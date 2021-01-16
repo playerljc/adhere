@@ -1,0 +1,39 @@
+/* 全局的less函数和mixin */
+
+/**
+  文字在一行上overflow
+ */
+.common-text-inline-overflow() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/**
+  文字在多行上overflow，行数可控
+ */
+.common-text-overflow-multi(@line: 3) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-align: justify;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+}
+
+/**
+ 显示滚动条
+ */
+.common-hover-overflow-auto() {
+  overflow: hidden;
+  &:hover {
+    overflow: auto;
+  }
+}
+
+// 文字换行
+.common-word-break {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+}

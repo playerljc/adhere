@@ -1,0 +1,8 @@
+/lambda/
+/scripts
+/config
+/public
+.history
+/assets
+*.json
+*.md

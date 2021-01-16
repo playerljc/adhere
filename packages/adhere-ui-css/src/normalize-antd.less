@@ -1,0 +1,35 @@
+/**
+  这里是对antd样式的normalize
+ */
+
+// Spin
+.ant-spin-nested-loading {
+  display: flex;
+  width: 100%;
+  min-height: 100%;
+  > .ant-spin-container {
+    width: 100%;
+  }
+}
+
+// .ant-select-dropdown
+.ant-select-dropdown {
+  z-index: @common-max-zindex + 1;
+}
+
+// .ant-notification
+.ant-notification {
+  z-index: @common-max-zindex + 2;
+}
+
+// .ant-message
+.ant-message {
+  z-index: @common-max-zindex + 2;
+}
+
+// .ant-card
+.ant-card {
+  > .ant-card-body {
+    height: 100%;
+  }
+}
