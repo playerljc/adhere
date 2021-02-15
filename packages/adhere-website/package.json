@@ -1,0 +1,84 @@
+{
+  "name": "@baifendian/adhere-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "adhere的website",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildapp": "cross-env environment=dev mode=production ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:prettier": "check-prettier lint",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "prettier": "prettier -c --write \"**/*\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/playerljc/adhere"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.2"
+  },
+  "author": "playerljc",
+  "license": "ISC",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "bugs": {
+    "url": "https://gitee.com/playerljc/adhere/issues"
+  },
+  "homepage": "https://gitee.com/playerljc/adhere",
+  "devDependencies": {
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/build": "^3.0.8",
+    "@umijs/fabric": "^2.0.8",
+    "babel-plugin-import": "^1.13.3",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.0",
+    "prettier": "^2.0.5",
+    "stylelint": "^13.7.2"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.4.0",
+    "@baifendian/adhere": "^1.0.0",
+    "@ctsj/router": "^1.0.1",
+    "antd": "^4.9.4",
+    "classnames": "^2.2.6",
+    "component-playground": "^3.2.1",
+    "copy-to-clipboard": "^3.3.1",
+    "core-js": "^3.6.5",
+    "font-awesome": "^4.7.0",
+    "moment": "^2.29.1",
+    "rc-queue-anim": "^1.8.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

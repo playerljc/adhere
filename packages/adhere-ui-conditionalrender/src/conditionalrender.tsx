@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { IConditionalRenderProps } from './types';
+
 /**
  * ConditionalRender - 条件渲染
  * @class ConditionalRender
  * @classdesc ConditionalRender
  */
-function ConditionalRender({ conditional, noMatch, children }) {
+function ConditionalRender({ conditional, noMatch, children }: IConditionalRenderProps) {
   if (conditional) {
     return children;
   }

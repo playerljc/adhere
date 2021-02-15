@@ -11,7 +11,7 @@ const localKeys = new Map();
 
 /**
  * initIntlMap - 初始化以中文为key,intl.get()为值的Map
- * @param {Object} - zh_CN
+ * @param zh_CN
  */
 function initIntlMap(zh_CN) {
   const propertys = Object.getOwnPropertyNames(zh_CN);
@@ -30,7 +30,8 @@ function initIntlMap(zh_CN) {
  * @param data
  */
 export function getLocal(data: Array<string>): object {
-  const result = [...new Set(data)];
+  // @ts-ignore
+  const result = [...Array.from(new Set(data))];
 
   const local = {};
 
@@ -100,11 +101,11 @@ export default {
 
   /**
    * v - 以中文获取国际化值
-   * @param {String} - key 中文
-   * @param {Object} - variables
    * @return {String}
+   * @param key
+   * @param variables
    */
-  v(key: string, variables: object | null): string {
+  v(key: string, variables?: object | null): string {
     if (!isInit) return '';
 
     if (variables) {
@@ -119,7 +120,7 @@ export default {
    * @param key
    * @param variables
    */
-  get(key: string, variables: object | null): string {
+  get(key: string, variables?: object | null): string {
     return intl.get(key, variables);
   },
 
@@ -128,7 +129,7 @@ export default {
    * @param key
    * @param options
    */
-  getHTML(key: string, options: object | null): string {
+  getHTML(key: string, options?: object | null): string {
     return intl.getHTML(key, options);
   },
 
@@ -144,7 +145,7 @@ export default {
    * @param options
    * @param variables
    */
-  formatMessage(options, variables) {
+  formatMessage(options, variables?: object | null) {
     return intl.formatMessage(options, variables);
   },
 
@@ -153,7 +154,21 @@ export default {
    * @param options
    * @param variables
    */
-  formatHTMLMessage(options, variables) {
+  formatHTMLMessage(options, variables?: object | null) {
     return intl.formatHTMLMessage(options, variables);
+  },
+  /**
+   * load - Load more locales after init
+   * @param locales
+   */
+  load(locales: { [key: string]: any }) {
+    intl.load(locales);
+  },
+  /**
+   * getLocal
+   * @param data
+   */
+  getLocal(data: Array<string>): object {
+    return getLocal(data);
   },
 };

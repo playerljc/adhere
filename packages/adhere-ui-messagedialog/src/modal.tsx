@@ -7,9 +7,9 @@ import intl from '@baifendian/adhere-util-intl';
 
 import Actions from './actions';
 import Emitter from './emitter';
-import IModalDialogProps from './types';
+import { IModalDialogProps } from './types';
 
-const selectorPrefix = 'adhere-ui-messagedialog';
+export const selectorPrefix = 'adhere-ui-messagedialog';
 
 /**
  * ModalDialog
@@ -17,6 +17,8 @@ const selectorPrefix = 'adhere-ui-messagedialog';
  * @classdesc Modal
  */
 class ModalDialog extends React.Component<IModalDialogProps, any> {
+  static defaultProps: any;
+  static propTypes: any;
   constructor(props) {
     super(props);
 
@@ -33,14 +35,16 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
 
   /**
    * onClose
-   * @param {HTMLElement} - el
+   * @param el
    */
   onClose(el) {
     const { parent } = this.props;
 
     function close() {
+      // @ts-ignore
       const flag = ReactDOM.unmountComponentAtNode(parent);
       if (flag) {
+        // @ts-ignore
         parent.parentElement.removeChild(parent);
       }
     }
@@ -60,18 +64,23 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
    */
   renderCloseBtn() {
     const {
+      // @ts-ignore
       config: { footer = [] },
     } = this.props;
 
     const props = {
       key: 'close',
       title: intl.v('取消'),
+      type: undefined,
+
       onClick: () => {
+        // @ts-ignore
         this.onClose();
       },
     };
 
     if (footer.length === 0) {
+      // @ts-ignore
       props.type = 'primary';
     }
 
@@ -81,6 +90,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
   render() {
     const { config, cloneBtn, children } = this.props;
 
+    // @ts-ignore
     const { footer = [], centered = true, ...other } = config;
 
     return (
@@ -90,6 +100,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
         centered={centered}
         wrapClassName={selectorPrefix}
         onCancel={() => {
+          // @ts-ignore
           this.onClose();
         }}
         visible
@@ -109,7 +120,7 @@ ModalDialog.defaultProps = {
 ModalDialog.propTypes = {
   parent: PropTypes.object,
   config: PropTypes.object,
-  cloneBtn: PropTypes.boolean,
+  cloneBtn: PropTypes.bool,
 };
 
 export default ModalDialog;

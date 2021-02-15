@@ -1,3 +1,5 @@
+import { InitFunc } from './types';
+
 const target = {};
 
 const funParams = new Map();
@@ -62,27 +64,49 @@ function CreateFunProxy(fun: Function, property: string) {
   });
 }
 
-const ins = {
+function initValue(p, params) {
+  const handler = ins.handlers[p];
+
+  // 返回值 - 一般都不是函数
+  let value = handler(params);
+
+  // 如果返回值是Function
+  if (value instanceof Function) {
+    value = CreateFunProxy(value, p);
+  }
+
+  return value;
+}
+
+const ins: {
+  handlers: object;
+  value: any;
+  init: InitFunc;
+} = {
   handlers: {},
   value: new Proxy(target, {
     get(t: Object, p: string, receiver) {
       // 如果p属性没在t中
       if (!(p in t)) {
-        const handler = ins.handlers[p];
-
-        // 返回值 - 一般都不是函数
-        let value = handler();
-
-        // 如果返回值是Function
-        if (value instanceof Function) {
-          value = CreateFunProxy(value, p);
-        }
-
-        receiver[p] = value;
+        receiver[p] = {
+          value: initValue(p, null),
+          refresh(params) {
+            receiver[p].value = initValue(p, params);
+          },
+        };
       }
+
       return Reflect.get(target, p, receiver);
     },
   }),
+  init: (dictArr = []) => {
+    (dictArr || []).forEach((dict) => {
+      if (dict) {
+        dict.initStatic();
+        dict.initRemote();
+      }
+    });
+  },
 };
 
 export default ins;

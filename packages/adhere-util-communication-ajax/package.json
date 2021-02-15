@@ -30,7 +30,13 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "@baifendian/adhere-ui-globalindicator": "^1.0.0"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "antd": "^4.10.3",
+    "@baifendian/adhere-ui-globalindicator": "^1.0.0",
+    "@baifendian/adhere-util": "^1.0.0",
+    "@baifendian/adhere-util-intl": "^1.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0"
   }
 }

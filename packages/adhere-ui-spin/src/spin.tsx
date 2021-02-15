@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Resource from '@baifendian/adhere-util-resource';
 
-import ISpinProps from './types';
+import { ISpinProps } from './types';
 
-const selectorprefix = 'adhere-ui-spin';
+const selectorPrefix = 'adhere-ui-spin';
 
 /**
  * Spin
@@ -11,18 +12,22 @@ const selectorprefix = 'adhere-ui-spin';
  * @classdesc Spin
  */
 class Spin extends React.Component<ISpinProps, any> {
+  static defaultProps: any;
+  static propTypes: any;
+
   render() {
-    const { spinning, text } = this.props;
+    // @ts-ignore
+    const { spinning, text, zIndex } = this.props;
 
     return spinning ? (
-      <div className={selectorprefix}>
-        <span className={`${selectorprefix}-dot`}>
+      <div className={selectorPrefix} style={{ zIndex: zIndex }}>
+        <span className={`${selectorPrefix}-dot`}>
           <i></i>
           <i></i>
           <i></i>
           <i></i>
         </span>
-        <div className={`${selectorprefix}-text`}>{text}</div>
+        <div className={`${selectorPrefix}-text`}>{text}</div>
       </div>
     ) : null;
   }
@@ -31,11 +36,13 @@ class Spin extends React.Component<ISpinProps, any> {
 Spin.defaultProps = {
   spinning: false,
   text: '',
+  zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
 };
 
 Spin.propTypes = {
   spinning: PropTypes.bool,
   text: PropTypes.string,
+  zIndex: PropTypes.number,
 };
 
 export default Spin;

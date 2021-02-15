@@ -1,0 +1,71 @@
+@import '~@baifendian/adhere-ui-flexlayout/lib/index';
+
+.adhere-ui-splitlayout {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+
+  &.adhere-ui-splitlayout-vertical, &.adhere-ui-splitlayout-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      display: flex;
+      background-color: rgba(0,0,0,.1);
+      content: '';
+    }
+  }
+
+  &.adhere-ui-splitlayout-vertical {
+    flex-direction: column;
+    height: 10px;
+
+    &::before {
+      width: 100%;
+      height: 1px;
+    }
+  }
+
+  &.adhere-ui-splitlayout-horizontal {
+    flex-direction: row;
+    width: 10px;
+
+    &::before {
+      width: 1px;
+      height: 100%;
+    }
+  }
+
+  //&:hover {
+  //  background-image: radial-gradient(
+  //    at center center,
+  //    rgba(0, 0, 0, 0.2) 0%,
+  //    transparent 70%,
+  //    transparent 100%
+  //  );
+  //  background-repeat: no-repeat;
+  //  background-position: 0 50%;
+  //  background-size: 50px 100%;
+  //}
+}
+
+.adhere-ui-splitlayout-noSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
+.adhere-ui-splitlayout-colResize {
+  cursor: col-resize;
+}
+
+.adhere-ui-splitlayout-rowResize {
+  cursor: row-resize;
+}

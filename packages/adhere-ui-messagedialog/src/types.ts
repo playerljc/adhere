@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * IAlertArgv
  * @interface IAlertArgv
@@ -6,8 +8,9 @@ export interface IAlertArgv {
   title?: string | null | React.ReactElement;
   text?: string | null | React.ReactElement;
   width?: number;
+  zIndex?: number;
   local?: string;
-  icon:?: React.ReactElement | null,
+  icon?: React.ReactElement | null;
 }
 
 /**
@@ -15,7 +18,6 @@ export interface IAlertArgv {
  * @interface IConfirmArgv
  */
 export interface IConfirmArgv extends IAlertArgv {
-  zIndex?: number;
   onSuccess?: Function;
 }
 

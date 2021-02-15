@@ -1,3 +1,8 @@
+/**
+ * historyBack 历史回退
+ * @param history {History}
+ * @param routePath {string}
+ */
 export default (history, routePath = '/') => {
   if (document.referrer !== '') {
     window.history.go(-1);

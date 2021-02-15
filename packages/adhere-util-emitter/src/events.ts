@@ -4,6 +4,8 @@
  * @classdesc Events
  */
 class Events {
+  private events: {};
+
   /**
    * @constructor
    */
@@ -74,11 +76,13 @@ class Events {
    * @param {string} type
    * @param {Object} params
    */
+  // @ts-ignore
   trigger(type: string, ...params: object) {
     let result;
 
     if (this.hasType(type)) {
       this.events[type].handlers.forEach((handler) => {
+        // @ts-ignore
         result = handler(...params);
       });
     }
@@ -88,17 +92,13 @@ class Events {
 
   /**
    * document自定义事件的触发
-   * @param {string} - type
-   * @param {Object} - params
+   * @param el
+   * @param type
+   * @param params
    */
-  static trigger(type: string, ...params: object) {
-    document.dispatchEvent(
-      new CustomEvent(type, {
-        bubbles: 'true',
-        cancelable: 'true',
-        detail: params,
-      }),
-    );
+  dispatchEvent(el: HTMLElement | Document = document, type: string, params: CustomEventInit) {
+    const event = new CustomEvent(type, params);
+    el.dispatchEvent(event);
   }
 }
 

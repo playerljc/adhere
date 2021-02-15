@@ -21,5 +21,4 @@ export default {
 
     Dict.handlers.FormPopupContainer = () => (el) => el.parentElement;
   },
-  initRemote() {},
 };

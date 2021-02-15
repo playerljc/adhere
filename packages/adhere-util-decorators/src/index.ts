@@ -1,3 +1,3 @@
 import ReactErrorBoundaries from './ReactErrorBoundaries';
 
-export { ReactErrorBoundaries };
+export default { ReactErrorBoundaries };

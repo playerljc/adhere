@@ -1,9 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ISplitProps from './types';
+import { ISplitProps } from './types';
 
 const selectorPrefix = 'adhere-ui-split';
+
+/**
+ * SplitGroup
+ * @class SplitGroup
+ * @classdesc SplitGroup
+ */
+class SplitGroup extends React.Component<ISplitProps, any> {
+  static defaultProps: any;
+  static propTypes: any;
+
+  render() {
+    const { children, ...others } = this.props;
+    // 3
+    // 0 1 2
+
+    return (
+      <>
+        {
+          // @ts-ignore
+          children.map((component, index) => {
+            if (index !== 0) {
+              // @ts-ignore
+              return (
+                <>
+                  <Split {...others} key={index} />
+                  {component}
+                </>
+              );
+            }
+
+            return component;
+          })
+        }
+      </>
+    );
+  }
+}
+
+SplitGroup.defaultProps = {
+  direction: 'vertical',
+  size: 20,
+  className: '',
+};
+
+SplitGroup.propTypes = {
+  direction: PropTypes.oneOf(['vertical', 'horizontal']),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.string,
+};
 
 /**
  * Split
@@ -11,6 +60,10 @@ const selectorPrefix = 'adhere-ui-split';
  * @classdesc Split
  */
 class Split extends React.Component<ISplitProps, any> {
+  static defaultProps: any;
+  static propTypes: any;
+  static Group = SplitGroup;
+
   getStyle() {
     const { direction, size } = this.props;
 

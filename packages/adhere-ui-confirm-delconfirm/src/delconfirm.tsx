@@ -5,7 +5,7 @@ import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 
-import IDelConfirmProps from './types';
+import { IDelConfirmProps } from './types';
 
 const selectorPrefix = 'adhere-ui-delconfirm';
 
@@ -15,6 +15,9 @@ const selectorPrefix = 'adhere-ui-delconfirm';
  * @classdesc DelConform
  */
 class DelConform extends React.Component<IDelConfirmProps, any> {
+  static defaultProps: any;
+  static propTypes: any;
+
   constructor(props) {
     super(props);
 
@@ -22,9 +25,9 @@ class DelConform extends React.Component<IDelConfirmProps, any> {
   }
 
   onClick() {
-    const { success, zIndex = Resource.Dict.value.ResourceNormalMaxZIndex } = this.props;
+    const { success, zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value } = this.props;
 
-    DelConform.open(success, zIndex || Resource.Dict.value.ResourceNormalMaxZIndex);
+    DelConform.open(success, zIndex || Resource.Dict.value.ResourceNormalMaxZIndex.value);
   }
 
   render() {
@@ -67,7 +70,7 @@ class DelConform extends React.Component<IDelConfirmProps, any> {
 }
 
 DelConform.defaultProps = {
-  zIndex: Resource.Dict.value.ResourceNormalMaxZIndex,
+  zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
   className: '',
   success: () => {},
   children: null,

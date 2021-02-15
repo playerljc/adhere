@@ -1,0 +1,96 @@
+.adhere-ui-sliderscale {
+  position: relative;
+  margin-top: 15px;
+  padding: 0;
+
+  > .adhere-ui-sliderscale-range {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    -webkit-appearance: none;
+
+    /* 滑块 */
+
+    &::-webkit-slider-thumb {
+      width: 0;
+      height: 0;
+      margin-top: -10px;
+      border-top: 18px solid rgba(0, 0, 0, 0.5);
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      -webkit-appearance: none;
+    }
+
+    /* 滚道 */
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 30px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+    }
+  }
+
+  > .adhere-ui-sliderscale-scale {
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 100%;
+
+    &.adhere-ui-sliderscale-scale-item-poin {
+      height: 30%;
+    }
+
+    > .adhere-ui-sliderscale-scale-item {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      height: 10%;
+      background-color: transparent;
+
+      &::before,
+      &::after {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        content: '';
+      }
+
+      &::after {
+        right: 0;
+        border-left: 1px solid rgba(0, 0, 0, 0.5);
+      }
+
+      &:first-child {
+        &::before {
+          left: 0;
+          height: 300%;
+          border-left: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        > .adhere-ui-sliderscale-scale-item-value {
+          top: 300%;
+          right: auto;
+          left: 0;
+          margin-left: -6px;
+        }
+      }
+
+      > .adhere-ui-sliderscale-scale-item-value {
+        position: absolute;
+        right: 0;
+        bottom: -15px;
+        width: 12px;
+        margin-right: -6px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+  }
+}

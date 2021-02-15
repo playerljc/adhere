@@ -1,0 +1,27 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  > .Fixed {
+    display: flex;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    > .Fixed {
+      flex-shrink: 0;
+      padding: 10px;
+    }
+
+    > .Auto {
+      flex-grow: 1;
+      min-width: 0;
+    }
+  }
+
+  > .Auto {
+    flex-grow: 1;
+    min-height: 0;
+  }
+}

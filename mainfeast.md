@@ -21,7 +21,19 @@
 - adhere-ui-confirm-delconfirm
 - adhere-ui-confirm-importantconfirm
 - adhere-util-decorators
-
+- adhere-ui-suspense
+- adhere-ui-css
+- adhere-ui-tableheadsearch
+- adhere-ui-olmap
+- adhere-ui-hooks
+- adhere-util-communication-ajax
+- adhere-ui-flexlayout
+- adhere-util-adapterscreen
+- baifendian/adhere-ui-splitlayout
+- baifendian/adhere-ui-stickuplayout
+- baifendian/adhere-ui-surnames
+- adhere-ui-sliderscale
+- adhere-ui-revolving
 
 ### 没有落实有雏形的组件
 - 自使用的图片和背景

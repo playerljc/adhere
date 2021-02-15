@@ -26,34 +26,47 @@
   
 # 组件列表
 
-- [@baifendian/adhere-util-communication-ajax](#@baifendian/adhere-util-communication-ajax)
-- [@baifendian/adhere-ui-suspense](#@baifendian/adhere-ui-suspense)
-- [@baifendian/adhere-ui-olmap](#@baifendian/adhere-ui-olmap)
-- [@baifendian/adhere-ui-hooks](#@baifendian/adhere-ui-hooks)
-- [@baifendian/adhere-util-regex](#@baifendian/adhere-util-regex)
-- [@baifendian/adhere-util-moment](#@baifendian/adhere-util-moment)
-- [@baifendian/adhere-ui-form](#@baifendian/adhere-ui-form)
-- [@baifendian/adhere-ui-imageviwer](#@baifendian/adhere-ui-imageviwer)
+# 移植
+- [@baifendian/adhere-ui-scrollload](#@baifendian/adhere-ui-scrollload)
+- [@baifendian/adhere-ui-jdcategorytab](#@baifendian/adhere-ui-jdcategorytab)
+- [@baifendian/adhere-ui-fontsizesetting](#@baifendian/adhere-ui-fontsizesetting)
+- [@baifendian/adhere-ui-sidelayout](#@baifendian/adhere-ui-sidelayout)
+- [@baifendian/adhere-ui-cascadecompared](#@baifendian/adhere-ui-cascadecompared)
+- [@baifendian/adhere-ui-contextmenu](#@baifendian/adhere-ui-contextmenu)
+- [@baifendian/adhere-util-drag](#@baifendian/adhere-util-drag)
+- [@baifendian/adhere-util-droppable](#@baifendian/adhere-util-droppable)
+- [@baifendian/adhere-util-selectable](#@baifendian/adhere-util-selectable)
+- [@baifendian/adhere-util-resizeable](#@baifendian/adhere-util-resizeable)
 
-- [@baifendian/adhere-system-lint](#@baifendian/adhere-system-lint)
+# 自创
+- [@baifendian/adhere-util-watch](#@baifendian/adhere-util-watch)
+- [@baifendian/adhere-util-memoized](#baifendian/adhere-util-memoized)
+- [@baifendian/adhere-util-errorcatch](#@baifendian/adhere-util-errorcatch)
+- [@baifendian/adhere-ui-searchtable](#@baifendian/adhere-ui-searchtable)
+
+# 分配
+- [@baifendian/adhere-ui-imageviwer](#@baifendian/adhere-ui-imageviwer)
+- [@baifendian/adhere-ui-form](#@baifendian/adhere-ui-form)
+- [@baifendian/adhere-ui-echarts](#@baifendian/adhere-ui-echarts)
+- [@baifendian/adhere-util-regex](#@baifendian/adhere-util-regex)
+- [@baifendian/adhere-util-clientdetection](#@baifendian/adhere-util-clientdetection)
+
+# 分配待定
+- [@baifendian/adhere-ui-adaptivelayout](#baifendian/adhere-ui-adaptivelayout)
+- [@baifendian/adhere-ui-table](#@baifendian/adhere-ui-table)
+- [@baidendian/adhere-ui-kvinfo](#@baidendian/adhere-ui-kvinfo)
+- [@baifendian/adhere-util-moment](#@baifendian/adhere-util-moment)
+- [@baifendian/adhere-ui-datepicker](#@baifendian/adhere-ui-datepicker)
+- [@baifendian/adhere-ui-tooltip](#@baifendian/adhere-ui-tooltip)
+- [@baifendian/adhere-ui-icon](#@baifendian/adhere-ui-icon)
 - [@baifendian/adhere-util-communication-sse](#@baifendian/adhere-util-communication-sse)
 - [@baifendian/adhere-util-communication-websocket](#@baifendian/adhere-util-communication-websocket)
 - [@baifendian/adhere-util-communication-postmessage](#@baifendian/adhere-util-communication-postmessage)
-- [@baifendian/adhere-util-clientdetection](#@baifendian/adhere-util-clientdetection)
-- [@baifendian/adhere-util-errorcatch](#@baifendian/adhere-util-errorcatch)
-- [@baidendian/adhere-util-adapterscreen](#@baidendian/adhere-util-adapterscreen)
-- [@baifendian/adhere-ui-table](#@baifendian/adhere-ui-table)
-- [@baifendian/adhere-ui-tableheadsearch](#@baifendian/adhere-ui-tableheadsearch)
-- [@baifendian/adhere-ui-searchtable](#@baifendian/adhere-ui-searchtable)
-- [@baifendian/adhere-ui-tooltip](#@baifendian/adhere-ui-tooltip)
-- [@baifendian/adhere-ui-icon](#@baifendian/adhere-ui-icon)
 - [@baifendian/adhere-ui-imgclip](#@baifendian/adhere-ui-imgclip)
-- [@baifendian/adhere-ui-echarts](#@baifendian/adhere-ui-echarts)
-- [@baidendian/adhere-ui-kvinfo](#@baidendian/adhere-ui-kvinfo)
-- [@baifendian/adhere-ui-datepicker](#@baifendian/adhere-ui-datepicker)
 - [@baifendian/adhere-ui-media](#@baifendian/adhere-ui-media)
-- [@baifendian/adhere-ui-adaptivelayout](#baifendian/adhere-ui-adaptivelayout)
+- [@baifendian/adhere-system-lint](#@baifendian/adhere-system-lint)
 
+# 完成
 - [@baifendian/adhere-util-dict](#@baifendian/adhere-util-dict) - ok
 - [@baifendian/adhere-util-emitter](#@baifendian/adhere-util-emitter) - ok
 - [@baifendian/adhere-util-intl](#@baifendian/adhere-util-intl) - ok
@@ -77,6 +90,18 @@
 - [@baifendian/adhere-ui-confirm-importantconfirm](#@baifendian/adhere-ui-confirm-importantconfirm) - ok
 - [@baifendian/adhere-ui-css](#@baifendian/adhere-ui-css) - ok
 - [@baifendian/adhere-ui-decorators](#@baifendian/adhere-util-decorators) - ok
+- [@baifendian/adhere-ui-suspense](#@baifendian/adhere-ui-suspense) - ok
+- [@baifendian/adhere-ui-tableheadsearch](#@baifendian/adhere-ui-tableheadsearch) - ok
+- [@baifendian/adhere-ui-hooks](#@baifendian/adhere-ui-hooks) - ok
+- [@baifendian/adhere-ui-olmap](#@baifendian/adhere-ui-olmap) - ok
+- [@baifendian/adhere-util-communication-ajax](#@baifendian/adhere-util-communication-ajax) - ok
+- [@baidendian/adhere-util-adapterscreen](#@baidendian/adhere-util-adapterscreen) - ok
+- [@baifendian/adhere-ui-flexlayout](#@baifendian/adhere-ui-flexlayout) - ok
+- [@baifendian/adhere-ui-splitlayout](#@baifendian/adhere-ui-splitlayout) - ok
+- [@baifendian/adhere-ui-stickuplayout](#@baifendian/adhere-ui-stickuplayout) - ok
+- [@baifendian/adhere-ui-surnames](#@baifendian/adhere-ui-surnames) - ok
+- [@baifendian/adhere-ui-sliderscale](#@baifendian/adhere-ui-sliderscale) - ok
+- [@baifendian/adhere-ui-revolving](#@baifendian/adhere-ui-revolving) - ok
 
 ## @baifendian/adhere-system-lint
 
@@ -266,6 +291,7 @@ websocket
 统一的错误机制处理(关键位置的异常捕获，可以进行异常的封装)
 
 - 不能让无属性，未定义这种错误在前段出现，关键代码的错误校验
+- 可以使用注解的方式
 
 ## @baifendian/adhere-ui-tooltip
 
@@ -364,3 +390,102 @@ echarts 常用图表的封装
 ## @baifendian/adhere-ui-imagelazy
 
 图片懒加载
+
+## @baifendian/adhere-ui-flexlayout
+
+实现flex布局的组件
+
+## @baifendian/adhere-ui-splitlayout
+
+实现分割窗体的布局，可以拉动调整大小
+
+## @baifendian/adhere-ui-sidelayout
+
+实现抽屉布局
+
+## @baifendian/adhere-ui-stickuplayout
+
+滚动固定头额布局
+
+## @baifendian/adhere-ui-sliderscale
+
+刻度盘
+
+## @baifendian/adhere-ui-cascadecompared
+
+级联比较
+
+## @baifendian/adhere-ui-fontsizesetting
+
+字体设置
+
+## @baifendian/adhere-ui-jdcategorytab
+
+京东的面板
+
+## @baifendian/adhere-ui-scrollload
+
+滚动加载
+
+## @baifendian/adhere-ui-revolving
+
+走马灯
+
+## @baifendian/adhere-ui-surnames
+
+姓名面板
+
+## baifendian/adhere-util-watch
+对值的监控
+ - 支持all - 每一个依赖项都改变了才执行回调
+ - 支持race - 只要有一个依赖项改变了就执行回调
+
+## baifendian/adhere-util-memoized
+缓存
+ - 支持函数调用的memoized 在函数对象中使用符号来存储一些信息
+ - 支持表达式求职的memoized 依赖项列表和函数
+ 
+ 
+ 
+## @baifendian/adhere-ui-contextmenu
+上下文菜单，可以移动后显示子菜单那种
+
+## @baifendian/adhere-util-drag
+功能
+ - 拖拽移动一个元素
+ - 正常拖拽
+ - clone的拖拽
+ - 拖拽中地图的显示
+ - 辅助线
+ - 触发的事件
+ 
+## @baifendian/adhere-util-droppable
+功能:
+ - 从哪拖到哪,怎么放置(谁能拖，谁能放，怎么放)
+
+ - 画布都有哪些扩展，移动到target的时候是有限制的，不能拖出无限滚动，
+ 放的时候是自由放置
+ 拖动到target里的元素可以自由移动
+
+ 测试:
+
+ log:
+ - 在el范围内拖动，而不是全局拖动
+ - 加入如果source和target为包含关系，则不能放入
+
+ - 无限拖动，画布跟着滚动 (在父容器里拖动的时候，拖动到目标容器(ct-drag-target)的时候)
+ - 只想移动，根本不想放入(在el范围内自由的移动)
+ - Axure是鼠标不能出target的范围，不管是从左拽进来，还是在target自由移动，都是这样的
+ 现在可以实现，但是不是自动的需要鼠标移动才能更新滚动条的位置
+ 
+## @baifendian/adhere-util-selectable
+功能:
+ - 在一个区域内进行选取，区域内带有ct-selectable-item样式的元素会参与计算
+ - 圈选中获取选中和非选中的元素，选取结束获取选取的元素
+ 
+## @baifendian/adhere-util-resizeable
+功能:
+ - 上、下、左、右、左上、左下、右上、右下8个方向的resizeable
+ - 一组中多个元素resizeable
+ - 多组都可以resizeable
+ - 无线扩展

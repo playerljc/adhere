@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ConfigProvider, Button } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
-import ptPT from 'antd/es/locale/pt_PT';
-import enUS from 'antd/es/local/en_US';
 
 import intl from '@baifendian/adhere-util-intl';
+
+// @ts-ignore
+import Resource from '@baifendian/adhere-util-resource';
 
 import { IAlertArgv, IConfirmArgv } from './types';
 
@@ -13,14 +13,29 @@ import Actions from './actions';
 import Emitter from './emitter';
 import ModalDialog from './modal';
 
+import { selectorPrefix } from './modal';
+
 const DEFAULT_LOCAL = 'zh_CN';
 
-const LOCAL = {
-  zh_CN: zhCN,
-  pt_PT: ptPT,
-  en_US: enUS,
-};
+const LOCAL = Resource.Dict.value.LocalsAntd;
 
+/**
+ * renderByIcon
+ * @param icon
+ * @param text
+ * @return React.ReactElement
+ */
+function renderByIcon(icon, text) {
+  return (
+    <div className={`${selectorPrefix}-renderByIcon`}>
+      <div className={`${selectorPrefix}-renderByIcon-fixed`}>{icon}</div>
+      <div className={`${selectorPrefix}-renderByIcon-auto`}>{text}</div>
+    </div>
+  );
+}
+
+// @ts-ignore
+// @ts-ignore
 export default {
   /**
    * Confirm
@@ -47,7 +62,7 @@ export default {
         width: width || 300,
         closable: false,
         zIndex,
-        icon,
+        // icon,
         footer: [
           <Button
             key="submit"
@@ -68,7 +83,8 @@ export default {
         ],
       },
       local,
-      children: text,
+      // @ts-ignore
+      children: icon ? renderByIcon(icon, text) : text,
     });
   },
   /**
@@ -76,24 +92,28 @@ export default {
    * @param title - {String | ReactNode}
    * @param text - {String | ReactNode}
    * @param width - {number}
+   * @param local
+   * @param zIndex
    * @param icon - {React.ReactElement | null}
    */
-  Alert({ title, text = null, width = 300, local, icon }: IAlertArgv) {
+  Alert({ title, text = null, width = 300, zIndex = 1000, local, icon }: IAlertArgv) {
     this.Modal({
       config: {
         title,
         centered: true,
         width: width || 300,
         closable: false,
-        icon,
+        zIndex,
+        // icon,
       },
       local,
-      children: text,
+      // @ts-ignore
+      children: icon ? renderByIcon(icon, text) : text,
     });
   },
   /**
-   * Modal
-   * @param {Object} - config
+   *  Modal
+   *  @param {Object} - config
    *  @param {String | ReactElement} - title
    *  @param {Boolean} - maskClosable 是否点击遮罩关闭 默认是false
    *  @param {Number} - zIndex 层级大小
@@ -103,9 +123,10 @@ export default {
    *  @param {String | Number} - width 宽度
    *  @param {Boolean} - closable 是否显示关闭 默认true
    *  @param {Array<ReactNode>} - footer
-   * @param {ReactNode} - children
+   *  @param {ReactNode} - children
+   *  @param defaultCloneBtn
    */
-  Modal({ config = {}, children = null, local = DEFAULT_LOCAL }) {
+  Modal({ config = {}, children = null, defaultCloneBtn = true, local = DEFAULT_LOCAL }) {
     const modalConfig = Object.assign(
       {
         maskClosable: false,
@@ -115,9 +136,10 @@ export default {
 
     const el = document.createElement('div');
 
+    // @ts-ignore
     ReactDOM.render(
       <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]}>
-        <ModalDialog parent={el} config={modalConfig}>
+        <ModalDialog parent={el} config={modalConfig} cloneBtn={defaultCloneBtn}>
           {children}
         </ModalDialog>
       </ConfigProvider>,
@@ -130,7 +152,7 @@ export default {
   },
   /**
    * close
-   * @param {HTMLElement} - el
+   * @param el
    */
   close(el: HTMLElement) {
     Emitter.trigger(Actions.close, el);
