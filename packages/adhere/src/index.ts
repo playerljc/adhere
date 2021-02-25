@@ -22,6 +22,12 @@ import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
 import Surnames from '@baifendian/adhere-ui-surnames';
 import SliderScale from '@baifendian/adhere-ui-sliderscale';
 import Revolving from '@baifendian/adhere-ui-revolving';
+import ScrollLoad from '@baifendian/adhere-ui-scrollload';
+import JdCategoryTab from '@baifendian/adhere-ui-jdcategorytab';
+import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
+import SlideLayout from '@baifendian/adhere-ui-slidelayout';
+import ContextMenu from '@baifendian/adhere-ui-contextmenu';
+import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
 import Util from '@baifendian/adhere-util';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
 import Decorators from '@baifendian/adhere-util-decorators';
@@ -32,6 +38,7 @@ import NotNull from '@baifendian/adhere-util-notnull';
 import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
+import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export {
   ConditionalRender,
@@ -68,4 +75,11 @@ export {
   Surnames,
   SliderScale,
   Revolving,
+  ScrollLoad,
+  JdCategoryTab,
+  CascadeCompared,
+  SlideLayout,
+  ContextMenu,
+  FontSizeSetting,
+  WatchMemoized,
 };

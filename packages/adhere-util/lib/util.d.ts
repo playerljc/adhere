@@ -1,15 +1,10 @@
 declare const _default: {
+    /**----------------------------基本---------------------------**/
     /**
      * isEmpty - 对象是否为空
      * @param value
      */
     isEmpty(value: any): boolean;
-    /**
-     * isArray - 判断数组
-     * @param obj
-     * @return {boolean}
-     */
-    isArray(obj: any): boolean;
     /**
      * isNumber - 判断是否是number
      * @param val
@@ -29,6 +24,23 @@ declare const _default: {
      */
     isString(val: any): boolean;
     /**
+     * isSymbol - 是否是符号类型
+     * @param val
+     * @return boolean
+     */
+    isSymbol(val: any): boolean;
+    /**
+     * isPrimitive - 是否是基本类型
+     * @param val
+     */
+    isPrimitive(val: any): boolean;
+    /**
+     * isArray - 判断数组
+     * @param obj
+     * @return {boolean}
+     */
+    isArray(obj: any): boolean;
+    /**
      * isFunction - 判断函数
      * @param obj
      * @return {boolean}
@@ -41,29 +53,10 @@ declare const _default: {
      */
     isObject(obj: any): boolean;
     /**
-     * isTextNode - 是否是文本节点
-     * @param el - Node
-     * @return {boolean}
+     * isRef - 是否是引用类型
+     * @param obj
      */
-    isTextNode(el: any): boolean;
-    /**
-     * isCommentNode - 是否是注释节点
-     * @param el
-     * @return {boolean}
-     */
-    isCommentNode(el: any): boolean;
-    /**
-     * isElementNode - 是否是元素节点
-     * @param el - Element
-     * @return {boolean}
-     */
-    isElementNode(el: any): boolean;
-    /**
-     * createElement - 根据html字符串创建dom
-     * @param htmlStr - string
-     * @return {Element}
-     */
-    createElement(htmlStr: any): Element | null;
+    isRef(obj: any): boolean;
     /**
      * chainCallAssignment - 对象的链式赋值
      * obj.a.b.c.d.x.x.x = value
@@ -122,19 +115,206 @@ declare const _default: {
      */
     execExpression(context: any, expressionStr: any, data: any): any;
     /**
-     * noop - 返回一个空实现的函数
-     * @return Function
+     * toPoint - 百分数转化为小数
+     * @param percent
      */
-    noop(): Function;
+    toPoint(percent: string): number;
     /**
-     * 函数节流
+     * point - 小数转化为百分数
+     * @param point
      */
+    toPercent(point: any): string;
     /**
      * getCookie
      * @return {string}
      * @param name
      */
     getCookie(name?: string): string;
+    /**
+     * noop - 返回一个空实现的函数
+     * @return Function
+     */
+    noop(): Function;
+    /**
+     * rgb - rgb颜色随机
+     */
+    rgb(): string;
+    /**
+     * color16 - 十六进制颜色随机
+     */
+    color16(): string;
+    /**
+     * generatorRandom - 生成随机数
+     * @param lowerValue - 最小值
+     * @param upperValue - 最大值
+     */
+    generatorRandom(lowerValue: any, upperValue: any): number;
+    /**
+     * uuid - 获取uuid
+     * @return string
+     */
+    uuid(): string;
+    /**
+     * getPropertyVisitPathStr - 获取属性访问的完整字符串路径 a.b.c.d.e.f
+     * @param target Proxy中set的target参数
+     * @param key Proxy中set的key参数
+     * @return {string}
+     */
+    getPropertyVisitPathStr(target: any, key: any): string;
+    /**
+     * convertBase64UrlToBlob - 转换base64位blob对象
+     * @return Blob
+     * @param data
+     */
+    convertBase64UrlToBlob(data: string): Blob;
+    /**----------------------------基本end---------------------------**/
+    /**--------------------------dom-start-------------------------**/
+    /**
+     * isTextNode - 是否是文本节点
+     * @param el - Node
+     * @return {boolean}
+     */
+    isTextNode(el: Node): boolean;
+    /**
+     * isCommentNode - 是否是注释节点
+     * @param el
+     * @return {boolean}
+     */
+    isCommentNode(el: Node): boolean;
+    /**
+     * isElementNode - 是否是元素节点
+     * @param el - Element
+     * @return {boolean}
+     */
+    isElementNode(el: Node): boolean;
+    /**
+     * createElement - 根据html字符串创建dom
+     * @param htmlStr - string
+     * @return {Element}
+     */
+    createElement(htmlStr: string): HTMLElement;
+    /**
+     * getTopDom - 已target为开始向上查找元素
+     * @param {HtmlElement} target
+     * @param {string} selector
+     * @return {HtmlElement}
+     */
+    getTopDom(target: any, selector: string): null | HTMLElement;
+    /**
+     * on - 注册事件
+     * @param el
+     * @param tag
+     * @param type
+     * @param handler
+     * @param capture
+     */
+    on(el: any, tag: string, type: string, handler: Function, capture?: boolean): void;
+    /**
+     * off
+     * @param el
+     * @param tag
+     * @param type
+     * @param handler
+     */
+    off(el: Element, tag: string, type: string, handler: Function): void;
+    /**
+     * addClass
+     * @param {HTMLElement} el
+     * @param {String} classes
+     */
+    addClass(el: any, classes?: string): void;
+    /**
+     * removeClass
+     * @param {HTMLElement} el
+     * @param {String} classes
+     */
+    removeClass(el: any, classes?: string): void;
+    /**
+     * hasClass
+     * @param {HTMLElement} el
+     * @param {String} className
+     * @return {Boolean}
+     */
+    hasClass(el: any, className: string): boolean;
+    /**
+     * DOM没有提供insertAfter()方法
+     * @param {HtmlElement} newElement
+     * @param {HtmlElement} targetElement
+     */
+    insertAfter(newElement: any, targetElement: any): void;
+    /**
+     * prepend
+     * @param {HTMLElement} - el
+     * @param {HTMLElement | String} - children
+     */
+    prepend(el: any, children: any): void;
+    /**
+     * remove
+     * @param {HTMLElement} - el
+     */
+    remove(el: any): void;
+    /**
+     * getParentElementByTag
+     * @param {HtmlElement} el
+     * @param {string} tag
+     * @return {HtmlElement}
+     */
+    getParentElementByTag(el: any, tag: string): HTMLElement | null;
+    /**
+     * children
+     * @param {HTMLElement} el
+     * @param {string} selector
+     */
+    children(el: any, selector: string): any[];
+    /**
+     * isTouch
+     * @return {boolean}
+     */
+    isTouch(): boolean;
+    /**
+     * objectToDataSet
+     * @param {Object} - obj
+     * @param {HTMLElement} - dom
+     */
+    objectToDataSet(obj: object, dom: HTMLElement): void;
+    /**
+     * dataSetToObj
+     * @param {HTMLElement} - dom
+     * @returns {Object}
+     */
+    dataSetToObject(dom: HTMLElement): {};
+    /**
+     * getPageLeft - 获取指定元素距离视口的left
+     * @param {HTMLElement} - el
+     * @return {SelectOptions}
+     */
+    getPageLeft(el: any): any;
+    /**
+     * getPageTop - 获取指定元素距离视口的top
+     * @param {HTMLElement} - el
+     * @return {SelectOptions}
+     */
+    getPageTop(el: any): any;
+    /**
+     * getPageRect - 获取元素距离视口的Rect
+     * @param {HTMLElement} - el
+     * @return {{top: number, left: number}}
+     */
+    getPageRect(el: any): {
+        top: any;
+        bottom: any;
+        left: any;
+        right: any;
+    };
+    /**
+     * isIframeEmbed - 是否是iframe嵌入
+     * @return {boolean}
+     */
+    isIframeEmbed(): boolean;
+    /**--------------------------dom-end-------------------------**/
+    /**
+     * 函数节流
+     */
     /**
      * getLang
      * @return {String}
@@ -172,20 +352,5 @@ declare const _default: {
         enterUrl: any;
         params?: string | undefined;
     }): string;
-    /**
-     * isIframeEmbed - 是否是iframe嵌入
-     * @return {boolean}
-     */
-    isIframeEmbed(): boolean;
-    /**
-     * toPoint - 百分数转化为小数
-     * @param percent
-     */
-    toPoint(percent: string): number;
-    /**
-     * point - 小数转化为百分数
-     * @param point
-     */
-    toPercent(point: any): string;
 };
 export default _default;

@@ -77,7 +77,7 @@ class Events {
    * @param {Object} params
    */
   // @ts-ignore
-  trigger(type: string, ...params: object) {
+  trigger(type: string, ...params: Array) {
     let result;
 
     if (this.hasType(type)) {

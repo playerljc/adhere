@@ -25,25 +25,17 @@
   - vx.x.x-polyfill
   
 # 线上地址(临时)
-[http://www.hongyf.cn:8081/](http://www.hongyf.cn:8081/) 
+[http://www.hongyf.cn:8081/](http://www.hongyf.cn:8081/)  
   
 # 组件列表
 
 # 移植
-- [@baifendian/adhere-ui-scrollload](#@baifendian/adhere-ui-scrollload)
-- [@baifendian/adhere-ui-jdcategorytab](#@baifendian/adhere-ui-jdcategorytab)
-- [@baifendian/adhere-ui-fontsizesetting](#@baifendian/adhere-ui-fontsizesetting)
-- [@baifendian/adhere-ui-sidelayout](#@baifendian/adhere-ui-sidelayout)
-- [@baifendian/adhere-ui-cascadecompared](#@baifendian/adhere-ui-cascadecompared)
-- [@baifendian/adhere-ui-contextmenu](#@baifendian/adhere-ui-contextmenu)
 - [@baifendian/adhere-util-drag](#@baifendian/adhere-util-drag)
 - [@baifendian/adhere-util-droppable](#@baifendian/adhere-util-droppable)
 - [@baifendian/adhere-util-selectable](#@baifendian/adhere-util-selectable)
 - [@baifendian/adhere-util-resizeable](#@baifendian/adhere-util-resizeable)
 
 # 自创
-- [@baifendian/adhere-util-watch](#@baifendian/adhere-util-watch)
-- [@baifendian/adhere-util-memoized](#baifendian/adhere-util-memoized)
 - [@baifendian/adhere-util-errorcatch](#@baifendian/adhere-util-errorcatch)
 - [@baifendian/adhere-ui-searchtable](#@baifendian/adhere-ui-searchtable)
 
@@ -105,6 +97,13 @@
 - [@baifendian/adhere-ui-surnames](#@baifendian/adhere-ui-surnames) - ok
 - [@baifendian/adhere-ui-sliderscale](#@baifendian/adhere-ui-sliderscale) - ok
 - [@baifendian/adhere-ui-revolving](#@baifendian/adhere-ui-revolving) - ok
+- [@baifendian/adhere-ui-scrollload](#@baifendian/adhere-ui-scrollload) - ok
+- [@baifendian/adhere-ui-jdcategorytab](#@baifendian/adhere-ui-jdcategorytab) - ok
+- [@baifendian/adhere-ui-cascadecompared](#@baifendian/adhere-ui-cascadecompared) - ok
+- [@baifendian/adhere-ui-slidelayout](#@baifendian/adhere-ui-slidelayout) - ok
+- [@baifendian/adhere-ui-contextmenu](#@baifendian/adhere-ui-contextmenu) - ok
+- [@baifendian/adhere-ui-fontsizesetting](#@baifendian/adhere-ui-fontsizesetting) - ok
+- [@baifendian/adhere-util-memoized](#baifendian/adhere-util-watchmemoized)- ok
 
 ## @baifendian/adhere-system-lint
 
@@ -402,7 +401,7 @@ echarts 常用图表的封装
 
 实现分割窗体的布局，可以拉动调整大小
 
-## @baifendian/adhere-ui-sidelayout
+## @baifendian/adhere-ui-slidelayout
 
 实现抽屉布局
 
@@ -438,17 +437,13 @@ echarts 常用图表的封装
 
 姓名面板
 
-## baifendian/adhere-util-watch
+## baifendian/adhere-util-watchmemoized
 对值的监控
  - 支持all - 每一个依赖项都改变了才执行回调
  - 支持race - 只要有一个依赖项改变了就执行回调
-
-## baifendian/adhere-util-memoized
 缓存
  - 支持函数调用的memoized 在函数对象中使用符号来存储一些信息
  - 支持表达式求职的memoized 依赖项列表和函数
- 
- 
  
 ## @baifendian/adhere-ui-contextmenu
 上下文菜单，可以移动后显示子菜单那种

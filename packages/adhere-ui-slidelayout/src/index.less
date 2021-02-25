@@ -1,0 +1,90 @@
+.adhere-ui {
+  &-slidelayout {
+    &-overlay,
+    &-reveal-master,
+    &-reveal,
+    &-push,
+    &-push-master,
+    &-push-slave {
+      position: absolute;
+      background-color: #fff;
+    }
+
+    &-overlay,
+    &-reveal-master,
+    &-reveal,
+    &-push {
+      top: 0;
+      bottom: 0;
+    }
+
+    &-overlay {
+      z-index: 9999;
+    }
+
+    &-overlay,
+    &-reveal,
+    &-push {
+      box-sizing: border-box;
+      max-width: 100%;
+      padding: 15px;
+      overflow: auto;
+      overflow-scrolling: touch;
+
+      &.left {
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      &.right {
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      &.top {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      &.bottom {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &-overlay {
+      left: 0;
+    }
+
+    &-reveal {
+      z-index: 1;
+    }
+
+    &-reveal-master {
+      right: 0;
+      left: 0;
+      z-index: 9998;
+    }
+
+    &-push-master,
+    &-push-slav,
+    &-push {
+      z-index: 9998;
+    }
+
+    &-push-master,
+    &-push-slave {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+
+    &-mask {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 9997;
+      display: none;
+      overflow: hidden;
+      background-color: transparent;
+    }
+  }
+}

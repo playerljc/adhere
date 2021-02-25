@@ -57,6 +57,12 @@
     "@baifendian/adhere-ui-surnames": "^1.0.0",
     "@baifendian/adhere-ui-sliderscale": "^1.0.0",
     "@baifendian/adhere-ui-revolving": "^1.0.0",
+    "@baifendian/adhere-ui-scrollload": "^1.0.0",
+    "@baifendian/adhere-ui-jdcategorytab": "^1.0.0",
+    "@baifendian/adhere-ui-cascadecompared": "^1.0.0",
+    "@baifendian/adhere-ui-slidelayout": "^1.0.0",
+    "@baifendian/adhere-ui-contextmenu": "^1.0.0",
+    "@baifendian/adhere-ui-fontsizesetting": "^1.0.0",
     "@baifendian/adhere-util": "^1.0.0",
     "@baifendian/adhere-util-adapterscreen": "^1.0.0",
     "@baifendian/adhere-util-communication-ajax": "^1.0.0",
@@ -66,6 +72,7 @@
     "@baifendian/adhere-util-intl": "^1.0.0",
     "@baifendian/adhere-util-notnull": "^1.0.0",
     "@baifendian/adhere-util-preferences": "^1.0.0",
-    "@baifendian/adhere-util-resource": "^1.0.0"
+    "@baifendian/adhere-util-resource": "^1.0.0",
+    "@baifendian/adhere-util-watchmemoized": "^1.0.0"
   }
 }

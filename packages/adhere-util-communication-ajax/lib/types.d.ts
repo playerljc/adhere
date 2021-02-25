@@ -1,7 +1,7 @@
-interface timeout {
+interface loadstart {
     (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
 }
-interface loadstart {
+interface timeout {
     (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
 }
 interface progress {

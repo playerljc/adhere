@@ -22,6 +22,19 @@ const Suspense = lazy(() => import('@/components/ui/suspense'));
 const TableHeadSearch = lazy(() => import('@/components/ui/tableheadsearch'));
 const CSS = lazy(() => import('@/components/ui/css'));
 const OLMap = lazy(() => import('@/components/ui/olmap'));
+const FlexLayout = lazy(() => import('@/components/ui/flexlayout'));
+const SplitLayout = lazy(() => import('@/components/ui/splitlayout'));
+const StickupLayout = lazy(() => import('@/components/ui/stickuplayout'));
+const Surnames = lazy(() => import('@/components/ui/surnames'));
+const SliderScale = lazy(() => import('@/components/ui/sliderscale'));
+const Revolving = lazy(() => import('@/components/ui/revolving'));
+const ScrollLoad = lazy(() => import('@/components/ui/scrollload'));
+const JCategoryTab = lazy(() => import('@/components/ui/jdcategorytab'));
+const CascadeCompared = lazy(() => import('@/components/ui/cascadecompared'));
+const SlideLayout = lazy(() => import('@/components/ui/slidelayout'));
+const ContextMenu = lazy(() => import('@/components/ui/contextmenu'));
+const FontSizeSetting = lazy(() => import('@/components/ui/fontsizesetting'));
+
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
 const Dict = lazy(() => import('@/components/util/dict'));
@@ -29,12 +42,9 @@ const Emitter = lazy(() => import('@/components/util/emitter'));
 const Preferences = lazy(() => import('@/components/util/preferences'));
 const Intl = lazy(() => import('@/components/util/intl'));
 const NotNull = lazy(() => import('@/components/util/notnull'));
-const FlexLayout = lazy(() => import('@/components/ui/flexlayout'));
-const SplitLayout = lazy(() => import('@/components/ui/splitlayout'));
-const StickupLayout = lazy(() => import('@/components/ui/stickuplayout'));
-const Surnames = lazy(() => import('@/components/ui/surnames'));
-const SliderScale = lazy(() => import('@/components/ui/sliderscale'));
-const Revolving = lazy(() => import('@/components/ui/revolving'));
+const Util = lazy(() => import('@/components/util/util'));
+const WatchMemoized = lazy(() => import('@/components/util/watchmemoized'));
+const Ajax = lazy(() => import('@/components/util/ajax'));
 
 export default () => [
   {
@@ -186,6 +196,36 @@ export default () => [
                 name: 'Revolving',
                 component: Revolving,
               },
+              {
+                path: '/adhere/ui/scrollload',
+                name: 'ScrollLoad',
+                component: ScrollLoad,
+              },
+              {
+                path: '/adhere/ui/jcategorytab',
+                name: 'JCategoryTab',
+                component: JCategoryTab,
+              },
+              {
+                path: '/adhere/ui/cascadecompared',
+                name: 'CascadeCompared',
+                component: CascadeCompared,
+              },
+              {
+                path: '/adhere/ui/slidelayout',
+                name: 'SlideLayout',
+                component: SlideLayout,
+              },
+              {
+                path: '/adhere/ui/contextmenu',
+                name: 'ContextMenu',
+                component: ContextMenu,
+              },
+              {
+                path: '/adhere/ui/fontsizesetting',
+                name: 'FontSizeSetting',
+                component: FontSizeSetting,
+              },
             ],
           },
           {
@@ -230,6 +270,21 @@ export default () => [
                 path: '/adhere/util/notnull',
                 name: 'NotNull',
                 component: NotNull,
+              },
+              {
+                path: '/adhere/util/util',
+                name: 'Util',
+                component: Util,
+              },
+              {
+                path: '/adhere/util/watchmemoized',
+                name: 'WatchMemoized',
+                component: WatchMemoized,
+              },
+              {
+                path: '/adhere/util/ajax',
+                name: 'Ajax',
+                component: Ajax,
               },
             ],
           },

@@ -26,7 +26,7 @@ declare class SplitLayout extends React.Component<ISplitLayoutProps, any> {
     private autoEl;
     private containerEl;
     componentDidMount(): void;
-    componentWillReceiveProps(nextProps: Readonly<ISplitLayoutProps>, nextContext: any): void;
+    componentDidUpdate(): void;
     /**
      * checked
      */

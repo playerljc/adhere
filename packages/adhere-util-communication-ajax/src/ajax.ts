@@ -1,4 +1,5 @@
 import { notification } from 'antd';
+// @ts-ignore
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
@@ -44,7 +45,16 @@ function createXHR() {
  * getDefaultConfig - 返回构造函数config的默认值
  * @return IConfig
  */
-function getDefaultConfig(): IConfig {
+function getDefaultConfig(): IConfig & {
+  loading: {
+    // 是否显示遮罩
+    show: boolean;
+    // 遮罩的内容
+    text: string;
+    // 遮罩的元素
+    el: HTMLElement;
+  };
+} {
   return {
     timeout: Ajax.TIMEOUT,
     withCredentials: true,
@@ -76,6 +86,15 @@ function getDefaultConfig(): IConfig {
           deal402.call(this);
           break;
       }
+    },
+    // loading的配置
+    loading: {
+      // 是否显示遮罩
+      show: false,
+      // 遮罩的内容
+      text: '',
+      // 遮罩的元素
+      el: document.body,
     },
   };
 }
@@ -223,7 +242,6 @@ function onreadystatechange({
  * sendPrepare - send前的准备
  */
 function sendPrepare(
-  this: any,
   {
     // 当前方法独有
     method,
@@ -231,6 +249,8 @@ function sendPrepare(
     // get|post|path|put|delete方法独有
     path,
     headers,
+    // 数据
+    data,
     // 业务参数
     mock,
     loading,
@@ -246,7 +266,10 @@ function sendPrepare(
     ...curConfig // timeout && withCredentials && events
   }: ISendPrepareArg,
   { resolve, reject },
-): XMLHttpRequest | null {
+): {
+  xhr: XMLHttpRequest | null;
+  contentType: string | null;
+} {
   let indicator;
 
   const defaultLoadingText = `${intl.v('加载中')}...`;
@@ -258,6 +281,7 @@ function sendPrepare(
     indicator = GlobalIndicator.show(el || document.body, text || defaultLoadingText);
   }
 
+  // 如果是mock数据
   if (mock) {
     setTimeout(() => {
       if (show) {
@@ -272,13 +296,15 @@ function sendPrepare(
       }
     }, 200);
 
-    return null;
+    return { xhr: null, contentType: '' };
   }
 
+  // @ts-ignore
   const { baseURL, config } = this;
 
   const { timeout, withCredentials, interceptor, ...events } = Object.assign(
     // 默认的属性
+    // @ts-ignore
     getDefaultConfig.call(this),
     config,
     curConfig,
@@ -296,26 +322,53 @@ function sendPrepare(
   // withCredentials
   xhr.withCredentials = withCredentials;
 
-  // requestHeaders
+  let contentType = '';
+
+  // requestHeaders - 在open之后
+  // 如果用户设置了header
   if (!Util.isEmpty(headers) && Util.isObject(headers)) {
-    // 如果用户没有定义Content-type 则默认添加application/json
-    if (!('Content-type' in headers)) {
+    // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
+    if (!('Content-type' in headers) && method !== ('get' || 'GET')) {
       headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+      contentType = headers['Content-Type'];
+      console.log('设置了header，但是没有设置Content-Type', Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA);
     }
 
     for (const header in headers) {
       xhr.setRequestHeader(header, headers[header]);
     }
+  } else {
+    // 用户没有设置header
+    // 会根据data初始化heeader
+    if (!Util.isEmpty(data) && Util.isRef(data) && method !== ('get' || 'GET')) {
+      if (
+        !(
+          'form' in data &&
+          'data' in data &&
+          !Util.isEmpty(data.form) &&
+          !Util.isEmpty(data.data) &&
+          data.form instanceof HTMLFormElement
+        )
+      ) {
+        console.log('默认设置Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+        contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+        xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+      } else {
+        console.log('有formData不需要设置Content-Type');
+        contentType = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
+      }
+    }
   }
   // 默认Content-Type
-  else {
-    xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
-  }
+  // else {
+  //   xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+  // }
 
   // events
   initXhrEvents(xhr, events);
 
   // onreadystatechange
+  // @ts-ignore
   xhr.onreadystatechange = onreadystatechange.bind(this, {
     xhr,
     interceptor,
@@ -335,7 +388,10 @@ function sendPrepare(
   });
 
   // return
-  return xhr;
+  return {
+    xhr,
+    contentType,
+  };
 }
 
 /**
@@ -357,8 +413,11 @@ function getSendParams({ data, contentType }) {
   // multipart/form-data
   // FormData
 
+  console.log('getSendParams', data, contentType);
+
   // application/json
-  if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) === 0 && Util.isObject(data)) {
+  if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) === 0 && Util.isRef(data)) {
+    console.log('数据需要被转换成JSON字符串', JSON.stringify(data));
     return JSON.stringify(data);
   }
 
@@ -367,6 +426,7 @@ function getSendParams({ data, contentType }) {
     contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED) === 0 &&
     Util.isObject(data)
   ) {
+    console.log('application/x-www-form-urlencoded转换', JSON.stringify(data));
     return Array.from(Object.keys(data))
       .map((k) => encodeURIComponent(`${k}=${data[k]}`))
       .join('&');
@@ -374,10 +434,14 @@ function getSendParams({ data, contentType }) {
 
   // multipart/form-data
   if (contentType.indexOf(Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA) === 0 && Util.isObject(data)) {
+    console.log('multipart/form-data转换');
+    console.log('form', data.form);
+
     const formData = new FormData(data.form);
 
-    Array.from(Object.keys(data)).forEach(function (k) {
-      formData.set(k, data[k]);
+    Array.from(Object.keys(data.data)).forEach(function (k) {
+      formData.append(k, data.data[k]);
+      console.log(k, data.data[k]);
     });
 
     return formData;
@@ -390,15 +454,17 @@ function getSendParams({ data, contentType }) {
  * @param data
  * @param arg
  */
-function complexRequest(method: string, { data, ...arg }: ISendArg) {
+function complexRequest(method: string, params: ISendArg) {
   return new Promise((resolve, reject) => {
-    const xhr = sendPrepare.call(
+    const { xhr, contentType } = sendPrepare.call(
       // @ts-ignore
       this,
       {
         // @ts-ignore
+        ...getDefaultConfig.call(this),
+        // @ts-ignore
         method,
-        ...arg,
+        ...params,
       },
       {
         resolve,
@@ -407,8 +473,13 @@ function complexRequest(method: string, { data, ...arg }: ISendArg) {
     );
 
     if (xhr) {
-      // @ts-ignore
-      xhr.send(getSendParams.call(this, { data, contentType: arg.headers['Content-type'] }));
+      xhr.send(
+        // @ts-ignore
+        getSendParams.call(this, {
+          data: params.data,
+          contentType,
+        }),
+      );
     }
   });
 }
@@ -522,11 +593,11 @@ class Ajax {
    * @param config
    */
   constructor(baseURL: string, systemManagerBaseURL: string, config: IConfig) {
-    this.baseURL = baseURL;
+    this.baseURL = baseURL || '';
 
-    this.systemManagerBaseURL = systemManagerBaseURL;
+    this.systemManagerBaseURL = systemManagerBaseURL || '';
 
-    this.config = config;
+    this.config = config || {};
   }
 
   /**
@@ -536,9 +607,10 @@ class Ajax {
    */
   get({ data, ...arg }: ISendArg) {
     return new Promise((resolve, reject) => {
-      const xhr = sendPrepare.call(
+      const { xhr } = sendPrepare.call(
         this,
         {
+          ...getDefaultConfig.call(this),
           method: 'get',
           ...arg,
         },
@@ -559,7 +631,7 @@ class Ajax {
    * @param params
    */
   post(params: ISendArg) {
-    return complexRequest('post', params);
+    return complexRequest.call(this, 'post', params);
   }
 
   /**
@@ -567,7 +639,7 @@ class Ajax {
    * @param params
    */
   path(params: ISendArg) {
-    return complexRequest('path', params);
+    return complexRequest.call(this, 'path', params);
   }
 
   /**
@@ -575,7 +647,7 @@ class Ajax {
    * @param params
    */
   put(params: ISendArg) {
-    return complexRequest('put', params);
+    return complexRequest.call(this, 'put', params);
   }
 
   /**
@@ -583,7 +655,7 @@ class Ajax {
    * @param params
    */
   delete(params: ISendArg) {
-    return complexRequest('delete', params);
+    return complexRequest.call(this, 'delete', params);
   }
 }
 

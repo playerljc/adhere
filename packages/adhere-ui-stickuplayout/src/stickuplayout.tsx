@@ -30,7 +30,7 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
     this.initial();
   }
 
-  componentWillReceiveProps(nextProps: Readonly<IStickupLayoutProps>, nextContext: any) {
+  componentDidUpdate() {
     this.initial();
   }
 
@@ -225,7 +225,7 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
    * @param {Object} item
    * @param {number} duration
    */
-  private scrollTo(item, duration = 300) {
+  private scrollTo(item: IIndexItem, duration = 300) {
     // @ts-ignore
     const targetTop = item.start + this.headerEls[item.index].offsetHeight;
     if (duration === 0) {
@@ -250,6 +250,10 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
     }
   }
 
+  refresh() {
+    this.initial();
+  }
+
   /**
    * scrollToByIndex
    * @param {number} index
@@ -269,6 +273,32 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
       }
     }
     if (!item) return false;
+
+    this.scrollTo(item, duration);
+  }
+
+  /**
+   * scrollToByHeaderEl
+   * @param {HtmlElement} headerEl
+   * @param {number} duration
+   * @return {boolean}
+   */
+  scrollToByHeaderEl(headerEl, duration = 300) {
+    let i = 0,
+      item,
+      index = -1;
+    // @ts-ignore
+    for (; i < this.index.length; i++) {
+      // @ts-ignore
+      if (this.index[i].dom === headerEl) {
+        // @ts-ignore
+        item = this.index[i];
+        index = i;
+        break;
+      }
+    }
+    if (!item) return false;
+
     this.scrollTo(item, duration);
   }
 

@@ -83,7 +83,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
     }
   }
 
-  componentWillReceiveProps(nextProps: Readonly<ISplitLayoutProps>, nextContext: any) {
+  componentDidUpdate() {
     if (this.checked()) {
       this.isEnter = false;
       this.isOut = false;

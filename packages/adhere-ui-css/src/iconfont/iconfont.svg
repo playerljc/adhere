@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="yueduye_zitijianxiao" unicode="&#58893;" d="M581.5 129.7h-82L440.8 287H201.4l-55.3-157.4h-82l219 574.9h79.4l219-574.8zM417.8 352L331 591c-2.7 7.7-5.7 21-8.9 40.1h-1.9c-2.7-17.3-5.8-30.7-9.3-40.1l-86.1-239h193zM642 418.1h315.6v-63.7H642z"  horiz-adv-x="1024" />
+
+    
+    <glyph glyph-name="yueduye_zitizengda" unicode="&#58894;" d="M957.6 354.4H831.7v-126.3h-63.2V354.4H642v63.7h126.5V545h63.2v-126.9h125.9v-63.7zM581.5 129.7h-82L440.8 287H201.4l-55.3-157.4h-82l219 574.9h79.4l219-574.8zM417.8 352L331 591c-2.7 7.7-5.7 21-8.9 40.1h-1.9c-2.7-17.3-5.8-30.7-9.3-40.1l-86.1-239h193z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

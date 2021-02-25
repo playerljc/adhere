@@ -136,7 +136,20 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  <Revolving direction="left">
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <Revolving direction="left">
@@ -158,7 +171,20 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  <Revolving direction="right">
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <Revolving direction="right">
@@ -180,7 +206,20 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  <Revolving direction="top" style={{ height: 50 }}>
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <Revolving direction="top" style={{ height: 50 }}>
@@ -202,7 +241,20 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  <Revolving direction="bottom" style={{ height: 50 }}>
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <Revolving direction="bottom" style={{ height: 50 }}>
@@ -224,7 +276,20 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  <Revolving direction="bottom" speed={1000 * 3} style={{ height: 50 }}>
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <Revolving direction="bottom" speed={1000 * 3} style={{ height: 50 }}>
@@ -246,7 +311,20 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }}>
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }}>
@@ -268,7 +346,46 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
+  import React, { useRef } from 'react';
+  import { Button } from 'antd';
+  import { Revolving, Space } from '@baifendian/adhere';
   
+  const ref = useRef();
+  
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <Space.Group direction="horizontal">
+      <Button
+        type="primary"
+        onClick={() => {
+          ref.current.start();
+        }}
+      >
+        start
+      </Button>
+      <Button
+        onClick={() => {
+          ref.current.stop();
+        }}
+      >
+        stop
+      </Button>
+    </Space.Group>
+  </div>
+
+  <Space />
+
+  <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }} ref={ref}>
+    <Revolving.Item>Slide 1</Revolving.Item>
+    <Revolving.Item>Slide 2</Revolving.Item>
+    <Revolving.Item>Slide 3</Revolving.Item>
+    <Revolving.Item>Slide 4</Revolving.Item>
+    <Revolving.Item>Slide 5</Revolving.Item>
+    <Revolving.Item>Slide 6</Revolving.Item>
+    <Revolving.Item>Slide 7</Revolving.Item>
+    <Revolving.Item>Slide 8</Revolving.Item>
+    <Revolving.Item>Slide 9</Revolving.Item>
+    <Revolving.Item>Slide 10</Revolving.Item>
+  </Revolving>
         `}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>

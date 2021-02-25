@@ -14,7 +14,7 @@ declare class Revolving extends React.Component<IRevolvingProps> {
     private wrapperEl;
     private swiper;
     componentDidMount(): void;
-    componentWillReceiveProps(nextProps: Readonly<IRevolvingProps>, nextContext: any): void;
+    componentDidUpdate(prevProps: Readonly<IRevolvingProps>, prevState: Readonly<{}>, snapshot?: any): void;
     private initial;
     private getDirection;
     /**

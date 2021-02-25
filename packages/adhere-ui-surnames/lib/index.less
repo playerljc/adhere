@@ -28,9 +28,9 @@
 
   > .adhere-ui-surnames-index {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
 
     > .adhere-ui-surnames-index-inner {
       display: flex;
@@ -214,8 +214,8 @@
 
 .adhere-ui-surnames {
   > .adhere-ui-surnames-highlighted {
-    background-color: rgb(0, 122, 255);
     color: #fff;
+    background-color: rgb(0, 122, 255);
   }
 
   > .adhere-ui-surnames-index {
@@ -225,8 +225,8 @@
         color: rgb(0, 122, 255);
 
         &:active {
-          border-radius: 50%;
           background-color: #0bc2b4;
+          border-radius: 50%;
         }
       }
     }
@@ -235,8 +235,8 @@
   > .adhere-ui-surnames-content {
     > .adhere-ui-surnames-group {
       > .adhere-ui-surnames-group-title {
-        background: rgb(247, 247, 247);
         color: #9c9c9c;
+        background: rgb(247, 247, 247);
       }
     }
   }
@@ -244,7 +244,7 @@
 
 .adhere-ui-surnames.adhere-ui-surnames-config-position-right {
   > .adhere-ui-surnames-highlighted {
-    &:after {
+    &::after {
       border-color: transparent transparent transparent #007aff;
     }
   }
@@ -252,7 +252,7 @@
 
 .adhere-ui-surnames.adhere-ui-surnames-config-position-left {
   > .adhere-ui-surnames-highlighted {
-    &:after {
+    &::after {
       border-color: transparent #007aff transparent transparent;
     }
   }
@@ -260,7 +260,7 @@
 
 .adhere-ui-surnames.adhere-ui-surnames-config-position-top {
   > .adhere-ui-surnames-highlighted {
-    &:after {
+    &::after {
       border-color: transparent transparent #007aff transparent;
     }
   }
@@ -268,7 +268,7 @@
 
 .adhere-ui-surnames.adhere-ui-surnames-config-position-bottom {
   > .adhere-ui-surnames-highlighted {
-    &:after {
+    &::after {
       border-color: #007aff transparent transparent transparent;
     }
   }

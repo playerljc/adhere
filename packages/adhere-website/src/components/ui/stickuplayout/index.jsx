@@ -92,6 +92,29 @@ export default () => {
             returnType: '',
             returnDesc: '',
           },
+          {
+            name: 'scrollToByHeaderEl',
+            desc: '滚动到指定el',
+            modifier: 'public',
+            params: [
+              {
+                name: 'headerEl',
+                desc: '指定的el',
+                type: 'HtmlElement',
+                defaultVal: '',
+                required: 'true',
+              },
+              {
+                name: 'duration',
+                desc: '滚动的时间',
+                type: 'number',
+                defaultVal: '300',
+                required: '',
+              },
+            ],
+            returnType: '',
+            returnDesc: '',
+          },
         ]}
       />
 

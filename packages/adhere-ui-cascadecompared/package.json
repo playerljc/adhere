@@ -1,0 +1,41 @@
+{
+  "name": "@baifendian/adhere-ui-cascadecompared",
+  "version": "1.0.0",
+  "description": "级联比较",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "ctbuild buildpackagets",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/playerljc/adhere"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.2"
+  },
+  "author": "playerljc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitee.com/playerljc/adhere/issues"
+  },
+  "homepage": "https://gitee.com/playerljc/adhere",
+  "devDependencies": {
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/build": "^4.0.2",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "classnames": "^2.2.6",
+    "iscroll": "^5.2.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@baifendian/adhere-ui-stickuplayout": "^1.0.0"
+  }
+}

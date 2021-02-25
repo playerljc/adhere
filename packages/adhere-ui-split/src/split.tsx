@@ -21,22 +21,22 @@ class SplitGroup extends React.Component<ISplitProps, any> {
 
     return (
       <>
-        {
-          // @ts-ignore
-          children.map((component, index) => {
-            if (index !== 0) {
-              // @ts-ignore
-              return (
-                <>
-                  <Split {...others} key={index} />
-                  {component}
-                </>
-              );
-            }
+        {Array.isArray(children)
+          ? // @ts-ignore
+            children.map((component, index) => {
+              if (index !== 0) {
+                // @ts-ignore
+                return (
+                  <>
+                    <Split {...others} key={index} />
+                    {component}
+                  </>
+                );
+              }
 
-            return component;
-          })
-        }
+              return component;
+            })
+          : children}
       </>
     );
   }

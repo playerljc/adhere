@@ -26,15 +26,19 @@ class Revolving extends React.Component<IRevolvingProps> {
   private swiper: Swiper;
 
   componentDidMount() {
-    this.initial(this.props);
+    this.initial();
   }
 
-  componentWillReceiveProps(nextProps: Readonly<IRevolvingProps>, nextContext: any) {
-    this.initial(nextProps);
+  componentDidUpdate(
+    prevProps: Readonly<IRevolvingProps>,
+    prevState: Readonly<{}>,
+    snapshot?: any,
+  ) {
+    this.initial();
   }
 
-  private initial(props: IRevolvingProps) {
-    const { speed, delay, loop, direction, stopOnLastSlide, listeners } = props;
+  private initial() {
+    const { speed, delay, loop, direction, stopOnLastSlide, listeners } = this.props;
 
     if (this.swiper) {
       this.swiper.destory();

@@ -34,6 +34,12 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-surnames', 'Surnames'],
   ['@baifendian/adhere-ui-sliderscale', 'SliderScale'],
   ['@baifendian/adhere-ui-revolving', 'Revolving'],
+  ['@baifendian/adhere-ui-scrollload', 'ScrollLoad'],
+  ['@baifendian/adhere-ui-jdcategorytab', 'JdCategoryTab'],
+  ['@baifendian/adhere-ui-cascadecompared', 'CascadeCompared'],
+  ['@baifendian/adhere-ui-slidelayout', 'SlideLayout'],
+  ['@baifendian/adhere-ui-contextmenu', 'ContextMenu'],
+  ['@baifendian/adhere-ui-fontsizesetting', 'FontSizeSetting'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -44,6 +50,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-preferences', 'Preferences'],
   ['@baifendian/adhere-util-resource', 'Resource'],
   ['@baifendian/adhere-util-adapterscreen', 'AdapterScreen'],
+  ['@baifendian/adhere-util-watchmemoized', 'WatchMemoized'],
 ]);
 
 /**
@@ -111,8 +118,11 @@ for (const p in dependencies) {
       const result = fs.readdirSync(cssPackagePath);
 
       result.forEach((fileName) => {
-        const content = fs.readFileSync(path.join(cssPackagePath, fileName));
-        fs.writeFileSync(path.join(contextPath, fileName), content);
+        const stat = fs.statSync(path.join(cssPackagePath, fileName));
+        if (stat.isFile()) {
+          const content = fs.readFileSync(path.join(cssPackagePath, fileName));
+          fs.writeFileSync(path.join(contextPath, fileName), content);
+        }
       });
     }
   }

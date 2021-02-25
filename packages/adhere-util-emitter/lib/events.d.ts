@@ -41,7 +41,7 @@ declare class Events {
      * @param {string} type
      * @param {Object} params
      */
-    trigger(type: string, ...params: object): any;
+    trigger(type: string, ...params: Array): any;
     /**
      * document自定义事件的触发
      * @param el

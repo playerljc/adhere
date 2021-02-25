@@ -29,11 +29,18 @@
 - adhere-util-communication-ajax
 - adhere-ui-flexlayout
 - adhere-util-adapterscreen
-- baifendian/adhere-ui-splitlayout
-- baifendian/adhere-ui-stickuplayout
-- baifendian/adhere-ui-surnames
+- adhere-ui-splitlayout
+- adhere-ui-stickuplayout
+- adhere-ui-surnames
 - adhere-ui-sliderscale
 - adhere-ui-revolving
+- adhere-ui-scrollload
+- adhere-ui-jdcategorytab
+- adhere-ui-cascadecompared
+- adhere-ui-slidelayout
+- adhere-ui-contextmenu
+- adhere-ui-fontsizesetting
+- adhere-util-watchmemoized
 
 ### 没有落实有雏形的组件
 - 自使用的图片和背景

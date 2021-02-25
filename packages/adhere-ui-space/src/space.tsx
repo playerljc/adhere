@@ -19,22 +19,21 @@ class SpaceGroup extends React.Component<ISpaceProps, any> {
 
     return (
       <>
-        {
-          // @ts-ignore
-          children.map((component, index) => {
-            if (index !== 0) {
-              // @ts-ignore
-              return (
-                <>
-                  <Space {...others} key={index} />
-                  {component}
-                </>
-              );
-            }
+        {Array.isArray(children)
+          ? children.map((component, index) => {
+              if (index !== 0) {
+                // @ts-ignore
+                return (
+                  <>
+                    <Space {...others} key={index} />
+                    {component}
+                  </>
+                );
+              }
 
-            return component;
-          })
-        }
+              return component;
+            })
+          : children}
       </>
     );
   }

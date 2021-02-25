@@ -19,7 +19,7 @@ declare class StickupLayout extends React.Component<IStickupLayoutProps> {
     private preScrollObj;
     private maskEl;
     componentDidMount(): void;
-    componentWillReceiveProps(nextProps: Readonly<IStickupLayoutProps>, nextContext: any): void;
+    componentDidUpdate(): void;
     componentWillUnmount(): void;
     private onScroll;
     private initial;
@@ -44,6 +44,7 @@ declare class StickupLayout extends React.Component<IStickupLayoutProps> {
      * @access private
      */
     private initMask;
+    refresh(): void;
     /**
      * scrollToByIndex
      * @param {number} index
@@ -51,6 +52,13 @@ declare class StickupLayout extends React.Component<IStickupLayoutProps> {
      * @return {boolean}
      */
     scrollToByIndex(index: any, duration?: number): false | undefined;
+    /**
+     * scrollToByHeaderEl
+     * @param {HtmlElement} headerEl
+     * @param {number} duration
+     * @return {boolean}
+     */
+    scrollToByHeaderEl(headerEl: any, duration?: number): false | undefined;
     render(): JSX.Element;
 }
 export default StickupLayout;
