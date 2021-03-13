@@ -40,12 +40,40 @@ interface interceptor {
  * @classdesc 构造函数配置对象(缺省的配置)
  */
 export interface IConfig {
+    /**
+     * 在预设时间内没有接收到响应时触发。
+     * 也可以使用 ontimeout 属性。
+     */
     onTimeout?: timeout;
+    /**
+     * 接收到响应数据时触发。
+     * 也可以使用 onloadstart 属性。
+     */
     onLoadsStart?: loadstart;
+    /**
+     * 当请求接收到更多数据时，周期性地触发。
+     * 也可以使用 onprogress 属性。
+     */
     onProgress?: progress;
+    /**
+     * 当 request 被停止时触发，例如当程序调用 XMLHttpRequest.abort() 时。
+     * 也可以使用 onabort 属性。
+     */
     onAbort?: abort;
+    /**
+     * 当 request 遭遇错误时触发。
+     * 也可以使用 onerror 属性
+     */
     onError?: error;
+    /**
+     * XMLHttpRequest请求成功完成时触发。
+     * 也可以使用 onload 属性.
+     */
     onLoad?: load;
+    /**
+     * 当请求结束时触发, 无论请求成功 ( load) 还是失败 (abort 或 error)。
+     * 也可以使用 onloadend 属性。
+     */
     onLoadend?: loadend;
     timeout?: number;
     withCredentials?: boolean;
