@@ -9,11 +9,13 @@ module.exports = {
   getConfig({ webpackConfig }) {
     // cssModules处理中添加
     // if (webpackConfig.mode === 'development') {
+    // eslint-disable-next-line no-param-reassign
     webpackConfig.resolve.alias.ol = path.join(
       __dirname,
       'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
     );
 
+    // eslint-disable-next-line no-param-reassign
     webpackConfig.resolve.alias.swiper = path.join(
       __dirname,
       'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
