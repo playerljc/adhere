@@ -1,24 +1,14 @@
-0 silly argv { _: [ 'version' ],
-0 silly argv   lernaVersion: '3.22.1',
-0 silly argv   '$0': 'node_modules\\lerna\\cli.js' }
-1 notice cli v3.22.1
-2 verbose rootPath C:\self\work\bfd\projects\adhere
-3 info current version 1.0.3
-4 silly isAnythingCommitted
-5 verbose isAnythingCommitted 1
-6 silly currentBranch
-7 verbose currentBranch develop
-8 silly remoteBranchExists
-9 silly isBehindUpstream
-10 error Error: Command failed: git remote update
-10 error fatal: unable to access 'http://git.baifendian.com/SYYF/adhere.git/': Recv failure: Connection was reset
-10 error error: Could not fetch origin
-10 error
-10 error Fetching origin
-10 error
-10 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
-10 error     at Function.module.exports.sync (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:338:15)
-10 error     at Object.execSync (C:\self\work\bfd\projects\adhere\node_modules\@lerna\child-process\index.js:26:16)
-10 error     at updateRemote (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\lib\is-behind-upstream.js:26:16)
-10 error     at isBehindUpstream (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\lib\is-behind-upstream.js:11:3)
-10 error     at VersionCommand.initialize (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\index.js:154:9)
+297 error Error: Command failed: git commit -m v1.0.2
+297 error husky > pre-commit (node v10.16.3)
+297 error
+297 error > @baifendian/adhere-website@1.0.2 lint-staged C:\self\work\bfd\projects\adhere\packages\adhere-website
+297 error > lint-staged
+297 error
+297 error i No staged files found.
+297 error On branch develop
+297 error Your branch is up to date with 'origin/develop'.
+297 error
+297 error nothing to commit, working tree clean
+297 error
+297 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
+297 error     at Promise.all.then.arr (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:278:16)
