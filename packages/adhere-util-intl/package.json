@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-intl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 react-intl-universal 的国际化组件",
   "main": "lib/index.js",
   "files": [

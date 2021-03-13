@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-cascadecompared",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "级联比较",
   "main": "lib/index.js",
   "files": [
@@ -39,6 +39,6 @@
     "iscroll": "^5.2.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@baifendian/adhere-ui-stickuplayout": "^1.0.0"
+    "@baifendian/adhere-ui-stickuplayout": "^1.0.1"
   }
 }

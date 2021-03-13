@@ -24,7 +24,7 @@
     "url": "https://gitee.com/playerljc/adhere/issues"
   },
   "homepage": "https://gitee.com/playerljc/adhere",
-  "publishConfig": {
+  "1.0.1": {
     "access": "public"
   },
   "devDependencies": {
