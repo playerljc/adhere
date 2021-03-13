@@ -63,8 +63,6 @@ class Menu extends React.PureComponent<IMenuProps, any> {
       y = clientHeight - menuHeight;
     }
 
-    console.log('x', x, 'y', y);
-
     // @ts-ignore
     this.el?.style.left = `${x}px`;
 

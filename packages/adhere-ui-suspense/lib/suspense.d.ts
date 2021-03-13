@@ -15,8 +15,19 @@ declare abstract class Suspense extends React.Component<ISuspenseProps, ISuspens
     isFirstLoading: boolean;
     static defaultProps: any;
     static propTypes: any;
+    /**
+     * fetchData - 加载数据
+     */
     abstract fetchData(): void;
+    /**
+     * renderInner - 渲染实际内容
+     * @return React.ReactElement
+     */
     abstract renderInner(): React.ReactElement | null;
+    /**
+     * showLoading - 是否显示遮罩
+     * @return boolean
+     */
     abstract showLoading(): boolean;
     componentWillReceiveProps(nextProps: any): void;
     componentDidMount(): void;
@@ -24,22 +35,22 @@ declare abstract class Suspense extends React.Component<ISuspenseProps, ISuspens
      * renderNormalFirstLoading
      * @return React.ReactElement
      */
-    renderNormalFirstLoading(): JSX.Element;
+    private static renderNormalFirstLoading;
     /**
      * renderFirstLoading - 渲染第一次Loading的UI
      * @return {React.Element}
      */
-    renderFirstLoading(): any;
+    private renderFirstLoading;
     /**
      * renderNormal - 渲染正常的UI
      * @return {React.Element}
      */
-    renderNormal(): JSX.Element;
+    private renderNormal;
     /**
      * renderDispatch
      * @return {React.Element|*}
      */
-    renderDispatch(): any;
+    private renderDispatch;
     render(): JSX.Element;
 }
 export default Suspense;

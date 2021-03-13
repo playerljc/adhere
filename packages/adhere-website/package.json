@@ -75,6 +75,7 @@
     "component-playground": "^3.2.1",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.6.5",
+    "faker": "^5.4.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.1",
     "rc-queue-anim": "^1.8.5",

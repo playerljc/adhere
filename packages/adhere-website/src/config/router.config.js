@@ -34,6 +34,7 @@ const CascadeCompared = lazy(() => import('@/components/ui/cascadecompared'));
 const SlideLayout = lazy(() => import('@/components/ui/slidelayout'));
 const ContextMenu = lazy(() => import('@/components/ui/contextmenu'));
 const FontSizeSetting = lazy(() => import('@/components/ui/fontsizesetting'));
+const SearchTable = lazy(() => import('@/components/ui/searchtable'));
 
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
@@ -225,6 +226,11 @@ export default () => [
                 path: '/adhere/ui/fontsizesetting',
                 name: 'FontSizeSetting',
                 component: FontSizeSetting,
+              },
+              {
+                path: '/adhere/ui/searchtable',
+                name: 'SearchTable',
+                component: SearchTable,
               },
             ],
           },

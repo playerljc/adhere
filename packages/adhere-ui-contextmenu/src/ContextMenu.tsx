@@ -24,7 +24,9 @@ class ContextMenuComponent extends React.PureComponent<IContextMenuComponentProp
     this.menuIns?.mount();
   }
 
-  private onClick = () => {
+  private onClick = (e) => {
+    e.stopPropagation();
+
     const { el } = this.props;
 
     const flag = ReactDOM.unmountComponentAtNode(el);

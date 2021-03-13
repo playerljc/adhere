@@ -556,7 +556,7 @@ export default () => {
           // subpage 添加子页面
           // delete 删除
           // rename 重命名
-          alert(\`${id},${attribute}\`);
+          alert("id:"+id+"attribute:"+attribute);
         },
       });
     }}

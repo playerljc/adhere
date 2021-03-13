@@ -9,11 +9,11 @@ declare function ConditionalRender({ conditional, noMatch, children }: IConditio
 declare namespace ConditionalRender {
     var defaultProps: {
         conditional: boolean;
-        noMatch: null;
+        noMatch: () => null;
     };
     var propTypes: {
         conditional: PropTypes.Requireable<boolean>;
-        noMatch: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+        noMatch: PropTypes.Requireable<(...args: any[]) => any>;
     };
 }
 export default ConditionalRender;

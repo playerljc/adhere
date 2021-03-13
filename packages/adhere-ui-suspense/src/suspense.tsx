@@ -28,10 +28,21 @@ abstract class Suspense
   static defaultProps: any;
   static propTypes: any;
 
+  /**
+   * fetchData - 加载数据
+   */
   abstract fetchData(): void;
 
+  /**
+   * renderInner - 渲染实际内容
+   * @return React.ReactElement
+   */
   abstract renderInner(): React.ReactElement | null;
 
+  /**
+   * showLoading - 是否显示遮罩
+   * @return boolean
+   */
   abstract showLoading(): boolean;
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +65,7 @@ abstract class Suspense
    * renderNormalFirstLoading
    * @return React.ReactElement
    */
-  renderNormalFirstLoading() {
+  private static renderNormalFirstLoading() {
     const result = [];
 
     for (let i = 0; i < 7; i++) {
@@ -69,7 +80,7 @@ abstract class Suspense
    * renderFirstLoading - 渲染第一次Loading的UI
    * @return {React.Element}
    */
-  renderFirstLoading() {
+  private renderFirstLoading() {
     // @ts-ignore
     const { firstLoading } = this.props;
 
@@ -77,14 +88,14 @@ abstract class Suspense
       return firstLoading;
     }
 
-    return this.renderNormalFirstLoading();
+    return Suspense.renderNormalFirstLoading();
   }
 
   /**
    * renderNormal - 渲染正常的UI
    * @return {React.Element}
    */
-  renderNormal() {
+  private renderNormal() {
     return (
       <Spin size="large" spinning={this.showLoading()}>
         {this.renderInner()}
@@ -96,7 +107,7 @@ abstract class Suspense
    * renderDispatch
    * @return {React.Element|*}
    */
-  renderDispatch() {
+  private renderDispatch() {
     const loading = this.showLoading();
 
     if (this.isFirst && !this.isFirstLoading && loading) {
