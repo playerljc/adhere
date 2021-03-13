@@ -1,14 +1,8 @@
-297 error Error: Command failed: git commit -m v1.0.2
-297 error husky > pre-commit (node v10.16.3)
-297 error
-297 error > @baifendian/adhere-website@1.0.2 lint-staged C:\self\work\bfd\projects\adhere\packages\adhere-website
-297 error > lint-staged
-297 error
-297 error i No staged files found.
-297 error On branch develop
-297 error Your branch is up to date with 'origin/develop'.
-297 error
-297 error nothing to commit, working tree clean
-297 error
-297 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
-297 error     at Promise.all.then.arr (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:278:16)
+298 error Error: Command failed: git commit -m v1.0.2
+298 error On branch develop
+298 error Your branch is up to date with 'origin/develop'.
+298 error
+298 error nothing to commit, working tree clean
+298 error
+298 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
+298 error     at Promise.all.then.arr (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:278:16)
