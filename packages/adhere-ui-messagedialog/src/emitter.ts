@@ -1,6 +1,4 @@
-const events = {
-
-};
+const events = {};
 
 /**
  * Emitter

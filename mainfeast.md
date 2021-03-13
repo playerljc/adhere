@@ -1,4 +1,5 @@
 ### 完成开发组件
+
 - adhere-util-dict
 - adhere-ui-globalindicator
 - adhere-util-preferences
@@ -43,10 +44,11 @@
 - adhere-util-watchmemoized
 
 ### 没有落实有雏形的组件
+
 - 自使用的图片和背景
 - 表单相不填充的表单
-- media相关
+- media 相关
   - 视频捕获后截图
   - 音频的捕获
   - 后台传输视频流
-- 两个可滚动区域同步滚动  
+- 两个可滚动区域同步滚动

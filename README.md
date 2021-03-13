@@ -12,22 +12,25 @@
 - 支持 ie10 以上
 
 # 分支要求
-- develop是不支持IE的分支
-  - 使用React17.x
-  - antd使用4.x
-  - tsconfig的target可以给出es6
-  - 不支持ie的版本号应该
+
+- develop 是不支持 IE 的分支
+  - 使用 React17.x
+  - antd 使用 4.x
+  - tsconfig 的 target 可以给出 es6
+  - 不支持 ie 的版本号应该
   - vx.x.x
-- feature是支持IE的分支
-  - 使用React16.x
-  - antd使用3.x  
-  - tsconfig的target只能给出es5
+- feature 是支持 IE 的分支
+  - 使用 React16.x
+  - antd 使用 3.x
+  - tsconfig 的 target 只能给出 es5
   - vx.x.x-polyfill
-  
+
 # 线上地址(临时)
-[http://www.hongyf.cn:8081/](http://www.hongyf.cn:8081/)  
-  
+
+[http://www.hongyf.cn:8081/](http://www.hongyf.cn:8081/)
+
 # 组件列表
+
 - [@baifendian/adhere-ui-searchtable](#@baifendian/adhere-ui-searchtable)
 - [@baifendian/adhere-ui-imageviwer](#@baifendian/adhere-ui-imageviwer)
 - [@baifendian/adhere-ui-form](#@baifendian/adhere-ui-form)
@@ -372,7 +375,7 @@ echarts 常用图表的封装
 
 ## @baifendian/adhere-ui-spin
 
-无侵入的loading
+无侵入的 loading
 
 ## @baifendian/adhere-ui-conditionalrender
 
@@ -384,7 +387,7 @@ echarts 常用图表的封装
 
 ## @baifendian/adhere-ui-flexlayout
 
-实现flex布局的组件
+实现 flex 布局的组件
 
 ## @baifendian/adhere-ui-splitlayout
 
@@ -427,52 +430,60 @@ echarts 常用图表的封装
 姓名面板
 
 ## baifendian/adhere-util-watchmemoized
+
 对值的监控
- - 支持all - 每一个依赖项都改变了才执行回调
- - 支持race - 只要有一个依赖项改变了就执行回调
-缓存
- - 支持函数调用的memoized 在函数对象中使用符号来存储一些信息
- - 支持表达式求职的memoized 依赖项列表和函数
- 
+
+- 支持 all - 每一个依赖项都改变了才执行回调
+- 支持 race - 只要有一个依赖项改变了就执行回调缓存
+- 支持函数调用的 memoized 在函数对象中使用符号来存储一些信息
+- 支持表达式求职的 memoized 依赖项列表和函数
+
 ## @baifendian/adhere-ui-contextmenu
+
 上下文菜单，可以移动后显示子菜单那种
 
 ## @baifendian/adhere-util-drag
+
 功能
- - 拖拽移动一个元素
- - 正常拖拽
- - clone的拖拽
- - 拖拽中地图的显示
- - 辅助线
- - 触发的事件
- 
+
+- 拖拽移动一个元素
+- 正常拖拽
+- clone 的拖拽
+- 拖拽中地图的显示
+- 辅助线
+- 触发的事件
+
 ## @baifendian/adhere-util-droppable
+
 功能:
- - 从哪拖到哪,怎么放置(谁能拖，谁能放，怎么放)
 
- - 画布都有哪些扩展，移动到target的时候是有限制的，不能拖出无限滚动，
- 放的时候是自由放置
- 拖动到target里的元素可以自由移动
+- 从哪拖到哪,怎么放置(谁能拖，谁能放，怎么放)
 
- 测试:
+- 画布都有哪些扩展，移动到 target 的时候是有限制的，不能拖出无限滚动，放的时候是自由放置拖动到 target 里的元素可以自由移动
 
- log:
- - 在el范围内拖动，而不是全局拖动
- - 加入如果source和target为包含关系，则不能放入
+测试:
 
- - 无限拖动，画布跟着滚动 (在父容器里拖动的时候，拖动到目标容器(ct-drag-target)的时候)
- - 只想移动，根本不想放入(在el范围内自由的移动)
- - Axure是鼠标不能出target的范围，不管是从左拽进来，还是在target自由移动，都是这样的
- 现在可以实现，但是不是自动的需要鼠标移动才能更新滚动条的位置
- 
+log:
+
+- 在 el 范围内拖动，而不是全局拖动
+- 加入如果 source 和 target 为包含关系，则不能放入
+
+- 无限拖动，画布跟着滚动 (在父容器里拖动的时候，拖动到目标容器(ct-drag-target)的时候)
+- 只想移动，根本不想放入(在 el 范围内自由的移动)
+- Axure 是鼠标不能出 target 的范围，不管是从左拽进来，还是在 target 自由移动，都是这样的现在可以实现，但是不是自动的需要鼠标移动才能更新滚动条的位置
+
 ## @baifendian/adhere-util-selectable
+
 功能:
- - 在一个区域内进行选取，区域内带有ct-selectable-item样式的元素会参与计算
- - 圈选中获取选中和非选中的元素，选取结束获取选取的元素
- 
+
+- 在一个区域内进行选取，区域内带有 ct-selectable-item 样式的元素会参与计算
+- 圈选中获取选中和非选中的元素，选取结束获取选取的元素
+
 ## @baifendian/adhere-util-resizeable
+
 功能:
- - 上、下、左、右、左上、左下、右上、右下8个方向的resizeable
- - 一组中多个元素resizeable
- - 多组都可以resizeable
- - 无线扩展
+
+- 上、下、左、右、左上、左下、右上、右下 8 个方向的 resizeable
+- 一组中多个元素 resizeable
+- 多组都可以 resizeable
+- 无线扩展

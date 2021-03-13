@@ -4,28 +4,32 @@
 
 # 兼容性
 
-- 支持 react16.x和17.x
+- 支持 react16.x 和 17.x
 - 支持 antd4.x
 - 支持国际化
 - 支持修改主题
 - 支持动态引入(babel-plugin-import)
 
 # 安装
+
 ```javascript
 npm i @baifendian/adhere --save
 ```
+
 # 动态引入
-需要在webpack构建中加入如下配置
+
+需要在 webpack 构建中加入如下配置
+
 ```javascript
 [
-    'import',
-    {
-      libraryName: '@baifendian/adhere',
-      transformToDefaultImport: true,
-      style: true,
-    },
-    'adhere',
-  ],
+  'import',
+  {
+    libraryName: '@baifendian/adhere',
+    transformToDefaultImport: true,
+    style: true,
+  },
+  'adhere',
+],
   [
     'import',
     {
@@ -33,17 +37,21 @@ npm i @baifendian/adhere --save
       style: true,
     },
     'ant',
-  ]
+  ];
 ```
 
 如果没有进行动态引入则需要单独引入样式文件
+
 ```javascript
 @baifendian/adhere/lib/index.less
 ```
+
 和
+
 ```javascript
-antd/dist/antd.less
+antd / dist / antd.less;
 ```
-  
+
 # 线上地址(临时)
-[http://www.hongyf.cn:8081/](http://www.hongyf.cn:8081/)  
+
+[http://www.hongyf.cn:8081/](http://www.hongyf.cn:8081/)
