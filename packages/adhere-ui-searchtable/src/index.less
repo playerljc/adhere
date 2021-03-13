@@ -1,0 +1,66 @@
+@import '~antd/es/table/style/index.less';
+@import '~antd/es/button/style/index.less';
+@import '~@baifendian/adhere-ui-suspense/lib/index.less';
+@import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
+@import '~@baifendian/adhere-ui-spin/lib/index.less';
+@import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
+
+.adhere-ui-searchtable {
+  position: relative;
+  padding: 24px;
+  background-color: #f0f2f5;
+
+  > .adhere-ui-searchtable-SearchWrapper {
+    margin-bottom: 16px;
+    padding: 24px 24px 0;
+    background: #fff;
+
+   .adhere-ui-searchtable-SearchFooterWrapper {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 20px;
+
+      > .adhere-ui-searchtable-SearchFooterItem {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+
+        &.ant-btn {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  > .adhere-ui-searchtable-TableWrapper {
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+  }
+}
+
+.adhere-ui-searchform {
+  min-width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 20px;
+
+  > tbody {
+    > .adhere-ui-searchform-row {
+      > .adhere-ui-searchform-label {
+        max-width: 60px;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: right;
+        word-break: keep-all;
+      }
+
+      //> .adhere-ui-searchform-value {
+      //
+      //}
+    }
+  }
+}
+
+

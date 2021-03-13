@@ -24,7 +24,9 @@ class DelConform extends React.Component<IDelConfirmProps, any> {
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick() {
+  onClick(e) {
+    e.stopPropagation();
+
     const { success, zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value } = this.props;
 
     DelConform.open(success, zIndex || Resource.Dict.value.ResourceNormalMaxZIndex.value);

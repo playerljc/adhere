@@ -31,6 +31,10 @@ const local = getLocal([
   '中',
   '大',
   '特大',
+  '序号',
+  '查询',
+  '重置',
+  '当前 {page}-{pageSize}/共 {total}条',
 ]);
 
 export default { ...local };

@@ -28,6 +28,7 @@ import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
+import SearchTable from '@baifendian/adhere-ui-searchtable';
 import Util from '@baifendian/adhere-util';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
 import Decorators from '@baifendian/adhere-util-decorators';
@@ -82,4 +83,5 @@ export {
   ContextMenu,
   FontSizeSetting,
   WatchMemoized,
+  SearchTable,
 };

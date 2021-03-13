@@ -24,6 +24,9 @@
     "url": "https://gitee.com/playerljc/adhere/issues"
   },
   "homepage": "https://gitee.com/playerljc/adhere",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.2",

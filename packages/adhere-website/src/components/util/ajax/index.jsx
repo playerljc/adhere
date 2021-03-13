@@ -173,7 +173,6 @@ export default () => {
             type: 'boolean',
             defaultVal: '',
           },
-
           {
             params: 'onTimeout',
             desc: '超时函数',
@@ -238,7 +237,33 @@ export default () => {
       />
 
       <h2>get</h2>
-      <Playground mode="code" scope={{ React }} codeText={``}>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
+  
+  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
+  
+  k007Ajax
+    .get({
+      path:
+        '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
+      loading: {
+        show: true,
+      },
+    })
+    .then((res) => {
+      if (res) {
+        if (res.data.code === 200) {
+          alert(JSON.stringify(res.data.data));
+        }
+
+        res.hideIndicator();
+      }
+    });
+      `}
+      >
         <Button
           type="primary"
           onClick={() => {
@@ -253,7 +278,7 @@ export default () => {
               .then((res) => {
                 if (res) {
                   if (res.data.code === 200) {
-                    console.log(res.data.data);
+                    alert(JSON.stringify(res.data.data));
                   }
 
                   res.hideIndicator();
@@ -266,7 +291,40 @@ export default () => {
       </Playground>
 
       <h2>post</h2>
-      <Playground mode="code" scope={{ React }} codeText={``}>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
+  
+  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
+  
+  k007Ajax
+    .post({
+      path: '/api/controlledObject/facade/fq/queryList',
+      data: [
+        {
+          resource: '12345678',
+          type: '101',
+          uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
+        },
+        { resource: '', type: '103', uuid: '562096255732281344' },
+      ],
+      loading: {
+        show: true,
+      },
+    })
+    .then((res) => {
+      if (res) {
+        if (res.data.code === 200) {
+          alert(JSON.stringify(res.data.data));
+        }
+
+        res.hideIndicator();
+      }
+    });
+      `}
+      >
         <Button
           type="primary"
           onClick={() => {
@@ -288,7 +346,7 @@ export default () => {
               .then((res) => {
                 if (res) {
                   if (res.data.code === 200) {
-                    console.log(res.data.data);
+                    alert(JSON.stringify(res.data.data));
                   }
 
                   res.hideIndicator();
@@ -301,7 +359,75 @@ export default () => {
       </Playground>
 
       <h2>upload</h2>
-      <Playground mode="code" scope={{ React }} codeText={``}>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
+  
+  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
+  
+  <form encType="multipart/form-data" method="post" ref={uploadFormFef}>
+    <div>
+      <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
+
+      <Space />
+
+      <input
+        type="file"
+        ref={uploadRef}
+        onChange={() => {
+          const file = uploadRef.current.files[0];
+
+          const { size } = file;
+
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            setImg(e.target.result);
+          };
+
+          reader.readAsDataURL(file);
+
+          k007Ajax
+            .post({
+              path: '/api/personControl/monitorPerson/image/upload',
+              data: {
+                form: uploadFormFef.current,
+                data: {
+                  file,
+                },
+              },
+              loading: {
+                show: true,
+              },
+              onProgress: (e) => {
+                setPercent((e.loaded / size) * 100);
+              },
+              onLoadend: () => {
+                setPercent(100);
+              },
+            })
+            .then((res) => {
+              setPercent(100);
+
+              if (res) {
+                if (res.data.code === 200) {
+                  alert(JSON.stringify(res.data.data));
+                }
+
+                res.hideIndicator();
+              }
+            });
+        }}
+      />
+
+      <Space />
+
+      <Progress percent={percent} />
+    </div>
+  </form>
+      `}
+      >
         <form encType="multipart/form-data" method="post" ref={uploadFormFef}>
           <div>
             <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
@@ -347,7 +473,7 @@ export default () => {
 
                     if (res) {
                       if (res.data.code === 200) {
-                        console.log(res.data.data);
+                        alert(JSON.stringify(res.data.data));
                       }
 
                       res.hideIndicator();
@@ -364,7 +490,52 @@ export default () => {
       </Playground>
 
       <h2>PromiseAll</h2>
-      <Playground mode="code" scope={{ React }} codeText={``}>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
+  
+  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
+  
+  <Button
+    type="primary"
+    onClick={() => {
+      const globalIndicator = GlobalIndicator.show();
+
+      Promise.all([
+        k007Ajax.get({
+          path:
+            '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
+        }),
+        k007Ajax.get({
+          path: '/api/SystemManager/system/role/login/list?state=&kw=&pageNum=1&pageSize=10',
+        }),
+        k007Ajax.post({
+          path: '/api/controlledObject/facade/fq/queryList',
+          data: [
+            {
+              resource: '12345678',
+              type: '101',
+              uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
+            },
+            { resource: '', type: '103', uuid: '562096255732281344' },
+          ],
+        }),
+      ])
+        .then((res) => {
+          GlobalIndicator.hide(globalIndicator);
+          alert(JSON.stringify(res));
+        })
+        .catch(() => {
+          GlobalIndicator.hide(globalIndicator);
+        });
+    }}
+  >
+    call
+  </Button>
+      `}
+      >
         <Button
           type="primary"
           onClick={() => {
@@ -392,7 +563,7 @@ export default () => {
             ])
               .then((res) => {
                 GlobalIndicator.hide(globalIndicator);
-                console.log(res);
+                alert(JSON.stringify(res));
               })
               .catch(() => {
                 GlobalIndicator.hide(globalIndicator);

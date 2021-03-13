@@ -56,11 +56,13 @@ export default () => {
     ]}
   >
     <ConditionalRender conditional={baseUseShow}>
-      <p>
+      {
+        () => (<p>
         In the process of internal desktop applications development, many different design
         specs and implementations would be involved, which might cause designers and
         developers difficulties and duplication and reduce the efficiency of development.
-      </p>
+      </p>)
+      }
     </ConditionalRender>
   </Card>
       `}
@@ -79,11 +81,13 @@ export default () => {
           ]}
         >
           <ConditionalRender conditional={baseUseShow}>
-            <p>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </p>
+            {() => (
+              <p>
+                In the process of internal desktop applications development, many different design
+                specs and implementations would be involved, which might cause designers and
+                developers difficulties and duplication and reduce the efficiency of development.
+              </p>
+            )}
           </ConditionalRender>
         </Card>
       </Playground>
@@ -112,12 +116,16 @@ export default () => {
       </Button>,
     ]}
   >
-    <ConditionalRender conditional={noMatchUseShow} noMatch={<Empty />}>
-      <p>
-        In the process of internal desktop applications development, many different design
-        specs and implementations would be involved, which might cause designers and
-        developers difficulties and duplication and reduce the efficiency of development.
-      </p>
+    <ConditionalRender conditional={noMatchUseShow} noMatch={() => <Empty />}>
+      {
+        () => (
+          <p>
+            In the process of internal desktop applications development, many different design
+            specs and implementations would be involved, which might cause designers and
+            developers difficulties and duplication and reduce the efficiency of development.
+          </p>
+        )
+      }
     </ConditionalRender>
   </Card>
       `}
@@ -135,12 +143,14 @@ export default () => {
             </Button>,
           ]}
         >
-          <ConditionalRender conditional={noMatchUseShow} noMatch={<Empty />}>
-            <p>
-              In the process of internal desktop applications development, many different design
-              specs and implementations would be involved, which might cause designers and
-              developers difficulties and duplication and reduce the efficiency of development.
-            </p>
+          <ConditionalRender conditional={noMatchUseShow} noMatch={() => <Empty />}>
+            {() => (
+              <p>
+                In the process of internal desktop applications development, many different design
+                specs and implementations would be involved, which might cause designers and
+                developers difficulties and duplication and reduce the efficiency of development.
+              </p>
+            )}
           </ConditionalRender>
         </Card>
       </Playground>

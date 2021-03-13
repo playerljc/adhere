@@ -9,7 +9,7 @@ declare class DelConform extends React.Component<IDelConfirmProps, any> {
     static defaultProps: any;
     static propTypes: any;
     constructor(props: any);
-    onClick(): void;
+    onClick(e: any): void;
     render(): JSX.Element;
     /**
      * open

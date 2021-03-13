@@ -14,18 +14,18 @@ declare class Events {
      * @param {type} type
      * @param {Function} handler
      */
-    remove(type: string, handler: Function): void;
+    remove(type: string | symbol, handler: Function): void;
     /**
      * hasType
      * @param {string} type
      * @return {boolean}
      */
-    hasType(type: string): boolean;
+    hasType(type: string | symbol): boolean;
     /**
      * clear 清除一个type下的所有handler
      * @param {string} type
      */
-    clear(type: string): void;
+    clear(type: string | symbol): void;
     /**
      * 清除所有
      */
@@ -34,14 +34,40 @@ declare class Events {
      * on
      * @param {string} type
      * @param {Function} handler
+     * @param {number} makStackSize
      */
-    on(type: string, handler: Function): void;
+    on(type: string | symbol, handler: Function, makStackSize?: number): void;
+    /**
+     * once
+     * @param type
+     * @param handler
+     */
+    once(type: string | symbol, handler: Function): void;
+    /**
+     * all
+     * @param types
+     * @param handler
+     */
+    all(types: Array<string>, handler: Function): () => void;
+    /**
+     * race
+     * @param types
+     * @param handler
+     */
+    race(types: Array<string>, handler: Function): () => void;
+    /**
+     * count
+     * @param type
+     * @param count
+     * @param handler
+     */
+    count(type: any, count: any, handler: any): () => void;
     /**
      * trigger
      * @param {string} type
      * @param {Object} params
      */
-    trigger(type: string, ...params: Array): any;
+    trigger(type: string | symbol, ...params: Array): any;
     /**
      * document自定义事件的触发
      * @param el

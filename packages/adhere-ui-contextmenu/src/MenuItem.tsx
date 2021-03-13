@@ -56,9 +56,10 @@ class MenuItem extends React.PureComponent<IMenuItemProps, any> {
     return (
       <ConditionalRender
         conditional={typeof icon === 'string'}
-        noMatch={<span className={classNames(`${selectorPrefix}-icon`)}>{icon}</span>}
+        // @ts-ignore
+        noMatch={() => <span className={classNames(`${selectorPrefix}-icon`)}>{icon}</span>}
       >
-        <span className={classNames(`${selectorPrefix}-icon`, icon)} />
+        {() => <span className={classNames(`${selectorPrefix}-icon`, icon)} />}
       </ConditionalRender>
     );
   }
@@ -79,8 +80,8 @@ class MenuItem extends React.PureComponent<IMenuItemProps, any> {
     } = this.props;
 
     return (
-      <ConditionalRender conditional={children.length !== 0} noMatch={null}>
-        <span className={`${selectorPrefix}-more fa fa-caret-right`} />
+      <ConditionalRender conditional={children.length !== 0}>
+        {() => <span className={`${selectorPrefix}-more fa fa-caret-right`} />}
       </ConditionalRender>
     );
   }
@@ -92,13 +93,15 @@ class MenuItem extends React.PureComponent<IMenuItemProps, any> {
     } = this.props;
 
     return (
-      <ConditionalRender conditional={children.length !== 0} noMatch={null}>
-        <SubMenu
-          // @ts-ignore
-          data={children}
-          className={subMenuClassName}
-          style={subMenuStyle}
-        />
+      <ConditionalRender conditional={children.length !== 0}>
+        {() => (
+          <SubMenu
+            // @ts-ignore
+            data={children}
+            className={subMenuClassName}
+            style={subMenuStyle}
+          />
+        )}
       </ConditionalRender>
     );
   }
@@ -118,23 +121,26 @@ class MenuItem extends React.PureComponent<IMenuItemProps, any> {
     return (
       <ConditionalRender
         conditional={!separation}
-        noMatch={<li className={`${selectorPrefix}-separation`} />}
+        // @ts-ignore
+        noMatch={() => <li className={`${selectorPrefix}-separation`} />}
       >
-        <li
-          className={classNames(
-            selectorPrefix,
-            disabled ? 'disabled' : '',
-            // @ts-ignore
-            (className || '').split(' '),
-          )}
-          style={{ ...(style || {}) }}
-          onClick={this.onClick}
-        >
-          {this.renderIcon()}
-          {this.renderName()}
-          {this.renderMore()}
-          {this.renderSubMenu()}
-        </li>
+        {() => (
+          <li
+            className={classNames(
+              selectorPrefix,
+              disabled ? 'disabled' : '',
+              // @ts-ignore
+              (className || '').split(' '),
+            )}
+            style={{ ...(style || {}) }}
+            onClick={this.onClick}
+          >
+            {this.renderIcon()}
+            {this.renderName()}
+            {this.renderMore()}
+            {this.renderSubMenu()}
+          </li>
+        )}
       </ConditionalRender>
     );
   }

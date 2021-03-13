@@ -25,6 +25,9 @@
     "url": "https://gitee.com/playerljc/adhere/issues"
   },
   "homepage": "https://gitee.com/playerljc/adhere",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.8",
@@ -63,6 +66,7 @@
     "@baifendian/adhere-ui-slidelayout": "^1.0.0",
     "@baifendian/adhere-ui-contextmenu": "^1.0.0",
     "@baifendian/adhere-ui-fontsizesetting": "^1.0.0",
+    "@baifendian/adhere-ui-searchtable": "^1.0.0",
     "@baifendian/adhere-util": "^1.0.0",
     "@baifendian/adhere-util-adapterscreen": "^1.0.0",
     "@baifendian/adhere-util-communication-ajax": "^1.0.0",

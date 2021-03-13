@@ -39,9 +39,115 @@ export default () => {
                 defaultVal: '() => {}',
                 required: 'true',
               },
+              {
+                name: 'makStackSize',
+                desc: '最大注册数',
+                type: 'number',
+                defaultVal: '200',
+                required: 'false',
+              },
             ],
             returnType: 'void',
             returnDesc: '',
+          },
+          {
+            name: 'once',
+            desc: '注册只执行一次的事件',
+            modifier: 'public',
+            params: [
+              {
+                name: 'type',
+                desc: '事件类型',
+                type: 'String',
+                defaultVal: '',
+                required: 'true',
+              },
+              {
+                name: 'handler',
+                desc: '事件句柄',
+                type: 'Function',
+                defaultVal: '() => {}',
+                required: 'true',
+              },
+            ],
+            returnType: 'void',
+            returnDesc: '',
+          },
+          {
+            name: 'all',
+            desc: '依赖类型都执行后的钩子',
+            modifier: 'public',
+            params: [
+              {
+                name: 'types',
+                desc: '事件类型',
+                type: 'Array<String>',
+                defaultVal: '',
+                required: 'true',
+              },
+              {
+                name: 'handler',
+                desc: '事件句柄',
+                type: 'Function',
+                defaultVal: '() => {}',
+                required: 'true',
+              },
+            ],
+            returnType: 'Function',
+            returnDesc: '注销的方法',
+          },
+          {
+            name: 'race',
+            desc: '依赖类型任意一个执行后的钩子',
+            modifier: 'public',
+            params: [
+              {
+                name: 'types',
+                desc: '事件类型',
+                type: 'Array<String>',
+                defaultVal: '',
+                required: 'true',
+              },
+              {
+                name: 'handler',
+                desc: '事件句柄',
+                type: 'Function',
+                defaultVal: '() => {}',
+                required: 'true',
+              },
+            ],
+            returnType: 'Function',
+            returnDesc: '注销的方法',
+          },
+          {
+            name: 'count',
+            desc: '一个类型执行了count次后的钩子',
+            modifier: 'public',
+            params: [
+              {
+                name: 'type',
+                desc: '事件类型',
+                type: 'String',
+                defaultVal: '',
+                required: 'true',
+              },
+              {
+                name: 'count',
+                desc: '执行次数',
+                type: 'number',
+                defaultVal: '',
+                required: 'true',
+              },
+              {
+                name: 'handler',
+                desc: '事件句柄',
+                type: 'Function',
+                defaultVal: '() => {}',
+                required: 'true',
+              },
+            ],
+            returnType: 'Function',
+            returnDesc: '注销的方法',
           },
           {
             name: 'remove',
@@ -338,6 +444,260 @@ export default () => {
           }}
         >
           发出通知
+        </Button>
+      </Playground>
+
+      <h2>只执行一次</h2>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Emitter } from '@baifendian/adhere';
+
+  <Button
+    style={{ marginRight: 20 }}
+    onClick={() => {
+      Emitter.once('type3', () => {
+        alert('type3');
+      });
+
+      Emitter.once('type3', () => {
+        alert('type3');
+      });
+    }}
+  >
+    注册通知
+  </Button>
+  <Button
+    onClick={() => {
+      Emitter.trigger('type3');
+    }}
+  >
+    发出通知
+  </Button>
+      `}
+      >
+        <Button
+          style={{ marginRight: 20 }}
+          onClick={() => {
+            Emitter.once('type3', () => {
+              alert('type3');
+            });
+
+            Emitter.once('type3', () => {
+              alert('type3');
+            });
+          }}
+        >
+          注册通知
+        </Button>
+        <Button
+          onClick={() => {
+            Emitter.trigger('type3');
+          }}
+        >
+          发出通知
+        </Button>
+      </Playground>
+
+      <h2>all</h2>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Emitter } from '@baifendian/adhere';
+
+  <Button
+      style={{ marginRight: 20 }}
+      onClick={() => {
+        Emitter.once('type4', () => {
+          alert('type4');
+        });
+
+        Emitter.once('type5', () => {
+          alert('type5');
+        });
+
+        Emitter.once('type6', () => {
+          alert('type6');
+        });
+      }}
+    >
+      注册通知
+    </Button>
+    <Button
+      onClick={() => {
+        const fun = Emitter.all(['type4', 'type5', 'type6'], () => {
+          alert('type4,type5,type6 - changed');
+        });
+
+        Emitter.trigger('type4');
+        Emitter.trigger('type5');
+        Emitter.trigger('type6');
+      }}
+    >
+      发出通知并监控
+    </Button>
+      `}
+      >
+        <Button
+          style={{ marginRight: 20 }}
+          onClick={() => {
+            Emitter.once('type4', () => {
+              alert('type4');
+            });
+
+            Emitter.once('type5', () => {
+              alert('type5');
+            });
+
+            Emitter.once('type6', () => {
+              alert('type6');
+            });
+          }}
+        >
+          注册通知
+        </Button>
+        <Button
+          onClick={() => {
+            const fun = Emitter.all(['type4', 'type5', 'type6'], () => {
+              alert('type4,type5,type6 - changed');
+            });
+
+            Emitter.trigger('type4');
+            Emitter.trigger('type5');
+            Emitter.trigger('type6');
+          }}
+        >
+          发出通知并监控
+        </Button>
+      </Playground>
+
+      <h2>race</h2>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Emitter } from '@baifendian/adhere';
+  
+  <Button
+    style={{ marginRight: 20 }}
+    onClick={() => {
+      Emitter.once('type7', () => {
+        alert('type7');
+      });
+  
+      Emitter.once('type8', () => {
+        alert('type8');
+      });
+  
+      Emitter.once('type9', () => {
+        alert('type9');
+      });
+    }}
+  >
+    注册通知
+  </Button>
+  <Button
+    onClick={() => {
+      const fun = Emitter.race(['type7', 'type8', 'type9'], () => {
+        alert('type7,type8,type9 - changed');
+      });
+  
+      Emitter.trigger('type7');
+      Emitter.trigger('type8');
+      Emitter.trigger('type9');
+    }}
+  >
+    发出通知并监控
+  </Button>
+      `}
+      >
+        <Button
+          style={{ marginRight: 20 }}
+          onClick={() => {
+            Emitter.once('type7', () => {
+              alert('type7');
+            });
+
+            Emitter.once('type8', () => {
+              alert('type8');
+            });
+
+            Emitter.once('type9', () => {
+              alert('type9');
+            });
+          }}
+        >
+          注册通知
+        </Button>
+        <Button
+          onClick={() => {
+            const fun = Emitter.race(['type7', 'type8', 'type9'], () => {
+              alert('type7,type8,type9 - changed');
+            });
+
+            Emitter.trigger('type7');
+            Emitter.trigger('type8');
+            Emitter.trigger('type9');
+          }}
+        >
+          发出通知并监控
+        </Button>
+      </Playground>
+
+      <h2>count</h2>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+  import { Emitter } from '@baifendian/adhere';
+  
+  <Button
+    style={{ marginRight: 20 }}
+    onClick={() => {
+      Emitter.on('type10', () => {
+        alert('type10');
+      });
+    }}
+  >
+    注册通知
+  </Button>
+  <Button
+    onClick={() => {
+      const fun = Emitter.count('type10', 2, () => {
+        alert('type10 - called 2');
+      });
+
+      Emitter.trigger('type10');
+      Emitter.trigger('type10');
+    }}
+  >
+    发出通知并监控
+  </Button>
+      `}
+      >
+        <Button
+          style={{ marginRight: 20 }}
+          onClick={() => {
+            Emitter.on('type10', () => {
+              alert('type10');
+            });
+          }}
+        >
+          注册通知
+        </Button>
+        <Button
+          onClick={() => {
+            const fun = Emitter.count('type10', 2, () => {
+              alert('type10 - called 2');
+            });
+
+            Emitter.trigger('type10');
+            Emitter.trigger('type10');
+          }}
+        >
+          发出通知并监控
         </Button>
       </Playground>
     </div>

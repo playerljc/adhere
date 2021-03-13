@@ -10,20 +10,21 @@ import { IConditionalRenderProps } from './types';
  */
 function ConditionalRender({ conditional, noMatch, children }: IConditionalRenderProps) {
   if (conditional) {
-    return children;
+    return children();
   }
 
-  return noMatch ? noMatch : null;
+  // @ts-ignore
+  return noMatch ? noMatch() : null;
 }
 
 ConditionalRender.defaultProps = {
   conditional: true,
-  noMatch: null,
+  noMatch: () => null,
 };
 
 ConditionalRender.propTypes = {
   conditional: PropTypes.bool,
-  noMatch: PropTypes.node,
+  noMatch: PropTypes.func,
 };
 
 export default ConditionalRender;
