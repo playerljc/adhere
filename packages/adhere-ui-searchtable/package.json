@@ -24,6 +24,9 @@
     "url": "https://gitee.com/playerljc/adhere/issues"
   },
   "homepage": "https://gitee.com/playerljc/adhere",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.2",
@@ -43,5 +46,5 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
-  "gitHead": "61eb8c55fecd66e1d36908d570f7be209101abca"
+  "gitHead": "88a3b05803477de70b8f60d897188318dd6b7596"
 }
