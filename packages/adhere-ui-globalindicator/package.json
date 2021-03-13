@@ -33,7 +33,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^1.0.1",
-    "@baifendian/adhere-ui-css": "^1.0.1"
+    "@baifendian/adhere-ui-css": "^1.0.1",
+    "@baifendian/adhere-util-resource": "^1.0.1"
   }
 }
