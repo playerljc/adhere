@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-watchmemoized",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "对值的监控和缓存",
   "main": "lib/index.js",
   "files": [
@@ -33,8 +33,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.1",
-    "@baifendian/adhere-util-emitter": "^1.0.1",
+    "@baifendian/adhere-util": "^1.0.2",
+    "@baifendian/adhere-util-emitter": "^1.0.2",
     "lodash": "^4.17.21"
   },
   "gitHead": "61eb8c55fecd66e1d36908d570f7be209101abca"

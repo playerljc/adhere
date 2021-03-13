@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-hooks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "常用的hooks功能",
   "main": "lib/index.js",
   "files": [
