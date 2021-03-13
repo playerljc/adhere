@@ -78,5 +78,6 @@
     "@baifendian/adhere-util-preferences": "^1.0.1",
     "@baifendian/adhere-util-resource": "^1.0.1",
     "@baifendian/adhere-util-watchmemoized": "^1.0.1"
-  }
+  },
+  "gitHead": "61eb8c55fecd66e1d36908d570f7be209101abca"
 }

@@ -1,8 +1,12 @@
-0 silly argv { _: [ 'bootstrap' ],
-0 silly argv   lernaVersion: '3.22.1',
-0 silly argv   '$0': 'node_modules\\lerna\\cli.js' }
-1 notice cli v3.22.1
-2 verbose rootPath C:\self\my\frameworker\ctmobile\adhere
-3 error JSONError: Unexpected token } in JSON at position 871 while parsing near '...rsal": "^2.4.3",  }}' in packages\adhere-util-intl\package.json
-3 error     at module.exports (C:\self\my\frameworker\ctmobile\adhere\node_modules\@lerna\project\node_modules\parse-json\index.js:26:19)
-3 error     at parse (C:\self\my\frameworker\ctmobile\adhere\node_modules\@lerna\project\node_modules\load-json-file\index.js:15:9)
+15 error Error: Command failed: git remote update
+15 error fatal: unable to access 'http://git.baifendian.com/SYYF/adhere.git/': Recv failure: Connection was reset
+15 error error: Could not fetch origin
+15 error
+15 error Fetching origin
+15 error
+15 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
+15 error     at Function.module.exports.sync (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:338:15)
+15 error     at Object.execSync (C:\self\work\bfd\projects\adhere\node_modules\@lerna\child-process\index.js:26:16)
+15 error     at updateRemote (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\lib\is-behind-upstream.js:26:16)
+15 error     at isBehindUpstream (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\lib\is-behind-upstream.js:11:3)
+15 error     at VersionCommand.initialize (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\index.js:154:9)

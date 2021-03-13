@@ -34,5 +34,6 @@
   },
   "dependencies": {
     "@baifendian/adhere-util-preferences": "^1.0.1"
-  }
+  },
+  "gitHead": "61eb8c55fecd66e1d36908d570f7be209101abca"
 }

@@ -31,5 +31,6 @@
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.2",
     "typescript": "^3.8.2"
-  }
+  },
+  "gitHead": "61eb8c55fecd66e1d36908d570f7be209101abca"
 }
