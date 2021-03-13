@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-emitter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "观察者模式",
   "main": "lib/index.js",
   "files": [

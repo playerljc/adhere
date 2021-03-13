@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-errorprompt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "错误的提示(就是为了全局统一)",
   "main": "lib/index.js",
   "files": [
@@ -33,7 +33,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^1.0.2",
+    "@baifendian/adhere-util-intl": "^1.0.3",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

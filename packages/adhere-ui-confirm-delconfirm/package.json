@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-confirm-delconfirm",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "删除确认提示",
   "main": "lib/index.js",
   "files": [
@@ -33,9 +33,9 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-messagedialog": "^1.0.2",
-    "@baifendian/adhere-util-intl": "^1.0.2",
-    "@baifendian/adhere-util-resource": "^1.0.2",
+    "@baifendian/adhere-ui-messagedialog": "^1.0.3",
+    "@baifendian/adhere-util-intl": "^1.0.3",
+    "@baifendian/adhere-util-resource": "^1.0.3",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",
