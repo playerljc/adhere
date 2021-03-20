@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.10",
+    "@ctsj/build": "^4.0.11",
     "typescript": "^3.8.2"
   },
   "gitHead": "88a3b05803477de70b8f60d897188318dd6b7596"

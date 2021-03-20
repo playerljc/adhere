@@ -84,7 +84,7 @@ function task(packageName) {
       const content = fs.readFileSync(path.join(packagePath, 'src', 'index.ts'));
       fs.writeFileSync(
         path.join(packagePath, 'src', 'index.ts'),
-        `import './index.less' ${content}`,
+        `import './index.less;' ${content}`,
       );
     }
 
@@ -136,6 +136,9 @@ function loopTask() {
   });
 }
 
+/**
+ * readdir
+ */
 fs.readdir(contextPath, function (err, dirNames) {
   packagesNames = dirNames.filter((dirName) => !excludes.includes(dirName));
 
