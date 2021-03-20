@@ -4,11 +4,13 @@
   "description": "无侵入性的竖线和横线分割",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "umd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildpackage": "ctbuild buildpackagets",
+    "buildumd": "ctbuild buildumd --packagename AdhereSplit --define alias=@,evnVars=true,cssModules=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
@@ -29,7 +31,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.2",
+    "@ctsj/build": "^4.0.10",
     "typescript": "^3.8.2"
   },
   "dependencies": {

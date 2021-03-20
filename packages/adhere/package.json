@@ -4,12 +4,14 @@
   "description": "adhere",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "umd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuildpackage": "node script/build.js",
     "buildpackage": "ctbuild buildpackagets",
+    "buildumd": "ctbuild buildumd --packagename adhere --define alias=@,evnVars=true,cssModules=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
@@ -30,7 +32,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.8",
+    "@ctsj/build": "^4.0.10",
     "babel-plugin-import": "^1.13.3",
     "typescript": "^3.8.2"
   },
