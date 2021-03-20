@@ -1,42 +1,48 @@
 {
-	"name": "@baifendian/adhere-ui-olmap",
-	"version": "1.0.3",
-	"description": "对openlayers的封装",
-	"main": "lib/index.js",
-	"files": [
-		"lib",
-		"umd"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://gitee.com/playerljc/adhere"
-	},
-	"resolutions": {
-		"graceful-fs": "4.2.2"
-	},
-	"author": "playerljc",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://gitee.com/playerljc/adhere/issues"
-	},
-	"homepage": "https://gitee.com/playerljc/adhere",
-	"publishConfig": {
-		"access": "public"
-	},
-	"devDependencies": {
-		"@babel/runtime": "^7.7.4",
-		"@ctsj/build": "^4.0.11",
-		"typescript": "^3.8.2"
-	},
-	"dependencies": {
-		"@types/react": "^17.0.0",
-		"@types/react-dom": "^17.0.0",
-		"@types/uuid": "^8.3.0",
-		"algebra.js": "^0.2.6",
-		"ol": "^6.5.0",
-		"react": "^17.0.1",
-		"react-dom": "^17.0.1",
-		"uuid": "^8.3.2"
-	},
-	"gitHead": "88a3b05803477de70b8f60d897188318dd6b7596"
+  "name": "@baifendian/adhere-ui-olmap",
+  "version": "1.0.3",
+  "description": "对openlayers的封装",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage": "ctbuild buildpackagets",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "buildumd": "ctbuild buildumd --packagename AdhereOLMap --define alias=@,evnVars=true,cssModules=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/playerljc/adhere"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.2"
+  },
+  "author": "playerljc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitee.com/playerljc/adhere/issues"
+  },
+  "homepage": "https://gitee.com/playerljc/adhere",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/build": "^4.0.11",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "@baifendian/adhere-util-resource": "^1.0.3",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/uuid": "^8.3.0",
+    "algebra.js": "^0.2.6",
+    "ol": "^6.5.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "uuid": "^8.3.2"
+  },
+  "gitHead": "88a3b05803477de70b8f60d897188318dd6b7596"
 }

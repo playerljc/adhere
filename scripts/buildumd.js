@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 
 const contextPath = path.join(__dirname, '../packages');
 
-const excludes = ['adhere-ui-css', 'adhere-website'];
+const excludes = ['adhere-ui-css', 'adhere', 'adhere-website'];
 
 let index = 0;
 
@@ -84,7 +84,7 @@ function task(packageName) {
       const content = fs.readFileSync(path.join(packagePath, 'src', 'index.ts'));
       fs.writeFileSync(
         path.join(packagePath, 'src', 'index.ts'),
-        `import './index.less;' ${content}`,
+        `import './index.less'; ${content}`,
       );
     }
 

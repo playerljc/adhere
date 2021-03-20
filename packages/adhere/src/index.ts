@@ -1,3 +1,4 @@
+import './index.less';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
 import ImportantConfirm from '@baifendian/adhere-ui-confirm-importantconfirm';
