@@ -57,11 +57,11 @@ function task(packageName) {
   return new Promise((resolve) => {
     // 将模板html拷贝到目录中
     // if(包含index.less) {
-    //   备份src/index.ts为index_back.ts
-    //   index.ts里加入import './index.less';
+    //   备份src/index.js为index_back.js
+    //   index.js里加入import './index.less';
     // }
     // 运行npm run buildumd
-    // 完成之后将index_back.ts的内容拷贝到index.ts中且删除index_back.ts
+    // 完成之后将index_back.js的内容拷贝到index.js中且删除index_back.js
     // 删除index.html模板文件
 
     const packagePath = path.join(contextPath, packageName);
@@ -74,31 +74,31 @@ function task(packageName) {
 
     // 包含index.less
     if (fs.existsSync(path.join(packagePath, 'src', 'index.less'))) {
-      // 备份src/index.ts为index_back.ts
+      // 备份src/index.js为index_back.js
       fs.writeFileSync(
-        path.join(packagePath, 'src', 'index_back.ts'),
-        fs.readFileSync(path.join(packagePath, 'src', 'index.ts')),
+        path.join(packagePath, 'src', 'index_back.js'),
+        fs.readFileSync(path.join(packagePath, 'src', 'index.js')),
       );
 
-      // index.ts里加入import './index.less';
-      const content = fs.readFileSync(path.join(packagePath, 'src', 'index.ts'));
+      // index.js里加入import './index.less';
+      const content = fs.readFileSync(path.join(packagePath, 'src', 'index.js'));
       fs.writeFileSync(
-        path.join(packagePath, 'src', 'index.ts'),
+        path.join(packagePath, 'src', 'index.js'),
         `import './index.less'; ${content}`,
       );
     }
 
     // 运行npm run buildumd
     buildUmd(packageName).then(() => {
-      if (fs.existsSync(path.join(packagePath, 'src', 'index_back.ts'))) {
-        // 完成之后将index_back.ts的内容拷贝到index.ts中且删除index_back.ts
+      if (fs.existsSync(path.join(packagePath, 'src', 'index_back.js'))) {
+        // 完成之后将index_back.js的内容拷贝到index.js中且删除index_back.js
         fs.writeFileSync(
-          path.join(packagePath, 'src', 'index.ts'),
-          fs.readFileSync(path.join(packagePath, 'src', 'index_back.ts')),
+          path.join(packagePath, 'src', 'index.js'),
+          fs.readFileSync(path.join(packagePath, 'src', 'index_back.js')),
         );
 
-        // 删除index_back.ts
-        rimraf.sync(path.join(packagePath, 'src', 'index_back.ts'));
+        // 删除index_back.js
+        rimraf.sync(path.join(packagePath, 'src', 'index_back.js'));
       }
 
       // 删除index.html模板文件

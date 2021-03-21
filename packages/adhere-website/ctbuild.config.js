@@ -10,10 +10,8 @@ module.exports = {
     // cssModules处理中添加
     // if (webpackConfig.mode === 'development') {
     // eslint-disable-next-line no-param-reassign
-    webpackConfig.externals = {
-      adhere: 'adhere',
-    };
 
+    // eslint-disable-next-line no-param-reassign
     webpackConfig.resolve.alias.ol = path.join(
       __dirname,
       'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
@@ -77,6 +75,7 @@ module.exports = {
     }
 
     if (webpackConfig.mode !== 'development') {
+      // eslint-disable-next-line no-param-reassign
       webpackConfig.optimization.splitChunks = {
         chunks: 'all',
         minSize: 30000,

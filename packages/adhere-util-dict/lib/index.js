@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(exports,"__esModule",{value:!0});var dict_1=__importDefault(require("./dict"));exports.default=dict_1.default;
+import Dict from"./dict";export default Dict;
 //# sourceMappingURL=index.js.map

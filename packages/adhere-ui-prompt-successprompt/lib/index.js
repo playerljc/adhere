@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var successprompt_1=__importDefault(require("./successprompt"));exports.default=successprompt_1.default;
+import SuccessPrompt from"./successprompt";export default SuccessPrompt;
 //# sourceMappingURL=index.js.map

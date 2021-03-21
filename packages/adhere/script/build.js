@@ -70,6 +70,8 @@ function pascalCaseToKebabCase(name) {
 
 // eslint-disable-next-line guard-for-in
 for (const p in dependencies) {
+  if (!p.startsWith('@baifendian')) continue;
+
   const packagesPath = path.join(__dirname, '../../');
 
   const name = p.split('/')[1];
@@ -137,6 +139,9 @@ for (const p in dependencies) {
   }
 }
 
-fs.writeFileSync(path.join(__dirname, '../src', 'index.less'), indexLessContent.join(''));
+const content = fs.readFileSync(path.join(__dirname, '../src', 'index.less'));
 
-// console.log(dependenciesAll);
+fs.writeFileSync(
+  path.join(__dirname, '../src', 'index.less'),
+  `${content}\r\n${indexLessContent.join('')}`,
+);

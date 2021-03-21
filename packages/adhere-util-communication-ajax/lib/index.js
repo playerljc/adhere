@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var ajax_1=__importDefault(require("./ajax"));exports.default=ajax_1.default;
+import Ajax from"./ajax";export default Ajax;
 //# sourceMappingURL=index.js.map
