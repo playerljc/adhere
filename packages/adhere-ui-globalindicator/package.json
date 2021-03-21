@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-globalindicator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "全局无侵入的遮罩",
   "main": "lib/index.js",
   "files": [
@@ -34,8 +34,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^1.0.3",
-    "@baifendian/adhere-util-resource": "^1.0.3"
+    "@baifendian/adhere-ui-css": "^1.0.4",
+    "@baifendian/adhere-util-resource": "^1.0.4"
   },
   "gitHead": "88a3b05803477de70b8f60d897188318dd6b7596"
 }
