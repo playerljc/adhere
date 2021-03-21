@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuildpackage": "node script/build.js",
     "buildpackage": "ctbuild buildpackagets",
-    "buildumd": "ctbuild buildumd --packagename adhere --define alias=@,evnVars=true,cssModules=true",
+    "buildumd": "node script/buildumd.js",
+    "buildumd:core": "ctbuild buildumd --packagename adhere --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
@@ -34,9 +35,27 @@
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.11",
     "babel-plugin-import": "^1.13.3",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "classnames": "^2.2.6",
+    "iscroll": "^5.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "antd": "^4.12.0",
+    "omit.js": "^2.0.2",
+    "@types/uuid": "^8.3.0",
+    "algebra.js": "^0.2.6",
+    "ol": "^6.5.0",
+    "uuid": "^8.3.2",
+    "swiper": "4.4.6",
+    "@ant-design/icons": "^4.3.0",
+    "react-intl-universal": "^2.4.3",
+    "moment": "^2.29.1",
+    "lodash": "^4.17.21",
     "@baifendian/adhere-ui-cascadecompared": "^1.0.3",
     "@baifendian/adhere-ui-conditionalrender": "^1.0.3",
     "@baifendian/adhere-ui-confirm-delconfirm": "^1.0.3",

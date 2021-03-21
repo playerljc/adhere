@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildpackage": "ctbuild buildpackagets",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
-    "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true,cssModules=true"
+    "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true"
   },
   "repository": {
     "type": "git",

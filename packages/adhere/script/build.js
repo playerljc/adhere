@@ -9,6 +9,8 @@ const contextPath = path.join(__dirname, '../', 'src');
 
 const excludes = ['@baifendian/adhere-ui-css'];
 
+const indexLessContent = [];
+
 const namedMap = new Map([
   ['@baifendian/adhere-ui-conditionalrender', 'ConditionalRender'],
   ['@baifendian/adhere-ui-confirm-delconfirm', 'DelConfirm'],
@@ -64,11 +66,16 @@ function pascalCaseToKebabCase(name) {
   return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
 }
 
+// let dependenciesAll = {};
+
 // eslint-disable-next-line guard-for-in
 for (const p in dependencies) {
   const packagesPath = path.join(__dirname, '../../');
 
   const name = p.split('/')[1];
+
+  // const json = require(path.join(packagesPath, name, 'package.json'));
+  // dependenciesAll = { ...dependenciesAll, ...json.dependencies };
 
   // 不排除
   if (excludes.indexOf(p) === -1) {
@@ -99,6 +106,7 @@ for (const p in dependencies) {
     if (fs.existsSync(path.join(packagesPath, name, 'src', 'index.less'))) {
       // index.less写入文件
       fs.writeFileSync(styleIndexPath, `@import '~${p}/lib/index.less';`);
+      indexLessContent.push(`@import '~${p}/lib/index.less';\r\n`);
     } else {
       fs.writeFileSync(styleIndexPath, '');
     }
@@ -128,3 +136,7 @@ for (const p in dependencies) {
     }
   }
 }
+
+fs.writeFileSync(path.join(__dirname, '../src', 'index.less'), indexLessContent.join(''));
+
+// console.log(dependenciesAll);

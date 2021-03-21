@@ -10,6 +10,10 @@ module.exports = {
     // cssModules处理中添加
     // if (webpackConfig.mode === 'development') {
     // eslint-disable-next-line no-param-reassign
+    webpackConfig.externals = {
+      adhere: 'adhere',
+    };
+
     webpackConfig.resolve.alias.ol = path.join(
       __dirname,
       'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
@@ -26,14 +30,14 @@ module.exports = {
     //   'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/algebra.js',
     // );
 
+    // 第三方库的引用是从文件当前目录开始搜索
+    webpackConfig.resolve.modules.unshift(path.join(__dirname, 'node_modules'));
+
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].include.push(
       /packages[\\/]adhere[\\/]lib[\\/].*[\\/]style[\\/]index.less/,
       /packages[\\/]adhere[\\/]lib[\\/].*.less/,
     );
     // }
-
-    // 第三方库的引用是从文件当前目录开始搜索
-    webpackConfig.resolve.modules.unshift(path.join(__dirname, 'node_modules'));
 
     webpackConfig.module.rules[1].include.push(/ol.css/, /swiper.css/);
 

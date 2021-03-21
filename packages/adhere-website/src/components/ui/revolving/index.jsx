@@ -6,7 +6,7 @@ import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
 
-import 'swiper/dist/css/swiper.css';
+// import 'swiper/dist/css/swiper.css';
 
 export default () => {
   const ref = useRef();
