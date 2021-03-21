@@ -1,8 +1,12 @@
-298 error Error: Command failed: git commit -m v1.0.2
-298 error On branch develop
-298 error Your branch is up to date with 'origin/develop'.
-298 error
-298 error nothing to commit, working tree clean
-298 error
-298 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
-298 error     at Promise.all.then.arr (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:278:16)
+15 error Error: Command failed: git remote update
+15 error fatal: unable to access 'http://git.baifendian.com/SYYF/adhere.git/': Recv failure: Connection was reset
+15 error error: Could not fetch origin
+15 error
+15 error Fetching origin
+15 error
+15 error     at makeError (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:174:9)
+15 error     at Function.module.exports.sync (C:\self\work\bfd\projects\adhere\node_modules\execa\index.js:338:15)
+15 error     at Object.execSync (C:\self\work\bfd\projects\adhere\node_modules\@lerna\child-process\index.js:26:16)
+15 error     at updateRemote (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\lib\is-behind-upstream.js:26:16)
+15 error     at isBehindUpstream (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\lib\is-behind-upstream.js:11:3)
+15 error     at VersionCommand.initialize (C:\self\work\bfd\projects\adhere\node_modules\@lerna\version\index.js:154:9)
