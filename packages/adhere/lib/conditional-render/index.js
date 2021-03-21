@@ -1,2 +1,2 @@
-"use strict";var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _adhereUiConditionalrender=_interopRequireDefault(require("@baifendian/adhere-ui-conditionalrender")),_default=_adhereUiConditionalrender.default;exports.default=_default;
+import Model from"@baifendian/adhere-ui-conditionalrender";export default Model;
 //# sourceMappingURL=index.js.map

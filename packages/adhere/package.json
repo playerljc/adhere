@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuildpackage": "node script/build.js",
-    "buildpackage": "ctbuild buildpackage",
+    "buildpackage": "ctbuild buildpackagets",
     "buildumd": "node script/buildumd.js",
     "buildumd:core": "ctbuild buildumd --packagename adhere --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"

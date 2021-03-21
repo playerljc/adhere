@@ -1,2 +1,2 @@
-"use strict";var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _adhereUtilDecorators=_interopRequireDefault(require("@baifendian/adhere-util-decorators")),_default=_adhereUtilDecorators.default;exports.default=_default;
+import Model from"@baifendian/adhere-util-decorators";export default Model;
 //# sourceMappingURL=index.js.map
