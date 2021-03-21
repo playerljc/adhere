@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-spin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "无侵入的loading",
   "main": "lib/index.js",
   "files": [
@@ -35,8 +35,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^1.0.4",
-    "@baifendian/adhere-util-resource": "^1.0.4",
+    "@baifendian/adhere-ui-css": "^1.0.5",
+    "@baifendian/adhere-util-resource": "^1.0.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",
