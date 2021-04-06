@@ -29,6 +29,7 @@ import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
+import G6 from '@baifendian/adhere-ui-g6';
 import Util from '@baifendian/adhere-util';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
 import Decorators from '@baifendian/adhere-util-decorators';
@@ -84,4 +85,5 @@ export {
   FontSizeSetting,
   WatchMemoized,
   SearchTable,
+  G6,
 };
