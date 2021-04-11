@@ -115,16 +115,6 @@ declare const _default: {
      */
     execExpression(context: any, expressionStr: any, data: any): any;
     /**
-     * toPoint - 百分数转化为小数
-     * @param percent
-     */
-    toPoint(percent: string): number;
-    /**
-     * point - 小数转化为百分数
-     * @param point
-     */
-    toPercent(point: any): string;
-    /**
      * getCookie
      * @return {string}
      * @param name
@@ -135,14 +125,6 @@ declare const _default: {
      * @return Function
      */
     noop(): Function;
-    /**
-     * rgb - rgb颜色随机
-     */
-    rgb(): string;
-    /**
-     * color16 - 十六进制颜色随机
-     */
-    color16(): string;
     /**
      * generatorRandom - 生成随机数
      * @param lowerValue - 最小值
@@ -312,6 +294,51 @@ declare const _default: {
      */
     isIframeEmbed(): boolean;
     /**--------------------------dom-end-------------------------**/
+    /**--------------------------math-start----------------------**/
+    /**
+     * toPoint - 百分数转化为小数
+     * @param percent
+     */
+    toPoint(percent: string): number;
+    /**
+     * point - 小数转化为百分数
+     * @param point
+     */
+    toPercent(point: any): string;
+    /**
+     * straightLineIntersection - 计算两个直线的交点
+     * @param p1
+     * @param p2
+     * @param p3
+     * @param p4
+     */
+    straightLineIntersection(p1: {
+        x: number;
+        y: number;
+    }, p2: {
+        x: number;
+        y: number;
+    }, p3: {
+        x: number;
+        y: number;
+    }, p4: {
+        x: number;
+        y: number;
+    }): {
+        x: number;
+        y: number;
+    };
+    /**--------------------------math-end------------------------**/
+    /**--------------------------color-start----------------------**/
+    /**
+     * rgb - rgb颜色随机
+     */
+    rgb(): string;
+    /**
+     * color16 - 十六进制颜色随机
+     */
+    color16(): string;
+    /**--------------------------color-end----------------------**/
     /**
      * 函数节流
      */
