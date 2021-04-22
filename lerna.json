@@ -2,7 +2,7 @@
   "packages": [
     "packages/**"
   ],
-  "npmClient": "npm",
+  "npmClient": "yarn",
   "command": {
     "bootstrap": {
       "npmClientArgs": [

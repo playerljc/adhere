@@ -1,0 +1,122 @@
+import React from 'react';
+import { Input, InputNumber, Radio, Checkbox, Select, DatePicker, Switch, TreeSelect, Slider, TimePicker, Rate, Upload } from 'antd';
+
+const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group;
+const { RangePicker } = DatePicker;
+const { TextArea } = Input;
+const { Option } = Select;
+
+const renderText = ({ value, ...others }) => (
+  <Input {...others} readOnly />
+);
+
+const renderInput = ({ type, maxLength = 100, placeholder = '请输入', ...others }) => (
+  <Input
+    autoComplete="off"
+    type={type}
+    maxLength={maxLength}
+    placeholder={placeholder}
+    {...others}
+  />
+);
+
+const renderInputArea = ({ maxLength = 500, rows = 4, placeholder = '请输入', ...others }) => (
+  <TextArea
+    autoComplete="off"
+    maxLength={maxLength}
+    rows={rows}
+    placeholder={placeholder}
+    {...others}
+  />
+);
+
+const renderPassword = ({ type, maxLength = 800, placeholder = '请输入', ...others }) => (
+  <Input.Password
+    autoComplete="off"
+    type={type}
+    maxLength={maxLength}
+    placeholder={placeholder}
+    {...others}
+  />
+);
+
+const renderInputNumber = ({
+  placeholder = '请输入',
+  max = Infinity,
+  min = -Infinity,
+  ...others
+}) => (
+  <InputNumber
+    autoComplete="off"
+    placeholder={placeholder}
+    max={max || Infinity}
+    min={min || -Infinity}
+    {...others}
+  />
+);
+
+const renderRadio = ({ ...others }) => <RadioGroup {...others} />;
+
+const renderCheckbox = ({ options, ...others }) =>
+  options.length && options.length === 1 ? (
+    <Checkbox {...others}>{options[0].label}</Checkbox>
+  ) : (
+    <CheckboxGroup options={options} {...others} />
+  );
+
+const renderSelect = ({ optGroup, options, placeholder = '请选择', renderOption, ...others }) => {
+  const renderOptionItem = (arr) =>
+    (arr || []).map((v, i) => (
+      /* eslint-disable react/no-array-index-key */
+      <Option value={v.value} key={`select-option-${i}`} disabled={v.disabled}>
+        {renderOption ? renderOption(v) : v.label}
+      </Option>
+    ));
+  return (
+    <Select placeholder={placeholder} {...others}>
+      {optGroup && optGroup.length
+        ? optGroup.map((e) => renderOptionItem(e))
+        : renderOptionItem(options)}
+    </Select>
+  );
+};
+
+const renderRangepicker = ({ format, ...others }) => <RangePicker format={format} {...others} />;
+
+const renderDatepicker = ({ format, ...others }) => <DatePicker format={format} {...others} />;
+
+const renderTimePicker = ({ ...others }) => <TimePicker {...others} />;
+
+const renderSwitch = (item) => <Switch {...item} />;
+
+const renderTreeselect = ({ data, allowClear, ...others }) => (
+  <TreeSelect allowClear={allowClear} treeData={data} {...others} />
+);
+
+const renderSlider = ({ ...others }) => (
+  <Slider {...others} />
+);
+
+const renderRate = ({ ...others }) => <Rate {...others} />;
+
+const renderUpload = ({ ...others }) => <Upload {...others} />;
+
+export default {
+  renderText,
+  renderInput,
+  renderPassword,
+  renderInputArea,
+  renderInputNumber,
+  renderRadio,
+  renderCheckbox,
+  renderSelect,
+  renderDatepicker,
+  renderRangepicker,
+  renderTimePicker,
+  renderSwitch,
+  renderTreeselect,
+  renderSlider,
+  renderRate,
+  renderUpload,
+};
