@@ -6,5 +6,5 @@ import { message } from 'antd';
  * @param text - {string | React.ReactElement}
  */
 export default (text: string | React.ReactElement) => {
-  message.warn(text);
+  return message.warn(text);
 };

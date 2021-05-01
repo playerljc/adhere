@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Input } from 'antd';
+import { Form, Button } from 'antd';
 
 import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
@@ -44,7 +44,8 @@ export default () => {
           },
           {
             params: 'layout',
-            desc: '{labelCol, wrapperCol} 配置布局会应用到每一个item中，如果需要单独特殊配置，columns里面会覆盖此配置',
+            desc:
+              '{labelCol, wrapperCol} 配置布局会应用到每一个item中，如果需要单独特殊配置，columns里面会覆盖此配置',
             type: 'object',
             defaultVal: '',
           },
@@ -56,7 +57,8 @@ export default () => {
         data={[
           {
             params: 'type',
-            desc: '表单项类型, 可选【input, password, textarea, number, radio, checkbox, select, \n switch, slider, rate, datepicker, rangepicker, timepicker, define】',
+            desc:
+              '表单项类型, 可选【input, password, textarea, number, radio, checkbox, select, \n switch, slider, rate, datepicker, rangepicker, timepicker, define】',
             type: 'string',
             defaultVal: '',
           },
@@ -74,7 +76,8 @@ export default () => {
           },
           {
             params: 'contentProps',
-            desc: '传入被Form.Item包裹的组件的属性，\n 例如type为input则是antd中Input支持的属性，以此类推',
+            desc:
+              '传入被Form.Item包裹的组件的属性，\n 例如type为input则是antd中Input支持的属性，以此类推',
             type: 'ReactNode',
             defaultVal: '',
           },
@@ -82,13 +85,15 @@ export default () => {
             params: '......',
             desc: (
               <div>
-                支持antd中Form.Item的属性 
-                <a href="https://ant.design/components/form-cn/#Form.Item" target="_blank">https://ant.design/components/form-cn/#Form.Item</a>
+                支持antd中Form.Item的属性
+                <a href="https://ant.design/components/form-cn/#Form.Item" target="_blank">
+                  https://ant.design/components/form-cn/#Form.Item
+                </a>
               </div>
             ),
             type: '',
             defaultVal: '',
-          }
+          },
         ]}
       />
       <h2>基本使用</h2>
@@ -132,19 +137,21 @@ export default () => {
   
         `}
       >
-        <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
-              { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: 'text' }
+              { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: 'text' },
             ]}
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
-      
+
       <h3>【type=input | password | textarea | number】</h3>
       <Playground
         mode="code"
@@ -210,21 +217,21 @@ export default () => {
   
         `}
       >
-        <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
               {
                 label: '输入框',
                 name: 'name',
                 type: 'input',
-                rules: [{ required: true, message: '请输入'}],
+                rules: [{ required: true, message: '请输入' }],
                 contentProps: { placeholder: '请输入关键词' },
               },
               {
                 label: '密码框',
                 name: 'password',
                 type: 'password',
-                rules: [{ required: true, message: '请输入'}],
+                rules: [{ required: true, message: '请输入' }],
                 contentProps: { placeholder: '请输入密码' },
               },
               {
@@ -238,17 +245,20 @@ export default () => {
                 name: 'number',
                 type: 'number',
                 contentProps: { min: 10 },
-              }
+              },
             ]}
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
 
       <h3>【type=radio | checkbox | select】</h3>
+      {/* eslint-disable-next-line react/no-unescaped-entities */}
       <p>均是通过contentProps.options: [&lt;'label', 'value'&gt;]来配置选择项</p>
       <Playground
         mode="code"
@@ -330,7 +340,7 @@ export default () => {
   
         `}
       >
-        <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
               {
@@ -338,7 +348,10 @@ export default () => {
                 name: 'radio1',
                 type: 'radio',
                 contentProps: {
-                  options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
+                  options: [
+                    { label: '单选1', value: 1 },
+                    { label: '单选2', value: 2 },
+                  ],
                 },
               },
               {
@@ -347,7 +360,10 @@ export default () => {
                 type: 'radio',
                 contentProps: {
                   optionType: 'button',
-                  options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
+                  options: [
+                    { label: '单选1', value: 1 },
+                    { label: '单选2', value: 2 },
+                  ],
                 },
               },
               {
@@ -355,7 +371,10 @@ export default () => {
                 name: 'checkbox1',
                 type: 'checkbox',
                 contentProps: {
-                  options: [{ label: '复选1', value: 1 }, { label: '复选2', value: 2}]
+                  options: [
+                    { label: '复选1', value: 1 },
+                    { label: '复选2', value: 2 },
+                  ],
                 },
               },
               {
@@ -363,7 +382,10 @@ export default () => {
                 name: 'select1',
                 type: 'select',
                 contentProps: {
-                  options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
+                  options: [
+                    { label: '下拉1', value: 1 },
+                    { label: '下拉2', value: 2 },
+                  ],
                 },
               },
               {
@@ -372,14 +394,19 @@ export default () => {
                 type: 'select',
                 contentProps: {
                   mode: 'multiple',
-                  options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
+                  options: [
+                    { label: '下拉1', value: 1 },
+                    { label: '下拉2', value: 2 },
+                  ],
                 },
-              }
+              },
             ]}
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
@@ -450,7 +477,7 @@ export default () => {
   
         `}
       >
-        <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
               {
@@ -484,7 +511,9 @@ export default () => {
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
@@ -588,7 +617,7 @@ export default () => {
   
         `}
       >
-        <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
               {
@@ -655,11 +684,13 @@ export default () => {
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
-      
+
       <h3>【type=upload | define】</h3>
       <Playground
         mode="code"
@@ -718,7 +749,7 @@ export default () => {
   
         `}
       >
-        <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
               {
@@ -728,7 +759,7 @@ export default () => {
                 contentProps: {
                   // antd Upload支持的属性
                   // children 是upload组件包括的组件
-                  children: <Button>Upload</Button>
+                  children: <Button>Upload</Button>,
                 },
               },
               {
@@ -744,11 +775,13 @@ export default () => {
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
-      
+
       <h3>【Skip使用例子】</h3>
       <Playground
         mode="code"
@@ -807,7 +840,7 @@ export default () => {
   
         `}
       >
-        <Form name="skipDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <Form name="skipDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
               {
@@ -815,27 +848,35 @@ export default () => {
                 name: 'showSelect',
                 type: 'radio',
                 contentProps: {
-                  options: [{ label: '是', value: 1 }, { label: '否', value: 2 }],
-                  onChange: e => setSkip(e.target.value === 2),
-                }
+                  options: [
+                    { label: '是', value: 1 },
+                    { label: '否', value: 2 },
+                  ],
+                  onChange: (e) => setSkip(e.target.value === 2),
+                },
               },
               {
                 label: '下拉',
                 name: 'isSelect',
                 type: 'select',
-                skip: skip,
+                skip,
                 contentProps: {
-                  options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2 }]
-                }
-              }
+                  options: [
+                    { label: '下拉1', value: 1 },
+                    { label: '下拉2', value: 2 },
+                  ],
+                },
+              },
             ]}
             layout={layout}
           />
           <Form.Item wrapperCol={{ offset: 4 }}>
-            <Button type="primary" htmlType="submit">提交</Button>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
           </Form.Item>
         </Form>
       </Playground>
     </div>
-  )
-}
+  );
+};

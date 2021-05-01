@@ -45,6 +45,7 @@
 - [@baifendian/adhere-ui-imageviwer](#@baifendian/adhere-ui-imageviwer)
 - [@baifendian/adhere-ui-form](#@baifendian/adhere-ui-form)
 - [@baifendian/adhere-ui-echarts](#@baifendian/adhere-ui-echarts)
+- [@baifendian/adhere-ui-g6](#@baifendian/adhere-ui-g6)
 - [@baifendian/adhere-util-regex](#@baifendian/adhere-util-regex)
 - [@baifendian/adhere-util-clientdetection](#@baifendian/adhere-util-clientdetection)
 
@@ -500,3 +501,6 @@ log:
 - 一组中多个元素 resizeable
 - 多组都可以 resizeable
 - 无线扩展
+
+## @baifendian/adhere-ui-g6
+antv-g6的封装
