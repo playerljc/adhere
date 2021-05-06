@@ -36,6 +36,7 @@ const ContextMenu = lazy(() => import('@/components/ui/contextmenu'));
 const FontSizeSetting = lazy(() => import('@/components/ui/fontsizesetting'));
 const SearchTable = lazy(() => import('@/components/ui/searchtable'));
 const FormItemCreator = lazy(() => import('@/components/ui/formitemcreator'));
+const TableList = lazy(() => import('@/components/ui/tablelist'));
 
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
@@ -237,6 +238,11 @@ export default () => [
                 path: '/adhere/ui/formitemcreator',
                 name: 'FormItemCreator',
                 component: FormItemCreator,
+              },
+              {
+                path: '/adhere/ui/tablelist',
+                name: 'TableList',
+                component: TableList,
               },
             ],
           },

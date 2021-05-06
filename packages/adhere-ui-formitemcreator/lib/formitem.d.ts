@@ -10,6 +10,11 @@ declare const _default: {
         maxLength?: number | undefined;
         placeholder?: string | undefined;
     }) => JSX.Element;
+    renderSearch: ({ maxLength, placeholder, ...others }: {
+        [x: string]: any;
+        maxLength?: number | undefined;
+        placeholder?: string | undefined;
+    }) => JSX.Element;
     renderPassword: ({ type, maxLength, placeholder, ...others }: {
         [x: string]: any;
         type: any;

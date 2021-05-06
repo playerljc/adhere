@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["table-list/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-tablelist';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,2DACQA"}

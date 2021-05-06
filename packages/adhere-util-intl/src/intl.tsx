@@ -116,6 +116,21 @@ export default {
   },
 
   /**
+   * v - 以中文获取国际化后的html
+   * @param key 
+   * @param options 
+   */
+  vHtml(key: string, options?: object | null) {
+    if (!isInit) return '';
+
+    if (options) {
+      return intl.getHTML(intlKey[key], options);
+    }
+
+    return intlMap[key];
+  },
+
+  /**
    * get
    * @param key
    * @param variables

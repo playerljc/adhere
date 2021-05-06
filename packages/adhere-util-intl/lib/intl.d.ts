@@ -23,6 +23,12 @@ declare const _default: {
      */
     v(key: string, variables?: object | null | undefined): string;
     /**
+     * v - 以中文获取国际化后的html
+     * @param key
+     * @param options
+     */
+    vHtml(key: string, options?: object | null | undefined): any;
+    /**
      * get
      * @param key
      * @param variables

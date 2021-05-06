@@ -21,6 +21,15 @@ const renderInput = ({ type, maxLength = 100, placeholder = '请输入', ...othe
   />
 );
 
+const renderSearch = ({ maxLength = 800, placeholder = '请输入', ...others }) => (
+  <Input.Search
+    autoComplete="off"
+    maxLength={maxLength}
+    placeholder={placeholder}
+    {...others}
+  />
+);
+
 const renderInputArea = ({ maxLength = 500, rows = 4, placeholder = '请输入', ...others }) => (
   <TextArea
     autoComplete="off"
@@ -105,6 +114,7 @@ const renderUpload = ({ ...others }) => <Upload {...others} />;
 export default {
   renderText,
   renderInput,
+  renderSearch,
   renderPassword,
   renderInputArea,
   renderInputNumber,

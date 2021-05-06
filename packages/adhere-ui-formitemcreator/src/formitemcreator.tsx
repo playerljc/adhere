@@ -51,6 +51,9 @@ class FormItemCreator extends React.Component<IFormItemCreatorProps> {
       case 'input':
         component = renderItem.renderInput(contentProps);
         break;
+      case 'search':
+        component = renderItem.renderSearch(contentProps);
+        break;
       case 'password':
         component = renderItem.renderPassword(contentProps);
         break;

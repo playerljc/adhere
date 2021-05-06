@@ -18,5 +18,4 @@ export interface IFormItemLayoutProps {
 export interface IFormItemCreatorProps {
     columns: Array<IFormItemProps>;
     layout?: IFormItemLayoutProps;
-    render: () => React.ReactElement<HTMLDivElement>;
 }
