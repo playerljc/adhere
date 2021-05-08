@@ -10,7 +10,7 @@ import { TooltipProps } from 'antd/lib/tooltip';
  */
 export interface ITableListProps<T> {
     className?: string;
-    mode?: "table" | "list";
+    mode?: 'table' | 'list';
     search?: ISearchProps;
     toolbar?: IToolbarProps;
     table?: ITableProps<T>;

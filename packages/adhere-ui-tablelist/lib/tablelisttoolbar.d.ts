@@ -10,7 +10,7 @@ export declare const ToolbarReload: ({ reload, onSearch }: {
     reload: any;
     onSearch: any;
 }) => JSX.Element;
-export declare const ToolbarSetting: ({ setting, tableColumns, onSettingChange, onSettingSortEnd, selectedColumnKeys }: {
+export declare const ToolbarSetting: ({ setting, tableColumns, onSettingChange, onSettingSortEnd, selectedColumnKeys, }: {
     setting: any;
     tableColumns: any;
     onSettingChange: any;

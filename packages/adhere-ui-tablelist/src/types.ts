@@ -11,22 +11,22 @@ import { TooltipProps } from 'antd/lib/tooltip';
  */
 export interface ITableListProps<T> {
   className?: string;
-  mode?: "table" | "list";
+  mode?: 'table' | 'list';
   search?: ISearchProps;
   toolbar?: IToolbarProps;
   table?: ITableProps<T>;
   list?: ListProps<T>;
   request?: Function;
-};
+}
 
-export interface ITableProps<RecordType> extends TableProps<RecordType>{
+export interface ITableProps<RecordType> extends TableProps<RecordType> {
   sortable?: boolean | ISortableProps;
-};
+}
 
 export interface TSortTableProps<RecordType> extends TableProps<RecordType> {
   sortable?: boolean | ISortableProps;
-  [proName:string]: any;
-};
+  [proName: string]: any;
+}
 
 /**
  * 搜索栏
@@ -40,12 +40,12 @@ export interface ISearchProps {
   searchText?: string;
   resetText?: string;
   size?: SizeType;
-};
+}
 
 export interface ISortableProps {
   itemProps?: object;
   containerProps?: object;
-};
+}
 
 /**
  * 工具栏
@@ -59,7 +59,7 @@ export interface IToolbarProps {
   reload?: boolean | object;
   setting?: boolean | object;
   toolbarOptionRender?: undefined | React.ReactElement;
-};
+}
 
 /**
  * 工具栏-选中全部

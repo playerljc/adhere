@@ -37,16 +37,16 @@ declare class TableList<RecordType extends object = any> extends React.Component
      */
     private renderSearch;
     /**
-    * toolbar: 标题，全选----刷新，搜索，设置
-    */
+     * toolbar: 标题，全选----刷新，搜索，设置
+     */
     private renderToolbar;
     /**
      * 渲染列表
      */
     private renderList;
     /**
-    * 渲染表格
-    */
+     * 渲染表格
+     */
     private renderTable;
     /**
      * 渲染内容

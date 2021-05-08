@@ -16,15 +16,14 @@ class Util {
 
   constructor(ins) {
     this.ins = ins;
-    console.log('constructor', this.ins.props);
   }
-  
+
   /**
    * 获取对应mode的属性
    */
   getModeProps = () => {
     return { rowKey: 'id', ...this.ins.props[this.ins.props.mode || 'table'] };
-  }
+  };
 
   /**
    * 获取默认显示的列项
@@ -32,12 +31,14 @@ class Util {
   getDefaultSelectedColumnKeys = (columns) => {
     const { showNumber } = this.ins.props;
 
-    const result = (columns || []).filter(v => v.show || !v.hasOwnProperty('show')).map(v => v.key);
+    const result = (columns || [])
+      .filter((v) => v.show || !v.hasOwnProperty('show'))
+      .map((v) => v.key);
     if (showNumber && !result.includes('xuhao')) {
-      result.unshift(showNumber?.key || 'xuhao')
-    };
+      result.unshift(showNumber?.key || 'xuhao');
+    }
     return result;
-  }
+  };
 
   /**
    * 获取rowSelection 默认支持跨页选中，如果想要跨页取消设置clearOnChange为true
@@ -45,23 +46,27 @@ class Util {
   getRowSelection = () => {
     const { selectedRowKeys = [], selectedRows = [], selectAll } = this.ins.state;
     const { rowSelection } = this.getModeProps();
-    return rowSelection ? {
-      // 在表格变化的时候是否清空选中
-      clearOnChange: false,
-      ...rowSelection,
-      onChange: this.onSelectChange,
-      selectedRowKeys: rowSelection.selectedRowKeys || selectedRowKeys,
-      // 一下是自定义的变量
-      selectedRows,
-      // 是否选中全部数据
-      selectAll,
-    } : null
+    return rowSelection
+      ? {
+          // 在表格变化的时候是否清空选中
+          clearOnChange: false,
+          ...rowSelection,
+          onChange: this.onSelectChange,
+          selectedRowKeys: rowSelection.selectedRowKeys || selectedRowKeys,
+          // 一下是自定义的变量
+          selectedRows,
+          // 是否选中全部数据
+          selectAll,
+        }
+      : null;
   };
 
   /**
    * 获取排序后的表格数据
    */
-  getSortDatasource = () => { return this.ins.SortableTableRef.state.dataSource };
+  getSortDatasource = () => {
+    return this.ins.SortableTableRef.state.dataSource;
+  };
 
   /**
    * 获取参数
@@ -77,7 +82,7 @@ class Util {
 
   /**
    * 获取表单统一配置
-   * @param {*} Formcolumns 
+   * @param {*} Formcolumns
    */
   getFormColumns = (Formcolumns, size, searchNow) => {
     return Formcolumns.map((temp) => {
@@ -87,23 +92,27 @@ class Util {
       if (t.type === 'rangepicker' || t.type === 'select') {
         t.contentProps = {
           getPopupContainer: () => this.ins.TableListRef,
-          ...t.contentProps
+          ...t.contentProps,
         };
       }
       if (t.type === 'select') {
         t.contentProps = {
-          style: { width: '150px'},
+          style: { width: '150px' },
           allowClear: true,
-          ... t.contentProps
+          ...t.contentProps,
         };
       }
       if (searchNow) {
         t.contentProps = {
-          onSearch: t.type === 'search' ? v => this.onSearch({ [t.name]: v }) : null,
-          onChange: t.type !== 'search' ? e => this.onSearch({
-            [t.name]: ['input', 'textarea', 'number'].includes(t.type) ? e.target.value : e
-          }) : null,
-          ...t.contentProps
+          onSearch: t.type === 'search' ? (v) => this.onSearch({ [t.name]: v }) : null,
+          onChange:
+            t.type !== 'search'
+              ? (e) =>
+                  this.onSearch({
+                    [t.name]: ['input', 'textarea', 'number'].includes(t.type) ? e.target.value : e,
+                  })
+              : null,
+          ...t.contentProps,
         };
       }
       return t;
@@ -123,15 +132,15 @@ class Util {
       showSizeChanger: true,
       pageSizeOptions: ['10', '20', '50'],
       showQuickJumper: true,
-      showTotal:(total, [page, pageSize]) => {
+      showTotal: (total, [page, pageSize]) => {
         return `当前 ${page}-${pageSize}/共 ${total} 条`;
       },
       onChange: this.onPageChange,
       onShowSizeChange: this.onPageChange,
       ...pagination,
-    }
+    };
   };
-  
+
   /**
    * 获取表格的配置项
    */
@@ -192,18 +201,18 @@ class Util {
   };
 
   /*
-  * 获取表格或者列表的loading
-  */
+   * 获取表格或者列表的loading
+   */
   getLoading = (loading) => {
     if (loading || this.ins.state.loading) {
-      return loading && loading.hasOwnProperty('size') ? loading : { size: 'large' }
+      return loading && loading.hasOwnProperty('size') ? loading : { size: 'large' };
     }
     return false;
-  }
+  };
 
   /**
    * 发起请求
-   * @param {*} params 
+   * @param {*} params
    */
   fetchList = (params?: object) => {
     const fetchParams = { ...this.getParams(), ...params };
@@ -225,11 +234,14 @@ class Util {
     if (rowSelection && !rowSelection.selectAll && rowSelection.clearOnChange) {
       rowSelection.onChange([], []);
     }
-    this.ins.setState({
-      params: { ...params, ...searchParams, page: 1 }
-    }, () => {
-      this.fetchList();
-    });
+    this.ins.setState(
+      {
+        params: { ...params, ...searchParams, page: 1 },
+      },
+      () => {
+        this.fetchList();
+      },
+    );
   };
 
   /**
@@ -269,13 +281,13 @@ class Util {
       newData.splice(newIndex, 0, oldItem);
       this.ins.setState({ tableColumns: newData });
     }
-  }
+  };
 
   /**
    * 表格变化
-   * @param {*} _ 
-   * @param {*} filters 
-   * @param {*} sorter 
+   * @param {*} _
+   * @param {*} filters
+   * @param {*} sorter
    */
   onTableChange = (keys, filters, sorter) => {
     if (!isEmpty(sorter) || !isEmpty(filters)) {
@@ -304,7 +316,7 @@ class Util {
     const { dataSource, rowKey, rowSelection } = this.getModeProps();
     const { selectAll } = this.ins.state;
     if (this.ins.state.selectAll) {
-      const allKeys = dataSource.map(v => v[rowKey]);
+      const allKeys = dataSource.map((v) => v[rowKey]);
       const exceptKeys = union(selectAll.exceptKeys || [], difference(allKeys, selectedRowKeys));
       this.ins.setState({ selectAll: exceptKeys.length ? { exceptKeys } : true });
     }
@@ -317,8 +329,8 @@ class Util {
 
   /**
    * 分页变化
-   * @param {*} page 
-   * @param {*} limit 
+   * @param {*} page
+   * @param {*} limit
    */
   onPageChange = (page, limit) => {
     const { params } = this.ins.state;
@@ -327,33 +339,42 @@ class Util {
     if (rowSelection && !rowSelection.selectAll && rowSelection.clearOnChange) {
       rowSelection.onChange([], []);
     }
-    this.ins.setState({
-      params: { ...params, page, limit }
-    }, () => this.fetchList());
+    this.ins.setState(
+      {
+        params: { ...params, page, limit },
+      },
+      () => this.fetchList(),
+    );
   };
 
-  /* 
-  * 表格删除时候操作，刷列表
-  */
+  /*
+   * 表格删除时候操作，刷列表
+   */
   onDelete = (deletedKeys = []) => {
     const { pagination, rowKey } = this.getModeProps();
     const { total } = pagination;
     const { page, limit } = this.ins.state.params;
     if (total % limit === 1 && page === Math.ceil(total / limit)) {
-      this.ins.setState({
-        params: { ...this.ins.state.params, page: page - (deletedKeys.length) || 1 }
-      }, () => this.fetchList());
+      this.ins.setState(
+        {
+          params: { ...this.ins.state.params, page: page - deletedKeys.length || 1 },
+        },
+        () => this.fetchList(),
+      );
       return;
     }
     const rowSelection = this.getRowSelection();
     if (rowSelection) {
-      const selectedRowKeys = rowSelection.selectedRowKeys.filter((v:never) => !deletedKeys.includes(v));
-      const selectedRows = rowSelection.selectedRows.filter((v:never) => !deletedKeys.includes(v[rowKey]));
+      const selectedRowKeys = rowSelection.selectedRowKeys.filter(
+        (v: never) => !deletedKeys.includes(v),
+      );
+      const selectedRows = rowSelection.selectedRows.filter(
+        (v: never) => !deletedKeys.includes(v[rowKey]),
+      );
       rowSelection.onChange(selectedRowKeys, selectedRows);
     }
     this.fetchList();
   };
-
 }
 
 export default Util;

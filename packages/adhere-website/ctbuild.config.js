@@ -31,6 +31,7 @@ module.exports = {
     // 第三方库的引用是从文件当前目录开始搜索
     webpackConfig.resolve.modules.unshift(path.join(__dirname, 'node_modules'));
 
+    // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].include.push(
       /packages[\\/]adhere[\\/]lib[\\/].*[\\/]style[\\/]index.less/,
       /packages[\\/]adhere[\\/]lib[\\/].*.less/,
