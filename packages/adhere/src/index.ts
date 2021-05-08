@@ -29,6 +29,9 @@ import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
+import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
+import TableList from '@baifendian/adhere-ui-tablelist';
+import Popup from '@baifendian/adhere-ui-popup';
 import G6 from '@baifendian/adhere-ui-g6';
 import Util from '@baifendian/adhere-util';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
@@ -85,5 +88,8 @@ export {
   FontSizeSetting,
   WatchMemoized,
   SearchTable,
+  FormItemCreator,
+  TableList,
+  Popup,
   G6,
 };

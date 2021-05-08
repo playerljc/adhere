@@ -46,6 +46,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-g6', 'G6'],
   ['@baifendian/adhere-ui-formitemcreator', 'FormItemCreator'],
   ['@baifendian/adhere-ui-tablelist', 'TableList'],
+  ['@baifendian/adhere-ui-popup', 'Popup'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -73,6 +74,7 @@ function pascalCaseToKebabCase(name) {
 
 // eslint-disable-next-line guard-for-in
 for (const p in dependencies) {
+  // eslint-disable-next-line no-continue
   if (!p.startsWith('@baifendian')) continue;
 
   const packagesPath = path.join(__dirname, '../../');

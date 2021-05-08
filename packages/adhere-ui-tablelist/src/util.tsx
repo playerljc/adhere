@@ -64,7 +64,7 @@ class Util {
   /**
    * 获取排序后的表格数据
    */
-  getSortDatasource = () => {
+  getSortDataSource = () => {
     return this.ins.SortableTableRef.state.dataSource;
   };
 

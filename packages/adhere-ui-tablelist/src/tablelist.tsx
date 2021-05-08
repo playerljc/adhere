@@ -24,16 +24,19 @@ class TableList<RecordType extends object = any> extends React.Component<
 > {
   static defaultProps: any;
   static propTypes: any;
-  private searchFormRef: any;
+
+  private readonly searchFormRef: any;
+  private readonly getModeProps: Function;
+  private readonly getDefaultSelectedColumnKeys: Function;
+  private readonly getFormColumns: Function;
+  private readonly getRowSelection: Function;
+  private readonly getPagination: Function;
+  private readonly getLoading: Function;
+  private readonly getTableColumns: Function;
+
   private TableListRef: HTMLDivElement | null | undefined;
-  private getModeProps: Function;
-  private getDefaultSelectedColumnKeys: Function;
-  private getFormColumns: Function;
-  private getRowSelection: Function;
-  private getPagination: Function;
-  private getLoading: Function;
-  private getTableColumns: Function;
-  public getSortDatasource: Function;
+
+  public getSortDataSource: Function;
   public getParams: Function;
   public fetchList: Function;
   public onSearch: Function;
@@ -49,7 +52,7 @@ class TableList<RecordType extends object = any> extends React.Component<
     this.getModeProps = util.getModeProps;
     this.getDefaultSelectedColumnKeys = util.getDefaultSelectedColumnKeys;
     this.getFormColumns = util.getFormColumns;
-    this.getSortDatasource = util.getSortDatasource;
+    this.getSortDataSource = util.getSortDataSource;
     this.getParams = util.getParams;
     this.getRowSelection = util.getRowSelection;
     this.getPagination = util.getPagination;

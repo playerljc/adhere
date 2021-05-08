@@ -75,6 +75,7 @@
     "@baifendian/adhere-ui-g6": "^1.0.5",
     "@baifendian/adhere-ui-formitemcreator": "^1.0.5",
     "@baifendian/adhere-ui-tablelist": "^1.0.5",
+    "@baifendian/adhere-ui-popup": "^1.0.5",
     "@baifendian/adhere-util": "^1.0.5",
     "@baifendian/adhere-util-adapterscreen": "^1.0.5",
     "@baifendian/adhere-util-communication-ajax": "^1.0.5",

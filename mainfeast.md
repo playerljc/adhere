@@ -42,6 +42,9 @@
 - adhere-ui-contextmenu
 - adhere-ui-fontsizesetting
 - adhere-util-watchmemoized
+- adhere-ui-formitemcreator
+- adhere-ui-tablelist
+- adhere-ui-popup
 
 ### 没有落实有雏形的组件
 

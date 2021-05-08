@@ -51,6 +51,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>columns属性</h2>
       <p>表单中每一项的配置</p>
       <Props
@@ -96,45 +97,45 @@ export default () => {
           },
         ]}
       />
+
       <h2>基本使用</h2>
       <h3>【type=text】</h3>
       <Playground
         mode="code"
         scope={{ React }}
         codeText={`
-          import React from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
-
-            return (
-              <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: 'text' }
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+  import React from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
   
+  export default () => {
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
+
+    return (
+      <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: 'text' }
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
         `}
       >
         <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -157,63 +158,63 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-          import React from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
+  import React from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
+  
+  export default () => {
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
 
-            return (
-              <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    {
-                      label: '输入框',
-                      name: 'name',
-                      type: 'input',
-                      rules: [{ required: true, message: '请输入'}],
-                      contentProps: { placeholder: '请输入关键词' },
-                    },
-                    {
-                      label: '密码框',
-                      name: 'password',
-                      type: 'password',
-                      rules: [{ required: true, message: '请输入'}],
-                      contentProps: { placeholder: '请输入密码' },
-                    },
-                    {
-                      label: '文本域',
-                      name: 'des',
-                      type: 'textarea',
-                      contentProps: { rows: 8 },
-                    },
-                    {
-                      label: '数值输入框',
-                      name: 'number',
-                      type: 'number',
-                      contentProps: { min: 10 },
-                    }
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+    return (
+      <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            {
+              label: '输入框',
+              name: 'name',
+              type: 'input',
+              rules: [{ required: true, message: '请输入'}],
+              contentProps: { placeholder: '请输入关键词' },
+            },
+            {
+              label: '密码框',
+              name: 'password',
+              type: 'password',
+              rules: [{ required: true, message: '请输入'}],
+              contentProps: { placeholder: '请输入密码' },
+            },
+            {
+              label: '文本域',
+              name: 'des',
+              type: 'textarea',
+              contentProps: { rows: 8 },
+            },
+            {
+              label: '数值输入框',
+              name: 'number',
+              type: 'number',
+              contentProps: { min: 10 },
+            }
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
   
         `}
       >
@@ -264,79 +265,79 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-          import React from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
+  import React from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
+  
+  export default () => {
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
 
-            return (
-              <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    {
-                      label: '单选框1',
-                      name: 'radio1',
-                      type: 'radio',
-                      contentProps: {
-                        options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
-                      },
-                    },
-                    {
-                      label: '单选框2-按钮形式',
-                      name: 'radio2',
-                      type: 'radio',
-                      contentProps: {
-                        optionType: 'button',
-                        options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
-                      },
-                    },
-                    {
-                      label: '复选框',
-                      name: 'checkbox1',
-                      type: 'checkbox',
-                      contentProps: {
-                        options: [{ label: '复选1', value: 1 }, { label: '复选2', value: 2}]
-                      },
-                    },
-                    {
-                      label: '下拉',
-                      name: 'select1',
-                      type: 'select',
-                      contentProps: {
-                        options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
-                      },
-                    },
-                    {
-                      label: '多选下拉',
-                      name: 'select2',
-                      type: 'select',
-                      contentProps: {
-                        mode: 'multiple',
-                        options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
-                      },
-                    }
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+    return (
+      <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            {
+              label: '单选框1',
+              name: 'radio1',
+              type: 'radio',
+              contentProps: {
+                options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
+              },
+            },
+            {
+              label: '单选框2-按钮形式',
+              name: 'radio2',
+              type: 'radio',
+              contentProps: {
+                optionType: 'button',
+                options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
+              },
+            },
+            {
+              label: '复选框',
+              name: 'checkbox1',
+              type: 'checkbox',
+              contentProps: {
+                options: [{ label: '复选1', value: 1 }, { label: '复选2', value: 2}]
+              },
+            },
+            {
+              label: '下拉',
+              name: 'select1',
+              type: 'select',
+              contentProps: {
+                options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
+              },
+            },
+            {
+              label: '多选下拉',
+              name: 'select2',
+              type: 'select',
+              contentProps: {
+                mode: 'multiple',
+                options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
+              },
+            }
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
   
         `}
       >
@@ -416,64 +417,64 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-          import React from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
+  import React from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
+  
+  export default () => {
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
 
-            return (
-              <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    {
-                      label: '开关',
-                      name: 'switch',
-                      type: 'switch',
-                      contentProps: {
-                        // antd switch支持的属性
-                        checkedChildren: '开启',
-                      },
-                    },
-                    {
-                      label: '滑动条',
-                      name: 'slider',
-                      type: 'slider',
-                      contentProps: {
-                        // antd slider支持的属性
-                        range: true,
-                      },
-                    },
-                    {
-                      label: '评分',
-                      name: 'rate',
-                      type: 'rate',
-                      contentProps: {
-                        // antd rate支持的属性
-                        allowHalf: true,
-                      },
-                    },
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+    return (
+      <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            {
+              label: '开关',
+              name: 'switch',
+              type: 'switch',
+              contentProps: {
+                // antd switch支持的属性
+                checkedChildren: '开启',
+              },
+            },
+            {
+              label: '滑动条',
+              name: 'slider',
+              type: 'slider',
+              contentProps: {
+                // antd slider支持的属性
+                range: true,
+              },
+            },
+            {
+              label: '评分',
+              name: 'rate',
+              type: 'rate',
+              contentProps: {
+                // antd rate支持的属性
+                allowHalf: true,
+              },
+            },
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
   
         `}
       >
@@ -523,97 +524,97 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-          import React from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
+  import React from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
+  
+  export default () => {
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
 
-            return (
-              <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    {
-                      label: '选择日期',
-                      name: 'date',
-                      type: 'datepicker',
-                      contentProps: {
-                        // antd DatePicker支持的属性
-                      },
-                    },
-                    {
-                      label: '选择年份',
-                      name: 'year',
-                      type: 'datepicker',
-                      contentProps: {
-                        // antd DatePicker支持的属性
-                        picker: 'year',
-                      },
-                    },
-                    {
-                      label: '选择月份',
-                      name: 'month',
-                      type: 'datepicker',
-                      contentProps: {
-                        // antd DatePicker支持的属性
-                        picker: 'month',
-                      },
-                    },
-                    {
-                      label: '选择季度',
-                      name: 'quarter',
-                      type: 'datepicker',
-                      contentProps: {
-                        // antd DatePicker支持的属性
-                        picker: 'quarter',
-                      },
-                    },
-                    {
-                      label: '选择周',
-                      name: 'week',
-                      type: 'datepicker',
-                      contentProps: {
-                        // antd DatePicker支持的属性
-                        picker: 'week',
-                      },
-                    },
-                    {
-                      label: '选择日期范围',
-                      name: 'rangedate',
-                      type: 'rangepicker',
-                      contentProps: {
-                        // antd DatePicker.RangePicker支持的属性
-                      },
-                    },
-                    {
-                      label: '选择时间',
-                      name: 'time',
-                      type: 'timepicker',
-                      contentProps: {
-                        // antd TimePicker支持的属性
-                      },
-                    },
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+    return (
+      <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            {
+              label: '选择日期',
+              name: 'date',
+              type: 'datepicker',
+              contentProps: {
+                // antd DatePicker支持的属性
+              },
+            },
+            {
+              label: '选择年份',
+              name: 'year',
+              type: 'datepicker',
+              contentProps: {
+                // antd DatePicker支持的属性
+                picker: 'year',
+              },
+            },
+            {
+              label: '选择月份',
+              name: 'month',
+              type: 'datepicker',
+              contentProps: {
+                // antd DatePicker支持的属性
+                picker: 'month',
+              },
+            },
+            {
+              label: '选择季度',
+              name: 'quarter',
+              type: 'datepicker',
+              contentProps: {
+                // antd DatePicker支持的属性
+                picker: 'quarter',
+              },
+            },
+            {
+              label: '选择周',
+              name: 'week',
+              type: 'datepicker',
+              contentProps: {
+                // antd DatePicker支持的属性
+                picker: 'week',
+              },
+            },
+            {
+              label: '选择日期范围',
+              name: 'rangedate',
+              type: 'rangepicker',
+              contentProps: {
+                // antd DatePicker.RangePicker支持的属性
+              },
+            },
+            {
+              label: '选择时间',
+              name: 'time',
+              type: 'timepicker',
+              contentProps: {
+                // antd TimePicker支持的属性
+              },
+            },
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
   
         `}
       >
@@ -696,56 +697,56 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-          import React from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
+  import React from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
+  
+  export default () => {
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
 
-            return (
-              <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    {
-                      label: '上传头像',
-                      name: 'image',
-                      type: 'upload',
-                      contentProps: {
-                        // antd Upload支持的属性
-                        // children 是upload组件包括的组件
-                        children: <Button>Upload</Button>
-                      },
-                    },
-                    {
-                      label: '自己定义的表单项',
-                      name: 'my',
-                      type: 'define',
-                      content: <div>我就是自定义的</div>,
-                      contentProps: {
-                        // 传给content的属性
-                      },
-                    },
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+    return (
+      <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            {
+              label: '上传头像',
+              name: 'image',
+              type: 'upload',
+              contentProps: {
+                // antd Upload支持的属性
+                // children 是upload组件包括的组件
+                children: <Button>Upload</Button>
+              },
+            },
+            {
+              label: '自己定义的表单项',
+              name: 'my',
+              type: 'define',
+              content: <div>我就是自定义的</div>,
+              contentProps: {
+                // 传给content的属性
+              },
+            },
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
   
         `}
       >
@@ -787,56 +788,56 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-          import React, { useState } from 'react';
-          import { Form, Button } from 'antd';
-          import { FormItemCreator } from '@baifendian/adhere';
-          
-          export default () => {
-            const [skip, setSkip] = useState(true);
-            const layout = {
-              labelCol: { span: 4 },
-              wrapperCol: { span: 12 },
-            };
-          
-            const onFinish = (values) => {
-              console.log('success', values);
-            };
-          
-            const onFinishFailed = (errorInfo) => {
-              console.log('failed', errorInfo);
-            };
+  import React, { useState } from 'react';
+  import { Form, Button } from 'antd';
+  import { FormItemCreator } from '@baifendian/adhere';
+  
+  export default () => {
+    const [skip, setSkip] = useState(true);
+    const layout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 12 },
+    };
+  
+    const onFinish = (values) => {
+      console.log('success', values);
+    };
+  
+    const onFinishFailed = (errorInfo) => {
+      console.log('failed', errorInfo);
+    };
 
-            return (
-              <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
-                <FormItemCreator
-                  columns={[
-                    {
-                      label: '是否显示下拉',
-                      name: 'showSelect',
-                      type: 'radio',
-                      contentProps: {
-                        options: [{ label: '是', value: 1 }, { label: '否', value: 2 }],
-                        onChange: e => setSkip(e.target.value === 2),
-                      }
-                    },
-                    {
-                      label: '下拉',
-                      name: 'isSelect',
-                      type: 'select',
-                      skip: skip,
-                      contentProps: {
-                        options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2 }]
-                      }
-                    }
-                  ]}
-                  layout={layout}
-                />
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                  <Button type="primary" htmlType="submit">提交</Button>
-                </Form.Item>
-              </Form>
-            )
-          }
+    return (
+      <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+        <FormItemCreator
+          columns={[
+            {
+              label: '是否显示下拉',
+              name: 'showSelect',
+              type: 'radio',
+              contentProps: {
+                options: [{ label: '是', value: 1 }, { label: '否', value: 2 }],
+                onChange: e => setSkip(e.target.value === 2),
+              }
+            },
+            {
+              label: '下拉',
+              name: 'isSelect',
+              type: 'select',
+              skip: skip,
+              contentProps: {
+                options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2 }]
+              }
+            }
+          ]}
+          layout={layout}
+        />
+        <Form.Item wrapperCol={{ offset: 4 }}>
+          <Button type="primary" htmlType="submit">提交</Button>
+        </Form.Item>
+      </Form>
+    )
+  }
   
         `}
       >
