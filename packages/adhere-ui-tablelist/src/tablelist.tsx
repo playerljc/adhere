@@ -259,7 +259,7 @@ class TableList<RecordType extends object = any> extends React.Component<
         rowKey={rowKey}
         pagination={this.getPagination(pagination)}
         loading={this.getLoading(loading)}
-        renderItem={(item, index) => {
+        renderItem={(item: any, index) => {
           const key = typeof rowKey === 'function' ? rowKey(item) : rowKey;
           return (
             <List.Item>
