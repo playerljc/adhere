@@ -628,7 +628,34 @@ export default () => (
       mode="code"
       scope={{ React }}
       codeText={`
+  import React from 'react';
+  import { Button } from 'antd';
+  import { MessageDialog,FormItemCreator } from '@baifendian/adhere';
   
+  <Button
+    type="primary"
+    onClick={() => {
+      MessageDialog.Prompt({
+        title: '提示',
+        config: {
+          type: FormItemCreator.SLIDER,
+          label: '大小',
+          initialValue: 10,
+        },
+        width: 300,
+        zIndex: 1000,
+        local: 'zh_CN',
+        onSuccess: (value) => {
+          return new Promise((resolve) => {
+            alert(value);
+            resolve();
+          });
+        },
+      });
+    }}
+  >
+    Open Prompt
+  </Button>
       `}
     >
       <Button
@@ -662,7 +689,33 @@ export default () => (
       mode="code"
       scope={{ React }}
       codeText={`
+  import React from 'react';
+  import { Button } from 'antd';
+  import { MessageDialog } from '@baifendian/adhere';
   
+  <Button
+    type="primary"
+    onClick={() => {
+      MessageDialog.InputPrompt({
+        title: '提示',
+        config: {
+          label: '姓名',
+          initialValue: '张三',
+        },
+        width: 300,
+        zIndex: 1000,
+        local: 'zh_CN',
+        onSuccess: (value) => {
+          return new Promise((resolve) => {
+            alert(value);
+            resolve();
+          });
+        },
+      });
+    }}
+  >
+    Open InputPrompt
+  </Button>
       `}
     >
       <Button
@@ -695,7 +748,33 @@ export default () => (
       mode="code"
       scope={{ React }}
       codeText={`
+  import React from 'react';
+  import { Button } from 'antd';
+  import { MessageDialog } from '@baifendian/adhere';
   
+  <Button
+    type="primary"
+    onClick={() => {
+      MessageDialog.TextAreaPrompt({
+        title: '提示',
+        config: {
+          label: '地址',
+          initialValue: '',
+        },
+        width: 300,
+        zIndex: 1000,
+        local: 'zh_CN',
+        onSuccess: (value) => {
+          return new Promise((resolve) => {
+            alert(value);
+            resolve();
+          });
+        },
+      });
+    }}
+  >
+    Open InputPrompt
+  </Button>
       `}
     >
       <Button
@@ -728,7 +807,33 @@ export default () => (
       mode="code"
       scope={{ React }}
       codeText={`
+  import React from 'react';
+  import { Button } from 'antd';
+  import { MessageDialog } from '@baifendian/adhere';
   
+  <Button
+    type="primary"
+    onClick={() => {
+      MessageDialog.PassWordPrompt({
+        title: '提示',
+        config: {
+          label: '密码',
+          initialValue: '',
+        },
+        width: 300,
+        zIndex: 1000,
+        local: 'zh_CN',
+        onSuccess: (value) => {
+          return new Promise((resolve) => {
+            alert(value);
+            resolve();
+          });
+        },
+      });
+    }}
+  >
+    Open PassWordPrompt
+  </Button>
       `}
     >
       <Button
@@ -761,7 +866,33 @@ export default () => (
       mode="code"
       scope={{ React }}
       codeText={`
+  import React from 'react';
+  import { Button } from 'antd';
+  import { MessageDialog } from '@baifendian/adhere';
   
+  <Button
+    type="primary"
+    onClick={() => {
+      MessageDialog.NumberPrompt({
+        title: '提示',
+        config: {
+          label: '数字',
+          initialValue: '',
+        },
+        width: 300,
+        zIndex: 1000,
+        local: 'zh_CN',
+        onSuccess: (value) => {
+          return new Promise((resolve) => {
+            alert(value);
+            resolve();
+          });
+        },
+      });
+    }}
+  >
+    Open NumberPrompt
+  </Button>
       `}
     >
       <Button
