@@ -1,5 +1,20 @@
 import React from 'react';
-import { Input, InputNumber, Radio, Checkbox, Select, DatePicker, Switch, TreeSelect, Slider, TimePicker, Rate, Upload } from 'antd';
+import {
+  Input,
+  InputNumber,
+  Radio,
+  Checkbox,
+  Select,
+  DatePicker,
+  Switch,
+  TreeSelect,
+  Slider,
+  TimePicker,
+  Rate,
+  Upload,
+} from 'antd';
+
+import Intl from '@baifendian/adhere-util-intl';
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
@@ -7,44 +22,47 @@ const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Option } = Select;
 
-const renderText = ({ value, ...others }) => (
-  <Input {...others} readOnly />
-);
+const renderText = ({ value, ...others }) => <Input {...others} readOnly />;
 
-const renderInput = ({ type, maxLength = 100, placeholder = '请输入', ...others }) => (
+const renderInput = ({ type, maxLength = 100, placeholder = Intl.v('请输入'), ...others }) => (
   <Input
     autoComplete="off"
     type={type}
-    maxLength={maxLength}
+    maxLength={maxLength || 100}
     placeholder={placeholder}
     {...others}
   />
 );
 
-const renderSearch = ({ maxLength = 800, placeholder = '请输入', ...others }) => (
+const renderSearch = ({ maxLength = 800, placeholder = Intl.v('请输入'), ...others }) => (
   <Input.Search
     autoComplete="off"
-    maxLength={maxLength}
+    maxLength={maxLength || 800}
     placeholder={placeholder}
     {...others}
   />
 );
 
-const renderInputArea = ({ maxLength = 500, rows = 4, placeholder = '请输入', ...others }) => (
+const renderInputArea = ({
+  maxLength = 500,
+  rows = 4,
+  placeholder = Intl.v('请输入'),
+  ...others
+}) => (
   <TextArea
     autoComplete="off"
-    maxLength={maxLength}
+    maxLength={maxLength || 500}
     rows={rows}
     placeholder={placeholder}
     {...others}
   />
 );
 
-const renderPassword = ({ type, maxLength = 800, placeholder = '请输入', ...others }) => (
+const renderPassword = ({ type, maxLength = 800, placeholder = Intl.v('请输入'), ...others }) => (
   <Input.Password
     autoComplete="off"
     type={type}
-    maxLength={maxLength}
+    maxLength={maxLength || 800}
     placeholder={placeholder}
     {...others}
   />
@@ -74,11 +92,16 @@ const renderCheckbox = ({ options, ...others }) =>
     <CheckboxGroup options={options} {...others} />
   );
 
-const renderSelect = ({ optGroup, options, placeholder = '请选择', renderOption, ...others }) => {
+const renderSelect = ({
+  optGroup,
+  options,
+  placeholder = Intl.v('请选择'),
+  renderOption,
+  ...others
+}) => {
   const renderOptionItem = (arr) =>
-    (arr || []).map((v, i) => (
-      /* eslint-disable react/no-array-index-key */
-      <Option value={v.value} key={`select-option-${i}`} disabled={v.disabled}>
+    (arr || []).map((v) => (
+      <Option value={v.value} key={v.value} disabled={v.disabled}>
         {renderOption ? renderOption(v) : v.label}
       </Option>
     ));
@@ -91,21 +114,19 @@ const renderSelect = ({ optGroup, options, placeholder = '请选择', renderOpti
   );
 };
 
-const renderRangepicker = ({ format, ...others }) => <RangePicker format={format} {...others} />;
+const renderRangePicker = ({ format, ...others }) => <RangePicker format={format} {...others} />;
 
-const renderDatepicker = ({ format, ...others }) => <DatePicker format={format} {...others} />;
+const renderDatePicker = ({ format, ...others }) => <DatePicker format={format} {...others} />;
 
 const renderTimePicker = ({ ...others }) => <TimePicker {...others} />;
 
 const renderSwitch = (item) => <Switch {...item} />;
 
-const renderTreeselect = ({ data, allowClear, ...others }) => (
+const renderTreeSelect = ({ data, allowClear, ...others }) => (
   <TreeSelect allowClear={allowClear} treeData={data} {...others} />
 );
 
-const renderSlider = ({ ...others }) => (
-  <Slider {...others} />
-);
+const renderSlider = ({ ...others }) => <Slider {...others} />;
 
 const renderRate = ({ ...others }) => <Rate {...others} />;
 
@@ -121,11 +142,11 @@ export default {
   renderRadio,
   renderCheckbox,
   renderSelect,
-  renderDatepicker,
-  renderRangepicker,
+  renderDatePicker,
+  renderRangePicker,
   renderTimePicker,
   renderSwitch,
-  renderTreeselect,
+  renderTreeSelect,
   renderSlider,
   renderRate,
   renderUpload,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Result, Button } from 'antd';
-import { MessageDialog } from '@baifendian/adhere';
+import { MessageDialog, FormItemCreator } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -100,6 +100,326 @@ export default () => (
               name: 'text',
               desc: '显示的内容',
               type: 'String | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'width',
+              desc: '宽度',
+              type: 'number',
+              defaultVal: '300',
+              required: '',
+            },
+            {
+              name: 'zIndex',
+              desc: '层级',
+              type: 'number',
+              defaultVal: '1000',
+              required: '',
+            },
+            {
+              name: 'local',
+              desc: '语言',
+              type: 'string [zh_CN | pt_PT | en_US]',
+              defaultVal: 'zh_CN',
+              required: '',
+            },
+            {
+              name: 'icon',
+              desc: '图标',
+              type: 'string | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+          ],
+          returnType: 'void',
+          returnDesc: '',
+        },
+      ]}
+    />
+
+    <h3>Prompt方法</h3>
+    <FunctionProps
+      data={[
+        {
+          name: 'MessageDialog.Prompt',
+          desc: '打开一个FormItem的窗体',
+          modifier: 'static',
+          params: [
+            {
+              name: 'title',
+              desc: '标题',
+              type: 'String | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'config',
+              desc: 'FormItemCreator的一个配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'layout',
+              desc: 'FormItemCreator的layout配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'width',
+              desc: '宽度',
+              type: 'number',
+              defaultVal: '300',
+              required: '',
+            },
+            {
+              name: 'zIndex',
+              desc: '层级',
+              type: 'number',
+              defaultVal: '1000',
+              required: '',
+            },
+            {
+              name: 'local',
+              desc: '语言',
+              type: 'string [zh_CN | pt_PT | en_US]',
+              defaultVal: 'zh_CN',
+              required: '',
+            },
+            {
+              name: 'icon',
+              desc: '图标',
+              type: 'string | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+          ],
+          returnType: 'void',
+          returnDesc: '',
+        },
+      ]}
+    />
+
+    <h3>InputPrompt方法</h3>
+    <FunctionProps
+      data={[
+        {
+          name: 'MessageDialog.InputPrompt方法',
+          desc: '打开一个InputFormItem的窗体',
+          modifier: 'static',
+          params: [
+            {
+              name: 'title',
+              desc: '标题',
+              type: 'String | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'config',
+              desc: 'FormItemCreator的一个配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'layout',
+              desc: 'FormItemCreator的layout配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'width',
+              desc: '宽度',
+              type: 'number',
+              defaultVal: '300',
+              required: '',
+            },
+            {
+              name: 'zIndex',
+              desc: '层级',
+              type: 'number',
+              defaultVal: '1000',
+              required: '',
+            },
+            {
+              name: 'local',
+              desc: '语言',
+              type: 'string [zh_CN | pt_PT | en_US]',
+              defaultVal: 'zh_CN',
+              required: '',
+            },
+            {
+              name: 'icon',
+              desc: '图标',
+              type: 'string | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+          ],
+          returnType: 'void',
+          returnDesc: '',
+        },
+      ]}
+    />
+
+    <h3>TextAreaPrompt方法</h3>
+    <FunctionProps
+      data={[
+        {
+          name: 'MessageDialog.TextAreaPrompt方法',
+          desc: '打开一个TextAreaFormItem的窗体',
+          modifier: 'static',
+          params: [
+            {
+              name: 'title',
+              desc: '标题',
+              type: 'String | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'config',
+              desc: 'FormItemCreator的一个配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'layout',
+              desc: 'FormItemCreator的layout配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'width',
+              desc: '宽度',
+              type: 'number',
+              defaultVal: '300',
+              required: '',
+            },
+            {
+              name: 'zIndex',
+              desc: '层级',
+              type: 'number',
+              defaultVal: '1000',
+              required: '',
+            },
+            {
+              name: 'local',
+              desc: '语言',
+              type: 'string [zh_CN | pt_PT | en_US]',
+              defaultVal: 'zh_CN',
+              required: '',
+            },
+            {
+              name: 'icon',
+              desc: '图标',
+              type: 'string | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+          ],
+          returnType: 'void',
+          returnDesc: '',
+        },
+      ]}
+    />
+
+    <h3>PassWordPrompt方法</h3>
+    <FunctionProps
+      data={[
+        {
+          name: 'MessageDialog.PassWordPrompt方法',
+          desc: '打开一个PassWordFormItem的窗体',
+          modifier: 'static',
+          params: [
+            {
+              name: 'title',
+              desc: '标题',
+              type: 'String | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'config',
+              desc: 'FormItemCreator的一个配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'layout',
+              desc: 'FormItemCreator的layout配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'width',
+              desc: '宽度',
+              type: 'number',
+              defaultVal: '300',
+              required: '',
+            },
+            {
+              name: 'zIndex',
+              desc: '层级',
+              type: 'number',
+              defaultVal: '1000',
+              required: '',
+            },
+            {
+              name: 'local',
+              desc: '语言',
+              type: 'string [zh_CN | pt_PT | en_US]',
+              defaultVal: 'zh_CN',
+              required: '',
+            },
+            {
+              name: 'icon',
+              desc: '图标',
+              type: 'string | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+          ],
+          returnType: 'void',
+          returnDesc: '',
+        },
+      ]}
+    />
+
+    <h3>NumberPromptPrompt方法</h3>
+    <FunctionProps
+      data={[
+        {
+          name: 'MessageDialog.NumberPrompt方法',
+          desc: '打开一个NumberFormItem的窗体',
+          modifier: 'static',
+          params: [
+            {
+              name: 'title',
+              desc: '标题',
+              type: 'String | React.ReactElement',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'config',
+              desc: 'FormItemCreator的一个配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
+              defaultVal: '',
+              required: '',
+            },
+            {
+              name: 'layout',
+              desc: 'FormItemCreator的layout配置，请参考adhere-ui-formitemcreator',
+              type: 'Object',
               defaultVal: '',
               required: '',
             },
@@ -300,6 +620,172 @@ export default () => (
         }}
       >
         Open Alert
+      </Button>
+    </Playground>
+
+    <h2>使用Prompt</h2>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  
+      `}
+    >
+      <Button
+        type="primary"
+        onClick={() => {
+          MessageDialog.Prompt({
+            title: '提示',
+            config: {
+              type: FormItemCreator.SLIDER,
+              label: '大小',
+              initialValue: 10,
+            },
+            width: 300,
+            zIndex: 1000,
+            local: 'zh_CN',
+            onSuccess: (value) => {
+              return new Promise((resolve) => {
+                alert(value);
+                resolve();
+              });
+            },
+          });
+        }}
+      >
+        Open Prompt
+      </Button>
+    </Playground>
+
+    <h2>使用InputPrompt</h2>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  
+      `}
+    >
+      <Button
+        type="primary"
+        onClick={() => {
+          MessageDialog.InputPrompt({
+            title: '提示',
+            config: {
+              label: '姓名',
+              initialValue: '张三',
+            },
+            width: 300,
+            zIndex: 1000,
+            local: 'zh_CN',
+            onSuccess: (value) => {
+              return new Promise((resolve) => {
+                alert(value);
+                resolve();
+              });
+            },
+          });
+        }}
+      >
+        Open InputPrompt
+      </Button>
+    </Playground>
+
+    <h2>使用TextAreaPrompt</h2>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  
+      `}
+    >
+      <Button
+        type="primary"
+        onClick={() => {
+          MessageDialog.TextAreaPrompt({
+            title: '提示',
+            config: {
+              label: '地址',
+              initialValue: '',
+            },
+            width: 300,
+            zIndex: 1000,
+            local: 'zh_CN',
+            onSuccess: (value) => {
+              return new Promise((resolve) => {
+                alert(value);
+                resolve();
+              });
+            },
+          });
+        }}
+      >
+        Open InputPrompt
+      </Button>
+    </Playground>
+
+    <h2>使用PassWordPrompt</h2>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  
+      `}
+    >
+      <Button
+        type="primary"
+        onClick={() => {
+          MessageDialog.PassWordPrompt({
+            title: '提示',
+            config: {
+              label: '密码',
+              initialValue: '',
+            },
+            width: 300,
+            zIndex: 1000,
+            local: 'zh_CN',
+            onSuccess: (value) => {
+              return new Promise((resolve) => {
+                alert(value);
+                resolve();
+              });
+            },
+          });
+        }}
+      >
+        Open PassWordPrompt
+      </Button>
+    </Playground>
+
+    <h2>使用NumberPrompt</h2>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  
+      `}
+    >
+      <Button
+        type="primary"
+        onClick={() => {
+          MessageDialog.NumberPrompt({
+            title: '提示',
+            config: {
+              label: '数字',
+              initialValue: '',
+            },
+            width: 300,
+            zIndex: 1000,
+            local: 'zh_CN',
+            onSuccess: (value) => {
+              return new Promise((resolve) => {
+                alert(value);
+                resolve();
+              });
+            },
+          });
+        }}
+      >
+        Open NumberPrompt
       </Button>
     </Playground>
 

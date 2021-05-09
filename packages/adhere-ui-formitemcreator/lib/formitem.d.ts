@@ -47,11 +47,11 @@ declare const _default: {
         placeholder?: string | undefined;
         renderOption: any;
     }) => JSX.Element;
-    renderDatepicker: ({ format, ...others }: {
+    renderDatePicker: ({ format, ...others }: {
         [x: string]: any;
         format: any;
     }) => JSX.Element;
-    renderRangepicker: ({ format, ...others }: {
+    renderRangePicker: ({ format, ...others }: {
         [x: string]: any;
         format: any;
     }) => JSX.Element;
@@ -59,7 +59,7 @@ declare const _default: {
         [x: string]: any;
     }) => JSX.Element;
     renderSwitch: (item: any) => JSX.Element;
-    renderTreeselect: ({ data, allowClear, ...others }: {
+    renderTreeSelect: ({ data, allowClear, ...others }: {
         [x: string]: any;
         data: any;
         allowClear: any;

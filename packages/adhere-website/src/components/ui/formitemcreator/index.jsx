@@ -58,8 +58,10 @@ export default () => {
         data={[
           {
             params: 'type',
-            desc:
-              '表单项类型, 可选【input, password, textarea, number, radio, checkbox, select, \n switch, slider, rate, datepicker, rangepicker, timepicker, define】',
+            desc: `表单项类型, 可选【\n
+              FormItemCreator.INPUT, FormItemCreator.PASSWORD, FormItemCreator.TEXTAREA, FormItemCreator.NUMBER, FormItemCreator.RADIO, FormItemCreator.CHECKBOX, FormItemCreator.SELECT, \n 
+              FormItemCreator.SWITCH, FormItemCreator.SLIDER, FormItemCreator.RATE, FormItemCreator.DATEPICKER, FormItemCreator.RANGEPICKER, FormItemCreator.TIMEPICKER, FormItemCreator.DEFINE \n
+            】`,
             type: 'string',
             defaultVal: '',
           },
@@ -71,7 +73,7 @@ export default () => {
           },
           {
             params: 'content',
-            desc: 'type为define时需配置此项，自定义Form.item中包裹的组件 ',
+            desc: 'type为FormItemCreator.DEFINE时需配置此项，自定义Form.item中包裹的组件 ',
             type: 'ReactNode',
             defaultVal: '',
           },
@@ -99,7 +101,7 @@ export default () => {
       />
 
       <h2>基本使用</h2>
-      <h3>【type=text】</h3>
+      <h3>【type=FormItemCreator.TEXT】</h3>
       <Playground
         mode="code"
         scope={{ React }}
@@ -126,7 +128,7 @@ export default () => {
       <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
         <FormItemCreator
           columns={[
-            { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: 'text' }
+            { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: FormItemCreator.TEXT }
           ]}
           layout={layout}
         />
@@ -141,7 +143,12 @@ export default () => {
         <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormItemCreator
             columns={[
-              { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: 'text' },
+              {
+                label: '就是一个查看',
+                name: 'name',
+                initialValue: '我就是一个查看',
+                type: FormItemCreator.TEXT,
+              },
             ]}
             layout={layout}
           />
@@ -153,7 +160,10 @@ export default () => {
         </Form>
       </Playground>
 
-      <h3>【type=input | password | textarea | number】</h3>
+      <h3>
+        【type=FormItemCreator.TEXT | FormItemCreator.PASSWORD | FormItemCreator.TEXTAREA |
+        FormItemCreator.NUMBER】
+      </h3>
       <Playground
         mode="code"
         scope={{ React }}
@@ -183,27 +193,27 @@ export default () => {
             {
               label: '输入框',
               name: 'name',
-              type: 'input',
+              type: FormItemCreator.INPUT,
               rules: [{ required: true, message: '请输入'}],
               contentProps: { placeholder: '请输入关键词' },
             },
             {
               label: '密码框',
               name: 'password',
-              type: 'password',
+              type: FormItemCreator.PASSWORD,
               rules: [{ required: true, message: '请输入'}],
               contentProps: { placeholder: '请输入密码' },
             },
             {
               label: '文本域',
               name: 'des',
-              type: 'textarea',
+              type: FormItemCreator.TEXTAREA,
               contentProps: { rows: 8 },
             },
             {
               label: '数值输入框',
               name: 'number',
-              type: 'number',
+              type: FormItemCreator.NUMBER,
               contentProps: { min: 10 },
             }
           ]}
@@ -215,7 +225,6 @@ export default () => {
       </Form>
     )
   }
-  
         `}
       >
         <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -224,27 +233,27 @@ export default () => {
               {
                 label: '输入框',
                 name: 'name',
-                type: 'input',
+                type: FormItemCreator.INPUT,
                 rules: [{ required: true, message: '请输入' }],
                 contentProps: { placeholder: '请输入关键词' },
               },
               {
                 label: '密码框',
                 name: 'password',
-                type: 'password',
+                type: FormItemCreator.PASSWORD,
                 rules: [{ required: true, message: '请输入' }],
                 contentProps: { placeholder: '请输入密码' },
               },
               {
                 label: '文本域',
                 name: 'des',
-                type: 'textarea',
+                type: FormItemCreator.TEXTAREA,
                 contentProps: { rows: 8 },
               },
               {
                 label: '数值输入框',
                 name: 'number',
-                type: 'number',
+                type: FormItemCreator.NUMBER,
                 contentProps: { min: 10 },
               },
             ]}
@@ -290,7 +299,7 @@ export default () => {
             {
               label: '单选框1',
               name: 'radio1',
-              type: 'radio',
+              type: FormItemCreator.RADIO,
               contentProps: {
                 options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
               },
@@ -298,7 +307,7 @@ export default () => {
             {
               label: '单选框2-按钮形式',
               name: 'radio2',
-              type: 'radio',
+              type: FormItemCreator.RADIO,
               contentProps: {
                 optionType: 'button',
                 options: [{ label: '单选1', value: 1 }, { label: '单选2', value: 2}]
@@ -307,7 +316,7 @@ export default () => {
             {
               label: '复选框',
               name: 'checkbox1',
-              type: 'checkbox',
+              type: FormItemCreator.CHECKBOX,
               contentProps: {
                 options: [{ label: '复选1', value: 1 }, { label: '复选2', value: 2}]
               },
@@ -315,7 +324,7 @@ export default () => {
             {
               label: '下拉',
               name: 'select1',
-              type: 'select',
+              type: FormItemCreator.SELECT,
               contentProps: {
                 options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
               },
@@ -323,7 +332,7 @@ export default () => {
             {
               label: '多选下拉',
               name: 'select2',
-              type: 'select',
+              type: FormItemCreator.SELECT,
               contentProps: {
                 mode: 'multiple',
                 options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2}]
@@ -338,7 +347,6 @@ export default () => {
       </Form>
     )
   }
-  
         `}
       >
         <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -347,7 +355,7 @@ export default () => {
               {
                 label: '单选框1',
                 name: 'radio1',
-                type: 'radio',
+                type: FormItemCreator.RADIO,
                 contentProps: {
                   options: [
                     { label: '单选1', value: 1 },
@@ -358,7 +366,7 @@ export default () => {
               {
                 label: '单选框2-按钮形式',
                 name: 'radio2',
-                type: 'radio',
+                type: FormItemCreator.RADIO,
                 contentProps: {
                   optionType: 'button',
                   options: [
@@ -370,7 +378,7 @@ export default () => {
               {
                 label: '复选框',
                 name: 'checkbox1',
-                type: 'checkbox',
+                type: FormItemCreator.CHECKBOX,
                 contentProps: {
                   options: [
                     { label: '复选1', value: 1 },
@@ -381,7 +389,7 @@ export default () => {
               {
                 label: '下拉',
                 name: 'select1',
-                type: 'select',
+                type: FormItemCreator.SELECT,
                 contentProps: {
                   options: [
                     { label: '下拉1', value: 1 },
@@ -392,7 +400,7 @@ export default () => {
               {
                 label: '多选下拉',
                 name: 'select2',
-                type: 'select',
+                type: FormItemCreator.SELECT,
                 contentProps: {
                   mode: 'multiple',
                   options: [
@@ -442,7 +450,7 @@ export default () => {
             {
               label: '开关',
               name: 'switch',
-              type: 'switch',
+              type: FormItemCreator.SWITCH,
               contentProps: {
                 // antd switch支持的属性
                 checkedChildren: '开启',
@@ -451,7 +459,7 @@ export default () => {
             {
               label: '滑动条',
               name: 'slider',
-              type: 'slider',
+              type: FormItemCreator.SLIDER,
               contentProps: {
                 // antd slider支持的属性
                 range: true,
@@ -460,7 +468,7 @@ export default () => {
             {
               label: '评分',
               name: 'rate',
-              type: 'rate',
+              type: FormItemCreator.RATE,
               contentProps: {
                 // antd rate支持的属性
                 allowHalf: true,
@@ -475,7 +483,6 @@ export default () => {
       </Form>
     )
   }
-  
         `}
       >
         <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -484,7 +491,7 @@ export default () => {
               {
                 label: '开关',
                 name: 'switch',
-                type: 'switch',
+                type: FormItemCreator.SWITCH,
                 contentProps: {
                   // antd switch支持的属性
                   checkedChildren: '开启',
@@ -493,7 +500,7 @@ export default () => {
               {
                 label: '滑动条',
                 name: 'slider',
-                type: 'slider',
+                type: FormItemCreator.SLIDER,
                 contentProps: {
                   // antd slider支持的属性
                   range: true,
@@ -502,7 +509,7 @@ export default () => {
               {
                 label: '评分',
                 name: 'rate',
-                type: 'rate',
+                type: FormItemCreator.RATE,
                 contentProps: {
                   // antd rate支持的属性
                   allowHalf: true,
@@ -519,7 +526,9 @@ export default () => {
         </Form>
       </Playground>
 
-      <h3>【type=datepicker | rangepicker | timepicker</h3>
+      <h3>
+        【type=FormItemCreator.DATEPICKER | FormItemCreator.RANGEPICKER | FormItemCreator.TIMEPICKER
+      </h3>
       <Playground
         mode="code"
         scope={{ React }}
@@ -549,7 +558,7 @@ export default () => {
             {
               label: '选择日期',
               name: 'date',
-              type: 'datepicker',
+              type: FormItemCreator.DATEPICKER,
               contentProps: {
                 // antd DatePicker支持的属性
               },
@@ -557,7 +566,7 @@ export default () => {
             {
               label: '选择年份',
               name: 'year',
-              type: 'datepicker',
+              type: FormItemCreator.DATEPICKER,
               contentProps: {
                 // antd DatePicker支持的属性
                 picker: 'year',
@@ -566,7 +575,7 @@ export default () => {
             {
               label: '选择月份',
               name: 'month',
-              type: 'datepicker',
+              type: FormItemCreator.DATEPICKER,
               contentProps: {
                 // antd DatePicker支持的属性
                 picker: 'month',
@@ -575,7 +584,7 @@ export default () => {
             {
               label: '选择季度',
               name: 'quarter',
-              type: 'datepicker',
+              type: FormItemCreator.DATEPICKER,
               contentProps: {
                 // antd DatePicker支持的属性
                 picker: 'quarter',
@@ -584,7 +593,7 @@ export default () => {
             {
               label: '选择周',
               name: 'week',
-              type: 'datepicker',
+              type: FormItemCreator.DATEPICKER,
               contentProps: {
                 // antd DatePicker支持的属性
                 picker: 'week',
@@ -593,7 +602,7 @@ export default () => {
             {
               label: '选择日期范围',
               name: 'rangedate',
-              type: 'rangepicker',
+              type: FormItemCreator.RANGEPICKER,
               contentProps: {
                 // antd DatePicker.RangePicker支持的属性
               },
@@ -601,7 +610,7 @@ export default () => {
             {
               label: '选择时间',
               name: 'time',
-              type: 'timepicker',
+              type: FormItemCreator.TIMEPICKER,
               contentProps: {
                 // antd TimePicker支持的属性
               },
@@ -615,7 +624,6 @@ export default () => {
       </Form>
     )
   }
-  
         `}
       >
         <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -624,7 +632,7 @@ export default () => {
               {
                 label: '选择日期',
                 name: 'date',
-                type: 'datepicker',
+                type: FormItemCreator.DATEPICKER,
                 contentProps: {
                   // antd DatePicker支持的属性
                 },
@@ -632,7 +640,7 @@ export default () => {
               {
                 label: '选择年份',
                 name: 'year',
-                type: 'datepicker',
+                type: FormItemCreator.DATEPICKER,
                 contentProps: {
                   // antd DatePicker支持的属性
                   picker: 'year',
@@ -641,7 +649,7 @@ export default () => {
               {
                 label: '选择月份',
                 name: 'month',
-                type: 'datepicker',
+                type: FormItemCreator.DATEPICKER,
                 contentProps: {
                   // antd DatePicker支持的属性
                   picker: 'month',
@@ -650,7 +658,7 @@ export default () => {
               {
                 label: '选择季度',
                 name: 'quarter',
-                type: 'datepicker',
+                type: FormItemCreator.DATEPICKER,
                 contentProps: {
                   // antd DatePicker支持的属性
                   picker: 'quarter',
@@ -659,7 +667,7 @@ export default () => {
               {
                 label: '选择周',
                 name: 'week',
-                type: 'datepicker',
+                type: FormItemCreator.DATEPICKER,
                 contentProps: {
                   // antd DatePicker支持的属性
                   picker: 'week',
@@ -668,7 +676,7 @@ export default () => {
               {
                 label: '选择日期范围',
                 name: 'rangedate',
-                type: 'rangepicker',
+                type: FormItemCreator.RANGEPICKER,
                 contentProps: {
                   // antd DatePicker.RangePicker支持的属性
                 },
@@ -676,7 +684,7 @@ export default () => {
               {
                 label: '选择时间',
                 name: 'time',
-                type: 'timepicker',
+                type: FormItemCreator.TIMEPICKER,
                 contentProps: {
                   // antd TimePicker支持的属性
                 },
@@ -692,7 +700,7 @@ export default () => {
         </Form>
       </Playground>
 
-      <h3>【type=upload | define】</h3>
+      <h3>【type=FormItemCreator.UPLOAD | FormItemCreator.DEFINE】</h3>
       <Playground
         mode="code"
         scope={{ React }}
@@ -722,7 +730,7 @@ export default () => {
             {
               label: '上传头像',
               name: 'image',
-              type: 'upload',
+              type: FormItemCreator.UPLOAD,
               contentProps: {
                 // antd Upload支持的属性
                 // children 是upload组件包括的组件
@@ -732,7 +740,7 @@ export default () => {
             {
               label: '自己定义的表单项',
               name: 'my',
-              type: 'define',
+              type: FormItemCreator.DEFINE,
               content: <div>我就是自定义的</div>,
               contentProps: {
                 // 传给content的属性
@@ -747,7 +755,6 @@ export default () => {
       </Form>
     )
   }
-  
         `}
       >
         <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -756,7 +763,7 @@ export default () => {
               {
                 label: '上传头像',
                 name: 'image',
-                type: 'upload',
+                type: FormItemCreator.UPLOAD,
                 contentProps: {
                   // antd Upload支持的属性
                   // children 是upload组件包括的组件
@@ -766,7 +773,7 @@ export default () => {
               {
                 label: '自己定义的表单项',
                 name: 'my',
-                type: 'define',
+                type: FormItemCreator.DEFINE,
                 content: <div>我就是自定义的</div>,
                 contentProps: {
                   // 传给content的属性
@@ -814,7 +821,7 @@ export default () => {
             {
               label: '是否显示下拉',
               name: 'showSelect',
-              type: 'radio',
+              type: FormItemCreator.RADIO,
               contentProps: {
                 options: [{ label: '是', value: 1 }, { label: '否', value: 2 }],
                 onChange: e => setSkip(e.target.value === 2),
@@ -823,7 +830,7 @@ export default () => {
             {
               label: '下拉',
               name: 'isSelect',
-              type: 'select',
+              type: FormItemCreator.SELECT,
               skip: skip,
               contentProps: {
                 options: [{ label: '下拉1', value: 1 }, { label: '下拉2', value: 2 }]
@@ -838,7 +845,6 @@ export default () => {
       </Form>
     )
   }
-  
         `}
       >
         <Form name="skipDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -847,7 +853,7 @@ export default () => {
               {
                 label: '是否显示下拉',
                 name: 'showSelect',
-                type: 'radio',
+                type: FormItemCreator.RADIO,
                 contentProps: {
                   options: [
                     { label: '是', value: 1 },
@@ -859,7 +865,7 @@ export default () => {
               {
                 label: '下拉',
                 name: 'isSelect',
-                type: 'select',
+                type: FormItemCreator.SELECT,
                 skip,
                 contentProps: {
                   options: [

@@ -1,5 +1,5 @@
 import { IAlertArgv, IConfirmArgv } from './types';
-declare const _default: {
+declare const MessageDialogFactory: {
     /**
      * Confirm
      * @param title {String | ReactNode}
@@ -20,6 +20,48 @@ declare const _default: {
      * @param icon - {React.ReactElement | null}
      */
     Alert({ title, text, width, zIndex, local, icon }: IAlertArgv): void;
+    /**
+     * Prompt
+     * @param title
+     * @param config
+     * @param width
+     * @param zIndex
+     * @param local
+     * @param onSuccess
+     * @constructor
+     */
+    Prompt({ title, config, layout, width, zIndex, local, onSuccess }: {
+        title: any;
+        config: any;
+        layout?: {
+            labelCol: {
+                span: number;
+            };
+            wrapperCol: {
+                span: number;
+            };
+        } | undefined;
+        width?: number | undefined;
+        zIndex?: number | undefined;
+        local: any;
+        onSuccess: any;
+    }): void;
+    InputPrompt({ config, ...params }: {
+        [x: string]: any;
+        config: any;
+    }): void;
+    TextAreaPrompt({ config, ...params }: {
+        [x: string]: any;
+        config: any;
+    }): void;
+    PassWordPrompt({ config, ...params }: {
+        [x: string]: any;
+        config: any;
+    }): void;
+    NumberPrompt({ config, ...params }: {
+        [x: string]: any;
+        config: any;
+    }): void;
     /**
      *  Modal
      *  @param {Object} - config
@@ -47,4 +89,4 @@ declare const _default: {
      */
     close(el: HTMLElement): void;
 };
-export default _default;
+export default MessageDialogFactory;

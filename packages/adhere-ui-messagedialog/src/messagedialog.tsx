@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ConfigProvider, Button } from 'antd';
+import { ConfigProvider, Button, Form } from 'antd';
 
 import intl from '@baifendian/adhere-util-intl';
-
-// @ts-ignore
 import Resource from '@baifendian/adhere-util-resource';
+import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 
 import { IAlertArgv, IConfirmArgv } from './types';
 
@@ -18,6 +17,11 @@ import { selectorPrefix } from './modal';
 const DEFAULT_LOCAL = 'zh_CN';
 
 const LOCAL = Resource.Dict.value.LocalsAntd;
+
+const PromptLayout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
+};
 
 /**
  * renderByIcon
@@ -35,8 +39,7 @@ function renderByIcon(icon, text) {
 }
 
 // @ts-ignore
-// @ts-ignore
-export default {
+const MessageDialogFactory = {
   /**
    * Confirm
    * @param title {String | ReactNode}
@@ -112,6 +115,110 @@ export default {
     });
   },
   /**
+   * Prompt
+   * @param title
+   * @param config
+   * @param width
+   * @param zIndex
+   * @param local
+   * @param onSuccess
+   * @constructor
+   */
+  Prompt({ title, config, layout = PromptLayout, width = 300, zIndex = 1000, local, onSuccess }) {
+    const ref = React.createRef();
+
+    const el = this.Modal({
+      config: {
+        title,
+        centered: true,
+        width: width || 300,
+        closable: false,
+        zIndex,
+        footer: [
+          <Button
+            key="submit"
+            type="primary"
+            title={intl.v('确定')}
+            onClick={() => {
+              if (onSuccess) {
+                // @ts-ignore
+                ref.current.validateFields().then((values) => {
+                  onSuccess(values.value).then(() => {
+                    Emitter.trigger(Actions.close, el);
+                  });
+                });
+              } else {
+                Emitter.trigger(Actions.close, el);
+              }
+            }}
+          >
+            {intl.v('确定')}
+          </Button>,
+        ],
+      },
+      local,
+      // @ts-ignore
+      children: (
+        // @ts-ignore
+        <Form name="Prompt" ref={ref} style={{ width: '100%' }}>
+          <FormItemCreator
+            columns={[
+              {
+                ...(config || {
+                  label: 'normal',
+                  type: FormItemCreator.TEXT,
+                  initialValue: '',
+                }),
+                name: 'value',
+              },
+            ]}
+            layout={layout || PromptLayout}
+          />
+        </Form>
+      ),
+    });
+  },
+  InputPrompt({ config, ...params }) {
+    // @ts-ignore
+    MessageDialogFactory.Prompt({
+      ...params,
+      config: {
+        ...config,
+        type: FormItemCreator.INPUT,
+      },
+    });
+  },
+  TextAreaPrompt({ config, ...params }) {
+    // @ts-ignore
+    MessageDialogFactory.Prompt({
+      ...params,
+      config: {
+        ...config,
+        type: FormItemCreator.TEXTAREA,
+      },
+    });
+  },
+  PassWordPrompt({ config, ...params }) {
+    // @ts-ignore
+    MessageDialogFactory.Prompt({
+      ...params,
+      config: {
+        ...config,
+        type: FormItemCreator.PASSWORD,
+      },
+    });
+  },
+  NumberPrompt({ config, ...params }) {
+    // @ts-ignore
+    MessageDialogFactory.Prompt({
+      ...params,
+      config: {
+        ...config,
+        type: FormItemCreator.NUMBER,
+      },
+    });
+  },
+  /**
    *  Modal
    *  @param {Object} - config
    *  @param {String | ReactElement} - title
@@ -158,3 +265,5 @@ export default {
     Emitter.trigger(Actions.close, el);
   },
 };
+
+export default MessageDialogFactory;

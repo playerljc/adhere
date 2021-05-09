@@ -13,7 +13,6 @@ function isWin32() {
 
 /**
  * buildUmd
- * @param packageName
  * @return {Promise<unknown>}
  */
 function buildUmd() {

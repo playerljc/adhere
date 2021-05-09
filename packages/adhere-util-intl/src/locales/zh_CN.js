@@ -41,6 +41,8 @@ const local = getLocal([
   '列展示',
   '设置',
   '全选',
+  '请输入',
+  '请选择',
 ]);
 
 export default { ...local };

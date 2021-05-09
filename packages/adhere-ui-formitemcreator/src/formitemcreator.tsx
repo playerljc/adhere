@@ -5,8 +5,6 @@ import { Form } from 'antd';
 import renderItem from './formitem';
 import { IFormItemCreatorProps, IFormItemProps } from './types';
 
-const selectorPrefix = 'adhere-ui-formitemcreator';
-
 /**
  * FormItemCreator
  * @class FormItemCreator
@@ -16,113 +14,95 @@ class FormItemCreator extends React.Component<IFormItemCreatorProps> {
   static defaultProps: any;
   static propTypes: any;
 
-  componentDidMount() {}
+  static TEXT = Symbol('text');
+  static INPUT = Symbol('input');
+  static SEARCH = Symbol('search');
+  static PASSWORD = Symbol('password');
+  static TEXTAREA = Symbol('textarea');
+  static NUMBER = Symbol('number');
+  static RADIO = Symbol('radio');
+  static CHECKBOX = Symbol('checkbox');
+  static DATEPICKER = Symbol('datepicker');
+  static RANGEPICKER = Symbol('rangepicker');
+  static TIMEPICKER = Symbol('timepicker');
+  static SWITCH = Symbol('switch');
+  static SELECT = Symbol('select');
+  static SLIDER = Symbol('slider');
+  static RATE = Symbol('rate');
+  static UPLOAD = Symbol('upload');
+  static DEFINE = Symbol('define');
 
-  componentWillReceiveProps(nextProps: Readonly<IFormItemCreatorProps>, nextContext: any) {}
+  private readonly FORM_ITEM_CONFIG = new Map([
+    [FormItemCreator.TEXT, 'renderText'],
+    [FormItemCreator.INPUT, 'renderInput'],
+    [FormItemCreator.SEARCH, 'renderSearch'],
+    [FormItemCreator.PASSWORD, 'renderPassword'],
+    [FormItemCreator.TEXTAREA, 'renderInputArea'],
+    [FormItemCreator.NUMBER, 'renderInputNumber'],
+    [FormItemCreator.RADIO, 'renderRadio'],
+    [FormItemCreator.CHECKBOX, 'renderCheckbox'],
+    [FormItemCreator.DATEPICKER, 'renderDatePicker'],
+    [FormItemCreator.RANGEPICKER, 'renderRangePicker'],
+    [FormItemCreator.TIMEPICKER, 'renderTimePicker'],
+    [FormItemCreator.SWITCH, 'renderSwitch'],
+    [FormItemCreator.SELECT, 'renderSelect'],
+    [FormItemCreator.SLIDER, 'renderSlider'],
+    [FormItemCreator.RATE, 'renderRate'],
+    [FormItemCreator.UPLOAD, 'renderUpload'],
+  ]);
 
   /**
-   * 表单单项的默认配置 通过type来制定
+   * getDefaultItemProps - 表单单项的默认配置 通过type来制定
    * @param {Object} item
    */
-  getDefaultItemProps = (item: IFormItemProps) => {
+  private getDefaultItemProps(item: IFormItemProps) {
     switch (item.type) {
-      case 'switch':
+      case FormItemCreator.SWITCH:
         return { valuePropName: 'checked' };
-      case 'checkbox':
+      case FormItemCreator.CHECKBOX:
         return { valuePropName: 'checked' };
-      case 'upload':
+      case FormItemCreator.UPLOAD:
         return { valuePropName: 'fileList' };
       default:
         return null;
     }
-  };
+  }
 
   /**
-   * 表单单项渲染 通过type来制定
+   * renderFormItem - 表单单项渲染 通过type来制定
    * @param {Object} item
    */
-  createFormItem = (item: IFormItemProps) => {
+  private renderFormItem(item: IFormItemProps) {
     const { type, contentProps = {} } = item;
-    let component;
-    switch (type) {
-      case 'text':
-        component = renderItem.renderText(contentProps);
-        break;
-      case 'input':
-        component = renderItem.renderInput(contentProps);
-        break;
-      case 'search':
-        component = renderItem.renderSearch(contentProps);
-        break;
-      case 'password':
-        component = renderItem.renderPassword(contentProps);
-        break;
-      case 'textarea':
-        component = renderItem.renderInputArea(contentProps);
-        break;
-      case 'number':
-        component = renderItem.renderInputNumber(contentProps);
-        break;
-      case 'radio':
-        component = renderItem.renderRadio(contentProps);
-        break;
-      case 'checkbox':
-        component = renderItem.renderCheckbox(contentProps);
-        break;
-      case 'datepicker':
-        component = renderItem.renderDatepicker(contentProps);
-        break;
-      case 'rangepicker':
-        component = renderItem.renderRangepicker(contentProps);
-        break;
-      case 'timepicker':
-        component = renderItem.renderTimePicker(contentProps);
-        break;
-      case 'switch':
-        component = renderItem.renderSwitch(contentProps);
-        break;
-      case 'select':
-        component = renderItem.renderSelect(contentProps);
-        break;
-      case 'slider':
-        component = renderItem.renderSlider(contentProps);
-        break;
-      case 'rate':
-        component = renderItem.renderRate(contentProps);
-        break;
-      case 'upload':
-        component = renderItem.renderUpload(contentProps);
-        break;
-      case 'define':
-        component = item.content;
-        break;
-      default:
-        component = renderItem.renderInput(contentProps);;
-        break;
+
+    // @ts-ignore
+    if (type === FormItemCreator.DEFINE) {
+      return item.content;
+    } else {
+      // @ts-ignore
+      const renderMethodName = this.FORM_ITEM_CONFIG.get(type || FormItemCreator.INPUT);
+
+      // @ts-ignore
+      return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
     }
-    return component || null;
-  }; 
+  }
 
   render() {
     // @ts-ignore
     const { columns, layout } = this.props;
 
     // @ts-ignore
-    return (
-      columns.map((item: IFormItemProps) => {
-        const { skip, contentProps, ...itemProps } = item;
-        if (skip) return;
-        return (
-          <Form.Item
-            {...this.getDefaultItemProps(item)}
-            {...layout}
-            {...itemProps}
-          >
-            {this.createFormItem(item)}
-          </Form.Item>
-        )
-      })
-    )
+    return columns.map((item: IFormItemProps) => {
+      const { skip, contentProps, ...itemProps } = item;
+
+      if (skip) return;
+
+      return (
+        <Form.Item {...this.getDefaultItemProps(item)} {...layout} {...itemProps}>
+          {this.renderFormItem(item)}
+        </Form.Item>
+      );
+    });
   }
 }
 

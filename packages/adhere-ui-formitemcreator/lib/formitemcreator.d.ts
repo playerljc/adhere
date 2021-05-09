@@ -1,5 +1,5 @@
 import React from 'react';
-import { IFormItemCreatorProps, IFormItemProps } from './types';
+import { IFormItemCreatorProps } from './types';
 /**
  * FormItemCreator
  * @class FormItemCreator
@@ -8,20 +8,34 @@ import { IFormItemCreatorProps, IFormItemProps } from './types';
 declare class FormItemCreator extends React.Component<IFormItemCreatorProps> {
     static defaultProps: any;
     static propTypes: any;
-    componentDidMount(): void;
-    componentWillReceiveProps(nextProps: Readonly<IFormItemCreatorProps>, nextContext: any): void;
+    static TEXT: symbol;
+    static INPUT: symbol;
+    static SEARCH: symbol;
+    static PASSWORD: symbol;
+    static TEXTAREA: symbol;
+    static NUMBER: symbol;
+    static RADIO: symbol;
+    static CHECKBOX: symbol;
+    static DATEPICKER: symbol;
+    static RANGEPICKER: symbol;
+    static TIMEPICKER: symbol;
+    static SWITCH: symbol;
+    static SELECT: symbol;
+    static SLIDER: symbol;
+    static RATE: symbol;
+    static UPLOAD: symbol;
+    static DEFINE: symbol;
+    private readonly FORM_ITEM_CONFIG;
     /**
-     * 表单单项的默认配置 通过type来制定
+     * getDefaultItemProps - 表单单项的默认配置 通过type来制定
      * @param {Object} item
      */
-    getDefaultItemProps: (item: IFormItemProps) => {
-        valuePropName: string;
-    } | null;
+    private getDefaultItemProps;
     /**
-     * 表单单项渲染 通过type来制定
+     * renderFormItem - 表单单项渲染 通过type来制定
      * @param {Object} item
      */
-    createFormItem: (item: IFormItemProps) => any;
+    private renderFormItem;
     render(): (JSX.Element | undefined)[];
 }
 export default FormItemCreator;

@@ -1,1 +1,13 @@
 1.adhere-ui-conditionalrender修改
+
+2.adhere-ui-messagedialog 加入定制化dialog
+如prompt
+如进度条
+
+3.BackTopAnimation
+4.Notification
+5.PullRefresh
+6.SwipeOut
+7.ImageViewer
+
+8.FormItemCreate没有写出contentProps在不同type的时候的具体属性值都有什么
