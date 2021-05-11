@@ -38,6 +38,7 @@ const SearchTable = lazy(() => import('@/components/ui/searchtable'));
 const FormItemCreator = lazy(() => import('@/components/ui/formitemcreator'));
 const TableList = lazy(() => import('@/components/ui/tablelist'));
 const Popup = lazy(() => import('@/components/ui/popup'));
+const BackTopAnimation = lazy(() => import('@/components/ui/backtopanimation'));
 
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
@@ -249,6 +250,11 @@ export default () => [
                 path: '/adhere/ui/popup',
                 name: 'Popup',
                 component: Popup,
+              },
+              {
+                path: '/adhere/ui/backtopanimation',
+                name: 'BackTopAnimation',
+                component: BackTopAnimation,
               },
             ],
           },

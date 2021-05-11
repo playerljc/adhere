@@ -33,6 +33,7 @@ import G6 from '@baifendian/adhere-ui-g6';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import Popup from '@baifendian/adhere-ui-popup';
+import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
@@ -45,7 +46,7 @@ import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-export { 
+export {
   CascadeCompared,
   ConditionalRender,
   DelConfirm,
@@ -81,6 +82,7 @@ export {
   FormItemCreator,
   TableList,
   Popup,
+  BackTopAnimation,
   Util,
   AdapterScreen,
   Ajax,

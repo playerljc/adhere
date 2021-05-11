@@ -45,6 +45,7 @@
 - adhere-ui-formitemcreator
 - adhere-ui-tablelist
 - adhere-ui-popup
+- adhere-ui-backtopanimation
 
 ### 没有落实有雏形的组件
 

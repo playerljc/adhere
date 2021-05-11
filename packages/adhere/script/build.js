@@ -49,6 +49,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-formitemcreator', 'FormItemCreator'],
   ['@baifendian/adhere-ui-tablelist', 'TableList'],
   ['@baifendian/adhere-ui-popup', 'Popup'],
+  ['@baifendian/adhere-ui-backtopanimation', 'BackTopAnimation'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
