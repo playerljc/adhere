@@ -150,7 +150,47 @@ export default () => (
     <Space />
 
     <h2>基本使用</h2>
-    <Playground mode="code" scope={{ React }} codeText={``}>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  import React from 'react';
+  import { List, Avatar } from 'antd';
+  import { PullRefresh  } from '@baifendian/adhere';
+  
+  import styles from './index.less';
+  
+  let data = [];
+  data.length = 100;
+  data.fill(0);
+  data = data.map((t, index) => "Ant Design Title" + (index + 1));
+  
+  <PullRefresh
+    className={styles.Wrap}
+    onPullRefresh={(ins) => {
+      setTimeout(() => {
+        ins.reset();
+      }, 1000 * 3);
+    }}
+  >
+    <List
+      itemLayout="horizontal"
+      dataSource={[].concat(data)}
+      renderItem={(item) => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            }
+            title={<a href="https://ant.design">{item.title}</a>}
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          />
+        </List.Item>
+      )}
+    />
+  </PullRefresh>
+    `}
+    >
       <PullRefresh
         className={styles.Wrap}
         onPullRefresh={(ins) => {
@@ -178,7 +218,59 @@ export default () => (
     </Playground>
 
     <h2>Api触发刷新</h2>
-    <Playground mode="code" scope={{ React }} codeText={``}>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  import React from 'react';
+  import { List, Avatar, Button } from 'antd';
+  import { PullRefresh, Space } from '@baifendian/adhere';
+  
+  import styles from './index.less';
+  
+  let data = [];
+  data.length = 100;
+  data.fill(0);
+  data = data.map((t, index) => "Ant Design Title" + (index + 1));
+  
+  const ref = React.createRef();
+  
+  <PullRefresh
+    className={styles.Wrap}
+    ref={ref}
+    onPullRefresh={(ins) => {
+      setTimeout(() => {
+        ins.reset();
+      }, 1000 * 3);
+    }}
+  >
+    <List
+      itemLayout="horizontal"
+      dataSource={[].concat(data)}
+      renderItem={(item) => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            }
+            title={<a href="https://ant.design">{item.title}</a>}
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          />
+        </List.Item>
+      )}
+    />
+  </PullRefresh>
+  <Space />
+
+  <Button
+    onClick={() => {
+      ref.current.refresh();
+    }}
+  >
+    触发下拉刷新
+  </Button>
+    `}
+    >
       <PullRefresh
         className={styles.Wrap}
         ref={ref}
