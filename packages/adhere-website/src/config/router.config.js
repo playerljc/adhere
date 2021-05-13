@@ -39,6 +39,7 @@ const FormItemCreator = lazy(() => import('@/components/ui/formitemcreator'));
 const TableList = lazy(() => import('@/components/ui/tablelist'));
 const Popup = lazy(() => import('@/components/ui/popup'));
 const BackTopAnimation = lazy(() => import('@/components/ui/backtopanimation'));
+const PullRefresh = lazy(() => import('@/components/ui/pullrefresh'));
 
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
@@ -255,6 +256,11 @@ export default () => [
                 path: '/adhere/ui/backtopanimation',
                 name: 'BackTopAnimation',
                 component: BackTopAnimation,
+              },
+              {
+                path: '/adhere/ui/pullrefresh',
+                name: 'PullRefresh',
+                component: PullRefresh,
               },
             ],
           },

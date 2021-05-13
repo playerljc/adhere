@@ -43,6 +43,9 @@ const local = getLocal([
   'selecionar tudo',
   'Por favor, insira',
   'por favor escolha',
+  'Puxe para baixo para atualizar',
+  'Solte para atualizar',
+  'Tempo de atualização',
 ]);
 
 export default { ...local };

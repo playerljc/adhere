@@ -43,6 +43,9 @@ const local = getLocal([
   'select all',
   'please enter',
   'please choose',
+  'Pull down to refresh',
+  'Release to refresh',
+  'Update time',
 ]);
 
 export default { ...local };

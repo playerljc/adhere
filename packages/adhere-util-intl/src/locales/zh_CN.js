@@ -43,6 +43,9 @@ const local = getLocal([
   '全选',
   '请输入',
   '请选择',
+  '下拉刷新',
+  '松开刷新',
+  '更新时间',
 ]);
 
 export default { ...local };

@@ -34,6 +34,7 @@ import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import Popup from '@baifendian/adhere-ui-popup';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
+import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
@@ -46,7 +47,7 @@ import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-export {
+export { 
   CascadeCompared,
   ConditionalRender,
   DelConfirm,
@@ -83,6 +84,7 @@ export {
   TableList,
   Popup,
   BackTopAnimation,
+  PullRefresh,
   Util,
   AdapterScreen,
   Ajax,

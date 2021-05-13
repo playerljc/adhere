@@ -4,10 +4,12 @@
 如prompt
 如进度条
 
-3.BackTopAnimation
-4.Notification
-5.PullRefresh
-6.SwipeOut
-7.ImageViewer
+.FormItemCreate没有写出contentProps在不同type的时候的具体属性值都有什么 - ok
 
-8.FormItemCreate没有写出contentProps在不同type的时候的具体属性值都有什么
+.BackTopAnimation - ok
+.PullRefresh
+.Notification
+.SwipeOut
+.ImageViewer
+
+
