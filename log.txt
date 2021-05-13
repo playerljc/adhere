@@ -7,7 +7,7 @@
 .FormItemCreate没有写出contentProps在不同type的时候的具体属性值都有什么 - ok
 
 .BackTopAnimation - ok
-.PullRefresh
+.PullRefresh - ok
 .Notification
 .SwipeOut
 .ImageViewer
