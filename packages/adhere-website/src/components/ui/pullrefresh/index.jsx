@@ -297,6 +297,7 @@ export default () => (
   <Space />
 
   <Button
+    type="primary"
     onClick={() => {
       ref.current.refresh();
     }}
@@ -333,6 +334,7 @@ export default () => (
       <Space />
 
       <Button
+        type="primary"
         onClick={() => {
           ref.current.refresh();
         }}
