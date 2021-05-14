@@ -40,6 +40,7 @@ const TableList = lazy(() => import('@/components/ui/tablelist'));
 const Popup = lazy(() => import('@/components/ui/popup'));
 const BackTopAnimation = lazy(() => import('@/components/ui/backtopanimation'));
 const PullRefresh = lazy(() => import('@/components/ui/pullrefresh'));
+const Notification = lazy(() => import('@/components/ui/notification'));
 
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
@@ -261,6 +262,11 @@ export default () => [
                 path: '/adhere/ui/pullrefresh',
                 name: 'PullRefresh',
                 component: PullRefresh,
+              },
+              {
+                path: '/adhere/ui/notification',
+                name: 'Notification',
+                component: Notification,
               },
             ],
           },

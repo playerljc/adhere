@@ -47,6 +47,7 @@
 - adhere-ui-popup
 - adhere-ui-backtopanimation
 - adhere-ui-pullrefresh
+- adhere-ui-notification
 
 ### 没有落实有雏形的组件
 

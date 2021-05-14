@@ -1,7 +1,7 @@
 {
-  "name": "@baifendian/adhere-util-${name}",
-  "version": "1.0.0",
-  "description": "Ajax通信",
+  "name": "@baifendian/adhere-ui-notification",
+  "version": "1.0.5",
+  "description": "通知",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildpackage": "ctbuild buildpackagets",
-    "buildumd": "ctbuild buildumd --packagename Adhere${name} --define alias=@,evnVars=true",
+    "buildumd": "ctbuild buildumd --packagename AdhereNotification --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
@@ -34,12 +34,13 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "classnames": "^2.2.6",
+    "@baifendian/adhere-util": "^1.0.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "antd": "^4.9.4",
-    "omit.js": "^2.0.2"
+    "classnames": "^2.2.6",
+    "omit.js": "^2.0.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "uuid": "^8.3.2"
   }
 }

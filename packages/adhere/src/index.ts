@@ -35,6 +35,7 @@ import TableList from '@baifendian/adhere-ui-tablelist';
 import Popup from '@baifendian/adhere-ui-popup';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
+import Notification from '@baifendian/adhere-ui-notification';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
@@ -85,6 +86,7 @@ export {
   Popup,
   BackTopAnimation,
   PullRefresh,
+  Notification,
   Util,
   AdapterScreen,
   Ajax,
