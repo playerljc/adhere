@@ -11,6 +11,9 @@ import { IPullRefreshProps, IPullRefreshState } from './types';
 
 const selectorPrefix = 'adhere-ui-pullrefresh';
 
+const defaultImg =
+  'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHN0eWxlPSJ3aWR0aDozMDhweDtoZWlnaHQ6MzA4cHg7IiB2ZXJzaW9uPSIxLjEiIGlkPSLlm77lvaIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMTAyNHB4IiBoZWlnaHQ9IjEwMjRweCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAyNCAxMDI0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCiAgPHBhdGggY2xhc3M9InN2Z3BhdGgiIGRhdGEtaW5kZXg9InBhdGhfMCIgZmlsbD0iI2VjZjBmMSIgZD0iTTc5Ny43NjQ0MiAzMjYuNTU4NDFjLTguODg0MTk5LTE1LjU2MzMyNy0yNTIuODgwMS0yODYuODE5MDE5LTI2OC4zNzk1MTItMzEzLjU2NzQ4OS0xMC4xMzA1NDQtMTcuNDQ4ODIzLTM0LjI1ODQ5NS0xNy4xOTMxNjItNDQuMzg5MDM4IDBDNDczLjY1MDkzOSAzMi4yNjEzMjQgMjMwLjk5NzI1NSAzMDQuNjM1NTMgMjE4LjM3NDAyMyAzMjcuNDIxMjY0Yy05LjIzNTczMiAxNi41NTQwMTEgMC45NTg3MjcgMzguMzgxMDE5IDIxLjk1NDgzNyAzOC4zODEwMTlsMTE5LjkwNDczMSAwIDAgMjU2LjQ5MTMwMyAwIDM2Ljc4MzE0MSAyOTEuODM2MzU0IDAgMC0yOTMuMzA2NDAyIDEyMy41Nzk4NDkgMEM3OTQuNjk2NDk1IDM2NS43NzAzMjUgODA4Ljk0OTU2MiAzNDYuMTE2NDMxIDc5Ny43NjQ0MiAzMjYuNTU4NDF6IiAvPg0KPHBhdGggY2xhc3M9InN2Z3BhdGgiIGRhdGEtaW5kZXg9InBhdGhfMSIgZmlsbD0iI2VjZjBmMSIgZD0iTTM2MC4yMDE2MzMgNjg5LjY5MjA2MWwyOTIuMzE1NzE4IDAgMCA5MC45MTkyMzItMjkyLjMxNTcxOCAwIDAtOTAuOTE5MjMyWiIgLz4NCjxwYXRoIGNsYXNzPSJzdmdwYXRoIiBkYXRhLWluZGV4PSJwYXRoXzIiIGZpbGw9IiNlY2YwZjEiIGQ9Ik0zNjAuMjAxNjMzIDg0MC45MTUxOTFsMjkyLjMxNTcxOCAwIDAgNjAuNTkxNTE2LTI5Mi4zMTU3MTggMCAwLTYwLjU5MTUxNloiIC8+DQo8cGF0aCBjbGFzcz0ic3ZncGF0aCIgZGF0YS1pbmRleD0icGF0aF8zIiBmaWxsPSIjZWNmMGYxIiBkPSJNMzYwLjIwMTYzMyA5OTIuMzkzOTgybDI5MC40MzAyMjIgMCAwIDMwLjI5NTc1OC0yOTAuNDMwMjIyIDAgMC0zMC4yOTU3NThaIiAvPg0KDQo8L3N2Zz4NCg==';
+
 /**
  * PullRefresh
  * @class PullRefresh
@@ -22,6 +25,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
   state: IPullRefreshState = {
     isCan: false,
+    preUpdateTime: moment().valueOf(),
   };
 
   // 是否到顶了
@@ -39,9 +43,9 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
   private refreshHeight: number = 0;
 
   private elRef = React.createRef();
+  private scrollElRef = React.createRef();
   private iconElRef = React.createRef();
   private refreshElRef = React.createRef();
-  private scrollElRef = React.createRef();
   private triggerInnerElRef = React.createRef();
 
   constructor(props) {
@@ -65,6 +69,15 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
     this.refreshHeight = this.el.clientHeight;
 
     this.addEvents();
+  }
+
+  componentWillReceiveProps(nextProps: Readonly<IPullRefreshProps>, nextContext: any) {
+    if ('updateTime' in nextProps && nextProps.updateTime !== this.props.updateTime) {
+      this.setState({
+        // @ts-ignore
+        preUpdateTime: nextProps.updateTime,
+      });
+    }
   }
 
   /**
@@ -93,11 +106,13 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
    * @private
    */
   private renderMask(): void {
-    this.maskEl = document.createElement('div');
+    this.maskEl = document.querySelector(`.${selectorPrefix}-mask`);
 
-    this.maskEl.className = `${selectorPrefix}-mask`;
-
-    document.body.appendChild(this.maskEl);
+    if (!this.maskEl) {
+      this.maskEl = document.createElement('div');
+      this.maskEl.className = `${selectorPrefix}-mask`;
+      document.body.appendChild(this.maskEl);
+    }
   }
 
   /**
@@ -376,6 +391,10 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
       // @ts-ignore
       self.scrollEl.removeEventListener('transitionend', onTransitionEnd);
+
+      self.setState({
+        preUpdateTime: moment().valueOf(),
+      });
     }
 
     const self = this;
@@ -417,6 +436,30 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
     self.translateY(self.scrollEl, '0px', 200);
 
     self.translateY(self.el, 'calc(-100% + 0px)', 200);
+  }
+
+  /**
+   * resetUpdateTime
+   * @param updateTime
+   * @return Promise
+   */
+  resetUpdateTime(updateTime: number): Promise<null> {
+    return new Promise((resolve) => {
+      this.setState(
+        {
+          preUpdateTime: updateTime || moment().valueOf(),
+        },
+        () => resolve(),
+      );
+    });
+  }
+
+  /**
+   * getUpdateTime
+   * @return number
+   */
+  getUpdateTime(): number {
+    return this.state.preUpdateTime;
   }
 
   private renderLoadingAnimation() {
@@ -472,16 +515,28 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
       <ConditionalRender
         conditional={!!renderIcon}
         // @ts-ignore
-        noMatch={() => <div className={`${selectorPrefix}-trigger-icon`} ref={this.iconElRef} />}
+        noMatch={() => (
+          <div className={`${selectorPrefix}-trigger-icon`}>
+            <img
+              className={`${selectorPrefix}-trigger-icon-inner`}
+              src={defaultImg}
+              alt=""
+              // @ts-ignore
+              ref={this.iconElRef}
+            />
+          </div>
+        )}
       >
         {() => (
-          <div
-            className={`${selectorPrefix}-trigger-icon`}
-            // @ts-ignore
-            ref={this.iconElRef}
-          >
-            {/* @ts-ignore */}
-            {renderIcon()}
+          <div className={`${selectorPrefix}-trigger-icon`}>
+            <div
+              className={`${selectorPrefix}-trigger-icon-inner`}
+              // @ts-ignore
+              ref={this.iconElRef}
+            >
+              {/* @ts-ignore */}
+              {renderIcon()}
+            </div>
           </div>
         )}
       </ConditionalRender>
@@ -514,7 +569,8 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
    * @private
    */
   private renderUpdateTime() {
-    const { isShowUpdateTime } = this.props;
+    const { isShowUpdateTime, updateTimeFormat } = this.props;
+    const { preUpdateTime } = this.state;
 
     return (
       <ConditionalRender conditional={isShowUpdateTime}>
@@ -522,7 +578,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
           <p className={`${selectorPrefix}-trigger-update`}>
             {Intl.v('更新时间')}：
             <span className={`${selectorPrefix}-trigger-update-label`}>
-              {moment().format(Resource.Dict.value.ResourceMomentFormatFull.value)}
+              {moment(preUpdateTime).format(updateTimeFormat)}
             </span>
           </p>
         )}
@@ -574,11 +630,12 @@ PullRefresh.defaultProps = {
   scrollClassName: '',
   scrollStyle: {},
   pullHeight: 200,
-  renderIcon: () => null,
   renderLabel: () => Intl.v('下拉刷新'),
   renderCanLabel: () => Intl.v('松开刷新'),
-  isShowUpdateTime: true,
   renderLoadingAnimation: 'la-ball-circus la-dark',
+  isShowUpdateTime: true,
+  updateTime: moment().valueOf(),
+  updateTimeFormat: Resource.Dict.value.ResourceMomentFormatFull.value,
 };
 
 PullRefresh.propTypes = {
@@ -590,8 +647,10 @@ PullRefresh.propTypes = {
   renderIcon: PropTypes.func,
   renderLabel: PropTypes.func,
   renderCanLabel: PropTypes.func,
-  isShowUpdateTime: PropTypes.bool,
   renderLoadingAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  isShowUpdateTime: PropTypes.bool,
+  updateTime: PropTypes.number,
+  updateTimeFormat: PropTypes.string,
   onPullStart: PropTypes.func,
   onPullCanRefresh: PropTypes.func,
   onPullRefresh: PropTypes.func,

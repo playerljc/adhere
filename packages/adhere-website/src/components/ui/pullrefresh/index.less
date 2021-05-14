@@ -1,3 +1,24 @@
 .Wrap {
   height: 300px;
 }
+
+.RefreshCustom1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+
+  img {
+    margin-right: 15px;
+    :local {
+      animation: RefreshCustom1 1.2s infinite linear;
+    }
+  }
+}
+
+@keyframes RefreshCustom1 {
+  to {
+    transform: rotate(405deg);
+    transform-origin: center center;
+  }
+}

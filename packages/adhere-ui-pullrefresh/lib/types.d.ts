@@ -10,6 +10,8 @@ export interface IPullRefreshProps {
     scrollStyle?: React.CSSProperties;
     pullHeight: number;
     isShowUpdateTime?: boolean;
+    updateTime?: number;
+    updateTimeFormat?: string;
     renderIcon?: () => React.ReactElement;
     renderLabel: () => React.ReactElement;
     renderCanLabel: () => React.ReactElement;
@@ -26,4 +28,5 @@ export interface IPullRefreshProps {
  */
 export interface IPullRefreshState {
     isCan: boolean;
+    preUpdateTime: number;
 }

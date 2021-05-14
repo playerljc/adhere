@@ -20,12 +20,13 @@ declare class PullRefresh extends React.Component<IPullRefreshProps, IPullRefres
     private isDownPull;
     private refreshHeight;
     private elRef;
+    private scrollElRef;
     private iconElRef;
     private refreshElRef;
-    private scrollElRef;
     private triggerInnerElRef;
     constructor(props: any);
     componentDidMount(): void;
+    componentWillReceiveProps(nextProps: Readonly<IPullRefreshProps>, nextContext: any): void;
     /**
      * getPullHeight
      * @private
@@ -97,6 +98,17 @@ declare class PullRefresh extends React.Component<IPullRefreshProps, IPullRefres
      * reset
      */
     reset(): void;
+    /**
+     * resetUpdateTime
+     * @param updateTime
+     * @return Promise
+     */
+    resetUpdateTime(updateTime: number): Promise<null>;
+    /**
+     * getUpdateTime
+     * @return number
+     */
+    getUpdateTime(): number;
     private renderLoadingAnimation;
     /**
      * renderIcon

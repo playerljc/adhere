@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import Resource from '@baifendian/adhere-util-resource';
 
 /**
  * IPullRefreshProps
@@ -13,6 +15,10 @@ export interface IPullRefreshProps {
   pullHeight: number;
   // 是否显示更新时间
   isShowUpdateTime?: boolean;
+  // 更新时间毫秒数
+  updateTime?: number;
+  // 更新时间的格式化
+  updateTimeFormat?: string;
   renderIcon?: () => React.ReactElement;
   renderLabel: () => React.ReactElement;
   renderCanLabel: () => React.ReactElement;
@@ -30,4 +36,5 @@ export interface IPullRefreshProps {
  */
 export interface IPullRefreshState {
   isCan: boolean;
+  preUpdateTime: number;
 }

@@ -6,6 +6,8 @@ import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
 import Props from '@/lib/Props';
 
+import refreshIcon from './refresh.svg';
+
 import styles from './index.less';
 
 let data = [];
@@ -75,16 +77,28 @@ export default () => (
           defaultVal: '',
         },
         {
+          params: 'renderLoadingAnimation',
+          desc: '拉取后的loading效果，如果是string可选的值可以参考load-awesome库',
+          type: '() => React.ReactElement | string',
+          defaultVal: '',
+        },
+        {
           params: 'isShowUpdateTime',
           desc: '是否显示更新时间',
           type: 'boolean',
           defaultVal: '',
         },
         {
-          params: 'renderLoadingAnimation',
-          desc: '拉取后的loading效果，如果是string可选的值可以参考load-awesome库',
-          type: '() => React.ReactElement | string',
-          defaultVal: '',
+          params: 'updateTime',
+          desc: '默认的更新时间(毫秒)',
+          type: 'number',
+          defaultVal: '当前时间的毫秒',
+        },
+        {
+          params: 'updateTimeFormat',
+          desc: '更新时间的格式化',
+          type: 'string',
+          defaultVal: 'YYYY-MM-DD HH:mm:ss',
         },
         {
           params: 'onPullStart',
@@ -109,12 +123,6 @@ export default () => (
           desc: '拉动到了底部',
           type: 'Function',
           defaultVal: '',
-        },
-        {
-          params: 'renderEmpty',
-          desc: '自定义empty的UI',
-          type: 'Function',
-          defaultVal: 'JSX',
         },
         {
           params: 'onPullRebound',
@@ -143,6 +151,30 @@ export default () => (
           params: [],
           returnType: 'void',
           returnDesc: '',
+        },
+        {
+          name: 'resetUpdateTime',
+          desc: '重置更新时间',
+          modifier: 'public',
+          params: [
+            {
+              name: 'updateTime',
+              desc: '更新时间(毫秒)',
+              type: 'number',
+              defaultVal: '当前时间的毫秒',
+              required: '',
+            },
+          ],
+          returnType: 'Promise',
+          returnDesc: '',
+        },
+        {
+          name: 'getUpdateTime',
+          desc: '获取更新时间(毫秒)',
+          modifier: 'public',
+          params: [],
+          returnType: 'number',
+          returnDesc: '当前时间的毫秒',
         },
       ]}
     />
@@ -216,6 +248,8 @@ export default () => (
         />
       </PullRefresh>
     </Playground>
+
+    <Space />
 
     <h2>Api触发刷新</h2>
     <Playground
@@ -305,6 +339,135 @@ export default () => (
       >
         触发下拉刷新
       </Button>
+    </Playground>
+
+    <Space />
+
+    <h2>自定义图标和文本(1)</h2>
+    <Playground
+      mode="code"
+      scope={{ React }}
+      codeText={`
+  import React from 'react';
+  import { List, Avatar } from 'antd';
+  import { PullRefresh } from '@baifendian/adhere';
+  
+  import refreshIcon from './refresh.svg';
+  
+  import styles from './index.less';
+  
+  let data = [];
+  data.length = 100;
+  data.fill(0);
+  data = data.map((t, index) => "Ant Design Title" + (index + 1));
+  
+  <PullRefresh
+    className={styles.Wrap}
+    isShowUpdateTime={false}
+    renderIcon={() => (
+      <div>
+        <img src={refreshIcon} alt="" />
+      </div>
+    )}
+    renderLabel={() => '下拉可刷新'}
+    renderCanLabel={() => '释放可刷新'}
+    renderLoadingAnimation={() => (
+      <div className={styles.RefreshCustom1}>
+        <img src={refreshIcon} alt="" />
+        <div>刷新中...</div>
+      </div>
+    )}
+    onPullRefresh={(ins) => {
+      setTimeout(() => {
+        ins.reset();
+      }, 1000 * 3);
+    }}
+  >
+    <List
+      itemLayout="horizontal"
+      dataSource={[].concat(data)}
+      renderItem={(item) => (
+        <List.Item>
+          <List.Item.Meta
+            avatar={
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            }
+            title={<a href="https://ant.design">{item.title}</a>}
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          />
+        </List.Item>
+      )}
+    />
+  </PullRefresh>
+  
+  
+  /*-------------------------------index.less-------------------------*/
+  
+  .Wrap {
+    height: 300px;
+  }
+  
+  .RefreshCustom1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+  
+    img {
+      margin-right: 15px;
+      :local {
+        animation: RefreshCustom1 1.2s infinite linear;
+      }
+    }
+  }
+  
+  @keyframes RefreshCustom1 {
+    to {
+      transform: rotate(405deg);
+      transform-origin: center center;
+    }
+  }
+
+    `}
+    >
+      <PullRefresh
+        className={styles.Wrap}
+        isShowUpdateTime={false}
+        renderIcon={() => (
+          <div>
+            <img src={refreshIcon} alt="" />
+          </div>
+        )}
+        renderLabel={() => '下拉可刷新'}
+        renderCanLabel={() => '释放可刷新'}
+        renderLoadingAnimation={() => (
+          <div className={styles.RefreshCustom1}>
+            <img src={refreshIcon} alt="" />
+            <div>刷新中...</div>
+          </div>
+        )}
+        onPullRefresh={(ins) => {
+          setTimeout(() => {
+            ins.reset();
+          }, 1000 * 3);
+        }}
+      >
+        <List
+          itemLayout="horizontal"
+          dataSource={[].concat(data)}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                }
+                title={<a href="https://ant.design">{item.title}</a>}
+                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              />
+            </List.Item>
+          )}
+        />
+      </PullRefresh>
     </Playground>
   </div>
 );
