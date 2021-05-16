@@ -122,6 +122,12 @@ export default () => {
             defaultVal: '',
           },
           {
+            params: 'duration',
+            desc: 'beforeShow和afterShow的持续时间(毫秒)',
+            type: 'number',
+            defaultVal: '200',
+          },
+          {
             params: 'onInit',
             desc: 'onInit',
             type: '() => void',

@@ -189,8 +189,8 @@ export default {
   },
   /**
    * prepend
-   * @param {HTMLElement} - el
-   * @param {HTMLElement | String} - children
+   * @param el
+   * @param children
    */
   prepend(el, children) {
     let childrenEl;
@@ -206,7 +206,7 @@ export default {
   },
   /**
    * remove
-   * @param {HTMLElement} - el
+   * @param el
    */
   remove(el) {
     el.parentNode.removeChild(el);
@@ -260,8 +260,8 @@ export default {
   },
   /**
    * objectToDataSet
-   * @param {Object} - obj
-   * @param {HTMLElement} - dom
+   * @param obj
+   * @param dom
    */
   objectToDataSet(obj: object, dom: HTMLElement) {
     for (const p in obj) {
@@ -270,8 +270,8 @@ export default {
   },
   /**
    * dataSetToObj
-   * @param {HTMLElement} - dom
    * @returns {Object}
+   * @param dom
    */
   dataSetToObject(dom: HTMLElement) {
     const obj = {};
@@ -282,8 +282,8 @@ export default {
   },
   /**
    * getPageLeft - 获取指定元素距离视口的left
-   * @param {HTMLElement} - el
    * @return {SelectOptions}
+   * @param el
    */
   getPageLeft(el) {
     let left = el.offsetLeft;
@@ -298,8 +298,8 @@ export default {
   },
   /**
    * getPageTop - 获取指定元素距离视口的top
-   * @param {HTMLElement} - el
    * @return {SelectOptions}
+   * @param el
    */
   getPageTop(el) {
     let top = el.offsetTop;
@@ -314,8 +314,8 @@ export default {
   },
   /**
    * getPageRect - 获取元素距离视口的Rect
-   * @param {HTMLElement} - el
    * @return {{top: number, left: number}}
+   * @param el
    */
   getPageRect(el) {
     let top = el.offsetTop;
