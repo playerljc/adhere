@@ -105,6 +105,7 @@
 - [@baifendian/adhere-ui-backtopanimation](#@baifendian/adhere-ui-backtopanimation) - ok
 - [@baifendian/adhere-ui-pullrefresh](#@baifendian/adhere-ui-pullrefresh) - ok
 - [@baifendian/adhere-ui-notification](#@baifendian/adhere-ui-notification) - ok
+- [@baifendian/adhere-ui-swipeout](#@baifendian/adhere-ui-swipeout) - ok
   
 - [@baifendian/adhere-util-memoized](#baifendian/adhere-util-watchmemoized)- ok
 - [@baifendian/adhere-util-communication-ajax](#@baifendian/adhere-util-communication-ajax) - ok

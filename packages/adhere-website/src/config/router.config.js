@@ -41,6 +41,7 @@ const Popup = lazy(() => import('@/components/ui/popup'));
 const BackTopAnimation = lazy(() => import('@/components/ui/backtopanimation'));
 const PullRefresh = lazy(() => import('@/components/ui/pullrefresh'));
 const Notification = lazy(() => import('@/components/ui/notification'));
+const SwipeOut = lazy(() => import('@/components/ui/swipeout'));
 
 const AdapterScreen = lazy(() => import('@/components/util/adapterscreen'));
 const Decorators = lazy(() => import('@/components/util/decorators'));
@@ -267,6 +268,11 @@ export default () => [
                 path: '/adhere/ui/notification',
                 name: 'Notification',
                 component: Notification,
+              },
+              {
+                path: '/adhere/ui/swipeout',
+                name: 'SwipeOut',
+                component: SwipeOut,
               },
             ],
           },

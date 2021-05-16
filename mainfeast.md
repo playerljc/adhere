@@ -48,6 +48,7 @@
 - adhere-ui-backtopanimation
 - adhere-ui-pullrefresh
 - adhere-ui-notification
+- adhere-ui-swipeout
 
 ### 没有落实有雏形的组件
 

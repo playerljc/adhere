@@ -8,7 +8,7 @@
 
 .BackTopAnimation - ok
 .PullRefresh - ok
-.Notification
+.Notification - ok
 .SwipeOut
 .ImageViewer
 

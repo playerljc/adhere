@@ -79,6 +79,7 @@
     "@baifendian/adhere-ui-backtopanimation": "^1.0.5",
     "@baifendian/adhere-ui-pullrefresh": "^1.0.5",
     "@baifendian/adhere-ui-notification": "^1.0.5",
+    "@baifendian/adhere-ui-swipeout": "^1.0.5",
     "@baifendian/adhere-util": "^1.0.5",
     "@baifendian/adhere-util-adapterscreen": "^1.0.5",
     "@baifendian/adhere-util-communication-ajax": "^1.0.5",

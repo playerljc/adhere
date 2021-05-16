@@ -36,6 +36,7 @@ import Popup from '@baifendian/adhere-ui-popup';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
 import Notification from '@baifendian/adhere-ui-notification';
+import SwipeOut from '@baifendian/adhere-ui-swipeout';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
@@ -87,6 +88,7 @@ export {
   BackTopAnimation,
   PullRefresh,
   Notification,
+  SwipeOut,
   Util,
   AdapterScreen,
   Ajax,
