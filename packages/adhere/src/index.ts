@@ -29,7 +29,6 @@ import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
 import Surnames from '@baifendian/adhere-ui-surnames';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
-import G6 from '@baifendian/adhere-ui-g6';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import Popup from '@baifendian/adhere-ui-popup';
@@ -81,7 +80,6 @@ export {
   Surnames,
   Suspense,
   TableHeadSearch,
-  G6,
   FormItemCreator,
   TableList,
   Popup,
