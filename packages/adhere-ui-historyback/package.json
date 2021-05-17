@@ -4,7 +4,8 @@
   "description": "历史记录返回操作",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "umd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

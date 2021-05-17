@@ -4,7 +4,8 @@
   "description": "图片懒加载",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "umd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

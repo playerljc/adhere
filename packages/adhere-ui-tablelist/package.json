@@ -4,7 +4,8 @@
   "description": "表格和列表",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "umd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

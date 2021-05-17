@@ -17,6 +17,7 @@ function isWin32() {
  */
 function buildUmd() {
   return new Promise((resolve) => {
+    // 在执行buildumd:core之前需要把index.ts引入
     const command = isWin32() ? `npm.cmd` : `npm`;
 
     const npmProcess = spawn(command, ['run', 'buildumd:core'], {
