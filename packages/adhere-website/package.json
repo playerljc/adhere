@@ -70,6 +70,8 @@
     "component-playground": "^3.2.1",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.1.1",
+    "echarts-for-react": "^3.0.1",
     "faker": "^5.4.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.1",

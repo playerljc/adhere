@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { lazy } from 'react';
 
 import BasicLayout from '@/lib/BasicLayout';
@@ -53,6 +55,9 @@ const NotNull = lazy(() => import(/* webpackChunkName: "notnull" */ '@/component
 const Util = lazy(() => import(/* webpackChunkName: "util" */ '@/components/util/util'));
 const WatchMemoized = lazy(() => import(/* webpackChunkName: "watchmemoized" */ '@/components/util/watchmemoized'));
 const Ajax = lazy(() => import(/* webpackChunkName: "ajax" */ '@/components/util/ajax'));
+
+const Echarts = lazy(() => import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'));
+const MapTalks = lazy(() => import(/* webpackChunkName: "echarts" */ '@/components/gallery/gis/maptalks'));
 
 export default () => [
   {
@@ -336,6 +341,36 @@ export default () => [
               },
             ],
           },
+          {
+            path:'/adhere/gallery',
+            name: 'Gallery',
+            routes: [
+              {
+                path: '/',
+                redirect: '/adhere/gallery/echarts',
+              },
+              {
+                path: '/adhere/gallery/echarts',
+                name: 'Echarts',
+                component: Echarts,
+              },
+              {
+                path: '/adhere/gallery/gis',
+                name: 'GIS',
+                routes: [
+                  {
+                    path: '/',
+                    redirect: '/adhere/gallery/gis/maptalks',
+                  },
+                  {
+                    path: '/adhere/gallery/gis/maptalks',
+                    name: 'MapTalks',
+                    component: MapTalks
+                  }
+                ]
+              }
+            ],
+          }
         ],
       },
     ],
