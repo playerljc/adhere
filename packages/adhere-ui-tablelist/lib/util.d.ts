@@ -16,7 +16,7 @@ declare class Util {
     /**
      * 获取排序后的表格数据
      */
-    getSortDatasource: () => any;
+    getSortDataSource: () => any;
     /**
      * 获取参数
      */

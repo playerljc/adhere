@@ -19,6 +19,7 @@ export interface ITableListProps<T> {
 }
 export interface ITableProps<RecordType> extends TableProps<RecordType> {
     sortable?: boolean | ISortableProps;
+    showNumber?: boolean | object;
 }
 export interface TSortTableProps<RecordType> extends TableProps<RecordType> {
     sortable?: boolean | ISortableProps;

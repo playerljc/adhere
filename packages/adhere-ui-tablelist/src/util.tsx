@@ -3,12 +3,13 @@
  * @Author: yumeng.qin
  * @Date: 2021-04-27 16:23:26
  * @LastEditor: yumeng.qin
- * @LastEditTime: 2021-05-06 16:40:40
+ * @LastEditTime: 2021-05-21 10:41:27
  */
 import React from 'react';
 import { Tooltip } from 'antd';
 import { isEmpty, difference, union } from 'lodash';
 import moment from 'moment';
+import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import intl from '@baifendian/adhere-util-intl';
 
 class Util {
@@ -29,7 +30,7 @@ class Util {
    * 获取默认显示的列项
    */
   getDefaultSelectedColumnKeys = (columns) => {
-    const { showNumber } = this.ins.props;
+    const { showNumber } = this.getModeProps();
 
     const result = (columns || [])
       .filter((v) => v.show || !v.hasOwnProperty('show'))
@@ -89,13 +90,13 @@ class Util {
       const t = temp;
       t.contentProps = t.contentProps || {};
       t.contentProps.size = size;
-      if (t.type === 'rangepicker' || t.type === 'select') {
+      if (t.type === FormItemCreator.RANGEPICKER || t.type === FormItemCreator.SELECT) {
         t.contentProps = {
           getPopupContainer: () => this.ins.TableListRef,
           ...t.contentProps,
         };
       }
-      if (t.type === 'select') {
+      if (t.type === FormItemCreator.SELECT) {
         t.contentProps = {
           style: { width: '150px' },
           allowClear: true,
@@ -104,12 +105,12 @@ class Util {
       }
       if (searchNow) {
         t.contentProps = {
-          onSearch: t.type === 'search' ? (v) => this.onSearch({ [t.name]: v }) : null,
-          onChange:
-            t.type !== 'search'
+          onSearch: t.type === FormItemCreator.SEARCH ? (v) => this.onSearch({ [t.name]: v }) : null,
+          onPressEnter:
+            t.type !== FormItemCreator.SEARCH
               ? (e) =>
                   this.onSearch({
-                    [t.name]: ['input', 'textarea', 'number'].includes(t.type) ? e.target.value : e,
+                    [t.name]: [FormItemCreator.INPUT, FormItemCreator.TEXTAREA, FormItemCreator.NUMBER].includes(t.type) ? e.target.value : e,
                   })
               : null,
           ...t.contentProps,
@@ -146,8 +147,7 @@ class Util {
    */
   getTableColumns = () => {
     const { params } = this.ins.state;
-    const { showNumber } = this.ins.props;
-    const { columns } = this.getModeProps();
+    const { columns, showNumber } = this.getModeProps();
     const tableColumns = (columns || []).map((item) => ({
       ...item,
       render: (text, record, index) => {

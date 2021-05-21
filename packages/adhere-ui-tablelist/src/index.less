@@ -52,11 +52,16 @@
         .ant-form-btngroup {
           display: flex;
           align-items: center;
-          min-height: 38px;
           .ant-btn {
             margin: 0 5px;
           }
         }
+      }
+      &.adhere-ui-tablelist-search-form-havebefore {
+        margin-left: 16px;
+      }
+      &.adhere-ui-tablelist-search-form-haveafter {
+        margin-right: 16px;
       }
     }
   }
@@ -66,6 +71,7 @@
     justify-content: space-between;
     padding: @tablelist-toolbar-padding;
     .adhere-ui-tablelist-toolbar-left {
+      display: flex;
       > span {
         margin-right: 10px;
         &.adhere-ui-tablelist-toolbar-left-total {

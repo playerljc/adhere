@@ -163,9 +163,18 @@ class TableList<RecordType extends object = any> extends React.Component<
     return search ? (
       <div className={classNames(className, `${selectorPrefix}-search`)}>
         {beforeContent}
-        <Form layout="inline" ref={this.searchFormRef} className={`${selectorPrefix}-search-form`}>
+        <Form
+          layout="inline"
+          ref={this.searchFormRef}
+          className={
+            classNames(`${selectorPrefix}-search-form`, {
+              [`${selectorPrefix}-search-form-havebefore`]: beforeContent,
+              [`${selectorPrefix}-search-form-haveafter`]: afterContent
+            })
+          }
+        >
           <div className="ant-form-search">
-            <FormItemCreator columns={this.getFormColumns(columns || [], size)} />
+            <FormItemCreator columns={this.getFormColumns(columns || [], size, search.hasOwnProperty('optionRender') && !optionRender)} />
           </div>
           {search.hasOwnProperty('optionRender') ? (
             optionRender
