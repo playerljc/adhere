@@ -29,6 +29,25 @@ declare const _default: {
         x: number;
         y: number;
     };
+    getA3Point({ p1, p2, distance }: {
+        p1: any;
+        p2: any;
+        distance: any;
+    }): {
+        x: number;
+        y: number;
+    };
+    getDistanceByBetweenPoint({ p1, p2 }: {
+        p1: any;
+        p2: any;
+    }): number;
+    clientToCtxPoint({ event, el }: {
+        event: any;
+        el: any;
+    }): {
+        x: number;
+        y: number;
+    };
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

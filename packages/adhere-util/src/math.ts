@@ -48,5 +48,48 @@ export default {
         ((y3 - y4) * (x1 - x2) - (y1 - y2) * (x3 - x4)),
     };
   },
+  /**
+   * getA3Piint - 计算两点p1,p2 距离p1点distance距离的点p3的坐标
+   * @param {Point} - p1
+   * @param {Point} - p2
+   * @param {Number} - distance 与p1的距离
+   * @return {{x: *, y: *}}
+   */
+  getA3Point({ p1, p2, distance }): { x: number; y: number } {
+    const { x: Ax1, y: Ay1 } = p1;
+    const { x: Ax2, y: Ay2 } = p2;
+    const dLA1A2 = Math.sqrt(Math.pow(Ax2 - Ax1, 2) + Math.pow(Ay2 - Ay1, 2)); // 计算A1A2的长度
+    const Ax3 = (distance / dLA1A2) * (Ax2 - Ax1) + Ax1; // A3的横坐标
+    const Ay3 = (distance / dLA1A2) * (Ay2 - Ay1) + Ay1; // A3的横坐标
+    return {
+      x: Ax3,
+      y: Ay3,
+    };
+  },
+  /**
+   * getDistanceByBetweenPoint - 获取p1,p2两点间的距离
+   * @param {Point} - p1
+   * @param {Point} - p2
+   * @return {number}
+   */
+  getDistanceByBetweenPoint({ p1, p2 }): number {
+    const { x: Ax1, y: Ay1 } = p1;
+    const { x: Ax2, y: Ay2 } = p2;
+    return Math.sqrt(Math.pow(Ax2 - Ax1, 2) + Math.pow(Ay2 - Ay1, 2)); // 计算A1A2的长度
+  },
+  /**
+   * clientToCtxPoint - 屏幕坐标转换成画布坐标
+   * @param {Event} - event
+   * @param {HTMLCanvasElement} - el
+   * @return {x:number,y:number}
+   */
+  clientToCtxPoint({ event, el }): { x: number; y: number } {
+    const { clientX, clientY } = event;
+    const rect = el.getBoundingClientRect();
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+    };
+  },
   /**--------------------------math-end------------------------**/
 };

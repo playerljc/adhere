@@ -75,13 +75,13 @@ declare const _default: {
     insertAfter(newElement: any, targetElement: any): void;
     /**
      * prepend
-     * @param {HTMLElement} - el
-     * @param {HTMLElement | String} - children
+     * @param el
+     * @param children
      */
     prepend(el: any, children: any): void;
     /**
      * remove
-     * @param {HTMLElement} - el
+     * @param el
      */
     remove(el: any): void;
     /**
@@ -104,32 +104,32 @@ declare const _default: {
     isTouch(): boolean;
     /**
      * objectToDataSet
-     * @param {Object} - obj
-     * @param {HTMLElement} - dom
+     * @param obj
+     * @param dom
      */
     objectToDataSet(obj: object, dom: HTMLElement): void;
     /**
      * dataSetToObj
-     * @param {HTMLElement} - dom
      * @returns {Object}
+     * @param dom
      */
     dataSetToObject(dom: HTMLElement): {};
     /**
      * getPageLeft - 获取指定元素距离视口的left
-     * @param {HTMLElement} - el
      * @return {SelectOptions}
+     * @param el
      */
     getPageLeft(el: any): any;
     /**
      * getPageTop - 获取指定元素距离视口的top
-     * @param {HTMLElement} - el
      * @return {SelectOptions}
+     * @param el
      */
     getPageTop(el: any): any;
     /**
      * getPageRect - 获取元素距离视口的Rect
-     * @param {HTMLElement} - el
      * @return {{top: number, left: number}}
+     * @param el
      */
     getPageRect(el: any): {
         top: any;

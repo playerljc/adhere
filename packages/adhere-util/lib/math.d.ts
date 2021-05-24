@@ -33,5 +33,43 @@ declare const _default: {
         x: number;
         y: number;
     };
+    /**
+     * getA3Piint - 计算两点p1,p2 距离p1点distance距离的点p3的坐标
+     * @param {Point} - p1
+     * @param {Point} - p2
+     * @param {Number} - distance 与p1的距离
+     * @return {{x: *, y: *}}
+     */
+    getA3Point({ p1, p2, distance }: {
+        p1: any;
+        p2: any;
+        distance: any;
+    }): {
+        x: number;
+        y: number;
+    };
+    /**
+     * getDistanceByBetweenPoint - 获取p1,p2两点间的距离
+     * @param {Point} - p1
+     * @param {Point} - p2
+     * @return {number}
+     */
+    getDistanceByBetweenPoint({ p1, p2 }: {
+        p1: any;
+        p2: any;
+    }): number;
+    /**
+     * clientToCtxPoint - 屏幕坐标转换成画布坐标
+     * @param {Event} - event
+     * @param {HTMLCanvasElement} - el
+     * @return {x:number,y:number}
+     */
+    clientToCtxPoint({ event, el }: {
+        event: any;
+        el: any;
+    }): {
+        x: number;
+        y: number;
+    };
 };
 export default _default;

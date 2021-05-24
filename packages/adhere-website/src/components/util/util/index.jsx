@@ -954,6 +954,76 @@ export default () => {
             returnType: '{x:number,y:number}',
             returnDesc: '',
           },
+
+          {
+            name: 'getA3Point',
+            desc: '计算两点p1,p2 距离p1点distance距离的点p3的坐标',
+            modifier: 'public',
+            params: [
+              {
+                name: 'p1',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p2',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: '{x:number,y:number}',
+            returnDesc: '',
+          },
+          {
+            name: 'getDistanceByBetweenPoint',
+            desc: '获取p1,p2两点间的距离',
+            modifier: 'public',
+            params: [
+              {
+                name: 'p1',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p2',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'clientToCtxPoint',
+            desc: '屏幕坐标转换成画布坐标',
+            modifier: 'public',
+            params: [
+              {
+                name: 'event',
+                desc: '事件对象',
+                type: 'HtmlMouseEvent',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'el',
+                desc: '容器的HtmlDom',
+                type: 'HtmlElement',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
         ]}
       />
 
