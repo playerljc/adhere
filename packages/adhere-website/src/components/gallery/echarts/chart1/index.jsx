@@ -4,100 +4,383 @@ import ReactECharts from 'echarts-for-react';
 import Playground from '@/lib/Playground';
 
 const option = {
-  title: {
-    text: '堆叠区域图'
-  },
   tooltip: {
     trigger: 'axis',
     axisPointer: {
       type: 'cross',
       label: {
-        backgroundColor: '#6a7985'
-      }
-    }
-  },
-  legend: {
-    data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
+        backgroundColor: '#6a7985',
+      },
+    },
   },
   grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
+    x: 50,
+    y: 50,
+    x2: 50,
+    y2: 70,
   },
-  xAxis: [
-    {
-      type: 'category',
-      boundaryGap: false,
-      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-    }
-  ],
+  legend: {
+    type: 'scroll',
+    top: 0,
+    right: 16,
+    padding: [5, 16, 5, 150],
+  },
+  xAxis: {
+    boundaryGap: false,
+    axisTick: {
+      show: true,
+      alignWithLabel: true,
+    },
+    data: [
+      '2020-08-21',
+      '2020-08-22',
+      '2020-08-23',
+      '2020-08-24',
+      '2020-08-25',
+      '2020-08-26',
+      '2020-08-27',
+      '2020-08-28',
+      '2020-08-29',
+      '2020-08-30',
+      '2020-08-31',
+      '2020-09-01',
+      '2020-09-02',
+      '2020-09-03',
+      '2020-09-04',
+      '2020-09-05',
+      '2020-09-06',
+      '2020-09-07',
+      '2020-09-08',
+      '2020-09-09',
+      '2020-09-10',
+      '2020-09-11',
+    ],
+  },
   yAxis: [
     {
-      type: 'value'
-    }
+      min: 0,
+      type: 'value',
+      axisTick: {
+        show: false,
+      },
+      splitLine: {
+        show: false,
+      },
+      nameTextStyle: {
+        align: 'left',
+      },
+      name: 'AQI',
+      max: 125,
+    },
   ],
   series: [
     {
-      name: '邮件营销',
       type: 'line',
-      stack: '总量',
-      areaStyle: {},
-      emphasis: {
-        focus: 'series'
+      smooth: true,
+      connectNulls: true,
+      areaStyle: {
+        opacity: 0.4,
       },
-      data: [120, 132, 101, 134, 90, 230, 210]
+      yAxisIndex: 0,
+      data: [
+        {
+          value: 51,
+          symbolRotate: null,
+        },
+        {
+          value: 46,
+          symbolRotate: null,
+        },
+        {
+          value: 68,
+          symbolRotate: null,
+        },
+        {
+          value: 46,
+          symbolRotate: null,
+        },
+        {
+          value: 68,
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+      ],
+      name: '\u884c\u653f\u4e2d\u5fc3',
+      markArea: {
+        silent: true,
+        data: [
+          [
+            {
+              yAxis: 0,
+              name: '\u4f18',
+              label: {
+                show: true,
+                position: 'insideLeft',
+                verticalAlign: 'middle',
+                opacity: 1,
+                color: '#000',
+              },
+              itemStyle: {
+                color: '#00e400',
+                opacity: 1,
+              },
+            },
+            {
+              yAxis: 50,
+            },
+          ],
+          [
+            {
+              yAxis: 50,
+              name: '\u826f',
+              label: {
+                show: true,
+                position: 'insideLeft',
+                verticalAlign: 'middle',
+                opacity: 1,
+                color: '#000',
+              },
+              itemStyle: {
+                color: '#ffff00',
+                opacity: 1,
+              },
+            },
+            {
+              yAxis: 100,
+            },
+          ],
+          [
+            {
+              yAxis: 100,
+              name: '\u8f7b\u5ea6\u6c61\u67d3',
+              label: {
+                show: true,
+                position: 'insideLeft',
+                verticalAlign: 'middle',
+                opacity: 1,
+                color: '#000',
+              },
+              itemStyle: {
+                color: '#ff7e00',
+                opacity: 1,
+              },
+            },
+            {
+              yAxis: 150,
+            },
+          ],
+        ],
+      },
     },
     {
-      name: '联盟广告',
       type: 'line',
-      stack: '总量',
-      areaStyle: {},
-      emphasis: {
-        focus: 'series'
+      smooth: true,
+      connectNulls: true,
+      areaStyle: {
+        opacity: 0.4,
       },
-      data: [220, 182, 191, 234, 290, 330, 310]
+      yAxisIndex: 0,
+      data: [
+        {
+          value: 40,
+          symbolRotate: null,
+        },
+        {
+          value: 51,
+          symbolRotate: null,
+        },
+        {
+          value: 59,
+          symbolRotate: null,
+        },
+        {
+          value: 51,
+          symbolRotate: null,
+        },
+        {
+          value: 59,
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+        {
+          symbolRotate: null,
+        },
+      ],
+      name: '\u5b89\u5bb6',
+      markArea: {
+        silent: true,
+        data: [
+          [
+            {
+              yAxis: 0,
+              name: '\u4f18',
+              label: {
+                show: true,
+                position: 'insideLeft',
+                verticalAlign: 'middle',
+                opacity: 1,
+                color: '#000',
+              },
+              itemStyle: {
+                color: '#00e400',
+                opacity: 1,
+              },
+            },
+            {
+              yAxis: 50,
+            },
+          ],
+          [
+            {
+              yAxis: 50,
+              name: '\u826f',
+              label: {
+                show: true,
+                position: 'insideLeft',
+                verticalAlign: 'middle',
+                opacity: 1,
+                color: '#000',
+              },
+              itemStyle: {
+                color: '#ffff00',
+                opacity: 1,
+              },
+            },
+            {
+              yAxis: 100,
+            },
+          ],
+          [
+            {
+              yAxis: 100,
+              name: '\u8f7b\u5ea6\u6c61\u67d3',
+              label: {
+                show: true,
+                position: 'insideLeft',
+                verticalAlign: 'middle',
+                opacity: 1,
+                color: '#000',
+              },
+              itemStyle: {
+                color: '#ff7e00',
+                opacity: 1,
+              },
+            },
+            {
+              yAxis: 150,
+            },
+          ],
+        ],
+      },
     },
+  ],
+  dataZoom: [
     {
-      name: '视频广告',
-      type: 'line',
-      stack: '总量',
-      areaStyle: {},
-      emphasis: {
-        focus: 'series'
+      show: true,
+      start: 10,
+      end: 40,
+      textStyle: {
+        color: 'transparent',
       },
-      data: [150, 232, 201, 154, 190, 330, 410]
     },
-    {
-      name: '直接访问',
-      type: 'line',
-      stack: '总量',
-      areaStyle: {},
-      emphasis: {
-        focus: 'series'
-      },
-      data: [320, 332, 301, 334, 390, 330, 320]
-    },
-    {
-      name: '搜索引擎',
-      type: 'line',
-      stack: '总量',
-      label: {
-        show: true,
-        position: 'top'
-      },
-      areaStyle: {},
-      emphasis: {
-        focus: 'series'
-      },
-      data: [820, 932, 901, 934, 1290, 1330, 1320]
-    }
-  ]
+  ],
 };
 
 export default () => (
@@ -108,102 +391,7 @@ export default () => (
   import React from 'react';
   import ReactECharts from 'echarts-for-react';
   
-  const option = {
-    title: {
-      text: '堆叠区域图'
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-        label: {
-          backgroundColor: '#6a7985'
-        }
-      }
-    },
-    legend: {
-      data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {}
-      }
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type: 'category',
-        boundaryGap: false,
-        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-      }
-    ],
-    yAxis: [
-      {
-        type: 'value'
-      }
-    ],
-    series: [
-      {
-        name: '邮件营销',
-        type: 'line',
-        stack: '总量',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [120, 132, 101, 134, 90, 230, 210]
-      },
-      {
-        name: '联盟广告',
-        type: 'line',
-        stack: '总量',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [220, 182, 191, 234, 290, 330, 310]
-      },
-      {
-        name: '视频广告',
-        type: 'line',
-        stack: '总量',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [150, 232, 201, 154, 190, 330, 410]
-      },
-      {
-        name: '直接访问',
-        type: 'line',
-        stack: '总量',
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [320, 332, 301, 334, 390, 330, 320]
-      },
-      {
-        name: '搜索引擎',
-        type: 'line',
-        stack: '总量',
-        label: {
-          show: true,
-          position: 'top'
-        },
-        areaStyle: {},
-        emphasis: {
-          focus: 'series'
-        },
-        data: [820, 932, 901, 934, 1290, 1330, 1320]
-      }
-    ]
-  };
+  const option = ${JSON.stringify(option)}
   
   <ReactECharts option={option} />
     `}
