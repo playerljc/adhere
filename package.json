@@ -19,7 +19,8 @@
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./packages/**/src",
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"packages/**/src/**/*.less\" --syntax less",
-    "prettier": "prettier -c --write \"**/*\""
+    "prettier": "prettier -c --write \"**/*\"",
+    "prettier-json": "prettier -c --write \"**/*.json\""
   },
   "husky": {
     "hooks": {
