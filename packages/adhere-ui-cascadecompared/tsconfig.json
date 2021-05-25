@@ -4,7 +4,9 @@
     "declarationDir": "./lib",
     "outDir": "./lib",
     "baseUrl": "./",
-    "jsx": "react"
+"module": "esnext"
+
+
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

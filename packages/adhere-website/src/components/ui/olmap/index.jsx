@@ -25,7 +25,7 @@ import icon from './区控-图例.svg';
 // // import { Tile } from 'ol/layer.js';
 // import TileLayer from 'ol/layer/Tile';
 // import { OSM } from 'ol/source.js';
-import 'ol/ol.css';
+// import 'ol/ol.css';
 
 // import AnimationManager from './animationmanager';
 

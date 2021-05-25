@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var react_1=require("react");exports.default=function(e){var r=react_1.useRef();return react_1.useEffect(function(){r.current=e}),r.current};
+import{useRef as useRef,useEffect as useEffect}from"react";export default function(e){var f=useRef();return useEffect(function(){f.current=e}),f.current}
 //# sourceMappingURL=usePrevious.js.map

@@ -1,14 +1,16 @@
 {
   "name": "@baifendian/adhere-ui-tableheadsearch",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "基于antd-design的Table的列头筛选",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "umd"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildpackage": "ctbuild buildpackagets",
+    "buildumd": "ctbuild buildumd --packagename AdhereTableHeadSearch --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
@@ -29,14 +31,15 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.2",
+    "@ctsj/build": "^4.0.11",
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "@ant-design/icons": "^4.3.0",
     "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0"
-  }
+    "@types/react-dom": "^17.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

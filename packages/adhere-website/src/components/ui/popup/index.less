@@ -1,0 +1,22 @@
+.Wrap {
+  display: flex;
+  flex-direction: column;
+
+  > .Fixed {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+  }
+
+  > .Auto {
+    flex-grow: 1;
+    box-sizing: border-box;
+    min-height: 0;
+    padding: 1rem;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 21px;
+  }
+}

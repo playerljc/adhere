@@ -9,6 +9,10 @@ const contextPath = path.join(__dirname, '../', 'src');
 
 const excludes = ['@baifendian/adhere-ui-css'];
 
+const indexLessContent = [];
+const indexJsContent = [];
+const indexJsExportContent = ['export { \r\n'];
+
 const namedMap = new Map([
   ['@baifendian/adhere-ui-conditionalrender', 'ConditionalRender'],
   ['@baifendian/adhere-ui-confirm-delconfirm', 'DelConfirm'],
@@ -41,6 +45,14 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-contextmenu', 'ContextMenu'],
   ['@baifendian/adhere-ui-fontsizesetting', 'FontSizeSetting'],
   ['@baifendian/adhere-ui-searchtable', 'SearchTable'],
+  // ['@baifendian/adhere-ui-g6', 'G6'],
+  ['@baifendian/adhere-ui-formitemcreator', 'FormItemCreator'],
+  ['@baifendian/adhere-ui-tablelist', 'TableList'],
+  ['@baifendian/adhere-ui-popup', 'Popup'],
+  ['@baifendian/adhere-ui-backtopanimation', 'BackTopAnimation'],
+  ['@baifendian/adhere-ui-pullrefresh', 'PullRefresh'],
+  ['@baifendian/adhere-ui-notification', 'Notification'],
+  ['@baifendian/adhere-ui-swipeout', 'SwipeOut'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -64,15 +76,25 @@ function pascalCaseToKebabCase(name) {
   return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
 }
 
-// eslint-disable-next-line guard-for-in
-for (const p in dependencies) {
+// let dependenciesAll = {};
+
+// eslint-disable-next-line guard-for-in,no-restricted-syntax
+for (const packageName in dependencies) {
+  // eslint-disable-next-line no-continue
+  if (!packageName.startsWith('@baifendian')) continue;
+
   const packagesPath = path.join(__dirname, '../../');
 
-  const name = p.split('/')[1];
+  const name = packageName.split('/')[1];
+
+  // const json = require(path.join(packagesPath, name, 'package.json'));
+  // dependenciesAll = { ...dependenciesAll, ...json.dependencies };
 
   // 不排除
-  if (excludes.indexOf(p) === -1) {
-    const folderName = pascalCaseToKebabCase(namedMap.get(p)); // name.substring(name.lastIndexOf('-') + 1);
+  if (excludes.indexOf(packageName) === -1) {
+    const exportName = namedMap.get(packageName);
+
+    const folderName = pascalCaseToKebabCase(namedMap.get(packageName)); // name.substring(name.lastIndexOf('-') + 1);
 
     const folderPath = path.join(contextPath, folderName);
 
@@ -88,7 +110,7 @@ for (const p in dependencies) {
     }
 
     // index.js写入文件
-    fs.writeFileSync(indexPath, `import Model from '${p}';\r\nexport default Model;`);
+    fs.writeFileSync(indexPath, `import Model from '${packageName}';\r\nexport default Model;`);
 
     if (!fs.existsSync(stylePath)) {
       // 不存在
@@ -98,11 +120,14 @@ for (const p in dependencies) {
     // 查看packages中是否存在index.less
     if (fs.existsSync(path.join(packagesPath, name, 'src', 'index.less'))) {
       // index.less写入文件
-      fs.writeFileSync(styleIndexPath, `@import '~${p}/lib/index.less';`);
+      fs.writeFileSync(styleIndexPath, `@import '~${packageName}/lib/index.less';`);
+      indexLessContent.push(`@import '~${packageName}/lib/index.less';\r\n`);
     } else {
       fs.writeFileSync(styleIndexPath, '');
     }
 
+    indexJsContent.push(`import ${exportName} from '${packageName}';\r\n`);
+    indexJsExportContent.push(`  ${exportName},\r\n`);
     // 查看packages中是否存在antd.less
     // if (fs.existsSync(path.join(packagesPath, name, 'src', 'antd.less'))) {
     //   // 读取antd.less文件内容
@@ -113,7 +138,7 @@ for (const p in dependencies) {
   } else {
     // 排除的包
     // eslint-disable-next-line no-lonely-if
-    if (p === '@baifendian/adhere-ui-css') {
+    if (packageName === '@baifendian/adhere-ui-css') {
       const cssPackagePath = path.join(packagesPath, name, 'src');
 
       const result = fs.readdirSync(cssPackagePath);
@@ -128,3 +153,11 @@ for (const p in dependencies) {
     }
   }
 }
+
+const indexLessPath = path.join(__dirname, '../src', 'index.less');
+const lessContent = fs.readFileSync(indexLessPath);
+fs.writeFileSync(indexLessPath, `${lessContent}\r\n${indexLessContent.join('')}`);
+
+const indexJsPath = path.join(__dirname, '../src', 'index.ts');
+indexJsExportContent.push('};\r\n');
+fs.writeFileSync(indexJsPath, `${indexJsContent.join('')}\r\n${indexJsExportContent.join('')}`);

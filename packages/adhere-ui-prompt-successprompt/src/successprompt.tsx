@@ -8,5 +8,5 @@ import Intl from '@baifendian/adhere-util-intl';
  * @param text - {string | React.ReactElement}
  */
 export default (text: string | React.ReactElement) => {
-  message.success(text ? text : Intl.v('操作成功'));
+  return message.success(text ? text : Intl.v('操作成功'));
 };

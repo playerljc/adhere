@@ -13,7 +13,7 @@ export default function (callback) {
         res = value.apply(this, Array.prototype.slice.call(arguments));
       } catch (e) {
         if (callback) {
-          callback.call(this,e);
+          callback.call(this, e);
         }
       }
 

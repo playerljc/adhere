@@ -3,12 +3,11 @@
   "compilerOptions": {
     "declarationDir": "./lib",
     "outDir": "./lib",
-    "baseUrl": "./"
+    "baseUrl": "./",
+"module": "esnext"
+
+
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src/**/*"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["src/**/*"]
 }

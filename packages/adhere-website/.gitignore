@@ -18,6 +18,10 @@ npm-debug
 
 .cache
 
+yarn.lock
+
+package-lock.json
+
 .zip
 
 .vscode

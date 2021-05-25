@@ -35,6 +35,17 @@ const local = getLocal([
   '查询',
   '重置',
   '当前 {page}-{pageSize}/共 {total}条',
+  '共 <em>{n}</em> 条',
+  '搜索',
+  '刷新',
+  '列展示',
+  '设置',
+  '全选',
+  '请输入',
+  '请选择',
+  '下拉刷新',
+  '松开刷新',
+  '更新时间',
 ]);
 
 export default { ...local };

@@ -1,4 +1,4 @@
-@import "./vars";
+@import './vars';
 
 /**
   这里是对antd样式的normalize
@@ -34,4 +34,22 @@
   > .ant-card-body {
     height: 100%;
   }
+}
+
+.ant-select-tree {
+  .ant-select-tree-node-content-wrapper {
+    white-space: nowrap;
+  }
+}
+
+.ant-tree-title {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ant-picker-dropdown {
+  z-index: @adhere-common-max-zindex + 2;
 }

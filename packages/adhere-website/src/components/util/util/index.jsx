@@ -786,38 +786,6 @@ export default () => {
             returnDesc: '',
           },
           {
-            name: 'toPoint',
-            desc: '百分数转化为小数',
-            modifier: 'public',
-            params: [
-              {
-                name: 'percent',
-                desc: '',
-                type: 'string',
-                defaultVal: '',
-                required: '',
-              },
-            ],
-            returnType: 'string',
-            returnDesc: '',
-          },
-          {
-            name: 'toPercent',
-            desc: '小数转化为百分数',
-            modifier: 'public',
-            params: [
-              {
-                name: 'point',
-                desc: '',
-                type: 'number',
-                defaultVal: '',
-                required: '',
-              },
-            ],
-            returnType: 'string',
-            returnDesc: '',
-          },
-          {
             name: 'getCookie',
             desc: '获取指定的cookie值',
             modifier: 'public',
@@ -839,22 +807,6 @@ export default () => {
             modifier: 'public',
             params: [],
             returnType: 'Function',
-            returnDesc: '',
-          },
-          {
-            name: 'rgb',
-            desc: 'rgb颜色随机',
-            modifier: 'public',
-            params: [],
-            returnType: 'string',
-            returnDesc: '',
-          },
-          {
-            name: 'color16',
-            desc: '十六进制颜色随机',
-            modifier: 'public',
-            params: [],
-            returnType: 'string',
             returnDesc: '',
           },
           {
@@ -925,6 +877,173 @@ export default () => {
               },
             ],
             returnType: 'Blob',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <h2>数学操作</h2>
+      <FunctionProps
+        data={[
+          {
+            name: 'toPoint',
+            desc: '百分数转化为小数',
+            modifier: 'public',
+            params: [
+              {
+                name: 'percent',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'string',
+            returnDesc: '',
+          },
+          {
+            name: 'toPercent',
+            desc: '小数转化为百分数',
+            modifier: 'public',
+            params: [
+              {
+                name: 'point',
+                desc: '',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'string',
+            returnDesc: '',
+          },
+          {
+            name: 'straightLineIntersection',
+            desc: '计算两个直线的交点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'p1',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p2',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p3',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p4',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: '{x:number,y:number}',
+            returnDesc: '',
+          },
+
+          {
+            name: 'getA3Point',
+            desc: '计算两点p1,p2 距离p1点distance距离的点p3的坐标',
+            modifier: 'public',
+            params: [
+              {
+                name: 'p1',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p2',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: '{x:number,y:number}',
+            returnDesc: '',
+          },
+          {
+            name: 'getDistanceByBetweenPoint',
+            desc: '获取p1,p2两点间的距离',
+            modifier: 'public',
+            params: [
+              {
+                name: 'p1',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'p2',
+                desc: '',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'clientToCtxPoint',
+            desc: '屏幕坐标转换成画布坐标',
+            modifier: 'public',
+            params: [
+              {
+                name: 'event',
+                desc: '事件对象',
+                type: 'HtmlMouseEvent',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'el',
+                desc: '容器的HtmlDom',
+                type: 'HtmlElement',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <h2>颜色操作</h2>
+      <FunctionProps
+        data={[
+          {
+            name: 'rgb',
+            desc: 'rgb颜色随机',
+            modifier: 'public',
+            params: [],
+            returnType: 'string',
+            returnDesc: '',
+          },
+          {
+            name: 'color16',
+            desc: '十六进制颜色随机',
+            modifier: 'public',
+            params: [],
+            returnType: 'string',
             returnDesc: '',
           },
         ]}

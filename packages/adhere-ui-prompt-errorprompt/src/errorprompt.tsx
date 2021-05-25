@@ -8,5 +8,5 @@ import Intl from '@baifendian/adhere-util-intl';
  * @param text - {string | React.ReactElement}
  */
 export default (text: string | React.ReactElement) => {
-  message.error(text ? text : Intl.v('系统异常'));
+  return message.error(text ? text : Intl.v('系统异常'));
 };

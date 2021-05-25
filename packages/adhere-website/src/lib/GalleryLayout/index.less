@@ -1,0 +1,20 @@
+.Wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  > .Fixed {
+    flex-shrink: 0;
+    padding: 15px 20px;
+  }
+
+  > .Auto {
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden auto;
+
+    .CardWrap {
+      padding: 20px;
+    }
+  }
+}

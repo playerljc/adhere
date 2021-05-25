@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["notification/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-notification';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,8DACQA"}

@@ -1,43 +1,3 @@
-interface loadstart {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface timeout {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface progress {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface abort {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface error {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface load {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface loadend {
-  (e: ProgressEvent<XMLHttpRequestEventTarget> | null): void;
-}
-
-interface onBeforeResponse {
-  (): void;
-}
-
-/**
- * interceptor - 拦截器接口定义
- * @interface
- */
-interface interceptor {
-  (params: { status?: number; statusText?: string; response?: any; responseText: string }): void;
-}
-
 /**
  * IConfig
  * @interface IConfig
@@ -48,41 +8,51 @@ export interface IConfig {
    * 在预设时间内没有接收到响应时触发。
    * 也可以使用 ontimeout 属性。
    */
-  onTimeout?: timeout;
+  onTimeout?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
   /**
    * 接收到响应数据时触发。
    * 也可以使用 onloadstart 属性。
    */
-  onLoadsStart?: loadstart;
+  onLoadsStart?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
   /**
    * 当请求接收到更多数据时，周期性地触发。
    * 也可以使用 onprogress 属性。
    */
-  onProgress?: progress;
+  onProgress?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
   /**
    * 当 request 被停止时触发，例如当程序调用 XMLHttpRequest.abort() 时。
    * 也可以使用 onabort 属性。
    */
-  onAbort?: abort;
+  onAbort?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
   /**
    * 当 request 遭遇错误时触发。
    * 也可以使用 onerror 属性
    */
-  onError?: error;
+  onError?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
+
   /**
    * XMLHttpRequest请求成功完成时触发。
    * 也可以使用 onload 属性.
    */
-  onLoad?: load;
+  onLoad?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
   /**
    * 当请求结束时触发, 无论请求成功 ( load) 还是失败 (abort 或 error)。
    * 也可以使用 onloadend 属性。
    */
-  onLoadend?: loadend;
+  onLoadend?: (e: ProgressEvent<XMLHttpRequestEventTarget> | null) => void;
   timeout?: number;
   withCredentials?: boolean;
   // 全局的拦截器
-  interceptor: interceptor;
+  /**
+   * interceptor - 拦截器接口定义
+   * @interface
+   */
+  interceptor: (params: {
+    status?: number;
+    statusText?: string;
+    response?: any;
+    responseText: string;
+  }) => void;
 }
 
 /**
@@ -118,7 +88,7 @@ export interface ISendArg extends IConfig {
     el: HTMLElement;
   };
   // 和后端定义的三大业务key
-  onBeforeResponse: onBeforeResponse;
+  onBeforeResponse: () => void;
   // 数据属性
   dataKey: string;
   // 消息属性
