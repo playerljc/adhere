@@ -106,7 +106,6 @@
 - [@baifendian/adhere-ui-pullrefresh](#@baifendian/adhere-ui-pullrefresh) - ok
 - [@baifendian/adhere-ui-notification](#@baifendian/adhere-ui-notification) - ok
 - [@baifendian/adhere-ui-swipeout](#@baifendian/adhere-ui-swipeout) - ok
-  
 - [@baifendian/adhere-util-memoized](#baifendian/adhere-util-watchmemoized)- ok
 - [@baifendian/adhere-util-communication-ajax](#@baifendian/adhere-util-communication-ajax) - ok
 - [@baidendian/adhere-util-adapterscreen](#@baidendian/adhere-util-adapterscreen) - ok
@@ -511,4 +510,5 @@ log:
 - 无线扩展
 
 ## @baifendian/adhere-ui-g6
-antv-g6的封装
+
+antv-g6 的封装
