@@ -91,7 +91,7 @@ class Playground extends React.Component {
   }
 
   /**
-   * renderCodeView
+   * renderCodeView - 代码展示视图
    * @return {*}
    */
   renderCodeView() {
