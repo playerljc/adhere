@@ -46,6 +46,7 @@ class Introduction extends React.Component {
             <code>antd/dist/antd.less</code>
           </Paragraph>
         </Typography>
+
         <Playground
           mode="code"
           scope={{ React }}
