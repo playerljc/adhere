@@ -1,7 +1,7 @@
-import GeoLayer from './geolayer';
-import * as TitleLayer from './titlelayer';
 import OLMap from './olmap';
 import HeatMap from './heatmap';
+import GeoLayer from './geolayer';
+import * as TitleLayer from './titlelayer';
 import Util from './util';
 import AnimationManager from './animationmanager';
 
