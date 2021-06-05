@@ -92,7 +92,9 @@ GalleryLayout.defaultProps = {
 };
 
 GalleryLayout.propTypes = {
+  // 一行多少个组件
   rowCount: PropTypes.number,
+  // 组件的清单文件
   manifest: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,

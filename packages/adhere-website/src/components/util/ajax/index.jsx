@@ -6,7 +6,7 @@ import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
 
-const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
+const k007Ajax = new Ajax('http://k007-pe.baifendian.com');
 
 export default () => {
   const uploadFormFef = useRef();

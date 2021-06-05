@@ -95,7 +95,7 @@ export default () => {
   });
 
   // 创建一个memoized的Promise函数
-  const anyncFun = memoized.createMemoFun((...params) => {
+  const asyncFun = memoized.createMemoFun((...params) => {
     console.log('callAnyncFun');
     return new Promise((resolve) => {
       resolve(params.reduce((pre, current) => pre + current, 0));
@@ -553,14 +553,14 @@ export default () => {
         <Space.Group direction="horizontal" size={10}>
           <Button
             onClick={() => {
-              anyncFun(1, 2, 3).then((res) => {
+              asyncFun(1, 2, 3).then((res) => {
                 console.log('asyncFun', res);
               });
 
-              console.log('asyncFun', anyncFun(1, 2, 3));
+              console.log('asyncFun', asyncFun(1, 2, 3));
 
-              console.log('asyncFun', anyncFun(1, 2, 4));
-              console.log('asyncFun', anyncFun(1, 2, 4));
+              console.log('asyncFun', asyncFun(1, 2, 4));
+              console.log('asyncFun', asyncFun(1, 2, 4));
             }}
           >
             调用memoized函数

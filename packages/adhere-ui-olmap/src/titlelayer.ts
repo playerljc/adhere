@@ -1,6 +1,5 @@
 import Tile from 'ol/layer/Tile';
 import { XYZ, OSM, TileWMS, WMTS } from 'ol/source.js';
-import get = Reflect.get;
 
 /**
  * getOSM - OSM的resource

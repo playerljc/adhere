@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Heatmap as HeatmapLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source.js';
 
 import OlMap from './olmap';
 import Util from './util';
-import { Heatmap as HeatmapLayer } from 'ol/layer';
 
 /**
  * HeatMap

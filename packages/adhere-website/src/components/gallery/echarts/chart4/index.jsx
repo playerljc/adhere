@@ -108,7 +108,7 @@ export default () => (
   import React from 'react';
   import ReactECharts from 'echarts-for-react';
   
-  const option = ${JSON.stringify(option)}
+  const option = ${JSON.stringify(option, null, 2)}
   
   <ReactECharts option={option} />
     `}

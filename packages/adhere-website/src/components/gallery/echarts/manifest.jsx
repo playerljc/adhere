@@ -7,6 +7,7 @@ import Chart4 from './chart4';
 import Chart5 from './chart5';
 import Chart6 from './chart6';
 import Chart7 from './chart7';
+import IframeDemo from './iframe_demo';
 
 export default [
   {
@@ -43,5 +44,10 @@ export default [
     title: 'Chart7',
     keyword: '7',
     component: <Chart7 />,
-  }
+  },
+  {
+    title: 'Iframe_Demo',
+    keyword: '8',
+    component: <IframeDemo />,
+  },
 ];

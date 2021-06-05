@@ -118,6 +118,37 @@ class BasicLayout extends React.Component {
   }
 
   /**
+   * loopRoutes
+   * @param defaultOpenKeys
+   * @param defaultSelectedKeys
+   * @param routes
+   */
+  static loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes }) {
+    const { pathname } = window.location;
+    for (let i = 0; i < routes.length; i++) {
+      const route = routes[i];
+      if (pathname.indexOf(route.path) !== -1) {
+        if (
+          route.routes &&
+          route.routes.length &&
+          route.routes.filter((t) => t.hide).length !== route.routes.length
+        ) {
+          defaultOpenKeys.push({
+            path: route.path,
+            name: route.name,
+          });
+          BasicLayout.loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes: route.routes });
+        } else {
+          defaultSelectedKeys.push({
+            path: route.path,
+            name: route.name,
+          });
+        }
+      }
+    }
+  }
+
+  /**
    * renderMenuItem
    * @param routes
    * @return {any[]}
@@ -235,37 +266,6 @@ class BasicLayout extends React.Component {
         </Breadcrumb>
       </div>
     );
-  }
-
-  /**
-   * loopRoutes
-   * @param defaultOpenKeys
-   * @param defaultSelectedKeys
-   * @param routes
-   */
-  static loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes }) {
-    const { pathname } = window.location;
-    for (let i = 0; i < routes.length; i++) {
-      const route = routes[i];
-      if (pathname.indexOf(route.path) !== -1) {
-        if (
-          route.routes &&
-          route.routes.length &&
-          route.routes.filter((t) => t.hide).length !== route.routes.length
-        ) {
-          defaultOpenKeys.push({
-            path: route.path,
-            name: route.name,
-          });
-          BasicLayout.loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes: route.routes });
-        } else {
-          defaultSelectedKeys.push({
-            path: route.path,
-            name: route.name,
-          });
-        }
-      }
-    }
   }
 
   /**

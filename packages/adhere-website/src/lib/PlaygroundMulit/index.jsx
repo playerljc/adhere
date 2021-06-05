@@ -11,11 +11,11 @@ import './index.less';
 const selectPrefix = 'adhere-website-playground';
 
 /**
- * Playground
- * @class Playground
- * @classdesc Playground
+ * PlaygroundMulit
+ * @class PlaygroundMulit
+ * @classdesc PlaygroundMulit
  */
-class Playground extends React.Component {
+class PlaygroundMulit extends React.Component {
   state = {
     expand: this.props.expand,
   };
@@ -29,23 +29,6 @@ class Playground extends React.Component {
     });
   }
 
-  /**
-   * renderProps
-   * @return {*}
-   */
-  renderProps() {
-    return (
-      <div className={classNames(selectPrefix, this.props.mode)}>
-        <PlaygroundExt
-          {...this.props}
-          collapsableCode={false}
-          initiallyExpanded={false}
-          es6Console={false}
-        />
-      </div>
-    );
-  }
-
   renderAction() {
     return this.actionConfig.map((config) => config.call(this));
   }
@@ -57,7 +40,8 @@ class Playground extends React.Component {
     return (
       <div
         onClick={() => {
-          copy(this.props.codeText);
+          const { config } = this;
+          copy(config.map((c) => c.codeText).join('\r\n'));
           message.success('复制成功');
         }}
       >
@@ -92,19 +76,23 @@ class Playground extends React.Component {
 
   /**
    * renderCodeView - 代码展示视图
+   * @param config
    * @return {*}
    */
-  renderCodeView() {
-    return this.state.expand ? (
-      <Card>
-        <PlaygroundExt
-          {...this.props}
-          collapsableCode={false}
-          initiallyExpanded={false}
-          es6Console={false}
-        />
-      </Card>
-    ) : null;
+  renderCodeView(config) {
+    return (
+      <div className={`${selectPrefix}-codeviewwrap`}>
+        <div className={`${selectPrefix}-codeviewwrap-title`}>{config.title}</div>
+        <div className={`${selectPrefix}-codeviewwrap-inner`}>
+          <PlaygroundExt
+            {...config}
+            collapsableCode={false}
+            initiallyExpanded={false}
+            es6Console={false}
+          />
+        </div>
+      </div>
+    );
   }
 
   /**
@@ -112,10 +100,15 @@ class Playground extends React.Component {
    * @return {*}
    */
   renderCode() {
+    const { config, children } = this.props;
+    const { expand } = this.state;
+
     return (
-      <div className={classNames(selectPrefix, this.props.mode)}>
-        <Card actions={this.renderAction()}>{this.props.children}</Card>
-        {this.renderCodeView()}
+      <div className={classNames(selectPrefix)}>
+        {/* 显示区 */}
+        <Card actions={this.renderAction()}>{children}</Card>
+        {/* 代码区 */}
+        {expand ? <Card>{(config || []).map((c) => this.renderCodeView(c))}</Card> : null}
       </div>
     );
   }
@@ -125,34 +118,30 @@ class Playground extends React.Component {
    * @return {*}
    */
   render() {
-    const { mode } = this.props;
-
-    return mode === 'props' ? this.renderProps() : this.renderCode();
+    return this.renderCode();
   }
 }
 
-Playground.defaultProps = {
-  docClass: null,
-  codeText: '',
-  collapsableCode: true,
-  initiallyExpanded: true,
-  es6Console: true,
-  propDescriptionMap: null,
-  scope: { React },
-  mode: 'code',
+PlaygroundMulit.defaultProps = {
+  config: [],
   expand: false,
 };
 
-Playground.propTypes = {
-  docClass: PropTypes.object,
-  codeText: PropTypes.string,
-  collapsableCode: PropTypes.bool,
-  initiallyExpanded: PropTypes.bool,
-  es6Console: PropTypes.bool,
-  propDescriptionMap: PropTypes.object,
-  scope: PropTypes.object,
-  mode: PropTypes.oneOf(['props', 'code']),
+PlaygroundMulit.propTypes = {
+  config: PropTypes.arrayOf(
+    PropTypes.shape({
+      docClass: PropTypes.object,
+      codeText: PropTypes.string,
+      collapsableCode: PropTypes.bool,
+      initiallyExpanded: PropTypes.bool,
+      es6Console: PropTypes.bool,
+      propDescriptionMap: PropTypes.object,
+      scope: PropTypes.object,
+      // 描述
+      title: PropTypes.object,
+    }),
+  ),
   expand: PropTypes.bool,
 };
 
-export default Playground;
+export default PlaygroundMulit;
