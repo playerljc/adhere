@@ -62,17 +62,17 @@ export default () => (
     mode="code"
     scope={{ React }}
     codeText={`
-      import React from 'react';
-      import ReactECharts from 'echarts-for-react';
-      import echarts from 'echarts/lib/echarts';
-      import 'echarts-wordcloud';
-      import 'echarts/lib/component/title';
-      import 'echarts/lib/component/tooltip';
-      import 'echarts/lib/component/legend';
+  import React from 'react';
+  import ReactECharts from 'echarts-for-react';
+  import echarts from 'echarts/lib/echarts';
+  import 'echarts-wordcloud';
+  import 'echarts/lib/component/title';
+  import 'echarts/lib/component/tooltip';
+  import 'echarts/lib/component/legend';
       
-      const option = ${JSON.stringify(option, null, 2)}
+  const option = ${JSON.stringify(option, null, 2)}
       
-      <ReactECharts option={option} />
+  <ReactECharts option={option} />
     `}
   >
     <ReactECharts option={option} />
