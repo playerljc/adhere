@@ -477,7 +477,6 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   renderInner = ({ direction }): React.ReactElement => {
-    console.log('direction', direction);
     this.direction = direction;
 
     // @ts-ignore
