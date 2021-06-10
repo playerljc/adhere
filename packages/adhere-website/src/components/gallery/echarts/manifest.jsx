@@ -7,6 +7,7 @@ import Chart4 from './chart4';
 import Chart5 from './chart5';
 import Chart6 from './chart6';
 import Chart7 from './chart7';
+import Chart8 from './chart8';
 import IframeDemo from './iframe_demo';
 
 export default [
@@ -49,5 +50,10 @@ export default [
     title: 'Iframe_Demo',
     keyword: '8',
     component: <IframeDemo />,
+  },
+  {
+    title: '词云',
+    keyword: '9',
+    component: <Chart8 />,
   },
 ];
