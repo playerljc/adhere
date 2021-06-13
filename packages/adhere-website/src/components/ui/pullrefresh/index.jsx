@@ -4,6 +4,7 @@ import { PullRefresh, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import PlaygroundMulit from '@/lib/PlaygroundMulit';
 import Props from '@/lib/Props';
 
 import refreshIcon from './refresh.svg';
@@ -346,10 +347,13 @@ export default () => (
     <Space />
 
     <h2>自定义图标和文本(1)</h2>
-    <Playground
-      mode="code"
-      scope={{ React }}
-      codeText={`
+    <PlaygroundMulit
+      config={[
+        {
+          title: 'index.js',
+          mode: 'code',
+          scope: { React },
+          codeText: `
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { PullRefresh } from '@baifendian/adhere';
@@ -401,10 +405,13 @@ export default () => (
       )}
     />
   </PullRefresh>
-  
-  
-  /*-------------------------------index.less-------------------------*/
-  
+          `,
+        },
+        {
+          title: 'index.less',
+          mode: 'code',
+          scope: { React },
+          codeText: `
   .Wrap {
     height: 300px;
   }
@@ -429,8 +436,9 @@ export default () => (
       transform-origin: center center;
     }
   }
-
-    `}
+          `,
+        },
+      ]}
     >
       <PullRefresh
         className={styles.Wrap}
@@ -470,6 +478,6 @@ export default () => (
           )}
         />
       </PullRefresh>
-    </Playground>
+    </PlaygroundMulit>
   </div>
 );
