@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import v1 from 'uuid';
 
-import Util from '@baifendian/adhere-util';
-
 import { IConfig, IShowConfig, IShowStandardConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-notification';

@@ -12,7 +12,7 @@ import Overlay from 'ol/Overlay.js';
 import { fromLonLat, transform, toLonLat, transformExtent } from 'ol/proj.js';
 import { getBottomLeft, getTopRight, boundingExtent } from 'ol/extent.js';
 import { createStringXY } from 'ol/coordinate';
-import { Heatmap as HeatmapLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Fill, Stroke, Style, Icon, RegularShape, Circle as CircleStyle } from 'ol/style.js';
 import Draw, { createBox } from 'ol/interaction/Draw.js';
@@ -272,14 +272,13 @@ export default {
   },
 
   /**
-   * addHeatmapLayer - 添加一个热力层
-   * @param map
+   * createHeatMapLayer - 创建一个热力层
    * @param layoutConfig
    */
-  addHeatmapLayer(map, layoutConfig) {
+  createHeatMapLayer(layoutConfig) {
     const vectorSource = new VectorSource();
 
-    const heatmapLayer = new HeatmapLayer({
+    const layer = new HeatMapLayer({
       source: vectorSource,
       gradient: ['#00005c', '#020288', '#0202c0', '#0ff', '#0f0', '#ff0', '#f00'],
       weight: () => 1,
@@ -289,9 +288,10 @@ export default {
       ...layoutConfig,
     });
 
-    map.addLayer(heatmapLayer);
-
-    return vectorSource;
+    return {
+      layer,
+      vectorSource,
+    };
   },
 
   /**

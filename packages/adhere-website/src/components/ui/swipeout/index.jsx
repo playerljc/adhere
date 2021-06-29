@@ -148,36 +148,6 @@ export default () => {
         ]}
       />
 
-      <h2>重写的方法</h2>
-      <FunctionProps
-        data={[
-          {
-            name: 'fetchData',
-            desc: '加载数据',
-            modifier: 'public',
-            params: [],
-            returnType: 'void',
-            returnDesc: '',
-          },
-          {
-            name: 'renderInner',
-            desc: '渲染的UI',
-            modifier: 'public',
-            params: [],
-            returnType: 'React.ReactElement',
-            returnDesc: '',
-          },
-          {
-            name: 'showLoading',
-            desc: '是否显示遮罩',
-            modifier: 'public',
-            params: [],
-            returnType: 'boolean',
-            returnDesc: '',
-          },
-        ]}
-      />
-
       <h2>基本使用</h2>
       <Playground
         mode="code"
