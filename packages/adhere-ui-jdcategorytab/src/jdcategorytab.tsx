@@ -132,7 +132,6 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
           >
             <a
               onClick={(e) => {
-                console.log('click', e.target, data);
                 // @ts-ignore
                 this.scrollTo(data.key);
               }}
@@ -156,7 +155,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
         >
           <a
             onClick={(e) => {
-              console.log('click', e.target, data);
+              // console.log('click', e.target, data);
               // @ts-ignore
               this.scrollTo(data.key);
             }}
@@ -169,8 +168,6 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
   }
 
   render() {
-    console.log('render');
-
     // @ts-ignore
     const {
       className,
