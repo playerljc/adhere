@@ -101,7 +101,7 @@ export default () => {
               width: 272,
               alt: 'logo',
               targetSrc:
-                'https://dev-ws.percent.cn/pic/group1/default/20201124/18/11/1/7382f049130a04028f110ffbbaa84d0e.jpg',
+                'https://img2.baidu.com/it/u=1697432864,1600199787&fm=26&fmt=auto&gp=0.jpg',
             }}
           />
         }
@@ -130,7 +130,7 @@ export default () => {
                     width: 272,
                     alt: 'logo',
                     targetSrc:
-                      'https://dev-ws.percent.cn/pic/group1/default/20201124/18/11/1/7382f049130a04028f110ffbbaa84d0e.jpg',
+                      'https://img2.baidu.com/it/u=1697432864,1600199787&fm=26&fmt=auto&gp=0.jpg',
                   }}
                 />
               }
@@ -183,7 +183,7 @@ export default () => {
               alt: 'logo',
               originSrc: 'https://dss2.bdstatic.com/8_V1bjqh_Q23odCf/pacific/1989213037.jpg',
               targetSrc:
-                'https://dev-ws.percent.cn/pic/group1/default/20201124/18/11/1/7382f049130a04028f110ffbbaa84d0e.jpg',
+                'https://img2.baidu.com/it/u=1697432864,1600199787&fm=26&fmt=auto&gp=0.jpg',
             }}
           />
         }
@@ -213,7 +213,7 @@ export default () => {
                     alt: 'logo',
                     originSrc: 'https://dss2.bdstatic.com/8_V1bjqh_Q23odCf/pacific/1989213037.jpg',
                     targetSrc:
-                      'https://dev-ws.percent.cn/pic/group1/default/20201124/18/11/1/7382f049130a04028f110ffbbaa84d0e.jpg',
+                      'https://img2.baidu.com/it/u=1697432864,1600199787&fm=26&fmt=auto&gp=0.jpg',
                   }}
                 />
               }
