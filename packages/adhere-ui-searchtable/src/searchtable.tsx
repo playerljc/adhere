@@ -123,7 +123,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   /**
    * renderSearchFooterItems - 渲染SearchFooter的按钮组
    */
-  abstract renderSearchFooterItems(): Array<React.ReactElement> | null;
+  abstract renderSearchFooterItems(defaultItems: Array<React.ReactElement>): Array<React.ReactElement> | null;
 
   /**
    * onSearch - 进行查询
@@ -295,31 +295,34 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @return React.ReactElement
    */
   protected renderSearchFooter(): React.ReactElement {
-    const items = this.renderSearchFooterItems() || [];
+    const defaultItems = [
+      <Button
+        className={`${selectorPrefix}-SearchFooterItem`}
+        type="primary"
+        icon={<i className="iconfont iconsousuo" />}
+        onClick={() => {
+          // @ts-ignore
+          this.setState(
+            {
+              page: 1,
+            },
+            () => {
+              this.onSearch();
+            },
+          );
+        }}
+      >
+        {Intl.v('查询')}
+      </Button>,
+      <Button className={`${selectorPrefix}-SearchFooterItem`} onClick={this.onClear}>
+        {Intl.v('重置')}
+      </Button>,
+    ];
+
+    const items = this.renderSearchFooterItems(defaultItems) || [...defaultItems];
 
     return (
       <div className={`${selectorPrefix}-SearchFooterWrapper`}>
-        <Button
-          className={`${selectorPrefix}-SearchFooterItem`}
-          type="primary"
-          icon={<i className="iconfont iconsousuo" />}
-          onClick={() => {
-            // @ts-ignore
-            this.setState(
-              {
-                page: 1,
-              },
-              () => {
-                this.onSearch();
-              },
-            );
-          }}
-        >
-          {Intl.v('查询')}
-        </Button>
-        <Button className={`${selectorPrefix}-SearchFooterItem`} onClick={this.onClear}>
-          {Intl.v('重置')}
-        </Button>
         {items.map((t) => (
           <div className={`${selectorPrefix}-SearchFooterItem`}>{t}</div>
         ))}
