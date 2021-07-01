@@ -1,2 +1,2 @@
-import flexLayout from"./flexlayout";export default flexLayout;
+import FlexLayout from"./flexlayout";export default FlexLayout;
 //# sourceMappingURL=index.js.map

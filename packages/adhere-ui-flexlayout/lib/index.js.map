@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import flexLayout from './flexlayout';\r\nexport default flexLayout;\r\n"],"names":["flexLayout"],"mappings":"OAAOA,6CACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FlexLayout from './flexlayout';\r\nexport default FlexLayout;\r\n"],"names":["FlexLayout"],"mappings":"OAAOA,6CACQA"}
