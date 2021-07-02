@@ -7,10 +7,10 @@ const lerna = require('../../../lerna.json');
 const excludePackageNames = ['adhere', 'adhere-website'];
 
 // packages目录路径
-const packagesDirPath = path.resolve('../../');
+const packagesDirPath = path.join(__dirname, '../../');
 
 // 从lerna.json中获取最新的版本号
-const {version} = lerna;
+const { version } = lerna;
 
 /**
  * isWin32
@@ -61,7 +61,7 @@ packageNames.forEach((packageName) => {
 changelogHtmlStr += '</ul>';
 
 // 接下来把changelogHtmlStr 插入入到adhere/changelog/CHANGELOG.html的body顶部中
-const adhereChangelogPath = path.resolve('../changelog/CHANGELOG.html');
+const adhereChangelogPath = path.join(__dirname, '../changelog/CHANGELOG.html');
 
 const adhereChangelogHtml = fs.readFileSync(adhereChangelogPath, {
   encoding: 'utf-8',
@@ -75,7 +75,7 @@ fs.writeFileSync(adhereChangelogPath, $.html('html'), { encoding: 'utf-8' });
 // 运行bd进程
 const command = isWin32() ? `bd.cmd` : `bd`;
 const bdProcess = spawn(command, ['CHANGELOG.html'], {
-  cwd: path.resolve('../changelog'),
+  cwd: path.join(__dirname, '../changelog'),
   encoding: 'utf-8',
 });
 
