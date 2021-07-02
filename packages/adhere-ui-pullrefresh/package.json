@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-pullrefresh",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "下拉刷新",
   "main": "lib/index.js",
   "files": [
@@ -36,18 +36,18 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "classnames": "^2.2.6",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.6",
+    "@baifendian/adhere-ui-css": "^1.0.6",
+    "@baifendian/adhere-util": "^1.0.6",
+    "@baifendian/adhere-util-intl": "^1.0.6",
+    "@baifendian/adhere-util-resource": "^1.0.6",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "classnames": "^2.2.6",
     "load-awesome": "^1.1.0",
-    "omit.js": "^2.0.2",
     "moment": "^2.29.1",
-    "@baifendian/adhere-ui-css": "^1.0.5",
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.5",
-    "@baifendian/adhere-util-intl": "^1.0.5",
-    "@baifendian/adhere-util-resource": "^1.0.5",
-    "@baifendian/adhere-util": "^1.0.5"
+    "omit.js": "^2.0.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

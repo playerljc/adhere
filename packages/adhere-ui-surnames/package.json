@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-surnames",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "姓名面板",
   "main": "lib/index.js",
   "files": [
@@ -35,12 +35,12 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@baifendian/adhere-util": "^1.0.6",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "@baifendian/adhere-util": "^1.0.5"
+    "react-dom": "^17.0.1"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }
