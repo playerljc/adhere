@@ -17,7 +17,7 @@ declare class CascadeCompared extends React.Component<ICascadeComparedProps> {
     private getFixedColumnConfig;
     private renderCell;
     private renderIndicator;
-    private renderMastGroupContent;
+    private renderMasterGroupContent;
     private renderMasterGroup;
     private renderMaster;
     /**

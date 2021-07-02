@@ -1,8 +1,8 @@
+import './index.less';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import v1 from 'uuid';
-
-import Util from '@baifendian/adhere-util';
+import { v1 } from 'uuid';
 
 import { IConfig, IShowConfig, IShowStandardConfig } from './types';
 

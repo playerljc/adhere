@@ -1,7 +1,7 @@
-import GeoLayer from './geolayer';
-import * as TitleLayer from './titlelayer';
 import OLMap from './olmap';
 import HeatMap from './heatmap';
+import GeoLayer from './geolayer';
+import * as TitleLayer from './titlelayer';
 import AnimationManager from './animationmanager';
 declare const _default: {
     AnimationManager: typeof AnimationManager;
@@ -20,7 +20,10 @@ declare const _default: {
             vectorLayer: any;
             vectorSource: any;
         };
-        addHeatmapLayer(map: any, layoutConfig: any): any;
+        createHeatMapLayer(layoutConfig: any): {
+            layer: any;
+            vectorSource: any;
+        };
         drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, propertys, }: {
             center: any;
             radius: any;

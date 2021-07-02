@@ -208,7 +208,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
     );
   }
 
-  private renderMastGroupContent({
+  private renderMasterGroupContent({
     dataSource = [],
     columns = [],
     fixedWrapClassName = '',
@@ -309,7 +309,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
         className={classNames((className || '').split(' '))}
         style={{ ...(style || {}) }}
         title={title}
-        content={this.renderMastGroupContent(config)}
+        content={this.renderMasterGroupContent(config)}
       />
     );
   }

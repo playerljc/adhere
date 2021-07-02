@@ -16,3 +16,9 @@
 .问题
  .adhere和antd都是懒加载，这样没问题
   都不懒加载，会有问题，antd总的和adhere中antd会有重复
+
+
+
+.umd
+ .Popup不好用
+ .Notification不好用

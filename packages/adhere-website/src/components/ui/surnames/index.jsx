@@ -108,6 +108,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>indexes</h2>
       <Props
         data={[
@@ -137,6 +138,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>dataSource</h2>
       <Props
         data={[
@@ -154,6 +156,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>方法</h2>
       <FunctionProps
         data={[

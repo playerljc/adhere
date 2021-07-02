@@ -59,6 +59,8 @@ const Ajax = lazy(() => import(/* webpackChunkName: "ajax" */ '@/components/util
 const Echarts = lazy(() => import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'));
 const MapTalks = lazy(() => import(/* webpackChunkName: "echarts" */ '@/components/gallery/gis/maptalks'));
 
+const Graph = lazy(() => import(/* webpackChunkName: "graph" */ '@/components/gallery/graph'));
+
 export default () => [
   {
     path: '/',
@@ -368,6 +370,11 @@ export default () => [
                     component: MapTalks
                   }
                 ]
+              },
+              {
+                path: '/adhere/gallery/graph',
+                name: 'Graph',
+                component: Graph,
               }
             ],
           }

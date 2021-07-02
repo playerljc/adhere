@@ -50,11 +50,13 @@ declare const _default: {
         vectorSource: any;
     };
     /**
-     * addHeatmapLayer - 添加一个热力层
-     * @param map
+     * createHeatMapLayer - 创建一个热力层
      * @param layoutConfig
      */
-    addHeatmapLayer(map: any, layoutConfig: any): any;
+    createHeatMapLayer(layoutConfig: any): {
+        layer: any;
+        vectorSource: any;
+    };
     /**
      * drawCircle - 创建一个圆形
      * @param center

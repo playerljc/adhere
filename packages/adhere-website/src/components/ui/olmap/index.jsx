@@ -2405,7 +2405,7 @@ export default () => {
 
               heatRef.current.addLayer();
 
-              const layer = heatRef.current.getHeatmapLayer();
+              const layer = heatRef.current.getHeatMapLayer();
               layer.setSource(vectorSource);
             }}
           >

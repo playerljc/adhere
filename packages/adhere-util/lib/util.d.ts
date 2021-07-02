@@ -11,6 +11,7 @@ declare const _default: {
         enterUrl: any;
         params?: string | undefined;
     }): string;
+    isTouch(): boolean;
     toPoint(percent: string): number;
     toPercent(point: any): string;
     straightLineIntersection(p1: {
@@ -63,7 +64,6 @@ declare const _default: {
     remove(el: any): void;
     getParentElementByTag(el: any, tag: string): HTMLElement | null;
     children(el: any, selector: string): any[];
-    isTouch(): boolean;
     objectToDataSet(obj: object, dom: HTMLElement): void;
     dataSetToObject(dom: HTMLElement): {};
     getPageLeft(el: any): any;

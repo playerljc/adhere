@@ -48,7 +48,7 @@ import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-export {
+export { 
   CascadeCompared,
   ConditionalRender,
   DelConfirm,

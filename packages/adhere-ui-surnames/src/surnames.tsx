@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Util from '@baifendian/adhere-util';
 
 import { IPosition, ISurnamesProps } from './types';
 
@@ -8,40 +9,40 @@ const selectorPrefix = 'adhere-ui-surnames';
 
 const DURATION = 100;
 
-function isTouch() {
-  return 'ontouchend' in document;
-}
-
-/**
- * getTopDom
- * @param target
- * @param selector
- * @return HTMLElement
- */
-function getTopDom(target, selector) {
-  if (!target || !selector) return null;
-
-  if (target.className.indexOf(selector) !== -1) {
-    return target;
-  }
-
-  let parentDom = target;
-  while ((parentDom = parentDom.parentElement)) {
-    if (parentDom.className.indexOf(selector) !== -1 || parentDom === document.body) {
-      break;
-    }
-  }
-
-  if (parentDom) {
-    if (parentDom === document.body) {
-      return null;
-    } else {
-      return parentDom;
-    }
-  } else {
-    return null;
-  }
-}
+// function isTouch() {
+//   return 'ontouchend' in document;
+// }
+//
+// /**
+//  * getTopDom
+//  * @param target
+//  * @param selector
+//  * @return HTMLElement
+//  */
+// function getTopDom(target, selector) {
+//   if (!target || !selector) return null;
+//
+//   if (target.className.indexOf(selector) !== -1) {
+//     return target;
+//   }
+//
+//   let parentDom = target;
+//   while ((parentDom = parentDom.parentElement)) {
+//     if (parentDom.className.indexOf(selector) !== -1 || parentDom === document.body) {
+//       break;
+//     }
+//   }
+//
+//   if (parentDom) {
+//     if (parentDom === document.body) {
+//       return null;
+//     } else {
+//       return parentDom;
+//     }
+//   } else {
+//     return null;
+//   }
+// }
 
 /**
  * Surnames
@@ -103,7 +104,7 @@ class Surnames extends React.Component<ISurnamesProps> {
 
     const target = e.target;
 
-    const indexItemEl = getTopDom(target, `${selectorPrefix}-index-item`);
+    const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`);
 
     this.curIndexName = indexItemEl.dataset.name;
 
@@ -128,10 +129,12 @@ class Surnames extends React.Component<ISurnamesProps> {
 
     const target = e.target;
 
-    const indexItemEl = getTopDom(target, `${selectorPrefix}-index-item`);
+    const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`);
 
+    // @ts-ignore
     console.log('按下获取索引名称', indexItemEl.dataset.name);
 
+    // @ts-ignore
     this.curIndexName = indexItemEl.dataset.name;
 
     this.isMouseClicked = true;
@@ -228,7 +231,7 @@ class Surnames extends React.Component<ISurnamesProps> {
   }
 
   private initEvent() {
-    if (isTouch()) {
+    if (Util.isTouch()) {
       // @ts-ignore
       this.indexInnerEl.addEventListener('click', this.onClick);
 

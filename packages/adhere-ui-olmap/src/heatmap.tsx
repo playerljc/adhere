@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Heatmap as HeatmapLayer } from 'ol/layer';
+import { Heatmap as HeatMapLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source.js';
 
 import OlMap from './olmap';
@@ -15,38 +14,25 @@ class HeatMap extends OlMap {
   static defaultProps: any;
   static propTypes: any;
   private vectorSource: VectorSource;
+  private layer: HeatMapLayer;
 
-  addLayer() {
-    // @ts-ignore
-    const { heatMapLayerConfig } = this.props;
+  /**
+   * addLayer - 添加一个热力图图层
+   */
+  addLayer(heatMapLayerConfig = {}) {
+    const { layer, vectorSource } = Util.createHeatMapLayer(
+      heatMapLayerConfig || {},
+    );
 
-    this.vectorSource = Util.addHeatmapLayer(this.map, heatMapLayerConfig);
+    this.layer = layer;
+    this.vectorSource = vectorSource;
+
+    this.map.addLayer(this.layer);
   }
 
-  getHeatmapLayer() {
-    const layers = this.map.getLayers();
-
-    let result = null;
-
-    for (let i = 1; i < layers.getLength(); i++) {
-      const layer = layers.item(i);
-      if (layer instanceof HeatmapLayer) {
-        result = layer;
-        break;
-      }
-    }
-
-    return result;
+  getHeatMapLayer():HeatMapLayer {
+    return this.layer;
   }
 }
-
-// 指定 props 的默认值：
-HeatMap.defaultProps = {
-  heatMapLayerConfig: {},
-};
-
-HeatMap.propTypes = {
-  heatMapLayerConfig: PropTypes.object,
-};
 
 export default HeatMap;

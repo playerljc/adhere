@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-notification",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "通知",
   "main": "lib/index.js",
   "files": [
@@ -35,7 +35,6 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

@@ -11,7 +11,17 @@ module.exports = {
     // if (webpackConfig.mode === 'development') {
     // eslint-disable-next-line no-param-reassign
 
+    // TODO:umd  umd时候需要打开
+    // webpackConfig.externals = {
+    //   '@baifendian/adhere': "adhere",
+    //   'antd': 'antd',
+    //   'react': 'React',
+    //   'react-dom':"ReactDOM",
+    //   'moment':'moment',
+    // };
+
     // eslint-disable-next-line no-param-reassign
+    // TODO:umd umd的时候需要注释掉
     webpackConfig.resolve.alias.ol = path.join(
       __dirname,
       'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
@@ -40,6 +50,7 @@ module.exports = {
 
     webpackConfig.module.rules[1].include.push(/ol.css/, /swiper.css/);
 
+    // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
 
