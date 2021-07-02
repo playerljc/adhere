@@ -9,6 +9,7 @@ export default () => (
   <div className="Page">
     <h1>Split</h1>
     <p>无侵入性的竖线和横线分割</p>
+
     <h2>属性</h2>
     <h3>Split</h3>
     <Props
@@ -33,6 +34,7 @@ export default () => (
         },
       ]}
     />
+
     <h3>Split.Group</h3>
     <Props
       data={[

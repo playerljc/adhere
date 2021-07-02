@@ -1,6 +1,8 @@
+import './index.less';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import v1 from 'uuid';
+import { v1 } from 'uuid';
 
 import { IConfig, IShowConfig, IShowStandardConfig } from './types';
 
