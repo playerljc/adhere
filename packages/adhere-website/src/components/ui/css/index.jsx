@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import Playground from '@/lib/Playground';
 
-// import '@baifendian/adhere/lib/css.less';
-
 export default () => {
   const list = [];
   list.length = 50;
