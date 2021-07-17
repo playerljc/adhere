@@ -80,12 +80,11 @@ export default {
   /**
    * clientToCtxPoint - 屏幕坐标转换成画布坐标
    * @param {Event} - event
-   * @param {HTMLCanvasElement} - el
+   * @param {Rect} - rect
    * @return {x:number,y:number}
    */
-  clientToCtxPoint({ event, el }): { x: number; y: number } {
+  clientToCtxPoint({ event, rect }): { x: number; y: number } {
     const { clientX, clientY } = event;
-    const rect = el.getBoundingClientRect();
     return {
       x: clientX - rect.left,
       y: clientY - rect.top,

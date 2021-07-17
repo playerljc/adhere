@@ -42,9 +42,9 @@ declare const _default: {
         p1: any;
         p2: any;
     }): number;
-    clientToCtxPoint({ event, el }: {
+    clientToCtxPoint({ event, rect }: {
         event: any;
-        el: any;
+        rect: any;
     }): {
         x: number;
         y: number;

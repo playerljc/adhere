@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -16,6 +16,7 @@ class Auto extends React.Component<IAutoProps, any> {
   // @ts-ignore
   private props: IAutoProps | undefined;
   private direction: string | undefined;
+  private ref: RefObject<HTMLDivElement> | null | undefined;
 
   static defaultProps: any;
   static propTypes: any;
@@ -26,6 +27,10 @@ class Auto extends React.Component<IAutoProps, any> {
     this.renderInner = this.renderInner.bind(this);
   }
 
+  getEl(): HTMLDivElement {
+    return this?.ref?.current as HTMLDivElement;
+  }
+
   renderInner({ direction }) {
     this.direction = direction;
 
@@ -34,6 +39,7 @@ class Auto extends React.Component<IAutoProps, any> {
 
     return (
       <div
+        ref={this.ref}
         className={classNames(
           selectorPrefix,
           `${autoFixed ? selectorPrefix + '-autoFixed' : ''}`,

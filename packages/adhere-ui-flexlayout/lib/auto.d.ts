@@ -8,9 +8,11 @@ import { IAutoProps } from './types';
 declare class Auto extends React.Component<IAutoProps, any> {
     private props;
     private direction;
+    private ref;
     static defaultProps: any;
     static propTypes: any;
     constructor(props: any);
+    getEl(): HTMLDivElement;
     renderInner({ direction }: {
         direction: any;
     }): JSX.Element;

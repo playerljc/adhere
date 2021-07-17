@@ -10,7 +10,9 @@ declare class Fixed extends React.Component<IFixedProps, any> {
     static propTypes: any;
     private props;
     private direction;
+    private ref;
     constructor(props: any);
+    getEl(): HTMLDivElement;
     renderInner({ direction }: {
         direction: any;
     }): JSX.Element;

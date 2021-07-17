@@ -66,7 +66,7 @@ declare class SplitLayout extends React.Component<ISplitLayoutProps, any> {
     initEvents(): void;
     onMouseenter: (e: any) => void;
     onMousedown: (e: any) => void;
-    onMouseup: () => void;
+    onMouseup: (e: any) => void;
     onMouseleave: (e: any) => void;
     onMousemove: (e: any) => void;
     onMouseout: (e: any) => void;

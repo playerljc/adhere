@@ -61,12 +61,12 @@ declare const _default: {
     /**
      * clientToCtxPoint - 屏幕坐标转换成画布坐标
      * @param {Event} - event
-     * @param {HTMLCanvasElement} - el
+     * @param {Rect} - rect
      * @return {x:number,y:number}
      */
-    clientToCtxPoint({ event, el }: {
+    clientToCtxPoint({ event, rect }: {
         event: any;
-        el: any;
+        rect: any;
     }): {
         x: number;
         y: number;
