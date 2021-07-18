@@ -7,11 +7,11 @@ import {
   IAction,
   IPoint,
   IRectangleData,
-  IPolygonSelection,
   IStyle,
   SelectType,
 } from '../types';
-import DefaultStyle from '../defaultStyle';
+import DrawAction from './drawAction';
+import Util from '../util';
 
 /**
  * RectangleDrawAction
@@ -19,19 +19,7 @@ import DefaultStyle from '../defaultStyle';
  * @classdesc - 矩形选取
  * @remark: - 一个start - end的周期中只能绘制一个矩形
  */
-class RectangleDrawAction implements IAction {
-  // 上下文对象
-  protected context: IPolygonSelection | null = null;
-
-  // 样式对象
-  // @ts-ignore
-  protected style: IStyle = {
-    ...DefaultStyle,
-  };
-
-  // 状态对象
-  protected status: number = ActionStatus.UnStart;
-
+class RectangleDrawAction extends DrawAction implements IAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
@@ -48,6 +36,7 @@ class RectangleDrawAction implements IAction {
    * context
    */
   constructor() {
+    super();
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
@@ -77,7 +66,7 @@ class RectangleDrawAction implements IAction {
 
     ctx.beginPath();
 
-    this.leftTopPoint = this.getPoint({ startPoint, targetPoint });
+    this.leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
     this.width = Math.abs(targetPoint.x - (startPoint?.x || 0));
     this.height = Math.abs(targetPoint.y - (startPoint?.y || 0));
 
@@ -136,36 +125,6 @@ class RectangleDrawAction implements IAction {
   }
 
   /**
-   * getPoint - 判断target在start的四个方向
-   * @param startPoint
-   * @param targetPoint
-   * @return IPoint
-   */
-  private getPoint({ startPoint, targetPoint }): IPoint | null {
-    if (targetPoint.x <= startPoint.x && targetPoint.y <= startPoint.y) {
-      // leftTop
-      return targetPoint;
-    } else if (targetPoint.x <= startPoint.x && targetPoint.y >= startPoint.y) {
-      // leftBottom
-      return {
-        x: targetPoint.x,
-        y: startPoint.y,
-      };
-    } else if (targetPoint.x >= startPoint.x && targetPoint.y <= startPoint.y) {
-      // rightTop
-      return {
-        x: startPoint.x,
-        y: targetPoint.y,
-      };
-    } else if (targetPoint.x >= startPoint.x && targetPoint.y >= startPoint.y) {
-      // rightBottom
-      return startPoint;
-    }
-
-    return null;
-  }
-
-  /**
    * addHistoryPath - 绘制历史数据
    * @param ctx
    * @param data
@@ -181,14 +140,6 @@ class RectangleDrawAction implements IAction {
     ctx.beginPath();
 
     ctx.rect(data?.leftTopPoint?.x || 0, data?.leftTopPoint?.y || 0, data?.width, data?.height);
-  }
-
-  /**
-   * setContext
-   * @param context
-   */
-  setContext(context: IPolygonSelection): void {
-    this.context = context;
   }
 
   /**
@@ -290,13 +241,6 @@ class RectangleDrawAction implements IAction {
     this.status = ActionStatus.Destroy;
 
     context.trigger(ActionEvents.Destroy);
-  }
-
-  /**
-   * getStatus - 获取状态
-   */
-  getStatus(): number {
-    return this.status;
   }
 }
 

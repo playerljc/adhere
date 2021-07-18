@@ -7,11 +7,10 @@ import {
   IAction,
   IPoint,
   IFreeData,
-  IPolygonSelection,
   IStyle,
   SelectType,
 } from '../types';
-import DefaultStyle from '../defaultStyle';
+import DrawAction from './drawAction';
 
 /**
  * FreeDrawAction
@@ -19,19 +18,7 @@ import DefaultStyle from '../defaultStyle';
  * @classdesc - 自由绘制选取
  * @remark: - 一个start - end的周期中只能绘制一个自由图形
  */
-class FreeDrawAction implements IAction {
-  // 上下文对象
-  protected context: IPolygonSelection | null = null;
-
-  // 样式对象
-  // @ts-ignore
-  protected style: IStyle = {
-    ...DefaultStyle,
-  };
-
-  // 状态对象
-  protected status: number = ActionStatus.UnStart;
-
+class FreeDrawAction extends DrawAction implements IAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
@@ -42,6 +29,7 @@ class FreeDrawAction implements IAction {
    * context
    */
   constructor() {
+    super();
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
@@ -169,14 +157,6 @@ class FreeDrawAction implements IAction {
   }
 
   /**
-   * setContext
-   * @param context
-   */
-  setContext(context: IPolygonSelection) {
-    this.context = context;
-  }
-
-  /**
    * start
    * @param style
    */
@@ -265,13 +245,6 @@ class FreeDrawAction implements IAction {
     this.status = ActionStatus.Destroy;
 
     context.trigger(ActionEvents.Destroy);
-  }
-
-  /**
-   * getStatus - 获取状态
-   */
-  getStatus(): number {
-    return this.status;
   }
 }
 

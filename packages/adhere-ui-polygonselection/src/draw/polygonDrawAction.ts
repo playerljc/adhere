@@ -4,15 +4,12 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  IAction,
   IPolygonData,
   IPoint,
-  IPolygonSelection,
   IStyle,
   SelectType,
 } from '../types';
-
-import DefaultStyle from '../defaultStyle';
+import DrawAction from './drawAction';
 
 /**
  * PolygonAction
@@ -20,19 +17,7 @@ import DefaultStyle from '../defaultStyle';
  * @classdesc  - 多边形选取
  * @remark: 一个start - end的周期中只能绘制一个多边形
  */
-class PolygonDrawAction implements IAction {
-  // 上下文对象
-  protected context: IPolygonSelection | null = null;
-
-  // 样式对象
-  // @ts-ignore
-  protected style: IStyle = {
-    ...DefaultStyle,
-  };
-
-  // 当前状态
-  protected status: number = ActionStatus.UnStart;
-
+class PolygonDrawAction extends DrawAction {
   // 开始点
   private startPoint: IPoint | null = null;
 
@@ -43,6 +28,7 @@ class PolygonDrawAction implements IAction {
    * constructor
    */
   constructor() {
+    super();
     this.onCanvasClick = this.onCanvasClick.bind(this);
     this.onCanvasMousemove = this.onCanvasMousemove.bind(this);
     this.onCanvasDbClick = this.onCanvasDbClick.bind(this);
@@ -231,14 +217,6 @@ class PolygonDrawAction implements IAction {
   }
 
   /**
-   * setContext
-   * @param context
-   */
-  setContext(context: IPolygonSelection) {
-    this.context = context;
-  }
-
-  /**
    * start - 开始
    * @param style
    */
@@ -249,11 +227,11 @@ class PolygonDrawAction implements IAction {
 
     const { context } = this;
 
-    if(!context) return;
+    if (!context) return;
 
     const canvasEl = context.getCanvasEl();
 
-    if(!canvasEl) return;
+    if (!canvasEl) return;
 
     // 触发开始之前事件
     context.trigger(ActionEvents.BeforeStart);
@@ -276,7 +254,7 @@ class PolygonDrawAction implements IAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if(!canvasEl) return;
+    if (!canvasEl) return;
 
     canvasEl?.removeEventListener('click', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
@@ -316,7 +294,7 @@ class PolygonDrawAction implements IAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if(!canvasEl) return;
+    if (!canvasEl) return;
 
     canvasEl?.removeEventListener('click', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
@@ -329,13 +307,6 @@ class PolygonDrawAction implements IAction {
     this.status = ActionStatus.Destroy;
 
     context.trigger(ActionEvents.Destroy);
-  }
-
-  /**
-   * getStatus - 获取状态
-   */
-  getStatus(): number {
-    return this.status;
   }
 }
 

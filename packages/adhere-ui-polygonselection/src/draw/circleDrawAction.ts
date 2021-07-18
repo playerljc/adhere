@@ -1,17 +1,16 @@
 import MathUtil from '@baifendian/adhere-util/lib/math';
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
+import DrawAction from './drawAction';
 import {
   ActionEvents,
   ActionStatus,
   IAction,
   IPoint,
   ICircleData,
-  IPolygonSelection,
   IStyle,
   SelectType,
 } from '../types';
-import DefaultStyle from '../defaultStyle';
 
 /**
  * CircleDrawAction
@@ -19,19 +18,7 @@ import DefaultStyle from '../defaultStyle';
  * @classdesc - 圆形选取
  * @remark: - 一个start - end的周期中只能绘制一个圆形
  */
-class CircleDrawAction implements IAction {
-  // 上下文对象
-  protected context: IPolygonSelection | null = null;
-
-  // 样式对象
-  // @ts-ignore
-  protected style: IStyle = {
-    ...DefaultStyle,
-  };
-
-  // 状态对象
-  protected status: number = ActionStatus.UnStart;
-
+class CircleDrawAction extends DrawAction implements IAction {
   // 中心点
   protected centerPoint: IPoint | null = null;
 
@@ -42,6 +29,7 @@ class CircleDrawAction implements IAction {
    * context
    */
   constructor() {
+    super();
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
@@ -165,14 +153,6 @@ class CircleDrawAction implements IAction {
   }
 
   /**
-   * setContext
-   * @param context
-   */
-  setContext(context: IPolygonSelection) {
-    this.context = context;
-  }
-
-  /**
    * start
    * @param style
    */
@@ -262,13 +242,6 @@ class CircleDrawAction implements IAction {
     this.status = ActionStatus.Destroy;
 
     context.trigger(ActionEvents.Destroy);
-  }
-
-  /**
-   * getStatus - 获取状态
-   */
-  getStatus(): number {
-    return this.status;
   }
 }
 

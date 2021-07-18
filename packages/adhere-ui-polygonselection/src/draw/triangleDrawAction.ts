@@ -7,11 +7,11 @@ import {
   IAction,
   IPoint,
   ITriangleData,
-  IPolygonSelection,
   IStyle,
   SelectType,
 } from '../types';
-import DefaultStyle from '../defaultStyle';
+import DrawAction from './drawAction';
+import Util from '../util';
 
 /**
  * TriangleDrawAction
@@ -19,19 +19,7 @@ import DefaultStyle from '../defaultStyle';
  * @classdesc - 三角形选取
  * @remark: - 一个start - end的周期中只能绘制一个三角形
  */
-class TriangleDrawAction implements IAction {
-  // 上下文对象
-  protected context: IPolygonSelection | null = null;
-
-  // 样式对象
-  // @ts-ignore
-  protected style: IStyle = {
-    ...DefaultStyle,
-  };
-
-  // 状态对象
-  protected status: number = ActionStatus.UnStart;
-
+class TriangleDrawAction extends DrawAction implements IAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
@@ -42,6 +30,7 @@ class TriangleDrawAction implements IAction {
    * context
    */
   constructor() {
+    super();
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
@@ -79,7 +68,7 @@ class TriangleDrawAction implements IAction {
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
 
-    this.points = this.triangle({ startPoint, targetPoint });
+    this.points = Util.triangle({ startPoint, targetPoint });
     ctx.moveTo(this.points[0].x, this.points[0].y);
     ctx.lineTo(this.points[1].x, this.points[1].y);
     ctx.lineTo(this.points[2].x, this.points[2].y);
@@ -131,66 +120,6 @@ class TriangleDrawAction implements IAction {
   }
 
   /**
-   * getPoint
-   * @param startPoint
-   * @param targetPoint
-   */
-  private getPoint({ startPoint, targetPoint }): IPoint | null {
-    if (targetPoint.x <= startPoint.x && targetPoint.y <= startPoint.y) {
-      // leftTop
-      return targetPoint;
-    } else if (targetPoint.x <= startPoint.x && targetPoint.y >= startPoint.y) {
-      // leftBottom
-      return {
-        x: targetPoint.x,
-        y: startPoint.y,
-      };
-    } else if (targetPoint.x >= startPoint.x && targetPoint.y <= startPoint.y) {
-      // rightTop
-      return {
-        x: startPoint.x,
-        y: targetPoint.y,
-      };
-    } else if (targetPoint.x >= startPoint.x && targetPoint.y >= startPoint.y) {
-      // rightBottom
-      return startPoint;
-    }
-
-    return null;
-  }
-
-  /**
-   * triangle - 判断target在start的四个方向
-   * @param startPoint
-   * @param targetPoint
-   */
-  private triangle({ startPoint, targetPoint }): IPoint[] {
-    const s = this.getPoint({ startPoint, targetPoint });
-
-    if (!s) return [];
-
-    const w = Math.abs(targetPoint.x - startPoint.x);
-    const h = Math.abs(targetPoint.y - startPoint.y);
-
-    const point1 = {
-      x: s.x,
-      y: s.y + h,
-    };
-
-    const point2 = {
-      x: s.x + w / 2,
-      y: s.y,
-    };
-
-    const point3 = {
-      x: s.x + w,
-      y: s.y + h,
-    };
-
-    return [point1, point2, point3];
-  }
-
-  /**
    * addHistoryPath - 绘制历史数据
    * @param ctx
    * @param data
@@ -206,14 +135,6 @@ class TriangleDrawAction implements IAction {
     ctx.moveTo(data.points[0].x, data.points[0].y);
     ctx.lineTo(data.points[1].x, data.points[1].y);
     ctx.lineTo(data.points[2].x, data.points[2].y);
-  }
-
-  /**
-   * setContext
-   * @param context
-   */
-  setContext(context: IPolygonSelection) {
-    this.context = context;
   }
 
   /**
@@ -305,13 +226,6 @@ class TriangleDrawAction implements IAction {
     this.status = ActionStatus.Destroy;
 
     context.trigger(ActionEvents.Destroy);
-  }
-
-  /**
-   * getStatus - 获取状态
-   */
-  getStatus(): number {
-    return this.status;
   }
 }
 
