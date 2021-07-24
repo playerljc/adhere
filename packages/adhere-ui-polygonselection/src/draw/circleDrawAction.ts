@@ -5,11 +5,11 @@ import DrawAction from './drawAction';
 import {
   ActionEvents,
   ActionStatus,
-  IAction,
   IPoint,
   ICircleData,
   IStyle,
   SelectType,
+  ActionType,
 } from '../types';
 
 /**
@@ -18,7 +18,7 @@ import {
  * @classdesc - 圆形选取
  * @remark: - 一个start - end的周期中只能绘制一个圆形
  */
-class CircleDrawAction extends DrawAction implements IAction {
+class CircleDrawAction extends DrawAction {
   // 中心点
   protected centerPoint: IPoint | null = null;
 
@@ -168,7 +168,10 @@ class CircleDrawAction extends DrawAction implements IAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    context.trigger(ActionEvents.BeforeStart);
+    this.emit.trigger(ActionEvents.BeforeStart, {
+      selectType: SelectType.Circle,
+      actionType: ActionType.Draw,
+    });
 
     // 注册事件
     canvasEl?.addEventListener('mousedown', this.onCanvasMouseDown);
@@ -177,7 +180,10 @@ class CircleDrawAction extends DrawAction implements IAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    context.trigger(ActionEvents.Start);
+    this.emit.trigger(ActionEvents.Start, {
+      selectType: SelectType.Circle,
+      actionType: ActionType.Draw,
+    });
   }
 
   /**
@@ -216,7 +222,11 @@ class CircleDrawAction extends DrawAction implements IAction {
 
     this.radius = 0;
 
-    context.trigger(ActionEvents.End, data);
+    this.emit.trigger(ActionEvents.End, {
+      selectType: SelectType.Circle,
+      actionType: ActionType.Draw,
+      data,
+    });
   }
 
   /**
@@ -241,7 +251,10 @@ class CircleDrawAction extends DrawAction implements IAction {
 
     this.status = ActionStatus.Destroy;
 
-    context.trigger(ActionEvents.Destroy);
+    this.emit.trigger(ActionEvents.Destroy, {
+      selectType: SelectType.Circle,
+      actionType: ActionType.Draw,
+    });
   }
 }
 

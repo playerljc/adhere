@@ -4,11 +4,11 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  IAction,
   IPoint,
   ITriangleData,
   IStyle,
   SelectType,
+  ActionType,
 } from '../types';
 import DrawAction from './drawAction';
 import Util from '../util';
@@ -19,7 +19,7 @@ import Util from '../util';
  * @classdesc - 三角形选取
  * @remark: - 一个start - end的周期中只能绘制一个三角形
  */
-class TriangleDrawAction extends DrawAction implements IAction {
+class TriangleDrawAction extends DrawAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
@@ -153,7 +153,10 @@ class TriangleDrawAction extends DrawAction implements IAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    context.trigger(ActionEvents.BeforeStart);
+    this.emit.trigger(ActionEvents.BeforeStart, {
+      selectType: SelectType.Triangle,
+      actionType: ActionType.Draw,
+    });
 
     // 注册事件
     canvasEl?.addEventListener('mousedown', this.onCanvasMouseDown);
@@ -162,7 +165,10 @@ class TriangleDrawAction extends DrawAction implements IAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    context.trigger(ActionEvents.Start);
+    this.emit.trigger(ActionEvents.Start, {
+      selectType: SelectType.Triangle,
+      actionType: ActionType.Draw,
+    });
   }
 
   /**
@@ -200,7 +206,11 @@ class TriangleDrawAction extends DrawAction implements IAction {
 
     this.points = [];
 
-    context.trigger(ActionEvents.End, data);
+    this.emit.trigger(ActionEvents.End, {
+      selectType: SelectType.Triangle,
+      actionType: ActionType.Draw,
+      data,
+    });
   }
 
   /**
@@ -225,7 +235,10 @@ class TriangleDrawAction extends DrawAction implements IAction {
 
     this.status = ActionStatus.Destroy;
 
-    context.trigger(ActionEvents.Destroy);
+    this.emit.trigger(ActionEvents.Destroy, {
+      selectType: SelectType.Triangle,
+      actionType: ActionType.Draw,
+    });
   }
 }
 

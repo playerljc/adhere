@@ -8,6 +8,7 @@ import {
   IPoint,
   IStyle,
   SelectType,
+  ActionType,
 } from '../types';
 import DrawAction from './drawAction';
 
@@ -58,7 +59,10 @@ class PolygonDrawAction extends DrawAction {
       this.pointStack.push(this.startPoint);
 
       // 触发开始事件
-      this.context.trigger(ActionEvents.Start);
+      this.emit.trigger(ActionEvents.Start, {
+        selectType: SelectType.Polygon,
+        actionType: ActionType.Draw,
+      });
     } else {
       // 不是第一次
       // 画一条直线
@@ -234,7 +238,10 @@ class PolygonDrawAction extends DrawAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    context.trigger(ActionEvents.BeforeStart);
+    this.emit.trigger(ActionEvents.BeforeStart, {
+      selectType: SelectType.Polygon,
+      actionType: ActionType.Draw,
+    });
 
     // 注册事件
     canvasEl?.addEventListener('click', this.onCanvasClick);
@@ -281,7 +288,11 @@ class PolygonDrawAction extends DrawAction {
 
     context.addHistoryData(data);
 
-    context.trigger(ActionEvents.End, data);
+    this.emit.trigger(ActionEvents.End, {
+      selectType: SelectType.Polygon,
+      actionType: ActionType.Draw,
+      data,
+    });
   }
 
   /**
@@ -306,7 +317,10 @@ class PolygonDrawAction extends DrawAction {
 
     this.status = ActionStatus.Destroy;
 
-    context.trigger(ActionEvents.Destroy);
+    this.emit.trigger(ActionEvents.Destroy, {
+      selectType: SelectType.Polygon,
+      actionType: ActionType.Draw,
+    });
   }
 }
 

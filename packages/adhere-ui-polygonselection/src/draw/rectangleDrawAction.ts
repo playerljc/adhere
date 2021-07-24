@@ -4,7 +4,7 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  IAction,
+  ActionType,
   IPoint,
   IRectangleData,
   IStyle,
@@ -19,7 +19,7 @@ import Util from '../util';
  * @classdesc - 矩形选取
  * @remark: - 一个start - end的周期中只能绘制一个矩形
  */
-class RectangleDrawAction extends DrawAction implements IAction {
+class RectangleDrawAction extends DrawAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
@@ -158,7 +158,10 @@ class RectangleDrawAction extends DrawAction implements IAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    context.trigger(ActionEvents.BeforeStart);
+    this.emit.trigger(ActionEvents.BeforeStart, {
+      selectType: SelectType.Rectangle,
+      actionType: ActionType.Draw,
+    });
 
     // 注册事件
     canvasEl?.addEventListener('mousedown', this.onCanvasMouseDown);
@@ -167,7 +170,10 @@ class RectangleDrawAction extends DrawAction implements IAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    context.trigger(ActionEvents.Start);
+    this.emit.trigger(ActionEvents.Start, {
+      selectType: SelectType.Rectangle,
+      actionType: ActionType.Draw,
+    });
   }
 
   /**
@@ -211,7 +217,11 @@ class RectangleDrawAction extends DrawAction implements IAction {
 
     this.height = 0;
 
-    context.trigger(ActionEvents.End, data);
+    this.emit.trigger(ActionEvents.End, {
+      selectType: SelectType.Rectangle,
+      actionType: ActionType.Draw,
+      data,
+    });
   }
 
   /**
@@ -240,7 +250,10 @@ class RectangleDrawAction extends DrawAction implements IAction {
 
     this.status = ActionStatus.Destroy;
 
-    context.trigger(ActionEvents.Destroy);
+    this.emit.trigger(ActionEvents.Destroy, {
+      selectType: SelectType.Rectangle,
+      actionType: ActionType.Draw,
+    });
   }
 }
 

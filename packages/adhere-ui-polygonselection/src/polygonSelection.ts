@@ -191,6 +191,15 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   }
 
   /**
+   * getHistoryDataById
+   * @param id
+   * @return IActionData | null | undefined
+   */
+  getHistoryDataById(id: string): IActionData | null | undefined {
+    return this.canvasData.find((data) => data.id === id);
+  }
+
+  /**
    * changeAction - 切换一个Action
    * @param action - action对象
    * @return void
@@ -206,7 +215,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
       this.curAction.destroy();
     }
 
-    action.setContext(this);
+    action?.setContext(this);
 
     this.curAction = action;
   }
@@ -216,7 +225,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param style
    * @return void
    */
-  start(style: IStyle): void {
+  start(style?: IStyle): void {
     if (!this.curAction) return;
 
     this.curAction.start(style);

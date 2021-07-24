@@ -1,3 +1,4 @@
+import { IPoint, ICircle } from './types';
 declare const _default: {
     /**--------------------------math-start----------------------**/
     /**
@@ -9,7 +10,7 @@ declare const _default: {
      * point - 小数转化为百分数
      * @param point
      */
-    toPercent(point: any): string;
+    toPercent(point: number): string;
     /**
      * straightLineIntersection - 计算两个直线的交点
      * @param p1
@@ -17,22 +18,7 @@ declare const _default: {
      * @param p3
      * @param p4
      */
-    straightLineIntersection(p1: {
-        x: number;
-        y: number;
-    }, p2: {
-        x: number;
-        y: number;
-    }, p3: {
-        x: number;
-        y: number;
-    }, p4: {
-        x: number;
-        y: number;
-    }): {
-        x: number;
-        y: number;
-    };
+    straightLineIntersection(p1: IPoint, p2: IPoint, p3: IPoint, p4: IPoint): IPoint;
     /**
      * getA3Piint - 计算两点p1,p2 距离p1点distance距离的点p3的坐标
      * @param {Point} - p1
@@ -41,13 +27,10 @@ declare const _default: {
      * @return {{x: *, y: *}}
      */
     getA3Point({ p1, p2, distance }: {
-        p1: any;
-        p2: any;
-        distance: any;
-    }): {
-        x: number;
-        y: number;
-    };
+        p1: IPoint;
+        p2: IPoint;
+        distance: number;
+    }): IPoint;
     /**
      * getDistanceByBetweenPoint - 获取p1,p2两点间的距离
      * @param {Point} - p1
@@ -55,8 +38,8 @@ declare const _default: {
      * @return {number}
      */
     getDistanceByBetweenPoint({ p1, p2 }: {
-        p1: any;
-        p2: any;
+        p1: IPoint;
+        p2: IPoint;
     }): number;
     /**
      * clientToCtxPoint - 屏幕坐标转换成画布坐标
@@ -65,11 +48,14 @@ declare const _default: {
      * @return {x:number,y:number}
      */
     clientToCtxPoint({ event, rect }: {
-        event: any;
-        rect: any;
-    }): {
-        x: number;
-        y: number;
-    };
+        event: MouseEvent;
+        rect: DOMRect;
+    }): IPoint;
+    /**
+     * isPointInCircle - 判断一个点是否在圆内
+     * @param point
+     * @param circle
+     */
+    isPointInCircle(point: IPoint, circle: ICircle): boolean;
 };
 export default _default;

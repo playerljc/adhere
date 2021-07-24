@@ -4,11 +4,11 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  IAction,
   IPoint,
   IFreeData,
   IStyle,
   SelectType,
+  ActionType,
 } from '../types';
 import DrawAction from './drawAction';
 
@@ -18,7 +18,7 @@ import DrawAction from './drawAction';
  * @classdesc - 自由绘制选取
  * @remark: - 一个start - end的周期中只能绘制一个自由图形
  */
-class FreeDrawAction extends DrawAction implements IAction {
+class FreeDrawAction extends DrawAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
@@ -172,7 +172,10 @@ class FreeDrawAction extends DrawAction implements IAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    context.trigger(ActionEvents.BeforeStart);
+    this.emit.trigger(ActionEvents.BeforeStart, {
+      selectType: SelectType.Free,
+      actionType: ActionType.Draw,
+    });
 
     // 注册事件
     canvasEl?.addEventListener('mousedown', this.onCanvasMouseDown);
@@ -181,7 +184,10 @@ class FreeDrawAction extends DrawAction implements IAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    context.trigger(ActionEvents.Start);
+    this.emit.trigger(ActionEvents.Start, {
+      selectType: SelectType.Free,
+      actionType: ActionType.Draw,
+    });
   }
 
   /**
@@ -219,7 +225,11 @@ class FreeDrawAction extends DrawAction implements IAction {
 
     this.points = [];
 
-    context.trigger(ActionEvents.End, data);
+    this.emit.trigger(ActionEvents.End, {
+      selectType: SelectType.Free,
+      actionType: ActionType.Draw,
+      data,
+    });
   }
 
   /**
@@ -244,7 +254,10 @@ class FreeDrawAction extends DrawAction implements IAction {
 
     this.status = ActionStatus.Destroy;
 
-    context.trigger(ActionEvents.Destroy);
+    this.emit.trigger(ActionEvents.Destroy, {
+      selectType: SelectType.Free,
+      actionType: ActionType.Draw,
+    });
   }
 }
 

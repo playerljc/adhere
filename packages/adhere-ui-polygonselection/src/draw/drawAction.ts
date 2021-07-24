@@ -1,10 +1,12 @@
+import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+
 import { ActionStatus, IAction, IPolygonSelection, IStyle } from '../types';
 import DefaultStyle from '../defaultStyle';
 
 /**
  * DrawAction
  * @class DrawAction
- * @classdesc
+ * @classdesc DrawAction
  */
 abstract class DrawAction implements IAction {
   // 上下文对象
@@ -18,6 +20,9 @@ abstract class DrawAction implements IAction {
 
   // 当前状态
   protected status: number = ActionStatus.UnStart;
+
+  // 通知对象
+  protected emit = new Emitter();
 
   /**
    * destroy
@@ -34,7 +39,7 @@ abstract class DrawAction implements IAction {
    * start
    * @param style
    */
-  abstract start(style: IStyle): void;
+  abstract start(style?: IStyle): void;
 
   /**
    * setContext

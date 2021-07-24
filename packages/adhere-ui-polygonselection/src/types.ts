@@ -29,7 +29,7 @@ export interface IAction {
   // 获取状态
   getStatus: () => number;
   // 开始
-  start: (style: IStyle) => void;
+  start: (style?: IStyle) => void;
   // 结束
   end: (e?: MouseEvent) => void;
   // 销毁
@@ -102,7 +102,10 @@ export interface IFreeData extends IActionData {
 /**
  * IModifyAction
  */
-export interface IModifyAction {}
+export interface IModifyAction extends IAction {
+  // 开始
+  start: () => void;
+}
 
 /**
  * IMoveAction
@@ -121,12 +124,13 @@ export enum PolygonSelectionActions {
  */
 export interface IPolygonSelection {
   trigger: (type: string, params?: any | null | undefined) => void;
-  getHeight: () => number;
   getWidth: () => number;
+  getHeight: () => number;
   getCtx: () => CanvasRenderingContext2D | null;
   getCanvasEl: () => HTMLCanvasElement | null;
   addHistoryData: (data: IActionData) => void;
   removeHistoryDataById: (actionDataId: string) => IActionData[];
+  getHistoryDataById: (id: string) => IActionData | null | undefined;
   drawHistoryData: () => void;
   changeAction: (action: IAction) => void;
   start: (style: IStyle) => void;
@@ -168,4 +172,12 @@ export enum SelectType {
   Rectangle = 'Rectangle',
   Triangle = 'Triangle',
   Free = 'Free',
+}
+
+/**
+ * ActionType
+ */
+export enum ActionType {
+  Draw = 'Draw',
+  Modify = 'Modify'
 }

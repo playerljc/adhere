@@ -13,42 +13,22 @@ declare const _default: {
     }): string;
     isTouch(): boolean;
     toPoint(percent: string): number;
-    toPercent(point: any): string;
-    straightLineIntersection(p1: {
-        x: number;
-        y: number;
-    }, p2: {
-        x: number;
-        y: number;
-    }, p3: {
-        x: number;
-        y: number;
-    }, p4: {
-        x: number;
-        y: number;
-    }): {
-        x: number;
-        y: number;
-    };
+    toPercent(point: number): string;
+    straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
     getA3Point({ p1, p2, distance }: {
-        p1: any;
-        p2: any;
-        distance: any;
-    }): {
-        x: number;
-        y: number;
-    };
+        p1: import("./types").IPoint;
+        p2: import("./types").IPoint;
+        distance: number;
+    }): import("./types").IPoint;
     getDistanceByBetweenPoint({ p1, p2 }: {
-        p1: any;
-        p2: any;
+        p1: import("./types").IPoint;
+        p2: import("./types").IPoint;
     }): number;
     clientToCtxPoint({ event, rect }: {
-        event: any;
-        rect: any;
-    }): {
-        x: number;
-        y: number;
-    };
+        event: MouseEvent;
+        rect: DOMRect;
+    }): import("./types").IPoint;
+    isPointInCircle(point: import("./types").IPoint, circle: import("./types").ICircle): boolean;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
