@@ -131,12 +131,12 @@ class CircleModifyAction extends ModifyAction {
     // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.id);
 
-    if (data) {
-      // 中心点和startPoint的距离就是半径
-      const { center } = data.data;
+    if (!data) return;
 
-      data.data.radius = MathUtil.getDistanceByBetweenPoint({ p1: center, p2: this.startPoint });
-    }
+    // 中心点和startPoint的距离就是半径
+    const { center } = data.data;
+
+    data.data.radius = MathUtil.getDistanceByBetweenPoint({ p1: center, p2: this.startPoint });
 
     context.clear();
 

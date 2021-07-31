@@ -1,4 +1,6 @@
+// @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
+// @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
 import {
@@ -103,6 +105,8 @@ class FreeDrawAction extends DrawAction {
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
+
+    if (!this.startPoint) return;
 
     this.points.push(this.startPoint);
 
@@ -243,6 +247,12 @@ class FreeDrawAction extends DrawAction {
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    // 如果是运行状态则删除之前的绘制
+    if (this.status === ActionStatus.Running) {
+      context.clear();
+      context.drawHistoryData();
+    }
 
     canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);

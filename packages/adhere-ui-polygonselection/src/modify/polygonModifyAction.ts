@@ -87,13 +87,13 @@ class PolygonModifyAction extends ModifyAction {
     // canvasHistory需要修改.this.startPoint那个点去找到，替换成targetPoint的值
     const data = context.getHistoryDataById(this.data.id);
 
-    if (data) {
-      const index = data.data.findIndex(
-        (t) => t.x === this?.startPoint?.x && t.y === this?.startPoint?.y,
-      );
+    if (!data) return;
 
-      index !== -1 && (data.data[index] = targetPoint);
-    }
+    const index = data.data.findIndex(
+      (t) => t.x === this?.startPoint?.x && t.y === this?.startPoint?.y,
+    );
+
+    index !== -1 && (data.data[index] = targetPoint);
 
     context.clear();
 

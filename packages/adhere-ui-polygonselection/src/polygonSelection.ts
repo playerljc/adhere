@@ -52,13 +52,12 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   /**
    * constructor
    * @param el - 父元素
-   * @param action - 当前的action
+   * @param defaultData: IActionData[]
    */
-  constructor(el: HTMLElement, action: IAction) {
+  constructor(el: HTMLElement, defaultData?: IActionData[]) {
     super();
 
-    // 当前的action
-    this.curAction = action;
+    defaultData && (this.canvasData = defaultData);
 
     this.onResize = this.onResize.bind(this);
 
@@ -197,6 +196,22 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    */
   getHistoryDataById(id: string): IActionData | null | undefined {
     return this.canvasData.find((data) => data.id === id);
+  }
+
+  /**
+   * getHistoryData
+   * @return IActionData []
+   */
+  getHistoryData(): IActionData[] {
+    return [...this.canvasData];
+  }
+
+  /**
+   * setHistoryData
+   * @param data
+   */
+  setHistoryData(data: IActionData[]): void {
+    this.canvasData = data;
   }
 
   /**

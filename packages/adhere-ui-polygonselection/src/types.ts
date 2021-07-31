@@ -1,3 +1,5 @@
+import PolygonSelection from './index';
+
 /**
  * Action的状态
  */
@@ -35,7 +37,7 @@ export interface IAction {
   // 销毁
   destroy: () => void;
   // 设置上下文对象
-  setContext: (context: IPolygonSelection) => void;
+  setContext: (context: PolygonSelection) => void;
 }
 
 /**
@@ -132,6 +134,8 @@ export interface IPolygonSelection {
   removeHistoryDataById: (actionDataId: string) => IActionData[];
   getHistoryDataById: (id: string) => IActionData | null | undefined;
   drawHistoryData: () => void;
+  getHistoryData: () => IActionData[];
+  setHistoryData: (data: IActionData[]) => void;
   changeAction: (action: IAction) => void;
   start: (style: IStyle) => void;
   end: () => void;
@@ -179,5 +183,5 @@ export enum SelectType {
  */
 export enum ActionType {
   Draw = 'Draw',
-  Modify = 'Modify'
+  Modify = 'Modify',
 }

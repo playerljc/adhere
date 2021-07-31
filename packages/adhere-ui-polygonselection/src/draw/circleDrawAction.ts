@@ -1,4 +1,6 @@
+// @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
+// @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
 import DrawAction from './drawAction';
@@ -44,14 +46,18 @@ class CircleDrawAction extends DrawAction {
 
     const ctx = context?.getCtx();
 
-    if (!context || !ctx) return;
+    if (!context || !ctx || !centerPoint) return;
 
     const canvasEl = context.getCanvasEl();
+
+    if (!canvasEl) return;;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
+
+    if(!targetPoint) return;
 
     context.clear();
 
@@ -240,6 +246,12 @@ class CircleDrawAction extends DrawAction {
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    // 如果是运行状态则删除之前的绘制
+    if (this.status === ActionStatus.Running) {
+      context.clear();
+      context.drawHistoryData();
+    }
 
     canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);

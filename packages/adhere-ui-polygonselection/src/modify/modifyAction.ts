@@ -66,7 +66,9 @@ abstract class ModifyAction implements IModifyAction {
    * getPointInAnchor
    * @param targetPoint
    */
-  protected abstract getPointInAnchor(targetPoint: IPoint): IPoint | null;
+  protected abstract getPointInAnchor(
+    targetPoint: IPoint,
+  ): IPoint | null | { point: IPoint; index: number };
 
   /**
    * getSelectType
@@ -138,7 +140,7 @@ abstract class ModifyAction implements IModifyAction {
 
     if (findPoint) {
       // this.startPoint需要赋值为anchor圆形的中心点
-      this.startPoint = findPoint;
+      this.startPoint = findPoint as IPoint;
       canvasEl?.addEventListener('mousemove', this.onCanvasMousemove);
       canvasEl?.addEventListener('mouseup', this.onCanvasMouseup);
     }
@@ -213,6 +215,8 @@ abstract class ModifyAction implements IModifyAction {
    * @param e
    */
   end(e?: MouseEvent): void {
+    if(!e) return;
+
     const { context } = this;
 
     if (!context) return;
@@ -221,9 +225,9 @@ abstract class ModifyAction implements IModifyAction {
 
     if (!canvasEl) return;
 
-    canvasEl?.removeEventListener('mousedown', this.onCanvasMousedown);
-    canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
-    canvasEl?.removeEventListener('mouseup', this.onCanvasMouseup);
+    canvasEl.removeEventListener('mousedown', this.onCanvasMousedown);
+    canvasEl.removeEventListener('mousemove', this.onCanvasMousemove);
+    canvasEl.removeEventListener('mouseup', this.onCanvasMouseup);
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
@@ -265,6 +269,8 @@ abstract class ModifyAction implements IModifyAction {
     context.drawHistoryData();
 
     this.status = ActionStatus.Destroy;
+
+    this.startPoint = null;
 
     this.emit.trigger(ActionEvents.Destroy, {
       selectType: this.getSelectType(),

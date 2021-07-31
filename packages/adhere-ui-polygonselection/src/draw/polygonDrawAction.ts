@@ -1,4 +1,6 @@
+// @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math.js';
+// @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
 import {
@@ -56,6 +58,8 @@ class PolygonDrawAction extends DrawAction {
         rect: canvasEl?.getBoundingClientRect(),
       });
 
+      if (!this.startPoint) return;
+
       this.pointStack.push(this.startPoint);
 
       // 触发开始事件
@@ -76,7 +80,9 @@ class PolygonDrawAction extends DrawAction {
 
       this.startPoint = curPoint;
 
-      this.pointStack.push(this.startPoint);
+      if (this.startPoint) {
+        this.pointStack.push(this.startPoint);
+      }
     }
   }
 
@@ -306,6 +312,12 @@ class PolygonDrawAction extends DrawAction {
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    // 如果是运行状态则删除之前的绘制
+    if (this.status === ActionStatus.Running) {
+      context.clear();
+      context.drawHistoryData();
+    }
 
     canvasEl?.removeEventListener('click', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);

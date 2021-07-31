@@ -1,4 +1,6 @@
+// @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
+// @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
 import {
@@ -48,6 +50,8 @@ class TriangleDrawAction extends DrawAction {
     if (!context || !ctx) return;
 
     const canvasEl = context.getCanvasEl();
+
+    if(!canvasEl) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
@@ -224,6 +228,12 @@ class TriangleDrawAction extends DrawAction {
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    // 如果是运行状态则删除之前的绘制
+    if (this.status === ActionStatus.Running) {
+      context.clear();
+      context.drawHistoryData();
+    }
 
     canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
