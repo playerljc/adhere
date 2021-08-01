@@ -8,7 +8,7 @@ import DefaultStyle from '../defaultStyle';
  * @class DrawAction
  * @classdesc DrawAction
  */
-abstract class DrawAction implements IAction {
+abstract class DrawAction extends Emitter implements IAction {
   // 上下文对象
   protected context: IPolygonSelection | null = null;
 
@@ -20,9 +20,6 @@ abstract class DrawAction implements IAction {
 
   // 当前状态
   protected status: number = ActionStatus.UnStart;
-
-  // 通知对象
-  protected emit = new Emitter();
 
   /**
    * destroy

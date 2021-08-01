@@ -62,7 +62,7 @@ class FreeDrawAction extends DrawAction {
 
     this.points.push(curPoint);
 
-    context.clear();
+    context.clearDraw();
 
     context.drawHistoryData();
 
@@ -135,11 +135,11 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
-   * addHistoryPath - 绘制历史数据
+   * drawHistoryPath - 绘制历史数据
    * @param ctx
    * @param data
    */
-  static addHistoryPath(
+  static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
       points: IPoint[];
@@ -176,7 +176,7 @@ class FreeDrawAction extends DrawAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    this.emit.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.BeforeStart, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
@@ -188,7 +188,7 @@ class FreeDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.emit.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.Start, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
@@ -229,7 +229,7 @@ class FreeDrawAction extends DrawAction {
 
     this.points = [];
 
-    this.emit.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.End, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
       data,
@@ -250,7 +250,7 @@ class FreeDrawAction extends DrawAction {
 
     // 如果是运行状态则删除之前的绘制
     if (this.status === ActionStatus.Running) {
-      context.clear();
+      context.clearDraw();
       context.drawHistoryData();
     }
 
@@ -264,7 +264,7 @@ class FreeDrawAction extends DrawAction {
 
     this.status = ActionStatus.Destroy;
 
-    this.emit.trigger(ActionEvents.Destroy, {
+    this.trigger(ActionEvents.Destroy, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });

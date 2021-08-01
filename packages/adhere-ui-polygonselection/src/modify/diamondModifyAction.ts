@@ -1,16 +1,16 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IRectangleData, SelectType } from '../types';
+import { IPoint, IDiamondData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 
 /**
- * RectangleModifyAction
- * @class RectangleModifyAction
- * @classdesc - 矩形修改
+ * DiamondModifyAction
+ * @class DiamondModifyAction
+ * @classdesc - 菱形修改
  * @remark:
  */
-class RectangleModifyAction extends ModifyAction {
+class DiamondModifyAction extends ModifyAction {
   private rectangleAnchorPoints: IPoint[] = [];
 
   private indexToModifyHandlerMapping: Map<number, Function> = new Map<number, Function>([
@@ -24,13 +24,13 @@ class RectangleModifyAction extends ModifyAction {
     [7, this.modifyDataByLeftCenter],
   ]);
 
-  constructor(data: IRectangleData) {
+  constructor(data: IDiamondData) {
     super(data);
   }
 
   /**
    * drawAnchors
-   * 4个角，四条边的中心点
+   * circle有4个anchor，上，下，左，右
    */
   protected drawAnchors(): void {
     if (!this.context) return;
@@ -44,7 +44,6 @@ class RectangleModifyAction extends ModifyAction {
     const widthHalf = width / 2;
     const heightHalf = height / 2;
 
-    // 4个角,4条边中心点 顺时针绘制
     this.rectangleAnchorPoints = [
       {
         ...leftTopPoint,
@@ -79,6 +78,7 @@ class RectangleModifyAction extends ModifyAction {
       },
     ];
 
+    // 4个角,4条边中心点 顺时针绘制
     for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
       const point = this.rectangleAnchorPoints[i];
 
@@ -97,7 +97,20 @@ class RectangleModifyAction extends ModifyAction {
       );
 
       ctx.stroke();
+      ctx.fill();
 
+      // 矩形绘制
+      ctx.beginPath();
+
+      this.setAnchorStyle();
+
+      ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
+      ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
+      ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
+      ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
+      ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+
+      ctx.stroke();
       ctx.fill();
     }
   }
@@ -171,7 +184,7 @@ class RectangleModifyAction extends ModifyAction {
    * getSelectType
    */
   protected getSelectType(): SelectType {
-    return SelectType.Rectangle;
+    return SelectType.Diamond;
   }
 
   /**
@@ -464,4 +477,4 @@ class RectangleModifyAction extends ModifyAction {
   }
 }
 
-export default RectangleModifyAction;
+export default DiamondModifyAction;

@@ -1,17 +1,17 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { ICircleData, IPoint, SelectType } from '../types';
+import { IStartData, IPoint, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 
 /**
- * CircleModifyAction
- * @class CircleModifyAction
- * @classdesc - 圆形修改
+ * StartModifyAction
+ * @class StartModifyAction
+ * @classdesc - 五角星修改
  * @remark:
  */
-class CircleModifyAction extends ModifyAction {
-  constructor(data: ICircleData) {
+class StartModifyAction extends ModifyAction {
+  constructor(data: IStartData) {
     super(data);
   }
 
@@ -26,24 +26,24 @@ class CircleModifyAction extends ModifyAction {
 
     if (!ctx) return;
 
-    const { center, radius } = this?.data?.data?.data;
+    const { center, outRadius } = this?.data?.data?.data;
 
     // 顺时针，上，右，下，左
     const circleAnchorPoints: IPoint[] = [
       {
         x: center.x,
-        y: center.y - radius,
+        y: center.y - outRadius,
       },
       {
-        x: center.x + radius,
+        x: center.x + outRadius,
         y: center.y,
       },
       {
         x: center.x,
-        y: center.y + radius,
+        y: center.y + outRadius,
       },
       {
-        x: center.x - radius,
+        x: center.x - outRadius,
         y: center.y,
       },
     ];
@@ -66,9 +66,15 @@ class CircleModifyAction extends ModifyAction {
       );
 
       ctx.stroke();
-
       ctx.fill();
     }
+
+    ctx.beginPath();
+    this.setAnchorStyle();
+    ctx.ellipse(center.x, center.y, outRadius, outRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -82,24 +88,24 @@ class CircleModifyAction extends ModifyAction {
     let point: IPoint | null = null;
     let index: number = -1;
 
-    const { center, radius } = this?.data?.data?.data;
+    const { center, outRadius } = this?.data?.data?.data;
 
     // 顺时针，上，右，下，左
     const circleAnchorPoints: IPoint[] = [
       {
         x: center.x,
-        y: center.y - radius,
+        y: center.y - outRadius,
       },
       {
-        x: center.x + radius,
+        x: center.x + outRadius,
         y: center.y,
       },
       {
         x: center.x,
-        y: center.y + radius,
+        y: center.y + outRadius,
       },
       {
-        x: center.x - radius,
+        x: center.x - outRadius,
         y: center.y,
       },
     ];
@@ -146,7 +152,8 @@ class CircleModifyAction extends ModifyAction {
     const { center } = data.data;
 
     // 两点间距离(圆的中心点和targetPoint)之间的距离
-    data.data.radius = MathUtil.getDistanceByBetweenPoint({ p1: center, p2: targetPoint });
+    data.data.outRadius = MathUtil.getDistanceByBetweenPoint({ p1: center, p2: targetPoint });
+    data.data.innerRadius = data.data.outRadius / 2;
 
     context.clearDraw();
 
@@ -159,8 +166,8 @@ class CircleModifyAction extends ModifyAction {
    * getSelectType
    */
   protected getSelectType(): SelectType {
-    return SelectType.Circle;
+    return SelectType.Start;
   }
 }
 
-export default CircleModifyAction;
+export default StartModifyAction;

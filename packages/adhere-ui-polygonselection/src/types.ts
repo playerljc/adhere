@@ -19,9 +19,9 @@ export enum ActionStatus {
  */
 export enum ActionEvents {
   BeforeStart = 'BeforeStart',
-  Start = 'start',
-  End = 'end',
-  Destroy = 'destroy',
+  Start = 'Start',
+  End = 'End',
+  Destroy = 'Destroy',
 }
 
 /**
@@ -44,10 +44,10 @@ export interface IAction {
  * IActionData - Action的数据
  */
 export interface IActionData {
-  id: string;
-  type: SelectType;
+  id?: string;
+  type?: SelectType;
   data: any;
-  style: IStyle;
+  style?: IStyle;
 }
 
 /**
@@ -92,6 +92,19 @@ export interface ITriangleData extends IActionData {
 }
 
 /**
+ * IDiamondData - Diamond的数据
+ */
+export interface IDiamondData extends IActionData {
+  type: SelectType.Diamond;
+  // 矩形的数据
+  data: {
+    leftTopPoint: IPoint | null;
+    width: number;
+    height: number;
+  };
+}
+
+/**
  * IFreeData - Free的数据
  */
 export interface IFreeData extends IActionData {
@@ -102,17 +115,27 @@ export interface IFreeData extends IActionData {
 }
 
 /**
+ * IStartData - Start的数据
+ */
+export interface IStartData extends IActionData {
+  type?: SelectType.Start;
+  data: {
+    // 圆的中心点
+    center: IPoint;
+    // 外半径
+    outRadius: number;
+    // 内半径(外半径的一半)
+    innerRadius: number;
+  };
+}
+
+/**
  * IModifyAction
  */
 export interface IModifyAction extends IAction {
   // 开始
   start: () => void;
 }
-
-/**
- * IMoveAction
- */
-export interface IMoveAction {}
 
 /**
  * PolygonSelectionActions - PolygonSelectionActions的事件类型
@@ -140,7 +163,7 @@ export interface IPolygonSelection {
   start: (style: IStyle) => void;
   end: () => void;
   destroy: () => void;
-  clear: () => void;
+  clearDraw: () => void;
 }
 
 /**
@@ -175,6 +198,8 @@ export enum SelectType {
   Circle = 'Circle',
   Rectangle = 'Rectangle',
   Triangle = 'Triangle',
+  Diamond = 'Diamond',
+  Start = 'Start',
   Free = 'Free',
 }
 

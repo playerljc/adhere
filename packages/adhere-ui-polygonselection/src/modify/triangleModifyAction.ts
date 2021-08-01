@@ -5,15 +5,13 @@ import { IPoint, ITriangleData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 
 /**
- * TriangleDrawAction
- * @class TriangleDrawAction
+ * TriangleModifyAction
+ * @class TriangleModifyAction
  * @classdesc - 三角形修改
  * @remark:
  */
-class TriangleDrawAction extends ModifyAction {
+class TriangleModifyAction extends ModifyAction {
   private rectangleAnchorPoints: IPoint[] = [];
-
-  private startIndex: number = -1;
 
   private indexToModifyHandlerMapping: Map<number, Function> = new Map<number, Function>([
     [0, this.modifyDataByLeftTop],
@@ -41,7 +39,7 @@ class TriangleDrawAction extends ModifyAction {
 
     if (!ctx) return;
 
-    const { points } = this?.data?.data;
+    const { points } = this?.data?.data?.data;
 
     if (!points || !points.length) return;
 
@@ -49,7 +47,7 @@ class TriangleDrawAction extends ModifyAction {
 
     // 绘制矩形和八个控制点
     const leftTopPoint = {
-      x: points[1].x - points[0].x,
+      x: points[0].x,
       y: points[1].y,
     };
     const width = points[2].x - points[0].x;
@@ -91,13 +89,13 @@ class TriangleDrawAction extends ModifyAction {
       },
     ];
 
-    ctx.beginPath();
-
-    this.setAnchorStyle();
-
     // 4个角,4条边中心点 顺时针绘制
     for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
       const point = this.rectangleAnchorPoints[i];
+
+      ctx.beginPath();
+
+      this.setAnchorStyle();
 
       ctx.ellipse(
         point.x,
@@ -108,18 +106,24 @@ class TriangleDrawAction extends ModifyAction {
         0,
         2 * Math.PI,
       );
+
+      ctx.stroke();
+      ctx.fill();
+
+      // 矩形绘制
+      ctx.beginPath();
+
+      this.setAnchorStyle();
+
+      ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
+      ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
+      ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
+      ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
+      ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+
+      ctx.stroke();
+      ctx.fill();
     }
-
-    // 矩形绘制
-    ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
-    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
-    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
-    ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
-    ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
-
-    ctx.stroke();
-
-    ctx.fill();
   }
 
   /**
@@ -167,7 +171,7 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return;
 
@@ -180,7 +184,7 @@ class TriangleDrawAction extends ModifyAction {
 
     if (!result) return;
 
-    context.clear();
+    context.clearDraw();
 
     context.drawHistoryData();
 
@@ -194,34 +198,41 @@ class TriangleDrawAction extends ModifyAction {
     return SelectType.Triangle;
   }
 
-  protected onCanvasMousedown(e) {
-    if (!this.context) return;
+  /**
+   * getBox
+   */
+  protected getBox(): {
+    leftTop: IPoint;
+    rightTop: IPoint;
+    rightBottom: IPoint;
+    leftBottom: IPoint;
+  } | null {
+    const { context } = this;
 
-    const canvasEl = this.context.getCanvasEl();
+    if (!context || !this.data) return null;
 
-    if (!canvasEl) return;
+    // canvasHistory需要修改 需要修改半径
+    const data = context.getHistoryDataById(this.data.data.id);
 
-    const ctx = this.context.getCtx();
+    if (!data) return null;
 
-    if (!ctx) return;
+    const { points } = data.data;
 
-    const point = MathUtil.clientToCtxPoint({
-      event: e,
-      rect: canvasEl?.getBoundingClientRect(),
-    });
+    if (!points || !points.length) return null;
 
-    // 判断按下的startPoint是否为anchor点
-    // 用isPointInPath判断只能判断出point在路径中，但是不能获取anchor的中心点
-    // 需要判断point在那个anchor里才可以，这样可以获取命中的圆形中心点
-    const findPoint: { point: IPoint; index: number } | null = this.getPointInAnchor(point);
+    const leftTopPoint = {
+      x: points[0].x,
+      y: points[1].y,
+    };
+    const width = points[2].x - points[0].x;
+    const height = points[2].y - points[1].y;
 
-    if (findPoint) {
-      this.startPoint = findPoint.point;
-      this.startIndex = findPoint.index;
-
-      canvasEl?.addEventListener('mousemove', this.onCanvasMousemove);
-      canvasEl?.addEventListener('mouseup', this.onCanvasMouseup);
-    }
+    return {
+      leftTop: { ...leftTopPoint },
+      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
+      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
+      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
+    };
   }
 
   protected modifyDataByLeftTop(targetPoint: IPoint): boolean {
@@ -232,7 +243,7 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
@@ -240,33 +251,34 @@ class TriangleDrawAction extends ModifyAction {
 
     if (!points || !points.length) return false;
 
-    const leftTopPoint = {
-      x: points[1].x - points[0].x,
-      y: points[1].y,
-    };
-    const width = points[2].x - points[0].x;
-    const height = points[2].y - points[1].y;
-
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.x > box.rightTop.x || targetPoint.y > box.rightBottom.y) return false;
 
+    const leftTopPoint = targetPoint;
+    const width = box.rightTop.x - targetPoint.x;
+    const height = box.rightBottom.y - targetPoint.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
+
     return true;
   }
 
@@ -278,32 +290,44 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.y > box.leftBottom.y) return false;
 
     // 修改
+    const leftTopPoint = {
+      x: box.leftTop.x,
+      y: targetPoint.y,
+    };
+    const width = box.rightTop.x - box.leftTop.x;
+    const height = box.rightBottom.y - targetPoint.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -317,32 +341,43 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.x < box.leftTop.x || targetPoint.y > box.leftBottom.y) return false;
 
     // 修改
-    // 修改
+    const leftTopPoint = {
+      x: box.leftTop.x,
+      y: targetPoint.y,
+    };
+    const width = targetPoint.x - box.leftTop.x;
+    const height = box.rightBottom.y - targetPoint.y;
+
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -356,32 +391,43 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.x < box.leftTop.x) return false;
 
-    // 修改
+    const leftTopPoint = {
+      x: box.leftTop.x,
+      y: box.leftTop.y,
+    };
+    const width = targetPoint.x - box.leftTop.x;
+    const height = box.rightBottom.y - box.rightTop.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -395,32 +441,40 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.x < box.leftTop.x || targetPoint.y < box.leftTop.y) return false;
 
-    // 修改
+    const leftTopPoint = { ...box.leftTop };
+    const width = targetPoint.x - box.leftTop.x;
+    const height = targetPoint.y - box.leftTop.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -434,32 +488,40 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.y < box.leftTop.y) return false;
 
-    // 修改
+    const leftTopPoint = { ...box.leftTop };
+    const width = box.rightTop.x - box.leftTop.x;
+    const height = targetPoint.y - box.leftTop.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -473,32 +535,43 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.x > box.rightBottom.x || targetPoint.y < box.rightTop.y) return false;
 
-    // 修改
+    const leftTopPoint = {
+      x: targetPoint.x,
+      y: box.leftTop.y,
+    };
+    const width = box.rightBottom.x - targetPoint.x;
+    const height = targetPoint.y - box.rightTop.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -512,32 +585,43 @@ class TriangleDrawAction extends ModifyAction {
     if (!context || !ctx || !this.data || !this.startPoint) return false;
 
     // canvasHistory需要修改 需要修改半径
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return false;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
-    const box = {
-      leftTop: { ...leftTopPoint },
-      rightTop: { x: leftTopPoint.x + width, y: leftTopPoint.y },
-      rightBottom: { x: leftTopPoint.x + width, y: leftTopPoint.y + height },
-      leftBottom: { x: leftTopPoint.x, y: leftTopPoint.y + height },
-    };
+    const box = this.getBox();
+
+    if (!box) return false;
 
     // 范围限制
     if (targetPoint.x > box.rightBottom.x) return false;
 
-    // 修改
+    const leftTopPoint = {
+      x: targetPoint.x,
+      y: box.leftTop.y,
+    };
+    const width = box.rightBottom.x - targetPoint.x;
+    const height = box.rightBottom.y - box.rightTop.y;
+
     // 修改
     data.data.points = [
-      { ...box.leftBottom },
       {
-        x: box.leftTop.x + width / 2,
-        y: box.leftTop.y,
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
       },
-      { ...box.rightBottom },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
     ];
 
     return true;
@@ -550,4 +634,4 @@ class TriangleDrawAction extends ModifyAction {
   }
 }
 
-export default TriangleDrawAction;
+export default TriangleModifyAction;

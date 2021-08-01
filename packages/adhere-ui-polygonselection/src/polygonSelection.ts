@@ -14,6 +14,8 @@ import PolygonDrawAction from './draw/polygonDrawAction';
 import CircleDrawAction from './draw/circleDrawAction';
 import RectangleDrawAction from './draw/rectangleDrawAction';
 import TriangleDrawAction from './draw/triangleDrawAction';
+import DiamondDrawAction from './draw/diamondDrawAction';
+import StartDrawAction from './draw/startDrawAction';
 import FreeDrawAction from './draw/freeDrawAction';
 
 const selectorPrefix = 'adhere-ui-polygonselection';
@@ -46,6 +48,8 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     [SelectType.Circle, CircleDrawAction],
     [SelectType.Rectangle, RectangleDrawAction],
     [SelectType.Triangle, TriangleDrawAction],
+    [SelectType.Diamond, DiamondDrawAction],
+    [SelectType.Start, StartDrawAction],
     [SelectType.Free, FreeDrawAction],
   ]);
 
@@ -56,6 +60,8 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    */
   constructor(el: HTMLElement, defaultData?: IActionData[]) {
     super();
+
+    this.el = el;
 
     defaultData && (this.canvasData = defaultData);
 
@@ -84,7 +90,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     // 适配canvas
     this.adapterCanvas();
 
-    window.addEventListener('resize', this.onResize);
+    // window.addEventListener('resize', this.onResize);
   }
 
   /**
@@ -96,6 +102,8 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     if (canvasEl) {
       canvasEl.width = this.el?.offsetWidth || 0;
       canvasEl.height = this.el?.offsetHeight || 0;
+      this.clearDraw();
+      this.drawHistoryData();
     }
   }
 
@@ -169,18 +177,20 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
       if (!ctx || !data) return;
 
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
+      if (data.style) {
+        // 设置上下文属性
+        ctx.lineWidth = data.style.lineWidth;
+        ctx.lineJoin = data.style.lineJoin;
+        ctx.lineCap = data.style.lineCap;
+        ctx.setLineDash(data.style.lineDash);
+        ctx.lineDashOffset = data.style.lineDashOffset;
+        ctx.strokeStyle = data.style.strokeStyle;
+        ctx.fillStyle = data.style.fillStyle;
+      }
 
       // 绘制指定类型的路径
       // @ts-ignore
-      this.typeActionMap.get(data.type)?.addHistoryPath(ctx, data.data);
+      this.typeActionMap.get(data.type)?.drawHistoryPath(ctx, data.data);
 
       // 描边
       ctx.stroke();
@@ -259,7 +269,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   /**
    * clear
    */
-  clear(): void {
+  clearDraw(): void {
     const { ctx } = this;
 
     if (!ctx) return;

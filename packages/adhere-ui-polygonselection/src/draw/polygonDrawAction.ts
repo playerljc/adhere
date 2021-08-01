@@ -63,7 +63,7 @@ class PolygonDrawAction extends DrawAction {
       this.pointStack.push(this.startPoint);
 
       // 触发开始事件
-      this.emit.trigger(ActionEvents.Start, {
+      this.trigger(ActionEvents.Start, {
         selectType: SelectType.Polygon,
         actionType: ActionType.Draw,
       });
@@ -99,7 +99,7 @@ class PolygonDrawAction extends DrawAction {
     if (!canvasEl) return;
 
     // 如果有startPoint,擦除绘制直线
-    this.context.clear();
+    this.context.clearDraw();
 
     // 绘制历史数据
     this.context.drawHistoryData();
@@ -208,11 +208,11 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * addHistoryPath - 绘制历史数据
+   * drawHistoryPath - 绘制历史数据
    * @param ctx
    * @param data
    */
-  static addHistoryPath(ctx: CanvasRenderingContext2D, data: IPoint[] = []): void {
+  static drawHistoryPath(ctx: CanvasRenderingContext2D, data: IPoint[] = []): void {
     ctx.beginPath();
 
     (data || []).forEach((point: IPoint, index: number) => {
@@ -244,7 +244,7 @@ class PolygonDrawAction extends DrawAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    this.emit.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.BeforeStart, {
       selectType: SelectType.Polygon,
       actionType: ActionType.Draw,
     });
@@ -273,15 +273,11 @@ class PolygonDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
     canvasEl?.removeEventListener('dblclick', this.onCanvasDbClick);
 
-    context.clear();
+    context.clearDraw();
 
     context.drawHistoryData();
 
     this.fill();
-
-    this.startPoint = null;
-
-    this.pointStack = [];
 
     this.status = ActionStatus.End;
 
@@ -292,9 +288,13 @@ class PolygonDrawAction extends DrawAction {
       style: this.style,
     };
 
+    this.startPoint = null;
+
+    this.pointStack = [];
+
     context.addHistoryData(data);
 
-    this.emit.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.End, {
       selectType: SelectType.Polygon,
       actionType: ActionType.Draw,
       data,
@@ -315,7 +315,7 @@ class PolygonDrawAction extends DrawAction {
 
     // 如果是运行状态则删除之前的绘制
     if (this.status === ActionStatus.Running) {
-      context.clear();
+      context.clearDraw();
       context.drawHistoryData();
     }
 
@@ -329,7 +329,7 @@ class PolygonDrawAction extends DrawAction {
 
     this.status = ActionStatus.Destroy;
 
-    this.emit.trigger(ActionEvents.Destroy, {
+    this.trigger(ActionEvents.Destroy, {
       selectType: SelectType.Polygon,
       actionType: ActionType.Draw,
     });

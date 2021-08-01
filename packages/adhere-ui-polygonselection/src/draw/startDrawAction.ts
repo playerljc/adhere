@@ -3,29 +3,32 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
-import DrawAction from './drawAction';
 import {
   ActionEvents,
   ActionStatus,
+  ActionType,
   IPoint,
-  ICircleData,
+  IStartData,
   IStyle,
   SelectType,
-  ActionType,
 } from '../types';
+import DrawAction from './drawAction';
 
 /**
- * CircleDrawAction
+ * StartDrawAction
  * @class
- * @classdesc - 圆形选取
- * @remark: - 一个start - end的周期中只能绘制一个圆形
+ * @classdesc - 五角星选取
+ * @remark: - 一个start - end的周期中只能绘制一个五角星
  */
-class CircleDrawAction extends DrawAction {
+class StartDrawAction extends DrawAction {
   // 中心点
   protected centerPoint: IPoint | null = null;
 
-  // 半径
-  protected radius: number = 0;
+  // 外圆半径
+  protected outRadius: number = 0;
+
+  // 内圆半径
+  protected innerRadius: number = 0;
 
   /**
    * context
@@ -38,55 +41,89 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
+   * drawStart
+   * @param ctx
+   * @param data
+   */
+  static drawStart({ ctx, data }: { ctx: CanvasRenderingContext2D; data: IStartData }): void {
+    if (!data || !ctx) return;
+
+    const {
+      data: { center, outRadius, innerRadius },
+      style,
+    } = data;
+
+    ctx.beginPath();
+
+    const startCount = 5;
+    const spend = 360 / startCount;
+    const min = 90 - spend;
+    const max = spend - min;
+
+    for (let i = 0; i < startCount; i++) {
+      if (style) {
+        ctx.lineWidth = style.lineWidth;
+        ctx.lineJoin = style.lineJoin;
+        ctx.lineCap = style.lineCap;
+        ctx.setLineDash(style.lineDash);
+        ctx.lineDashOffset = style.lineDashOffset;
+        ctx.strokeStyle = style.strokeStyle;
+        ctx.fillStyle = style.fillStyle;
+      }
+
+      ctx.lineTo(
+        Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x,
+        -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y,
+      );
+      ctx.lineTo(
+        Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x,
+        -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y,
+      );
+    }
+
+    ctx.stroke();
+    ctx.fill();
+  }
+
+  /**
    * draw
    * @param e
    */
   private draw(e): void {
-    const { context, centerPoint, style } = this;
+    const { context, centerPoint } = this;
 
     const ctx = context?.getCtx();
 
-    if (!context || !ctx || !centerPoint) return;
+    if (!context || !centerPoint || !ctx) return;
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;;
+    if (!canvasEl || !this.centerPoint) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    if(!targetPoint) return;
-
     context.clearDraw();
 
     context.drawHistoryData();
 
-    ctx.beginPath();
+    this.outRadius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
 
-    this.radius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+    this.innerRadius = this.outRadius / 2;
 
-    ctx.lineWidth = style.lineWidth;
-    ctx.lineJoin = style.lineJoin;
-    ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
-    ctx.lineDashOffset = style.lineDashOffset;
-    ctx.strokeStyle = style.strokeStyle;
-    ctx.fillStyle = style.fillStyle;
-
-    ctx.ellipse(
-      centerPoint?.x || 0,
-      centerPoint?.y || 0,
-      this.radius,
-      this.radius,
-      (45 * Math.PI) / 180,
-      0,
-      2 * Math.PI,
-    );
-
-    ctx.stroke();
-    ctx.fill();
+    StartDrawAction.drawStart({
+      ctx,
+      data: {
+        data: {
+          center: this.centerPoint,
+          outRadius: this.outRadius,
+          innerRadius: this.innerRadius,
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -118,10 +155,6 @@ class CircleDrawAction extends DrawAction {
 
     if (!context) return;
 
-    const ctx = context.getCtx();
-
-    if (!ctx) return;
-
     this.draw(e);
   }
 
@@ -141,28 +174,29 @@ class CircleDrawAction extends DrawAction {
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
+      // 圆的中心点
       center: IPoint;
-      radius: number;
+      // 外半径
+      outRadius: number;
+      // 内半径(外半径的一半)
+      innerRadius: number;
     },
   ): void {
-    ctx.beginPath();
+    if (!data) return;
 
-    ctx.ellipse(
-      data.center.x,
-      data.center.y,
-      data.radius,
-      data.radius,
-      (45 * Math.PI) / 180,
-      0,
-      2 * Math.PI,
-    );
+    StartDrawAction.drawStart({
+      ctx,
+      data: {
+        data,
+      },
+    });
   }
 
   /**
    * start
    * @param style
    */
-  start(style: IStyle) {
+  start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
     style && (this.style = style);
@@ -175,7 +209,7 @@ class CircleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Start,
       actionType: ActionType.Draw,
     });
 
@@ -187,7 +221,7 @@ class CircleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Start,
       actionType: ActionType.Draw,
     });
   }
@@ -202,7 +236,7 @@ class CircleDrawAction extends DrawAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl || !this.centerPoint || !this.outRadius || !this.innerRadius) return;
 
     canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
@@ -212,12 +246,13 @@ class CircleDrawAction extends DrawAction {
 
     this.status = ActionStatus.End;
 
-    const data: ICircleData = {
+    const data: IStartData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Circle,
+      type: SelectType.Start,
       data: {
         center: this.centerPoint,
-        radius: this.radius,
+        outRadius: this.outRadius,
+        innerRadius: this.innerRadius,
       },
       style: this.style,
     };
@@ -226,10 +261,12 @@ class CircleDrawAction extends DrawAction {
 
     this.centerPoint = null;
 
-    this.radius = 0;
+    this.outRadius = 0;
+
+    this.innerRadius = 0;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Start,
       actionType: ActionType.Draw,
       data,
     });
@@ -238,7 +275,7 @@ class CircleDrawAction extends DrawAction {
   /**
    * destroy
    */
-  destroy() {
+  destroy(): void {
     const { context } = this;
 
     if (!context) return;
@@ -259,15 +296,17 @@ class CircleDrawAction extends DrawAction {
 
     this.centerPoint = null;
 
-    this.radius = 0;
+    this.outRadius = 0;
+
+    this.innerRadius = 0;
 
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Start,
       actionType: ActionType.Draw,
     });
   }
 }
 
-export default CircleDrawAction;
+export default StartDrawAction;

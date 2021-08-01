@@ -1,6 +1,6 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
-import Emitter from '@baifendian/adhere-util-emitter';
+import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
 import {
   ActionStatus,
@@ -18,9 +18,12 @@ import {
  * @class ModifyAction
  * @classdesc ModifyAction
  */
-abstract class ModifyAction implements IModifyAction {
+abstract class ModifyAction extends Emitter implements IModifyAction {
   // 起始点
   protected startPoint: IPoint | null = null;
+
+  // 起始点的索引
+  protected startIndex: number = -1;
 
   // 上下文对象
   protected context: IPolygonSelection | null = null;
@@ -30,9 +33,6 @@ abstract class ModifyAction implements IModifyAction {
 
   // 当前状态
   protected status: number = ActionStatus.UnStart;
-
-  // 通知对象
-  protected emit = Emitter;
 
   // EmitActions
   protected EmitActions = {
@@ -68,7 +68,7 @@ abstract class ModifyAction implements IModifyAction {
    */
   protected abstract getPointInAnchor(
     targetPoint: IPoint,
-  ): IPoint | null | { point: IPoint; index: number };
+  ): { point: IPoint; index: number } | null ;
 
   /**
    * getSelectType
@@ -80,6 +80,7 @@ abstract class ModifyAction implements IModifyAction {
    * @param data
    */
   protected constructor(data: IActionData) {
+    super();
     this.data = data;
 
     this.onContext = this.onContext.bind(this);
@@ -87,7 +88,7 @@ abstract class ModifyAction implements IModifyAction {
     this.onCanvasMousemove = this.onCanvasMousemove.bind(this);
     this.onCanvasMouseup = this.onCanvasMouseup.bind(this);
 
-    this.emit.on(this.EmitActions.CONTEXT, this.onContext);
+    this.on(this.EmitActions.CONTEXT, this.onContext);
   }
 
   /**
@@ -140,7 +141,9 @@ abstract class ModifyAction implements IModifyAction {
 
     if (findPoint) {
       // this.startPoint需要赋值为anchor圆形的中心点
-      this.startPoint = findPoint as IPoint;
+      this.startPoint = findPoint.point;
+      this.startIndex = findPoint.index;
+
       canvasEl?.addEventListener('mousemove', this.onCanvasMousemove);
       canvasEl?.addEventListener('mouseup', this.onCanvasMouseup);
     }
@@ -192,7 +195,7 @@ abstract class ModifyAction implements IModifyAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    this.emit.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.BeforeStart, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
     });
@@ -204,7 +207,7 @@ abstract class ModifyAction implements IModifyAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.emit.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.Start, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
     });
@@ -240,7 +243,7 @@ abstract class ModifyAction implements IModifyAction {
 
     this.startPoint = null;
 
-    this.emit.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.End, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
       data: targetPoint,
@@ -259,12 +262,12 @@ abstract class ModifyAction implements IModifyAction {
 
     if (!canvasEl) return;
 
-    this.emit.remove(this.EmitActions.CONTEXT, this.onContext);
+    this.remove(this.EmitActions.CONTEXT, this.onContext);
     canvasEl?.removeEventListener('mousedown', this.onCanvasMousedown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseup);
 
-    context.clear();
+    context.clearDraw();
 
     context.drawHistoryData();
 
@@ -272,7 +275,7 @@ abstract class ModifyAction implements IModifyAction {
 
     this.startPoint = null;
 
-    this.emit.trigger(ActionEvents.Destroy, {
+    this.trigger(ActionEvents.Destroy, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
     });
@@ -285,7 +288,7 @@ abstract class ModifyAction implements IModifyAction {
   setContext(context: IPolygonSelection) {
     this.context = context;
 
-    this.emit.trigger(this.EmitActions.CONTEXT);
+    this.trigger(this.EmitActions.CONTEXT);
   }
 
   /**

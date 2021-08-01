@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "buildpackage": "ctbuild buildpackagets",
     "buildumd": "ctbuild buildumd --packagename AdherePolygonSelection --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
@@ -39,10 +40,7 @@
     "@baifendian/adhere-util": "^1.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "classnames": "^2.2.6",
     "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "omit.js": "^2.0.2",
-    "@turf/turf": "^6.5.0"
+    "@types/react-dom": "^17.0.0"
   }
 }

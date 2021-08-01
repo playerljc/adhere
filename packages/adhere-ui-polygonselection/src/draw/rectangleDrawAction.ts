@@ -64,7 +64,7 @@ class RectangleDrawAction extends DrawAction {
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    context.clear();
+    context.clearDraw();
 
     context.drawHistoryData();
 
@@ -129,11 +129,11 @@ class RectangleDrawAction extends DrawAction {
   }
 
   /**
-   * addHistoryPath - 绘制历史数据
+   * drawHistoryPath - 绘制历史数据
    * @param ctx
    * @param data
    */
-  static addHistoryPath(
+  static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
       leftTopPoint: IPoint | null;
@@ -162,7 +162,7 @@ class RectangleDrawAction extends DrawAction {
     if (!canvasEl) return;
 
     // 触发开始之前事件
-    this.emit.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.BeforeStart, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
@@ -174,7 +174,7 @@ class RectangleDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.emit.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.Start, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
@@ -221,7 +221,7 @@ class RectangleDrawAction extends DrawAction {
 
     this.height = 0;
 
-    this.emit.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.End, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
       data,
@@ -242,7 +242,7 @@ class RectangleDrawAction extends DrawAction {
 
     // 如果是运行状态则删除之前的绘制
     if (this.status === ActionStatus.Running) {
-      context.clear();
+      context.clearDraw();
       context.drawHistoryData();
     }
 
@@ -260,7 +260,7 @@ class RectangleDrawAction extends DrawAction {
 
     this.status = ActionStatus.Destroy;
 
-    this.emit.trigger(ActionEvents.Destroy, {
+    this.trigger(ActionEvents.Destroy, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });

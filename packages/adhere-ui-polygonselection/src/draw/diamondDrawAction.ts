@@ -3,29 +3,36 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
-import DrawAction from './drawAction';
 import {
   ActionEvents,
   ActionStatus,
+  ActionType,
   IPoint,
-  ICircleData,
+  IDiamondData,
   IStyle,
   SelectType,
-  ActionType,
 } from '../types';
+import DrawAction from './drawAction';
+import Util from '../util';
 
 /**
- * CircleDrawAction
+ * DiamondDrawAction
  * @class
- * @classdesc - 圆形选取
- * @remark: - 一个start - end的周期中只能绘制一个圆形
+ * @classdesc - 菱形选取
+ * @remark: - 一个start - end的周期中只能绘制一个菱形
  */
-class CircleDrawAction extends DrawAction {
-  // 中心点
-  protected centerPoint: IPoint | null = null;
+class DiamondDrawAction extends DrawAction {
+  // startPoint
+  protected startPoint: IPoint | null = null;
 
-  // 半径
-  protected radius: number = 0;
+  // 左上角坐标
+  protected leftTopPoint: IPoint | null = null;
+
+  // 宽度
+  protected width: number = 0;
+
+  // 高度
+  protected height: number = 0;
 
   /**
    * context
@@ -42,22 +49,20 @@ class CircleDrawAction extends DrawAction {
    * @param e
    */
   private draw(e): void {
-    const { context, centerPoint, style } = this;
+    const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
 
-    if (!context || !ctx || !centerPoint) return;
+    if (!context || !ctx) return;
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;;
+    if (!canvasEl) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
-
-    if(!targetPoint) return;
 
     context.clearDraw();
 
@@ -65,7 +70,15 @@ class CircleDrawAction extends DrawAction {
 
     ctx.beginPath();
 
-    this.radius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+    this.leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
+
+    if (!this.leftTopPoint) return;
+
+    this.width = Math.abs(targetPoint.x - (startPoint?.x || 0));
+    this.height = Math.abs(targetPoint.y - (startPoint?.y || 0));
+
+    const widthHalf = this.width / 2;
+    const heightHalf = this.height / 2;
 
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
@@ -75,15 +88,11 @@ class CircleDrawAction extends DrawAction {
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
 
-    ctx.ellipse(
-      centerPoint?.x || 0,
-      centerPoint?.y || 0,
-      this.radius,
-      this.radius,
-      (45 * Math.PI) / 180,
-      0,
-      2 * Math.PI,
-    );
+    // 顺时针方向绘制
+    ctx.moveTo(this.leftTopPoint.x, this.leftTopPoint.y + heightHalf);
+    ctx.lineTo(this.leftTopPoint.x + widthHalf, this.leftTopPoint.y);
+    ctx.lineTo(this.leftTopPoint.x + this.width, this.leftTopPoint.y + heightHalf);
+    ctx.lineTo(this.leftTopPoint.x + widthHalf, this.leftTopPoint.y + this.height);
 
     ctx.stroke();
     ctx.fill();
@@ -100,7 +109,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.centerPoint = MathUtil.clientToCtxPoint({
+    this.startPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -117,10 +126,6 @@ class CircleDrawAction extends DrawAction {
     const { context } = this;
 
     if (!context) return;
-
-    const ctx = context.getCtx();
-
-    if (!ctx) return;
 
     this.draw(e);
   }
@@ -141,28 +146,30 @@ class CircleDrawAction extends DrawAction {
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
-      center: IPoint;
-      radius: number;
+      leftTopPoint: IPoint | null;
+      width: number;
+      height: number;
     },
   ): void {
     ctx.beginPath();
 
-    ctx.ellipse(
-      data.center.x,
-      data.center.y,
-      data.radius,
-      data.radius,
-      (45 * Math.PI) / 180,
-      0,
-      2 * Math.PI,
-    );
+    if(!data || !data.leftTopPoint) return;
+
+    const widthHalf = data.width / 2;
+    const heightHalf = data.height / 2;
+
+    // 顺时针方向绘制
+    ctx.moveTo(data.leftTopPoint.x, data.leftTopPoint.y + heightHalf);
+    ctx.lineTo(data.leftTopPoint.x + widthHalf, data.leftTopPoint.y);
+    ctx.lineTo(data.leftTopPoint.x + data.width, data.leftTopPoint.y + heightHalf);
+    ctx.lineTo(data.leftTopPoint.x + widthHalf, data.leftTopPoint.y + data.height);
   }
 
   /**
    * start
    * @param style
    */
-  start(style: IStyle) {
+  start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
     style && (this.style = style);
@@ -175,7 +182,7 @@ class CircleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
     });
 
@@ -187,7 +194,7 @@ class CircleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
     });
   }
@@ -212,24 +219,29 @@ class CircleDrawAction extends DrawAction {
 
     this.status = ActionStatus.End;
 
-    const data: ICircleData = {
+    const data: IDiamondData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Circle,
+      type: SelectType.Diamond,
       data: {
-        center: this.centerPoint,
-        radius: this.radius,
+        leftTopPoint: this.leftTopPoint,
+        width: this.width,
+        height: this.height,
       },
       style: this.style,
     };
 
     context.addHistoryData(data);
 
-    this.centerPoint = null;
+    this.startPoint = null;
 
-    this.radius = 0;
+    this.leftTopPoint = null;
+
+    this.width = 0;
+
+    this.height = 0;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
       data,
     });
@@ -238,7 +250,7 @@ class CircleDrawAction extends DrawAction {
   /**
    * destroy
    */
-  destroy() {
+  destroy(): void {
     const { context } = this;
 
     if (!context) return;
@@ -257,17 +269,21 @@ class CircleDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
 
-    this.centerPoint = null;
+    this.startPoint = null;
 
-    this.radius = 0;
+    this.leftTopPoint = null;
+
+    this.width = 0;
+
+    this.height = 0;
 
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Circle,
+      selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
     });
   }
 }
 
-export default CircleDrawAction;
+export default DiamondDrawAction;

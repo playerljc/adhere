@@ -10,6 +10,8 @@ import ModifyAction from './modifyAction';
  * @remark:
  */
 class PolygonModifyAction extends ModifyAction {
+  protected startIndex: number = -1;
+
   constructor(data: IPolygonData) {
     super(data);
   }
@@ -24,14 +26,14 @@ class PolygonModifyAction extends ModifyAction {
 
     if (!ctx) return;
 
-    const data: IPoint[] = this?.data?.data || [];
-
-    ctx.beginPath();
-
-    this.setAnchorStyle();
+    const data: IPoint[] = this?.data?.data?.data || [];
 
     for (let i = 0; i < data.length; i++) {
       const point = data[i];
+
+      ctx.beginPath();
+
+      this.setAnchorStyle();
 
       ctx.ellipse(
         point.x,
@@ -42,11 +44,11 @@ class PolygonModifyAction extends ModifyAction {
         0,
         2 * Math.PI,
       );
+
+      ctx.stroke();
+
+      ctx.fill();
     }
-
-    ctx.stroke();
-
-    ctx.fill();
   }
 
   /**
@@ -54,23 +56,36 @@ class PolygonModifyAction extends ModifyAction {
    * @param targetPoint
    * @return IPoint | null
    */
-  protected getPointInAnchor(targetPoint: IPoint): IPoint | null {
+  protected getPointInAnchor(targetPoint: IPoint): { point: IPoint; index: number } | null {
     if (!this.data) return null;
 
-    let result: IPoint | null = null;
+    let point: IPoint | null = null;
+    let index: number = -1;
 
-    for (let i = 0; i < this.data.data.length; i++) {
-      const center = this.data.data[i];
+    const {
+      data: { data },
+    } = this.data;
+
+    for (let i = 0; i < data.length; i++) {
+      const center = data[i];
 
       const radius = this.anchorRadius + this.anchorLineWidth;
 
       if (MathUtil.isPointInCircle(targetPoint, { center, radius })) {
-        result = center;
+        point = center;
+        index = i;
         break;
       }
     }
 
-    return result;
+    if (point && index !== -1) {
+      return {
+        point,
+        index,
+      };
+    }
+
+    return null;
   }
 
   /**
@@ -82,20 +97,16 @@ class PolygonModifyAction extends ModifyAction {
 
     const ctx = context?.getCtx();
 
-    if (!context || !ctx || !this.data || !this.startPoint) return;
+    if (!context || !ctx || !this.data || !this.startPoint || this.startIndex === -1) return;
 
     // canvasHistory需要修改.this.startPoint那个点去找到，替换成targetPoint的值
-    const data = context.getHistoryDataById(this.data.id);
+    const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return;
 
-    const index = data.data.findIndex(
-      (t) => t.x === this?.startPoint?.x && t.y === this?.startPoint?.y,
-    );
+    data.data[this.startIndex] = targetPoint;
 
-    index !== -1 && (data.data[index] = targetPoint);
-
-    context.clear();
+    context.clearDraw();
 
     context.drawHistoryData();
 
