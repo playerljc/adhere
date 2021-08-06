@@ -14,6 +14,8 @@ import StartModifyAction from './modify/startModifyAction';
 
 import { ActionEvents } from './types';
 
+import './index.less';
+
 /**
  * DrawingBoard
  * @class DrawingBoard
@@ -549,7 +551,7 @@ class DrawingBoard extends React.Component {
             </li>
           </ul>
         </div>
-        <div className="auto" ref={this.ref}></div>
+        <div className="auto" style={{ position: 'relative' }} ref={this.ref}></div>
       </div>
     );
   }

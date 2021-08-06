@@ -248,6 +248,8 @@ abstract class ModifyAction extends Emitter implements IModifyAction {
       actionType: ActionType.Modify,
       data: targetPoint,
     });
+
+    canvasEl.style.cursor = 'default';
   }
 
   /**
@@ -279,6 +281,8 @@ abstract class ModifyAction extends Emitter implements IModifyAction {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
     });
+
+    canvasEl.style.cursor = 'default';
   }
 
   /**

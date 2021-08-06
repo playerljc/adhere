@@ -233,8 +233,6 @@ class PolygonDrawAction extends DrawAction {
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
-    style && (this.style = style);
-
     const { context } = this;
 
     if (!context) return;
@@ -242,6 +240,10 @@ class PolygonDrawAction extends DrawAction {
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    super.start(style);
+
+    style && (this.style = style);
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
@@ -263,11 +265,17 @@ class PolygonDrawAction extends DrawAction {
     // 结束
     const { context } = this;
 
-    if (!context) return;
+    if (!context) {
+      super.end();
+      return;
+    }
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      super.end();
+      return;
+    }
 
     canvasEl?.removeEventListener('click', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
@@ -299,6 +307,8 @@ class PolygonDrawAction extends DrawAction {
       actionType: ActionType.Draw,
       data,
     });
+
+    super.end();
   }
 
   /**
@@ -307,11 +317,17 @@ class PolygonDrawAction extends DrawAction {
   destroy(): void {
     const { context } = this;
 
-    if (!context) return;
+    if (!context) {
+      super.destroy();
+      return;
+    }
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      super.destroy();
+      return;
+    }
 
     // 如果是运行状态则删除之前的绘制
     if (this.status === ActionStatus.Running) {
@@ -333,6 +349,8 @@ class PolygonDrawAction extends DrawAction {
       selectType: SelectType.Polygon,
       actionType: ActionType.Draw,
     });
+
+    super.destroy();
   }
 }
 

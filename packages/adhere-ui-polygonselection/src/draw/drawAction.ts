@@ -24,19 +24,49 @@ abstract class DrawAction extends Emitter implements IAction {
   /**
    * destroy
    */
-  abstract destroy(): void;
+  destroy(): void {
+    if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
+
+    const { context } = this;
+
+    const canvasEl = context.getCanvasEl();
+
+    if (!canvasEl) return;
+
+    canvasEl.style.cursor = 'default';
+  }
 
   /**
    * end
    * @param e
    */
-  abstract end(e?: MouseEvent): void;
+  end(e?: MouseEvent): void {
+    if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
+
+    const { context } = this;
+
+    const canvasEl = context.getCanvasEl();
+
+    if (!canvasEl) return;
+
+    canvasEl.style.cursor = 'default';
+  }
 
   /**
    * start
    * @param style
    */
-  abstract start(style?: IStyle): void;
+  start(style?: IStyle): void {
+    if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
+
+    const { context } = this;
+
+    const canvasEl = context.getCanvasEl();
+
+    if (!canvasEl) return;
+
+    canvasEl.style.cursor = `url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjI3OTEzNjM1NDc3IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQzMDgiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTUxMi4wMDIgODg3QzMwNC44OTIgODg3IDEzNyA3MTkuMTA4IDEzNyA1MTIuMDAyIDEzNyAzMDQuODkyIDMwNC44OTIgMTM3IDUxMi4wMDIgMTM3IDcxOS4xMDggMTM3IDg4NyAzMDQuODkyIDg4NyA1MTIuMDAyIDg4NyA3MTkuMTA4IDcxOS4xMDggODg3IDUxMi4wMDIgODg3ek01MTIgNzg3YzE1MS44NzggMCAyNzUtMTIzLjEyMiAyNzUtMjc1UzY2My44NzggMjM3IDUxMiAyMzcgMjM3IDM2MC4xMjIgMjM3IDUxMnMxMjMuMTIyIDI3NSAyNzUgMjc1eiIgZmlsbD0iIzFBQTVGRiIgcC1pZD0iNDMwOSI+PC9wYXRoPjxwYXRoIGQ9Ik01MTIgNTEybS0yMjUgMGEyMjUgMjI1IDAgMSAwIDQ1MCAwIDIyNSAyMjUgMCAxIDAtNDUwIDBaIiBmaWxsPSIjMUFBNUZGIiBwLWlkPSI0MzEwIj48L3BhdGg+PC9zdmc+), auto`;
+  }
 
   /**
    * setContext

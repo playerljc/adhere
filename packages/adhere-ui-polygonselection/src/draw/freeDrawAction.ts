@@ -167,13 +167,15 @@ class FreeDrawAction extends DrawAction {
   start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
-    style && (this.style = style);
-
     const { context } = this;
 
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    super.start(style);
+
+    style && (this.style = style);
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
@@ -200,11 +202,17 @@ class FreeDrawAction extends DrawAction {
   end(e): void {
     const { context } = this;
 
-    if (!context) return;
+    if (!context) {
+      super.end(e);
+      return;
+    }
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      super.end(e);
+      return;
+    }
 
     canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
@@ -234,6 +242,8 @@ class FreeDrawAction extends DrawAction {
       actionType: ActionType.Draw,
       data,
     });
+
+    super.end(e);
   }
 
   /**
@@ -242,11 +252,17 @@ class FreeDrawAction extends DrawAction {
   destroy(): void {
     const { context } = this;
 
-    if (!context) return;
+    if (!context) {
+      super.destroy();
+      return;
+    }
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      super.destroy();
+      return;
+    }
 
     // 如果是运行状态则删除之前的绘制
     if (this.status === ActionStatus.Running) {
@@ -268,6 +284,8 @@ class FreeDrawAction extends DrawAction {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
+
+    super.destroy();
   }
 }
 

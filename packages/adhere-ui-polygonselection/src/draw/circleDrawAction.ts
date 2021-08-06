@@ -165,13 +165,15 @@ class CircleDrawAction extends DrawAction {
   start(style: IStyle) {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
-    style && (this.style = style);
-
     const { context } = this;
 
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
+
+    super.start(style);
+
+    style && (this.style = style);
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
@@ -198,11 +200,17 @@ class CircleDrawAction extends DrawAction {
   end(e) {
     const { context } = this;
 
-    if (!context) return;
+    if (!context) {
+      super.end(e);
+      return;
+    }
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      super.end(e);
+      return;
+    }
 
     canvasEl?.removeEventListener('mousedown', this.onCanvasMouseDown);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
@@ -233,6 +241,8 @@ class CircleDrawAction extends DrawAction {
       actionType: ActionType.Draw,
       data,
     });
+
+    super.end(e);
   }
 
   /**
@@ -241,11 +251,17 @@ class CircleDrawAction extends DrawAction {
   destroy() {
     const { context } = this;
 
-    if (!context) return;
+    if (!context) {
+      super.destroy();
+      return;
+    }
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      super.destroy();
+      return;
+    }
 
     // 如果是运行状态则删除之前的绘制
     if (this.status === ActionStatus.Running) {
@@ -267,6 +283,8 @@ class CircleDrawAction extends DrawAction {
       selectType: SelectType.Circle,
       actionType: ActionType.Draw,
     });
+
+    super.destroy();
   }
 }
 

@@ -43,7 +43,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
   // ActionType
   // @ts-ignore
-  protected typeActionMap: Map<string, IAction> = new Map([
+  protected typeActionMap: Map<SelectType, IAction> = new Map([
     [SelectType.Polygon, PolygonDrawAction],
     [SelectType.Circle, CircleDrawAction],
     [SelectType.Rectangle, RectangleDrawAction],
@@ -75,6 +75,8 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * initCanvas - 初始化Canvas
    */
   private initCanvas(): void {
+    if (!this.el) return;
+
     // 创建一个canvas
     this.canvasEl = document.createElement('canvas');
 
@@ -82,7 +84,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
     this.ctx = this.canvasEl.getContext('2d');
 
-    this.el?.appendChild(this.canvasEl);
+    this.el.appendChild(this.canvasEl);
 
     // 触发canvasMount事件
     this.trigger(PolygonSelectionActions.CanvasMount);
@@ -97,14 +99,15 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * adapterCanvas - 适配canvas
    */
   private adapterCanvas() {
-    const { canvasEl } = this;
+    const { canvasEl, el } = this;
 
-    if (canvasEl) {
-      canvasEl.width = this.el?.offsetWidth || 0;
-      canvasEl.height = this.el?.offsetHeight || 0;
-      this.clearDraw();
-      this.drawHistoryData();
-    }
+    if (!el || !canvasEl) return;
+
+    canvasEl.width = el.offsetWidth || 0;
+    canvasEl.height = el.offsetHeight || 0;
+
+    this.clearDraw();
+    this.drawHistoryData();
   }
 
   /**
