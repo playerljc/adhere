@@ -1,4 +1,4 @@
-import { IPoint, IStyle } from '../types';
+import { IPoint, IFreeData, IStyle } from '../types';
 import DrawAction from './drawAction';
 /**
  * FreeDrawAction
@@ -34,6 +34,13 @@ declare class FreeDrawAction extends DrawAction {
      * @param e
      */
     private onCanvasMouseUp;
+    /**
+     * draw
+     * @description
+     * @param ctx
+     * @param data
+     */
+    static draw(ctx: CanvasRenderingContext2D, data: IFreeData): void;
     /**
      * drawHistoryPath - 绘制历史数据
      * @param ctx

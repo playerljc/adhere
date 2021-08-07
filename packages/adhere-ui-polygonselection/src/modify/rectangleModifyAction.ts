@@ -1,8 +1,10 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import { IPoint, IRectangleData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
+import RectangleDrawAction from '../draw/rectangleDrawAction';
 
 /**
  * RectangleModifyAction
@@ -22,6 +24,17 @@ class RectangleModifyAction extends ModifyAction {
     [5, this.modifyDataByCenterBottom],
     [6, this.modifyDataByLeftBottom],
     [7, this.modifyDataByLeftCenter],
+  ]);
+
+  protected ResizeCursorMapping = new Map<number, string>([
+    [0, 'nwse-resize'],
+    [1, 'ns-resize'],
+    [2, 'nesw-resize'],
+    [3, 'ew-resize'],
+    [4, 'nwse-resize'],
+    [5, 'ns-resize'],
+    [6, 'nesw-resize'],
+    [7, 'ew-resize'],
   ]);
 
   constructor(data: IRectangleData) {
@@ -136,10 +149,28 @@ class RectangleModifyAction extends ModifyAction {
   }
 
   /**
-   * draw
+   * setResizeCursorByIndex
+   * @param index
+   */
+  protected setResizeCursorByIndex(index: number): void {
+    if (!this.context) return;
+
+    const canvasEl = this.context.getCanvasEl();
+
+    const assistCanvasEl = this.context.getAssistCanvasEl();
+
+    if (!canvasEl || !assistCanvasEl) return;
+
+    canvasEl.style.cursor = assistCanvasEl.style.cursor = this.ResizeCursorMapping.get(
+      index,
+    ) as string;
+  }
+
+  /**
+   * drawModify
    * @param targetPoint
    */
-  protected draw(targetPoint: IPoint) {
+  protected drawModify(targetPoint: IPoint) {
     const { context } = this;
 
     const ctx = context?.getCtx();
@@ -159,6 +190,35 @@ class RectangleModifyAction extends ModifyAction {
     const result = handler.call(this, targetPoint);
 
     if (!result) return;
+
+    context.clearDraw();
+
+    context.drawHistoryData();
+
+    this.drawAnchors();
+  }
+
+  /**
+   * drawMove
+   * @param startPoint
+   * @param targetPoint
+   */
+  protected drawMove(startPoint: IPoint, targetPoint: IPoint): void {
+    const { context } = this;
+
+    const ctx = context?.getCtx();
+
+    if (!context || !ctx || !this.data) return;
+
+    const data = context.getHistoryDataById(this.data.data.id);
+
+    if (!data) return;
+
+    const offsetX = targetPoint.x - startPoint.x;
+    const offsetY = targetPoint.y - startPoint.y;
+
+    data.data.leftTopPoint.x += offsetX;
+    data.data.leftTopPoint.y += offsetY;
 
     context.clearDraw();
 
@@ -455,6 +515,64 @@ class RectangleModifyAction extends ModifyAction {
     data.data.height = height;
 
     return true;
+  }
+
+  isCanMove(targetPoint: IPoint): boolean {
+    if (!this.data) return false;
+
+    const { leftTopPoint, width, height } = this?.data?.data?.data;
+
+    const halfWidth = width / 2;
+    const halfHeight = height / 2;
+    const pt = turf.point([targetPoint.x, targetPoint.y]);
+    const poly = turf.polygon([
+      [
+        [leftTopPoint.x, leftTopPoint.y + halfHeight],
+        [leftTopPoint.x + halfWidth, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y + halfHeight],
+        [leftTopPoint.x + halfWidth, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y + halfHeight],
+      ],
+    ]);
+
+    return turf.booleanPointInPolygon(pt, poly);
+  }
+
+  /**
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
+   */
+  // @ts-ignore
+  drawMoveGeometry(): void {
+    if (!this.context || !this.data) return;
+
+    RectangleDrawAction.draw(
+      this.context.getAssistCtx() as CanvasRenderingContext2D,
+      this.data as IRectangleData,
+    );
+  }
+
+  // @ts-ignore
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+
+    const srcData = { ...(this.data.data as IRectangleData) };
+    srcData.data = {
+      ...srcData.data,
+      leftTopPoint: {
+        ...srcData.data.leftTopPoint,
+      },
+    };
+
+    const offsetX = targetPoint.x - startPoint.x;
+    const offsetY = targetPoint.y - startPoint.y;
+
+    if (srcData.data && srcData.data.leftTopPoint) {
+      srcData.data.leftTopPoint.x += offsetX;
+      srcData.data.leftTopPoint.y += offsetY;
+
+      RectangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
+    }
   }
 
   destroy() {

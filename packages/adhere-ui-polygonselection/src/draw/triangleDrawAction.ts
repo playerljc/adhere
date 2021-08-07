@@ -11,6 +11,7 @@ import {
   IStyle,
   SelectType,
   ActionType,
+  IStartData,
 } from '../types';
 import DrawAction from './drawAction';
 import Util from '../util';
@@ -51,7 +52,7 @@ class TriangleDrawAction extends DrawAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if(!canvasEl) return;
+    if (!canvasEl) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
@@ -121,6 +122,39 @@ class TriangleDrawAction extends DrawAction {
    */
   private onCanvasMouseUp(e) {
     this.end(e);
+  }
+
+  /**
+   * draw
+   * @description
+   * @param ctx
+   * @param data
+   */
+  static draw(ctx: CanvasRenderingContext2D, data: ITriangleData) {
+    if (!ctx || !data) return;
+
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+    }
+
+    this.drawHistoryPath(
+      ctx,
+      data.data as {
+        points: IPoint[];
+      },
+    );
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
   }
 
   /**

@@ -1,5 +1,5 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-import { IAction, IActionData, IPolygonSelection, IStyle } from './types';
+import { IAction, IActionData, IPolygonSelection, IStyle, SelectType } from './types';
 /**
  * PolygonSelection
  * @class
@@ -10,8 +10,10 @@ declare class PolygonSelection extends Emitter implements IPolygonSelection {
     protected curAction: IAction | null;
     protected canvasEl: HTMLCanvasElement | null;
     protected ctx: CanvasRenderingContext2D | null;
+    protected assistCanvasEl: HTMLCanvasElement | null;
+    protected assistCtx: CanvasRenderingContext2D | null;
     protected canvasData: IActionData[];
-    protected typeActionMap: Map<string, IAction>;
+    protected typeActionMap: Map<SelectType, IAction>;
     /**
      * constructor
      * @param el - 父元素
@@ -40,6 +42,11 @@ declare class PolygonSelection extends Emitter implements IPolygonSelection {
      * @return HTMLCanvasElement | null
      */
     getCanvasEl(): HTMLCanvasElement | null;
+    /**
+     * getAssistCanvasEl
+     */
+    getAssistCanvasEl(): HTMLCanvasElement | null;
+    getAssistCtx(): CanvasRenderingContext2D | null;
     /**
      * getWidth
      * @return number
@@ -104,6 +111,23 @@ declare class PolygonSelection extends Emitter implements IPolygonSelection {
      * clear
      */
     clearDraw(): void;
+    /**
+     * clearAssistDraw
+     * @description 清除assist的canvas
+     */
+    clearAssistDraw(): void;
+    /**
+     * setFrontCanvas
+     * @description 置顶
+     * @param canvasEl
+     */
+    setFrontCanvas(canvasEl: HTMLCanvasElement): void;
+    /**
+     * setBackCanvas
+     * @description 置底
+     * @param canvasEl
+     */
+    setBackCanvas(canvasEl: HTMLCanvasElement): void;
     /**
      * destroy - 销毁
      * @return void

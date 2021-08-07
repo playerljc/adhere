@@ -139,6 +139,37 @@ class DiamondDrawAction extends DrawAction {
   }
 
   /**
+   * draw
+   * @description
+   * @param ctx
+   * @param data
+   */
+  static draw(ctx: CanvasRenderingContext2D, data: IDiamondData) {
+    if (!ctx || !data) return;
+
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+    }
+
+    this.drawHistoryPath(
+      ctx,
+      data.data as { leftTopPoint: IPoint | null; width: number; height: number },
+    );
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+  }
+
+  /**
    * drawHistoryPath - 绘制历史数据
    * @param ctx
    * @param data
@@ -153,7 +184,7 @@ class DiamondDrawAction extends DrawAction {
   ): void {
     ctx.beginPath();
 
-    if(!data || !data.leftTopPoint) return;
+    if (!data || !data.leftTopPoint) return;
 
     const widthHalf = data.width / 2;
     const heightHalf = data.height / 2;

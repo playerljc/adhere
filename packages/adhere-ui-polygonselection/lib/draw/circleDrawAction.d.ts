@@ -1,5 +1,5 @@
 import DrawAction from './drawAction';
-import { IPoint, IStyle } from '../types';
+import { IPoint, ICircleData, IStyle } from '../types';
 /**
  * CircleDrawAction
  * @class
@@ -33,6 +33,13 @@ declare class CircleDrawAction extends DrawAction {
      * @param e
      */
     private onCanvasMouseUp;
+    /**
+     * draw
+     * @description 绘制
+     * @param ctx
+     * @param data
+     */
+    static draw(ctx: CanvasRenderingContext2D, data: ICircleData): void;
     /**
      * drawHistoryPath - 绘制历史数据
      * @param ctx

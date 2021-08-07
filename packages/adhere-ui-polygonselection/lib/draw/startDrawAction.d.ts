@@ -44,6 +44,13 @@ declare class StartDrawAction extends DrawAction {
      */
     private onCanvasMouseUp;
     /**
+     * draw
+     * @description
+     * @param ctx
+     * @param data
+     */
+    static draw(ctx: CanvasRenderingContext2D, data: IStartData): void;
+    /**
      * drawHistoryPath - 绘制历史数据
      * @param ctx
      * @param data

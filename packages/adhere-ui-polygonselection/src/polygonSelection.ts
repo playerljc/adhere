@@ -38,6 +38,12 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   // 当前的ctx对象
   protected ctx: CanvasRenderingContext2D | null = null;
 
+  // 辅助的canvas元素
+  protected assistCanvasEl: HTMLCanvasElement | null = null;
+
+  // 辅助的ctx对象
+  protected assistCtx: CanvasRenderingContext2D | null = null;
+
   // canvas上的所有数据
   protected canvasData: IActionData[] = [];
 
@@ -69,6 +75,9 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
     // 初始化canvas
     this.initCanvas();
+
+    // @ts-ignore
+    // this.assistCtx.fillRect(0,0,100,100);
   }
 
   /**
@@ -79,12 +88,16 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
     // 创建一个canvas
     this.canvasEl = document.createElement('canvas');
-
     this.canvasEl.className = selectorPrefix;
-
     this.ctx = this.canvasEl.getContext('2d');
 
+    // 创建一个assistCanvas
+    this.assistCanvasEl = document.createElement('canvas');
+    this.assistCanvasEl.className = `${selectorPrefix}-assist`;
+    this.assistCtx = this.assistCanvasEl.getContext('2d');
+
     this.el.appendChild(this.canvasEl);
+    this.el.appendChild(this.assistCanvasEl);
 
     // 触发canvasMount事件
     this.trigger(PolygonSelectionActions.CanvasMount);
@@ -99,14 +112,18 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * adapterCanvas - 适配canvas
    */
   private adapterCanvas() {
-    const { canvasEl, el } = this;
+    const { canvasEl, assistCanvasEl, el } = this;
 
-    if (!el || !canvasEl) return;
+    if (!el || !canvasEl || !assistCanvasEl) return;
 
     canvasEl.width = el.offsetWidth || 0;
     canvasEl.height = el.offsetHeight || 0;
 
+    assistCanvasEl.width = el.offsetWidth || 0;
+    assistCanvasEl.height = el.offsetHeight || 0;
+
     this.clearDraw();
+    this.clearAssistDraw();
     this.drawHistoryData();
   }
 
@@ -131,6 +148,17 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    */
   getCanvasEl(): HTMLCanvasElement | null {
     return this.canvasEl;
+  }
+
+  /**
+   * getAssistCanvasEl
+   */
+  getAssistCanvasEl() : HTMLCanvasElement | null {
+    return this.assistCanvasEl;
+  }
+
+  getAssistCtx(): CanvasRenderingContext2D | null {
+    return this.assistCtx;
   }
 
   /**
@@ -278,6 +306,35 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     if (!ctx) return;
 
     ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
+  }
+
+  /**
+   * clearAssistDraw
+   * @description 清除assist的canvas
+   */
+  clearAssistDraw(): void {
+    const { assistCtx } = this;
+
+    if (!assistCtx) return;
+
+    assistCtx.clearRect(0, 0, this.getWidth(), this.getHeight());
+  }
+
+  /**
+   * setFrontCanvas
+   * @description 置顶
+   * @param canvasEl
+   */
+  setFrontCanvas(canvasEl: HTMLCanvasElement) {
+    canvasEl.style.zIndex = '9999';  }
+
+  /**
+   * setBackCanvas
+   * @description 置底
+   * @param canvasEl
+   */
+  setBackCanvas(canvasEl: HTMLCanvasElement) {
+    canvasEl.style.zIndex = '1';
   }
 
   /**

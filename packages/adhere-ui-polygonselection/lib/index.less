@@ -1,7 +1,16 @@
-.adhere-ui-polygonselection {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+:global {
+  .adhere-ui-polygonselection,
+  .adhere-ui-polygonselection-assist {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .adhere-ui-polygonselection {
+    z-index: 2;
+  }
+
+  .adhere-ui-polygonselection-assist {
+    z-index: 1;
+  }
 }

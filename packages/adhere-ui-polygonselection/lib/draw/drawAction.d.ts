@@ -12,17 +12,17 @@ declare abstract class DrawAction extends Emitter implements IAction {
     /**
      * destroy
      */
-    abstract destroy(): void;
+    destroy(): void;
     /**
      * end
      * @param e
      */
-    abstract end(e?: MouseEvent): void;
+    end(e?: MouseEvent): void;
     /**
      * start
      * @param style
      */
-    abstract start(style?: IStyle): void;
+    start(style?: IStyle): void;
     /**
      * setContext
      * @param context

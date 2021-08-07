@@ -1,4 +1,4 @@
-import { IPoint, IStyle } from '../types';
+import { IPolygonData, IPoint, IStyle } from '../types';
 import DrawAction from './drawAction';
 /**
  * PolygonAction
@@ -41,6 +41,13 @@ declare class PolygonDrawAction extends DrawAction {
      * @param eP
      */
     private drawLine;
+    /**
+     * draw
+     * @description
+     * @param ctx
+     * @param data
+     */
+    static draw(ctx: CanvasRenderingContext2D, data: IPolygonData): void;
     /**
      * drawHistoryPath - 绘制历史数据
      * @param ctx

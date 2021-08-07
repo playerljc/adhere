@@ -1,4 +1,4 @@
-import { IPoint, IStyle } from '../types';
+import { IPoint, IRectangleData, IStyle } from '../types';
 import DrawAction from './drawAction';
 /**
  * RectangleDrawAction
@@ -35,6 +35,13 @@ declare class RectangleDrawAction extends DrawAction {
      * @param e
      */
     private onCanvasMouseUp;
+    /**
+     * draw
+     * @description
+     * @param ctx
+     * @param data
+     */
+    static draw(ctx: CanvasRenderingContext2D, data: IRectangleData): void;
     /**
      * drawHistoryPath - 绘制历史数据
      * @param ctx

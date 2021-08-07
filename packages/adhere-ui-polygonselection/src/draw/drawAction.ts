@@ -31,9 +31,11 @@ abstract class DrawAction extends Emitter implements IAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    const assistCanvasEl = context.getAssistCanvasEl();
 
-    canvasEl.style.cursor = 'default';
+    if (!canvasEl || !assistCanvasEl) return;
+
+    canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
   }
 
   /**
@@ -47,9 +49,11 @@ abstract class DrawAction extends Emitter implements IAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;
+    const assistCanvasEl = context.getAssistCanvasEl();
 
-    canvasEl.style.cursor = 'default';
+    if (!canvasEl || !assistCanvasEl) return;
+
+    canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
   }
 
   /**

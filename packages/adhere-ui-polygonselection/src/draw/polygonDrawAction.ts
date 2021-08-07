@@ -11,6 +11,7 @@ import {
   IStyle,
   SelectType,
   ActionType,
+  IFreeData,
 } from '../types';
 import DrawAction from './drawAction';
 
@@ -205,6 +206,34 @@ class PolygonDrawAction extends DrawAction {
     ctx.setLineDash(style.lineDash);
 
     ctx.stroke();
+  }
+
+  /**
+   * draw
+   * @description
+   * @param ctx
+   * @param data
+   */
+  static draw(ctx: CanvasRenderingContext2D, data: IPolygonData) {
+    if (!ctx || !data) return;
+
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+    }
+
+    this.drawHistoryPath(ctx, data.data as IPoint[]);
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
   }
 
   /**

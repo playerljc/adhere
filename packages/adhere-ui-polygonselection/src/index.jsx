@@ -10,6 +10,11 @@ import DiamondDrawAction from './draw/diamondDrawAction';
 import StartDrawAction from './draw/startDrawAction';
 import FreeDrawAction from './draw/freeDrawAction';
 
+import CircleModifyAtion from './modify/circleModifyAction';
+import DiamondModifyAction from './modify/diamondModifyAction';
+import PolygonModifyAction from './modify/polygonModifyAction';
+import RectangleModifyAction from './modify/rectangleModifyAction';
+import TriangleModifyAction from './modify/triangleModifyAction';
 import StartModifyAction from './modify/startModifyAction';
 
 import { ActionEvents } from './types';
@@ -140,30 +145,6 @@ class DrawingBoard extends React.Component {
             <li>
               <button
                 onClick={() => {
-                  // 多边形数据据
-                  // const d = {
-                  //   selectType: 'Polygon',
-                  //   actionType: 'Draw',
-                  //   data: {
-                  //     id: 'fd4ef30f-8add-4cc1-8f36-d861e77b5354',
-                  //     type: 'Polygon',
-                  //     data: [
-                  //       { x: 148.34375, y: 33 },
-                  //       { x: 120.34375, y: 198 },
-                  //       { x: 360.34375, y: 181 },
-                  //     ],
-                  //     style: {
-                  //       fillStyle: 'red',
-                  //       strokeStyle: '#000',
-                  //       lineWidth: 2,
-                  //       lineCap: 'round',
-                  //       lineJoin: 'round',
-                  //       lineDash: [],
-                  //       lineDashOffset: -1,
-                  //     },
-                  //   },
-                  // };
-
                   // 圆形数据
                   // const d = {
                   //   selectType: 'Circle',
@@ -184,6 +165,30 @@ class DrawingBoard extends React.Component {
                   //   },
                   // };
 
+                  // 五角星数据
+                  // const d = {
+                  //   selectType: 'Start',
+                  //   actionType: 'Draw',
+                  //   data: {
+                  //     id: '113e1bf4-3d94-48fb-9ee7-f1353c9e7f2f',
+                  //     type: 'Start',
+                  //     data: {
+                  //       center: { x: 269.34375, y: 138 },
+                  //       outRadius: 119.63277142990545,
+                  //       innerRadius: 59.81638571495272,
+                  //     },
+                  //     style: {
+                  //       fillStyle: 'red',
+                  //       strokeStyle: '#000',
+                  //       lineWidth: 2,
+                  //       lineCap: 'round',
+                  //       lineJoin: 'round',
+                  //       lineDash: [],
+                  //       lineDashOffset: -1,
+                  //     },
+                  //   },
+                  // };
+
                   // 矩形数据
                   // const d = {
                   //   selectType: 'Rectangle',
@@ -192,6 +197,26 @@ class DrawingBoard extends React.Component {
                   //     id: 'b45017c9-1684-4251-b9aa-41392a40ab90',
                   //     type: 'Rectangle',
                   //     data: { leftTopPoint: { x: 102.34375, y: 92 }, width: 351, height: 168 },
+                  //     style: {
+                  //       fillStyle: 'red',
+                  //       strokeStyle: '#000',
+                  //       lineWidth: 2,
+                  //       lineCap: 'round',
+                  //       lineJoin: 'round',
+                  //       lineDash: [],
+                  //       lineDashOffset: -1,
+                  //     },
+                  //   },
+                  // };
+
+                  // 菱形数据
+                  // const d = {
+                  //   selectType: 'Diamond',
+                  //   actionType: 'Draw',
+                  //   data: {
+                  //     id: 'eda99742-7eb6-49ee-bb4b-fa979a71a4d4',
+                  //     type: 'Diamond',
+                  //     data: { leftTopPoint: { x: 304.34375, y: 188 }, width: 331, height: 276 },
                   //     style: {
                   //       fillStyle: 'red',
                   //       strokeStyle: '#000',
@@ -233,38 +258,18 @@ class DrawingBoard extends React.Component {
                   //   },
                   // };
 
-                  // 菱形数据
-                  // const d = {
-                  //   selectType: 'Diamond',
-                  //   actionType: 'Draw',
-                  //   data: {
-                  //     id: 'eda99742-7eb6-49ee-bb4b-fa979a71a4d4',
-                  //     type: 'Diamond',
-                  //     data: { leftTopPoint: { x: 304.34375, y: 188 }, width: 331, height: 276 },
-                  //     style: {
-                  //       fillStyle: 'red',
-                  //       strokeStyle: '#000',
-                  //       lineWidth: 2,
-                  //       lineCap: 'round',
-                  //       lineJoin: 'round',
-                  //       lineDash: [],
-                  //       lineDashOffset: -1,
-                  //     },
-                  //   },
-                  // };
-
-                  // 五角星数据
+                  // 多边形数据据
                   const d = {
-                    selectType: 'Start',
+                    selectType: 'Polygon',
                     actionType: 'Draw',
                     data: {
-                      id: '113e1bf4-3d94-48fb-9ee7-f1353c9e7f2f',
-                      type: 'Start',
-                      data: {
-                        center: { x: 269.34375, y: 138 },
-                        outRadius: 119.63277142990545,
-                        innerRadius: 59.81638571495272,
-                      },
+                      id: 'fd4ef30f-8add-4cc1-8f36-d861e77b5354',
+                      type: 'Polygon',
+                      data: [
+                        { x: 148.34375, y: 33 },
+                        { x: 120.34375, y: 198 },
+                        { x: 360.34375, y: 181 },
+                      ],
                       style: {
                         fillStyle: 'red',
                         strokeStyle: '#000',
@@ -281,7 +286,7 @@ class DrawingBoard extends React.Component {
                   this.polygonSelection.addHistoryData(d.data);
                   this.polygonSelection.drawHistoryData();
 
-                  const action = new StartModifyAction(d);
+                  const action = new PolygonModifyAction(d);
                   action.on(ActionEvents.End, () => {
                     action.start();
                   });

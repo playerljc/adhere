@@ -8,6 +8,7 @@ import {
   ActionStatus,
   ActionType,
   IPoint,
+  IPolygonData,
   IRectangleData,
   IStyle,
   SelectType,
@@ -57,7 +58,7 @@ class RectangleDrawAction extends DrawAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if(!canvasEl) return;
+    if (!canvasEl) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
@@ -126,6 +127,37 @@ class RectangleDrawAction extends DrawAction {
    */
   private onCanvasMouseUp(e) {
     this.end(e);
+  }
+
+  /**
+   * draw
+   * @description
+   * @param ctx
+   * @param data
+   */
+  static draw(ctx: CanvasRenderingContext2D, data: IRectangleData) {
+    if (!ctx || !data) return;
+
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+    }
+
+    this.drawHistoryPath(
+      ctx,
+      data.data as { leftTopPoint: IPoint | null; width: number; height: number },
+    );
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
   }
 
   /**

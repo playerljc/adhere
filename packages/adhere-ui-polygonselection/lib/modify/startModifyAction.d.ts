@@ -7,6 +7,7 @@ import ModifyAction from './modifyAction';
  * @remark:
  */
 declare class StartModifyAction extends ModifyAction {
+    protected ResizeCursorMapping: Map<number, string>;
     constructor(data: IStartData);
     /**
      * drawAnchors
@@ -23,13 +24,34 @@ declare class StartModifyAction extends ModifyAction {
         index: number;
     } | null;
     /**
-     * draw
+     * setResizeCursorByIndex
+     * @param index
+     */
+    protected setResizeCursorByIndex(index: number): void;
+    /**
+     * drawModify
      * @param targetPoint
      */
-    protected draw(targetPoint: IPoint): void;
+    protected drawModify(targetPoint: IPoint): void;
+    /**
+     * drawMove
+     * @param startPoint
+     * @param targetPoint
+     */
+    protected drawMove(startPoint: IPoint, targetPoint: IPoint): void;
     /**
      * getSelectType
      */
     protected getSelectType(): SelectType;
+    /**
+     * isCanMove
+     * @param targetPoint
+     */
+    isCanMove(targetPoint: IPoint): boolean;
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     */
+    drawMoveGeometry(): void;
 }
 export default StartModifyAction;

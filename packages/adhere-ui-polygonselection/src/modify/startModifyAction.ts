@@ -1,8 +1,10 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import { IStartData, IPoint, SelectType } from '../types';
 import ModifyAction from './modifyAction';
+import StartDrawAction from '../draw/startDrawAction';
 
 /**
  * StartModifyAction
@@ -11,6 +13,13 @@ import ModifyAction from './modifyAction';
  * @remark:
  */
 class StartModifyAction extends ModifyAction {
+  protected ResizeCursorMapping = new Map<number, string>([
+    [0, 'ns-resize'],
+    [1, 'ew-resize'],
+    [2, 'ns-resize'],
+    [3, 'ew-resize'],
+  ]);
+
   constructor(data: IStartData) {
     super(data);
   }
@@ -133,10 +142,28 @@ class StartModifyAction extends ModifyAction {
   }
 
   /**
-   * draw
+   * setResizeCursorByIndex
+   * @param index
+   */
+  protected setResizeCursorByIndex(index: number): void {
+    if (!this.context) return;
+
+    const canvasEl = this.context.getCanvasEl();
+
+    const assistCanvasEl = this.context.getAssistCanvasEl();
+
+    if (!canvasEl || !assistCanvasEl) return;
+
+    const cursor = this.ResizeCursorMapping.get(index) as string;
+
+    canvasEl.style.cursor = assistCanvasEl.style.cursor = cursor;
+  }
+
+  /**
+   * drawModify
    * @param targetPoint
    */
-  protected draw(targetPoint: IPoint) {
+  protected drawModify(targetPoint: IPoint) {
     const { context } = this;
 
     const ctx = context?.getCtx();
@@ -163,10 +190,126 @@ class StartModifyAction extends ModifyAction {
   }
 
   /**
+   * drawMove
+   * @param startPoint
+   * @param targetPoint
+   */
+  protected drawMove(startPoint: IPoint, targetPoint: IPoint): void {
+    const { context } = this;
+
+    const ctx = context?.getCtx();
+
+    if (!context || !ctx || !this.data) return;
+
+    const data = context.getHistoryDataById(this.data.data.id);
+
+    if (!data) return;
+
+    const offsetX = targetPoint.x - startPoint.x;
+    const offsetY = targetPoint.y - startPoint.y;
+
+    data.data.center.x += offsetX;
+    data.data.center.y += offsetY;
+
+    context.clearDraw();
+
+    context.drawHistoryData();
+
+    this.drawAnchors();
+  }
+
+  /**
    * getSelectType
    */
   protected getSelectType(): SelectType {
     return SelectType.Start;
+  }
+
+  /**
+   * isCanMove
+   * @param targetPoint
+   */
+  isCanMove(targetPoint: IPoint): boolean {
+    if (!this.data) return false;
+
+    const {
+      // 圆的中心点
+      center,
+      // 外半径
+      outRadius,
+      // 内半径(外半径的一半)
+      innerRadius,
+    } = this?.data?.data?.data;
+
+    const pt = turf.point([targetPoint.x, targetPoint.y]);
+
+    const startCount = 5;
+    const spend = 360 / startCount;
+    const min = 90 - spend;
+    const max = spend - min;
+
+    const points: IPoint[] = [];
+
+    for (let i = 0; i < startCount; i++) {
+      points.push({
+        x: Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x,
+        y: -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y,
+      });
+
+      points.push({
+        x: Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x,
+        y: -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y,
+      });
+    }
+
+    const polygon = points.map((point) => [point.x, point.y]);
+    polygon.push(polygon[0]);
+    const poly = turf.polygon([polygon]);
+
+    return turf.booleanPointInPolygon(pt, poly);
+  }
+
+  /**
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
+   */
+  // @ts-ignore
+  drawMoveGeometry(): void {
+    if (!this.context || !this.data) return;
+
+    StartDrawAction.draw(
+      this.context.getAssistCtx() as CanvasRenderingContext2D,
+      this.data as IStartData,
+    );
+  }
+
+  /**
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
+   * @param startPoint
+   * @param targetPoint
+   */
+  // @ts-ignore
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+
+    const srcData = { ...(this.data.data as IStartData) };
+    srcData.data = {
+      ...srcData.data,
+      center: {
+        ...srcData.data.center,
+      },
+    };
+
+    const offsetX = targetPoint.x - startPoint.x;
+    const offsetY = targetPoint.y - startPoint.y;
+
+    if (srcData.data && srcData.data.center) {
+      srcData.data.center.x += offsetX;
+      srcData.data.center.y += offsetY;
+
+      StartDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
+    }
   }
 }
 

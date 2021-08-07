@@ -1,4 +1,4 @@
-import { IPoint, IStyle } from '../types';
+import { IPoint, ITriangleData, IStyle } from '../types';
 import DrawAction from './drawAction';
 /**
  * TriangleDrawAction
@@ -33,6 +33,13 @@ declare class TriangleDrawAction extends DrawAction {
      * @param e
      */
     private onCanvasMouseUp;
+    /**
+     * draw
+     * @description
+     * @param ctx
+     * @param data
+     */
+    static draw(ctx: CanvasRenderingContext2D, data: ITriangleData): void;
     /**
      * drawHistoryPath - 绘制历史数据
      * @param ctx

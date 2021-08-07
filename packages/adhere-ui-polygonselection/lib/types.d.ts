@@ -49,7 +49,7 @@ export interface IPolygonData extends IActionData {
 export interface ICircleData extends IActionData {
     type: SelectType.Circle;
     data: {
-        center: IPoint | null;
+        center: IPoint;
         radius: number;
     };
 }
@@ -59,7 +59,7 @@ export interface ICircleData extends IActionData {
 export interface IRectangleData extends IActionData {
     type: SelectType.Rectangle;
     data: {
-        leftTopPoint: IPoint | null;
+        leftTopPoint: IPoint;
         width: number;
         height: number;
     };
@@ -79,7 +79,7 @@ export interface ITriangleData extends IActionData {
 export interface IDiamondData extends IActionData {
     type: SelectType.Diamond;
     data: {
-        leftTopPoint: IPoint | null;
+        leftTopPoint: IPoint;
         width: number;
         height: number;
     };
@@ -110,6 +110,51 @@ export interface IStartData extends IActionData {
 export interface IModifyAction extends IAction {
     start: () => void;
 }
+interface IDrawMoveGeometry {
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动当中的几何图形
+     */
+    (): void;
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动当中的几何图形
+     * @param startPoint
+     * @param targetPoint
+     */
+    (startPoint: IPoint, targetPoint: IPoint): void;
+}
+/**
+ * IModifyAction
+ * @description - 移动的接口
+ */
+export interface IMoveAction {
+    moveStartPoint: IPoint | null;
+    canMove: boolean;
+    isMoved: boolean;
+    /**
+     * isCanMove
+     * @description 是否可以移动
+     * @param targetPoint
+     */
+    isCanMove: (targetPoint: IPoint) => boolean;
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动当中的几何图形
+     */
+    drawMoveGeometry: IDrawMoveGeometry;
+    /**
+     * initMoveEvents
+     */
+    initMoveEvents: () => void;
+    /**
+     * clearMoveEvents
+     */
+    clearMoveEvents: () => void;
+    onMoveMousedown: (e?: MouseEvent) => void;
+    onMoveMousemove: (e?: MouseEvent) => void;
+    onMoveMouseup: (e?: MouseEvent) => void;
+}
 /**
  * PolygonSelectionActions - PolygonSelectionActions的事件类型
  */
@@ -125,6 +170,8 @@ export interface IPolygonSelection {
     getHeight: () => number;
     getCtx: () => CanvasRenderingContext2D | null;
     getCanvasEl: () => HTMLCanvasElement | null;
+    getAssistCtx: () => CanvasRenderingContext2D | null;
+    getAssistCanvasEl: () => HTMLCanvasElement | null;
     addHistoryData: (data: IActionData) => void;
     removeHistoryDataById: (actionDataId: string) => IActionData[];
     getHistoryDataById: (id: string) => IActionData | null | undefined;
@@ -132,10 +179,13 @@ export interface IPolygonSelection {
     getHistoryData: () => IActionData[];
     setHistoryData: (data: IActionData[]) => void;
     changeAction: (action: IAction) => void;
+    setFrontCanvas: (canvasEl: HTMLCanvasElement) => void;
+    setBackCanvas: (canvasEl: HTMLCanvasElement) => void;
     start: (style: IStyle) => void;
     end: () => void;
     destroy: () => void;
     clearDraw: () => void;
+    clearAssistDraw: () => void;
 }
 /**
  * IPoint
@@ -173,5 +223,7 @@ export declare enum SelectType {
  */
 export declare enum ActionType {
     Draw = "Draw",
-    Modify = "Modify"
+    Modify = "Modify",
+    Move = "Move"
 }
+export {};

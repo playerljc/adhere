@@ -11,6 +11,7 @@ import {
   IStyle,
   SelectType,
   ActionType,
+  IDiamondData,
 } from '../types';
 import DrawAction from './drawAction';
 
@@ -132,6 +133,34 @@ class FreeDrawAction extends DrawAction {
    */
   private onCanvasMouseUp(e) {
     this.end(e);
+  }
+
+  /**
+   * draw
+   * @description
+   * @param ctx
+   * @param data
+   */
+  static draw(ctx: CanvasRenderingContext2D, data: IFreeData) {
+    if (!ctx || !data) return;
+
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+    }
+
+    this.drawHistoryPath(ctx, data.data as { points: IPoint[] });
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
   }
 
   /**

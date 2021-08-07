@@ -1,8 +1,10 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import { IPoint, ITriangleData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
+import TriangleDrawAction from '../draw/triangleDrawAction';
 
 /**
  * TriangleModifyAction
@@ -22,6 +24,17 @@ class TriangleModifyAction extends ModifyAction {
     [5, this.modifyDataByCenterBottom],
     [6, this.modifyDataByLeftBottom],
     [7, this.modifyDataByLeftCenter],
+  ]);
+
+  protected ResizeCursorMapping = new Map<number, string>([
+    [0, 'nwse-resize'],
+    [1, 'ns-resize'],
+    [2, 'nesw-resize'],
+    [3, 'ew-resize'],
+    [4, 'nwse-resize'],
+    [5, 'ns-resize'],
+    [6, 'nesw-resize'],
+    [7, 'ew-resize'],
   ]);
 
   constructor(data: ITriangleData) {
@@ -109,21 +122,21 @@ class TriangleModifyAction extends ModifyAction {
 
       ctx.stroke();
       ctx.fill();
-
-      // 矩形绘制
-      ctx.beginPath();
-
-      this.setAnchorStyle();
-
-      ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
-      ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
-      ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
-      ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
-      ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
-
-      ctx.stroke();
-      ctx.fill();
     }
+
+    // 矩形绘制
+    ctx.beginPath();
+
+    this.setAnchorStyle();
+
+    ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
+    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
+    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
+    ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
+    ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -160,10 +173,28 @@ class TriangleModifyAction extends ModifyAction {
   }
 
   /**
-   * draw
+   * setResizeCursorByIndex
+   * @param index
+   */
+  protected setResizeCursorByIndex(index: number): void {
+    if (!this.context) return;
+
+    const canvasEl = this.context.getCanvasEl();
+
+    const assistCanvasEl = this.context.getAssistCanvasEl();
+
+    if (!canvasEl || !assistCanvasEl) return;
+
+    canvasEl.style.cursor = assistCanvasEl.style.cursor = this.ResizeCursorMapping.get(
+      index,
+    ) as string;
+  }
+
+  /**
+   * drawModify
    * @param targetPoint
    */
-  protected draw(targetPoint: IPoint) {
+  protected drawModify(targetPoint: IPoint) {
     const { context } = this;
 
     const ctx = context?.getCtx();
@@ -183,6 +214,37 @@ class TriangleModifyAction extends ModifyAction {
     const result = handler.call(this, targetPoint);
 
     if (!result) return;
+
+    context.clearDraw();
+
+    context.drawHistoryData();
+
+    this.drawAnchors();
+  }
+
+  /**
+   * drawMove
+   * @param startPoint
+   * @param targetPoint
+   */
+  protected drawMove(startPoint: IPoint, targetPoint: IPoint): void {
+    const { context } = this;
+
+    const ctx = context?.getCtx();
+
+    if (!context || !ctx || !this.data) return;
+
+    const data = context.getHistoryDataById(this.data.data.id);
+
+    if (!data) return;
+
+    const offsetX = targetPoint.x - startPoint.x;
+    const offsetY = targetPoint.y - startPoint.y;
+
+    data.data.points.forEach((point: IPoint) => {
+      point.x += offsetX;
+      point.y += offsetY;
+    });
 
     context.clearDraw();
 
@@ -625,6 +687,56 @@ class TriangleModifyAction extends ModifyAction {
     ];
 
     return true;
+  }
+
+  isCanMove(targetPoint: IPoint): boolean {
+    if (!this.data) return false;
+
+    const points = [...this?.data?.data?.data?.points || []];
+    points.push(points[0]);
+
+
+    const pt = turf.point([targetPoint.x, targetPoint.y]);
+    const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
+
+    return turf.booleanPointInPolygon(pt, poly);
+  }
+
+  /**
+   * drawMoveGeometry
+   * @description 绘制移动时的几何图形
+   */
+  // @ts-ignore
+  drawMoveGeometry(): void {
+    if (!this.context || !this.data) return;
+
+    TriangleDrawAction.draw(
+      this.context.getAssistCtx() as CanvasRenderingContext2D,
+      this.data as ITriangleData,
+    );
+  }
+
+  // @ts-ignore
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+
+    const srcData = { ...(this.data.data as ITriangleData) };
+    srcData.data = {
+      ...srcData.data,
+      points: srcData.data.points.map((point) => ({ ...point })),
+    };
+
+    const offsetX = targetPoint.x - startPoint.x;
+    const offsetY = targetPoint.y - startPoint.y;
+
+    if (srcData.data && srcData.data.points && srcData.data.points.length) {
+      srcData.data.points.forEach((point: IPoint) => {
+        point.x += offsetX;
+        point.y += offsetY;
+      });
+
+      TriangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
+    }
   }
 
   destroy() {

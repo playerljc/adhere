@@ -9,6 +9,7 @@ import ModifyAction from './modifyAction';
 declare class RectangleModifyAction extends ModifyAction {
     private rectangleAnchorPoints;
     private indexToModifyHandlerMapping;
+    protected ResizeCursorMapping: Map<number, string>;
     constructor(data: IRectangleData);
     /**
      * drawAnchors
@@ -25,10 +26,21 @@ declare class RectangleModifyAction extends ModifyAction {
         index: number;
     } | null;
     /**
-     * draw
+     * setResizeCursorByIndex
+     * @param index
+     */
+    protected setResizeCursorByIndex(index: number): void;
+    /**
+     * drawModify
      * @param targetPoint
      */
-    protected draw(targetPoint: IPoint): void;
+    protected drawModify(targetPoint: IPoint): void;
+    /**
+     * drawMove
+     * @param startPoint
+     * @param targetPoint
+     */
+    protected drawMove(startPoint: IPoint, targetPoint: IPoint): void;
     /**
      * getSelectType
      */
@@ -50,6 +62,12 @@ declare class RectangleModifyAction extends ModifyAction {
     protected modifyDataByCenterBottom(targetPoint: IPoint): boolean;
     protected modifyDataByLeftBottom(targetPoint: IPoint): boolean;
     protected modifyDataByLeftCenter(targetPoint: IPoint): boolean;
+    isCanMove(targetPoint: IPoint): boolean;
+    /**
+     * drawMoveGeometry
+     * @description 绘制移动时的几何图形
+     */
+    drawMoveGeometry(): void;
     destroy(): void;
 }
 export default RectangleModifyAction;

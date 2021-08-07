@@ -50,14 +50,14 @@ class CircleDrawAction extends DrawAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl) return;;
+    if (!canvasEl) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    if(!targetPoint) return;
+    if (!targetPoint) return;
 
     context.clearDraw();
 
@@ -131,6 +131,34 @@ class CircleDrawAction extends DrawAction {
    */
   private onCanvasMouseUp(e) {
     this.end(e);
+  }
+
+  /**
+   * draw
+   * @description 绘制
+   * @param ctx
+   * @param data
+   */
+  static draw(ctx: CanvasRenderingContext2D, data: ICircleData) {
+    if (!ctx || !data) return;
+
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+    }
+
+    this.drawHistoryPath(ctx, data.data as { center: IPoint; radius: number });
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
   }
 
   /**
