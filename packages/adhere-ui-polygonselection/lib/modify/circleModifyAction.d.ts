@@ -1,5 +1,5 @@
 import { ICircleData, IPoint, SelectType } from '../types';
-import ModifyAction from './modifyAction';
+import ModifyAction from './ModifyAction';
 /**
  * CircleModifyAction
  * @class CircleModifyAction

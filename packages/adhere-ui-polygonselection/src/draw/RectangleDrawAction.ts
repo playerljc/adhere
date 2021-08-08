@@ -9,27 +9,31 @@ import {
   ActionStatus,
   ActionType,
   IPoint,
-  IStartData,
+  IRectangleData,
   IStyle,
   SelectType,
 } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
+import Util from '../util';
 
 /**
- * StartDrawAction
+ * RectangleDrawAction
  * @class
- * @classdesc - 五角星选取
- * @remark: - 一个start - end的周期中只能绘制一个五角星
+ * @classdesc - 矩形选取
+ * @remark: - 一个start - end的周期中只能绘制一个矩形
  */
-class StartDrawAction extends DrawAction {
-  // 中心点
-  protected centerPoint: IPoint | null = null;
+class RectangleDrawAction extends DrawAction {
+  // startPoint
+  protected startPoint: IPoint | null = null;
 
-  // 外圆半径
-  protected outRadius: number = 0;
+  // 左上角坐标
+  protected leftTopPoint: IPoint | null = null;
 
-  // 内圆半径
-  protected innerRadius: number = 0;
+  // 宽度
+  protected width: number = 0;
+
+  // 高度
+  protected height: number = 0;
 
   protected isMove = false;
 
@@ -49,87 +53,21 @@ class StartDrawAction extends DrawAction {
    * @param point
    * @param data
    */
-  static booleanPointInData(point: IPoint, data: IStartData): boolean {
-    const {
-      // 圆的中心点
-      center,
-      // 外半径
-      outRadius,
-      // 内半径(外半径的一半)
-      innerRadius,
-    } = data.data;
+  static booleanPointInData(point: IPoint, data: IRectangleData): boolean {
+    const { leftTopPoint, width, height } = data.data;
 
     const pt = turf.point([point.x, point.y]);
-
-    const startCount = 5;
-    const spend = 360 / startCount;
-    const min = 90 - spend;
-    const max = spend - min;
-
-    const points: IPoint[] = [];
-
-    for (let i = 0; i < startCount; i++) {
-      points.push({
-        x: Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x,
-        y: -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y,
-      });
-
-      points.push({
-        x: Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x,
-        y: -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y,
-      });
-    }
-
-    const polygon = points.map((point) => [point.x, point.y]);
-    polygon.push(polygon[0]);
-    const poly = turf.polygon([polygon]);
+    const poly = turf.polygon([
+      [
+        [leftTopPoint.x, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y],
+      ],
+    ]);
 
     return turf.booleanPointInPolygon(pt, poly);
-  }
-
-  /**
-   * drawStart
-   * @param ctx
-   * @param data
-   */
-  static drawStart({ ctx, data }: { ctx: CanvasRenderingContext2D; data: IStartData }): void {
-    if (!data || !ctx) return;
-
-    const {
-      data: { center, outRadius, innerRadius },
-      style,
-    } = data;
-
-    ctx.beginPath();
-
-    const startCount = 5;
-    const spend = 360 / startCount;
-    const min = 90 - spend;
-    const max = spend - min;
-
-    for (let i = 0; i < startCount; i++) {
-      if (style) {
-        ctx.lineWidth = style.lineWidth;
-        ctx.lineJoin = style.lineJoin;
-        ctx.lineCap = style.lineCap;
-        ctx.setLineDash(style.lineDash);
-        ctx.lineDashOffset = style.lineDashOffset;
-        ctx.strokeStyle = style.strokeStyle;
-        ctx.fillStyle = style.fillStyle;
-      }
-
-      ctx.lineTo(
-        Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x,
-        -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y,
-      );
-      ctx.lineTo(
-        Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x,
-        -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y,
-      );
-    }
-
-    ctx.stroke();
-    ctx.fill();
   }
 
   /**
@@ -137,15 +75,15 @@ class StartDrawAction extends DrawAction {
    * @param e
    */
   private draw(e): void {
-    const { context, centerPoint } = this;
+    const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
 
-    if (!context || !centerPoint || !ctx) return;
+    if (!context || !ctx) return;
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl || !this.centerPoint) return;
+    if (!canvasEl) return;
 
     const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
@@ -156,21 +94,24 @@ class StartDrawAction extends DrawAction {
 
     context.drawHistoryData();
 
-    this.outRadius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+    ctx.beginPath();
 
-    this.innerRadius = this.outRadius / 2;
+    this.leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
+    this.width = Math.abs(targetPoint.x - (startPoint?.x || 0));
+    this.height = Math.abs(targetPoint.y - (startPoint?.y || 0));
 
-    StartDrawAction.drawStart({
-      ctx,
-      data: {
-        data: {
-          center: this.centerPoint,
-          outRadius: this.outRadius,
-          innerRadius: this.innerRadius,
-        },
-        style: this.style,
-      },
-    });
+    ctx.lineWidth = style.lineWidth;
+    ctx.lineJoin = style.lineJoin;
+    ctx.lineCap = style.lineCap;
+    ctx.setLineDash(style.lineDash);
+    ctx.lineDashOffset = style.lineDashOffset;
+    ctx.strokeStyle = style.strokeStyle;
+    ctx.fillStyle = style.fillStyle;
+
+    ctx.rect(this.leftTopPoint?.x || 0, this.leftTopPoint?.y || 0, this.width, this.height);
+
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -184,7 +125,7 @@ class StartDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.centerPoint = MathUtil.clientToCtxPoint({
+    this.startPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -223,7 +164,7 @@ class StartDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IStartData) {
+  static draw(ctx: CanvasRenderingContext2D, data: IRectangleData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -240,14 +181,7 @@ class StartDrawAction extends DrawAction {
 
     this.drawHistoryPath(
       ctx,
-      data.data as {
-        // 圆的中心点
-        center: IPoint;
-        // 外半径
-        outRadius: number;
-        // 内半径(外半径的一半)
-        innerRadius: number;
-      },
+      data.data as { leftTopPoint: IPoint | null; width: number; height: number },
     );
 
     // 描边
@@ -264,22 +198,14 @@ class StartDrawAction extends DrawAction {
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
-      // 圆的中心点
-      center: IPoint;
-      // 外半径
-      outRadius: number;
-      // 内半径(外半径的一半)
-      innerRadius: number;
+      leftTopPoint: IPoint | null;
+      width: number;
+      height: number;
     },
   ): void {
-    if (!data) return;
+    ctx.beginPath();
 
-    StartDrawAction.drawStart({
-      ctx,
-      data: {
-        data,
-      },
-    });
+    ctx.rect(data?.leftTopPoint?.x || 0, data?.leftTopPoint?.y || 0, data?.width, data?.height);
   }
 
   /**
@@ -301,7 +227,7 @@ class StartDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Start,
+      selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
 
@@ -313,7 +239,7 @@ class StartDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Start,
+      selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
   }
@@ -331,7 +257,7 @@ class StartDrawAction extends DrawAction {
 
     const canvasEl = context.getCanvasEl();
 
-    if (!canvasEl || !this.centerPoint || !this.outRadius || !this.innerRadius) {
+    if (!canvasEl) {
       super.end(e);
       return;
     }
@@ -344,29 +270,31 @@ class StartDrawAction extends DrawAction {
 
     this.status = ActionStatus.End;
 
-    const data: IStartData = {
+    const data: IRectangleData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Start,
+      type: SelectType.Rectangle,
       data: {
-        center: this.centerPoint,
-        outRadius: this.outRadius,
-        innerRadius: this.innerRadius,
+        leftTopPoint: this.leftTopPoint as IPoint,
+        width: this.width,
+        height: this.height,
       },
       style: this.style,
     };
 
     context.addHistoryData(data);
 
-    this.centerPoint = null;
+    this.startPoint = null;
 
-    this.outRadius = 0;
+    this.leftTopPoint = null;
 
-    this.innerRadius = 0;
+    this.width = 0;
+
+    this.height = 0;
 
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Start,
+      selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
       data,
     });
@@ -402,18 +330,20 @@ class StartDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
 
-    this.centerPoint = null;
+    this.startPoint = null;
 
-    this.outRadius = 0;
+    this.leftTopPoint = null;
 
-    this.innerRadius = 0;
+    this.width = 0;
+
+    this.height = 0;
 
     this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Start,
+      selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
 
@@ -421,4 +351,4 @@ class StartDrawAction extends DrawAction {
   }
 }
 
-export default StartDrawAction;
+export default RectangleDrawAction;

@@ -10,13 +10,13 @@ import {
   SelectType,
 } from './types';
 
-import PolygonDrawAction from './draw/polygonDrawAction';
-import CircleDrawAction from './draw/circleDrawAction';
-import RectangleDrawAction from './draw/rectangleDrawAction';
-import TriangleDrawAction from './draw/triangleDrawAction';
-import DiamondDrawAction from './draw/diamondDrawAction';
-import StartDrawAction from './draw/startDrawAction';
-import FreeDrawAction from './draw/freeDrawAction';
+import PolygonDrawAction from './draw/PolygonDrawAction';
+import CircleDrawAction from './draw/CircleDrawAction';
+import RectangleDrawAction from './draw/RectangleDrawAction';
+import TriangleDrawAction from './draw/TriangleDrawAction';
+import DiamondDrawAction from './draw/DiamondDrawAction';
+import StartDrawAction from './draw/StartDrawAction';
+import FreeDrawAction from './draw/FreeDrawAction';
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 const selectorPrefix = 'adhere-ui-polygonselection';

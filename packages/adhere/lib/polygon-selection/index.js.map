@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["polygon-selection/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-polygonselection';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,kEACQA"}

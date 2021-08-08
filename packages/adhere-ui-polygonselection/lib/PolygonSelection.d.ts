@@ -21,17 +21,21 @@ declare class PolygonSelection extends Emitter implements IPolygonSelection {
      */
     constructor(el: HTMLElement, defaultData?: IActionData[]);
     /**
+     * initEvents
+     */
+    protected initEvents(): void;
+    /**
      * initCanvas - 初始化Canvas
      */
-    private initCanvas;
+    protected initCanvas(): void;
     /**
      * adapterCanvas - 适配canvas
      */
-    private adapterCanvas;
+    protected adapterCanvas(): void;
     /**
      * onResize
      */
-    private onResize;
+    protected onResize(): void;
     /**
      * getCtx
      * @return CanvasRenderingContext2D | null
@@ -96,6 +100,11 @@ declare class PolygonSelection extends Emitter implements IPolygonSelection {
      * @return void
      */
     changeAction(action: IAction): void;
+    /**
+     * getCurAction
+     * @return IAction | null
+     */
+    getCurAction(): IAction | null;
     /**
      * start - 开始
      * @param style

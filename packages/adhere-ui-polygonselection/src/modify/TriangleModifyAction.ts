@@ -2,18 +2,18 @@ import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IRectangleData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
-import RectangleDrawAction from '../draw/rectangleDrawAction';
+import { IPoint, ITriangleData, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
+import TriangleDrawAction from '../draw/TriangleDrawAction';
 import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**
- * RectangleModifyAction
- * @class RectangleModifyAction
- * @classdesc - 矩形修改
+ * TriangleModifyAction
+ * @class TriangleModifyAction
+ * @classdesc - 三角形修改
  * @remark:
  */
-class RectangleModifyAction extends ModifyAction {
+class TriangleModifyAction extends ModifyAction {
   private rectangleAnchorPoints: IPoint[] = [];
 
   private indexToModifyHandlerMapping: Map<number, Function> = new Map<number, Function>([
@@ -38,13 +38,13 @@ class RectangleModifyAction extends ModifyAction {
     [7, 'ew-resize'],
   ]);
 
-  constructor(data: IRectangleData) {
+  constructor(data: ITriangleData) {
     super(data);
   }
 
   /**
    * drawAnchors
-   * 4个角，四条边的中心点
+   * circle有4个anchor，上，下，左，右
    */
   protected drawAnchors(): void {
     if (!this.context) return;
@@ -53,12 +53,22 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!ctx) return;
 
-    const { leftTopPoint, width, height } = this?.data?.data?.data;
+    const { points } = this?.data?.data?.data;
 
+    if (!points || !points.length) return;
+
+    // points三个点分别为左下，上中，右下
+
+    // 绘制矩形和八个控制点
+    const leftTopPoint = {
+      x: points[0].x,
+      y: points[1].y,
+    };
+    const width = points[2].x - points[0].x;
+    const height = points[2].y - points[1].y;
     const widthHalf = width / 2;
     const heightHalf = height / 2;
 
-    // 4个角,4条边中心点 顺时针绘制
     this.rectangleAnchorPoints = [
       {
         ...leftTopPoint,
@@ -93,6 +103,7 @@ class RectangleModifyAction extends ModifyAction {
       },
     ];
 
+    // 4个角,4条边中心点 顺时针绘制
     for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
       const point = this.rectangleAnchorPoints[i];
 
@@ -111,9 +122,22 @@ class RectangleModifyAction extends ModifyAction {
       );
 
       ctx.stroke();
-
       ctx.fill();
     }
+
+    // 矩形绘制
+    ctx.beginPath();
+
+    this.setAnchorStyle();
+
+    ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
+    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
+    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
+    ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
+    ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -220,8 +244,10 @@ class RectangleModifyAction extends ModifyAction {
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;
 
-    data.data.leftTopPoint.x += offsetX;
-    data.data.leftTopPoint.y += offsetY;
+    data.data.points.forEach((point: IPoint) => {
+      point.x += offsetX;
+      point.y += offsetY;
+    });
 
     this.data.data = data;
 
@@ -236,7 +262,7 @@ class RectangleModifyAction extends ModifyAction {
    * getSelectType
    */
   protected getSelectType(): SelectType {
-    return SelectType.Rectangle;
+    return SelectType.Triangle;
   }
 
   /**
@@ -250,15 +276,23 @@ class RectangleModifyAction extends ModifyAction {
   } | null {
     const { context } = this;
 
-    const ctx = context?.getCtx();
+    if (!context || !this.data) return null;
 
-    if (!context || !ctx || !this.data) return null;
-
+    // canvasHistory需要修改 需要修改半径
     const data = context.getHistoryDataById(this.data.data.id);
 
     if (!data) return null;
 
-    const { leftTopPoint, width, height } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return null;
+
+    const leftTopPoint = {
+      x: points[0].x,
+      y: points[1].y,
+    };
+    const width = points[2].x - points[0].x;
+    const height = points[2].y - points[1].y;
 
     return {
       leftTop: { ...leftTopPoint },
@@ -280,6 +314,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -288,10 +326,25 @@ class RectangleModifyAction extends ModifyAction {
     // 范围限制
     if (targetPoint.x > box.rightTop.x || targetPoint.y > box.rightBottom.y) return false;
 
+    const leftTopPoint = targetPoint;
+    const width = box.rightTop.x - targetPoint.x;
+    const height = box.rightBottom.y - targetPoint.y;
+
     // 修改
-    data.data.leftTopPoint = targetPoint;
-    data.data.width = box.rightTop.x - targetPoint.x;
-    data.data.height = box.rightBottom.y - targetPoint.y;
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -308,7 +361,9 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
-    const { width } = data.data;
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
 
     // 计算出四个角的坐标
     const box = this.getBox();
@@ -319,12 +374,28 @@ class RectangleModifyAction extends ModifyAction {
     if (targetPoint.y > box.leftBottom.y) return false;
 
     // 修改
-    data.data.leftTopPoint = {
+    const leftTopPoint = {
       x: box.leftTop.x,
       y: targetPoint.y,
     };
-    data.data.width = width;
-    data.data.height = box.rightBottom.y - targetPoint.y;
+    const width = box.rightTop.x - box.leftTop.x;
+    const height = box.rightBottom.y - targetPoint.y;
+
+    // 修改
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -341,6 +412,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
+    const { points } = data.data;
+
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -350,12 +425,27 @@ class RectangleModifyAction extends ModifyAction {
     if (targetPoint.x < box.leftTop.x || targetPoint.y > box.leftBottom.y) return false;
 
     // 修改
-    data.data.leftTopPoint = {
+    const leftTopPoint = {
       x: box.leftTop.x,
       y: targetPoint.y,
     };
-    data.data.width = targetPoint.x - box.leftTop.x;
-    data.data.height = box.rightBottom.y - targetPoint.y;
+    const width = targetPoint.x - box.leftTop.x;
+    const height = box.rightBottom.y - targetPoint.y;
+
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -372,9 +462,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
-    const { leftTopPoint, height } = data.data;
+    const { points } = data.data;
 
-    // 计算出四个角的坐标
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -383,10 +474,28 @@ class RectangleModifyAction extends ModifyAction {
     // 范围限制
     if (targetPoint.x < box.leftTop.x) return false;
 
+    const leftTopPoint = {
+      x: box.leftTop.x,
+      y: box.leftTop.y,
+    };
+    const width = targetPoint.x - box.leftTop.x;
+    const height = box.rightBottom.y - box.rightTop.y;
+
     // 修改
-    data.data.leftTopPoint = { ...leftTopPoint };
-    data.data.width = targetPoint.x - box.leftTop.x;
-    data.data.height = height;
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -403,9 +512,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
-    const { leftTopPoint } = data.data;
+    const { points } = data.data;
 
-    // 计算出四个角的坐标
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -414,10 +524,25 @@ class RectangleModifyAction extends ModifyAction {
     // 范围限制
     if (targetPoint.x < box.leftTop.x || targetPoint.y < box.leftTop.y) return false;
 
+    const leftTopPoint = { ...box.leftTop };
+    const width = targetPoint.x - box.leftTop.x;
+    const height = targetPoint.y - box.leftTop.y;
+
     // 修改
-    data.data.leftTopPoint = { ...leftTopPoint };
-    data.data.width = targetPoint.x - box.leftTop.x;
-    data.data.height = targetPoint.y - box.leftTop.y;
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -434,9 +559,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
-    const { leftTopPoint, width } = data.data;
+    const { points } = data.data;
 
-    // 计算出四个角的坐标
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -445,10 +571,25 @@ class RectangleModifyAction extends ModifyAction {
     // 范围限制
     if (targetPoint.y < box.leftTop.y) return false;
 
+    const leftTopPoint = { ...box.leftTop };
+    const width = box.rightTop.x - box.leftTop.x;
+    const height = targetPoint.y - box.leftTop.y;
+
     // 修改
-    data.data.leftTopPoint = { ...leftTopPoint };
-    data.data.width = width;
-    data.data.height = targetPoint.y - box.leftTop.y;
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -465,9 +606,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
-    const { leftTopPoint } = data.data;
+    const { points } = data.data;
 
-    // 计算出四个角的坐标
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -476,13 +618,28 @@ class RectangleModifyAction extends ModifyAction {
     // 范围限制
     if (targetPoint.x > box.rightBottom.x || targetPoint.y < box.rightTop.y) return false;
 
-    // 修改
-    data.data.leftTopPoint = {
+    const leftTopPoint = {
       x: targetPoint.x,
-      y: leftTopPoint.y,
+      y: box.leftTop.y,
     };
-    data.data.width = box.rightBottom.x - targetPoint.x;
-    data.data.height = targetPoint.y - box.rightTop.y;
+    const width = box.rightBottom.x - targetPoint.x;
+    const height = targetPoint.y - box.rightTop.y;
+
+    // 修改
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -499,9 +656,10 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!data) return false;
 
-    const { leftTopPoint, height } = data.data;
+    const { points } = data.data;
 
-    // 计算出四个角的坐标
+    if (!points || !points.length) return false;
+
     // 计算出四个角的坐标
     const box = this.getBox();
 
@@ -510,14 +668,28 @@ class RectangleModifyAction extends ModifyAction {
     // 范围限制
     if (targetPoint.x > box.rightBottom.x) return false;
 
-    // 修改
-    data.data.leftTopPoint = {
+    const leftTopPoint = {
       x: targetPoint.x,
-      y: leftTopPoint.y,
+      y: box.leftTop.y,
     };
+    const width = box.rightBottom.x - targetPoint.x;
+    const height = box.rightBottom.y - box.rightTop.y;
 
-    data.data.width = box.rightBottom.x - targetPoint.x;
-    data.data.height = height;
+    // 修改
+    data.data.points = [
+      {
+        x: leftTopPoint.x,
+        y: leftTopPoint.y + height,
+      },
+      {
+        x: leftTopPoint.x + width / 2,
+        y: leftTopPoint.y,
+      },
+      {
+        x: leftTopPoint.x + width,
+        y: leftTopPoint.y + height,
+      },
+    ];
 
     return true;
   }
@@ -525,18 +697,11 @@ class RectangleModifyAction extends ModifyAction {
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
-    const { leftTopPoint, width, height } = this?.data?.data?.data;
+    const points = [...(this?.data?.data?.data?.points || [])];
+    points.push(points[0]);
 
     const pt = turf.point([targetPoint.x, targetPoint.y]);
-    const poly = turf.polygon([
-      [
-        [leftTopPoint.x, leftTopPoint.y],
-        [leftTopPoint.x + width, leftTopPoint.y],
-        [leftTopPoint.x + width, leftTopPoint.y + height],
-        [leftTopPoint.x, leftTopPoint.y + height],
-        [leftTopPoint.x, leftTopPoint.y],
-      ],
-    ]);
+    const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
 
     return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
   }
@@ -549,9 +714,9 @@ class RectangleModifyAction extends ModifyAction {
   drawMoveGeometry(): void {
     if (!this.context || !this.data) return;
 
-    RectangleDrawAction.draw(
+    TriangleDrawAction.draw(
       this.context.getAssistCtx() as CanvasRenderingContext2D,
-      this.data as IRectangleData,
+      this.data as ITriangleData,
     );
   }
 
@@ -559,20 +724,20 @@ class RectangleModifyAction extends ModifyAction {
   drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
     if (!this.context || !this.data || !startPoint || !targetPoint) return;
 
-    const srcData = { ...(this.data.data as IRectangleData) };
+    const srcData = { ...(this.data.data as ITriangleData) };
     srcData.data = {
       ...srcData.data,
-      leftTopPoint: {
-        ...srcData.data.leftTopPoint,
-      },
+      points: srcData.data.points.map((point) => ({ ...point })),
     };
 
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;
 
-    if (srcData.data && srcData.data.leftTopPoint) {
-      srcData.data.leftTopPoint.x += offsetX;
-      srcData.data.leftTopPoint.y += offsetY;
+    if (srcData.data && srcData.data.points && srcData.data.points.length) {
+      srcData.data.points.forEach((point: IPoint) => {
+        point.x += offsetX;
+        point.y += offsetY;
+      });
 
       if (srcData.style) {
         srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
@@ -582,7 +747,7 @@ class RectangleModifyAction extends ModifyAction {
         srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
       }
 
-      RectangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
+      TriangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
   }
 
@@ -593,4 +758,4 @@ class RectangleModifyAction extends ModifyAction {
   }
 }
 
-export default RectangleModifyAction;
+export default TriangleModifyAction;

@@ -1,5 +1,5 @@
 import { IPoint, ITriangleData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
+import ModifyAction from './ModifyAction';
 /**
  * TriangleModifyAction
  * @class TriangleModifyAction

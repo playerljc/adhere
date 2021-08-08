@@ -1,3 +1,6 @@
+/**
+ * 几何图形默认的样式
+ */
 export default {
   fillStyle: 'rgb(91,155,213,1)',
   // 描边颜色

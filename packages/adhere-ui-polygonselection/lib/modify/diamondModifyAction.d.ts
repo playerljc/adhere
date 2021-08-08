@@ -1,5 +1,5 @@
 import { IPoint, IDiamondData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
+import ModifyAction from './ModifyAction';
 /**
  * DiamondModifyAction
  * @class DiamondModifyAction

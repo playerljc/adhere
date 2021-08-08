@@ -16,8 +16,6 @@ declare abstract class ModifyAction extends Emitter implements IModifyAction, IM
     };
     protected anchorRadius: number;
     protected anchorLineWidth: number;
-    protected anchorStrokeStyle: string;
-    protected anchorFillStyle: string;
     moveStartPoint: IPoint | null;
     canMove: boolean;
     isMoved: boolean;

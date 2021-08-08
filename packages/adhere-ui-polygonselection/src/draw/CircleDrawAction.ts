@@ -3,32 +3,31 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
+import DrawAction from './DrawAction';
 import {
   ActionEvents,
   ActionStatus,
   IPoint,
-  IFreeData,
+  ICircleData,
   IStyle,
   SelectType,
   ActionType,
-  IDiamondData,
 } from '../types';
-import DrawAction from './drawAction';
 
 /**
- * FreeDrawAction
+ * CircleDrawAction
  * @class
- * @classdesc - 自由绘制选取
- * @remark: - 一个start - end的周期中只能绘制一个自由图形
+ * @classdesc - 圆形选取
+ * @remark: - 一个start - end的周期中只能绘制一个圆形
  */
-class FreeDrawAction extends DrawAction {
-  // startPoint
-  protected startPoint: IPoint | null = null;
+class CircleDrawAction extends DrawAction {
+  // 中心点
+  protected centerPoint: IPoint | null = null;
 
   protected isMove = false;
 
-  // 除了第一个点的所有点
-  protected points: IPoint[] = [];
+  // 半径
+  protected radius: number = 0;
 
   /**
    * context
@@ -41,35 +40,44 @@ class FreeDrawAction extends DrawAction {
   }
 
   /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: ICircleData): boolean {
+    return MathUtil.isPointInCircle(point, data.data);
+  }
+
+  /**
    * draw
    * @param e
-   * @param isEnd
    */
-  private draw(e, isEnd = false) {
-    const { context, style } = this;
+  private draw(e): void {
+    const { context, centerPoint, style } = this;
 
     const ctx = context?.getCtx();
 
-    if (!context || !ctx) return;
+    if (!context || !ctx || !centerPoint) return;
 
     const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
 
-    const curPoint: IPoint = MathUtil.clientToCtxPoint({
+    const targetPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    if (!curPoint) return;
-
-    this.points.push(curPoint);
+    if (!targetPoint) return;
 
     context.clearDraw();
 
     context.drawHistoryData();
 
     ctx.beginPath();
+
+    this.radius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
 
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
@@ -79,15 +87,15 @@ class FreeDrawAction extends DrawAction {
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
 
-    this.points.forEach((point: IPoint, index: number) => {
-      if (index === 0) {
-        ctx.moveTo(point.x, point.y);
-      } else {
-        ctx.lineTo(point.x, point.y);
-      }
-    });
-
-    isEnd && ctx.closePath();
+    ctx.ellipse(
+      centerPoint?.x || 0,
+      centerPoint?.y || 0,
+      this.radius,
+      this.radius,
+      (45 * Math.PI) / 180,
+      0,
+      2 * Math.PI,
+    );
 
     ctx.stroke();
     ctx.fill();
@@ -104,14 +112,10 @@ class FreeDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.startPoint = MathUtil.clientToCtxPoint({
+    this.centerPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
-
-    if (!this.startPoint) return;
-
-    this.points.push(this.startPoint);
 
     canvasEl?.addEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.addEventListener('mouseup', this.onCanvasMouseUp);
@@ -125,6 +129,10 @@ class FreeDrawAction extends DrawAction {
     const { context } = this;
 
     if (!context) return;
+
+    const ctx = context.getCtx();
+
+    if (!ctx) return;
 
     this.isMove = true;
 
@@ -143,11 +151,11 @@ class FreeDrawAction extends DrawAction {
 
   /**
    * draw
-   * @description
+   * @description 绘制
    * @param ctx
    * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IFreeData) {
+  static draw(ctx: CanvasRenderingContext2D, data: ICircleData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -162,7 +170,7 @@ class FreeDrawAction extends DrawAction {
       ctx.globalAlpha = data.style.globalAlpha || 1;
     }
 
-    this.drawHistoryPath(ctx, data.data as { points: IPoint[] });
+    this.drawHistoryPath(ctx, data.data as { center: IPoint; radius: number });
 
     // 描边
     ctx.stroke();
@@ -178,29 +186,28 @@ class FreeDrawAction extends DrawAction {
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
-      points: IPoint[];
+      center: IPoint;
+      radius: number;
     },
   ): void {
     ctx.beginPath();
 
-    const { points = [] } = data;
-
-    (points || []).forEach((point: IPoint, index: number) => {
-      if (index === 0) {
-        ctx.moveTo(point.x, point.y);
-      } else {
-        ctx.lineTo(point.x, point.y);
-      }
-    });
-
-    ctx.closePath();
+    ctx.ellipse(
+      data.center.x,
+      data.center.y,
+      data.radius,
+      data.radius,
+      (45 * Math.PI) / 180,
+      0,
+      2 * Math.PI,
+    );
   }
 
   /**
    * start
    * @param style
    */
-  start(style: IStyle): void {
+  start(style: IStyle) {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
     const { context } = this;
@@ -215,7 +222,7 @@ class FreeDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Free,
+      selectType: SelectType.Circle,
       actionType: ActionType.Draw,
     });
 
@@ -227,7 +234,7 @@ class FreeDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Free,
+      selectType: SelectType.Circle,
       actionType: ActionType.Draw,
     });
   }
@@ -235,7 +242,7 @@ class FreeDrawAction extends DrawAction {
   /**
    * end
    */
-  end(e): void {
+  end(e) {
     const { context } = this;
 
     if (!context) {
@@ -254,29 +261,30 @@ class FreeDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
 
-    this.draw(e, true);
+    e && this.draw(e);
 
     this.status = ActionStatus.End;
 
-    const data: IFreeData = {
+    const data: ICircleData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Free,
+      type: SelectType.Circle,
       data: {
-        points: JSON.parse(JSON.stringify(this.points)),
+        center: this.centerPoint as IPoint,
+        radius: this.radius,
       },
       style: this.style,
     };
 
     context.addHistoryData(data);
 
-    this.startPoint = null;
+    this.centerPoint = null;
 
-    this.points = [];
+    this.radius = 0;
 
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Free,
+      selectType: SelectType.Circle,
       actionType: ActionType.Draw,
       data,
     });
@@ -287,7 +295,7 @@ class FreeDrawAction extends DrawAction {
   /**
    * destroy
    */
-  destroy(): void {
+  destroy() {
     const { context } = this;
 
     if (!context) {
@@ -312,16 +320,16 @@ class FreeDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
 
-    this.startPoint = null;
+    this.centerPoint = null;
 
-    this.points = [];
+    this.radius = 0;
 
     this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Free,
+      selectType: SelectType.Circle,
       actionType: ActionType.Draw,
     });
 
@@ -329,4 +337,4 @@ class FreeDrawAction extends DrawAction {
   }
 }
 
-export default FreeDrawAction;
+export default CircleDrawAction;

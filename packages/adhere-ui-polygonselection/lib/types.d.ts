@@ -159,7 +159,9 @@ export interface IMoveAction {
  * PolygonSelectionActions - PolygonSelectionActions的事件类型
  */
 export declare enum PolygonSelectionActions {
-    CanvasMount = "CanvasMount"
+    CanvasMount = "CanvasMount",
+    CanvasClickEmpty = "CanvasClickEmpty",
+    CanvasClickGeometry = "CanvasClickGeometry"
 }
 /**
  * IPolygonSelection
@@ -179,6 +181,7 @@ export interface IPolygonSelection {
     getHistoryData: () => IActionData[];
     setHistoryData: (data: IActionData[]) => void;
     changeAction: (action: IAction) => void;
+    getCurAction: () => IAction | null;
     setFrontCanvas: (canvasEl: HTMLCanvasElement) => void;
     setBackCanvas: (canvasEl: HTMLCanvasElement) => void;
     start: (style: IStyle) => void;
@@ -205,6 +208,7 @@ export interface IStyle {
     lineJoin: CanvasLineJoin;
     lineDash: number[];
     lineDashOffset: number;
+    globalAlpha: number;
 }
 /**
  * SelectType

@@ -11,10 +11,18 @@ declare class DiamondDrawAction extends DrawAction {
     protected leftTopPoint: IPoint | null;
     protected width: number;
     protected height: number;
+    protected isMove: boolean;
     /**
      * context
      */
     constructor();
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(point: IPoint, data: IDiamondData): boolean;
     /**
      * draw
      * @param e

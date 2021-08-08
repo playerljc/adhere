@@ -2,8 +2,8 @@
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import { ICircleData, IPoint, SelectType } from '../types';
-import ModifyAction from './modifyAction';
-import CircleDrawAction from '../draw/circleDrawAction';
+import ModifyAction from './ModifyAction';
+import CircleDrawAction from '../draw/CircleDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
 
 /**

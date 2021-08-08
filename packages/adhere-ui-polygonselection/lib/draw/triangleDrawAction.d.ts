@@ -1,5 +1,5 @@
 import { IPoint, ITriangleData, IStyle } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 /**
  * TriangleDrawAction
  * @class
@@ -9,10 +9,18 @@ import DrawAction from './drawAction';
 declare class TriangleDrawAction extends DrawAction {
     protected startPoint: IPoint | null;
     protected points: IPoint[];
+    protected isMove: boolean;
     /**
      * context
      */
     constructor();
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(point: IPoint, data: ITriangleData): boolean;
     /**
      * draw
      * @param e

@@ -2,8 +2,8 @@ import * as turf from '@turf/turf';
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import { IPoint, IPolygonData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
-import PolygonDrawAction from '../draw/polygonDrawAction';
+import ModifyAction from './ModifyAction';
+import PolygonDrawAction from '../draw/PolygonDrawAction';
 import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**

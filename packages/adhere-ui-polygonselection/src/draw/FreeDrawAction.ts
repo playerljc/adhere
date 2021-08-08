@@ -1,4 +1,3 @@
-import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
@@ -8,28 +7,27 @@ import {
   ActionEvents,
   ActionStatus,
   IPoint,
-  ITriangleData,
+  IFreeData,
   IStyle,
   SelectType,
   ActionType,
 } from '../types';
-import DrawAction from './drawAction';
-import Util from '../util';
+import DrawAction from './DrawAction';
 
 /**
- * TriangleDrawAction
+ * FreeDrawAction
  * @class
- * @classdesc - 三角形选取
- * @remark: - 一个start - end的周期中只能绘制一个三角形
+ * @classdesc - 自由绘制选取
+ * @remark: - 一个start - end的周期中只能绘制一个自由图形
  */
-class TriangleDrawAction extends DrawAction {
+class FreeDrawAction extends DrawAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
-  // 三角形三个点
-  protected points: IPoint[] = [];
-
   protected isMove = false;
+
+  // 除了第一个点的所有点
+  protected points: IPoint[] = [];
 
   /**
    * context
@@ -42,27 +40,12 @@ class TriangleDrawAction extends DrawAction {
   }
 
   /**
-   * booleanPointInData
-   * @description 判断点是否在
-   * @param point
-   * @param data
-   */
-  static booleanPointInData(point: IPoint, data: ITriangleData): boolean {
-    const points = [...(data.data.points || [])];
-    points.push(points[0]);
-
-    const pt = turf.point([point.x, point.y]);
-    const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
-
-    return turf.booleanPointInPolygon(pt, poly);
-  }
-
-  /**
    * draw
    * @param e
+   * @param isEnd
    */
-  private draw(e) {
-    const { context, startPoint, style } = this;
+  private draw(e, isEnd = false) {
+    const { context, style } = this;
 
     const ctx = context?.getCtx();
 
@@ -72,10 +55,14 @@ class TriangleDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    const targetPoint: IPoint = MathUtil.clientToCtxPoint({
+    const curPoint: IPoint = MathUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
+
+    if (!curPoint) return;
+
+    this.points.push(curPoint);
 
     context.clearDraw();
 
@@ -91,12 +78,15 @@ class TriangleDrawAction extends DrawAction {
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
 
-    this.points = Util.triangle({ startPoint, targetPoint });
-    ctx.moveTo(this.points[0].x, this.points[0].y);
-    ctx.lineTo(this.points[1].x, this.points[1].y);
-    ctx.lineTo(this.points[2].x, this.points[2].y);
+    this.points.forEach((point: IPoint, index: number) => {
+      if (index === 0) {
+        ctx.moveTo(point.x, point.y);
+      } else {
+        ctx.lineTo(point.x, point.y);
+      }
+    });
 
-    ctx.closePath();
+    isEnd && ctx.closePath();
 
     ctx.stroke();
     ctx.fill();
@@ -117,6 +107,10 @@ class TriangleDrawAction extends DrawAction {
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
+
+    if (!this.startPoint) return;
+
+    this.points.push(this.startPoint);
 
     canvasEl?.addEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.addEventListener('mouseup', this.onCanvasMouseUp);
@@ -152,7 +146,7 @@ class TriangleDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: ITriangleData) {
+  static draw(ctx: CanvasRenderingContext2D, data: IFreeData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -167,12 +161,7 @@ class TriangleDrawAction extends DrawAction {
       ctx.globalAlpha = data.style.globalAlpha || 1;
     }
 
-    this.drawHistoryPath(
-      ctx,
-      data.data as {
-        points: IPoint[];
-      },
-    );
+    this.drawHistoryPath(ctx, data.data as { points: IPoint[] });
 
     // 描边
     ctx.stroke();
@@ -193,9 +182,17 @@ class TriangleDrawAction extends DrawAction {
   ): void {
     ctx.beginPath();
 
-    ctx.moveTo(data.points[0].x, data.points[0].y);
-    ctx.lineTo(data.points[1].x, data.points[1].y);
-    ctx.lineTo(data.points[2].x, data.points[2].y);
+    const { points = [] } = data;
+
+    (points || []).forEach((point: IPoint, index: number) => {
+      if (index === 0) {
+        ctx.moveTo(point.x, point.y);
+      } else {
+        ctx.lineTo(point.x, point.y);
+      }
+    });
+
+    ctx.closePath();
   }
 
   /**
@@ -217,7 +214,7 @@ class TriangleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Triangle,
+      selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
 
@@ -229,7 +226,7 @@ class TriangleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Triangle,
+      selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
   }
@@ -256,13 +253,13 @@ class TriangleDrawAction extends DrawAction {
     canvasEl?.removeEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.removeEventListener('mouseup', this.onCanvasMouseUp);
 
-    e && this.draw(e);
+    this.draw(e, true);
 
     this.status = ActionStatus.End;
 
-    const data: ITriangleData = {
+    const data: IFreeData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Triangle,
+      type: SelectType.Free,
       data: {
         points: JSON.parse(JSON.stringify(this.points)),
       },
@@ -278,7 +275,7 @@ class TriangleDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Triangle,
+      selectType: SelectType.Free,
       actionType: ActionType.Draw,
       data,
     });
@@ -323,7 +320,7 @@ class TriangleDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Triangle,
+      selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
 
@@ -331,4 +328,4 @@ class TriangleDrawAction extends DrawAction {
   }
 }
 
-export default TriangleDrawAction;
+export default FreeDrawAction;

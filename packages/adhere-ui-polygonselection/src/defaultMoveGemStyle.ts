@@ -1,3 +1,6 @@
+/**
+ * 移动的元素样式
+ */
 export default {
   // 描边颜色
   strokeStyle: '#fff',

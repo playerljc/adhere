@@ -1,5 +1,5 @@
 import { IStartData, IPoint, SelectType } from '../types';
-import ModifyAction from './modifyAction';
+import ModifyAction from './ModifyAction';
 /**
  * StartModifyAction
  * @class StartModifyAction

@@ -1,4 +1,4 @@
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 import { IPoint, ICircleData, IStyle } from '../types';
 /**
  * CircleDrawAction
@@ -8,11 +8,19 @@ import { IPoint, ICircleData, IStyle } from '../types';
  */
 declare class CircleDrawAction extends DrawAction {
     protected centerPoint: IPoint | null;
+    protected isMove: boolean;
     protected radius: number;
     /**
      * context
      */
     constructor();
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(point: IPoint, data: ICircleData): boolean;
     /**
      * draw
      * @param e

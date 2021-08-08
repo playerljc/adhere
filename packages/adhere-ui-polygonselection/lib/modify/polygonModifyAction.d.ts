@@ -1,5 +1,5 @@
 import { IPoint, IPolygonData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
+import ModifyAction from './ModifyAction';
 /**
  * PolygonModifyAction
  * @class PolygonModifyAction

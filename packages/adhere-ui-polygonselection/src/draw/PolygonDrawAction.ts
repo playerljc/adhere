@@ -13,7 +13,7 @@ import {
   SelectType,
   ActionType,
 } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 
 /**
  * PolygonAction

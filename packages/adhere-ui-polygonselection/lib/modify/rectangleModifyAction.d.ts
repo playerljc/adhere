@@ -1,5 +1,5 @@
 import { IPoint, IRectangleData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
+import ModifyAction from './ModifyAction';
 /**
  * RectangleModifyAction
  * @class RectangleModifyAction

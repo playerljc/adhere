@@ -3,8 +3,8 @@ import * as turf from '@turf/turf';
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import { IStartData, IPoint, SelectType } from '../types';
-import ModifyAction from './modifyAction';
-import StartDrawAction from '../draw/startDrawAction';
+import ModifyAction from './ModifyAction';
+import StartDrawAction from '../draw/StartDrawAction';
 import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**

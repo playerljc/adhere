@@ -1,5 +1,5 @@
 import { IPolygonData, IPoint, IStyle } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 /**
  * PolygonAction
  * @class PolygonAction
@@ -9,10 +9,18 @@ import DrawAction from './drawAction';
 declare class PolygonDrawAction extends DrawAction {
     private startPoint;
     private pointStack;
+    protected isMove: boolean;
     /**
      * constructor
      */
     constructor();
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(point: IPoint, data: IPolygonData): boolean;
     /**
      * onCanvasClick
      * @param e

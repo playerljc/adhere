@@ -1,5 +1,5 @@
 import { IPoint, IStartData, IStyle } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 /**
  * StartDrawAction
  * @class
@@ -10,10 +10,18 @@ declare class StartDrawAction extends DrawAction {
     protected centerPoint: IPoint | null;
     protected outRadius: number;
     protected innerRadius: number;
+    protected isMove: boolean;
     /**
      * context
      */
     constructor();
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(point: IPoint, data: IStartData): boolean;
     /**
      * drawStart
      * @param ctx

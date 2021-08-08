@@ -7,33 +7,27 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  ActionType,
   IPoint,
-  IRectangleData,
+  ITriangleData,
   IStyle,
   SelectType,
+  ActionType,
 } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 import Util from '../util';
 
 /**
- * RectangleDrawAction
+ * TriangleDrawAction
  * @class
- * @classdesc - 矩形选取
- * @remark: - 一个start - end的周期中只能绘制一个矩形
+ * @classdesc - 三角形选取
+ * @remark: - 一个start - end的周期中只能绘制一个三角形
  */
-class RectangleDrawAction extends DrawAction {
+class TriangleDrawAction extends DrawAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
-  // 左上角坐标
-  protected leftTopPoint: IPoint | null = null;
-
-  // 宽度
-  protected width: number = 0;
-
-  // 高度
-  protected height: number = 0;
+  // 三角形三个点
+  protected points: IPoint[] = [];
 
   protected isMove = false;
 
@@ -53,19 +47,12 @@ class RectangleDrawAction extends DrawAction {
    * @param point
    * @param data
    */
-  static booleanPointInData(point: IPoint, data: IRectangleData): boolean {
-    const { leftTopPoint, width, height } = data.data;
+  static booleanPointInData(point: IPoint, data: ITriangleData): boolean {
+    const points = [...(data.data.points || [])];
+    points.push(points[0]);
 
     const pt = turf.point([point.x, point.y]);
-    const poly = turf.polygon([
-      [
-        [leftTopPoint.x, leftTopPoint.y],
-        [leftTopPoint.x + width, leftTopPoint.y],
-        [leftTopPoint.x + width, leftTopPoint.y + height],
-        [leftTopPoint.x, leftTopPoint.y + height],
-        [leftTopPoint.x, leftTopPoint.y],
-      ],
-    ]);
+    const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
 
     return turf.booleanPointInPolygon(pt, poly);
   }
@@ -74,7 +61,7 @@ class RectangleDrawAction extends DrawAction {
    * draw
    * @param e
    */
-  private draw(e): void {
+  private draw(e) {
     const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -96,10 +83,6 @@ class RectangleDrawAction extends DrawAction {
 
     ctx.beginPath();
 
-    this.leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
-    this.width = Math.abs(targetPoint.x - (startPoint?.x || 0));
-    this.height = Math.abs(targetPoint.y - (startPoint?.y || 0));
-
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
@@ -108,7 +91,12 @@ class RectangleDrawAction extends DrawAction {
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
 
-    ctx.rect(this.leftTopPoint?.x || 0, this.leftTopPoint?.y || 0, this.width, this.height);
+    this.points = Util.triangle({ startPoint, targetPoint });
+    ctx.moveTo(this.points[0].x, this.points[0].y);
+    ctx.lineTo(this.points[1].x, this.points[1].y);
+    ctx.lineTo(this.points[2].x, this.points[2].y);
+
+    ctx.closePath();
 
     ctx.stroke();
     ctx.fill();
@@ -164,7 +152,7 @@ class RectangleDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IRectangleData) {
+  static draw(ctx: CanvasRenderingContext2D, data: ITriangleData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -181,7 +169,9 @@ class RectangleDrawAction extends DrawAction {
 
     this.drawHistoryPath(
       ctx,
-      data.data as { leftTopPoint: IPoint | null; width: number; height: number },
+      data.data as {
+        points: IPoint[];
+      },
     );
 
     // 描边
@@ -198,14 +188,14 @@ class RectangleDrawAction extends DrawAction {
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
     data: {
-      leftTopPoint: IPoint | null;
-      width: number;
-      height: number;
+      points: IPoint[];
     },
   ): void {
     ctx.beginPath();
 
-    ctx.rect(data?.leftTopPoint?.x || 0, data?.leftTopPoint?.y || 0, data?.width, data?.height);
+    ctx.moveTo(data.points[0].x, data.points[0].y);
+    ctx.lineTo(data.points[1].x, data.points[1].y);
+    ctx.lineTo(data.points[2].x, data.points[2].y);
   }
 
   /**
@@ -227,7 +217,7 @@ class RectangleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Rectangle,
+      selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
     });
 
@@ -239,7 +229,7 @@ class RectangleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Rectangle,
+      selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
     });
   }
@@ -247,7 +237,7 @@ class RectangleDrawAction extends DrawAction {
   /**
    * end
    */
-  end(e) {
+  end(e): void {
     const { context } = this;
 
     if (!context) {
@@ -270,13 +260,11 @@ class RectangleDrawAction extends DrawAction {
 
     this.status = ActionStatus.End;
 
-    const data: IRectangleData = {
+    const data: ITriangleData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Rectangle,
+      type: SelectType.Triangle,
       data: {
-        leftTopPoint: this.leftTopPoint as IPoint,
-        width: this.width,
-        height: this.height,
+        points: JSON.parse(JSON.stringify(this.points)),
       },
       style: this.style,
     };
@@ -285,16 +273,12 @@ class RectangleDrawAction extends DrawAction {
 
     this.startPoint = null;
 
-    this.leftTopPoint = null;
-
-    this.width = 0;
-
-    this.height = 0;
+    this.points = [];
 
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Rectangle,
+      selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
       data,
     });
@@ -332,18 +316,14 @@ class RectangleDrawAction extends DrawAction {
 
     this.startPoint = null;
 
-    this.leftTopPoint = null;
-
-    this.width = 0;
-
-    this.height = 0;
+    this.points = [];
 
     this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Rectangle,
+      selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
     });
 
@@ -351,4 +331,4 @@ class RectangleDrawAction extends DrawAction {
   }
 }
 
-export default RectangleDrawAction;
+export default TriangleDrawAction;

@@ -53,6 +53,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-pullrefresh', 'PullRefresh'],
   ['@baifendian/adhere-ui-notification', 'Notification'],
   ['@baifendian/adhere-ui-swipeout', 'SwipeOut'],
+  ['@baifendian/adhere-ui-polygonselection', 'PolygonSelection'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],

@@ -1,5 +1,5 @@
 import { IPoint, IFreeData, IStyle } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 /**
  * FreeDrawAction
  * @class
@@ -8,6 +8,7 @@ import DrawAction from './drawAction';
  */
 declare class FreeDrawAction extends DrawAction {
     protected startPoint: IPoint | null;
+    protected isMove: boolean;
     protected points: IPoint[];
     /**
      * context

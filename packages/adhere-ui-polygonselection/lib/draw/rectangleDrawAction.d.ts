@@ -1,5 +1,5 @@
 import { IPoint, IRectangleData, IStyle } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 /**
  * RectangleDrawAction
  * @class
@@ -11,10 +11,18 @@ declare class RectangleDrawAction extends DrawAction {
     protected leftTopPoint: IPoint | null;
     protected width: number;
     protected height: number;
+    protected isMove: boolean;
     /**
      * context
      */
     constructor();
+    /**
+     * booleanPointInData
+     * @description 判断点是否在
+     * @param point
+     * @param data
+     */
+    static booleanPointInData(point: IPoint, data: IRectangleData): boolean;
     /**
      * draw
      * @param e

@@ -1,20 +1,19 @@
 import * as turf from '@turf/turf';
-
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IDiamondData, SelectType } from '../types';
-import ModifyAction from './modifyAction';
-import DiamondDrawAction from '../draw/diamondDrawAction';
+import { IPoint, IRectangleData, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
+import RectangleDrawAction from '../draw/RectangleDrawAction';
 import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**
- * DiamondModifyAction
- * @class DiamondModifyAction
- * @classdesc - 菱形修改
+ * RectangleModifyAction
+ * @class RectangleModifyAction
+ * @classdesc - 矩形修改
  * @remark:
  */
-class DiamondModifyAction extends ModifyAction {
+class RectangleModifyAction extends ModifyAction {
   private rectangleAnchorPoints: IPoint[] = [];
 
   private indexToModifyHandlerMapping: Map<number, Function> = new Map<number, Function>([
@@ -39,13 +38,13 @@ class DiamondModifyAction extends ModifyAction {
     [7, 'ew-resize'],
   ]);
 
-  constructor(data: IDiamondData) {
+  constructor(data: IRectangleData) {
     super(data);
   }
 
   /**
    * drawAnchors
-   * circle有4个anchor，上，下，左，右
+   * 4个角，四条边的中心点
    */
   protected drawAnchors(): void {
     if (!this.context) return;
@@ -59,6 +58,7 @@ class DiamondModifyAction extends ModifyAction {
     const widthHalf = width / 2;
     const heightHalf = height / 2;
 
+    // 4个角,4条边中心点 顺时针绘制
     this.rectangleAnchorPoints = [
       {
         ...leftTopPoint,
@@ -93,7 +93,6 @@ class DiamondModifyAction extends ModifyAction {
       },
     ];
 
-    // 4个角,4条边中心点 顺时针绘制
     for (let i = 0; i < this.rectangleAnchorPoints.length; i++) {
       const point = this.rectangleAnchorPoints[i];
 
@@ -112,22 +111,9 @@ class DiamondModifyAction extends ModifyAction {
       );
 
       ctx.stroke();
+
       ctx.fill();
     }
-
-    // 矩形绘制
-    ctx.beginPath();
-
-    this.setAnchorStyle();
-
-    ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
-    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
-    ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
-    ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
-    ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
-
-    ctx.stroke();
-    ctx.fill();
   }
 
   /**
@@ -250,7 +236,7 @@ class DiamondModifyAction extends ModifyAction {
    * getSelectType
    */
   protected getSelectType(): SelectType {
-    return SelectType.Diamond;
+    return SelectType.Rectangle;
   }
 
   /**
@@ -536,25 +522,19 @@ class DiamondModifyAction extends ModifyAction {
     return true;
   }
 
-  /**
-   * isCanMove
-   * @param targetPoint
-   */
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
     const { leftTopPoint, width, height } = this?.data?.data?.data;
 
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
     const pt = turf.point([targetPoint.x, targetPoint.y]);
     const poly = turf.polygon([
       [
-        [leftTopPoint.x, leftTopPoint.y + halfHeight],
-        [leftTopPoint.x + halfWidth, leftTopPoint.y],
-        [leftTopPoint.x + width, leftTopPoint.y + halfHeight],
-        [leftTopPoint.x + halfWidth, leftTopPoint.y + height],
-        [leftTopPoint.x, leftTopPoint.y + halfHeight],
+        [leftTopPoint.x, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y],
       ],
     ]);
 
@@ -569,23 +549,17 @@ class DiamondModifyAction extends ModifyAction {
   drawMoveGeometry(): void {
     if (!this.context || !this.data) return;
 
-    DiamondDrawAction.draw(
+    RectangleDrawAction.draw(
       this.context.getAssistCtx() as CanvasRenderingContext2D,
-      this.data as IDiamondData,
+      this.data as IRectangleData,
     );
   }
 
-  /**
-   * drawMoveGeometry
-   * @description 绘制移动时的几何图形
-   * @param startPoint
-   * @param targetPoint
-   */
   // @ts-ignore
   drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
     if (!this.context || !this.data || !startPoint || !targetPoint) return;
 
-    const srcData = { ...(this.data.data as IDiamondData) };
+    const srcData = { ...(this.data.data as IRectangleData) };
     srcData.data = {
       ...srcData.data,
       leftTopPoint: {
@@ -608,7 +582,7 @@ class DiamondModifyAction extends ModifyAction {
         srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
       }
 
-      DiamondDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
+      RectangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
   }
 
@@ -619,4 +593,4 @@ class DiamondModifyAction extends ModifyAction {
   }
 }
 
-export default DiamondModifyAction;
+export default RectangleModifyAction;
