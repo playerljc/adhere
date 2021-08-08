@@ -14,6 +14,8 @@ import {
   ActionType,
 } from '../types';
 
+import defaultAnchorStyle from '../defaultAnchorStyle';
+
 /**
  * ModifyAction
  * @class ModifyAction
@@ -45,12 +47,6 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
 
   // anchorWidth
   protected anchorLineWidth = 2;
-
-  // anchorStrokeStyle
-  protected anchorStrokeStyle = 'blue';
-
-  // anchorFillStyle
-  protected anchorFillStyle = 'rgba(0,0,0,.1)';
 
   // 移动的以第一个点
   moveStartPoint: IPoint | null = null;
@@ -143,9 +139,9 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
     if (!ctx) return;
 
     // anchor上下文
-    ctx.strokeStyle = this.anchorStrokeStyle;
-    ctx.fillStyle = this.anchorFillStyle;
-    ctx.lineWidth = this.anchorLineWidth;
+    ctx.strokeStyle = defaultAnchorStyle.strokeStyle;
+    ctx.fillStyle = defaultAnchorStyle.fillStyle;
+    ctx.lineWidth = defaultAnchorStyle.lineWidth;
   }
 
   /**
