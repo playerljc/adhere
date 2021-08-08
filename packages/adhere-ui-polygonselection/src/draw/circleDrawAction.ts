@@ -24,6 +24,8 @@ class CircleDrawAction extends DrawAction {
   // 中心点
   protected centerPoint: IPoint | null = null;
 
+  protected isMove = false;
+
   // 半径
   protected radius: number = 0;
 
@@ -35,6 +37,16 @@ class CircleDrawAction extends DrawAction {
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
+  }
+
+  /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: ICircleData): boolean {
+    return MathUtil.isPointInCircle(point, data.data);
   }
 
   /**
@@ -122,6 +134,8 @@ class CircleDrawAction extends DrawAction {
 
     if (!ctx) return;
 
+    this.isMove = true;
+
     this.draw(e);
   }
 
@@ -130,7 +144,9 @@ class CircleDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasMouseUp(e) {
+    if (!this.isMove) return;
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -252,7 +268,7 @@ class CircleDrawAction extends DrawAction {
       id: BaseUtil.uuid(),
       type: SelectType.Circle,
       data: {
-        center: this.centerPoint,
+        center: this.centerPoint as IPoint,
         radius: this.radius,
       },
       style: this.style,
@@ -263,6 +279,8 @@ class CircleDrawAction extends DrawAction {
     this.centerPoint = null;
 
     this.radius = 0;
+
+    this.isMove = false;
 
     this.trigger(ActionEvents.End, {
       selectType: SelectType.Circle,
@@ -304,6 +322,8 @@ class CircleDrawAction extends DrawAction {
     this.centerPoint = null;
 
     this.radius = 0;
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

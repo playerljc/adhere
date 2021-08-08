@@ -8,4 +8,4 @@ export default {
   lineJoin: 'round',
   lineDash: [],
   lineDashOffset: -1,
-}
+};

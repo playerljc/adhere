@@ -1,3 +1,4 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
@@ -8,7 +9,6 @@ import {
   ActionStatus,
   ActionType,
   IPoint,
-  IPolygonData,
   IRectangleData,
   IStyle,
   SelectType,
@@ -35,6 +35,8 @@ class RectangleDrawAction extends DrawAction {
   // 高度
   protected height: number = 0;
 
+  protected isMove = false;
+
   /**
    * context
    */
@@ -43,6 +45,29 @@ class RectangleDrawAction extends DrawAction {
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
+  }
+
+  /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: IRectangleData): boolean {
+    const { leftTopPoint, width, height } = data.data;
+
+    const pt = turf.point([point.x, point.y]);
+    const poly = turf.polygon([
+      [
+        [leftTopPoint.x, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y],
+      ],
+    ]);
+
+    return turf.booleanPointInPolygon(pt, poly);
   }
 
   /**
@@ -118,6 +143,8 @@ class RectangleDrawAction extends DrawAction {
 
     if (!context) return;
 
+    this.isMove = true;
+
     this.draw(e);
   }
 
@@ -126,7 +153,9 @@ class RectangleDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasMouseUp(e) {
+    if (!this.isMove) return;
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -244,7 +273,7 @@ class RectangleDrawAction extends DrawAction {
       id: BaseUtil.uuid(),
       type: SelectType.Rectangle,
       data: {
-        leftTopPoint: this.leftTopPoint,
+        leftTopPoint: this.leftTopPoint as IPoint,
         width: this.width,
         height: this.height,
       },
@@ -260,6 +289,8 @@ class RectangleDrawAction extends DrawAction {
     this.width = 0;
 
     this.height = 0;
+
+    this.isMove = false;
 
     this.trigger(ActionEvents.End, {
       selectType: SelectType.Rectangle,
@@ -305,6 +336,8 @@ class RectangleDrawAction extends DrawAction {
     this.width = 0;
 
     this.height = 0;
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

@@ -191,6 +191,8 @@ class RectangleModifyAction extends ModifyAction {
 
     if (!result) return;
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -219,6 +221,8 @@ class RectangleModifyAction extends ModifyAction {
 
     data.data.leftTopPoint.x += offsetX;
     data.data.leftTopPoint.y += offsetY;
+
+    this.data.data = data;
 
     context.clearDraw();
 
@@ -522,20 +526,18 @@ class RectangleModifyAction extends ModifyAction {
 
     const { leftTopPoint, width, height } = this?.data?.data?.data;
 
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
     const pt = turf.point([targetPoint.x, targetPoint.y]);
     const poly = turf.polygon([
       [
-        [leftTopPoint.x, leftTopPoint.y + halfHeight],
-        [leftTopPoint.x + halfWidth, leftTopPoint.y],
-        [leftTopPoint.x + width, leftTopPoint.y + halfHeight],
-        [leftTopPoint.x + halfWidth, leftTopPoint.y + height],
-        [leftTopPoint.x, leftTopPoint.y + halfHeight],
+        [leftTopPoint.x, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y],
       ],
     ]);
 
-    return turf.booleanPointInPolygon(pt, poly);
+    return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
   }
 
   /**

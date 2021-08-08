@@ -1,3 +1,5 @@
+import * as turf from '@turf/turf';
+
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
@@ -34,6 +36,8 @@ class DiamondDrawAction extends DrawAction {
   // 高度
   protected height: number = 0;
 
+  protected isMove = false;
+
   /**
    * context
    */
@@ -42,6 +46,31 @@ class DiamondDrawAction extends DrawAction {
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
+  }
+
+  /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: IDiamondData): boolean {
+    const { leftTopPoint, width, height } = data.data;
+
+    const halfWidth = width / 2;
+    const halfHeight = height / 2;
+    const pt = turf.point([point.x, point.y]);
+    const poly = turf.polygon([
+      [
+        [leftTopPoint.x, leftTopPoint.y + halfHeight],
+        [leftTopPoint.x + halfWidth, leftTopPoint.y],
+        [leftTopPoint.x + width, leftTopPoint.y + halfHeight],
+        [leftTopPoint.x + halfWidth, leftTopPoint.y + height],
+        [leftTopPoint.x, leftTopPoint.y + halfHeight],
+      ],
+    ]);
+
+    return turf.booleanPointInPolygon(pt, poly);
   }
 
   /**
@@ -127,6 +156,8 @@ class DiamondDrawAction extends DrawAction {
 
     if (!context) return;
 
+    this.isMove = true;
+
     this.draw(e);
   }
 
@@ -135,7 +166,9 @@ class DiamondDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasMouseUp(e) {
+    if (!this.isMove) return;
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -262,7 +295,7 @@ class DiamondDrawAction extends DrawAction {
       id: BaseUtil.uuid(),
       type: SelectType.Diamond,
       data: {
-        leftTopPoint: this.leftTopPoint,
+        leftTopPoint: this.leftTopPoint as IPoint,
         width: this.width,
         height: this.height,
       },
@@ -278,6 +311,8 @@ class DiamondDrawAction extends DrawAction {
     this.width = 0;
 
     this.height = 0;
+
+    this.isMove = false;
 
     this.trigger(ActionEvents.End, {
       selectType: SelectType.Diamond,
@@ -323,6 +358,8 @@ class DiamondDrawAction extends DrawAction {
     this.width = 0;
 
     this.height = 0;
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

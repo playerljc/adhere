@@ -397,7 +397,14 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
 
     if (!canvasEl || !assistCanvasEl) return;
 
-    if (!this.canMove || !this.isMoved || !this.moveStartPoint) return;
+    if (!this.canMove || !this.isMoved || !this.moveStartPoint) {
+      // assistCanvas置部
+      context.setBackCanvas(assistCanvasEl);
+      this.canMove = false;
+      this.isMoved = false;
+      this.moveStartPoint = null;
+      return;
+    }
 
     console.log('onMoveMouseup');
 

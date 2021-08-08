@@ -5,3 +5,9 @@
 .修改模式下同时也能移动(完成)
 .画布上点击能判断出点击的几何图形
 .window.resize事件重绘没有绘制修改的anchor(现在是暂时屏蔽掉了)
+
+.Draw、Modify和Move的时候没有移动不算操作
+.Draw、Modify和Move完也不能执行click
+.click事件的盘算判断
+.判断Move应该去掉包含的anchor
+.click一个是点击到了geo一个是点击到了空白

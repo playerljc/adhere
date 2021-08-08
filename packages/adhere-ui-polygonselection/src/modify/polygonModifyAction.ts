@@ -124,6 +124,8 @@ class PolygonModifyAction extends ModifyAction {
 
     data.data[this.startIndex] = targetPoint;
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -155,6 +157,8 @@ class PolygonModifyAction extends ModifyAction {
       point.y += offsetY;
     });
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -178,7 +182,7 @@ class PolygonModifyAction extends ModifyAction {
     const pt = turf.point([targetPoint.x, targetPoint.y]);
     const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
 
-    return turf.booleanPointInPolygon(pt, poly);
+    return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
   }
 
   /**
@@ -206,7 +210,7 @@ class PolygonModifyAction extends ModifyAction {
     if (!this.context || !this.data || !startPoint || !targetPoint) return;
 
     const srcData = { ...(this.data.data as IPolygonData) };
-    srcData.data = srcData.data.map(point => ({...point}));
+    srcData.data = srcData.data.map((point) => ({ ...point }));
 
     const offsetX = targetPoint.x - startPoint.x;
     const offsetY = targetPoint.y - startPoint.y;

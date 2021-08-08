@@ -174,6 +174,8 @@ class CircleModifyAction extends ModifyAction {
     // 两点间距离(圆的中心点和targetPoint)之间的距离
     data.data.radius = MathUtil.getDistanceByBetweenPoint({ p1: center, p2: targetPoint });
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -203,6 +205,8 @@ class CircleModifyAction extends ModifyAction {
     data.data.center.x += offsetX;
     data.data.center.y += offsetY;
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -226,7 +230,10 @@ class CircleModifyAction extends ModifyAction {
 
     const { center, radius } = this?.data?.data?.data;
 
-    return MathUtil.isPointInCircle(targetPoint, { center, radius });
+    return (
+      MathUtil.isPointInCircle(targetPoint, { center, radius }) &&
+      !this.getPointInAnchor(targetPoint)
+    );
   }
 
   /**

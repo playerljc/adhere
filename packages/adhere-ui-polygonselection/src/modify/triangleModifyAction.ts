@@ -215,6 +215,8 @@ class TriangleModifyAction extends ModifyAction {
 
     if (!result) return;
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -245,6 +247,8 @@ class TriangleModifyAction extends ModifyAction {
       point.x += offsetX;
       point.y += offsetY;
     });
+
+    this.data.data = data;
 
     context.clearDraw();
 
@@ -692,14 +696,13 @@ class TriangleModifyAction extends ModifyAction {
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
-    const points = [...this?.data?.data?.data?.points || []];
+    const points = [...(this?.data?.data?.data?.points || [])];
     points.push(points[0]);
-
 
     const pt = turf.point([targetPoint.x, targetPoint.y]);
     const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
 
-    return turf.booleanPointInPolygon(pt, poly);
+    return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
   }
 
   /**

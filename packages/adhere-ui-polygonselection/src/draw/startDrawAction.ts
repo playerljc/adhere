@@ -1,3 +1,4 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
@@ -8,7 +9,6 @@ import {
   ActionStatus,
   ActionType,
   IPoint,
-  IRectangleData,
   IStartData,
   IStyle,
   SelectType,
@@ -31,6 +31,8 @@ class StartDrawAction extends DrawAction {
   // 内圆半径
   protected innerRadius: number = 0;
 
+  protected isMove = false;
+
   /**
    * context
    */
@@ -39,6 +41,50 @@ class StartDrawAction extends DrawAction {
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
+  }
+
+  /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: IStartData): boolean {
+    const {
+      // 圆的中心点
+      center,
+      // 外半径
+      outRadius,
+      // 内半径(外半径的一半)
+      innerRadius,
+    } = data.data;
+
+    const pt = turf.point([point.x, point.y]);
+
+    const startCount = 5;
+    const spend = 360 / startCount;
+    const min = 90 - spend;
+    const max = spend - min;
+
+    const points: IPoint[] = [];
+
+    for (let i = 0; i < startCount; i++) {
+      points.push({
+        x: Math.cos(((min + i * spend) / 180) * Math.PI) * outRadius + center.x,
+        y: -Math.sin(((min + i * spend) / 180) * Math.PI) * outRadius + center.y,
+      });
+
+      points.push({
+        x: Math.cos(((max + i * spend) / 180) * Math.PI) * innerRadius + center.x,
+        y: -Math.sin(((max + i * spend) / 180) * Math.PI) * innerRadius + center.y,
+      });
+    }
+
+    const polygon = points.map((point) => [point.x, point.y]);
+    polygon.push(polygon[0]);
+    const poly = turf.polygon([polygon]);
+
+    return turf.booleanPointInPolygon(pt, poly);
   }
 
   /**
@@ -156,6 +202,8 @@ class StartDrawAction extends DrawAction {
 
     if (!context) return;
 
+    this.isMove = true;
+
     this.draw(e);
   }
 
@@ -164,7 +212,9 @@ class StartDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasMouseUp(e) {
+    if (!this.isMove) return;
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -312,6 +362,8 @@ class StartDrawAction extends DrawAction {
 
     this.innerRadius = 0;
 
+    this.isMove = false;
+
     this.trigger(ActionEvents.End, {
       selectType: SelectType.Start,
       actionType: ActionType.Draw,
@@ -354,6 +406,8 @@ class StartDrawAction extends DrawAction {
     this.outRadius = 0;
 
     this.innerRadius = 0;
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

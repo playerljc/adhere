@@ -205,6 +205,8 @@ class DiamondModifyAction extends ModifyAction {
 
     if (!result) return;
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -233,6 +235,8 @@ class DiamondModifyAction extends ModifyAction {
 
     data.data.leftTopPoint.x += offsetX;
     data.data.leftTopPoint.y += offsetY;
+
+    this.data.data = data;
 
     context.clearDraw();
 
@@ -553,7 +557,7 @@ class DiamondModifyAction extends ModifyAction {
       ],
     ]);
 
-    return turf.booleanPointInPolygon(pt, poly);
+    return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
   }
 
   /**

@@ -1,3 +1,4 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math.js';
 // @ts-ignore
@@ -11,7 +12,6 @@ import {
   IStyle,
   SelectType,
   ActionType,
-  IFreeData,
 } from '../types';
 import DrawAction from './drawAction';
 
@@ -28,6 +28,8 @@ class PolygonDrawAction extends DrawAction {
   // 点的集合
   private pointStack: IPoint[] = [];
 
+  protected isMove = false;
+
   /**
    * constructor
    */
@@ -36,6 +38,22 @@ class PolygonDrawAction extends DrawAction {
     this.onCanvasClick = this.onCanvasClick.bind(this);
     this.onCanvasMousemove = this.onCanvasMousemove.bind(this);
     this.onCanvasDbClick = this.onCanvasDbClick.bind(this);
+  }
+
+  /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: IPolygonData): boolean {
+    const points = [...data.data];
+    points.push(points[0]);
+
+    const pt = turf.point([point.x, point.y]);
+    const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
+
+    return turf.booleanPointInPolygon(pt, poly);
   }
 
   /**
@@ -99,6 +117,8 @@ class PolygonDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
+    this.isMove = true;
+
     // 如果有startPoint,擦除绘制直线
     this.context.clearDraw();
 
@@ -121,8 +141,10 @@ class PolygonDrawAction extends DrawAction {
   /**
    * onCanvasDbClick - 结束绘制
    */
-  private onCanvasDbClick(): void {
+  private onCanvasDbClick(e): void {
+    if (!this.isMove) return;
     this.end();
+    e.stopPropagation();
   }
 
   /**
@@ -329,6 +351,8 @@ class PolygonDrawAction extends DrawAction {
 
     this.pointStack = [];
 
+    this.isMove = false;
+
     context.addHistoryData(data);
 
     this.trigger(ActionEvents.End, {
@@ -371,6 +395,8 @@ class PolygonDrawAction extends DrawAction {
     this.startPoint = null;
 
     this.pointStack = [];
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

@@ -182,6 +182,8 @@ class StartModifyAction extends ModifyAction {
     data.data.outRadius = MathUtil.getDistanceByBetweenPoint({ p1: center, p2: targetPoint });
     data.data.innerRadius = data.data.outRadius / 2;
 
+    this.data.data = data;
+
     context.clearDraw();
 
     context.drawHistoryData();
@@ -210,6 +212,8 @@ class StartModifyAction extends ModifyAction {
 
     data.data.center.x += offsetX;
     data.data.center.y += offsetY;
+
+    this.data.data = data;
 
     context.clearDraw();
 
@@ -266,7 +270,7 @@ class StartModifyAction extends ModifyAction {
     polygon.push(polygon[0]);
     const poly = turf.polygon([polygon]);
 
-    return turf.booleanPointInPolygon(pt, poly);
+    return turf.booleanPointInPolygon(pt, poly) && !this.getPointInAnchor(targetPoint);
   }
 
   /**

@@ -193,6 +193,8 @@ export interface IMoveAction {
  */
 export enum PolygonSelectionActions {
   CanvasMount = 'CanvasMount',
+  CanvasClickEmpty = 'CanvasClickEmpty',
+  CanvasClickGeometry = 'CanvasClickGeometry',
 }
 
 /**
@@ -213,6 +215,7 @@ export interface IPolygonSelection {
   getHistoryData: () => IActionData[];
   setHistoryData: (data: IActionData[]) => void;
   changeAction: (action: IAction) => void;
+  getCurAction: () => IAction | null;
   setFrontCanvas: (canvasEl: HTMLCanvasElement) => void;
   setBackCanvas: (canvasEl: HTMLCanvasElement) => void;
   start: (style: IStyle) => void;

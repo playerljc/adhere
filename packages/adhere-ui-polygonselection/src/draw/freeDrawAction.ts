@@ -25,6 +25,8 @@ class FreeDrawAction extends DrawAction {
   // startPoint
   protected startPoint: IPoint | null = null;
 
+  protected isMove = false;
+
   // 除了第一个点的所有点
   protected points: IPoint[] = [];
 
@@ -124,6 +126,8 @@ class FreeDrawAction extends DrawAction {
 
     if (!context) return;
 
+    this.isMove = true;
+
     this.draw(e);
   }
 
@@ -132,7 +136,9 @@ class FreeDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasMouseUp(e) {
+    if (!this.isMove) return;
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -266,6 +272,8 @@ class FreeDrawAction extends DrawAction {
 
     this.points = [];
 
+    this.isMove = false;
+
     this.trigger(ActionEvents.End, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
@@ -306,6 +314,8 @@ class FreeDrawAction extends DrawAction {
     this.startPoint = null;
 
     this.points = [];
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

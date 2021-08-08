@@ -17,6 +17,7 @@ import TriangleDrawAction from './draw/triangleDrawAction';
 import DiamondDrawAction from './draw/diamondDrawAction';
 import StartDrawAction from './draw/startDrawAction';
 import FreeDrawAction from './draw/freeDrawAction';
+import MathUtil from '@baifendian/adhere-util/lib/math';
 
 const selectorPrefix = 'adhere-ui-polygonselection';
 
@@ -76,14 +77,62 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     // 初始化canvas
     this.initCanvas();
 
-    // @ts-ignore
-    // this.assistCtx.fillRect(0,0,100,100);
+    this.initEvents();
+  }
+
+  /**
+   * initEvents
+   */
+  protected initEvents() {
+    if (!this.el) return;
+
+    // 点击了el元素
+    this.el.addEventListener('mouseup', (e: MouseEvent) => {
+      if (!e) return;
+
+      // 查看point命中了HistoryData中的哪一项
+      const historyData = this.getHistoryData();
+
+      if(!historyData || !historyData.length) {
+        this.trigger(PolygonSelectionActions.CanvasClickEmpty);
+        return;
+      }
+
+      const point = MathUtil.clientToCtxPoint({
+        event: e,
+        rect: (this.el as HTMLDivElement).getBoundingClientRect(),
+      });
+
+      let findIndexes: number[] = [];
+
+      for (let i = 0; i < historyData.length; i++) {
+        const data = historyData[i];
+
+        const isIn = (this.typeActionMap.get(data.type as SelectType) as any).booleanPointInData(
+          point,
+          data,
+        );
+
+        if (isIn) {
+          findIndexes.push(i);
+        }
+      }
+
+      if (findIndexes.length) {
+        this.trigger(
+          PolygonSelectionActions.CanvasClickGeometry,
+          JSON.parse(JSON.stringify(historyData[findIndexes[findIndexes.length - 1]])),
+        );
+      } else {
+        this.trigger(PolygonSelectionActions.CanvasClickEmpty);
+      }
+    });
   }
 
   /**
    * initCanvas - 初始化Canvas
    */
-  private initCanvas(): void {
+  protected initCanvas(): void {
     if (!this.el) return;
 
     // 创建一个canvas
@@ -111,7 +160,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   /**
    * adapterCanvas - 适配canvas
    */
-  private adapterCanvas() {
+  protected adapterCanvas() {
     const { canvasEl, assistCanvasEl, el } = this;
 
     if (!el || !canvasEl || !assistCanvasEl) return;
@@ -130,7 +179,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   /**
    * onResize
    */
-  private onResize() {
+  protected onResize() {
     this.adapterCanvas();
   }
 
@@ -153,7 +202,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   /**
    * getAssistCanvasEl
    */
-  getAssistCanvasEl() : HTMLCanvasElement | null {
+  getAssistCanvasEl(): HTMLCanvasElement | null {
     return this.assistCanvasEl;
   }
 
@@ -277,6 +326,14 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   }
 
   /**
+   * getCurAction
+   * @return IAction | null
+   */
+  getCurAction(): IAction | null {
+    return this.curAction;
+  }
+
+  /**
    * start - 开始
    * @param style
    * @return void
@@ -326,7 +383,9 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param canvasEl
    */
   setFrontCanvas(canvasEl: HTMLCanvasElement) {
-    canvasEl.style.zIndex = '9999';  }
+    console.log('置顶')
+    canvasEl.style.zIndex = '9999';
+  }
 
   /**
    * setBackCanvas
@@ -334,6 +393,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param canvasEl
    */
   setBackCanvas(canvasEl: HTMLCanvasElement) {
+    console.log('置底')
     canvasEl.style.zIndex = '1';
   }
 

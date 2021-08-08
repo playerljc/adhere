@@ -1,3 +1,4 @@
+import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 // @ts-ignore
@@ -11,7 +12,6 @@ import {
   IStyle,
   SelectType,
   ActionType,
-  IStartData,
 } from '../types';
 import DrawAction from './drawAction';
 import Util from '../util';
@@ -29,6 +29,8 @@ class TriangleDrawAction extends DrawAction {
   // 三角形三个点
   protected points: IPoint[] = [];
 
+  protected isMove = false;
+
   /**
    * context
    */
@@ -37,6 +39,22 @@ class TriangleDrawAction extends DrawAction {
     this.onCanvasMouseDown = this.onCanvasMouseDown.bind(this);
     this.onCanvasMouseMove = this.onCanvasMouseMove.bind(this);
     this.onCanvasMouseUp = this.onCanvasMouseUp.bind(this);
+  }
+
+  /**
+   * booleanPointInData
+   * @description 判断点是否在
+   * @param point
+   * @param data
+   */
+  static booleanPointInData(point: IPoint, data: ITriangleData): boolean {
+    const points = [...(data.data.points || [])];
+    points.push(points[0]);
+
+    const pt = turf.point([point.x, point.y]);
+    const poly = turf.polygon([points.map((point) => [point.x, point.y])]);
+
+    return turf.booleanPointInPolygon(pt, poly);
   }
 
   /**
@@ -113,6 +131,8 @@ class TriangleDrawAction extends DrawAction {
 
     if (!context) return;
 
+    this.isMove = true;
+
     this.draw(e);
   }
 
@@ -121,7 +141,9 @@ class TriangleDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasMouseUp(e) {
+    if (!this.isMove) return;
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -252,6 +274,8 @@ class TriangleDrawAction extends DrawAction {
 
     this.points = [];
 
+    this.isMove = false;
+
     this.trigger(ActionEvents.End, {
       selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
@@ -292,6 +316,8 @@ class TriangleDrawAction extends DrawAction {
     this.startPoint = null;
 
     this.points = [];
+
+    this.isMove = false;
 
     this.status = ActionStatus.Destroy;
 

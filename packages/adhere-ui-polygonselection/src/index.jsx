@@ -17,7 +17,7 @@ import RectangleModifyAction from './modify/rectangleModifyAction';
 import TriangleModifyAction from './modify/triangleModifyAction';
 import StartModifyAction from './modify/startModifyAction';
 
-import { ActionEvents } from './types';
+import { ActionEvents, PolygonSelectionActions, SelectType } from './types';
 
 import './index.less';
 
@@ -35,6 +35,76 @@ class DrawingBoard extends React.Component {
 
   componentDidMount() {
     this.polygonSelection = new PolygonSelection(this.ref.current);
+
+    // ActionType
+    // @ts-ignore
+    const typeActionMap = new Map([
+      [SelectType.Polygon, PolygonModifyAction],
+      [SelectType.Circle, CircleModifyAtion],
+      [SelectType.Rectangle, RectangleModifyAction],
+      [SelectType.Triangle, TriangleModifyAction],
+      [SelectType.Diamond, DiamondModifyAction],
+      [SelectType.Start, StartModifyAction],
+    ]);
+
+    this.polygonSelection.on(PolygonSelectionActions.CanvasClickGeometry, (data) => {
+      // 多边形数据据
+      // const d = {
+      //   selectType: 'Polygon',
+      //   actionType: 'Draw',
+      //   data: {
+      //     id: 'fd4ef30f-8add-4cc1-8f36-d861e77b5354',
+      //     type: 'Polygon',
+      //     data: [
+      //       { x: 148.34375, y: 33 },
+      //       { x: 120.34375, y: 198 },
+      //       { x: 360.34375, y: 181 },
+      //     ],
+      //     style: {
+      //       fillStyle: 'red',
+      //       strokeStyle: '#000',
+      //       lineWidth: 2,
+      //       lineCap: 'round',
+      //       lineJoin: 'round',
+      //       lineDash: [],
+      //       lineDashOffset: -1,
+      //     },
+      //   },
+      // };
+      //
+      // this.polygonSelection.clearDraw();
+      // this.polygonSelection.addHistoryData(d.data);
+      // this.polygonSelection.drawHistoryData();
+      //
+      // const action = new PolygonModifyAction(d);
+      // action.on(ActionEvents.End, () => {
+      //   action.start();
+      // });
+      // this.polygonSelection.changeAction(action);
+      // action.start();
+
+      console.log('click');
+
+      const Component = typeActionMap.get(data.type);
+      const action = new Component({
+        selectType: data.type,
+        actionType: 'Draw',
+        data,
+      });
+      action.on(ActionEvents.End, () => {
+        action.start();
+      });
+      this.polygonSelection.changeAction(action);
+
+      action.start();
+    });
+
+    this.polygonSelection.on(PolygonSelectionActions.CanvasClickEmpty, () => {
+      console.log('clickEmpty')
+      this.polygonSelection.clearDraw();
+      this.polygonSelection.clearAssistDraw();
+      this.polygonSelection.drawHistoryData();
+    });
   }
 
   render() {
@@ -47,7 +117,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new PolygonDrawAction();
                   action.on(ActionEvents.End, (data) => {
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -61,7 +131,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new CircleDrawAction();
                   action.on(ActionEvents.End, (data) => {
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -75,7 +145,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new RectangleDrawAction();
                   action.on(ActionEvents.End, (data) => {
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -89,7 +159,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new TriangleDrawAction();
                   action.on(ActionEvents.End, (data) => {
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -103,8 +173,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new DiamondDrawAction();
                   action.on(ActionEvents.End, (data) => {
-                    console.log(JSON.stringify(data));
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -118,8 +187,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new StartDrawAction();
                   action.on(ActionEvents.End, (data) => {
-                    console.log(JSON.stringify(data));
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -133,7 +201,7 @@ class DrawingBoard extends React.Component {
                 onClick={() => {
                   const action = new FreeDrawAction();
                   action.on(ActionEvents.End, () => {
-                    action.start();
+                    // action.start();
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
