@@ -5,6 +5,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, ITriangleData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 import TriangleDrawAction from '../draw/triangleDrawAction';
+import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**
  * TriangleModifyAction
@@ -737,6 +738,14 @@ class TriangleModifyAction extends ModifyAction {
         point.x += offsetX;
         point.y += offsetY;
       });
+
+      if (srcData.style) {
+        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+      }
 
       TriangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

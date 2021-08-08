@@ -5,6 +5,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IStartData, IPoint, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 import StartDrawAction from '../draw/startDrawAction';
+import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**
  * StartModifyAction
@@ -311,6 +312,14 @@ class StartModifyAction extends ModifyAction {
     if (srcData.data && srcData.data.center) {
       srcData.data.center.x += offsetX;
       srcData.data.center.y += offsetY;
+
+      if (srcData.style) {
+        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+      }
 
       StartDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

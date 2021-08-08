@@ -6,6 +6,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, IDiamondData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 import DiamondDrawAction from '../draw/diamondDrawAction';
+import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**
  * DiamondModifyAction
@@ -598,6 +599,14 @@ class DiamondModifyAction extends ModifyAction {
     if (srcData.data && srcData.data.leftTopPoint) {
       srcData.data.leftTopPoint.x += offsetX;
       srcData.data.leftTopPoint.y += offsetY;
+
+      if (srcData.style) {
+        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+      }
 
       DiamondDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

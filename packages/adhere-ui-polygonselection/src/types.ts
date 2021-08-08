@@ -247,6 +247,7 @@ export interface IStyle {
   lineJoin: CanvasLineJoin;
   lineDash: number[];
   lineDashOffset: number;
+  globalAlpha: number;
 }
 
 /**

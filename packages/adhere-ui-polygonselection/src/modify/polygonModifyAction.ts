@@ -4,6 +4,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, IPolygonData, SelectType } from '../types';
 import ModifyAction from './modifyAction';
 import PolygonDrawAction from '../draw/polygonDrawAction';
+import defaultMoveGemStyle from "../defaultMoveGemStyle";
 
 /**
  * PolygonModifyAction
@@ -220,6 +221,14 @@ class PolygonModifyAction extends ModifyAction {
         point.x += offsetX;
         point.y += offsetY;
       });
+
+      if (srcData.style) {
+        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
+        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
+        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
+        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
+        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
+      }
 
       PolygonDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

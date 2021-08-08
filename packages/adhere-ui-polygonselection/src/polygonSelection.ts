@@ -108,7 +108,9 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
       for (let i = 0; i < historyData.length; i++) {
         const data = historyData[i];
 
-        const isIn = (this.typeActionMap.get(data.type as SelectType) as any).booleanPointInData(
+        const action = (this.typeActionMap.get(data.type as SelectType) as any);
+
+        const isIn = action?.booleanPointInData(
           point,
           data,
         );

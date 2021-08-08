@@ -164,6 +164,7 @@ class TriangleDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
     }
 
     this.drawHistoryPath(
