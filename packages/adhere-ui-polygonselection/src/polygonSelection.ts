@@ -93,7 +93,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
 
-      if(!historyData || !historyData.length) {
+      if (!historyData || !historyData.length) {
         this.trigger(PolygonSelectionActions.CanvasClickEmpty);
         return;
       }
@@ -108,12 +108,10 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
       for (let i = 0; i < historyData.length; i++) {
         const data = historyData[i];
 
-        const action = (this.typeActionMap.get(data.type as SelectType) as any);
+        const action = this.typeActionMap.get(data.type as SelectType) as any;
 
-        const isIn = action?.booleanPointInData(
-          point,
-          data,
-        );
+        const isIn =
+          'booleanPointInData' in action ? action?.booleanPointInData(point, data) : false;
 
         if (isIn) {
           findIndexes.push(i);
@@ -385,7 +383,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param canvasEl
    */
   setFrontCanvas(canvasEl: HTMLCanvasElement) {
-    console.log('置顶')
+    console.log('置顶');
     canvasEl.style.zIndex = '9999';
   }
 
@@ -395,7 +393,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param canvasEl
    */
   setBackCanvas(canvasEl: HTMLCanvasElement) {
-    console.log('置底')
+    console.log('置底');
     canvasEl.style.zIndex = '1';
   }
 
