@@ -158,7 +158,7 @@ export default () => {
               onClick={() => {
                 const action = new CircleDrawAction();
                 action.on(ActionEvents.End, (data) => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
@@ -173,7 +173,7 @@ export default () => {
               onClick={() => {
                 const action = new RectangleDrawAction();
                 action.on(ActionEvents.End, (data) => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
@@ -188,7 +188,7 @@ export default () => {
               onClick={() => {
                 const action = new DiamondDrawAction();
                 action.on(ActionEvents.End, (data) => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
@@ -203,7 +203,7 @@ export default () => {
               onClick={() => {
                 const action = new TriangleDrawAction();
                 action.on(ActionEvents.End, (data) => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
@@ -218,7 +218,7 @@ export default () => {
               onClick={() => {
                 const action = new StartDrawAction();
                 action.on(ActionEvents.End, (data) => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
@@ -233,7 +233,7 @@ export default () => {
               onClick={() => {
                 const action = new PolygonDrawAction();
                 action.on(ActionEvents.End, (data) => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
@@ -248,7 +248,7 @@ export default () => {
               onClick={() => {
                 const action = new FreeDrawAction();
                 action.on(ActionEvents.End, () => {
-                  // action.start();
+                  action.start();
                 });
                 polygonSelection.current.changeAction(action);
                 action.start();
