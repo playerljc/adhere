@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, message } from 'antd';
+import React, { useEffect, useRef } from 'react';
+import { Button, Table, message } from 'antd';
 import {
   PolygonSelection as PolygonSelectionModule,
   Preferences,
   MessageDialog,
+  Split,
 } from '@baifendian/adhere';
 
 import styles from './imageselect.less';
@@ -134,18 +135,116 @@ export default () => {
             <Button
               type="primary"
               onClick={() => {
+                // 画布的数据
                 const canvasData = polygonSelection.current.getHistoryData();
-                const localData = Preferences.getObjectByLocal('polygonSelectionData') || [];
-                localData.push(canvasData);
-                Preferences.putObjectByLocal('polygonSelectionData', localData);
-                message.success('保存成功！');
+
+                if (!canvasData || !canvasData.length) {
+                  message.warn('画布上没有可以保存的数据！');
+                  return;
+                }
+
+                MessageDialog.InputPrompt({
+                  title: '数据名称',
+                  config: {
+                    label: '数据名称',
+                    initialValue: '',
+                  },
+                  width: 300,
+                  zIndex: 1000,
+                  local: 'zh_CN',
+                  onSuccess: (value) => {
+                    return new Promise((resolve) => {
+                      const localData = Preferences.getObjectByLocal('polygonSelectionData') || [];
+
+                      // 添加画布数据
+                      localData.push({
+                        id: new Date().getTime(),
+                        name: value,
+                        data: canvasData,
+                      });
+
+                      Preferences.putObjectByLocal('polygonSelectionData', localData);
+                      message.success('保存成功！');
+                      resolve();
+                    });
+                  },
+                });
               }}
             >
               保存数据
             </Button>
           </li>
           <li>
-            <Button type="primary" onClick={() => {}}>
+            <Button
+              type="primary"
+              onClick={() => {
+                const localData = Preferences.getObjectByLocal('polygonSelectionData') || [];
+
+                const columns = [
+                  {
+                    title: '名称',
+                    dataIndex: 'name',
+                    key: 'name',
+                  },
+                  {
+                    title: '操作',
+                    dataIndex: 'option',
+                    key: 'option',
+                    render: (text, record) => {
+                      return (
+                        <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
+                          <a
+                            href="#"
+                            onClick={() => {
+                              const index = localData.findIndex((data) => data.id === record.id);
+                              if (index !== -1) {
+                                localData.splice(index, 1);
+                                Preferences.putObjectByLocal('polygonSelectionData', localData);
+                                message.success('删除成功！');
+                                MessageDialog.close(el);
+                              }
+                            }}
+                          >
+                            删除
+                          </a>
+                          <Split direction="horizontal" />
+                          <a
+                            href="#"
+                            onClick={() => {
+                              message.success('操作成功！');
+                              MessageDialog.close(el);
+                              const { data } = record;
+                              polygonSelection.current.setHistoryData(data);
+                              polygonSelection.current.clearDraw();
+                              polygonSelection.current.drawHistoryData();
+                            }}
+                          >
+                            打开
+                          </a>
+                        </div>
+                      );
+                    },
+                  },
+                ];
+
+                const el = MessageDialog.Modal({
+                  config: {
+                    title: '设置数据',
+                  },
+                  defaultCloneBtn: false,
+                  children: (
+                    <div style={{ width: '100%' }}>
+                      <Table
+                        rowKey="id"
+                        columns={columns}
+                        dataSource={localData}
+                        pagination={false}
+                      />
+                    </div>
+                  ),
+                });
+              }}
+            >
               设置数据
             </Button>
           </li>
