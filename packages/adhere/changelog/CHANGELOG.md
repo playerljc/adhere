@@ -1,3 +1,21 @@
+# 1.0.7
+
+***
+
+2021-8-9
+
+* **adhere-ui-css**
+  - 加入common-no-select函数
+* **adhere-ui-flexlayout**
+  - fixed和auto加入了getEl方法
+* **adhere-ui-polygonselection**
+  - 加入PolygonSelection(多边形选区)组件
+* **adhere-ui-splitlayout**
+  - onMouseup事件加入dragFinished事件触发
+  - 加入FlexLayout的use
+* **adhere-util**
+  - math修改
+
 # 1.0.6
 
 ***

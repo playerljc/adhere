@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-ui-polygonselection",
-  "version": "1.0.6",
-  "description": "多边形选取",
+  "version": "1.0.7",
+  "description": "多边形选区",
   "main": "lib/index.js",
   "files": [
     "lib",

@@ -49,6 +49,7 @@
 - adhere-ui-pullrefresh
 - adhere-ui-notification
 - adhere-ui-swipeout
+- adhere-ui-polygonselection
 
 ### 没有落实有雏形的组件
 
