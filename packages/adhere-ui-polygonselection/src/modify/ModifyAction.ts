@@ -115,9 +115,13 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
     this.data = data;
 
     this.onContext = this.onContext.bind(this);
+
+    // 修改相关的
     this.onCanvasMousedown = this.onCanvasMousedown.bind(this);
     this.onCanvasMousemove = this.onCanvasMousemove.bind(this);
     this.onCanvasMouseup = this.onCanvasMouseup.bind(this);
+
+    // 是否可以修改的移动
     this.onCanvasIsModifyMousemove = this.onCanvasIsModifyMousemove.bind(this);
 
     // move的相关事件
@@ -129,9 +133,9 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
   }
 
   /**
-   * setAnchorStyle
+   * setAnchorCircleStyle
    */
-  protected setAnchorStyle(): void {
+  protected setAnchorCircleStyle(): void {
     if (!this.context) return;
 
     const ctx = this.context.getCtx();
@@ -142,6 +146,23 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
     ctx.strokeStyle = defaultAnchorStyle.strokeStyle;
     ctx.fillStyle = defaultAnchorStyle.fillStyle;
     ctx.lineWidth = defaultAnchorStyle.lineWidth;
+  }
+
+  /**
+   * setAnchorLineStyle
+   */
+  protected setAnchorLineStyle(): void {
+    if (!this.context) return;
+
+    const ctx = this.context.getCtx();
+
+    if (!ctx) return;
+
+    // anchor上下文
+    ctx.strokeStyle = defaultAnchorStyle.strokeStyle;
+    ctx.lineWidth = defaultAnchorStyle.lineWidth;
+    ctx.setLineDash(defaultAnchorStyle.lineDash);
+    ctx.lineDashOffset = defaultAnchorStyle.lineDashOffset;
   }
 
   /**
@@ -221,6 +242,7 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
    */
   protected onCanvasMouseup(e) {
     this.end(e);
+    e.stopPropagation();
   }
 
   /**
@@ -420,12 +442,12 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
     this.canMove = false;
     this.isMoved = false;
     this.moveStartPoint = null;
+    e.stopPropagation();
   }
 
   /**
    * start
    */
-
   start(): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 

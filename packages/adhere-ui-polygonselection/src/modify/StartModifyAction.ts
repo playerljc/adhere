@@ -63,7 +63,7 @@ class StartModifyAction extends ModifyAction {
 
       ctx.beginPath();
 
-      this.setAnchorStyle();
+      this.setAnchorCircleStyle();
 
       ctx.ellipse(
         point.x,
@@ -80,11 +80,10 @@ class StartModifyAction extends ModifyAction {
     }
 
     ctx.beginPath();
-    this.setAnchorStyle();
+    this.setAnchorLineStyle();
     ctx.ellipse(center.x, center.y, outRadius, outRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.stroke();
-    ctx.fill();
   }
 
   /**

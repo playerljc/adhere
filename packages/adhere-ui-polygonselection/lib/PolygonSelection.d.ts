@@ -1,5 +1,5 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-import { IAction, IActionData, IPolygonSelection, IStyle, SelectType } from './types';
+import { IAction, IActionData, IPolygonSelection, IStyle, SelectType, IListeners } from './types';
 /**
  * PolygonSelection
  * @class
@@ -7,6 +7,7 @@ import { IAction, IActionData, IPolygonSelection, IStyle, SelectType } from './t
  */
 declare class PolygonSelection extends Emitter implements IPolygonSelection {
     protected el: HTMLElement | null;
+    protected listeners: IListeners | null | undefined;
     protected curAction: IAction | null;
     protected canvasEl: HTMLCanvasElement | null;
     protected ctx: CanvasRenderingContext2D | null;
@@ -16,10 +17,16 @@ declare class PolygonSelection extends Emitter implements IPolygonSelection {
     protected typeActionMap: Map<SelectType, IAction>;
     /**
      * constructor
-     * @param el - 父元素
-     * @param defaultData: IActionData[]
+     * @param el: HtmlElement - 父元素
+     * @param defaultData: IActionData[] - 缺省的ActionData数据
+     * @param listeners: IListeners - 缺省的事件注册对象
      */
-    constructor(el: HTMLElement, defaultData?: IActionData[]);
+    constructor(el: HTMLElement, defaultData?: IActionData[], listeners?: IListeners);
+    /**
+     * initListeners
+     * @description 注册用户的listeners
+     */
+    protected initListeners(): void;
     /**
      * initEvents
      */

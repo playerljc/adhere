@@ -69,9 +69,13 @@ declare abstract class ModifyAction extends Emitter implements IModifyAction, IM
      */
     protected constructor(data: IActionData);
     /**
-     * setAnchorStyle
+     * setAnchorCircleStyle
      */
-    protected setAnchorStyle(): void;
+    protected setAnchorCircleStyle(): void;
+    /**
+     * setAnchorLineStyle
+     */
+    protected setAnchorLineStyle(): void;
     /**
      * onContext
      */

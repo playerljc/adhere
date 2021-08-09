@@ -1,5 +1,5 @@
 import { IPoint, IDiamondData, IStyle } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 /**
  * DiamondDrawAction
  * @class

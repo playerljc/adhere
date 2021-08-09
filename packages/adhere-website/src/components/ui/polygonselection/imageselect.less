@@ -1,0 +1,35 @@
+.Wrap {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.Fixed {
+  flex-shrink: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+  > ul {
+    margin: 0;
+    padding: 20px;
+    list-style: none;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    > li {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+
+      :global(> .ant-btn) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.Auto {
+  position: relative;
+  flex-grow: 1;
+  min-width: 0;
+}

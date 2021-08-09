@@ -109,7 +109,7 @@ class TriangleModifyAction extends ModifyAction {
 
       ctx.beginPath();
 
-      this.setAnchorStyle();
+      this.setAnchorCircleStyle();
 
       ctx.ellipse(
         point.x,
@@ -127,17 +127,13 @@ class TriangleModifyAction extends ModifyAction {
 
     // 矩形绘制
     ctx.beginPath();
-
-    this.setAnchorStyle();
-
+    this.setAnchorLineStyle();
     ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
     ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
     ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
-
     ctx.stroke();
-    ctx.fill();
   }
 
   /**

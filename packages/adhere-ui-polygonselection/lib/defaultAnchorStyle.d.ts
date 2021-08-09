@@ -4,7 +4,7 @@ declare const _default: {
     lineWidth: number;
     lineCap: string;
     lineJoin: string;
-    lineDash: never[];
+    lineDash: number[];
     lineDashOffset: number;
 };
 /**

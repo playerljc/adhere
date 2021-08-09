@@ -4,11 +4,11 @@
 export default {
   fillStyle: '#fff',
   // 描边颜色
-  strokeStyle: '#000',
+  strokeStyle: '#fff',
   // 描边大小
   lineWidth: 1,
   lineCap: 'round',
   lineJoin: 'round',
-  lineDash: [],
+  lineDash: [5, 4, 3],
   lineDashOffset: -1,
 };

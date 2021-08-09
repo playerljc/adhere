@@ -14,7 +14,7 @@ import {
   IStyle,
   SelectType,
 } from '../types';
-import DrawAction from './drawAction';
+import DrawAction from './DrawAction';
 import Util from '../util';
 
 /**

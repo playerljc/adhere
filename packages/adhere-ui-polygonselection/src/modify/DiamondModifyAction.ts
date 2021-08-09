@@ -99,7 +99,7 @@ class DiamondModifyAction extends ModifyAction {
 
       ctx.beginPath();
 
-      this.setAnchorStyle();
+      this.setAnchorCircleStyle();
 
       ctx.ellipse(
         point.x,
@@ -118,7 +118,7 @@ class DiamondModifyAction extends ModifyAction {
     // 矩形绘制
     ctx.beginPath();
 
-    this.setAnchorStyle();
+    this.setAnchorLineStyle();
 
     ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
     ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
@@ -127,7 +127,6 @@ class DiamondModifyAction extends ModifyAction {
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
 
     ctx.stroke();
-    ctx.fill();
   }
 
   /**

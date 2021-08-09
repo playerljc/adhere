@@ -98,7 +98,7 @@ class RectangleModifyAction extends ModifyAction {
 
       ctx.beginPath();
 
-      this.setAnchorStyle();
+      this.setAnchorCircleStyle();
 
       ctx.ellipse(
         point.x,

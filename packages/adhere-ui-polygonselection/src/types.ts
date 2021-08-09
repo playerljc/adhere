@@ -1,5 +1,3 @@
-import PolygonSelection from './index';
-
 /**
  * Action的状态
  */
@@ -37,9 +35,15 @@ export interface IAction {
   // 销毁
   destroy: () => void;
   // 设置上下文对象
-  setContext: (context: PolygonSelection) => void;
+  setContext: (context: IPolygonSelection) => void;
 }
 
+/**
+ * IListeners
+ */
+export interface IListeners {
+  [propName: string]: () => void;
+}
 /**
  * IActionData - Action的数据
  */

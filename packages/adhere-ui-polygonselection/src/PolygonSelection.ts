@@ -8,6 +8,7 @@ import {
   IStyle,
   PolygonSelectionActions,
   SelectType,
+  IListeners,
 } from './types';
 
 import PolygonDrawAction from './draw/PolygonDrawAction';
@@ -29,6 +30,9 @@ const selectorPrefix = 'adhere-ui-polygonselection';
 class PolygonSelection extends Emitter implements IPolygonSelection {
   // 父元素
   protected el: HTMLElement | null = null;
+
+  // 注册的事件对象
+  protected listeners: IListeners | null | undefined = null;
 
   // 当前的Action
   protected curAction: IAction | null = null;
@@ -62,28 +66,51 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
   /**
    * constructor
-   * @param el - 父元素
-   * @param defaultData: IActionData[]
+   * @param el: HtmlElement - 父元素
+   * @param defaultData: IActionData[] - 缺省的ActionData数据
+   * @param listeners: IListeners - 缺省的事件注册对象
    */
-  constructor(el: HTMLElement, defaultData?: IActionData[]) {
+  constructor(el: HTMLElement, defaultData?: IActionData[], listeners?: IListeners) {
     super();
 
     this.el = el;
+
+    this.listeners = listeners;
 
     defaultData && (this.canvasData = defaultData);
 
     this.onResize = this.onResize.bind(this);
 
-    // 初始化canvas
+    // 初始化Listeners
+    this.initListeners();
+
+    // 初始化Canvas
     this.initCanvas();
 
+    // 初始化Events
     this.initEvents();
+  }
+
+  /**
+   * initListeners
+   * @description 注册用户的listeners
+   */
+  protected initListeners(): void {
+    const { listeners } = this;
+
+    if (!listeners) return;
+
+    const keys = Object.keys(listeners);
+
+    keys.forEach((key) => {
+      this.on(key, listeners[key]);
+    });
   }
 
   /**
    * initEvents
    */
-  protected initEvents() {
+  protected initEvents(): void {
     if (!this.el) return;
 
     // 点击了el元素
@@ -382,7 +409,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @description 置顶
    * @param canvasEl
    */
-  setFrontCanvas(canvasEl: HTMLCanvasElement) {
+  setFrontCanvas(canvasEl: HTMLCanvasElement): void {
     console.log('置顶');
     canvasEl.style.zIndex = '9999';
   }
@@ -392,7 +419,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @description 置底
    * @param canvasEl
    */
-  setBackCanvas(canvasEl: HTMLCanvasElement) {
+  setBackCanvas(canvasEl: HTMLCanvasElement): void {
     console.log('置底');
     canvasEl.style.zIndex = '1';
   }

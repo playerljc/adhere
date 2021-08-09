@@ -1,4 +1,3 @@
-import PolygonSelection from './index';
 /**
  * Action的状态
  */
@@ -25,7 +24,13 @@ export interface IAction {
     start: (style?: IStyle) => void;
     end: (e?: MouseEvent) => void;
     destroy: () => void;
-    setContext: (context: PolygonSelection) => void;
+    setContext: (context: IPolygonSelection) => void;
+}
+/**
+ * IListeners
+ */
+export interface IListeners {
+    [propName: string]: () => void;
 }
 /**
  * IActionData - Action的数据

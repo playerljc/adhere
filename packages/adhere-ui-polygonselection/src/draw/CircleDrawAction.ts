@@ -155,7 +155,7 @@ class CircleDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: ICircleData) {
+  static draw(ctx: CanvasRenderingContext2D, data: ICircleData): void {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -207,7 +207,7 @@ class CircleDrawAction extends DrawAction {
    * start
    * @param style
    */
-  start(style: IStyle) {
+  start(style: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
     const { context } = this;
@@ -242,7 +242,7 @@ class CircleDrawAction extends DrawAction {
   /**
    * end
    */
-  end(e) {
+  end(e): void {
     const { context } = this;
 
     if (!context) {
@@ -295,7 +295,7 @@ class CircleDrawAction extends DrawAction {
   /**
    * destroy
    */
-  destroy() {
+  destroy(): void {
     const { context } = this;
 
     if (!context) {
