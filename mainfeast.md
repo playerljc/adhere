@@ -50,6 +50,7 @@
 - adhere-ui-notification
 - adhere-ui-swipeout
 - adhere-ui-polygonselection
+- adhere-util-domain
 
 ### 没有落实有雏形的组件
 

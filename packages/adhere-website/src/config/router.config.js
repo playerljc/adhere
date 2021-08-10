@@ -124,6 +124,8 @@ const WatchMemoized = lazy(() =>
   import(/* webpackChunkName: "watchmemoized" */ '@/components/util/watchmemoized'),
 );
 const Ajax = lazy(() => import(/* webpackChunkName: "ajax" */ '@/components/util/ajax'));
+const Domain = lazy(() => import(/* webpackChunkName: "domain" */ '@/components/util/domain'));
+
 
 const Echarts = lazy(() =>
   import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'),
@@ -419,6 +421,11 @@ export default () => [
                 name: 'Ajax',
                 component: Ajax,
               },
+              {
+                path: '/adhere/util/domain',
+                name: 'Domain',
+                component: Domain,
+              }
             ],
           },
           {

@@ -65,6 +65,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-resource', 'Resource'],
   ['@baifendian/adhere-util-adapterscreen', 'AdapterScreen'],
   ['@baifendian/adhere-util-watchmemoized', 'WatchMemoized'],
+  ['@baifendian/adhere-util-domain','Domain'],
 ]);
 
 /**

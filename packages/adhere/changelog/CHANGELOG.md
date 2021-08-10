@@ -2,7 +2,7 @@
 
 ***
 
-2021-8-9
+2021-8-10
 
 * **adhere-ui-css**
   - 加入common-no-select函数
@@ -15,6 +15,8 @@
   - 加入FlexLayout的use
 * **adhere-util**
   - math修改
+* **adhere-util-domain**
+  - domain模块的浏览器端实现
 
 # 1.0.6
 

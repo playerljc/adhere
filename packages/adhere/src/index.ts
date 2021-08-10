@@ -48,6 +48,7 @@ import NotNull from '@baifendian/adhere-util-notnull';
 import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
+import Domain from '@baifendian/adhere-util-domain';
 
 export { 
   BackTopAnimation,
@@ -100,4 +101,5 @@ export {
   Preferences,
   Resource,
   WatchMemoized,
+  Domain,
 };

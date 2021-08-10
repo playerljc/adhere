@@ -145,7 +145,6 @@ export default () => {
 
       <h2>字典返回函数值的memoized操作</h2>
       <Playground
-        Playground
         mode="code"
         scope={{ React }}
         expand
