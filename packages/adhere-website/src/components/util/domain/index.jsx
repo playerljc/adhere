@@ -1,11 +1,16 @@
-import React from 'react';
+import React,{useRef} from 'react';
 import { Button } from 'antd';
 import { Domain } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
 
+import styles from './index.less';
+
 export default () => {
+  const console1Ref = useRef();
+  const console2Ref = useRef();
+
   return (
     <div className="Page">
       <h1>Domain</h1>
@@ -148,17 +153,21 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-  import React from 'react';
+  import React,{useRef} from 'react';
   import { Button } from 'antd';
   import { Domain } from '@baifendian/adhere';
 
+  const console1Ref = useRef();
+  
   <Button
     type="primary"
     onClick={() => {
       const d = Domain.create();
 
       d.on('error', function (e) {
-        console.log(e);
+        const content = console1Ref.current.innerHTML;
+        console1Ref.current.innerHTML = \`\${content}\${content ? '</br>' : ''}\${e.toString()}\`;
+        console1Ref.current.scrollTop = console1Ref.current.scrollHeight - console1Ref.current.offsetHeight;
       });
 
       d.run(function () {
@@ -170,22 +179,27 @@ export default () => {
   </Button>
       `}
       >
-        <Button
-          type="primary"
-          onClick={() => {
-            const d = Domain.create();
+        <>
+          <Button
+            type="primary"
+            onClick={() => {
+              const d = Domain.create();
 
-            d.on('error', function (e) {
-              console.log(e);
-            });
+              d.on('error', function (e) {
+                const content = console1Ref.current.innerHTML;
+                console1Ref.current.innerHTML = `${content}${content ? `</br>` : ''}${e.toString()}`;
+                console1Ref.current.scrollTop = console1Ref.current.scrollHeight - console1Ref.current.offsetHeight;
+              });
 
-            d.run(function () {
-              noexists();
-            });
-          }}
-        >
-          运行
-        </Button>
+              d.run(function () {
+                noexists();
+              });
+            }}
+          >
+            运行
+          </Button>
+          <div className={styles.Console} ref={console1Ref}></div>
+        </>
       </Playground>
 
       <h2>基本操作(bind方法)</h2>
@@ -193,17 +207,21 @@ export default () => {
         mode="code"
         scope={{ React }}
         codeText={`
-  import React from 'react';
+  import React,{useRef} from 'react';
   import { Button } from 'antd';
   import { Domain } from '@baifendian/adhere';
 
+  const console2Ref = useRef();
+  
   <Button
     type="primary"
     onClick={() => {
       const d = Domain.create();
 
       d.on('error', function (e) {
-        console.log(e);
+        const content = console1Ref.current.innerHTML;
+        console2Ref.current.innerHTML = \`\${content}\${content ? '</br>' : ''}\${e.toString()}\`;
+        console2Ref.current.scrollTop = console2Ref.current.scrollHeight - console2Ref.current.offsetHeight;
       });
 
       function run() {
@@ -222,29 +240,34 @@ export default () => {
   </Button>
         `}
       >
-        <Button
-          type="primary"
-          onClick={() => {
-            const d = Domain.create();
+        <>
+          <Button
+            type="primary"
+            onClick={() => {
+              const d = Domain.create();
 
-            d.on('error', function (e) {
-              console.log(e);
-            });
+              d.on('error', function (e) {
+                const content = console2Ref.current.innerHTML;
+                console2Ref.current.innerHTML = `${content}${content ? `</br>` : ''}${e.toString()}`;
+                console2Ref.current.scrollTop = console2Ref.current.scrollHeight - console2Ref.current.offsetHeight;
+              });
 
-            function run() {
-              return new Promise(
-                d.bind((resolve) => {
-                  noexists();
-                  resolve();
-                }),
-              );
-            }
+              function run() {
+                return new Promise(
+                  d.bind((resolve) => {
+                    noexists();
+                    resolve();
+                  }),
+                );
+              }
 
-            run();
-          }}
-        >
-          运行
-        </Button>
+              run();
+            }}
+          >
+            运行
+          </Button>
+          <div className={styles.Console} ref={console2Ref}></div>
+        </>
       </Playground>
     </div>
   );
