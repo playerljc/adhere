@@ -97,5 +97,37 @@ export default {
     const _y = point.y - circle.center.y;
     return !(_x * _x + _y * _y > circle.radius * circle.radius);
   },
+  /**
+   * isPointInRect - 点是否在矩形中
+   * @param point
+   * @param rect 1 2 3 4 5 6 7 8 9 10
+   */
+  isPointInRect(point: IPoint, rect: { x: number; y: number; width: number; height: number }) {
+    return (
+      point.x >= rect.x &&
+      point.x <= rect.x + rect.width - 1 &&
+      point.y >= rect.y &&
+      point.y <= rect.y + rect.height - 1
+    );
+  },
+  /**
+   * getCanvasTextInGemX
+   * @description - 获取一个文本在Rect中的居中的X位置
+   * @param ctx
+   * @param text
+   * @param rect
+   */
+  getCanvasTextInGemX(
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    rect: { leftTop: IPoint; rightBottom: IPoint },
+  ): number {
+    const left = rect.leftTop.x;
+    const right = rect.rightBottom.x;
+    const rectWidth = right - left;
+    const { width: textWidth } = ctx.measureText(text);
+
+    return (rectWidth - textWidth) / 2;
+  },
   /**--------------------------math-end------------------------**/
 };

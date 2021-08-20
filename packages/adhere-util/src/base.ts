@@ -14,9 +14,7 @@ export default {
    * @param value
    */
   isEmpty(value) {
-    if (value === null || value === '' || value === undefined) return true;
-
-    return false;
+    return value === null || value === '' || value === undefined;
   },
   /**
    * isNumber - 判断是否是number

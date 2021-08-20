@@ -83,6 +83,7 @@
     "@baifendian/adhere-ui-tableheadsearch": "^1.0.6",
     "@baifendian/adhere-ui-tablelist": "^1.0.6",
     "@baifendian/adhere-ui-polygonselection": "^1.0.6",
+    "@baifendian/adhere-ui-playground": "^1.0.6",
     "@baifendian/adhere-util": "^1.0.6",
     "@baifendian/adhere-util-adapterscreen": "^1.0.6",
     "@baifendian/adhere-util-communication-ajax": "^1.0.6",

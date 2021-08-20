@@ -36,26 +36,28 @@ let changelogHtmlStr = `
 
 packageNames.forEach((packageName) => {
   const changelogHtmlPath = path.join(packagesDirPath, packageName, 'changelog', 'CHANGELOG.html');
-  const content = fs.readFileSync(changelogHtmlPath, { encoding: 'utf-8' });
-  const $ = cheerio.load(content);
+  try {
+    const content = fs.readFileSync(changelogHtmlPath, { encoding: 'utf-8' });
+    const $ = cheerio.load(content);
 
-  const result = $('h1')
-    .filter((i, el) => {
-      return $(el).text() === version;
-    })
-    .next()
-    .next()
-    .next();
+    const result = $('h1')
+      .filter((i, el) => {
+        return $(el).text() === version;
+      })
+      .next()
+      .next()
+      .next();
 
-  const html = $(result).html();
-  if (html) {
-    changelogHtmlStr += `
+    const html = $(result).html();
+    if (html) {
+      changelogHtmlStr += `
       <li>
         <h3>${packageName}</h3>
         <ul>${html}</ul>
       </li>
     `;
-  }
+    }
+  } catch (e) {}
 });
 
 changelogHtmlStr += '</ul>';

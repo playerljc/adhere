@@ -2,12 +2,14 @@
 
 ***
 
-2021-8-10
+2021-8-20
 
 * **adhere-ui-css**
   - 加入common-no-select函数
 * **adhere-ui-flexlayout**
   - fixed和auto加入了getEl方法
+* **adhere-ui-playground**
+  - 加入adhere-ui-playground组件
 * **adhere-ui-polygonselection**
   - 加入PolygonSelection(多边形选区)组件
 * **adhere-ui-splitlayout**

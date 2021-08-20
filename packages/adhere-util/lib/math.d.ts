@@ -57,5 +57,27 @@ declare const _default: {
      * @param circle
      */
     isPointInCircle(point: IPoint, circle: ICircle): boolean;
+    /**
+     * isPointInRect - 点是否在矩形中
+     * @param point
+     * @param rect 1 2 3 4 5 6 7 8 9 10
+     */
+    isPointInRect(point: IPoint, rect: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }): boolean;
+    /**
+     * getCanvasTextInGemX
+     * @description - 获取一个文本在Rect中的居中的X位置
+     * @param ctx
+     * @param text
+     * @param rect
+     */
+    getCanvasTextInGemX(ctx: CanvasRenderingContext2D, text: string, rect: {
+        leftTop: IPoint;
+        rightBottom: IPoint;
+    }): number;
 };
 export default _default;

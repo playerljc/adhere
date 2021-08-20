@@ -1,0 +1,49 @@
+{
+  "name": "@baifendian/adhere-ui-playground",
+  "version": "1.0.6",
+  "description": "一个代码展示的组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "umd"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildpackage": "ctbuild buildpackagets",
+    "buildumd": "ctbuild buildumd --packagename AdherePlayground --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/playerljc/adhere"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.2"
+  },
+  "author": "playerljc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitee.com/playerljc/adhere/issues"
+  },
+  "homepage": "https://gitee.com/playerljc/adhere",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/build": "^4.0.11",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "classnames": "^2.2.6",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "component-playground": "^3.2.1",
+    "copy-to-clipboard": "^3.3.1",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.6",
+    "@baifendian/adhere-util-intl": "^1.0.6"
+  }
+}

@@ -54,6 +54,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-notification', 'Notification'],
   ['@baifendian/adhere-ui-swipeout', 'SwipeOut'],
   ['@baifendian/adhere-ui-polygonselection', 'PolygonSelection'],
+  ['@baifendian/adhere-ui-playground', 'PlayGround'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -65,7 +66,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-resource', 'Resource'],
   ['@baifendian/adhere-util-adapterscreen', 'AdapterScreen'],
   ['@baifendian/adhere-util-watchmemoized', 'WatchMemoized'],
-  ['@baifendian/adhere-util-domain','Domain'],
+  ['@baifendian/adhere-util-domain', 'Domain'],
 ]);
 
 /**

@@ -12,6 +12,12 @@ declare const _default: {
         params?: string | undefined;
     }): string;
     isTouch(): boolean;
+    getDrawStartPath(config: {
+        startCount: number;
+        center: import("./types").IPoint;
+        outRadius: number;
+        innerRadius: number;
+    }): import("./types").IPoint[];
     toPoint(percent: string): number;
     toPercent(point: number): string;
     straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
@@ -29,6 +35,16 @@ declare const _default: {
         rect: DOMRect;
     }): import("./types").IPoint;
     isPointInCircle(point: import("./types").IPoint, circle: import("./types").ICircle): boolean;
+    isPointInRect(point: import("./types").IPoint, rect: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }): boolean;
+    getCanvasTextInGemX(ctx: CanvasRenderingContext2D, text: string, rect: {
+        leftTop: import("./types").IPoint;
+        rightBottom: import("./types").IPoint;
+    }): number;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

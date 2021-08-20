@@ -37,6 +37,7 @@ import SwipeOut from '@baifendian/adhere-ui-swipeout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import PolygonSelection from '@baifendian/adhere-ui-polygonselection';
+import PlayGround from '@baifendian/adhere-ui-playground';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
@@ -90,6 +91,7 @@ export {
   TableHeadSearch,
   TableList,
   PolygonSelection,
+  PlayGround,
   Util,
   AdapterScreen,
   Ajax,
