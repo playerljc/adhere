@@ -12,7 +12,7 @@ const selectorPrefix = 'adhere-ui-playground-table';
  * @class Table
  * @classdesc Table
  */
-class Table extends React.Component<ITableProps> {
+class Table extends React.Component<ITableProps, any> {
   /**
    * renderHeader
    */
@@ -69,7 +69,10 @@ class Table extends React.Component<ITableProps> {
                     valign={valign || 'top'}
                     style={{ textAlign: align || 'left' }}
                   >
-                    <ConditionalRender conditional={!!render} noMatch={() => record[dataIndex] || '-'}>
+                    <ConditionalRender
+                      conditional={!!render}
+                      noMatch={() => record[dataIndex] || '-'}
+                    >
                       {() => render(record[dataIndex], record, rowIndex, columnIndex)}
                     </ConditionalRender>
                   </td>

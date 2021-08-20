@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { Requireable } from 'prop-types';
 import PlayGroundExt from 'component-playground';
 import copy from 'copy-to-clipboard';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -19,6 +19,7 @@ const selectPrefix = 'adhere-ui-playground';
  * @classdesc PlayGround
  */
 class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
+  // @ts-ignore
   state = {
     expand: this.props.expand,
   };
@@ -111,6 +112,7 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
     return (
       <ConditionalRender conditional={expand}>
         {() => (
+          // @ts-ignore
           <Card>
             <PlayGroundExt
               {...this.props}
@@ -133,6 +135,7 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
 
     return (
       <div className={selectPrefix}>
+        {/* @ts-ignore*/}
         <Card actions={this.renderAction()}>{children}</Card>
         {this.renderCodeView()}
       </div>

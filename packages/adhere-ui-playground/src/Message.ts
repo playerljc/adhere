@@ -29,10 +29,10 @@ export default {
     document.body.appendChild(message);
 
     setTimeout(() => {
-      const notice = message.querySelector(`.${selectPrefix}-notice`);
+      const notice = message.querySelector(`.${selectPrefix}-notice`) as HTMLElement;
       notice.classList.add(`${selectPrefix}-move-up-leave`);
       setTimeout(() => {
-        message.parentElement.removeChild(message);
+        (message as HTMLDivElement)?.parentElement?.removeChild(message);
       }, 300);
     }, 4000);
   },
