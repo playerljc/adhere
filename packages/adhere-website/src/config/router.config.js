@@ -105,6 +105,7 @@ const SwipeOut = lazy(() => import(/* webpackChunkName: "swipeout" */ '@/compone
 const PolygonSelection = lazy(() =>
   import(/* webpackChunkName: "swipeout" */ '@/components/ui/polygonselection'),
 );
+const PlayGround = lazy(() => import(/* webpackChunkName: "playground" */ '@/components/ui/playground'));
 
 const AdapterScreen = lazy(() =>
   import(/* webpackChunkName: "adapterscreen" */ '@/components/util/adapterscreen'),
@@ -361,6 +362,11 @@ export default () => [
                 name: 'PolygonSelection',
                 component: PolygonSelection,
               },
+              {
+                path: '/adhere/ui/playground',
+                name: 'PlayGround',
+                component: PlayGround,
+              }
             ],
           },
           {

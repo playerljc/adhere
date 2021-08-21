@@ -51,6 +51,7 @@
 - adhere-ui-swipeout
 - adhere-ui-polygonselection
 - adhere-util-domain
+- adhere-ui-playground
 
 ### 没有落实有雏形的组件
 

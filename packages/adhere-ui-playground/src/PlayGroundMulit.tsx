@@ -158,13 +158,7 @@ PlayGroundMulit.defaultProps = {
 PlayGroundMulit.propTypes = {
   config: PropTypes.arrayOf(
     PropTypes.shape({
-      docClass: PropTypes.func,
       codeText: PropTypes.string,
-      collapsableCode: PropTypes.bool,
-      initiallyExpanded: PropTypes.bool,
-      es6Console: PropTypes.bool,
-      propDescriptionMap: PropTypes.object,
-      scope: PropTypes.object,
       // 描述
       title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     }),

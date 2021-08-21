@@ -11,14 +11,6 @@ declare class Props extends React.Component<IPropsProps, any> {
         key: string;
         dataIndex: string;
         width: string;
-        align: string;
-        render?: undefined;
-    } | {
-        title: string;
-        key: string;
-        dataIndex: string;
-        width: string;
-        align?: undefined;
         render?: undefined;
     } | {
         title: string;
@@ -26,7 +18,6 @@ declare class Props extends React.Component<IPropsProps, any> {
         dataIndex: string;
         width: string;
         render: (value: any) => JSX.Element;
-        align?: undefined;
     })[];
     protected render(): JSX.Element;
 }

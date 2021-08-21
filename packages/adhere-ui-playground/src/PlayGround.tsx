@@ -19,7 +19,6 @@ const selectPrefix = 'adhere-ui-playground';
  * @classdesc PlayGround
  */
 class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
-  // @ts-ignore
   state = {
     expand: this.props.expand,
   };
@@ -116,6 +115,9 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
           <Card>
             <PlayGroundExt
               {...this.props}
+              docClass={null}
+              propDescriptionMap={null}
+              scope={{ React }}
               collapsableCode={false}
               initiallyExpanded={false}
               es6Console={false}
@@ -144,24 +146,12 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
 }
 
 PlayGround.defaultProps = {
-  docClass: null,
   codeText: '',
-  collapsableCode: true,
-  initiallyExpanded: true,
-  es6Console: true,
-  propDescriptionMap: null,
-  scope: { React },
   expand: false,
 };
 
 PlayGround.propTypes = {
-  docClass: PropTypes.func,
   codeText: PropTypes.string,
-  collapsableCode: PropTypes.bool,
-  initiallyExpanded: PropTypes.bool,
-  es6Console: PropTypes.bool,
-  propDescriptionMap: PropTypes.object,
-  scope: PropTypes.object,
   expand: PropTypes.bool,
 };
 

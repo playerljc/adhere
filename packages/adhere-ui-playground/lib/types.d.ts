@@ -44,13 +44,7 @@ export interface ITableProps {
  * @interface IPlayGroundProps
  */
 export interface IPlayGroundProps {
-    docClass: Function | null;
     codeText: string;
-    collapsableCode: boolean;
-    initiallyExpanded: boolean;
-    es6Console: boolean;
-    propDescriptionMap: object | null;
-    scope: object;
     title: object | string;
     expand?: boolean;
 }

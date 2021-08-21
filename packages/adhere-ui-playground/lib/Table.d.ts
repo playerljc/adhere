@@ -5,7 +5,7 @@ import { ITableProps } from './types';
  * @class Table
  * @classdesc Table
  */
-declare class Table extends React.Component<ITableProps> {
+declare class Table extends React.Component<ITableProps, any> {
     /**
      * renderHeader
      */

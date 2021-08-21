@@ -21,7 +21,6 @@ class Props extends React.Component<IPropsProps, any> {
         key: 'params',
         dataIndex: 'params',
         width: '20%',
-        align: 'center'
       },
       {
         title: Intl.v('说明'),

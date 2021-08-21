@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 
 /**
  * ICardProps
@@ -34,10 +34,10 @@ export interface ITableColumn {
  * ITableProps
  */
 export interface ITableProps {
-  className: string,
+  className: string;
   style: CSSProperties | null;
   tableClassName: string;
-  tableStyle:CSSProperties;
+  tableStyle: CSSProperties;
   columns: ITableColumn[];
   dataSource: Object[];
   rowKey: string;
@@ -48,13 +48,7 @@ export interface ITableProps {
  * @interface IPlayGroundProps
  */
 export interface IPlayGroundProps {
-  docClass: Function | null;
   codeText: string;
-  collapsableCode: boolean;
-  initiallyExpanded: boolean;
-  es6Console: boolean;
-  propDescriptionMap: object | null;
-  scope: object;
   title: object | string;
   expand?: boolean;
 }
@@ -109,11 +103,11 @@ export interface IFunctionProps {
       // 默认值
       defaultVal: string | React.ReactNode;
       // 是否必填
-      required: string | boolean,
+      required: string | boolean;
     }>;
     // 函数返回值类型
     returnType: string | React.ReactNode;
     // 函数返回值说明
-    returnDesc: string | React.ReactNode
-  }>
+    returnDesc: string | React.ReactNode;
+  }>;
 }
