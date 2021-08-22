@@ -6,6 +6,7 @@
 
 * **adhere-ui-css**
   - 加入common-no-select函数
+  - 加入switch.less
 * **adhere-ui-flexlayout**
   - fixed和auto加入了getEl方法
 * **adhere-ui-olmap**
