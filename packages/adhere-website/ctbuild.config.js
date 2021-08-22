@@ -20,6 +20,8 @@ module.exports = {
     //   'moment':'moment',
     // };
 
+    webpackConfig.devtool = 'cheap-module-eval-source-map';
+
     // eslint-disable-next-line no-param-reassign
     // TODO:umd umd的时候需要注释掉
     webpackConfig.resolve.alias.ol = path.join(

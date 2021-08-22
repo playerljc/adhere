@@ -2,12 +2,14 @@
 
 ***
 
-2021-8-20
+2021-8-22
 
 * **adhere-ui-css**
   - 加入common-no-select函数
 * **adhere-ui-flexlayout**
   - fixed和auto加入了getEl方法
+* **adhere-ui-olmap**
+  - 加入windLayer(风场)
 * **adhere-ui-playground**
   - 加入adhere-ui-playground组件
 * **adhere-ui-polygonselection**

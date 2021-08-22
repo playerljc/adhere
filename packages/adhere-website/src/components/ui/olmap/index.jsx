@@ -88,6 +88,7 @@ export default () => {
   const heatRef = useRef();
   const fRef = useRef();
   const animationRef = useRef();
+  const windRef = useRef();
 
   return (
     <div className="Page">
@@ -133,6 +134,71 @@ export default () => {
             ],
             returnType: 'void',
             returnDesc: '',
+          },
+        ]}
+      />
+
+      <h3>WindLayer - 继承WindLayer</h3>
+      <FunctionProps
+        data={[
+          {
+            name: 'constructor',
+            desc: '构造方法',
+            modifier: 'private',
+            params: [
+              {
+                name: 'data',
+                desc: '风场的数据',
+                type: 'Object',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '风场的配置',
+                type: 'IWindLayerConfig',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'void',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <h3>IWindLayerConfig</h3>
+      <Props
+        data={[
+          {
+            params: 'velocityScale',
+            desc: '',
+            type: 'number',
+            defaultVal: '1 / 20',
+          },
+          {
+            params: 'paths',
+            desc: '',
+            type: 'number',
+            defaultVal: '5000',
+          },
+          {
+            params: 'colorScale',
+            desc: '',
+            type: 'Array<string>',
+            defaultVal: '',
+          },
+          {
+            params: 'lineWidth',
+            desc: '',
+            type: 'number',
+            defaultVal: '2',
+          },
+          {
+            params: 'generateParticleOption',
+            desc: '',
+            type: 'boolean',
+            defaultVal: 'false',
           },
         ]}
       />
@@ -2927,6 +2993,25 @@ export default () => {
             轨迹播放
           </Button>
           <OLMapComponent zoom={11.5} ref={animationRef} />
+        </div>
+      </Playground>
+
+      <h3>风场</h3>
+      <Playground
+        mode="code"
+        scope={{ React }}
+      >
+        <div style={{ width: '100%', height: 500 }}>
+          <Button
+            type="primary"
+            style={{ marginBottom: 20 }}
+            onClick={() => {
+              windRef.current.addWindLayer();
+            }}
+          >
+            添加风场Layer
+          </Button>
+          <OLMapComponent zoom={5} ref={windRef} />
         </div>
       </Playground>
     </div>

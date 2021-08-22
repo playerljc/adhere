@@ -1,4 +1,5 @@
 import GeoLayer from './geolayer';
+import WindLayer from './windlayer';
 declare const _default: {
     SHOWBASESTATION_MINZOOM: number;
     /**
@@ -40,6 +41,15 @@ declare const _default: {
      * @returns geoLayer 此次生成的layer
      */
     addGeoLayer: (mapInstance: any, geojsonData: any, getStyleConfig?: () => void, zIndex?: number) => GeoLayer;
+    /**
+     * addWindLayer - 添加风场层
+     * @param mapInstance
+     * @param data
+     * @param config
+     * @param zIndex
+     * @return WindLayer
+     */
+    addWindLayer: (mapInstance: any, data: any, config: any, zIndex?: number) => WindLayer;
     /**
      * addVectorLayer - 添加一个向量层
      * @param map

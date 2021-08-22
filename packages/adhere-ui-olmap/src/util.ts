@@ -26,6 +26,7 @@ import Resource from '@baifendian/adhere-util-resource';
 
 import * as TitleLayer from './titlelayer';
 import GeoLayer from './geolayer';
+import WindLayer from './windlayer';
 
 const EARTH_RADIUS = Resource.Dict.value.ResourceGisEarthRadius.value; // 单位M
 
@@ -248,6 +249,20 @@ export default {
     const geoLayer = new GeoLayer(geojsonData, getStyleConfig, zIndex);
     mapInstance.addLayer(geoLayer);
     return geoLayer;
+  },
+
+  /**
+   * addWindLayer - 添加风场层
+   * @param mapInstance
+   * @param data
+   * @param config
+   * @param zIndex
+   * @return WindLayer
+   */
+  addWindLayer: (mapInstance, data, config, zIndex = 0) => {
+    const windLayer = new WindLayer(data, config);
+    mapInstance.addLayer(windLayer);
+    return windLayer;
   },
 
   /**

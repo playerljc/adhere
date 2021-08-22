@@ -3357,6 +3357,11 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+gl-matrix@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/gl-matrix/-/gl-matrix-3.3.0.tgz#232eef60b1c8b30a28cbbe75b2caf6c48fd6358b"
+  integrity sha512-COb7LDz+SXaHtl/h4LeaFcNdJdAQSDeVqjiIihSXNrkWObZLhDI4hIkZC11Aeqp7bcE72clzB0BnDXr2SmslRA==
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -5185,6 +5190,13 @@ ol-mapbox-style@^6.1.1:
     "@mapbox/mapbox-gl-style-spec" "^13.14.0"
     mapbox-to-css-font "^2.4.0"
     webfont-matcher "^1.1.0"
+
+ol-wind@^1.1.1-alpha.2:
+  version "1.1.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/ol-wind/-/ol-wind-1.1.1-alpha.2.tgz#cf7b089ad17a0328e58ebb74f238e07c30d3fe7e"
+  integrity sha512-H29hFul+5Uv25bZZd9khaj2vbzZlSd9o5ZYV6jynNrsWcVymkGWhQhMi1fXZCy6sxFhjcU7U+8/5Xs0Fb10+tA==
+  dependencies:
+    wind-core "^1.1.1-alpha.2"
 
 ol@^6.5.0:
   version "6.5.0"
@@ -7543,6 +7555,13 @@ which@^1.2.14, which@^1.2.9, which@^1.3.1:
   resolved "https://registry.yarnpkg.com/which/-/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
   dependencies:
     isexe "^2.0.0"
+
+wind-core@^1.1.1-alpha.2:
+  version "1.1.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/wind-core/-/wind-core-1.1.1-alpha.2.tgz#7608eae3fe685213bf66c0eff9f912b2bd1ce35d"
+  integrity sha512-T19BxBljbHpRiJLI5Z5MR+seiQeVcondohyVXnUIqygfW7O9JABAPKKhACW0whgXMAwTZcXBLuWCbEICI+HJ6A==
+  dependencies:
+    gl-matrix "^3.3.0"
 
 worker-farm@^1.7.0:
   version "1.7.0"

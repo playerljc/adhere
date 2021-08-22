@@ -33,6 +33,13 @@ declare class OlMap extends React.Component<IOLMapProps, any> {
      */
     addGeoLayer(geojsonData: any, getStyleConfig: any, zIndex?: number): GeoLayer;
     /**
+     * addWindLayer - 添加风场层
+     * @param data
+     * @param config
+     * @param zIndex
+     */
+    addWindLayer(data: any, config: any, zIndex?: number): import("./windlayer").default;
+    /**
      * 添加数据层
      * @return {*|{vectorLayer, vectorSource}}
      */

@@ -16,6 +16,7 @@ declare const _default: {
         addClickListener: (mapInstance: any, listeningLayer: any, hitCallback: ((feature: any) => void) | undefined, unHitCallback: ((feature: any) => void) | undefined, setCursor: any) => void;
         addHoverListener: (mapInstance: any, listeningLayer: any, hitCallback: any, unHitCallback: any) => void;
         addGeoLayer: (mapInstance: any, geojsonData: any, getStyleConfig?: () => void, zIndex?: number) => GeoLayer;
+        addWindLayer: (mapInstance: any, data: any, config: any, zIndex?: number) => import("./windlayer").default;
         addVectorLayer(map: any, zIndex: any): {
             vectorLayer: any;
             vectorSource: any;

@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true",
     "buildpackage": "ctbuild buildpackagets",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --packagename AdhereOLMap --define alias=@,evnVars=true"
@@ -41,6 +42,7 @@
     "@types/uuid": "^8.3.0",
     "algebra.js": "^0.2.6",
     "ol": "^6.5.0",
+    "ol-wind": "^1.1.1-alpha.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "uuid": "^8.3.2"
