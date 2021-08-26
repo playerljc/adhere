@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 import {
   GeometryType,
@@ -17,12 +18,6 @@ import PolygonGeometry from './PolygonGeometry';
 class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
   coordinates: Array<ICoordinate[]>;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: Array<ICoordinate[]>) {
     super();
 
@@ -31,7 +26,7 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
 
   setCoordinates(coordinates: Array<ICoordinate[]>) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): Array<ICoordinate[]> {
@@ -48,8 +43,14 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
     const polygon = turf.polygon([
       coordinates
         .map((coordinate: ICoordinate[]) => {
-          return [coordinate.map((p) => [p.lng, p.lat]).flat()];
+          return [
+            coordinate
+              .map((p) => [p.lng, p.lat])
+              // @ts-ignore
+              .flat(),
+          ];
         })
+        // @ts-ignore
         .flat(),
     ]);
 

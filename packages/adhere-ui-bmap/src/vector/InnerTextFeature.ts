@@ -17,12 +17,6 @@ class InnerTextFeature extends Feature implements IInnerTextFeature {
   text: string;
   textStyle: ITextStyle;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(params: IInnerTextFeatureParams) {
     const { text, textStyle, ...superParams } = params;
 
@@ -43,12 +37,12 @@ class InnerTextFeature extends Feature implements IInnerTextFeature {
 
   setText(text: string): void {
     this.text = text;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   setTextStyle(style: ITextStyle): void {
     this.textStyle = style;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -69,7 +63,8 @@ class InnerTextFeature extends Feature implements IInnerTextFeature {
 
     const map = this.getMap();
 
-    const pixel = map.pointToPixel(BMap.Point(coordinate.lng, coordinate.lat));
+    // @ts-ignore
+    const pixel = map.pointToPixel(new BMap.Point(coordinate.lng, coordinate.lat));
 
     ctx.fillText(this.text || '', pixel.x, pixel.y);
 

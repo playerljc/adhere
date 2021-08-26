@@ -28,7 +28,7 @@ declare class BMap extends React.Component<IBMapProps, IBMapState> {
     protected initMapControl(): void;
     /**
      * importBMapJS
-     * @return Promise
+     * @return Promise<any>
      */
     protected importBMapJS(): Promise<any>;
     /**

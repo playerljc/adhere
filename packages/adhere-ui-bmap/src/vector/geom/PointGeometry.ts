@@ -21,12 +21,6 @@ class PointGeometry extends Geometry implements IPointGeometry {
     ['image', PointGeometry.drawImagePoint],
   ]);
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ICoordinate) {
     super();
 
@@ -35,7 +29,7 @@ class PointGeometry extends Geometry implements IPointGeometry {
 
   setCoordinates(coordinates: ICoordinate) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICoordinate {
@@ -81,8 +75,10 @@ class PointGeometry extends Geometry implements IPointGeometry {
     ctx.setLineDash(style.lineDash);
     ctx.lineDashOffset = style.lineDashOffset;
     ctx.strokeStyle = style.strokeStyle;
+    ctx.fillStyle = style.fillStyle;
 
-    const pixel = map.pointToPixel(BMap.Point(coordinates.lng, coordinates.lat));
+    // @ts-ignore
+    const pixel = map.pointToPixel(new BMap.Point(coordinates.lng, coordinates.lat));
 
     ctx.ellipse(pixel.x, pixel.y, style.radius, style.radius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
 
@@ -113,7 +109,8 @@ class PointGeometry extends Geometry implements IPointGeometry {
 
     image.src = style.img.src;
 
-    const pixel = map.pointToPixel(BMap.Point(coordinates.lng, coordinates.lat));
+    // @ts-ignore
+    const pixel = map.pointToPixel(new BMap.Point(coordinates.lng, coordinates.lat));
 
     ctx.drawImage(image, pixel.x, pixel.y, style.img.width, style.img.height);
   }
@@ -129,13 +126,19 @@ class PointGeometry extends Geometry implements IPointGeometry {
     coordinates: ICoordinate;
     map: any;
   }) {
-    const targetStyle: IPointGeometryStyle = style || {
+    const targetStyle: IPointGeometryStyle = {
       ...GeometryStyle,
       radius: 5,
       pointType: 'circle',
+      ...(style || {}),
     };
 
-    PointGeometry.drawMapping.get(style.pointType)({ ctx, style: targetStyle, coordinates, map });
+    PointGeometry.drawMapping.get(targetStyle.pointType)({
+      ctx,
+      style: targetStyle,
+      coordinates,
+      map,
+    });
   }
 
   /**
@@ -144,7 +147,7 @@ class PointGeometry extends Geometry implements IPointGeometry {
    * @param style
    */
   draw(ctx: CanvasRenderingContext2D, style: IPointGeometryStyle): void {
-    PointGeometry.drawCirclePoint({
+    PointGeometry.drawPoint({
       ctx,
       style,
       coordinates: this.coordinates,

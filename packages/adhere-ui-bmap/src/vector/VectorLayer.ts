@@ -1,3 +1,4 @@
+// @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
 import { IVectorLayer, IVectorLayerConfig, IVectorSource, VectorActions } from '../types';
@@ -81,6 +82,10 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     return this.map;
   }
 
+  getEmitter(): Emitter {
+    return this.emitter;
+  }
+
   protected initCanvasEvents() {}
 
   protected initEvents() {
@@ -90,6 +95,6 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   protected onUpdate() {
     this.update();
   }
-
-
 }
+
+export default VectorLayer;

@@ -18,12 +18,6 @@ import Geometry from './Geometry';
 class CircleGeometry extends Geometry implements ICircleGeometry {
   coordinates: ICircleGeometryData;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ICircleGeometryData) {
     super();
 
@@ -32,7 +26,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
 
   setCoordinates(coordinates: ICircleGeometryData) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICircleGeometryData {
@@ -76,7 +70,8 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
 
     const map = this.getMap();
 
-    const pixel = map.pointToPixel(BMap.Point(center.lng, center.lat));
+    // @ts-ignore
+    const pixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
 
     // 比例尺
     const scale = Util.getScale(map);

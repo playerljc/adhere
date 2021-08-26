@@ -1,2 +1,2 @@
-
+var GeometryType,VectorActions;!function(t){t[t.Point=0]="Point",t[t.MulitPoint=1]="MulitPoint",t[t.Circle=2]="Circle",t[t.LineString=3]="LineString",t[t.MulitLineString=4]="MulitLineString",t[t.Polygon=5]="Polygon",t[t.MulitPolygon=6]="MulitPolygon",t[t.Rect=7]="Rect",t[t.MulitRect=8]="MulitRect",t[t.Text=9]="Text"}(GeometryType=GeometryType||{}),(VectorActions=VectorActions||{}).UPDATE="UPDATE";export{GeometryType,VectorActions};
 //# sourceMappingURL=types.js.map

@@ -16,12 +16,6 @@ import Geometry from './Geometry';
 class TextGeometry extends Geometry implements ITextGeometry {
   coordinates: ITextGeometryData;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ITextGeometryData) {
     super();
 
@@ -30,7 +24,7 @@ class TextGeometry extends Geometry implements ITextGeometry {
 
   setCoordinates(coordinates: ITextGeometryData) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ITextGeometryData {
@@ -63,7 +57,9 @@ class TextGeometry extends Geometry implements ITextGeometry {
     const {
       coordinates: { text, point },
     } = this;
-    const pixel = map.pointToPixel(BMap.Point(point.lng, point.lat));
+
+    // @ts-ignore
+    const pixel = map.pointToPixel(new BMap.Point(point.lng, point.lat));
 
     ctx.fillText(text, pixel.x, pixel.y);
     ctx.restore();

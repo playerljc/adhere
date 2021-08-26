@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 import {
   GeometryType,
@@ -19,12 +20,6 @@ import Util from '../../util';
 class RectGeometry extends Geometry implements IRectGeometry {
   coordinates: IRectGeometryData;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: IRectGeometryData) {
     super();
 
@@ -33,7 +28,7 @@ class RectGeometry extends Geometry implements IRectGeometry {
 
   setCoordinates(coordinates: IRectGeometryData) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IRectGeometryData {
@@ -45,13 +40,16 @@ class RectGeometry extends Geometry implements IRectGeometry {
   }
 
   static getCenterCoordinate(coordinates: IRectGeometryData): ICoordinate {
-    const polygon = turf.polygon([
-      coordinates.map((coordinate: ICoordinate) => {
-        return [coordinate.lng, coordinate.lat];
-      }),
+    const { leftTop, width, height } = coordinates;
+
+    const features = turf.featureCollection([
+      turf.point([leftTop.lng, leftTop.lat]),
+      turf.point([leftTop.lng + width, leftTop.lat]),
+      turf.point([leftTop.lng + width, leftTop.lat + height]),
+      turf.point([leftTop.lng, leftTop.lat + height]),
     ]);
 
-    const center = turf.centerOfMass(polygon);
+    const center = turf.center(features);
 
     return {
       lng: center.x,
@@ -95,7 +93,8 @@ class RectGeometry extends Geometry implements IRectGeometry {
 
     const { leftTop, width, height } = coordinates;
 
-    const pixel = map.pointToPixel(BMap.Point(leftTop.lng, leftTop.lat));
+    // @ts-ignore
+    const pixel = map.pointToPixel(new BMap.Point(leftTop.lng, leftTop.lat));
 
     // 比例尺
     const scale = Util.getScale(map);

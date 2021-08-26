@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 import {
   GeometryType,
@@ -16,12 +17,6 @@ import Geometry from './Geometry';
 class PolygonGeometry extends Geometry implements IPolygonGeometry {
   coordinates: ICoordinate[];
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ICoordinate[]) {
     super();
 
@@ -30,7 +25,7 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
 
   setCoordinates(coordinates: ICoordinate[]) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICoordinate[] {
@@ -82,7 +77,8 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
     ctx.strokeStyle = style.strokeStyle;
 
     coordinates.forEach((coordinate: ICoordinate, index: number) => {
-      const pixel = map.pointToPixel(BMap.Point(coordinate.lng, coordinate.lat));
+      // @ts-ignore
+      const pixel = map.pointToPixel(new BMap.Point(coordinate.lng, coordinate.lat));
 
       if (index === 0) {
         ctx.moveTo(pixel.x, pixel.y);

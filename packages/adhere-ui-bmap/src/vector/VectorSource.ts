@@ -1,3 +1,4 @@
+// @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 import { IVectorSource, IFeature, VectorActions, IVectorLayer } from '../types';
 
@@ -26,27 +27,27 @@ class VectorSource extends Emitter implements IVectorSource {
     if (this.hasFeatureById(feature.getId())) return;
     this.features.push(feature);
     this.setFeaturesContext();
-    this.trigger(VectorActions.UPDATE);
+    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   addFeatures(features: IFeature[]): void {
     const filterFeatures = features.filter((f) => !this.hasFeatureById(f.getId()));
     this.features = [...this.features, ...filterFeatures];
     this.setFeaturesContext();
-    this.trigger(VectorActions.UPDATE);
+    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   addFirstFeature(feature: IFeature): void {
     if (this.hasFeatureById(feature.getId())) return;
     this.features.unshift(feature);
-    this.trigger(VectorActions.UPDATE);
+    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   insertFeature(feature: IFeature, index: number): void {
     if (this.hasFeatureById(feature.getId())) return;
     this.features.splice(index, 0, feature);
     this.setFeaturesContext();
-    this.trigger(VectorActions.UPDATE);
+    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   removeFeature(feature: IFeature): void {
@@ -57,12 +58,12 @@ class VectorSource extends Emitter implements IVectorSource {
     if (!this.hasFeatureById(id)) return;
     const index = this.features.findIndex((f) => f.getId() === id);
     this.features.splice(index, 1);
-    this.trigger(VectorActions.UPDATE);
+    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   clear(): void {
     this.features = [];
-    this.trigger(VectorActions.UPDATE);
+    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getFeatureById(id: string): IFeature {

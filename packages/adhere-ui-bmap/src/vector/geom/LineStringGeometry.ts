@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 
 import {
@@ -27,12 +28,6 @@ const SIZE_TO_SCALE = new Map<string, number>([
 class LineStringGeometry extends Geometry implements ILineStringGeometry {
   coordinates: ILineStringGeometryData;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ILineStringGeometryData) {
     super();
 
@@ -61,7 +56,8 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
       arrow: { type },
     } = style;
     const { point1 } = coordinates;
-    const pixel1 = map.pointToPixel(BMap.Point(point1.lng, point1.lat));
+    // @ts-ignore
+    const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
 
     // 逆时针
     let arrowP1: IPixel;
@@ -130,7 +126,8 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
       arrow: { type },
     } = style;
     const { point2 } = coordinates;
-    const pixel2 = map.pointToPixel(BMap.Point(point2.lng, point2.lat));
+    // @ts-ignore
+    const pixel2 = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
 
     // 逆时针
     let arrowP1: IPixel;
@@ -294,26 +291,19 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     // 绘制直线
     ctx.beginPath();
 
-    const targetStyle: ILineStringGeometryStyle = style || {
-      ...GeometryStyle,
-      arrow: {
-        draw: false,
-        direction: 'end',
-        type: 'normal',
-        size: 'normal',
-      },
-    };
-    ctx.lineWidth = targetStyle.lineWidth;
-    ctx.lineJoin = targetStyle.lineJoin;
-    ctx.lineCap = targetStyle.lineCap;
-    ctx.setLineDash(targetStyle.lineDash);
-    ctx.lineDashOffset = targetStyle.lineDashOffset;
-    ctx.strokeStyle = targetStyle.strokeStyle;
+    ctx.lineWidth = style.lineWidth;
+    ctx.lineJoin = style.lineJoin;
+    ctx.lineCap = style.lineCap;
+    ctx.setLineDash(style.lineDash);
+    ctx.lineDashOffset = style.lineDashOffset;
+    ctx.strokeStyle = style.strokeStyle;
 
     const { point1, point2 } = coordinates;
 
-    const pixel1 = map.pointToPixel(BMap.Point(point1.lng, point1.lat));
-    const pixel2 = map.pointToPixel(BMap.Point(point2.lng, point2.lat));
+    // @ts-ignore
+    const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
+    // @ts-ignore
+    const pixel2 = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
 
     ctx.moveTo(pixel1.x, pixel1.y);
     ctx.lineTo(pixel2.x, pixel2.y);
@@ -323,12 +313,12 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     ctx.restore();
 
     // 在绘制箭头
-    if (targetStyle.arrow.draw) {
-      if (targetStyle.arrow.direction === 'start') {
+    if (style.arrow.draw) {
+      if (style.arrow.direction === 'start') {
         LineStringGeometry.drawStartArrow({ ctx, style, coordinates, map });
-      } else if (targetStyle.arrow.direction === 'end') {
+      } else if (style.arrow.direction === 'end') {
         LineStringGeometry.drawEndArrow({ ctx, style, coordinates, map });
-      } else if (targetStyle.arrow.direction === 'bothEnds') {
+      } else if (style.arrow.direction === 'bothEnds') {
         LineStringGeometry.drawStartArrow({ ctx, style, coordinates, map });
         LineStringGeometry.drawEndArrow({ ctx, style, coordinates, map });
       }
@@ -337,7 +327,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
 
   setCoordinates(coordinates: ILineStringGeometryData) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ILineStringGeometryData {
@@ -367,9 +357,19 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
   }
 
   draw(ctx: CanvasRenderingContext2D, style: ILineStringGeometryStyle): void {
+    const targetStyle: ILineStringGeometryStyle = style || {
+      ...GeometryStyle,
+      arrow: {
+        draw: false,
+        direction: 'end',
+        type: 'normal',
+        size: 'normal',
+      },
+    };
+
     LineStringGeometry.drawLineString({
       ctx,
-      style,
+      style: targetStyle,
       coordinates: this.coordinates,
       map: this.getMap(),
     });

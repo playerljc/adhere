@@ -1,4 +1,3 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 import {
   ITextParams,
   ITextFeature,
@@ -6,6 +5,7 @@ import {
   ITextStyle,
   VectorActions,
   IVectorSource,
+  IVectorLayer,
 } from '../types';
 
 /**
@@ -13,22 +13,14 @@ import {
  * @class TextFeature
  * @classdesc 只包含文本的要素
  */
-class TextFeature extends Emitter implements ITextFeature {
+class TextFeature implements ITextFeature {
   name: string;
   id: string;
   style: ITextStyle;
   geometry: ITextGeometry;
   context: IVectorSource;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(params: ITextParams) {
-    super();
-
     this.name = params.name;
     this.id = params.id;
     this.style = params.style;
@@ -57,12 +49,12 @@ class TextFeature extends Emitter implements ITextFeature {
 
   setGeometry(geom: ITextGeometry): void {
     this.geometry = geom;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   setStyle(style: ITextStyle): void {
     this.style = style;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   setId(id: string): void {
@@ -75,6 +67,14 @@ class TextFeature extends Emitter implements ITextFeature {
 
   getContext(): IVectorSource {
     return this.context;
+  }
+
+  getMap(): any {
+    return this.getLayer().getMap();
+  }
+
+  getLayer(): IVectorLayer {
+    return this.getContext().getContext();
   }
 
   setContext(context: IVectorSource): void {

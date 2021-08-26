@@ -1,5 +1,7 @@
 // @ts-ignore
 import React from 'react';
+// @ts-ignore
+import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
 /**
  * IBMapProps
@@ -307,6 +309,7 @@ export interface IFeature {
   getContext: () => IVectorSource;
 
   getMap: () => any;
+  getLayer: () => IVectorLayer;
 }
 
 /**
@@ -353,6 +356,7 @@ export interface ITextFeature extends IFeature {
   getStyle: () => ITextStyle;
   getGeometry: () => ITextGeometry;
   setGeometry: (geom: ITextGeometry) => void;
+  getLayer: () => IVectorLayer;
 }
 
 /**
@@ -384,6 +388,7 @@ export interface IVectorLayer {
   getZIndex: () => number;
   update: () => void;
   getMap: () => any;
+  getEmitter: () => Emitter;
 }
 
 export interface IVectorLayerConfig {

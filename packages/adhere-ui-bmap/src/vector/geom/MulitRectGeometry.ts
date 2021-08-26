@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 import {
   GeometryType,
@@ -18,12 +19,6 @@ import RectGeometry from './RectGeometry';
 class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
   coordinates: IRectGeometryData[];
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: IRectGeometryData[]) {
     super();
 
@@ -32,7 +27,7 @@ class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
 
   setCoordinates(coordinates: IRectGeometryData[]) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IRectGeometryData[] {
@@ -46,15 +41,11 @@ class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
   getCenterCoordinate(): ICoordinate {
     const { coordinates } = this;
 
-    const polygon = turf.polygon([
-      coordinates
-        .map((coordinate: IRectGeometryData) => {
-          return [[coordinate.leftTop.lng, coordinate.leftTop.lat]];
-        })
-        .flat(),
-    ]);
+    const features = turf.featureCollection(
+      coordinates.map((p) => turf.point([p.leftTop.lng, p.leftTop.lat])),
+    );
 
-    const center = turf.centerOfMass(polygon);
+    const center = turf.center(features);
 
     return {
       lng: center.x,

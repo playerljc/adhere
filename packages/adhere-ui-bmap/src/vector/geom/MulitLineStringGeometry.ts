@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 import {
   GeometryType,
@@ -19,12 +20,6 @@ import LineStringGeometry from './LineStringGeometry';
 class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeometry {
   coordinates: ILineStringGeometryData[];
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ILineStringGeometryData[]) {
     super();
 
@@ -33,7 +28,7 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
 
   setCoordinates(coordinates: ILineStringGeometryData[]) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ILineStringGeometryData[] {
@@ -47,16 +42,16 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
   getCenterCoordinate(): ICoordinate {
     const { coordinates } = this;
 
-    const polygon = turf.polygon([
-      coordinates.map((coordinate: ILineStringGeometryData) => {
-        return [
-          [coordinate.point1.lng, coordinate.point1.lat],
-          [coordinate.point2.lng, coordinate.point2.lat],
-        ];
-      }).flat(),
-    ]);
+    const points = [];
 
-    const center = turf.centerOfMass(polygon);
+    coordinates.forEach((p) => {
+      points.push(turf.point([p.point1.lng, p.point1.lat]));
+      points.push(turf.point([p.point2.lng, p.point2.lat]));
+    });
+
+    const features = turf.featureCollection(points);
+
+    const center = turf.center(features);
 
     return {
       lng: center.x,

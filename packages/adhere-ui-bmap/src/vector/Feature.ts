@@ -1,5 +1,5 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 import {
+  IVectorLayer,
   IFeatureParams,
   IVectorSource,
   IFeature,
@@ -13,7 +13,7 @@ import {
  * @class Feature
  * @classdesc 要素
  */
-class Feature extends Emitter implements IFeature {
+class Feature implements IFeature {
   // 要素的名称
   name: string;
 
@@ -28,15 +28,7 @@ class Feature extends Emitter implements IFeature {
 
   context: IVectorSource;
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(params: IFeatureParams) {
-    super();
-
     this.name = params.name;
     this.id = params.id;
     this.style = params.style;
@@ -72,12 +64,12 @@ class Feature extends Emitter implements IFeature {
   setGeometry(geom: IGeometry): void {
     this.geometry = geom;
     this.setGeometryContext();
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   setStyle(style: IStyle): void {
     this.style = style;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   setId(id: string): void {
@@ -96,8 +88,12 @@ class Feature extends Emitter implements IFeature {
     this.context = context;
   }
 
+  getLayer(): IVectorLayer {
+    return this.getContext().getContext();
+  }
+
   getMap(): any {
-    return this.getContext().getContext().getMap();
+    return this.getLayer().getMap();
   }
 }
 

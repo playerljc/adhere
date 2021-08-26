@@ -1,3 +1,4 @@
+// @ts-ignore
 import turf from '@turf/turf';
 import {
   GeometryType,
@@ -17,12 +18,6 @@ import PointGeometry from './PointGeometry';
 class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
   coordinates: ICoordinate[];
 
-  // @ts-ignore
-  constructor() {
-    super();
-  }
-
-  // @ts-ignore
   constructor(coordinates: ICoordinate[]) {
     super();
 
@@ -31,7 +26,7 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
 
   setCoordinates(coordinates: ICoordinate[]) {
     this.coordinates = coordinates;
-    this.trigger(VectorActions.UPDATE);
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICoordinate[] {
@@ -45,13 +40,9 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
   getCenterCoordinate(): ICoordinate {
     const { coordinates } = this;
 
-    const polygon = turf.polygon([
-      coordinates.map((coordinate: ICoordinate) => {
-        return [coordinate.lng, coordinate.lat];
-      }),
-    ]);
+    const features = turf.featureCollection(coordinates.map((p) => turf.point([p.lng, p.lat])));
 
-    const center = turf.centerOfMass(polygon);
+    const center = turf.center(features);
 
     return {
       lng: center.x,

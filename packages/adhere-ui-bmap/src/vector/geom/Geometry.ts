@@ -1,13 +1,11 @@
-// @ts-ignore
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-import { IGeometry, IStyle, GeometryType, IFeature, ICoordinate } from '../../types';
+import {IGeometry, IStyle, GeometryType, IFeature, ICoordinate, IVectorLayer} from '../../types';
 
 /**
  * Geometry
  * @class Geometry
  * @classdesc Geometry
  */
-abstract class Geometry extends Emitter implements IGeometry {
+abstract class Geometry implements IGeometry {
   context: IFeature;
 
   abstract draw(ctx: CanvasRenderingContext2D, style: IStyle): void;
@@ -23,7 +21,11 @@ abstract class Geometry extends Emitter implements IGeometry {
   }
 
   protected getMap(): any {
-    return this.getContext().getContext().getContext().getMap();
+    return this.getLayer().getMap();
+  }
+
+  protected getLayer(): IVectorLayer {
+    return this.getContext().getContext().getContext();
   }
 }
 

@@ -9,7 +9,7 @@ import './index.less';
 
 const ref = React.createRef();
 
-let WindLayer, HeatMpLayer, BMapAirPressureLayer;
+let WindLayer, HeatMpLayer, BMapAirPressureLayer, VectorLayer, VectorSource, Feature, PointGeometry;
 
 const citys = [
   [121.487899486, 31.24916171, '上海-上海市'],
@@ -20905,7 +20905,7 @@ ReactDOM.render(
 
           const map = ref.current.getMap();
 
-          const heatMapOverlay = new HeatMpLayer({ radius: 10, visible: true, });
+          const heatMapOverlay = new HeatMpLayer({ radius: 10, visible: true });
 
           map.addOverlay(heatMapOverlay);
 
@@ -20951,6 +20951,42 @@ ReactDOM.render(
       >
         加入气压
       </button>
+      <button
+        onClick={() => {
+          const map = ref.current.getMap();
+
+          const feature = new Feature({
+            name: 'f1',
+            id: 'f1',
+            geometry: new PointGeometry({ lng: 121.487899486, lat: 31.24916171 }),
+            style: {
+              radius: 30,
+              lineWidth: 3,
+              strokeStyle: 'blue',
+              fillStyle: 'red',
+            },
+          });
+
+          const vectorSource = new VectorSource([feature]);
+          const vectorLayer = new VectorLayer(map, {
+            paneName: 'floatShadow',
+            zIndex: 9999,
+            source: vectorSource,
+          });
+
+          map.addOverlay(vectorLayer);
+
+          setTimeout(() => {
+            debugger
+            feature.getGeometry().setCoordinates({
+              lng: 123.471095,
+              lat: 41.6862,
+            });
+          }, 3000);
+        }}
+      >
+        添加VectorLayer
+      </button>
     </div>
     <div className={styles.Auto}>
       <BMap
@@ -20960,12 +20996,23 @@ ReactDOM.render(
           import('./windlayer').then((res) => {
             WindLayer = res.default;
           });
-
           import('./heatmaplayer').then((res) => {
             HeatMpLayer = res.default;
           });
           import('./airpressurelayer').then((res) => {
             BMapAirPressureLayer = res.default;
+          });
+          import('./vector/VectorLayer').then((res) => {
+            VectorLayer = res.default;
+          });
+          import('./vector/VectorSource').then((res) => {
+            VectorSource = res.default;
+          });
+          import('./vector/Feature').then((res) => {
+            Feature = res.default;
+          });
+          import('./vector/geom/PointGeometry').then((res) => {
+            PointGeometry = res.default;
           });
         }}
       />
