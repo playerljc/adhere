@@ -4,6 +4,7 @@ export default {
    * @param map
    */
   flyToChina(map) {
+    // @ts-ignore
     map.centerAndZoom(new BMap.Point(106.638754, 34.842904), 2);
   },
   /**
@@ -23,11 +24,13 @@ export default {
       strokeColor: '#ddd';
     },
     map,
-  ): Promise<BMap.Polygon> {
+  ): // @ts-ignore
+  Promise<BMap.Polygon> {
     const cityOverlays = [];
 
     return new Promise((resolve) => {
       // 勾勒的轮廓
+      // @ts-ignore
       const bd = new BMap.Boundary();
 
       bd.get(cityName, (rs) => {
@@ -39,10 +42,12 @@ export default {
           boundarie.forEach((pointStr) => {
             const point = pointStr.trim().split(',');
             this.cityPoints.push(
+              // @ts-ignore
               new BMap.Point(parseFloat(point[0].trim()), parseFloat(point[1].trim())),
             );
           });
 
+          // @ts-ignore
           const hole = new BMap.Polygon(boundarieStr, { ...style });
 
           cityOverlays.push(hole);
@@ -60,6 +65,7 @@ export default {
    * @param points
    * @param config
    */
+  // @ts-ignore
   fit(map, points: BMap.Point[], config): Promise<any> {
     return new Promise((resolve) => {
       const viewport = map.getViewport(points, config || {});
@@ -119,7 +125,7 @@ export default {
    * @return number
    */
   getScale(map): number {
-    const zoom = map.getZom();
+    const zoom = map.getZoom();
 
     /**
      * 比例尺的单位是(m)
@@ -146,7 +152,7 @@ export default {
       [1, 10000000],
     ]);
 
-    return zoomScaleMap.get(zoom);
+    return 1 / zoomScaleMap.get(zoom);
   },
   /**
    * getUnitPixelToM - 1px等于多少米(m)
@@ -155,5 +161,56 @@ export default {
    */
   getUnitPixelToM(zoom): number {
     return Math.pow(2, 18 - zoom);
+  },
+  /**
+   * getArrowPoints - 获取三角形三个顶点值
+   * @param from
+   * @param to
+   * @param scale
+   * @param width
+   * @param theta
+   * @return {{A: {x: number, y: number}, B: {x: number, y: number}, C: {x: number, y: number}}}
+   */
+  getArrowPoints({ from, to, scale = 1, width = 5, theta = 35 }) {
+    const { x: fromX, y: fromY } = from;
+    const { x: toX, y: toY } = to;
+    let arrowX, arrowY; // 箭头线终点坐标
+    // 计算各角度和对应的箭头终点坐标
+    const angle = (Math.atan2(fromY - toY, fromX - toX) * 180) / Math.PI;
+    const angle1 = ((angle + theta) * Math.PI) / 180;
+    const angle2 = ((angle - theta) * Math.PI) / 180;
+
+    const topX = width * Math.cos(angle1);
+    const topY = width * Math.sin(angle1);
+
+    const botX = width * Math.cos(angle2);
+    const botY = width * Math.sin(angle2);
+
+    arrowX = toX + topX;
+    arrowY = toY + topY;
+
+    const A = {
+      x: arrowX * scale,
+      y: arrowY * scale,
+    };
+
+    const B = {
+      x: toX * scale,
+      y: toY * scale,
+    };
+
+    arrowX = toX + botX;
+    arrowY = toY + botY;
+
+    const C = {
+      x: arrowX * scale,
+      y: arrowY * scale,
+    };
+
+    return {
+      A,
+      B,
+      C,
+    };
   },
 };

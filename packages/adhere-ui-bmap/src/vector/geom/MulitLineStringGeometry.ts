@@ -11,6 +11,7 @@ import {
 
 import Geometry from './Geometry';
 import LineStringGeometry from './LineStringGeometry';
+import GeometryStyle from '../style/GeometryStyle';
 
 /**
  * MulitLineStringGeometry
@@ -63,10 +64,21 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
     // 绘制多条直线
     const { coordinates } = this;
 
+    const targetStyle: ILineStringGeometryStyle = {
+      ...GeometryStyle,
+      arrow: {
+        draw: false,
+        direction: 'end',
+        type: 'normal',
+        size: 'normal',
+      },
+      ...(style || {}),
+    };
+
     coordinates.forEach((lineStringGeometryData: ILineStringGeometryData) => {
       LineStringGeometry.drawLineString({
         ctx,
-        style,
+        style: targetStyle,
         coordinates: lineStringGeometryData,
         map: this.getMap(),
       });

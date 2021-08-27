@@ -111,6 +111,9 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
     // 添加比例尺控件
     this.map.addControl(new BMap.NavigationControl());
 
+    //开启鼠标滚轮缩放
+    this.map.enableScrollWheelZoom(true);
+
     // this.map.disableScrollWheelZoom();
     // this.map.disableDoubleClickZoom();
     // this.map.disableKeyboard();

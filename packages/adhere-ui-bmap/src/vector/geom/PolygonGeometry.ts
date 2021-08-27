@@ -8,6 +8,7 @@ import {
   VectorActions,
 } from '../../types';
 import Geometry from './Geometry';
+import GeometryStyle from '../style/GeometryStyle';
 
 /**
  * PolygonGeometry
@@ -67,14 +68,21 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
     map: any;
   }) {
     ctx.save();
+
+    const targetStyle = {
+      ...GeometryStyle,
+      ...(style || {}),
+    };
+
     ctx.beginPath();
 
-    ctx.lineWidth = style.lineWidth;
-    ctx.lineJoin = style.lineJoin;
-    ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
-    ctx.lineDashOffset = style.lineDashOffset;
-    ctx.strokeStyle = style.strokeStyle;
+    ctx.lineWidth = targetStyle.lineWidth;
+    ctx.lineJoin = targetStyle.lineJoin;
+    ctx.lineCap = targetStyle.lineCap;
+    ctx.setLineDash(targetStyle.lineDash);
+    ctx.lineDashOffset = targetStyle.lineDashOffset;
+    ctx.strokeStyle = targetStyle.strokeStyle;
+    ctx.fillStyle = targetStyle.fillStyle;
 
     coordinates.forEach((coordinate: ICoordinate, index: number) => {
       // @ts-ignore

@@ -80,9 +80,14 @@ class RectGeometry extends Geometry implements IRectGeometry {
     map: any;
   }) {
     ctx.save();
+
+    const targetStyle = {
+      ...GeometryStyle,
+      ...(style || {}),
+    };
+
     ctx.beginPath();
 
-    const targetStyle = style || GeometryStyle;
     ctx.lineWidth = targetStyle.lineWidth;
     ctx.lineJoin = targetStyle.lineJoin;
     ctx.lineCap = targetStyle.lineCap;

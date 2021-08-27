@@ -4,7 +4,7 @@ export default {
    * isTouch - 是否移动端支持touch事件
    * @return boolean
    */
-  isTouch() {
+  isTouch(): boolean {
     return 'ontouchend' in document;
   }
   /**----------------------------客户端检测end---------------------------**/
