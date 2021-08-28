@@ -5,8 +5,9 @@ import {
   ITextStyle,
   ITextGeometryData,
   ICoordinate,
-} from '../../types';
+} from '../types';
 import Geometry from './Geometry';
+import TextStyle from '../style/TextStyle';
 
 /**
  * TextGeometry
@@ -45,12 +46,17 @@ class TextGeometry extends Geometry implements ITextGeometry {
 
   draw(ctx: CanvasRenderingContext2D, style: ITextStyle): void {
     ctx.save();
+
+    const targetStyle = { ...TextStyle, ...(style || {}) };
+
     ctx.beginPath();
 
-    ctx.font = style.font;
-    ctx.textAlign = style.textAlign;
-    ctx.textBaseline = style.textBaseline;
-    ctx.direction = style.direction;
+    ctx.font = targetStyle.font;
+    ctx.textAlign = targetStyle.textAlign;
+    ctx.textBaseline = targetStyle.textBaseline;
+    ctx.direction = targetStyle.direction;
+    ctx.fillStyle = targetStyle.fillStyle;
+    ctx.strokeStyle = targetStyle.strokeStyle;
 
     const map = this.getMap();
 

@@ -5,7 +5,7 @@ import {
   ITextStyle,
   VectorActions,
   ICoordinate,
-} from '../types';
+} from './types';
 import TextStyle from './style/TextStyle';
 
 /**

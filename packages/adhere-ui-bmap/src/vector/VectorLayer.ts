@@ -1,7 +1,7 @@
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
-import { IVectorLayer, IVectorLayerConfig, IVectorSource, VectorActions } from '../types';
+import { IVectorLayer, IVectorLayerConfig, IVectorSource, VectorActions } from './types';
 
 /**
  * VectorLayer
@@ -72,6 +72,13 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     const { source } = this;
 
     const features = source.getFeatures();
+
+    // 绘制的时候按照feature的zIndex从小到大进行排序
+    features.sort((f1, f2) => {
+      if (f1.getZIndex() > f2.getZIndex()) return 1;
+      else if (f1.getZIndex() < f2.getZIndex()) return -1;
+      else return 0;
+    });
 
     (features || []).forEach((feature) => {
       feature.draw(ctx);

@@ -22,12 +22,20 @@ let WindLayer,
   PointGeometry,
   MulitPointGeometry,
   CircleGeometry,
+  MulitCircleGeometry,
   LineStringGeometry,
   MulitLineStringGeometry,
   PolygonGeometry,
   MulitPolygonGeometry,
   RectGeometry,
-  MulitRectGeometry
+  MulitRectGeometry,
+  RegularPolygonGeometry,
+  MulitRegularPolygonGeometry,
+  StartGeometry,
+  MulitStartGeometry,
+  SectorGeometry,
+  MulitSectorGeometry,
+  TextGeometry;
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
@@ -106,9 +114,9 @@ ReactDOM.render(
         onClick={() => {
           const map = ref.current.getMap();
 
-          // const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
+          const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
 
-          // const mulitGemo = new MulitPointGeometry(citys.map(city => ({
+          // const mulitPointGemo = new MulitPointGeometry(citys.map(city => ({
           //   lng: city[0],
           //   lat: city[1],
           // })));
@@ -117,6 +125,27 @@ ReactDOM.render(
           //   center: { lng: 121.487899486, lat: 31.24916171 },
           //   radius: 20000
           // });
+
+          // const mulitCircelGemo = new MulitCircleGeometry([
+          //   {
+          //     center: { lng: 121.487899486, lat: 31.24916171 },
+          //     radius: 20000000,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 116.988692412,
+          //       lat: 33.6367723858,
+          //     },
+          //     radius: 20000000,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 121.360525873,
+          //       lat: 38.9658447898,
+          //     },
+          //     radius: 20000000,
+          //   },
+          // ]);
 
           // const lineStringGemo = new LineStringGeometry({
           //   point1: {
@@ -213,37 +242,89 @@ ReactDOM.render(
           //   height: 30000000,
           // });
 
-          const mulitRectGeom = new MulitRectGeometry([
-            {
-              leftTop: {
-                lng: 121.487899486,
-                lat: 31.24916171,
-              },
-              width: 200000000,
-              height: 30000000,
-            },
-            {
-              leftTop: {
-                lng: 106.635720331,
-                lat: 30.4639838879,
-              },
-              width: 200000000,
-              height: 30000000,
-            },
-            {
-              leftTop: {
-                lng: 116.988692412,
-                lat: 33.6367723858,
-              },
-              width: 200000000,
-              height: 30000000,
-            },
-          ]);
+          // const mulitRectGeom = new MulitRectGeometry([
+          //   {
+          //     leftTop: {
+          //       lng: 121.487899486,
+          //       lat: 31.24916171,
+          //     },
+          //     width: 200000000,
+          //     height: 30000000,
+          //   },
+          //   {
+          //     leftTop: {
+          //       lng: 106.635720331,
+          //       lat: 30.4639838879,
+          //     },
+          //     width: 200000000,
+          //     height: 30000000,
+          //   },
+          //   {
+          //     leftTop: {
+          //       lng: 116.988692412,
+          //       lat: 33.6367723858,
+          //     },
+          //     width: 200000000,
+          //     height: 30000000,
+          //   },
+          // ]);
+
+          // const regularPolygonGeom = new RegularPolygonGeometry({
+          //   n: 7,
+          //   center: {
+          //     lng: 121.487899486,
+          //     lat: 31.24916171,
+          //   },
+          //   size: 20000000,
+          // });
+
+          // const mulitRegularPolygonGeom = new MulitRegularPolygonGeometry([
+          //   {
+          //     n: 3,
+          //     center: {
+          //       lng: 121.487899486,
+          //       lat: 31.24916171,
+          //     },
+          //     size: 20000000,
+          //   },
+          //   {
+          //     n: 4,
+          //     center: {
+          //       lng: 118.181882949,
+          //       lat: 26.6436264742,
+          //     },
+          //     size: 20000000,
+          //   },
+          //   {
+          //     n: 5,
+          //     center: {
+          //       lng: 114.316200103,
+          //       lat: 30.5810841269,
+          //     },
+          //     size: 20000000,
+          //   },
+          //   {
+          //     n: 6,
+          //     center: {
+          //       lng: 105.564887792,
+          //       lat: 30.5574913504,
+          //     },
+          //     size: 20000000,
+          //   }
+          // ]);
+
+          // const textGemo = new TextGeometry({
+          //   point: {
+          //     lng: 121.487899486,
+          //     lat: 31.24916171,
+          //   },
+          //   text: '上海',
+          // });
 
           const feature = new Feature({
             name: 'f1',
             id: 'f1',
-            geometry: mulitRectGeom,
+            geometry: pointGeom,
             /*{
               // radius: 10,
               lineWidth: 2,
@@ -251,9 +332,14 @@ ReactDOM.render(
               fillStyle: 'red',
             }*/
             style: {
-              lineWidth: 3,
+              lineWidth: 1,
               strokeStyle: 'yellow',
               fillStyle: 'red',
+              regularPolygon: {
+                n: 3,
+                size: 10,
+              },
+              pointType: 'regularPolygon', // 'circle' | 'image' | 'regularPolygon';
               // arrow: {
               //   // 是否绘制
               //   draw: true,
@@ -264,6 +350,12 @@ ReactDOM.render(
               //   // 箭头的大小 小 | 中 | 大
               //   size: 'normal' /* | 'normal' | 'large';*/,
               // },
+              // font: 'bold 30px sans-serif',
+              // textAlign: 'center',
+              // textBaseline: 'middle',
+              // direction: 'inherit',
+              // strokeStyle: 'red',
+              // fillStyle: 'red',
             },
           });
 
@@ -322,6 +414,9 @@ ReactDOM.render(
           import('./vector/geom/CircleGeometry').then((res) => {
             CircleGeometry = res.default;
           });
+          import('./vector/geom/MulitCircleGeometry').then((res) => {
+            MulitCircleGeometry = res.default;
+          });
           import('./vector/geom/LineStringGeometry').then((res) => {
             LineStringGeometry = res.default;
           });
@@ -339,6 +434,29 @@ ReactDOM.render(
           });
           import('./vector/geom/MulitRectGeometry').then((res) => {
             MulitRectGeometry = res.default;
+          });
+          import('./vector/geom/RegularPolygonGeometry').then((res) => {
+            RegularPolygonGeometry = res.default;
+          });
+          import('./vector/geom/MulitRegularPolygonGeometry').then((res) => {
+            MulitRegularPolygonGeometry = res.default;
+          });
+
+          import('./vector/geom/StartGeometry').then((res) => {
+            StartGeometry = res.default;
+          });
+          import('./vector/geom/MulitStartGeometry').then((res) => {
+            MulitStartGeometry = res.default;
+          });
+          import('./vector/geom/SectorGeometry').then((res) => {
+            SectorGeometry = res.default;
+          });
+          import('./vector/geom/MulitSectorGeometry').then((res) => {
+            MulitSectorGeometry = res.default;
+          });
+
+          import('./vector/geom/TextGeometry').then((res) => {
+            TextGeometry = res.default;
           });
         }}
       />

@@ -7,7 +7,7 @@ import {
   IGeometryStyle,
   VectorActions,
   ICoordinate,
-} from '../../types';
+} from '../types';
 import Geometry from './Geometry';
 import RectGeometry from './RectGeometry';
 

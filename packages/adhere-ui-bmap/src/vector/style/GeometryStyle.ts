@@ -1,4 +1,4 @@
-import { IGeometryStyle } from '../../types';
+import { IGeometryStyle } from '../types';
 
 /**
  * GeometryStyle

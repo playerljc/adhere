@@ -1,4 +1,5 @@
-import { ITextStyle } from '../../types';
+import { ITextStyle } from '../types';
+import GeometryStyle from './GeometryStyle';
 
 /**
  * TextStyle
@@ -8,6 +9,7 @@ const TextStyle: ITextStyle = {
   textAlign: 'start',
   textBaseline: 'middle',
   direction: 'inherit',
+  ...GeometryStyle,
 };
 
 export default TextStyle;

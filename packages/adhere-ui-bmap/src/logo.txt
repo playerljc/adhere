@@ -1,0 +1,5 @@
+.Feature的zIndex和Properties (ok)
+.正多边形和point中的正多边形，五角星，扇形
+.点击事件等各种事件
+.drawAction和modifyAction
+.测距

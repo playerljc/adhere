@@ -9,7 +9,7 @@ import {
   VectorActions,
   IPixel,
   ICoordinate,
-} from '../../types';
+} from '../types';
 
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';

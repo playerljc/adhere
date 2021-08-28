@@ -6,7 +6,7 @@ import {
   IMulitPointGeometry,
   IPointGeometryStyle,
   VectorActions,
-} from '../../types';
+} from '../types';
 import Geometry from './Geometry';
 import PointGeometry from './PointGeometry';
 

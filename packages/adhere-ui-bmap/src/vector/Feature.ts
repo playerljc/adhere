@@ -6,7 +6,7 @@ import {
   IGeometry,
   IStyle,
   VectorActions,
-} from '../types';
+} from './types';
 
 /**
  * Feature
@@ -15,17 +15,24 @@ import {
  */
 class Feature implements IFeature {
   // 要素的名称
-  name: string;
+  name: string = '';
 
   // 要素的id
-  id: string;
+  id: string = '';
 
   // 要素的样式
-  style: IStyle;
+  style: IStyle = {};
+
+  // 要素的层级
+  zIndex: number = 1;
+
+  // 要素的业务属性
+  properties: object = {};
 
   // 要素的几何形状
   geometry: IGeometry;
 
+  // 上下文
   context: IVectorSource;
 
   constructor(params: IFeatureParams) {
@@ -61,6 +68,14 @@ class Feature implements IFeature {
     return this.style;
   }
 
+  getZIndex(): number {
+    return this.zIndex;
+  }
+
+  getProperties(): object {
+    return this.properties;
+  }
+
   setGeometry(geom: IGeometry): void {
     this.geometry = geom;
     this.setGeometryContext();
@@ -78,6 +93,15 @@ class Feature implements IFeature {
 
   setName(name: string): void {
     this.name = name;
+  }
+
+  setZIndex(zIndex: number) {
+    this.zIndex = zIndex;
+    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+  }
+
+  setProperties(properties: object): void {
+    this.properties = properties;
   }
 
   getContext(): IVectorSource {

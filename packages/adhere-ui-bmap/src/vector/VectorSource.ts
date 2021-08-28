@@ -1,6 +1,6 @@
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-import { IVectorSource, IFeature, VectorActions, IVectorLayer } from '../types';
+import { IVectorSource, IFeature, VectorActions, IVectorLayer } from './types';
 
 /**
  * VectorSource

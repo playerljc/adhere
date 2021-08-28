@@ -4,9 +4,12 @@ import {
   IPointGeometryStyle,
   IPointGeometry,
   VectorActions,
-} from '../../types';
+} from '../types';
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';
+import RegularPolygonGeometry from './RegularPolygonGeometry';
+import StartGeometry from './StartGeometry';
+import SectorGeometry from './SectorGeometry';
 
 /**
  * PointGeometry
@@ -19,6 +22,9 @@ class PointGeometry extends Geometry implements IPointGeometry {
   static drawMapping = new Map([
     ['circle', PointGeometry.drawCirclePoint],
     ['image', PointGeometry.drawImagePoint],
+    ['regularPolygon', PointGeometry.drawRegularPolygon],
+    ['start', PointGeometry.drawStart],
+    ['sector', PointGeometry.drawSector],
   ]);
 
   constructor(coordinates: ICoordinate) {
@@ -115,6 +121,94 @@ class PointGeometry extends Geometry implements IPointGeometry {
     ctx.drawImage(image, pixel.x, pixel.y, style.img.width, style.img.height);
   }
 
+  /**
+   * drawRegularPolygon
+   * @param ctx
+   * @param style
+   * @param coordinates
+   * @param map
+   */
+  static drawRegularPolygon({
+    ctx,
+    style,
+    coordinates,
+    map,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IPointGeometryStyle;
+    coordinates: ICoordinate;
+    map: any;
+  }) {
+    RegularPolygonGeometry.drawRegularPolygon({
+      ctx,
+      style,
+      coordinates: { ...style.regularPolygon, center: coordinates },
+      map,
+      isScale: false,
+    });
+  }
+
+  /**
+   * drawStart
+   * @param ctx
+   * @param style
+   * @param coordinates
+   * @param map
+   */
+  static drawStart({
+    ctx,
+    style,
+    coordinates,
+    map,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IPointGeometryStyle;
+    coordinates: ICoordinate;
+    map: any;
+  }) {
+    StartGeometry.drawStart({
+      ctx,
+      style,
+      coordinates: { ...style.start, center: coordinates },
+      map,
+      isScale: false,
+    });
+  }
+
+  /**
+   * drawSector
+   * @param ctx
+   * @param style
+   * @param coordinates
+   * @param map
+   */
+  static drawSector({
+    ctx,
+    style,
+    coordinates,
+    map,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IPointGeometryStyle;
+    coordinates: ICoordinate;
+    map: any;
+  }) {
+    SectorGeometry.drawSector({
+      ctx,
+      style,
+      coordinates: { ...style.sector, center: coordinates },
+      map,
+      isScale: false,
+    });
+  }
+
+  /**
+   * drawPoint
+   * @param ctx
+   * @param style
+   * @param coordinates
+   * @param map
+   */
   static drawPoint({
     ctx,
     style,

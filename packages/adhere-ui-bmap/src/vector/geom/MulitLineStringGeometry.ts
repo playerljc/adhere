@@ -7,7 +7,7 @@ import {
   ILineStringGeometryStyle,
   IMulitLineStringGeometry,
   VectorActions,
-} from '../../types';
+} from '../types';
 
 import Geometry from './Geometry';
 import LineStringGeometry from './LineStringGeometry';

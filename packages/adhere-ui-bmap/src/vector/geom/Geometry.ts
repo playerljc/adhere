@@ -1,4 +1,4 @@
-import {IGeometry, IStyle, GeometryType, IFeature, ICoordinate, IVectorLayer} from '../../types';
+import {IGeometry, IStyle, GeometryType, IFeature, ICoordinate, IVectorLayer} from '../types';
 
 /**
  * Geometry

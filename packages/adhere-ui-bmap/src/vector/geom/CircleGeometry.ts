@@ -5,7 +5,7 @@ import {
   ICoordinate,
   IGeometryStyle,
   VectorActions,
-} from '../../types';
+} from '../types';
 import Util from '../../util';
 import GeometryStyle from '../style/GeometryStyle';
 import Geometry from './Geometry';
@@ -49,7 +49,17 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
     return CircleGeometry.getCenterCoordinate(this.coordinates);
   }
 
-  draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void {
+  static drawCircle({
+    ctx,
+    style,
+    coordinates,
+    map,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    coordinates: ICircleGeometryData;
+    map: any;
+  }): void {
     ctx.save();
 
     // 绘制圆形
@@ -65,11 +75,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
     ctx.strokeStyle = targetStyle.strokeStyle;
     ctx.fillStyle = targetStyle.fillStyle;
 
-    const {
-      coordinates: { center, radius },
-    } = this;
-
-    const map = this.getMap();
+    const { center, radius } = coordinates;
 
     // @ts-ignore
     const pixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
@@ -85,6 +91,15 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
     ctx.stroke();
     ctx.fill();
     ctx.restore();
+  }
+
+  draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void {
+    CircleGeometry.drawCircle({
+      ctx,
+      style,
+      coordinates: this.coordinates,
+      map: this.getMap(),
+    });
   }
 }
 
