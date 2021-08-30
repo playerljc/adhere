@@ -2,12 +2,11 @@
 import * as turf from '@turf/turf';
 import {
   GeometryType,
-  ICoordinate,
   IMulitCircleGeometry,
   VectorActions,
   ICircleGeometryData,
   IGeometryStyle,
-  IPixel
+  IPixel,
 } from '../types';
 
 import Geometry from './Geometry';
@@ -41,13 +40,28 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
     return GeometryType.MulitCircle;
   }
 
-  getCenterCoordinate(): ICoordinate {
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { coordinates } = this;
+
+    const map = this.getMap();
 
     const points = [];
 
     coordinates.forEach((p) => {
-      points.push(turf.point([p.center.lng, p.center.lat]));
+      const pixel = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(p.center.lng, p.center.lat),
+      );
+
+      points.push(turf.point([pixel.x, pixel.y]));
     });
 
     const features = turf.featureCollection(points);
@@ -55,8 +69,8 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
     const center = turf.center(features);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
@@ -74,6 +88,7 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
         style: targetStyle,
         coordinates: circleGeometryData,
         map: this.getMap(),
+        isScale: true,
       });
     });
   }
@@ -81,10 +96,19 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
   /**
    * isPixelInGeometry
    * @param pixel
+   * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel): boolean {
-    return false;
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return this.coordinates.some((coordinate: ICircleGeometryData) => {
+      return CircleGeometry.isPixelInGeometry({
+        coordinates: coordinate,
+        map: this.getMap(),
+        style,
+        pixel,
+        isScale: true,
+      });
+    });
   }
 }
 

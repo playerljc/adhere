@@ -97,7 +97,7 @@ export interface IPointGeometryStyle extends IGeometryStyle {
   // 只有当pointType为sector时才生效(扇形)
   sector?: ISectorGeometryData;
   // 只有当pointType为rect时才生效(扇形)
-  rect?:  IRectGeometryData;
+  rect?: IRectGeometryData;
   // 类型
   pointType: 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect';
 }
@@ -108,9 +108,28 @@ export interface IPointGeometryStyle extends IGeometryStyle {
 export interface IGeometry {
   getType: () => GeometryType;
   draw: (ctx: CanvasRenderingContext2D, style: IStyle) => void;
+  drawText: ({
+    ctx,
+    text,
+    textStyle,
+    style,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    text: string;
+    style: IStyle;
+    textStyle: ITextStyle;
+  }) => void;
   setContext: (context: IFeature) => void;
   getContext: () => IFeature;
-  getCenterCoordinate: () => ICoordinate;
+  getCenterCoordinate: ({
+    ctx,
+    style,
+    isScale
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }) => IPixel;
   isPixelInGeometry: (pixel: IPixel, style?: IStyle) => boolean;
 }
 
@@ -354,7 +373,7 @@ export interface IFeature {
   setProperties: (properties: object) => void;
   setContext: (context: IVectorSource) => void;
   draw: (ctx: CanvasRenderingContext2D) => void;
-  isPointInFeature: (pixel: IPixel, style?:IStyle) => boolean;
+  isPointInFeature: (pixel: IPixel, style?: IStyle) => boolean;
 }
 
 /**

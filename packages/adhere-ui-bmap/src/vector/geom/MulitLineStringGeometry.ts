@@ -2,12 +2,12 @@
 import * as turf from '@turf/turf';
 import {
   GeometryType,
-  ICoordinate,
   ILineStringGeometryData,
   ILineStringGeometryStyle,
   IMulitLineStringGeometry,
   VectorActions,
   IPixel,
+  IGeometryStyle,
 } from '../types';
 
 import Geometry from './Geometry';
@@ -41,14 +41,34 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
     return GeometryType.MulitLineString;
   }
 
-  getCenterCoordinate(): ICoordinate {
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { coordinates } = this;
+
+    const map = this.getMap();
 
     const points = [];
 
     coordinates.forEach((p) => {
-      points.push(turf.point([p.point1.lng, p.point1.lat]));
-      points.push(turf.point([p.point2.lng, p.point2.lat]));
+      const pixel1 = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(p.point1.lng, p.point1.lat),
+      );
+
+      const pixel2 = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(p.point2.lng, p.point2.lat),
+      );
+
+      points.push(turf.point([pixel1.x, pixel1.y]));
+      points.push(turf.point([pixel2.x, pixel2.y]));
     });
 
     const features = turf.featureCollection(points);
@@ -56,8 +76,8 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
     const center = turf.center(features);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
@@ -89,10 +109,18 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
   /**
    * isPixelInGeometry
    * @param pixel
+   * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel): boolean {
-    return false;
+  isPixelInGeometry(pixel: IPixel, style?: ILineStringGeometryStyle): boolean {
+    return this.coordinates.some((coordinate: ILineStringGeometryData) => {
+      return LineStringGeometry.isPixelInGeometry({
+        pixel,
+        style,
+        coordinates: coordinate,
+        map: this.getMap(),
+      });
+    });
   }
 }
 

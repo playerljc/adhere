@@ -9,11 +9,15 @@ import {
   VectorActions,
   IPixel,
   ICoordinate,
+  ITextStyle,
+  IGeometryStyle,
+  ICircleGeometryData,
 } from '../types';
 
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';
 import Util from '../../util';
+import TextStyle from '../style/TextStyle';
 
 const SIZE = new Map<string, number>([
   ['small', 3],
@@ -370,22 +374,54 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     return GeometryType.LineString;
   }
 
-  static getCenterCoordinate(coordinates: ILineStringGeometryData): ICoordinate {
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: ILineStringGeometryData;
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { point1, point2 } = coordinates;
 
-    const midpoint = turf.midpoint(
-      turf.point([point1.lng, point1.lat]),
-      turf.point([point2.lng, point2.lat]),
+    const point1Pixel = map.pointToPixel(
+      // @ts-ignore
+      new BMap.Point(point1.lng, point1.lat),
+    );
+    const point2Pixel = map.pointToPixel(
+      // @ts-ignore
+      new BMap.Point(point2.lng, point2.lat),
     );
 
+    const midpoint = [(point1Pixel.x + point2Pixel.x) / 2, (point1Pixel.y + point2Pixel.y) / 2];
+
     return {
-      lng: midpoint.x,
-      lat: midpoint.y,
+      x: midpoint[0],
+      y: midpoint[1],
     };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return LineStringGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return LineStringGeometry.getCenterCoordinate({
+      ctx,
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   draw(ctx: CanvasRenderingContext2D, style: ILineStringGeometryStyle): void {
@@ -397,20 +433,86 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     });
   }
 
-  /**
-   * isPixelInGeometry
-   * @param pixel
-   * @param style
-   * @return boolean
-   */
-  isPixelInGeometry(pixel: IPixel, style?: ILineStringGeometryStyle): boolean {
+  drawText({
+    ctx,
+    text,
+    style,
+    textStyle,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    text: string;
+    style: IGeometryStyle;
+    textStyle: ITextStyle;
+  }): void {
+    ctx.save();
+    ctx.beginPath();
+
+    // 先旋转在进行绘制
+    const map = this.getMap();
+
+    // 中心点
+    const centerPixel = this.getCenterCoordinate({ ctx, style, isScale: true });
+
+    // 平移到中心点
+    ctx.translate(centerPixel.x, centerPixel.y);
+
+    const { point1, point2 } = this.coordinates;
+    // @ts-ignore
+    const point1Pixel = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
+    // @ts-ignore
+    const point2Pixel = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
+
+    // 斜率
+    const slope = (point2Pixel.y - point1Pixel.y) / (point2Pixel.x - point1Pixel.x);
+
+    // 斜率的弧度
+    const slopeRadian = Math.atan(slope);
+
+    // 斜率的角度
+    const angle = (180 * slopeRadian) / Math.PI;
+
+    // 旋转斜率的角度
+    ctx.rotate((angle * Math.PI) / 180);
+
+    const targetTextStyle = { ...TextStyle, ...(textStyle || {}) };
+    ctx.font = targetTextStyle.font;
+    ctx.textAlign = targetTextStyle.textAlign;
+    ctx.textBaseline = targetTextStyle.textBaseline;
+    ctx.direction = targetTextStyle.direction;
+    ctx.strokeStyle = targetTextStyle.strokeStyle;
+    ctx.fillStyle = targetTextStyle.fillStyle;
+
+    const targetStyle: IGeometryStyle = { ...GeometryStyle, ...(style || {}) };
+    ctx.lineWidth = targetStyle.lineWidth;
+    ctx.lineJoin = targetStyle.lineJoin;
+    ctx.lineCap = targetStyle.lineCap;
+    ctx.setLineDash(targetStyle.lineDash);
+    ctx.lineDashOffset = targetStyle.lineDashOffset;
+    ctx.strokeStyle = targetStyle.strokeStyle;
+
+    ctx.fillText(text || '', 0, 0);
+
+    ctx.restore();
+  }
+
+  static isPixelInGeometry({
+    pixel,
+    style,
+    coordinates,
+    map,
+  }: {
+    pixel: IPixel;
+    style: ILineStringGeometryStyle;
+    coordinates: ILineStringGeometryData;
+    map: any;
+  }): boolean {
     const canvas = document.createElement('canvas');
 
     const ctx = canvas.getContext('2d');
 
     ctx.beginPath();
 
-    const { point1, point2 } = this.coordinates;
+    const { point1, point2 } = coordinates;
     // @ts-ignore
     const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
     // @ts-ignore
@@ -420,6 +522,21 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     ctx.lineTo(pixel2.x, pixel2.y);
 
     return ctx.isPointInPath(pixel.x, pixel.y);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: ILineStringGeometryStyle): boolean {
+    return LineStringGeometry.isPixelInGeometry({
+      pixel,
+      style,
+      coordinates: this.coordinates,
+      map: this.getMap(),
+    });
   }
 }
 

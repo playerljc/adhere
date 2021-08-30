@@ -129,5 +129,14 @@ export default {
 
     return (rectWidth - textWidth) / 2;
   },
+  /**
+   * midpoint - 计算两个点的中心点
+   * @param point1
+   * @param point2
+   * @return IPoint
+   */
+  midpoint(point1: IPoint, point2: IPoint): IPoint {
+    return { x: (point1.x + point2.x) / 2, y: (point1.y + point2.y) / 2 };
+  },
   /**--------------------------math-end------------------------**/
 };

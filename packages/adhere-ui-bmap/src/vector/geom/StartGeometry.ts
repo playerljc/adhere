@@ -2,7 +2,6 @@ import Geometry from './Geometry';
 import {
   IStartGeometryData,
   IStartGeometry,
-  ICoordinate,
   VectorActions,
   GeometryType,
   IGeometryStyle,
@@ -38,14 +37,42 @@ class StartGeometry extends Geometry implements IStartGeometry {
     return GeometryType.Start;
   }
 
-  static getCenterCoordinate(coordinates: IStartGeometryData): ICoordinate {
-    return {
-      ...coordinates.center,
-    };
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: IStartGeometryData;
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    const centerPixel = map.pointToPixel(
+      // @ts-ignore
+      new BMap.Point(coordinates.center.lng, coordinates.center.lat),
+    );
+    return { ...centerPixel };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return StartGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return StartGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   static drawStart({

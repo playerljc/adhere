@@ -4,7 +4,6 @@ import {
   IInnerTextFeature,
   ITextStyle,
   VectorActions,
-  ICoordinate,
 } from './types';
 import TextStyle from './style/TextStyle';
 
@@ -48,27 +47,12 @@ class InnerTextFeature extends Feature implements IInnerTextFeature {
   draw(ctx: CanvasRenderingContext2D): void {
     super.draw(ctx);
 
-    ctx.beginPath();
-
-    // draw文字
-    ctx.save();
-
-    const targetStyle = this.textStyle || { ...TextStyle };
-    ctx.font = targetStyle.font;
-    ctx.textAlign = targetStyle.textAlign;
-    ctx.textBaseline = targetStyle.textBaseline;
-    ctx.direction = targetStyle.direction;
-
-    const coordinate: ICoordinate = this.geometry.getCenterCoordinate();
-
-    const map = this.getMap();
-
-    // @ts-ignore
-    const pixel = map.pointToPixel(new BMap.Point(coordinate.lng, coordinate.lat));
-
-    ctx.fillText(this.text || '', pixel.x, pixel.y);
-
-    ctx.restore();
+    this.geometry.drawText({
+      ctx,
+      text: this.text,
+      style: this.style,
+      textStyle: this.textStyle || { ...TextStyle },
+    });
   }
 }
 

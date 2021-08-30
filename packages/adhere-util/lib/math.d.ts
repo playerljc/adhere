@@ -79,5 +79,12 @@ declare const _default: {
         leftTop: IPoint;
         rightBottom: IPoint;
     }): number;
+    /**
+     * midpoint - 计算两个点的中心点
+     * @param point1
+     * @param point2
+     * @return IPoint
+     */
+    midpoint(point1: IPoint, point2: IPoint): IPoint;
 };
 export default _default;

@@ -6,7 +6,6 @@ import {
   IRectGeometryData,
   IGeometryStyle,
   VectorActions,
-  ICoordinate,
   IPixel,
 } from '../types';
 import Geometry from './Geometry';
@@ -40,26 +39,64 @@ class RectGeometry extends Geometry implements IRectGeometry {
     return GeometryType.Rect;
   }
 
-  static getCenterCoordinate(coordinates: IRectGeometryData): ICoordinate {
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: IRectGeometryData;
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { leftTop, width, height } = coordinates;
 
+    // @ts-ignore
+    const leftTopPixel = map.pointToPixel(new BMap.Point(leftTop.lng, leftTop.lat));
+
+    // 比例尺
+    const scale = Util.getScale(map);
+    let realWidth = width;
+    let realHeight = height;
+    if (isScale) {
+      realWidth = scale * width;
+      realHeight = scale * height;
+    }
+
     const features = turf.featureCollection([
-      turf.point([leftTop.lng, leftTop.lat]),
-      turf.point([leftTop.lng + width, leftTop.lat]),
-      turf.point([leftTop.lng + width, leftTop.lat + height]),
-      turf.point([leftTop.lng, leftTop.lat + height]),
+      turf.point([leftTopPixel.x, leftTopPixel.y]),
+      turf.point([leftTopPixel.x + realWidth, leftTopPixel.y]),
+      turf.point([leftTopPixel.x + realWidth, leftTopPixel.y + realHeight]),
+      turf.point([leftTopPixel.x, leftTopPixel.y + realHeight]),
     ]);
 
     const center = turf.center(features);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return RectGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return RectGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   /**

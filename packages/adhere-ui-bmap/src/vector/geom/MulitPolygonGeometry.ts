@@ -38,28 +38,37 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
     return GeometryType.MulitPolygon;
   }
 
-  getCenterCoordinate(): ICoordinate {
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { coordinates } = this;
 
-    const polygon = turf.polygon([
-      coordinates
-        .map((coordinate: ICoordinate[]) => {
-          return [
-            coordinate
-              .map((p) => [p.lng, p.lat])
-              // @ts-ignore
-              .flat(),
-          ];
-        })
-        // @ts-ignore
-        .flat(),
-    ]);
+    const map = this.getMap();
+
+    const geojson = coordinates.map((coordinate: ICoordinate[]) =>
+      coordinate.map((p) => {
+        const pixel = map.pointToPixel(
+          // @ts-ignore
+          new BMap.Point(p.lng, p.lat),
+        );
+
+        return [pixel.x, pixel.y];
+      }),
+    )
+
+    const polygon = turf.polygon(geojson);
 
     const center = turf.centerOfMass(polygon);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
@@ -79,7 +88,13 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
    * @return boolean
    */
   isPixelInGeometry(pixel: IPixel): boolean {
-    return false;
+    return this.coordinates.some((coordinate: ICoordinate[]) => {
+      return PolygonGeometry.isPixelInGeometry({
+        coordinates: coordinate,
+        map: this.getMap(),
+        pixel,
+      });
+    });
   }
 }
 

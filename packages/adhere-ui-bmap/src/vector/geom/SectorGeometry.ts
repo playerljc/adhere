@@ -2,7 +2,6 @@ import Geometry from './Geometry';
 import {
   ISectorGeometryData,
   ISectorGeometry,
-  ICoordinate,
   VectorActions,
   GeometryType,
   IGeometryStyle,
@@ -38,14 +37,42 @@ class SectorGeometry extends Geometry implements ISectorGeometry {
     return GeometryType.Sector;
   }
 
-  static getCenterCoordinate(coordinates: ISectorGeometryData): ICoordinate {
-    return {
-      ...coordinates.center,
-    };
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: ISectorGeometryData;
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    const centerPixel = map.pointToPixel(
+      // @ts-ignore
+      new BMap.Point(coordinates.center.lng, coordinates.center.lat),
+    );
+    return { ...centerPixel };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return SectorGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return SectorGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   static drawSector({

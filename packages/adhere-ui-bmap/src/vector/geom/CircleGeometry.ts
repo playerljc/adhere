@@ -2,7 +2,6 @@ import {
   GeometryType,
   ICircleGeometry,
   ICircleGeometryData,
-  ICoordinate,
   IGeometryStyle,
   IPixel,
   VectorActions,
@@ -40,14 +39,48 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
 
   /**
    * getCenterCoordinate
+   * @param ctx
    * @param coordinates
+   * @param map
+   * @param style
+   * @param isScale
    */
-  static getCenterCoordinate(coordinates: ICircleGeometryData): ICoordinate {
-    return { ...coordinates.center };
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: ICircleGeometryData;
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    const centerPixel = map.pointToPixel(
+      // @ts-ignore
+      new BMap.Point(coordinates.center.lng, coordinates.center.lat),
+    );
+    return { ...centerPixel };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return CircleGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return CircleGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   static drawCircle({

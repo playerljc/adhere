@@ -2,7 +2,6 @@ import Geometry from './Geometry';
 import {
   IRegularPolygonGeometryData,
   IRegularPolygonGeometry,
-  ICoordinate,
   VectorActions,
   GeometryType,
   IGeometryStyle,
@@ -38,14 +37,42 @@ class RegularPolygonGeometry extends Geometry implements IRegularPolygonGeometry
     return GeometryType.RegularPolygon;
   }
 
-  static getCenterCoordinate(coordinates: IRegularPolygonGeometryData): ICoordinate {
-    return {
-      ...coordinates.center,
-    };
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: IRegularPolygonGeometryData;
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    const centerPixel = map.pointToPixel(
+      // @ts-ignore
+      new BMap.Point(coordinates.center.lng, coordinates.center.lat),
+    );
+    return { ...centerPixel };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return RegularPolygonGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return RegularPolygonGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   static drawRegularPolygon({

@@ -6,7 +6,6 @@ import {
   IRectGeometryData,
   IGeometryStyle,
   VectorActions,
-  ICoordinate,
   IPixel,
 } from '../types';
 import Geometry from './Geometry';
@@ -39,18 +38,35 @@ class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
     return GeometryType.MulitRect;
   }
 
-  getCenterCoordinate(): ICoordinate {
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { coordinates } = this;
 
-    const features = turf.featureCollection(
-      coordinates.map((p) => turf.point([p.leftTop.lng, p.leftTop.lat])),
-    );
+    const map = this.getMap();
+
+    const geojson = coordinates.map((p) => {
+      const pixel = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(p.leftTop.lng, p.leftTop.lat),
+      );
+
+      return turf.point([pixel.x, pixel.y]);
+    });
+
+    const features = turf.featureCollection(geojson);
 
     const center = turf.center(features);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
@@ -60,17 +76,26 @@ class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
     const map = this.getMap();
 
     coordinates.forEach((coordinates: IRectGeometryData) => {
-      RectGeometry.drawRect({ ctx, style, coordinates, map });
+      RectGeometry.drawRect({ ctx, style, coordinates, map, isScale: true });
     });
   }
 
   /**
    * isPixelInGeometry
    * @param pixel
+   * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel): boolean {
-    return false;
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return this.coordinates.some((coordinate: IRectGeometryData) => {
+      return RectGeometry.isPixelInGeometry({
+        coordinates: coordinate,
+        map: this.getMap(),
+        pixel,
+        style,
+        isScale: true,
+      });
+    });
   }
 }
 

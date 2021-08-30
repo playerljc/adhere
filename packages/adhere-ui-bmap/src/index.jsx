@@ -21,6 +21,7 @@ let WindLayer,
   VectorLayer,
   VectorSource,
   Feature,
+  InnerTextFeature,
   PointGeometry,
   MulitPointGeometry,
   CircleGeometry,
@@ -116,7 +117,7 @@ ReactDOM.render(
         onClick={() => {
           const map = ref.current.getMap();
 
-          const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
+          // const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
 
           // const mulitPointGemo = new MulitPointGeometry(citys.map(city => ({
           //   lng: city[0],
@@ -160,28 +161,28 @@ ReactDOM.render(
           //   },
           // });
 
-          // const mulitLineStringGemo = new MulitLineStringGeometry([
-          //   {
-          //     point1: {
-          //       lng: 121.48789948,
-          //       lat: 31.24916171,
-          //     },
-          //     point2: {
-          //       lng: 123.471095,
-          //       lat: 41.6862,
-          //     },
-          //   },
-          //   {
-          //     point1: {
-          //       lng: 121.623353,
-          //       lat: 38.921873,
-          //     },
-          //     point2: {
-          //       lng: 120.380834,
-          //       lat: 36.073394,
-          //     },
-          //   },
-          // ]);
+          const mulitLineStringGemo = new MulitLineStringGeometry([
+            {
+              point1: {
+                lng: 121.48789948,
+                lat: 31.24916171,
+              },
+              point2: {
+                lng: 123.471095,
+                lat: 41.6862,
+              },
+            },
+            {
+              point1: {
+                lng: 121.623353,
+                lat: 38.921873,
+              },
+              point2: {
+                lng: 120.380834,
+                lat: 36.073394,
+              },
+            },
+          ]);
 
           // const polygonGeom = new PolygonGeometry(
           //   citys.map((city) => ({
@@ -204,6 +205,10 @@ ReactDOM.render(
           //       lng: 99.7136815989,
           //       lat: 27.8310294612,
           //     },
+          //     {
+          //       lng: 121.487899486,
+          //       lat: 31.24916171,
+          //     },
           //   ],
           //   [
           //     {
@@ -218,6 +223,10 @@ ReactDOM.render(
           //       lng: 124.832994532,
           //       lat: 45.1360489701,
           //     },
+          //     {
+          //       lng: 109.993706251,
+          //       lat: 39.8164895606,
+          //     },
           //   ],
           //   [
           //     {
@@ -231,6 +240,10 @@ ReactDOM.render(
           //     {
           //       lng: 106.285267996,
           //       lat: 36.0215234807,
+          //     },
+          //     {
+          //       lng: 106.757915842,
+          //       lat: 31.8691891592,
           //     },
           //   ],
           // ]);
@@ -250,24 +263,24 @@ ReactDOM.render(
           //       lng: 121.487899486,
           //       lat: 31.24916171,
           //     },
-          //     width: 200000000,
-          //     height: 30000000,
+          //     width: 2000000,
+          //     height: 3000000,
           //   },
           //   {
           //     leftTop: {
           //       lng: 106.635720331,
           //       lat: 30.4639838879,
           //     },
-          //     width: 200000000,
-          //     height: 30000000,
+          //     width: 2000000,
+          //     height: 3000000,
           //   },
           //   {
           //     leftTop: {
           //       lng: 116.988692412,
           //       lat: 33.6367723858,
           //     },
-          //     width: 200000000,
-          //     height: 30000000,
+          //     width: 2000000,
+          //     height: 3000000,
           //   },
           // ]);
 
@@ -416,10 +429,19 @@ ReactDOM.render(
           //   text: '上海',
           // });
 
-          const feature = new Feature({
+          const feature = new InnerTextFeature({
             name: 'f1',
             id: 'f1',
-            geometry: pointGeom,
+            geometry: mulitLineStringGemo,
+            text: '蜜雪冰城',
+            textStyle: {
+              font: '10px sans-serif',
+              textAlign: 'center',
+              textBaseline: 'middle',
+              direction: 'inherit',
+              strokeStyle: 'yellow',
+              fillStyle: 'yellow',
+            },
             /*{
               // radius: 10,
               lineWidth: 2,
@@ -454,16 +476,16 @@ ReactDOM.render(
                 height: 50,
               },
               pointType: 'rect', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect';
-              // arrow: {
-              //   // 是否绘制
-              //   draw: true,
-              //   // 箭头方向 箭头绘制在开始 | 结束 | 双向
-              //   direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
-              //   // 箭头的类型 尖的箭头，还是方形的箭头
-              //   type: 'normal' /* | 'square';*/,
-              //   // 箭头的大小 小 | 中 | 大
-              //   size: 'normal' /* | 'normal' | 'large';*/,
-              // },
+              arrow: {
+                // 是否绘制
+                draw: true,
+                // 箭头方向 箭头绘制在开始 | 结束 | 双向
+                direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
+                // 箭头的类型 尖的箭头，还是方形的箭头
+                type: 'normal' /* | 'square';*/,
+                // 箭头的大小 小 | 中 | 大
+                size: 'normal' /* | 'normal' | 'large';*/,
+              },
               // font: 'bold 30px sans-serif',
               // textAlign: 'center',
               // textBaseline: 'middle',
@@ -520,6 +542,11 @@ ReactDOM.render(
           import('./vector/Feature').then((res) => {
             Feature = res.default;
           });
+
+          import('./vector/InnerTextFeature').then((res) => {
+            InnerTextFeature = res.default;
+          });
+
           import('./vector/geom/PointGeometry').then((res) => {
             PointGeometry = res.default;
           });

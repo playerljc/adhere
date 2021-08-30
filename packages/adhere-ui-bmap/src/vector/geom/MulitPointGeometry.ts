@@ -7,6 +7,7 @@ import {
   IPointGeometryStyle,
   VectorActions,
   IPixel,
+  IGeometryStyle,
 } from '../types';
 import Geometry from './Geometry';
 import PointGeometry from './PointGeometry';
@@ -38,16 +39,35 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
     return GeometryType.MulitPoint;
   }
 
-  getCenterCoordinate(): ICoordinate {
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { coordinates } = this;
 
-    const features = turf.featureCollection(coordinates.map((p) => turf.point([p.lng, p.lat])));
+    const map = this.getMap();
+
+    const features = turf.featureCollection(
+      coordinates.map((p) => {
+        const pixel = map.pointToPixel(
+          // @ts-ignore
+          new BMap.Point(p.lng, p.lat),
+        );
+
+        return turf.point([pixel.x, pixel.y]);
+      }),
+    );
 
     const center = turf.center(features);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
@@ -64,10 +84,18 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
   /**
    * isPixelInGeometry
    * @param pixel
+   * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel): boolean {
-    return false;
+  isPixelInGeometry(pixel: IPixel, style?: IPointGeometryStyle): boolean {
+    return this.coordinates.some((coordinate: ICoordinate) => {
+      return PointGeometry.isPixelInGeometry({
+        coordinates: coordinate,
+        map: this.getMap(),
+        pixel,
+        style,
+      });
+    });
   }
 }
 

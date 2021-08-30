@@ -7,6 +7,7 @@ import {
   ICoordinate,
   IPixel,
   VectorActions,
+  ICircleGeometryData,
 } from '../types';
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';
@@ -38,23 +39,58 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
     return GeometryType.Polygon;
   }
 
-  static getCenterCoordinate(coordinates: ICoordinate[]): ICoordinate {
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: ICoordinate[];
+    map: any;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    // const polygonCoordinates = [...coordinates];
+    // polygonCoordinates.push(coordinates[0]);
+
     const polygon = turf.polygon([
       coordinates.map((coordinate: ICoordinate) => {
-        return [coordinate.lng, coordinate.lat];
+        // @ts-ignore
+        const pixel = map.pointToPixel(
+          // @ts-ignore
+          new BMap.Point(coordinate.lng, coordinate.lat),
+        );
+
+        return [pixel.x, pixel.y];
       }),
     ]);
 
     const center = turf.centerOfMass(polygon);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return PolygonGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return PolygonGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale,
+    });
   }
 
   static drawPolygon({
@@ -125,6 +161,9 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
     map: any;
   }): boolean {
     const point = turf.point([pixel.x, pixel.y]);
+
+    // const polyCoordinates = [...coordinates];
+    // polyCoordinates.push(coordinates[0]);
 
     const poly = turf.polygon([
       coordinates.map((coordinate) => {

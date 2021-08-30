@@ -1,6 +1,6 @@
 .Feature的zIndex和Properties (ok)
 .正多边形和point中的正多边形，五角星，扇形 (ok)
-.点击事件等各种事件
+.点击事件等各种事件(ok)
 .各种空间数据的转换(如：GeoJSON,KML)
 .drawAction和modifyAction
 .测距

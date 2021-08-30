@@ -45,6 +45,7 @@ declare const _default: {
         leftTop: import("./types").IPoint;
         rightBottom: import("./types").IPoint;
     }): number;
+    midpoint(point1: import("./types").IPoint, point2: import("./types").IPoint): import("./types").IPoint;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

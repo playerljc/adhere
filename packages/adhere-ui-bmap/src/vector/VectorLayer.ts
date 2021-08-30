@@ -135,9 +135,6 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   protected initCanvasEvents() {
     // @ts-ignore
     this.canvas.addEventListener('click', (e: PointerEvent) => {
-      const x = e.clientX;
-      const y = e.clientY;
-
       const pixel: IPixel = MathUtil.clientToCtxPoint({
         event: e,
         // @ts-ignore

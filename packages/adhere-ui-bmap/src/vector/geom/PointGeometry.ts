@@ -40,6 +40,165 @@ class PointGeometry extends Geometry implements IPointGeometry {
     ['rect', RectGeometry.isPixelInGeometry],
   ]);
 
+  static centerCoordinateMapping = new Map<string, Function>([
+    [
+      'circle',
+      ({
+        ctx,
+        coordinates,
+        map,
+        style,
+        isScale,
+      }: {
+        ctx: CanvasRenderingContext2D;
+        coordinates: ICoordinate;
+        map: any;
+        style: IPointGeometryStyle;
+        isScale: boolean;
+      }) =>
+        CircleGeometry.getCenterCoordinate({
+          ctx,
+          map,
+          style,
+          isScale,
+          coordinates: {
+            center: coordinates,
+            radius: style.radius,
+          },
+        }),
+    ],
+    [
+      'image',
+      ({
+        ctx,
+        coordinates,
+        map,
+        style,
+        isScale,
+      }: {
+        ctx: CanvasRenderingContext2D;
+        coordinates: ICoordinate;
+        map: any;
+        style: IPointGeometryStyle;
+        isScale: boolean;
+      }) =>
+        RectGeometry.getCenterCoordinate({
+          ctx,
+          map,
+          style,
+          isScale,
+          coordinates: {
+            leftTop: coordinates,
+            ...style.img,
+          },
+        }),
+    ],
+    [
+      'regularPolygon',
+      ({
+        ctx,
+        coordinates,
+        map,
+        style,
+        isScale,
+      }: {
+        ctx: CanvasRenderingContext2D;
+        coordinates: ICoordinate;
+        map: any;
+        style: IPointGeometryStyle;
+        isScale: boolean;
+      }) =>
+        RegularPolygonGeometry.getCenterCoordinate({
+          ctx,
+          map,
+          style,
+          isScale,
+          coordinates: {
+            center: coordinates,
+            ...style.regularPolygon,
+          },
+        }),
+    ],
+    [
+      'start',
+      ({
+        ctx,
+        coordinates,
+        map,
+        style,
+        isScale,
+      }: {
+        ctx: CanvasRenderingContext2D;
+        coordinates: ICoordinate;
+        map: any;
+        style: IPointGeometryStyle;
+        isScale: boolean;
+      }) =>
+        StartGeometry.getCenterCoordinate({
+          ctx,
+          map,
+          style,
+          isScale,
+          coordinates: {
+            center: coordinates,
+            ...style.start,
+          },
+        }),
+    ],
+    [
+      'sector',
+      ({
+        ctx,
+        coordinates,
+        map,
+        style,
+        isScale,
+      }: {
+        ctx: CanvasRenderingContext2D;
+        coordinates: ICoordinate;
+        map: any;
+        style: IPointGeometryStyle;
+        isScale: boolean;
+      }) =>
+        SectorGeometry.getCenterCoordinate({
+          ctx,
+          map,
+          style,
+          isScale,
+          coordinates: {
+            center: coordinates,
+            ...style.sector,
+          },
+        }),
+    ],
+    [
+      'rect',
+      ({
+        ctx,
+        coordinates,
+        map,
+        style,
+        isScale,
+      }: {
+        ctx: CanvasRenderingContext2D;
+        coordinates: ICoordinate;
+        map: any;
+        style: IPointGeometryStyle;
+        isScale: boolean;
+      }) =>
+        RectGeometry.getCenterCoordinate({
+          ctx,
+          map,
+          style,
+          isScale,
+          coordinates: {
+            leftTop: coordinates,
+            ...style.rect,
+          },
+        }),
+    ],
+  ]);
+
   static pointTypeToCoordinatesMapping = new Map<string, Function>([
     [
       'circle',
@@ -105,12 +264,44 @@ class PointGeometry extends Geometry implements IPointGeometry {
     return GeometryType.Point;
   }
 
-  static getCenterCoordinate(coordinates: ICoordinate) {
-    return { ...coordinates };
+  static getCenterCoordinate({
+    ctx,
+    coordinates,
+    map,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    coordinates: ICoordinate;
+    map: any;
+    style: IPointGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return PointGeometry.centerCoordinateMapping.get(style.pointType)({
+      ctx,
+      coordinates,
+      map,
+      style,
+      isScale,
+    });
   }
 
-  getCenterCoordinate(): ICoordinate {
-    return PointGeometry.getCenterCoordinate(this.coordinates);
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IPointGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
+    return PointGeometry.getCenterCoordinate({
+      coordinates: this.coordinates,
+      ctx,
+      map: this.getMap(),
+      style,
+      isScale: false,
+    });
   }
 
   /**

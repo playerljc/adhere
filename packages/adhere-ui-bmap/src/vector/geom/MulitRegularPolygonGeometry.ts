@@ -5,7 +5,6 @@ import {
   IMulitRegularPolygonGeometry,
   IRegularPolygonGeometryData,
   IGeometryStyle,
-  ICoordinate,
   VectorActions,
   IPixel,
 } from '../types';
@@ -39,13 +38,28 @@ class MulitRegularPolygonGeometry extends Geometry implements IMulitRegularPolyg
     return GeometryType.MulitRegularPolygon;
   }
 
-  getCenterCoordinate(): ICoordinate {
+  getCenterCoordinate({
+    ctx,
+    style,
+    isScale,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+    isScale: boolean;
+  }): IPixel {
     const { coordinates } = this;
 
     const points = [];
 
+    const map = this.getMap();
+
     coordinates.forEach((p) => {
-      points.push(turf.point([p.center.lng, p.center.lat]));
+      const pixel = map.pointToPixel(
+        // @ts-ignore
+        new BMap.Point(p.center.lng, p.center.lat),
+      );
+
+      points.push(turf.point([pixel.x, pixel.y]));
     });
 
     const features = turf.featureCollection(points);
@@ -53,8 +67,8 @@ class MulitRegularPolygonGeometry extends Geometry implements IMulitRegularPolyg
     const center = turf.center(features);
 
     return {
-      lng: center.x,
-      lat: center.y,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
     };
   }
 
@@ -77,10 +91,19 @@ class MulitRegularPolygonGeometry extends Geometry implements IMulitRegularPolyg
   /**
    * isPixelInGeometry
    * @param pixel
+   * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel): boolean {
-    return false;
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return this.coordinates.some((coordinate: IRegularPolygonGeometryData) => {
+      return RegularPolygonGeometry.isPixelInGeometry({
+        coordinates: coordinate,
+        map: this.getMap(),
+        pixel,
+        style,
+        isScale: true,
+      });
+    });
   }
 }
 
