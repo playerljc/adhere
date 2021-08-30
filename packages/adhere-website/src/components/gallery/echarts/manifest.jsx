@@ -8,6 +8,9 @@ import Chart5 from './chart5';
 import Chart6 from './chart6';
 import Chart7 from './chart7';
 import Chart8 from './chart8';
+import Chart9 from './chart9';
+import Chart10 from './chart10';
+import Chart11 from './chart11';
 import IframeDemo from './iframe_demo';
 
 export default [
@@ -55,5 +58,20 @@ export default [
     title: '词云',
     keyword: '9',
     component: <Chart8 />,
+  },
+  {
+    title: '地图柱状图',
+    keyword: '地图',
+    component: <Chart9 />,
+  },
+  {
+    title: '城市地图',
+    keyword: '地图',
+    component: <Chart10 />,
+  },
+  {
+    title: '路线地图',
+    keyword: '地图',
+    component: <Chart11 />,
   },
 ];
