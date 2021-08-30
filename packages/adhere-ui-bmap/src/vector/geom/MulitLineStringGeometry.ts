@@ -1,5 +1,5 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   ICoordinate,
@@ -7,6 +7,7 @@ import {
   ILineStringGeometryStyle,
   IMulitLineStringGeometry,
   VectorActions,
+  IPixel,
 } from '../types';
 
 import Geometry from './Geometry';
@@ -83,6 +84,15 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
         map: this.getMap(),
       });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

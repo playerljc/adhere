@@ -3,6 +3,7 @@ import {
   ICoordinate,
   IPointGeometryStyle,
   IPointGeometry,
+  IPixel,
   VectorActions,
 } from '../types';
 import Geometry from './Geometry';
@@ -10,6 +11,8 @@ import GeometryStyle from '../style/GeometryStyle';
 import RegularPolygonGeometry from './RegularPolygonGeometry';
 import StartGeometry from './StartGeometry';
 import SectorGeometry from './SectorGeometry';
+import CircleGeometry from './CircleGeometry';
+import RectGeometry from './RectGeometry';
 
 /**
  * PointGeometry
@@ -25,6 +28,62 @@ class PointGeometry extends Geometry implements IPointGeometry {
     ['regularPolygon', PointGeometry.drawRegularPolygon],
     ['start', PointGeometry.drawStart],
     ['sector', PointGeometry.drawSector],
+    ['rect', PointGeometry.drawRect],
+  ]);
+
+  static isPixelInGeometryMapping = new Map<string, Function>([
+    ['circle', CircleGeometry.isPixelInGeometry],
+    ['image', RectGeometry.isPixelInGeometry],
+    ['regularPolygon', RegularPolygonGeometry.isPixelInGeometry],
+    ['start', StartGeometry.isPixelInGeometry],
+    ['sector', SectorGeometry.isPixelInGeometry],
+    ['rect', RectGeometry.isPixelInGeometry],
+  ]);
+
+  static pointTypeToCoordinatesMapping = new Map<string, Function>([
+    [
+      'circle',
+      (coordinates: ICoordinate, style: IPointGeometryStyle) => ({
+        center: coordinates,
+        radius: style.radius,
+      }),
+    ],
+    [
+      'image',
+      (coordinates: ICoordinate, style: IPointGeometryStyle) => ({
+        leftTop: coordinates,
+        width: style.img.width,
+        height: style.img.height,
+      }),
+    ],
+    [
+      'regularPolygon',
+      (coordinates: ICoordinate, style: IPointGeometryStyle) => ({
+        center: coordinates,
+        ...style.regularPolygon,
+      }),
+    ],
+    [
+      'start',
+      (coordinates: ICoordinate, style: IPointGeometryStyle) => ({
+        center: coordinates,
+        ...style.start,
+      }),
+    ],
+    [
+      'sector',
+      (coordinates: ICoordinate, style: IPointGeometryStyle) => ({
+        center: coordinates,
+        ...style.sector,
+      }),
+    ],
+    [
+      'rect',
+      (coordinates: ICoordinate, style: IPointGeometryStyle) => ({
+        leftTop: coordinates,
+        ...style.rect,
+      }),
+    ],
   ]);
 
   constructor(coordinates: ICoordinate) {
@@ -72,25 +131,33 @@ class PointGeometry extends Geometry implements IPointGeometry {
     coordinates: ICoordinate;
     map: any;
   }) {
-    ctx.save();
-    ctx.beginPath();
+    // ctx.save();
+    // ctx.beginPath();
+    //
+    // ctx.lineWidth = style.lineWidth;
+    // ctx.lineJoin = style.lineJoin;
+    // ctx.lineCap = style.lineCap;
+    // ctx.setLineDash(style.lineDash);
+    // ctx.lineDashOffset = style.lineDashOffset;
+    // ctx.strokeStyle = style.strokeStyle;
+    // ctx.fillStyle = style.fillStyle;
+    //
+    // // @ts-ignore
+    // const pixel = map.pointToPixel(new BMap.Point(coordinates.lng, coordinates.lat));
+    //
+    // ctx.ellipse(pixel.x, pixel.y, style.radius, style.radius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+    //
+    // ctx.stroke();
+    // ctx.fill();
+    // ctx.restore();
 
-    ctx.lineWidth = style.lineWidth;
-    ctx.lineJoin = style.lineJoin;
-    ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
-    ctx.lineDashOffset = style.lineDashOffset;
-    ctx.strokeStyle = style.strokeStyle;
-    ctx.fillStyle = style.fillStyle;
-
-    // @ts-ignore
-    const pixel = map.pointToPixel(new BMap.Point(coordinates.lng, coordinates.lat));
-
-    ctx.ellipse(pixel.x, pixel.y, style.radius, style.radius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
-
-    ctx.stroke();
-    ctx.fill();
-    ctx.restore();
+    CircleGeometry.drawCircle({
+      ctx,
+      style,
+      coordinates: { radius: style.radius, center: coordinates },
+      map,
+      isScale: false,
+    });
   }
 
   /**
@@ -203,6 +270,33 @@ class PointGeometry extends Geometry implements IPointGeometry {
   }
 
   /**
+   * drawRect
+   * @param ctx
+   * @param style
+   * @param coordinates
+   * @param map
+   */
+  static drawRect({
+    ctx,
+    style,
+    coordinates,
+    map,
+  }: {
+    ctx: CanvasRenderingContext2D;
+    style: IPointGeometryStyle;
+    coordinates: ICoordinate;
+    map: any;
+  }) {
+    RectGeometry.drawRect({
+      ctx,
+      style,
+      coordinates: { ...style.rect, leftTop: coordinates },
+      map,
+      isScale: false,
+    });
+  }
+
+  /**
    * drawPoint
    * @param ctx
    * @param style
@@ -246,6 +340,44 @@ class PointGeometry extends Geometry implements IPointGeometry {
       style,
       coordinates: this.coordinates,
       map: this.getMap(),
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    pixel,
+    style,
+  }: {
+    coordinates: ICoordinate;
+    pixel: IPixel;
+    map: any;
+    style: IPointGeometryStyle;
+  }): boolean {
+    return PointGeometry.isPixelInGeometryMapping.get(style.pointType)({
+      coordinates: PointGeometry.pointTypeToCoordinatesMapping.get(style.pointType)(
+        coordinates,
+        style,
+      ),
+      isScale: false,
+      map,
+      style,
+      pixel,
+    });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: IPointGeometryStyle): boolean {
+    return PointGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      pixel,
+      map: this.getMap(),
+      style,
     });
   }
 }

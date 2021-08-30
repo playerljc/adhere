@@ -1,5 +1,5 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   IRectGeometry,
@@ -7,6 +7,7 @@ import {
   IGeometryStyle,
   VectorActions,
   ICoordinate,
+  IPixel,
 } from '../types';
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';
@@ -73,11 +74,13 @@ class RectGeometry extends Geometry implements IRectGeometry {
     style,
     coordinates,
     map,
+    isScale,
   }: {
     ctx: CanvasRenderingContext2D;
     style: IGeometryStyle;
     coordinates: IRectGeometryData;
     map: any;
+    isScale: boolean;
   }) {
     ctx.save();
 
@@ -105,10 +108,14 @@ class RectGeometry extends Geometry implements IRectGeometry {
     const scale = Util.getScale(map);
 
     // 实际的宽度(图上距离)
-    const realWidth = scale * width;
-
+    let realWidth = width;
     // 实际的高度(图上距离)
-    const realHeight = scale * height;
+    let realHeight = height;
+
+    if (isScale) {
+      realWidth = scale * width;
+      realHeight = scale * height;
+    }
 
     ctx.rect(pixel.x, pixel.y, realWidth, realHeight);
 
@@ -123,7 +130,86 @@ class RectGeometry extends Geometry implements IRectGeometry {
    * @param style
    */
   draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void {
-    RectGeometry.drawRect({ ctx, style, coordinates: this.coordinates, map: this.getMap() });
+    RectGeometry.drawRect({
+      ctx,
+      style,
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      isScale: true,
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    style,
+    pixel,
+    isScale,
+  }: {
+    coordinates: IRectGeometryData;
+    pixel: IPixel;
+    style?: IGeometryStyle;
+    map: any;
+    isScale: boolean;
+  }): boolean {
+    // const { leftTop, width, height } = coordinates;
+    //
+    // const scale = Util.getScale(map);
+    //
+    // // @ts-ignore
+    // const leftTopPixel = map.pointToPixel(new BMap.Point(leftTop.lng, leftTop.lat));
+    //
+    // let realWidth = width;
+    // let realHeight = height;
+    //
+    // if (isScale) {
+    //   realWidth = scale * width;
+    //   realHeight = scale * height;
+    // }
+    //
+    // const point = turf.point([pixel.x, pixel.y]);
+    //
+    // const poly = turf.polygon([
+    //   [
+    //     [leftTopPixel.x, leftTopPixel.y],
+    //     [leftTopPixel.x + realWidth, leftTopPixel.y],
+    //     [leftTopPixel.x + realWidth, leftTopPixel.y + realHeight],
+    //     [leftTopPixel.x, leftTopPixel.y + realHeight],
+    //     [leftTopPixel.x, leftTopPixel.y],
+    //   ],
+    // ]);
+    //
+    // return turf.booleanPointInPolygon(point, poly);
+
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    RectGeometry.drawRect({
+      ctx,
+      coordinates,
+      style,
+      map,
+      isScale,
+    });
+
+    return ctx.isPointInPath(pixel.x, pixel.y);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return RectGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      style,
+      isScale: true,
+      pixel,
+    });
   }
 }
 

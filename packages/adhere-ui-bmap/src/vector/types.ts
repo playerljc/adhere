@@ -8,7 +8,7 @@ export enum GeometryType {
   Point,
   MulitPoint,
   Circle,
-  MulitCircel,
+  MulitCircle,
   LineString,
   MulitLineString,
   Polygon,
@@ -96,8 +96,10 @@ export interface IPointGeometryStyle extends IGeometryStyle {
   start?: IStartGeometryData;
   // 只有当pointType为sector时才生效(扇形)
   sector?: ISectorGeometryData;
+  // 只有当pointType为rect时才生效(扇形)
+  rect?:  IRectGeometryData;
   // 类型
-  pointType: 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector';
+  pointType: 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect';
 }
 
 /**
@@ -109,6 +111,7 @@ export interface IGeometry {
   setContext: (context: IFeature) => void;
   getContext: () => IFeature;
   getCenterCoordinate: () => ICoordinate;
+  isPixelInGeometry: (pixel: IPixel, style?: IStyle) => boolean;
 }
 
 /**
@@ -185,9 +188,9 @@ export interface ICircleGeometry extends IGeometry {
 }
 
 /**
- * IMulitCircelGeometry
+ * IMulitCircleGeometry
  */
-export interface IMulitCircelGeometry extends IGeometry {
+export interface IMulitCircleGeometry extends IGeometry {
   setCoordinates: (coordinates: ICircleGeometryData[]) => void;
   getCoordinates: () => ICircleGeometryData[];
 }
@@ -351,6 +354,7 @@ export interface IFeature {
   setProperties: (properties: object) => void;
   setContext: (context: IVectorSource) => void;
   draw: (ctx: CanvasRenderingContext2D) => void;
+  isPointInFeature: (pixel: IPixel, style?:IStyle) => boolean;
 }
 
 /**
@@ -411,10 +415,41 @@ export interface IVectorLayer {
   update: () => void;
   getMap: () => any;
   getEmitter: () => Emitter;
+  addEventListener: (type: VectorEventActions, handler: (e: any) => void) => void;
+  removeEventListener: (type: VectorEventActions, handler: (e: any) => void) => void;
 }
 
+/**
+ * VectorEventActions
+ */
+export enum VectorEventActions {
+  FEATURE_CLICK = 'feature:click',
+  VECTOR_CLICK = 'vector:click',
+}
+
+/**
+ * IFeatureEvent
+ */
+export interface IFeatureClickEvent {
+  features: IFeature[];
+  pixel: IPixel;
+}
+
+export interface IVectorClickEvent {}
+
+/**
+ * IVectorLayerConfig
+ */
 export interface IVectorLayerConfig {
-  paneName: string;
+  paneName:
+    | 'floatPane'
+    | 'floatShadow'
+    | 'labelPane'
+    | 'mapPane'
+    | 'markerMouseTarget'
+    | 'markerPane'
+    | 'markerShadow'
+    | 'vertexPane';
   zIndex: number;
   source: IVectorSource;
 }

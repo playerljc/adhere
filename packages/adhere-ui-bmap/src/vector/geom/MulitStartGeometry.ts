@@ -1,11 +1,12 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   IMulitStartGeometry,
   IStartGeometryData,
   IGeometryStyle,
   ICoordinate,
+  IPixel,
   VectorActions,
 } from '../types';
 import Geometry from './Geometry';
@@ -71,6 +72,15 @@ class MulitStartGeometry extends Geometry implements IMulitStartGeometry {
         isScale: true,
       });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

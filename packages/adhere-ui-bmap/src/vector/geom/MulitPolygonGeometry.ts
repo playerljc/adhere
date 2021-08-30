@@ -1,11 +1,12 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   IMulitPolygonGeometry,
   IGeometryStyle,
   ICoordinate,
   VectorActions,
+  IPixel,
 } from '../types';
 import Geometry from './Geometry';
 import PolygonGeometry from './PolygonGeometry';
@@ -70,6 +71,15 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
     coordinates.forEach((coordinate: ICoordinate[]) => {
       PolygonGeometry.drawPolygon({ ctx, style, coordinates: coordinate, map });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

@@ -4,6 +4,7 @@ import {
   ICircleGeometryData,
   ICoordinate,
   IGeometryStyle,
+  IPixel,
   VectorActions,
 } from '../types';
 import Util from '../../util';
@@ -54,11 +55,13 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
     style,
     coordinates,
     map,
+    isScale,
   }: {
     ctx: CanvasRenderingContext2D;
     style: IGeometryStyle;
     coordinates: ICircleGeometryData;
     map: any;
+    isScale: boolean;
   }): void {
     ctx.save();
 
@@ -84,7 +87,10 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
     const scale = Util.getScale(map);
 
     // 实际的半径(图上距离)
-    const realRadius = scale * radius;
+    let realRadius = radius;
+    if (isScale) {
+      realRadius = scale * radius;
+    }
 
     ctx.ellipse(pixel.x, pixel.y, realRadius, realRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
 
@@ -99,6 +105,67 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
       style,
       coordinates: this.coordinates,
       map: this.getMap(),
+      isScale: true,
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    style,
+    pixel,
+    isScale,
+  }: {
+    coordinates: ICircleGeometryData;
+    pixel: IPixel;
+    style?: IGeometryStyle;
+    map: any;
+    isScale: boolean;
+  }): boolean {
+    // const { center, radius } = coordinates;
+    //
+    // // @ts-ignore
+    // const centerPixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
+    //
+    // // 比例尺
+    // const scale = Util.getScale(map);
+    //
+    // let realRadius = radius;
+    //
+    // if (isScale) {
+    //   realRadius = scale * radius;
+    // }
+    //
+    // return MathUtil.isPointInCircle(pixel, { center: centerPixel, radius: realRadius });
+
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    CircleGeometry.drawCircle({
+      ctx,
+      coordinates,
+      style,
+      map,
+      isScale,
+    });
+
+    return ctx.isPointInPath(pixel.x, pixel.y);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return CircleGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      style,
+      pixel,
+      isScale: true,
     });
   }
 }

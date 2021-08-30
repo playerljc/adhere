@@ -5,6 +5,7 @@ import {
   ITextStyle,
   ITextGeometryData,
   ICoordinate,
+  IPixel,
 } from '../types';
 import Geometry from './Geometry';
 import TextStyle from '../style/TextStyle';
@@ -69,6 +70,15 @@ class TextGeometry extends Geometry implements ITextGeometry {
 
     ctx.fillText(text, pixel.x, pixel.y);
     ctx.restore();
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

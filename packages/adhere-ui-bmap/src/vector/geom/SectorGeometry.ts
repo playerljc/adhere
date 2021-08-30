@@ -6,6 +6,7 @@ import {
   VectorActions,
   GeometryType,
   IGeometryStyle,
+  IPixel,
 } from '../types';
 import GeometryStyle from '../style/GeometryStyle';
 import Util from '../../util';
@@ -112,6 +113,50 @@ class SectorGeometry extends Geometry implements ISectorGeometry {
       style,
       coordinates: this.coordinates,
       map: this.getMap(),
+      isScale: true,
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    style,
+    pixel,
+    isScale,
+  }: {
+    coordinates: ISectorGeometryData;
+    pixel: IPixel;
+    map: any;
+    isScale: boolean;
+    style?: IGeometryStyle;
+  }): boolean {
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    SectorGeometry.drawSector({
+      ctx,
+      coordinates,
+      style,
+      map,
+      isScale,
+    });
+
+    return ctx.isPointInPath(pixel.x, pixel.y);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return SectorGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      style,
+      pixel,
       isScale: true,
     });
   }

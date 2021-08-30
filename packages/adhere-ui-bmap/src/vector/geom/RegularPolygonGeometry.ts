@@ -6,6 +6,7 @@ import {
   VectorActions,
   GeometryType,
   IGeometryStyle,
+  IPixel,
 } from '../types';
 import GeometryStyle from '../style/GeometryStyle';
 import Util from '../../util';
@@ -117,6 +118,81 @@ class RegularPolygonGeometry extends Geometry implements IRegularPolygonGeometry
       coordinates: this.coordinates,
       map: this.getMap(),
       isScale: true,
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    pixel,
+    style,
+    isScale,
+  }: {
+    coordinates: IRegularPolygonGeometryData;
+    pixel: IPixel;
+    style?: IGeometryStyle;
+    map: any;
+    isScale: boolean;
+  }): boolean {
+    // const { n, center, size } = coordinates;
+    //
+    // const scale = Util.getScale(map);
+    // const points: IPixel[] = [];
+    //
+    // let curSize = size;
+    // if (isScale) {
+    //   curSize = scale * size;
+    // }
+    //
+    // // @ts-ignore
+    // const centerPixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
+    //
+    // const degree = (2 * Math.PI) / n;
+    //
+    // for (let i = 0; i < n; i++) {
+    //   const x = Math.cos(i * degree);
+    //   const y = Math.sin(i * degree);
+    //   points.push({
+    //     x: x * curSize + centerPixel.x,
+    //     y: y * curSize + centerPixel.y,
+    //   });
+    // }
+    //
+    // const polygon = points.map((point) => [point.x, point.y]);
+    // polygon.push(polygon[0]);
+    //
+    // const point = turf.point([pixel.x, pixel.y]);
+    // const poly = turf.polygon([polygon]);
+    //
+    // return turf.booleanPointInPolygon(point, poly);
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    RegularPolygonGeometry.drawRegularPolygon({
+      ctx,
+      coordinates,
+      style,
+      map,
+      isScale,
+    });
+
+    return ctx.isPointInPath(pixel.x, pixel.y);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return RegularPolygonGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      style,
+      isScale: true,
+      pixel,
     });
   }
 }

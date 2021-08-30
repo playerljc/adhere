@@ -1,5 +1,5 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   IMulitRegularPolygonGeometry,
@@ -7,6 +7,7 @@ import {
   IGeometryStyle,
   ICoordinate,
   VectorActions,
+  IPixel,
 } from '../types';
 import Geometry from './Geometry';
 import RegularPolygonGeometry from './RegularPolygonGeometry';
@@ -71,6 +72,15 @@ class MulitRegularPolygonGeometry extends Geometry implements IMulitRegularPolyg
         isScale: true,
       });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

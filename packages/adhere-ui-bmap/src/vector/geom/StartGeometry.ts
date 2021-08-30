@@ -6,6 +6,7 @@ import {
   VectorActions,
   GeometryType,
   IGeometryStyle,
+  IPixel,
 } from '../types';
 import GeometryStyle from '../style/GeometryStyle';
 import Util from '../../util';
@@ -92,11 +93,12 @@ class StartGeometry extends Geometry implements IStartGeometry {
     // @ts-ignore
     const pixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
 
-    const spend = 360 / 5;
+    const startCount = 5;
+    const spend = 360 / startCount;
     const min = 90 - spend;
     const max = spend - min;
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < startCount; i++) {
       ctx.lineTo(
         Math.cos(((min + i * spend) / 180) * Math.PI) * curOutRadius + pixel.x,
         -Math.sin(((min + i * spend) / 180) * Math.PI) * curOutRadius + pixel.y,
@@ -124,6 +126,92 @@ class StartGeometry extends Geometry implements IStartGeometry {
       coordinates: this.coordinates,
       map: this.getMap(),
       isScale: true,
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    pixel,
+    style,
+    isScale,
+  }: {
+    coordinates: IStartGeometryData;
+    pixel: IPixel;
+    style: IGeometryStyle;
+    map: any;
+    isScale: boolean;
+  }): boolean {
+    // const { center, innerRadius, outRadius } = coordinates;
+    //
+    // // 比例尺
+    // const scale = Util.getScale(map);
+    //
+    // // @ts-ignore
+    // const centerPixel = map.pointToPixel(new BMap.Point(center.lng, center.lat));
+    //
+    // let curInnerRadius = innerRadius;
+    // let curOutRadius = outRadius;
+    //
+    // if (isScale) {
+    //   curInnerRadius = scale * innerRadius;
+    //   curOutRadius = scale * outRadius;
+    // }
+    //
+    // const startCount = 5;
+    // const spend = 360 / startCount;
+    // const min = 90 - spend;
+    // const max = spend - min;
+    //
+    // const points: IPixel[] = [];
+    //
+    // for (let i = 0; i < startCount; i++) {
+    //   points.push({
+    //     x: Math.cos(((min + i * spend) / 180) * Math.PI) * curOutRadius + centerPixel.x,
+    //     y: -Math.sin(((min + i * spend) / 180) * Math.PI) * curOutRadius + centerPixel.y,
+    //   });
+    //   points.push({
+    //     x: Math.cos(((max + i * spend) / 180) * Math.PI) * curInnerRadius + centerPixel.x,
+    //     y: -Math.sin(((max + i * spend) / 180) * Math.PI) * curInnerRadius + centerPixel.y,
+    //   });
+    // }
+    //
+    // const polygon = points.map((point) => [point.x, point.y]);
+    // polygon.push(polygon[0]);
+    //
+    // const point = turf.point([pixel.x, pixel.y]);
+    // const poly = turf.polygon([polygon]);
+    //
+    // return turf.booleanPointInPolygon(point, poly);
+
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    StartGeometry.drawStart({
+      ctx,
+      coordinates,
+      style,
+      map,
+      isScale,
+    });
+
+    return ctx.isPointInPath(pixel.x, pixel.y);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+    return StartGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      map: this.getMap(),
+      isScale: true,
+      style,
+      pixel,
     });
   }
 }

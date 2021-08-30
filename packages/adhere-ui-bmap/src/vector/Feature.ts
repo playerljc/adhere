@@ -5,6 +5,7 @@ import {
   IFeature,
   IGeometry,
   IStyle,
+  IPixel,
   VectorActions,
 } from './types';
 
@@ -118,6 +119,10 @@ class Feature implements IFeature {
 
   getMap(): any {
     return this.getLayer().getMap();
+  }
+
+  isPointInFeature(pixel: IPixel, style?: IStyle): boolean {
+    return this.geometry.isPixelInGeometry(pixel, style);
   }
 }
 

@@ -1,7 +1,16 @@
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+// @ts-ignore
+import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IVectorLayer, IVectorLayerConfig, IVectorSource, VectorActions } from './types';
+import {
+  IPixel,
+  IVectorLayer,
+  IVectorLayerConfig,
+  IVectorSource,
+  VectorActions,
+  VectorEventActions,
+} from './types';
 
 /**
  * VectorLayer
@@ -15,6 +24,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   source: IVectorSource;
   isLoad: boolean = false;
   emitter: Emitter = new Emitter();
+  cacheCanvas: HTMLCanvasElement | null = null;
 
   // @ts-ignore
   constructor(map, config: IVectorLayerConfig) {
@@ -52,6 +62,39 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     this.update();
   }
 
+  /**
+   * drawCache
+   */
+  protected drawCache(): void {
+    if (!this.cacheCanvas) {
+      this.cacheCanvas = document.createElement('canvas');
+      // @ts-ignore
+      this.cacheCanvas.width = this.canvas.width;
+      // @ts-ignore
+      this.cacheCanvas.height = this.canvas.height;
+    }
+
+    // 绘制source中的数据
+    const { source } = this;
+
+    const features = source.getFeatures();
+
+    // 绘制的时候按照feature的zIndex从小到大进行排序
+    features.sort((f1, f2) => {
+      if (f1.getZIndex() > f2.getZIndex()) return 1;
+      else if (f1.getZIndex() < f2.getZIndex()) return -1;
+      else return 0;
+    });
+
+    const ctx = this.cacheCanvas.getContext('2d');
+
+    ctx.clearRect(0, 0, this.cacheCanvas.width, this.cacheCanvas.height);
+
+    (features || []).forEach((feature) => {
+      feature.draw(ctx);
+    });
+  }
+
   update() {
     // @ts-ignore
     const ctx = this.canvas.getContext('2d');
@@ -66,23 +109,11 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
 
     this.isLoad = true;
 
+    this.drawCache();
+
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    // 绘制source中的数据
-    const { source } = this;
-
-    const features = source.getFeatures();
-
-    // 绘制的时候按照feature的zIndex从小到大进行排序
-    features.sort((f1, f2) => {
-      if (f1.getZIndex() > f2.getZIndex()) return 1;
-      else if (f1.getZIndex() < f2.getZIndex()) return -1;
-      else return 0;
-    });
-
-    (features || []).forEach((feature) => {
-      feature.draw(ctx);
-    });
+    ctx.drawImage(this.cacheCanvas, 0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
   getMap() {
@@ -93,7 +124,39 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     return this.emitter;
   }
 
-  protected initCanvasEvents() {}
+  addEventListener(type: VectorEventActions, handler): void {
+    this.emitter.on(type, handler);
+  }
+
+  removeEventListener(type: VectorEventActions, handler): void {
+    this.emitter.remove(type, handler);
+  }
+
+  protected initCanvasEvents() {
+    // @ts-ignore
+    this.canvas.addEventListener('click', (e: PointerEvent) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
+      const pixel: IPixel = MathUtil.clientToCtxPoint({
+        event: e,
+        // @ts-ignore
+        rect: this.canvas.getBoundingClientRect(),
+      });
+
+      const features = this.source.getFeatures();
+      const hitFeatures = features.filter((f) => f.isPointInFeature(pixel, f.getStyle()));
+
+      if (hitFeatures.length) {
+        this.emitter.trigger(VectorEventActions.FEATURE_CLICK, {
+          features: [...hitFeatures],
+          pixel,
+        });
+      } else {
+        this.emitter.trigger(VectorEventActions.VECTOR_CLICK);
+      }
+    });
+  }
 
   protected initEvents() {
     this.emitter.on(VectorActions.UPDATE, this.onUpdate);

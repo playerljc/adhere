@@ -1,11 +1,12 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   ICoordinate,
   IMulitPointGeometry,
   IPointGeometryStyle,
   VectorActions,
+  IPixel,
 } from '../types';
 import Geometry from './Geometry';
 import PointGeometry from './PointGeometry';
@@ -58,6 +59,15 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
     coordinates.forEach((coordinate: ICoordinate) => {
       PointGeometry.drawPoint({ ctx, style, coordinates: coordinate, map });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

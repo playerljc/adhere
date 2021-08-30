@@ -1,10 +1,11 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   IPolygonGeometry,
   IGeometryStyle,
   ICoordinate,
+  IPixel,
   VectorActions,
 } from '../types';
 import Geometry from './Geometry';
@@ -110,6 +111,41 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
       ctx,
       style,
       coordinates: this.coordinates,
+      map: this.getMap(),
+    });
+  }
+
+  static isPixelInGeometry({
+    coordinates,
+    map,
+    pixel,
+  }: {
+    coordinates: ICoordinate[];
+    pixel: IPixel;
+    map: any;
+  }): boolean {
+    const point = turf.point([pixel.x, pixel.y]);
+
+    const poly = turf.polygon([
+      coordinates.map((coordinate) => {
+        // @ts-ignore
+        const p = map.pointToPixel(new BMap.Point(coordinate.lng, coordinate.lat));
+        return [p.x, p.y];
+      }),
+    ]);
+
+    return turf.booleanPointInPolygon(point, poly);
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return PolygonGeometry.isPixelInGeometry({
+      coordinates: this.coordinates,
+      pixel,
       map: this.getMap(),
     });
   }

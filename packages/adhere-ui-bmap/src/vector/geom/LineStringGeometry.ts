@@ -1,5 +1,5 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 
 import {
   GeometryType,
@@ -14,12 +14,6 @@ import {
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';
 import Util from '../../util';
-
-const SIZE_TO_SCALE = new Map<string, number>([
-  ['small', 0.5],
-  ['normal', 1],
-  ['large', 1.5],
-]);
 
 const SIZE = new Map<string, number>([
   ['small', 3],
@@ -401,6 +395,31 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
       coordinates: this.coordinates,
       map: this.getMap(),
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @param style
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel, style?: ILineStringGeometryStyle): boolean {
+    const canvas = document.createElement('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+
+    const { point1, point2 } = this.coordinates;
+    // @ts-ignore
+    const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
+    // @ts-ignore
+    const pixel2 = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
+
+    ctx.moveTo(pixel1.x, pixel1.y);
+    ctx.lineTo(pixel2.x, pixel2.y);
+
+    return ctx.isPointInPath(pixel.x, pixel.y);
   }
 }
 

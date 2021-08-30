@@ -11,6 +11,8 @@ import citys from './citys.json';
 
 import isoline from './isoline';
 
+import icon from './站点.svg';
+
 const ref = React.createRef();
 
 let WindLayer,
@@ -126,7 +128,7 @@ ReactDOM.render(
           //   radius: 20000
           // });
 
-          // const mulitCircelGemo = new MulitCircleGeometry([
+          // const mulitCircleGemo = new MulitCircleGeometry([
           //   {
           //     center: { lng: 121.487899486, lat: 31.24916171 },
           //     radius: 20000000,
@@ -313,6 +315,99 @@ ReactDOM.render(
           //   }
           // ]);
 
+          // const startGeom = new StartGeometry({
+          //   center: {
+          //     lng: 121.487899486,
+          //     lat: 31.24916171,
+          //   },
+          //   innerRadius: 20000000 / 2,
+          //   outRadius: 20000000,
+          // });
+
+          // const mulitStartGeom = new MulitStartGeometry([
+          //   {
+          //     center: {
+          //       lng: 121.487899486,
+          //       lat: 31.24916171,
+          //     },
+          //     innerRadius: 20000000 / 2,
+          //     outRadius: 21000000,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 118.181882949,
+          //       lat: 26.6436264742,
+          //     },
+          //     innerRadius: 20000000 / 2,
+          //     outRadius: 21000000,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 114.316200103,
+          //       lat: 30.5810841269,
+          //     },
+          //     innerRadius: 20000000 / 2,
+          //     outRadius: 21000000,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 105.564887792,
+          //       lat: 30.5574913504,
+          //     },
+          //     innerRadius: 20000000 / 2,
+          //     outRadius: 21000000,
+          //   },
+          // ]);
+
+          // const sectorGeom = new SectorGeometry({
+          //   center: {
+          //     lng: 121.487899486,
+          //     lat: 31.24916171,
+          //   },
+          //   radius: 20000000,
+          //   angle1: 0,
+          //   angle2: 90,
+          // });
+
+          // const mulitSectorGeom = new MulitSectorGeometry([
+          //   {
+          //     center: {
+          //       lng: 121.487899486,
+          //       lat: 31.24916171,
+          //     },
+          //     radius: 21000000,
+          //     angle1: 0,
+          //     angle2: 90,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 118.181882949,
+          //       lat: 26.6436264742,
+          //     },
+          //     radius: 21000000,
+          //     angle1: 20,
+          //     angle2: 180,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 114.316200103,
+          //       lat: 30.5810841269,
+          //     },
+          //     radius: 21000000,
+          //     angle1: 180,
+          //     angle2: 360,
+          //   },
+          //   {
+          //     center: {
+          //       lng: 105.564887792,
+          //       lat: 30.5574913504,
+          //     },
+          //     radius: 21000000,
+          //     angle1: 90,
+          //     angle2: 270,
+          //   },
+          // ]);
+
           // const textGemo = new TextGeometry({
           //   point: {
           //     lng: 121.487899486,
@@ -335,11 +430,30 @@ ReactDOM.render(
               lineWidth: 1,
               strokeStyle: 'yellow',
               fillStyle: 'red',
+              radius: 30,
+              img: {
+                src: icon,
+                width: 32,
+                height: 32
+              },
               regularPolygon: {
                 n: 3,
                 size: 10,
               },
-              pointType: 'regularPolygon', // 'circle' | 'image' | 'regularPolygon';
+              start: {
+                innerRadius: 20 / 2,
+                outRadius: 20,
+              },
+              sector: {
+                radius: 20,
+                angle1: 180,
+                angle2: 360,
+              },
+              rect: {
+                width: 50,
+                height: 50,
+              },
+              pointType: 'rect', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect';
               // arrow: {
               //   // 是否绘制
               //   draw: true,
@@ -362,7 +476,7 @@ ReactDOM.render(
           const vectorSource = new VectorSource([feature]);
 
           const vectorLayer = new VectorLayer(map, {
-            paneName: 'floatShadow',
+            paneName: 'vertexPane',
             zIndex: 9999,
             source: vectorSource,
           });
@@ -386,6 +500,7 @@ ReactDOM.render(
       <BMap
         ref={ref}
         ak="bxFuXXDt1oKdlgu6mXCCnK51cDgDGBLp"
+        zoom={6}
         onBMapScriptReady={() => {
           import('./windlayer').then((res) => {
             WindLayer = res.default;

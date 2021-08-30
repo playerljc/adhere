@@ -1,5 +1,5 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   IMulitRectGeometry,
@@ -7,6 +7,7 @@ import {
   IGeometryStyle,
   VectorActions,
   ICoordinate,
+  IPixel,
 } from '../types';
 import Geometry from './Geometry';
 import RectGeometry from './RectGeometry';
@@ -61,6 +62,15 @@ class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
     coordinates.forEach((coordinates: IRectGeometryData) => {
       RectGeometry.drawRect({ ctx, style, coordinates, map });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

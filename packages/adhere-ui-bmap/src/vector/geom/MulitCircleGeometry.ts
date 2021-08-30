@@ -1,12 +1,13 @@
 // @ts-ignore
-import turf from '@turf/turf';
+import * as turf from '@turf/turf';
 import {
   GeometryType,
   ICoordinate,
-  IMulitCircelGeometry,
+  IMulitCircleGeometry,
   VectorActions,
   ICircleGeometryData,
   IGeometryStyle,
+  IPixel
 } from '../types';
 
 import Geometry from './Geometry';
@@ -18,7 +19,7 @@ import GeometryStyle from '../style/GeometryStyle';
  * @class MulitCircleGeometry
  * @classdesc MulitCircleGeometry - 多个圆
  */
-class MulitCircleGeometry extends Geometry implements IMulitCircelGeometry {
+class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
   coordinates: ICircleGeometryData[];
 
   constructor(coordinates: ICircleGeometryData[]) {
@@ -37,7 +38,7 @@ class MulitCircleGeometry extends Geometry implements IMulitCircelGeometry {
   }
 
   getType(): GeometryType {
-    return GeometryType.MulitCircel;
+    return GeometryType.MulitCircle;
   }
 
   getCenterCoordinate(): ICoordinate {
@@ -75,6 +76,15 @@ class MulitCircleGeometry extends Geometry implements IMulitCircelGeometry {
         map: this.getMap(),
       });
     });
+  }
+
+  /**
+   * isPixelInGeometry
+   * @param pixel
+   * @return boolean
+   */
+  isPixelInGeometry(pixel: IPixel): boolean {
+    return false;
   }
 }
 

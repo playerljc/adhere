@@ -1,4 +1,12 @@
-import {IGeometry, IStyle, GeometryType, IFeature, ICoordinate, IVectorLayer} from '../types';
+import {
+  IGeometry,
+  IStyle,
+  IPixel,
+  GeometryType,
+  IFeature,
+  ICoordinate,
+  IVectorLayer,
+} from '../types';
 
 /**
  * Geometry
@@ -11,6 +19,7 @@ abstract class Geometry implements IGeometry {
   abstract draw(ctx: CanvasRenderingContext2D, style: IStyle): void;
   abstract getType(): GeometryType;
   abstract getCenterCoordinate(): ICoordinate;
+  abstract isPixelInGeometry(pixel: IPixel): boolean;
 
   setContext(context: IFeature): void {
     this.context = context;
