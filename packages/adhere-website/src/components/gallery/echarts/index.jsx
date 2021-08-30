@@ -4,6 +4,4 @@ import manifest from './manifest';
 
 import GalleryLayout from '@/lib/GalleryLayout';
 
-export default () => (
-  <GalleryLayout manifest={manifest} />
-);
+export default () => <GalleryLayout manifest={manifest} />;

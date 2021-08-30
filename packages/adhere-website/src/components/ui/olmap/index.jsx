@@ -2997,10 +2997,7 @@ export default () => {
       </Playground>
 
       <h3>风场</h3>
-      <Playground
-        mode="code"
-        scope={{ React }}
-      >
+      <Playground mode="code" scope={{ React }}>
         <div style={{ width: '100%', height: 500 }}>
           <Button
             type="primary"

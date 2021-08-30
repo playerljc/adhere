@@ -56,7 +56,7 @@ export default () => {
             desc: '数据请求',
             type: 'Function',
             defaultVal: '',
-          }
+          },
         ]}
       />
 
@@ -117,7 +117,7 @@ export default () => {
             desc: '搜索表单以及内置操作按钮的大小 small | middle | small',
             type: 'string',
             defaultVal: 'middle',
-          }
+          },
         ]}
       />
 
@@ -139,13 +139,15 @@ export default () => {
           },
           {
             params: 'total',
-            desc: '工具栏显示数据总数, 为true默认显示为“共n条”,如果想自定义可以传string或者ReactNode',
+            desc:
+              '工具栏显示数据总数, 为true默认显示为“共n条”,如果想自定义可以传string或者ReactNode',
             type: 'boolean | string | ReactNode',
             defaultVal: '',
           },
           {
             params: 'selectAll',
-            desc: '工具栏选中全部，默认是选中当前页，传入object{ total: 全选是否代表跨页选中全部数据 }',
+            desc:
+              '工具栏选中全部，默认是选中当前页，传入object{ total: 全选是否代表跨页选中全部数据 }',
             type: 'boolean | object{ total: boolean }',
             defaultVal: '',
           },
@@ -180,8 +182,7 @@ export default () => {
       <Playground
         mode="code"
         scope={{ React }}
-        codeText={
-          `
+        codeText={`
           import React from 'react';
           import { TableList, FormItemCreator } from '@baifendian/adhere';
 
@@ -240,8 +241,7 @@ export default () => {
           }
           
           export default Demo;
-          `
-        }
+          `}
       >
         <Demo1 />
       </Playground>
@@ -250,8 +250,7 @@ export default () => {
       <Playground
         mode="code"
         scope={{ React }}
-        codeText={
-          `
+        codeText={`
           import React from 'react';
           import { TableList, FormItemCreator } from '@baifendian/adhere';
 
@@ -312,8 +311,7 @@ export default () => {
           }
           
           export default Demo;
-          `
-        }
+          `}
       >
         <Demo2 />
       </Playground>
@@ -322,8 +320,7 @@ export default () => {
       <Playground
         mode="code"
         scope={{ React }}
-        codeText={
-          `
+        codeText={`
           import React from 'react';
           import { TableList, FormItemCreator } from '@baifendian/adhere';
 
@@ -386,8 +383,7 @@ export default () => {
           }
           
           export default Demo;
-          `
-        }
+          `}
       >
         <Demo3 />
       </Playground>
@@ -396,8 +392,7 @@ export default () => {
       <Playground
         mode="code"
         scope={{ React }}
-        codeText={
-          `
+        codeText={`
           import React from 'react';
           import { TableList, FormItemCreator } from '@baifendian/adhere';
 
@@ -458,8 +453,7 @@ export default () => {
           }
           
           export default Demo;
-          `
-        }
+          `}
       >
         <Demo4 />
       </Playground>
@@ -468,8 +462,7 @@ export default () => {
       <Playground
         mode="code"
         scope={{ React }}
-        codeText={
-          `
+        codeText={`
           import React from 'react';
           import { Button } from 'antd';
           import { TableList, FormItemCreator } from '@baifendian/adhere';
@@ -544,11 +537,10 @@ export default () => {
               );
             }
           }
-          `
-        }
+          `}
       >
         <Demo5 />
       </Playground>
     </div>
-  )
-}
+  );
+};

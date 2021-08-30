@@ -68,7 +68,7 @@ const data = [
     name: '崇左市',
     center: [107.353926, 22.404108],
     centroid: [107.277353, 22.502179],
-  }
-]
+  },
+];
 
 export default data;

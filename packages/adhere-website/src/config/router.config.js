@@ -105,7 +105,9 @@ const SwipeOut = lazy(() => import(/* webpackChunkName: "swipeout" */ '@/compone
 const PolygonSelection = lazy(() =>
   import(/* webpackChunkName: "swipeout" */ '@/components/ui/polygonselection'),
 );
-const PlayGround = lazy(() => import(/* webpackChunkName: "playground" */ '@/components/ui/playground'));
+const PlayGround = lazy(() =>
+  import(/* webpackChunkName: "playground" */ '@/components/ui/playground'),
+);
 
 const AdapterScreen = lazy(() =>
   import(/* webpackChunkName: "adapterscreen" */ '@/components/util/adapterscreen'),
@@ -126,7 +128,6 @@ const WatchMemoized = lazy(() =>
 );
 const Ajax = lazy(() => import(/* webpackChunkName: "ajax" */ '@/components/util/ajax'));
 const Domain = lazy(() => import(/* webpackChunkName: "domain" */ '@/components/util/domain'));
-
 
 const Echarts = lazy(() =>
   import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'),
@@ -366,7 +367,7 @@ export default () => [
                 path: '/adhere/ui/playground',
                 name: 'PlayGround',
                 component: PlayGround,
-              }
+              },
             ],
           },
           {
@@ -431,7 +432,7 @@ export default () => [
                 path: '/adhere/util/domain',
                 name: 'Domain',
                 component: Domain,
-              }
+              },
             ],
           },
           {

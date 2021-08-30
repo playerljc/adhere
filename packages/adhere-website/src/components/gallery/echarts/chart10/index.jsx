@@ -5,244 +5,254 @@ import ReactECharts from 'echarts-for-react';
 import Playground from '@/lib/Playground';
 import geoJson from './guangxi.geo.json';
 import data from './config';
-import sectorImg  from './shape.png';
+import sectorImg from './shape.png';
 
 // 绘制地图
 echarts.registerMap('guangxi', geoJson);
 
 const mapColor = {
-    shadowColor1: '#8DFFFF',
-    shadowColor2: '#1E3C55',
-    effectScatterColor: '#00FFFF',
-}
+  shadowColor1: '#8DFFFF',
+  shadowColor2: '#1E3C55',
+  effectScatterColor: '#00FFFF',
+};
 
 // 涟漪
 const scatterRiff = () => {
-    return data.map((item) => {
-        return {
-            name: item.name,
-            value: item.centroid
-        }
-    })
-}
+  return data.map((item) => {
+    return {
+      name: item.name,
+      value: item.centroid,
+    };
+  });
+};
 
 // 扇形
 const scatterSector = () => {
-    return data.map((item) => {
-      return [item.centroid[0], item.centroid[1] + 0.3]
-    })
-}
+  return data.map((item) => {
+    return [item.centroid[0], item.centroid[1] + 0.3];
+  });
+};
 
 const option = {
-    geo: [
-        {
-            map: 'guangxi',
-            aspectScale: 0.75, //长宽比
-            zoom: 1,
-            roam: false,
-            label: {
-                show: false,
-            },
-            itemStyle: {
-                normal: {
-                    areaColor: '#013C62',
-                    shadowColor: '#000',
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 5,
-                    borderWidth: 0,
-                },
-                emphasis: {
-                    areaColor: '#2AB8FF',
-                    borderWidth: 0,
-                }
-            },
-            z: 5,
-            silent: true,
-            left: 20,
-            top: 10,
-            bottom: 10,
-            right: 20
+  geo: [
+    {
+      map: 'guangxi',
+      aspectScale: 0.75, //长宽比
+      zoom: 1,
+      roam: false,
+      label: {
+        show: false,
+      },
+      itemStyle: {
+        normal: {
+          areaColor: '#013C62',
+          shadowColor: '#000',
+          shadowOffsetX: 0,
+          shadowOffsetY: 5,
+          borderWidth: 0,
         },
-        {
-            map: 'guangxi',
-            aspectScale: 0.75, //长宽比
-            zoom: 1.1,
-            roam: false,
-            label: {
-                show: false,
-            },
-            itemStyle: {
-                normal: {
-                    areaColor: '#013C62',
-                    shadowColor: mapColor.shadowColor1,
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 10,
-                    borderWidth: 0,
-                },
-                emphasis: {
-                    areaColor: '#2AB8FF',
-                    borderWidth: 0,
-                }
-            },
-            z: 4,
-            silent: true,
-            left: 20,
-            top: 10,
-            bottom: 10,
-            right: 20
+        emphasis: {
+          areaColor: '#2AB8FF',
+          borderWidth: 0,
         },
-        {
-            map: 'guangxi',
-            aspectScale: 0.75, //长宽比
-            zoom: 1.1,
-            roam: false,
-            label: {
-                show: false,
-            },
-            itemStyle: {
-                normal: {
-                    areaColor: '#013C62',
-                    shadowColor: '#020925',
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 15,
-                    borderWidth: 0,
-                },
-                emphasis: {
-                    areaColor: '#2AB8FF',
-                    borderWidth: 0,
-                }
-            },
-            z: 3,
-            silent: true,
-            left: 20,
-            top: 10,
-            bottom: 10,
-            right: 20
+      },
+      z: 5,
+      silent: true,
+      left: 20,
+      top: 10,
+      bottom: 10,
+      right: 20,
+    },
+    {
+      map: 'guangxi',
+      aspectScale: 0.75, //长宽比
+      zoom: 1.1,
+      roam: false,
+      label: {
+        show: false,
+      },
+      itemStyle: {
+        normal: {
+          areaColor: '#013C62',
+          shadowColor: mapColor.shadowColor1,
+          shadowOffsetX: 0,
+          shadowOffsetY: 10,
+          borderWidth: 0,
         },
-        {
-            map: 'guangxi',
-            aspectScale: 0.75, //长宽比
-            zoom: 1.1,
-            roam: false,
-            label: {
-                show: false,
-            },
-            itemStyle: {
-                normal: {
-                    areaColor: '#013C62',
-                    shadowColor: mapColor.shadowColor2,
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 20,
-                    borderWidth: 0,
-                },
-                emphasis: {
-                    areaColor: '#2AB8FF',
-                    borderWidth: 0,
-                }
-            },
-            z: 2,
-            silent: true,
-            left: 20,
-            top: 10,
-            bottom: 10,
-            right: 20
-        }
-    ],
-    series: [
-        // map
-        {
-            type: 'map',
-            label: {
-                show: false,
-            },
-            emphasis: {
-                label: false,
-            },
-            itemStyle: {
-                normal: {
-                    borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: '#F68604'
-                    }, {
-                        offset: 1,
-                        color: '#FFBC00'
-                    }], false),
-                    borderWidth: 1.5,
-                    areaColor: 'rgba(3, 42, 76, 1)', 
-                },
-                emphasis: {
-                    areaColor: 'rgba(3, 42, 76, 1)',
-                    borderWidth: 1.5,
-                }
-            },
-            zoom: 1.1,
-            roam: false,
-            map: 'guangxi',
-            z: 6,
-            data,
-            silent: true,
-            left: 20,
-            top: 10,
-            bottom: 10,
-            right: 20
+        emphasis: {
+          areaColor: '#2AB8FF',
+          borderWidth: 0,
         },
-        // 带涟漪特效的气泡
-        {
-            tooltip: {
-                show: false,
-            },
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            rippleEffect: {
-                scale: 10,
-                brushType: 'stroke',
-            },
-            showEffectOn: 'render',
-            itemStyle: {
-                normal: {
-                    shadowColor: '#fff',
-                    shadowBlur: 5,
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 0,
-                    color: mapColor.effectScatterColor,
-                },
-            },
-            label: {
-                show: true,
-                color: '#fff',
-                position: 'bottom',
-                distance: 15,
-                formatter: (a) => {
-                    return a.name
-                },
-                fontSize: 10,
-            },
-            emphasis: {
-                label: {
-                    show: true,
-                    color: '#fff'
-                }
-            },
-            symbol: 'circle',
-            symbolSize: [10, 3],
-            data: scatterRiff(),
-            z: 7,
-            silent: true,
+      },
+      z: 4,
+      silent: true,
+      left: 20,
+      top: 10,
+      bottom: 10,
+      right: 20,
+    },
+    {
+      map: 'guangxi',
+      aspectScale: 0.75, //长宽比
+      zoom: 1.1,
+      roam: false,
+      label: {
+        show: false,
+      },
+      itemStyle: {
+        normal: {
+          areaColor: '#013C62',
+          shadowColor: '#020925',
+          shadowOffsetX: 0,
+          shadowOffsetY: 15,
+          borderWidth: 0,
         },
-        {
-            type: 'scatter',
-            coordinateSystem: 'geo',
-            geoIndex: 0,
-            z: 8,
-            label: {
-                show: false,
-            },
-            symbol: `image://${sectorImg}`,
-            symbolSize: [26.3, 30],
-            silent: true,
-            data: scatterSector(),
+        emphasis: {
+          areaColor: '#2AB8FF',
+          borderWidth: 0,
         },
-    ]
+      },
+      z: 3,
+      silent: true,
+      left: 20,
+      top: 10,
+      bottom: 10,
+      right: 20,
+    },
+    {
+      map: 'guangxi',
+      aspectScale: 0.75, //长宽比
+      zoom: 1.1,
+      roam: false,
+      label: {
+        show: false,
+      },
+      itemStyle: {
+        normal: {
+          areaColor: '#013C62',
+          shadowColor: mapColor.shadowColor2,
+          shadowOffsetX: 0,
+          shadowOffsetY: 20,
+          borderWidth: 0,
+        },
+        emphasis: {
+          areaColor: '#2AB8FF',
+          borderWidth: 0,
+        },
+      },
+      z: 2,
+      silent: true,
+      left: 20,
+      top: 10,
+      bottom: 10,
+      right: 20,
+    },
+  ],
+  series: [
+    // map
+    {
+      type: 'map',
+      label: {
+        show: false,
+      },
+      emphasis: {
+        label: false,
+      },
+      itemStyle: {
+        normal: {
+          borderColor: new echarts.graphic.LinearGradient(
+            0,
+            0,
+            0,
+            1,
+            [
+              {
+                offset: 0,
+                color: '#F68604',
+              },
+              {
+                offset: 1,
+                color: '#FFBC00',
+              },
+            ],
+            false,
+          ),
+          borderWidth: 1.5,
+          areaColor: 'rgba(3, 42, 76, 1)',
+        },
+        emphasis: {
+          areaColor: 'rgba(3, 42, 76, 1)',
+          borderWidth: 1.5,
+        },
+      },
+      zoom: 1.1,
+      roam: false,
+      map: 'guangxi',
+      z: 6,
+      data,
+      silent: true,
+      left: 20,
+      top: 10,
+      bottom: 10,
+      right: 20,
+    },
+    // 带涟漪特效的气泡
+    {
+      tooltip: {
+        show: false,
+      },
+      type: 'effectScatter',
+      coordinateSystem: 'geo',
+      rippleEffect: {
+        scale: 10,
+        brushType: 'stroke',
+      },
+      showEffectOn: 'render',
+      itemStyle: {
+        normal: {
+          shadowColor: '#fff',
+          shadowBlur: 5,
+          shadowOffsetX: 0,
+          shadowOffsetY: 0,
+          color: mapColor.effectScatterColor,
+        },
+      },
+      label: {
+        show: true,
+        color: '#fff',
+        position: 'bottom',
+        distance: 15,
+        formatter: (a) => {
+          return a.name;
+        },
+        fontSize: 10,
+      },
+      emphasis: {
+        label: {
+          show: true,
+          color: '#fff',
+        },
+      },
+      symbol: 'circle',
+      symbolSize: [10, 3],
+      data: scatterRiff(),
+      z: 7,
+      silent: true,
+    },
+    {
+      type: 'scatter',
+      coordinateSystem: 'geo',
+      geoIndex: 0,
+      z: 8,
+      label: {
+        show: false,
+      },
+      symbol: `image://${sectorImg}`,
+      symbolSize: [26.3, 30],
+      silent: true,
+      data: scatterSector(),
+    },
+  ],
 };
 
 export default () => (

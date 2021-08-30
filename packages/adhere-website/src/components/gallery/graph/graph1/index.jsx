@@ -2,7 +2,6 @@ import React from 'react';
 
 import Playground from '@/lib/Playground';
 
-
 export default () => (
   <Playground
     mode="code"

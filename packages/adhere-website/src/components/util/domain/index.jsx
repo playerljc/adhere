@@ -1,4 +1,4 @@
-import React,{useRef} from 'react';
+import React, { useRef } from 'react';
 import { Button } from 'antd';
 import { Domain } from '@baifendian/adhere';
 
@@ -187,8 +187,11 @@ export default () => {
 
               d.on('error', function (e) {
                 const content = console1Ref.current.innerHTML;
-                console1Ref.current.innerHTML = `${content}${content ? `</br>` : ''}${e.toString()}`;
-                console1Ref.current.scrollTop = console1Ref.current.scrollHeight - console1Ref.current.offsetHeight;
+                console1Ref.current.innerHTML = `${content}${
+                  content ? `</br>` : ''
+                }${e.toString()}`;
+                console1Ref.current.scrollTop =
+                  console1Ref.current.scrollHeight - console1Ref.current.offsetHeight;
               });
 
               d.run(function () {
@@ -248,8 +251,11 @@ export default () => {
 
               d.on('error', function (e) {
                 const content = console2Ref.current.innerHTML;
-                console2Ref.current.innerHTML = `${content}${content ? `</br>` : ''}${e.toString()}`;
-                console2Ref.current.scrollTop = console2Ref.current.scrollHeight - console2Ref.current.offsetHeight;
+                console2Ref.current.innerHTML = `${content}${
+                  content ? `</br>` : ''
+                }${e.toString()}`;
+                console2Ref.current.scrollTop =
+                  console2Ref.current.scrollHeight - console2Ref.current.offsetHeight;
               });
 
               function run() {

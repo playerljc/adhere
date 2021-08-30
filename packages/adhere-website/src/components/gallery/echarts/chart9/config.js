@@ -96,7 +96,7 @@ const data = [
     centroid: [107.277353, 22.502179],
     accidentNum: 70,
     dieNum: 70,
-  }
-]
+  },
+];
 
 export default data;
