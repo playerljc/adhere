@@ -61,17 +61,17 @@ export default [
   },
   {
     title: '地图柱状图',
-    keyword: '地图',
+    keyword: '地图柱状图',
     component: <Chart9 />,
   },
   {
     title: '城市地图',
-    keyword: '地图',
+    keyword: '城市地图',
     component: <Chart10 />,
   },
   {
     title: '路线地图',
-    keyword: '地图',
+    keyword: '路线地图',
     component: <Chart11 />,
   },
 ];
