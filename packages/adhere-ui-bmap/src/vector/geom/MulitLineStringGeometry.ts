@@ -30,7 +30,7 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
 
   setCoordinates(coordinates: ILineStringGeometryData[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ILineStringGeometryData[] {
@@ -67,7 +67,9 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
         new BMap.Point(p.point2.lng, p.point2.lat),
       );
 
+      // @ts-ignore
       points.push(turf.point([pixel1.x, pixel1.y]));
+      // @ts-ignore
       points.push(turf.point([pixel2.x, pixel2.y]));
     });
 
@@ -81,19 +83,19 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
     };
   }
 
-  draw(ctx: CanvasRenderingContext2D, style: ILineStringGeometryStyle): void {
+  draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void {
     // 绘制多条直线
     const { coordinates } = this;
 
     const targetStyle: ILineStringGeometryStyle = {
       ...GeometryStyle,
+      ...(style || {}),
       arrow: {
         draw: false,
         direction: 'end',
         type: 'normal',
         size: 'normal',
       },
-      ...(style || {}),
     };
 
     coordinates.forEach((lineStringGeometryData: ILineStringGeometryData) => {
@@ -112,7 +114,7 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
    * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel, style?: ILineStringGeometryStyle): boolean {
+  isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean {
     return this.coordinates.some((coordinate: ILineStringGeometryData) => {
       return LineStringGeometry.isPixelInGeometry({
         pixel,

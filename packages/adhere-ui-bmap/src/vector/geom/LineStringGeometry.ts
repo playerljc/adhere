@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as turf from '@turf/turf';
+import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import {
   GeometryType,
@@ -8,10 +8,8 @@ import {
   ILineStringGeometryData,
   VectorActions,
   IPixel,
-  ICoordinate,
   ITextStyle,
   IGeometryStyle,
-  ICircleGeometryData,
 } from '../types';
 
 import Geometry from './Geometry';
@@ -38,150 +36,6 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
 
     this.coordinates = coordinates;
   }
-
-  // /**
-  //  * createStartArrowPath
-  //  * @param ctx
-  //  * @param coordinates
-  //  * @param style
-  //  * @param map
-  //  */
-  // static createStartArrowPath({
-  //   ctx,
-  //   coordinates,
-  //   style,
-  //   map,
-  // }: {
-  //   ctx: CanvasRenderingContext2D;
-  //   coordinates: ILineStringGeometryData;
-  //   style: ILineStringGeometryStyle;
-  //   map: any;
-  // }): void {
-  //   const {
-  //     arrow: { type },
-  //   } = style;
-  //   const { point1 } = coordinates;
-  //   // @ts-ignore
-  //   const pixel1 = map.pointToPixel(new BMap.Point(point1.lng, point1.lat));
-  //
-  //   // 逆时针
-  //   let arrowP1: IPixel;
-  //   let arrowP2: IPixel;
-  //   let arrowP3: IPixel;
-  //
-  //   const size = SIZE.get(style.arrow.size);
-  //
-  //   // 尖的箭头
-  //   if (type === 'normal') {
-  //     arrowP1 = {
-  //       x: pixel1.x,
-  //       y: pixel1.y - size,
-  //     };
-  //
-  //     arrowP2 = {
-  //       x: pixel1.x,
-  //       y: pixel1.y + size,
-  //     };
-  //
-  //     arrowP3 = {
-  //       x: pixel1.x - size * 3,
-  //       y: pixel1.y,
-  //     };
-  //   }
-  //   // 方形的箭头
-  //   else if (type === 'square') {
-  //     arrowP1 = {
-  //       x: pixel1.x,
-  //       y: pixel1.y - size,
-  //     };
-  //
-  //     arrowP2 = {
-  //       x: pixel1.x,
-  //       y: pixel1.y + size,
-  //     };
-  //
-  //     arrowP3 = {
-  //       x: pixel1.x - size,
-  //       y: pixel1.y,
-  //     };
-  //   }
-  //
-  //   ctx.moveTo(arrowP1.x, arrowP1.y);
-  //   ctx.lineTo(arrowP2.x, arrowP2.y);
-  //   ctx.lineTo(arrowP3.x, arrowP3.y);
-  // }
-  //
-  // /**
-  //  * createEndArrowPath
-  //  * @param ctx
-  //  * @param coordinates
-  //  * @param style
-  //  * @param map
-  //  */
-  // static createEndArrowPath({
-  //   ctx,
-  //   coordinates,
-  //   style,
-  //   map,
-  // }: {
-  //   ctx: CanvasRenderingContext2D;
-  //   coordinates: ILineStringGeometryData;
-  //   style: ILineStringGeometryStyle;
-  //   map: any;
-  // }): void {
-  //   const {
-  //     arrow: { type },
-  //   } = style;
-  //   const { point2 } = coordinates;
-  //   // @ts-ignore
-  //   const pixel2 = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
-  //
-  //   // 逆时针
-  //   let arrowP1: IPixel;
-  //   let arrowP2: IPixel;
-  //   let arrowP3: IPixel;
-  //
-  //   // 尖的箭头
-  //   const size = SIZE.get(style.arrow.size);
-  //
-  //   if (type === 'normal') {
-  //     arrowP1 = {
-  //       x: pixel2.x,
-  //       y: pixel2.y - size,
-  //     };
-  //
-  //     arrowP2 = {
-  //       x: pixel2.x,
-  //       y: pixel2.y + size,
-  //     };
-  //
-  //     arrowP3 = {
-  //       x: pixel2.x + size * 3,
-  //       y: pixel2.y,
-  //     };
-  //   }
-  //   // 方形的箭头
-  //   else if (type === 'square') {
-  //     arrowP1 = {
-  //       x: pixel2.x,
-  //       y: pixel2.y - size,
-  //     };
-  //
-  //     arrowP2 = {
-  //       x: pixel2.x,
-  //       y: pixel2.y + size,
-  //     };
-  //
-  //     arrowP3 = {
-  //       x: pixel2.x + size,
-  //       y: pixel2.y,
-  //     };
-  //   }
-  //
-  //   ctx.moveTo(arrowP1.x, arrowP1.y);
-  //   ctx.lineTo(arrowP2.x, arrowP2.y);
-  //   ctx.lineTo(arrowP3.x, arrowP3.y);
-  // }
 
   /**
    * drawStartArrow
@@ -307,7 +161,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     map,
   }: {
     ctx: CanvasRenderingContext2D;
-    style: ILineStringGeometryStyle;
+    style: IGeometryStyle;
     coordinates: ILineStringGeometryData;
     map: any;
   }) {
@@ -315,13 +169,13 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
 
     const targetStyle: ILineStringGeometryStyle = {
       ...GeometryStyle,
+      ...(style || {}),
       arrow: {
         draw: false,
         direction: 'end',
         type: 'normal',
         size: 'normal',
       },
-      ...(style || {}),
     };
 
     // 绘制直线
@@ -349,12 +203,12 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     ctx.restore();
 
     // 在绘制箭头
-    if (style.arrow.draw) {
-      if (style.arrow.direction === 'start') {
+    if ((style as ILineStringGeometryStyle).arrow.draw) {
+      if ((style as ILineStringGeometryStyle).arrow.direction === 'start') {
         LineStringGeometry.drawStartArrow({ ctx, style: targetStyle, coordinates, map });
-      } else if (style.arrow.direction === 'end') {
+      } else if ((style as ILineStringGeometryStyle).arrow.direction === 'end') {
         LineStringGeometry.drawEndArrow({ ctx, style: targetStyle, coordinates, map });
-      } else if (style.arrow.direction === 'bothEnds') {
+      } else if ((style as ILineStringGeometryStyle).arrow.direction === 'bothEnds') {
         LineStringGeometry.drawStartArrow({ ctx, style: targetStyle, coordinates, map });
         LineStringGeometry.drawEndArrow({ ctx, style: targetStyle, coordinates, map });
       }
@@ -363,7 +217,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
 
   setCoordinates(coordinates: ILineStringGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ILineStringGeometryData {
@@ -398,12 +252,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
       new BMap.Point(point2.lng, point2.lat),
     );
 
-    const midpoint = [(point1Pixel.x + point2Pixel.x) / 2, (point1Pixel.y + point2Pixel.y) / 2];
-
-    return {
-      x: midpoint[0],
-      y: midpoint[1],
-    };
+    return MathUtil.midpoint(point1Pixel, point2Pixel);
   }
 
   getCenterCoordinate({
@@ -424,7 +273,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     });
   }
 
-  draw(ctx: CanvasRenderingContext2D, style: ILineStringGeometryStyle): void {
+  draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void {
     LineStringGeometry.drawLineString({
       ctx,
       style,
@@ -462,17 +311,11 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     // @ts-ignore
     const point2Pixel = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
 
-    // 斜率
-    const slope = (point2Pixel.y - point1Pixel.y) / (point2Pixel.x - point1Pixel.x);
-
-    // 斜率的弧度
-    const slopeRadian = Math.atan(slope);
-
     // 斜率的角度
-    const angle = (180 * slopeRadian) / Math.PI;
+    const radian = MathUtil.slopToRadian(point1Pixel, point2Pixel);
 
     // 旋转斜率的角度
-    ctx.rotate((angle * Math.PI) / 180);
+    ctx.rotate(radian);
 
     const targetTextStyle = { ...TextStyle, ...(textStyle || {}) };
     ctx.font = targetTextStyle.font;
@@ -502,13 +345,15 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     map,
   }: {
     pixel: IPixel;
-    style: ILineStringGeometryStyle;
+    style: IGeometryStyle;
     coordinates: ILineStringGeometryData;
     map: any;
   }): boolean {
     const canvas = document.createElement('canvas');
 
     const ctx = canvas.getContext('2d');
+
+    if (!ctx) return false;
 
     ctx.beginPath();
 
@@ -530,7 +375,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
    * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel, style?: ILineStringGeometryStyle): boolean {
+  isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean {
     return LineStringGeometry.isPixelInGeometry({
       pixel,
       style,

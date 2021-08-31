@@ -27,7 +27,7 @@ class MulitStartGeometry extends Geometry implements IMulitStartGeometry {
 
   setCoordinates(coordinates: IStartGeometryData[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IStartGeometryData[] {
@@ -59,6 +59,7 @@ class MulitStartGeometry extends Geometry implements IMulitStartGeometry {
         new BMap.Point(p.center.lng, p.center.lat),
       );
 
+      // @ts-ignore
       points.push(turf.point([pixel.x, pixel.y]));
     });
 
@@ -94,7 +95,7 @@ class MulitStartGeometry extends Geometry implements IMulitStartGeometry {
    * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+  isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean {
     return this.coordinates.some((coordinate: IStartGeometryData) => {
       return StartGeometry.isPixelInGeometry({
         coordinates: coordinate,

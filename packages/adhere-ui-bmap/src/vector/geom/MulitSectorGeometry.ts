@@ -27,7 +27,7 @@ class MulitSectorGeometry extends Geometry implements IMulitSectorGeometry {
 
   setCoordinates(coordinates: ISectorGeometryData[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ISectorGeometryData[] {
@@ -59,6 +59,7 @@ class MulitSectorGeometry extends Geometry implements IMulitSectorGeometry {
         new BMap.Point(p.center.lng, p.center.lat),
       );
 
+      // @ts-ignore
       points.push(turf.point([pixel.x, pixel.y]));
     });
 

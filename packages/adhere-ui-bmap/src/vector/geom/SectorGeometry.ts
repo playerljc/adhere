@@ -26,7 +26,7 @@ class SectorGeometry extends Geometry implements ISectorGeometry {
 
   setCoordinates(coordinates: ISectorGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ISectorGeometryData {
@@ -161,9 +161,12 @@ class SectorGeometry extends Geometry implements ISectorGeometry {
 
     const ctx = canvas.getContext('2d');
 
+    if(!ctx) return false;
+
     SectorGeometry.drawSector({
       ctx,
       coordinates,
+      // @ts-ignore
       style,
       map,
       isScale,

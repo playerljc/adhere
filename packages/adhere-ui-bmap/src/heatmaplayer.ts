@@ -6,4 +6,7 @@ import './heatmap';
  * @classdesc 热力图
  */
 // @ts-ignore
-export default class extends BMapLib.HeatmapOverlay {}
+class HeatMapLayer extends BMapLib.HeatmapOverlay {}
+{
+}
+export default HeatMapLayer;

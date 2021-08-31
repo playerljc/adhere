@@ -14,6 +14,10 @@ export enum GeometryType {
   Polygon,
   MulitPolygon,
   Rect,
+  RadiusRect,
+  MulitRadiusRect,
+  Leaf,
+  MulitLeaf,
   MulitRect,
   Text,
   RegularPolygon,
@@ -24,15 +28,15 @@ export enum GeometryType {
   MulitSector,
 }
 
-/**
- * IStyle
- */
-export interface IStyle {}
+// /**
+//  * IStyle
+//  */
+// export interface IStyle {}
 
 /**
  * IGeometryStyle
  */
-export interface IGeometryStyle extends IStyle {
+export interface IGeometryStyle/* extends IStyle*/ {
   // 填充颜色
   fillStyle: string;
   // 描边颜色
@@ -98,8 +102,18 @@ export interface IPointGeometryStyle extends IGeometryStyle {
   sector?: ISectorGeometryData;
   // 只有当pointType为rect时才生效(扇形)
   rect?: IRectGeometryData;
+  radiusRect?: IRadiusRectGeometryData;
+  leaf?: ILeafGeometryData;
   // 类型
-  pointType: 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect';
+  pointType:
+    | 'circle'
+    | 'image'
+    | 'regularPolygon'
+    | 'start'
+    | 'sector'
+    | 'rect'
+    | 'radiusRect'
+    | 'leaf';
 }
 
 /**
@@ -107,7 +121,7 @@ export interface IPointGeometryStyle extends IGeometryStyle {
  */
 export interface IGeometry {
   getType: () => GeometryType;
-  draw: (ctx: CanvasRenderingContext2D, style: IStyle) => void;
+  draw: (ctx: CanvasRenderingContext2D, style: IGeometryStyle) => void;
   drawText: ({
     ctx,
     text,
@@ -116,21 +130,21 @@ export interface IGeometry {
   }: {
     ctx: CanvasRenderingContext2D;
     text: string;
-    style: IStyle;
+    style: IGeometryStyle;
     textStyle: ITextStyle;
   }) => void;
   setContext: (context: IFeature) => void;
-  getContext: () => IFeature;
+  getContext: () => IFeature | null;
   getCenterCoordinate: ({
     ctx,
     style,
-    isScale
+    isScale,
   }: {
     ctx: CanvasRenderingContext2D;
     style: IGeometryStyle;
     isScale: boolean;
   }) => IPixel;
-  isPixelInGeometry: (pixel: IPixel, style?: IStyle) => boolean;
+  isPixelInGeometry: (pixel: IPixel, style: IGeometryStyle) => boolean;
 }
 
 /**
@@ -172,6 +186,14 @@ export interface IRectGeometryData {
   leftTop: ICoordinate;
   width: number;
   height: number;
+}
+
+/**
+ * IRadiusRectGeometryData
+ */
+export interface IRadiusRectGeometryData extends IRectGeometryData {
+  // 圆角半径
+  radius: number;
 }
 
 /**
@@ -291,6 +313,36 @@ export interface IMulitRegularPolygonGeometry extends IGeometry {
 }
 
 /**
+ * ILeafGeometry
+ */
+export interface ILeafGeometry extends IGeometry {
+  setCoordinates: (coordinates: ILeafGeometryData) => void;
+  getCoordinates: () => ILeafGeometryData;
+}
+
+/**
+ * ILeafGeometryData
+ */
+export interface ILeafGeometryData {
+  // 片数
+  n: number;
+  // 中心点
+  center: ICoordinate;
+  // 花朵的大小
+  size: number;
+  // 花瓣的长度
+  length: number;
+}
+
+/**
+ * IMulitLeafGeometry
+ */
+export interface IMulitLeafGeometry extends IGeometry {
+  setCoordinates: (coordinates: ILeafGeometryData[]) => void;
+  getCoordinates: () => ILeafGeometryData[];
+}
+
+/**
  * IStartGeometryData
  */
 export interface IStartGeometryData {
@@ -359,21 +411,21 @@ export interface IFeature {
   getGeometry: () => IGeometry;
   getId: () => string;
   getName: () => string;
-  getStyle: () => IStyle;
+  getStyle: () => IGeometryStyle;
   getZIndex: () => number;
   getProperties: () => object;
   getContext: () => IVectorSource;
   getMap: () => any;
-  getLayer: () => IVectorLayer;
+  getLayer: () => IVectorLayer | null;
   setGeometry: (geom: IGeometry) => void;
   setName: (name: string) => void;
   setId: (id: string) => void;
-  setStyle: (style: IStyle) => void;
+  setStyle: (style: IGeometryStyle) => void;
   setZIndex: (zIndex: number) => void;
   setProperties: (properties: object) => void;
   setContext: (context: IVectorSource) => void;
   draw: (ctx: CanvasRenderingContext2D) => void;
-  isPointInFeature: (pixel: IPixel, style?: IStyle) => boolean;
+  isPointInFeature: (pixel: IPixel, style?: IGeometryStyle) => boolean;
 }
 
 /**
@@ -392,7 +444,7 @@ export interface IInnerTextFeature extends IFeature {
 export interface IFeatureParams {
   name: string;
   id: string;
-  style: IStyle;
+  style: IGeometryStyle;
   geometry: IGeometry;
 }
 
@@ -414,14 +466,14 @@ export interface IVectorSource {
   addFirstFeature: (feature: IFeature) => void;
   insertFeature: (feature: IFeature, index: number) => void;
   clear: () => void;
-  getFeatureById: (id: string) => IFeature;
+  getFeatureById: (id: string) => IFeature | null;
   getFeatures: () => IFeature[];
   hasFeature: (feature: IFeature) => boolean;
   hasFeatureById: (id: string) => boolean;
   removeFeature: (feature: IFeature) => void;
   removeFeatureById: (id: string) => void;
   setContext: (context: IVectorLayer) => void;
-  getContext: () => IVectorLayer;
+  getContext: () => IVectorLayer | null;
 }
 
 /**

@@ -29,7 +29,7 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
 
   setCoordinates(coordinates: ICircleGeometryData[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICircleGeometryData[] {
@@ -61,6 +61,7 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
         new BMap.Point(p.center.lng, p.center.lat),
       );
 
+      // @ts-ignore
       points.push(turf.point([pixel.x, pixel.y]));
     });
 
@@ -99,7 +100,7 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
    * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+  isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean {
     return this.coordinates.some((coordinate: ICircleGeometryData) => {
       return CircleGeometry.isPixelInGeometry({
         coordinates: coordinate,

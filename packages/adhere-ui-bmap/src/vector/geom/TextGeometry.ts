@@ -26,7 +26,7 @@ class TextGeometry extends Geometry implements ITextGeometry {
 
   setCoordinates(coordinates: ITextGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ITextGeometryData {
@@ -41,10 +41,12 @@ class TextGeometry extends Geometry implements ITextGeometry {
     return { ...coordinates.point };
   }
 
+  // @ts-ignore
   getCenterCoordinate(): ICoordinate {
     return TextGeometry.getCenterCoordinate(this.coordinates);
   }
 
+  // @ts-ignore
   draw(ctx: CanvasRenderingContext2D, style: ITextStyle): void {
     ctx.save();
 

@@ -26,7 +26,7 @@ class RegularPolygonGeometry extends Geometry implements IRegularPolygonGeometry
 
   setCoordinates(coordinates: IRegularPolygonGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IRegularPolygonGeometryData {
@@ -196,9 +196,12 @@ class RegularPolygonGeometry extends Geometry implements IRegularPolygonGeometry
 
     const ctx = canvas.getContext('2d');
 
+    if(!ctx) return false;
+
     RegularPolygonGeometry.drawRegularPolygon({
       ctx,
       coordinates,
+      // @ts-ignore
       style,
       map,
       isScale,

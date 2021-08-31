@@ -8,7 +8,7 @@ import { IVectorSource, IFeature, VectorActions, IVectorLayer } from './types';
  * @classdesc VectorLayer的数据源
  */
 class VectorSource extends Emitter implements IVectorSource {
-  context: IVectorLayer;
+  context: IVectorLayer | null = null;
   features: IFeature[] = [];
 
   constructor(features: IFeature[]) {
@@ -27,27 +27,27 @@ class VectorSource extends Emitter implements IVectorSource {
     if (this.hasFeatureById(feature.getId())) return;
     this.features.push(feature);
     this.setFeaturesContext();
-    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   addFeatures(features: IFeature[]): void {
     const filterFeatures = features.filter((f) => !this.hasFeatureById(f.getId()));
     this.features = [...this.features, ...filterFeatures];
     this.setFeaturesContext();
-    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   addFirstFeature(feature: IFeature): void {
     if (this.hasFeatureById(feature.getId())) return;
     this.features.unshift(feature);
-    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   insertFeature(feature: IFeature, index: number): void {
     if (this.hasFeatureById(feature.getId())) return;
     this.features.splice(index, 0, feature);
     this.setFeaturesContext();
-    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   removeFeature(feature: IFeature): void {
@@ -58,15 +58,16 @@ class VectorSource extends Emitter implements IVectorSource {
     if (!this.hasFeatureById(id)) return;
     const index = this.features.findIndex((f) => f.getId() === id);
     this.features.splice(index, 1);
-    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   clear(): void {
     this.features = [];
-    this.getContext().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getContext()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
-  getFeatureById(id: string): IFeature {
+  getFeatureById(id: string): IFeature | null {
+    // @ts-ignore
     return this.features.find((f) => f.getId() === id);
   }
 
@@ -86,7 +87,7 @@ class VectorSource extends Emitter implements IVectorSource {
     this.context = context;
   }
 
-  getContext(): IVectorLayer {
+  getContext(): IVectorLayer | null {
     return this.context;
   }
 }

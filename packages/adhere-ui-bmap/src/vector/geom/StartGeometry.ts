@@ -26,7 +26,7 @@ class StartGeometry extends Geometry implements IStartGeometry {
 
   setCoordinates(coordinates: IStartGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IStartGeometryData {
@@ -215,6 +215,8 @@ class StartGeometry extends Geometry implements IStartGeometry {
 
     const ctx = canvas.getContext('2d');
 
+    if(!ctx) return false;
+
     StartGeometry.drawStart({
       ctx,
       coordinates,
@@ -237,6 +239,7 @@ class StartGeometry extends Geometry implements IStartGeometry {
       coordinates: this.coordinates,
       map: this.getMap(),
       isScale: true,
+      // @ts-ignore
       style,
       pixel,
     });

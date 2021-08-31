@@ -38,6 +38,10 @@ let WindLayer,
   MulitStartGeometry,
   SectorGeometry,
   MulitSectorGeometry,
+  RadiusRectGeometry,
+  MulitRadiusRectGeometry,
+  LeafGeometry,
+  MulitLeafGeometry,
   TextGeometry;
 
 function getRandomArbitrary(min, max) {
@@ -117,7 +121,7 @@ ReactDOM.render(
         onClick={() => {
           const map = ref.current.getMap();
 
-          // const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
+          const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
 
           // const mulitPointGemo = new MulitPointGeometry(citys.map(city => ({
           //   lng: city[0],
@@ -161,28 +165,28 @@ ReactDOM.render(
           //   },
           // });
 
-          const mulitLineStringGemo = new MulitLineStringGeometry([
-            {
-              point1: {
-                lng: 121.48789948,
-                lat: 31.24916171,
-              },
-              point2: {
-                lng: 123.471095,
-                lat: 41.6862,
-              },
-            },
-            {
-              point1: {
-                lng: 121.623353,
-                lat: 38.921873,
-              },
-              point2: {
-                lng: 120.380834,
-                lat: 36.073394,
-              },
-            },
-          ]);
+          // const mulitLineStringGemo = new MulitLineStringGeometry([
+          //   {
+          //     point1: {
+          //       lng: 121.48789948,
+          //       lat: 31.24916171,
+          //     },
+          //     point2: {
+          //       lng: 123.471095,
+          //       lat: 41.6862,
+          //     },
+          //   },
+          //   {
+          //     point1: {
+          //       lng: 121.623353,
+          //       lat: 38.921873,
+          //     },
+          //     point2: {
+          //       lng: 120.380834,
+          //       lat: 36.073394,
+          //     },
+          //   },
+          // ]);
 
           // const polygonGeom = new PolygonGeometry(
           //   citys.map((city) => ({
@@ -281,6 +285,46 @@ ReactDOM.render(
           //     },
           //     width: 2000000,
           //     height: 3000000,
+          //   },
+          // ]);
+
+          // const radiusRectGeom = new RadiusRectGeometry({
+          //   leftTop: {
+          //     lng: 121.487899486,
+          //     lat: 31.24916171,
+          //   },
+          //   width: 100000000,
+          //   height: 20000000,
+          //   radius: 100000000 / 10
+          // });
+
+          // const mulitRadiusRectGeom = new MulitRadiusRectGeometry([
+          //   {
+          //     leftTop: {
+          //       lng: 121.487899486,
+          //       lat: 31.24916171,
+          //     },
+          //     width: 100000000,
+          //     height: 20000000,
+          //     radius: 100000000 / 10,
+          //   },
+          //   {
+          //     leftTop: {
+          //       lng: 106.635720331,
+          //       lat: 30.4639838879,
+          //     },
+          //     width: 100000000,
+          //     height: 20000000,
+          //     radius: 100000000 / 10,
+          //   },
+          //   {
+          //     leftTop: {
+          //       lng: 116.988692412,
+          //       lat: 33.6367723858,
+          //     },
+          //     width: 100000000,
+          //     height: 20000000,
+          //     radius: 100000000 / 10,
           //   },
           // ]);
 
@@ -421,6 +465,26 @@ ReactDOM.render(
           //   },
           // ]);
 
+          // const leafGeom = new LeafGeometry({
+          //   center: {
+          //     lng: 121.487899486,
+          //     lat: 31.24916171,
+          //   },
+          //   n: 10,
+          //   size: 20000000,
+          //   length: 20000000 * 4,
+          // });
+
+          // const mulitLeafGemo = new MulitLeafGeometry(citys.map(city => ({
+          //   center: {
+          //     lng: city[0],
+          //     lat: city[1],
+          //   },
+          //   n: 10,
+          //   size: 2000000,
+          //   length: 2000000 * 4,
+          // })));
+
           // const textGemo = new TextGeometry({
           //   point: {
           //     lng: 121.487899486,
@@ -432,7 +496,7 @@ ReactDOM.render(
           const feature = new InnerTextFeature({
             name: 'f1',
             id: 'f1',
-            geometry: mulitLineStringGemo,
+            geometry: pointGeom,
             text: '蜜雪冰城',
             textStyle: {
               font: '10px sans-serif',
@@ -456,7 +520,7 @@ ReactDOM.render(
               img: {
                 src: icon,
                 width: 32,
-                height: 32
+                height: 32,
               },
               regularPolygon: {
                 n: 3,
@@ -475,7 +539,17 @@ ReactDOM.render(
                 width: 50,
                 height: 50,
               },
-              pointType: 'rect', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect';
+              radiusRect: {
+                width: 30,
+                height: 20,
+                radius: 3,
+              },
+              leaf: {
+                n: 4,
+                size: 15,
+                length: 60,
+              },
+              pointType: 'radiusRect', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect' | 'radiusRect' | 'leaf';
               arrow: {
                 // 是否绘制
                 draw: true,
@@ -595,6 +669,19 @@ ReactDOM.render(
           });
           import('./vector/geom/MulitSectorGeometry').then((res) => {
             MulitSectorGeometry = res.default;
+          });
+          import('./vector/geom/RadiusRectGeometry').then((res) => {
+            RadiusRectGeometry = res.default;
+          });
+          import('./vector/geom/MulitRadiusRectGeometry').then((res) => {
+            MulitRadiusRectGeometry = res.default;
+          });
+
+          import('./vector/geom/LeafGeometry').then((res) => {
+            LeafGeometry = res.default;
+          });
+          import('./vector/geom/MulitLeafGeometry').then((res) => {
+            MulitLeafGeometry = res.default;
           });
 
           import('./vector/geom/TextGeometry').then((res) => {

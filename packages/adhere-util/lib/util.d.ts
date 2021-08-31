@@ -45,7 +45,12 @@ declare const _default: {
         leftTop: import("./types").IPoint;
         rightBottom: import("./types").IPoint;
     }): number;
-    midpoint(point1: import("./types").IPoint, point2: import("./types").IPoint): import("./types").IPoint;
+    midpoint(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint): import("./types").IPoint;
+    slope(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint): number;
+    slopToRadian(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint, yAxis?: "cartesian" | "geographic"): number;
+    slopToAngle(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint, yAxis?: "cartesian" | "geographic"): number;
+    radianToAngle(radian: number): number;
+    angleToRadian(angle: any): number;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

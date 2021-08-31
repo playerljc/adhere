@@ -28,7 +28,7 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
 
   setCoordinates(coordinates: ICoordinate[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICoordinate[] {

@@ -131,12 +131,87 @@ export default {
   },
   /**
    * midpoint - 计算两个点的中心点
-   * @param point1
-   * @param point2
+   * @param startPoint
+   * @param endPoint
    * @return IPoint
    */
-  midpoint(point1: IPoint, point2: IPoint): IPoint {
-    return { x: (point1.x + point2.x) / 2, y: (point1.y + point2.y) / 2 };
+  midpoint(startPoint: IPoint, endPoint: IPoint): IPoint {
+    return { x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2 };
+  },
+  /**
+   * slope - 计算两个点的斜率
+   * @param startPoint
+   * @param endPoint
+   * @return number
+   */
+  slope(startPoint: IPoint, endPoint: IPoint) {
+    if (startPoint.x === endPoint.x) return 0;
+
+    return (endPoint.y - startPoint.y) / (endPoint.x - startPoint.x);
+  },
+  /**
+   * slopToRadian - 获取两点斜率的弧度
+   * @param startPoint
+   * @param endPoint
+   * @param yAxis cartesian(平面) | geographic(地理)
+   */
+  slopToRadian(
+    startPoint: IPoint,
+    endPoint: IPoint,
+    yAxis: 'cartesian' | 'geographic' = 'geographic',
+  ): number {
+    const slope = this.slope(startPoint, endPoint);
+    if (slope === 0) {
+      // 直角坐标系
+      if (yAxis === 'cartesian') {
+        if (endPoint.y > startPoint.y) {
+          return this.angleToRadian(90);
+        } else {
+          return this.angleToRadian(270);
+        }
+      }
+      // 地理坐标系
+      else if (yAxis === 'geographic') {
+        if (endPoint.y > startPoint.y) {
+          return this.angleToRadian(270);
+        } else {
+          return this.angleToRadian(90);
+        }
+      }
+    }
+
+    return Math.atan(slope);
+  },
+  /**
+   * slopToAngle - 获取两点斜率的角度
+   * @param startPoint
+   * @param endPoint
+   * @param yAxis
+   * @return number - 角度
+   */
+  slopToAngle(
+    startPoint: IPoint,
+    endPoint: IPoint,
+    yAxis: 'cartesian' | 'geographic' = 'geographic',
+  ): number {
+    const slopRadian = this.slopToRadian(startPoint, endPoint, yAxis);
+    return this.radianToAngle(slopRadian);
+  },
+  /**
+   * radianToAngle - 弧度转换成角度
+   * @param radian - 弧度
+   * @return number - 角度
+   */
+  radianToAngle(radian: number): number {
+    return (180 * radian) / Math.PI;
+  },
+  /**
+   * angleToRadian - 角度转弧度
+   * @param angle - 角度
+   * @return number - 弧度
+   */
+  angleToRadian(angle): number {
+    return (angle * Math.PI) / 180;
   },
   /**--------------------------math-end------------------------**/
 };

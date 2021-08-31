@@ -81,10 +81,44 @@ declare const _default: {
     }): number;
     /**
      * midpoint - 计算两个点的中心点
-     * @param point1
-     * @param point2
+     * @param startPoint
+     * @param endPoint
      * @return IPoint
      */
-    midpoint(point1: IPoint, point2: IPoint): IPoint;
+    midpoint(startPoint: IPoint, endPoint: IPoint): IPoint;
+    /**
+     * slope - 计算两个点的斜率
+     * @param startPoint
+     * @param endPoint
+     * @return number
+     */
+    slope(startPoint: IPoint, endPoint: IPoint): number;
+    /**
+     * slopToRadian - 获取两点斜率的弧度
+     * @param startPoint
+     * @param endPoint
+     * @param yAxis cartesian(平面) | geographic(地理)
+     */
+    slopToRadian(startPoint: IPoint, endPoint: IPoint, yAxis?: 'cartesian' | 'geographic'): number;
+    /**
+     * slopToAngle - 获取两点斜率的角度
+     * @param startPoint
+     * @param endPoint
+     * @param yAxis
+     * @return number - 角度
+     */
+    slopToAngle(startPoint: IPoint, endPoint: IPoint, yAxis?: 'cartesian' | 'geographic'): number;
+    /**
+     * radianToAngle - 弧度转换成角度
+     * @param radian - 弧度
+     * @return number - 角度
+     */
+    radianToAngle(radian: number): number;
+    /**
+     * angleToRadian - 角度转弧度
+     * @param angle - 角度
+     * @return number - 弧度
+     */
+    angleToRadian(angle: any): number;
 };
 export default _default;

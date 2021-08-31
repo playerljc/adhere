@@ -28,7 +28,7 @@ class RectGeometry extends Geometry implements IRectGeometry {
 
   setCoordinates(coordinates: IRectGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IRectGeometryData {
@@ -104,6 +104,7 @@ class RectGeometry extends Geometry implements IRectGeometry {
    * @param ctx
    * @param style
    * @param coordinates
+   * @param isScale
    * @param map
    */
   static drawRect({
@@ -222,9 +223,12 @@ class RectGeometry extends Geometry implements IRectGeometry {
 
     const ctx = canvas.getContext('2d');
 
+    if(!ctx) return false;
+
     RectGeometry.drawRect({
       ctx,
       coordinates,
+      // @ts-ignore
       style,
       map,
       isScale,

@@ -27,7 +27,7 @@ class MulitRegularPolygonGeometry extends Geometry implements IMulitRegularPolyg
 
   setCoordinates(coordinates: IRegularPolygonGeometryData[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IRegularPolygonGeometryData[] {
@@ -59,6 +59,7 @@ class MulitRegularPolygonGeometry extends Geometry implements IMulitRegularPolyg
         new BMap.Point(p.center.lng, p.center.lat),
       );
 
+      // @ts-ignore
       points.push(turf.point([pixel.x, pixel.y]));
     });
 

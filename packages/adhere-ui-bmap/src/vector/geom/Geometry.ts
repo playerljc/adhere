@@ -1,6 +1,5 @@
 import {
   IGeometry,
-  IStyle,
   IPixel,
   GeometryType,
   IFeature,
@@ -18,9 +17,9 @@ import GeometryStyle from '../style/GeometryStyle';
  * @classdesc Geometry
  */
 abstract class Geometry implements IGeometry {
-  context: IFeature;
+  context: IFeature | null = null;
 
-  abstract draw(ctx: CanvasRenderingContext2D, style: IStyle): void;
+  abstract draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void;
   abstract getType(): GeometryType;
   abstract getCenterCoordinate({
     ctx,
@@ -31,13 +30,13 @@ abstract class Geometry implements IGeometry {
     style: IGeometryStyle;
     isScale: boolean;
   }): IPixel;
-  abstract isPixelInGeometry(pixel: IPixel): boolean;
+  abstract isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean;
 
   setContext(context: IFeature): void {
     this.context = context;
   }
 
-  getContext(): IFeature {
+  getContext(): IFeature | null {
     return this.context;
   }
 
@@ -81,11 +80,13 @@ abstract class Geometry implements IGeometry {
   }
 
   protected getMap(): any {
-    return this.getLayer().getMap();
+    return this?.getLayer()?.getMap();
   }
 
-  protected getLayer(): IVectorLayer {
-    return this.getContext().getContext().getContext();
+  protected getLayer(): IVectorLayer | null {
+    const context = this.getContext();
+    if (!context) return null;
+    return context.getContext().getContext();
   }
 }
 

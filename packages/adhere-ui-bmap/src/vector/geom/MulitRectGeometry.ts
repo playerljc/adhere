@@ -27,7 +27,7 @@ class MulitRectGeometry extends Geometry implements IMulitRectGeometry {
 
   setCoordinates(coordinates: IRectGeometryData[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): IRectGeometryData[] {

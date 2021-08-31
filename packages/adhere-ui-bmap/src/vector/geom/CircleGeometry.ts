@@ -26,7 +26,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
 
   setCoordinates(coordinates: ICircleGeometryData) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICircleGeometryData {
@@ -151,7 +151,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
   }: {
     coordinates: ICircleGeometryData;
     pixel: IPixel;
-    style?: IGeometryStyle;
+    style: IGeometryStyle;
     map: any;
     isScale: boolean;
   }): boolean {
@@ -175,6 +175,8 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
 
     const ctx = canvas.getContext('2d');
 
+    if(!ctx) return false;
+
     CircleGeometry.drawCircle({
       ctx,
       coordinates,
@@ -192,7 +194,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
    * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel, style?: IGeometryStyle): boolean {
+  isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean {
     return CircleGeometry.isPixelInGeometry({
       coordinates: this.coordinates,
       map: this.getMap(),

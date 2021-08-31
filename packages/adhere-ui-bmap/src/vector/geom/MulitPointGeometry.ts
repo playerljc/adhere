@@ -28,7 +28,7 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
 
   setCoordinates(coordinates: ICoordinate[]) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): ICoordinate[] {
@@ -71,7 +71,7 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
     };
   }
 
-  draw(ctx: CanvasRenderingContext2D, style: IPointGeometryStyle): void {
+  draw(ctx: CanvasRenderingContext2D, style: IGeometryStyle): void {
     const { coordinates } = this;
 
     const map = this.getMap();
@@ -87,7 +87,7 @@ class MulitPointGeometry extends Geometry implements IMulitPointGeometry {
    * @param style
    * @return boolean
    */
-  isPixelInGeometry(pixel: IPixel, style?: IPointGeometryStyle): boolean {
+  isPixelInGeometry(pixel: IPixel, style: IGeometryStyle): boolean {
     return this.coordinates.some((coordinate: ICoordinate) => {
       return PointGeometry.isPixelInGeometry({
         coordinates: coordinate,

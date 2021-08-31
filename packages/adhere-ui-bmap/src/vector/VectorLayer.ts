@@ -88,6 +88,8 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
 
     const ctx = this.cacheCanvas.getContext('2d');
 
+    if(!ctx) return;
+
     ctx.clearRect(0, 0, this.cacheCanvas.width, this.cacheCanvas.height);
 
     (features || []).forEach((feature) => {
