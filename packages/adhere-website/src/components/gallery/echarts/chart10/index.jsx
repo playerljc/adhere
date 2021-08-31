@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
 
 import Playground from '@/lib/Playground';
+import point from './point_y.png';
 import geoJson from './guangxi.geo.json';
 import data from './config';
 import sectorImg from './shape.png';
+import styles from './index.less';
+
 
 // 绘制地图
 echarts.registerMap('guangxi', geoJson);
@@ -255,19 +258,78 @@ const option = {
   ],
 };
 
-export default () => (
-  <Playground
-    mode="code"
-    scope={{ React }}
-    codeText={`
-  import React from 'react';
-  import ReactECharts from 'echarts-for-react';
+export default () => {
   
-  const option = ${JSON.stringify(option, null, 2)}
+  const echartMap = useRef(null);
+
+  // 页面加载完毕
+  const [flag, setFlag] = useState(false);
+  useEffect(() => {
+    setFlag(flag);
+  }, [flag])
+  useEffect(() => {
+    setFlag(true)
+    // 将某一项高亮
+    let instance = echartMap.current.getEchartsInstance()
+    let result = instance.getOption();
+    result.series[0].data = data.map((item) => {
+        return {
+            name: item.name,
+            itemStyle: item.name === '南宁市' ? {
+              borderColor: '#FF961A',
+              areaColor: 'rgba(255, 150, 26, .5)',
+            } : {}
+        }
+    });
+    instance.setOption(result, true)
+  }, [])
+
+  // 经纬度变成坐标点
+  const getPoint = (current) => {
+    if (!echartMap.current || !option) return;
+    const echarts = echartMap.current.getEchartsInstance();
+    // 获取系列
+    var seriesModel = echarts.getModel().getSeriesByIndex(option?.series?.length - 1)
+    // 获取地理坐标系实例
+    var coordSys = seriesModel?.coordinateSystem;
+    // dataToPoint 相当于 getPosByGeo
+    var point = coordSys?.dataToPoint([current[0], current[1]]);
+    return point ? { x: point[0], y: point[1]} : { x: 0, y: 0 };
+  }
   
-  <ReactECharts option={option} />
-    `}
-  >
-    <ReactECharts option={option} />
-  </Playground>
-);
+  // 渲染钻石
+  const renderDiamonds = () => {
+    if (!echartMap.current || !option) return;
+    const { x, y } = getPoint([108.467546, 23.055985]);
+    const top = y - 20;
+    const left = x - 25;
+    return (
+        <div className="echart-map-tooltip" style={{top, left, zIndex: 10}}>
+            <img src={point} />
+        </div>
+    )
+  }
+  return (
+    <>
+      <Playground
+        mode="code"
+        scope={{ React }}
+        codeText={`
+      import React from 'react';
+      import ReactECharts from 'echarts-for-react';
+      
+      const option = ${JSON.stringify(option, null, 2)}
+      
+      <ReactECharts option={option} />
+        `}
+      >
+        <div className={styles.Map}>
+          <ReactECharts option={option} ref={echartMap} />
+          {/* 渲染钻石 */}
+          {flag ? renderDiamonds(): <></>}
+        </div>
+      </Playground>
+      
+    </>
+  )
+};
