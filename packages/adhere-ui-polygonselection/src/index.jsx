@@ -34,7 +34,7 @@ class DrawingBoard extends React.Component {
   }
 
   componentDidMount() {
-    this.polygonSelection = new PolygonSelection(this.ref.current);
+    this.polygonSelection = new PolygonSelection.PolygonSelection(this.ref.current);
 
     // ActionType
     // @ts-ignore

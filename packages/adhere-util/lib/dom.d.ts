@@ -142,5 +142,12 @@ declare const _default: {
      * @return {boolean}
      */
     isIframeEmbed(): boolean;
+    /**
+     * addClickListener - 支持PC和移动端的点击事件
+     * @param el
+     * @param handler
+     * @param capture
+     */
+    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
 };
 export default _default;

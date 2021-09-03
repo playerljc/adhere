@@ -4,10 +4,11 @@ import {
   IVectorSource,
   IFeature,
   IGeometry,
-  IStyle,
+  IGeometryStyle,
   IPixel,
   VectorActions,
 } from './types';
+import GeometryStyle from './style/GeometryStyle';
 
 /**
  * Feature
@@ -22,7 +23,7 @@ class Feature implements IFeature {
   id: string = '';
 
   // 要素的样式
-  style: IStyle = {};
+  style: IGeometryStyle = GeometryStyle;
 
   // 要素的层级
   zIndex: number = 1;
@@ -34,13 +35,15 @@ class Feature implements IFeature {
   geometry: IGeometry;
 
   // 上下文
+  // @ts-ignore
   context: IVectorSource;
 
   constructor(params: IFeatureParams) {
-    this.name = params.name;
-    this.id = params.id;
-    this.style = params.style;
-    this.geometry = params.geometry;
+    this.name = params?.name;
+    this.id = params?.id;
+    this.properties = params?.properties;
+    this.style = params?.style;
+    this.geometry = params?.geometry;
     this.setGeometryContext();
   }
 
@@ -65,7 +68,7 @@ class Feature implements IFeature {
     return this.name;
   }
 
-  getStyle(): IStyle {
+  getStyle(): IGeometryStyle {
     return this.style;
   }
 
@@ -80,12 +83,12 @@ class Feature implements IFeature {
   setGeometry(geom: IGeometry): void {
     this.geometry = geom;
     this.setGeometryContext();
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
-  setStyle(style: IStyle): void {
+  setStyle(style: IGeometryStyle): void {
     this.style = style;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   setId(id: string): void {
@@ -98,7 +101,7 @@ class Feature implements IFeature {
 
   setZIndex(zIndex: number) {
     this.zIndex = zIndex;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   setProperties(properties: object): void {
@@ -113,15 +116,16 @@ class Feature implements IFeature {
     this.context = context;
   }
 
-  getLayer(): IVectorLayer {
-    return this.getContext().getContext();
+  getLayer(): IVectorLayer | null {
+    // @ts-ignore
+    return this?.getContext()?.getContext();
   }
 
   getMap(): any {
-    return this.getLayer().getMap();
+    return this?.getLayer()?.getMap();
   }
 
-  isPointInFeature(pixel: IPixel, style?: IStyle): boolean {
+  isPointInFeature(pixel: IPixel, style: IGeometryStyle): boolean {
     return this.geometry.isPixelInGeometry(pixel, style);
   }
 }

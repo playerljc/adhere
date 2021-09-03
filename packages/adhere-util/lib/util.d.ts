@@ -12,12 +12,35 @@ declare const _default: {
         params?: string | undefined;
     }): string;
     isTouch(): boolean;
-    getDrawStartPath(config: {
+    drawStart(ctx: CanvasRenderingContext2D, config: {
         startCount: number;
         center: import("./types").IPoint;
         outRadius: number;
         innerRadius: number;
-    }): import("./types").IPoint[];
+    }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    drawSector(ctx: CanvasRenderingContext2D, config: {
+        center: import("./types").IPoint;
+        radius: number;
+        angle1: number;
+        angle2: number;
+    }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    drawLeaf(ctx: CanvasRenderingContext2D, config: {
+        n: number;
+        center: import("./types").IPoint;
+        size: number;
+        length: number;
+    }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    drawRegularPolygon(ctx: CanvasRenderingContext2D, config: {
+        n: number;
+        center: import("./types").IPoint;
+        size: number;
+    }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
+    drawRadiusRect(ctx: CanvasRenderingContext2D, config: {
+        leftTop: import("./types").IPoint;
+        width: number;
+        height: number;
+        radius: number;
+    }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
     toPoint(percent: string): number;
     toPercent(point: number): string;
     straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
@@ -77,6 +100,7 @@ declare const _default: {
         right: any;
     };
     isIframeEmbed(): boolean;
+    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
     rgb(): string;
     color16(): string;
     isEmpty(value: any): boolean;

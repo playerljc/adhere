@@ -36,12 +36,12 @@ class InnerTextFeature extends Feature implements IInnerTextFeature {
 
   setText(text: string): void {
     this.text = text;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   setTextStyle(style: ITextStyle): void {
     this.textStyle = style;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this?.getLayer()?.getEmitter()?.trigger(VectorActions.UPDATE);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

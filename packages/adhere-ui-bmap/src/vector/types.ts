@@ -5,27 +5,27 @@ import Emitter from '@baifendian/adhere-util-emitter/lib/events';
  * GeometryType
  */
 export enum GeometryType {
-  Point,
-  MulitPoint,
-  Circle,
-  MulitCircle,
-  LineString,
-  MulitLineString,
-  Polygon,
-  MulitPolygon,
-  Rect,
-  RadiusRect,
-  MulitRadiusRect,
-  Leaf,
-  MulitLeaf,
-  MulitRect,
-  Text,
-  RegularPolygon,
-  MulitRegularPolygon,
-  Start,
-  MulitStart,
-  Sector,
-  MulitSector,
+  Point = 'Point',
+  MulitPoint = 'MulitPoint',
+  Circle = 'Circle',
+  MulitCircle = 'MulitCircle',
+  LineString = 'LineString',
+  MulitLineString = 'MulitLineString',
+  Polygon = 'Polygon',
+  MulitPolygon = 'MulitPolygon',
+  Rect = 'Rect',
+  RadiusRect = 'RadiusRect',
+  MulitRadiusRect = 'MulitRadiusRect',
+  Leaf = 'Leaf',
+  MulitLeaf = 'MulitLeaf',
+  MulitRect = 'MulitRect',
+  Text = 'Text',
+  RegularPolygon = 'RegularPolygon',
+  MulitRegularPolygon = 'MulitRegularPolygon',
+  Start = 'Start',
+  MulitStart = 'MulitStart',
+  Sector = 'Sector',
+  MulitSector = 'MulitSector',
 }
 
 // /**
@@ -36,7 +36,8 @@ export enum GeometryType {
 /**
  * IGeometryStyle
  */
-export interface IGeometryStyle/* extends IStyle*/ {
+export interface IGeometryStyle {
+  /* extends IStyle*/
   // 填充颜色
   fillStyle: string;
   // 描边颜色
@@ -425,7 +426,7 @@ export interface IFeature {
   setProperties: (properties: object) => void;
   setContext: (context: IVectorSource) => void;
   draw: (ctx: CanvasRenderingContext2D) => void;
-  isPointInFeature: (pixel: IPixel, style?: IGeometryStyle) => boolean;
+  isPointInFeature: (pixel: IPixel, style: IGeometryStyle) => boolean;
 }
 
 /**
@@ -446,6 +447,7 @@ export interface IFeatureParams {
   id: string;
   style: IGeometryStyle;
   geometry: IGeometry;
+  properties: object;
 }
 
 /**
@@ -474,6 +476,8 @@ export interface IVectorSource {
   removeFeatureById: (id: string) => void;
   setContext: (context: IVectorLayer) => void;
   getContext: () => IVectorLayer | null;
+  readGeoJSON: (geoJSON: any, onForeachStyle: (geom: IGeometry) => IFeature) => void;
+  featuresToGeoJSON: () => any;
 }
 
 /**
@@ -530,4 +534,125 @@ export interface IVectorLayerConfig {
  */
 export enum VectorActions {
   UPDATE = 'UPDATE',
+  APPEND = 'APPEND',
+}
+
+/**
+ * ImageCacheKey
+ */
+export interface ImageCacheKey {
+  src: string,
+  width: number,
+  height: number,
+}
+
+/**
+ * Point
+ * MultiPoint
+ * LineString
+ * MultiLineString
+ * Polygon
+ * MultiPolygon
+ * GeometryCollection
+ * Feature
+ * FeatureCollection
+ */
+
+/**
+ * IGeoJSONPoint
+ */
+export interface IGeoJSONPoint {
+  readonly type: 'Point';
+  coordinates: number[];
+}
+
+/**
+ * IGeoJSONMulitPoint
+ */
+export interface IGeoJSONMulitPoint {
+  readonly type: 'MultiPoint';
+  coordinates: Array<number[]>;
+}
+
+/**
+ * IGeoJSONLineString
+ */
+export interface IGeoJSONLineString {
+  readonly type: 'LineString';
+  coordinates: Array<number[]>;
+}
+
+/**
+ * IGeoJSONMultiLineString
+ */
+export interface IGeoJSONMultiLineString {
+  readonly type: 'MultiLineString';
+  coordinates: Array<Array<number[]>>;
+}
+
+/**
+ * IGeoJSONPolygon
+ */
+export interface IGeoJSONPolygon {
+  readonly type: 'Polygon';
+  coordinates: Array<number[]>;
+}
+
+/**
+ * IGeoJSONMultiPolygon
+ */
+export interface IGeoJSONMultiPolygon {
+  readonly type: 'MultiPolygon';
+  coordinates: Array<Array<number[]>>;
+}
+
+/**
+ * IGeoJSONGeometryCollection
+ */
+export interface IGeoJSONGeometryCollection {
+  readonly type: 'GeometryCollection';
+  geometries: Array<Geometry>;
+}
+
+/**
+ * IGeoJSONFeature
+ */
+export interface IGeoJSONFeature {
+  readonly type: 'Feature';
+  geometry: Geometry;
+  properties: object;
+  id: string;
+  bbox?: number[];
+}
+
+/**
+ * IGeoJSONFeatureCollection
+ */
+export interface IGeoJSONFeatureCollection {
+  type: 'FeatureCollection';
+  features: IGeoJSONFeature[];
+  bbox?: number[];
+}
+
+export type Geometry =
+  | IGeoJSONPoint
+  | IGeoJSONMulitPoint
+  | IGeoJSONLineString
+  | IGeoJSONMultiLineString
+  | IGeoJSONPolygon
+  | IGeoJSONMultiPolygon
+  | IGeoJSONGeometryCollection;
+
+export type GeoJSONNode = Geometry | IGeoJSONFeature | IGeoJSONFeatureCollection;
+
+export enum GeoJSONType {
+  Point = 'Point',
+  MultiPoint = 'MultiPoint',
+  LineString = 'LineString',
+  MultiLineString = 'MultiLineString',
+  Polygon = 'Polygon',
+  MultiPolygon = 'MultiPolygon',
+  GeometryCollection = 'GeometryCollection',
+  Feature = 'Feature',
+  FeatureCollection = 'FeatureCollection',
 }

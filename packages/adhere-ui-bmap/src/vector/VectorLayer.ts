@@ -24,7 +24,6 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   source: IVectorSource;
   isLoad: boolean = false;
   emitter: Emitter = new Emitter();
-  cacheCanvas: HTMLCanvasElement | null = null;
 
   // @ts-ignore
   constructor(map, config: IVectorLayerConfig) {
@@ -63,17 +62,9 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   }
 
   /**
-   * drawCache
+   * drawSource
    */
-  protected drawCache(): void {
-    if (!this.cacheCanvas) {
-      this.cacheCanvas = document.createElement('canvas');
-      // @ts-ignore
-      this.cacheCanvas.width = this.canvas.width;
-      // @ts-ignore
-      this.cacheCanvas.height = this.canvas.height;
-    }
-
+  protected drawSource(): void {
     // 绘制source中的数据
     const { source } = this;
 
@@ -86,11 +77,10 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
       else return 0;
     });
 
-    const ctx = this.cacheCanvas.getContext('2d');
+    // @ts-ignore
+    const ctx = this.canvas.getContext('2d');
 
     if(!ctx) return;
-
-    ctx.clearRect(0, 0, this.cacheCanvas.width, this.cacheCanvas.height);
 
     (features || []).forEach((feature) => {
       feature.draw(ctx);
@@ -111,11 +101,9 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
 
     this.isLoad = true;
 
-    this.drawCache();
-
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    ctx.drawImage(this.cacheCanvas, 0, 0, ctx.canvas.width, ctx.canvas.height);
+    this.drawSource();
   }
 
   getMap() {

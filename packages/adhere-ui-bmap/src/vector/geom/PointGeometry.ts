@@ -4,7 +4,8 @@ import {
   IPointGeometryStyle,
   IPointGeometry,
   IPixel,
-  VectorActions, IGeometryStyle,
+  VectorActions,
+  IGeometryStyle,
 } from '../types';
 import Geometry from './Geometry';
 import GeometryStyle from '../style/GeometryStyle';
@@ -15,6 +16,7 @@ import CircleGeometry from './CircleGeometry';
 import RectGeometry from './RectGeometry';
 import RadiusRectGeometry from './RadiusRectGeometry';
 import LeafGeometry from './LeafGeometry';
+import ImageCache from '../ImageCache';
 
 /**
  * PointGeometry
@@ -406,26 +408,6 @@ class PointGeometry extends Geometry implements IPointGeometry {
     coordinates: ICoordinate;
     map: any;
   }) {
-    // ctx.save();
-    // ctx.beginPath();
-    //
-    // ctx.lineWidth = style.lineWidth;
-    // ctx.lineJoin = style.lineJoin;
-    // ctx.lineCap = style.lineCap;
-    // ctx.setLineDash(style.lineDash);
-    // ctx.lineDashOffset = style.lineDashOffset;
-    // ctx.strokeStyle = style.strokeStyle;
-    // ctx.fillStyle = style.fillStyle;
-    //
-    // // @ts-ignore
-    // const pixel = map.pointToPixel(new BMap.Point(coordinates.lng, coordinates.lat));
-    //
-    // ctx.ellipse(pixel.x, pixel.y, style.radius, style.radius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
-    //
-    // ctx.stroke();
-    // ctx.fill();
-    // ctx.restore();
-
     CircleGeometry.drawCircle({
       ctx,
       style,
@@ -455,16 +437,37 @@ class PointGeometry extends Geometry implements IPointGeometry {
     map: any;
   }) {
     // @ts-ignore
-    const image = new Image(style.img.width, style.img.height);
-
-    // @ts-ignore
-    image.src = style.img.src;
-
-    // @ts-ignore
     const pixel = map.pointToPixel(new BMap.Point(coordinates.lng, coordinates.lat));
 
-    // @ts-ignore
-    ctx.drawImage(image, pixel.x, pixel.y, style.img.width, style.img.height);
+    let image = ImageCache.get({
+      src: style?.img?.src || '',
+      width: style?.img?.width || 0,
+      height: style?.img?.height || 0,
+    });
+
+    if (!image) {
+      // @ts-ignore
+      const image = new Image(style.img.width, style.img.height);
+
+      image.onload = () => {
+        ImageCache.add(
+          {
+            src: style?.img?.src || '',
+            width: style?.img?.width || 0,
+            height: style?.img?.height || 0,
+          },
+          image,
+        );
+        // @ts-ignore
+        ctx.drawImage(image, pixel.x, pixel.y, style.img.width, style.img.height);
+      };
+
+      // @ts-ignore
+      image.src = style.img.src;
+    } else {
+      // @ts-ignore
+      ctx.drawImage(image, pixel.x, pixel.y, style.img.width, style.img.height);
+    }
   }
 
   /**
@@ -683,10 +686,9 @@ class PointGeometry extends Geometry implements IPointGeometry {
     // @ts-ignore
     return PointGeometry.isPixelInGeometryMapping.get((style as IPointGeometryStyle)?.pointType)({
       // @ts-ignore
-      coordinates: PointGeometry.pointTypeToCoordinatesMapping.get((style as IPointGeometryStyle)?.pointType)(
-        coordinates,
-        style,
-      ),
+      coordinates: PointGeometry.pointTypeToCoordinatesMapping.get(
+        (style as IPointGeometryStyle)?.pointType,
+      )(coordinates, style),
       isScale: false,
       map,
       style,

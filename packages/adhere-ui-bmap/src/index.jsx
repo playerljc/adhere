@@ -15,6 +15,8 @@ import icon from './站点.svg';
 
 const ref = React.createRef();
 
+let vectorSource = null;
+
 let WindLayer,
   HeatMpLayer,
   BMapAirPressureLayer,
@@ -121,12 +123,12 @@ ReactDOM.render(
         onClick={() => {
           const map = ref.current.getMap();
 
-          const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
+          // const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
 
-          // const mulitPointGemo = new MulitPointGeometry(citys.map(city => ({
-          //   lng: city[0],
-          //   lat: city[1],
-          // })));
+          const mulitPointGemo = new MulitPointGeometry(citys.map(city => ({
+            lng: city[0],
+            lat: city[1],
+          })));
 
           // const circleGemo = new CircleGeometry({
           //   center: { lng: 121.487899486, lat: 31.24916171 },
@@ -493,10 +495,10 @@ ReactDOM.render(
           //   text: '上海',
           // });
 
-          const feature = new InnerTextFeature({
+          const feature = new /*InnerText*/Feature({
             name: 'f1',
             id: 'f1',
-            geometry: pointGeom,
+            geometry: mulitPointGemo,
             text: '蜜雪冰城',
             textStyle: {
               font: '10px sans-serif',
@@ -549,7 +551,7 @@ ReactDOM.render(
                 size: 15,
                 length: 60,
               },
-              pointType: 'radiusRect', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect' | 'radiusRect' | 'leaf';
+              pointType: 'image', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect' | 'radiusRect' | 'leaf';
               arrow: {
                 // 是否绘制
                 draw: true,
@@ -569,7 +571,7 @@ ReactDOM.render(
             },
           });
 
-          const vectorSource = new VectorSource([feature]);
+          vectorSource = new VectorSource([feature]);
 
           const vectorLayer = new VectorLayer(map, {
             paneName: 'vertexPane',
@@ -589,6 +591,65 @@ ReactDOM.render(
         }}
       >
         添加VectorLayer
+      </button>
+      <button
+        onClick={() => {
+          if (!vectorSource) {
+            alert('没有初始化source');
+            return;
+          }
+
+          vectorSource.appendGeoJSON(
+            {
+              type: 'GeometryCollection',
+              geometries: [
+                {
+                  type: 'Point',
+                  coordinates: [100.624066094, 36.2843638038],
+                },
+                {
+                  type: 'LineString',
+                  coordinates: [
+                    [121.48789948, 31.24916171],
+                    [123.471095, 41.6862],
+                  ],
+                },
+                {
+                  type: 'Polygon',
+                  coordinates: citys.map((city) => [city[0], city[1]]),
+                },
+              ],
+            },
+            (geom) => {
+              const feature = new Feature();
+              feature.setGeometry(geom);
+
+              feature.setStyle({
+                lineWidth: 1,
+                strokeStyle: 'yellow',
+                fillStyle: 'red',
+
+                pointType: 'circle',
+                radius: 30,
+
+                arrow: {
+                  // 是否绘制
+                  draw: true,
+                  // 箭头方向 箭头绘制在开始 | 结束 | 双向
+                  direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
+                  // 箭头的类型 尖的箭头，还是方形的箭头
+                  type: 'normal' /* | 'square';*/,
+                  // 箭头的大小 小 | 中 | 大
+                  size: 'normal' /* | 'normal' | 'large';*/,
+                },
+              });
+
+              return feature;
+            },
+          );
+        }}
+      >
+        载入GeoJSON
       </button>
     </div>
 

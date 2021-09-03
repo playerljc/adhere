@@ -1,3 +1,5 @@
+import ClientDetectionUtil from './clientDetection';
+
 const eventListenerHandlers = new Map();
 
 export default {
@@ -344,5 +346,87 @@ export default {
   isIframeEmbed() {
     return window.top && window.top !== window;
   },
+  /**
+   * addClickListener - 支持PC和移动端的点击事件
+   * @param el
+   * @param handler
+   * @param capture
+   */
+  addClickListener: (() => {
+    return function (el: HTMLElement, handler: (e) => {}, capture?: boolean): Function {
+      let isStart = false;
+      let isMove = false;
+      let startTime = 0;
+      let endTime = 0;
+
+      const handlers = Array<{ type: string; handler: Function }>();
+
+      // 如果是移动端浏览器
+      if (ClientDetectionUtil.isTouch()) {
+        const touchStartHandler = () => {
+          isStart = true;
+          startTime = new Date().getTime();
+        };
+
+        const touchMoveHandler = () => {
+          isMove = true;
+        };
+
+        const touchEndHandler = (e) => {
+          endTime = new Date().getTime();
+
+          const step = endTime - startTime;
+
+          if ((isStart && !isMove) || (isStart && isMove && step <= 200) /*事件少于200ms*/) {
+            // 命中
+            handler(e);
+          }
+        };
+
+        handlers.push({
+          type: 'touchstart',
+          handler: touchStartHandler,
+        });
+        handlers.push({
+          type: 'touchmove',
+          handler: touchMoveHandler,
+        });
+        handlers.push({
+          type: 'touchend',
+          handler: touchEndHandler,
+        });
+
+        // @ts-ignore
+        el.addEventListener('touchstart', touchStartHandler, capture || false);
+
+        // @ts-ignore
+        el.addEventListener('touchmove', touchMoveHandler, capture || false);
+
+        // @ts-ignore
+        el.addEventListener('touchend', touchEndHandler, capture || false);
+      }
+      // 是PC端浏览器
+      else {
+        const clickHandler = (e) => {
+          handler(e);
+        };
+
+        handlers.push({
+          type: 'click',
+          handler: clickHandler,
+        });
+
+        // @ts-ignore
+        el.addEventListener('click', clickHandler, capture || false);
+      }
+
+      return () => {
+        handlers.forEach(({ type, handler }) => {
+          // @ts-ignore
+          el.removeEventListener(type, handler);
+        });
+      };
+    };
+  })(),
   /**--------------------------dom-end-------------------------**/
 };
