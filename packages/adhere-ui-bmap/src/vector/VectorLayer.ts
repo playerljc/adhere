@@ -87,6 +87,10 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     });
   }
 
+  protected firstLoad() {
+    this.initCanvasEvents();
+  }
+
   update() {
     // @ts-ignore
     const ctx = this.canvas.getContext('2d');
@@ -96,7 +100,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     }
 
     if (!this.isLoad) {
-      this.initCanvasEvents();
+      this.firstLoad();
     }
 
     this.isLoad = true;

@@ -1,8 +1,11 @@
-import { ImageCacheKey } from './types';
+import { ImageCacheClass, ImageCacheKey } from './types';
 
 const ImageCache = new Map<string, HTMLImageElement>();
 
-export default {
+/**
+ * ImageCacheIns
+ */
+const ImageCacheIns: ImageCacheClass = {
   add(key: ImageCacheKey, image: HTMLImageElement): Map<string, HTMLImageElement> {
     return ImageCache.set(JSON.stringify(key), image);
   },
@@ -22,3 +25,5 @@ export default {
     return Array.from(ImageCache.keys()).map((key) => JSON.parse(key));
   },
 };
+
+export default ImageCacheIns;

@@ -9,6 +9,7 @@ import {
   PolygonSelectionActions,
   SelectType,
   IListeners,
+  IPoint,
 } from './types';
 
 import PolygonDrawAction from './draw/PolygonDrawAction';
@@ -19,6 +20,7 @@ import DiamondDrawAction from './draw/DiamondDrawAction';
 import StartDrawAction from './draw/StartDrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
 import MathUtil from '@baifendian/adhere-util/lib/math';
+import Util from '../../util';
 
 const selectorPrefix = 'adhere-ui-polygonselection';
 
@@ -27,7 +29,11 @@ const selectorPrefix = 'adhere-ui-polygonselection';
  * @class
  * @classdesc - PolygonSelection
  */
-class PolygonSelection extends Emitter implements IPolygonSelection {
+// @ts-ignore
+class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
+  // map
+  protected map: any | null = null;
+
   // 父元素
   protected el: HTMLElement | null = null;
 
@@ -52,7 +58,39 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
   // canvas上的所有数据
   protected canvasData: IActionData[] = [];
 
+  protected emitter: Emitter = new Emitter();
+
+  protected isLoad: boolean = false;
+
   // ActionType
+  /**
+   * constructor
+   * @param map
+   * @param defaultData: IActionData[] - 缺省的ActionData数据
+   * @param listeners: IListeners - 缺省的事件注册对象
+   */
+  // @ts-ignore
+  constructor(map: any, defaultData?: IActionData[], listeners?: IListeners) {
+    // @ts-ignore
+    this.update = this.update.bind(this);
+
+    super({
+      // @ts-ignore
+      update: this.update,
+      paneName: 'markerPane',
+      zIndex: 19999,
+    });
+
+    this.map = map;
+
+    this.listeners = listeners;
+
+    defaultData && (this.canvasData = defaultData);
+
+    // 初始化Listeners
+    this.initListeners();
+  }
+
   // @ts-ignore
   protected typeActionMap: Map<SelectType, IAction> = new Map([
     [SelectType.Polygon, PolygonDrawAction],
@@ -64,31 +102,27 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     [SelectType.Free, FreeDrawAction],
   ]);
 
-  /**
-   * constructor
-   * @param el: HtmlElement - 父元素
-   * @param defaultData: IActionData[] - 缺省的ActionData数据
-   * @param listeners: IListeners - 缺省的事件注册对象
-   */
-  constructor(el: HTMLElement, defaultData?: IActionData[], listeners?: IListeners) {
-    super();
+  protected update() {
+    if (!this.isLoad) {
+      // 初始化Canvas
+      this.initCanvas();
 
-    this.el = el;
+      // 初始化Events
+      this.initEvents();
 
-    this.listeners = listeners;
+      this.clearDraw();
+      this.clearAssistDraw();
+      this.drawHistoryData();
+      this.isLoad = true;
+    } else {
+      if (this.curAction) {
+        this.curAction.destroy();
+      }
 
-    defaultData && (this.canvasData = defaultData);
-
-    this.onResize = this.onResize.bind(this);
-
-    // 初始化Listeners
-    this.initListeners();
-
-    // 初始化Canvas
-    this.initCanvas();
-
-    // 初始化Events
-    this.initEvents();
+      this.clearDraw();
+      this.clearAssistDraw();
+      this.drawHistoryData();
+    }
   }
 
   /**
@@ -103,7 +137,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     const keys = Object.keys(listeners);
 
     keys.forEach((key) => {
-      this.on(key, listeners[key]);
+      this.emitter.on(key, listeners[key]);
     });
   }
 
@@ -111,9 +145,8 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * initEvents
    */
   protected initEvents(): void {
-    if (!this.el) return;
-
     // 点击了el元素
+    // @ts-ignore
     this.el.addEventListener('mouseup', (e: MouseEvent) => {
       if (!e) return;
 
@@ -121,38 +154,44 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
       const historyData = this.getHistoryData();
 
       // if (!historyData || !historyData.length) {
-      //   this.trigger(PolygonSelectionActions.CanvasClickEmpty);
+      //   this.emitter.trigger(PolygonSelectionActions.CanvasClickEmpty);
       //   return;
       // }
 
-      const point = MathUtil.clientToCtxPoint({
+      let pixel = MathUtil.clientToCtxPoint({
         event: e,
         rect: (this.el as HTMLDivElement).getBoundingClientRect(),
       });
 
-      let findIndexes: number[] = [];
+      let finsEntitys: Array<{ index: number; data: IActionData }> = [];
 
       for (let i = 0; i < historyData.length; i++) {
         const data = historyData[i];
 
         const action = this.typeActionMap.get(data.type as SelectType) as any;
 
-        const isIn =
-          'booleanPointInData' in action ? action?.booleanPointInData(point, data) : false;
+        let isIn = false;
 
-        if (isIn) {
-          findIndexes.push(i);
+        if ('booleanPointInData' in action) {
+          isIn = action?.booleanPointInData(this, pixel, data);
+          if (isIn) {
+            finsEntitys.push({
+              index: i,
+              data,
+            });
+          }
         }
       }
 
-      if (findIndexes.length) {
-        this.trigger(
+      if (finsEntitys.length) {
+        // 原始数据-需要转换成坐标数据
+        this.emitter.trigger(
           PolygonSelectionActions.CanvasClickGeometry,
-          JSON.parse(JSON.stringify(historyData[findIndexes[findIndexes.length - 1]])),
+          JSON.parse(JSON.stringify(finsEntitys[finsEntitys.length - 1].data)),
         );
       } else {
         if (historyData.length) {
-          this.trigger(PolygonSelectionActions.CanvasClickEmpty);
+          this.emitter.trigger(PolygonSelectionActions.CanvasClickEmpty);
         }
       }
     });
@@ -162,54 +201,79 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * initCanvas - 初始化Canvas
    */
   protected initCanvas(): void {
-    if (!this.el) return;
+    // @ts-ignore
+    this.el = this.canvas.parentElement;
 
     // 创建一个canvas
-    this.canvasEl = document.createElement('canvas');
-    this.canvasEl.className = selectorPrefix;
+    // @ts-ignore
+    this.canvasEl = this.canvas;
+
+    this.el.style.width = `${this.canvasEl.width}px`;
+    this.el.style.height = `${this.canvasEl.height}px`;
+
+    // @ts-ignore
+    this.canvasEl.className = `${selectorPrefix}`;
+    // @ts-ignore
     this.ctx = this.canvasEl.getContext('2d');
 
     // 创建一个assistCanvas
     this.assistCanvasEl = document.createElement('canvas');
     this.assistCanvasEl.className = `${selectorPrefix}-assist`;
+    // @ts-ignore
+    this.assistCanvasEl.style.zIndex = `${parseInt(this.canvasEl.style.zIndex) - 1}`;
+    // @ts-ignore
+    this.assistCanvasEl.width = this.canvasEl.width;
+    // @ts-ignore
+    this.assistCanvasEl.height = this.canvasEl.height;
     this.assistCtx = this.assistCanvasEl.getContext('2d');
 
-    this.el.appendChild(this.canvasEl);
+    // @ts-ignore
     this.el.appendChild(this.assistCanvasEl);
 
     // 触发canvasMount事件
-    this.trigger(PolygonSelectionActions.CanvasMount);
-
-    // 适配canvas
-    this.adapterCanvas();
-
-    // window.addEventListener('resize', this.onResize);
+    this.emitter.trigger(PolygonSelectionActions.CanvasMount);
   }
 
   /**
-   * adapterCanvas - 适配canvas
+   * pixelToPoint
+   * @param pixel
+   * @return IPoint
    */
-  protected adapterCanvas() {
-    const { canvasEl, assistCanvasEl, el } = this;
+  pixelToPoint(pixel: IPoint): IPoint {
+    const point = this.map.pixelToPoint(pixel);
 
-    if (!el || !canvasEl || !assistCanvasEl) return;
-
-    canvasEl.width = el.offsetWidth || 0;
-    canvasEl.height = el.offsetHeight || 0;
-
-    assistCanvasEl.width = el.offsetWidth || 0;
-    assistCanvasEl.height = el.offsetHeight || 0;
-
-    this.clearDraw();
-    this.clearAssistDraw();
-    this.drawHistoryData();
+    return {
+      x: point.lng,
+      y: point.lat,
+    };
   }
 
   /**
-   * onResize
+   * pointToPixel
+   * @param point
    */
-  protected onResize() {
-    this.adapterCanvas();
+  pointToPixel(point: IPoint): IPoint {
+    // @ts-ignore
+    return this.map.pointToPixel(new BMap.Point(point.x, point.y));
+  }
+
+  /**
+   * distanceToActual - 图上距离转换成实际距离
+   * @param distance 图上距离
+   * @return number 实际距离
+   */
+  distanceToActual(distance: number): number {
+    const scale = Util.getScale(this.map);
+    return distance / scale;
+  }
+
+  /**
+   * actualToDistance - 实际距离转换成图上距离
+   * @param actual
+   */
+  actualToDistance(actual: number): number {
+    const scale = Util.getScale(this.map);
+    return scale * actual;
   }
 
   /**
@@ -244,7 +308,8 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @return number
    */
   getWidth(): number {
-    return this?.el?.offsetWidth || 0;
+    // @ts-ignore
+    return this?.getCanvasEl()?.width;
   }
 
   /**
@@ -252,11 +317,13 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @return number
    */
   getHeight(): number {
-    return this?.el?.offsetHeight || 0;
+    // @ts-ignore
+    return this?.getCanvasEl()?.height;
   }
 
   /**
-   * addHistoryData - 添加一个ActionData到canvasData中
+   * addHistoryData
+   * @description - 添加一个ActionData到canvasData中
    * @param data
    * @return void
    */
@@ -299,7 +366,10 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
 
       // 绘制指定类型的路径
       // @ts-ignore
-      this.typeActionMap.get(data.type)?.drawHistoryPath(ctx, data.data);
+      const action: IAction = this.typeActionMap.get(data.type);
+
+      // @ts-ignore
+      action?.drawHistoryPath(this, ctx, data.data);
 
       // 描边
       ctx.stroke();
@@ -343,12 +413,13 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
     if (action === this.curAction) return;
 
     // 只有是未开始才能切换
-    if (action.getStatus() !== ActionStatus.UnStart) return;
+    if (action && action.getStatus() !== ActionStatus.UnStart) return;
 
     if (this.curAction) {
       this.curAction.destroy();
     }
 
+    // @ts-ignore
     action?.setContext(this);
 
     this.curAction = action;
@@ -412,8 +483,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param canvasEl
    */
   setFrontCanvas(canvasEl: HTMLCanvasElement): void {
-    console.log('置顶');
-    canvasEl.style.zIndex = '9999';
+    canvasEl.style.zIndex = `${19999 + 1}`;
   }
 
   /**
@@ -422,8 +492,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @param canvasEl
    */
   setBackCanvas(canvasEl: HTMLCanvasElement): void {
-    console.log('置底');
-    canvasEl.style.zIndex = '1';
+    canvasEl.style.zIndex = `${19999 - 1}`;
   }
 
   /**
@@ -431,8 +500,6 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @return void
    */
   destroy(): void {
-    window.removeEventListener('resize', this.onResize);
-
     if (this.curAction) {
       this.curAction.destroy();
     }

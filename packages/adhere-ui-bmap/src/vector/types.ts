@@ -538,12 +538,29 @@ export enum VectorActions {
 }
 
 /**
+ * ImageCacheClass
+ */
+export interface ImageCacheClass {
+  add(key: ImageCacheKey, image: HTMLImageElement): Map<string, HTMLImageElement>;
+
+  get(key: ImageCacheKey): HTMLImageElement | null | undefined;
+
+  delete(key: ImageCacheKey): boolean;
+
+  clear(): void;
+
+  values(): HTMLImageElement[];
+
+  keys(): ImageCacheKey[];
+}
+
+/**
  * ImageCacheKey
  */
 export interface ImageCacheKey {
-  src: string,
-  width: number,
-  height: number,
+  src: string;
+  width: number;
+  height: number;
 }
 
 /**

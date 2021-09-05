@@ -44,7 +44,30 @@ let WindLayer,
   MulitRadiusRectGeometry,
   LeafGeometry,
   MulitLeafGeometry,
-  TextGeometry;
+  TextGeometry,
+  PolygonSelectionModule,
+  PolygonSelection,
+  PolygonDrawAction,
+  CircleDrawAction,
+  RectangleDrawAction,
+  TriangleDrawAction,
+  DiamondDrawAction,
+  StartDrawAction,
+  FreeDrawAction,
+  CircleModifyAction,
+  DiamondModifyAction,
+  PolygonModifyAction,
+  RectangleModifyAction,
+  TriangleModifyAction,
+  StartModifyAction,
+  Types,
+  PolygonSelectionActions,
+  ActionEvents;
+
+let polygonSelection;
+
+// ActionType
+let typeActionMap;
 
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
@@ -125,10 +148,12 @@ ReactDOM.render(
 
           // const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
 
-          const mulitPointGemo = new MulitPointGeometry(citys.map(city => ({
-            lng: city[0],
-            lat: city[1],
-          })));
+          const mulitPointGemo = new MulitPointGeometry(
+            citys.map((city) => ({
+              lng: city[0],
+              lat: city[1],
+            })),
+          );
 
           // const circleGemo = new CircleGeometry({
           //   center: { lng: 121.487899486, lat: 31.24916171 },
@@ -495,7 +520,7 @@ ReactDOM.render(
           //   text: '上海',
           // });
 
-          const feature = new /*InnerText*/Feature({
+          const feature = new /*InnerText*/ Feature({
             name: 'f1',
             id: 'f1',
             geometry: mulitPointGemo,
@@ -651,6 +676,59 @@ ReactDOM.render(
       >
         载入GeoJSON
       </button>
+      <button
+        onClick={() => {
+          const map = ref.current.getMap();
+
+          if (!polygonSelection) {
+            polygonSelection = new PolygonSelection(map, [], {
+              [PolygonSelectionActions.CanvasMount]: () => {
+                const action = new TriangleDrawAction();
+                action.on(ActionEvents.End, (data) => {
+                  // action.start();
+                });
+                polygonSelection.changeAction(action);
+                action.start();
+              },
+            });
+
+            // 点击了画布中的几何图形
+            polygonSelection.emitter.on(PolygonSelectionActions.CanvasClickGeometry, (data) => {
+              const Component = typeActionMap.get(data.type);
+
+              const action = new Component({
+                selectType: data.type,
+                actionType: 'Draw',
+                data,
+              });
+
+              action.on(ActionEvents.End, () => {
+                action.start();
+              });
+
+              polygonSelection.changeAction(action);
+
+              action.start();
+            });
+
+            // 点击了画布的空位置
+            polygonSelection.emitter.on(PolygonSelectionActions.CanvasClickEmpty, () => {
+              polygonSelection.changeAction(null);
+            });
+
+            map.addOverlay(polygonSelection);
+          } else {
+            const action = new TriangleDrawAction();
+            action.on(ActionEvents.End, (data) => {
+              // action.start();
+            });
+            polygonSelection.changeAction(action);
+            action.start();
+          }
+        }}
+      >
+        绘制圆形
+      </button>
     </div>
 
     <div className={styles.Auto}>
@@ -747,6 +825,38 @@ ReactDOM.render(
 
           import('./vector/geom/TextGeometry').then((res) => {
             TextGeometry = res.default;
+          });
+
+          import('./vector/interaction').then((res) => {
+            PolygonSelectionModule = res.default;
+
+            PolygonSelection = PolygonSelectionModule.PolygonSelection;
+            PolygonDrawAction = PolygonSelectionModule.PolygonDrawAction;
+            CircleDrawAction = PolygonSelectionModule.CircleDrawAction;
+            RectangleDrawAction = PolygonSelectionModule.RectangleDrawAction;
+            TriangleDrawAction = PolygonSelectionModule.TriangleDrawAction;
+            DiamondDrawAction = PolygonSelectionModule.DiamondDrawAction;
+            StartDrawAction = PolygonSelectionModule.StartDrawAction;
+            FreeDrawAction = PolygonSelectionModule.FreeDrawAction;
+            CircleModifyAction = PolygonSelectionModule.CircleModifyAction;
+            DiamondModifyAction = PolygonSelectionModule.DiamondModifyAction;
+            PolygonModifyAction = PolygonSelectionModule.PolygonModifyAction;
+            RectangleModifyAction = PolygonSelectionModule.RectangleModifyAction;
+            TriangleModifyAction = PolygonSelectionModule.TriangleModifyAction;
+            StartModifyAction = PolygonSelectionModule.StartModifyAction;
+            Types = PolygonSelectionModule.Types;
+
+            PolygonSelectionActions = Types.PolygonSelectionActions;
+            ActionEvents = Types.ActionEvents;
+
+            typeActionMap = new Map([
+              ['Polygon', PolygonModifyAction],
+              ['Circle', CircleModifyAction],
+              ['Rectangle', RectangleModifyAction],
+              ['Triangle', TriangleModifyAction],
+              ['Diamond', DiamondModifyAction],
+              ['Start', StartModifyAction],
+            ]);
           });
         }}
       />
