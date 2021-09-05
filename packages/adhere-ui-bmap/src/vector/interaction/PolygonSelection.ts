@@ -208,7 +208,9 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
     // @ts-ignore
     this.canvasEl = this.canvas;
 
+    // @ts-ignore
     this.el.style.width = `${this.canvasEl.width}px`;
+    // @ts-ignore
     this.el.style.height = `${this.canvasEl.height}px`;
 
     // @ts-ignore

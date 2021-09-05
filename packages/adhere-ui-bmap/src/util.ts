@@ -27,6 +27,7 @@ export default {
   ): // @ts-ignore
   Promise<BMap.Polygon> {
     const cityOverlays = [];
+    const cityPoints = [];
 
     return new Promise((resolve) => {
       // 勾勒的轮廓
@@ -41,7 +42,7 @@ export default {
 
           boundarie.forEach((pointStr) => {
             const point = pointStr.trim().split(',');
-            this.cityPoints.push(
+            cityPoints.push(
               // @ts-ignore
               new BMap.Point(parseFloat(point[0].trim()), parseFloat(point[1].trim())),
             );
@@ -50,12 +51,16 @@ export default {
           // @ts-ignore
           const hole = new BMap.Polygon(boundarieStr, { ...style });
 
+          // @ts-ignore
           cityOverlays.push(hole);
 
           map.addOverlay(hole);
         }
 
-        resolve(cityOverlays);
+        resolve({
+          cityOverlays,
+          cityPoints
+        });
       });
     });
   },
@@ -152,6 +157,7 @@ export default {
       [1, 10000000],
     ]);
 
+    // @ts-ignore
     return 1 / zoomScaleMap.get(zoom);
   },
   /**
