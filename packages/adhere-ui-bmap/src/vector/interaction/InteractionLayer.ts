@@ -61,6 +61,9 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
   protected isLoad: boolean = false;
 
+  // canvas的属性监控
+  protected canvasObserver: MutationObserver | null = null;
+
   /**
    * constructor
    * @param map
@@ -146,8 +149,6 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
     // 点击了el元素
     // @ts-ignore
     this.el.addEventListener('mouseup', (e: MouseEvent) => {
-      console.log('elMouseUp');
-
       if (!e) return;
 
       // 查看point命中了HistoryData中的哪一项
@@ -160,7 +161,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
       let pixel = MathUtil.clientToCtxPoint({
         event: e,
-        rect: (this.el as HTMLDivElement).getBoundingClientRect(),
+        rect: this.getCanvasEl()?.getBoundingClientRect() /*(this.el as HTMLDivElement).getBoundingClientRect()*/,
       });
 
       // let {left, top} = window.getComputedStyle(this.getCanvasEl(), null);
@@ -190,6 +191,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
       }
 
       if (finsEntitys.length) {
+        console.log('点击了节点');
         // 原始数据-需要转换成坐标数据
         this.emitter.trigger(
           InteractionLayerActions.CanvasClickGeometry,
@@ -197,6 +199,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
         );
       } else {
         if (historyData.length) {
+          console.log('点击拉画布');
           this.emitter.trigger(InteractionLayerActions.CanvasClickEmpty);
         }
       }
@@ -234,6 +237,24 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
     // @ts-ignore
     this.assistCanvasEl.height = this.canvasEl.height;
     this.assistCtx = this.assistCanvasEl.getContext('2d');
+
+    // 创建一个观察器实例并传入回调函数
+    this.canvasObserver = new MutationObserver((mutationsList, observer) => {
+      for(let mutation of mutationsList) {
+        /*if (mutation.type === 'childList') {
+          // console.log('A child node has been added or removed.');
+        }
+        else */if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          this.assistCanvasEl.style.left = this.canvasEl.style.left;
+          this.assistCanvasEl.style.top = this.canvasEl.style.top;
+        }
+      }
+    });
+
+    // 以上述配置开始观察目标节点
+    this.canvasObserver.observe(this.canvasEl, {
+      attributes: true,
+    });
 
     // @ts-ignore
     this.el.appendChild(this.assistCanvasEl);
@@ -480,6 +501,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
     if (!ctx) return;
 
+    console.log('clearDraw');
     ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
   }
 
@@ -520,6 +542,11 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   destroy(): void {
     if (this.curAction) {
       this.curAction.destroy();
+    }
+
+    // 之后，可停止观察
+    if (this.canvasObserver) {
+      this.canvasObserver.disconnect();
     }
   }
 }
