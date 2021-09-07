@@ -17,6 +17,7 @@ const loadGridIcon =
  * @class BMap
  * @classdesc 百度地图的React组件
  */
+// @ts-ignore
 class BMap extends React.Component<IBMapProps, IBMapState> {
   static defaultProps: any;
   static propTypes: any;
@@ -47,6 +48,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
     const { externalImportBMapScript } = this.props;
 
     if (externalImportBMapScript) {
+      // @ts-ignore
       this.BMap = window.BMap;
 
       this.setState(
@@ -61,6 +63,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
       this.importBMapJS().then((BMap) => {
         this.BMap = BMap;
 
+        // @ts-ignore
         window.BMap = BMap;
 
         this.props.onBMapScriptReady && this.props.onBMapScriptReady();
@@ -85,11 +88,15 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
 
     const { config, zoom, center } = this.props;
 
-    this.map = new BMap.Map(this.ref.current, config);
+    this.map = new BMap.Map(this.ref.current, {
+      // @ts-ignore
+      enableMapClick: false,
+      ...config
+    });
 
     this.initMapControl();
 
-    this.map.centerAndZoom(new BMap.Point(center.lon, center.lat), zoom);
+    this.map.centerAndZoom(new BMap.Point(center?.lon, center?.lat), zoom);
 
     this.map.addEventListener('tilesloaded', () => {
       if (this.isLoad) return;
@@ -97,10 +104,11 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
       this.isLoad = true;
 
       const logoEl = document.querySelector('.anchorBL');
-      logoEl && logoEl.parentElement.removeChild(logoEl);
+      logoEl && logoEl?.parentElement?.removeChild(logoEl);
 
       setTimeout(() => {
-        this.ref.current.style.background = `url("${loadGridIcon}") repeat #fff;`;
+        // @ts-ignore
+        this?.ref?.current?.style?.background = `url("${loadGridIcon}") repeat #fff;`;
       }, 2000);
     });
   }
@@ -130,9 +138,11 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
       return new Promise((resolve) => {
         const script = document.createElement('script');
         script.onload = () => {
+          // @ts-ignore
           resolve(window.BMap);
         };
         script.src = src;
+        // @ts-ignore
         document.querySelector('head').appendChild(script);
       });
     }
@@ -146,8 +156,8 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
         const first = el.firstElementChild;
 
         if (
-          first.tagName.toLowerCase() === 'script' &&
-          first.getAttribute('src').indexOf('http://api.map.baidu.com') !== -1
+          first?.tagName.toLowerCase() === 'script' &&
+          first?.getAttribute('src')?.indexOf('http://api.map.baidu.com') !== -1
         ) {
           importReal(first.getAttribute('src')).then((res) => {
             resolve(res);
@@ -159,7 +169,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
 
       const script = document.createElement('script');
       script.src = `http://api.map.baidu.com/api?v=3.0&ak=${this.props.ak}`;
-      document.querySelector('head').appendChild(script);
+      document?.querySelector('head')?.appendChild(script);
     });
   }
 
@@ -182,7 +192,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
       <ConditionalRender conditional={isReady} noMatch={() => this.renderLoading()}>
         {() => (
           <div
-            className={classNames(selectorPrefix, className.split(' '))}
+            className={classNames(selectorPrefix, className?.split(' '))}
             style={{ ...style }}
             ref={this.ref}
           />
@@ -225,11 +235,11 @@ BMap.propTypes = {
     // 是否启用使用高分辨率地图。在iPhone4及其后续设备上，可以通过开启此选项获取更高分辨率的底图，v1.2,v1.3版本默认不开启，v1.4默认为开启状态
     // 地图类型，默认为BMAP_NORMAL_MAP
     mapType: PropTypes.object,
-    enableHighResolution: PropTypes.boolean,
+    enableHighResolution: PropTypes.bool,
     // 是否自动适应地图容器变化，默认启用
-    enableAutoResize: PropTypes.boolean,
+    enableAutoResize: PropTypes.bool,
     // 是否开启底图可点功能，默认启用
-    enableMapClick: PropTypes.boolean,
+    enableMapClick: PropTypes.bool,
   }),
   onBMapScriptReady: PropTypes.func,
   externalImportBMapScript: PropTypes.bool,

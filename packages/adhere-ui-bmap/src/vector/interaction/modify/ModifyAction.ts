@@ -524,6 +524,8 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
     });
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
+
+    this?.context?.enableMap();
   }
 
   /**
@@ -603,6 +605,8 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
       actionType: ActionType.Modify,
       data: targetPixel,
     });
+
+    this?.context?.enableMap();
   }
 
   /**
@@ -646,6 +650,8 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
     });
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
+
+    this?.context?.enableMap();
   }
 
   /**

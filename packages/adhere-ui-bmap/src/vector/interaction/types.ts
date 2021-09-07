@@ -243,6 +243,7 @@ export interface IPolygonSelection {
    * @param actual
    */
   actualToDistance(actual: number): number;
+  enableMap(): void;
 }
 
 /**

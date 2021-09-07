@@ -5,6 +5,7 @@ import Math from './math';
 import Geometry from './geometry';
 import clientDetection from './clientDetection';
 import SystemManager from './systemmanager';
+import Tree from './tree';
 
 export default {
   /**
@@ -17,4 +18,5 @@ export default {
   ...Geometry,
   ...clientDetection,
   ...SystemManager,
+  ...Tree,
 };

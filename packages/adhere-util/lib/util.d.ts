@@ -1,4 +1,33 @@
 declare const _default: {
+    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, }: {
+        keyAttr: string;
+        titleAttr: string;
+        rootParentId: string | number;
+    }): {
+        key: string;
+        title: string;
+        isLeaf: boolean;
+        children?: any[] | undefined;
+        properties?: any;
+    }[];
+    getAncestor(data: any[], node: any, config: {
+        keyAttr: string;
+        parentIdAttr: string;
+        rootParentId: string;
+    }): any[];
+    filterTree(data: any[], kw: string, config: {
+        filterAttr: string;
+        keyAttr: string;
+        parentIdAttr: string;
+        rootParentId: string;
+        titleAttr: string;
+    }): {
+        key: string;
+        title: string;
+        isLeaf: boolean;
+        children?: any[] | undefined;
+        properties?: any;
+    }[];
     getLang(): string;
     setLang(lang?: string): void;
     getDatePickerFormat(): string;

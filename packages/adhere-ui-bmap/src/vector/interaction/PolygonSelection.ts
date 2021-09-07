@@ -62,7 +62,6 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
 
   protected isLoad: boolean = false;
 
-  // ActionType
   /**
    * constructor
    * @param map
@@ -234,6 +233,14 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
 
     // 触发canvasMount事件
     this.emitter.trigger(PolygonSelectionActions.CanvasMount);
+  }
+
+  enableMap(): void {
+    this.map.enableDoubleClickZoom();
+  }
+
+  protected disableMap(): void {
+    this.map.disableDoubleClickZoom();
   }
 
   /**
@@ -416,6 +423,8 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
 
     // 只有是未开始才能切换
     if (action && action.getStatus() !== ActionStatus.UnStart) return;
+
+    this.disableMap();
 
     if (this.curAction) {
       this.curAction.destroy();

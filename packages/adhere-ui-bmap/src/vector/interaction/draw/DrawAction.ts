@@ -36,6 +36,8 @@ abstract class DrawAction extends Emitter implements IAction {
     if (!canvasEl || !assistCanvasEl) return;
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
+
+    this.context.enableMap();
   }
 
   /**
@@ -54,6 +56,8 @@ abstract class DrawAction extends Emitter implements IAction {
     if (!canvasEl || !assistCanvasEl) return;
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
+
+    this.context.enableMap();
   }
 
   /**
