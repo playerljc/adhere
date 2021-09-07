@@ -1,4 +1,4 @@
-import { IAntdTreeNode, IFlatTreeArrNode } from './types';
+import { IAntdTreeNode, IFlatTreeArrNode, IAntdTreeSelectNode } from './types';
 
 export default {
   /**
@@ -11,12 +11,7 @@ export default {
    */
   arrayToAntdTree(
     arr: any[],
-    {
-      keyAttr,
-      titleAttr,
-      rootParentId,
-      parentIdAttr,
-    }: IFlatTreeArrNode,
+    { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode,
   ): Array<IAntdTreeNode> {
     /**
      * findNodesByParentId
@@ -24,12 +19,67 @@ export default {
      * @param parentId
      * @return {*}
      */
-    function findNodesByParentId(arr:IFlatTreeArrNode[], parentId:string | number) {
+    function findNodesByParentId(arr: IFlatTreeArrNode[], parentId: string | number) {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
         .map((item) => ({
           title: item[titleAttr],
           key: item[keyAttr],
+          children: [],
+          props: { ...item },
+          isLeaf: true,
+        }));
+    }
+
+    /**
+     * Recursion
+     * @constructor
+     */
+    function Recursion(node) {
+      node.children = findNodesByParentId(arr, node.props[keyAttr]);
+      node.isLeaf = !node.children.length;
+      if (node.isLeaf) {
+        delete node.children;
+      }
+
+      (node.children || []).forEach((node) => {
+        Recursion(node);
+      });
+    }
+
+    const roots = findNodesByParentId(arr, rootParentId);
+
+    roots.forEach((root) => {
+      Recursion(root);
+    });
+
+    return roots;
+  },
+  /**
+   * arrayToAntdTreeSelect - array转换成TreeSelect
+   * @param arr
+   * @param keyAttr - id的属性
+   * @param titleAttr - title的属性
+   * @param parentIdAttr - parentId的属性
+   * @param rootParentId - root的parentId值
+   */
+  arrayToAntdTreeSelect(
+    arr: any[],
+    { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode,
+  ): Array<IAntdTreeSelectNode> {
+    /**
+     * findNodesByParentId
+     * @param arr
+     * @param parentId
+     * @return {*}
+     */
+    function findNodesByParentId(arr: IFlatTreeArrNode[], parentId: string | number) {
+      return arr
+        .filter((item) => item[parentIdAttr] == parentId)
+        .map((item) => ({
+          label: item[titleAttr],
+          key: item[keyAttr],
+          value: item[keyAttr],
           children: [],
           props: { ...item },
           isLeaf: true,

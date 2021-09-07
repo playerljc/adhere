@@ -16,6 +16,15 @@ export interface IAntdTreeNode {
   properties?: any;
 }
 
+export interface IAntdTreeSelectNode {
+  key: string;
+  label: string;
+  value: string;
+  isLeaf: boolean;
+  children?: IAntdTreeNode[];
+  properties?: any;
+}
+
 /**
  * IFlatTreeArrNode - 拉平的数组
  */
