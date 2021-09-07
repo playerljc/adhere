@@ -2,7 +2,7 @@ import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IStartData, IPoint, SelectType, IPolygonSelection } from '../types';
+import { IStartData, IPoint, SelectType, IInteractionLayer } from '../types';
 import ModifyAction from './ModifyAction';
 import StartDrawAction from '../draw/StartDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
@@ -101,7 +101,7 @@ class StartModifyAction extends ModifyAction {
     let index: number = -1;
 
     const { center, outRadius } = StartDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this?.data?.data?.data,
     );
 
@@ -261,7 +261,7 @@ class StartModifyAction extends ModifyAction {
       // 内半径(外半径的一半)
       innerRadius,
     } = StartDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this?.data?.data?.data,
     );
 

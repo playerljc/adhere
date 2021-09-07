@@ -1,5 +1,5 @@
 // @ts-ignore
-import PolygonSelection from './PolygonSelection';
+import InteractionLayer from './InteractionLayer';
 import CircleDrawAction from './draw/CircleDrawAction';
 import DiamondDrawAction from './draw/DiamondDrawAction';
 import DrawAction from './draw/DrawAction';
@@ -22,7 +22,7 @@ import Util from './util';
 import * as Types from './types';
 
 export default {
-  PolygonSelection,
+  InteractionLayer,
   CircleDrawAction,
   DiamondDrawAction,
   DrawAction,

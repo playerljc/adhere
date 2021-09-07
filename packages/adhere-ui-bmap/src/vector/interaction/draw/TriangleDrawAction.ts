@@ -12,7 +12,7 @@ import {
   IStyle,
   SelectType,
   ActionType,
-  IPolygonSelection,
+  IInteractionLayer,
 } from '../types';
 import DrawAction from './DrawAction';
 import Util from '../util';
@@ -50,7 +50,7 @@ class TriangleDrawAction extends DrawAction {
    * @param data
    */
   static booleanPointInData(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     point: IPoint,
     data: ITriangleData,
   ): boolean {
@@ -117,7 +117,7 @@ class TriangleDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(context: IPolygonSelection, ctx: CanvasRenderingContext2D, data: ITriangleData) {
+  static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: ITriangleData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -153,7 +153,7 @@ class TriangleDrawAction extends DrawAction {
    * @param data
    */
   static drawHistoryPath(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     ctx: CanvasRenderingContext2D,
     data: {
       points: IPoint[];
@@ -225,7 +225,7 @@ class TriangleDrawAction extends DrawAction {
    * @param data
    */
   static transformOriginToReal(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: {
       points: IPoint[];
     },
@@ -243,7 +243,7 @@ class TriangleDrawAction extends DrawAction {
    * @param data
    */
   static transformRealToOrigin(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: {
       points: IPoint[];
     },

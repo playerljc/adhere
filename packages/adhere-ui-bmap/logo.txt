@@ -4,8 +4,11 @@
 .圆角矩形(ok)
 .N叶草(ok)
 .各种空间数据的转换(如：GeoJSON,KML)(ok)
-.drawAction和modifyAction
+.drawAction和modifyAction(ok)
  .当在interAction模式的时候屏蔽双击放大，和地图点击的效果
+ .拉框选取
+ .拉框搜索
+
 .测距
 .轨迹回放(动画)
 .点聚合

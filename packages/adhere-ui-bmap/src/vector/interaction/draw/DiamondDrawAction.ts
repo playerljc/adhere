@@ -13,7 +13,7 @@ import {
   IDiamondData,
   IStyle,
   SelectType,
-  IPolygonSelection,
+  IInteractionLayer,
 } from '../types';
 import DrawAction from './DrawAction';
 import Util from '../util';
@@ -57,7 +57,7 @@ class DiamondDrawAction extends DrawAction {
    * @param data
    */
   static booleanPointInData(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     point: IPoint,
     data: IDiamondData,
   ): boolean {
@@ -143,7 +143,7 @@ class DiamondDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(context: IPolygonSelection, ctx: CanvasRenderingContext2D, data: IDiamondData) {
+  static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: IDiamondData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -177,7 +177,7 @@ class DiamondDrawAction extends DrawAction {
    * @param data
    */
   static drawHistoryPath(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     ctx: CanvasRenderingContext2D,
     data: {
       leftTopPoint: IPoint | null;
@@ -263,7 +263,7 @@ class DiamondDrawAction extends DrawAction {
    * @param data
    */
   static transformOriginToReal(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: {
       leftTopPoint: IPoint;
       width: number;
@@ -283,7 +283,7 @@ class DiamondDrawAction extends DrawAction {
    * @param data
    */
   static transformRealToOrigin(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: {
       leftTopPoint: IPoint;
       width: number;

@@ -1,7 +1,7 @@
 import * as turf from '@turf/turf';
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IPolygonData, IPolygonSelection, SelectType } from '../types';
+import { IPoint, IPolygonData, IInteractionLayer, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import PolygonDrawAction from '../draw/PolygonDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
@@ -69,7 +69,7 @@ class PolygonModifyAction extends ModifyAction {
     let index: number = -1;
 
     const data = PolygonDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this.data.data.data,
     );
 
@@ -188,7 +188,7 @@ class PolygonModifyAction extends ModifyAction {
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
-    const points = PolygonDrawAction.transformOriginToReal(this.context as IPolygonSelection, [
+    const points = PolygonDrawAction.transformOriginToReal(this.context as IInteractionLayer, [
       ...this?.data?.data?.data,
     ]);
     points.push(points[0]);

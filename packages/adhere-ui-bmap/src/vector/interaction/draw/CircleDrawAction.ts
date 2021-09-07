@@ -12,7 +12,7 @@ import {
   IStyle,
   SelectType,
   ActionType,
-  IPolygonSelection,
+  IInteractionLayer,
 } from '../types';
 
 /**
@@ -47,7 +47,7 @@ class CircleDrawAction extends DrawAction {
    * @param point
    * @param data
    */
-  static booleanPointInData(context: IPolygonSelection, point: IPoint, data: ICircleData): boolean {
+  static booleanPointInData(context: IInteractionLayer, point: IPoint, data: ICircleData): boolean {
     return MathUtil.isPointInCircle(
       point,
       CircleDrawAction.transformOriginToReal(context, data.data),
@@ -109,11 +109,11 @@ class CircleDrawAction extends DrawAction {
   /**
    * draw
    * @description 绘制
-   * @param context IPolygonSelection
+   * @param context IInteractionLayer
    * @param ctx
    * @param data
    */
-  static draw(context: IPolygonSelection, ctx: CanvasRenderingContext2D, data: ICircleData): void {
+  static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: ICircleData): void {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -143,7 +143,7 @@ class CircleDrawAction extends DrawAction {
    * @param data
    */
   static drawHistoryPath(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     ctx: CanvasRenderingContext2D,
     data: {
       center: IPoint;
@@ -227,7 +227,7 @@ class CircleDrawAction extends DrawAction {
    * @param data
    */
   static transformRealToOrigin(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: { center: IPoint; radius: number },
   ): { center: IPoint; radius: number } {
     return {
@@ -242,7 +242,7 @@ class CircleDrawAction extends DrawAction {
    * @param data
    */
   static transformOriginToReal(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: { center: IPoint; radius: number },
   ): { center: IPoint; radius: number } {
     return {

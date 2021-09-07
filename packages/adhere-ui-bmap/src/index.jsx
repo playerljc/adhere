@@ -45,8 +45,8 @@ let WindLayer,
   LeafGeometry,
   MulitLeafGeometry,
   TextGeometry,
-  PolygonSelectionModule,
-  PolygonSelection,
+  InteractionLayerModule,
+  InteractionLayer,
   PolygonDrawAction,
   CircleDrawAction,
   RectangleDrawAction,
@@ -61,10 +61,10 @@ let WindLayer,
   TriangleModifyAction,
   StartModifyAction,
   Types,
-  PolygonSelectionActions,
+  InteractionLayerActions,
   ActionEvents;
 
-let polygonSelection;
+let interactionLayer;
 
 // ActionType
 let typeActionMap;
@@ -129,7 +129,7 @@ ReactDOM.render(
             new BMapAirPressureLayer({
               map,
               data,
-              paneName: 'floatShadow',
+              paneName: 'markerShadow',
               zIndex: 2,
               style: {
                 strokeStyle: '#ccc',
@@ -146,14 +146,14 @@ ReactDOM.render(
         onClick={() => {
           const map = ref.current.getMap();
 
-          // const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
+          const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
 
-          const mulitPointGemo = new MulitPointGeometry(
-            citys.map((city) => ({
-              lng: city[0],
-              lat: city[1],
-            })),
-          );
+          // const mulitPointGemo = new MulitPointGeometry(
+          //   citys.map((city) => ({
+          //     lng: city[0],
+          //     lat: city[1],
+          //   })),
+          // );
 
           // const circleGemo = new CircleGeometry({
           //   center: { lng: 121.487899486, lat: 31.24916171 },
@@ -523,7 +523,7 @@ ReactDOM.render(
           const feature = new /*InnerText*/ Feature({
             name: 'f1',
             id: 'f1',
-            geometry: mulitPointGemo,
+            geometry: pointGeom,
             text: '蜜雪冰城',
             textStyle: {
               font: '10px sans-serif',
@@ -680,20 +680,20 @@ ReactDOM.render(
         onClick={() => {
           const map = ref.current.getMap();
 
-          if (!polygonSelection) {
-            polygonSelection = new PolygonSelection(map, [], {
-              [PolygonSelectionActions.CanvasMount]: () => {
-                const action = new TriangleDrawAction();
+          if (!interactionLayer) {
+            interactionLayer = new InteractionLayer(map, [], {
+              [InteractionLayerActions.CanvasMount]: () => {
+                const action = new CircleDrawAction();
                 action.on(ActionEvents.End, (data) => {
                   // action.start();
                 });
-                polygonSelection.changeAction(action);
+                interactionLayer.changeAction(action);
                 action.start();
               },
             });
 
             // 点击了画布中的几何图形
-            polygonSelection.emitter.on(PolygonSelectionActions.CanvasClickGeometry, (data) => {
+            interactionLayer.emitter.on(InteractionLayerActions.CanvasClickGeometry, (data) => {
               const Component = typeActionMap.get(data.type);
 
               const action = new Component({
@@ -706,23 +706,23 @@ ReactDOM.render(
                 action.start();
               });
 
-              polygonSelection.changeAction(action);
+              interactionLayer.changeAction(action);
 
               action.start();
             });
 
             // 点击了画布的空位置
-            polygonSelection.emitter.on(PolygonSelectionActions.CanvasClickEmpty, () => {
-              polygonSelection.changeAction(null);
+            interactionLayer.emitter.on(InteractionLayerActions.CanvasClickEmpty, () => {
+              interactionLayer.changeAction(null);
             });
 
-            map.addOverlay(polygonSelection);
+            map.addOverlay(interactionLayer);
           } else {
-            const action = new TriangleDrawAction();
+            const action = new CircleDrawAction();
             action.on(ActionEvents.End, (data) => {
               // action.start();
             });
-            polygonSelection.changeAction(action);
+            interactionLayer.changeAction(action);
             action.start();
           }
         }}
@@ -828,25 +828,25 @@ ReactDOM.render(
           });
 
           import('./vector/interaction').then((res) => {
-            PolygonSelectionModule = res.default;
+            InteractionLayerModule = res.default;
 
-            PolygonSelection = PolygonSelectionModule.PolygonSelection;
-            PolygonDrawAction = PolygonSelectionModule.PolygonDrawAction;
-            CircleDrawAction = PolygonSelectionModule.CircleDrawAction;
-            RectangleDrawAction = PolygonSelectionModule.RectangleDrawAction;
-            TriangleDrawAction = PolygonSelectionModule.TriangleDrawAction;
-            DiamondDrawAction = PolygonSelectionModule.DiamondDrawAction;
-            StartDrawAction = PolygonSelectionModule.StartDrawAction;
-            FreeDrawAction = PolygonSelectionModule.FreeDrawAction;
-            CircleModifyAction = PolygonSelectionModule.CircleModifyAction;
-            DiamondModifyAction = PolygonSelectionModule.DiamondModifyAction;
-            PolygonModifyAction = PolygonSelectionModule.PolygonModifyAction;
-            RectangleModifyAction = PolygonSelectionModule.RectangleModifyAction;
-            TriangleModifyAction = PolygonSelectionModule.TriangleModifyAction;
-            StartModifyAction = PolygonSelectionModule.StartModifyAction;
-            Types = PolygonSelectionModule.Types;
+            InteractionLayer = InteractionLayerModule.InteractionLayer;
+            PolygonDrawAction = InteractionLayerModule.PolygonDrawAction;
+            CircleDrawAction = InteractionLayerModule.CircleDrawAction;
+            RectangleDrawAction = InteractionLayerModule.RectangleDrawAction;
+            TriangleDrawAction = InteractionLayerModule.TriangleDrawAction;
+            DiamondDrawAction = InteractionLayerModule.DiamondDrawAction;
+            StartDrawAction = InteractionLayerModule.StartDrawAction;
+            FreeDrawAction = InteractionLayerModule.FreeDrawAction;
+            CircleModifyAction = InteractionLayerModule.CircleModifyAction;
+            DiamondModifyAction = InteractionLayerModule.DiamondModifyAction;
+            PolygonModifyAction = InteractionLayerModule.PolygonModifyAction;
+            RectangleModifyAction = InteractionLayerModule.RectangleModifyAction;
+            TriangleModifyAction = InteractionLayerModule.TriangleModifyAction;
+            StartModifyAction = InteractionLayerModule.StartModifyAction;
+            Types = InteractionLayerModule.Types;
 
-            PolygonSelectionActions = Types.PolygonSelectionActions;
+            InteractionLayerActions = Types.InteractionLayerActions;
             ActionEvents = Types.ActionEvents;
 
             typeActionMap = new Map([

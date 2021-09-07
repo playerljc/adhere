@@ -211,7 +211,7 @@ BMap.defaultProps = {
     maxZoom: 20,
     enableHighResolution: true,
     enableAutoResize: true,
-    enableMapClick: true,
+    enableMapClick: false,
   },
   zoom: 5,
   center: {

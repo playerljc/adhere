@@ -1,12 +1,12 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-
+import MathUtil from '@baifendian/adhere-util/lib/math';
 import {
   ActionStatus,
   IAction,
   IActionData,
-  IPolygonSelection,
+  IInteractionLayer,
   IStyle,
-  PolygonSelectionActions,
+  InteractionLayerActions,
   SelectType,
   IListeners,
   IPoint,
@@ -19,18 +19,17 @@ import TriangleDrawAction from './draw/TriangleDrawAction';
 import DiamondDrawAction from './draw/DiamondDrawAction';
 import StartDrawAction from './draw/StartDrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
-import MathUtil from '@baifendian/adhere-util/lib/math';
 import Util from '../../util';
 
-const selectorPrefix = 'adhere-ui-polygonselection';
+const selectorPrefix = 'adhere-ui-interactionlayer';
 
 /**
- * PolygonSelection
+ * InteractionLayer
  * @class
- * @classdesc - PolygonSelection
+ * @classdesc - InteractionLayer
  */
 // @ts-ignore
-class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
+class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // map
   protected map: any | null = null;
 
@@ -147,13 +146,15 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
     // 点击了el元素
     // @ts-ignore
     this.el.addEventListener('mouseup', (e: MouseEvent) => {
+      console.log('elMouseUp');
+
       if (!e) return;
 
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
 
       // if (!historyData || !historyData.length) {
-      //   this.emitter.trigger(PolygonSelectionActions.CanvasClickEmpty);
+      //   this.emitter.trigger(InteractionLayerActions.CanvasClickEmpty);
       //   return;
       // }
 
@@ -161,6 +162,12 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
         event: e,
         rect: (this.el as HTMLDivElement).getBoundingClientRect(),
       });
+
+      // let {left, top} = window.getComputedStyle(this.getCanvasEl(), null);
+      // left = parseInt(left.replace('px',''));
+      // top = parseInt(top.replace('px',''));
+      // pixel.x -= left;
+      // pixel.y -= top;
 
       let finsEntitys: Array<{ index: number; data: IActionData }> = [];
 
@@ -185,12 +192,12 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
       if (finsEntitys.length) {
         // 原始数据-需要转换成坐标数据
         this.emitter.trigger(
-          PolygonSelectionActions.CanvasClickGeometry,
+          InteractionLayerActions.CanvasClickGeometry,
           JSON.parse(JSON.stringify(finsEntitys[finsEntitys.length - 1].data)),
         );
       } else {
         if (historyData.length) {
-          this.emitter.trigger(PolygonSelectionActions.CanvasClickEmpty);
+          this.emitter.trigger(InteractionLayerActions.CanvasClickEmpty);
         }
       }
     });
@@ -232,7 +239,7 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
     this.el.appendChild(this.assistCanvasEl);
 
     // 触发canvasMount事件
-    this.emitter.trigger(PolygonSelectionActions.CanvasMount);
+    this.emitter.trigger(InteractionLayerActions.CanvasMount);
   }
 
   enableMap(): void {
@@ -517,4 +524,4 @@ class PolygonSelection extends BMap.CanvasLayer implements IPolygonSelection {
   }
 }
 
-export default PolygonSelection;
+export default InteractionLayer;

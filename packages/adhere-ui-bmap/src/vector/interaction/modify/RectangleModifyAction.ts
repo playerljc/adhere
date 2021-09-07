@@ -2,7 +2,7 @@ import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IPolygonSelection, IRectangleData, SelectType } from '../types';
+import { IPoint, IInteractionLayer, IRectangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import RectangleDrawAction from '../draw/RectangleDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
@@ -54,7 +54,7 @@ class RectangleModifyAction extends ModifyAction {
     if (!ctx) return;
 
     const { leftTopPoint, width, height } = RectangleDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this?.data?.data?.data,
     );
 
@@ -575,7 +575,7 @@ class RectangleModifyAction extends ModifyAction {
     if (!this.data) return false;
 
     const { leftTopPoint, width, height } = RectangleDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this?.data?.data?.data,
     );
 

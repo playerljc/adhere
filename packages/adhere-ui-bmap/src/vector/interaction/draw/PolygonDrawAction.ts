@@ -12,7 +12,7 @@ import {
   IStyle,
   SelectType,
   ActionType,
-  IPolygonSelection,
+  IInteractionLayer,
 } from '../types';
 import DrawAction from './DrawAction';
 
@@ -49,7 +49,7 @@ class PolygonDrawAction extends DrawAction {
    * @param data
    */
   static booleanPointInData(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     point: IPoint,
     data: IPolygonData,
   ): boolean {
@@ -71,7 +71,7 @@ class PolygonDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(context: IPolygonSelection, ctx: CanvasRenderingContext2D, data: IPolygonData) {
+  static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: IPolygonData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -101,7 +101,7 @@ class PolygonDrawAction extends DrawAction {
    * @param data
    */
   static drawHistoryPath(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     ctx: CanvasRenderingContext2D,
     data: IPoint[] = [],
   ): void {
@@ -208,7 +208,7 @@ class PolygonDrawAction extends DrawAction {
    * @param context
    * @param data
    */
-  static transformOriginToReal(context: IPolygonSelection, data: IPoint[]): IPoint[] {
+  static transformOriginToReal(context: IInteractionLayer, data: IPoint[]): IPoint[] {
     return data.map((point) => context.pointToPixel(point));
   }
 
@@ -217,7 +217,7 @@ class PolygonDrawAction extends DrawAction {
    * @param context
    * @param data
    */
-  static transformRealToOrigin(context: IPolygonSelection, data: IPoint[]): IPoint[] {
+  static transformRealToOrigin(context: IInteractionLayer, data: IPoint[]): IPoint[] {
     return data.map((point) => context.pixelToPoint(point));
   }
 

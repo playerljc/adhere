@@ -7,7 +7,7 @@ import {
   IModifyAction,
   IMoveAction,
   IActionData,
-  IPolygonSelection,
+  IInteractionLayer,
   IPoint,
   ActionEvents,
   SelectType,
@@ -23,7 +23,7 @@ import defaultAnchorStyle from '../defaultAnchorStyle';
  */
 abstract class ModifyAction extends Emitter implements IModifyAction, IMoveAction {
   // 上下文对象
-  context: IPolygonSelection | null = null;
+  context: IInteractionLayer | null = null;
 
   // 数据
   protected data: IActionData | null = null;
@@ -658,7 +658,7 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
    * setContext
    * @param context
    */
-  setContext(context: IPolygonSelection) {
+  setContext(context: IInteractionLayer) {
     this.context = context;
 
     this.trigger(this.EmitActions.CONTEXT);

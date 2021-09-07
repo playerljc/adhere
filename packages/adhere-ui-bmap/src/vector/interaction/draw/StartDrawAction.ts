@@ -12,7 +12,7 @@ import {
   IStartData,
   IStyle,
   SelectType,
-  IPolygonSelection,
+  IInteractionLayer,
 } from '../types';
 import DrawAction from './DrawAction';
 
@@ -51,7 +51,7 @@ class StartDrawAction extends DrawAction {
    * @param point
    * @param data
    */
-  static booleanPointInData(context: IPolygonSelection, point: IPoint, data: IStartData): boolean {
+  static booleanPointInData(context: IInteractionLayer, point: IPoint, data: IStartData): boolean {
     const {
       // 圆的中心点
       center,
@@ -100,7 +100,7 @@ class StartDrawAction extends DrawAction {
     ctx,
     data,
   }: {
-    context: IPolygonSelection;
+    context: IInteractionLayer;
     ctx: CanvasRenderingContext2D;
     data: IStartData;
   }): void {
@@ -198,7 +198,7 @@ class StartDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static draw(context: IPolygonSelection, ctx: CanvasRenderingContext2D, data: IStartData) {
+  static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: IStartData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -239,7 +239,7 @@ class StartDrawAction extends DrawAction {
    * @param data
    */
   static drawHistoryPath(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     ctx: CanvasRenderingContext2D,
     data: {
       // 圆的中心点
@@ -317,7 +317,7 @@ class StartDrawAction extends DrawAction {
    * @param data
    */
   static transformOriginToReal(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: {
       // 圆的中心点
       center: IPoint;
@@ -350,7 +350,7 @@ class StartDrawAction extends DrawAction {
    * @param data
    */
   static transformRealToOrigin(
-    context: IPolygonSelection,
+    context: IInteractionLayer,
     data: {
       // 圆的中心点
       center: IPoint;

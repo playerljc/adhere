@@ -1,7 +1,7 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { ICircleData, IPoint, IPolygonSelection, SelectType } from '../types';
+import { ICircleData, IPoint, IInteractionLayer, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import CircleDrawAction from '../draw/CircleDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
@@ -97,7 +97,7 @@ class CircleModifyAction extends ModifyAction {
     let index: number = -1;
 
     const { center, radius } = CircleDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this?.data?.data?.data,
     );
 
@@ -261,7 +261,7 @@ class CircleModifyAction extends ModifyAction {
 
     const inCircle = MathUtil.isPointInCircle(
       targetPixel,
-      CircleDrawAction.transformOriginToReal(this.context as IPolygonSelection, {
+      CircleDrawAction.transformOriginToReal(this.context as IInteractionLayer, {
         center,
         radius,
       }),

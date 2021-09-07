@@ -2,7 +2,7 @@ import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IPolygonSelection, ITriangleData, SelectType } from '../types';
+import { IPoint, IInteractionLayer, ITriangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import TriangleDrawAction from '../draw/TriangleDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
@@ -752,7 +752,7 @@ class TriangleModifyAction extends ModifyAction {
   isCanMove(targetPoint: IPoint): boolean {
     if (!this.data) return false;
 
-    const points = TriangleDrawAction.transformOriginToReal(this.context as IPolygonSelection, {
+    const points = TriangleDrawAction.transformOriginToReal(this.context as IInteractionLayer, {
       points: [...(this?.data?.data?.data?.points || [])],
     }).points;
     points.push(points[0]);

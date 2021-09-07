@@ -9,6 +9,7 @@ class BMapAirPressureLayer extends BMap.CanvasLayer {
   map: any = null;
   data: any = null;
   config: BMapAirPressureLayerConfig;
+
   private canvas: HTMLCanvasElement;
 
   // @ts-ignore

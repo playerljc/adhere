@@ -1,3 +1,7 @@
+import MathUtil from '@baifendian/adhere-util/lib/math';
+
+import { IPixel } from './vector/types';
+
 export default {
   /**
    * flyToChina - 设置地图的zoom为全中国
@@ -59,7 +63,7 @@ export default {
 
         resolve({
           cityOverlays,
-          cityPoints
+          cityPoints,
         });
       });
     });
@@ -218,5 +222,46 @@ export default {
       B,
       C,
     };
+  },
+  clientToCtxPointToEl({
+    event,
+    rect,
+    offsetEl,
+  }: {
+    event: MouseEvent;
+    rect: DOMRect;
+    offsetEl: HTMLElement;
+  }): IPixel {
+    let { left, top } = window.getComputedStyle(offsetEl, null);
+    const offsetLeft: number = parseInt(left.replace('px', ''));
+    const offsetTop: number = parseInt(top.replace('px', ''));
+
+    return this.clientToCtxPoint({
+      event,
+      rect,
+      offsetLeft,
+      offsetTop,
+    });
+  },
+  clientToCtxPoint({
+    event,
+    rect,
+    offsetLeft,
+    offsetTop,
+  }: {
+    event: MouseEvent;
+    rect: DOMRect;
+    offsetLeft: number;
+    offsetTop: number;
+  }): IPixel {
+    let pixel = MathUtil.clientToCtxPoint({
+      event: event,
+      rect: rect,
+    });
+
+    pixel.x -= offsetLeft;
+    pixel.y -= offsetTop;
+
+    return pixel;
   },
 };

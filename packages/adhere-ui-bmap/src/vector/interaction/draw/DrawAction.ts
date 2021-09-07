@@ -1,6 +1,6 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
-import { ActionStatus, IAction, IPolygonSelection, IStyle } from '../types';
+import { ActionStatus, IAction, IInteractionLayer, IStyle } from '../types';
 import DefaultStyle from '../defaultStyle';
 
 /**
@@ -10,7 +10,7 @@ import DefaultStyle from '../defaultStyle';
  */
 abstract class DrawAction extends Emitter implements IAction {
   // 上下文对象
-  protected context: IPolygonSelection | null = null;
+  protected context: IInteractionLayer | null = null;
 
   // 样式对象
   // @ts-ignore
@@ -80,7 +80,7 @@ abstract class DrawAction extends Emitter implements IAction {
    * setContext
    * @param context
    */
-  setContext(context: IPolygonSelection) {
+  setContext(context: IInteractionLayer) {
     this.context = context;
   }
 

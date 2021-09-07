@@ -35,7 +35,7 @@ export interface IAction {
   // 销毁
   destroy: () => void;
   // 设置上下文对象
-  setContext: (context: IPolygonSelection) => void;
+  setContext: (context: IInteractionLayer) => void;
 }
 
 /**
@@ -194,18 +194,18 @@ export interface IMoveAction {
 }
 
 /**
- * PolygonSelectionActions - PolygonSelectionActions的事件类型
+ * InteractionLayerActions - InteractionLayerActions的事件类型
  */
-export enum PolygonSelectionActions {
+export enum InteractionLayerActions {
   CanvasMount = 'CanvasMount',
   CanvasClickEmpty = 'CanvasClickEmpty',
   CanvasClickGeometry = 'CanvasClickGeometry',
 }
 
 /**
- * IPolygonSelection
+ * IInteractionLayer
  */
-export interface IPolygonSelection {
+export interface IInteractionLayer {
   getWidth: () => number;
   getHeight: () => number;
   getCtx: () => CanvasRenderingContext2D | null;

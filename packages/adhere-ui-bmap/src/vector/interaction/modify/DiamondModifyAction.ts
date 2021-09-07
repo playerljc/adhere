@@ -3,7 +3,7 @@ import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
-import { IPoint, IDiamondData, SelectType, IPolygonSelection } from '../types';
+import { IPoint, IDiamondData, SelectType, IInteractionLayer } from '../types';
 import ModifyAction from './ModifyAction';
 import DiamondDrawAction from '../draw/DiamondDrawAction';
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
@@ -592,7 +592,7 @@ class DiamondModifyAction extends ModifyAction {
     if (!this.data) return false;
 
     const { leftTopPoint, width, height } = DiamondDrawAction.transformOriginToReal(
-      this.context as IPolygonSelection,
+      this.context as IInteractionLayer,
       this?.data?.data?.data,
     );
 
