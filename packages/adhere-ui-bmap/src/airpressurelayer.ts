@@ -5,11 +5,13 @@ import { BMapAirPressureLayerConfig } from './types';
  * @class BMapAirPressureLayer
  * @classdesc 气压层(绘制多边形)
  */
+/* @ts-ignore */
 class BMapAirPressureLayer extends BMap.CanvasLayer {
   map: any = null;
   data: any = null;
   config: BMapAirPressureLayerConfig;
 
+  /* @ts-ignore */
   private canvas: HTMLCanvasElement;
 
   // @ts-ignore
@@ -53,6 +55,7 @@ class BMapAirPressureLayer extends BMap.CanvasLayer {
       const bPoints = [];
 
       points.forEach((p) => {
+        /* @ts-ignore */
         bPoints.push(new BMap.Point(p.lng, p.lat));
       });
 

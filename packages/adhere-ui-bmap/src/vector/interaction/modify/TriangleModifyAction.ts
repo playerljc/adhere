@@ -5,7 +5,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, IInteractionLayer, ITriangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import TriangleDrawAction from '../draw/TriangleDrawAction';
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
 
 /**
  * TriangleModifyAction

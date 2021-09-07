@@ -1,7 +1,7 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
 import { ActionStatus, IAction, IInteractionLayer, IStyle } from '../types';
-import DefaultStyle from '../defaultStyle';
+import DefaultStyle from '../DefaultStyle';
 
 /**
  * DrawAction
@@ -67,7 +67,16 @@ abstract class DrawAction extends Emitter implements IAction {
   start(style?: IStyle): void {
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
+    this.setCursor();
+  }
+
+  /**
+   * setCursor
+   */
+  setCursor() {
     const { context } = this;
+
+    if(!context) return;
 
     const canvasEl = context.getCanvasEl();
 

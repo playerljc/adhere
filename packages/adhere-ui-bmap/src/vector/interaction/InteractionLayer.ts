@@ -147,28 +147,16 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
    */
   protected initEvents(): void {
     // 点击了el元素
-    // @ts-ignore
-    this.el.addEventListener('mouseup', (e: MouseEvent) => {
+    (this.el as HTMLElement).addEventListener('mouseup', (e: MouseEvent) => {
       if (!e) return;
 
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
 
-      // if (!historyData || !historyData.length) {
-      //   this.emitter.trigger(InteractionLayerActions.CanvasClickEmpty);
-      //   return;
-      // }
-
       let pixel = MathUtil.clientToCtxPoint({
         event: e,
-        rect: this.getCanvasEl()?.getBoundingClientRect() /*(this.el as HTMLDivElement).getBoundingClientRect()*/,
+        rect: (this.getCanvasEl() as HTMLCanvasElement).getBoundingClientRect() /*(this.el as HTMLDivElement).getBoundingClientRect()*/,
       });
-
-      // let {left, top} = window.getComputedStyle(this.getCanvasEl(), null);
-      // left = parseInt(left.replace('px',''));
-      // top = parseInt(top.replace('px',''));
-      // pixel.x -= left;
-      // pixel.y -= top;
 
       let finsEntitys: Array<{ index: number; data: IActionData }> = [];
 
@@ -241,18 +229,15 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
     // 创建一个观察器实例并传入回调函数
     this.canvasObserver = new MutationObserver((mutationsList, observer) => {
       for(let mutation of mutationsList) {
-        /*if (mutation.type === 'childList') {
-          // console.log('A child node has been added or removed.');
-        }
-        else */if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          this.assistCanvasEl.style.left = this.canvasEl.style.left;
-          this.assistCanvasEl.style.top = this.canvasEl.style.top;
+       if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+         (this.assistCanvasEl as HTMLCanvasElement).style.left = (this.canvasEl as HTMLCanvasElement).style.left;
+         (this.assistCanvasEl as HTMLCanvasElement).style.top = (this.canvasEl as HTMLCanvasElement).style.top;
         }
       }
     });
 
     // 以上述配置开始观察目标节点
-    this.canvasObserver.observe(this.canvasEl, {
+    this.canvasObserver.observe((this.canvasEl as HTMLCanvasElement), {
       attributes: true,
     });
 

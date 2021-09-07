@@ -4,7 +4,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, IPolygonData, IInteractionLayer, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import PolygonDrawAction from '../draw/PolygonDrawAction';
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
 
 /**
  * PolygonModifyAction

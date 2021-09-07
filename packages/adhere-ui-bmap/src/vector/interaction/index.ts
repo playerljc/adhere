@@ -15,9 +15,9 @@ import PolygonModifyAction from './modify/PolygonModifyAction';
 import RectangleModifyAction from './modify/RectangleModifyAction';
 import StartModifyAction from './modify/StartModifyAction';
 import TriangleModifyAction from './modify/TriangleModifyAction';
-import DefaultAnchorStyle from './defaultAnchorStyle';
-import DefaultMoveGemStyle from './defaultMoveGemStyle';
-import DefaultStyle from './defaultStyle';
+import DefaultAnchorStyle from './DefaultAnchorStyle';
+import DefaultMoveGemStyle from './DefaultMoveGemStyle';
+import DefaultStyle from './DefaultStyle';
 import Util from './util';
 import * as Types from './types';
 

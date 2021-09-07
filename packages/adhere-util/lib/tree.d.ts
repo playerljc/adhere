@@ -1,22 +1,23 @@
+import { IAntdTreeNode, IFlatTreeArrNode, IAntdTreeSelectNode } from './types';
 declare const _default: {
     /**
      * arrayToAntdTree - array转换成Tree
      * @param arr
      * @param keyAttr - id的属性
      * @param titleAttr - title的属性
+     * @param parentIdAttr - parentId的属性
      * @param rootParentId - root的parentId值
      */
-    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, }: {
-        keyAttr: string;
-        titleAttr: string;
-        rootParentId: string | number;
-    }): Array<{
-        key: string;
-        title: string;
-        isLeaf: boolean;
-        children?: any[];
-        properties?: any;
-    }>;
+    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): Array<IAntdTreeNode>;
+    /**
+     * arrayToAntdTreeSelect - array转换成TreeSelect
+     * @param arr
+     * @param keyAttr - id的属性
+     * @param titleAttr - title的属性
+     * @param parentIdAttr - parentId的属性
+     * @param rootParentId - root的parentId值
+     */
+    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): Array<IAntdTreeSelectNode>;
     /**
      * getAncestor - 获取祖先
      * @param data
@@ -40,12 +41,6 @@ declare const _default: {
         parentIdAttr: string;
         rootParentId: string;
         titleAttr: string;
-    }): Array<{
-        key: string;
-        title: string;
-        isLeaf: boolean;
-        children?: any[];
-        properties?: any;
-    }>;
+    }): Array<IAntdTreeNode>;
 };
 export default _default;

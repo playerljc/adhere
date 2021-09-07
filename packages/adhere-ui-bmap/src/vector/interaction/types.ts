@@ -36,6 +36,8 @@ export interface IAction {
   destroy: () => void;
   // 设置上下文对象
   setContext: (context: IInteractionLayer) => void;
+  // 设置光标形状
+  setCursor: () => void;
 }
 
 /**

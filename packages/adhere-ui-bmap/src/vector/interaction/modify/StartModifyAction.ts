@@ -5,7 +5,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IStartData, IPoint, SelectType, IInteractionLayer } from '../types';
 import ModifyAction from './ModifyAction';
 import StartDrawAction from '../draw/StartDrawAction';
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
 
 /**
  * StartModifyAction

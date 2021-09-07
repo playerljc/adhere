@@ -14,7 +14,7 @@ import {
   ActionType,
 } from '../types';
 
-import defaultAnchorStyle from '../defaultAnchorStyle';
+import defaultAnchorStyle from '../DefaultAnchorStyle';
 
 /**
  * ModifyAction

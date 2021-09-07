@@ -1,15 +1,6 @@
 declare const _default: {
-    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, }: {
-        keyAttr: string;
-        titleAttr: string;
-        rootParentId: string | number;
-    }): {
-        key: string;
-        title: string;
-        isLeaf: boolean;
-        children?: any[] | undefined;
-        properties?: any;
-    }[];
+    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeNode[];
+    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeSelectNode[];
     getAncestor(data: any[], node: any, config: {
         keyAttr: string;
         parentIdAttr: string;
@@ -21,13 +12,7 @@ declare const _default: {
         parentIdAttr: string;
         rootParentId: string;
         titleAttr: string;
-    }): {
-        key: string;
-        title: string;
-        isLeaf: boolean;
-        children?: any[] | undefined;
-        properties?: any;
-    }[];
+    }): import("./types").IAntdTreeNode[];
     getLang(): string;
     setLang(lang?: string): void;
     getDatePickerFormat(): string;

@@ -5,7 +5,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, IInteractionLayer, IRectangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import RectangleDrawAction from '../draw/RectangleDrawAction';
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
+import defaultMoveGemStyle from '../DefaultMoveGemStyle';
 
 /**
  * RectangleModifyAction
