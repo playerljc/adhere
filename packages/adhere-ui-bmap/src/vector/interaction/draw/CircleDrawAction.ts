@@ -58,7 +58,7 @@ class CircleDrawAction extends DrawAction {
    * draw - 移动的时候绘制
    * @param e
    */
-  private draw(e): void {
+  protected draw(e): void {
     const { context, centerPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -153,9 +153,6 @@ class CircleDrawAction extends DrawAction {
     const centerPixel = context.pointToPixel(data.center);
     const radius = context.actualToDistance(data.radius);
 
-    console.log(data.center);
-    console.log(centerPixel, radius);
-
     ctx.beginPath();
 
     // 需要转换
@@ -174,7 +171,7 @@ class CircleDrawAction extends DrawAction {
    * onCanvasMouseDown
    * @param e
    */
-  private onCanvasMouseDown(e) {
+  protected onCanvasMouseDown(e) {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -196,7 +193,7 @@ class CircleDrawAction extends DrawAction {
    * onCanvasMouseMove
    * @param e
    */
-  private onCanvasMouseMove(e) {
+  protected onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -216,7 +213,7 @@ class CircleDrawAction extends DrawAction {
    * onCanvasMouseUp
    * @param e
    */
-  private onCanvasMouseUp(e) {
+  protected onCanvasMouseUp(e) {
     if (!this.isMove) return;
 
     this.end(e);
@@ -255,6 +252,14 @@ class CircleDrawAction extends DrawAction {
   }
 
   /**
+   * getSelectType
+   * @return SelectType
+   */
+  getSelectType(): SelectType {
+    return SelectType.Circle;
+  }
+
+  /**
    * start
    * @param style
    */
@@ -273,7 +278,7 @@ class CircleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Circle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -285,7 +290,7 @@ class CircleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Circle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
   }
@@ -318,7 +323,7 @@ class CircleDrawAction extends DrawAction {
 
     const data: ICircleData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Circle,
+      type: this.getSelectType() as SelectType.Circle,
       data: CircleDrawAction.transformRealToOrigin(context, {
         center: this.centerPoint as IPoint,
         radius: this.radius,
@@ -335,7 +340,7 @@ class CircleDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Circle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -380,7 +385,7 @@ class CircleDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Circle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

@@ -5,6 +5,7 @@ import DiamondDrawAction from './draw/DiamondDrawAction';
 import DrawAction from './draw/DrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
 import PolygonDrawAction from './draw/PolygonDrawAction';
+import DistanceDrawAction from './draw/DistanceDrawAction';
 import RectangleDrawAction from './draw/RectangleDrawAction';
 import StartDrawAction from './draw/StartDrawAction';
 import TriangleDrawAction from './draw/TriangleDrawAction';
@@ -28,6 +29,7 @@ export default {
   DrawAction,
   FreeDrawAction,
   PolygonDrawAction,
+  DistanceDrawAction,
   RectangleDrawAction,
   StartDrawAction,
   TriangleDrawAction,

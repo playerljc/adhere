@@ -8,11 +8,11 @@ import {
   ActionEvents,
   ActionStatus,
   ActionType,
+  IInteractionLayer,
   IPoint,
   IRectangleData,
   IStyle,
   SelectType,
-  IInteractionLayer,
 } from '../types';
 import DrawAction from './DrawAction';
 import Util from '../util';
@@ -83,7 +83,7 @@ class RectangleDrawAction extends DrawAction {
    * draw
    * @param e
    */
-  private draw(e): void {
+  protected draw(e): void {
     const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -194,7 +194,7 @@ class RectangleDrawAction extends DrawAction {
    * onCanvasMouseDown
    * @param e
    */
-  private onCanvasMouseDown(e) {
+  protected onCanvasMouseDown(e) {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -216,7 +216,7 @@ class RectangleDrawAction extends DrawAction {
    * onCanvasMouseMove
    * @param e
    */
-  private onCanvasMouseMove(e) {
+  protected onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -232,7 +232,7 @@ class RectangleDrawAction extends DrawAction {
    * onCanvasMouseUp
    * @param e
    */
-  private onCanvasMouseUp(e) {
+  protected onCanvasMouseUp(e) {
     if (!this.isMove) return;
 
     this.end(e);
@@ -284,6 +284,10 @@ class RectangleDrawAction extends DrawAction {
     };
   }
 
+  getSelectType(): SelectType {
+    return SelectType.Rectangle;
+  }
+
   /**
    * start
    * @param style
@@ -303,7 +307,7 @@ class RectangleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Rectangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -315,7 +319,7 @@ class RectangleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Rectangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
   }
@@ -348,7 +352,7 @@ class RectangleDrawAction extends DrawAction {
 
     const data: IRectangleData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Rectangle,
+      type: this.getSelectType() as SelectType.Rectangle,
       data: RectangleDrawAction.transformRealToOrigin(context, {
         leftTopPoint: this.leftTopPoint as IPoint,
         width: this.width,
@@ -370,7 +374,7 @@ class RectangleDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Rectangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -419,7 +423,7 @@ class RectangleDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Rectangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

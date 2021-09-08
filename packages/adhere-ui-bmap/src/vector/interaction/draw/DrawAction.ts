@@ -1,6 +1,6 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
-import { ActionStatus, IAction, IInteractionLayer, IStyle } from '../types';
+import { ActionStatus, IAction, IInteractionLayer, IStyle, SelectType } from '../types';
 import DefaultStyle from '../DefaultStyle';
 
 /**
@@ -20,6 +20,12 @@ abstract class DrawAction extends Emitter implements IAction {
 
   // 当前状态
   protected status: number = ActionStatus.UnStart;
+
+  /**
+   * getSelectType
+   * @description - 获取Select的类型
+   */
+  abstract getSelectType(): SelectType;
 
   /**
    * destroy
@@ -76,7 +82,7 @@ abstract class DrawAction extends Emitter implements IAction {
   setCursor() {
     const { context } = this;
 
-    if(!context) return;
+    if (!context) return;
 
     const canvasEl = context.getCanvasEl();
 

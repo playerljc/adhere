@@ -86,7 +86,7 @@ class DiamondDrawAction extends DrawAction {
    * draw
    * @param e
    */
-  private draw(e): void {
+  protected draw(e): void {
     const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -211,7 +211,7 @@ class DiamondDrawAction extends DrawAction {
    * onCanvasMouseDown
    * @param e
    */
-  private onCanvasMouseDown(e) {
+  protected onCanvasMouseDown(e) {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -233,7 +233,7 @@ class DiamondDrawAction extends DrawAction {
    * onCanvasMouseMove
    * @param e
    */
-  private onCanvasMouseMove(e) {
+  protected onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -249,7 +249,7 @@ class DiamondDrawAction extends DrawAction {
    * onCanvasMouseUp
    * @param e
    */
-  private onCanvasMouseUp(e) {
+  protected onCanvasMouseUp(e) {
     if (!this.isMove) return;
 
     this.end(e);
@@ -301,6 +301,10 @@ class DiamondDrawAction extends DrawAction {
     };
   }
 
+  getSelectType(): SelectType {
+    return SelectType.Diamond;
+  }
+
   /**
    * start
    * @param style
@@ -320,7 +324,7 @@ class DiamondDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Diamond,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -332,7 +336,7 @@ class DiamondDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Diamond,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
   }
@@ -365,7 +369,7 @@ class DiamondDrawAction extends DrawAction {
 
     const data: IDiamondData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Diamond,
+      type: this.getSelectType() as SelectType.Diamond,
       data: DiamondDrawAction.transformRealToOrigin(context, {
         leftTopPoint: this.leftTopPoint as IPoint,
         width: this.width,
@@ -387,7 +391,7 @@ class DiamondDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Diamond,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -436,7 +440,7 @@ class DiamondDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Diamond,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

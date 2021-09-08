@@ -8,11 +8,11 @@ import {
   ActionEvents,
   ActionStatus,
   ActionType,
+  IInteractionLayer,
   IPoint,
   IStartData,
   IStyle,
   SelectType,
-  IInteractionLayer,
 } from '../types';
 import DrawAction from './DrawAction';
 
@@ -149,7 +149,7 @@ class StartDrawAction extends DrawAction {
    * draw
    * @param e
    */
-  private draw(e): void {
+  protected draw(e): void {
     const { context, centerPoint } = this;
 
     const ctx = context?.getCtx();
@@ -265,7 +265,7 @@ class StartDrawAction extends DrawAction {
    * onCanvasMouseDown
    * @param e
    */
-  private onCanvasMouseDown(e) {
+  protected onCanvasMouseDown(e) {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -287,7 +287,7 @@ class StartDrawAction extends DrawAction {
    * onCanvasMouseMove
    * @param e
    */
-  private onCanvasMouseMove(e) {
+  protected onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -303,7 +303,7 @@ class StartDrawAction extends DrawAction {
    * onCanvasMouseUp
    * @param e
    */
-  private onCanvasMouseUp(e) {
+  protected onCanvasMouseUp(e) {
     if (!this.isMove) return;
 
     this.end(e);
@@ -377,6 +377,10 @@ class StartDrawAction extends DrawAction {
     };
   }
 
+  getSelectType(): SelectType {
+    return SelectType.Start;
+  }
+
   /**
    * start
    * @param style
@@ -396,7 +400,7 @@ class StartDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Start,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -408,7 +412,7 @@ class StartDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Start,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
   }
@@ -441,7 +445,7 @@ class StartDrawAction extends DrawAction {
 
     const data: IStartData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Start,
+      type: this.getSelectType() as SelectType.Start,
       data: StartDrawAction.transformRealToOrigin(context, {
         center: this.centerPoint as IPoint,
         outRadius: this.outRadius,
@@ -461,7 +465,7 @@ class StartDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Start,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -508,7 +512,7 @@ class StartDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Start,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

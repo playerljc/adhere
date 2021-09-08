@@ -7,12 +7,12 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  IPoint,
-  ITriangleData,
-  IStyle,
-  SelectType,
   ActionType,
   IInteractionLayer,
+  IPoint,
+  IStyle,
+  ITriangleData,
+  SelectType,
 } from '../types';
 import DrawAction from './DrawAction';
 import Util from '../util';
@@ -69,7 +69,7 @@ class TriangleDrawAction extends DrawAction {
    * draw
    * @param e
    */
-  private draw(e) {
+  protected draw(e) {
     const { context, startPoint, style } = this;
 
     const ctx = context?.getCtx();
@@ -173,7 +173,7 @@ class TriangleDrawAction extends DrawAction {
    * onCanvasMouseDown
    * @param e
    */
-  private onCanvasMouseDown(e) {
+  protected onCanvasMouseDown(e) {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -195,7 +195,7 @@ class TriangleDrawAction extends DrawAction {
    * onCanvasMouseMove
    * @param e
    */
-  private onCanvasMouseMove(e) {
+  protected onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -211,7 +211,7 @@ class TriangleDrawAction extends DrawAction {
    * onCanvasMouseUp
    * @param e
    */
-  private onCanvasMouseUp(e) {
+  protected onCanvasMouseUp(e) {
     if (!this.isMove) return;
 
     this.end(e);
@@ -255,6 +255,10 @@ class TriangleDrawAction extends DrawAction {
     };
   }
 
+  getSelectType(): SelectType {
+    return SelectType.Triangle;
+  }
+
   /**
    * start
    * @param style
@@ -274,7 +278,7 @@ class TriangleDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Triangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -286,7 +290,7 @@ class TriangleDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Triangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
   }
@@ -319,7 +323,7 @@ class TriangleDrawAction extends DrawAction {
 
     const data: ITriangleData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Triangle,
+      type: this.getSelectType() as SelectType.Triangle,
       data: TriangleDrawAction.transformRealToOrigin(context, {
         points: JSON.parse(JSON.stringify(this.points)),
       }),
@@ -335,7 +339,7 @@ class TriangleDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Triangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -380,7 +384,7 @@ class TriangleDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Triangle,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

@@ -24,10 +24,10 @@ import DrawAction from './DrawAction';
  */
 class PolygonDrawAction extends DrawAction {
   // 开始点
-  private startPoint: IPoint | null = null;
+  protected startPoint: IPoint | null = null;
 
   // 点的集合
-  private pointStack: IPoint[] = [];
+  protected pointStack: IPoint[] = [];
 
   protected isMove = false;
 
@@ -121,9 +121,27 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
+   * transformOriginToReal - 原始数据转换成实际数据
+   * @param context
+   * @param data
+   */
+  static transformOriginToReal(context: IInteractionLayer, data: IPoint[]): IPoint[] {
+    return data.map((point) => context.pointToPixel(point));
+  }
+
+  /**
+   * transformRealToOrigin - 实际数据转换成原始数据
+   * @param context
+   * @param data
+   */
+  static transformRealToOrigin(context: IInteractionLayer, data: IPoint[]): IPoint[] {
+    return data.map((point) => context.pixelToPoint(point));
+  }
+
+  /**
    * fill
    */
-  private fill(): void {
+  protected fill(): void {
     if (!this.context) return;
 
     const { pointStack } = this;
@@ -158,7 +176,7 @@ class PolygonDrawAction extends DrawAction {
    * @param sP
    * @param eP
    */
-  private drawLine(sP: IPoint, eP: IPoint): void {
+  protected drawLine(sP: IPoint, eP: IPoint): void {
     if (!this.context) return;
 
     const { style } = this;
@@ -189,7 +207,7 @@ class PolygonDrawAction extends DrawAction {
   /**
    * drawStack
    */
-  private drawStack(): void {
+  protected drawStack(): void {
     const { pointStack } = this;
 
     if (pointStack.length <= 1) return;
@@ -204,28 +222,10 @@ class PolygonDrawAction extends DrawAction {
   }
 
   /**
-   * transformOriginToReal - 原始数据转换成实际数据
-   * @param context
-   * @param data
-   */
-  static transformOriginToReal(context: IInteractionLayer, data: IPoint[]): IPoint[] {
-    return data.map((point) => context.pointToPixel(point));
-  }
-
-  /**
-   * transformRealToOrigin - 实际数据转换成原始数据
-   * @param context
-   * @param data
-   */
-  static transformRealToOrigin(context: IInteractionLayer, data: IPoint[]): IPoint[] {
-    return data.map((point) => context.pixelToPoint(point));
-  }
-
-  /**
    * onCanvasClick
    * @param e
    */
-  private onCanvasClick(e): void {
+  protected onCanvasClick(e): void {
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -248,21 +248,22 @@ class PolygonDrawAction extends DrawAction {
 
       // 触发开始事件
       this.trigger(ActionEvents.Start, {
-        selectType: SelectType.Polygon,
+        selectType: this.getSelectType(),
         actionType: ActionType.Draw,
       });
-    } else {
-      // 不是第一次
+    }
+    // 不是第一次
+    else {
       // 画一条直线
       // 当前点
-      const curPoint = MathUtil.clientToCtxPoint({
+      const targetPoint = MathUtil.clientToCtxPoint({
         event: e,
         rect: canvasEl?.getBoundingClientRect(),
       });
 
-      this.drawLine(this.startPoint, curPoint);
+      this.drawLine(this.startPoint, targetPoint);
 
-      this.startPoint = curPoint;
+      this.startPoint = targetPoint;
 
       if (this.startPoint) {
         this.pointStack.push(this.startPoint);
@@ -276,7 +277,7 @@ class PolygonDrawAction extends DrawAction {
    * onCanvasMousemove
    * @param e
    */
-  private onCanvasMousemove(e): void {
+  protected onCanvasMousemove(e): void {
     if (!this.context) return;
     if (!this.startPoint) return;
 
@@ -310,12 +311,20 @@ class PolygonDrawAction extends DrawAction {
   /**
    * onCanvasDbClick - 结束绘制
    */
-  private onCanvasDbClick(e): void {
+  protected onCanvasDbClick(e): void {
     if (!this.isMove) return;
 
     this.end();
 
     e.stopPropagation();
+  }
+
+  /**
+   * getSelectType
+   * @return SelectType
+   */
+  getSelectType(): SelectType {
+    return SelectType.Polygon;
   }
 
   /**
@@ -339,7 +348,7 @@ class PolygonDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Polygon,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -383,7 +392,7 @@ class PolygonDrawAction extends DrawAction {
 
     const data: IPolygonData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Polygon,
+      type: this.getSelectType() as SelectType.Polygon,
       data: PolygonDrawAction.transformRealToOrigin(context, this.pointStack),
       style: this.style,
     };
@@ -397,7 +406,7 @@ class PolygonDrawAction extends DrawAction {
     context.addHistoryData(data);
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Polygon,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -442,7 +451,7 @@ class PolygonDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Polygon,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

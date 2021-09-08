@@ -6,11 +6,11 @@ import BaseUtil from '@baifendian/adhere-util/lib/base';
 import {
   ActionEvents,
   ActionStatus,
-  IPoint,
+  ActionType,
   IFreeData,
+  IPoint,
   IStyle,
   SelectType,
-  ActionType,
 } from '../types';
 import DrawAction from './DrawAction';
 
@@ -120,7 +120,7 @@ class FreeDrawAction extends DrawAction {
    * onCanvasMouseMove
    * @param e
    */
-  private onCanvasMouseMove(e) {
+  protected onCanvasMouseMove(e) {
     const { context } = this;
 
     if (!context) return;
@@ -134,7 +134,7 @@ class FreeDrawAction extends DrawAction {
    * onCanvasMouseUp
    * @param e
    */
-  private onCanvasMouseUp(e) {
+  protected onCanvasMouseUp(e) {
     if (!this.isMove) return;
     this.end(e);
     e.stopPropagation();
@@ -195,6 +195,10 @@ class FreeDrawAction extends DrawAction {
     ctx.closePath();
   }
 
+  getSelectType(): SelectType {
+    return SelectType.Free;
+  }
+
   /**
    * start
    * @param style
@@ -214,7 +218,7 @@ class FreeDrawAction extends DrawAction {
 
     // 触发开始之前事件
     this.trigger(ActionEvents.BeforeStart, {
-      selectType: SelectType.Free,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 
@@ -226,7 +230,7 @@ class FreeDrawAction extends DrawAction {
 
     // 触发开始事件
     this.trigger(ActionEvents.Start, {
-      selectType: SelectType.Free,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
   }
@@ -259,7 +263,7 @@ class FreeDrawAction extends DrawAction {
 
     const data: IFreeData = {
       id: BaseUtil.uuid(),
-      type: SelectType.Free,
+      type: this.getSelectType() as SelectType.Free,
       data: {
         points: JSON.parse(JSON.stringify(this.points)),
       },
@@ -275,7 +279,7 @@ class FreeDrawAction extends DrawAction {
     this.isMove = false;
 
     this.trigger(ActionEvents.End, {
-      selectType: SelectType.Free,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
       data,
     });
@@ -320,7 +324,7 @@ class FreeDrawAction extends DrawAction {
     this.status = ActionStatus.Destroy;
 
     this.trigger(ActionEvents.Destroy, {
-      selectType: SelectType.Free,
+      selectType: this.getSelectType(),
       actionType: ActionType.Draw,
     });
 

@@ -28,6 +28,8 @@ export enum ActionEvents {
 export interface IAction {
   // 获取状态
   getStatus: () => number;
+  // 获取Select的类型
+  getSelectType: () => SelectType;
   // 开始
   start: (style?: IStyle) => void;
   // 结束
@@ -284,6 +286,7 @@ export enum SelectType {
   Diamond = 'Diamond',
   Start = 'Start',
   Free = 'Free',
+  Distance = 'Distance',
 }
 
 /**

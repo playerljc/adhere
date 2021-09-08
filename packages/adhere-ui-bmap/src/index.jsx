@@ -48,6 +48,7 @@ let WindLayer,
   InteractionLayerModule,
   InteractionLayer,
   PolygonDrawAction,
+  DistanceDrawAction,
   CircleDrawAction,
   RectangleDrawAction,
   TriangleDrawAction,
@@ -683,7 +684,7 @@ ReactDOM.render(
           if (!interactionLayer) {
             interactionLayer = new InteractionLayer(map, [], {
               [InteractionLayerActions.CanvasMount]: () => {
-                const action = new CircleDrawAction();
+                const action = new DistanceDrawAction();
                 action.on(ActionEvents.End, (data) => {
                   // action.start();
                 });
@@ -717,8 +718,9 @@ ReactDOM.render(
             });
 
             map.addOverlay(interactionLayer);
-          } else {
-            const action = new CircleDrawAction();
+          }
+          else {
+            const action = new DistanceDrawAction();
             action.on(ActionEvents.End, (data) => {
               // action.start();
             });
@@ -832,6 +834,7 @@ ReactDOM.render(
 
             InteractionLayer = InteractionLayerModule.InteractionLayer;
             PolygonDrawAction = InteractionLayerModule.PolygonDrawAction;
+            DistanceDrawAction = InteractionLayerModule.DistanceDrawAction;
             CircleDrawAction = InteractionLayerModule.CircleDrawAction;
             RectangleDrawAction = InteractionLayerModule.RectangleDrawAction;
             TriangleDrawAction = InteractionLayerModule.TriangleDrawAction;
