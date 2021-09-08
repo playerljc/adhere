@@ -112,7 +112,7 @@ class StartDrawAction extends DrawAction {
       context,
       data.data,
     );
-
+    ctx.save();
     ctx.beginPath();
 
     const startCount = 5;
@@ -143,6 +143,7 @@ class StartDrawAction extends DrawAction {
 
     ctx.stroke();
     ctx.fill();
+    ctx.restore();
   }
 
   /**

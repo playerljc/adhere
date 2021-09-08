@@ -20,6 +20,7 @@ import DiamondDrawAction from './draw/DiamondDrawAction';
 import StartDrawAction from './draw/StartDrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
 import Util from '../../util';
+import DistanceDrawAction from "./draw/DistanceDrawAction";
 
 const selectorPrefix = 'adhere-ui-interactionlayer';
 
@@ -95,6 +96,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // @ts-ignore
   protected typeActionMap: Map<SelectType, IAction> = new Map([
     [SelectType.Polygon, PolygonDrawAction],
+    [SelectType.Distance, DistanceDrawAction],
     [SelectType.Circle, CircleDrawAction],
     [SelectType.Rectangle, RectangleDrawAction],
     [SelectType.Triangle, TriangleDrawAction],
@@ -149,6 +151,8 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
     // 点击了el元素
     (this.el as HTMLElement).addEventListener('mouseup', (e: MouseEvent) => {
       if (!e) return;
+
+      if(e.detail >= 2) return;
 
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
@@ -393,10 +397,10 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
       // @ts-ignore
       action?.drawHistoryPath(this, ctx, data.data);
 
-      // 描边
-      ctx.stroke();
-      // 填充
-      ctx.fill();
+      // // 描边
+      // ctx.stroke();
+      // // 填充
+      // ctx.fill();
     });
   }
 

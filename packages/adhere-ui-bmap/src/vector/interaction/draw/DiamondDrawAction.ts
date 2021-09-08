@@ -185,6 +185,7 @@ class DiamondDrawAction extends DrawAction {
       height: number;
     },
   ): void {
+    ctx.save();
     ctx.beginPath();
 
     if (!data || !data.leftTopPoint) return;
@@ -205,6 +206,12 @@ class DiamondDrawAction extends DrawAction {
     ctx.lineTo(realData.leftTopPoint.x + widthHalf, realData.leftTopPoint.y);
     ctx.lineTo(realData.leftTopPoint.x + realData.width, realData.leftTopPoint.y + heightHalf);
     ctx.lineTo(realData.leftTopPoint.x + widthHalf, realData.leftTopPoint.y + realData.height);
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+    ctx.restore();
   }
 
   /**

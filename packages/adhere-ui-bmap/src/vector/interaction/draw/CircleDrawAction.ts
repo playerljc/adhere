@@ -153,6 +153,7 @@ class CircleDrawAction extends DrawAction {
     const centerPixel = context.pointToPixel(data.center);
     const radius = context.actualToDistance(data.radius);
 
+    ctx.save();
     ctx.beginPath();
 
     // 需要转换
@@ -165,6 +166,12 @@ class CircleDrawAction extends DrawAction {
       0,
       2 * Math.PI,
     );
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+    ctx.restore();
   }
 
   /**

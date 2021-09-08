@@ -172,6 +172,7 @@ class RectangleDrawAction extends DrawAction {
       height: number;
     },
   ): void {
+    ctx.save();
     ctx.beginPath();
 
     const realData = RectangleDrawAction.transformOriginToReal(
@@ -182,12 +183,19 @@ class RectangleDrawAction extends DrawAction {
         height: number;
       },
     );
+
     ctx.rect(
       realData?.leftTopPoint?.x || 0,
       realData?.leftTopPoint?.y || 0,
       realData?.width,
       realData?.height,
     );
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+    ctx.restore();
   }
 
   /**

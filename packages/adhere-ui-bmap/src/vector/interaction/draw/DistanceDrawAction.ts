@@ -2,7 +2,9 @@
 import MathUtil from '@baifendian/adhere-util/lib/math.js';
 
 import PolygonDrawAction from './PolygonDrawAction';
-import { IStyle, SelectType } from '../types';
+import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
+import DistancePointStyle from '../../style/DistancePointStyle';
+import { IGeometryStyle } from '../../types';
 
 /**
  * DistanceDrawAction
@@ -12,6 +14,10 @@ import { IStyle, SelectType } from '../types';
 class DistanceDrawAction extends PolygonDrawAction {
   constructor() {
     super();
+
+    this.onCanvasClick = this.onCanvasClick.bind(this);
+    this.onCanvasMousemove = this.onCanvasMousemove.bind(this);
+    this.onCanvasDbClick = this.onCanvasDbClick.bind(this);
 
     this.onCursorMouseMove = this.onCursorMouseMove.bind(this);
   }
@@ -33,7 +39,7 @@ class DistanceDrawAction extends PolygonDrawAction {
     });
 
     // TODO: 在这里根据绘制的节点绘制跟随鼠标的提示框
-    console.log(targetPixel);
+    // console.log(targetPixel);
   }
 
   /**
@@ -69,10 +75,231 @@ class DistanceDrawAction extends PolygonDrawAction {
   }
 
   /**
-   * drawStartPoint
-   * @description - 绘制开始点
+   * drawHistoryPath - 绘制历史数据
+   * @param context
+   * @param ctx
+   * @param data
    */
-  protected drawStartPoint(): void {}
+  static drawHistoryPath(
+    context: IInteractionLayer,
+    ctx: CanvasRenderingContext2D,
+    data: IPoint[] = [],
+  ): void {
+    ctx.save();
+    ctx.beginPath();
+
+    const realData = PolygonDrawAction.transformOriginToReal(context, data);
+
+    (realData || []).forEach((pixel: IPoint, index: number) => {
+      if (index === 0) {
+        ctx.moveTo(pixel.x, pixel.y);
+      } else {
+        ctx.lineTo(pixel.x, pixel.y);
+      }
+    });
+
+    // 描边
+    ctx.stroke();
+    ctx.restore();
+
+    data.forEach((point: IPoint, index: number) => {
+      this.drawStartPoint({
+        context,
+        ctx,
+        style: DistancePointStyle,
+        pointStack: data,
+        toPoint: data[index],
+      });
+    });
+  }
+
+  /**
+   * drawStartPoint
+   * @param context
+   * @param ctx
+   * @param style
+   * @param pointStack
+   * @param toPoint
+   */
+  static drawStartPoint({
+    context,
+    ctx,
+    style,
+    pointStack,
+    toPoint,
+  }: {
+    context: IInteractionLayer;
+    pointStack: IPoint[];
+    toPoint: IPoint;
+    ctx: CanvasRenderingContext2D;
+    style: IGeometryStyle;
+  }): void {
+    ctx.save();
+    ctx.beginPath();
+
+    ctx.fillStyle = style.fillStyle;
+    ctx.strokeStyle = style.strokeStyle;
+    ctx.lineWidth = style.lineWidth;
+
+    const toPixel = context.pointToPixel(toPoint);
+
+    // 需要转换
+    ctx.ellipse(toPixel.x, toPixel.y, 4, 4, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+
+    ctx.stroke();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  /**
+   * drawStartPoint
+   * @description - 绘制开始点和点的提示框
+   */
+  protected drawStartPoint(): void {
+    const { context, startPoint } = this;
+
+    if (!context) return;
+
+    const ctx = context.getCtx();
+
+    if (!ctx) return;
+
+    const { pointStack } = this;
+
+    DistanceDrawAction.drawStartPoint({
+      context,
+      ctx,
+      style: DistancePointStyle,
+      pointStack: PolygonDrawAction.transformRealToOrigin(context, [...pointStack]),
+      toPoint: context.pixelToPoint(startPoint as IPoint),
+    });
+  }
+
+  /**
+   * fill
+   * @override
+   */
+  protected fill(): void {
+    const { context } = this;
+
+    if (!context) return;
+
+    const { pointStack } = this;
+
+    const ctx = context.getCtx();
+
+    if (!ctx) return;
+
+    if (pointStack.length <= 1) {
+      if (pointStack.length === 1) {
+        DistanceDrawAction.drawStartPoint({
+          context,
+          ctx: context.getCtx() as CanvasRenderingContext2D,
+          style: DistancePointStyle,
+          pointStack: PolygonDrawAction.transformRealToOrigin(context, pointStack),
+          toPoint: context.pixelToPoint(pointStack[0]),
+        });
+      }
+
+      return;
+    }
+
+    ctx.fillStyle = this.style.fillStyle;
+
+    ctx.save();
+    ctx.beginPath();
+
+    for (let i = 0; i < pointStack.length; i++) {
+      const point = pointStack[i];
+
+      if (i === 0) {
+        ctx.moveTo(point.x, point.y);
+      } else {
+        ctx.lineTo(point.x, point.y);
+      }
+    }
+
+    ctx.stroke();
+    ctx.restore();
+
+    const originData = PolygonDrawAction.transformRealToOrigin(context, pointStack);
+
+    originData.forEach((point: IPoint, index: number) => {
+      DistanceDrawAction.drawStartPoint({
+        context,
+        ctx,
+        style: DistancePointStyle,
+        pointStack: originData,
+        toPoint: originData[index],
+      });
+    });
+  }
+
+  /**
+   * drawStack
+   * @override
+   */
+  protected drawStack(): void {
+    const { pointStack, context } = this;
+
+    if (!context) return;
+
+    if (pointStack.length <= 1) {
+      if (pointStack.length === 1) {
+        DistanceDrawAction.drawStartPoint({
+          context,
+          ctx: context.getCtx() as CanvasRenderingContext2D,
+          style: DistancePointStyle,
+          pointStack: PolygonDrawAction.transformRealToOrigin(context, pointStack),
+          toPoint: context.pixelToPoint(pointStack[0]),
+        });
+      }
+
+      return;
+    }
+
+    let index = 0;
+
+    do {
+      if (index !== pointStack.length - 1) {
+        this.drawLine(pointStack[index], pointStack[index + 1]);
+      }
+
+      DistanceDrawAction.drawStartPoint({
+        context,
+        ctx: context.getCtx() as CanvasRenderingContext2D,
+        style: DistancePointStyle,
+        pointStack: PolygonDrawAction.transformRealToOrigin(context, pointStack),
+        toPoint: context.pixelToPoint(pointStack[index]),
+      });
+
+      index++;
+    } while (index < pointStack.length);
+  }
+
+  /**
+   * getCanvasClick
+   * @override
+   */
+  protected getCanvasClick() {
+    return this.onCanvasClick;
+  }
+
+  /**
+   * getCanvasMousemove
+   * @override
+   */
+  protected getCanvasMousemove() {
+    return this.onCanvasMousemove;
+  }
+
+  /**
+   * getCanvasDbClick
+   * @override
+   */
+  protected getCanvasDbClick() {
+    return this.onCanvasDbClick;
+  }
 
   /**
    * onCanvasClick
@@ -80,6 +307,12 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @param e
    */
   protected onCanvasClick(e): void {
+    console.log('测距click');
+
+    if(e.detail >= 2) {
+      return;
+    }
+
     super.onCanvasClick(e);
 
     // 画点
@@ -101,6 +334,7 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @param e
    */
   protected onCanvasDbClick(e): void {
+    console.log('测距dbClick');
     super.onCanvasDbClick(e);
   }
 

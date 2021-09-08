@@ -159,6 +159,7 @@ class TriangleDrawAction extends DrawAction {
       points: IPoint[];
     },
   ): void {
+    ctx.save();
     ctx.beginPath();
 
     const realPoints = TriangleDrawAction.transformOriginToReal(context, { points: data.points })
@@ -167,6 +168,12 @@ class TriangleDrawAction extends DrawAction {
     ctx.moveTo(realPoints[0].x, realPoints[0].y);
     ctx.lineTo(realPoints[1].x, realPoints[1].y);
     ctx.lineTo(realPoints[2].x, realPoints[2].y);
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+    ctx.restore();
   }
 
   /**

@@ -105,6 +105,7 @@ class PolygonDrawAction extends DrawAction {
     ctx: CanvasRenderingContext2D,
     data: IPoint[] = [],
   ): void {
+    ctx.save();
     ctx.beginPath();
 
     const realData = PolygonDrawAction.transformOriginToReal(context, data);
@@ -118,6 +119,12 @@ class PolygonDrawAction extends DrawAction {
     });
 
     ctx.closePath();
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+    ctx.restore();
   }
 
   /**
@@ -152,23 +159,23 @@ class PolygonDrawAction extends DrawAction {
 
     if (pointStack.length <= 1) return;
 
-    ctx?.beginPath();
+    ctx.save();
+    ctx.beginPath();
 
     for (let i = 0; i < pointStack.length; i++) {
       const point = pointStack[i];
 
       if (i === 0) {
-        ctx?.moveTo(point.x, point.y);
+        ctx.moveTo(point.x, point.y);
       } else {
-        ctx?.lineTo(point.x, point.y);
+        ctx.lineTo(point.x, point.y);
       }
     }
 
-    ctx?.closePath();
-
+    ctx.closePath();
     ctx.fillStyle = this.style.fillStyle;
-
     ctx.fill();
+    ctx.restore();
   }
 
   /**
@@ -221,21 +228,42 @@ class PolygonDrawAction extends DrawAction {
     } while (index !== pointStack.length - 1);
   }
 
+  protected getCanvasClick() {
+    return this.onCanvasClick;
+  }
+
+  protected getCanvasMousemove() {
+    return this.onCanvasMousemove;
+  }
+
+  protected getCanvasDbClick() {
+    return this.onCanvasDbClick;
+  }
+
   /**
    * onCanvasClick
    * @param e
    */
   protected onCanvasClick(e): void {
-    if (!this.context) return;
+    console.log('多边形Click');
+    if (!this.context) {
+      return;
+    }
 
     const canvasEl = this.context.getCanvasEl();
 
-    if (!canvasEl) return;
+    if (!canvasEl) {
+      return;
+    }
+
+    if(e.detail >= 2) {
+      return;
+    }
 
     // 第一次
     if (!this.startPoint) {
-      canvasEl?.addEventListener('mousemove', this.onCanvasMousemove);
-      canvasEl?.addEventListener('dblclick', this.onCanvasDbClick);
+      canvasEl?.addEventListener('mousemove', this.getCanvasMousemove());
+      canvasEl?.addEventListener('dblclick', this.getCanvasDbClick());
 
       this.startPoint = MathUtil.clientToCtxPoint({
         event: e,
@@ -312,6 +340,7 @@ class PolygonDrawAction extends DrawAction {
    * onCanvasDbClick - 结束绘制
    */
   protected onCanvasDbClick(e): void {
+    console.log('多边形dbClick');
     if (!this.isMove) return;
 
     this.end();
@@ -353,7 +382,7 @@ class PolygonDrawAction extends DrawAction {
     });
 
     // 注册事件
-    canvasEl?.addEventListener('click', this.onCanvasClick);
+    canvasEl?.addEventListener('mouseup', this.getCanvasClick());
 
     // 修改状态
     this.status = ActionStatus.Running;
@@ -378,9 +407,9 @@ class PolygonDrawAction extends DrawAction {
       return;
     }
 
-    canvasEl?.removeEventListener('click', this.onCanvasClick);
-    canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
-    canvasEl?.removeEventListener('dblclick', this.onCanvasDbClick);
+    canvasEl?.removeEventListener('mouseup', this.getCanvasClick());
+    canvasEl?.removeEventListener('mousemove', this.getCanvasMousemove());
+    canvasEl?.removeEventListener('dblclick', this.getCanvasDbClick());
 
     context.clearDraw();
 
@@ -438,7 +467,7 @@ class PolygonDrawAction extends DrawAction {
       context.drawHistoryData();
     }
 
-    canvasEl?.removeEventListener('click', this.onCanvasClick);
+    canvasEl?.removeEventListener('mouseup', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
     canvasEl?.removeEventListener('dblclick', this.onCanvasDbClick);
 

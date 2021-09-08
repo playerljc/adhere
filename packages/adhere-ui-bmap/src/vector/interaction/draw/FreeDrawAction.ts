@@ -180,6 +180,7 @@ class FreeDrawAction extends DrawAction {
       points: IPoint[];
     },
   ): void {
+    ctx.save();
     ctx.beginPath();
 
     const { points = [] } = data;
@@ -193,6 +194,12 @@ class FreeDrawAction extends DrawAction {
     });
 
     ctx.closePath();
+
+    // 描边
+    ctx.stroke();
+    // 填充
+    ctx.fill();
+    ctx.restore();
   }
 
   getSelectType(): SelectType {
