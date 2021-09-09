@@ -24,6 +24,7 @@ class DistanceDrawAction extends PolygonDrawAction {
     this.onCanvasDbClick = this.onCanvasDbClick.bind(this);
 
     this.onCursorMouseMove = this.onCursorMouseMove.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   /**
@@ -526,9 +527,32 @@ class DistanceDrawAction extends PolygonDrawAction {
   }
 
   /**
+   * onDelete
+   * @param deleteMarker - mark
+   * @param id - 删除数据的id
+   */
+  protected onDelete(deleteMarker: any, id: number | string): void {
+    const { context } = this;
+    if (!context) return;
+
+    const map = context.getMap();
+
+    const historyData = context?.getHistoryData();
+    const index = historyData?.findIndex((data) => data.id === id);
+    if (index !== -1) {
+      historyData?.splice(index, 1);
+      context.setHistoryData(historyData);
+      context.clearDraw();
+      context.drawHistoryData();
+      map.removeOverlay(deleteMarker);
+    }
+  }
+
+  /**
    * drawDeleteMark
    * @param context
    * @param point
+   * @param onDelete
    */
   static drawDeleteMark({
     context,
@@ -595,15 +619,15 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @override
    */
   end() {
-    const map = this?.context?.getMap();
+    const { context } = this;
+    if (!context) return;
+
+    const map = context.getMap();
     map.enableDragging();
     map.enableScrollWheelZoom();
     map.enableDoubleClickZoom();
     map.enableContinuousZoom();
     map.enablePinchToZoom();
-
-    const { context } = this;
-    if (!context) return;
 
     const deleteMarker = DistanceDrawAction.drawDeleteMark({
       context: context as IInteractionLayer,
@@ -611,15 +635,7 @@ class DistanceDrawAction extends PolygonDrawAction {
         this.pointStack[this.pointStack.length - 1],
       ),
       onDelete: () => {
-        const historyData = context?.getHistoryData();
-        const index = historyData?.findIndex((data) => data.id === id);
-        if (index !== -1) {
-          historyData?.splice(index, 1);
-          context.setHistoryData(historyData);
-          context.clearDraw();
-          context.drawHistoryData();
-          map.removeOverlay(deleteMarker);
-        }
+        this.onDelete(deleteMarker, id);
       },
     });
 
