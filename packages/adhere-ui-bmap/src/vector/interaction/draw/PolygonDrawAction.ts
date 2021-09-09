@@ -391,7 +391,7 @@ class PolygonDrawAction extends DrawAction {
   /**
    * end - 结束
    */
-  end(): void {
+  end(): void | string {
     // 结束
     const { context } = this;
 
@@ -419,8 +419,10 @@ class PolygonDrawAction extends DrawAction {
 
     this.status = ActionStatus.End;
 
+    const id = BaseUtil.uuid();
+
     const data: IPolygonData = {
-      id: BaseUtil.uuid(),
+      id,
       type: this.getSelectType() as SelectType.Polygon,
       data: PolygonDrawAction.transformRealToOrigin(context, this.pointStack),
       style: this.style,
@@ -441,6 +443,8 @@ class PolygonDrawAction extends DrawAction {
     });
 
     super.end();
+
+    return id;
   }
 
   /**

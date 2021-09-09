@@ -16,8 +16,6 @@ import GeometryStyle from '../../style/GeometryStyle';
  * @classdesc 测距离
  */
 class DistanceDrawAction extends PolygonDrawAction {
-  deleteMarker: any = null;
-
   constructor() {
     super();
 
@@ -532,7 +530,15 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @param context
    * @param point
    */
-  static drawDeleteMark({ context, point }: { context: IInteractionLayer; point: IPoint }): void {
+  static drawDeleteMark({
+    context,
+    point,
+    onDelete,
+  }: {
+    context: IInteractionLayer;
+    point: IPoint;
+    onDelete: Function;
+  }): any {
     const map = context.getMap();
     // @ts-ignore
     const icon = new BMap.Icon(
@@ -552,17 +558,21 @@ class DistanceDrawAction extends PolygonDrawAction {
     const pt = new BMap.Point(point.x, point.y);
 
     // @ts-ignore
-    this.deleteMarker = new BMap.Marker(pt, {
+    const deleteMarker = new BMap.Marker(pt, {
       icon,
     });
 
     // @ts-ignore
-    this.deleteMarker.addEventListener('click', () => {
-
+    deleteMarker.addEventListener('click', () => {
+      if (onDelete) {
+        onDelete();
+      }
     });
 
     // @ts-ignore
-    map.addOverlay(this.deleteMarker);
+    map.addOverlay(deleteMarker);
+
+    return deleteMarker;
   }
 
   getSelectType(): SelectType {
@@ -593,15 +603,27 @@ class DistanceDrawAction extends PolygonDrawAction {
     map.enablePinchToZoom();
 
     const { context } = this;
+    if (!context) return;
 
-    DistanceDrawAction.drawDeleteMark({
+    const deleteMarker = DistanceDrawAction.drawDeleteMark({
       context: context as IInteractionLayer,
       point: (context as IInteractionLayer).pixelToPoint(
         this.pointStack[this.pointStack.length - 1],
       ),
+      onDelete: () => {
+        const historyData = context?.getHistoryData();
+        const index = historyData?.findIndex((data) => data.id === id);
+        if (index !== -1) {
+          historyData?.splice(index, 1);
+          context.setHistoryData(historyData);
+          context.clearDraw();
+          context.drawHistoryData();
+          map.removeOverlay(deleteMarker);
+        }
+      },
     });
 
-    super.end();
+    const id = super.end();
   }
 
   /**
