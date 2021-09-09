@@ -635,6 +635,7 @@ class DistanceDrawAction extends PolygonDrawAction {
         this.pointStack[this.pointStack.length - 1],
       ),
       onDelete: () => {
+        // @ts-ignore
         this.onDelete(deleteMarker, id);
       },
     });
