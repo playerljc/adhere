@@ -88,6 +88,7 @@ declare const _default: {
     slopToAngle(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint, yAxis?: "cartesian" | "geographic"): number;
     radianToAngle(radian: number): number;
     angleToRadian(angle: any): number;
+    distance(value: number, unit: "kilometer"): number;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

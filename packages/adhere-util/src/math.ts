@@ -213,5 +213,16 @@ export default {
   angleToRadian(angle): number {
     return (angle * Math.PI) / 180;
   },
+  /**
+   * distance - 距离
+   * @param value - 数值(m)
+   * @param unit - 单位
+   * @return 转换后的数值
+   */
+  distance(value: number, unit: 'kilometer'): number {
+    const map = new Map<string, number>([['kilometer', 1000]]);
+
+    return value / map.get(unit);
+  },
   /**--------------------------math-end------------------------**/
 };

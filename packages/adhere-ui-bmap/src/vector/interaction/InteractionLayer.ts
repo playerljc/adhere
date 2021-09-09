@@ -490,7 +490,6 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
     if (!ctx) return;
 
-    console.log('clearDraw');
     ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
   }
 
@@ -537,6 +536,14 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
     if (this.canvasObserver) {
       this.canvasObserver.disconnect();
     }
+  }
+
+  /**
+   * getMap
+   * @return any
+   */
+  getMap(): any {
+    return this.map;
   }
 }
 

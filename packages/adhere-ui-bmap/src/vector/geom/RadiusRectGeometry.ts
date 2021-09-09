@@ -42,13 +42,12 @@ class RadiusRectGeometry extends RectGeometry {
     map: any;
     isScale: boolean;
   }) {
-    ctx.save();
-
     const targetStyle = {
       ...GeometryStyle,
       ...(style || {}),
     };
 
+    ctx.save();
     ctx.beginPath();
 
     ctx.lineWidth = targetStyle.lineWidth;

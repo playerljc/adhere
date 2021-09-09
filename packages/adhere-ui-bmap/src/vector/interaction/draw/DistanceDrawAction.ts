@@ -1,10 +1,14 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math.js';
+// @ts-ignore
+import Intl from '@baifendian/adhere-util-intl';
 
-import PolygonDrawAction from './PolygonDrawAction';
-import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
-import DistancePointStyle from '../../style/DistancePointStyle';
+import { IInteractionLayer, IPoint, SelectType } from '../types';
 import { IGeometryStyle } from '../../types';
+import PolygonDrawAction from './PolygonDrawAction';
+import DistancePointStyle from '../../style/DistancePointStyle';
+import RadiusRectGeometry from '../../geom/RadiusRectGeometry';
+import GeometryStyle from '../../style/GeometryStyle';
 
 /**
  * DistanceDrawAction
@@ -28,9 +32,11 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @param e
    */
   protected onCursorMouseMove(e): void {
-    if (!this.context) return;
+    const { context, pointStack } = this;
 
-    const canvasEl = this.context.getCanvasEl();
+    if (!context) return;
+
+    const canvasEl = context.getCanvasEl();
 
     // 当前点
     const targetPixel = MathUtil.clientToCtxPoint({
@@ -38,40 +44,88 @@ class DistanceDrawAction extends PolygonDrawAction {
       rect: canvasEl?.getBoundingClientRect() as DOMRect,
     });
 
-    // TODO: 在这里根据绘制的节点绘制跟随鼠标的提示框
-    // console.log(targetPixel);
-  }
+    // 计算距离
+    let distance = 0;
 
-  /**
-   * initCursorMouseMove
-   */
-  protected initCursorMouseMove() {
-    const { context } = this;
+    // 1 2 3
+    if (!pointStack.length) return;
 
-    if (!context) return;
+    for (let i = 0; i < pointStack.length - 1; i++) {
+      const fFromPixel = pointStack[i];
+      const tToPixel = pointStack[i + 1];
+      const itemDistance = MathUtil.getDistanceByBetweenPoint({ p1: fFromPixel, p2: tToPixel });
 
-    const canvasEl = context.getCanvasEl();
+      distance += itemDistance;
+    }
 
-    if (!canvasEl) return;
+    const moveDistance = MathUtil.getDistanceByBetweenPoint({
+      p1: pointStack[pointStack.length - 1],
+      p2: targetPixel,
+    });
 
-    // 注册事件
-    canvasEl?.addEventListener('mousemove', this.onCursorMouseMove);
-  }
+    // 转换成实际距离
+    distance = context.distanceToActual(distance + moveDistance);
 
-  /**
-   * clearCursorMouseMove
-   */
-  protected clearCursorMouseMove() {
-    const { context } = this;
+    const ctx = context.getCtx() as CanvasRenderingContext2D;
+    const width = 120;
+    const height = 50;
+    const radius = 2;
 
-    if (!context) return;
+    const toolTipPixel = {
+      x: targetPixel.x + 10,
+      y: targetPixel.y - height / 2,
+    };
 
-    const canvasEl = context.getCanvasEl();
+    const toolTipPoint = context.pixelToPoint(toolTipPixel);
 
-    if (!canvasEl) return;
+    RadiusRectGeometry.drawRadiusRect({
+      ctx: ctx,
+      style: {
+        ...GeometryStyle,
+        lineWidth: 1,
+        strokeStyle: 'red',
+        fillStyle: '#fff',
+      },
+      coordinates: {
+        leftTop: {
+          lng: toolTipPoint.x,
+          lat: toolTipPoint.y,
+        },
+        width,
+        height,
+        radius,
+      },
+      map: context.getMap(),
+      isScale: false,
+    });
 
-    // 注册事件
-    canvasEl?.removeEventListener('mousemove', this.onCursorMouseMove);
+    let distanceText = '';
+    if (distance < 1000) {
+      distanceText = `${distance.toFixed(2)}${Intl.v('米')}`;
+    } else {
+      // @ts-ignore
+      distanceText = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}${Intl.v('公里')}`;
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = '#000';
+    ctx.fillText(
+      `总长：${distanceText}`,
+      toolTipPixel.x + width / 2,
+      toolTipPixel.y + (height / 4) * 2,
+      ctx.measureText(`${Intl.v('总长')}：${distanceText}`).width,
+    );
+    ctx.fillText(
+      '单击确定地点，双击结束',
+      toolTipPixel.x + width / 2,
+      toolTipPixel.y + (height / 4) * 3,
+      ctx.measureText(`${Intl.v('单击确定地点，双击结束')}：${distanceText}`).width,
+    );
+    ctx.restore();
   }
 
   /**
@@ -102,13 +156,13 @@ class DistanceDrawAction extends PolygonDrawAction {
     ctx.stroke();
     ctx.restore();
 
-    data.forEach((point: IPoint, index: number) => {
+    data.forEach((point: IPoint) => {
       this.drawStartPoint({
         context,
         ctx,
         style: DistancePointStyle,
         pointStack: data,
-        toPoint: data[index],
+        toPoint: point,
       });
     });
   }
@@ -134,21 +188,125 @@ class DistanceDrawAction extends PolygonDrawAction {
     ctx: CanvasRenderingContext2D;
     style: IGeometryStyle;
   }): void {
-    ctx.save();
-    ctx.beginPath();
-
-    ctx.fillStyle = style.fillStyle;
-    ctx.strokeStyle = style.strokeStyle;
-    ctx.lineWidth = style.lineWidth;
-
     const toPixel = context.pointToPixel(toPoint);
 
-    // 需要转换
-    ctx.ellipse(toPixel.x, toPixel.y, 4, 4, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+    // 绘制toolTip的文字
+    const pointIndex = pointStack.findIndex((point) => {
+      const itemPointStr = JSON.stringify(point);
+      const toPointStr = JSON.stringify(toPoint);
+      return itemPointStr === toPointStr;
+    });
 
-    ctx.stroke();
-    ctx.fill();
-    ctx.restore();
+    {
+      const circleRadius = 6;
+
+      // 绘制圆圈
+      ctx.save();
+      ctx.beginPath();
+
+      ctx.fillStyle = style.fillStyle;
+      ctx.strokeStyle = style.strokeStyle;
+      ctx.lineWidth = style.lineWidth;
+
+      // 需要转换
+      ctx.ellipse(
+        toPixel.x,
+        toPixel.y,
+        circleRadius,
+        circleRadius,
+        (45 * Math.PI) / 180,
+        0,
+        2 * Math.PI,
+      );
+
+      ctx.stroke();
+      ctx.fill();
+      ctx.restore();
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.font = '9px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'blue';
+      ctx.fillText(`${pointIndex + 1}`, toPixel.x, toPixel.y);
+      ctx.restore();
+    }
+
+    /*------------------------------------------------------------------------------------------*/
+
+    {
+      // 绘制tooltip
+      const width = 50;
+      const height = 20;
+      const radius = 2;
+
+      const toolTipPixel = {
+        x: toPixel.x + 10,
+        y: toPixel.y - height / 2,
+      };
+
+      const toolTipPoint = context.pixelToPoint(toolTipPixel);
+
+      // 绘制toolTip的框
+      RadiusRectGeometry.drawRadiusRect({
+        ctx,
+        style: {
+          ...GeometryStyle,
+          lineWidth: 1,
+          strokeStyle: '#000',
+          fillStyle: '#fff',
+        },
+        coordinates: {
+          leftTop: {
+            lng: toolTipPoint.x,
+            lat: toolTipPoint.y,
+          },
+          width,
+          height,
+          radius,
+        },
+        map: context.getMap(),
+        isScale: false,
+      });
+
+      let toolTip = '';
+
+      if (pointIndex === 0) {
+        toolTip = Intl.v('起点');
+      } else {
+        // 计算距离
+        let distance = 0;
+
+        for (let i = 0; i < pointIndex; i++) {
+          const fFromPixel = context.pointToPixel(pointStack[i]);
+          const tToPixel = context.pointToPixel(pointStack[i + 1]);
+          const itemDistance = MathUtil.getDistanceByBetweenPoint({ p1: fFromPixel, p2: tToPixel });
+
+          distance += itemDistance;
+        }
+
+        // 转换成实际距离
+        distance = context.distanceToActual(distance);
+
+        if (distance < 1000) {
+          toolTip = `${distance.toFixed(2)}${Intl.v('米')}`;
+        } else {
+          // @ts-ignore
+          toolTip = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}${Intl.v('公里')}`;
+        }
+      }
+
+      // 绘制到中心点上
+      ctx.save();
+      ctx.beginPath();
+      ctx.font = '10px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#000';
+      ctx.fillText(toolTip, toolTipPixel.x + width / 2, toolTipPixel.y + height / 2);
+      ctx.restore();
+    }
   }
 
   /**
@@ -307,9 +465,7 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @param e
    */
   protected onCanvasClick(e): void {
-    console.log('测距click');
-
-    if(e.detail >= 2) {
+    if (e.detail >= 2) {
       return;
     }
 
@@ -317,6 +473,8 @@ class DistanceDrawAction extends PolygonDrawAction {
 
     // 画点
     this.drawStartPoint();
+
+    // super.end();
   }
 
   /**
@@ -326,6 +484,7 @@ class DistanceDrawAction extends PolygonDrawAction {
    */
   protected onCanvasMousemove(e): void {
     super.onCanvasMousemove(e);
+    this.onCursorMouseMove(e);
   }
 
   /**
@@ -334,7 +493,6 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @param e
    */
   protected onCanvasDbClick(e): void {
-    console.log('测距dbClick');
     super.onCanvasDbClick(e);
   }
 
@@ -343,24 +501,11 @@ class DistanceDrawAction extends PolygonDrawAction {
   }
 
   /**
-   * start
-   * @override
-   * @param style
-   */
-  start(style: IStyle) {
-    super.start(style);
-
-    // 注册一个mouseMove事件，用来跟随鼠标显示提示信息
-    this.initCursorMouseMove();
-  }
-
-  /**
    * end
    * @override
    */
   end() {
     super.end();
-    this.clearCursorMouseMove();
   }
 
   /**
@@ -369,7 +514,6 @@ class DistanceDrawAction extends PolygonDrawAction {
    */
   destroy(): void {
     super.destroy();
-    this.clearCursorMouseMove();
   }
 
   /**

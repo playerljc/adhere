@@ -194,7 +194,7 @@ export interface IMoveAction {
   onMoveMousedown: (e?: MouseEvent) => void;
   onMoveMousemove: (e?: MouseEvent) => void;
   onMoveMouseup: (e?: MouseEvent) => void;
-  endMove: (e:MouseEvent) => void;
+  endMove: (e: MouseEvent) => void;
 }
 
 /**
@@ -248,6 +248,7 @@ export interface IInteractionLayer {
    */
   actualToDistance(actual: number): number;
   enableMap(): void;
+  getMap(): any;
 }
 
 /**

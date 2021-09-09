@@ -120,5 +120,12 @@ declare const _default: {
      * @return number - 弧度
      */
     angleToRadian(angle: any): number;
+    /**
+     * distance - 距离
+     * @param value - 数值(m)
+     * @param unit - 单位
+     * @return 转换后的数值
+     */
+    distance(value: number, unit: 'kilometer'): number;
 };
 export default _default;

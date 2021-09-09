@@ -46,6 +46,11 @@ const local = getLocal([
   'Pull down to refresh',
   'Release to refresh',
   'Update time',
+  'M',
+  '公里',
+  'start',
+  '总长',
+  '单击确定地点，双击结束'
 ]);
 
 export default { ...local };

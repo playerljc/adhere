@@ -134,35 +134,53 @@ export default {
    * @return number
    */
   getScale(map): number {
-    const zoom = map.getZoom();
+    // const zoom = map.getZoom();
+    //
+    // /**
+    //  * 比例尺的单位是(m)
+    //  */
+    // const zoomScaleMap = new Map([
+    //   [19, 20],
+    //   [18, 50],
+    //   [17, 10],
+    //   [16, 200],
+    //   [15, 500],
+    //   [14, 1000],
+    //   [13, 2000],
+    //   [12, 5000],
+    //   [11, 10000],
+    //   [10, 20000],
+    //   [9, 25000],
+    //   [8, 50000],
+    //   [7, 100000],
+    //   [6, 200000],
+    //   [5, 500000],
+    //   [4, 1000000],
+    //   [3, 2000000],
+    //   [2, 5000000],
+    //   [1, 10000000],
+    // ]);
+    //
+    // // @ts-ignore
+    // return 1 / zoomScaleMap.get(zoom);
 
-    /**
-     * 比例尺的单位是(m)
-     */
-    const zoomScaleMap = new Map([
-      [19, 20],
-      [18, 50],
-      [17, 10],
-      [16, 200],
-      [15, 500],
-      [14, 1000],
-      [13, 2000],
-      [12, 5000],
-      [11, 10000],
-      [10, 20000],
-      [9, 25000],
-      [8, 50000],
-      [7, 100000],
-      [6, 200000],
-      [5, 500000],
-      [4, 1000000],
-      [3, 2000000],
-      [2, 5000000],
-      [1, 10000000],
-    ]);
+
+    // 根据输入范围值(单位：米) 计算出需要画的区域像素：px
+    const pointA = map.getCenter();
+    const pointAPixel = map.pointToOverlayPixel(pointA);
 
     // @ts-ignore
-    return 1 / zoomScaleMap.get(zoom);
+    const pointB = new BMap.Point(pointA.lng, pointA.lat + 0.001);
+    const pointBPixel = map.pointToOverlayPixel(pointB);
+
+    // 像素距离
+    const pixelDistanceBetween2Points = Math.abs(pointBPixel.y - pointAPixel.y);
+    const realDistanceBetween2Points = map.getDistance(pointA, pointB);
+
+    // 比例尺
+    return pixelDistanceBetween2Points / realDistanceBetween2Points;
+
+    // return this.getUnitPixelToM(map.getZoom());
   },
   /**
    * getUnitPixelToM - 1px等于多少米(m)
