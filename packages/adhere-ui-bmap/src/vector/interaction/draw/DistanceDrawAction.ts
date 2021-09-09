@@ -3,7 +3,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math.js';
 // @ts-ignore
 import Intl from '@baifendian/adhere-util-intl';
 
-import { IInteractionLayer, IPoint, SelectType } from '../types';
+import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
 import { IGeometryStyle } from '../../types';
 import PolygonDrawAction from './PolygonDrawAction';
 import DistancePointStyle from '../../style/DistancePointStyle';
@@ -100,13 +100,57 @@ class DistanceDrawAction extends PolygonDrawAction {
     });
 
     let distanceText = '';
+    let unitText = '';
     if (distance < 1000) {
-      distanceText = `${distance.toFixed(2)}${Intl.v('米')}`;
+      distanceText = `${distance.toFixed(2)}`;
+      unitText = Intl.v('米');
     } else {
       // @ts-ignore
-      distanceText = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}${Intl.v('公里')}`;
+      distanceText = `${MathUtil.distance(distance, 'kilometer').toFixed(2)}`;
+      unitText = Intl.v('公里');
     }
 
+    // 总长
+    ctx.save();
+    ctx.beginPath();
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = '#000';
+    ctx.fillText(
+      `${Intl.v('总长')}：`,
+      (toolTipPixel.x + width / 2) - ctx.measureText(distanceText).width / 2,
+      toolTipPixel.y + (height / 4) * 2,
+      ctx.measureText(`${Intl.v('总长')}：`).width,
+    );
+
+    // 数值
+    ctx.beginPath();
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = 'red';
+    ctx.fillText(
+      distanceText,
+      toolTipPixel.x + width / 2,
+      toolTipPixel.y + (height / 4) * 2,
+      ctx.measureText(distanceText).width,
+    );
+
+    // 单位
+    ctx.beginPath();
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = '#000';
+    ctx.fillText(
+      unitText,
+      (toolTipPixel.x + width / 2) + ctx.measureText(distanceText).width / 2,
+      toolTipPixel.y + (height / 4) * 2,
+      ctx.measureText(unitText).width,
+    );
+
+    // 说明
     ctx.save();
     ctx.beginPath();
     ctx.font = '10px sans-serif';
@@ -114,18 +158,11 @@ class DistanceDrawAction extends PolygonDrawAction {
     ctx.textBaseline = 'bottom';
     ctx.fillStyle = '#000';
     ctx.fillText(
-      `总长：${distanceText}`,
+      Intl.v('单击确定地点，双击结束'),
       toolTipPixel.x + width / 2,
-      toolTipPixel.y + (height / 4) * 2,
-      ctx.measureText(`${Intl.v('总长')}：${distanceText}`).width,
+      toolTipPixel.y + (height / 4) * 3 + 2,
+      ctx.measureText(Intl.v('单击确定地点，双击结束')).width,
     );
-    ctx.fillText(
-      '单击确定地点，双击结束',
-      toolTipPixel.x + width / 2,
-      toolTipPixel.y + (height / 4) * 3,
-      ctx.measureText(`${Intl.v('单击确定地点，双击结束')}：${distanceText}`).width,
-    );
-    ctx.restore();
   }
 
   /**
@@ -500,12 +537,31 @@ class DistanceDrawAction extends PolygonDrawAction {
     return SelectType.Distance;
   }
 
+  start(style: IStyle) {
+    const map = this?.context?.getMap();
+
+    map.disableDragging();
+    map.disableScrollWheelZoom();
+    map.disableDoubleClickZoom();
+    map.disableContinuousZoom();
+    map.disablePinchToZoom();
+
+    super.start(style);
+  }
+
   /**
    * end
    * @override
    */
   end() {
     super.end();
+
+    const map = this?.context?.getMap();
+    map.enableDragging();
+    map.enableScrollWheelZoom();
+    map.enableDoubleClickZoom();
+    map.enableContinuousZoom();
+    map.enablePinchToZoom();
   }
 
   /**
@@ -514,6 +570,13 @@ class DistanceDrawAction extends PolygonDrawAction {
    */
   destroy(): void {
     super.destroy();
+
+    const map = this?.context?.getMap();
+    map.enableDragging();
+    map.enableScrollWheelZoom();
+    map.enableDoubleClickZoom();
+    map.enableContinuousZoom();
+    map.enablePinchToZoom();
   }
 
   /**
