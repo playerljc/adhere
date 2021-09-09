@@ -16,6 +16,8 @@ import GeometryStyle from '../../style/GeometryStyle';
  * @classdesc 测距离
  */
 class DistanceDrawAction extends PolygonDrawAction {
+  deleteMarker: any = null;
+
   constructor() {
     super();
 
@@ -47,7 +49,6 @@ class DistanceDrawAction extends PolygonDrawAction {
     // 计算距离
     let distance = 0;
 
-    // 1 2 3
     if (!pointStack.length) return;
 
     for (let i = 0; i < pointStack.length - 1; i++) {
@@ -66,18 +67,18 @@ class DistanceDrawAction extends PolygonDrawAction {
     // 转换成实际距离
     distance = context.distanceToActual(distance + moveDistance);
 
-    const ctx = context.getCtx() as CanvasRenderingContext2D;
-    const width = 120;
-    const height = 50;
-    const radius = 2;
+    // ---------------------------计算距离结束------------------------
 
+    // ---------------------------绘制圆角矩形------------------------
+    const ctx = context.getCtx() as CanvasRenderingContext2D;
+    const radiusRectWidth = 120;
+    const radiusRectHeight = 50;
+    const radiusRectRadius = 2;
     const toolTipPixel = {
       x: targetPixel.x + 10,
-      y: targetPixel.y - height / 2,
+      y: targetPixel.y - radiusRectHeight / 2,
     };
-
     const toolTipPoint = context.pixelToPoint(toolTipPixel);
-
     RadiusRectGeometry.drawRadiusRect({
       ctx: ctx,
       style: {
@@ -91,14 +92,15 @@ class DistanceDrawAction extends PolygonDrawAction {
           lng: toolTipPoint.x,
           lat: toolTipPoint.y,
         },
-        width,
-        height,
-        radius,
+        width: radiusRectWidth,
+        height: radiusRectHeight,
+        radius: radiusRectRadius,
       },
       map: context.getMap(),
       isScale: false,
     });
 
+    // ---------------------------绘制文本----------------------------
     let distanceText = '';
     let unitText = '';
     if (distance < 1000) {
@@ -110,57 +112,51 @@ class DistanceDrawAction extends PolygonDrawAction {
       unitText = Intl.v('公里');
     }
 
+    const textFont = '10px sans-serif';
+    const textBaseline = 'bottom';
+    const textX = toolTipPixel.x + radiusRectWidth / 2;
+    const textY = toolTipPixel.y + (radiusRectHeight / 4) * 2;
+    const distanceTextHalfWidth = ctx.measureText(distanceText).width / 2;
+
     // 总长
-    ctx.save();
     ctx.beginPath();
-    ctx.font = '10px sans-serif';
+    ctx.font = textFont;
     ctx.textAlign = 'right';
-    ctx.textBaseline = 'bottom';
+    ctx.textBaseline = textBaseline;
     ctx.fillStyle = '#000';
     ctx.fillText(
       `${Intl.v('总长')}：`,
-      (toolTipPixel.x + width / 2) - ctx.measureText(distanceText).width / 2,
-      toolTipPixel.y + (height / 4) * 2,
+      textX - distanceTextHalfWidth,
+      textY,
       ctx.measureText(`${Intl.v('总长')}：`).width,
     );
 
     // 数值
     ctx.beginPath();
-    ctx.font = '10px sans-serif';
+    ctx.font = textFont;
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
+    ctx.textBaseline = textBaseline;
     ctx.fillStyle = 'red';
-    ctx.fillText(
-      distanceText,
-      toolTipPixel.x + width / 2,
-      toolTipPixel.y + (height / 4) * 2,
-      ctx.measureText(distanceText).width,
-    );
+    ctx.fillText(distanceText, textX, textY, ctx.measureText(distanceText).width);
 
     // 单位
     ctx.beginPath();
-    ctx.font = '10px sans-serif';
+    ctx.font = textFont;
     ctx.textAlign = 'left';
-    ctx.textBaseline = 'bottom';
+    ctx.textBaseline = textBaseline;
     ctx.fillStyle = '#000';
-    ctx.fillText(
-      unitText,
-      (toolTipPixel.x + width / 2) + ctx.measureText(distanceText).width / 2,
-      toolTipPixel.y + (height / 4) * 2,
-      ctx.measureText(unitText).width,
-    );
+    ctx.fillText(unitText, textX + distanceTextHalfWidth, textY, ctx.measureText(unitText).width);
 
     // 说明
-    ctx.save();
     ctx.beginPath();
-    ctx.font = '10px sans-serif';
+    ctx.font = textFont;
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
+    ctx.textBaseline = textBaseline;
     ctx.fillStyle = '#000';
     ctx.fillText(
       Intl.v('单击确定地点，双击结束'),
-      toolTipPixel.x + width / 2,
-      toolTipPixel.y + (height / 4) * 3 + 2,
+      textX,
+      toolTipPixel.y + (radiusRectHeight / 4) * 3 + 3,
       ctx.measureText(Intl.v('单击确定地点，双击结束')).width,
     );
   }
@@ -510,8 +506,6 @@ class DistanceDrawAction extends PolygonDrawAction {
 
     // 画点
     this.drawStartPoint();
-
-    // super.end();
   }
 
   /**
@@ -533,13 +527,50 @@ class DistanceDrawAction extends PolygonDrawAction {
     super.onCanvasDbClick(e);
   }
 
+  /**
+   * drawDeleteMark
+   * @param context
+   * @param point
+   */
+  static drawDeleteMark({ context, point }: { context: IInteractionLayer; point: IPoint }): void {
+    const map = context.getMap();
+    // @ts-ignore
+    const icon = new BMap.Icon(
+      'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMxMTk1MDc3NjM5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjExMjQ1IiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik0xNTkuMjE1NDg0IDI4NC43MzgwNjVoNzE1LjQ3ODcxYzEzLjIxMjkwMyAwIDIzLjc4MzIyNi0xMC41NzAzMjMgMjMuNzgzMjI1LTIzLjc4MzIyNnMtMTAuNTcwMzIzLTIzLjc4MzIyNi0yMy43ODMyMjUtMjMuNzgzMjI2SDE1OS4yMTU0ODRjLTEzLjIxMjkwMyAwLTIzLjc4MzIyNiAxMC41NzAzMjMtMjMuNzgzMjI2IDIzLjc4MzIyNnMxMC41NzAzMjMgMjMuNzgzMjI2IDIzLjc4MzIyNiAyMy43ODMyMjYiIHAtaWQ9IjExMjQ2IiBmaWxsPSIjZDgxZTA2Ij48L3BhdGg+PHBhdGggZD0iTTM1Ny40MDkwMzIgMzU2LjA4Nzc0MnY0MTMuNTYzODcxYzAgMTMuMjEyOTAzIDEwLjU3MDMyMyAyMy43ODMyMjYgMjMuNzgzMjI2IDIzLjc4MzIyNnMyMy43ODMyMjYtMTAuNTcwMzIzIDIzLjc4MzIyNi0yMy43ODMyMjZWMzU2LjA4Nzc0MmMwLTEzLjIxMjkwMy0xMC41NzAzMjMtMjMuNzgzMjI2LTIzLjc4MzIyNi0yMy43ODMyMjYtMTIuNTUyMjU4IDAtMjMuNzgzMjI2IDEwLjU3MDMyMy0yMy43ODMyMjYgMjMuNzgzMjI2IiBwLWlkPSIxMTI0NyIgZmlsbD0iI2Q4MWUwNiI+PC9wYXRoPjxwYXRoIGQ9Ik01MDAuNzY5MDMyIDM1Ni4wODc3NDJ2NDEzLjU2Mzg3MWMwIDEzLjIxMjkwMyAxMC41NzAzMjMgMjMuNzgzMjI2IDIzLjc4MzIyNiAyMy43ODMyMjZzMjMuNzgzMjI2LTEwLjU3MDMyMyAyMy43ODMyMjYtMjMuNzgzMjI2VjM1Ni4wODc3NDJjMC0xMy4yMTI5MDMtMTAuNTcwMzIzLTIzLjc4MzIyNi0yMy43ODMyMjYtMjMuNzgzMjI2cy0yMy43ODMyMjYgMTAuNTcwMzIzLTIzLjc4MzIyNiAyMy43ODMyMjYiIHAtaWQ9IjExMjQ4IiBmaWxsPSIjZDgxZTA2Ij48L3BhdGg+PHBhdGggZD0iTTYyNy42MTI5MDMgMzU2LjA4Nzc0MnY0MTMuNTYzODcxYzAgMTMuMjEyOTAzIDEwLjU3MDMyMyAyMy43ODMyMjYgMjMuNzgzMjI2IDIzLjc4MzIyNnMyMy43ODMyMjYtMTAuNTcwMzIzIDIzLjc4MzIyNi0yMy43ODMyMjZWMzU2LjA4Nzc0MmMwLTEzLjIxMjkwMy0xMC41NzAzMjMtMjMuNzgzMjI2LTIzLjc4MzIyNi0yMy43ODMyMjZTNjI3LjYxMjkwMyAzNDIuODc0ODM5IDYyNy42MTI5MDMgMzU2LjA4Nzc0MiIgcC1pZD0iMTEyNDkiIGZpbGw9IiNkODFlMDYiPjwvcGF0aD48cGF0aCBkPSJNNzU1LjExNzQxOSAyNzYuODEwMzIzdjU0MC40MDc3NDJjMCAxMy4yMTI5MDMtMTAuNTcwMzIzIDIzLjc4MzIyNi0yMy43ODMyMjUgMjMuNzgzMjI1aC00MjkuNDE5MzU1Yy0xMy4yMTI5MDMgMC0yMy43ODMyMjYtMTAuNTcwMzIzLTIzLjc4MzIyNi0yMy43ODMyMjVWMjc2LjgxMDMyM2MwLTEzLjIxMjkwMy0xMC41NzAzMjMtMjMuNzgzMjI2LTIzLjc4MzIyNi0yMy43ODMyMjZzLTIzLjc4MzIyNiAxMC41NzAzMjMtMjMuNzgzMjI2IDIzLjc4MzIyNnY1NDAuNDA3NzQyYzAgMzkuNjM4NzEgMzEuNzEwOTY4IDcxLjM0OTY3NyA3MS4zNDk2NzggNzEuMzQ5Njc3aDQyOS40MTkzNTVjMzkuNjM4NzEgMCA3MS4zNDk2NzctMzEuNzEwOTY4IDcxLjM0OTY3Ny03MS4zNDk2NzdWMjc2LjgxMDMyM2MwLTEzLjIxMjkwMy0xMC41NzAzMjMtMjMuNzgzMjI2LTIzLjc4MzIyNi0yMy43ODMyMjZzLTIzLjc4MzIyNiAxMC41NzAzMjMtMjMuNzgzMjI2IDIzLjc4MzIyNnoiIHAtaWQ9IjExMjUwIiBmaWxsPSIjZDgxZTA2Ij48L3BhdGg+PHBhdGggZD0iTTM4OS43ODA2NDUgMjQ1LjA5OTM1NXYtNDcuNTY2NDUyYzAtMjEuODAxMjkgMTcuODM3NDE5LTM5LjYzODcxIDM5LjYzODcxLTM5LjYzODcwOWgxNzUuMDcwOTY4YzIxLjgwMTI5IDAgMzkuNjM4NzEgMTcuODM3NDE5IDM5LjYzODcwOSAzOS42Mzg3MDl2NDcuNTY2NDUyYzAgMTMuMjEyOTAzIDEwLjU3MDMyMyAyMy43ODMyMjYgMjMuNzgzMjI2IDIzLjc4MzIyNnMyMy43ODMyMjYtMTAuNTcwMzIzIDIzLjc4MzIyNi0yMy43ODMyMjZ2LTQ3LjU2NjQ1MmMwLTQ4LjIyNzA5Ny0zOC45NzgwNjUtODcuMjA1MTYxLTg3LjIwNTE2MS04Ny4yMDUxNjFINDI5LjQxOTM1NWMtNDguMjI3MDk3IDAtODcuMjA1MTYxIDM4Ljk3ODA2NS04Ny4yMDUxNjEgODcuMjA1MTYxdjQ3LjU2NjQ1MmMwIDEzLjIxMjkwMyAxMC41NzAzMjMgMjMuNzgzMjI2IDIzLjc4MzIyNSAyMy43ODMyMjYgMTIuNTUyMjU4IDAgMjMuNzgzMjI2LTEwLjU3MDMyMyAyMy43ODMyMjYtMjMuNzgzMjI2eiIgcC1pZD0iMTEyNTEiIGZpbGw9IiNkODFlMDYiPjwvcGF0aD48L3N2Zz4=',
+      // @ts-ignore
+      new BMap.Size(30, 30),
+    );
+
+    // @ts-ignore
+    const pixel = context.pointToPixel(point);
+    pixel.x += 22;
+    pixel.y += 30;
+
+    point = context.pixelToPoint(pixel);
+
+    // @ts-ignore
+    const pt = new BMap.Point(point.x, point.y);
+
+    // @ts-ignore
+    this.deleteMarker = new BMap.Marker(pt, {
+      icon,
+    });
+
+    // @ts-ignore
+    this.deleteMarker.addEventListener('click', () => {
+
+    });
+
+    // @ts-ignore
+    map.addOverlay(this.deleteMarker);
+  }
+
   getSelectType(): SelectType {
     return SelectType.Distance;
   }
 
   start(style: IStyle) {
     const map = this?.context?.getMap();
-
     map.disableDragging();
     map.disableScrollWheelZoom();
     map.disableDoubleClickZoom();
@@ -554,14 +585,23 @@ class DistanceDrawAction extends PolygonDrawAction {
    * @override
    */
   end() {
-    super.end();
-
     const map = this?.context?.getMap();
     map.enableDragging();
     map.enableScrollWheelZoom();
     map.enableDoubleClickZoom();
     map.enableContinuousZoom();
     map.enablePinchToZoom();
+
+    const { context } = this;
+
+    DistanceDrawAction.drawDeleteMark({
+      context: context as IInteractionLayer,
+      point: (context as IInteractionLayer).pixelToPoint(
+        this.pointStack[this.pointStack.length - 1],
+      ),
+    });
+
+    super.end();
   }
 
   /**
