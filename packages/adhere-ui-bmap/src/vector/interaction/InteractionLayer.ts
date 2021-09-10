@@ -1,5 +1,6 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 import MathUtil from '@baifendian/adhere-util/lib/math';
+
 import {
   ActionStatus,
   IAction,
@@ -11,7 +12,6 @@ import {
   IListeners,
   IPoint,
 } from './types';
-
 import PolygonDrawAction from './draw/PolygonDrawAction';
 import CircleDrawAction from './draw/CircleDrawAction';
 import RectangleDrawAction from './draw/RectangleDrawAction';
@@ -20,16 +20,16 @@ import DiamondDrawAction from './draw/DiamondDrawAction';
 import StartDrawAction from './draw/StartDrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
 import Util from '../../util';
-import DistanceDrawAction from "./draw/DistanceDrawAction";
+import DistanceDrawAction from './draw/DistanceDrawAction';
 
 const selectorPrefix = 'adhere-ui-interactionlayer';
+const zIndex = 19999;
 
 /**
  * InteractionLayer
  * @class
  * @classdesc - InteractionLayer
  */
-// @ts-ignore
 class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // map
   protected map: any | null = null;
@@ -80,7 +80,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
       // @ts-ignore
       update: this.update,
       paneName: 'markerPane',
-      zIndex: 19999,
+      zIndex,
     });
 
     this.map = map;
@@ -148,11 +148,13 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
    * initEvents
    */
   protected initEvents(): void {
-    // 点击了el元素
+    /**
+     * 点击了el元素
+     */
     (this.el as HTMLElement).addEventListener('mouseup', (e: MouseEvent) => {
       if (!e) return;
 
-      if(e.detail >= 2) return;
+      if (e.detail >= 2) return;
 
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
@@ -232,16 +234,18 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
     // 创建一个观察器实例并传入回调函数
     this.canvasObserver = new MutationObserver((mutationsList, observer) => {
-      for(let mutation of mutationsList) {
-       if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-         (this.assistCanvasEl as HTMLCanvasElement).style.left = (this.canvasEl as HTMLCanvasElement).style.left;
-         (this.assistCanvasEl as HTMLCanvasElement).style.top = (this.canvasEl as HTMLCanvasElement).style.top;
+      for (let mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          (this.assistCanvasEl as HTMLCanvasElement).style.left = (this
+            .canvasEl as HTMLCanvasElement).style.left;
+          (this.assistCanvasEl as HTMLCanvasElement).style.top = (this
+            .canvasEl as HTMLCanvasElement).style.top;
         }
       }
     });
 
     // 以上述配置开始观察目标节点
-    this.canvasObserver.observe((this.canvasEl as HTMLCanvasElement), {
+    this.canvasObserver.observe(this.canvasEl as HTMLCanvasElement, {
       attributes: true,
     });
 
@@ -511,7 +515,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
    * @param canvasEl
    */
   setFrontCanvas(canvasEl: HTMLCanvasElement): void {
-    canvasEl.style.zIndex = `${19999 + 1}`;
+    canvasEl.style.zIndex = `${zIndex + 1}`;
   }
 
   /**
@@ -520,7 +524,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
    * @param canvasEl
    */
   setBackCanvas(canvasEl: HTMLCanvasElement): void {
-    canvasEl.style.zIndex = `${19999 - 1}`;
+    canvasEl.style.zIndex = `${zIndex - 1}`;
   }
 
   /**

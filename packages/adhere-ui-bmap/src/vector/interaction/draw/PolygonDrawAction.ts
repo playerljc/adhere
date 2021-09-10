@@ -184,11 +184,13 @@ class PolygonDrawAction extends DrawAction {
    * @param eP
    */
   protected drawLine(sP: IPoint, eP: IPoint): void {
-    if (!this.context) return;
+    const { context } = this;
+
+    if (!context) return;
 
     const { style } = this;
 
-    const ctx = this.context.getCtx();
+    const ctx = context.getCtx();
 
     if (!ctx) return;
 
@@ -197,6 +199,10 @@ class PolygonDrawAction extends DrawAction {
     ctx.moveTo(sP.x, sP.y);
 
     ctx.lineTo(eP.x, eP.y);
+
+    ctx.strokeStyle = style.strokeStyle;
+
+    ctx.fillStyle = style.fillStyle;
 
     ctx.lineWidth = style.lineWidth;
 
@@ -256,7 +262,7 @@ class PolygonDrawAction extends DrawAction {
       return;
     }
 
-    if(e.detail >= 2) {
+    if (e.detail >= 2) {
       return;
     }
 
@@ -306,27 +312,29 @@ class PolygonDrawAction extends DrawAction {
    * @param e
    */
   protected onCanvasMousemove(e): void {
-    if (!this.context) return;
-    if (!this.startPoint) return;
+    const { context, startPoint } = this;
 
-    const canvasEl = this.context.getCanvasEl();
+    if (!context) return;
+    if (!startPoint) return;
+
+    const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
 
     this.isMove = true;
 
     // 如果有startPoint,擦除绘制直线
-    this.context.clearDraw();
+    context.clearDraw();
 
     // 绘制历史数据
-    this.context.drawHistoryData();
+    context.drawHistoryData();
 
     // 绘制stack数据
     this.drawStack();
 
     // drawLine
     this.drawLine(
-      this.startPoint,
+      startPoint,
       MathUtil.clientToCtxPoint({
         event: e,
         rect: canvasEl?.getBoundingClientRect(),
@@ -340,7 +348,6 @@ class PolygonDrawAction extends DrawAction {
    * onCanvasDbClick - 结束绘制
    */
   protected onCanvasDbClick(e): void {
-    console.log('多边形dbClick');
     if (!this.isMove) return;
 
     this.end();
@@ -361,9 +368,9 @@ class PolygonDrawAction extends DrawAction {
    * @param style
    */
   start(style: IStyle): void {
-    if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
+    const { context, status } = this;
 
-    const { context } = this;
+    if (!context || [ActionStatus.Running, ActionStatus.Destroy].includes(status)) return;
 
     if (!context) return;
 

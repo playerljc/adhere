@@ -1,6 +1,4 @@
-// @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math.js';
-// @ts-ignore
 import Intl from '@baifendian/adhere-util-intl';
 
 import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
@@ -9,13 +7,20 @@ import PolygonDrawAction from './PolygonDrawAction';
 import DistancePointStyle from '../../style/DistancePointStyle';
 import RadiusRectGeometry from '../../geom/RadiusRectGeometry';
 import GeometryStyle from '../../style/GeometryStyle';
+import DefaultStyle from '../DefaultStyle';
 
 /**
  * DistanceDrawAction
  * @class DistanceDrawAction
- * @classdesc 测距离
+ * @classdesc 测距
  */
 class DistanceDrawAction extends PolygonDrawAction {
+  // @ts-ignore
+  protected style: IStyle = {
+    ...DefaultStyle,
+    strokeStyle: 'red',
+  };
+
   constructor() {
     super();
 
