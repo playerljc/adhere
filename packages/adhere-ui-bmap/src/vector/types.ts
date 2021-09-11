@@ -1,5 +1,6 @@
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import { IPoint } from './interaction/types';
 
 /**
  * GeometryType
@@ -672,4 +673,91 @@ export enum GeoJSONType {
   GeometryCollection = 'GeometryCollection',
   Feature = 'Feature',
   FeatureCollection = 'FeatureCollection',
+}
+
+/**
+ * ITrajectoryPlayBackLayer
+ * @description - 轨迹回放的Layer
+ */
+export interface ITrajectoryPlayBackLayer {
+  getEmitter: () => Emitter;
+  update: () => void;
+  getMap: () => any;
+
+  getCanvasEl(): HTMLCanvasElement | null;
+  getCtx(): CanvasRenderingContext2D | null;
+  pixelToPoint: (pixel: IPoint) => IPoint;
+  /**
+   * distanceToActual - 图上距离转换成实际距离
+   * @param distance
+   */
+  distanceToActual: (distance: number) => number;
+  /**
+   * pointToPixel
+   * @param point
+   */
+  pointToPixel(point: IPoint): IPoint;
+  /**
+   * actualToDistance - 实际距离转换成图上距离
+   * @param actual
+   */
+  actualToDistance(actual: number): number;
+
+  // 放入一个轨迹
+  addTrajectory(trajectory: ITrajectory): void;
+  // 删除一个轨迹
+  removeTrajectory(trajectory: ITrajectory): void;
+  // 删除一个轨迹通过id
+  removeTrajectoryById(id: string): void;
+  // 清空所有轨迹
+  clean(): void;
+  // 获取一个轨迹
+  getTrajectoryById(id: string): ITrajectory | null | undefined;
+  // 获取所有轨迹
+  getTrajectorys(): ITrajectory[];
+  // 是否含有置顶轨迹
+  hasTrajectoryById(id: string): boolean;
+  clear(): void;
+  drawHistory(): void;
+}
+
+/**
+ * ITrajectory
+ * @description - 一个轨迹
+ */
+export interface ITrajectory {
+  // 初始化
+  init(): void;
+  // 开始
+  start(): void;
+  // 暂停
+  pause(): void;
+  // 恢复
+  resume(): void;
+  // 结束
+  finish(): void;
+  // 获取id
+  getId(): string;
+  // 销毁
+  destroy(): void;
+  getStatus(): TrajectoryStatus;
+  drawHistory(): void;
+}
+
+/**
+ * TrajectoryStatus
+ */
+export enum TrajectoryStatus {
+  // 未初始化
+  UnInit,
+  // 初始化完成
+  Init,
+  // 进行中
+  Running,
+  // 暂停
+  Pause,
+  // 结束
+  End,
+  // 销毁
+  Destroy,
 }
