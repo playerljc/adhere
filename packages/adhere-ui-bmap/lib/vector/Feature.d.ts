@@ -1,4 +1,4 @@
-import { IVectorLayer, IFeatureParams, IVectorSource, IFeature, IGeometry, IStyle, IPixel } from './types';
+import { IVectorLayer, IFeatureParams, IVectorSource, IFeature, IGeometry, IGeometryStyle, IPixel } from './types';
 /**
  * Feature
  * @class Feature
@@ -7,7 +7,7 @@ import { IVectorLayer, IFeatureParams, IVectorSource, IFeature, IGeometry, IStyl
 declare class Feature implements IFeature {
     name: string;
     id: string;
-    style: IStyle;
+    style: IGeometryStyle;
     zIndex: number;
     properties: object;
     geometry: IGeometry;
@@ -18,19 +18,19 @@ declare class Feature implements IFeature {
     getGeometry(): IGeometry;
     getId(): string;
     getName(): string;
-    getStyle(): IStyle;
+    getStyle(): IGeometryStyle;
     getZIndex(): number;
     getProperties(): object;
     setGeometry(geom: IGeometry): void;
-    setStyle(style: IStyle): void;
+    setStyle(style: IGeometryStyle): void;
     setId(id: string): void;
     setName(name: string): void;
     setZIndex(zIndex: number): void;
     setProperties(properties: object): void;
     getContext(): IVectorSource;
     setContext(context: IVectorSource): void;
-    getLayer(): IVectorLayer;
+    getLayer(): IVectorLayer | null;
     getMap(): any;
-    isPointInFeature(pixel: IPixel, style?: IStyle): boolean;
+    isPointInFeature(pixel: IPixel, style: IGeometryStyle): boolean;
 }
 export default Feature;

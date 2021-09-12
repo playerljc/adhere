@@ -1,5 +1,6 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-import { IVectorSource, IFeature, IVectorLayer } from './types';
+import { IVectorSource, IFeature, IVectorLayer, GeoJSONNode } from './types';
+import Geometry from './geom/Geometry';
 /**
  * VectorSource
  * @class VectorSource
@@ -21,6 +22,24 @@ declare class VectorSource extends Emitter implements IVectorSource {
     getFeatures(): IFeature[];
     hasFeature(feature: IFeature): boolean;
     hasFeatureById(id: string): boolean;
+    /**
+     * readGeoJSON - 读取GeoJSON数据转换成features
+     * @param geoJSON
+     * @param onForeachGeom
+     * @return void
+     */
+    readGeoJSON(geoJSON: GeoJSONNode, onForeachGeom: (geom: Geometry) => IFeature): void;
+    /**
+     * appendGeoJSON - 向画布追加GeoJSON的数据
+     * @param geoJSON
+     * @param onForeachGeom
+     */
+    appendGeoJSON(geoJSON: GeoJSONNode, onForeachGeom: (geom: Geometry) => IFeature): void;
+    /**
+     * featuresToGeoJSON - features转换成GeoJSON
+     * @return any
+     */
+    featuresToGeoJSON(): GeoJSONNode;
     setContext(context: IVectorLayer): void;
     getContext(): IVectorLayer | null;
 }

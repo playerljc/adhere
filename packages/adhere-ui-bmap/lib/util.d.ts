@@ -1,3 +1,4 @@
+import { IPixel } from './vector/types';
 declare const _default: {
     /**
      * flyToChina - 设置地图的zoom为全中国
@@ -100,5 +101,16 @@ declare const _default: {
             y: number;
         };
     };
+    clientToCtxPointToEl({ event, rect, offsetEl, }: {
+        event: MouseEvent;
+        rect: DOMRect;
+        offsetEl: HTMLElement;
+    }): IPixel;
+    clientToCtxPoint({ event, rect, offsetLeft, offsetTop, }: {
+        event: MouseEvent;
+        rect: DOMRect;
+        offsetLeft: number;
+        offsetTop: number;
+    }): IPixel;
 };
 export default _default;

@@ -1,29 +1,30 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import { IPoint } from './interaction/types';
 /**
  * GeometryType
  */
 export declare enum GeometryType {
-    Point = 0,
-    MulitPoint = 1,
-    Circle = 2,
-    MulitCircle = 3,
-    LineString = 4,
-    MulitLineString = 5,
-    Polygon = 6,
-    MulitPolygon = 7,
-    Rect = 8,
-    RadiusRect = 9,
-    MulitRadiusRect = 10,
-    Leaf = 11,
-    MulitLeaf = 12,
-    MulitRect = 13,
-    Text = 14,
-    RegularPolygon = 15,
-    MulitRegularPolygon = 16,
-    Start = 17,
-    MulitStart = 18,
-    Sector = 19,
-    MulitSector = 20
+    Point = "Point",
+    MulitPoint = "MulitPoint",
+    Circle = "Circle",
+    MulitCircle = "MulitCircle",
+    LineString = "LineString",
+    MulitLineString = "MulitLineString",
+    Polygon = "Polygon",
+    MulitPolygon = "MulitPolygon",
+    Rect = "Rect",
+    RadiusRect = "RadiusRect",
+    MulitRadiusRect = "MulitRadiusRect",
+    Leaf = "Leaf",
+    MulitLeaf = "MulitLeaf",
+    MulitRect = "MulitRect",
+    Text = "Text",
+    RegularPolygon = "RegularPolygon",
+    MulitRegularPolygon = "MulitRegularPolygon",
+    Start = "Start",
+    MulitStart = "MulitStart",
+    Sector = "Sector",
+    MulitSector = "MulitSector"
 }
 /**
  * IGeometryStyle
@@ -336,7 +337,7 @@ export interface IFeature {
     setProperties: (properties: object) => void;
     setContext: (context: IVectorSource) => void;
     draw: (ctx: CanvasRenderingContext2D) => void;
-    isPointInFeature: (pixel: IPixel, style?: IGeometryStyle) => boolean;
+    isPointInFeature: (pixel: IPixel, style: IGeometryStyle) => boolean;
 }
 /**
  * IInnerTextFeature
@@ -355,6 +356,7 @@ export interface IFeatureParams {
     id: string;
     style: IGeometryStyle;
     geometry: IGeometry;
+    properties: object;
 }
 /**
  * IInnerTextFeatureParams
@@ -381,6 +383,8 @@ export interface IVectorSource {
     removeFeatureById: (id: string) => void;
     setContext: (context: IVectorLayer) => void;
     getContext: () => IVectorLayer | null;
+    readGeoJSON: (geoJSON: any, onForeachStyle: (geom: IGeometry) => IFeature) => void;
+    featuresToGeoJSON: () => any;
 }
 /**
  * IVectorLayer - 代表一个向量层
@@ -423,5 +427,178 @@ export interface IVectorLayerConfig {
  * VectorActions
  */
 export declare enum VectorActions {
-    UPDATE = "UPDATE"
+    UPDATE = "UPDATE",
+    APPEND = "APPEND"
+}
+/**
+ * ImageCacheClass
+ */
+export interface ImageCacheClass {
+    add(key: ImageCacheKey, image: HTMLImageElement): Map<string, HTMLImageElement>;
+    get(key: ImageCacheKey): HTMLImageElement | null | undefined;
+    delete(key: ImageCacheKey): boolean;
+    clear(): void;
+    values(): HTMLImageElement[];
+    keys(): ImageCacheKey[];
+}
+/**
+ * ImageCacheKey
+ */
+export interface ImageCacheKey {
+    src: string;
+    width: number;
+    height: number;
+}
+/**
+ * Point
+ * MultiPoint
+ * LineString
+ * MultiLineString
+ * Polygon
+ * MultiPolygon
+ * GeometryCollection
+ * Feature
+ * FeatureCollection
+ */
+/**
+ * IGeoJSONPoint
+ */
+export interface IGeoJSONPoint {
+    readonly type: 'Point';
+    coordinates: number[];
+}
+/**
+ * IGeoJSONMulitPoint
+ */
+export interface IGeoJSONMulitPoint {
+    readonly type: 'MultiPoint';
+    coordinates: Array<number[]>;
+}
+/**
+ * IGeoJSONLineString
+ */
+export interface IGeoJSONLineString {
+    readonly type: 'LineString';
+    coordinates: Array<number[]>;
+}
+/**
+ * IGeoJSONMultiLineString
+ */
+export interface IGeoJSONMultiLineString {
+    readonly type: 'MultiLineString';
+    coordinates: Array<Array<number[]>>;
+}
+/**
+ * IGeoJSONPolygon
+ */
+export interface IGeoJSONPolygon {
+    readonly type: 'Polygon';
+    coordinates: Array<number[]>;
+}
+/**
+ * IGeoJSONMultiPolygon
+ */
+export interface IGeoJSONMultiPolygon {
+    readonly type: 'MultiPolygon';
+    coordinates: Array<Array<number[]>>;
+}
+/**
+ * IGeoJSONGeometryCollection
+ */
+export interface IGeoJSONGeometryCollection {
+    readonly type: 'GeometryCollection';
+    geometries: Array<Geometry>;
+}
+/**
+ * IGeoJSONFeature
+ */
+export interface IGeoJSONFeature {
+    readonly type: 'Feature';
+    geometry: Geometry;
+    properties: object;
+    id: string;
+    bbox?: number[];
+}
+/**
+ * IGeoJSONFeatureCollection
+ */
+export interface IGeoJSONFeatureCollection {
+    type: 'FeatureCollection';
+    features: IGeoJSONFeature[];
+    bbox?: number[];
+}
+export declare type Geometry = IGeoJSONPoint | IGeoJSONMulitPoint | IGeoJSONLineString | IGeoJSONMultiLineString | IGeoJSONPolygon | IGeoJSONMultiPolygon | IGeoJSONGeometryCollection;
+export declare type GeoJSONNode = Geometry | IGeoJSONFeature | IGeoJSONFeatureCollection;
+export declare enum GeoJSONType {
+    Point = "Point",
+    MultiPoint = "MultiPoint",
+    LineString = "LineString",
+    MultiLineString = "MultiLineString",
+    Polygon = "Polygon",
+    MultiPolygon = "MultiPolygon",
+    GeometryCollection = "GeometryCollection",
+    Feature = "Feature",
+    FeatureCollection = "FeatureCollection"
+}
+/**
+ * ITrajectoryPlayBackLayer
+ * @description - 轨迹回放的Layer
+ */
+export interface ITrajectoryPlayBackLayer {
+    getEmitter: () => Emitter;
+    update: () => void;
+    getMap: () => any;
+    getCanvasEl(): HTMLCanvasElement | null;
+    getCtx(): CanvasRenderingContext2D | null;
+    pixelToPoint: (pixel: IPoint) => IPoint;
+    /**
+     * distanceToActual - 图上距离转换成实际距离
+     * @param distance
+     */
+    distanceToActual: (distance: number) => number;
+    /**
+     * pointToPixel
+     * @param point
+     */
+    pointToPixel(point: IPoint): IPoint;
+    /**
+     * actualToDistance - 实际距离转换成图上距离
+     * @param actual
+     */
+    actualToDistance(actual: number): number;
+    addTrajectory(trajectory: ITrajectory): void;
+    removeTrajectory(trajectory: ITrajectory): void;
+    removeTrajectoryById(id: string): void;
+    clean(): void;
+    getTrajectoryById(id: string): ITrajectory | null | undefined;
+    getTrajectorys(): ITrajectory[];
+    hasTrajectoryById(id: string): boolean;
+    clear(): void;
+    drawHistory(): void;
+}
+/**
+ * ITrajectory
+ * @description - 一个轨迹
+ */
+export interface ITrajectory {
+    init(): void;
+    start(): void;
+    pause(): void;
+    resume(): void;
+    finish(): void;
+    getId(): string;
+    destroy(): void;
+    getStatus(): TrajectoryStatus;
+    drawHistory(): void;
+}
+/**
+ * TrajectoryStatus
+ */
+export declare enum TrajectoryStatus {
+    UnInit = 0,
+    Init = 1,
+    Running = 2,
+    Pause = 3,
+    End = 4,
+    Destroy = 5
 }
