@@ -1,11 +1,6 @@
 import Emitter from '@baifendian/adhere-util-emitter/lib/events';
 
-import {
-  ITrajectory,
-  ITrajectoryPlayBackLayer,
-  IVectorLayerConfig,
-  TrajectoryStatus,
-} from '../../types';
+import { ITrajectory, ITrajectoryPlayBackLayer, TrajectoryStatus } from '../../types';
 import { InteractionLayerActions, IPoint } from '../../interaction/types';
 import Util from '../../../util';
 
@@ -18,7 +13,18 @@ const selectorPrefix = 'adhere-ui-trajectoryplaybacklayer';
  */
 class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPlayBackLayer {
   protected map: any;
-  protected config: IVectorLayerConfig;
+  protected config: {
+    paneName:
+      | 'floatPane'
+      | 'floatShadow'
+      | 'labelPane'
+      | 'mapPane'
+      | 'markerMouseTarget'
+      | 'markerPane'
+      | 'markerShadow'
+      | 'vertexPane';
+    zIndex: number;
+  };
   protected emitter: Emitter = new Emitter();
   protected isLoad: boolean = false;
   protected source: ITrajectory[] = [];
@@ -31,7 +37,21 @@ class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPla
   protected ctx: CanvasRenderingContext2D | null = null;
 
   // @ts-ignore
-  constructor(map, config: IVectorLayerConfig) {
+  constructor(
+    map,
+    config: {
+      paneName:
+        | 'floatPane'
+        | 'floatShadow'
+        | 'labelPane'
+        | 'mapPane'
+        | 'markerMouseTarget'
+        | 'markerPane'
+        | 'markerShadow'
+        | 'vertexPane';
+      zIndex: number;
+    },
+  ) {
     // @ts-ignore
     this.update = this.update.bind(this);
 

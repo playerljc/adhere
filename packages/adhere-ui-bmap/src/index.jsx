@@ -6,13 +6,13 @@ import BMap from './bmap';
 
 import styles from './temp.less';
 
-import './index.less';
-
 import citys from './citys.json';
 
 import isoline from './isoline';
 
 import icon from './站点.svg';
+
+import './index.less';
 
 const ref = React.createRef();
 
@@ -64,9 +64,12 @@ let WindLayer,
   StartModifyAction,
   Types,
   InteractionLayerActions,
-  ActionEvents;
+  ActionEvents,
+  Trajectory,
+  TrajectoryPlayBackLayer;
 
 let interactionLayer;
+let trajectoryPlayBackLayer;
 
 // ActionType
 let typeActionMap;
@@ -688,6 +691,60 @@ Intl.init({
             if (!interactionLayer) {
               interactionLayer = new InteractionLayer(map, [], {
                 [InteractionLayerActions.CanvasMount]: () => {
+                  const action = new CircleDrawAction();
+                  action.on(ActionEvents.End, (data) => {
+                    // action.start();
+                  });
+                  interactionLayer.changeAction(action);
+                  action.start();
+                },
+              });
+
+              // 点击了画布中的几何图形
+              interactionLayer.emitter.on(InteractionLayerActions.CanvasClickGeometry, (data) => {
+                const Component = typeActionMap.get(data.type);
+
+                const action = new Component({
+                  selectType: data.type,
+                  actionType: 'Draw',
+                  data,
+                });
+
+                action.on(ActionEvents.End, () => {
+                  action.start();
+                });
+
+                interactionLayer.changeAction(action);
+
+                action.start();
+              });
+
+              // 点击了画布的空位置
+              interactionLayer.emitter.on(InteractionLayerActions.CanvasClickEmpty, () => {
+                interactionLayer.changeAction(null);
+              });
+
+              map.addOverlay(interactionLayer);
+            } else {
+              const action = new CircleDrawAction();
+              action.on(ActionEvents.End, (data) => {
+                // action.start();
+              });
+              interactionLayer.changeAction(action);
+              action.start();
+            }
+          }}
+        >
+          交互式绘制
+        </button>
+
+        <button
+          onClick={() => {
+            const map = ref.current.getMap();
+
+            if (!interactionLayer) {
+              interactionLayer = new InteractionLayer(map, [], {
+                [InteractionLayerActions.CanvasMount]: () => {
                   const action = new DistanceDrawAction();
                   action.on(ActionEvents.End, (data) => {
                     // action.start();
@@ -732,7 +789,40 @@ Intl.init({
             }
           }}
         >
-          绘制圆形
+          测距
+        </button>
+        <button
+          onClick={() => {
+            const map = ref.current.getMap();
+
+            if (!trajectoryPlayBackLayer) {
+              trajectoryPlayBackLayer = new TrajectoryPlayBackLayer(map, {
+                paneName: 'floatPane',
+                zIndex: 20001,
+              });
+
+              map.addOverlay(trajectoryPlayBackLayer);
+
+              const trajector = new Trajectory({
+                context: trajectoryPlayBackLayer,
+                id: '1',
+                coordinates: citys.map((t) => ({ lng: t[0], lat: t[1] })),
+                duration: 60 * 2,
+              });
+
+              trajectoryPlayBackLayer.addTrajectory(trajector);
+
+              setTimeout(() => {
+                trajector.start();
+                // setTimeout(() => {
+                //   trajector.pause();
+                // },5000);
+              }, 3000);
+            } else {
+            }
+          }}
+        >
+          轨迹回放
         </button>
       </div>
 
@@ -740,7 +830,8 @@ Intl.init({
         <BMap
           ref={ref}
           ak="bxFuXXDt1oKdlgu6mXCCnK51cDgDGBLp"
-          zoom={15}
+          /*zoom={15}*/
+          zoom={6}
           onBMapScriptReady={() => {
             import('./windlayer').then((res) => {
               WindLayer = res.default;
@@ -830,6 +921,14 @@ Intl.init({
 
             import('./vector/geom/TextGeometry').then((res) => {
               TextGeometry = res.default;
+            });
+
+            import('./vector/trajectory/playback/Trajectory').then((res) => {
+              Trajectory = res.default;
+            });
+
+            import('./vector/trajectory/playback/TrajectoryPlayBackLayer').then((res) => {
+              TrajectoryPlayBackLayer = res.default;
             });
 
             import('./vector/interaction').then((res) => {

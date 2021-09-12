@@ -131,40 +131,40 @@ export default {
   },
   /**
    * midpoint - 计算两个点的中心点
-   * @param startPoint
-   * @param endPoint
+   * @param fromPoint
+   * @param toPoint
    * @return IPoint
    */
-  midpoint(startPoint: IPoint, endPoint: IPoint): IPoint {
-    return { x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2 };
+  midpoint(fromPoint: IPoint, toPoint: IPoint): IPoint {
+    return { x: (fromPoint.x + toPoint.x) / 2, y: (fromPoint.y + toPoint.y) / 2 };
   },
   /**
    * slope - 计算两个点的斜率
-   * @param startPoint
-   * @param endPoint
+   * @param fromPoint
+   * @param toPoint
    * @return number
    */
-  slope(startPoint: IPoint, endPoint: IPoint) {
-    if (startPoint.x === endPoint.x) return 0;
+  slope(fromPoint: IPoint, toPoint: IPoint) {
+    if (fromPoint.x === toPoint.x) return 0;
 
-    return (endPoint.y - startPoint.y) / (endPoint.x - startPoint.x);
+    return (toPoint.y - fromPoint.y) / (toPoint.x - fromPoint.x);
   },
   /**
    * slopToRadian - 获取两点斜率的弧度
-   * @param startPoint
-   * @param endPoint
+   * @param fromPoint
+   * @param toPoint
    * @param yAxis cartesian(平面) | geographic(地理)
    */
   slopToRadian(
-    startPoint: IPoint,
-    endPoint: IPoint,
+    fromPoint: IPoint,
+    toPoint: IPoint,
     yAxis: 'cartesian' | 'geographic' = 'geographic',
   ): number {
-    const slope = this.slope(startPoint, endPoint);
+    const slope = this.slope(fromPoint, toPoint);
     if (slope === 0) {
       // 直角坐标系
       if (yAxis === 'cartesian') {
-        if (endPoint.y > startPoint.y) {
+        if (toPoint.y > fromPoint.y) {
           return this.angleToRadian(90);
         } else {
           return this.angleToRadian(270);
@@ -172,7 +172,7 @@ export default {
       }
       // 地理坐标系
       else if (yAxis === 'geographic') {
-        if (endPoint.y > startPoint.y) {
+        if (toPoint.y > fromPoint.y) {
           return this.angleToRadian(270);
         } else {
           return this.angleToRadian(90);
@@ -184,17 +184,17 @@ export default {
   },
   /**
    * slopToAngle - 获取两点斜率的角度
-   * @param startPoint
-   * @param endPoint
+   * @param fromPoint
+   * @param toPoint
    * @param yAxis
    * @return number - 角度
    */
   slopToAngle(
-    startPoint: IPoint,
-    endPoint: IPoint,
+    fromPoint: IPoint,
+    toPoint: IPoint,
     yAxis: 'cartesian' | 'geographic' = 'geographic',
   ): number {
-    const slopRadian = this.slopToRadian(startPoint, endPoint, yAxis);
+    const slopRadian = this.slopToRadian(fromPoint, toPoint, yAxis);
     return this.radianToAngle(slopRadian);
   },
   /**
@@ -222,6 +222,7 @@ export default {
   distance(value: number, unit: 'kilometer'): number {
     const map = new Map<string, number>([['kilometer', 1000]]);
 
+    // @ts-ignore
     return value / map.get(unit);
   },
   /**--------------------------math-end------------------------**/
