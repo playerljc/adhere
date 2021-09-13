@@ -1,4 +1,5 @@
 import * as turf from '@turf/turf';
+// @ts-ignore
 import MathUtil from '@baifendian/adhere-util/lib/math';
 
 import {
@@ -121,6 +122,7 @@ class Trajectory implements ITrajectory {
 
   /**
    * createDefaultCap
+   * @description - 创建缺省的箭头
    * @protected
    // * @param toPixel
    */
@@ -161,6 +163,12 @@ class Trajectory implements ITrajectory {
     });
   }
 
+  /**
+   * updateCap
+   * @param toPixel
+   * @protected
+   * @description - 更新arrow的位置和旋转角度
+   */
   protected updateCap(toPixel: IPixel): void {
     const { preLoopPixel, context, arrowMarker } = this;
     if (!context || !preLoopPixel || !arrowMarker) return;

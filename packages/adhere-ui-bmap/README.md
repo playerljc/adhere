@@ -1,17 +1,49 @@
-## 百度地图
-
-- VectorLayer
-- VectorSource
-- Geometry
-- DrawAction
-- ModifyAction
-- Geometry的点击
-- WindLayer(风场)
-- AirPressureLayer(气压)
-- 热力图-温度、湿度
-- TileLayer(图片层、栅格层)(待定)
-- Util
-
-百度地图的js并没有提供npm的安装方式
-
-
+### 百度地图
+* VectorLayer
+  - VectorSource
+  * Geometry  
+    - CircleGeometry
+    - LeafGeometry
+    - LineStringGeometry
+    - MulitCircleGeometry
+    - MulitLeafGeometry
+    - MulitLineStringGeometry
+    - MulitPointGeometry
+    - MulitPolygonGeometry
+    - MulitRadiusRectGeometry
+    - MulitRectGeometry
+    - MulitRegularPolygonGeometry
+    - MulitSectorGeometry
+    - MulitStartGeometry
+    - PointGeometry
+    - PolygonGeometry
+    - RadiusRectGeometry
+    - RectGeometry
+    - RegularPolygonGeometry
+    - SectorGeometry
+    - StartGeometry
+    - TextGeometry 
+  * Format
+    - GeoJSON  
+* interaction(交互式绘制)
+  * DrawAction
+    - CircleDrawAction
+    - DiamondDrawAction
+    - DistanceDrawAction
+    - FreeDrawAction
+    - PolygonDrawAction
+    - RectangleDrawAction
+    - StartDrawAction
+    - TriangleDrawAction 
+  * ModifyAction
+    - CircleModifyAction
+    - DiamondModifyAction
+    - PolygonModifyAction
+    - RectangleModifyAction
+    - StartModifyAction
+    - TriangleModifyAction
+* WindLayer(风场)
+* AirPressureLayer(气压)
+* 热力图-温度、湿度
+* 轨迹回放
+* Util

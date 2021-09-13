@@ -49,10 +49,17 @@ declare class Trajectory implements ITrajectory {
     protected drawDefaultPosition(coordinate: ICoordinate, index: number): void;
     /**
      * createDefaultCap
+     * @description - 创建缺省的箭头
      * @protected
      // * @param toPixel
      */
     protected createDefaultCap(): any;
+    /**
+     * updateCap
+     * @param toPixel
+     * @protected
+     * @description - 更新arrow的位置和旋转角度
+     */
     protected updateCap(toPixel: IPixel): void;
     /**
      * drawPosition

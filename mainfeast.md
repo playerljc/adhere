@@ -52,6 +52,7 @@
 - adhere-ui-polygonselection
 - adhere-util-domain
 - adhere-ui-playground
+- adhere-ui-bmap
 
 ### 没有落实有雏形的组件
 
