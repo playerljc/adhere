@@ -142,59 +142,80 @@ export default {
    * slope - 计算两个点的斜率
    * @param fromPoint
    * @param toPoint
-   * @return number
+   * @param axis - 'cartesian' | 'geographic'
+   * @return number | undefined
    */
-  slope(fromPoint: IPoint, toPoint: IPoint) {
-    if (fromPoint.x === toPoint.x) return 0;
+  slope(
+    fromPoint: IPoint,
+    toPoint: IPoint,
+    // cartesian 平面直角坐标系
+    // geographic 地理坐标系
+    axis: 'cartesian' | 'geographic' = 'geographic',
+  ): number | undefined {
+    // 垂直
+    if (fromPoint.x === toPoint.x) return undefined;
 
-    return (toPoint.y - fromPoint.y) / (toPoint.x - fromPoint.x);
+    // 平行
+    if (fromPoint.y === toPoint.y) return 0;
+
+    // 有角度
+    const slope = (toPoint.y - fromPoint.y) / (toPoint.x - fromPoint.x);
+
+    // 如果是地理坐标系则取负值
+    return axis === 'geographic' ? -slope : slope;
   },
   /**
    * slopToRadian - 获取两点斜率的弧度
    * @param fromPoint
    * @param toPoint
-   * @param yAxis cartesian(平面) | geographic(地理)
+   * @param axis cartesian(平面) | geographic(地理)
    */
   slopToRadian(
     fromPoint: IPoint,
     toPoint: IPoint,
-    yAxis: 'cartesian' | 'geographic' = 'geographic',
+    axis: 'cartesian' | 'geographic' = 'geographic',
   ): number {
+    // 斜率
     const slope = this.slope(fromPoint, toPoint);
-    if (slope === 0) {
-      // 直角坐标系
-      if (yAxis === 'cartesian') {
-        if (toPoint.y > fromPoint.y) {
-          return this.angleToRadian(90);
-        } else {
-          return this.angleToRadian(270);
-        }
-      }
-      // 地理坐标系
-      else if (yAxis === 'geographic') {
-        if (toPoint.y > fromPoint.y) {
-          return this.angleToRadian(270);
-        } else {
-          return this.angleToRadian(90);
-        }
-      }
-    }
 
-    return Math.atan(slope);
+    // 垂直
+    if (slope === 0) {
+      return fromPoint.x < toPoint.x ? this.angleToRadian(0) : this.angleToRadian(180);
+    }
+    // 平行
+    else if (slope === undefined) {
+      return axis === 'cartesian'
+        ? fromPoint.y <= toPoint.y
+          ? this.angleToRadian(90)
+          : this.angleToRadian(-90)
+        : fromPoint.y <= toPoint.y
+        ? this.angleToRadian(-90)
+        : this.angleToRadian(90);
+    }
+    // 有角度
+    else {
+      const dy = toPoint.y - fromPoint.y;
+      const dx = toPoint.x - fromPoint.x;
+      const degrees = Math.atan2(dy, dx);
+      return axis === 'cartesian' ? degrees : -degrees;
+    }
   },
   /**
    * slopToAngle - 获取两点斜率的角度
    * @param fromPoint
    * @param toPoint
-   * @param yAxis
+   * @param axis
    * @return number - 角度
    */
   slopToAngle(
     fromPoint: IPoint,
     toPoint: IPoint,
-    yAxis: 'cartesian' | 'geographic' = 'geographic',
+    axis: 'cartesian' | 'geographic' = 'geographic',
   ): number {
-    const slopRadian = this.slopToRadian(fromPoint, toPoint, yAxis);
+    // 获取斜率的弧度
+    const slopRadian = this.slopToRadian(fromPoint, toPoint, axis);
+
+    // 弧度转换成角度
     return this.radianToAngle(slopRadian);
   },
   /**

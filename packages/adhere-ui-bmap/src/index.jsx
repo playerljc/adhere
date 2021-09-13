@@ -814,9 +814,9 @@ Intl.init({
 
               setTimeout(() => {
                 trajector.start();
-                // setTimeout(() => {
-                //   trajector.pause();
-                // },5000);
+                setTimeout(() => {
+                  trajector.pause();
+                },5000);
               }, 3000);
             } else {
             }

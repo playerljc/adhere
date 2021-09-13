@@ -81,33 +81,34 @@ declare const _default: {
     }): number;
     /**
      * midpoint - 计算两个点的中心点
-     * @param startPoint
-     * @param endPoint
+     * @param fromPoint
+     * @param toPoint
      * @return IPoint
      */
-    midpoint(startPoint: IPoint, endPoint: IPoint): IPoint;
+    midpoint(fromPoint: IPoint, toPoint: IPoint): IPoint;
     /**
      * slope - 计算两个点的斜率
-     * @param startPoint
-     * @param endPoint
-     * @return number
+     * @param fromPoint
+     * @param toPoint
+     * @param axis - 'cartesian' | 'geographic'
+     * @return number | undefined
      */
-    slope(startPoint: IPoint, endPoint: IPoint): number;
+    slope(fromPoint: IPoint, toPoint: IPoint, axis?: 'cartesian' | 'geographic'): number | undefined;
     /**
      * slopToRadian - 获取两点斜率的弧度
-     * @param startPoint
-     * @param endPoint
-     * @param yAxis cartesian(平面) | geographic(地理)
+     * @param fromPoint
+     * @param toPoint
+     * @param axis cartesian(平面) | geographic(地理)
      */
-    slopToRadian(startPoint: IPoint, endPoint: IPoint, yAxis?: 'cartesian' | 'geographic'): number;
+    slopToRadian(fromPoint: IPoint, toPoint: IPoint, axis?: 'cartesian' | 'geographic'): number;
     /**
      * slopToAngle - 获取两点斜率的角度
-     * @param startPoint
-     * @param endPoint
-     * @param yAxis
+     * @param fromPoint
+     * @param toPoint
+     * @param axis
      * @return number - 角度
      */
-    slopToAngle(startPoint: IPoint, endPoint: IPoint, yAxis?: 'cartesian' | 'geographic'): number;
+    slopToAngle(fromPoint: IPoint, toPoint: IPoint, axis?: 'cartesian' | 'geographic'): number;
     /**
      * radianToAngle - 弧度转换成角度
      * @param radian - 弧度

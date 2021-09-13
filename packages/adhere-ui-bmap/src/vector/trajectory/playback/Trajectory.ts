@@ -170,14 +170,16 @@ class Trajectory implements ITrajectory {
     const dx = toPixel.x - preLoopPixel.x;
     const dy = toPixel.y - preLoopPixel.y;
     const rotation = Math.atan2(dy, dx);
+    const degrees1 = rotation * (180 / Math.PI);
 
-    const degrees = rotation * (180 / Math.PI);
+    const degrees = MathUtil.slopToAngle(preLoopPixel, toPixel, 'geographic');
 
+    console.log(-degrees1, degrees);
     // const angle = MathUtil.radianToAngle(MathUtil.slope(preLoopPixel, toPixel));
 
     // @ts-ignore
     arrowMarker.setPosition(new BMap.Point(toPoint.x, toPoint.y));
-    arrowMarker.setRotation(-degrees);
+    arrowMarker.setRotation(degrees);
     // const angle1 =
     //   (Math.atan2(preLoopPixel.y - toPixel.y, preLoopPixel.x - toPixel.x) * 180) / Math.PI;
 

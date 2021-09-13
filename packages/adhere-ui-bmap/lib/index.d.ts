@@ -2,11 +2,13 @@ import BMap from './bmap';
 import BMapAirPressureLayer from './airpressurelayer';
 import HeatMapLayer from './heatmaplayer';
 import BMapWindLayer from './windlayer';
+import * as Vector from './vector';
 declare const _default: {
     BMap: typeof BMap;
     BMapWindLayer: typeof BMapWindLayer;
     BMapAirPressureLayer: typeof BMapAirPressureLayer;
     HeatMapLayer: typeof HeatMapLayer;
+    Vector: typeof Vector;
     Util: {
         flyToChina(map: any): void;
         fillCityBoundary(cityName: any, style: {
@@ -57,13 +59,13 @@ declare const _default: {
             event: MouseEvent;
             rect: DOMRect;
             offsetEl: HTMLElement;
-        }): import("./vector/types").IPixel;
+        }): Vector.Types.IPixel;
         clientToCtxPoint({ event, rect, offsetLeft, offsetTop, }: {
             event: MouseEvent;
             rect: DOMRect;
             offsetLeft: number;
             offsetTop: number;
-        }): import("./vector/types").IPixel;
+        }): Vector.Types.IPixel;
     };
 };
 export default _default;

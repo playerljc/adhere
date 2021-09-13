@@ -82,10 +82,10 @@ declare const _default: {
         leftTop: import("./types").IPoint;
         rightBottom: import("./types").IPoint;
     }): number;
-    midpoint(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint): import("./types").IPoint;
-    slope(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint): number;
-    slopToRadian(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint, yAxis?: "cartesian" | "geographic"): number;
-    slopToAngle(startPoint: import("./types").IPoint, endPoint: import("./types").IPoint, yAxis?: "cartesian" | "geographic"): number;
+    midpoint(fromPoint: import("./types").IPoint, toPoint: import("./types").IPoint): import("./types").IPoint;
+    slope(fromPoint: import("./types").IPoint, toPoint: import("./types").IPoint, axis?: "cartesian" | "geographic"): number | undefined;
+    slopToRadian(fromPoint: import("./types").IPoint, toPoint: import("./types").IPoint, axis?: "cartesian" | "geographic"): number;
+    slopToAngle(fromPoint: import("./types").IPoint, toPoint: import("./types").IPoint, axis?: "cartesian" | "geographic"): number;
     radianToAngle(radian: number): number;
     angleToRadian(angle: any): number;
     distance(value: number, unit: "kilometer"): number;
