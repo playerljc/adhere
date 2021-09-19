@@ -175,7 +175,7 @@ class CircleGeometry extends Geometry implements ICircleGeometry {
 
     const ctx = canvas.getContext('2d');
 
-    if(!ctx) return false;
+    if (!ctx) return false;
 
     CircleGeometry.drawCircle({
       ctx,

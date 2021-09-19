@@ -267,8 +267,6 @@ class CircleModifyAction extends ModifyAction {
       }),
     );
 
-    console.log('inCircle', inCircle);
-
     return inCircle && !this.getPointInAnchor(targetPixel);
   }
 

@@ -80,7 +80,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     // @ts-ignore
     const ctx = this.canvas.getContext('2d');
 
-    if(!ctx) return;
+    if (!ctx) return;
 
     (features || []).forEach((feature) => {
       feature.draw(ctx);
@@ -92,6 +92,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   }
 
   update() {
+    console.log('update');
     // @ts-ignore
     const ctx = this.canvas.getContext('2d');
 
@@ -105,6 +106,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
 
     this.isLoad = true;
 
+    console.log('clear');
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
     this.drawSource();

@@ -164,21 +164,29 @@ export default {
     // // @ts-ignore
     // return 1 / zoomScaleMap.get(zoom);
 
-
     // 根据输入范围值(单位：米) 计算出需要画的区域像素：px
     const pointA = map.getCenter();
-    const pointAPixel = map.pointToOverlayPixel(pointA);
+    // const pointAPixel = map.pointToOverlayPixel(pointA);
+    const pointAPixel = map.pointToPixel(pointA);
 
     // @ts-ignore
     const pointB = new BMap.Point(pointA.lng, pointA.lat + 0.001);
-    const pointBPixel = map.pointToOverlayPixel(pointB);
+    // const pointBPixel = map.pointToOverlayPixel(pointB);
+    const pointBPixel = map.pointToPixel(pointB);
 
     // 像素距离
     const pixelDistanceBetween2Points = Math.abs(pointBPixel.y - pointAPixel.y);
     const realDistanceBetween2Points = map.getDistance(pointA, pointB);
 
+    // console.log('pointAPixel', pointAPixel);
+    // console.log('pointBPixel', pointBPixel);
+    // console.log('realDistanceBetween2Points', realDistanceBetween2Points);
+
     // 比例尺
-    return pixelDistanceBetween2Points / realDistanceBetween2Points;
+    return (
+      (pixelDistanceBetween2Points <= 0 ? 1 : pixelDistanceBetween2Points) /
+      realDistanceBetween2Points
+    );
 
     // return this.getUnitPixelToM(map.getZoom());
   },

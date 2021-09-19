@@ -137,6 +137,29 @@ export default {
     return result;
   },
   /**
+   * getDescendants
+   * @description - 获取子孙
+   */
+  getDescendants(
+    data: any[],
+    node: any,
+    config: { keyAttr: string; parentIdAttr: string; rootParentId: string },
+  ): any[] {
+    function loop(n: any) {
+      const children = data.filter((t) => t[config.parentIdAttr] === n[config.keyAttr]);
+      children.forEach((t) => {
+        result.push(t);
+        loop(t);
+      });
+    }
+
+    const result: any[] = [];
+
+    loop(node);
+
+    return result;
+  },
+  /**
    * filterTree - 本地过滤tree
    * @param data
    * @param kw

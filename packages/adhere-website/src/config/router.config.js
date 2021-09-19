@@ -108,6 +108,7 @@ const PolygonSelection = lazy(() =>
 const PlayGround = lazy(() =>
   import(/* webpackChunkName: "playground" */ '@/components/ui/playground'),
 );
+const BMap = lazy(() => import(/* webpackChunkName: "bmap" */ '@/components/ui/bmap'));
 
 const AdapterScreen = lazy(() =>
   import(/* webpackChunkName: "adapterscreen" */ '@/components/util/adapterscreen'),
@@ -128,7 +129,6 @@ const WatchMemoized = lazy(() =>
 );
 const Ajax = lazy(() => import(/* webpackChunkName: "ajax" */ '@/components/util/ajax'));
 const Domain = lazy(() => import(/* webpackChunkName: "domain" */ '@/components/util/domain'));
-
 const Echarts = lazy(() =>
   import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'),
 );
@@ -367,6 +367,11 @@ export default () => [
                 path: '/adhere/ui/playground',
                 name: 'PlayGround',
                 component: PlayGround,
+              },
+              {
+                path: '/adhere/ui/bmap',
+                name: 'BMap',
+                component: BMap,
               },
             ],
           },

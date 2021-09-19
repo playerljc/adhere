@@ -182,7 +182,6 @@ class Trajectory implements ITrajectory {
 
     const degrees = MathUtil.slopToAngle(preLoopPixel, toPixel, 'geographic');
 
-    console.log(-degrees1, degrees);
     // const angle = MathUtil.radianToAngle(MathUtil.slope(preLoopPixel, toPixel));
 
     // @ts-ignore

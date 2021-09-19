@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Intl from '@baifendian/adhere-util-intl';
+import BaseUtil from '@baifendian/adhere-util/lib/base';
 
 import BMap from './bmap';
 
@@ -150,6 +151,7 @@ Intl.init({
         >
           加入气压
         </button>
+
         <button
           onClick={() => {
             const map = ref.current.getMap();
@@ -528,83 +530,83 @@ Intl.init({
             //   text: '上海',
             // });
 
-            const feature = new /*InnerText*/ Feature({
-              name: 'f1',
-              id: 'f1',
-              geometry: pointGeom,
-              text: '蜜雪冰城',
-              textStyle: {
-                font: '10px sans-serif',
-                textAlign: 'center',
-                textBaseline: 'middle',
-                direction: 'inherit',
-                strokeStyle: 'yellow',
-                fillStyle: 'yellow',
-              },
-              /*{
-                // radius: 10,
-                lineWidth: 2,
-                strokeStyle: 'blue',
-                fillStyle: 'red',
-              }*/
-              style: {
-                lineWidth: 1,
-                strokeStyle: 'yellow',
-                fillStyle: 'red',
-                radius: 30,
-                img: {
-                  src: icon,
-                  width: 32,
-                  height: 32,
-                },
-                regularPolygon: {
-                  n: 3,
-                  size: 10,
-                },
-                start: {
-                  innerRadius: 20 / 2,
-                  outRadius: 20,
-                },
-                sector: {
-                  radius: 20,
-                  angle1: 180,
-                  angle2: 360,
-                },
-                rect: {
-                  width: 50,
-                  height: 50,
-                },
-                radiusRect: {
-                  width: 30,
-                  height: 20,
-                  radius: 3,
-                },
-                leaf: {
-                  n: 4,
-                  size: 15,
-                  length: 60,
-                },
-                pointType: 'image', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect' | 'radiusRect' | 'leaf';
-                arrow: {
-                  // 是否绘制
-                  draw: true,
-                  // 箭头方向 箭头绘制在开始 | 结束 | 双向
-                  direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
-                  // 箭头的类型 尖的箭头，还是方形的箭头
-                  type: 'normal' /* | 'square';*/,
-                  // 箭头的大小 小 | 中 | 大
-                  size: 'normal' /* | 'normal' | 'large';*/,
-                },
-                // font: 'bold 30px sans-serif',
-                // textAlign: 'center',
-                // textBaseline: 'middle',
-                // direction: 'inherit',
-                // strokeStyle: 'red',
-                // fillStyle: 'red',
-              },
-            });
+            // const feature = new /*InnerText*/ Feature({
+            //   name: 'f1',
+            //   id: 'f1',
+            //   geometry: pointGeom,
+            //   text: '蜜雪冰城',
+            //   textStyle: {
+            //     font: '10px sans-serif',
+            //     textAlign: 'center',
+            //     textBaseline: 'middle',
+            //     direction: 'inherit',
+            //     strokeStyle: 'yellow',
+            //     fillStyle: 'yellow',
+            //   },
+            //   /*{
+            //     // radius: 10,
+            //     lineWidth: 2,
+            //     strokeStyle: 'blue',
+            //     fillStyle: 'red',
+            //   }*/
+            //   style: {
+            //     lineWidth: 1,
+            //     strokeStyle: 'yellow',
+            //     fillStyle: 'red',
+            //     radius: 30,
+            //     img: {
+            //       src: icon,
+            //       width: 32,
+            //       height: 32,
+            //     },
+            //     regularPolygon: {
+            //       n: 3,
+            //       size: 10,
+            //     },
+            //     start: {
+            //       innerRadius: 20 / 2,
+            //       outRadius: 20,
+            //     },
+            //     sector: {
+            //       radius: 20,
+            //       angle1: 180,
+            //       angle2: 360,
+            //     },
+            //     rect: {
+            //       width: 50,
+            //       height: 50,
+            //     },
+            //     radiusRect: {
+            //       width: 30,
+            //       height: 20,
+            //       radius: 3,
+            //     },
+            //     leaf: {
+            //       n: 4,
+            //       size: 15,
+            //       length: 60,
+            //     },
+            //     pointType: 'image', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect' | 'radiusRect' | 'leaf';
+            //     arrow: {
+            //       // 是否绘制
+            //       draw: true,
+            //       // 箭头方向 箭头绘制在开始 | 结束 | 双向
+            //       direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
+            //       // 箭头的类型 尖的箭头，还是方形的箭头
+            //       type: 'normal' /* | 'square';*/,
+            //       // 箭头的大小 小 | 中 | 大
+            //       size: 'normal' /* | 'normal' | 'large';*/,
+            //     },
+            //     // font: 'bold 30px sans-serif',
+            //     // textAlign: 'center',
+            //     // textBaseline: 'middle',
+            //     // direction: 'inherit',
+            //     // strokeStyle: 'red',
+            //     // fillStyle: 'red',
+            //   },
+            // });
 
-            vectorSource = new VectorSource([feature]);
+            vectorSource = new VectorSource([/* feature */]);
 
             const vectorLayer = new VectorLayer(map, {
               paneName: 'vertexPane',
@@ -612,7 +614,200 @@ Intl.init({
               source: vectorSource,
             });
 
+
+            const geom = new Map([
+              // 正多边形
+              [
+                0,
+                {
+                  getGeom: (point) =>
+                    new RegularPolygonGeometry({
+                      n: [4, 5, 6, 7][Math.floor(Math.random() * 4)],
+                      center: {
+                        lng: point.lng,
+                        lat: point.lat,
+                      },
+                      size: 2000,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+              // 矩形
+              [
+                1,
+                {
+                  getGeom: (point) =>
+                    new RectGeometry({
+                      leftTop: {
+                        lng: point.lng,
+                        lat: point.lat,
+                      },
+                      width: 2000,
+                      height: 3000,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+              // 圆角矩形
+              [
+                2,
+                {
+                  getGeom: (point) =>
+                    new RadiusRectGeometry({
+                      leftTop: {
+                        lng: point.x,
+                        lat: point.y,
+                      },
+                      width: 1000,
+                      height: 2000,
+                      radius: 1000 / 10,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+              // 圆形
+              [
+                3,
+                {
+                  getGeom: (point) =>
+                    new CircleGeometry({
+                      center: { lng: point.lng, lat: point.lat },
+                      radius: 2000,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+              // 扇形
+              [
+                4,
+                {
+                  getGeom: (point) =>
+                    new SectorGeometry({
+                      center: {
+                        lng: point.lng,
+                        lat: point.lat,
+                      },
+                      radius: 2000,
+                      angle1: 0,
+                      angle2: 90,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+              // 五角星
+              [
+                5,
+                {
+                  getGeom: (point) =>
+                    new StartGeometry({
+                      center: {
+                        lng: point.x,
+                        lat: point.y,
+                      },
+                      innerRadius: 2000 / 2,
+                      outRadius: 2000,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+              // n叶草
+              [
+                6,
+                {
+                  getGeom: (point) =>
+                    new LeafGeometry({
+                      center: {
+                        lng: point.x,
+                        lat: point.y,
+                      },
+                      n: [6, 7, 8, 9, 10][Math.floor(Math.random() * 5)],
+                      size: 2000,
+                      length: 2000 * 4,
+                    }),
+                  getStyle: () => ({ ...defaultStyle }),
+                },
+              ],
+            ]);
+
+            // const features = citys.map((city => {
+            //   return new Feature({
+            //     name: BaseUtil.uuid(),
+            //     id: BaseUtil.uuid(),
+            //     geometry: new PointGeometry({ lng: city[0], lat: city[1] }),
+            //     style: {
+            //       lineWidth: 1,
+            //       strokeStyle: 'yellow',
+            //       fillStyle: 'red',
+            //       radius: 30,
+            //       img: {
+            //         src: icon,
+            //         width: 32,
+            //         height: 32,
+            //       },
+            //       regularPolygon: {
+            //         n: 3,
+            //         size: 10,
+            //       },
+            //       start: {
+            //         innerRadius: 20 / 2,
+            //         outRadius: 20,
+            //       },
+            //       sector: {
+            //         radius: 20,
+            //         angle1: 180,
+            //         angle2: 360,
+            //       },
+            //       rect: {
+            //         width: 50,
+            //         height: 50,
+            //       },
+            //       radiusRect: {
+            //         width: 30,
+            //         height: 20,
+            //         radius: 3,
+            //       },
+            //       leaf: {
+            //         n: 4,
+            //         size: 15,
+            //         length: 60,
+            //       },
+            //       pointType: 'image', // 'circle' | 'image' | 'regularPolygon' | 'start' | 'sector' | 'rect' | 'radiusRect' | 'leaf';
+            //       arrow: {
+            //         // 是否绘制
+            //         draw: true,
+            //         // 箭头方向 箭头绘制在开始 | 结束 | 双向
+            //         direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
+            //         // 箭头的类型 尖的箭头，还是方形的箭头
+            //         type: 'normal' /* | 'square';*/,
+            //         // 箭头的大小 小 | 中 | 大
+            //         size: 'normal' /* | 'normal' | 'large';*/,
+            //       },
+            //     },
+            //   });
+            // }));
+
+            const defaultStyle = {
+              lineWidth: 1,
+              strokeStyle: 'yellow',
+              fillStyle: 'red',
+            };
+
+            const features = citys.map(
+              (city, i) =>
+                new Feature({
+                  id: BaseUtil.uuid(),
+                  name: BaseUtil.uuid(),
+                  geometry: geom.get(i % geom.size).getGeom({
+                    lng: city[0],
+                    lat: city[1],
+                  }),
+                  style: geom.get(i % geom.size).getStyle(),
+                }),
+            );
+
             map.addOverlay(vectorLayer);
+
+            vectorSource.addFeatures(features);
 
             // setTimeout(() => {
             //   debugger;
@@ -625,6 +820,7 @@ Intl.init({
         >
           添加VectorLayer
         </button>
+
         <button
           onClick={() => {
             if (!vectorSource) {
@@ -669,11 +865,11 @@ Intl.init({
                     // 是否绘制
                     draw: true,
                     // 箭头方向 箭头绘制在开始 | 结束 | 双向
-                    direction: 'bothEnds' /* | 'end' | 'bothEnds';*/,
+                    direction: 'bothEnds' /* 'start' | 'end' | 'bothEnds';*/,
                     // 箭头的类型 尖的箭头，还是方形的箭头
-                    type: 'normal' /* | 'square';*/,
+                    type: 'normal' /* normal' | 'square */,
                     // 箭头的大小 小 | 中 | 大
-                    size: 'normal' /* | 'normal' | 'large';*/,
+                    size: 'normal' /* small' | 'normal' | 'large */,
                   },
                 });
 
@@ -684,6 +880,7 @@ Intl.init({
         >
           载入GeoJSON
         </button>
+
         <button
           onClick={() => {
             const map = ref.current.getMap();
@@ -791,6 +988,7 @@ Intl.init({
         >
           测距
         </button>
+
         <button
           onClick={() => {
             const map = ref.current.getMap();

@@ -47,6 +47,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
   protected componentDidMount() {
     const { externalImportBMapScript } = this.props;
 
+    // 外部载入bmap.js
     if (externalImportBMapScript) {
       // @ts-ignore
       this.BMap = window.BMap;
@@ -59,7 +60,9 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
           this.initMap();
         },
       );
-    } else {
+    }
+    // 内部引入bmap.js
+    else {
       this.importBMapJS().then((BMap) => {
         this.BMap = BMap;
 
@@ -86,12 +89,12 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
   protected initMap(): void {
     const { BMap } = this;
 
-    const { config, zoom, center } = this.props;
+    const { config, zoom, onBMapInitReady, center } = this.props;
 
     this.map = new BMap.Map(this.ref.current, {
       // @ts-ignore
       enableMapClick: false,
-      ...config
+      ...config,
     });
 
     this.initMapControl();
@@ -111,6 +114,8 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
         this?.ref?.current?.style?.background = `url("${loadGridIcon}") repeat #fff;`;
       }, 2000);
     });
+
+    onBMapInitReady && onBMapInitReady();
   }
 
   protected initMapControl() {
@@ -243,7 +248,11 @@ BMap.propTypes = {
     // 是否开启底图可点功能，默认启用
     enableMapClick: PropTypes.bool,
   }),
+  // 百度地图组件初始化完成
+  onBMapInitReady: PropTypes.func,
+  // bmap.js引入成功的回调
   onBMapScriptReady: PropTypes.func,
+  // 是否外部引入bmap.js
   externalImportBMapScript: PropTypes.bool,
 };
 

@@ -15,6 +15,7 @@ export interface IBMapProps {
     lon: number;
     lat: number;
   };
+  onBMapInitReady: Function;
   onBMapScriptReady: Function;
   externalImportBMapScript: boolean;
 }
