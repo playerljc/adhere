@@ -6,6 +6,8 @@ import { Link } from '@ctsj/router';
 import { Menu, Breadcrumb, Tooltip } from 'antd';
 import { Decorators } from '@baifendian/adhere';
 
+import Footer from '@/lib/Footer';
+
 import styles from './index.less';
 
 const { SubMenu } = Menu;
@@ -309,6 +311,9 @@ class BasicLayout extends React.Component {
             defaultOpenKeys,
           })}
           <div className={styles.Auto}>{this.props.children}</div>
+          <div className={styles.FooterWrap}>
+            <Footer />
+          </div>
         </div>
       </div>
     );

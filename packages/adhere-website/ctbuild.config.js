@@ -50,6 +50,12 @@ module.exports = {
     );
     // }
 
+    // 加入markdown的解析
+    webpackConfig.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
+
     webpackConfig.module.rules[1].include.push(/ol.css/, /swiper.css/);
 
     // TODO:umd umd的时候需要注释掉

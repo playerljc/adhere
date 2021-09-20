@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 
 import { lazy } from 'react';
@@ -6,6 +7,8 @@ import BasicLayout from '@/lib/BasicLayout';
 
 const App = lazy(() => import(/* webpackChunkName: "app" */ '@/app'));
 const Introduction = lazy(() => import(/* webpackChunkName: "introduction" */ '@/introduction'));
+const Changelog = lazy(() => import(/* webpackChunkName: "changelog" */ '@/changelog'));
+
 const Split = lazy(() => import(/* webpackChunkName: "split" */ '@/components/ui/split'));
 const Space = lazy(() => import(/* webpackChunkName: "space" */ '@/components/ui/space'));
 const ConditionalRender = lazy(() =>
@@ -159,6 +162,11 @@ export default () => [
             path: '/adhere/introduction',
             name: '简介',
             component: Introduction,
+          },
+          {
+            path: '/adhere/changelog',
+            name: '更新日志',
+            component: Changelog,
           },
           {
             path: '/adhere/ui',

@@ -1,0 +1,61 @@
+.Wrap {
+  display: flex;
+  padding: 60px;
+  color: #fff6;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #000;
+
+  > .Item {
+    flex-grow: 1;
+    > dl {
+      > dt {
+        position: relative;
+        margin: 0 auto 24px;
+        font-weight: 500;
+        font-size: 20px;
+        color: #fff;
+      }
+
+      > dd {
+        > .ItemList {
+          > .ItemListItem {
+            margin-left: 15px;
+            color: #fff;
+            font-size: 16px;
+            list-style-type: circle;
+
+            &:not(:last-child) {
+              margin-bottom: 15px;
+            }
+
+            > a {
+              color: #fff;
+            }
+
+            .ItemListItemText {
+              margin-left: 10px;
+            }
+
+            > ul {
+              padding-top: 15px;
+              > li {
+                margin-left: 10px;
+                color: #fff;
+                font-size: 14px;
+
+                > a {
+                  color: #fff;
+                }
+
+                &:not(:last-child) {
+                  margin-bottom: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
