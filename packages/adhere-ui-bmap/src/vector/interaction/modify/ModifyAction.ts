@@ -103,9 +103,14 @@ abstract class ModifyAction extends Emitter implements IModifyAction, IMoveActio
   abstract drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): void;
 
   /**
+   * setCursor
+   */
+  abstract setCursor(): void;
+
+  /**
    * getSelectType
    */
-  protected abstract getSelectType(): SelectType;
+  abstract getSelectType(): SelectType;
 
   /**
    * constructor

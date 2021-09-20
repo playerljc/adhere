@@ -14,61 +14,10 @@ import PolygonModifyAction from './modify/PolygonModifyAction';
 import RectangleModifyAction from './modify/RectangleModifyAction';
 import StartModifyAction from './modify/StartModifyAction';
 import TriangleModifyAction from './modify/TriangleModifyAction';
+import DefaultAnchorStyle from './DefaultAnchorStyle';
+import DefaultMoveGemStyle from './DefaultMoveGemStyle';
+import DefaultStyle from './DefaultStyle';
 import InteractionLayer from './InteractionLayer';
+import Util from './util';
 import * as Types from './types';
-declare const _default: {
-    InteractionLayer: typeof InteractionLayer;
-    CircleDrawAction: typeof CircleDrawAction;
-    DiamondDrawAction: typeof DiamondDrawAction;
-    DrawAction: typeof DrawAction;
-    FreeDrawAction: typeof FreeDrawAction;
-    PolygonDrawAction: typeof PolygonDrawAction;
-    DistanceDrawAction: typeof DistanceDrawAction;
-    RectangleDrawAction: typeof RectangleDrawAction;
-    StartDrawAction: typeof StartDrawAction;
-    TriangleDrawAction: typeof TriangleDrawAction;
-    CircleModifyAction: typeof CircleModifyAction;
-    DiamondModifyAction: typeof DiamondModifyAction;
-    ModifyAction: typeof ModifyAction;
-    PolygonModifyAction: typeof PolygonModifyAction;
-    RectangleModifyAction: typeof RectangleModifyAction;
-    StartModifyAction: typeof StartModifyAction;
-    TriangleModifyAction: typeof TriangleModifyAction;
-    DefaultAnchorStyle: {
-        fillStyle: string;
-        strokeStyle: string;
-        lineWidth: number;
-        lineCap: string;
-        lineJoin: string;
-        lineDash: number[];
-        lineDashOffset: number;
-    };
-    DefaultMoveGemStyle: {
-        strokeStyle: string;
-        lineWidth: number;
-        lineDash: number[];
-        lineDashOffset: number;
-        globalAlpha: number;
-    };
-    DefaultStyle: {
-        fillStyle: string;
-        strokeStyle: string;
-        lineWidth: number;
-        lineCap: string;
-        lineJoin: string;
-        lineDash: never[];
-        lineDashOffset: number;
-    };
-    Util: {
-        getRectLeftTopPoint({ startPoint, targetPoint }: {
-            startPoint: any;
-            targetPoint: any;
-        }): Types.IPoint | null;
-        triangle({ startPoint, targetPoint }: {
-            startPoint: any;
-            targetPoint: any;
-        }): Types.IPoint[];
-    };
-    Types: typeof Types;
-};
-export default _default;
+export { InteractionLayer, CircleDrawAction, DiamondDrawAction, DrawAction, FreeDrawAction, PolygonDrawAction, DistanceDrawAction, RectangleDrawAction, StartDrawAction, TriangleDrawAction, CircleModifyAction, DiamondModifyAction, ModifyAction, PolygonModifyAction, RectangleModifyAction, StartModifyAction, TriangleModifyAction, DefaultAnchorStyle, DefaultMoveGemStyle, DefaultStyle, Util, Types, };

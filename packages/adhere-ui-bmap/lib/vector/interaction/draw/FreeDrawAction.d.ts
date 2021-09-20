@@ -1,4 +1,4 @@
-import { IFreeData, IPoint, IStyle, SelectType } from '../types';
+import { IFreeData, IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
 import DrawAction from './DrawAction';
 /**
  * FreeDrawAction
@@ -38,18 +38,32 @@ declare class FreeDrawAction extends DrawAction {
     /**
      * draw
      * @description
+     * @param context
      * @param ctx
      * @param data
      */
-    static draw(ctx: CanvasRenderingContext2D, data: IFreeData): void;
+    static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: IFreeData): void;
     /**
      * drawHistoryPath - 绘制历史数据
+     * @param context
      * @param ctx
      * @param data
      */
-    static drawHistoryPath(ctx: CanvasRenderingContext2D, data: {
+    static drawHistoryPath(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: {
         points: IPoint[];
     }): void;
+    /**
+     * transformRealToOrigin - 实际数据转换成原始数据
+     * @param context
+     * @param data
+     */
+    static transformRealToOrigin(context: IInteractionLayer, data: IPoint[]): IPoint[];
+    /**
+     * transformOriginToReal - 原始数据转换成实际数据
+     * @param context
+     * @param data
+     */
+    static transformOriginToReal(context: IInteractionLayer, data: IPoint[]): IPoint[];
     getSelectType(): SelectType;
     /**
      * start

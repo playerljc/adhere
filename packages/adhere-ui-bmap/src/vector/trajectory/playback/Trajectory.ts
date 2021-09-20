@@ -157,7 +157,7 @@ class Trajectory implements ITrajectory {
     // const pt = new BMap.Point(point.x, point.y);
 
     // @ts-ignore
-    return new BMap.Marker(null, {
+    return new BMap.Marker(new BMap.Point(90, 90), {
       icon: myIcon,
       // rotation: angle,
     });
@@ -378,9 +378,14 @@ class Trajectory implements ITrajectory {
   protected loop() {
     // 2 5
     // 0 1   (2)     3 4    (5)
-    if (this.status === TrajectoryStatus.Pause) return;
 
     this.loopHeader = window.requestAnimationFrame(() => {
+      // 暂停则不执行其他操作
+      if (this.status === TrajectoryStatus.Pause) {
+        this.loop();
+        return;
+      }
+
       const { context } = this;
       if (!context) return;
       const ctx = context.getCtx();
@@ -607,7 +612,7 @@ class Trajectory implements ITrajectory {
     context.clear();
 
     // 画历史
-    context.drawHistory();
+    // context.drawHistory();
 
     this.status = TrajectoryStatus.Destroy;
 

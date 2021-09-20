@@ -258,10 +258,18 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
   enableMap(): void {
     this.map.enableDoubleClickZoom();
+    // this.map.enableInertialDragging();
+    // this.map.enableDragging();
+    // this.map.enableScrollWheelZoom();
+    // this.map.enableContinuousZoom();
   }
 
   protected disableMap(): void {
     this.map.disableDoubleClickZoom();
+    // this.map.disableInertialDragging();
+    // this.map.disableDragging();
+    // this.map.disableScrollWheelZoom();
+    // this.map.disableContinuousZoom();
   }
 
   /**

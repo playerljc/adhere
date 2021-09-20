@@ -71,6 +71,7 @@ let WindLayer,
 
 let interactionLayer;
 let trajectoryPlayBackLayer;
+let trajector;
 
 // ActionType
 let typeActionMap;
@@ -1001,7 +1002,7 @@ Intl.init({
 
               map.addOverlay(trajectoryPlayBackLayer);
 
-              const trajector = new Trajectory({
+              trajector = new Trajectory({
                 context: trajectoryPlayBackLayer,
                 id: '1',
                 coordinates: citys.map((t) => ({ lng: t[0], lat: t[1] })),
@@ -1012,11 +1013,14 @@ Intl.init({
 
               setTimeout(() => {
                 trajector.start();
-                setTimeout(() => {
-                  trajector.pause();
-                },5000);
+                // setTimeout(() => {
+                //   trajector.pause();
+                // },5000);
               }, 3000);
             } else {
+              if(trajector) {
+                trajectoryPlayBackLayer.removeTrajectory(trajector);
+              }
             }
           }}
         >
@@ -1130,7 +1134,7 @@ Intl.init({
             });
 
             import('./vector/interaction').then((res) => {
-              InteractionLayerModule = res.default;
+              InteractionLayerModule = res;
 
               InteractionLayer = InteractionLayerModule.InteractionLayer;
               PolygonDrawAction = InteractionLayerModule.PolygonDrawAction;

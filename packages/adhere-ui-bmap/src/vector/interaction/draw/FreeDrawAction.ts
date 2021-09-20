@@ -8,6 +8,7 @@ import {
   ActionStatus,
   ActionType,
   IFreeData,
+  IInteractionLayer,
   IPoint,
   IStyle,
   SelectType,
@@ -114,6 +115,7 @@ class FreeDrawAction extends DrawAction {
 
     canvasEl?.addEventListener('mousemove', this.onCanvasMouseMove);
     canvasEl?.addEventListener('mouseup', this.onCanvasMouseUp);
+    e.stopPropagation();
   }
 
   /**
@@ -128,6 +130,8 @@ class FreeDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    e.stopPropagation();
   }
 
   /**
@@ -143,10 +147,11 @@ class FreeDrawAction extends DrawAction {
   /**
    * draw
    * @description
+   * @param context
    * @param ctx
    * @param data
    */
-  static draw(ctx: CanvasRenderingContext2D, data: IFreeData) {
+  static draw(context: IInteractionLayer, ctx: CanvasRenderingContext2D, data: IFreeData) {
     if (!ctx || !data) return;
 
     if (data.style) {
@@ -161,7 +166,7 @@ class FreeDrawAction extends DrawAction {
       ctx.globalAlpha = data.style.globalAlpha || 1;
     }
 
-    this.drawHistoryPath(ctx, data.data as { points: IPoint[] });
+    this.drawHistoryPath(context, ctx, data.data as { points: IPoint[] });
 
     // 描边
     ctx.stroke();
@@ -171,10 +176,12 @@ class FreeDrawAction extends DrawAction {
 
   /**
    * drawHistoryPath - 绘制历史数据
+   * @param context
    * @param ctx
    * @param data
    */
   static drawHistoryPath(
+    context: IInteractionLayer,
     ctx: CanvasRenderingContext2D,
     data: {
       points: IPoint[];
@@ -185,13 +192,15 @@ class FreeDrawAction extends DrawAction {
 
     const { points = [] } = data;
 
-    (points || []).forEach((point: IPoint, index: number) => {
-      if (index === 0) {
-        ctx.moveTo(point.x, point.y);
-      } else {
-        ctx.lineTo(point.x, point.y);
-      }
-    });
+    (FreeDrawAction.transformOriginToReal(context, points) || []).forEach(
+      (point: IPoint, index: number) => {
+        if (index === 0) {
+          ctx.moveTo(point.x, point.y);
+        } else {
+          ctx.lineTo(point.x, point.y);
+        }
+      },
+    );
 
     ctx.closePath();
 
@@ -200,6 +209,24 @@ class FreeDrawAction extends DrawAction {
     // 填充
     ctx.fill();
     ctx.restore();
+  }
+
+  /**
+   * transformRealToOrigin - 实际数据转换成原始数据
+   * @param context
+   * @param data
+   */
+  static transformRealToOrigin(context: IInteractionLayer, data: IPoint[]): IPoint[] {
+    return data.map((p) => context.pixelToPoint(p));
+  }
+
+  /**
+   * transformOriginToReal - 原始数据转换成实际数据
+   * @param context
+   * @param data
+   */
+  static transformOriginToReal(context: IInteractionLayer, data: IPoint[]): IPoint[] {
+    return data.map((p) => context.pointToPixel(p));
   }
 
   getSelectType(): SelectType {
@@ -272,7 +299,7 @@ class FreeDrawAction extends DrawAction {
       id: BaseUtil.uuid(),
       type: this.getSelectType() as SelectType.Free,
       data: {
-        points: JSON.parse(JSON.stringify(this.points)),
+        points: FreeDrawAction.transformRealToOrigin(context, this.points),
       },
       style: this.style,
     };

@@ -25,7 +25,7 @@ import InteractionLayer from './InteractionLayer';
 import Util from './util';
 import * as Types from './types';
 
-export default {
+export {
   InteractionLayer,
   CircleDrawAction,
   DiamondDrawAction,

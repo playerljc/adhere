@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Button, Select } from 'antd';
 import { v1 } from 'uuid';
-import { BMap } from '@baifendian/adhere';
+import { BMap, MessageDialog } from '@baifendian/adhere';
 
 import Playground from '@/lib/Playground';
 import citys from './data/citys.json';
@@ -19,14 +19,28 @@ const {
   HeatMapLayer,
   Vector: {
     Feature,
-    ImageCache,
     InnerTextFeature,
     VectorLayer,
     VectorSource,
-    Types,
-    Styles,
-    Trajectory,
-    Interaction,
+    Trajectory: { Trajectory, TrajectoryPlayBackLayer },
+    Interaction: {
+      InteractionLayer,
+      CircleDrawAction,
+      DiamondDrawAction,
+      FreeDrawAction,
+      PolygonDrawAction,
+      DistanceDrawAction,
+      RectangleDrawAction,
+      StartDrawAction,
+      TriangleDrawAction,
+      CircleModifyAction,
+      DiamondModifyAction,
+      PolygonModifyAction,
+      RectangleModifyAction,
+      StartModifyAction,
+      TriangleModifyAction,
+      Types: InteractionTypes,
+    },
     Geom: {
       PointGeometry,
       MulitPointGeometry,
@@ -50,7 +64,6 @@ const {
       // 文字
       TextGeometry,
     },
-    Format,
   },
   Util,
 } = BMap;
@@ -128,6 +141,41 @@ export default () => {
   const geoJSONOverlay = useRef();
   const geoJSONSource = useRef();
 
+  const rangingRef = useRef();
+  const rangingOverlay = useRef();
+
+  const trajectoryPlayBackLayerRef = useRef();
+  const trajectoryRef = useRef();
+  const trajector = useRef();
+  const trajectorDuration = useRef(60 * 2);
+  const [isTrajectorPause, setTrajecorPause] = useState(false);
+
+  const interactionRef = useRef();
+  const interactionLayer = useRef();
+  const [interactionValue, setInteractionValue] = useState('-1');
+  const interactionModifyTypeActionMap = useRef(
+    new Map([
+      ['Polygon', PolygonModifyAction],
+      ['Circle', CircleModifyAction],
+      ['Rectangle', RectangleModifyAction],
+      ['Triangle', TriangleModifyAction],
+      ['Diamond', DiamondModifyAction],
+      ['Start', StartModifyAction],
+    ]),
+  );
+
+  const interactionDrawTypeActionMap = useRef(
+    new Map([
+      ['Polygon', PolygonDrawAction],
+      ['Circle', CircleDrawAction],
+      ['Rectangle', RectangleDrawAction],
+      ['Triangle', TriangleDrawAction],
+      ['Diamond', DiamondDrawAction],
+      ['Free', FreeDrawAction],
+      ['Start', StartDrawAction],
+    ]),
+  );
+
   useEffect(() => {}, []);
 
   function createVectorLayer({ overlay, ref, source, zIndex }) {
@@ -143,6 +191,17 @@ export default () => {
       zIndex,
       source: source.current,
     });
+
+    map.addOverlay(overlay.current);
+  }
+
+  function createInteractionLayer({ overlay, ref, defaultData, listeners }) {
+    if (overlay.current) return;
+
+    const map = ref.current.getMap();
+
+    // eslint-disable-next-line no-param-reassign
+    overlay.current = new InteractionLayer(map, defaultData || [], listeners || {});
 
     map.addOverlay(overlay.current);
   }
@@ -810,6 +869,7 @@ export default () => {
           <Playground mode="code" scope={{ React }}>
             <div className={styles.ToolBar}>
               <Select
+                style={{ width: 200 }}
                 value={lineStringType}
                 onChange={(value) => {
                   const map = lineStringRef.current.getMap();
@@ -936,6 +996,7 @@ export default () => {
           <Playground mode="code" scope={{ React }}>
             <div className={styles.ToolBar}>
               <Select
+                style={{ width: 200 }}
                 value={regularPolygonCount}
                 onChange={(value) => {
                   setRegularPolygonCount(value);
@@ -997,6 +1058,7 @@ export default () => {
           <Playground mode="code" scope={{ React }}>
             <div className={styles.ToolBar}>
               <Select
+                style={{ width: 200 }}
                 value={leafCount}
                 onChange={(value) => {
                   setLeafCount(value);
@@ -1060,6 +1122,7 @@ export default () => {
           <Playground mode="code" scope={{ React }}>
             <div className={styles.ToolBar}>
               <Select
+                style={{ width: 200 }}
                 value={textCount}
                 onChange={(value) => {
                   const map = textRef.current.getMap();
@@ -1221,10 +1284,216 @@ export default () => {
       </Playground>
 
       <h3>交互式绘制</h3>
+      <div className={styles.ToolBar}>
+        <Select
+          style={{ width: 200 }}
+          value={interactionValue}
+          onChange={(value) => {
+            setInteractionValue(value);
+
+            if (value === '-1') {
+              interactionLayer.current.changeAction(null);
+              return;
+            }
+            interactionLayer.current.changeAction(null);
+
+            const DrawActionComponent = interactionDrawTypeActionMap.current.get(value);
+            const action = new DrawActionComponent();
+            action.on(InteractionTypes.ActionEvents.End, ({ data }) => {
+              const Component = interactionModifyTypeActionMap.current.get(data.type);
+              const mAction = new Component({
+                selectType: data.type,
+                actionType: 'Draw',
+                data,
+              });
+
+              mAction.on(InteractionTypes.ActionEvents.End, () => {
+                mAction.start();
+              });
+
+              interactionLayer.current.changeAction(mAction);
+
+              mAction.start();
+            });
+            interactionLayer.current.changeAction(action);
+            action.start();
+          }}
+        >
+          <Option value="-1">请选择</Option>
+          <Option value="Circle">圆</Option>
+          <Option value="Diamond">菱形</Option>
+          <Option value="Free">自由绘制</Option>
+          <Option value="Polygon">多边形</Option>
+          <Option value="Rectangle">矩形</Option>
+          <Option value="Start">五角星</Option>
+          <Option value="Triangle">三角形</Option>
+        </Select>
+      </div>
+      <div className={styles.BMapWrap}>
+        <BMapComponent
+          ref={interactionRef}
+          zoom={5}
+          externalImportBMapScript={true}
+          onBMapInitReady={() => {
+            const map = interactionRef.current.getMap();
+            map.enableScrollWheelZoom(true);
+
+            createInteractionLayer({
+              overlay: interactionLayer,
+              ref: interactionRef,
+              defaultData: [],
+              listeners: {
+                [InteractionTypes.InteractionLayerActions.CanvasMount]: () => {
+                  // 点击了画布中的几何图形
+                  interactionLayer.current.emitter.on(
+                    InteractionTypes.InteractionLayerActions.CanvasClickGeometry,
+                    (data) => {
+                      const Component = interactionModifyTypeActionMap.current.get(data.type);
+
+                      const action = new Component({
+                        selectType: data.type,
+                        actionType: 'Draw',
+                        data,
+                      });
+
+                      action.on(InteractionTypes.ActionEvents.End, () => {
+                        action.start();
+                      });
+
+                      interactionLayer.current.changeAction(action);
+
+                      action.start();
+                    },
+                  );
+
+                  // 点击了画布的空位置
+                  interactionLayer.current.emitter.on(
+                    InteractionTypes.InteractionLayerActions.CanvasClickEmpty,
+                    () => {
+                      interactionLayer.current.changeAction(null);
+                    },
+                  );
+                },
+              },
+            });
+          }}
+        />
+      </div>
 
       <h3>测距</h3>
+      <div className={styles.ToolBar}>
+        <Button
+          type="primary"
+          onClick={() => {
+            rangingOverlay.current.changeAction(null);
+
+            const action = new DistanceDrawAction();
+            action.on(InteractionTypes.ActionEvents.End, (data) => {
+              // action.start();
+            });
+            rangingOverlay.current.changeAction(action);
+            action.start();
+          }}
+        >
+          开始
+        </Button>
+      </div>
+      <div className={styles.BMapWrap}>
+        <BMapComponent
+          ref={rangingRef}
+          zoom={5}
+          externalImportBMapScript={true}
+          onBMapInitReady={() => {
+            const map = rangingRef.current.getMap();
+            map.enableScrollWheelZoom(true);
+
+            createInteractionLayer({
+              overlay: rangingOverlay,
+              ref: rangingRef,
+              defaultData: [],
+              listeners: {
+                [InteractionTypes.InteractionLayerActions.CanvasMount]: () => {},
+              },
+            });
+          }}
+        />
+      </div>
 
       <h3>轨迹回放</h3>
+      <div className={styles.ToolBar}>
+        <Button
+          type="primary"
+          onClick={() => {
+            MessageDialog.NumberPrompt({
+              title: '提示',
+              config: {
+                label: '完成事件(秒)',
+                initialValue: `${60 * 2}`,
+              },
+              width: 300,
+              zIndex: 1000,
+              local: 'zh_CN',
+              onSuccess: (value) => {
+                return new Promise((resolve) => {
+                  if (trajector.current) {
+                    setTrajecorPause(false);
+                    trajectoryPlayBackLayerRef.current.removeTrajectory(trajector.current);
+                  }
+
+                  // eslint-disable-next-line radix
+                  trajectorDuration.current = parseInt(value);
+
+                  trajector.current = new Trajectory({
+                    context: trajectoryPlayBackLayerRef.current,
+                    id: '1',
+                    coordinates: citys.map((t) => ({ lng: t[0], lat: t[1] })),
+                    duration: trajectorDuration.current,
+                  });
+
+                  trajectoryPlayBackLayerRef.current.addTrajectory(trajector.current);
+                  trajector.current.start();
+
+                  resolve();
+                });
+              },
+              on,
+            });
+          }}
+        >
+          开始
+        </Button>
+        <Button
+          onClick={() => {
+            if (!trajector.current) return;
+
+            if (isTrajectorPause) {
+              trajector.current.resume();
+            } else {
+              trajector.current.pause();
+            }
+
+            setTrajecorPause(!isTrajectorPause);
+          }}
+        >
+          {isTrajectorPause ? '恢复' : '暂停'}
+        </Button>
+      </div>
+      <div className={styles.BMapWrap}>
+        <BMapComponent
+          ref={trajectoryRef}
+          zoom={5}
+          externalImportBMapScript={true}
+          onBMapInitReady={() => {
+            const map = trajectoryRef.current.getMap();
+            trajectoryPlayBackLayerRef.current = new TrajectoryPlayBackLayer(map, {
+              paneName: 'floatPane',
+              zIndex: 20001,
+            });
+
+            map.addOverlay(trajectoryPlayBackLayerRef.current);
+          }}
+        />
+      </div>
     </div>
   );
 };
