@@ -1456,7 +1456,6 @@ export default () => {
                   resolve();
                 });
               },
-              on,
             });
           }}
         >
