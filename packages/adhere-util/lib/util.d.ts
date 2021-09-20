@@ -6,6 +6,11 @@ declare const _default: {
         parentIdAttr: string;
         rootParentId: string;
     }): any[];
+    getDescendants(data: any[], node: any, config: {
+        keyAttr: string;
+        parentIdAttr: string;
+        rootParentId: string;
+    }): any[];
     filterTree(data: any[], kw: string, config: {
         filterAttr: string;
         keyAttr: string;
@@ -89,6 +94,8 @@ declare const _default: {
     radianToAngle(radian: number): number;
     angleToRadian(angle: any): number;
     distance(value: number, unit: "kilometer"): number;
+    getCirclePoint(center: import("./types").IPoint, raduis: number, angle: number): import("./types").IPoint;
+    getOvalPoint(center: import("./types").IPoint, raduisX: number, radiusY: number, angle: number): import("./types").IPoint;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;

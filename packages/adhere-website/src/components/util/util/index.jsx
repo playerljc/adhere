@@ -954,7 +954,6 @@ export default () => {
             returnType: '{x:number,y:number}',
             returnDesc: '',
           },
-
           {
             name: 'getA3Point',
             desc: '计算两点p1,p2 距离p1点distance距离的点p3的坐标',
@@ -1024,6 +1023,317 @@ export default () => {
             returnType: 'number',
             returnDesc: '',
           },
+          {
+            name: 'isPointInCircle',
+            desc: '判断一个点是否在圆内',
+            modifier: 'public',
+            params: [
+              {
+                name: 'point',
+                desc: '点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'circle',
+                desc: '圆的数据',
+                type: 'ICircle',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'boolean',
+            returnDesc: '',
+          },
+          {
+            name: 'isPointInRect',
+            desc: '点是否在矩形中',
+            modifier: 'public',
+            params: [
+              {
+                name: 'point',
+                desc: '点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'rect',
+                desc: '矩形的数据',
+                type: 'IRect',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'boolean',
+            returnDesc: '',
+          },
+          {
+            name: 'getCanvasTextInGemX',
+            desc: '获取一个文本在Rect中的居中的X位置',
+            modifier: 'public',
+            params: [
+              {
+                name: 'ctx',
+                desc: 'ctx',
+                type: 'CanvasRenderingContext2D',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'text',
+                desc: '文本',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'rect',
+                desc: '矩形数据',
+                type: '{ leftTop: IPoint; rightBottom: IPoint }',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'midpoint',
+            desc: '计算两个点的中心点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IPoint',
+            returnDesc: '',
+          },
+          {
+            name: 'slope',
+            desc: '计算两个点的斜率',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'axis',
+                desc: '坐标系',
+                type: "'cartesian' | 'geographic'",
+                defaultVal: 'cartesian',
+                required: '',
+              },
+            ],
+            returnType: 'number | undefined',
+            returnDesc: '',
+          },
+          {
+            name: 'slopToRadian',
+            desc: '获取两点斜率的弧度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'axis',
+                desc: '坐标系',
+                type: "'cartesian' | 'geographic'",
+                defaultVal: 'cartesian',
+                required: '',
+              },
+            ],
+            returnType: 'number | undefined',
+            returnDesc: '',
+          },
+          {
+            name: 'slopToAngle',
+            desc: '获取两点斜率的角度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'axis',
+                desc: '坐标系',
+                type: "'cartesian' | 'geographic'",
+                defaultVal: 'cartesian',
+                required: '',
+              },
+            ],
+            returnType: 'number | undefined',
+            returnDesc: '',
+          },
+          {
+            name: 'radianToAngle',
+            desc: '弧度转换成角度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'radian',
+                desc: '弧度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '角度',
+          },
+          {
+            name: 'angleToRadian',
+            desc: '角度转弧度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'angle',
+                desc: '角度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '弧度',
+          },
+          {
+            name: 'distance',
+            desc: '距离',
+            modifier: 'public',
+            params: [
+              {
+                name: 'value',
+                desc: '数值(m)',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'unit',
+                desc: '单位',
+                type: 'number',
+                defaultVal: 'kilometer',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'getCirclePoint',
+            desc: '获取圆上任意一点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'center',
+                desc: '圆心',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'raduis',
+                desc: '半径',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'angle',
+                desc: '弧度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IPoint',
+            returnDesc: '',
+          },
+          {
+            name: 'getOvalPoint',
+            desc: '获取椭圆上任意一点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'center',
+                desc: '圆心',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'raduisX',
+                desc: 'X半径',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'raduisY',
+                desc: 'y半径',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'angle',
+                desc: '弧度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IPoint',
+            returnDesc: '',
+          },
         ]}
       />
 
@@ -1044,6 +1354,20 @@ export default () => {
             modifier: 'public',
             params: [],
             returnType: 'string',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <h2>客户端监测</h2>
+      <FunctionProps
+        data={[
+          {
+            name: 'isTouch',
+            desc: '是否移动端支持touch事件',
+            modifier: 'public',
+            params: [],
+            returnType: 'boolean',
             returnDesc: '',
           },
         ]}

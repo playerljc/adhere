@@ -30,6 +30,15 @@ declare const _default: {
         rootParentId: string;
     }): any[];
     /**
+     * getDescendants
+     * @description - 获取子孙
+     */
+    getDescendants(data: any[], node: any, config: {
+        keyAttr: string;
+        parentIdAttr: string;
+        rootParentId: string;
+    }): any[];
+    /**
      * filterTree - 本地过滤tree
      * @param data
      * @param kw

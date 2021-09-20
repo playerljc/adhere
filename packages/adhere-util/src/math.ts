@@ -246,5 +246,32 @@ export default {
     // @ts-ignore
     return value / map.get(unit);
   },
+  /**
+   * getCirclePoint
+   * @description - 获取圆上任意一点
+   * @param center
+   * @param raduis
+   * @param angle
+   */
+  getCirclePoint(center: IPoint, raduis: number, angle: number): IPoint {
+    return {
+      x: center.x + Math.cos(angle) * raduis,
+      y: center.y + Math.sin(angle) * raduis,
+    };
+  },
+  /**
+   * getOvalPoint
+   * @description - 获取椭圆上任意一点
+   * @param center
+   * @param raduisX
+   * @param radiusY
+   * @param angle
+   */
+  getOvalPoint(center: IPoint, raduisX: number, radiusY: number, angle: number): IPoint {
+    return {
+      x: center.x + Math.cos(angle) * raduisX,
+      y: center.y + Math.sin(angle) * radiusY,
+    };
+  },
   /**--------------------------math-end------------------------**/
 };

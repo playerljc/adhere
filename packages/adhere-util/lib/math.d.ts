@@ -128,5 +128,22 @@ declare const _default: {
      * @return 转换后的数值
      */
     distance(value: number, unit: 'kilometer'): number;
+    /**
+     * getCirclePoint
+     * @description - 获取圆上任意一点
+     * @param center
+     * @param raduis
+     * @param angle
+     */
+    getCirclePoint(center: IPoint, raduis: number, angle: number): IPoint;
+    /**
+     * getOvalPoint
+     * @description - 获取椭圆上任意一点
+     * @param center
+     * @param raduisX
+     * @param radiusY
+     * @param angle
+     */
+    getOvalPoint(center: IPoint, raduisX: number, radiusY: number, angle: number): IPoint;
 };
 export default _default;
