@@ -99,7 +99,7 @@ export default () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      ReactPro
+                      ReactPro(G1)
                     </a>
                   </li>
                   <li>
@@ -108,7 +108,7 @@ export default () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      ReactPro(支持IE)
+                      ReactPro(G1)(支持IE)
                     </a>
                   </li>
                   <li>
@@ -117,7 +117,25 @@ export default () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      AntPro
+                      AntPro(G1)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="http://git.baifendian.com/dongxu.guo/ReactWeb"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      ReactWeb(G3)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="http://git.baifendian.com/bo.li/Percent_Vue_Admin.git"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      PercentVue(G3)
                     </a>
                   </li>
                   <li>
@@ -126,7 +144,7 @@ export default () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      VuePro
+                      VuePro(G1)
                     </a>
                   </li>
                 </ul>
