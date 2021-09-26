@@ -39,6 +39,18 @@
     p {
       margin: 10px 0;
     }
+
+    .list {
+      > li {
+        margin-left: 15px;
+        list-style-type: disc;
+      }
+    }
+
+    .list > li .list > li {
+      margin-left: 15px;
+      list-style-type: circle;
+    }
   }
 
   /* 滚动条整体样式 */
