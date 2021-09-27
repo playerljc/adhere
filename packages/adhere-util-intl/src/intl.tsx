@@ -117,8 +117,8 @@ export default {
 
   /**
    * v - 以中文获取国际化后的html
-   * @param key 
-   * @param options 
+   * @param key
+   * @param options
    */
   vHtml(key: string, options?: object | null) {
     if (!isInit) return '';
@@ -176,9 +176,11 @@ export default {
    * load - Load more locales after init
    * @param locales
    */
+
   load(locales: { [key: string]: any }) {
     intl.load(locales);
   },
+
   /**
    * getLocal
    * @param data
