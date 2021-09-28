@@ -6,7 +6,7 @@ import MathUtil from '@baifendian/adhere-util/lib/math';
 import { IPoint, IDiamondData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 import DiamondDrawAction from '../draw/DiamondDrawAction';
-import defaultMoveGemStyle from "../defaultMoveGemStyle";
+import defaultMoveGemStyle from '../defaultMoveGemStyle';
 
 /**
  * DiamondModifyAction

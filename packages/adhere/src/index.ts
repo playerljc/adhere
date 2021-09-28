@@ -52,7 +52,7 @@ import Resource from '@baifendian/adhere-util-resource';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 import Domain from '@baifendian/adhere-util-domain';
 
-export { 
+export {
   BackTopAnimation,
   CascadeCompared,
   ConditionalRender,

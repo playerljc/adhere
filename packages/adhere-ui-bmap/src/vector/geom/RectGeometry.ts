@@ -223,7 +223,7 @@ class RectGeometry extends Geometry implements IRectGeometry {
 
     const ctx = canvas.getContext('2d');
 
-    if(!ctx) return false;
+    if (!ctx) return false;
 
     RectGeometry.drawRect({
       ctx,

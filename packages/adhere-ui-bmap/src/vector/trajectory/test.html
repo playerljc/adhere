@@ -9,13 +9,13 @@
   <body>
     <script src="https://cdn.bootcss.com/Turf.js/5.1.6/turf.min.js"></script>
     <script>
-      debugger
+      debugger;
       var line = turf.lineString([
         [109.502991, 29.68718],
         [108.837829, 32.969237],
-        [113.567871, 37.200787]
+        [113.567871, 37.200787],
       ]);
-      var options = {units: 'miles'};
+      var options = { units: 'miles' };
 
       var along = turf.along(line, 1, options);
     </script>

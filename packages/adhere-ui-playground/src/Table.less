@@ -6,27 +6,27 @@
   > .adhere-ui-playground-table-inner {
     width: 100%;
     margin: 2em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 13px;
+    line-height: 1.5715;
     direction: ltr;
     empty-cells: show;
     border: 1px solid @adhere-ui-playground-table-color;
     border-collapse: collapse;
     border-spacing: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    font-size: 13px;
-    line-height: 1.5715;
 
     > thead {
       > .adhere-ui-playground-table-header {
         > .adhere-ui-playground-table-header-column {
-          padding-top: 14px;
           padding: 12px;
-          text-align: left;
-          border: 1px solid @adhere-ui-playground-table-color;
+          padding-top: 14px;
           color: #5c6b77;
           font-weight: 500;
           white-space: nowrap;
+          text-align: left;
           background: rgba(0, 0, 0, 0.02);
+          border: 1px solid @adhere-ui-playground-table-color;
 
           &:first-child {
             border-left: 1px solid @adhere-ui-playground-table-color;
@@ -49,12 +49,12 @@
 
         > .adhere-ui-playground-table-cell {
           padding: 12px;
-          text-align: left;
-          border: 1px solid @adhere-ui-playground-table-color;
+          color: @adhere-ui-playground-table-font-color;
           white-space: normal;
+          text-align: left;
           word-wrap: break-word;
           word-break: break-word;
-          color: @adhere-ui-playground-table-font-color;
+          border: 1px solid @adhere-ui-playground-table-color;
 
           &:first-child {
             width: 18%;

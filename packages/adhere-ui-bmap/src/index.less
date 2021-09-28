@@ -47,17 +47,17 @@
   border: 0 !important;
 }
 
-.BMap_pop > .BMap_bottom:after {
-  content: '';
+.BMap_pop > .BMap_bottom::after {
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate3d(-50%, 100%, 0);
   width: 0;
   height: 0;
+  border-top: 6px solid rgba(0, 0, 0, 0.4);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
-  border-top: 6px solid rgba(0, 0, 0, 0.4);
+  transform: translate3d(-50%, 100%, 0);
+  content: '';
 }
 
 .BMap_pop > div:nth-child(8) {

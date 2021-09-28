@@ -112,9 +112,12 @@ export default {
    *   rightBottomLat
    * }
    */
-  getBound(
-    map,
-  ): { leftTopLon: number; leftTopLat: number; rightBottomLon: number; rightBottomLat: number } {
+  getBound(map): {
+    leftTopLon: number;
+    leftTopLat: number;
+    rightBottomLon: number;
+    rightBottomLat: number;
+  } {
     const bounds = map.getBounds();
     //获取西南角的经纬度(左下端点)
     const sw = bounds.getSouthWest();

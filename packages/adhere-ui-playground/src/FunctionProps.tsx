@@ -157,9 +157,7 @@ class FunctionProps extends React.Component<IFunctionProps> {
                 </td>
               </tr>
               <ConditionalRender conditional={index !== data.length - 1}>
-                {() => (
-                  <div className={`${selectorPrefix}-dividing`} />
-                )}
+                {() => <div className={`${selectorPrefix}-dividing`} />}
               </ConditionalRender>
             </>
           ))}

@@ -304,15 +304,8 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
 
   render() {
     // @ts-ignore
-    const {
-      className,
-      style,
-      fixedClassName,
-      fixedStyle,
-      innerClassName,
-      innerStyle,
-      children,
-    } = this.props;
+    const { className, style, fixedClassName, fixedStyle, innerClassName, innerStyle, children } =
+      this.props;
 
     // @ts-ignore
     return (

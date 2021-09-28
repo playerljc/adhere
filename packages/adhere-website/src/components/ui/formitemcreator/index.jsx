@@ -44,8 +44,7 @@ export default () => {
           },
           {
             params: 'layout',
-            desc:
-              '{labelCol, wrapperCol} 配置布局会应用到每一个item中，如果需要单独特殊配置，columns里面会覆盖此配置',
+            desc: '{labelCol, wrapperCol} 配置布局会应用到每一个item中，如果需要单独特殊配置，columns里面会覆盖此配置',
             type: 'object',
             defaultVal: '',
           },
@@ -79,8 +78,7 @@ export default () => {
           },
           {
             params: 'contentProps',
-            desc:
-              '传入被Form.Item包裹的组件的属性，\n 例如type为input则是antd中Input支持的属性，以此类推',
+            desc: '传入被Form.Item包裹的组件的属性，\n 例如type为input则是antd中Input支持的属性，以此类推',
             type: 'ReactNode',
             defaultVal: '',
           },

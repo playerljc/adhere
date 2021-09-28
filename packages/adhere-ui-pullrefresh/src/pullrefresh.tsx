@@ -486,7 +486,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
               <div
                 className={classNames(
                   `${selectorPrefix}-trigger-refresh`,
-                  ...((renderLoadingAnimation as unknown) as string).split(' '),
+                  ...(renderLoadingAnimation as unknown as string).split(' '),
                 )}
                 // @ts-ignore
                 ref={this.refreshElRef}

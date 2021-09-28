@@ -61,7 +61,7 @@ const local = getLocal([
   '公里',
   '起点',
   '总长',
-  '单击确定地点，双击结束'
+  '单击确定地点，双击结束',
 ]);
 
 export default { ...local };

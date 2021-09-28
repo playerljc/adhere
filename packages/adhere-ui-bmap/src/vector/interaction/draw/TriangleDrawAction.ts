@@ -162,8 +162,9 @@ class TriangleDrawAction extends DrawAction {
     ctx.save();
     ctx.beginPath();
 
-    const realPoints = TriangleDrawAction.transformOriginToReal(context, { points: data.points })
-      .points;
+    const realPoints = TriangleDrawAction.transformOriginToReal(context, {
+      points: data.points,
+    }).points;
 
     ctx.moveTo(realPoints[0].x, realPoints[0].y);
     ctx.lineTo(realPoints[1].x, realPoints[1].y);

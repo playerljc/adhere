@@ -141,7 +141,7 @@ class Popup {
 
     // @ts-ignore
     if (promise) {
-      ((promise as unknown) as Promise<null>).then(() => {
+      (promise as unknown as Promise<null>).then(() => {
         // @ts-ignore
         this.popupEl.classList.remove('modal-in');
 

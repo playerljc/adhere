@@ -215,7 +215,7 @@ class StartGeometry extends Geometry implements IStartGeometry {
 
     const ctx = canvas.getContext('2d');
 
-    if(!ctx) return false;
+    if (!ctx) return false;
 
     StartGeometry.drawStart({
       ctx,

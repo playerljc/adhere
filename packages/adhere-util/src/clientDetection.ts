@@ -6,6 +6,6 @@ export default {
    */
   isTouch(): boolean {
     return 'ontouchend' in document;
-  }
+  },
   /**----------------------------客户端检测end---------------------------**/
 };

@@ -607,14 +607,15 @@ Intl.init({
             //   },
             // });
 
-            vectorSource = new VectorSource([/* feature */]);
+            vectorSource = new VectorSource([
+              /* feature */
+            ]);
 
             const vectorLayer = new VectorLayer(map, {
               paneName: 'vertexPane',
               zIndex: 9999,
               source: vectorSource,
             });
-
 
             const geom = new Map([
               // 正多边形
@@ -1018,7 +1019,7 @@ Intl.init({
                 // },5000);
               }, 3000);
             } else {
-              if(trajector) {
+              if (trajector) {
                 trajectoryPlayBackLayer.removeTrajectory(trajector);
               }
             }

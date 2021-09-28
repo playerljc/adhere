@@ -20,9 +20,7 @@ class HeatMap extends OlMap {
    * addLayer - 添加一个热力图图层
    */
   addLayer(heatMapLayerConfig = {}) {
-    const { layer, vectorSource } = Util.createHeatMapLayer(
-      heatMapLayerConfig || {},
-    );
+    const { layer, vectorSource } = Util.createHeatMapLayer(heatMapLayerConfig || {});
 
     this.layer = layer;
     this.vectorSource = vectorSource;
@@ -30,7 +28,7 @@ class HeatMap extends OlMap {
     this.map.addLayer(this.layer);
   }
 
-  getHeatMapLayer():HeatMapLayer {
+  getHeatMapLayer(): HeatMapLayer {
     return this.layer;
   }
 }

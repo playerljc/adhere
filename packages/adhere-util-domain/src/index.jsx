@@ -13,9 +13,11 @@ d.on('error', (e) => {
 // });
 
 function fun() {
-  return new Promise(d.bind(resolve => {
-    fun2();
-  }));
+  return new Promise(
+    d.bind((resolve) => {
+      fun2();
+    }),
+  );
 }
 
 fun();

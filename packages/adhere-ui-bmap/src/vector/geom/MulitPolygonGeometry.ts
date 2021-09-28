@@ -60,7 +60,7 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
 
         return [pixel.x, pixel.y];
       }),
-    )
+    );
 
     const polygon = turf.polygon(geojson);
 

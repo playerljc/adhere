@@ -269,8 +269,7 @@ export default () => {
           onClick={() => {
             k007Ajax
               .get({
-                path:
-                  '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
+                path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
                 loading: {
                   show: true,
                 },
@@ -543,8 +542,7 @@ export default () => {
 
             Promise.all([
               k007Ajax.get({
-                path:
-                  '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
+                path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
               }),
               k007Ajax.get({
                 path: '/api/SystemManager/system/role/login/list?state=&kw=&pageNum=1&pageSize=10',

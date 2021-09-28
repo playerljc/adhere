@@ -120,10 +120,7 @@ class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGround
       <div key={`${index}`} className={`${selectPrefix}-codeviewwrap`}>
         <div className={`${selectPrefix}-codeviewwrap-title`}>{config.title}</div>
         <div className={`${selectPrefix}-codeviewwrap-inner`}>
-          <PlaygroundExt
-            {...defaultProps}
-            {...config}
-          />
+          <PlaygroundExt {...defaultProps} {...config} />
         </div>
       </div>
     );

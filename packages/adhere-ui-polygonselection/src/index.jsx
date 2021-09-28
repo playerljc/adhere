@@ -100,7 +100,7 @@ class DrawingBoard extends React.Component {
     });
 
     this.polygonSelection.on(PolygonSelectionActions.CanvasClickEmpty, () => {
-      console.log('clickEmpty')
+      console.log('clickEmpty');
       this.polygonSelection.clearDraw();
       this.polygonSelection.clearAssistDraw();
       this.polygonSelection.drawHistoryData();

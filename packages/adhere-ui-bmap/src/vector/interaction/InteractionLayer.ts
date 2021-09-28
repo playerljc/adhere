@@ -161,7 +161,9 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
 
       let pixel = MathUtil.clientToCtxPoint({
         event: e,
-        rect: (this.getCanvasEl() as HTMLCanvasElement).getBoundingClientRect() /*(this.el as HTMLDivElement).getBoundingClientRect()*/,
+        rect: (
+          this.getCanvasEl() as HTMLCanvasElement
+        ).getBoundingClientRect() /*(this.el as HTMLDivElement).getBoundingClientRect()*/,
       });
 
       let finsEntitys: Array<{ index: number; data: IActionData }> = [];
@@ -236,10 +238,12 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
     this.canvasObserver = new MutationObserver((mutationsList, observer) => {
       for (let mutation of mutationsList) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          (this.assistCanvasEl as HTMLCanvasElement).style.left = (this
-            .canvasEl as HTMLCanvasElement).style.left;
-          (this.assistCanvasEl as HTMLCanvasElement).style.top = (this
-            .canvasEl as HTMLCanvasElement).style.top;
+          (this.assistCanvasEl as HTMLCanvasElement).style.left = (
+            this.canvasEl as HTMLCanvasElement
+          ).style.left;
+          (this.assistCanvasEl as HTMLCanvasElement).style.top = (
+            this.canvasEl as HTMLCanvasElement
+          ).style.top;
         }
       }
     });

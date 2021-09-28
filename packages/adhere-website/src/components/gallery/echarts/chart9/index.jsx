@@ -542,46 +542,47 @@ const option = {
 };
 
 export default () => {
-  
   const echartMap = useRef(null);
 
   // 页面加载完毕
   const [flag, setFlag] = useState(false);
   useEffect(() => {
     setFlag(flag);
-  }, [flag])
+  }, [flag]);
 
-  
   useEffect(() => {
-    setFlag(true)
+    setFlag(true);
     // 将某一项高亮
-    let instance = echartMap.current.getEchartsInstance()
+    let instance = echartMap.current.getEchartsInstance();
     let result = instance.getOption();
     result.series[0].data = data.map((item) => {
-        return {
-            name: item.name,
-            itemStyle: item.name === '南宁市' ? {
-              borderColor: '#FF0000',
-              areaColor: 'rgba(255, 0, 0, .5)',
-            } : {}
-        }
+      return {
+        name: item.name,
+        itemStyle:
+          item.name === '南宁市'
+            ? {
+                borderColor: '#FF0000',
+                areaColor: 'rgba(255, 0, 0, .5)',
+              }
+            : {},
+      };
     });
-    instance.setOption(result, true)
-  }, [])
+    instance.setOption(result, true);
+  }, []);
 
   // 经纬度变成坐标点
   const getPoint = (current) => {
     if (!echartMap.current || !option) return;
     const echarts = echartMap.current.getEchartsInstance();
     // 获取系列
-    var seriesModel = echarts.getModel().getSeriesByIndex(option?.series?.length - 1)
+    var seriesModel = echarts.getModel().getSeriesByIndex(option?.series?.length - 1);
     // 获取地理坐标系实例
     var coordSys = seriesModel?.coordinateSystem;
     // dataToPoint 相当于 getPosByGeo
     var point = coordSys?.dataToPoint([current[0], current[1]]);
-    return point ? { x: point[0], y: point[1]} : { x: 0, y: 0 };
-  }
-  
+    return point ? { x: point[0], y: point[1] } : { x: 0, y: 0 };
+  };
+
   // 渲染钻石
   const renderDiamonds = () => {
     if (!echartMap.current || !option) return;
@@ -589,11 +590,11 @@ export default () => {
     const top = y - 20;
     const left = x - 25;
     return (
-        <div className="echart-map-tooltip" style={{top, left, zIndex: 10}}>
-            <img src={point} />
-        </div>
-    )
-  }
+      <div className="echart-map-tooltip" style={{ top, left, zIndex: 10 }}>
+        <img src={point} />
+      </div>
+    );
+  };
   return (
     <>
       <Playground
@@ -611,10 +612,9 @@ export default () => {
         <div className={styles.Map}>
           <ReactECharts option={option} ref={echartMap} />
           {/* 渲染钻石 */}
-          {flag ? renderDiamonds(): <></>}
+          {flag ? renderDiamonds() : <></>}
         </div>
       </Playground>
-      
     </>
-  )
+  );
 };

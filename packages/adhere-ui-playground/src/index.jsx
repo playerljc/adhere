@@ -38,26 +38,28 @@ Intl.init({
         </PlayGroundMulit>
       </div>
       <div style={{ padding: 30 }}>
-        <Props data={[
-          {
-            params: 'columns',
-            desc: '表格的列',
-            type: 'Array<Object>',
-            defaultVal: ''
-          },
-          {
-            params: 'dataSource',
-            desc: '表格的数据',
-            type: 'Array<Object>',
-            defaultVal: '[]'
-          },
-          {
-            params: 'columns',
-            desc: '表格的列',
-            type: 'Array<Object>',
-            defaultVal: 'null'
-          }
-        ]}/>
+        <Props
+          data={[
+            {
+              params: 'columns',
+              desc: '表格的列',
+              type: 'Array<Object>',
+              defaultVal: '',
+            },
+            {
+              params: 'dataSource',
+              desc: '表格的数据',
+              type: 'Array<Object>',
+              defaultVal: '[]',
+            },
+            {
+              params: 'columns',
+              desc: '表格的列',
+              type: 'Array<Object>',
+              defaultVal: 'null',
+            },
+          ]}
+        />
       </div>
       <div style={{ padding: 30 }}>
         <FunctionProps
@@ -72,39 +74,39 @@ Intl.init({
                   desc: '元素',
                   type: 'HtmlElement',
                   defaultVal: '-',
-                  required: true
+                  required: true,
                 },
                 {
                   name: 'tag',
                   desc: '标签分组',
                   type: 'string ',
                   defaultVal: '-',
-                  required: true
+                  required: true,
                 },
                 {
                   name: 'type',
                   desc: '事件类型',
                   type: 'string ',
                   defaultVal: '-',
-                  required: true
+                  required: true,
                 },
                 {
                   name: 'handler',
                   desc: '事件句柄',
                   type: 'Function ',
                   defaultVal: '-',
-                  required: true
+                  required: true,
                 },
                 {
                   name: 'capture',
                   desc: '是否是捕获',
                   type: 'Function ',
                   defaultVal: '-',
-                  required: false
-                }
+                  required: false,
+                },
               ],
               returnType: 'Function',
-              returnDesc: '返回句柄'
+              returnDesc: '返回句柄',
             },
             {
               name: 'on',
@@ -116,12 +118,12 @@ Intl.init({
                   desc: '元素',
                   type: 'HtmlElement',
                   defaultVal: '-',
-                  required: true
-                }
+                  required: true,
+                },
               ],
               returnType: 'Function',
-              returnDesc: '返回句柄'
-            }
+              returnDesc: '返回句柄',
+            },
           ]}
         />
       </div>

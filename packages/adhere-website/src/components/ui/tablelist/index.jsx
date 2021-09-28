@@ -139,15 +139,13 @@ export default () => {
           },
           {
             params: 'total',
-            desc:
-              '工具栏显示数据总数, 为true默认显示为“共n条”,如果想自定义可以传string或者ReactNode',
+            desc: '工具栏显示数据总数, 为true默认显示为“共n条”,如果想自定义可以传string或者ReactNode',
             type: 'boolean | string | ReactNode',
             defaultVal: '',
           },
           {
             params: 'selectAll',
-            desc:
-              '工具栏选中全部，默认是选中当前页，传入object{ total: 全选是否代表跨页选中全部数据 }',
+            desc: '工具栏选中全部，默认是选中当前页，传入object{ total: 全选是否代表跨页选中全部数据 }',
             type: 'boolean | object{ total: boolean }',
             defaultVal: '',
           },

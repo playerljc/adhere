@@ -157,15 +157,7 @@ class CircleDrawAction extends DrawAction {
     ctx.beginPath();
 
     // 需要转换
-    ctx.ellipse(
-      centerPixel.x,
-      centerPixel.y,
-      radius,
-      radius,
-      (45 * Math.PI) / 180,
-      0,
-      2 * Math.PI,
-    );
+    ctx.ellipse(centerPixel.x, centerPixel.y, radius, radius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
 
     // 描边
     ctx.stroke();

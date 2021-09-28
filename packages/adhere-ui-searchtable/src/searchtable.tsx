@@ -123,7 +123,9 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   /**
    * renderSearchFooterItems - 渲染SearchFooter的按钮组
    */
-  abstract renderSearchFooterItems(defaultItems: Array<React.ReactElement>): Array<React.ReactElement> | null;
+  abstract renderSearchFooterItems(
+    defaultItems: Array<React.ReactElement>,
+  ): Array<React.ReactElement> | null;
 
   /**
    * onSearch - 进行查询

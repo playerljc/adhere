@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-	<meta charset="utf-8">
-	<title>镂空面绘制</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<style>
-    body,
-    html,
-    #container {
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      font-family: "微软雅黑";
-    }
-	</style>
-	<script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=bxFuXXDt1oKdlgu6mXCCnK51cDgDGBLp"></script>
-</head>
-<body>
-<div id="container"></div>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>镂空面绘制</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <style>
+      body,
+      html,
+      #container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        font-family: '微软雅黑';
+      }
+    </style>
+    <script src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=bxFuXXDt1oKdlgu6mXCCnK51cDgDGBLp"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
 </html>
 <script>
   var map = new BMapGL.Map('container', {
     enableDblclickZoom: false,
     displayOptions: {
-      building: false
-    }
+      building: false,
+    },
   });
   map.centerAndZoom(new BMapGL.Point(116.718, 40.142), 11);
   map.enableScrollWheelZoom(true);
 
   var bd = new BMapGL.Boundary();
   bd.get('唐山', function (rs) {
-    debugger
+    debugger;
     // console.log('外轮廓：', rs.boundaries[0]);
     // console.log('内镂空：', rs.boundaries[1]);
     var hole = new BMapGL.Polygon(rs.boundaries, {
       fillColor: 'blue',
-      fillOpacity: 0.2
+      fillOpacity: 0.2,
     });
     map.addOverlay(hole);
   });

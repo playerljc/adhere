@@ -1,10 +1,5 @@
 import Feature from './Feature';
-import {
-  IInnerTextFeatureParams,
-  IInnerTextFeature,
-  ITextStyle,
-  VectorActions,
-} from './types';
+import { IInnerTextFeatureParams, IInnerTextFeature, ITextStyle, VectorActions } from './types';
 import TextStyle from './style/TextStyle';
 
 /**

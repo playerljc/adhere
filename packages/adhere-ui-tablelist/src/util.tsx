@@ -105,12 +105,19 @@ class Util {
       }
       if (searchNow) {
         t.contentProps = {
-          onSearch: t.type === FormItemCreator.SEARCH ? (v) => this.onSearch({ [t.name]: v }) : null,
+          onSearch:
+            t.type === FormItemCreator.SEARCH ? (v) => this.onSearch({ [t.name]: v }) : null,
           onPressEnter:
             t.type !== FormItemCreator.SEARCH
               ? (e) =>
                   this.onSearch({
-                    [t.name]: [FormItemCreator.INPUT, FormItemCreator.TEXTAREA, FormItemCreator.NUMBER].includes(t.type) ? e.target.value : e,
+                    [t.name]: [
+                      FormItemCreator.INPUT,
+                      FormItemCreator.TEXTAREA,
+                      FormItemCreator.NUMBER,
+                    ].includes(t.type)
+                      ? e.target.value
+                      : e,
                   })
               : null,
           ...t.contentProps,
