@@ -111,7 +111,25 @@ FormItemCreator.defaultProps = {
 };
 
 FormItemCreator.propTypes = {
-  columns: PropTypes.array,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      labelCol: PropTypes.object,
+      wrapperCol: PropTypes.object,
+    }),
+  ),
+  layout: PropTypes.shape({
+    name: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      ]),
+    ),
+    type: PropTypes.symbol,
+    contentProps: PropTypes.any,
+    skip: PropTypes.bool,
+    content: PropTypes.node,
+  }),
 };
 
 export default FormItemCreator;
