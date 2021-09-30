@@ -4,4 +4,4 @@
 
 2021-08-31
 
-* bmap组件
+* 加入@baifendian/adhere-ui-bmap组件

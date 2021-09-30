@@ -2,10 +2,10 @@
 
 ***
 
-2021-9-13
+2021-9-30
 
 * **adhere-ui-bmap**
-  - bmap组件
+  - 加入@baifendian/adhere-ui-bmap组件
 * **adhere-ui-css**
   - 加入common-no-select函数
   - 加入switch.less
