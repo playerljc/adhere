@@ -18,7 +18,7 @@ export default () => {
                 <ul>
                   <li>
                     <a
-                      href="http://git.baifendian.com/SYYF/adherev"
+                      href="http://49.232.163.126:8084/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
