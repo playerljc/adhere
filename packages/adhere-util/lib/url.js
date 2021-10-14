@@ -1,0 +1,2 @@
+export default{parse:function(n){var r=window.location.search,n=(r=n?n:r).indexOf("?");if(-1===n)return{};for(var t={},o=(r=r.substring(n+1)).split("&"),i=0,e=o.length;i<e;i++){var d=o[i].split("=");t[window.decodeURIComponent(d[0]).trim()]=window.decodeURIComponent(d[1]).trim()}return t},stringify:function(t){var n=Object.keys(t||{}),o=[];return n.forEach(function(n){var r=t[n];r&&o.push(n.trim()+"="+window.encodeURIComponent(r.trim?r.trim():r))}),"?"+o.join("&")}};
+//# sourceMappingURL=url.js.map

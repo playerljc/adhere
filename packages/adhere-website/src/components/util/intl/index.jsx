@@ -226,31 +226,21 @@ export default () => {
   
   
   // zh_CN.js文件
-  import { Intl } from '@baifendian/adhere';
-
-  const local = Intl.getLocal([
-    'XXX系统',
-  ]);
   
-  export default { ...local };
+  export default [
+    'XXX系统',
+  ];
   
   // pt_PT.js文件
-  import { Intl } from '@baifendian/adhere';
-
-  const local = Intl.getLocal([
-    'XXX系统',
-  ]);
   
-  export default { ...local };
+  export default [
+    'XXX系统',
+  ];
   
   // en_US.js文件
-  import { Intl } from '@baifendian/adhere';
-
-  const local = Intl.getLocal([
+  export default [
     'XXX系统',
-  ]);
-  
-  export default { ...local };
+  ];
   
         `}
       />
