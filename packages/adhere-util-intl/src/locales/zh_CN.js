@@ -1,6 +1,4 @@
-import { getLocal } from '../intl';
-
-const local = getLocal([
+export default [
   '输入的值在1~200之间',
   '输入的内容在100个字符之内',
   '全部',
@@ -62,6 +60,5 @@ const local = getLocal([
   '起点',
   '总长',
   '单击确定地点，双击结束',
-]);
-
-export default { ...local };
+  '关闭',
+];

@@ -9,6 +9,8 @@ const intlKey = {};
 
 const localKeys = new Map();
 
+let mainLocales = {};
+
 /**
  * initIntlMap - 初始化以中文为key,intl.get()为值的Map
  * @param zh_CN
@@ -27,16 +29,17 @@ function initIntlMap(zh_CN) {
 
 /**
  * getLocal
+ * @param prefix
  * @param data
  */
-export function getLocal(data: Array<string>): object {
+export function getLocal(prefix: string = 'local', data: Array<string>): object {
   // @ts-ignore
   const result = [...Array.from(new Set(data))];
 
   const local = {};
 
   for (let i = 0; i < result.length; i++) {
-    const key = `local${i + 1}`;
+    const key = `${prefix || 'local'}${i + 1}`;
 
     let val = localKeys.get(key);
 
@@ -52,18 +55,30 @@ export function getLocal(data: Array<string>): object {
   return local;
 }
 
+/**
+ * getLocales
+ * @description - 获取系统所有的词条
+ * @return object
+ */
+export function getLocales(): object {
+  return { ...mainLocales };
+}
+
 export default {
   /**
    * init
+   * @param {String} - prefix
    * @param {String} - currentLocale
    * @param {Object} - locales
    * @param {Object} - ...other
    */
   init({
+    prefix = 'local',
     currentLocale = 'zh_CN',
     locales = {},
     ...other
   }: {
+    prefix: string;
     currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
     locales: any;
   }): Promise<any> {
@@ -73,28 +88,47 @@ export default {
       });
     }
 
-    // k007组件的国际化文件
+    // 系统的国际化资源
     const finallyLocales = {
       en_US: require('./locales/en_US').default,
       zh_CN: require('./locales/zh_CN').default,
       pt_PT: require('./locales/pt_PT').default,
     };
 
+    const finallyLocalesKeys = Object.keys(finallyLocales);
+    const localesKeys = Object.keys(locales);
+
+    let masterLocales;
+    let slaveLocales;
+
+    if (finallyLocalesKeys.length > localesKeys.length) {
+      masterLocales = finallyLocales;
+      slaveLocales = locales;
+    } else if (finallyLocalesKeys.length <= localesKeys.length) {
+      masterLocales = locales;
+      slaveLocales = finallyLocales;
+    }
+
+    // 总的国际化资源(系统的国际化资源 merge 用户的国际化资源)
+
     // 整合用户的locales
-    for (const p in locales) {
-      if (p in finallyLocales) {
-        finallyLocales[p] = Object.assign(finallyLocales[p], locales[p]);
-      }
+    for (const p in masterLocales) {
+      mainLocales[p] = getLocal(
+        prefix,
+        // @ts-ignore
+        ...new Set([...masterLocales[p], ...(slaveLocales[p] || [])]),
+      );
     }
 
     return intl
       .init({
         currentLocale,
-        locales: finallyLocales,
+        locales: mainLocales,
         ...other,
       })
       .then(() => {
-        initIntlMap(finallyLocales.zh_CN);
+        // @ts-ignore
+        initIntlMap(mainLocales.zh_CN);
         isInit = true;
       });
   },
@@ -183,9 +217,10 @@ export default {
 
   /**
    * getLocal
+   * @param prefix
    * @param data
    */
-  getLocal(data: Array<string>): object {
-    return getLocal(data);
+  getLocal(prefix: string = 'local', data: Array<string>): object {
+    return getLocal(prefix, data);
   },
 };

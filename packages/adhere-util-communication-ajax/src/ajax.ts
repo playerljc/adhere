@@ -498,7 +498,7 @@ function deal401() {
 
   window.location.href = Util.casUrl({
     // @ts-ignore
-    baseUrl: this.systemManagerBaseUrl,
+    baseUrl: this.systemManagerBaseURL,
     enterUrl: window.location.href,
   });
 }

@@ -1,6 +1,4 @@
-import { getLocal } from '../intl';
-
-const local = getLocal([
+export default [
   'The value entered is between 1 and 200',
   'The content entered is within 100 characters',
   'All',
@@ -47,10 +45,10 @@ const local = getLocal([
   'Release to refresh',
   'Update time',
   'M',
-  '公里',
-  'start',
-  '总长',
-  '单击确定地点，双击结束',
-]);
-
-export default { ...local };
+  'Meter',
+  'kilometer',
+  'starting point',
+  'Total length',
+  'Click to confirm the location, double-click to end',
+  'closure',
+];

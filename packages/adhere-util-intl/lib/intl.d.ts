@@ -1,17 +1,26 @@
 import intl from 'react-intl-universal';
 /**
  * getLocal
+ * @param prefix
  * @param data
  */
-export declare function getLocal(data: Array<string>): object;
+export declare function getLocal(prefix: string | undefined, data: Array<string>): object;
+/**
+ * getLocales
+ * @description - 获取系统所有的词条
+ * @return object
+ */
+export declare function getLocales(): object;
 declare const _default: {
     /**
      * init
+     * @param {String} - prefix
      * @param {String} - currentLocale
      * @param {Object} - locales
      * @param {Object} - ...other
      */
-    init({ currentLocale, locales, ...other }: {
+    init({ prefix, currentLocale, locales, ...other }: {
+        prefix: string;
         currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
         locales: any;
     }): Promise<any>;
@@ -65,8 +74,9 @@ declare const _default: {
     }): void;
     /**
      * getLocal
+     * @param prefix
      * @param data
      */
-    getLocal(data: Array<string>): object;
+    getLocal(prefix: string | undefined, data: Array<string>): object;
 };
 export default _default;

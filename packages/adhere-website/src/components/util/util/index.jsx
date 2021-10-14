@@ -1337,6 +1337,44 @@ export default () => {
         ]}
       />
 
+      <h2>Url操作</h2>
+      <FunctionProps
+        data={[
+          {
+            name: 'parse',
+            desc: 'query参数转换成Obj',
+            modifier: 'public',
+            params: [
+              {
+                name: 'path',
+                desc: '待解析的路径',
+                type: 'string',
+                defaultVal: 'window.location.search',
+                required: 'true',
+              },
+            ],
+            returnType: 'Object',
+            returnDesc: '',
+          },
+          {
+            name: 'stringify',
+            desc: '对象转换成query参数',
+            modifier: 'public',
+            params: [
+              {
+                name: 'record',
+                desc: '对象',
+                type: 'Object',
+                defaultVal: '',
+                required: 'true',
+              },
+            ],
+            returnType: 'string',
+            returnDesc: '',
+          },
+        ]}
+      />
+
       <h2>颜色操作</h2>
       <FunctionProps
         data={[

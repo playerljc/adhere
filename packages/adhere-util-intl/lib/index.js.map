@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Intl from './intl';\r\nexport default Intl;\r\n"],"names":["Intl"],"mappings":"OAAOA,iCACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Intl, { getLocales, getLocal } from './intl';\r\nexport { getLocales, getLocal };\r\nexport default Intl;\r\n"],"names":["Intl","getLocales","getLocal"],"mappings":"OAAOA,MAAQC,yBAAYC,iDAEZF,YADNC,yBAAYC"}

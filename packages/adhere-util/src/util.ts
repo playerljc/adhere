@@ -6,6 +6,7 @@ import Geometry from './geometry';
 import clientDetection from './clientDetection';
 import SystemManager from './systemmanager';
 import Tree from './tree';
+import Url from './url';
 
 export default {
   /**
@@ -19,4 +20,5 @@ export default {
   ...clientDetection,
   ...SystemManager,
   ...Tree,
+  ...Url,
 };

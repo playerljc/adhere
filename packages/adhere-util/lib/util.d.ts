@@ -1,4 +1,6 @@
 declare const _default: {
+    parse(path?: string | undefined): object;
+    stringify(record: object): string;
     arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeNode[];
     arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeSelectNode[];
     getAncestor(data: any[], node: any, config: {
@@ -61,6 +63,9 @@ declare const _default: {
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
     toPoint(percent: string): number;
+    /**
+     * 函数节流
+     */
     toPercent(point: number): string;
     straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
     getA3Point({ p1, p2, distance }: {

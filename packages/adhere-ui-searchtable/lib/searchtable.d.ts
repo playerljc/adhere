@@ -86,6 +86,13 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     abstract onSearch(): void;
     protected constructor(props: any);
     /**
+     * renderTableNumberColumn
+     * @description - 渲染序号列
+     * @param number
+     * @protected
+     */
+    protected renderTableNumberColumn(number?: string): JSX.Element;
+    /**
      * getPagination - 获取分页信息
      */
     protected getPagination(): {

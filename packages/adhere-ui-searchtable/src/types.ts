@@ -18,6 +18,7 @@ import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/l
 export interface ISearchTableProps extends ISuspenseProps {
   className?: string;
   style?: React.CSSProperties;
+  tableProps: object;
 }
 
 /**
