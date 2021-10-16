@@ -1,3 +1,21 @@
+# 1.0.8
+
+***
+
+2021-10-17
+
+* **adhere-ui-searchtable**
+  - 加入自定义序号列的渲染
+  - 搜索栏加入展开和关闭功能
+  - 加入Table的缺省传递props功能
+* **adhere-util**
+  - 加入url库
+* **adhere-util-communication-ajax**
+  - BUG的修改
+* **adhere-util-intl**
+  - 修改系统词条和用户词条的冲突
+  - 加入新词条
+
 # 1.0.7
 
 ***
