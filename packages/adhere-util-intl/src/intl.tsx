@@ -1,5 +1,9 @@
 import intl from 'react-intl-universal';
 
+import en_US from './locales/en_US';
+import zh_CN from './locales/zh_CN';
+import pt_PT from './locales/pt_PT';
+
 // 是否进行过初始化
 let isInit = false;
 
@@ -90,13 +94,13 @@ export default {
 
     // 系统的国际化资源
     const finallyLocales = {
-      en_US: require('./locales/en_US').default,
-      zh_CN: require('./locales/zh_CN').default,
-      pt_PT: require('./locales/pt_PT').default,
+      en_US,
+      zh_CN,
+      pt_PT,
     };
 
     const finallyLocalesKeys = Object.keys(finallyLocales);
-    const localesKeys = Object.keys(locales);
+    const localesKeys = Object.keys(locales || {});
 
     let masterLocales;
     let slaveLocales;
@@ -116,7 +120,7 @@ export default {
       mainLocales[p] = getLocal(
         prefix,
         // @ts-ignore
-        ...new Set([...masterLocales[p], ...(slaveLocales[p] || [])]),
+        Array.from(new Set([...masterLocales[p], ...(slaveLocales[p] || [])])),
       );
     }
 
