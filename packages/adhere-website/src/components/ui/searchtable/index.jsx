@@ -134,6 +134,22 @@ export default () => {
             returnDesc: '',
           },
           {
+            name: 'renderTableNumberColumn',
+            desc: '渲染序号列',
+            modifier: 'public',
+            params: [
+              {
+                name: 'number',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'React.ReactElement',
+            returnDesc: '',
+          },
+          {
             name: 'getTotal',
             desc: '获取表格数据的总数',
             modifier: 'public',
