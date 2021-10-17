@@ -337,12 +337,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         {Intl.v('重置')}
       </Button>,
       <ConditionalRender
+        // @ts-ignore
         conditional={this.state.expand}
         // @ts-ignore
         noMatch={() => (
           <a
             style={{ display: 'flex', alignItems: 'center' }}
             onClick={() => {
+              // @ts-ignore
               this.setState({
                 expand: true,
               });
@@ -361,6 +363,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
           <a
             style={{ display: 'flex', alignItems: 'center' }}
             onClick={() => {
+              // @ts-ignore
               this.setState({
                 expand: false,
               });

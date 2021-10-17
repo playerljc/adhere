@@ -400,6 +400,7 @@ function sendPrepare(
  * @param contentType
  */
 function getSendParams({ data, contentType }) {
+  // @ts-ignore
   contentType = contentType || '';
 
   // 四种Content-Type的处理(也就是send的参数)
