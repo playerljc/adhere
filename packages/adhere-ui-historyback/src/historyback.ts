@@ -4,9 +4,13 @@
  * @param routePath {string}
  */
 export default (history, routePath = '/') => {
-  if (document.referrer !== '') {
+  if ('referrer' in document) {
+    if (document.referrer !== '') {
+      window.history.go(-1);
+    } else if (history && routePath) {
+      history.replace(routePath || '/');
+    }
+  } else {
     window.history.go(-1);
-  } else if (history && routePath) {
-    history.replace(routePath || '/');
   }
 };

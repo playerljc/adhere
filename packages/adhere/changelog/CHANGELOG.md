@@ -4,6 +4,8 @@
 
 2021-10-17
 
+* **adhere-ui-historyback**
+  - 加入火狐下不支持document.referrer
 * **adhere-ui-searchtable**
   - 加入自定义序号列的渲染
   - 搜索栏加入展开和关闭功能

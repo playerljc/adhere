@@ -107,9 +107,9 @@ export default {
 
     if (finallyLocalesKeys.length > localesKeys.length) {
       masterLocales = finallyLocales;
-      slaveLocales = locales;
+      slaveLocales = locales || {};
     } else if (finallyLocalesKeys.length <= localesKeys.length) {
-      masterLocales = locales;
+      masterLocales = locales || {};
       slaveLocales = finallyLocales;
     }
 
