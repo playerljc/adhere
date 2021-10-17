@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-scrollload",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "滚动加载",
   "main": "lib/index.js",
   "files": [
@@ -35,7 +35,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^1.0.7",
+    "@baifendian/adhere-util-intl": "^1.0.8",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

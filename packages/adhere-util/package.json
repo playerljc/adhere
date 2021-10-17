@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "工具类",
   "main": "lib/index.js",
   "files": [

@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-website",
   "private": true,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "adhere的website",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -66,12 +66,12 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.0",
     "prettier": "^2.4.1",
-    "stylelint": "^13.13.1",
-    "raw-loader": "^4.0.2"
+    "raw-loader": "^4.0.2",
+    "stylelint": "^13.13.1"
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.7",
+    "@baifendian/adhere": "^1.0.8",
     "@ctsj/router": "^1.0.1",
     "antd": "^4.9.4",
     "classnames": "^2.2.6",
