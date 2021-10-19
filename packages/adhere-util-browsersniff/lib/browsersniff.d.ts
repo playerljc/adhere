@@ -1,12 +1,21 @@
+declare type browser = {
+    browser: string;
+    device: string;
+    engine: string;
+    language: string;
+    os: string;
+    osVersion: string;
+    version: string;
+};
 declare const _default: {
-    getInstance(): null;
-    browser(): any;
-    device(): any;
-    engine(): any;
-    language(): any;
-    os(): any;
-    osVersion(): any;
-    version(): any;
+    getInstance(): browser;
+    browser(): string;
+    device(): string;
+    engine(): string;
+    language(): string;
+    os(): string;
+    osVersion(): string;
+    version(): string;
     isBrowserSafari(): boolean;
     isBrowserChrome(): boolean;
     isBrowserIE(): boolean;

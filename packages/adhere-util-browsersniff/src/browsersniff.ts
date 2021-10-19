@@ -2,13 +2,23 @@ import Browser from './browser';
 
 let browserIns = null;
 
+type browser = {
+  browser: string;
+  device: string;
+  engine: string;
+  language: string;
+  os: string;
+  osVersion: string;
+  version: string;
+};
+
 export default {
-  getInstance() {
+  getInstance(): browser {
     if (!browserIns) {
       browserIns = new Browser();
     }
 
-    return browserIns;
+    return browserIns as unknown as browser;
   },
   browser() {
     return this.getInstance().browser;
