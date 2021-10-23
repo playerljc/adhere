@@ -38,13 +38,17 @@ class Introduction extends React.Component {
         </Typography>
 
         <Typography className={styles.Margin}>
-          <Title level={2}>动态引入</Title>
+          <Title level={2}>按需加载</Title>
           <Paragraph>
-            需要在webpack构建中加入如下配置,如果进行了动态引入，则不就需要要单独引入
+            需要在webpack构建中加入如下配置,如果进行了按需加载，则就不需要单独引入
             <code>@baifendian/adhere/lib/index.less</code>和<code>antd/dist/antd.less</code>
             <br />
-            如果没有进行动态引入则需要单独引入<code>@baifendian/adhere/lib/index.less</code>和
+            如果没有进行按需加载则需要单独引入<code>@baifendian/adhere/lib/index.less</code>和
             <code>antd/dist/antd.less</code>
+            <p style={{ color: 'red' }}>
+              注：如果对antd进行了按需加载在应该在webpack的babel-loader的include中加入adhere路径
+              <code>include.push(/@baifendian[\\/]adhere/)</code>
+            </p>
           </Paragraph>
           <Playground
             mode="code"
