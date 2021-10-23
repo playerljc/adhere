@@ -1,6 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import { Form, Button, Skeleton, Table, List, Checkbox } from 'antd';
+// import Form from 'antd/lib/form';
+// import Button from 'antd/lib/button';
+// import Skeleton from 'antd/lib/skeleton';
+// import Table from 'antd/lib/table';
+// import List from 'antd/lib/list';
+// import Checkbox from 'antd/lib/checkbox';
+
 import { FormInstance } from 'antd/lib/form';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import intl from '@baifendian/adhere-util-intl';

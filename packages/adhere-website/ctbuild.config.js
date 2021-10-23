@@ -61,6 +61,8 @@ module.exports = {
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
+    // webpackConfig.module.rules[0].include.push(path.join(__dirname, '../adhere-ui-tablelist/lib'));
+    webpackConfig.module.rules[0].include.push(/packages[\\/]adhere-/);
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;

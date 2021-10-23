@@ -12,6 +12,16 @@ type browser = {
   version: string;
 };
 
+/**
+ * {
+ *  browser: "Chrome"
+    device: "PC"
+    engine: "Blink"
+    language: "zh_CN"
+    os: "Windows"
+    osVersion: "10.0"
+    version: "94.0.4606.81"
+ */
 export default {
   getInstance(): browser {
     if (!browserIns) {

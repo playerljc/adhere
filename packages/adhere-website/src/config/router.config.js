@@ -135,6 +135,9 @@ const Domain = lazy(() => import(/* webpackChunkName: "domain" */ '@/components/
 const Resource = lazy(() =>
   import(/* webpackChunkName: "resource" */ '@/components/util/resource'),
 );
+const Browsersniff = lazy(() =>
+  import(/* webpackChunkName: "browsersniff" */ '@/components/util/browsersniff'),
+);
 
 const Echarts = lazy(() =>
   import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'),
@@ -454,6 +457,11 @@ export default () => [
                 path: '/adhere/util/resource',
                 name: 'Resource',
                 component: Resource,
+              },
+              {
+                path: '/adhere/util/browsersniff',
+                name: 'Browsersniff',
+                component: Browsersniff,
               },
             ],
           },
