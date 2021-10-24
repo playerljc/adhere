@@ -26,43 +26,7 @@ class TableImpl extends TableImplement {
   constructor(props) {
     super(props);
 
-    debugger;
-
     this.request = new Ajax('');
-
-    // Object.assign(this.state, {
-    //   name: '',
-    //   sex: '',
-    //   startTime: null,
-    //   endTime: null,
-    //   deptCode: '',
-    //   homeTown: '',
-    //   width: '',
-    //   height: '',
-    //   [this.getOrderFieldProp()]: 'height',
-    //   [this.getOrderProp()]: 'descend',
-    //   // selectedRowKeys
-    //   selectedRowKeys: [],
-    //   // dataSource
-    //   dataSource: {
-    //     total: 0,
-    //     list: [],
-    //   },
-    //   // loading
-    //   loading: false,
-    // });
-    //
-    // // 查询参数
-    // this.searchParams = {
-    //   name: '',
-    //   sex: '',
-    //   startTime: null,
-    //   endTime: null,
-    //   deptCode: '',
-    //   homeTown: '',
-    //   width: '',
-    //   height: '',
-    // };
 
     Object.assign(this.state, {
       loading: false,
@@ -70,7 +34,6 @@ class TableImpl extends TableImplement {
   }
 
   getParams() {
-    debugger;
     return {
       name: '',
       sex: '',
@@ -171,7 +134,6 @@ class TableImpl extends TableImplement {
               placeholder="姓名"
               value={this.state.name}
               onChange={(e) => {
-                // this.setState({ name: e.target.value.trim() });
                 this.onInputChange('name', e);
               }}
             />
@@ -183,7 +145,6 @@ class TableImpl extends TableImplement {
               style={{ width: 270 }}
               value={this.state.sex}
               onChange={(v) => {
-                // this.setState({ sex: v });
                 this.onSelectChange('sex', v);
               }}
             >
@@ -201,10 +162,6 @@ class TableImpl extends TableImplement {
               style={{ width: 270 }}
               value={[this.state.startTime, this.state.endTime]}
               onChange={(moments) => {
-                // this.setState({
-                //   startTime: moments.length ? moments[0] : null,
-                //   endTime: moments.length ? moments[1] : null,
-                // });
                 this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
               }}
               getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
@@ -221,7 +178,6 @@ class TableImpl extends TableImplement {
               placeholder="籍贯"
               value={this.state.homeTown}
               onChange={(e) => {
-                // this.setState({ homeTown: e.target.value.trim() });
                 this.onInputChange('homeTown', e);
               }}
             />
@@ -234,9 +190,6 @@ class TableImpl extends TableImplement {
               placeholder="身高"
               value={this.state.height}
               onChange={(v) => {
-                // this.setState({
-                //   height: v,
-                // });
                 this.onSelectChange('height', v);
               }}
             />
@@ -249,9 +202,6 @@ class TableImpl extends TableImplement {
               placeholder="体重"
               value={this.state.width}
               onChange={(v) => {
-                // this.setState({
-                //   width: v,
-                // });
                 this.onSelectChange('width', v);
               }}
             />
@@ -266,7 +216,6 @@ class TableImpl extends TableImplement {
               style={{ width: 270 }}
               value={this.state.deptCode}
               onChange={(v) => {
-                // this.setState({ deptCode: v });
                 this.onSelectChange('deptCode', v);
               }}
             >
@@ -300,42 +249,6 @@ class TableImpl extends TableImplement {
   getOrderPropValue() {
     return 'descend';
   }
-
-  // clear() {
-  //   return new Promise((resolve) => {
-  //     // 查询参数
-  //     this.searchParams = {
-  //       name: '',
-  //       sex: '',
-  //       startTime: null,
-  //       endTime: null,
-  //       deptCode: '',
-  //       homeTown: '',
-  //       width: '',
-  //       height: '',
-  //     };
-  //
-  //     this.setState(
-  //       {
-  //         name: '',
-  //         sex: '',
-  //         startTime: null,
-  //         endTime: null,
-  //         deptCode: '',
-  //         homeTown: '',
-  //         width: '',
-  //         height: '',
-  //         [this.getOrderFieldProp()]: 'height',
-  //         [this.getOrderProp()]: 'descend',
-  //         // selectedRowKeys
-  //         selectedRowKeys: [],
-  //       },
-  //       () => {
-  //         resolve();
-  //       },
-  //     );
-  //   });
-  // }
 
   renderSearchFooterItems() {
     return null;
@@ -381,69 +294,6 @@ class TableImpl extends TableImplement {
       );
     });
   }
-  // fetchData() {
-  //   const { page, limit } = this.state;
-  //
-  //   const { startTime, endTime, ...others } = this.searchParams;
-  //
-  //   const order = this.state[this.getOrderProp()];
-  //
-  //   const searParams = {
-  //     page,
-  //     limit,
-  //     ...others,
-  //     [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
-  //     [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
-  //     startTime: startTime
-  //       ? startTime.format(Resource.Dict.value.ResourceMomentFormatFull.value)
-  //       : null,
-  //     endTime: endTime ? endTime.format(Resource.Dict.value.ResourceMomentFormatFull.value) : null,
-  //   };
-  //
-  //   this.setState(
-  //     {
-  //       loading: true,
-  //     },
-  //     () => {
-  //       setTimeout(() => {
-  //         this.request
-  //           .get({
-  //             mock: true,
-  //             // eslint-disable-next-line global-require
-  //             path: require('./mock.js').default,
-  //           })
-  //           .then((result) => {
-  //             this.setState({
-  //               dataSource: {
-  //                 total: result.total,
-  //                 list: result.list,
-  //               },
-  //               loading: false,
-  //             });
-  //           });
-  //       }, 2000);
-  //     },
-  //   );
-  // }
-
-  // onSearch() {
-  //   const { name, sex, startTime, endTime, deptCode, homeTown, width, height } = this.state;
-  //
-  //   this.searchParams = {
-  //     name,
-  //     sex,
-  //     startTime,
-  //     endTime,
-  //     deptCode,
-  //     homeTown,
-  //     width,
-  //     height,
-  //     [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
-  //     [this.getOrderProp()]: this.state[this.getOrderProp()],
-  //   };
-  //
-  //   this.fetchData();
-  // }
 }
 
 export default TableImpl;

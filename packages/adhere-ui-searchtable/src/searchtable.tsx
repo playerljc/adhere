@@ -152,13 +152,6 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
     // @ts-ignore
     if (this.props.fixedHeaderAutoTable) {
-      console.log(
-        '111',
-        prevState.expand,
-        this.state.expand,
-        this.tableWrapRef.current.clientHeight,
-        this.state.scrollY,
-      );
       if (
         // @ts-ignore
         (prevState.scrollY === 0 && this.state.scrollY === 0) ||
