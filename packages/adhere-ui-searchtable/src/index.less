@@ -11,18 +11,18 @@
   padding: 24px;
   background-color: #f0f2f5;
 
-  > .adhere-ui-searchtable-SearchWrapper {
+  > .adhere-ui-searchtable-searchwrapper {
     margin-bottom: 16px;
     padding: 24px 24px 0;
     background: #fff;
 
-    .adhere-ui-searchtable-SearchFooterWrapper {
+    .adhere-ui-searchtable-searchfooterwrapper {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       margin-bottom: 20px;
 
-      > .adhere-ui-searchtable-SearchFooterItem {
+      > .adhere-ui-searchtable-searchfooteritem {
         display: flex;
         align-items: center;
 
@@ -37,10 +37,18 @@
     }
   }
 
-  > .adhere-ui-searchtable-TableWrapper {
+  > .adhere-ui-searchtable-autowrapper {
     position: relative;
     background: #fff;
     border-radius: 2px;
+
+    &.autofixed {
+      overflow-y: auto;
+    }
+
+    > .adhere-ui-searchtable-tablewrapper {
+      width: 100%;
+    }
   }
 }
 
@@ -53,7 +61,7 @@
   > tbody {
     > .adhere-ui-searchform-row {
       > .adhere-ui-searchform-label {
-        max-width: 60px;
+        //max-width: 60px;
         padding-right: 10px;
         white-space: nowrap;
         text-align: right;
@@ -65,4 +73,8 @@
       //}
     }
   }
+}
+
+.adhere-ui-searchtableimplement-tablewrapper {
+  height: 100%;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import { ISearchTableProps, ISearchTableState } from './types';
@@ -14,6 +14,7 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     static SearchForm: SearchForm;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
+    protected tableWrapRef: RefObject<HTMLDivElement>;
     /**
      * isShowNumber - 表格是否显示序号
      * @return boolean
@@ -85,13 +86,18 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     abstract onSearch(): void;
     protected constructor(props: any);
+    componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
     /**
      * renderTableNumberColumn
      * @description - 渲染序号列
      * @param number
+     * @param params
      * @protected
      */
-    protected renderTableNumberColumn(number?: string): JSX.Element;
+    protected renderTableNumberColumn(number: string | undefined, params: {
+        record: object;
+        index: number;
+    }): JSX.Element;
     /**
      * getPagination - 获取分页信息
      */
@@ -130,6 +136,12 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      * @return React.ReactElement
      */
     protected renderSearchFooter(): React.ReactElement;
+    /**
+     * renderTable
+     * @description - 认选表格体
+     * @protected
+     */
+    protected renderTable(): JSX.Element;
     /**
      * renderInner - 渲染SearchTable
      * @return React.ReactElement | null

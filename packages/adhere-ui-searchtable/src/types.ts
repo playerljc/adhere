@@ -10,6 +10,7 @@ import {
 } from 'antd/lib/table/interface';
 
 import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+import PropTypes from 'prop-types';
 
 /**
  * ISearchTableProps
@@ -18,7 +19,25 @@ import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/l
 export interface ISearchTableProps extends ISuspenseProps {
   className?: string;
   style?: React.CSSProperties;
-  tableProps: object;
+  tableClassName: string;
+  tableStyle: React.CSSProperties;
+  searchClassName: string;
+  searchStyle: React.CSSProperties;
+  firstLoading: React.ReactElement;
+  // antdTable的Props
+  antdTableProps: object;
+  // 是否有展开和收缩的功能
+  isShowExpandSearch: boolean;
+  // 展开和收缩的默认状态
+  defaultExpandSearchCollapse: boolean;
+  // 撑开search
+  fitSearch: boolean;
+  // 撑开表格
+  fitTable: boolean;
+  // 是否是查询固定，表格自适应
+  autoFixed: boolean;
+  // 锁定列头，表格滚动
+  fixedHeaderAutoTable: boolean;
 }
 
 /**

@@ -8,7 +8,18 @@ import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/l
 export interface ISearchTableProps extends ISuspenseProps {
     className?: string;
     style?: React.CSSProperties;
-    tableProps: object;
+    tableClassName: string;
+    tableStyle: React.CSSProperties;
+    searchClassName: string;
+    searchStyle: React.CSSProperties;
+    firstLoading: React.ReactElement;
+    antdTableProps: object;
+    isShowExpandSearch: boolean;
+    defaultExpandSearchCollapse: boolean;
+    fitSearch: boolean;
+    fitTable: boolean;
+    autoFixed: boolean;
+    fixedHeaderAutoTable: boolean;
 }
 /**
  * ISearchTableState

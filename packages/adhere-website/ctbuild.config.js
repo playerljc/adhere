@@ -22,6 +22,13 @@ module.exports = {
 
     webpackConfig.devtool = 'cheap-module-eval-source-map';
 
+    // webpackConfig.resolve.alias['@baifendian/adhere/lib/search-table'] = path.join(
+    //   __dirname,
+    //   '../',
+    //   'adhere-ui-searchtable',
+    //   'src',
+    // );
+
     // eslint-disable-next-line no-param-reassign
     // TODO:umd umd的时候需要注释掉
     webpackConfig.resolve.alias.ol = path.join(
@@ -47,6 +54,7 @@ module.exports = {
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].include.push(
       /packages[\\/]adhere[\\/]lib[\\/].*[\\/]style[\\/]index.less/,
       /packages[\\/]adhere[\\/]lib[\\/].*.less/,
+      // /packages[\\/]adhere-ui-searchtable[\\/]src[\\/]style[\\/]index.less/,
     );
     // }
 
@@ -56,14 +64,14 @@ module.exports = {
       use: 'raw-loader',
     });
 
-    webpackConfig.module.rules[1].include.push(/ol.css/, /swiper.css/);
+    webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/);
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
 
     // 在使用babel-plugin-import的时候让adhere也执行
-    webpackConfig.module.rules[0].include.push(/packages[\\/]adhere-/);
+    webpackConfig.module.rules[0].include = [/packages[\\/]adhere-/];
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;
@@ -76,7 +84,7 @@ module.exports = {
     });
 
     if (babelLoaderConfig) {
-      babelLoaderConfig.query.plugins.push(
+      babelLoaderConfig.options.plugins.push(
         [
           'import',
           {

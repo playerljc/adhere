@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Table, Button } from 'antd';
@@ -40,6 +40,8 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 连续模式
   static NUMBER_GENERATOR_RULE_CONTINUITY = Symbol();
+
+  protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
 
   /**
    * isShowNumber - 表格是否显示序号
@@ -140,17 +142,62 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     this.state = {
       page: 1,
       limit: 10,
-      expand: true,
+      expand: props.defaultExpandSearchCollapse,
+      scrollY: 0,
     };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot?: any) {
+    if (!this.tableWrapRef.current) return;
+
+    // @ts-ignore
+    if (this.props.fixedHeaderAutoTable) {
+      console.log(
+        '111',
+        prevState.expand,
+        this.state.expand,
+        this.tableWrapRef.current.clientHeight,
+        this.state.scrollY,
+      );
+      if (
+        // @ts-ignore
+        (prevState.scrollY === 0 && this.state.scrollY === 0) ||
+        (prevState.scrollY !== 0 &&
+          // @ts-ignore
+          this.state.scrollY !== 0 &&
+          // @ts-ignore
+          prevState.scrollY !== this.state.scrollY) ||
+        // @ts-ignore
+        prevState.expand !== this.state.expand
+      ) {
+        const tableWrapRef = this.tableWrapRef.current as HTMLElement;
+
+        const tableHeaderHeight = (tableWrapRef.querySelector('.ant-table-header') as HTMLElement)
+          ?.offsetHeight;
+        const tablePaginationHeight = (
+          tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement
+        )?.offsetHeight;
+
+        // @ts-ignore
+        this.setState({
+          // @ts-ignore
+          scrollY: tableWrapRef.clientHeight - (tableHeaderHeight + tablePaginationHeight + 16 * 2),
+        });
+      }
+    }
   }
 
   /**
    * renderTableNumberColumn
    * @description - 渲染序号列
    * @param number
+   * @param params
    * @protected
    */
-  protected renderTableNumberColumn(number: string = '') {
+  protected renderTableNumberColumn(
+    number: string = '',
+    params: { record: object; index: number },
+  ) {
     return <span>{number}</span>;
   }
 
@@ -288,9 +335,11 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
               // @ts-ignore
               conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
               // @ts-ignore
-              noMatch={() => this.renderTableNumberColumn((page - 1) * limit + (index + 1))}
+              noMatch={() =>
+                this.renderTableNumberColumn((page - 1) * limit + (index + 1), { record: v, index })
+              }
             >
-              {() => this.renderTableNumberColumn(index + 1)}
+              {() => this.renderTableNumberColumn(index + 1, { record: v, index })}
             </ConditionalRender>
           ),
         },
@@ -308,6 +357,9 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @return React.ReactElement
    */
   protected renderSearchFooter(): React.ReactElement {
+    // @ts-ignore
+    const { isShowExpandSearch } = this.props;
+
     const defaultItems = [
       <Button
         className={`${selectorPrefix}-SearchFooterItem`}
@@ -336,59 +388,106 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       <Button className={`${selectorPrefix}-SearchFooterItem`} onClick={this.onClear}>
         {Intl.v('重置')}
       </Button>,
-      <ConditionalRender
-        // @ts-ignore
-        conditional={this.state.expand}
-        // @ts-ignore
-        noMatch={() => (
-          <a
-            style={{ display: 'flex', alignItems: 'center' }}
-            onClick={() => {
-              // @ts-ignore
-              this.setState({
-                expand: true,
-              });
-            }}
-          >
-            <span style={{ marginRight: 5 }}>{Intl.v('展开')}</span>
-            <img
-              style={{ width: 16 }}
-              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMzODYzMjYyMTM1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE1MjQ0IiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik0xOTkuMzYgNTcyLjc2OGEzMS45MDQgMzEuOTA0IDAgMCAwIDIyLjYyNC05LjM3NmwyOTQuMTQ0LTI5NC4xNDQgMjg1LjcyOCAyODUuNzI4YTMxLjk2OCAzMS45NjggMCAxIDAgNDUuMjQ4LTQ1LjI0OEw1MzguNzUyIDIwMS4zNzZhMzIgMzIgMCAwIDAtNDUuMjggMEwxNzYuNzA0IDUxOC4xNDRhMzEuOTY4IDMxLjk2OCAwIDAgMCAyMi42NTYgNTQuNjI0eiBtMzM5LjQyNC0xMTUuMzkyYTMyIDMyIDAgMCAwLTQ1LjI4IDBMMTc2LjczNiA3NzQuMTQ0YTMxLjk2OCAzMS45NjggMCAxIDAgNDUuMjQ4IDQ1LjI0OGwyOTQuMTQ0LTI5NC4xNDQgMjg1LjcyOCAyODUuNzI4YTMxLjk2OCAzMS45NjggMCAxIDAgNDUuMjQ4LTQ1LjI0OGwtMzA4LjMyLTMwOC4zNTJ6IiBwLWlkPSIxNTI0NSIgZmlsbD0iIzE4OTBmZiI+PC9wYXRoPjwvc3ZnPg=="
-              alt="up"
-            />
-          </a>
-        )}
-      >
-        {() => (
-          <a
-            style={{ display: 'flex', alignItems: 'center' }}
-            onClick={() => {
-              // @ts-ignore
-              this.setState({
-                expand: false,
-              });
-            }}
-          >
-            <span style={{ marginRight: 5 }}>{Intl.v('关闭')}</span>
-            <img
-              style={{ width: 16 }}
-              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMzODYzMTc4MzI5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE0ODY3IiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik00OTMuNTA0IDU1OC4xNDRhMzEuOTA0IDMxLjkwNCAwIDAgMCA0NS4yOCAwbDMwOC4zNTItMzA4LjM1MmEzMS45NjggMzEuOTY4IDAgMSAwLTQ1LjI0OC00NS4yNDhMNTE2LjE2IDQ5MC4yNzIgMjIxLjk4NCAxOTYuMTI4YTMxLjk2OCAzMS45NjggMCAxIDAtNDUuMjQ4IDQ1LjI0OGwzMTYuNzY4IDMxNi43Njh6IiBwLWlkPSIxNDg2OCIgZmlsbD0iIzE4OTBmZiI+PC9wYXRoPjxwYXRoIGQ9Ik04MDEuODg4IDQ2MC41NzZMNTE2LjE2IDc0Ni4zMDQgMjIyLjAxNiA0NTIuMTZhMzEuOTY4IDMxLjk2OCAwIDEgMC00NS4yNDggNDUuMjQ4bDMxNi43NjggMzE2Ljc2OGEzMS45MDQgMzEuOTA0IDAgMCAwIDQ1LjI4IDBsMzA4LjM1Mi0zMDguMzUyYTMyIDMyIDAgMSAwLTQ1LjI4LTQ1LjI0OHoiIHAtaWQ9IjE0ODY5IiBmaWxsPSIjMTg5MGZmIj48L3BhdGg+PC9zdmc+"
-              alt="down"
-            />
-          </a>
-        )}
-      </ConditionalRender>,
     ];
+
+    if (isShowExpandSearch) {
+      defaultItems.push(
+        <ConditionalRender
+          // @ts-ignore
+          conditional={this.state.expand}
+          // @ts-ignore
+          noMatch={() => (
+            <a
+              style={{ display: 'flex', alignItems: 'center' }}
+              onClick={() => {
+                // @ts-ignore
+                this.setState({
+                  expand: true,
+                });
+              }}
+            >
+              <span style={{ marginRight: 5 }}>{Intl.v('展开')}</span>
+              <img
+                style={{ width: 16 }}
+                src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMzODYzMjYyMTM1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE1MjQ0IiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik0xOTkuMzYgNTcyLjc2OGEzMS45MDQgMzEuOTA0IDAgMCAwIDIyLjYyNC05LjM3NmwyOTQuMTQ0LTI5NC4xNDQgMjg1LjcyOCAyODUuNzI4YTMxLjk2OCAzMS45NjggMCAxIDAgNDUuMjQ4LTQ1LjI0OEw1MzguNzUyIDIwMS4zNzZhMzIgMzIgMCAwIDAtNDUuMjggMEwxNzYuNzA0IDUxOC4xNDRhMzEuOTY4IDMxLjk2OCAwIDAgMCAyMi42NTYgNTQuNjI0eiBtMzM5LjQyNC0xMTUuMzkyYTMyIDMyIDAgMCAwLTQ1LjI4IDBMMTc2LjczNiA3NzQuMTQ0YTMxLjk2OCAzMS45NjggMCAxIDAgNDUuMjQ4IDQ1LjI0OGwyOTQuMTQ0LTI5NC4xNDQgMjg1LjcyOCAyODUuNzI4YTMxLjk2OCAzMS45NjggMCAxIDAgNDUuMjQ4LTQ1LjI0OGwtMzA4LjMyLTMwOC4zNTJ6IiBwLWlkPSIxNTI0NSIgZmlsbD0iIzE4OTBmZiI+PC9wYXRoPjwvc3ZnPg=="
+                alt="up"
+              />
+            </a>
+          )}
+        >
+          {() => (
+            <a
+              style={{ display: 'flex', alignItems: 'center' }}
+              onClick={() => {
+                // @ts-ignore
+                this.setState({
+                  expand: false,
+                });
+              }}
+            >
+              <span style={{ marginRight: 5 }}>{Intl.v('关闭')}</span>
+              <img
+                style={{ width: 16 }}
+                src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjMzODYzMTc4MzI5IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE0ODY3IiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik00OTMuNTA0IDU1OC4xNDRhMzEuOTA0IDMxLjkwNCAwIDAgMCA0NS4yOCAwbDMwOC4zNTItMzA4LjM1MmEzMS45NjggMzEuOTY4IDAgMSAwLTQ1LjI0OC00NS4yNDhMNTE2LjE2IDQ5MC4yNzIgMjIxLjk4NCAxOTYuMTI4YTMxLjk2OCAzMS45NjggMCAxIDAtNDUuMjQ4IDQ1LjI0OGwzMTYuNzY4IDMxNi43Njh6IiBwLWlkPSIxNDg2OCIgZmlsbD0iIzE4OTBmZiI+PC9wYXRoPjxwYXRoIGQ9Ik04MDEuODg4IDQ2MC41NzZMNTE2LjE2IDc0Ni4zMDQgMjIyLjAxNiA0NTIuMTZhMzEuOTY4IDMxLjk2OCAwIDEgMC00NS4yNDggNDUuMjQ4bDMxNi43NjggMzE2Ljc2OGEzMS45MDQgMzEuOTA0IDAgMCAwIDQ1LjI4IDBsMzA4LjM1Mi0zMDguMzUyYTMyIDMyIDAgMSAwLTQ1LjI4LTQ1LjI0OHoiIHAtaWQ9IjE0ODY5IiBmaWxsPSIjMTg5MGZmIj48L3BhdGg+PC9zdmc+"
+                alt="down"
+              />
+            </a>
+          )}
+        </ConditionalRender>,
+      );
+    }
 
     const items = this.renderSearchFooterItems(defaultItems) || [...defaultItems];
 
     return (
-      <div className={`${selectorPrefix}-SearchFooterWrapper`}>
+      <div className={`${selectorPrefix}-searchfooterwrapper`}>
         {items.map((t) => (
-          <div className={`${selectorPrefix}-SearchFooterItem`}>{t}</div>
+          <div className={`${selectorPrefix}-searchfooteritem`}>{t}</div>
         ))}
       </div>
     );
+  }
+
+  /**
+   * renderTable
+   * @description - 认选表格体
+   * @protected
+   */
+  protected renderTable() {
+    const {
+      antdTableProps,
+      fixedHeaderAutoTable,
+      // @ts-ignore
+    } = this.props;
+
+    // Table的antdProps配置
+    const tableProps = {
+      rowKey: this.getRowKey(),
+      dataSource: this.getData(),
+      columns: this.getTableColumns(),
+      onChange: this.onTableChange,
+      pagination: this.getPagination(),
+      rowSelection: this.getRowSelection(),
+      ...(antdTableProps || {}),
+    };
+
+    // 是否支持锁定列头，表格体滚动
+    if (fixedHeaderAutoTable) {
+      // @ts-ignore
+      const { scrollY } = this.state;
+
+      if (antdTableProps) {
+        if (antdTableProps.scroll) {
+          tableProps.scroll.y = scrollY;
+        } else {
+          tableProps.scroll = { y: scrollY };
+        }
+      } else {
+        tableProps.scroll = { y: scrollY };
+      }
+    }
+
+    return <Table {...tableProps} />;
   }
 
   /**
@@ -403,9 +502,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       tableStyle,
       searchClassName,
       searchStyle,
-      tableProps,
+      fitSearch,
+      fitTable,
+      autoFixed,
       // @ts-ignore
     } = this.props;
+
+    // @ts-ignore
+    const { expand } = this.state;
 
     return (
       // @ts-ignore
@@ -417,16 +521,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         {/* @ts-ignore */}
         <Fixed
           className={classNames(
-            `${selectorPrefix}-SearchWrapper`,
+            `${selectorPrefix}-searchwrapper`,
             ...(searchClassName || '').split(' '),
           )}
           style={{ ...(searchStyle || {}) }}
+          fit={fitSearch}
         >
           {/* @ts-ignore */}
           <FlexLayout>
             {/* @ts-ignore */}
             <Fixed>
-              <ConditionalRender conditional={this.state.expand}>
+              <ConditionalRender conditional={expand} noMatch={null}>
                 {() => this.renderSearchForm()}
               </ConditionalRender>
             </Fixed>
@@ -437,20 +542,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         {/* @ts-ignore */}
         <Auto
           className={classNames(
-            `${selectorPrefix}-TableWrapper`,
+            `${selectorPrefix}-autowrapper`,
             ...(tableClassName || '').split(' '),
+            autoFixed ? 'autofixed' : '',
           )}
           style={{ ...(tableStyle || {}) }}
+          fit={fitTable}
+          autoFixed={autoFixed}
         >
-          <Table
-            rowKey={this.getRowKey()}
-            dataSource={this.getData()}
-            columns={this.getTableColumns()}
-            onChange={this.onTableChange}
-            pagination={this.getPagination()}
-            rowSelection={this.getRowSelection()}
-            {...tableProps}
-          />
+          <div ref={this.tableWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+            {this.renderTable()}
+          </div>
         </Auto>
       </FlexLayout>
     );
@@ -468,7 +570,13 @@ SearchTable.defaultProps = {
   isFirst: true,
   // 第一次加载
   isFirstLoading: null,
-  tableProps: {},
+  antdTableProps: {},
+  isShowExpandSearch: true,
+  defaultExpandSearchCollapse: true,
+  fitSearch: true,
+  fitTable: true,
+  autoFixed: true,
+  fixedHeaderAutoTable: false,
 };
 
 SearchTable.propTypes = {
@@ -480,7 +588,20 @@ SearchTable.propTypes = {
   searchStyle: PropTypes.object,
   reset: PropTypes.bool,
   firstLoading: PropTypes.node,
-  tableProps: PropTypes.object,
+  // antdTable的Props
+  antdTableProps: PropTypes.object,
+  // 是否有展开和收缩的功能
+  isShowExpandSearch: PropTypes.bool,
+  // 展开和收缩的默认状态
+  defaultExpandSearchCollapse: PropTypes.bool,
+  // 撑开search
+  fitSearch: PropTypes.bool,
+  // 撑开表格
+  fitTable: PropTypes.bool,
+  // 是否是查询固定，表格自适应
+  autoFixed: PropTypes.bool,
+  // 锁定列头，表格滚动
+  fixedHeaderAutoTable: PropTypes.bool,
 };
 
 export default SearchTable;

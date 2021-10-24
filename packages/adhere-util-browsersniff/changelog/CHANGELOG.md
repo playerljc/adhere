@@ -1,7 +1,7 @@
-# 1.0.0
+# 1.0.9
 
----
+***
 
-2020-12-22
+2021-10-24
 
-- 加入代码
+* 加入@baifendian/adhere-util-browsersniff

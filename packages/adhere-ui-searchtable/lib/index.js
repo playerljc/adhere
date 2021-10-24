@@ -1,2 +1,2 @@
-import SearchTable from"./searchtable";export default SearchTable;
+import SearchTable from"./searchtable";import SearchTableImplement from"./searchtableimplement";export default{Table:SearchTable,TableImplement:SearchTableImplement};
 //# sourceMappingURL=index.js.map

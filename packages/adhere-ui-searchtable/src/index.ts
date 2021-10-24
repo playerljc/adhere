@@ -1,3 +1,7 @@
 import SearchTable from './searchtable';
+import SearchTableImplement from './searchtableimplement';
 
-export default SearchTable;
+export default {
+  Table: SearchTable,
+  TableImplement: SearchTableImplement,
+};

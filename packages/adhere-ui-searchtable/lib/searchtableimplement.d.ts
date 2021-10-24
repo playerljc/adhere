@@ -1,86 +1,191 @@
-import React from 'react';
-import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
+import React, { RefObject } from 'react';
+import { ColumnType, TableRowSelection } from 'antd/lib/table/interface';
 import { ISearchTableImplementProps } from './types';
 import SearchTable from './searchtable';
-import SearchForm from './searchform';
 /**
  * SearchTableImplement
  * @class SearchTableImplement
  * @classdesc SearchTableImplement
  */
 declare class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> {
-    static SearchForm: SearchForm;
-    static NUMBER_GENERATOR_RULE_ALONE: symbol;
-    static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
+    protected innerWrapRef: RefObject<HTMLDivElement>;
+    constructor(props: any);
+    protected componentDidMount(): void;
     /**
-     * isShowNumber - 表格是否显示序号
-     * @return boolean
+     * getFetchListPropName
+     * @override
+     * @description - 获取调用列表接口的函数名
+     */
+    protected getFetchListPropName(): string;
+    /**
+     * getFetchListPropNameToFirstUpper
+     * @override
+     * @description - 获取调用列表接口的函数名首字母大写
+     * @return string
+     */
+    protected getFetchListPropNameToFirstUpper(): string;
+    /**
+     * onSelectChange
+     * @description - onSelectChange
+     * @param property
+     * @param v
+     */
+    protected onSelectChange: (property: string, v: string) => void;
+    /**
+     * onInputChange
+     * @description - onInputChange
+     * @param property
+     * @param e
+     */
+    protected onInputChange: (property: string, e: any) => void;
+    /**
+     * onDateTimeRangeChange
+     * @description - onDateTimeRangeChange
+     * @param propertys
+     * @param moments
+     */
+    protected onDateTimeRangeChange: (propertys: Array<string>, moments: Array<any>) => void;
+    /**
+     * getParams
+     * @override
+     * @description - 获取查询参数对象
+     */
+    protected getParams(): object;
+    /**
+     * getServiceName
+     * @override
+     * @description - 获取接口服务的model名称
+     */
+    protected getServiceName(): string;
+    /**
+     * getFetchDataParams
+     * @override
+     * @description - 获取调用数据接口的参数
+     */
+    protected getFetchDataParams(): object;
+    /**
+     * isShowNumber
+     * @description - 是否线上序号列
+     * @override
+     * @return {boolean}
      */
     protected isShowNumber(): boolean;
     /**
-     * getTableNumberColumnWidth - 表格序号列的宽度
-     * @return number
+     * getNumberGeneratorRule
+     * @override
+     * @description - 表格序号列的生成规则
+     */
+    protected getNumberGeneratorRule(): Symbol;
+    /**
+     * getTableNumberColumnWidth
+     * @override
+     * @description - 表格序号列的宽度
      */
     protected getTableNumberColumnWidth(): number;
     /**
-     * getNumberGeneratorRule - 获取符号列的生成规则
-     */
-    protected getNumberGeneratorRule(): string;
-    /**
-     * getRowKey - 获取表格的主键属性
-     * @return string
+     * getRowKey
+     * @override
+     * @description - 数据的主键
      */
     protected getRowKey(): string;
     /**
-     * getData - 获取表格数据
-     * @return Array<Object>
+     * getData
+     * @description - Table的数据(Table的dataSource字段)
+     * @override
+     * @return {Array}
      */
     protected getData(): Array<object>;
     /**
-     * getColumns - 获取表格列的信息
-     * @return Array<object>
+     * getColumns
+     * @description - Table的列
+     * @override
      */
     protected getColumns(): Array<ColumnType<object>>;
     /**
-     *
-     * getRowSelection - 获取表格行选择对象
+     * getRowSelection
+     * @override
+     * @description - 获取表格行选择对象
      */
     protected getRowSelection(): TableRowSelection<object>;
     /**
-     * renderSearchForm - 渲染查询的UI
+     * renderSearchForm
+     * @override
+     * @description - 渲染Table查询的表单
      */
     protected renderSearchForm(): React.ReactElement | null;
     /**
-     * getTotal - 获取表格数据的总数
+     * renderInner
+     * @override
+     * @description - 渲染主体
+     */
+    protected renderInner(): React.ReactElement | null;
+    /**
+     * getTotal
+     * @description - Table数据的总条数
+     * @override
      */
     protected getTotal(): number;
     /**
-     * getOrderFieldProp - 获取表格的排序字段
+     * getOrderFieldProp
+     * @description - 获取排序字段
+     * @override
      */
     protected getOrderFieldProp(): string;
     /**
-     * getOrderProp - 获取表格的排序属性
+     * getOrderFieldValue
+     * @description - 获取默认排序字段的值
+     * @override
+     * @protected
+     */
+    protected getOrderFieldValue(): string;
+    /**
+     * getOrderProp
+     * @description - 获取排序方式
      */
     protected getOrderProp(): string;
     /**
-     * onSubTableChange - 获取表格change句柄
-     * @param pagination
-     * @param filters
-     * @param sorter
-     * @param extra
+     * getOrderPropValue
+     * @override
+     * @description - 获取默认排序方式
+     * @protected
      */
-    protected onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra: TableCurrentDataSource<object>): void;
+    protected getOrderPropValue(): 'descend' | 'ascend';
     /**
-     * clear - 清除操作
+     * clear
+     * @description - 清空查询条件
+     * @override
      */
     protected clear(): Promise<any>;
     /**
-     * renderSearchFooterItems - 渲染SearchFooter的按钮组
+     * renderSearchFooterItems
+     * @description - 渲染表格的工具栏
+     * @override
      */
-    protected renderSearchFooterItems(): Array<React.ReactElement> | null;
+    protected renderSearchFooterItems(): Array<any>;
     /**
-     * onSearch - 进行查询
+     * showLoading
+     * @description - 是否显示遮罩
+     * @override
      */
-    protected onSearch(): void;
+    protected showLoading(): boolean;
+    /**
+     * fetchData
+     * @description - 加载数据
+     * @override
+     */
+    protected fetchData(): Promise<any>;
+    /**
+     * fetchDataExecute
+     * @description - 真正的执行获取列表数据的接口
+     * @param searchParams
+     * @protected
+     */
+    protected fetchDataExecute(searchParams: object): Promise<any>;
+    /**
+     * onSearch
+     * @description - 点击查询
+     * @override
+     */
+    protected onSearch(): Promise<any>;
 }
 export default SearchTableImplement;
