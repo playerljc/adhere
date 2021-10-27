@@ -1,3 +1,24 @@
+# 1.0.9
+
+***
+
+2021-10-27
+
+* **adhere-ui-css**
+  - normalize-antd.less修改
+* **adhere-ui-messagedialog**
+  - BUG的修改
+* **adhere-ui-searchtable**
+  - 把max-width的限制去掉
+  - 关闭和展开查询条件加入默认状态和是否显示
+  - 加入表格体fit和滚动
+  - 加入表格固定列头，表格体滚动
+  - 加入searchtableimplement.tsx的默认实现
+* **adhere-util-browsersniff**
+  - 加入@baifendian/adhere-util-browsersniff
+* **adhere-util-validator**
+  - 加入@baifendian/adhere-util-validator
+
 # 1.0.8
 
 ***
