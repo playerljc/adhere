@@ -52,6 +52,7 @@ import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
+import Validator from '@baifendian/adhere-util-validator';
 
 export { 
   BackTopAnimation,
@@ -108,4 +109,5 @@ export {
   Resource,
   WatchMemoized,
   Browsersniff,
+  Validator,
 };

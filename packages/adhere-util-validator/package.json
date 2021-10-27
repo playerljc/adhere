@@ -1,0 +1,41 @@
+{
+  "name": "@baifendian/adhere-util-validator",
+  "version": "1.0.8",
+  "description": "一个验证的库",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "umd"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildpackage": "ctbuild buildpackagets",
+    "buildumd": "ctbuild buildumd --packagename AdhereValidator --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/playerljc/adhere"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.2"
+  },
+  "author": "playerljc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitee.com/playerljc/adhere/issues"
+  },
+  "homepage": "https://gitee.com/playerljc/adhere",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.15.4",
+    "@ctsj/build": "^4.0.12",
+    "typescript": "^3.9.4"
+  },
+  "dependencies": {
+    "validator": "^13.6.0"
+  }
+}

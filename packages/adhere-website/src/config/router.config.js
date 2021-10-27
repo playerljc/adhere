@@ -138,6 +138,9 @@ const Resource = lazy(() =>
 const Browsersniff = lazy(() =>
   import(/* webpackChunkName: "browsersniff" */ '@/components/util/browsersniff'),
 );
+const Validator = lazy(() =>
+  import(/* webpackChunkName: "validator" */ '@/components/util/validator'),
+);
 
 const Echarts = lazy(() =>
   import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'),
@@ -462,6 +465,11 @@ export default () => [
                 path: '/adhere/util/browsersniff',
                 name: 'Browsersniff',
                 component: Browsersniff,
+              },
+              {
+                path: '/adhere/util/validator',
+                name: 'Validator',
+                component: Validator,
               },
             ],
           },

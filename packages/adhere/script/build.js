@@ -69,6 +69,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-watchmemoized', 'WatchMemoized'],
   ['@baifendian/adhere-util-domain', 'Domain'],
   ['@baifendian/adhere-util-browsersniff', 'Browsersniff'],
+  ['@baifendian/adhere-util-validator', 'Validator'],
 ]);
 
 /**

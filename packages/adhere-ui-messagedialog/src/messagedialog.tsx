@@ -16,7 +16,7 @@ import { selectorPrefix } from './modal';
 
 const DEFAULT_LOCAL = 'zh_CN';
 
-const LOCAL = Resource.Dict.value.LocalsAntd;
+const LOCAL = Resource.Dict.value.LocalsAntd.value;
 
 const PromptLayout = {
   labelCol: { span: 6 },

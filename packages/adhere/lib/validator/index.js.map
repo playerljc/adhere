@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["validator/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-validator';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,6DACQA"}
