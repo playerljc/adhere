@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tablelist",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "表格和列表",
   "main": "lib/index.js",
   "files": [

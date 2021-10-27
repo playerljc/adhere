@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-confirm-importantconfirm",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "重要操作确认提示",
   "main": "lib/index.js",
   "files": [
@@ -35,7 +35,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-messagedialog": "^1.0.8",
+    "@baifendian/adhere-ui-messagedialog": "^1.0.9",
     "@baifendian/adhere-util-intl": "^1.0.8",
     "@baifendian/adhere-util-resource": "^1.0.8",
     "@types/react": "^17.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-pullrefresh",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "下拉刷新",
   "main": "lib/index.js",
   "files": [
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^1.0.6",
-    "@baifendian/adhere-ui-css": "^1.0.8",
+    "@baifendian/adhere-ui-css": "^1.0.9",
     "@baifendian/adhere-util": "^1.0.8",
     "@baifendian/adhere-util-intl": "^1.0.8",
     "@baifendian/adhere-util-resource": "^1.0.8",
