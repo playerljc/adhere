@@ -4,4 +4,4 @@
 
 2021-10-24
 
-* 加入@baifendian/adhere-util-browsersniff
+* 加入@baifendian/adhere-util-validator
