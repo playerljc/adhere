@@ -517,7 +517,7 @@ function deal402() {
 
   window.location.href = Util.casLogoutUrl({
     // @ts-ignore
-    baseUrl: this.systemManagerBaseUrl,
+    baseUrl: this.systemManagerBaseURL,
     enterUrl: window.location.href,
     params: '&code=402',
   });
