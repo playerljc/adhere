@@ -127,10 +127,10 @@ class TableImpl extends TableImplement {
       <SearchForm>
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <SearchFormRow>
-          <SearchFormLabel style={{ width: 100 }}>姓名：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
           <SearchFormValue>
             <Input
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               placeholder="姓名"
               value={this.state.name}
               onChange={(e) => {
@@ -139,14 +139,15 @@ class TableImpl extends TableImplement {
             />
           </SearchFormValue>
 
-          <SearchFormLabel>性别：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
           <SearchFormValue>
             <Select
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               value={this.state.sex}
               onChange={(v) => {
                 this.onSelectChange('sex', v);
               }}
+              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
             >
               {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
                 <Option key={t.value} value={t.value}>
@@ -156,10 +157,10 @@ class TableImpl extends TableImplement {
             </Select>
           </SearchFormValue>
 
-          <SearchFormLabel>出生年月：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
           <SearchFormValue>
             <RangePicker
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               value={[this.state.startTime, this.state.endTime]}
               onChange={(moments) => {
                 this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
@@ -171,10 +172,10 @@ class TableImpl extends TableImplement {
 
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <SearchFormRow>
-          <SearchFormLabel>籍贯：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
           <SearchFormValue>
             <Input
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               placeholder="籍贯"
               value={this.state.homeTown}
               onChange={(e) => {
@@ -183,10 +184,10 @@ class TableImpl extends TableImplement {
             />
           </SearchFormValue>
 
-          <SearchFormLabel>身高：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
           <SearchFormValue>
             <InputNumber
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               placeholder="身高"
               value={this.state.height}
               onChange={(v) => {
@@ -195,10 +196,10 @@ class TableImpl extends TableImplement {
             />
           </SearchFormValue>
 
-          <SearchFormLabel>体重：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
           <SearchFormValue>
             <InputNumber
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               placeholder="体重"
               value={this.state.width}
               onChange={(v) => {
@@ -210,11 +211,12 @@ class TableImpl extends TableImplement {
 
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <SearchFormRow>
-          <SearchFormLabel>所在部门：</SearchFormLabel>
+          <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
           <SearchFormValue>
             <Select
-              style={{ width: 270 }}
+              style={{ width: '90%' }}
               value={this.state.deptCode}
+              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               onChange={(v) => {
                 this.onSelectChange('deptCode', v);
               }}

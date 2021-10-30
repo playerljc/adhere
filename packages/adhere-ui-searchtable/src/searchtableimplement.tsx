@@ -35,6 +35,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
       searchParams: {
         ...this.getParams(),
       },
+      selectedRowKeys: [],
     });
   }
 
@@ -65,7 +66,13 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @return string
    */
   protected getFetchListPropNameToFirstUpper(): string {
-    return '';
+    const fetchListPropName = this.getFetchListPropName();
+
+    if (fetchListPropName.length > 1) {
+      return `${fetchListPropName.charAt(0).toUpperCase()}${fetchListPropName.substring(1)}`;
+    }
+
+    return fetchListPropName;
   }
 
   // ------------ 不需要重写(override)的方法 start ------------------
@@ -176,6 +183,24 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
   }
 
   /**
+   * getDataKey
+   * @description - 获取数据的key
+   * @protected
+   */
+  protected getDataKey(): string {
+    return 'list';
+  }
+
+  /**
+   * getTotalKey
+   * @description - 获取total的key
+   * @protected
+   */
+  protected getTotalKey(): string {
+    return 'totalCount';
+  }
+
+  /**
    * getData
    * @description - Table的数据(Table的dataSource字段)
    * @override
@@ -183,7 +208,17 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    */
   protected getData(): Array<object> {
     // @ts-ignore
-    return this.props[this.getServiceName()][this.getFetchListPropName()].list;
+    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
+  }
+
+  /**
+   * getTotal
+   * @description - Table数据的总条数
+   * @override
+   */
+  protected getTotal(): number {
+    // @ts-ignore
+    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
   }
 
   /**
@@ -235,16 +270,6 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
         {innerJSX}
       </div>
     );
-  }
-
-  /**
-   * getTotal
-   * @description - Table数据的总条数
-   * @override
-   */
-  protected getTotal(): number {
-    // @ts-ignore
-    return this.props[this.getServiceName()][this.getFetchListPropName()].totalCount;
   }
 
   /**
@@ -351,8 +376,8 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
         // @ts-ignore
         [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
-        ins: this,
-        success: () => {},
+        // ins: this,
+        // success: () => {},
       },
     });
   }

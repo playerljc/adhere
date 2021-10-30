@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm';
 
@@ -37,6 +37,7 @@ export default () => {
         </a>
         )作为核心库
       </h3>
+
       <h2>相关方法</h2>
 
       <div style={{ margin: '20px 0' }}>

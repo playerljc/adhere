@@ -1,3 +1,13 @@
+# 1.0.10
+
+***
+
+2021-10-28
+
+* 修改searchtableimplement.tsx的fetchData方法的传值BUG
+* 样式大写修改为小写
+* 加入getDataKey和getTotalKey方法
+
 # 1.0.9
 
 ***

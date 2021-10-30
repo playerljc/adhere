@@ -89,12 +89,30 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      */
     protected getRowKey(): string;
     /**
+     * getDataKey
+     * @description - 获取数据的key
+     * @protected
+     */
+    protected getDataKey(): string;
+    /**
+     * getTotalKey
+     * @description - 获取total的key
+     * @protected
+     */
+    protected getTotalKey(): string;
+    /**
      * getData
      * @description - Table的数据(Table的dataSource字段)
      * @override
      * @return {Array}
      */
     protected getData(): Array<object>;
+    /**
+     * getTotal
+     * @description - Table数据的总条数
+     * @override
+     */
+    protected getTotal(): number;
     /**
      * getColumns
      * @description - Table的列
@@ -119,12 +137,6 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      * @description - 渲染主体
      */
     protected renderInner(): React.ReactElement | null;
-    /**
-     * getTotal
-     * @description - Table数据的总条数
-     * @override
-     */
-    protected getTotal(): number;
     /**
      * getOrderFieldProp
      * @description - 获取排序字段

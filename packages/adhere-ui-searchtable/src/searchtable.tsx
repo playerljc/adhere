@@ -355,7 +355,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
     const defaultItems = [
       <Button
-        className={`${selectorPrefix}-SearchFooterItem`}
+        className={`${selectorPrefix}-searchfooteritem`}
         type="primary"
         icon={
           <img
@@ -378,7 +378,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       >
         {Intl.v('查询')}
       </Button>,
-      <Button className={`${selectorPrefix}-SearchFooterItem`} onClick={this.onClear}>
+      <Button className={`${selectorPrefix}-searchfooteritem`} onClick={this.onClear}>
         {Intl.v('重置')}
       </Button>,
     ];
