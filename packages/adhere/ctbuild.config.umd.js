@@ -6,7 +6,7 @@ module.exports = {
   getConfig({ webpackConfig }) {
     delete webpackConfig.output.libraryExport;
 
-    webpackConfig.resolve.modules.unshift(path.join(__dirname, 'node_modules'));
+    webpackConfig.resolve.modules.unshift(path.join(__dirname, '../../node_modules'));
 
     webpackConfig.externals = { ...defaultExternals };
 

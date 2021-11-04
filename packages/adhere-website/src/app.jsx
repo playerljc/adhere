@@ -1,6 +1,5 @@
 import React from 'react';
 
-import leanJSON from '../../../lerna.json';
 import packageJSON from '../../../package.json';
 import styles from './app.less';
 
@@ -17,7 +16,7 @@ class App extends React.PureComponent {
         <div className={styles.Fixed}>
           <div className={styles.Fixed}>
             <a href={`${window.location.origin}`}>
-              <h2>adhere({`v${leanJSON.version}`})</h2>
+              <h2>adhere({`v${packageJSON.version}`})</h2>
             </a>
           </div>
           <div className={styles.Auto}>

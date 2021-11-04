@@ -1,2 +1,2 @@
-import{useRef as useRef,useEffect as useEffect}from"react";export default function(e){var f=useRef();return useEffect(function(){f.current=e}),f.current}
+import{useRef,useEffect}from"react";export default function(e){var r=useRef();return useEffect(function(){r.current=e}),r.current}
 //# sourceMappingURL=usePrevious.js.map

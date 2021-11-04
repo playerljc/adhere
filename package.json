@@ -1,6 +1,10 @@
 {
-  "name": "root",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "name": "root",
+  "version": "1.0.10",
   "description": "一个基于React的通用组件库，这个是在平时做的项目中沉淀出来的公共组件，包括UI、功能和其他",
   "scripts": {
     "bootstrap": "lerna bootstrap",
@@ -57,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "core-js": "^3.19.1",
     "fs-extra": "^9.0.1",
     "lerna": "^3.22.1",
     "@umijs/fabric": "^2.8.0",

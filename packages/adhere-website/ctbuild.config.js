@@ -31,16 +31,16 @@ module.exports = {
 
     // eslint-disable-next-line no-param-reassign
     // TODO:umd umd的时候需要注释掉
-    webpackConfig.resolve.alias.ol = path.join(
-      __dirname,
-      'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
-    );
+    // webpackConfig.resolve.alias.ol = path.join(
+    //   __dirname,
+    //   '../../node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
+    // );
 
     // eslint-disable-next-line no-param-reassign
-    webpackConfig.resolve.alias.swiper = path.join(
-      __dirname,
-      'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
-    );
+    // webpackConfig.resolve.alias.swiper = path.join(
+    //   __dirname,
+    //   '../../node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
+    // );
 
     // webpackConfig.resolve.alias['algebra.js'] = path.join(
     //   __dirname,
@@ -48,7 +48,7 @@ module.exports = {
     // );
 
     // 第三方库的引用是从文件当前目录开始搜索
-    webpackConfig.resolve.modules.unshift(path.join(__dirname, 'node_modules'));
+    // webpackConfig.resolve.modules.unshift(path.join(__dirname, '../../node_modules'));
 
     // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].include.push(

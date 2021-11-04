@@ -1,2 +1,2 @@
-import{useRef as useRef}from"react";export default function(){var r=useRef(!0);return[r.current,function(e){r.current=e}]}
+import{useRef}from"react";export default function(){var e=useRef(!0);return[e.current,function(r){e.current=r}]}
 //# sourceMappingURL=useFirst.js.map
