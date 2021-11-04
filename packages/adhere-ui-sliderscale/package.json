@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-sliderscale",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "description": "刻度盘",
   "main": "lib/index.js",
   "files": [

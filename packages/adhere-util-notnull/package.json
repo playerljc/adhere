@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-notnull",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "一个永远都不为空的操作",
   "main": "lib/index.js",
   "files": [
@@ -35,7 +35,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.8"
+    "@baifendian/adhere-util": "^1.0.10"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-css",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "提供很多公共的样式",
   "main": "lib/index.less",
   "files": [

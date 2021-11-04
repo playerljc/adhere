@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-browsersniff",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "浏览器嗅探的库",
   "main": "lib/index.js",
   "files": [

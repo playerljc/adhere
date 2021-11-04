@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-website",
   "private": true,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "adhere的website",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -71,8 +71,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.9",
+    "@baifendian/adhere": "^1.0.10",
     "@ctsj/router": "^1.0.1",
+    "@ctsj/state": "^2.0.21",
     "antd": "^4.9.4",
     "classnames": "^2.2.6",
     "component-playground": "^3.2.1",
@@ -89,7 +90,6 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-markdown": "^7.0.1",
-    "remark-gfm": "^2.0.0",
-    "@ctsj/state": "^2.0.21"
+    "remark-gfm": "^2.0.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-playground",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "一个代码展示的组件",
   "main": "lib/index.js",
   "files": [
@@ -36,8 +36,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.6",
-    "@baifendian/adhere-util-intl": "^1.0.8",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.10",
+    "@baifendian/adhere-util-intl": "^1.0.10",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
