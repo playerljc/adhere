@@ -41,6 +41,7 @@ import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
+import Browsersniff from '@baifendian/adhere-util-browsersniff';
 import Ajax from '@baifendian/adhere-util-communication-ajax';
 import Decorators from '@baifendian/adhere-util-decorators';
 import Dict from '@baifendian/adhere-util-dict';
@@ -50,9 +51,8 @@ import Intl from '@baifendian/adhere-util-intl';
 import NotNull from '@baifendian/adhere-util-notnull';
 import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
-import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-import Browsersniff from '@baifendian/adhere-util-browsersniff';
 import Validator from '@baifendian/adhere-util-validator';
+import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
   BackTopAnimation,
@@ -98,6 +98,7 @@ export {
   TableList,
   Util,
   AdapterScreen,
+  Browsersniff,
   Ajax,
   Decorators,
   Dict,
@@ -107,7 +108,6 @@ export {
   NotNull,
   Preferences,
   Resource,
-  WatchMemoized,
-  Browsersniff,
   Validator,
+  WatchMemoized,
 };

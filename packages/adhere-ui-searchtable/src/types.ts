@@ -10,7 +10,6 @@ import {
 } from 'antd/lib/table/interface';
 
 import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
-import PropTypes from 'prop-types';
 
 /**
  * ISearchTableProps
@@ -38,6 +37,8 @@ export interface ISearchTableProps extends ISuspenseProps {
   autoFixed: boolean;
   // 锁定列头，表格滚动
   fixedHeaderAutoTable: boolean;
+  // 两端固定(表格的头始终在上方，分页始终在下方)
+  fixedTableSpaceBetween: boolean;
 }
 
 /**
@@ -124,6 +125,16 @@ export interface ISearchTableImplementProps {
    * renderSearchForm - 渲染查询的UI
    */
   renderSearchForm(): React.ReactElement | null;
+
+  /**
+   * renderTableHeader - 渲染表格的头
+   */
+  renderTableHeader(): React.ReactElement | null;
+
+  /**
+   * renderTableFooter - 渲染表格的脚
+   */
+  renderTableFooter(): React.ReactElement | null;
 
   /**
    * getTotal - 获取表格数据的总数

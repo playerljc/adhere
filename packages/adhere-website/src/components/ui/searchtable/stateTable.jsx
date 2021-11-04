@@ -1,10 +1,17 @@
 import React from 'react';
 import moment from 'moment';
-import { Input, Select, DatePicker, InputNumber } from 'antd';
+import { Input, InputNumber, Select, DatePicker } from 'antd';
+import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+import { createState } from '@ctsj/state/lib/react';
+import { Resource, SearchTable, Dict } from '@baifendian/adhere';
 
-import { SearchTable, Resource, Ajax } from '@baifendian/adhere';
+import './serviceRegister';
 
-const { Table, TableImplement } = SearchTable;
+const { Option } = Select;
+
+const { RangePicker } = DatePicker;
+
+const { Table, TableStateImplement } = SearchTable;
 
 const { SearchForm } = Table;
 
@@ -12,118 +19,66 @@ const { SearchFormRow } = SearchForm;
 
 const { SearchFormLabel, SearchFormValue } = SearchFormRow;
 
-const { Option } = Select;
-
-const { RangePicker } = DatePicker;
+const serviceName = 'user';
 
 /**
- * Table
- * @class TableImpl
- * @classdesc TableImpl
+ * StateTable
  */
-class TableImpl extends TableImplement {
-  // eslint-disable-next-line no-useless-constructor
+class StateTable extends TableStateImplement {
   constructor(props) {
     super(props);
 
-    this.request = new Ajax('');
+    const models = [];
 
-    Object.assign(this.state, {
-      loading: false,
+    const requireComponent = require.context('./model', false, /.*\.(js)$/);
+
+    requireComponent.keys().forEach((fileName) => {
+      const model = requireComponent(fileName);
+      models.push(model.default());
+    });
+
+    this.unsubscribe = createState({
+      initialState: { ...this.state },
+      models,
+      mapState: (state) =>
+        Object.assign(
+          ServiceRegister.mapStateToProps({
+            namespaces: [serviceName],
+            state,
+          }),
+          {
+            loading: state.loading,
+          },
+        ),
+      mapDispatch: (dispatch) =>
+        ServiceRegister.mapDispatchToProps({
+          namespaces: [serviceName],
+          dispatch,
+        }),
+      ref: this,
+      middleWares: [],
+      reducer: null,
     });
   }
 
-  getParams() {
-    return {
-      name: '',
-      sex: '',
-      startTime: null,
-      endTime: null,
-      deptCode: '',
-      homeTown: '',
-      width: '',
-      height: '',
-    };
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
-  getFetchDataParams() {
-    const {
-      searchParams: { startTime, endTime },
-    } = this.state;
-
-    return {
-      startTime: startTime
-        ? `${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 00:00:00`
-        : null,
-      endTime: endTime
-        ? `${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 23:59:59`
-        : null,
-    };
+  getServiceName() {
+    return serviceName;
   }
 
-  getData() {
-    return this.state.dataSource.list;
+  getOrderFieldValue() {
+    return 'height';
   }
 
-  getColumns() {
-    return [
-      {
-        title: '姓名',
-        dataIndex: 'name',
-        key: 'name',
-        align: 'center',
-      },
-      {
-        title: '性别',
-        dataIndex: 'sex',
-        key: 'sex',
-        align: 'center',
-        render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
-      },
-      {
-        title: '籍贯',
-        dataIndex: 'homeTown',
-        key: 'homeTown',
-        align: 'center',
-      },
-      {
-        title: '出生年月',
-        dataIndex: 'birthday',
-        key: 'birthday',
-        align: 'center',
-        sorter: true,
-        sortOrder: this.sortOrder('birthday'),
-        render: (val) =>
-          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value) : '',
-      },
-      {
-        title: '所在部门',
-        dataIndex: 'deptName',
-        key: 'deptName',
-        align: 'center',
-      },
-      {
-        title: '身高',
-        dataIndex: 'height',
-        key: 'height',
-        align: 'center',
-        sorter: true,
-        sortOrder: this.sortOrder('height'),
-      },
-      {
-        title: '体重',
-        dataIndex: 'width',
-        key: 'width',
-        align: 'center',
-        sorter: true,
-        sortOrder: this.sortOrder('width'),
-      },
-    ];
+  getTotalKey() {
+    return 'total';
   }
 
   renderSearchForm() {
     return (
-      // eslint-disable-next-line react/jsx-no-undef
       <SearchForm>
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <SearchFormRow>
@@ -232,58 +187,88 @@ class TableImpl extends TableImplement {
     );
   }
 
-  getTotal() {
-    return this.state.dataSource.total;
+  renderSearchFooterItems(defaultItems) {
+    return [...defaultItems];
   }
 
-  getOrderFieldValue() {
-    return 'height';
+  getParams() {
+    return {
+      name: '',
+      sex: '',
+      startTime: null,
+      endTime: null,
+      deptCode: '',
+      homeTown: '',
+      width: '',
+      height: '',
+    };
   }
 
-  renderSearchFooterItems() {
-    return null;
+  getColumns() {
+    return [
+      {
+        title: '姓名',
+        dataIndex: 'name',
+        key: 'name',
+        align: 'center',
+      },
+      {
+        title: '性别',
+        dataIndex: 'sex',
+        key: 'sex',
+        align: 'center',
+        render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
+      },
+      {
+        title: '籍贯',
+        dataIndex: 'homeTown',
+        key: 'homeTown',
+        align: 'center',
+      },
+      {
+        title: '出生年月',
+        dataIndex: 'birthday',
+        key: 'birthday',
+        align: 'center',
+        sorter: true,
+        sortOrder: this.sortOrder('birthday'),
+        render: (val) =>
+          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value) : '',
+      },
+      {
+        title: '所在部门',
+        dataIndex: 'deptName',
+        key: 'deptName',
+        align: 'center',
+      },
+      {
+        title: '身高',
+        dataIndex: 'height',
+        key: 'height',
+        align: 'center',
+        sorter: true,
+        sortOrder: this.sortOrder('height'),
+      },
+      {
+        title: '体重',
+        dataIndex: 'width',
+        key: 'width',
+        align: 'center',
+        sorter: true,
+        sortOrder: this.sortOrder('width'),
+      },
+    ];
   }
 
-  showLoading() {
-    return this.state.loading;
+  getFetchListPropName() {
+    return 'fetchList';
   }
-
-  // eslint-disable-next-line no-unused-vars
-  onSubTableChange(pagination, filters, sorter) {}
 
   fetchDataExecute(searchParams) {
-    return new Promise((resolve) => {
-      this.setState(
-        {
-          loading: true,
-        },
-        () => {
-          setTimeout(() => {
-            this.request
-              .get({
-                mock: true,
-                // eslint-disable-next-line global-require
-                path: require('./mock.js').default.data,
-              })
-              .then((result) => {
-                this.setState(
-                  {
-                    dataSource: {
-                      total: result.total,
-                      list: result.list,
-                    },
-                    loading: false,
-                  },
-                  () => {
-                    resolve();
-                  },
-                );
-              });
-          }, 2000);
-        },
-      );
-    });
+    return super.fetchDataExecute(searchParams);
   }
+
+  onSubTableChange(pagination, filters, sorter) {}
 }
 
-export default TableImpl;
+export default StateTable;

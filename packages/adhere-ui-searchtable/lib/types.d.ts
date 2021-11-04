@@ -20,6 +20,7 @@ export interface ISearchTableProps extends ISuspenseProps {
     fitTable: boolean;
     autoFixed: boolean;
     fixedHeaderAutoTable: boolean;
+    fixedTableSpaceBetween: boolean;
 }
 /**
  * ISearchTableState
@@ -97,6 +98,14 @@ export interface ISearchTableImplementProps {
      * renderSearchForm - 渲染查询的UI
      */
     renderSearchForm(): React.ReactElement | null;
+    /**
+     * renderTableHeader - 渲染表格的头
+     */
+    renderTableHeader(): React.ReactElement | null;
+    /**
+     * renderTableFooter - 渲染表格的脚
+     */
+    renderTableFooter(): React.ReactElement | null;
     /**
      * getTotal - 获取表格数据的总数
      */

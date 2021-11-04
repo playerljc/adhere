@@ -1,7 +1,7 @@
 import React, { createRef, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import {
-  ColumnType,
+  // ColumnType,
   // FilterValue,
   // SorterResult,
   // TableCurrentDataSource,
@@ -17,7 +17,7 @@ const selectorPrefix = 'adhere-ui-searchtableimplement';
 /**
  * SearchTableImplement
  * @class SearchTableImplement
- * @classdesc SearchTableImplement
+ * @classdesc SearchTableImplement - SearchTable的默认实现
  */
 // @ts-ignore
 class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> {
@@ -222,16 +222,6 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
   }
 
   /**
-   * getColumns
-   * @description - Table的列
-   * @override
-   */
-  protected getColumns(): Array<ColumnType<object>> {
-    // @ts-ignore
-    return this.props.getColumns();
-  }
-
-  /**
    * getRowSelection
    * @override
    * @description - 获取表格行选择对象
@@ -355,19 +345,18 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
   }
 
   /**
-   * fetchData
-   * @description - 加载数据
-   * @override
+   * getSearchParams
+   * @description - 获取查询参数
+   * @protected
    */
-  protected fetchData(): Promise<any> {
+  protected getSearchParams(): any {
     // @ts-ignore
     const { page, limit, searchParams } = this.state;
 
     // @ts-ignore
     const order = this.state[this.getOrderProp()];
 
-    // @ts-ignore
-    return this.fetchDataExecute({
+    return {
       ...{
         page,
         limit,
@@ -376,10 +365,17 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
         // @ts-ignore
         [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
-        // ins: this,
-        // success: () => {},
       },
-    });
+    };
+  }
+
+  /**
+   * fetchData
+   * @description - 加载数据
+   * @override
+   */
+  protected fetchData(): Promise<any> {
+    return this.fetchDataExecute(this.getSearchParams());
   }
 
   /**

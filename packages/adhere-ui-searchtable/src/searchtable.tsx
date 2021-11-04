@@ -90,6 +90,16 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   abstract renderSearchForm(): React.ReactElement | null;
 
   /**
+   * renderTableHeader - 渲染表格的头
+   */
+  abstract renderTableHeader(): React.ReactElement | null;
+
+  /**
+   * renderTableFooter - 渲染表格的脚
+   */
+  abstract renderTableFooter(): React.ReactElement | null;
+
+  /**
    * getTotal - 获取表格数据的总数
    */
   abstract getTotal(): number;
@@ -145,6 +155,8 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       expand: props.defaultExpandSearchCollapse,
       scrollY: 0,
     };
+
+    this.onClear = this.onClear.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot?: any) {
@@ -270,7 +282,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   /**
    * onClear - 清除操作
    */
-  protected onClear = () => {
+  protected onClear() {
     // @ts-ignore
     this.setState(
       {
@@ -284,7 +296,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         });
       },
     );
-  };
+  }
 
   /**
    * sortOrder - table的column中加入
@@ -308,6 +320,16 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   protected getTableColumns(): Array<any> {
     const isShowNumber = this.isShowNumber();
     const getTableNumberColumnWidth = this.getTableNumberColumnWidth();
+
+    // 对权限进行过滤
+    const columns = this.getColumns().filter((column) => {
+      if ('authorized' in column) {
+        // @ts-ignore
+        return column.authorized();
+      }
+
+      return true;
+    });
 
     if (isShowNumber) {
       const numberGeneratorRule =
@@ -336,13 +358,10 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
             </ConditionalRender>
           ),
         },
-      ].concat(
-        // @ts-ignore
-        this.getColumns(),
-      );
+      ].concat(columns as Array<any>);
     }
 
-    return this.getColumns();
+    return columns;
   }
 
   /**
@@ -498,6 +517,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       fitSearch,
       fitTable,
       autoFixed,
+      fixedTableSpaceBetween,
       // @ts-ignore
     } = this.props;
 
@@ -508,7 +528,11 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       // @ts-ignore
       <FlexLayout
         direction="vertical"
-        className={classNames(selectorPrefix, ...(className || '').split(' '))}
+        className={classNames(
+          selectorPrefix,
+          fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
+          ...(className || '').split(' '),
+        )}
         style={{ ...(style || {}) }}
       >
         {/* @ts-ignore */}
@@ -532,6 +556,12 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
             <Fixed>{this.renderSearchFooter()}</Fixed>
           </FlexLayout>
         </Fixed>
+        <ConditionalRender conditional={!!this.renderTableHeader}>
+          {() => (
+            // @ts-ignore
+            <Fixed>{this.renderTableHeader()}</Fixed>
+          )}
+        </ConditionalRender>
         {/* @ts-ignore */}
         <Auto
           className={classNames(
@@ -547,8 +577,22 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
             {this.renderTable()}
           </div>
         </Auto>
+        <ConditionalRender conditional={!!this.renderTableFooter}>
+          {() => (
+            // @ts-ignore
+            <Fixed>{this.renderTableFooter()}</Fixed>
+          )}
+        </ConditionalRender>
       </FlexLayout>
     );
+  }
+
+  /**
+   * render
+   * @protected
+   */
+  protected render(): JSX.Element {
+    return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
   }
 }
 
@@ -570,6 +614,7 @@ SearchTable.defaultProps = {
   fitTable: true,
   autoFixed: true,
   fixedHeaderAutoTable: false,
+  fixedTableSpaceBetween: false,
 };
 
 SearchTable.propTypes = {
@@ -595,6 +640,8 @@ SearchTable.propTypes = {
   autoFixed: PropTypes.bool,
   // 锁定列头，表格滚动
   fixedHeaderAutoTable: PropTypes.bool,
+  // 两端固定(表格的头始终在上方，分页始终在下方)
+  fixedTableSpaceBetween: PropTypes.bool,
 };
 
 export default SearchTable;

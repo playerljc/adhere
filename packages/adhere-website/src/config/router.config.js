@@ -113,6 +113,8 @@ const PlayGround = lazy(() =>
 );
 const BMap = lazy(() => import(/* webpackChunkName: "bmap" */ '@/components/ui/bmap'));
 
+const Hooks = lazy(() => import(/* webpackChunkName: "hooks" */ '@/components/ui/hooks'));
+
 const AdapterScreen = lazy(() =>
   import(/* webpackChunkName: "adapterscreen" */ '@/components/util/adapterscreen'),
 );
@@ -390,6 +392,11 @@ export default () => [
                 path: '/adhere/ui/bmap',
                 name: 'BMap',
                 component: BMap,
+              },
+              {
+                path: '/adhere/ui/hooks',
+                name: 'Hooks',
+                component: Hooks,
               },
             ],
           },

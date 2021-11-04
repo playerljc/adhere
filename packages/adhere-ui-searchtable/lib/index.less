@@ -6,75 +6,139 @@
 @import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
 @import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
 
-.adhere-ui-searchtable {
-  position: relative;
-  padding: 24px;
-  background-color: #f0f2f5;
+.adhere-ui-searchtable-wrap {
+  display: flex;
+  width: 100%;
 
-  > .adhere-ui-searchtable-searchwrapper {
-    margin-bottom: 16px;
-    padding: 24px 24px 0;
-    background: #fff;
+  > .adhere-ui-suspense {
+    overflow: auto;
 
-    .adhere-ui-searchtable-searchfooterwrapper {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 20px;
+    .adhere-ui-searchtable {
+      position: relative;
+      padding: 24px;
+      background-color: #f0f2f5;
 
-      > .adhere-ui-searchtable-searchfooteritem {
-        display: flex;
-        align-items: center;
-
-        &:not(:last-child) {
-          margin-right: 10px;
+      .adhere-ui-searchtable-tablewrapper {
+        > .ant-table-wrapper {
+          > .ant-spin-nested-loading {
+            > .ant-spin-container {
+              > .ant-table-empty {
+                > .ant-table-container {
+                  > .ant-table-body {
+                    max-height: initial !important;
+                  }
+                }
+              }
+            }
+          }
         }
+      }
 
-        &.ant-btn {
+      > .adhere-ui-searchtable-searchwrapper {
+        margin-bottom: 16px;
+        padding: 24px 24px 0;
+        background: #fff;
+
+        .adhere-ui-searchtable-searchfooterwrapper {
           display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin-bottom: 20px;
+
+          > .adhere-ui-searchtable-searchfooteritem {
+            display: flex;
+            align-items: center;
+
+            &:not(:last-child) {
+              margin-right: 10px;
+            }
+
+            &.ant-btn {
+              display: flex;
+            }
+          }
+        }
+      }
+
+      > .adhere-ui-searchtable-autowrapper {
+        position: relative;
+        background: #fff;
+        border-radius: 2px;
+
+        &.autofixed {
+          overflow-y: auto;
+        }
+
+        > .adhere-ui-searchtable-tablewrapper {
+          width: 100%;
+        }
+      }
+
+      &.fixedtablespacebetween {
+        > .adhere-ui-searchtable-autowrapper {
+          > .adhere-ui-searchtable-tablewrapper {
+            .ant-table-wrapper {
+              height: 100%;
+
+              > .ant-spin-nested-loading {
+                > .ant-spin-container {
+                  display: flex;
+                  flex-direction: column;
+
+                  > .ant-table {
+                    flex-grow: 1;
+                    min-height: 0;
+
+                    > .ant-table-container {
+                      display: flex;
+                      flex-direction: column;
+                      height: 100%;
+
+                      > .ant-table-header {
+                        flex-shrink: 0;
+                      }
+
+                      > .ant-table-body {
+                        flex-grow: 1;
+                        min-height: 0;
+                        overflow-y: auto !important;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
-  }
 
-  > .adhere-ui-searchtable-autowrapper {
-    position: relative;
-    background: #fff;
-    border-radius: 2px;
+    .adhere-ui-searchform {
+      min-width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0 20px;
 
-    &.autofixed {
-      overflow-y: auto;
-    }
+      > tbody {
+        > .adhere-ui-searchform-row {
+          > .adhere-ui-searchform-label {
+            //max-width: 60px;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: right;
+            word-break: keep-all;
+          }
 
-    > .adhere-ui-searchtable-tablewrapper {
-      width: 100%;
-    }
-  }
-}
-
-.adhere-ui-searchform {
-  min-width: 100%;
-  table-layout: fixed;
-  border-collapse: separate;
-  border-spacing: 0 20px;
-
-  > tbody {
-    > .adhere-ui-searchform-row {
-      > .adhere-ui-searchform-label {
-        //max-width: 60px;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: right;
-        word-break: keep-all;
+          //> .adhere-ui-searchform-value {
+          //
+          //}
+        }
       }
+    }
 
-      //> .adhere-ui-searchform-value {
-      //
-      //}
+    .adhere-ui-searchtableimplement-tablewrapper {
+      height: 100%;
     }
   }
 }
 
-.adhere-ui-searchtableimplement-tablewrapper {
-  height: 100%;
-}

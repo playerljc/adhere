@@ -1,11 +1,11 @@
 import React, { RefObject } from 'react';
-import { ColumnType, TableRowSelection } from 'antd/lib/table/interface';
+import { TableRowSelection } from 'antd/lib/table/interface';
 import { ISearchTableImplementProps } from './types';
 import SearchTable from './searchtable';
 /**
  * SearchTableImplement
  * @class SearchTableImplement
- * @classdesc SearchTableImplement
+ * @classdesc SearchTableImplement - SearchTable的默认实现
  */
 declare class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> {
     protected innerWrapRef: RefObject<HTMLDivElement>;
@@ -114,12 +114,6 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      */
     protected getTotal(): number;
     /**
-     * getColumns
-     * @description - Table的列
-     * @override
-     */
-    protected getColumns(): Array<ColumnType<object>>;
-    /**
      * getRowSelection
      * @override
      * @description - 获取表格行选择对象
@@ -180,6 +174,12 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      * @override
      */
     protected showLoading(): boolean;
+    /**
+     * getSearchParams
+     * @description - 获取查询参数
+     * @protected
+     */
+    protected getSearchParams(): any;
     /**
      * fetchData
      * @description - 加载数据
