@@ -1,3 +1,16 @@
+# 1.0.11
+
+***
+
+2021-11-14
+
+* **adhere-ui-searchtable**
+  - componentDidUpdate的修改
+* **adhere-util-intl**
+  - 加入新词条
+* **adhere-util-resource**
+  - dict.form.config.js资源的修改
+
 # 1.0.10
 
 ***

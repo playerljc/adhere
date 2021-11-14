@@ -1,2 +1,2 @@
-import Intl,{getLocales as getLocales,getLocal as getLocal}from"./intl";export default Intl;export{getLocales as getLocales,getLocal as getLocal};
+import Intl,{getLocales,getLocal}from"./intl";export default Intl;export{getLocales,getLocal};
 //# sourceMappingURL=index.js.map

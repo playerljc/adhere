@@ -50,4 +50,5 @@ export default [
   'Comprimento total',
   'Clique para confirmar a localização, clique duas vezes para encerrar',
   'fecho',
+  'Não pode haver espaços antes e depois do conteúdo de entrada',
 ];
