@@ -111,8 +111,9 @@ export default () => {
       <h1>CascadeCompared</h1>
       <p>级联比较</p>
 
-      <h3>CascadeCompared</h3>
       <Props
+        border
+        title="CascadeCompared"
         data={[
           {
             params: 'className',
@@ -237,8 +238,11 @@ export default () => {
         ]}
       />
 
-      <h3>IIndicatorTableConfig</h3>
+      <Space />
+
       <Props
+        border
+        title="IIndicatorTableConfig"
         data={[
           {
             params: 'columns',
@@ -255,8 +259,11 @@ export default () => {
         ]}
       />
 
-      <h3>IColumnConfig</h3>
+      <Space />
+
       <Props
+        border
+        title="IColumnConfig"
         data={[
           {
             params: 'dataIndex',
@@ -297,8 +304,11 @@ export default () => {
         ]}
       />
 
-      <h3>IMasterItem</h3>
+      <Space />
+
       <Props
+        border
+        title="IMasterItem"
         data={[
           {
             params: 'columns',
@@ -369,8 +379,11 @@ export default () => {
         ]}
       />
 
-      <h2>方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'scrollToByIndex',

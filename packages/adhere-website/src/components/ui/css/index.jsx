@@ -505,6 +505,7 @@ export default () => {
 
       `}
       />
+
       <h2 id="vars">vars.less - less全局变量的定义</h2>
       <Playground
         mode="code"
@@ -519,6 +520,7 @@ export default () => {
 
       `}
       />
+
       <h2 id="mixin">mixin.less - less全局的函数和混入</h2>
       <Playground
         mode="code"
@@ -566,6 +568,7 @@ export default () => {
 
       `}
       />
+
       <h2 id="index">css.less - 对上述文件的一个整合引用</h2>
       <Playground
         mode="code"

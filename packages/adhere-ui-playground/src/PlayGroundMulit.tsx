@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Requireable } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PlaygroundExt from 'component-playground';
@@ -14,6 +14,10 @@ import { IPlayGroundMulitProps, IPlayGroundState } from './types';
 
 const selectPrefix = 'adhere-ui-playground-mulit';
 
+class InferPropsInner<T> {}
+
+class InferType<T> {}
+
 /**
  * PlayGroundMulit
  * @class PlayGroundMulit
@@ -25,6 +29,40 @@ class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGround
   };
 
   actionConfig = [this.renderClipboardAction, this.renderExpandAction];
+  static defaultProps: IPlayGroundMulitProps;
+  static propTypes: {
+    expand: Requireable<boolean>;
+    config: Requireable<
+      (
+        | (InferPropsInner<
+            Pick<
+              {
+                codeText: Requireable<string>;
+                title: Requireable<
+                  NonNullable<InferType<Requireable<object> | Requireable<string>>>
+                >;
+              },
+              never
+            >
+          > &
+            Partial<
+              InferPropsInner<
+                Pick<
+                  {
+                    codeText: Requireable<string>;
+                    title: Requireable<
+                      NonNullable<InferType<Requireable<object> | Requireable<string>>>
+                    >;
+                  },
+                  'codeText' | 'title'
+                >
+              >
+            >)
+        | undefined
+        | null
+      )[]
+    >;
+  };
 
   protected componentWillReceiveProps(nextProps) {
     this.setState({

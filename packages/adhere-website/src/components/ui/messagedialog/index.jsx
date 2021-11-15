@@ -1,6 +1,6 @@
 import React from 'react';
 import { Result, Button } from 'antd';
-import { MessageDialog, FormItemCreator } from '@baifendian/adhere';
+import { MessageDialog, FormItemCreator, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -17,8 +17,11 @@ export default () => (
       <li>- 不与变量进行绑定，开箱即用的功能</li>
     </ul>
 
-    <h3>Confirm方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="Confirm方法"
       data={[
         {
           name: 'MessageDialog.Confirm',
@@ -81,8 +84,11 @@ export default () => (
       ]}
     />
 
-    <h3>Alert方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="Alert方法"
       data={[
         {
           name: 'MessageDialog.Alert',
@@ -138,8 +144,11 @@ export default () => (
       ]}
     />
 
-    <h3>Prompt方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="Prompt方法"
       data={[
         {
           name: 'MessageDialog.Prompt',
@@ -202,8 +211,11 @@ export default () => (
       ]}
     />
 
-    <h3>InputPrompt方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="InputPrompt方法"
       data={[
         {
           name: 'MessageDialog.InputPrompt方法',
@@ -266,8 +278,11 @@ export default () => (
       ]}
     />
 
-    <h3>TextAreaPrompt方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="TextAreaPrompt方法"
       data={[
         {
           name: 'MessageDialog.TextAreaPrompt方法',
@@ -330,8 +345,11 @@ export default () => (
       ]}
     />
 
-    <h3>PassWordPrompt方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="PassWordPrompt方法"
       data={[
         {
           name: 'MessageDialog.PassWordPrompt方法',
@@ -394,8 +412,11 @@ export default () => (
       ]}
     />
 
-    <h3>NumberPromptPrompt方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="NumberPromptPrompt方法"
       data={[
         {
           name: 'MessageDialog.NumberPrompt方法',
@@ -458,8 +479,11 @@ export default () => (
       ]}
     />
 
-    <h3>Modal方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="Modal方法"
       data={[
         {
           name: 'MessageDialog.Modal',
@@ -501,8 +525,11 @@ export default () => (
       ]}
     />
 
-    <h3>Close方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="Close方法"
       data={[
         {
           name: 'MessageDialog.close',

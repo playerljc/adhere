@@ -19,6 +19,9 @@ const selectPrefix = 'adhere-ui-playground';
  * @classdesc PlayGround
  */
 class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
+  static defaultProps: IPlayGroundProps;
+  static propTypes: { expand: Requireable<boolean>; codeText: Requireable<string> };
+
   state = {
     expand: this.props.expand,
   };

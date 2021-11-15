@@ -2,8 +2,10 @@
 
 ***
 
-2021-11-14
+2021-11-15
 
+* **adhere-ui-playground**
+  - 加入collapse折叠操作
 * **adhere-ui-searchtable**
   - componentDidUpdate的修改
 * **adhere-util-intl**

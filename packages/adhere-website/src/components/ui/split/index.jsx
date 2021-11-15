@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Split } from '@baifendian/adhere';
+import { Space, Split } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
@@ -11,8 +11,9 @@ export default () => (
     <p>无侵入性的竖线和横线分割</p>
 
     <h2>属性</h2>
-    <h3>Split</h3>
     <Props
+      border
+      title="Split"
       data={[
         {
           params: 'direction',
@@ -35,8 +36,11 @@ export default () => (
       ]}
     />
 
-    <h3>Split.Group</h3>
+    <Space />
+
     <Props
+      border
+      title="Split.Group"
       data={[
         {
           params: 'direction',
@@ -58,6 +62,8 @@ export default () => (
         },
       ]}
     />
+
+    <Space />
 
     {/* <Playground
       docClass={Split}

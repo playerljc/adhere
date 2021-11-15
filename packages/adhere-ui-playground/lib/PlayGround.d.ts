@@ -1,4 +1,5 @@
 import React from 'react';
+import { Requireable } from 'prop-types';
 import { IPlayGroundProps, IPlayGroundState } from './types';
 /**
  * PlayGround
@@ -6,6 +7,11 @@ import { IPlayGroundProps, IPlayGroundState } from './types';
  * @classdesc PlayGround
  */
 declare class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
+    static defaultProps: IPlayGroundProps;
+    static propTypes: {
+        expand: Requireable<boolean>;
+        codeText: Requireable<string>;
+    };
     state: {
         expand: boolean | undefined;
     };

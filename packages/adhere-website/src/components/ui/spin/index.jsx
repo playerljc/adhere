@@ -13,8 +13,10 @@ export default () => {
       <h1>Spin</h1>
       <p>无侵入的loading</p>
       <p>放入含有position:relative的元素中则遮罩这个元素，否则遮罩body</p>
-      <h2>属性</h2>
+
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'spinning',
@@ -36,6 +38,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>基本使用</h2>
       <Playground
         mode="code"

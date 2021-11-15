@@ -9,8 +9,10 @@ export default () => (
   <div className="Page">
     <h1>WarnPrompt</h1>
     <p>警告的提示(就是为了全局统一)</p>
-    <h2>方法</h2>
+
     <FunctionProps
+      border
+      title="方法"
       data={[
         {
           name: 'WarnPrompt',

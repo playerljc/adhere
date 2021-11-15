@@ -1,4 +1,5 @@
 import React from 'react';
+import { Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 
@@ -7,8 +8,9 @@ export default () => {
     <div className="Page">
       <h1>工具类</h1>
 
-      <h2>dom相关</h2>
       <FunctionProps
+        border
+        title="dom相关"
         data={[
           {
             name: 'isTextNode',
@@ -468,8 +470,11 @@ export default () => {
         ]}
       />
 
-      <h2>基本操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="基本操作"
         data={[
           {
             name: 'isEmpty',
@@ -882,8 +887,11 @@ export default () => {
         ]}
       />
 
-      <h2>数学操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="数学操作"
         data={[
           {
             name: 'toPoint',
@@ -1337,8 +1345,11 @@ export default () => {
         ]}
       />
 
-      <h2>Url操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="Url操作"
         data={[
           {
             name: 'parse',
@@ -1375,8 +1386,11 @@ export default () => {
         ]}
       />
 
-      <h2>颜色操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="颜色操作"
         data={[
           {
             name: 'rgb',
@@ -1397,8 +1411,11 @@ export default () => {
         ]}
       />
 
-      <h2>客户端监测</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="客户端监测"
         data={[
           {
             name: 'isTouch',
@@ -1411,8 +1428,11 @@ export default () => {
         ]}
       />
 
-      <h2>系统管理相关</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="系统管理相关"
         data={[
           {
             name: 'getLang',

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { /* Card, */ Radio, Button } from 'antd';
-import { OLMap, Resource } from '@baifendian/adhere';
+import { OLMap, Resource, Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
@@ -102,8 +102,9 @@ export default () => {
         <li>- 提供Util工具</li>
       </ul>
 
-      <h3>GeoLayer - 继承ol/layer/Vector</h3>
       <FunctionProps
+        border
+        title="GeoLayer - 继承ol/layer/Vector"
         data={[
           {
             name: 'constructor',
@@ -138,8 +139,11 @@ export default () => {
         ]}
       />
 
-      <h3>WindLayer - 继承WindLayer</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="WindLayer - 继承WindLayer"
         data={[
           {
             name: 'constructor',
@@ -167,8 +171,11 @@ export default () => {
         ]}
       />
 
-      <h3>IWindLayerConfig</h3>
+      <Space />
+
       <Props
+        border
+        title="IWindLayerConfig"
         data={[
           {
             params: 'velocityScale',
@@ -203,8 +210,11 @@ export default () => {
         ]}
       />
 
-      <h3>TitleLayer - 提供各种瓦片层的source和TileLayer实现</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="TitleLayer - 提供各种瓦片层的source和TileLayer实现"
         data={[
           {
             name: 'getOSM',
@@ -366,8 +376,11 @@ export default () => {
         ]}
       />
 
-      <h3>OLMap</h3>
+      <Space />
+
       <Props
+        border
+        title="OLMap"
         data={[
           {
             params: 'type',
@@ -420,8 +433,11 @@ export default () => {
         ]}
       />
 
-      <h3>OLMap的方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="OLMap的方法"
         data={[
           {
             name: 'addMainGeoJSONLayer',
@@ -598,8 +614,11 @@ export default () => {
         ]}
       />
 
-      <h3>HeatMap</h3>
+      <Space />
+
       <Props
+        border
+        title="HeatMap"
         data={[
           {
             params: 'heatMapLayerConfig',
@@ -610,8 +629,11 @@ export default () => {
         ]}
       />
 
-      <h3>HeatMap的方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="HeatMap的方法"
         data={[
           {
             name: 'addLayer',
@@ -647,8 +669,11 @@ export default () => {
         ]}
       />
 
-      <h3>Util</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="Util"
         data={[
           {
             name: 'createMap',

@@ -12,7 +12,7 @@ import {
   FolderOutlined,
 } from '@ant-design/icons';
 
-import { ContextMenu } from '@baifendian/adhere';
+import { ContextMenu, Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
@@ -129,8 +129,9 @@ export default () => {
       <h1>ContextMenu</h1>
       <p>上下文菜单</p>
 
-      <h2>ContextMenu方法</h2>
       <FunctionProps
+        border
+        title="ContextMenu方法"
         data={[
           {
             name: 'open',
@@ -174,8 +175,11 @@ export default () => {
         ]}
       />
 
-      <h3>IData</h3>
+      <Space />
+
       <Props
+        border
+        title="IData"
         data={[
           {
             params: 'name',
@@ -246,8 +250,11 @@ export default () => {
         ]}
       />
 
-      <h3>IConfig</h3>
+      <Space />
+
       <Props
+        border
+        title="IData"
         data={[
           {
             params: 'x',

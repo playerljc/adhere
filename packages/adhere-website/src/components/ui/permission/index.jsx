@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Card, Empty, Button } from 'antd';
-import { Permission, MessageDialog } from '@baifendian/adhere';
+import { Permission, MessageDialog, Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
@@ -28,8 +28,11 @@ export default () => {
         <li>- 可以自定义无权限的 UI</li>
       </ul>
 
-      <h3>Permission</h3>
+      <Space />
+
       <Props
+        border
+        title="Permission"
         data={[
           {
             params: 'allPermission',
@@ -58,8 +61,11 @@ export default () => {
         ]}
       />
 
-      <h3>setPermission</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="setPermission"
         data={[
           {
             name: 'setPermission',
@@ -80,30 +86,11 @@ export default () => {
         ]}
       />
 
-      <h3>setPermission</h3>
-      <FunctionProps
-        data={[
-          {
-            name: 'setPermission',
-            desc: '设置所有的权限',
-            modifier: 'static',
-            params: [
-              {
-                name: 'permission',
-                desc: '所有的权限',
-                type: 'Array<String>',
-                defaultVal: '',
-                required: '',
-              },
-            ],
-            returnType: 'void',
-            returnDesc: '',
-          },
-        ]}
-      />
+      <Space />
 
-      <h3>getPermission</h3>
       <FunctionProps
+        border
+        title="getPermission"
         data={[
           {
             name: 'getPermission',
@@ -116,8 +103,11 @@ export default () => {
         ]}
       />
 
-      <h3>checkPermission</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="checkPermission"
         data={[
           {
             name: 'checkPermission',

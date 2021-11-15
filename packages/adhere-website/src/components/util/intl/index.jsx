@@ -2,6 +2,7 @@ import React from 'react';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import { Space } from '@baifendian/adhere';
 
 export default () => {
   return (
@@ -13,8 +14,11 @@ export default () => {
         <li>- 支持自动生成词条的key</li>
       </ul>
 
-      <h2>方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'init',

@@ -19,8 +19,10 @@ export default () => {
     <div className="Page">
       <h1>BackTopAnimation</h1>
       <p>动画的回到顶部</p>
-      <h2>属性</h2>
+
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'className',

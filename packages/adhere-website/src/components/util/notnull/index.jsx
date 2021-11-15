@@ -12,8 +12,9 @@ export default () => {
       <h1>一个永远都不为空的操作</h1>
       <p>一般都挂载到接口的返回值上，以免有空值对后续操作带来不便或者使界面挂掉</p>
 
-      <h2>方法</h2>
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'notnull',

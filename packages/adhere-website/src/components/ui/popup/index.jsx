@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { Popup } from '@baifendian/adhere';
+import { Popup, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -22,8 +22,9 @@ export default () => (
         <h2>PopupFactory</h2>
       </dt>
       <dd>
-        <h3>PopupFactory.create方法</h3>
         <FunctionProps
+          border
+          title="PopupFactory.create方法"
           data={[
             {
               name: 'PopupFactory.create',
@@ -44,8 +45,11 @@ export default () => (
           ]}
         />
 
-        <h3>PopupFactory.show方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="PopupFactory.show方法"
           data={[
             {
               name: 'PopupFactory.show',
@@ -66,8 +70,11 @@ export default () => (
           ]}
         />
 
-        <h3>PopupFactory.close方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="PopupFactory.close方法"
           data={[
             {
               name: 'PopupFactory.close',
@@ -88,8 +95,11 @@ export default () => (
           ]}
         />
 
-        <h3>PopupFactory.closeAll方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="PopupFactory.closeAll方法"
           data={[
             {
               name: 'PopupFactory.closeAll',
@@ -102,8 +112,11 @@ export default () => (
           ]}
         />
 
-        <h3>PopupFactory.destroy方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="PopupFactory.destroy方法"
           data={[
             {
               name: 'PopupFactory.destroy',
@@ -131,8 +144,9 @@ export default () => (
         <h2>Popup</h2>
       </dt>
       <dd>
-        <h3>show方法</h3>
         <FunctionProps
+          border
+          title="show方法"
           data={[
             {
               name: 'Popup.show',
@@ -153,8 +167,11 @@ export default () => (
           ]}
         />
 
-        <h3>close方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="close方法"
           data={[
             {
               name: 'Popup.close',
@@ -175,8 +192,11 @@ export default () => (
           ]}
         />
 
-        <h3>closeAll方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="closeAll方法"
           data={[
             {
               name: 'Popup.closeAll',
@@ -189,8 +209,11 @@ export default () => (
           ]}
         />
 
-        <h3>destroy方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="destroy方法"
           data={[
             {
               name: 'Popup.destroy',
@@ -211,8 +234,11 @@ export default () => (
           ]}
         />
 
-        <h3>isDestroy方法</h3>
+        <Space />
+
         <FunctionProps
+          border
+          title="isDestroy方法"
           data={[
             {
               name: 'Popup.isDestroy方法',
@@ -224,8 +250,12 @@ export default () => (
             },
           ]}
         />
-        <h3>getId</h3>
+
+        <Space />
+
         <FunctionProps
+          border
+          title="getId"
           data={[
             {
               name: 'Popup.isDestroy方法',
@@ -240,8 +270,9 @@ export default () => (
       </dd>
     </dl>
 
-    <h3>IConfig</h3>
     <Props
+      border
+      title="IConfig"
       data={[
         {
           params: 'onCreate',

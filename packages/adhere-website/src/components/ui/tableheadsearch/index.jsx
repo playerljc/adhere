@@ -131,8 +131,10 @@ export default () => {
     <div className="Page">
       <h1>TableHeadSearch</h1>
       <p>基于antd-design的Table的列头筛选</p>
-      <h2>方法</h2>
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'TableHeadSearch',

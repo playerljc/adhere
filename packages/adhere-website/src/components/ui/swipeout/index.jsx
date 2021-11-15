@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { List, Avatar, Radio } from 'antd';
 
 import Props from '@/lib/Props';
-import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
 
 import { SwipeOut, Space } from '@baifendian/adhere';
@@ -40,8 +39,9 @@ export default () => {
       <h1>SwipeOut</h1>
       <p>滑动操作</p>
 
-      <h2>属性</h2>
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'className',

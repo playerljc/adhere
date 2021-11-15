@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Space } from '@baifendian/adhere';
+
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -16,8 +18,9 @@ export default () => {
       <h1>SearchTable</h1>
       <h3>一种查询表格的通用模式(如果 UI 没有明确给出查询表格的 UI，就可以用这个默认模式)</h3>
 
-      <h2>属性</h2>
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'className',
@@ -112,8 +115,11 @@ export default () => {
         ]}
       />
 
-      <h3>重写的方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="重写的方法"
         data={[
           {
             name: 'isShowNumber',
@@ -323,8 +329,11 @@ export default () => {
         ]}
       />
 
-      <h3>searchtableimplement重写的方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="searchtableimplement重写的方法"
         data={[
           {
             name: 'getFetchListPropName',

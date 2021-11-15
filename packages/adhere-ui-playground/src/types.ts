@@ -49,7 +49,6 @@ export interface ITableProps {
  */
 export interface IPlayGroundProps {
   codeText: string;
-  title: object | string;
   expand?: boolean;
 }
 
@@ -110,4 +109,21 @@ export interface IFunctionProps {
     // 函数返回值说明
     returnDesc: string | React.ReactNode;
   }>;
+}
+
+export interface ICollapseProps {
+  headerClassName: string;
+  headerStyle: CSSProperties | null;
+  bodyClassName: string;
+  bodyStyle: CSSProperties | null;
+  title: React.ReactNode | string;
+  extra: React.ReactNode | string;
+  defaultCollapse: boolean;
+  border: boolean;
+  scrollY: boolean;
+  fixedHeaderScrollBody: boolean;
+}
+
+export interface ICollapseState {
+  collapse: boolean;
 }

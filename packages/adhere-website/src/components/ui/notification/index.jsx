@@ -47,8 +47,11 @@ export default () => {
         <li>- 支持top和bottom方向</li>
       </ul>
 
-      <h3>NotificationFactory</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="NotificationFactory"
         data={[
           {
             name: 'build',
@@ -78,8 +81,9 @@ export default () => {
 
       <Space />
 
-      <h3>Notification</h3>
       <FunctionProps
+        border
+        title="Notification"
         data={[
           {
             name: 'show',
@@ -134,8 +138,9 @@ export default () => {
 
       <Space />
 
-      <h3>IConfig</h3>
       <Props
+        border
+        title="Notification"
         data={[
           {
             params: 'style',
@@ -178,8 +183,9 @@ export default () => {
 
       <Space />
 
-      <h3>IShowConfig</h3>
       <Props
+        border
+        title="IShowConfig"
         data={[
           {
             params: 'closed',
@@ -198,8 +204,9 @@ export default () => {
 
       <Space />
 
-      <h3>IShowStandardConfig</h3>
       <Props
+        border
+        title="IShowStandardConfig"
         data={[
           {
             params: 'closed',

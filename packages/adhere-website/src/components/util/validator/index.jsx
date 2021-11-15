@@ -49,6 +49,8 @@ export default () => {
       </div>
 
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'isAllChinaPhoneNumber',

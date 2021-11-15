@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { Requireable } from 'react';
 import { IPlayGroundMulitProps, IPlayGroundState } from './types';
+declare class InferPropsInner<T> {
+}
+declare class InferType<T> {
+}
 /**
  * PlayGroundMulit
  * @class PlayGroundMulit
@@ -10,6 +14,17 @@ declare class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPl
         expand: boolean;
     };
     actionConfig: (() => JSX.Element)[];
+    static defaultProps: IPlayGroundMulitProps;
+    static propTypes: {
+        expand: Requireable<boolean>;
+        config: Requireable<((InferPropsInner<Pick<{
+            codeText: Requireable<string>;
+            title: Requireable<NonNullable<InferType<Requireable<object> | Requireable<string>>>>;
+        }, never>> & Partial<InferPropsInner<Pick<{
+            codeText: Requireable<string>;
+            title: Requireable<NonNullable<InferType<Requireable<object> | Requireable<string>>>>;
+        }, 'codeText' | 'title'>>>) | undefined | null)[]>;
+    };
     protected componentWillReceiveProps(nextProps: any): void;
     protected renderAction(): JSX.Element[];
     /**

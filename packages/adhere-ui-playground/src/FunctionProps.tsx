@@ -43,14 +43,19 @@
  *
  * */
 
-import React from 'react';
+import React, { Requireable } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import intl from '@baifendian/adhere-util-intl';
 
+import Collapse from './Collapse';
 import { IFunctionProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-functionprops';
+
+class InferPropsInner<T> {}
+
+class InferType<T> {}
 
 /**
  * FunctionProps
@@ -58,120 +63,239 @@ const selectorPrefix = 'adhere-ui-playground-functionprops';
  * @classdesc FunctionProps
  */
 class FunctionProps extends React.Component<IFunctionProps> {
+  static propTypes: {
+    data: Requireable<
+      (
+        | (InferPropsInner<
+            Pick<
+              {
+                modifier: Requireable<string>;
+                name: Requireable<string>;
+                params: Requireable<
+                  (
+                    | (InferPropsInner<
+                        Pick<
+                          {
+                            defaultVal: Requireable<string>;
+                            name: Requireable<string>;
+                            type: Requireable<string>;
+                            required: Requireable<
+                              NonNullable<InferType<Requireable<boolean> | Requireable<string>>>
+                            >;
+                            desc: Requireable<string>;
+                          },
+                          never
+                        >
+                      > &
+                        Partial<
+                          InferPropsInner<
+                            Pick<
+                              {
+                                defaultVal: Requireable<string>;
+                                name: Requireable<string>;
+                                type: Requireable<string>;
+                                required: Requireable<
+                                  NonNullable<InferType<Requireable<boolean> | Requireable<string>>>
+                                >;
+                                desc: Requireable<string>;
+                              },
+                              'defaultVal' | 'name' | 'type' | 'required' | 'desc'
+                            >
+                          >
+                        >)
+                    | undefined
+                    | null
+                  )[]
+                >;
+                returnDesc: Requireable<string>;
+                returnType: Requireable<string>;
+                desc: Requireable<string>;
+              },
+              never
+            >
+          > &
+            Partial<
+              InferPropsInner<
+                Pick<
+                  {
+                    modifier: Requireable<string>;
+                    name: Requireable<string>;
+                    params: Requireable<
+                      (
+                        | (InferPropsInner<
+                            Pick<
+                              {
+                                defaultVal: Requireable<string>;
+                                name: Requireable<string>;
+                                type: Requireable<string>;
+                                required: Requireable<
+                                  NonNullable<InferType<Requireable<boolean> | Requireable<string>>>
+                                >;
+                                desc: Requireable<string>;
+                              },
+                              never
+                            >
+                          > &
+                            Partial<
+                              InferPropsInner<
+                                Pick<
+                                  {
+                                    defaultVal: Requireable<string>;
+                                    name: Requireable<string>;
+                                    type: Requireable<string>;
+                                    required: Requireable<
+                                      NonNullable<
+                                        InferType<Requireable<boolean> | Requireable<string>>
+                                      >
+                                    >;
+                                    desc: Requireable<string>;
+                                  },
+                                  'defaultVal' | 'name' | 'type' | 'required' | 'desc'
+                                >
+                              >
+                            >)
+                        | undefined
+                        | null
+                      )[]
+                    >;
+                    returnDesc: Requireable<string>;
+                    returnType: Requireable<string>;
+                    desc: Requireable<string>;
+                  },
+                  'modifier' | 'name' | 'params' | 'returnDesc' | 'returnType' | 'desc'
+                >
+              >
+            >)
+        | undefined
+        | null
+      )[]
+    >;
+  };
+
+  static defaultProps: IFunctionProps;
+
   render() {
-    const { data } = this.props;
+    const { data, ...others } = this.props;
 
     return (
-      <div className={selectorPrefix}>
-        <table className={`${selectorPrefix}-inner`}>
-          {data.map(({ name, desc, modifier, params, returnType, returnDesc }, index) => (
-            <>
-              <tr key={`${index}`} className={`${selectorPrefix}-item`}>
-                <td valign="top" className={`${selectorPrefix}-item-name`}>
-                  <ConditionalRender conditional={!!modifier}>
-                    {() => (
-                      <span className={`${selectorPrefix}-modifier`}>
-                        {modifier || 'public'} -{' '}
+      <Collapse {...others}>
+        <div className={selectorPrefix}>
+          <table className={`${selectorPrefix}-inner`}>
+            {data.map(({ name, desc, modifier, params, returnType, returnDesc }, index) => (
+              <>
+                <tr key={`${index}`} className={`${selectorPrefix}-item`}>
+                  <td valign="top" className={`${selectorPrefix}-item-name`}>
+                    <ConditionalRender conditional={!!modifier}>
+                      {() => (
+                        <span className={`${selectorPrefix}-modifier`}>
+                          {modifier || 'public'} -{' '}
+                        </span>
+                      )}
+                    </ConditionalRender>
+                    <span className={`${selectorPrefix}-functionName`}>
+                      {name}(
+                      <span className={`${selectorPrefix}-highlight`}>
+                        {(params || []).map((t) => t.name).join(' , ')}
                       </span>
-                    )}
-                  </ConditionalRender>
-                  <span className={`${selectorPrefix}-functionName`}>
-                    {name}(
-                    <span className={`${selectorPrefix}-highlight`}>
-                      {(params || []).map((t) => t.name).join(' , ')}
+                      )
                     </span>
-                    )
-                  </span>
-                </td>
-                <td valign="top" className={`${selectorPrefix}-item-info`}>
-                  <div className={`${selectorPrefix}-item-desc`}>{desc}</div>
-                  <dl>
-                    <dt className={`${selectorPrefix}-`}>{intl.v('参数说明')}：</dt>
-                    <dd>
-                      <ConditionalRender conditional={!!params && params.length !== 0}>
-                        {() => (
-                          <ul className={`${selectorPrefix}-level1`}>
-                            {params.map((param, index) => (
-                              <li key={`${index + 1}`}>
-                                <div style={{ marginBottom: 10 }}>
-                                  <span className={`${selectorPrefix}-highlight`}>
-                                    {param.name}
-                                  </span>{' '}
-                                  - {param.desc || '-'}
-                                </div>
-                                <ul
-                                  className={`${selectorPrefix}-level2`}
-                                  style={{ marginBottom: 10 }}
-                                >
-                                  <li>
-                                    {intl.v('类型')}
-                                    <span className={`${selectorPrefix}-split`}>-</span>
+                  </td>
+                  <td valign="top" className={`${selectorPrefix}-item-info`}>
+                    <div className={`${selectorPrefix}-item-desc`}>{desc}</div>
+                    <dl>
+                      <dt className={`${selectorPrefix}-`}>{intl.v('参数说明')}：</dt>
+                      <dd>
+                        <ConditionalRender conditional={!!params && params.length !== 0}>
+                          {() => (
+                            <ul className={`${selectorPrefix}-level1`}>
+                              {params.map((param, index) => (
+                                <li key={`${index + 1}`}>
+                                  <div style={{ marginBottom: 10 }}>
                                     <span className={`${selectorPrefix}-highlight`}>
-                                      {param.type || '-'}
-                                    </span>
-                                  </li>
-                                  <li>
-                                    {intl.v('默认值')}
-                                    <span className={`${selectorPrefix}-split`}>-</span>
-                                    <span className={`${selectorPrefix}-highlight`}>
-                                      {param.defaultVal || '-'}
-                                    </span>
-                                  </li>
-                                  <li>
-                                    {intl.v('是否必填')}
-                                    <span className={`${selectorPrefix}-split`}>-</span>
-                                    <span className={`${selectorPrefix}-highlight`}>
-                                      {param.required || false ? intl.v('是') : intl.v('否')}
-                                    </span>
-                                  </li>
-                                  {/*<li>
+                                      {param.name}
+                                    </span>{' '}
+                                    - {param.desc || '-'}
+                                  </div>
+                                  <ul
+                                    className={`${selectorPrefix}-level2`}
+                                    style={{ marginBottom: 10 }}
+                                  >
+                                    <li>
+                                      {intl.v('类型')}
+                                      <span className={`${selectorPrefix}-split`}>-</span>
+                                      <span className={`${selectorPrefix}-highlight`}>
+                                        {param.type || '-'}
+                                      </span>
+                                    </li>
+                                    <li>
+                                      {intl.v('默认值')}
+                                      <span className={`${selectorPrefix}-split`}>-</span>
+                                      <span className={`${selectorPrefix}-highlight`}>
+                                        {param.defaultVal || '-'}
+                                      </span>
+                                    </li>
+                                    <li>
+                                      {intl.v('是否必填')}
+                                      <span className={`${selectorPrefix}-split`}>-</span>
+                                      <span className={`${selectorPrefix}-highlight`}>
+                                        {param.required || false ? intl.v('是') : intl.v('否')}
+                                      </span>
+                                    </li>
+                                    {/*<li>
                                   {intl.v('说明')}
                                   <span className={`${selectorPrefix}-split`}>-</span>
                                   <span className={`${selectorPrefix}-highlight`}>{param.desc || '-'}</span>
                                 </li>*/}
-                                </ul>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </ConditionalRender>
-                    </dd>
-                  </dl>
-                  <dl>
-                    <dt>{intl.v('返回值')}：</dt>
-                    <dd>
-                      <ul className={`${selectorPrefix}-level1`}>
-                        <li>
-                          {intl.v('类型')}
-                          <span className={`${selectorPrefix}-split`}>-</span>
-                          <span className={`${selectorPrefix}-highlight`}>{returnType || '-'}</span>
-                        </li>
-                        <li>
-                          {intl.v('说明')}
-                          <span className={`${selectorPrefix}-split`}>-</span>
-                          <span className={`${selectorPrefix}-highlight`}>{returnDesc || '-'}</span>
-                        </li>
-                      </ul>
-                    </dd>
-                  </dl>
-                </td>
-              </tr>
-              <ConditionalRender conditional={index !== data.length - 1}>
-                {() => <div className={`${selectorPrefix}-dividing`} />}
-              </ConditionalRender>
-            </>
-          ))}
-        </table>
-      </div>
+                                  </ul>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </ConditionalRender>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>{intl.v('返回值')}：</dt>
+                      <dd>
+                        <ul className={`${selectorPrefix}-level1`}>
+                          <li>
+                            {intl.v('类型')}
+                            <span className={`${selectorPrefix}-split`}>-</span>
+                            <span className={`${selectorPrefix}-highlight`}>
+                              {returnType || '-'}
+                            </span>
+                          </li>
+                          <li>
+                            {intl.v('说明')}
+                            <span className={`${selectorPrefix}-split`}>-</span>
+                            <span className={`${selectorPrefix}-highlight`}>
+                              {returnDesc || '-'}
+                            </span>
+                          </li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </td>
+                </tr>
+                <ConditionalRender conditional={index !== data.length - 1}>
+                  {() => <div className={`${selectorPrefix}-dividing`} />}
+                </ConditionalRender>
+              </>
+            ))}
+          </table>
+        </div>
+      </Collapse>
     );
   }
 }
 
 FunctionProps.defaultProps = {
+  ...Collapse.defaultProps,
   data: [],
 };
 
 FunctionProps.propTypes = {
+  ...Collapse.propTypes,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       // 函数名称

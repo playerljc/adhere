@@ -1,12 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { Requireable } from 'prop-types';
 import Intl from '@baifendian/adhere-util-intl';
 
 import Table from './Table';
 
+import Collapse from './Collapse';
+
 import { IPropsProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-props';
+
+class InferPropsInner<T> {}
+
+class InferType<T> {}
+
+class ReactNodeLike {}
 
 /**
  * Props
@@ -14,6 +22,57 @@ const selectPrefix = 'adhere-ui-playground-props';
  * @classdesc Props
  */
 class Props extends React.Component<IPropsProps, any> {
+  static propTypes: {
+    data: Requireable<
+      (
+        | (InferPropsInner<
+            Pick<
+              {
+                defaultVal: Requireable<
+                  NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                >;
+                params: Requireable<
+                  NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                >;
+                type: Requireable<
+                  NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                >;
+                desc: Requireable<
+                  NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                >;
+              },
+              never
+            >
+          > &
+            Partial<
+              InferPropsInner<
+                Pick<
+                  {
+                    defaultVal: Requireable<
+                      NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                    >;
+                    params: Requireable<
+                      NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                    >;
+                    type: Requireable<
+                      NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                    >;
+                    desc: Requireable<
+                      NonNullable<InferType<Requireable<string> | Requireable<ReactNodeLike>>>
+                    >;
+                  },
+                  'defaultVal' | 'params' | 'type' | 'desc'
+                >
+              >
+            >)
+        | undefined
+        | null
+      )[]
+    >;
+  };
+
+  static defaultProps: IPropsProps;
+
   protected getColumns() {
     return [
       {
@@ -46,23 +105,29 @@ class Props extends React.Component<IPropsProps, any> {
   }
 
   protected render() {
+    const { data, ...others } = this.props;
+
     return (
-      <div className={selectPrefix}>
-        <Table
-          columns={this.getColumns()}
-          dataSource={this.props.data.map((t, i) => ({ ...t, id: `${i + 1}` }))}
-          rowKey="id"
-        />
-      </div>
+      <Collapse {...others}>
+        <div className={selectPrefix}>
+          <Table
+            columns={this.getColumns()}
+            dataSource={this.props.data.map((t, i) => ({ ...t, id: `${i + 1}` }))}
+            rowKey="id"
+          />
+        </div>
+      </Collapse>
     );
   }
 }
 
 Props.defaultProps = {
+  ...Collapse.defaultProps,
   data: [],
 };
 
 Props.propTypes = {
+  ...Collapse.propTypes,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       params: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),

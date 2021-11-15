@@ -26,8 +26,11 @@ export default () => (
       <li>- 支持mobile和pc</li>
     </ul>
 
-    <h3>PullRefresh</h3>
+    <Space />
+
     <Props
+      border
+      title="PullRefresh"
       data={[
         {
           params: 'className',
@@ -134,8 +137,11 @@ export default () => (
       ]}
     />
 
-    <h3>方法</h3>
+    <Space />
+
     <FunctionProps
+      border
+      title="方法"
       data={[
         {
           name: 'refresh',

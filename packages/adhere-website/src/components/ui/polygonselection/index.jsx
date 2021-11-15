@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Space } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import PlaygroundMulit from '@/lib/PlaygroundMulit';
 
@@ -427,8 +429,11 @@ export default () => {
         <li>- 自由绘制区域</li>
       </ul>
 
-      <h2>PolygonSelection</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="PolygonSelection"
         data={[
           {
             name: 'getCtx',
@@ -665,8 +670,11 @@ export default () => {
         ]}
       />
 
-      <h2>CircleDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="CircleDrawAction"
         data={[
           {
             name: 'booleanPointInData',
@@ -809,8 +817,11 @@ export default () => {
         ]}
       />
 
-      <h2>DiamondDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="DiamondDrawAction"
         data={[
           {
             name: 'booleanPointInData',
@@ -954,8 +965,11 @@ export default () => {
         ]}
       />
 
-      <h2>FreeDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="FreeDrawAction"
         data={[
           {
             name: 'draw',
@@ -1074,8 +1088,11 @@ export default () => {
         ]}
       />
 
-      <h2>PolygonDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="PolygonDrawAction"
         data={[
           {
             name: 'booleanPointInData',
@@ -1213,8 +1230,11 @@ export default () => {
         ]}
       />
 
-      <h2>RectangleDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="RectangleDrawAction"
         data={[
           {
             name: 'booleanPointInData',
@@ -1358,8 +1378,11 @@ export default () => {
         ]}
       />
 
-      <h2>StartDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="StartDrawAction"
         data={[
           {
             name: 'booleanPointInData',
@@ -1503,8 +1526,11 @@ export default () => {
         ]}
       />
 
-      <h2>TriangleDrawAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="TriangleDrawAction"
         data={[
           {
             name: 'booleanPointInData',
@@ -1646,8 +1672,11 @@ export default () => {
         ]}
       />
 
-      <h2>CircleModifyAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="CircleModifyAction"
         data={[
           {
             name: 'isCanMove',
@@ -1820,8 +1849,11 @@ export default () => {
         ]}
       />
 
-      <h2>DiamondModifyAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="DiamondModifyAction"
         data={[
           {
             name: 'isCanMove',
@@ -1994,8 +2026,11 @@ export default () => {
         ]}
       />
 
-      <h2>PolygonModifyAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="PolygonModifyAction"
         data={[
           {
             name: 'isCanMove',
@@ -2168,8 +2203,11 @@ export default () => {
         ]}
       />
 
-      <h2>RectangleModifyAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="RectangleModifyAction"
         data={[
           {
             name: 'isCanMove',
@@ -2342,8 +2380,11 @@ export default () => {
         ]}
       />
 
-      <h2>StartModifyAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="StartModifyAction"
         data={[
           {
             name: 'isCanMove',
@@ -2516,8 +2557,11 @@ export default () => {
         ]}
       />
 
-      <h2>TriangleModifyAction</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="TriangleModifyAction"
         data={[
           {
             name: 'isCanMove',

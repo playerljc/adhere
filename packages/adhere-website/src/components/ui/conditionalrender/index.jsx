@@ -14,8 +14,10 @@ export default () => {
       <h1>ConditionalRender</h1>
       <p>条件渲染</p>
       <p>适用于自定义显示条件的情况下是否显示组件</p>
-      <h2>属性</h2>
+
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'conditional',
@@ -31,6 +33,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>基本使用</h2>
       <Playground
         mode="code"

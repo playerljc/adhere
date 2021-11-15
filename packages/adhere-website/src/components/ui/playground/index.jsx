@@ -1,6 +1,8 @@
 import React from 'react';
 import Props from '@/lib/Props';
 
+import { Space } from '@baifendian/adhere';
+
 export default () => {
   return (
     <div className="Page">
@@ -14,8 +16,11 @@ export default () => {
         <li>FunctionProps - 类方法说明</li>
       </ul>
 
-      <h3>PlayGround</h3>
+      <Space />
+
       <Props
+        border
+        title="PlayGround"
         data={[
           {
             params: 'codeText',
@@ -32,8 +37,11 @@ export default () => {
         ]}
       />
 
-      <h3>PlayGroundMulit</h3>
+      <Space />
+
       <Props
+        border
+        title="PlayGroundMulit"
         data={[
           {
             params: 'config',
@@ -50,8 +58,11 @@ export default () => {
         ]}
       />
 
-      <h3>Props</h3>
+      <Space />
+
       <Props
+        border
+        title="Props"
         data={[
           {
             params: 'data',
@@ -62,8 +73,11 @@ export default () => {
         ]}
       />
 
-      <h3>FunctionProps</h3>
+      <Space />
+
       <Props
+        border
+        title="FunctionProps"
         data={[
           {
             params: 'data',
@@ -74,8 +88,11 @@ export default () => {
         ]}
       />
 
-      <h3>IProps</h3>
+      <Space />
+
       <Props
+        border
+        title="IProps"
         data={[
           {
             params: 'params',
@@ -104,8 +121,11 @@ export default () => {
         ]}
       />
 
-      <h3>IFunctionProps</h3>
+      <Space />
+
       <Props
+        border
+        title="IFunctionProps"
         data={[
           {
             params: 'name',
@@ -146,8 +166,11 @@ export default () => {
         ]}
       />
 
-      <h3>IParams</h3>
+      <Space />
+
       <Props
+        border
+        title="IParams"
         data={[
           {
             params: 'name',

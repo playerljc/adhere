@@ -20,6 +20,8 @@ export default () => {
       <h1>Ajax</h1>
 
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'get',
@@ -104,8 +106,9 @@ export default () => {
         ]}
       />
 
-      <h2>ISendArg</h2>
       <Props
+        border
+        title="ISendArg"
         data={[
           {
             params: 'path',

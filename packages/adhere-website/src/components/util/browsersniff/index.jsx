@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import { Browsersniff } from '@baifendian/adhere';
+import { Browsersniff, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -17,8 +17,9 @@ export default () => {
         库来实现 - 用来嗅探用户浏览器的型号，版本，内核等信息
       </p>
 
-      <h2>主方法</h2>
       <FunctionProps
+        border
+        title="主方法"
         data={[
           {
             name: 'browser',
@@ -79,8 +80,11 @@ export default () => {
         ]}
       />
 
-      <h2>浏览器嗅探</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="浏览器嗅探"
         data={[
           {
             name: 'isBrowserSafari',
@@ -461,8 +465,11 @@ export default () => {
         ]}
       />
 
-      <h2>设备嗅探</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="设备嗅探"
         data={[
           {
             name: 'isDevicePC',
@@ -491,8 +498,11 @@ export default () => {
         ]}
       />
 
-      <h2>内核嗅探</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="内核嗅探"
         data={[
           {
             name: 'isEngineWebKit',
@@ -553,8 +563,11 @@ export default () => {
         ]}
       />
 
-      <h2>操作系统嗅探</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="操作系统嗅探"
         data={[
           {
             name: 'iSOSWindows',

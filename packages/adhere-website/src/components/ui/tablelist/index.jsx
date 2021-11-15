@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from '@ctsj/router';
+import { Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
@@ -12,8 +13,9 @@ export default () => {
       <h1>TableList</h1>
       <p>表格列表配置</p>
 
-      <h2>属性</h2>
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'className',
@@ -60,9 +62,12 @@ export default () => {
         ]}
       />
 
+      <Space />
+
       <h2>search属性</h2>
-      <p>搜索区域配置</p>
       <Props
+        border
+        title="搜索区域配置"
         data={[
           {
             params: 'className',
@@ -121,9 +126,12 @@ export default () => {
         ]}
       />
 
+      <Space />
+
       <h2>toolbar属性</h2>
-      <p>工具栏区域配置</p>
       <Props
+        border
+        title="工具栏区域配置"
         data={[
           {
             params: 'className',
@@ -175,6 +183,8 @@ export default () => {
           },
         ]}
       />
+
+      <Space />
 
       <h2>基础使用</h2>
       <Playground

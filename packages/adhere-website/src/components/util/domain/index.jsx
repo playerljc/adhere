@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button } from 'antd';
-import { Domain } from '@baifendian/adhere';
+import { Domain, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -16,8 +16,9 @@ export default () => {
       <h1>Domain</h1>
       <h2>Domain的浏览器端实现</h2>
 
-      <h2>Domain</h2>
       <FunctionProps
+        border
+        title="Domain"
         data={[
           {
             name: 'createDomain',
@@ -38,8 +39,11 @@ export default () => {
         ]}
       />
 
-      <h2>IDomain</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="IDomain"
         data={[
           {
             name: 'add',
