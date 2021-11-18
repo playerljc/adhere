@@ -38,3 +38,16 @@ export interface IFlatTreeArrNode {
   // root的parentId的值
   rootParentId: string | number;
 }
+
+/**
+ * IUrlConfig
+ * @description - Url库的parse和stringify的配置
+ */
+export interface IUrlConfig {
+  // 是否排除无效值
+  ignoreInvalid: boolean;
+  // 是否encode
+  isEncode: boolean;
+  // 是否decode
+  isDecode: boolean;
+}

@@ -1,6 +1,4 @@
 declare const _default: {
-    parse(path?: string | undefined): object;
-    stringify(record: object): string;
     arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeNode[];
     arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeSelectNode[];
     getAncestor(data: any[], node: any, config: {

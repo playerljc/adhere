@@ -65,6 +65,10 @@ class TableImpl extends TableImplement {
     return this.state.dataSource.list;
   }
 
+  // getPagination() {
+  //   return false;
+  // }
+
   getColumns() {
     return [
       {

@@ -30,3 +30,12 @@ export interface IFlatTreeArrNode {
     parentIdAttr: string;
     rootParentId: string | number;
 }
+/**
+ * IUrlConfig
+ * @description - Url库的parse和stringify的配置
+ */
+export interface IUrlConfig {
+    ignoreInvalid: boolean;
+    isEncode: boolean;
+    isDecode: boolean;
+}

@@ -181,16 +181,18 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       ) {
         const tableWrapRef = this.tableWrapRef.current as HTMLElement;
 
-        const tableHeaderHeight = (tableWrapRef.querySelector('.ant-table-header') as HTMLElement)
-          ?.offsetHeight;
-        const tablePaginationHeight = (
-          tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement
-        )?.offsetHeight;
+        const tableHeaderHeight =
+          (tableWrapRef.querySelector('.ant-table-header') as HTMLElement)?.offsetHeight || 0;
+
+        const tablePaginationHeight =
+          (tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement)?.offsetHeight || 0;
 
         // @ts-ignore
         this.setState({
           // @ts-ignore
-          scrollY: tableWrapRef.clientHeight - (tableHeaderHeight + tablePaginationHeight + 16 * 2),
+          scrollY:
+            tableWrapRef.clientHeight -
+            (tableHeaderHeight + (tablePaginationHeight ? tablePaginationHeight + 16 * 2 : 0)),
         });
       }
     }
