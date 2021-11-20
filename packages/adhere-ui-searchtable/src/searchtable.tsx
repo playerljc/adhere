@@ -170,12 +170,11 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         dataSource &&
         dataSource.length &&
         // @ts-ignore
-        ((prevState.scrollY === 0 && this.state.scrollY === 0) ||
-          (prevState.scrollY !== 0 &&
+        ((prevState.scrollY === 0 && this.state.scrollY === 0) /*prevState.scrollY !== 0 &&
             // @ts-ignore
-            this.state.scrollY !== 0 &&
-            // @ts-ignore
-            prevState.scrollY !== this.state.scrollY) ||
+            this.state.scrollY !== 0 &&*/ ||
+          // @ts-ignore
+          prevState.scrollY !== this.state.scrollY ||
           // @ts-ignore
           prevState.expand !== this.state.expand)
       ) {

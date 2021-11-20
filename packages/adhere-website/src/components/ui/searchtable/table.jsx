@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input, Select, DatePicker, InputNumber } from 'antd';
 
@@ -33,6 +34,16 @@ class TableImpl extends TableImplement {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    super.componentWillReceiveProps(nextProps);
+
+    if (this.props.pagination !== nextProps.pagination) {
+      this.setState({
+        scrollY: 0,
+      });
+    }
+  }
+
   getParams() {
     return {
       name: '',
@@ -65,9 +76,15 @@ class TableImpl extends TableImplement {
     return this.state.dataSource.list;
   }
 
-  // getPagination() {
-  //   return false;
-  // }
+  getPagination() {
+    const { pagination } = this.props;
+
+    if (pagination) {
+      return super.getPagination();
+    }
+
+    return false;
+  }
 
   getColumns() {
     return [
@@ -289,5 +306,13 @@ class TableImpl extends TableImplement {
     });
   }
 }
+
+TableImpl.defaultProps = {
+  pagination: true,
+};
+
+TableImpl.propTypes = {
+  pagination: PropTypes.bool,
+};
 
 export default TableImpl;

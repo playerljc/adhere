@@ -2,12 +2,15 @@
 
 ***
 
-2021-11-15
+2021-11-19
 
 * **adhere-ui-playground**
   - 加入collapse折叠操作
 * **adhere-ui-searchtable**
   - componentDidUpdate的修改
+  - 分页没有时候的处理
+* **adhere-util**
+  - url库修改加入是否忽略空值、加入缓存
 * **adhere-util-intl**
   - 加入新词条
 * **adhere-util-resource**

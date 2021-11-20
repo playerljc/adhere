@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Input, InputNumber, Select, DatePicker } from 'antd';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -59,6 +60,16 @@ class StateTable extends TableStateImplement {
       middleWares: [],
       reducer: null,
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    super.componentWillReceiveProps(nextProps);
+
+    if (this.props.pagination !== nextProps.pagination) {
+      this.setState({
+        scrollY: 0,
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -268,7 +279,25 @@ class StateTable extends TableStateImplement {
     return super.fetchDataExecute(searchParams);
   }
 
+  getPagination() {
+    const { pagination } = this.props;
+
+    if (pagination) {
+      return super.getPagination();
+    }
+
+    return false;
+  }
+
   onSubTableChange(pagination, filters, sorter) {}
 }
+
+StateTable.defaultProps = {
+  pagination: true,
+};
+
+StateTable.propTypes = {
+  pagination: PropTypes.bool,
+};
 
 export default StateTable;

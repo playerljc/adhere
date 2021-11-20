@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { Switch } from 'antd';
 import { Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
@@ -13,6 +13,12 @@ import FewTable from './fewTable';
 import StateTable from './stateTable';
 
 export default () => {
+  const [pagination1, setPagination1] = useState(false);
+  const [pagination2, setPagination2] = useState(false);
+  const [pagination3, setPagination3] = useState(false);
+  const [pagination4, setPagination4] = useState(false);
+  const [pagination5, setPagination5] = useState(false);
+
   return (
     <div className="Page">
       <h1>SearchTable</h1>
@@ -665,14 +671,27 @@ export default () => {
   </div>
       `}
       >
-        <div style={{ display: 'flex', height: 400 }}>
-          <Table
-            style={{ height: '100%' }}
-            isShowExpandSearch
-            defaultExpandSearchCollapse={false}
-            autoFixed
+        <>
+          <Switch
+            checkedChildren="分页"
+            checked={pagination1}
+            onChange={() => {
+              setPagination1(!pagination1);
+            }}
           />
-        </div>
+
+          <Space />
+
+          <div style={{ display: 'flex', height: 400 }}>
+            <Table
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              autoFixed
+              pagination={pagination1}
+            />
+          </div>
+        </>
       </Playground>
 
       <h2>固定列头</h2>
@@ -694,14 +713,27 @@ export default () => {
   </div>
       `}
       >
-        <div style={{ display: 'flex', height: 700 }}>
-          <Table
-            style={{ height: '100%' }}
-            isShowExpandSearch
-            defaultExpandSearchCollapse={false}
-            fixedHeaderAutoTable
+        <>
+          <Switch
+            checkedChildren="分页"
+            checked={pagination2}
+            onChange={() => {
+              setPagination2(!pagination2);
+            }}
           />
-        </div>
+
+          <Space />
+
+          <div style={{ display: 'flex', height: 700 }}>
+            <Table
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              pagination={pagination2}
+            />
+          </div>
+        </>
       </Playground>
 
       <h2>列表两端的渲染</h2>
@@ -780,14 +812,27 @@ export default () => {
           },
         ]}
       >
-        <div style={{ display: 'flex', height: 800 }}>
-          <FixedTableSpaceBetweenTable
-            style={{ height: '100%' }}
-            isShowExpandSearch
-            defaultExpandSearchCollapse={false}
-            fixedHeaderAutoTable
+        <>
+          <Switch
+            checkedChildren="分页"
+            checked={pagination3}
+            onChange={() => {
+              setPagination3(!pagination3);
+            }}
           />
-        </div>
+
+          <Space />
+
+          <div style={{ display: 'flex', height: 800 }}>
+            <FixedTableSpaceBetweenTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              pagination={pagination3}
+            />
+          </div>
+        </>
       </PlayGroundMulit>
 
       <h2>分页始终居底</h2>
@@ -864,15 +909,28 @@ export default () => {
           },
         ]}
       >
-        <div style={{ display: 'flex', height: 700 }}>
-          <FewTable
-            style={{ height: '100%' }}
-            isShowExpandSearch
-            defaultExpandSearchCollapse={false}
-            fixedHeaderAutoTable
-            fixedTableSpaceBetween
+        <>
+          <Switch
+            checkedChildren="分页"
+            checked={pagination4}
+            onChange={() => {
+              setPagination4(!pagination4);
+            }}
           />
-        </div>
+
+          <Space />
+
+          <div style={{ display: 'flex', height: 700 }}>
+            <FewTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination4}
+            />
+          </div>
+        </>
       </PlayGroundMulit>
 
       <h2>使用@ctsj/state的Table</h2>
@@ -1239,15 +1297,28 @@ export default () => {
           },
         ]}
       >
-        <div style={{ display: 'flex', height: 700 }}>
-          <StateTable
-            style={{ height: '100%' }}
-            isShowExpandSearch
-            defaultExpandSearchCollapse={false}
-            fixedHeaderAutoTable
-            fixedTableSpaceBetween
+        <>
+          <Switch
+            checkedChildren="分页"
+            checked={pagination5}
+            onChange={() => {
+              setPagination5(!pagination5);
+            }}
           />
-        </div>
+
+          <Space />
+
+          <div style={{ display: 'flex', height: 700 }}>
+            <StateTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination5}
+            />
+          </div>
+        </>
       </PlayGroundMulit>
 
       <h2>实现TableImplement的table</h2>
