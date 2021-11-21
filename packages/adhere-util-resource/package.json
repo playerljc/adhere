@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-resource",
-  "version": "1.0.11",
+  "version": "1.0.11-fix.0",
   "description": "常用的资源",
   "main": "lib/index.js",
   "files": [
@@ -35,7 +35,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.11",
+    "@baifendian/adhere-util": "^1.0.11-fix.0",
     "@baifendian/adhere-util-dict": "^1.0.10",
     "@baifendian/adhere-util-intl": "^1.0.11",
     "antd": "^4.12.0",
