@@ -1,4 +1,4 @@
-import { WatchMemoized } from '@baifendian/adhere';
+import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 import { IUrlConfig } from './types';
 
