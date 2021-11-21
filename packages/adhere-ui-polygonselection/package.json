@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-polygonselection",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "多边形选区",
   "main": "lib/index.js",
   "files": [
@@ -36,7 +36,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.10",
+    "@baifendian/adhere-util": "^1.0.11",
     "@baifendian/adhere-util-emitter": "^1.0.10",
     "@turf/turf": "^6.5.0"
   }
