@@ -14,7 +14,6 @@ module.exports = {
     'import/no-unresolved': 0,
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-unused-expressions': 0,
-
     'react/no-children-prop': 0,
   },
 };

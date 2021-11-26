@@ -10,16 +10,30 @@ export default {
    * @return Array
    */
   keyMap(
-    arr: Array<any>,
+    arr: Array<any> = [],
     handler: (item: any, index: number) => ReactElement,
   ): Array<ReactElement> {
-    return arr.map((item: any, index) => {
+    return (arr || []).map((item: any, index) => {
       const element: ReactElement = handler.call(this, item, index);
 
       // 如果返回的element有key则返回
       if (element.key) {
         return element;
       }
+
+      // 返回的element没有key则使用v1创建一个key
+      return React.cloneElement(element, { ...element.props, key: v1() }, element.props.children);
+    });
+  },
+  /**
+   * fillKey
+   * @description - 将一个ReactElements填充key
+   * @param elements
+   * @return Array
+   */
+  fillKey(elements: Array<ReactElement> = []): Array<ReactElement> {
+    return (elements || []).map((element) => {
+      if (element.key) return element;
 
       // 返回的element没有key则使用v1创建一个key
       return React.cloneElement(element, { ...element.props, key: v1() }, element.props.children);

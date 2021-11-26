@@ -7,6 +7,13 @@ declare const _default: {
      * @param handler
      * @return Array
      */
-    keyMap(arr: Array<any>, handler: (item: any, index: number) => ReactElement): Array<ReactElement>;
+    keyMap(arr: any[] | undefined, handler: (item: any, index: number) => ReactElement): Array<ReactElement>;
+    /**
+     * fillKey
+     * @description - 将一个ReactElements填充key
+     * @param elements
+     * @return Array
+     */
+    fillKey(elements?: Array<ReactElement>): Array<ReactElement>;
 };
 export default _default;

@@ -47,6 +47,22 @@ export default () => {
             returnType: 'Array<ReactElement>',
             returnDesc: '返回迭代的React.ReactElement数组',
           },
+          {
+            name: 'fillKey',
+            desc: '将一个ReactElements填充key',
+            modifier: 'public',
+            params: [
+              {
+                name: 'elements',
+                desc: '数组',
+                type: 'Array<ReactElement>',
+                defaultVal: '[]',
+                required: 'true',
+              },
+            ],
+            returnType: 'Array<ReactElement>',
+            returnDesc: '返回迭代的React.ReactElement数组',
+          },
         ]}
       />
 
