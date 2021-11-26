@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,n=1,e=arguments.length;n<e;n++)for(var a in t=arguments[n])Object.prototype.hasOwnProperty.call(t,a)&&(r[a]=t[a]);return r}).apply(this,arguments)};import React from"react";import{v1}from"uuid";export default{keyMap:function(r,n){var e=this;return r.map(function(r,t){t=n.call(e,r,t);return t.key?t:React.cloneElement(t,__assign(__assign({},t.props),{key:v1()}),t.props.children)})}};
+//# sourceMappingURL=index.js.map

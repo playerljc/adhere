@@ -53,6 +53,7 @@ import Preferences from '@baifendian/adhere-util-preferences';
 import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
+import ReactUtil from '@baifendian/adhere-util-reactutil';
 
 export { 
   BackTopAnimation,
@@ -110,4 +111,5 @@ export {
   Resource,
   Validator,
   WatchMemoized,
+  ReactUtil,
 };

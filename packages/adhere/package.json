@@ -99,6 +99,7 @@
     "@baifendian/adhere-util-resource": "^1.0.11-fix.0",
     "@baifendian/adhere-util-validator": "^1.0.10",
     "@baifendian/adhere-util-watchmemoized": "^1.0.11-fix.0",
+    "@baifendian/adhere-util-reactutil": "^1.0.12",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/uuid": "^8.3.0",
