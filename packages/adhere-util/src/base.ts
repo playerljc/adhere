@@ -349,5 +349,31 @@ export default {
 
     return new Blob([ab], { type: 'image/png' });
   },
+  /**
+   * omitObject
+   * @description - 对象排除空值
+   * @param obj
+   * @return object
+   */
+  omitObject(obj: object): object {
+    obj = obj || {};
+
+    const res = {};
+
+    const keys = Object.keys(obj);
+
+    keys.forEach((key) => {
+      let value = obj[key];
+      if (![null, undefined, '', 'undefined'].includes(value)) {
+        if (typeof value === 'string') {
+          value = value.trim();
+        }
+
+        res[key] = value;
+      }
+    });
+
+    return res;
+  },
   /**----------------------------基本end---------------------------**/
 };

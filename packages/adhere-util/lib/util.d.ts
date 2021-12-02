@@ -158,5 +158,6 @@ declare const _default: {
     uuid(): string;
     getPropertyVisitPathStr(target: any, key: any): string;
     convertBase64UrlToBlob(data: string): Blob;
+    omitObject(obj: object): object;
 };
 export default _default;

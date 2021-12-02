@@ -149,5 +149,12 @@ declare const _default: {
      * @param data
      */
     convertBase64UrlToBlob(data: string): Blob;
+    /**
+     * omitObject
+     * @description - 对象排除空值
+     * @param obj
+     * @return object
+     */
+    omitObject(obj: object): object;
 };
 export default _default;

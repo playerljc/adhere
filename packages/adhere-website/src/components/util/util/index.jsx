@@ -884,6 +884,22 @@ export default () => {
             returnType: 'Blob',
             returnDesc: '',
           },
+          {
+            name: 'omitObject',
+            desc: '对象排除空值',
+            modifier: 'public',
+            params: [
+              {
+                name: 'obj',
+                desc: '排除的对象',
+                type: 'object',
+                defaultVal: '{}',
+                required: 'true',
+              },
+            ],
+            returnType: 'object',
+            returnDesc: '',
+          },
         ]}
       />
 
