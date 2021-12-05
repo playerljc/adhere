@@ -1,8 +1,14 @@
-import { InitFunc } from './types';
+import { InitFunc, IConfig } from './types';
 
 const target = {};
 
 const funParams = new Map();
+
+const defaultConfig: IConfig = {
+  isFunMemo: true,
+};
+
+let config: IConfig = defaultConfig;
 
 /**
  * diffParams
@@ -64,14 +70,19 @@ function CreateFunProxy(fun: Function, property: string) {
   });
 }
 
+/**
+ * initValue
+ * @param p
+ * @param params
+ */
 function initValue(p, params) {
   const handler = ins.handlers[p];
 
   // 返回值 - 一般都不是函数
   let value = handler(params);
 
-  // 如果返回值是Function
-  if (value instanceof Function) {
+  // 如果返回值是Function && 缓存
+  if (value instanceof Function && config.isFunMemo) {
     value = CreateFunProxy(value, p);
   }
 
@@ -99,7 +110,9 @@ const ins: {
       return Reflect.get(target, p, receiver);
     },
   }),
-  init: (dictArr = []) => {
+  init: (dictArr = [], c: IConfig = defaultConfig) => {
+    config = c;
+
     (dictArr || []).forEach((dict) => {
       if (dict) {
         dict.initStatic();

@@ -129,6 +129,7 @@ class BasicLayout extends React.Component {
     const { pathname } = window.location;
     for (let i = 0; i < routes.length; i++) {
       const route = routes[i];
+
       if (pathname.indexOf(route.path) !== -1) {
         if (
           route.routes &&
@@ -141,10 +142,26 @@ class BasicLayout extends React.Component {
           });
           BasicLayout.loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes: route.routes });
         } else {
-          defaultSelectedKeys.push({
-            path: route.path,
-            name: route.name,
-          });
+          if (pathname === route.path) {
+            // 如果是hide，找到第一个不是hide的route
+            if ('hide' in route && route.hide) {
+              const firstIncludeRoute = routes
+                  .filter((t) => !('redirect' in t))
+                  .find((r) => (!('hide' in r) || !r.hide) && pathname.indexOf(r.path) !== -1);
+
+              if (firstIncludeRoute) {
+                defaultSelectedKeys.push({
+                  path: firstIncludeRoute.path,
+                  name: firstIncludeRoute.name,
+                });
+              }
+            } else {
+              defaultSelectedKeys.push({
+                path: route.path,
+                name: route.name,
+              });
+            }
+          }
         }
       }
     }

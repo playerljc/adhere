@@ -1,3 +1,21 @@
+# 1.0.12
+
+***
+
+2021-12-5
+
+* **adhere-ui-css**
+  - normalize-default.less修改
+  - mixin.less修改
+* **adhere-util**
+  - base加入omitObject方法
+* **adhere-util-communication-ajax**
+  - 加入notification的节流
+* **adhere-util-dict**
+  - 加入config配置
+* **adhere-util-reactutil**
+  - 加入@baifendian/adhere-util-reactutil
+
 # 1.0.11
 
 ***

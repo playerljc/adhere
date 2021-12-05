@@ -3,6 +3,9 @@ interface IDict {
     initRemote: () => {};
 }
 export interface InitFunc {
-    (dictArr: Array<IDict>): void;
+    (dictArr: IDict[], config: IConfig): void;
+}
+export interface IConfig {
+    isFunMemo: boolean;
 }
 export {};

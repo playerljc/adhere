@@ -9,10 +9,7 @@ export default {
    * @param handler
    * @return Array
    */
-  keyMap(
-    arr: Array<any> = [],
-    handler: (item: any, index: number) => ReactElement,
-  ): Array<ReactElement> {
+  keyMap(arr: any[] = [], handler: (item: any, index: number) => ReactElement): ReactElement[] {
     return (arr || []).map((item: any, index) => {
       const element: ReactElement = handler.call(this, item, index);
 
@@ -31,7 +28,7 @@ export default {
    * @param elements
    * @return Array
    */
-  fillKey(elements: Array<ReactElement> = []): Array<ReactElement> {
+  fillKey(elements: ReactElement[] = []): ReactElement[] {
     return (elements || []).map((element) => {
       if (element.key) return element;
 

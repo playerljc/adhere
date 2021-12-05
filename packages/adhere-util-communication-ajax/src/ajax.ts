@@ -9,16 +9,29 @@ import { IConfig, ISendArg, ISendPrepareArg } from './types';
 // 是否触发过402
 let trigger402 = false;
 
+// notification的节流时间(毫秒)
+const notificationThrottlingTime = 2000;
+
+let errorInfoHandler;
+let warnInfoHandler;
+
 /**
  * errorInfo - 错误的提示
  * @param title
  * @param message
  */
 function errorInfo(title, message) {
-  notification.error({
-    message: title,
-    description: message,
-  });
+  if (errorInfoHandler) {
+    clearTimeout(errorInfoHandler);
+    errorInfoHandler = null;
+  }
+
+  errorInfoHandler = setTimeout(() => {
+    notification.error({
+      message: title,
+      description: message,
+    });
+  }, notificationThrottlingTime);
 }
 
 /**
@@ -27,10 +40,17 @@ function errorInfo(title, message) {
  * @param message
  */
 function warnInfo(title, message) {
-  notification.warn({
-    message: title,
-    description: message,
-  });
+  if (warnInfoHandler) {
+    clearTimeout(warnInfoHandler);
+    warnInfoHandler = null;
+  }
+
+  warnInfoHandler = setTimeout(() => {
+    notification.warn({
+      message: title,
+      description: message,
+    });
+  }, notificationThrottlingTime);
 }
 
 /**
@@ -452,8 +472,7 @@ function getSendParams({ data, contentType }) {
 /**
  * complexRequest - 复杂的请求
  * @param method
- * @param data
- * @param arg
+ * @param params
  */
 function complexRequest(method: string, params: ISendArg) {
   return new Promise((resolve, reject) => {
