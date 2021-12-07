@@ -2,7 +2,7 @@
 
 ***
 
-2021-12-5
+2021-12-7
 
 * **adhere-ui-css**
   - normalize-default.less修改
@@ -11,6 +11,7 @@
   - base加入omitObject方法
 * **adhere-util-communication-ajax**
   - 加入notification的节流
+  - 修改传参错误和status的缺省处理
 * **adhere-util-dict**
   - 加入config配置
 * **adhere-util-reactutil**

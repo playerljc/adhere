@@ -1,4 +1,4 @@
-import { IConfig, ISendArg } from './types';
+import type { IConfig, ISendArg } from './types';
 /**
  * Ajax
  * @class Ajax

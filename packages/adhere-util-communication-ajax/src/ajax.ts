@@ -4,7 +4,7 @@ import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 
-import { IConfig, ISendArg, ISendPrepareArg } from './types';
+import type { IConfig, ISendArg, ISendPrepareArg } from './types';
 
 // 是否触发过402
 let trigger402 = false;
@@ -104,6 +104,9 @@ function getDefaultConfig(): IConfig & {
         case 402:
           // @ts-ignore
           deal402.call(this);
+          break;
+        default:
+          errorInfo(intl.v('提示'), intl.v('已提出请求，但未收到任何回复'));
           break;
       }
     },
@@ -231,8 +234,6 @@ function onreadystatechange({
       // 4xx
       // 5xx
 
-      errorInfo(intl.v('提示'), intl.v('已提出请求，但未收到任何回复'));
-
       // 拦截器
       interceptor({
         status,
@@ -351,7 +352,7 @@ function sendPrepare(
     if (!('Content-type' in headers) && method !== ('get' || 'GET')) {
       headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
       contentType = headers['Content-Type'];
-      console.log('设置了header，但是没有设置Content-Type', Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA);
+      // console.log('设置了header，但是没有设置Content-Type', Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA);
     }
 
     for (const header in headers) {
@@ -370,11 +371,11 @@ function sendPrepare(
           data.form instanceof HTMLFormElement
         )
       ) {
-        console.log('默认设置Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
+        // console.log('默认设置Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
         contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
         xhr.setRequestHeader('Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
       } else {
-        console.log('有formData不需要设置Content-Type');
+        // console.log('有formData不需要设置Content-Type');
         contentType = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
       }
     }
@@ -420,7 +421,6 @@ function sendPrepare(
  * @param contentType
  */
 function getSendParams({ data, contentType }) {
-  // @ts-ignore
   contentType = contentType || '';
 
   // 四种Content-Type的处理(也就是send的参数)
@@ -434,11 +434,11 @@ function getSendParams({ data, contentType }) {
   // multipart/form-data
   // FormData
 
-  console.log('getSendParams', data, contentType);
+  // console.log('getSendParams', data, contentType);
 
   // application/json
   if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) === 0 && Util.isRef(data)) {
-    console.log('数据需要被转换成JSON字符串', JSON.stringify(data));
+    // console.log('数据需要被转换成JSON字符串', JSON.stringify(data));
     return JSON.stringify(data);
   }
 
@@ -447,7 +447,7 @@ function getSendParams({ data, contentType }) {
     contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED) === 0 &&
     Util.isObject(data)
   ) {
-    console.log('application/x-www-form-urlencoded转换', JSON.stringify(data));
+    // console.log('application/x-www-form-urlencoded转换', JSON.stringify(data));
     return Array.from(Object.keys(data))
       .map((k) => encodeURIComponent(`${k}=${data[k]}`))
       .join('&');
@@ -455,14 +455,14 @@ function getSendParams({ data, contentType }) {
 
   // multipart/form-data
   if (contentType.indexOf(Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA) === 0 && Util.isObject(data)) {
-    console.log('multipart/form-data转换');
-    console.log('form', data.form);
+    // console.log('multipart/form-data转换');
+    // console.log('form', data.form);
 
     const formData = new FormData(data.form);
 
     Array.from(Object.keys(data.data)).forEach(function (k) {
       formData.append(k, data.data[k]);
-      console.log(k, data.data[k]);
+      // console.log(k, data.data[k]);
     });
 
     return formData;
@@ -480,8 +480,8 @@ function complexRequest(method: string, params: ISendArg) {
       // @ts-ignore
       this,
       {
-        // @ts-ignore
         ...getDefaultConfig.call(this),
+        ...this.config,
         // @ts-ignore
         method,
         ...params,
@@ -631,6 +631,7 @@ class Ajax {
         this,
         {
           ...getDefaultConfig.call(this),
+          ...this.config,
           method: 'get',
           ...arg,
         },
