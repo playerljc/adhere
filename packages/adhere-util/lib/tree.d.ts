@@ -1,5 +1,15 @@
-import { IAntdTreeNode, IFlatTreeArrNode, IAntdTreeSelectNode } from './types';
+import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
 declare const _default: {
+    /**
+     * treeToArray
+     * @description tree数据转换成Array
+     * @param treeData
+     * @param config
+     */
+    treeToArray(treeData: IAntdTreeNode[], config: {
+        parentIdAttr: string;
+        rootParentId: string | number;
+    }): any[];
     /**
      * arrayToAntdTree - array转换成Tree
      * @param arr
@@ -27,7 +37,7 @@ declare const _default: {
     getAncestor(data: any[], node: any, config: {
         keyAttr: string;
         parentIdAttr: string;
-        rootParentId: string;
+        rootParentId: string | number;
     }): any[];
     /**
      * getDescendants
@@ -36,7 +46,7 @@ declare const _default: {
     getDescendants(data: any[], node: any, config: {
         keyAttr: string;
         parentIdAttr: string;
-        rootParentId: string;
+        rootParentId: string | number;
     }): any[];
     /**
      * filterTree - 本地过滤tree
@@ -48,8 +58,18 @@ declare const _default: {
         filterAttr: string;
         keyAttr: string;
         parentIdAttr: string;
-        rootParentId: string;
+        rootParentId: string | number;
         titleAttr: string;
     }): Array<IAntdTreeNode>;
+    /**
+     * findNodeByKey
+     * @description - 根据keyAttr查找结点
+     * @param treeData
+     * @param val
+     * @param config
+     */
+    findNodeByKey(treeData: IAntdTreeNode[], val: any, config: {
+        keyAttr: string;
+    }): IAntdTreeNode | null;
 };
 export default _default;

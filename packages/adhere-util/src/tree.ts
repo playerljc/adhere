@@ -1,6 +1,47 @@
-import { IAntdTreeNode, IFlatTreeArrNode, IAntdTreeSelectNode } from './types';
+import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
 
 export default {
+  /**
+   * treeToArray
+   * @description tree数据转换成Array
+   * @param treeData
+   * @param config
+   */
+  treeToArray(
+    treeData: IAntdTreeNode[],
+    config: {
+      parentIdAttr: string;
+      rootParentId: string | number;
+    },
+  ): any[] {
+    // key: string;
+    // title: string;
+    // isLeaf: boolean;
+    // children?: IAntdTreeNode[];
+    // properties?: any;
+    const { parentIdAttr, rootParentId } = config;
+
+    const result: any[] = [];
+
+    function loop(context: any[], data: IAntdTreeNode[], parentId: string | number) {
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+
+        result.push({
+          ...item.properties,
+          [parentIdAttr]: parentId,
+        });
+
+        if (item.children) {
+          loop(context, item.children, item.key);
+        }
+      }
+    }
+
+    loop(result, treeData, rootParentId);
+
+    return result;
+  },
   /**
    * arrayToAntdTree - array转换成Tree
    * @param arr
@@ -23,10 +64,11 @@ export default {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
         .map((item) => ({
+          ...item,
           title: item[titleAttr],
           key: item[keyAttr],
           children: [],
-          props: { ...item },
+          properties: { ...item },
           isLeaf: true,
         }));
     }
@@ -36,7 +78,7 @@ export default {
      * @constructor
      */
     function Recursion(node) {
-      node.children = findNodesByParentId(arr, node.props[keyAttr]);
+      node.children = findNodesByParentId(arr, node.properties[keyAttr]);
       node.isLeaf = !node.children.length;
       if (node.isLeaf) {
         delete node.children;
@@ -77,11 +119,12 @@ export default {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
         .map((item) => ({
+          ...item,
           label: item[titleAttr],
           key: item[keyAttr],
           value: item[keyAttr],
           children: [],
-          props: { ...item },
+          properties: { ...item },
           isLeaf: true,
         }));
     }
@@ -91,7 +134,7 @@ export default {
      * @constructor
      */
     function Recursion(node) {
-      node.children = findNodesByParentId(arr, node.props[keyAttr]);
+      node.children = findNodesByParentId(arr, node.properties[keyAttr]);
       node.isLeaf = !node.children.length;
       if (node.isLeaf) {
         delete node.children;
@@ -119,7 +162,7 @@ export default {
   getAncestor(
     data: any[],
     node: any,
-    config: { keyAttr: string; parentIdAttr: string; rootParentId: string },
+    config: { keyAttr: string; parentIdAttr: string; rootParentId: string | number },
   ): any[] {
     const result: any[] = [];
 
@@ -143,7 +186,7 @@ export default {
   getDescendants(
     data: any[],
     node: any,
-    config: { keyAttr: string; parentIdAttr: string; rootParentId: string },
+    config: { keyAttr: string; parentIdAttr: string; rootParentId: string | number },
   ): any[] {
     function loop(n: any) {
       const children = data.filter((t) => t[config.parentIdAttr] === n[config.keyAttr]);
@@ -172,7 +215,7 @@ export default {
       filterAttr: string;
       keyAttr: string;
       parentIdAttr: string;
-      rootParentId: string;
+      rootParentId: string | number;
       titleAttr: string;
     },
   ): Array<IAntdTreeNode> {
@@ -188,17 +231,51 @@ export default {
       arr.forEach((t) => {
         const tops = this.getAncestor(data, t, config);
         const tArr = [...(tops || [])].map((item) => item[config.keyAttr]);
+        // @ts-ignore
         set = new Set<string>([...set, ...tArr]);
       });
 
+      // @ts-ignore
       set = new Set<string>([...set, ...arr.map((t) => t[config.keyAttr])]);
 
       return this.arrayToAntdTree(
+        // @ts-ignore
         [...set].map((t) => data.find((item) => item[config.keyAttr] === t)),
         arrayToAntdTreeConfig,
       );
     } else {
       return this.arrayToAntdTree(data, arrayToAntdTreeConfig);
     }
+  },
+  /**
+   * findNodeByKey
+   * @description - 根据keyAttr查找结点
+   * @param treeData
+   * @param val
+   * @param config
+   */
+  findNodeByKey(treeData: IAntdTreeNode[], val, config: { keyAttr: string }): IAntdTreeNode | null {
+    function findLoop(data: IAntdTreeNode[]): IAntdTreeNode | null {
+      let result: IAntdTreeNode | null;
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i][config.keyAttr] === val) {
+          result = data[i];
+          break;
+        } else {
+          // @ts-ignore
+          if ('children' in data[i] && Array.isArray(data[i].children) && data[i].children.length) {
+            // @ts-ignore
+            result = findLoop(data[i].children);
+            if (result) break;
+          }
+        }
+      }
+
+      // @ts-ignore
+      return result;
+    }
+
+    return findLoop(treeData);
   },
 };

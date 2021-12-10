@@ -5,6 +5,7 @@
 2021-12-01
 
 * base加入omitObject方法
+* tree的修改
 
 # 1.0.11
 
