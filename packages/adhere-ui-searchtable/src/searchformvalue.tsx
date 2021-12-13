@@ -16,10 +16,11 @@ class SearchFormValue extends React.Component<ISearchFormValueProps, any> {
   static propTypes: any;
 
   render() {
-    const { className, style, children } = this.props;
+    const { className, style, children, ...others } = this.props;
 
     return (
       <td
+        {...others}
         className={classNames(selectorPrefix, ...(className || '').split(' '))}
         style={{ ...(style || {}) }}
       >

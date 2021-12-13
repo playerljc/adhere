@@ -2,13 +2,16 @@
 
 ***
 
-2021-12-7
+2021-12-13
 
 * **adhere-ui-css**
   - normalize-default.less修改
   - mixin.less修改
+* **adhere-ui-searchtable**
+  - searchformlabel和searchformvalue加入其他属性的混入
 * **adhere-util**
   - base加入omitObject方法
+  - tree的修改
 * **adhere-util-communication-ajax**
   - 加入notification的节流
   - 修改传参错误和status的缺省处理

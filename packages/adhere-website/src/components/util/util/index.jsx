@@ -1537,6 +1537,178 @@ export default () => {
           },
         ]}
       />
+
+      <Space />
+
+      <FunctionProps
+        border
+        title="Tree"
+        data={[
+          {
+            name: 'treeToArray',
+            desc: 'tree数据转换成Array',
+            modifier: 'public',
+            params: [
+              {
+                name: 'treeData',
+                desc: '',
+                type: 'IAntdTreeNode[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type:
+                  '{\n' +
+                  '      parentIdAttr: string;\n' +
+                  '      rootParentId: string | number;\n' +
+                  '    }',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'any[]',
+            returnDesc: '',
+          },
+          {
+            name: 'arrayToAntdTree',
+            desc: 'array转换成Tree',
+            modifier: 'public',
+            params: [
+              {
+                name: 'arr',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'arr',
+                desc: '',
+                type: 'IFlatTreeArrNode',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'Array<IAntdTreeNode>',
+            returnDesc: '',
+          },
+          {
+            name: 'arrayToAntdTreeSelect',
+            desc: 'array转换成TreeSelect',
+            modifier: 'public',
+            params: [
+              {
+                name: 'arr',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'arr',
+                desc: '',
+                type: 'IFlatTreeArrNode',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'Array<IAntdTreeSelectNode>',
+            returnDesc: '',
+          },
+          {
+            name: 'getAncestor',
+            desc: '获取祖先',
+            modifier: 'public',
+            params: [
+              {
+                name: 'data',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'node',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'any[]',
+            returnDesc: '',
+          },
+          {
+            name: 'getDescendants',
+            desc: '获取子孙',
+            modifier: 'public',
+            params: [
+              {
+                name: 'data',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'node',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type: 'Object',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'any[]',
+            returnDesc: '',
+          },
+          {
+            name: 'findNodeByKey',
+            desc: '根据keyAttr查找结点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'treeData',
+                desc: '',
+                type: 'IAntdTreeNode[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'val',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type: 'Object',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IAntdTreeNode | null',
+            returnDesc: '',
+          },
+        ]}
+      />
     </div>
   );
 };

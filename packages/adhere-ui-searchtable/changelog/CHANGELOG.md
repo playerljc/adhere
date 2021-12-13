@@ -1,3 +1,11 @@
+# 1.0.12
+
+***
+
+2021-12-13
+
+* searchformlabel和searchformvalue加入其他属性的混入
+
 # 1.0.11
 
 ***
