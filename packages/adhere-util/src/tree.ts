@@ -120,7 +120,7 @@ export default {
         .filter((item) => item[parentIdAttr] == parentId)
         .map((item) => ({
           ...item,
-          label: item[titleAttr],
+          title: item[titleAttr],
           key: item[keyAttr],
           value: item[keyAttr],
           children: [],

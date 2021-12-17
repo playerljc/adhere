@@ -151,8 +151,9 @@ const Echarts = lazy(() =>
   import(/* webpackChunkName: "echarts" */ '@/components/gallery/echarts'),
 );
 const MapTalks = lazy(() =>
-  import(/* webpackChunkName: "echarts" */ '@/components/gallery/gis/maptalks'),
+  import(/* webpackChunkName: "gis" */ '@/components/gallery/gis/maptalks'),
 );
+const BMaps = lazy(() => import(/* webpackChunkName: "gis" */ '@/components/gallery/gis/bmap'));
 
 const Graph = lazy(() => import(/* webpackChunkName: "graph" */ '@/components/gallery/graph'));
 
@@ -508,6 +509,11 @@ export default () => [
                   {
                     path: '/',
                     redirect: '/adhere/gallery/gis/maptalks',
+                  },
+                  {
+                    path: '/adhere/gallery/gis/bmap',
+                    name: 'BMaps',
+                    component: BMaps,
                   },
                   {
                     path: '/adhere/gallery/gis/maptalks',
