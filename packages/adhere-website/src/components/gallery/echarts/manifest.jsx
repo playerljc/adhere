@@ -11,6 +11,12 @@ import Chart8 from './chart8';
 import Chart9 from './chart9';
 import Chart10 from './chart10';
 import Chart11 from './chart11';
+import Chart12 from './chart12';
+import Chart13 from './chart13';
+import Chart14 from './chart14';
+import Chart15 from './chart15';
+import Chart16 from './chart16';
+import Chart17 from './chart17';
 import IframeDemo from './iframe_demo';
 
 export default [
@@ -73,5 +79,35 @@ export default [
     title: '路线地图',
     keyword: '路线地图',
     component: <Chart11 />,
+  },
+  {
+    title: '环形图',
+    keyword: '环形图',
+    component: <Chart12 />,
+  },
+  {
+    title: '层叠柱状图',
+    keyword: '层叠柱状图',
+    component: <Chart13 />,
+  },
+  {
+    title: '带面积的折线图',
+    keyword: '带面积的折线图',
+    component: <Chart14 />,
+  },
+  {
+    title: '玫瑰图',
+    keyword: '玫瑰图',
+    component: <Chart15 />,
+  },
+  {
+    title: '堆叠柱状图',
+    keyword: '堆叠柱状图',
+    component: <Chart16 />,
+  },
+  {
+    title: '横向柱状图',
+    keyword: '横向柱状图',
+    component: <Chart17 />,
   },
 ];
