@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Graph1 from './graph1';
 import Windmill from './Windmill';
 
 export default [
@@ -13,9 +12,4 @@ export default [
       </div>
     ),
   },
-  // {
-  //   title: 'Graph1',
-  //   keyword: '多边形选取',
-  //   component: <Graph1 />,
-  // },
 ];
