@@ -108,7 +108,7 @@ export default {
   arrayToAntdTreeSelect(
     arr: any[],
     { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode,
-  ): Array<IAntdTreeSelectNode> {
+  ): IAntdTreeSelectNode[] {
     /**
      * findNodesByParentId
      * @param arr

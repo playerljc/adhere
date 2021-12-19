@@ -27,7 +27,7 @@ declare const _default: {
      * @param parentIdAttr - parentId的属性
      * @param rootParentId - root的parentId值
      */
-    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): Array<IAntdTreeSelectNode>;
+    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): IAntdTreeSelectNode[];
     /**
      * getAncestor - 获取祖先
      * @param data
