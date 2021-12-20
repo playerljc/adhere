@@ -2,19 +2,19 @@ import React, { useEffect, useRef } from 'react';
 
 import PlaygroundMulit from '@/lib/PlaygroundMulit';
 
-import BMapWindLayer from './windlayer';
+import HeatMapLayer from './HeatMapLayer';
 
 import styles from './index.less';
 
 const indexJsCodeText = `
  import React, { useEffect, useRef } from 'react';
- import BMapWindLayer from './windlayer';
+ import HeatMapLayer from './HeatMapLayer';
  import styles from './index.less';
  
- function Wind() {
+ function Heat() {
    const ref = useRef();
-   
-   useEffect(() => {
+
+  useEffect(() => {
     const map = new BMap.Map(ref.current); // 创建Map实例
     map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); // 初始化地图,设置中心点坐标和地图级别
     //添加地图类型控件
@@ -27,13 +27,13 @@ const indexJsCodeText = `
     // map.setCurrentCity('北京'); // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
 
-    map.addOverlay(new BMapWindLayer());
+    map.addOverlay(new HeatMapLayer(map));
   }, []);
   
   return <div className={styles.Wrap} ref={ref} />;
  }
  
- export default Wind;
+ export default Heat;
 `;
 
 const indexLessCodeText = `
@@ -43,60 +43,39 @@ const indexLessCodeText = `
  }
 `;
 
-const windLayerCodeText = `
-  import { WindLayer } from 'bmap-wind';
-  import defaultData from './windData.json';
-  
-  const DEFAULT_DATA = defaultData;
-  
-  const DEFAULT_CONFIG = {
-    windOptions: {
-      colorScale: [
-        'rgb(36,104, 180)',
-        'rgb(60,157, 194)',
-        'rgb(128,205,193 )',
-        'rgb(151,218,168 )',
-        'rgb(198,231,181)',
-        'rgb(238,247,217)',
-        'rgb(255,238,159)',
-        'rgb(252,217,125)',
-        'rgb(255,182,100)',
-        'rgb(252,150,75)',
-        'rgb(250,112,52)',
-        'rgb(245,64,32)',
-        'rgb(237,45,28)',
-        'rgb(220,24,32)',
-        'rgb(180,0,35)',
-      ],
-      frameRate: 250,
-      maxAge: 60,
-      globalAlpha: 0.9,
-      velocityScale: 1 / 30,
-      paths: 2000,
-    },
-    zIndex: 1,
-  };
-  
-  /**
-   * BMapWindLayer
-   * @class BMapWindLayer
-   * @classdesc BMapWindLayer 风场层
-   */
-  class BMapWindLayer extends WindLayer {
-    constructor(data, config) {
-      super(data || DEFAULT_DATA, config || DEFAULT_CONFIG);
-    }
+const heatMapLayerCodeText = `
+import citys from './data.json';
+
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+class HeatMapLayer {
+  constructor(map) {
+    this.map = map;
+    this.init();
   }
-  
-  export default BMapWindLayer;
+
+
+  init() {
+    const points = citys.map((t) => {
+      return {
+        lng: t[0],
+        lat: t[1],
+        count: getRandomArbitrary(1, 100),
+      };
+    });
+    this.heatmapOverlay = new BMapLib.HeatmapOverlay({ radius: 20 });
+    this.map.addOverlay(this.heatmapOverlay);
+    this.heatmapOverlay.setDataSet({ data: points, max: 100 });
+    this.heatmapOverlay.show();
+  };
+}
+
+export default HeatMapLayer;
 `;
 
-/**
- * Wind
- * @return {*}
- * @constructor
- */
-function Wind() {
+function Heat() {
   const ref = useRef();
 
   useEffect(() => {
@@ -112,7 +91,7 @@ function Wind() {
     // map.setCurrentCity('北京'); // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
 
-    map.addOverlay(new BMapWindLayer());
+    map.addOverlay(new HeatMapLayer(map));
   }, []);
 
   return (
@@ -131,10 +110,10 @@ function Wind() {
           codeText: indexLessCodeText,
         },
         {
-          title: 'windlayer.js',
+          title: 'HeatMapLayer.js',
           mode: 'code',
           scope: { React },
-          codeText: windLayerCodeText,
+          codeText: heatMapLayerCodeText,
         },
       ]}
     >
@@ -143,4 +122,4 @@ function Wind() {
   );
 }
 
-export default Wind;
+export default Heat;
