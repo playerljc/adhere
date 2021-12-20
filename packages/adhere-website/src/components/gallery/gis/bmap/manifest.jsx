@@ -4,6 +4,7 @@ import Wind from './wind';
 import Isobar from './Isobar';
 import Heat from './heat';
 import MassivePoints from './massivePoints';
+import Boundary from './boundary';
 
 export default [
   {
@@ -25,5 +26,10 @@ export default [
     title: '海量点',
     keyword: '海量点',
     component: <MassivePoints />
+  },
+  {
+    title: '区域轮廓',
+    keyword: '区域轮廓',
+    component: <Boundary />
   }
 ];
