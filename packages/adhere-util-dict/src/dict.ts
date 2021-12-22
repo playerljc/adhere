@@ -81,9 +81,17 @@ function initValue(p, params) {
   // 返回值 - 一般都不是函数
   let value = handler(params);
 
-  // 如果返回值是Function && 缓存
-  if (value instanceof Function && config.isFunMemo) {
-    value = CreateFunProxy(value, p);
+  // 如果value是函数则默认是缓存的
+  if (value instanceof Function) {
+    // 函数单独的缓存开关
+    if (!!value.isFunMemo) {
+      value = CreateFunProxy(value, p);
+    } else {
+      // 总体的缓存开关
+      if (config.isFunMemo) {
+        value = CreateFunProxy(value, p);
+      }
+    }
   }
 
   return value;
