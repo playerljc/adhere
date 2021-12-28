@@ -1,11 +1,11 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 import { IModifyAction, IMoveAction, IActionData, IPolygonSelection, IPoint, SelectType } from '../types';
 /**
  * ModifyAction
  * @class ModifyAction
  * @classdesc ModifyAction
  */
-declare abstract class ModifyAction extends Emitter implements IModifyAction, IMoveAction {
+declare abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMoveAction {
     context: IPolygonSelection | null;
     protected startPoint: IPoint | null;
     protected startIndex: number;
