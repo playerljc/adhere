@@ -15,7 +15,7 @@
     "buildpackage:cjs": "ctbuild buildpackagets",
     "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
-    "postinstallbuildpackage": "node script/removeUseStrict.js",
+    "postbuildpackage": "node script/removeUseStrict.js",
     "buildumd": "ctbuild buildumd --packagename AdhereBMap --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },

@@ -12,5 +12,6 @@ module.exports = {
     //   '@babel/plugin-transform-modules-commonjs',
     //   { strictMode: false },
     // ]);
+    // webpackConfig.module.rules[0].exclude.push(/heatmap\.js/);
   },
 };
