@@ -1,0 +1,275 @@
+.adhere-ui-surnames {
+  position: relative;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+
+  > .adhere-ui-surnames-highlighted {
+    position: absolute;
+    z-index: 9998;
+    display: none;
+    width: 44px;
+    height: 44px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 44px;
+    text-align: center;
+    border-radius: 50%;
+    transform: translate3d(0, 0, 0);
+
+    &::after {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      content: '';
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
+    > .adhere-ui-surnames-index-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;
+
+      > .adhere-ui-surnames-index-item {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 2px;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+  }
+
+  > .adhere-ui-surnames-content {
+    position: relative;
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow-scrolling: touch;
+
+    > .adhere-ui-surnames-group {
+      > .adhere-ui-surnames-group-title {
+        display: block;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        text-indent: 1rem;
+      }
+
+      > .adhere-ui-surnames-group-inner {
+      }
+    }
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-right,
+.adhere-ui-surnames.adhere-ui-surnames-config-position-left {
+  flex-direction: row;
+
+  > .adhere-ui-surnames-highlighted {
+    &::after {
+      top: 4px;
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    > .adhere-ui-surnames-index-inner {
+      flex-direction: column;
+    }
+  }
+
+  > .adhere-ui-surnames-content {
+    min-width: 0;
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-right {
+  > .adhere-ui-surnames-highlighted {
+    right: 1.5rem;
+
+    &::after {
+      right: -9px;
+      border-width: 18px 0 18px 18px;
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    order: 1;
+  }
+
+  > .adhere-ui-surnames-content {
+    order: 0;
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-left {
+  > .adhere-ui-surnames-highlighted {
+    left: 1.5rem;
+
+    &::after {
+      left: -9px;
+      border-width: 18px 18px 18px 0;
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    order: 0;
+  }
+
+  > .adhere-ui-surnames-content {
+    order: 1;
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-top,
+.adhere-ui-surnames.adhere-ui-surnames-config-position-bottom {
+  flex-direction: column;
+
+  > .adhere-ui-surnames-highlighted {
+    &::after {
+      left: 4px;
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    > .adhere-ui-surnames-index-inner {
+      flex-direction: row;
+
+      > .adhere-ui-surnames-index-item {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        &:not(:last-of-type) {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+
+  > .adhere-ui-surnames-content {
+    min-height: 0;
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-top {
+  > .adhere-ui-surnames-highlighted {
+    top: 1.5rem;
+
+    &::after {
+      top: -9px;
+      border-width: 0 18px 18px 18px;
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    order: 0;
+  }
+
+  > .adhere-ui-surnames-content {
+    order: 1;
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-bottom {
+  > .adhere-ui-surnames-highlighted {
+    bottom: 1.5rem;
+
+    &::after {
+      bottom: -9px;
+      border-width: 18px 18px 0 18px;
+    }
+  }
+
+  > .adhere-ui-surnames-index {
+    order: 1;
+  }
+
+  > .adhere-ui-surnames-content {
+    order: 0;
+  }
+}
+
+/* 用于切换时的遮罩 */
+.adhere-ui-surnames-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.adhere-ui-surnames {
+  > .adhere-ui-surnames-highlighted {
+    color: #fff;
+    background-color: rgb(0, 122, 255);
+  }
+
+  > .adhere-ui-surnames-index {
+    > .adhere-ui-surnames-index-inner {
+      position: relative;
+      > .adhere-ui-surnames-index-item {
+        color: rgb(0, 122, 255);
+
+        &:active {
+          background-color: #0bc2b4;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  > .adhere-ui-surnames-content {
+    > .adhere-ui-surnames-group {
+      > .adhere-ui-surnames-group-title {
+        color: #9c9c9c;
+        background: rgb(247, 247, 247);
+      }
+    }
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-right {
+  > .adhere-ui-surnames-highlighted {
+    &::after {
+      border-color: transparent transparent transparent #007aff;
+    }
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-left {
+  > .adhere-ui-surnames-highlighted {
+    &::after {
+      border-color: transparent #007aff transparent transparent;
+    }
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-top {
+  > .adhere-ui-surnames-highlighted {
+    &::after {
+      border-color: transparent transparent #007aff transparent;
+    }
+  }
+}
+
+.adhere-ui-surnames.adhere-ui-surnames-config-position-bottom {
+  > .adhere-ui-surnames-highlighted {
+    &::after {
+      border-color: #007aff transparent transparent transparent;
+    }
+  }
+}

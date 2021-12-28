@@ -1,0 +1,82 @@
+@adhere-ui-playground-table-color: #f0f0f0;
+@adhere-ui-playground-table-font-color: #595959;
+@adhere-ui-playground-table-highlight-color: #f2f4f5;
+
+.adhere-ui-playground-table {
+  > .adhere-ui-playground-table-inner {
+    width: 100%;
+    margin: 2em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-size: 13px;
+    line-height: 1.5715;
+    direction: ltr;
+    empty-cells: show;
+    border: 1px solid @adhere-ui-playground-table-color;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    > thead {
+      > .adhere-ui-playground-table-header {
+        > .adhere-ui-playground-table-header-column {
+          padding: 12px;
+          padding-top: 14px;
+          color: #5c6b77;
+          font-weight: 500;
+          white-space: nowrap;
+          text-align: left;
+          background: rgba(0, 0, 0, 0.02);
+          border: 1px solid @adhere-ui-playground-table-color;
+
+          &:first-child {
+            border-left: 1px solid @adhere-ui-playground-table-color;
+          }
+
+          &:last-child {
+            border-right: 1px solid @adhere-ui-playground-table-color;
+          }
+        }
+      }
+    }
+
+    > tbody {
+      > .adhere-ui-playground-table-row {
+        transition: all 0.3s;
+
+        &:hover {
+          background: rgba(60, 90, 100, 0.04);
+        }
+
+        > .adhere-ui-playground-table-cell {
+          padding: 12px;
+          color: @adhere-ui-playground-table-font-color;
+          white-space: normal;
+          text-align: left;
+          word-wrap: break-word;
+          word-break: break-word;
+          border: 1px solid @adhere-ui-playground-table-color;
+
+          &:first-child {
+            width: 18%;
+            font-weight: 600;
+            white-space: nowrap;
+            border-left: 1px solid @adhere-ui-playground-table-color;
+          }
+
+          &:last-child {
+            border-right: 1px solid @adhere-ui-playground-table-color;
+          }
+
+          code {
+            margin: 0 1px;
+            padding: 0.2em 0.4em;
+            font-size: 0.9em;
+            background: @adhere-ui-playground-table-highlight-color;
+            border: 1px solid @adhere-ui-playground-table-color;
+            border-radius: 3px;
+          }
+        }
+      }
+    }
+  }
+}

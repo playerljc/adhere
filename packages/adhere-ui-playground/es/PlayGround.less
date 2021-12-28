@@ -1,0 +1,28 @@
+.adhere-ui-playground {
+  .adhere-ui-playground-action-btn {
+    width: 14px;
+    margin: 0 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .playground {
+    > .playgroundCode {
+      > .playgroundStage {
+        > .CodeMirror {
+          height: auto;
+          overflow-y: hidden;
+          > .CodeMirror-vscrollbar {
+            display: none !important;
+          }
+        }
+      }
+    }
+
+    > .playgroundPreview {
+      display: none;
+    }
+  }
+}

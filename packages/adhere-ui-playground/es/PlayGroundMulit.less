@@ -1,0 +1,39 @@
+@import './PlayGround';
+
+.adhere-ui-playground-mulit {
+  .adhere-ui-playground-mulit-action-btn {
+    width: 14px;
+    margin: 0 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .playground {
+    > .playgroundCode {
+      > .playgroundStage {
+        > .CodeMirror {
+          height: auto;
+          overflow-y: hidden;
+          > .CodeMirror-vscrollbar {
+            display: none !important;
+          }
+        }
+      }
+    }
+
+    > .playgroundPreview {
+      display: none;
+    }
+  }
+}
+
+.adhere-ui-playground-mulit-codeviewwrap {
+  margin-bottom: 20px;
+
+  > .adhere-ui-playground-mulit-codeviewwrap-title {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+}

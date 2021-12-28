@@ -1,4 +1,4 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 
 import { ITrajectory, ITrajectoryPlayBackLayer, TrajectoryStatus } from '../../types';
 import { InteractionLayerActions, IPoint } from '../../interaction/types';
@@ -25,7 +25,7 @@ class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPla
       | 'vertexPane';
     zIndex: number;
   };
-  protected emitter: Emitter = new Emitter();
+  protected emitter: Emitter = new Emitter.Events();
   protected isLoad: boolean = false;
   protected source: ITrajectory[] = [];
 
@@ -126,7 +126,7 @@ class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPla
     return this.canvasEl;
   }
 
-  getEmitter(): Emitter {
+  getEmitter(): Emitter.Events {
     return this.emitter;
   }
 

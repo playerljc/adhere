@@ -1,8 +1,6 @@
 import * as turf from '@turf/turf';
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math.js';
-// @ts-ignore
-import BaseUtil from '@baifendian/adhere-util/lib/base';
+import BaseUtil from '@baifendian/adhere-util';
 
 import {
   ActionEvents,
@@ -72,7 +70,7 @@ class PolygonDrawAction extends DrawAction {
       canvasEl?.addEventListener('mousemove', this.onCanvasMousemove);
       canvasEl?.addEventListener('dblclick', this.onCanvasDbClick);
 
-      this.startPoint = MathUtil.clientToCtxPoint({
+      this.startPoint = BaseUtil.clientToCtxPoint({
         event: e,
         rect: canvasEl?.getBoundingClientRect(),
       });
@@ -90,7 +88,7 @@ class PolygonDrawAction extends DrawAction {
       // 不是第一次
       // 画一条直线
       // 当前点
-      const curPoint = MathUtil.clientToCtxPoint({
+      const curPoint = BaseUtil.clientToCtxPoint({
         event: e,
         rect: canvasEl?.getBoundingClientRect(),
       });
@@ -131,7 +129,7 @@ class PolygonDrawAction extends DrawAction {
     // drawLine
     this.drawLine(
       this.startPoint,
-      MathUtil.clientToCtxPoint({
+      BaseUtil.clientToCtxPoint({
         event: e,
         rect: canvasEl?.getBoundingClientRect(),
       }),

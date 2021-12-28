@@ -1,4 +1,5 @@
-import BaseUtil from '@baifendian/adhere-util/lib/base';
+import Util from '@baifendian/adhere-util';
+
 import {
   IFeature,
   GeoJSONNode,
@@ -58,7 +59,7 @@ export default {
           lat: node.coordinates[1],
         });
         feature = handler(geom);
-        feature.setId(BaseUtil.uuid());
+        feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.MultiPoint) {
         const geom = new MulitPointGeometry(
@@ -68,7 +69,7 @@ export default {
           })),
         );
         feature = handler(geom);
-        feature.setId(BaseUtil.uuid());
+        feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.LineString) {
         const geom = new LineStringGeometry({
@@ -82,7 +83,7 @@ export default {
           },
         });
         feature = handler(geom);
-        feature.setId(BaseUtil.uuid());
+        feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.MultiLineString) {
         const geom = new MulitLineStringGeometry(
@@ -98,7 +99,7 @@ export default {
           })),
         );
         feature = handler(geom);
-        feature.setId(BaseUtil.uuid());
+        feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.Polygon) {
         const geom = new PolygonGeometry(
@@ -108,7 +109,7 @@ export default {
           })),
         );
         feature = handler(geom);
-        feature.setId(BaseUtil.uuid());
+        feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.MultiPolygon) {
         const geom = new MulitPolygonGeometry(
@@ -120,7 +121,7 @@ export default {
           ),
         );
         feature = handler(geom);
-        feature.setId(BaseUtil.uuid());
+        feature.setId(Util.uuid());
         features.push(feature);
       } else if (node.type === GeoJSONType.GeometryCollection) {
         node.geometries.forEach((geom) => {

@@ -1,7 +1,7 @@
 // @ts-ignore
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import Util from '@baifendian/adhere-util';
 
 import {
   IPixel,
@@ -23,7 +23,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   config: IVectorLayerConfig;
   source: IVectorSource;
   isLoad: boolean = false;
-  emitter: Emitter = new Emitter();
+  emitter: Emitter = new Emitter.Events();
 
   // @ts-ignore
   constructor(map, config: IVectorLayerConfig) {
@@ -116,7 +116,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     return this.map;
   }
 
-  getEmitter(): Emitter {
+  getEmitter(): Emitter.Events {
     return this.emitter;
   }
 
@@ -131,7 +131,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   protected initCanvasEvents() {
     // @ts-ignore
     this.canvas.addEventListener('click', (e: PointerEvent) => {
-      const pixel: IPixel = MathUtil.clientToCtxPoint({
+      const pixel: IPixel = Util.clientToCtxPoint({
         event: e,
         // @ts-ignore
         rect: this.canvas.getBoundingClientRect(),

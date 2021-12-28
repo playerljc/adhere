@@ -1,5 +1,5 @@
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import MathUtil from '@baifendian/adhere-util';
 
 import { ICircleData, IPoint, IInteractionLayer, SelectType } from '../types';
 import ModifyAction from './ModifyAction';

@@ -1,6 +1,5 @@
 import * as turf from '@turf/turf';
-import MathUtil from '@baifendian/adhere-util/lib/math';
-import BaseUtil from '@baifendian/adhere-util/lib/base';
+import BaseUtil from '@baifendian/adhere-util';
 
 import {
   ActionEvents,
@@ -94,7 +93,7 @@ class DiamondDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    const targetPoint: IPoint = MathUtil.clientToCtxPoint({
+    const targetPoint: IPoint = BaseUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -222,7 +221,7 @@ class DiamondDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.startPoint = MathUtil.clientToCtxPoint({
+    this.startPoint = BaseUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });

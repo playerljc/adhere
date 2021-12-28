@@ -1,0 +1,1 @@
+{"version":3,"file":"warnprompt.js","sources":["warnprompt.js"],"sourcesContent":["import { message } from 'antd';\r\n/**\r\n * 警告的提示\r\n * @param text - {string | React.ReactElement}\r\n */\r\nexport default (function (text) {\r\n    return message.warn(text);\r\n});\r\n"],"names":["message","text","warn"],"mappings":"OAASA,kCAKM,SAAWC,GACtB,OAAOD,QAAQE,KAAKD"}

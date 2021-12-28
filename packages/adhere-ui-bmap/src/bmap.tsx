@@ -50,7 +50,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
     // 外部载入bmap.js
     if (externalImportBMapScript) {
       // @ts-ignore
-      this.BMap = window.BMap;
+      this.BMap = typeof window !== 'undefined' && window.BMap;
 
       this.setState(
         {
@@ -66,8 +66,10 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
       this.importBMapJS().then((BMap) => {
         this.BMap = BMap;
 
-        // @ts-ignore
-        window.BMap = BMap;
+        if (typeof window !== 'undefined') {
+          // @ts-ignore
+          window.BMap = BMap;
+        }
 
         this.props.onBMapScriptReady && this.props.onBMapScriptReady();
 
@@ -144,7 +146,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
         const script = document.createElement('script');
         script.onload = () => {
           // @ts-ignore
-          resolve(window.BMap);
+          resolve(typeof window !== 'undefined' && window.BMap);
         };
         script.src = src;
         // @ts-ignore

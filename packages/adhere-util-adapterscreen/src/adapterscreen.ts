@@ -3,6 +3,8 @@
  * @return number
  */
 function detectZoom() {
+  if (typeof window === 'undefined') return;
+
   let ratio = 0;
 
   const screen = window.screen;

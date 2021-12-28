@@ -1,5 +1,5 @@
 import * as turf from '@turf/turf';
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import MathUtil from '@baifendian/adhere-util';
 
 import { IPoint, IPolygonData, IInteractionLayer, SelectType } from '../types';
 import ModifyAction from './ModifyAction';

@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-util-adapterscreen';
+import Model from '@baifendian/adhere-util-adapterscreen/es';
 export default Model;

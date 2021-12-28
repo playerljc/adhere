@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-prompt-successprompt';
+import Model from '@baifendian/adhere-ui-prompt-successprompt/es';
 export default Model;

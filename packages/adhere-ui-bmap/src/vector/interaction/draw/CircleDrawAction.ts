@@ -1,7 +1,5 @@
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
-// @ts-ignore
-import BaseUtil from '@baifendian/adhere-util/lib/base';
+import Util from '@baifendian/adhere-util';
 
 import DrawAction from './DrawAction';
 import {
@@ -48,7 +46,7 @@ class CircleDrawAction extends DrawAction {
    * @param data
    */
   static booleanPointInData(context: IInteractionLayer, point: IPoint, data: ICircleData): boolean {
-    return MathUtil.isPointInCircle(
+    return Util.isPointInCircle(
       point,
       CircleDrawAction.transformOriginToReal(context, data.data),
     );
@@ -69,7 +67,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    const targetPoint: IPoint = MathUtil.clientToCtxPoint({
+    const targetPoint: IPoint = Util.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -82,7 +80,7 @@ class CircleDrawAction extends DrawAction {
 
     ctx.beginPath();
 
-    this.radius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+    this.radius = Util.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
 
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
@@ -177,7 +175,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.centerPoint = MathUtil.clientToCtxPoint({
+    this.centerPoint = Util.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -321,7 +319,7 @@ class CircleDrawAction extends DrawAction {
     this.status = ActionStatus.End;
 
     const data: ICircleData = {
-      id: BaseUtil.uuid(),
+      id: Util.uuid(),
       type: this.getSelectType() as SelectType.Circle,
       data: CircleDrawAction.transformRealToOrigin(context, {
         center: this.centerPoint as IPoint,

@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-split';
+import Model from '@baifendian/adhere-ui-split/es';
 export default Model;

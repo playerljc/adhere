@@ -51,7 +51,7 @@
   "homepage": "https://gitee.com/playerljc/adhere",
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.12",
+    "@ctsj/build": "^4.0.15",
     "@umijs/fabric": "^2.8.0",
     "babel-plugin-import": "^1.13.3",
     "cross-env": "^7.0.2",

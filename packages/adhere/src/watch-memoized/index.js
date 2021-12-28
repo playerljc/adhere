@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-util-watchmemoized';
+import Model from '@baifendian/adhere-util-watchmemoized/es';
 export default Model;

@@ -254,7 +254,7 @@ class Surnames extends React.Component<ISurnamesProps> {
       // @ts-ignore
       this.indexInnerEl.addEventListener('mouseup', this.onMouseup);
 
-      window.addEventListener('resize', this.onResize);
+      typeof window !== 'undefined' && window.addEventListener('resize', this.onResize);
     }
   }
 
@@ -367,12 +367,12 @@ class Surnames extends React.Component<ISurnamesProps> {
         if (scrollVal >= targetTop) {
           clear();
         } else {
-          window.requestAnimationFrame(scrollAnimation);
+          typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
         }
       } else if (scrollVal <= targetTop) {
         clear();
       } else {
-        window.requestAnimationFrame(scrollAnimation);
+        typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
       }
 
       function clear() {
@@ -391,7 +391,7 @@ class Surnames extends React.Component<ISurnamesProps> {
       onBeforeScroll(name);
     }
 
-    window.requestAnimationFrame(scrollAnimation);
+    typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
   }
 
   scrollTo(name: any) {

@@ -1,8 +1,6 @@
 import * as turf from '@turf/turf';
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
-// @ts-ignore
-import BaseUtil from '@baifendian/adhere-util/lib/base';
+import BaseUtil from '@baifendian/adhere-util';
 
 import {
   ActionEvents,
@@ -147,7 +145,7 @@ class StartDrawAction extends DrawAction {
 
     if (!canvasEl || !this.centerPoint) return;
 
-    const targetPoint: IPoint = MathUtil.clientToCtxPoint({
+    const targetPoint: IPoint = BaseUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -156,7 +154,7 @@ class StartDrawAction extends DrawAction {
 
     context.drawHistoryData();
 
-    this.outRadius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+    this.outRadius = BaseUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
 
     this.innerRadius = this.outRadius / 2;
 
@@ -184,7 +182,7 @@ class StartDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.centerPoint = MathUtil.clientToCtxPoint({
+    this.centerPoint = BaseUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });

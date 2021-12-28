@@ -4,6 +4,8 @@
  * @param routePath {string}
  */
 export default (history, routePath = '/') => {
+  if(typeof document === 'undefined') return;
+  
   if ('referrer' in document) {
     if (document.referrer !== '') {
       window.history.go(-1);

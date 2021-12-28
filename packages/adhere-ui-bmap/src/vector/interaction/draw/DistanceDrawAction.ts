@@ -1,4 +1,4 @@
-import MathUtil from '@baifendian/adhere-util/lib/math.js';
+import MathUtil from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';

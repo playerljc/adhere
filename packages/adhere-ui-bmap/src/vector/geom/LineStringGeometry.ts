@@ -1,5 +1,5 @@
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import Util from '@baifendian/adhere-util';
 
 import {
   GeometryType,
@@ -252,7 +252,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
       new BMap.Point(point2.lng, point2.lat),
     );
 
-    return MathUtil.midpoint(point1Pixel, point2Pixel);
+    return Util.midpoint(point1Pixel, point2Pixel);
   }
 
   getCenterCoordinate({
@@ -312,7 +312,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     const point2Pixel = map.pointToPixel(new BMap.Point(point2.lng, point2.lat));
 
     // 斜率的角度
-    const radian = MathUtil.slopToRadian(point1Pixel, point2Pixel);
+    const radian = Util.slopToRadian(point1Pixel, point2Pixel);
 
     // 旋转斜率的角度
     ctx.rotate(radian);

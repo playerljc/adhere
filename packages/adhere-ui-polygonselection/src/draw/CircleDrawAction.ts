@@ -1,7 +1,5 @@
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
-// @ts-ignore
-import BaseUtil from '@baifendian/adhere-util/lib/base';
+import BaseUtil from '@baifendian/adhere-util';
 
 import DrawAction from './DrawAction';
 import {
@@ -46,7 +44,7 @@ class CircleDrawAction extends DrawAction {
    * @param data
    */
   static booleanPointInData(point: IPoint, data: ICircleData): boolean {
-    return MathUtil.isPointInCircle(point, data.data);
+    return BaseUtil.isPointInCircle(point, data.data);
   }
 
   /**
@@ -64,7 +62,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    const targetPoint: IPoint = MathUtil.clientToCtxPoint({
+    const targetPoint: IPoint = BaseUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });
@@ -77,7 +75,7 @@ class CircleDrawAction extends DrawAction {
 
     ctx.beginPath();
 
-    this.radius = MathUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
+    this.radius = BaseUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
 
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
@@ -112,7 +110,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!canvasEl) return;
 
-    this.centerPoint = MathUtil.clientToCtxPoint({
+    this.centerPoint = BaseUtil.clientToCtxPoint({
       event: e,
       rect: canvasEl?.getBoundingClientRect(),
     });

@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 // 读取并拼接
-const contextPath = path.join(__dirname, '../', 'node_modules', 'load-awesome', 'css');
+const contextPath = path.join(__dirname, '../../../', 'node_modules', 'load-awesome', 'css');
 
 const result = fs.readdirSync(contextPath);
 

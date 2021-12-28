@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Split from './split';\r\nexport default Split;\r\n"],"names":["Split"],"mappings":"OAAOA,mCACQA"}

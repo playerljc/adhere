@@ -23,6 +23,10 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
   static Fixed = Fixed;
   static Auto = Auto;
 
+  static Context = FlexContext;
+
+  static selectorPrefix = selectorPrefix;
+
   // @ts-ignore
   private props: IFlexLayoutProps | undefined;
 

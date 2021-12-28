@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-olmap';
+import Model from '@baifendian/adhere-ui-olmap/es';
 export default Model;

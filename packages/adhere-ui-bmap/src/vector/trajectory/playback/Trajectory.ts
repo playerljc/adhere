@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf';
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import MathUtil from '@baifendian/adhere-util';
 
 import {
   ICoordinate,
@@ -296,7 +296,7 @@ class Trajectory implements ITrajectory {
     if (!map) return;
 
     if (this.loopHeader !== -1) {
-      window.cancelAnimationFrame(this.loopHeader);
+      typeof window !== 'undefined' && window.cancelAnimationFrame(this.loopHeader);
     }
     this.loopHeader = -1;
     this.bout = 1;
@@ -378,6 +378,8 @@ class Trajectory implements ITrajectory {
   protected loop() {
     // 2 5
     // 0 1   (2)     3 4    (5)
+
+    if(typeof window === 'undefined') return;
 
     this.loopHeader = window.requestAnimationFrame(() => {
       // 暂停则不执行其他操作

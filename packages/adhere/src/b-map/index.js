@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-bmap';
+import Model from '@baifendian/adhere-ui-bmap/es';
 export default Model;

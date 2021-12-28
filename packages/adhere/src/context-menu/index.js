@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-contextmenu';
+import Model from '@baifendian/adhere-ui-contextmenu/es';
 export default Model;

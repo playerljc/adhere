@@ -3,8 +3,7 @@
   "compilerOptions": {
     "declarationDir": "./lib",
     "outDir": "./lib",
-    "baseUrl": "./",
-    "module": "esnext",
+    "baseUrl": "./"
     "lib": ["dom", "dom.iterable", "esnext", "es6", "es2015.proxy"]
   },
   "exclude": ["node_modules"],

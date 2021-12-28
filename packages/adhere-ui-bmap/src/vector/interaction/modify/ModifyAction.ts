@@ -1,6 +1,6 @@
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import MathUtil from '@baifendian/adhere-util';
+import Emitter from '@baifendian/adhere-util-emitter';
 
 import {
   ActionStatus,
@@ -21,7 +21,7 @@ import defaultAnchorStyle from '../DefaultAnchorStyle';
  * @class ModifyAction
  * @classdesc ModifyAction
  */
-abstract class ModifyAction extends Emitter implements IModifyAction, IMoveAction {
+abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMoveAction {
   // 上下文对象
   context: IInteractionLayer | null = null;
 

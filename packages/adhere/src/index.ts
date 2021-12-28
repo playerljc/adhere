@@ -50,10 +50,10 @@ import Emitter from '@baifendian/adhere-util-emitter';
 import Intl from '@baifendian/adhere-util-intl';
 import NotNull from '@baifendian/adhere-util-notnull';
 import Preferences from '@baifendian/adhere-util-preferences';
+import ReactUtil from '@baifendian/adhere-util-reactutil';
 import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-import ReactUtil from '@baifendian/adhere-util-reactutil';
 
 export { 
   BackTopAnimation,
@@ -108,8 +108,8 @@ export {
   Intl,
   NotNull,
   Preferences,
+  ReactUtil,
   Resource,
   Validator,
   WatchMemoized,
-  ReactUtil,
 };

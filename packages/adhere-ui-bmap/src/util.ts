@@ -1,4 +1,4 @@
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import Util from '@baifendian/adhere-util';
 
 import { IPixel } from './vector/types';
 
@@ -261,7 +261,13 @@ export default {
     rect: DOMRect;
     offsetEl: HTMLElement;
   }): IPixel {
-    let { left, top } = window.getComputedStyle(offsetEl, null);
+    let { left, top } =
+      typeof window !== 'undefined'
+        ? window.getComputedStyle(offsetEl, null)
+        : {
+            left: '0',
+            top: '0',
+          };
     const offsetLeft: number = parseInt(left.replace('px', ''));
     const offsetTop: number = parseInt(top.replace('px', ''));
 
@@ -283,7 +289,7 @@ export default {
     offsetLeft: number;
     offsetTop: number;
   }): IPixel {
-    let pixel = MathUtil.clientToCtxPoint({
+    let pixel = Util.clientToCtxPoint({
       event: event,
       rect: rect,
     });

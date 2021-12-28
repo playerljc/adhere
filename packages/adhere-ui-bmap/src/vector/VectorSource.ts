@@ -1,5 +1,5 @@
 // @ts-ignore
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 import { IVectorSource, IFeature, VectorActions, IVectorLayer, GeoJSONNode } from './types';
 import GeoJSONFormat from './format/GeoJSONFormat';
 import Geometry from './geom/Geometry';
@@ -9,7 +9,7 @@ import Geometry from './geom/Geometry';
  * @class VectorSource
  * @classdesc VectorLayer的数据源
  */
-class VectorSource extends Emitter implements IVectorSource {
+class VectorSource extends Emitter.Events implements IVectorSource {
   context: IVectorLayer | null = null;
   features: IFeature[] = [];
 

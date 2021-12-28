@@ -1,4 +1,4 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 
 import { ActionStatus, IAction, IPolygonSelection, IStyle } from '../types';
 import DefaultStyle from '../defaultStyle';
@@ -8,7 +8,7 @@ import DefaultStyle from '../defaultStyle';
  * @class DrawAction
  * @classdesc DrawAction
  */
-abstract class DrawAction extends Emitter implements IAction {
+abstract class DrawAction extends Emitter.Events implements IAction {
   // 上下文对象
   protected context: IPolygonSelection | null = null;
 

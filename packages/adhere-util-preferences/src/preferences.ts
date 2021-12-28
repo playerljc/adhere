@@ -60,6 +60,7 @@ export default {
    * @param value - {string}
    */
   putStringByLocal(key: string, value: string) {
+    if (typeof window === 'undefined') return;
     putString(key, value, window.localStorage);
   },
 
@@ -69,6 +70,7 @@ export default {
    * @return {string}
    */
   getStringByLocal(key: string): string | null {
+    if (typeof window === 'undefined') return null;
     return getString(key, window.localStorage);
   },
 
@@ -78,6 +80,7 @@ export default {
    * @param object - {Object}
    */
   putObjectByLocal(key: string, object: Object) {
+    if (typeof window === 'undefined') return;
     putObject(key, object, window.localStorage);
   },
 
@@ -87,6 +90,7 @@ export default {
    * @return {Object | null}
    */
   getObjectByLocal(key: string): Object | null {
+    if (typeof window === 'undefined') return null;
     return getObject(key, window.localStorage);
   },
 
@@ -95,6 +99,7 @@ export default {
    * @param key - {string}
    */
   removeByLocal(key: string) {
+    if (typeof window === 'undefined') return;
     remove(key, window.localStorage);
   },
 
@@ -104,6 +109,7 @@ export default {
    * @param value - {string}
    */
   putStringBySession(key: string, value: string) {
+    if (typeof window === 'undefined') return;
     putString(key, value, window.sessionStorage);
   },
 
@@ -113,6 +119,7 @@ export default {
    * @return {string | null}
    */
   getStringBySession(key: string): string | null {
+    if (typeof window === 'undefined') return null;
     return getString(key, window.sessionStorage);
   },
 
@@ -122,6 +129,7 @@ export default {
    * @param object - {Object}
    */
   putObjectBySession(key: string, object: Object) {
+    if (typeof window === 'undefined') return;
     putObject(key, object, window.sessionStorage);
   },
 
@@ -131,6 +139,7 @@ export default {
    * @return {Object | null}
    */
   getObjectBySession(key: string): Object | null {
+    if (typeof window === 'undefined') return null;
     return getObject(key, window.sessionStorage);
   },
 
@@ -139,6 +148,7 @@ export default {
    * @param key - {string}
    */
   removeBySession(key: string) {
+    if (typeof window === 'undefined') return;
     remove(key, window.sessionStorage);
   },
 };

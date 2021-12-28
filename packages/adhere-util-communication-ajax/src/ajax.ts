@@ -509,6 +509,8 @@ function complexRequest(method: string, params: ISendArg) {
  */
 function deal401() {
   // 像top发送消息
+  if (typeof window === 'undefined') return;
+
   if (window.top && window.top !== window) {
     window.top.postMessage('http_status_401', '*');
   }
@@ -528,6 +530,8 @@ function deal401() {
  */
 function deal402() {
   trigger402 = true;
+
+  if (typeof window === 'undefined') return;
 
   if (window.parent && window.parent !== window) {
     window.parent.postMessage('http_status_402', '*');

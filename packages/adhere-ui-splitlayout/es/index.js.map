@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SplitLayout from './splitlayout';\r\nexport default SplitLayout;\r\n"],"names":["SplitLayout"],"mappings":"OAAOA,+CACQA"}

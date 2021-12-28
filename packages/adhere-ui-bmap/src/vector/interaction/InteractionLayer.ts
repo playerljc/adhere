@@ -1,5 +1,5 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import Emitter from '@baifendian/adhere-util-emitter';
+import MathUtil from '@baifendian/adhere-util';
 
 import {
   ActionStatus,
@@ -58,7 +58,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // canvas上的所有数据
   protected canvasData: IActionData[] = [];
 
-  protected emitter: Emitter = new Emitter();
+  protected emitter: Emitter = new Emitter.Events();
 
   protected isLoad: boolean = false;
 

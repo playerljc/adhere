@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableHeadSearch from './tableheadsearch';\r\nexport default TableHeadSearch;\r\n"],"names":["TableHeadSearch"],"mappings":"OAAOA,uDACQA"}

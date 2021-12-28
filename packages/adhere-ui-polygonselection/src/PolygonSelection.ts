@@ -1,4 +1,4 @@
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 
 import {
   ActionStatus,
@@ -18,7 +18,7 @@ import TriangleDrawAction from './draw/TriangleDrawAction';
 import DiamondDrawAction from './draw/DiamondDrawAction';
 import StartDrawAction from './draw/StartDrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import MathUtil from '@baifendian/adhere-util';
 
 const selectorPrefix = 'adhere-ui-polygonselection';
 
@@ -27,7 +27,7 @@ const selectorPrefix = 'adhere-ui-polygonselection';
  * @class
  * @classdesc - PolygonSelection
  */
-class PolygonSelection extends Emitter implements IPolygonSelection {
+class PolygonSelection extends Emitter.Events implements IPolygonSelection {
   // 父元素
   protected el: HTMLElement | null = null;
 
@@ -431,7 +431,7 @@ class PolygonSelection extends Emitter implements IPolygonSelection {
    * @return void
    */
   destroy(): void {
-    window.removeEventListener('resize', this.onResize);
+    typeof window !== 'undefined' && window.removeEventListener('resize', this.onResize);
 
     if (this.curAction) {
       this.curAction.destroy();

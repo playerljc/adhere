@@ -1,0 +1,122 @@
+@import '~@baifendian/adhere-ui-stickuplayout/lib/index.less';
+
+.adhere-ui-cascadecompared {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  > .adhere-ui-cascadecompared-indicator {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    > .adhere-ui-cascadecompared-autoWrap {
+      > .adhere-ui-cascadecompared-item {
+        display: inline-block;
+      }
+    }
+
+    /* 头的行和单元格 */
+    .adhere-ui-cascadecompared-item {
+      height: 100%;
+      > .adhere-ui-cascadecompared-cell {
+        height: 100%;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  > .adhere-ui-cascadecompared-master {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    min-height: 0;
+
+    > .adhere-ui-cascadecompared-master-inner {
+      overflow: hidden;
+
+      > .adhere-ui-stickuplayout-inner {
+        > .adhere-ui-stickuplayout-item {
+          > .adhere-ui-stickuplayout-item-content {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+
+  .adhere-ui-cascadecompared-fixedWrap {
+    flex-shrink: 0;
+
+    > .adhere-ui-cascadecompared-item {
+      width: 100%;
+
+      /* 项下的单元格 */
+      > .adhere-ui-cascadecompared-cell {
+        width: 100%;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .adhere-ui-cascadecompared-autoWrap {
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0;
+
+    .adhere-ui-cascadecompared-item {
+      > .adhere-ui-cascadecompared-cell {
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    > .adhere-ui-cascadecompared-autoInner {
+      display: inline-block;
+    }
+  }
+
+  .adhere-ui-cascadecompared-item {
+    //display: inline-block;
+    font-size: 0;
+    white-space: nowrap;
+
+    /* 不是最后一行才有 */
+    &:not(:last-child) {
+      > .adhere-ui-cascadecompared-cell {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    > .adhere-ui-cascadecompared-cell {
+      display: inline-block;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+  }
+
+  /* 值和项下的单元格 */
+  .adhere-ui-cascadecompared-fixedWrap,
+  .adhere-ui-cascadecompared-autoWrap {
+    .adhere-ui-cascadecompared-item {
+      > .adhere-ui-cascadecompared-cell {
+        height: 100%;
+        font-size: 16px;
+        white-space: inherit;
+        text-align: center;
+        word-wrap: break-word;
+        word-break: break-all;
+
+        .adhere-ui-cascadecompared-cellInner {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+        }
+      }
+    }
+  }
+}

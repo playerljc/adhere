@@ -344,7 +344,7 @@ export default {
    * @return {boolean}
    */
   isIframeEmbed() {
-    return window.top && window.top !== window;
+    return typeof window === 'undefined' ? false : window.top && window.top !== window;
   },
   /**
    * addClickListener - 支持PC和移动端的点击事件

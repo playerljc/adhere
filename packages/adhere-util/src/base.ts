@@ -337,7 +337,9 @@ export default {
    * @return Blob
    * @param data
    */
-  convertBase64UrlToBlob(data: string): Blob {
+  convertBase64UrlToBlob(data: string): Blob | null {
+    if(typeof window === 'undefined') return null;
+
     const bytes = window.atob(data.split(',')[1]); // 去掉url的头，并转换为byte
 
     // 处理异常,将ascii码小于0的转换为大于0

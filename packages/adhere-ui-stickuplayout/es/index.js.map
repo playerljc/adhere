@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import StickupLayout from './stickuplayout';\r\nexport default StickupLayout;\r\n"],"names":["StickupLayout"],"mappings":"OAAOA,mDACQA"}

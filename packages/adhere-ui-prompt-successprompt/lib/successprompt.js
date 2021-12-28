@@ -1,2 +1,2 @@
-import{message as message}from"antd";import Intl from"@baifendian/adhere-util-intl";export default function(e){return message.success(e||Intl.v("操作成功"))}
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var antd_1=require("antd"),adhere_util_intl_1=__importDefault(require("@baifendian/adhere-util-intl"));exports.default=function(e){return antd_1.message.success(e||adhere_util_intl_1.default.v("操作成功"))};
 //# sourceMappingURL=successprompt.js.map

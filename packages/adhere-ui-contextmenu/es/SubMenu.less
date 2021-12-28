@@ -1,0 +1,33 @@
+@import 'MenuItem';
+
+.adhere-ui-contextmenu-submenu() {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: #fff;
+  border-radius: 2px;
+  outline: none;
+  -webkit-box-shadow: ~'0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%)';
+  box-shadow: ~'0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%)';
+
+  //&::before {
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  width: 28px;
+  //  height: 100%;
+  //  background-color: rgba(0, 0, 0, 0.1);
+  //  border-right: 1px solid #ccc;
+  //  content: '';
+  //}
+
+  > .adhere-ui-contextmenu-menuitem {
+    .adhere-ui-contextmenu-menuitem();
+  }
+
+  > .adhere-ui-contextmenu-menuitem-separation {
+    .adhere-ui-contextmenu-menuitem-separation();
+  }
+}

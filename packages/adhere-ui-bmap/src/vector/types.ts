@@ -1,5 +1,5 @@
 // @ts-ignore
-import Emitter from '@baifendian/adhere-util-emitter/lib/events';
+import Emitter from '@baifendian/adhere-util-emitter';
 import { IPoint } from './interaction/types';
 
 /**
@@ -490,7 +490,8 @@ export interface IVectorLayer {
   getZIndex: () => number;
   update: () => void;
   getMap: () => any;
-  getEmitter: () => Emitter;
+  // @ts-ignore
+  getEmitter: () => Emitter.Events;
   addEventListener: (type: VectorEventActions, handler: (e: any) => void) => void;
   removeEventListener: (type: VectorEventActions, handler: (e: any) => void) => void;
 }
@@ -680,7 +681,8 @@ export enum GeoJSONType {
  * @description - 轨迹回放的Layer
  */
 export interface ITrajectoryPlayBackLayer {
-  getEmitter: () => Emitter;
+  // @ts-ignore
+  getEmitter: () => Emitter.Events;
   update: () => void;
   getMap: () => any;
 

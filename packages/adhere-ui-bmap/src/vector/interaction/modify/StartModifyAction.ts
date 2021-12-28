@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf';
 // @ts-ignore
-import MathUtil from '@baifendian/adhere-util/lib/math';
+import MathUtil from '@baifendian/adhere-util';
 
 import { IStartData, IPoint, SelectType, IInteractionLayer } from '../types';
 import ModifyAction from './ModifyAction';

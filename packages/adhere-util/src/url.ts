@@ -18,7 +18,9 @@ const methods = {
    * @param config
    * @return object
    */
-  parse(path?: string, config: IUrlConfig = { ...defaultConfig }): object {
+  parse(path?: string, config: IUrlConfig = { ...defaultConfig }): object | null {
+    if(typeof window === 'undefined') return null;
+
     let href = window.location.search;
 
     if (path) href = path;

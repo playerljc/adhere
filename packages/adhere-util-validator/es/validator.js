@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(a){for(var i,r=1,t=arguments.length;r<t;r++)for(var n in i=arguments[r])Object.prototype.hasOwnProperty.call(i,n)&&(a[n]=i[n]);return a}).apply(this,arguments)};import validator from"validator";import chinaPhoneValidator from"./chinaPhoneValidator";export default __assign(__assign({},validator),chinaPhoneValidator);
+//# sourceMappingURL=validator.js.map
