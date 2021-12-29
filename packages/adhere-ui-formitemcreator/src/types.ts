@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormItemProps } from 'antd/lib/form/FormItem';
+import { ColProps } from 'antd/lib/col';
 
 /**
  * IFormItemProps
@@ -10,6 +11,7 @@ export interface IFormItemProps extends FormItemProps {
   contentProps?: any;
   skip?: boolean;
   content?: React.ReactElement;
+  col?: ColProps;
 }
 
 /**
