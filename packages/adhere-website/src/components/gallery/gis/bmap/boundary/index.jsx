@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Select } from 'antd';
-import { GlobalIndicator } from '@baifendian/adhere';
+import { GlobalIndicator, Resource } from '@baifendian/adhere';
 
 import PlaygroundMulit from '@/lib/PlaygroundMulit';
 
@@ -360,6 +360,7 @@ function Boundary() {
                 });
               });
             }}
+            getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
           >
             {data.map((t) => (
               <Option key={t.cityCode} value={t.cityCode}>

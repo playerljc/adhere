@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Input, Button, Select } from 'antd';
-import { TableHeadSearch } from '@baifendian/adhere';
+import {Resource, TableHeadSearch} from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -46,6 +46,7 @@ function getColumns() {
             onChange={() => {
               confirm();
             }}
+            getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
           >
             <Option key={1} value="男">
               男

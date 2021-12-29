@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Select } from 'antd';
-import { ReactUtil, Space } from '@baifendian/adhere';
+import { ReactUtil, Resource, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -100,7 +100,10 @@ export default () => {
       >
         <>
           <div>
-            <Select style={{ width: 200 }}>
+            <Select
+              style={{ width: 200 }}
+              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+            >
               {data.map((t) => (
                 <Option key={t.value} value={t.value}>
                   {t.label}
@@ -112,7 +115,10 @@ export default () => {
           <Space direction="vertical" />
 
           <div>
-            <Select style={{ width: 200 }}>
+            <Select
+              style={{ width: 200 }}
+              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+            >
               {ReactUtil.keyMap(data, (t) => (
                 <Option value={t.value}>{t.label}</Option>
               ))}

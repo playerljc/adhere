@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Select } from 'antd';
 import { v1 } from 'uuid';
-import { BMap, MessageDialog } from '@baifendian/adhere';
+import {BMap, MessageDialog, Resource} from '@baifendian/adhere';
 
 import Playground from '@/lib/Playground';
 import citys from './data/citys.json';
@@ -877,6 +877,7 @@ export default () => {
                   const map = pointLayerRef.current.getMap();
                   map.panTo(new window.BMap.Point(121.487899486, 31.24916171));
                 }}
+                getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
                 <Option value="-1">请选择</Option>
                 <Option value="circle">圆形点</Option>
@@ -1133,6 +1134,7 @@ export default () => {
 
                   mulitPointLayerSource.current.addFeature(preMulitPointFeature.current);
                 }}
+                getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
                 <Option value="-1">请选择</Option>
                 <Option value="circle">圆形点</Option>
@@ -2143,6 +2145,7 @@ export default () => {
                     new window.BMap.Point(toPoint[0], toPoint[1]),
                   ]);
                 }}
+                getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
                 <Option value="-1">请选择</Option>
                 <Option value="base">无箭头</Option>
@@ -2320,6 +2323,7 @@ export default () => {
 
                   regularPolygonSource.current.addFeature(preRegularPolygonFeature.current);
                 }}
+                getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
                 <Option value="-1">请选择</Option>
                 <Option value="4">4</Option>
@@ -2500,6 +2504,7 @@ export default () => {
 
                   leafSource.current.addFeature(preLeafFeature.current);
                 }}
+                getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
                 <Option value="-1">请选择</Option>
                 <Option value="6">6</Option>
@@ -2737,6 +2742,7 @@ export default () => {
 
                   Util.fit(map, [new window.BMap.Point(point[0], point[1])]);
                 }}
+                getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
               >
                 <Option value="-1">请选择</Option>
                 <Option value="text">文字</Option>
@@ -3169,6 +3175,7 @@ export default () => {
               interactionLayer.current.changeAction(action);
               action.start();
             }}
+            getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
           >
             <Option value="-1">请选择</Option>
             <Option value="Circle">圆</Option>
