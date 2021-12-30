@@ -36,6 +36,6 @@ declare class FormItemCreator extends React.Component<IFormItemCreatorProps> {
      * @param {Object} item
      */
     private renderFormItem;
-    render(): (JSX.Element | undefined)[];
+    render(): JSX.Element | (JSX.Element | undefined)[];
 }
 export default FormItemCreator;

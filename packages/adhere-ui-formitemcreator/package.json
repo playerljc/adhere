@@ -3,7 +3,7 @@
   "version": "1.0.11",
   "description": "Form表单配置项",
   "main": "lib/index.js",
-"module": "es/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "es",

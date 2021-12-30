@@ -10,6 +10,8 @@
   - 如果value是函数加入是否缓存的设置
 * **adhere-util-decorators**
   - componentDidCatch中加入Loading chunk重新加载
+* **adhere-ui-formitemcreator**
+  - 优化栅格布局
 
 # 1.0.12
 
