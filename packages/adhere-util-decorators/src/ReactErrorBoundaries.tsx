@@ -46,6 +46,12 @@ const ReactErrorBoundariesHOC = (Component) => {
     componentDidCatch(error, errorInfo) {
       // 你同样可以将错误日志上报给服务器
       console.error(error, errorInfo);
+      if (String(error).includes('Loading chunk')) {
+        const hash = +new Date();
+        window.location.href = `${window.location.href}${
+          window.location.search ? '&' : '?'
+        }=_ijt=${hash}`;
+      }
     }
 
     private renderErrorUI(): React.ReactElement {
