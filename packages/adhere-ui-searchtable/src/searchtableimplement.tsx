@@ -10,7 +10,7 @@ import {
 } from 'antd/lib/table/interface';
 
 import { ISearchTableImplementProps } from './types';
-import SearchTable from './searchtable';
+import SearchTable, { defaultProps, propTypes } from './searchtable';
 
 const selectorPrefix = 'adhere-ui-searchtableimplement';
 
@@ -426,9 +426,12 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
   }
 }
 
-SearchTableImplement.defaultProps = {};
+SearchTableImplement.defaultProps = {
+  ...defaultProps,
+};
 
 SearchTableImplement.propTypes = {
+  ...propTypes,
   getTableWrapperInstance: PropTypes.func,
 };
 

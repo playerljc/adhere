@@ -599,7 +599,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 }
 
-SearchTable.defaultProps = {
+export const defaultProps = {
   className: '',
   style: {},
   tableClassName: '',
@@ -620,7 +620,7 @@ SearchTable.defaultProps = {
   fixedTableSpaceBetween: false,
 };
 
-SearchTable.propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   tableClassName: PropTypes.string,
@@ -646,5 +646,9 @@ SearchTable.propTypes = {
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: PropTypes.bool,
 };
+
+SearchTable.defaultProps = defaultProps;
+
+SearchTable.propTypes = propTypes;
 
 export default SearchTable;

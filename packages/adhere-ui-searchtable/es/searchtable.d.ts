@@ -1,4 +1,5 @@
 import React, { RefObject } from 'react';
+import PropTypes from 'prop-types';
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import { ISearchTableProps, ISearchTableState } from './types';
@@ -161,4 +162,40 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     protected render(): JSX.Element;
 }
+export declare const defaultProps: {
+    className: string;
+    style: {};
+    tableClassName: string;
+    tableStyle: {};
+    searchClassName: string;
+    searchStyle: {};
+    isFirst: boolean;
+    isFirstLoading: null;
+    antdTableProps: {};
+    isShowExpandSearch: boolean;
+    defaultExpandSearchCollapse: boolean;
+    fitSearch: boolean;
+    fitTable: boolean;
+    autoFixed: boolean;
+    fixedHeaderAutoTable: boolean;
+    fixedTableSpaceBetween: boolean;
+};
+export declare const propTypes: {
+    className: PropTypes.Requireable<string>;
+    style: PropTypes.Requireable<object>;
+    tableClassName: PropTypes.Requireable<string>;
+    tableStyle: PropTypes.Requireable<object>;
+    searchClassName: PropTypes.Requireable<string>;
+    searchStyle: PropTypes.Requireable<object>;
+    reset: PropTypes.Requireable<boolean>;
+    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+    antdTableProps: PropTypes.Requireable<object>;
+    isShowExpandSearch: PropTypes.Requireable<boolean>;
+    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
+    fitSearch: PropTypes.Requireable<boolean>;
+    fitTable: PropTypes.Requireable<boolean>;
+    autoFixed: PropTypes.Requireable<boolean>;
+    fixedHeaderAutoTable: PropTypes.Requireable<boolean>;
+    fixedTableSpaceBetween: PropTypes.Requireable<boolean>;
+};
 export default SearchTable;

@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import SearchTableImplement from './searchtableimplement';
+import { defaultProps, propTypes } from './searchtable';
 
 /**
  * SearchTableStateImplement
@@ -30,5 +32,13 @@ class SearchTableStateImplement extends SearchTableImplement {
     );
   }
 }
+
+SearchTableStateImplement.defaultProps = {
+  ...defaultProps,
+};
+
+SearchTableStateImplement.propTypes = {
+  ...propTypes,
+};
 
 export default SearchTableStateImplement;
