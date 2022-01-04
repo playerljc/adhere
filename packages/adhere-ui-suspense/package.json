@@ -1,9 +1,9 @@
 {
   "name": "@baifendian/adhere-ui-suspense",
-  "version": "1.0.10",
+  "version": "1.0.13",
   "description": "数据加载单元(如第一次是骷髅骨架，其他是 loading)，有数据加载的单元，第一次是骷髅骨架(或其他)mount，更新是 loading",
   "main": "lib/index.js",
-"module": "es/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "es",
@@ -36,8 +36,8 @@
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.15",
-    "typescript": "^3.8.2",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.8.2"
   },
   "dependencies": {
     "@types/react": "^17.0.0",

@@ -1,9 +1,9 @@
 {
   "name": "@baifendian/adhere-util-domain",
-  "version": "1.0.10",
+  "version": "1.0.13",
   "description": "domain模块的浏览器端实现",
   "main": "lib/index.js",
-"module": "es/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "es",
@@ -37,8 +37,8 @@
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.15",
-    "typescript": "^3.8.2",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.8.2"
   },
   "dependencies": {
     "events": "^3.3.0"
