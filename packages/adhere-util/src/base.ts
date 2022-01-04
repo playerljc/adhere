@@ -229,7 +229,7 @@ export default {
    * @param name
    */
   getCookie(name: string = 'lang'): string {
-    const strCookie = document.cookie; // 获取cookie字符串
+    const strCookie = typeof document !== 'undefined' ? document.cookie: ''; // 获取cookie字符串
 
     const arrCookie = strCookie.split(';'); // 分割
 

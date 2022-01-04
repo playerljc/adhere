@@ -148,7 +148,7 @@ declare const _default: {
      * @return Blob
      * @param data
      */
-    convertBase64UrlToBlob(data: string): Blob;
+    convertBase64UrlToBlob(data: string): Blob | null;
     /**
      * omitObject
      * @description - 对象排除空值

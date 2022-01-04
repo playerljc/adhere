@@ -164,7 +164,7 @@ declare const _default: {
     generatorRandom(lowerValue: any, upperValue: any): number;
     uuid(): string;
     getPropertyVisitPathStr(target: any, key: any): string;
-    convertBase64UrlToBlob(data: string): Blob;
+    convertBase64UrlToBlob(data: string): Blob | null;
     omitObject(obj: object): object;
 };
 export default _default;
