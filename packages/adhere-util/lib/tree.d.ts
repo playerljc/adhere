@@ -71,5 +71,13 @@ declare const _default: {
     findNodeByKey(treeData: IAntdTreeNode[], val: any, config: {
         keyAttr: string;
     }): IAntdTreeNode | null;
+    /**
+     * transformTreeData
+     * @description - 转换一个treeData为antd的TreeData
+     * @param treeData
+     * @param onCallback
+     * @return IAntdTreeNode[]
+     */
+    transformTreeData(treeData: any[], onCallback: (node: any) => IAntdTreeNode): IAntdTreeNode[];
 };
 export default _default;

@@ -265,7 +265,7 @@ export default {
    * @param obj
    * @param dom
    */
-  objectToDataSet(obj: object, dom: HTMLElement) {
+  objectToDataSet(obj: object, dom: HTMLElement): void {
     for (const p in obj) {
       dom.dataset[p] = obj[p];
     }
@@ -275,7 +275,7 @@ export default {
    * @returns {Object}
    * @param dom
    */
-  dataSetToObject(dom: HTMLElement) {
+  dataSetToObject(dom: HTMLElement): object {
     const obj = {};
     for (const p in dom.dataset) {
       obj[p] = dom.dataset[p];
@@ -287,14 +287,15 @@ export default {
    * @return {SelectOptions}
    * @param el
    */
-  getPageLeft(el) {
+  getPageLeft(el: HTMLElement): number {
     let left = el.offsetLeft;
-    let offsetParent = el.offsetParent;
+
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
       // @ts-ignore
       left += offsetParent.offsetLeft;
-    } while ((offsetParent = offsetParent.offsetParent));
+    } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
 
     return left;
   },
@@ -303,14 +304,14 @@ export default {
    * @return {SelectOptions}
    * @param el
    */
-  getPageTop(el) {
+  getPageTop(el: HTMLElement): number {
     let top = el.offsetTop;
-    let offsetParent = el.offsetParent;
+
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
-      // @ts-ignore
       top += offsetParent.offsetTop;
-    } while ((offsetParent = offsetParent.offsetParent));
+    } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
 
     return top;
   },
@@ -319,18 +320,80 @@ export default {
    * @return {{top: number, left: number}}
    * @param el
    */
-  getPageRect(el) {
+  getPageRect(el: HTMLElement): { top: number; bottom: number; left: number; right: number } {
     let top = el.offsetTop;
     let left = el.offsetLeft;
 
-    let offsetParent = el.offsetParent;
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
-      // @ts-ignore
       top += offsetParent.offsetTop;
-      // @ts-ignore
       left += offsetParent.offsetLeft;
-    } while ((offsetParent = offsetParent.offsetParent));
+    } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
+
+    return {
+      top,
+      bottom: top + el.offsetHeight,
+      left,
+      right: left + el.offsetWidth,
+    };
+  },
+  /**
+   * getLeftUntil
+   * @description - 获取left直到untilEl
+   * @param el
+   * @param untilEl
+   */
+  getLeftUntil({ el, untilEl }: { el: HTMLElement; untilEl: HTMLElement }): number {
+    let left = el.offsetLeft;
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
+
+    while (untilEl !== offsetParent) {
+      left += offsetParent.offsetLeft;
+      offsetParent = offsetParent.offsetParent as HTMLElement;
+    }
+
+    return left;
+  },
+  /**
+   * getTopUntil
+   * @description - 获取top直到untilEl
+   * @param el
+   * @param untilEl
+   */
+  getTopUntil({ el, untilEl }: { el: HTMLElement; untilEl: HTMLElement }): number {
+    let top = el.offsetTop;
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
+
+    while (untilEl !== offsetParent) {
+      top += offsetParent.offsetTop;
+      offsetParent = offsetParent.offsetParent as HTMLElement;
+    }
+
+    return top;
+  },
+  /**
+   * getRectUntil
+   * @description - 获取Rect直到untilEl
+   * @param el
+   * @param untilEl
+   */
+  getRectUntil({ el, untilEl }: { el: HTMLElement; untilEl: HTMLElement }): {
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+  } {
+    let top = el.offsetTop;
+    let left = el.offsetLeft;
+
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
+
+    while (untilEl !== offsetParent) {
+      top += offsetParent.offsetTop;
+      left += offsetParent.offsetLeft;
+      offsetParent = offsetParent.offsetParent as HTMLElement;
+    }
 
     return {
       top,

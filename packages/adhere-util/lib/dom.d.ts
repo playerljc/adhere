@@ -113,29 +113,64 @@ declare const _default: {
      * @returns {Object}
      * @param dom
      */
-    dataSetToObject(dom: HTMLElement): {};
+    dataSetToObject(dom: HTMLElement): object;
     /**
      * getPageLeft - 获取指定元素距离视口的left
      * @return {SelectOptions}
      * @param el
      */
-    getPageLeft(el: any): any;
+    getPageLeft(el: HTMLElement): number;
     /**
      * getPageTop - 获取指定元素距离视口的top
      * @return {SelectOptions}
      * @param el
      */
-    getPageTop(el: any): any;
+    getPageTop(el: HTMLElement): number;
     /**
      * getPageRect - 获取元素距离视口的Rect
      * @return {{top: number, left: number}}
      * @param el
      */
-    getPageRect(el: any): {
-        top: any;
-        bottom: any;
-        left: any;
-        right: any;
+    getPageRect(el: HTMLElement): {
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+    };
+    /**
+     * getLeftUntil
+     * @description - 获取left直到untilEl
+     * @param el
+     * @param untilEl
+     */
+    getLeftUntil({ el, untilEl }: {
+        el: HTMLElement;
+        untilEl: HTMLElement;
+    }): number;
+    /**
+     * getTopUntil
+     * @description - 获取top直到untilEl
+     * @param el
+     * @param untilEl
+     */
+    getTopUntil({ el, untilEl }: {
+        el: HTMLElement;
+        untilEl: HTMLElement;
+    }): number;
+    /**
+     * getRectUntil
+     * @description - 获取Rect直到untilEl
+     * @param el
+     * @param untilEl
+     */
+    getRectUntil({ el, untilEl }: {
+        el: HTMLElement;
+        untilEl: HTMLElement;
+    }): {
+        top: number;
+        left: number;
+        right: number;
+        bottom: number;
     };
     /**
      * isIframeEmbed - 是否是iframe嵌入
