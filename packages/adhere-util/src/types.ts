@@ -10,6 +10,7 @@ export interface ICircle {
 
 export interface IAntdTreeNode {
   key: string;
+  value: string;
   title: string;
   isLeaf: boolean;
   children?: IAntdTreeNode[];

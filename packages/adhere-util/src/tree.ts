@@ -32,7 +32,7 @@ export default {
           [parentIdAttr]: parentId,
         });
 
-        if (item.children) {
+        if (item.children && Array.isArray(item.children) && item.children.length) {
           loop(context, item.children, item.key);
         }
       }
@@ -277,5 +277,27 @@ export default {
     }
 
     return findLoop(treeData);
+  },
+  /**
+   * transformTreeData
+   * @description - 转换一个treeData为antd的TreeData
+   * @param treeData
+   * @param onCallback
+   * @return IAntdTreeNode[]
+   */
+  transformTreeData(treeData: any[], onCallback: (node: any) => IAntdTreeNode): IAntdTreeNode[] {
+    function loop(children) {
+      const result: IAntdTreeNode[] = [];
+
+      for (let i = 0; i < children.length; i++) {
+        const node = children[i];
+
+        result.push(onCallback(node));
+      }
+
+      return result;
+    }
+
+    return loop(treeData);
   },
 };

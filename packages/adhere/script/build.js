@@ -14,7 +14,6 @@ const indexLessContent = [];
 const indexJsContent = [];
 const indexJsExportContent = ['export { \r\n'];
 
-console.log('11111111111111',args.getArg('module'));
 const type = args.getArg('module');
 
 const namedMap = new Map([

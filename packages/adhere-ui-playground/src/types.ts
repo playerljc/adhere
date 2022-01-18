@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { CSSProperties } from 'react';
 
 /**
@@ -12,6 +13,10 @@ export interface ICardProps {
   actionStyle: object;
   title: React.ReactNode;
   extra: React.ReactNode;
+  description: {
+    title: string | React.ReactNode,
+    info: string | React.ReactNode,
+  },
   actions: React.ReactNode[];
 }
 

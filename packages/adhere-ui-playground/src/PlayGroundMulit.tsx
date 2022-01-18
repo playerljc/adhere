@@ -6,7 +6,7 @@ import copy from 'copy-to-clipboard';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
-import Card from './Card';
+import Card, { cardPropTypes } from './Card';
 import Message from './Message';
 import Constant from './constant';
 
@@ -23,6 +23,7 @@ class InferType<T> {}
  * @class PlayGroundMulit
  * @classdesc PlayGroundMulit
  */
+// @ts-ignore
 class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGroundState> {
   state = {
     expand: this.props.expand,
@@ -105,6 +106,7 @@ class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGround
     return (
       <ConditionalRender
         conditional={expand}
+        // @ts-ignore
         noMatch={() => (
           <div
             onClick={() => {
@@ -169,15 +171,20 @@ class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGround
    * @return {*}
    */
   protected render() {
-    const { config, children } = this.props;
+    // @ts-ignore
+    const { config, children, cardProps } = this.props;
     const { expand } = this.state;
 
     return (
       <div className={classNames(selectPrefix)}>
         {/* 显示区 */}
-        <Card actions={this.renderAction()}>{children}</Card>
+        {/*@ts-ignore*/}
+        <Card actions={this.renderAction()} {...(cardProps || {})}>
+          {children}
+        </Card>
         {/* 代码区 */}
         <ConditionalRender conditional={expand}>
+          {/*@ts-ignore*/}
           {() => <Card>{(config || []).map((c, index) => this.renderCodeView(c, index))}</Card>}
         </ConditionalRender>
       </div>
@@ -199,6 +206,8 @@ PlayGroundMulit.propTypes = {
     }),
   ),
   expand: PropTypes.bool,
+  // @ts-ignore
+  cardProps: PropTypes.shape(cardPropTypes),
 };
 
 export default PlayGroundMulit;

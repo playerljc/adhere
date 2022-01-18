@@ -1,5 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, {
+  Requireable,
+  ReactNodeLike,
+  InferType,
+  ReactElementLike,
+  ReactNodeArray,
+} from 'prop-types';
 import classNames from 'classnames';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -12,7 +18,36 @@ const selectorPrefix = 'adhere-ui-playground-card';
  * @class Card
  * @classdesc Card
  */
+// @ts-ignore
 class Card extends React.Component<ICardProps> {
+  static propTypes: {
+    headerClassName: any;
+    actionStyle: any;
+    bodyClassName: any;
+    extra: Requireable<ReactNodeLike>;
+    bodyStyle: any;
+    description: any;
+    actionClassName: any;
+    title: Requireable<NonNullable<InferType<Requireable<ReactNodeLike> | any>>>;
+    actions: Requireable<
+      ({} | ReactElementLike | ReactNodeArray | string | number | boolean | null | undefined)[]
+    >;
+    headerStyle: any;
+  };
+
+  static defaultProps: {
+    headerClassName: string;
+    actionStyle: {};
+    bodyClassName: string;
+    extra: null;
+    bodyStyle: {};
+    description: null;
+    actionClassName: string;
+    title: null;
+    actions: null;
+    headerStyle: {};
+  };
+
   protected render() {
     const {
       headerClassName,
@@ -25,6 +60,7 @@ class Card extends React.Component<ICardProps> {
       title,
       extra,
       actions,
+      description,
     } = this.props;
 
     return (
@@ -53,6 +89,24 @@ class Card extends React.Component<ICardProps> {
               style={{ ...bodyStyle }}
             >
               {children}
+            </div>
+          )}
+        </ConditionalRender>
+
+        <ConditionalRender conditional={!!description}>
+          {() => (
+            <div className={`${selectorPrefix}-description`}>
+              <ConditionalRender conditional={!!description.title}>
+                {() => (
+                  // @ts-ignore
+                  <div className={`${selectorPrefix}-description-title`} title={description.title}>
+                    {description.title}
+                  </div>
+                )}
+              </ConditionalRender>
+              <ConditionalRender conditional={!!description.info}>
+                {() => description.info}
+              </ConditionalRender>
             </div>
           )}
         </ConditionalRender>
@@ -86,9 +140,10 @@ Card.defaultProps = {
   title: null,
   extra: null,
   actions: null,
+  description: null,
 };
 
-Card.propTypes = {
+export const cardPropTypes = {
   headerClassName: PropTypes.string,
   headerStyle: PropTypes.object,
   bodyClassName: PropTypes.string,
@@ -98,6 +153,12 @@ Card.propTypes = {
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   extra: PropTypes.node,
   actions: PropTypes.arrayOf(PropTypes.node),
+  description: PropTypes.shape({
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  }),
 };
+
+Card.propTypes = cardPropTypes;
 
 export default Card;

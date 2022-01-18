@@ -5,7 +5,7 @@ import copy from 'copy-to-clipboard';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
-import Card from './Card';
+import Card, { cardPropTypes } from './Card';
 import Message from './Message';
 import Constant from './constant';
 
@@ -22,6 +22,7 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
   static defaultProps: IPlayGroundProps;
   static propTypes: { expand: Requireable<boolean>; codeText: Requireable<string> };
 
+  // @ts-ignore
   state = {
     expand: this.props.expand,
   };
@@ -71,6 +72,7 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
     return (
       <ConditionalRender
         conditional={expand}
+        // @ts-ignore
         noMatch={() => (
           <div
             onClick={() => {
@@ -110,6 +112,8 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
    */
   protected renderCodeView() {
     const { expand } = this.state;
+    // @ts-ignore
+    const { cardProps, ...others } = this.props;
 
     return (
       <ConditionalRender conditional={expand}>
@@ -117,13 +121,13 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
           // @ts-ignore
           <Card>
             <PlayGroundExt
-              {...this.props}
               docClass={null}
               propDescriptionMap={null}
               scope={{ React }}
               collapsableCode={false}
               initiallyExpanded={false}
               es6Console={false}
+              {...others}
             />
           </Card>
         )}
@@ -136,12 +140,15 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
    * @return {*}
    */
   protected render() {
-    const { children } = this.props;
+    // @ts-ignore
+    const { children, cardProps } = this.props;
 
     return (
       <div className={selectPrefix}>
         {/* @ts-ignore*/}
-        <Card actions={this.renderAction()}>{children}</Card>
+        <Card actions={this.renderAction()} {...(cardProps || {})}>
+          {children}
+        </Card>
         {this.renderCodeView()}
       </div>
     );
@@ -156,6 +163,8 @@ PlayGround.defaultProps = {
 PlayGround.propTypes = {
   codeText: PropTypes.string,
   expand: PropTypes.bool,
+  // @ts-ignore
+  cardProps: PropTypes.shape(cardPropTypes),
 };
 
 export default PlayGround;
