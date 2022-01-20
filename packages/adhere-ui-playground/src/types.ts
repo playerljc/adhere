@@ -134,6 +134,40 @@ export interface ICollapseProps {
   fixedHeaderScrollBody: boolean;
 }
 
+export interface ICodeBoxPlayGroundProps extends IPlayGroundProps {
+  type: 'PlayGround';
+  renderWrap?: (columnIndex: number, index: number, config: IPlayGroundProps) => React.ReactElement;
+  renderChildren?: (
+    columnIndex: number,
+    index: number,
+    config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>,
+  ) => React.ReactElement;
+}
+
+export interface ICodeBoxPlayGroundMulitProps extends IPlayGroundMulitProps {
+  type: 'PlayGroundMulit';
+  renderWrap?: (
+    columnIndex: number,
+    index: number,
+    config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>,
+    children?: React.ReactElement,
+  ) => React.ReactElement;
+  renderChildren?: (
+    columnIndex: number,
+    index: number,
+    config: IPlayGroundProps,
+  ) => React.ReactElement;
+}
+
+export interface ICodeBoxProps {
+  title?: string | React.ReactElement;
+  extra?: React.ReactElement;
+  isShowExpandAllBtn: boolean;
+  columnCount: number;
+  expandAll?: boolean;
+  config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>;
+}
+
 export interface ICollapseState {
   collapse: boolean;
 }

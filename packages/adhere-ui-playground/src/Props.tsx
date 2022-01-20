@@ -109,9 +109,12 @@ class Props extends React.Component<IPropsProps, any> {
     const { data, ...others } = this.props;
 
     return (
+      // @ts-ignore
       <Collapse {...others}>
         <div className={selectPrefix}>
+          {/*@ts-ignore*/}
           <Table
+            // @ts-ignore*
             columns={this.getColumns()}
             dataSource={this.props.data.map((t, i) => ({ ...t, id: `${i + 1}` }))}
             rowKey="id"

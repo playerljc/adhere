@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { Requireable } from 'prop-types';
 import classNames from 'classnames';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -14,6 +14,25 @@ const selectorPrefix = 'adhere-ui-playground-table';
  */
 // @ts-ignore
 class Table extends React.Component<ITableProps, any> {
+  static defaultProps: {
+    tableClassName: string;
+    columns: any[];
+    tableStyle: {};
+    className: string;
+    style: {};
+    dataSource: any[];
+  };
+
+  static propTypes: {
+    tableClassName: any;
+    columns: Requireable<any[]>;
+    tableStyle: any;
+    className: any;
+    style: any;
+    dataSource: Requireable<any[]>;
+    rowKey: any;
+  };
+
   /**
    * renderHeader
    */
@@ -27,8 +46,10 @@ class Table extends React.Component<ITableProps, any> {
             const { className, style, align } = column;
             const props = {
               key: column.key,
+              width: undefined,
             };
 
+            // @ts-ignore
             column.width && (props.width = column.width);
 
             return (
@@ -72,6 +93,7 @@ class Table extends React.Component<ITableProps, any> {
                   >
                     <ConditionalRender
                       conditional={!!render}
+                      // @ts-ignore
                       noMatch={() => record[dataIndex] || '-'}
                     >
                       {() => render(record[dataIndex], record, rowIndex, columnIndex)}

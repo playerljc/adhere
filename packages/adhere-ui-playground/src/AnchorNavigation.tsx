@@ -38,6 +38,8 @@ function AnchorNavigation(props) {
     props.anchors.forEach(({ anchor }, index) => {
       const el = document.getElementById(anchor) as HTMLElement;
 
+      if(!el) return;
+
       const top = Util.getTopUntil({ el, untilEl: container });
 
       const entry = {

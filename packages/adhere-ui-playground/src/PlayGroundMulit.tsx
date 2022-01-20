@@ -9,7 +9,6 @@ import Intl from '@baifendian/adhere-util-intl';
 import Card, { cardPropTypes } from './Card';
 import Message from './Message';
 import Constant from './constant';
-import { CodeBoxContext } from './CodeBoxContext';
 import { IPlayGroundMulitProps, IPlayGroundState } from './types';
 
 const selectPrefix = 'adhere-ui-playground-mulit';
@@ -180,33 +179,26 @@ class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGround
     id && (idProps.id = id);
 
     return (
-      <CodeBoxContext.Consumer>
-        {({ activeAnchor }) => (
-          <div
-            {...idProps}
-            className={classNames(
-              selectPrefix,
-              activeAnchor === id || isActive ? `${selectPrefix}-active` : '',
-            )}
-          >
-            {/* 显示区 */}
-            {/*@ts-ignore*/}
-            <Card actions={this.renderAction()} {...(cardProps || {})}>
-              {children}
-            </Card>
-            {/* 代码区 */}
-            <ConditionalRender conditional={expand}>
-              {/*@ts-ignore*/}
-              {() => <Card>{(config || []).map((c, index) => this.renderCodeView(c, index))}</Card>}
-            </ConditionalRender>
-          </div>
-        )}
-      </CodeBoxContext.Consumer>
+      <div
+        {...idProps}
+        className={classNames(selectPrefix, isActive ? `${selectPrefix}-active` : '')}
+      >
+        {/* 显示区 */}
+        {/*@ts-ignore*/}
+        <Card actions={this.renderAction()} {...(cardProps || {})}>
+          {children}
+        </Card>
+        {/* 代码区 */}
+        <ConditionalRender conditional={expand}>
+          {/*@ts-ignore*/}
+          {() => <Card>{(config || []).map((c, index) => this.renderCodeView(c, index))}</Card>}
+        </ConditionalRender>
+      </div>
     );
   }
 }
 
-PlayGroundMulit.defaultProps = {
+export const PlayGroundMulitDefaultProps: IPlayGroundMulitProps = {
   // @ts-ignore*
   id: undefined,
   config: [],
@@ -214,8 +206,8 @@ PlayGroundMulit.defaultProps = {
   isActive: false,
 };
 
-PlayGroundMulit.propTypes = {
-  // @ts-ignore*
+export const PlayGroundMulitPropTypes = {
+  // @ts-ignore
   id: PropTypes.string,
   config: PropTypes.arrayOf(
     PropTypes.shape({
@@ -229,5 +221,9 @@ PlayGroundMulit.propTypes = {
   cardProps: PropTypes.shape(cardPropTypes),
   isActive: PropTypes.bool,
 };
+
+PlayGroundMulit.defaultProps = PlayGroundMulitDefaultProps;
+
+PlayGroundMulit.propTypes = PlayGroundMulitPropTypes;
 
 export default PlayGroundMulit;

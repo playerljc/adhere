@@ -11,7 +11,6 @@ import Message from './Message';
 import Constant from './constant';
 
 import { IPlayGroundProps, IPlayGroundState } from './types';
-import { CodeBoxContext } from './CodeBoxContext';
 
 const selectPrefix = 'adhere-ui-playground';
 
@@ -149,28 +148,21 @@ class PlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
     id && (idProps.id = id);
 
     return (
-      <CodeBoxContext.Consumer>
-        {({ activeAnchor }) => (
-          <div
-            {...idProps}
-            className={classNames(
-              selectPrefix,
-              activeAnchor === id || isActive ? `${selectPrefix}-active` : '',
-            )}
-          >
-            {/* @ts-ignore*/}
-            <Card actions={this.renderAction()} {...(cardProps || {})}>
-              {children}
-            </Card>
-            {this.renderCodeView()}
-          </div>
-        )}
-      </CodeBoxContext.Consumer>
+      <div
+        {...idProps}
+        className={classNames(selectPrefix, isActive ? `${selectPrefix}-active` : '')}
+      >
+        {/* @ts-ignore*/}
+        <Card actions={this.renderAction()} {...(cardProps || {})}>
+          {children}
+        </Card>
+        {this.renderCodeView()}
+      </div>
     );
   }
 }
 
-PlayGround.defaultProps = {
+export const PlayGroundDefaultProps: IPlayGroundProps = {
   id: undefined,
   codeText: '',
   expand: false,
@@ -179,7 +171,7 @@ PlayGround.defaultProps = {
   isActive: false,
 };
 
-PlayGround.propTypes = {
+export const PlayGroundPropTypes = {
   // @ts-ignore
   id: PropTypes.string,
   codeText: PropTypes.string,
@@ -188,5 +180,9 @@ PlayGround.propTypes = {
   cardProps: PropTypes.shape(cardPropTypes),
   isActive: PropTypes.bool,
 };
+
+PlayGround.defaultProps = PlayGroundDefaultProps;
+
+PlayGround.propTypes = PlayGroundPropTypes;
 
 export default PlayGround;

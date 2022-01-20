@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import AnchorNavigation from '@/lib/AnchorNavigation';
 import CodeBoxPanel from '@/lib/CodeBoxPanel';
-import Playground from '@/lib/Playground';
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import { DelConfirm, Space, PlayGround } from '@baifendian/adhere';
@@ -16,22 +14,20 @@ export default () => {
   const [scrollEl, setScrollEl] = useState();
   const ref = useRef();
 
-  function renderBoxPanel() {
+  function boxPanelConfig() {
     return arr.map((t, index) => {
       if (index % 2 === 0) {
-        return (
-          <Playground
-            key={index}
-            id={`p${index + 1}`}
-            mode="code"
-            scope={{ React }}
-            cardProps={{
-              description: {
-                title: '123',
-                info: '123',
-              },
-            }}
-            codeText={`
+        return {
+          id: `p${index + 1}`,
+          mode: 'code',
+          scope: { React },
+          cardProps: {
+            description: {
+              title: '123',
+              info: '123',
+            },
+          },
+          codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
   
@@ -46,8 +42,9 @@ export default () => {
   >
     <a>删除</a>
   </DelConfirm>
-      `}
-          >
+      `,
+          type: 'PlayGround',
+          renderChildren: () => (
             <DelConfirm
               success={() => {
                 return new Promise((resolve) => {
@@ -59,25 +56,23 @@ export default () => {
             >
               <a>删除</a>
             </DelConfirm>
-          </Playground>
-        );
+          ),
+        };
       } else {
-        return (
-          <PlaygroundMulit
-            key={index}
-            id={`p${index + 1}`}
-            cardProps={{
-              description: {
-                title: '123',
-                info: '123',
-              },
-            }}
-            config={[
-              {
-                title: 'imageselect.jsx',
-                mode: 'code',
-                scope: { React },
-                codeText: `
+        return {
+          id: `p${index + 1}`,
+          cardProps: {
+            description: {
+              title: '123',
+              info: '123',
+            },
+          },
+          config: [
+            {
+              title: 'imageselect.jsx',
+              mode: 'code',
+              scope: { React },
+              codeText: `
         import React from 'react';
         import { DelConfirm } from '@baifendian/adhere';
 
@@ -93,12 +88,12 @@ export default () => {
           <a>删除</a>
         </DelConfirm>
                   `,
-              },
-              {
-                title: 'imageselect.less',
-                mode: 'code',
-                scope: { React },
-                codeText: `
+            },
+            {
+              title: 'imageselect.less',
+              mode: 'code',
+              scope: { React },
+              codeText: `
         import React from 'react';
         import { DelConfirm } from '@baifendian/adhere';
 
@@ -114,9 +109,10 @@ export default () => {
           <a>删除</a>
         </DelConfirm>
                   `,
-              },
-            ]}
-          >
+            },
+          ],
+          type: 'PlayGroundMulit',
+          renderChildren: () => (
             <DelConfirm
               success={() => {
                 return new Promise((resolve) => {
@@ -128,8 +124,8 @@ export default () => {
             >
               <a>删除</a>
             </DelConfirm>
-          </PlaygroundMulit>
-        );
+          ),
+        };
       }
     });
   }
@@ -157,8 +153,7 @@ export default () => {
 
           <Space />
 
-          <h2>代码演示</h2>
-          <CodeBoxPanel columnCount={1}>{renderBoxPanel()}</CodeBoxPanel>
+          <CodeBoxPanel title="代码演示" columnCount={1} config={boxPanelConfig()} />
 
           <Space />
 
