@@ -1,3 +1,17 @@
+# 1.0.14
+
+***
+
+2022-1-20
+
+* **adhere-ui-playground**
+  - 加入CodePanel组件
+  - 加入CodeBoxPanel组件
+  - 加入AnchorNavigation组件
+  - 细化Card组件加入description配置
+* **adhere-util**
+  - dom加入新方法
+
 # 1.0.13
 
 ***
