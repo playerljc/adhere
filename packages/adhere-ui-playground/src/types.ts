@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import React, { CSSProperties } from 'react';
 
 /**
@@ -14,9 +14,9 @@ export interface ICardProps {
   title: React.ReactNode;
   extra: React.ReactNode;
   description: {
-    title: string | React.ReactNode,
-    info: string | React.ReactNode,
-  },
+    title: string | React.ReactNode;
+    info: string | React.ReactNode;
+  };
   actions: React.ReactNode[];
 }
 
@@ -53,16 +53,21 @@ export interface ITableProps {
  * @interface IPlayGroundProps
  */
 export interface IPlayGroundProps {
+  id?: string;
   codeText: string;
   expand?: boolean;
+  cardProps: ICardProps;
+  isActive: boolean;
 }
 
 /**
  * IPlayGroundMulitProps
  */
 export interface IPlayGroundMulitProps {
+  id?: string;
   config: IPlayGroundProps[];
   expand: boolean;
+  isActive: boolean;
 }
 
 /**

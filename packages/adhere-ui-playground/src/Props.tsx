@@ -21,6 +21,7 @@ class ReactNodeLike {}
  * @class Props
  * @classdesc Props
  */
+// @ts-ignore
 class Props extends React.Component<IPropsProps, any> {
   static propTypes: {
     data: Requireable<

@@ -12,6 +12,7 @@ const selectorPrefix = 'adhere-ui-playground-table';
  * @class Table
  * @classdesc Table
  */
+// @ts-ignore
 class Table extends React.Component<ITableProps, any> {
   /**
    * renderHeader

@@ -157,6 +157,8 @@ const BMaps = lazy(() => import(/* webpackChunkName: "gis" */ '@/components/gall
 
 const Graph = lazy(() => import(/* webpackChunkName: "graph" */ '@/components/gallery/graph'));
 
+const Demo = lazy(() => import(/* webpackChunkName: "demo" */ '@/components/ui/demo'));
+
 export default () => [
   {
     path: '/',
@@ -191,6 +193,11 @@ export default () => [
               {
                 path: '/',
                 redirect: '/adhere/ui/split',
+              },
+              {
+                path: '/adhere/ui/demo',
+                name: 'Demo',
+                component: Demo,
               },
               {
                 path: '/adhere/ui/split',

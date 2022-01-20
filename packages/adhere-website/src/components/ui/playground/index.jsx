@@ -20,6 +20,25 @@ export default () => {
 
       <Props
         border
+        title="CodePanel"
+        data={[
+          {
+            params: 'codeText',
+            desc: '展示的代码',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'expand',
+            desc: '是否展开代码区域',
+            type: 'boolean',
+            defaultVal: 'false',
+          },
+        ]}
+      />
+
+      <Props
+        border
         title="PlayGround"
         data={[
           {

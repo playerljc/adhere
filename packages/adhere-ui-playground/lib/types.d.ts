@@ -48,15 +48,20 @@ export interface ITableProps {
  * @interface IPlayGroundProps
  */
 export interface IPlayGroundProps {
+    id?: string;
     codeText: string;
     expand?: boolean;
+    cardProps: ICardProps;
+    isActive: boolean;
 }
 /**
  * IPlayGroundMulitProps
  */
 export interface IPlayGroundMulitProps {
+    id?: string;
     config: IPlayGroundProps[];
     expand: boolean;
+    isActive: boolean;
 }
 /**
  * IPlayGroundState

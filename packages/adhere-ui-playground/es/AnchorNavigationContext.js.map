@@ -1,0 +1,1 @@
+{"version":3,"file":"AnchorNavigationContext.js","sources":["AnchorNavigationContext.js"],"sourcesContent":["import React from 'react';\r\nexport var AnchorNavigationContext = React.createContext({\r\n    scrollEl: null,\r\n});\r\n"],"names":["React","AnchorNavigationContext","createContext","scrollEl"],"mappings":"OAAOA,kBACA,IAAIC,wBAA0BD,MAAME,cAAc,CACrDC,SAAU,cADHF"}

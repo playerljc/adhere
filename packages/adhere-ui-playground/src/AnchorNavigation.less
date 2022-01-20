@@ -1,0 +1,69 @@
+.adhere-ui-playground-anchor-navigation {
+  position: relative;
+  display: flex;
+  height: 100%;
+
+  > .adhere-ui-playground-anchor-navigation-auto {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  > .adhere-ui-playground-anchor-navigation-fixed {
+    position: relative;
+    flex-shrink: 0;
+
+    > .adhere-ui-playground-anchor-navigation-anchor {
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+      list-style: none;
+      border-left: 1px solid #f0f0f0;
+
+      &.adhere-ui-playground-anchor-navigation-affix {
+        position: fixed;
+        z-index: 9999;
+        padding: 16px 0;
+        background-color: #fff;
+      }
+
+      > li {
+        margin-left: 0;
+        padding-left: 0;
+        line-height: 1.5;
+        list-style: none;
+
+        &:not(:last-child) {
+          margin-bottom: 4px;
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          > a {
+            color: @adhere-primary-color;
+          }
+        }
+
+        &.adhere-ui-playground-anchor-navigation-active {
+          > a {
+            color: @adhere-primary-color;
+            border-left: 1px solid @adhere-primary-color;
+          }
+        }
+
+        > a {
+          display: block;
+          width: 110px;
+          margin-left: -1px;
+          padding-left: 16px;
+          overflow: hidden;
+          color: #000000d9;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          border-left: 1px solid transparent;
+          transition: all 0.3s ease;
+        }
+      }
+    }
+  }
+}

@@ -460,6 +460,70 @@ export default () => {
             returnDesc: '距离视口的Rect',
           },
           {
+            name: 'getLeftUntil',
+            desc: '获取left直到untilEl',
+            modifier: 'public',
+            params: [
+              {
+                name: 'params',
+                desc: '',
+                type: `{
+                  el: HtmlElement,
+                  untilEl: HtmlElement
+                }`,
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'getTopUntil',
+            desc: '获取top直到untilEl',
+            modifier: 'public',
+            params: [
+              {
+                name: 'params',
+                desc: '',
+                type: `{
+                  el: HtmlElement,
+                  untilEl: HtmlElement
+                }`,
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'getRectUntil',
+            desc: '获取Rect直到untilEl',
+            modifier: 'public',
+            params: [
+              {
+                name: 'params',
+                desc: '',
+                type: `{
+                  el: HtmlElement,
+                  untilEl: HtmlElement
+                }`,
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: `
+              {
+                top: number;
+                left: number;
+                right: number;
+                bottom: number;
+              }
+            `,
+            returnDesc: '',
+          },
+          {
             name: 'isIframeEmbed',
             desc: '是否是iframe嵌入',
             modifier: 'public',
