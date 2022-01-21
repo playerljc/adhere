@@ -1,62 +1,30 @@
-import React, { Requireable } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { IPlayGroundMulitProps, IPlayGroundState } from './types';
-declare class InferPropsInner<T> {
-}
-declare class InferType<T> {
-}
+import APlayGround from './APlayGround';
+import { IPlayGroundMulitProps } from './types';
 /**
  * PlayGroundMulit
  * @class PlayGroundMulit
  * @classdesc PlayGroundMulit
  */
-declare class PlayGroundMulit extends React.Component<IPlayGroundMulitProps, IPlayGroundState> {
-    state: {
-        expand: boolean;
-    };
-    actionConfig: (() => JSX.Element)[];
-    static defaultProps: IPlayGroundMulitProps;
-    static propTypes: {
-        expand: Requireable<boolean>;
-        config: Requireable<((InferPropsInner<Pick<{
-            codeText: Requireable<string>;
-            title: Requireable<NonNullable<InferType<Requireable<object> | Requireable<string>>>>;
-        }, never>> & Partial<InferPropsInner<Pick<{
-            codeText: Requireable<string>;
-            title: Requireable<NonNullable<InferType<Requireable<object> | Requireable<string>>>>;
-        }, 'codeText' | 'title'>>>) | undefined | null)[]>;
-    };
-    protected componentWillReceiveProps(nextProps: any): void;
-    protected renderAction(): JSX.Element[];
-    /**
-     * renderClipboardAction
-     */
-    protected renderClipboardAction(): JSX.Element;
-    /**
-     * renderExpandAction
-     */
-    protected renderExpandAction(): JSX.Element;
+declare class PlayGroundMulit extends APlayGround {
+    renderMap: Map<string, Function>;
     /**
      * renderCodeView - 代码展示视图
      * @param config
      * @param index
+     *
+     * <CodePanel {...config} />
      */
-    protected renderCodeView(config: any, index: any): JSX.Element;
-    /**
-     * render
-     * @return {*}
-     */
-    protected render(): JSX.Element;
+    protected renderCodePanelView(config: any, index: any): JSX.Element;
+    protected renderCodeView(): React.ReactElement;
 }
 export declare const PlayGroundMulitDefaultProps: IPlayGroundMulitProps;
 export declare const PlayGroundMulitPropTypes: {
     id: PropTypes.Requireable<string>;
-    config: PropTypes.Requireable<(PropTypes.InferProps<{
-        codeText: PropTypes.Requireable<string>;
-        title: PropTypes.Requireable<string | object>;
-    }> | null | undefined)[]>;
-    expand: PropTypes.Requireable<boolean>;
     cardProps: PropTypes.Requireable<PropTypes.InferProps<{
+        className: PropTypes.Requireable<string>;
+        style: PropTypes.Requireable<object>;
         headerClassName: PropTypes.Requireable<string>;
         headerStyle: PropTypes.Requireable<object>;
         bodyClassName: PropTypes.Requireable<string>;
@@ -72,5 +40,7 @@ export declare const PlayGroundMulitPropTypes: {
         }>>;
     }>>;
     isActive: PropTypes.Requireable<boolean>;
+    expand: PropTypes.Requireable<boolean>;
+    config: PropTypes.Requireable<any[]>;
 };
 export default PlayGroundMulit;

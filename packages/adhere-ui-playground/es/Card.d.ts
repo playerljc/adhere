@@ -8,18 +8,22 @@ import { ICardProps } from './types';
  */
 declare class Card extends React.Component<ICardProps> {
     static propTypes: {
-        headerClassName: any;
-        actionStyle: any;
-        bodyClassName: any;
+        className: string;
+        style: object;
+        headerClassName: string;
+        actionStyle: object;
+        bodyClassName: string;
         extra: Requireable<ReactNodeLike>;
-        bodyStyle: any;
+        bodyStyle: object;
         description: any;
-        actionClassName: any;
+        actionClassName: string;
         title: Requireable<NonNullable<InferType<Requireable<ReactNodeLike> | any>>>;
         actions: Requireable<({} | ReactElementLike | ReactNodeArray | string | number | boolean | null | undefined)[]>;
         headerStyle: any;
     };
     static defaultProps: {
+        className: string;
+        style: {};
         headerClassName: string;
         actionStyle: {};
         bodyClassName: string;
@@ -34,6 +38,8 @@ declare class Card extends React.Component<ICardProps> {
     protected render(): JSX.Element;
 }
 export declare const cardPropTypes: {
+    className: PropTypes.Requireable<string>;
+    style: PropTypes.Requireable<object>;
     headerClassName: PropTypes.Requireable<string>;
     headerStyle: PropTypes.Requireable<object>;
     bodyClassName: PropTypes.Requireable<string>;

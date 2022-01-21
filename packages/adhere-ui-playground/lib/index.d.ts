@@ -1,18 +1,22 @@
 /// <reference types="react" />
-import PlayGround from './PlayGround';
-import PlayGroundMulit from './PlayGroundMulit';
 import Props from './Props';
 import FunctionProps from './FunctionProps';
 import CodePanel from './CodePanel';
+import CodeTabPanel from './CodeTabPanel';
 import CodeBoxPanel from './CodeBoxPanel';
+import PlayGround from './PlayGround';
+import PlayGroundTab from "./PlayGroundTab";
+import PlayGroundMulit from './PlayGroundMulit';
 import AnchorNavigation from './AnchorNavigation';
 declare const _default: {
+    CodePanel: typeof CodePanel;
+    CodeTabPanel: typeof CodeTabPanel;
+    CodeBoxPanel: typeof CodeBoxPanel;
     PlayGround: typeof PlayGround;
+    PlayGroundTab: typeof PlayGroundTab;
     PlayGroundMulit: typeof PlayGroundMulit;
     Props: typeof Props;
     FunctionProps: typeof FunctionProps;
-    CodePanel: typeof CodePanel;
-    CodeBoxPanel: typeof CodeBoxPanel;
     AnchorNavigation: typeof AnchorNavigation;
     AnchorNavigationContext: import("react").Context<{
         scrollEl: null;

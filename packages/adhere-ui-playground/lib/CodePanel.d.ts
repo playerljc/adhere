@@ -1,19 +1,28 @@
 /// <reference types="react" />
 import PropTypes from 'prop-types';
+import { ICodePanelProps } from './types';
 /**
  * CodePanel
- * @param props
+ * @classdesc - 单一的代码片段
  * @constructor
  */
-declare function CodePanel(props: any): JSX.Element;
+declare function CodePanel(props: ICodePanelProps): JSX.Element;
 declare namespace CodePanel {
     var defaultProps: {
         codeText: string;
-        expand: boolean;
+        theme: string;
     };
     var propTypes: {
         codeText: PropTypes.Requireable<string>;
-        expand: PropTypes.Requireable<boolean>;
+        theme: PropTypes.Requireable<string>;
     };
 }
+export declare const CodePanelDefaultProps: {
+    codeText: string;
+    theme: string;
+};
+export declare const CodePanelPropTypes: {
+    codeText: PropTypes.Requireable<string>;
+    theme: PropTypes.Requireable<string>;
+};
 export default CodePanel;

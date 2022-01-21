@@ -194,11 +194,11 @@ export default () => [
                 path: '/',
                 redirect: '/adhere/ui/split',
               },
-              // {
-              //   path: '/adhere/ui/demo',
-              //   name: 'Demo',
-              //   component: Demo,
-              // },
+              {
+                path: '/adhere/ui/demo',
+                name: 'Demo',
+                component: Demo,
+              },
               {
                 path: '/adhere/ui/split',
                 name: 'Split',

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import PlayGround, { PlayGroundPropTypes } from './PlayGround';
+import { APlayGroundPropTypes } from './APlayGround';
+import PlayGround from './PlayGround';
+import PlayGroundTab, { PlayGroundTabPropTypes } from './PlayGroundTab';
 import PlayGroundMulit, { PlayGroundMulitPropTypes } from './PlayGroundMulit';
 import { ICodeBoxProps } from './types';
 import Constant from './constant';
@@ -29,6 +31,7 @@ function CodeBoxPanel(props: ICodeBoxProps) {
   const renderMap = new Map<string, Function>([
     ['PlayGroundMulit', renderPlayGroundMulit],
     ['PlayGround', renderPlayGround],
+    ['PlayGroundTab', renderPlayGroundTab],
   ]);
 
   /**
@@ -61,7 +64,7 @@ function CodeBoxPanel(props: ICodeBoxProps) {
    * @param index
    * @return JSX
    */
-  function renderPlayGroundMulit(columnIndex: number, index: number) {
+  function renderPlayGroundMulit(columnIndex: number, index: number): React.ReactElement {
     const { config } = props;
 
     // @ts-ignore
@@ -119,6 +122,40 @@ function CodeBoxPanel(props: ICodeBoxProps) {
           {() => renderChildren(columnIndex, index, config)}
         </ConditionalRender>
       </PlayGround>
+    );
+
+    return (
+      // @ts-ignore
+      <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
+        {/*@ts-ignore*/}
+        {() => renderWrap(columnIndex, index, config, children)}
+      </ConditionalRender>
+    );
+  }
+
+  /**
+   * renderPlayGroundTab
+   */
+  function renderPlayGroundTab(columnIndex: number, index: number): React.ReactElement {
+    const { config } = props;
+
+    // @ts-ignore
+    const { renderWrap, renderChildren, type, ...playGroundTabProps } = config[index];
+    // activeAnchor
+
+    const children = (
+      // @ts-ignore
+      <PlayGroundTab
+        {...playGroundTabProps}
+        // @ts-ignore
+        isActive={activeAnchor === playGroundTabProps.id}
+        expand={expandAll}
+      >
+        <ConditionalRender conditional={!!renderChildren}>
+          {/*@ts-ignore*/}
+          {() => renderChildren(columnIndex, index, config)}
+        </ConditionalRender>
+      </PlayGroundTab>
     );
 
     return (
@@ -213,7 +250,14 @@ CodeBoxPanel.propTypes = {
         renderChildren: PropTypes.func,
       },
       {
-        ...PlayGroundPropTypes,
+        ...APlayGroundPropTypes,
+        // @ts-ignore
+        type: PropTypes.string,
+        renderWrap: PropTypes.func,
+        renderChildren: PropTypes.func,
+      },
+      {
+        ...PlayGroundTabPropTypes,
         // @ts-ignore
         type: PropTypes.string,
         renderWrap: PropTypes.func,

@@ -21,13 +21,15 @@ const selectorPrefix = 'adhere-ui-playground-card';
 // @ts-ignore
 class Card extends React.Component<ICardProps> {
   static propTypes: {
-    headerClassName: any;
-    actionStyle: any;
-    bodyClassName: any;
+    className: string;
+    style: object;
+    headerClassName: string;
+    actionStyle: object;
+    bodyClassName: string;
     extra: Requireable<ReactNodeLike>;
-    bodyStyle: any;
+    bodyStyle: object;
     description: any;
-    actionClassName: any;
+    actionClassName: string;
     title: Requireable<NonNullable<InferType<Requireable<ReactNodeLike> | any>>>;
     actions: Requireable<
       ({} | ReactElementLike | ReactNodeArray | string | number | boolean | null | undefined)[]
@@ -36,6 +38,8 @@ class Card extends React.Component<ICardProps> {
   };
 
   static defaultProps: {
+    className: string;
+    style: {};
     headerClassName: string;
     actionStyle: {};
     bodyClassName: string;
@@ -50,6 +54,8 @@ class Card extends React.Component<ICardProps> {
 
   protected render() {
     const {
+      className,
+      style,
       headerClassName,
       headerStyle,
       bodyClassName,
@@ -64,7 +70,7 @@ class Card extends React.Component<ICardProps> {
     } = this.props;
 
     return (
-      <div className={selectorPrefix}>
+      <div className={classNames(selectorPrefix, className.split(' '))} style={{ ...style }}>
         <ConditionalRender conditional={!!title || !!extra}>
           {() => (
             <div
@@ -131,6 +137,8 @@ class Card extends React.Component<ICardProps> {
 }
 
 Card.defaultProps = {
+  className: '',
+  style: {},
   headerClassName: '',
   headerStyle: {},
   bodyClassName: '',
@@ -144,6 +152,8 @@ Card.defaultProps = {
 };
 
 export const cardPropTypes = {
+  className: PropTypes.string,
+  style: PropTypes.object,
   headerClassName: PropTypes.string,
   headerStyle: PropTypes.object,
   bodyClassName: PropTypes.string,
@@ -159,6 +169,7 @@ export const cardPropTypes = {
   }),
 };
 
+// @ts-ignore
 Card.propTypes = cardPropTypes;
 
 export default Card;

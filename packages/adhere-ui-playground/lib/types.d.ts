@@ -3,6 +3,8 @@ import React, { CSSProperties } from 'react';
  * ICardProps
  */
 export interface ICardProps {
+    className: string;
+    style: object;
     headerClassName: string;
     headerStyle: object;
     bodyClassName: string;
@@ -43,25 +45,26 @@ export interface ITableProps {
     dataSource: Object[];
     rowKey: string;
 }
+export interface ICodePanelProps {
+    codeText: string;
+    theme?: string;
+}
 /**
  * IPlayGroundProps
  * @interface IPlayGroundProps
  */
-export interface IPlayGroundProps {
+export interface IPlayGroundProps extends ICodePanelProps {
     id?: string;
-    codeText: string;
-    expand?: boolean;
     cardProps: ICardProps;
     isActive: boolean;
+    expand?: boolean;
 }
 /**
  * IPlayGroundMulitProps
  */
-export interface IPlayGroundMulitProps {
-    id?: string;
+export interface IPlayGroundMulitProps extends IPlayGroundProps {
     config: IPlayGroundProps[];
     expand: boolean;
-    isActive: boolean;
 }
 /**
  * IPlayGroundState
@@ -114,13 +117,18 @@ export interface ICollapseProps {
 }
 export interface ICodeBoxPlayGroundProps extends IPlayGroundProps {
     type: 'PlayGround';
-    renderWrap?: (columnIndex: number, index: number, config: IPlayGroundProps) => React.ReactElement;
-    renderChildren?: (columnIndex: number, index: number, config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>) => React.ReactElement;
+    renderWrap?: (columnIndex: number, index: number, config: IPlayGroundProps, children: React.ReactElement) => React.ReactElement;
+    renderChildren?: (columnIndex: number, index: number, config: Array<ICodeBoxPlayGroundProps>) => React.ReactElement;
 }
 export interface ICodeBoxPlayGroundMulitProps extends IPlayGroundMulitProps {
     type: 'PlayGroundMulit';
-    renderWrap?: (columnIndex: number, index: number, config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>, children?: React.ReactElement) => React.ReactElement;
-    renderChildren?: (columnIndex: number, index: number, config: IPlayGroundProps) => React.ReactElement;
+    renderWrap?: (columnIndex: number, index: number, config: Array<ICodeBoxPlayGroundMulitProps>, children: React.ReactElement) => React.ReactElement;
+    renderChildren?: (columnIndex: number, index: number, config: Array<ICodeBoxPlayGroundMulitProps>) => React.ReactElement;
+}
+export interface ICodeBoxPlayGroundTabProps extends IPlayGroundTabProps {
+    type: 'PlayGroundTab';
+    renderWrap?: (columnIndex: number, index: number, config: IPlayGroundTabProps, children: React.ReactElement) => React.ReactElement;
+    renderChildren?: (columnIndex: number, index: number, config: Array<IPlayGroundTabProps>) => React.ReactElement;
 }
 export interface ICodeBoxProps {
     title?: string | React.ReactElement;
@@ -128,8 +136,18 @@ export interface ICodeBoxProps {
     isShowExpandAllBtn: boolean;
     columnCount: number;
     expandAll?: boolean;
-    config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>;
+    config: Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps | ICodeBoxPlayGroundTabProps>;
 }
 export interface ICollapseState {
     collapse: boolean;
+}
+export interface ICodeTabPanelItemProps extends ICodePanelProps {
+    key: string;
+    title: string | React.ReactElement;
+}
+export interface ICodeTabPanelProps {
+    active: string;
+    config: ICodeTabPanelItemProps[];
+}
+export interface IPlayGroundTabProps extends ICodeTabPanelProps, IPlayGroundProps {
 }

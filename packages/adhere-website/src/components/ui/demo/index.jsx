@@ -5,6 +5,7 @@ import CodeBoxPanel from '@/lib/CodeBoxPanel';
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import { DelConfirm, Space, PlayGround } from '@baifendian/adhere';
+import PlayGroundTab from '@/lib/PlayGroundTab';
 
 const arr = [];
 arr.length = 10;
@@ -16,7 +17,7 @@ export default () => {
 
   function boxPanelConfig() {
     return arr.map((t, index) => {
-      if (index % 2 === 0) {
+      if (index % 3 === 0) {
         return {
           id: `p${index + 1}`,
           mode: 'code',
@@ -30,7 +31,7 @@ export default () => {
           codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
-  
+
   <DelConfirm
     success={() => {
       return new Promise((resolve) => {
@@ -44,6 +45,7 @@ export default () => {
   </DelConfirm>
       `,
           type: 'PlayGround',
+          theme: 'eclipse',
           renderChildren: () => (
             <DelConfirm
               success={() => {
@@ -58,7 +60,9 @@ export default () => {
             </DelConfirm>
           ),
         };
-      } else {
+      }
+      //
+      else if (index % 3 === 1) {
         return {
           id: `p${index + 1}`,
           cardProps: {
@@ -71,6 +75,7 @@ export default () => {
             {
               title: 'imageselect.jsx',
               mode: 'code',
+              theme: 'eclipse',
               scope: { React },
               codeText: `
         import React from 'react';
@@ -110,8 +115,128 @@ export default () => {
         </DelConfirm>
                   `,
             },
+            {
+              title: 'imageselect.jsx',
+              mode: 'code',
+              scope: { React },
+              type: 'CodeTabPanel',
+              active: 'Typescript',
+              config: [
+                {
+                  key: 'Typescript',
+                  title: 'Typescript',
+                  codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+                  theme: 'eclipse',
+                },
+                {
+                  key: 'Javascript',
+                  title: 'Javascript',
+                  codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+                },
+              ],
+            },
           ],
           type: 'PlayGroundMulit',
+          renderChildren: () => (
+            <DelConfirm
+              success={() => {
+                return new Promise((resolve) => {
+                  alert('点击了确认');
+
+                  resolve();
+                });
+              }}
+            >
+              <a>删除</a>
+            </DelConfirm>
+          ),
+        };
+      }
+      //
+      else if (index % 3 === 2) {
+        return {
+          id: `p${index + 1}`,
+          cardProps: {
+            description: {
+              title: '123',
+              info: '123',
+            },
+          },
+          active: 'Typescript',
+          config: [
+            {
+              key: 'Typescript',
+              title: 'Typescript',
+              codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+              theme: 'eclipse',
+            },
+            {
+              key: 'Javascript',
+              title: 'Javascript',
+              codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+            },
+          ],
+          type: 'PlayGroundTab',
           renderChildren: () => (
             <DelConfirm
               success={() => {
@@ -154,6 +279,60 @@ export default () => {
           <Space />
 
           <CodeBoxPanel title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+          <Space />
+
+          <PlayGroundTab
+            cardProps={{
+              description: { title: '123', info: '123' },
+            }}
+            {...{
+              active: 'Typescript',
+              config: [
+                {
+                  key: 'Typescript',
+                  title: 'Typescript',
+                  codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+                  theme: 'eclipse',
+                },
+                {
+                  key: 'Javascript',
+                  title: 'Javascript',
+                  codeText: `
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
+
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
+
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
+      `,
+                },
+              ],
+            }}
+          />
 
           <Space />
 
