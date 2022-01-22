@@ -13,8 +13,9 @@ export default () => (
     <p>需要配合FlexLayout一起使用</p>
 
     <h2>属性</h2>
-    <h3>SplitLayout</h3>
     <Props
+      border
+      title="SplitLayout"
       data={[
         {
           params: 'maxSize',

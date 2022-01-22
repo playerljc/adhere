@@ -1,12 +1,11 @@
 {
-  "extends": "./node_modules/@ctsj/build/buildpackagetsconfig-base",
+  "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
   "compilerOptions": {
     "jsx": "react",
     "declarationDir": "./lib",
     "outDir": "./lib",
     "baseUrl": "./",
-    "lib": ["dom"],
-    "module": "esnext"
+    "lib": ["dom"]
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

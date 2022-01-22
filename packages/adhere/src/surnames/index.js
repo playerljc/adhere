@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-surnames';
+import Model from '@baifendian/adhere-ui-surnames/es';
 export default Model;

@@ -1,2 +1,2 @@
-import Model from '@baifendian/adhere-ui-hooks';
+import Model from '@baifendian/adhere-ui-hooks/es';
 export default Model;

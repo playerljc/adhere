@@ -1,0 +1,30 @@
+{
+  "id": "2379845",
+  "name": "adhere",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "adhere",
+  "glyphs": [
+    {
+      "icon_id": "680702",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e6fe",
+      "unicode_decimal": 59134
+    },
+    {
+      "icon_id": "4171381",
+      "name": "阅读页_字体减小",
+      "font_class": "yueduye_zitijianxiao",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "4171382",
+      "name": "阅读页_字体增大",
+      "font_class": "yueduye_zitizengda",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Notification from './notification';\r\nexport default Notification;\r\n"],"names":["Notification"],"mappings":"OAAOA,iDACQA"}

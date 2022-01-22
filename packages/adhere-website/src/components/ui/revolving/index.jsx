@@ -17,8 +17,9 @@ export default () => {
       <p>走马灯</p>
       <p>此组件是基于Swiper编写的</p>
 
-      <h3>Revolving</h3>
       <Props
+        border
+        title="Revolving"
         data={[
           {
             params: 'className',
@@ -83,8 +84,11 @@ export default () => {
         ]}
       />
 
-      <h3>方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'start',
@@ -113,8 +117,11 @@ export default () => {
         ]}
       />
 
-      <h3>Revolving.Item</h3>
+      <Space />
+
       <Props
+        border
+        title="Revolving.Item"
         data={[
           {
             params: 'className',
@@ -130,6 +137,8 @@ export default () => {
           },
         ]}
       />
+
+      <Space />
 
       <h2>direction - left</h2>
       <Playground

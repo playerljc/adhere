@@ -1,0 +1,84 @@
+.adhere-ui-playground-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 2px;
+
+  > .adhere-ui-playground-card-header {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    margin-bottom: -1px;
+    padding: 0 24px;
+    color: #000000d9;
+    font-weight: 500;
+    font-size: 16px;
+    background: 0 0;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 2px 2px 0 0;
+
+    > .adhere-ui-playground-card-header-title {
+      display: inline-block;
+      flex: 1;
+      padding: 16px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    > .adhere-ui-playground-card-header-extra {
+      float: right;
+      margin-left: auto;
+      padding: 16px 0;
+      color: #000000d9;
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+
+  > .adhere-ui-playground-card-body {
+    padding: 16px 24px;
+  }
+
+  > .adhere-ui-playground-card-description {
+    position: relative;
+    padding: 18px 24px 12px;
+    border-top: 1px solid #f0f0f0;
+
+    > .adhere-ui-playground-card-description-title {
+      position: absolute;
+      top: -14px;
+      max-width: 90%;
+      margin-left: 16px;
+      padding: 1px 8px;
+      overflow: hidden;
+      color: #777;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      background: #fff;
+      border-radius: 2px 2px 0 0;
+      transition: background-color 0.4s;
+    }
+  }
+
+  > .adhere-ui-playground-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+
+    > .adhere-ui-playground-card-action-item {
+      margin: 12px 0;
+      color: #00000073;
+      text-align: center;
+
+      &:not(:last-child) {
+        border-right: 1px solid #f0f0f0;
+      }
+    }
+  }
+}

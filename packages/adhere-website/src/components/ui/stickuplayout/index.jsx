@@ -19,8 +19,9 @@ export default () => {
       <p>滚动固定头额布局</p>
       <p>父元素需要固定高度</p>
 
-      <h3>SplitLayout</h3>
       <Props
+        border
+        title="SplitLayout"
         data={[
           {
             params: 'className',
@@ -66,8 +67,12 @@ export default () => {
           },
         ]}
       />
-      <h2>方法</h2>
+
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'scrollToByIndex',
@@ -118,8 +123,11 @@ export default () => {
         ]}
       />
 
-      <h3>SplitLayout.Item</h3>
+      <Space />
+
       <Props
+        border
+        title="SplitLayout.Item"
         data={[
           {
             params: 'className',

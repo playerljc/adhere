@@ -111,8 +111,9 @@ export default () => {
       <p>京东的面板</p>
       <p>本组件基于iscroll开发</p>
 
-      <h3>JdCategoryTab</h3>
       <Props
+        border
+        title="JdCategoryTab"
         data={[
           {
             params: 'className',
@@ -207,8 +208,11 @@ export default () => {
         ]}
       />
 
-      <h3>JdCategoryTab.Item</h3>
+      <Space />
+
       <Props
+        border
+        title="JdCategoryTab.Item"
         data={[
           {
             params: 'className',
@@ -231,8 +235,11 @@ export default () => {
         ]}
       />
 
-      <h3>方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'scrollTo',

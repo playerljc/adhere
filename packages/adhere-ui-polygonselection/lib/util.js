@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default={getRectLeftTopPoint:function(t){var e=t.startPoint,t=t.targetPoint;return t.x<=e.x&&t.y<=e.y?t:t.x<=e.x&&t.y>=e.y?{x:t.x,y:e.y}:t.x>=e.x&&t.y<=e.y?{x:e.x,y:t.y}:t.x>=e.x&&t.y>=e.y?e:null},triangle:function(t){var e=t.startPoint,x=t.targetPoint,y=this.getRectLeftTopPoint({startPoint:e,targetPoint:x});if(!y)return[];t=Math.abs(x.x-e.x),e=Math.abs(x.y-e.y);return[{x:y.x,y:y.y+e},{x:y.x+t/2,y:y.y},{x:y.x+t,y:y.y+e}]}};
+//# sourceMappingURL=util.js.map

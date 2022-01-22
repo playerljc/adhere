@@ -198,12 +198,12 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
         if (scrollVal >= targetTop) {
           clear();
         } else {
-          window.requestAnimationFrame(scrollAnimation);
+          typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
         }
       } else if (scrollVal <= targetTop) {
         clear();
       } else {
-        window.requestAnimationFrame(scrollAnimation);
+        typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
       }
 
       function clear() {
@@ -216,7 +216,7 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
     /** *
      * 滚动core
      */
-    window.requestAnimationFrame(scrollAnimation);
+    typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
   }
 
   /**
@@ -241,6 +241,8 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
    * @access private
    */
   private initMask() {
+    if(typeof window === 'undefined') return;
+
     if (!this.maskEl) {
       this.maskEl = document.createElement('div');
 
@@ -304,15 +306,8 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
 
   render() {
     // @ts-ignore
-    const {
-      className,
-      style,
-      fixedClassName,
-      fixedStyle,
-      innerClassName,
-      innerStyle,
-      children,
-    } = this.props;
+    const { className, style, fixedClassName, fixedStyle, innerClassName, innerStyle, children } =
+      this.props;
 
     // @ts-ignore
     return (

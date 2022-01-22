@@ -1,6 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import { Form, Button, Skeleton, Table, List, Checkbox } from 'antd';
+// import Form from 'antd/lib/form';
+// import Button from 'antd/lib/button';
+// import Skeleton from 'antd/lib/skeleton';
+// import Table from 'antd/lib/table';
+// import List from 'antd/lib/list';
+// import Checkbox from 'antd/lib/checkbox';
+
 import { FormInstance } from 'antd/lib/form';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import intl from '@baifendian/adhere-util-intl';
@@ -166,15 +174,19 @@ class TableList<RecordType extends object = any> extends React.Component<
         <Form
           layout="inline"
           ref={this.searchFormRef}
-          className={
-            classNames(`${selectorPrefix}-search-form`, {
-              [`${selectorPrefix}-search-form-havebefore`]: beforeContent,
-              [`${selectorPrefix}-search-form-haveafter`]: afterContent
-            })
-          }
+          className={classNames(`${selectorPrefix}-search-form`, {
+            [`${selectorPrefix}-search-form-havebefore`]: beforeContent,
+            [`${selectorPrefix}-search-form-haveafter`]: afterContent,
+          })}
         >
           <div className="ant-form-search">
-            <FormItemCreator columns={this.getFormColumns(columns || [], size, search.hasOwnProperty('optionRender') && !optionRender)} />
+            <FormItemCreator
+              columns={this.getFormColumns(
+                columns || [],
+                size,
+                search.hasOwnProperty('optionRender') && !optionRender,
+              )}
+            />
           </div>
           {search.hasOwnProperty('optionRender') ? (
             optionRender
@@ -200,16 +212,8 @@ class TableList<RecordType extends object = any> extends React.Component<
   private renderToolbar = () => {
     if (!this.props.toolbar) return;
     const { dataSource, rowKey, pagination } = this.getModeProps();
-    const {
-      className,
-      title,
-      total,
-      selectAll,
-      search,
-      reload,
-      setting,
-      toolbarOptionRender,
-    } = this.props.toolbar;
+    const { className, title, total, selectAll, search, reload, setting, toolbarOptionRender } =
+      this.props.toolbar;
     const { selectedColumnKeys, tableColumns } = this.state;
     const rowSelection = this.getRowSelection();
 
@@ -312,16 +316,8 @@ class TableList<RecordType extends object = any> extends React.Component<
   private renderTable = () => {
     if (!this.props.table) return;
     const { selectedColumnKeys, tableColumns } = this.state;
-    const {
-      sortable,
-      pagination,
-      loading,
-      dataSource,
-      columns,
-      rowKey,
-      rowSelection,
-      ...others
-    } = this.getModeProps();
+    const { sortable, pagination, loading, dataSource, columns, rowKey, rowSelection, ...others } =
+      this.getModeProps();
 
     const tableProps = {
       pagination: this.getPagination(pagination),

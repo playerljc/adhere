@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SuccessPrompt from './successprompt';\r\nexport default SuccessPrompt;\r\n"],"names":["SuccessPrompt"],"mappings":"OAAOA,mDACQA"}

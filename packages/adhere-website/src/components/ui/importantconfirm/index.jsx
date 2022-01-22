@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImportantConfirm } from '@baifendian/adhere';
+import { ImportantConfirm, Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
@@ -11,8 +11,10 @@ export default () => {
       <h1>ImportantConfirm</h1>
       <p>重要操作确认提示(使用的是antd的Modal)</p>
       <p>重要操作确认提示，确认后在执行操作</p>
-      <h2>属性</h2>
+
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'zIndex',
@@ -40,8 +42,12 @@ export default () => {
           },
         ]}
       />
-      <h2>方法</h2>
+
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'open',
@@ -68,6 +74,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>基本使用</h2>
       <Playground
         mode="code"
@@ -101,6 +108,7 @@ export default () => {
           <a>删除</a>
         </ImportantConfirm>
       </Playground>
+
       <h2>ImportantConfirm.open</h2>
       <Playground
         mode="code"

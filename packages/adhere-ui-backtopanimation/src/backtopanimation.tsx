@@ -44,12 +44,12 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
     function onScroll() {
       // @ts-ignore
       if (self.scrollEl.scrollTop !== 0) {
-        window.requestAnimationFrame(() => {
+        typeof window !== 'undefined' && window.requestAnimationFrame(() => {
           // @ts-ignore
           self.el.style.display = 'block';
         });
       } else {
-        window.requestAnimationFrame(() => {
+        typeof window !== 'undefined' && window.requestAnimationFrame(() => {
           // @ts-ignore
           self.el.style.display = 'none';
         });
@@ -129,12 +129,12 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
           if (scrollVal >= targetTop) {
             clear();
           } else {
-            window.requestAnimationFrame(scrollAnimation);
+            typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
           }
         } else if (scrollVal <= targetTop) {
           clear();
         } else {
-          window.requestAnimationFrame(scrollAnimation);
+          typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
         }
 
         function clear() {
@@ -145,7 +145,7 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
         }
       }
 
-      window.requestAnimationFrame(scrollAnimation);
+      typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
     });
   };
 

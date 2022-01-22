@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Avatar } from 'antd';
-import { ImageLazy } from '@baifendian/adhere';
+import { ImageLazy, Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
@@ -24,8 +24,10 @@ export default () => {
     <div className="Page">
       <h1>ImageLazy</h1>
       <p>图片懒加载</p>
-      <h2>属性</h2>
+
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'className',
@@ -41,8 +43,12 @@ export default () => {
           },
         ]}
       />
-      <h2>imgArgs</h2>
+
+      <Space />
+
       <Props
+        border
+        title="imgArgs"
         data={[
           {
             params: 'originSrc',

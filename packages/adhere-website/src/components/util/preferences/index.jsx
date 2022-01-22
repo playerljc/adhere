@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { Preferences } from '@baifendian/adhere';
+import { Preferences, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -14,8 +14,11 @@ export default () => {
         <li>- 支持对象的写入和拿出</li>
       </ul>
 
-      <h2>方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'putStringByLocal',

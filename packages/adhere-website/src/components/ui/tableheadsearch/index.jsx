@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Input, Button, Select } from 'antd';
-import { TableHeadSearch } from '@baifendian/adhere';
+import {Resource, TableHeadSearch} from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -46,6 +46,7 @@ function getColumns() {
             onChange={() => {
               confirm();
             }}
+            getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
           >
             <Option key={1} value="男">
               男
@@ -131,8 +132,10 @@ export default () => {
     <div className="Page">
       <h1>TableHeadSearch</h1>
       <p>基于antd-design的Table的列头筛选</p>
-      <h2>方法</h2>
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'TableHeadSearch',

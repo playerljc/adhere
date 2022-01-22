@@ -47,8 +47,9 @@ export default () => {
       <h1>ScrollLoad</h1>
       <p>滚动加载</p>
 
-      <h3>ScrollLoad</h3>
       <Props
+        border
+        title="ScrollLoad"
         data={[
           {
             params: 'className',
@@ -143,8 +144,11 @@ export default () => {
         ]}
       />
 
-      <h3>方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'hideAll',

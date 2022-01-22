@@ -20,18 +20,27 @@ module.exports = {
     //   'moment':'moment',
     // };
 
-    // eslint-disable-next-line no-param-reassign
-    // TODO:umd umd的时候需要注释掉
-    webpackConfig.resolve.alias.ol = path.join(
-      __dirname,
-      'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
-    );
+    webpackConfig.devtool = 'cheap-module-eval-source-map';
+
+    // webpackConfig.resolve.alias['@baifendian/adhere/lib/search-table'] = path.join(
+    //   __dirname,
+    //   '../',
+    //   'adhere-ui-searchtable',
+    //   'src',
+    // );
 
     // eslint-disable-next-line no-param-reassign
-    webpackConfig.resolve.alias.swiper = path.join(
-      __dirname,
-      'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
-    );
+    // TODO:umd umd的时候需要注释掉
+    // webpackConfig.resolve.alias.ol = path.join(
+    //   __dirname,
+    //   '../../node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
+    // );
+
+    // eslint-disable-next-line no-param-reassign
+    // webpackConfig.resolve.alias.swiper = path.join(
+    //   __dirname,
+    //   '../../node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
+    // );
 
     // webpackConfig.resolve.alias['algebra.js'] = path.join(
     //   __dirname,
@@ -39,20 +48,38 @@ module.exports = {
     // );
 
     // 第三方库的引用是从文件当前目录开始搜索
-    webpackConfig.resolve.modules.unshift(path.join(__dirname, 'node_modules'));
+    // webpackConfig.resolve.modules.unshift(path.join(__dirname, '../../node_modules'));
 
     // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
+    webpackConfig.module.rules[webpackConfig.module.rules.length - 1].exclude = [/packages[\\/]adhere-website[\\/]src/];
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].include.push(
-      /packages[\\/]adhere[\\/]lib[\\/].*[\\/]style[\\/]index.less/,
-      /packages[\\/]adhere[\\/]lib[\\/].*.less/,
+      /packages[\\/]adhere[\\/]lib[\\/].*[\\/]style[\\/]index\.less/,
+      /packages[\\/]adhere[\\/]lib[\\/].*\.less/,
+      /packages[\\/]adhere-.{1,}[\\/]lib[\\/].*\.less/,
+
+      /packages[\\/]adhere[\\/]es[\\/].*[\\/]style[\\/]index\.less/,
+      /packages[\\/]adhere[\\/]es[\\/].*\.less/,
+      /packages[\\/]adhere-.{1,}[\\/]es[\\/].*\.less/,
+      // /packages[\\/]adhere-ui-searchtable[\\/]src[\\/]style[\\/]index.less/,
     );
     // }
 
-    webpackConfig.module.rules[1].include.push(/ol.css/, /swiper.css/);
+    // 加入markdown的解析
+    webpackConfig.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
+
+    webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/);
+
+    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
+
+    // 在使用babel-plugin-import的时候让adhere也执行
+    // webpackConfig.module.rules[0].include = [/packages[\\/]adhere-/];
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;
@@ -65,13 +92,15 @@ module.exports = {
     });
 
     if (babelLoaderConfig) {
-      babelLoaderConfig.query.plugins.push(
+      babelLoaderConfig.options.plugins.push(
         [
           'import',
           {
             libraryName: '@baifendian/adhere',
+            libraryDirectory: 'es',
             transformToDefaultImport: true,
             style: true,
+            // styleLibraryDirectory: 'es'
           },
           'adhere',
         ],
@@ -79,6 +108,8 @@ module.exports = {
           'import',
           {
             libraryName: 'antd',
+            libraryDirectory: 'es',
+            // styleLibraryDirectory: 'es',
             style: true,
           },
           'ant',

@@ -12,8 +12,9 @@ export default () => {
       <h1>FontSizeSetting</h1>
       <p>字体设置</p>
 
-      <h2>属性</h2>
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'className',

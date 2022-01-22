@@ -16,8 +16,9 @@ export default () => {
       <h1>SliderScale</h1>
       <p>刻度盘</p>
 
-      <h3>SliderScale</h3>
       <Props
+        border
+        title="SliderScale"
         data={[
           {
             params: 'className',

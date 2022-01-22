@@ -1,6 +1,4 @@
-import { getLocal } from '../intl';
-
-const local = getLocal([
+export default [
   'The value entered is between 1 and 200',
   'The content entered is within 100 characters',
   'All',
@@ -46,6 +44,12 @@ const local = getLocal([
   'Pull down to refresh',
   'Release to refresh',
   'Update time',
-]);
-
-export default { ...local };
+  'M',
+  'Meter',
+  'kilometer',
+  'starting point',
+  'Total length',
+  'Click to confirm the location, double-click to end',
+  'closure',
+  'There can be no spaces before and after the input content',
+];

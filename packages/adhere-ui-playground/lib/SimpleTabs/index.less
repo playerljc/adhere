@@ -1,0 +1,51 @@
+.adhere-ui-playground-simple-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  > .adhere-ui-playground-simple-tabs-head {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 30px 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    > li {
+      position: relative;
+      padding: 10px 0;
+      text-align: center;
+
+      &:not(:first-child) {
+        margin-left: 20px;
+      }
+
+      &.active {
+        color: @adhere-primary-color;
+        transition: all 0.2s;
+
+        &:before {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          background-color: @adhere-primary-color;
+          content: '';
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  > .adhere-ui-playground-simple-tabs-body {
+    flex-grow: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}

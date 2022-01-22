@@ -14,9 +14,7 @@ export default {
    * @param value
    */
   isEmpty(value) {
-    if (value === null || value === '' || value === undefined) return true;
-
-    return false;
+    return value === null || value === '' || value === undefined;
   },
   /**
    * isNumber - 判断是否是number
@@ -231,7 +229,7 @@ export default {
    * @param name
    */
   getCookie(name: string = 'lang'): string {
-    const strCookie = document.cookie; // 获取cookie字符串
+    const strCookie = typeof document !== 'undefined' ? document.cookie: ''; // 获取cookie字符串
 
     const arrCookie = strCookie.split(';'); // 分割
 
@@ -339,7 +337,9 @@ export default {
    * @return Blob
    * @param data
    */
-  convertBase64UrlToBlob(data: string): Blob {
+  convertBase64UrlToBlob(data: string): Blob | null {
+    if(typeof window === 'undefined') return null;
+
     const bytes = window.atob(data.split(',')[1]); // 去掉url的头，并转换为byte
 
     // 处理异常,将ascii码小于0的转换为大于0
@@ -350,6 +350,32 @@ export default {
     }
 
     return new Blob([ab], { type: 'image/png' });
+  },
+  /**
+   * omitObject
+   * @description - 对象排除空值
+   * @param obj
+   * @return object
+   */
+  omitObject(obj: object): object {
+    obj = obj || {};
+
+    const res = {};
+
+    const keys = Object.keys(obj);
+
+    keys.forEach((key) => {
+      let value = obj[key];
+      if (![null, undefined, '', 'undefined'].includes(value)) {
+        if (typeof value === 'string') {
+          value = value.trim();
+        }
+
+        res[key] = value;
+      }
+    });
+
+    return res;
   },
   /**----------------------------基本end---------------------------**/
 };

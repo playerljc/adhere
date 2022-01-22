@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { /* Card, */ Radio, Button } from 'antd';
-import { OLMap, Resource } from '@baifendian/adhere';
+import { OLMap, Resource, Space } from '@baifendian/adhere';
 
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
@@ -88,6 +88,7 @@ export default () => {
   const heatRef = useRef();
   const fRef = useRef();
   const animationRef = useRef();
+  const windRef = useRef();
 
   return (
     <div className="Page">
@@ -101,8 +102,9 @@ export default () => {
         <li>- 提供Util工具</li>
       </ul>
 
-      <h3>GeoLayer - 继承ol/layer/Vector</h3>
       <FunctionProps
+        border
+        title="GeoLayer - 继承ol/layer/Vector"
         data={[
           {
             name: 'constructor',
@@ -137,8 +139,82 @@ export default () => {
         ]}
       />
 
-      <h3>TitleLayer - 提供各种瓦片层的source和TileLayer实现</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="WindLayer - 继承WindLayer"
+        data={[
+          {
+            name: 'constructor',
+            desc: '构造方法',
+            modifier: 'private',
+            params: [
+              {
+                name: 'data',
+                desc: '风场的数据',
+                type: 'Object',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '风场的配置',
+                type: 'IWindLayerConfig',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'void',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <Props
+        border
+        title="IWindLayerConfig"
+        data={[
+          {
+            params: 'velocityScale',
+            desc: '',
+            type: 'number',
+            defaultVal: '1 / 20',
+          },
+          {
+            params: 'paths',
+            desc: '',
+            type: 'number',
+            defaultVal: '5000',
+          },
+          {
+            params: 'colorScale',
+            desc: '',
+            type: 'Array<string>',
+            defaultVal: '',
+          },
+          {
+            params: 'lineWidth',
+            desc: '',
+            type: 'number',
+            defaultVal: '2',
+          },
+          {
+            params: 'generateParticleOption',
+            desc: '',
+            type: 'boolean',
+            defaultVal: 'false',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <FunctionProps
+        border
+        title="TitleLayer - 提供各种瓦片层的source和TileLayer实现"
         data={[
           {
             name: 'getOSM',
@@ -300,8 +376,11 @@ export default () => {
         ]}
       />
 
-      <h3>OLMap</h3>
+      <Space />
+
       <Props
+        border
+        title="OLMap"
         data={[
           {
             params: 'type',
@@ -354,8 +433,11 @@ export default () => {
         ]}
       />
 
-      <h3>OLMap的方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="OLMap的方法"
         data={[
           {
             name: 'addMainGeoJSONLayer',
@@ -532,8 +614,11 @@ export default () => {
         ]}
       />
 
-      <h3>HeatMap</h3>
+      <Space />
+
       <Props
+        border
+        title="HeatMap"
         data={[
           {
             params: 'heatMapLayerConfig',
@@ -544,8 +629,11 @@ export default () => {
         ]}
       />
 
-      <h3>HeatMap的方法</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="HeatMap的方法"
         data={[
           {
             name: 'addLayer',
@@ -581,8 +669,11 @@ export default () => {
         ]}
       />
 
-      <h3>Util</h3>
+      <Space />
+
       <FunctionProps
+        border
+        title="Util"
         data={[
           {
             name: 'createMap',
@@ -2927,6 +3018,22 @@ export default () => {
             轨迹播放
           </Button>
           <OLMapComponent zoom={11.5} ref={animationRef} />
+        </div>
+      </Playground>
+
+      <h3>风场</h3>
+      <Playground mode="code" scope={{ React }}>
+        <div style={{ width: '100%', height: 500 }}>
+          <Button
+            type="primary"
+            style={{ marginBottom: 20 }}
+            onClick={() => {
+              windRef.current.addWindLayer();
+            }}
+          >
+            添加风场Layer
+          </Button>
+          <OLMapComponent zoom={5} ref={windRef} />
         </div>
       </Playground>
     </div>

@@ -1,0 +1,1 @@
+{"version":3,"file":"emitter.js","sources":["emitter.js"],"sourcesContent":["import Events from './events';\r\nvar Emitter = new Events();\r\n// @ts-ignore\r\nEmitter.Events = Events;\r\nexport default Emitter;\r\n"],"names":["Events","Emitter"],"mappings":"OAAOA,sBACP,IAAIC,QAAU,IAAID,OAElBC,QAAQD,OAASA,sBACFC"}

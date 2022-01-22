@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import BackTopAnimation from './backtopanimation';\r\nexport default BackTopAnimation;\r\n"],"names":["BackTopAnimation"],"mappings":"OAAOA,yDACQA"}

@@ -10,7 +10,7 @@ import { createMask } from './slidelayout';
  */
 abstract class SlideLayout<
   P extends ISlideLayoutProps,
-  S extends ISlideLayoutState
+  S extends ISlideLayoutState,
 > extends React.Component<P, S> {
   // @ts-ignore
   protected positionConfig: {

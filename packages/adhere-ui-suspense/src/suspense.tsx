@@ -18,7 +18,8 @@ const selectorPrefix = 'adhere-ui-suspense';
  */
 abstract class Suspense
   extends React.Component<ISuspenseProps, ISuspenseState>
-  implements ISuspense {
+  implements ISuspense
+{
   // 第一次
   isFirst = true;
 

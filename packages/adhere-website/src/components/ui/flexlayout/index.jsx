@@ -12,8 +12,9 @@ export default () => (
     <p>实现flex布局的组件</p>
 
     <h2>属性</h2>
-    <h3>FlexLayout</h3>
     <Props
+      border
+      title="FlexLayout"
       data={[
         {
           params: 'direction',
@@ -35,8 +36,12 @@ export default () => (
         },
       ]}
     />
-    <h3>FlexLayout.Fixed</h3>
+
+    <Space />
+
     <Props
+      border
+      title="FlexLayout.Fixed"
       data={[
         {
           params: 'fit',
@@ -58,8 +63,12 @@ export default () => (
         },
       ]}
     />
-    <h3>FlexLayout.Auto</h3>
+
+    <Space />
+
     <Props
+      border
+      title="FlexLayout.Auto"
       data={[
         {
           params: 'autoFixed',

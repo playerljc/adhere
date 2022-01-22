@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
+const args = require('./commandArgs');
 const packageJSON = require('../package.json');
 
 const { dependencies } = packageJSON;
@@ -12,6 +13,8 @@ const excludes = ['@baifendian/adhere-ui-css'];
 const indexLessContent = [];
 const indexJsContent = [];
 const indexJsExportContent = ['export { \r\n'];
+
+const type = args.getArg('module');
 
 const namedMap = new Map([
   ['@baifendian/adhere-ui-conditionalrender', 'ConditionalRender'],
@@ -53,6 +56,9 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-pullrefresh', 'PullRefresh'],
   ['@baifendian/adhere-ui-notification', 'Notification'],
   ['@baifendian/adhere-ui-swipeout', 'SwipeOut'],
+  ['@baifendian/adhere-ui-polygonselection', 'PolygonSelection'],
+  ['@baifendian/adhere-ui-playground', 'PlayGround'],
+  ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -64,6 +70,10 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-resource', 'Resource'],
   ['@baifendian/adhere-util-adapterscreen', 'AdapterScreen'],
   ['@baifendian/adhere-util-watchmemoized', 'WatchMemoized'],
+  ['@baifendian/adhere-util-domain', 'Domain'],
+  ['@baifendian/adhere-util-browsersniff', 'Browsersniff'],
+  ['@baifendian/adhere-util-validator', 'Validator'],
+  ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
 ]);
 
 /**
@@ -110,7 +120,7 @@ for (const packageName in dependencies) {
     }
 
     // index.js写入文件
-    fs.writeFileSync(indexPath, `import Model from '${packageName}';\r\nexport default Model;`);
+    fs.writeFileSync(indexPath, `import Model from '${packageName}/${type}';\r\nexport default Model;`);
 
     if (!fs.existsSync(stylePath)) {
       // 不存在
@@ -120,8 +130,11 @@ for (const packageName in dependencies) {
     // 查看packages中是否存在index.less
     if (fs.existsSync(path.join(packagesPath, name, 'src', 'index.less'))) {
       // index.less写入文件
-      fs.writeFileSync(styleIndexPath, `@import '~${packageName}/lib/index.less';`);
-      indexLessContent.push(`@import '~${packageName}/lib/index.less';\r\n`);
+      fs.writeFileSync(
+        styleIndexPath,
+        `@import '~${packageName}/${type}/index.less';`,
+      );
+      indexLessContent.push(`@import '~${packageName}/${type}/index.less';\r\n`);
     } else {
       fs.writeFileSync(styleIndexPath, '');
     }

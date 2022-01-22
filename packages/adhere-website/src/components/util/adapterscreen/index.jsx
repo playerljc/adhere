@@ -45,8 +45,10 @@ export default () => {
     <div className="Page">
       <h1>AdapterScreen</h1>
       <p>对屏幕的缩放进行适配的操作</p>
-      <h2>方法</h2>
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'AdapterScreen',

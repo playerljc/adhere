@@ -115,8 +115,9 @@ export default () => {
       <h2>监控</h2>
       <p>支持类似与Vue的watch监控</p>
 
-      <h2>方法</h2>
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'createRef',

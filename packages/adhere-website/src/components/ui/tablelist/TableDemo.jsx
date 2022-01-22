@@ -5,7 +5,7 @@ import { TableList, FormItemCreator } from '@baifendian/adhere';
 const requestData = (params) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const page = params && params.page || '';
+      const page = (params && params.page) || '';
       const response = {
         code: 200,
         data: {
@@ -24,34 +24,44 @@ const requestData = (params) => {
           total: 20,
         },
         message: '',
-      }
+      };
       resolve(response);
-    }, 2000)
-  })
-}
+    }, 2000);
+  });
+};
 
 export class Demo1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: []
-    }
+      dataSource: [],
+    };
   }
 
   fetchData = (params) => {
     console.log('搜索参数', params);
-    return requestData(params).then(res => {
+    return requestData(params).then((res) => {
       if (res.code === 200) {
         this.setState({ tableData: res.data });
       }
-    })
-  }
+    });
+  };
 
-  tableColumns = ([
+  tableColumns = [
     { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
     { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
-    { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
-  ]);
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      key: 'sex',
+      ellipsis: true,
+      valueType: 'map',
+      map: [
+        { value: 1, label: '男' },
+        { value: 2, label: '女' },
+      ],
+    },
+  ];
 
   render() {
     const { tableData } = this.state;
@@ -78,7 +88,7 @@ export class Demo1 extends React.Component {
           pagination: { total: tableData && tableData.total },
           rowSelection: true,
         }}
-        ref={c => this.tableListRef = c}
+        ref={(c) => (this.tableListRef = c)}
         request={this.fetchData}
       />
     );
@@ -89,24 +99,34 @@ export class Demo2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: []
-    }
+      dataSource: [],
+    };
   }
 
   fetchData = (params) => {
     console.log('搜索参数', params);
-    return requestData(params).then(res => {
+    return requestData(params).then((res) => {
       if (res.code === 200) {
         this.setState({ tableData: res.data });
       }
-    })
-  }
+    });
+  };
 
-  tableColumns = ([
+  tableColumns = [
     { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
     { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
-    { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
-  ]);
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      key: 'sex',
+      ellipsis: true,
+      valueType: 'map',
+      map: [
+        { value: 1, label: '男' },
+        { value: 2, label: '女' },
+      ],
+    },
+  ];
 
   render() {
     const { tableData } = this.state;
@@ -134,7 +154,7 @@ export class Demo2 extends React.Component {
           pagination: { total: tableData && tableData.total },
           rowSelection: true,
         }}
-        ref={c => this.tableListRef = c}
+        ref={(c) => (this.tableListRef = c)}
         request={this.fetchData}
       />
     );
@@ -145,24 +165,34 @@ export class Demo3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: []
-    }
+      dataSource: [],
+    };
   }
 
   fetchData = (params) => {
     console.log('搜索参数', params);
-    return requestData(params).then(res => {
+    return requestData(params).then((res) => {
       if (res.code === 200) {
         this.setState({ tableData: res.data });
       }
-    })
-  }
+    });
+  };
 
-  tableColumns = ([
+  tableColumns = [
     { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
     { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
-    { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
-  ]);
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      key: 'sex',
+      ellipsis: true,
+      valueType: 'map',
+      map: [
+        { value: 1, label: '男' },
+        { value: 2, label: '女' },
+      ],
+    },
+  ];
 
   render() {
     const { tableData } = this.state;
@@ -186,7 +216,7 @@ export class Demo3 extends React.Component {
           pagination: { total: tableData && tableData.total },
           rowSelection: true,
         }}
-        ref={c => this.tableListRef = c}
+        ref={(c) => (this.tableListRef = c)}
         request={this.fetchData}
       />
     );
@@ -197,24 +227,34 @@ export class Demo4 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: []
-    }
+      dataSource: [],
+    };
   }
 
   fetchData = (params) => {
     console.log('搜索参数', params);
-    return requestData(params).then(res => {
+    return requestData(params).then((res) => {
       if (res.code === 200) {
         this.setState({ tableData: res.data });
       }
-    })
-  }
+    });
+  };
 
-  tableColumns = ([
+  tableColumns = [
     { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
     { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
-    { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
-  ]);
+    {
+      title: '性别',
+      dataIndex: 'sex',
+      key: 'sex',
+      ellipsis: true,
+      valueType: 'map',
+      map: [
+        { value: 1, label: '男' },
+        { value: 2, label: '女' },
+      ],
+    },
+  ];
 
   render() {
     const { tableData } = this.state;
@@ -223,12 +263,16 @@ export class Demo4 extends React.Component {
         mode="table"
         toolbar={{
           title: '这是表格的标题',
-          total: <span>获取到<em>20</em>条数据</span>,
+          total: (
+            <span>
+              获取到<em>20</em>条数据
+            </span>
+          ),
           toolbarOptionRender: (
             <div>
               <Button type="primary">添加</Button>
             </div>
-          )
+          ),
         }}
         table={{
           columns: this.tableColumns,
@@ -237,7 +281,7 @@ export class Demo4 extends React.Component {
           rowSelection: true,
           sortable: true,
         }}
-        ref={c => this.tableListRef = c}
+        ref={(c) => (this.tableListRef = c)}
         request={this.fetchData}
       />
     );
@@ -248,18 +292,18 @@ export class Demo5 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listData: []
-    }
+      listData: [],
+    };
   }
 
   fetchData = (params) => {
     console.log('搜索参数', params);
-    return requestData(params).then(res => {
+    return requestData(params).then((res) => {
       if (res.code === 200) {
         this.setState({ listData: res.data });
       }
-    })
-  }
+    });
+  };
 
   render() {
     const { listData } = this.state;
@@ -268,19 +312,19 @@ export class Demo5 extends React.Component {
         mode="list"
         toolbar={{
           title: '这是列表的标题',
-          total: <span>获取到<em>20</em>条数据</span>,
+          total: (
+            <span>
+              获取到<em>20</em>条数据
+            </span>
+          ),
           selectAll: true,
         }}
         list={{
           rowSelection: true,
           dataSource: listData.list,
-          renderItem: (item) => (
-            <div>
-              {item.name}
-            </div>
-          )
+          renderItem: (item) => <div>{item.name}</div>,
         }}
-        ref={c => this.tableListRef = c}
+        ref={(c) => (this.tableListRef = c)}
         request={this.fetchData}
       />
     );

@@ -13,8 +13,10 @@ export default () => {
     <div className="Page">
       <h1>GlobalIndicator</h1>
       <p>全局无侵入的遮罩</p>
-      <h2>方法</h2>
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'show',
@@ -64,6 +66,7 @@ export default () => {
           },
         ]}
       />
+
       <h2>基本使用</h2>
       <Playground
         mode="code"

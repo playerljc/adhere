@@ -1,4 +1,5 @@
 import React from 'react';
+import { Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 
@@ -7,8 +8,9 @@ export default () => {
     <div className="Page">
       <h1>工具类</h1>
 
-      <h2>dom相关</h2>
       <FunctionProps
+        border
+        title="dom相关"
         data={[
           {
             name: 'isTextNode',
@@ -458,6 +460,70 @@ export default () => {
             returnDesc: '距离视口的Rect',
           },
           {
+            name: 'getLeftUntil',
+            desc: '获取left直到untilEl',
+            modifier: 'public',
+            params: [
+              {
+                name: 'params',
+                desc: '',
+                type: `{
+                  el: HtmlElement,
+                  untilEl: HtmlElement
+                }`,
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'getTopUntil',
+            desc: '获取top直到untilEl',
+            modifier: 'public',
+            params: [
+              {
+                name: 'params',
+                desc: '',
+                type: `{
+                  el: HtmlElement,
+                  untilEl: HtmlElement
+                }`,
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'getRectUntil',
+            desc: '获取Rect直到untilEl',
+            modifier: 'public',
+            params: [
+              {
+                name: 'params',
+                desc: '',
+                type: `{
+                  el: HtmlElement,
+                  untilEl: HtmlElement
+                }`,
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: `
+              {
+                top: number;
+                left: number;
+                right: number;
+                bottom: number;
+              }
+            `,
+            returnDesc: '',
+          },
+          {
             name: 'isIframeEmbed',
             desc: '是否是iframe嵌入',
             modifier: 'public',
@@ -468,8 +534,11 @@ export default () => {
         ]}
       />
 
-      <h2>基本操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="基本操作"
         data={[
           {
             name: 'isEmpty',
@@ -879,11 +948,30 @@ export default () => {
             returnType: 'Blob',
             returnDesc: '',
           },
+          {
+            name: 'omitObject',
+            desc: '对象排除空值',
+            modifier: 'public',
+            params: [
+              {
+                name: 'obj',
+                desc: '排除的对象',
+                type: 'object',
+                defaultVal: '{}',
+                required: 'true',
+              },
+            ],
+            returnType: 'object',
+            returnDesc: '',
+          },
         ]}
       />
 
-      <h2>数学操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="数学操作"
         data={[
           {
             name: 'toPoint',
@@ -954,7 +1042,6 @@ export default () => {
             returnType: '{x:number,y:number}',
             returnDesc: '',
           },
-
           {
             name: 'getA3Point',
             desc: '计算两点p1,p2 距离p1点distance距离的点p3的坐标',
@@ -1024,11 +1111,366 @@ export default () => {
             returnType: 'number',
             returnDesc: '',
           },
+          {
+            name: 'isPointInCircle',
+            desc: '判断一个点是否在圆内',
+            modifier: 'public',
+            params: [
+              {
+                name: 'point',
+                desc: '点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'circle',
+                desc: '圆的数据',
+                type: 'ICircle',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'boolean',
+            returnDesc: '',
+          },
+          {
+            name: 'isPointInRect',
+            desc: '点是否在矩形中',
+            modifier: 'public',
+            params: [
+              {
+                name: 'point',
+                desc: '点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'rect',
+                desc: '矩形的数据',
+                type: 'IRect',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'boolean',
+            returnDesc: '',
+          },
+          {
+            name: 'getCanvasTextInGemX',
+            desc: '获取一个文本在Rect中的居中的X位置',
+            modifier: 'public',
+            params: [
+              {
+                name: 'ctx',
+                desc: 'ctx',
+                type: 'CanvasRenderingContext2D',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'text',
+                desc: '文本',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'rect',
+                desc: '矩形数据',
+                type: '{ leftTop: IPoint; rightBottom: IPoint }',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'midpoint',
+            desc: '计算两个点的中心点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IPoint',
+            returnDesc: '',
+          },
+          {
+            name: 'slope',
+            desc: '计算两个点的斜率',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'axis',
+                desc: '坐标系',
+                type: "'cartesian' | 'geographic'",
+                defaultVal: 'cartesian',
+                required: '',
+              },
+            ],
+            returnType: 'number | undefined',
+            returnDesc: '',
+          },
+          {
+            name: 'slopToRadian',
+            desc: '获取两点斜率的弧度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'axis',
+                desc: '坐标系',
+                type: "'cartesian' | 'geographic'",
+                defaultVal: 'cartesian',
+                required: '',
+              },
+            ],
+            returnType: 'number | undefined',
+            returnDesc: '',
+          },
+          {
+            name: 'slopToAngle',
+            desc: '获取两点斜率的角度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'fromPoint',
+                desc: '开始点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'toPoint',
+                desc: '结束点',
+                type: 'IPoint',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'axis',
+                desc: '坐标系',
+                type: "'cartesian' | 'geographic'",
+                defaultVal: 'cartesian',
+                required: '',
+              },
+            ],
+            returnType: 'number | undefined',
+            returnDesc: '',
+          },
+          {
+            name: 'radianToAngle',
+            desc: '弧度转换成角度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'radian',
+                desc: '弧度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '角度',
+          },
+          {
+            name: 'angleToRadian',
+            desc: '角度转弧度',
+            modifier: 'public',
+            params: [
+              {
+                name: 'angle',
+                desc: '角度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '弧度',
+          },
+          {
+            name: 'distance',
+            desc: '距离',
+            modifier: 'public',
+            params: [
+              {
+                name: 'value',
+                desc: '数值(m)',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'unit',
+                desc: '单位',
+                type: 'number',
+                defaultVal: 'kilometer',
+                required: '',
+              },
+            ],
+            returnType: 'number',
+            returnDesc: '',
+          },
+          {
+            name: 'getCirclePoint',
+            desc: '获取圆上任意一点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'center',
+                desc: '圆心',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'raduis',
+                desc: '半径',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'angle',
+                desc: '弧度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IPoint',
+            returnDesc: '',
+          },
+          {
+            name: 'getOvalPoint',
+            desc: '获取椭圆上任意一点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'center',
+                desc: '圆心',
+                type: '{x:number,y:number}',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'raduisX',
+                desc: 'X半径',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'raduisY',
+                desc: 'y半径',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'angle',
+                desc: '弧度',
+                type: 'number',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IPoint',
+            returnDesc: '',
+          },
         ]}
       />
 
-      <h2>颜色操作</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="Url操作"
+        data={[
+          {
+            name: 'parse',
+            desc: 'query参数转换成Obj',
+            modifier: 'public',
+            params: [
+              {
+                name: 'path',
+                desc: '待解析的路径',
+                type: 'string',
+                defaultVal: 'window.location.search',
+                required: 'true',
+              },
+            ],
+            returnType: 'Object',
+            returnDesc: '',
+          },
+          {
+            name: 'stringify',
+            desc: '对象转换成query参数',
+            modifier: 'public',
+            params: [
+              {
+                name: 'record',
+                desc: '对象',
+                type: 'Object',
+                defaultVal: '',
+                required: 'true',
+              },
+            ],
+            returnType: 'string',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <FunctionProps
+        border
+        title="颜色操作"
         data={[
           {
             name: 'rgb',
@@ -1049,8 +1491,28 @@ export default () => {
         ]}
       />
 
-      <h2>系统管理相关</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="客户端监测"
+        data={[
+          {
+            name: 'isTouch',
+            desc: '是否移动端支持touch事件',
+            modifier: 'public',
+            params: [],
+            returnType: 'boolean',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <FunctionProps
+        border
+        title="系统管理相关"
         data={[
           {
             name: 'getLang',
@@ -1135,6 +1597,178 @@ export default () => {
               },
             ],
             returnType: 'string',
+            returnDesc: '',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <FunctionProps
+        border
+        title="Tree"
+        data={[
+          {
+            name: 'treeToArray',
+            desc: 'tree数据转换成Array',
+            modifier: 'public',
+            params: [
+              {
+                name: 'treeData',
+                desc: '',
+                type: 'IAntdTreeNode[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type:
+                  '{\n' +
+                  '      parentIdAttr: string;\n' +
+                  '      rootParentId: string | number;\n' +
+                  '    }',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'any[]',
+            returnDesc: '',
+          },
+          {
+            name: 'arrayToAntdTree',
+            desc: 'array转换成Tree',
+            modifier: 'public',
+            params: [
+              {
+                name: 'arr',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'arr',
+                desc: '',
+                type: 'IFlatTreeArrNode',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'Array<IAntdTreeNode>',
+            returnDesc: '',
+          },
+          {
+            name: 'arrayToAntdTreeSelect',
+            desc: 'array转换成TreeSelect',
+            modifier: 'public',
+            params: [
+              {
+                name: 'arr',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'arr',
+                desc: '',
+                type: 'IFlatTreeArrNode',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'Array<IAntdTreeSelectNode>',
+            returnDesc: '',
+          },
+          {
+            name: 'getAncestor',
+            desc: '获取祖先',
+            modifier: 'public',
+            params: [
+              {
+                name: 'data',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'node',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type: 'any',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'any[]',
+            returnDesc: '',
+          },
+          {
+            name: 'getDescendants',
+            desc: '获取子孙',
+            modifier: 'public',
+            params: [
+              {
+                name: 'data',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'node',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type: 'Object',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'any[]',
+            returnDesc: '',
+          },
+          {
+            name: 'findNodeByKey',
+            desc: '根据keyAttr查找结点',
+            modifier: 'public',
+            params: [
+              {
+                name: 'treeData',
+                desc: '',
+                type: 'IAntdTreeNode[]',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'val',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+                required: '',
+              },
+              {
+                name: 'config',
+                desc: '',
+                type: 'Object',
+                defaultVal: '',
+                required: '',
+              },
+            ],
+            returnType: 'IAntdTreeNode | null',
             returnDesc: '',
           },
         ]}

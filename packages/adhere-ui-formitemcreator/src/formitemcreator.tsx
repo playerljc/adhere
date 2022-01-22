@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'antd';
+import { Form, Row, Col } from 'antd';
 
 import renderItem from './formitem';
 import { IFormItemCreatorProps, IFormItemProps } from './types';
@@ -89,20 +89,21 @@ class FormItemCreator extends React.Component<IFormItemCreatorProps> {
 
   render() {
     // @ts-ignore
-    const { columns, layout } = this.props;
+    const { columns, layout, row } = this.props;
 
-    // @ts-ignore
-    return columns.map((item: IFormItemProps) => {
-      const { skip, contentProps, ...itemProps } = item;
+    const formItems = columns.map((item: IFormItemProps) => {
+      const { skip, contentProps, col, ...itemProps } = item;
 
       if (skip) return;
 
-      return (
+      const formItem = (
         <Form.Item {...this.getDefaultItemProps(item)} {...layout} {...itemProps}>
           {this.renderFormItem(item)}
         </Form.Item>
       );
+      return col ? <Col {...col}>{formItem}</Col> : formItem;
     });
+    return row ? <Row {...row}>{formItems}</Row> : formItems;
   }
 }
 
@@ -111,7 +112,25 @@ FormItemCreator.defaultProps = {
 };
 
 FormItemCreator.propTypes = {
-  columns: PropTypes.array,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      labelCol: PropTypes.object,
+      wrapperCol: PropTypes.object,
+    }),
+  ),
+  layout: PropTypes.shape({
+    name: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      ]),
+    ),
+    type: PropTypes.symbol,
+    contentProps: PropTypes.any,
+    skip: PropTypes.bool,
+    content: PropTypes.node,
+  }),
 };
 
 export default FormItemCreator;

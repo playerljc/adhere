@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-// @ts-ignore
-import { FlexContext } from '@baifendian/adhere-ui-flexlayout/lib/context';
-// @ts-ignore
-import { selectorPrefix as flexlayoutSelectorPrefix } from '@baifendian/adhere-ui-flexlayout/lib/flexlayout';
+import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
 // @ts-ignore
 import { ISplitLayoutProps } from './types';
 
+const FlexContext = FlexLayout.Context;
+// @ts-ignore
+const flexlayoutSelectorPrefix = FlexLayout.selectorPrefix;
 const selectorPrefix = 'adhere-ui-splitlayout';
 
 /**
@@ -364,7 +364,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
     }
   };
 
-  onMouseup = () => {
+  onMouseup = (e) => {
     console.log('mouseup');
 
     const { el: splitEl } = this;
@@ -373,6 +373,9 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
     splitEl.classList.add(`${selectorPrefix}-${this.getResizeClass()}`);
 
     if (this.isDown) {
+      // @ts-ignore
+      const { onDragFinished } = this.props;
+
       this.isDown = false;
 
       this.isMove = false;
@@ -382,6 +385,10 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
       this.startVal = 0;
 
       this.changeBaseVal += this.changeVal;
+
+      if (onDragFinished) {
+        onDragFinished(e);
+      }
     }
   };
 
@@ -477,6 +484,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   renderInner = ({ direction }): React.ReactElement => {
+    console.log('renderInner-direction',direction);
     this.direction = direction;
 
     // @ts-ignore

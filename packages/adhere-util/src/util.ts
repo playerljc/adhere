@@ -2,8 +2,11 @@ import Base from './base';
 import Color from './color';
 import Dom from './dom';
 import Math from './math';
+import Geometry from './geometry';
 import clientDetection from './clientDetection';
 import SystemManager from './systemmanager';
+import Tree from './tree';
+import Url from './url';
 
 export default {
   /**
@@ -13,6 +16,9 @@ export default {
   ...Color,
   ...Dom,
   ...Math,
+  ...Geometry,
   ...clientDetection,
   ...SystemManager,
+  ...Tree,
+  ...Url,
 };

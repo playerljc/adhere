@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button } from 'antd';
-import { Emitter } from '@baifendian/adhere';
+import { Emitter, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -17,8 +17,11 @@ export default () => {
         <li>- 解除订阅</li>
       </ul>
 
-      <h2>方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'on',

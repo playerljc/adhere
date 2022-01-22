@@ -1,6 +1,4 @@
-import { getLocal } from '../intl';
-
-const local = getLocal([
+export default [
   'O valor inserido está entre 1 e 200',
   'O conteúdo inserido tem até 100 caracteres',
   'Tudo',
@@ -46,6 +44,11 @@ const local = getLocal([
   'Puxe para baixo para atualizar',
   'Solte para atualizar',
   'Tempo de atualização',
-]);
-
-export default { ...local };
+  'Metro',
+  'quilômetro',
+  'ponto de partida',
+  'Comprimento total',
+  'Clique para confirmar a localização, clique duas vezes para encerrar',
+  'fecho',
+  'Não pode haver espaços antes e depois do conteúdo de entrada',
+];

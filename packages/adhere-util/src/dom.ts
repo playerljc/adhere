@@ -1,3 +1,5 @@
+import ClientDetectionUtil from './clientDetection';
+
 const eventListenerHandlers = new Map();
 
 export default {
@@ -263,7 +265,7 @@ export default {
    * @param obj
    * @param dom
    */
-  objectToDataSet(obj: object, dom: HTMLElement) {
+  objectToDataSet(obj: object, dom: HTMLElement): void {
     for (const p in obj) {
       dom.dataset[p] = obj[p];
     }
@@ -273,7 +275,7 @@ export default {
    * @returns {Object}
    * @param dom
    */
-  dataSetToObject(dom: HTMLElement) {
+  dataSetToObject(dom: HTMLElement): object {
     const obj = {};
     for (const p in dom.dataset) {
       obj[p] = dom.dataset[p];
@@ -285,14 +287,15 @@ export default {
    * @return {SelectOptions}
    * @param el
    */
-  getPageLeft(el) {
+  getPageLeft(el: HTMLElement): number {
     let left = el.offsetLeft;
-    let offsetParent = el.offsetParent;
+
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
       // @ts-ignore
       left += offsetParent.offsetLeft;
-    } while ((offsetParent = offsetParent.offsetParent));
+    } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
 
     return left;
   },
@@ -301,14 +304,14 @@ export default {
    * @return {SelectOptions}
    * @param el
    */
-  getPageTop(el) {
+  getPageTop(el: HTMLElement): number {
     let top = el.offsetTop;
-    let offsetParent = el.offsetParent;
+
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
-      // @ts-ignore
       top += offsetParent.offsetTop;
-    } while ((offsetParent = offsetParent.offsetParent));
+    } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
 
     return top;
   },
@@ -317,18 +320,80 @@ export default {
    * @return {{top: number, left: number}}
    * @param el
    */
-  getPageRect(el) {
+  getPageRect(el: HTMLElement): { top: number; bottom: number; left: number; right: number } {
     let top = el.offsetTop;
     let left = el.offsetLeft;
 
-    let offsetParent = el.offsetParent;
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
-      // @ts-ignore
       top += offsetParent.offsetTop;
-      // @ts-ignore
       left += offsetParent.offsetLeft;
-    } while ((offsetParent = offsetParent.offsetParent));
+    } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
+
+    return {
+      top,
+      bottom: top + el.offsetHeight,
+      left,
+      right: left + el.offsetWidth,
+    };
+  },
+  /**
+   * getLeftUntil
+   * @description - 获取left直到untilEl
+   * @param el
+   * @param untilEl
+   */
+  getLeftUntil({ el, untilEl }: { el: HTMLElement; untilEl: HTMLElement }): number {
+    let left = el.offsetLeft;
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
+
+    while (untilEl !== offsetParent) {
+      left += offsetParent.offsetLeft;
+      offsetParent = offsetParent.offsetParent as HTMLElement;
+    }
+
+    return left;
+  },
+  /**
+   * getTopUntil
+   * @description - 获取top直到untilEl
+   * @param el
+   * @param untilEl
+   */
+  getTopUntil({ el, untilEl }: { el: HTMLElement; untilEl: HTMLElement }): number {
+    let top = el.offsetTop;
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
+
+    while (untilEl !== offsetParent) {
+      top += offsetParent.offsetTop;
+      offsetParent = offsetParent.offsetParent as HTMLElement;
+    }
+
+    return top;
+  },
+  /**
+   * getRectUntil
+   * @description - 获取Rect直到untilEl
+   * @param el
+   * @param untilEl
+   */
+  getRectUntil({ el, untilEl }: { el: HTMLElement; untilEl: HTMLElement }): {
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
+  } {
+    let top = el.offsetTop;
+    let left = el.offsetLeft;
+
+    let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
+
+    while (untilEl !== offsetParent) {
+      top += offsetParent.offsetTop;
+      left += offsetParent.offsetLeft;
+      offsetParent = offsetParent.offsetParent as HTMLElement;
+    }
 
     return {
       top,
@@ -342,7 +407,89 @@ export default {
    * @return {boolean}
    */
   isIframeEmbed() {
-    return window.top && window.top !== window;
+    return typeof window === 'undefined' ? false : window.top && window.top !== window;
   },
+  /**
+   * addClickListener - 支持PC和移动端的点击事件
+   * @param el
+   * @param handler
+   * @param capture
+   */
+  addClickListener: (() => {
+    return function (el: HTMLElement, handler: (e) => {}, capture?: boolean): Function {
+      let isStart = false;
+      let isMove = false;
+      let startTime = 0;
+      let endTime = 0;
+
+      const handlers = Array<{ type: string; handler: Function }>();
+
+      // 如果是移动端浏览器
+      if (ClientDetectionUtil.isTouch()) {
+        const touchStartHandler = () => {
+          isStart = true;
+          startTime = new Date().getTime();
+        };
+
+        const touchMoveHandler = () => {
+          isMove = true;
+        };
+
+        const touchEndHandler = (e) => {
+          endTime = new Date().getTime();
+
+          const step = endTime - startTime;
+
+          if ((isStart && !isMove) || (isStart && isMove && step <= 200) /*事件少于200ms*/) {
+            // 命中
+            handler(e);
+          }
+        };
+
+        handlers.push({
+          type: 'touchstart',
+          handler: touchStartHandler,
+        });
+        handlers.push({
+          type: 'touchmove',
+          handler: touchMoveHandler,
+        });
+        handlers.push({
+          type: 'touchend',
+          handler: touchEndHandler,
+        });
+
+        // @ts-ignore
+        el.addEventListener('touchstart', touchStartHandler, capture || false);
+
+        // @ts-ignore
+        el.addEventListener('touchmove', touchMoveHandler, capture || false);
+
+        // @ts-ignore
+        el.addEventListener('touchend', touchEndHandler, capture || false);
+      }
+      // 是PC端浏览器
+      else {
+        const clickHandler = (e) => {
+          handler(e);
+        };
+
+        handlers.push({
+          type: 'click',
+          handler: clickHandler,
+        });
+
+        // @ts-ignore
+        el.addEventListener('click', clickHandler, capture || false);
+      }
+
+      return () => {
+        handlers.forEach(({ type, handler }) => {
+          // @ts-ignore
+          el.removeEventListener(type, handler);
+        });
+      };
+    };
+  })(),
   /**--------------------------dom-end-------------------------**/
 };

@@ -1,0 +1,22 @@
+.Wrap {
+  width: 100%;
+  padding: 20px;
+  > ul {
+    padding-left: 20px;
+    list-style-type: disc;
+    > li {
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      > ul {
+        padding-left: 20px;
+        list-style-type: circle;
+        > li {
+          &:not(:last-child) {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+}

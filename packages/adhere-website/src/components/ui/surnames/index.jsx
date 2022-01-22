@@ -61,8 +61,9 @@ export default () => {
       <h1>Surnames</h1>
       <p>姓名面板</p>
 
-      <h3>Surnames</h3>
       <Props
+        border
+        title="Surnames"
         data={[
           {
             params: 'className',
@@ -109,8 +110,11 @@ export default () => {
         ]}
       />
 
-      <h2>indexes</h2>
+      <Space />
+
       <Props
+        border
+        title="indexes"
         data={[
           {
             params: 'index',
@@ -139,8 +143,11 @@ export default () => {
         ]}
       />
 
-      <h2>dataSource</h2>
+      <Space />
+
       <Props
+        border
+        title="dataSource"
         data={[
           {
             params: 'index',
@@ -157,8 +164,11 @@ export default () => {
         ]}
       />
 
-      <h2>方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'scrollToAnimation',
@@ -201,6 +211,8 @@ export default () => {
           },
         ]}
       />
+
+      <Space />
 
       <Playground
         mode="code"

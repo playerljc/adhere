@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
+import { Space } from '@baifendian/adhere';
+
 import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -22,8 +24,10 @@ export default () => {
       <p>
         此组件是一个父类，使用的时候需要写一个子类，人后重写fetchData、renderInner和showLoading三个方法，所以只能使用class的方式，不能使用hooks
       </p>
-      <h2>属性</h2>
+
       <Props
+        border
+        title="属性"
         data={[
           {
             params: 'reset',
@@ -40,8 +44,11 @@ export default () => {
         ]}
       />
 
-      <h2>重写的方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="重写的方法"
         data={[
           {
             name: 'fetchData',

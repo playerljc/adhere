@@ -18,6 +18,27 @@ import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/l
 export interface ISearchTableProps extends ISuspenseProps {
   className?: string;
   style?: React.CSSProperties;
+  tableClassName: string;
+  tableStyle: React.CSSProperties;
+  searchClassName: string;
+  searchStyle: React.CSSProperties;
+  firstLoading: React.ReactElement;
+  // antdTable的Props
+  antdTableProps: object;
+  // 是否有展开和收缩的功能
+  isShowExpandSearch: boolean;
+  // 展开和收缩的默认状态
+  defaultExpandSearchCollapse: boolean;
+  // 撑开search
+  fitSearch: boolean;
+  // 撑开表格
+  fitTable: boolean;
+  // 是否是查询固定，表格自适应
+  autoFixed: boolean;
+  // 锁定列头，表格滚动
+  fixedHeaderAutoTable: boolean;
+  // 两端固定(表格的头始终在上方，分页始终在下方)
+  fixedTableSpaceBetween: boolean;
 }
 
 /**
@@ -104,6 +125,16 @@ export interface ISearchTableImplementProps {
    * renderSearchForm - 渲染查询的UI
    */
   renderSearchForm(): React.ReactElement | null;
+
+  /**
+   * renderTableHeader - 渲染表格的头
+   */
+  renderTableHeader(): React.ReactElement | null;
+
+  /**
+   * renderTableFooter - 渲染表格的脚
+   */
+  renderTableFooter(): React.ReactElement | null;
 
   /**
    * getTotal - 获取表格数据的总数

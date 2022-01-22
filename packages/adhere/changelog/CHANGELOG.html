@@ -9,6 +9,330 @@
   </head>
 
   <body>
+    <h1>1.0.14</h1>
+    <hr />
+    <div>2022-1-22</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-playground</h3>
+        <ul>
+          <li>加入CodePanel组件</li>
+          <li>加入CodeTabPanel组件</li>
+          <li>加入CodeBoxPanel组件</li>
+          <li>加入AnchorNavigation组件</li>
+          <li>加入PlayGroundTab组件</li>
+          <li>细化Card组件加入description配置</li>
+          <li>细化PlayGround组件</li>
+          <li>细化PlayGroundMulit组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>dom加入新方法</li>
+        </ul>
+      </li>
+    </ul>
+    <h1>1.0.13</h1>
+    <hr />
+    <div>2021-12-28</div>
+    <ul>
+      <li>区分lib和es两个目录来区分main和module</li>
+      <li>ssr的支持</li>
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>如果value是函数加入是否缓存的设置</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-util-decorators</h3>
+        <ul>
+          <li>componentDidCatch中加入Loading chunk重新加载</li>
+        </ul>
+      </li>
+      <li>
+        <h3>adhere-ui-formitemcreator</h3>
+        <ul>
+          <li>优化栅格布局</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h1>1.0.12</h1>
+    <hr />
+    <div>2021-12-13</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-css</h3>
+        <ul>
+          <li>normalize-default.less修改</li>
+          <li>mixin.less修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>searchformlabel和searchformvalue加入其他属性的混入</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>base加入omitObject方法</li>
+          <li>tree的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-communication-ajax</h3>
+        <ul>
+          <li>加入notification的节流</li>
+          <li>修改传参错误和status的缺省处理</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-dict</h3>
+        <ul>
+          <li>加入config配置</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-reactutil</h3>
+        <ul>
+          <li>加入@baifendian/adhere-util-reactutil</li>
+        </ul>
+      </li>
+    </ul>
+    <h1>1.0.11</h1>
+    <hr />
+    <div>2021-11-19</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-playground</h3>
+        <ul>
+          <li>加入collapse折叠操作</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>componentDidUpdate的修改</li>
+          <li>分页没有时候的处理</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>url库修改加入是否忽略空值、加入缓存</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>加入新词条</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-resource</h3>
+        <ul>
+          <li>dict.form.config.js资源的修改</li>
+        </ul>
+      </li>
+    </ul>
+    <h1>1.0.10</h1>
+    <hr />
+    <div>2021-11-4</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-hooks</h3>
+        <ul>
+          <li>加入代码useForceUpdate</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>修改searchtableimplement.tsx的fetchData方法的传值BUG</li>
+          <li>样式大写修改为小写</li>
+          <li>加入getDataKey和getTotalKey方法</li>
+          <li>getFetchListPropNameToFirstUpper自动生成</li>
+          <li>column支持权限设置(authorized)</li>
+          <li>onClear方法改为在原型链上定义</li>
+          <li>加入renderTableHeader渲染(表格头上方，查询条件下方)</li>
+          <li>加入renderTableFooter渲染(表格下方,分页上方)</li>
+          <li>searchtableimplement.tsx加入getSearchParams方法获取所有查询参数</li>
+          <li>加入fixedTableSpaceBetween配置项(两端固定(表格的头始终在上方，分页始终在下方)</li>
+          <li>加入searchtablestateimplement.tsx实现类(state的支持)</li>
+          <li>修改无数据时样式的错乱</li>
+          <li>修改loading时的样式错乱</li>
+        </ul>
+      </li>
+    </ul>
+    <h1>1.0.9</h1>
+    <hr />
+    <div>2021-10-27</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-css</h3>
+        <ul>
+          <li>normalize-antd.less修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-messagedialog</h3>
+        <ul>
+          <li>BUG的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>把max-width的限制去掉</li>
+          <li>关闭和展开查询条件加入默认状态和是否显示</li>
+          <li>加入表格体fit和滚动</li>
+          <li>加入表格固定列头，表格体滚动</li>
+          <li>加入searchtableimplement.tsx的默认实现</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-browsersniff</h3>
+        <ul>
+          <li>加入@baifendian/adhere-util-browsersniff</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-validator</h3>
+        <ul>
+          <li>加入@baifendian/adhere-util-validator</li>
+        </ul>
+      </li>
+    </ul>
+    <h1>1.0.8</h1>
+    <hr />
+    <div>2021-10-17</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-historyback</h3>
+        <ul>
+          <li>加入火狐下不支持document.referrer</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-searchtable</h3>
+        <ul>
+          <li>加入自定义序号列的渲染</li>
+          <li>搜索栏加入展开和关闭功能</li>
+          <li>加入Table的缺省传递props功能</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>加入url库</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-communication-ajax</h3>
+        <ul>
+          <li>BUG的修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-intl</h3>
+        <ul>
+          <li>修改系统词条和用户词条的冲突</li>
+          <li>加入新词条</li>
+        </ul>
+      </li>
+    </ul>
+    <h1>1.0.7</h1>
+    <hr />
+    <div>2021-9-30</div>
+    <ul>
+      <li>
+        <h3>adhere-ui-bmap</h3>
+        <ul>
+          <li>加入@baifendian/adhere-ui-bmap组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-css</h3>
+        <ul>
+          <li>加入common-no-select函数</li>
+          <li>加入switch.less</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-flexlayout</h3>
+        <ul>
+          <li>fixed和auto加入了getEl方法</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-olmap</h3>
+        <ul>
+          <li>加入windLayer(风场)</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-playground</h3>
+        <ul>
+          <li>加入adhere-ui-playground组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-polygonselection</h3>
+        <ul>
+          <li>加入PolygonSelection(多边形选区)组件</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-ui-splitlayout</h3>
+        <ul>
+          <li>onMouseup事件加入dragFinished事件触发</li>
+          <li>加入FlexLayout的use</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util</h3>
+        <ul>
+          <li>math修改</li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>adhere-util-domain</h3>
+        <ul>
+          <li>domain模块的浏览器端实现</li>
+        </ul>
+      </li>
+    </ul>
     <h1>1.0.6</h1>
     <hr />
     <div>2021-7-2</div>
@@ -77,6 +401,7 @@
         </ul>
       </li>
     </ul>
+
     <h1>1.0.0</h1>
     <hr />
     <div>2020-12-22</div>

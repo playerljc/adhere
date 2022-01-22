@@ -1,5 +1,5 @@
 :global {
-  @import '../node_modules/font-awesome/less/font-awesome.less';
+  @import '../../../node_modules/font-awesome/less/font-awesome.less';
 
   html,
   body,
@@ -38,6 +38,18 @@
 
     p {
       margin: 10px 0;
+    }
+
+    .list {
+      > li {
+        margin-left: 15px;
+        list-style-type: disc;
+      }
+    }
+
+    .list > li .list > li {
+      margin-left: 15px;
+      list-style-type: circle;
     }
   }
 

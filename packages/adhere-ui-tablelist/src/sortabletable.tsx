@@ -6,7 +6,10 @@
  * @LastEditTime: 2021-04-28 17:10:18
  */
 import React from 'react';
+
 import { Table } from 'antd';
+// import Table from 'antd/lib/table';
+
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { TSortTableProps } from './types';

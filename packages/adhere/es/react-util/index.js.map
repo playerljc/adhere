@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["react-util/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-reactutil/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,gEACQA"}

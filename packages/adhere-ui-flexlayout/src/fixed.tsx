@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -21,11 +21,16 @@ class Fixed extends React.Component<IFixedProps, any> {
   // @ts-ignore
   private props: IFixedProps | undefined;
   private direction: string | undefined;
+  private ref: RefObject<HTMLDivElement> | null | undefined;
 
   constructor(props) {
     super(props);
 
     this.renderInner = this.renderInner.bind(this);
+  }
+
+  getEl(): HTMLDivElement {
+    return this?.ref?.current as HTMLDivElement;
   }
 
   renderInner({ direction }) {
@@ -36,6 +41,7 @@ class Fixed extends React.Component<IFixedProps, any> {
 
     return (
       <div
+        ref={this.ref}
         style={{ ...style }}
         className={classNames(
           selectorPrefix,

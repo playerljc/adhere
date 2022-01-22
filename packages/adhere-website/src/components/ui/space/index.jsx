@@ -9,9 +9,11 @@ export default () => (
   <div className="Page">
     <h1>Space</h1>
     <p>无侵入性的上下留白和左右留白</p>
+
     <h2>属性</h2>
-    <h3>Space</h3>
     <Props
+      border
+      title="Space"
       data={[
         {
           params: 'direction',
@@ -33,8 +35,12 @@ export default () => (
         },
       ]}
     />
-    <h3>Space.Group</h3>
+
+    <Space />
+
     <Props
+      border
+      title="Space.Group"
       data={[
         {
           params: 'direction',

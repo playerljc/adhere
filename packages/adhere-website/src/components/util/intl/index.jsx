@@ -2,6 +2,7 @@ import React from 'react';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import { Space } from '@baifendian/adhere';
 
 export default () => {
   return (
@@ -13,8 +14,11 @@ export default () => {
         <li>- 支持自动生成词条的key</li>
       </ul>
 
-      <h2>方法</h2>
+      <Space />
+
       <FunctionProps
+        border
+        title="方法"
         data={[
           {
             name: 'init',
@@ -226,31 +230,21 @@ export default () => {
   
   
   // zh_CN.js文件
-  import { Intl } from '@baifendian/adhere';
-
-  const local = Intl.getLocal([
-    'XXX系统',
-  ]);
   
-  export default { ...local };
+  export default [
+    'XXX系统',
+  ];
   
   // pt_PT.js文件
-  import { Intl } from '@baifendian/adhere';
-
-  const local = Intl.getLocal([
-    'XXX系统',
-  ]);
   
-  export default { ...local };
+  export default [
+    'XXX系统',
+  ];
   
   // en_US.js文件
-  import { Intl } from '@baifendian/adhere';
-
-  const local = Intl.getLocal([
+  export default [
     'XXX系统',
-  ]);
-  
-  export default { ...local };
+  ];
   
         `}
       />

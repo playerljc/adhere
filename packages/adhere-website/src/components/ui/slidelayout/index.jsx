@@ -43,8 +43,9 @@ export default () => {
       <h1>SlideLayout</h1>
       <p>抽屉布局</p>
 
-      <h3>Overlay</h3>
       <Props
+        border
+        title="Overlay"
         data={[
           {
             params: 'className',
@@ -127,8 +128,11 @@ export default () => {
         ]}
       />
 
-      <h3>Push</h3>
+      <Space />
+
       <Props
+        border
+        title="Push"
         data={[
           {
             params: 'masterClassName',
@@ -247,8 +251,11 @@ export default () => {
         ]}
       />
 
-      <h3>Reveal</h3>
+      <Space />
+
       <Props
+        border
+        title="Reveal"
         data={[
           {
             params: 'masterClassName',

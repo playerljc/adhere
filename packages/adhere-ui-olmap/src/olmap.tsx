@@ -6,7 +6,7 @@ import Resource from '@baifendian/adhere-util-resource';
 // import intl from '@baifendian/adhere-util-intl';
 
 import GeoLayer from './geolayer';
-import * as TitleLayer from './titlelayer';
+// import * as TitleLayer from './titlelayer';
 import { IOLMapProps } from './types';
 import Util from './util';
 import Constent from './constent';
@@ -109,6 +109,16 @@ class OlMap extends React.Component<IOLMapProps, any> {
    */
   addGeoLayer(geojsonData, getStyleConfig, zIndex = 0) {
     return Util.addGeoLayer(this.map, geojsonData, getStyleConfig, zIndex);
+  }
+
+  /**
+   * addWindLayer - 添加风场层
+   * @param data
+   * @param config
+   * @param zIndex
+   */
+  addWindLayer(data, config, zIndex = 0) {
+    return Util.addWindLayer(this.map, data, config, zIndex);
   }
 
   /**

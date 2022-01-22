@@ -12,7 +12,7 @@ export default () => {
         <li>- 异步字典</li>
       </ul>
       <p>
-        第一次使用的时候才加载到内存，加载过之后就不在加载，如果字典是函数，也会对函数的值进行memoized处理
+        第一次使用的时候才加载到内存，加载过之后就不在加载，如果字典是函数，也会对函数的值进行memoized处理，可以进行设置是否缓存
       </p>
 
       <h2>字典的定义</h2>
@@ -145,7 +145,6 @@ export default () => {
 
       <h2>字典返回函数值的memoized操作</h2>
       <Playground
-        Playground
         mode="code"
         scope={{ React }}
         expand

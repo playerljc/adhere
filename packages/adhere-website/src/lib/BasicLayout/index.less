@@ -5,16 +5,19 @@
 
   > .Auto {
     flex-direction: column;
+    overflow-y: auto;
 
     > .Fixed {
       padding: 20px;
     }
 
     > .Auto {
-      min-height: 0;
-      overflow-y: auto;
       background: @common-block-background-color;
     }
+
+    //> .FooterWrap {
+    //
+    //}
   }
 
   .Fixed {
@@ -44,6 +47,7 @@
   }
 
   .Auto {
+    position: relative;
     display: flex;
     flex-grow: 1;
     min-width: 0;
