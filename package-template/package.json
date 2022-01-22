@@ -1,22 +1,24 @@
 {
   "name": "@baifendian/adhere-util-${name}",
   "version": "1.0.0",
-  "description": "Ajax通信",
+  "description": "${description}",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
+    "es",
     "umd"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
-    "buildpackage": "ctbuild buildpackagets",
+    "buildpackage:cjs": "ctbuild buildpackagets",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --packagename Adhere${name} --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/playerljc/adhere"
+    "url": "https://gitee.com/playerljc/${name}"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
@@ -24,16 +26,17 @@
   "author": "playerljc",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitee.com/playerljc/adhere/issues"
+    "url": "https://gitee.com/playerljc/${name}/issues"
   },
-  "homepage": "https://gitee.com/playerljc/adhere",
+  "homepage": "https://gitee.com/playerljc/${name}",
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
     "@babel/runtime": "^7.15.4",
     "@ctsj/build": "^4.0.11",
-    "typescript": "^3.9.4"
+    "typescript": "^3.9.4",
+    "npm-run-all": "^4.1.5"
   },
   "dependencies": {
     "react": "^17.0.1",
