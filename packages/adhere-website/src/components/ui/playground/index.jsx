@@ -11,10 +11,12 @@ export default () => {
 
       <ul style={{ listStyle: 'disc', marginLeft: 20 }}>
         <li>PlayGround - React的代码单文件展示</li>
+        <li>PlayGroundTab - React的多标签文件展示</li>
         <li>PlayGroundMulit - React的代码多文件展示</li>
         <li>Props - React组件的Props说明</li>
         <li>FunctionProps - 类方法说明</li>
         <li>CodePanel - 代码片段</li>
+        <li>CodeTabPanel - 多标签代码片段</li>
         <li>CodeBoxPanel - 代码片段组</li>
         <li>AnchorNavigation - 带有锚点的导航</li>
       </ul>
@@ -36,6 +38,33 @@ export default () => {
             desc: '是否展开代码区域',
             type: 'boolean',
             defaultVal: 'false',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <Props
+        border
+        title="CodeTabPanel"
+        data={[
+          {
+            params: 'active',
+            desc: '激活项',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'config',
+            desc: '',
+            type: 'ICodeTabPanelItemProps[]',
+            defaultVal: '[]',
+          },
+          {
+            params: 'onChange',
+            desc: '',
+            type: 'Function',
+            defaultVal: '',
           },
         ]}
       />
@@ -75,6 +104,63 @@ export default () => {
             desc: '是否激活',
             type: 'boolean',
             defaultVal: 'false',
+          },
+        ]}
+      />
+
+      <Space />
+
+      <Props
+        border
+        title="PlayGroundTab"
+        data={[
+          {
+            params: 'id',
+            desc: 'id',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'codeText',
+            desc: '展示的代码',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'expand',
+            desc: '是否展开代码区域',
+            type: 'boolean',
+            defaultVal: 'false',
+          },
+          {
+            params: 'cardProps',
+            desc: 'card的配置',
+            type: 'cardPropTypes',
+            defaultVal: '',
+          },
+          {
+            params: 'isActive',
+            desc: '是否激活',
+            type: 'boolean',
+            defaultVal: 'false',
+          },
+          {
+            params: 'active',
+            desc: '激活项',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'config',
+            desc: '',
+            type: 'ICodeTabPanelItemProps[]',
+            defaultVal: '[]',
+          },
+          {
+            params: 'onChange',
+            desc: '',
+            type: 'Function',
+            defaultVal: '',
           },
         ]}
       />
@@ -429,6 +515,40 @@ export default () => {
           },
         ]}
       />
+
+      <Space />
+
+      <Props
+        border
+        title="ICodeTabPanelItemProps"
+        data={[
+          {
+            params: 'key',
+            desc: '',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'title',
+            desc: '',
+            type: 'string | React.ReactElement',
+            defaultVal: '',
+          },
+          {
+            params: 'codeText',
+            desc: '',
+            type: 'string',
+            defaultVal: '',
+          },
+          {
+            params: 'theme',
+            desc: '',
+            type: 'string',
+            defaultVal: '',
+          },
+        ]}
+      />
+
       <h3>例子</h3>
       <p>本文档全部采用了PlayGround作为代码展示</p>
     </div>
