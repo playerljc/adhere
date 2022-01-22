@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -19,6 +19,7 @@ const selectPrefix = 'adhere-ui-playground-code-box';
 function CodeBoxPanel(props: ICodeBoxProps) {
   const [activeAnchor, setAnchor] = useState('');
   const [expandAll, setExpandAll] = useState(props.expandAll);
+  const expandLock = useRef(false);
   const { columnCount, config } = props;
 
   const column = [];
@@ -56,6 +57,13 @@ function CodeBoxPanel(props: ICodeBoxProps) {
   useEffect(() => {
     setExpandAll(props.expandAll);
   }, [props.expandAll]);
+
+  /**
+   * useEffect expandAll
+   */
+  useEffect(() => {
+    expandLock.current = false;
+  },[expandAll]);
 
   /**
    * renderPlayGroundMulit
@@ -184,7 +192,11 @@ function CodeBoxPanel(props: ICodeBoxProps) {
                     className={`${selectPrefix}-expand-code`}
                     src={Constant.ExpandCodeAll}
                     alt=""
-                    onClick={() => setExpandAll(true)}
+                    onClick={() => {
+                      if (expandLock.current) return;
+                      expandLock.current = true;
+                      setExpandAll(true);
+                    }}
                   />
                 )}
               >
@@ -193,7 +205,11 @@ function CodeBoxPanel(props: ICodeBoxProps) {
                     className={`${selectPrefix}-expand-code`}
                     src={Constant.CloseCodeAll}
                     alt=""
-                    onClick={() => setExpandAll(false)}
+                    onClick={() => {
+                      if (expandLock.current) return;
+                      expandLock.current = true;
+                      setExpandAll(false);
+                    }}
                   />
                 )}
               </ConditionalRender>
@@ -267,4 +283,4 @@ CodeBoxPanel.propTypes = {
   ),
 };
 
-export default CodeBoxPanel;
+export default memo(CodeBoxPanel);

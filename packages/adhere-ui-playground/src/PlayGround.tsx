@@ -47,6 +47,13 @@ class PlayGround extends APlayGround {
       </ConditionalRender>
     );
   }
+
+  /**
+   * getClipboardText
+   */
+  protected getClipboardText(): Promise<string> {
+    return Promise.resolve(this.props.codeText);
+  }
 }
 
 PlayGround.defaultProps = {

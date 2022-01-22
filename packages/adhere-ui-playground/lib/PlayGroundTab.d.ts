@@ -7,11 +7,17 @@ import { IPlayGroundTabProps } from './types';
  * @classdesc PlayGroundTab
  */
 declare class PlayGroundTab extends APlayGround {
+    constructor(props: any);
+    protected componentWillReceiveProps(nextProps: any): void;
     /**
      * renderCodeView - 代码展示视图
      * @return {*}
      */
     protected renderCodeView(): React.ReactElement;
+    /**
+     * getClipboardText
+     */
+    protected getClipboardText(): Promise<string>;
 }
 export declare const PlayGroundTabDefaultProps: IPlayGroundTabProps;
 export declare const PlayGroundTabPropTypes: {
@@ -22,6 +28,7 @@ export declare const PlayGroundTabPropTypes: {
         codeText: import("prop-types").Requireable<string>;
         theme: import("prop-types").Requireable<string>;
     }> | null | undefined)[]>;
+    onChange: import("prop-types").Requireable<(...args: any[]) => any>;
     id: import("prop-types").Requireable<string>;
     cardProps: import("prop-types").Requireable<import("prop-types").InferProps<{
         className: import("prop-types").Requireable<string>;

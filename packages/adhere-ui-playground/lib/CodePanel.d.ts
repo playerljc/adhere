@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ICodePanelProps } from './types';
 /**
@@ -25,4 +25,5 @@ export declare const CodePanelPropTypes: {
     codeText: PropTypes.Requireable<string>;
     theme: PropTypes.Requireable<string>;
 };
-export default CodePanel;
+declare const _default: React.MemoExoticComponent<typeof CodePanel>;
+export default _default;

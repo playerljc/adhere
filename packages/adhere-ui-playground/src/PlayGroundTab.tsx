@@ -12,6 +12,26 @@ import { IPlayGroundTabProps } from './types';
  * @classdesc PlayGroundTab
  */
 class PlayGroundTab extends APlayGround {
+  // @ts-ignore
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.state,
+      // @ts-ignore
+      activeKey: props.active,
+    };
+  }
+
+  protected componentWillReceiveProps(nextProps) {
+    super.componentWillReceiveProps(nextProps);
+
+    this.setState({
+      // @ts-ignore
+      activeKey: nextProps.active,
+    });
+  }
+
   /**
    * renderCodeView - 代码展示视图
    * @return {*}
@@ -31,7 +51,17 @@ class PlayGroundTab extends APlayGround {
         noMatch={() => (
           // @ts-ignore
           <Card style={{ display: expand ? '' : 'none' }}>
-            <CodeTabPanel {...others} />
+            <CodeTabPanel
+              {...others}
+              // @ts-ignore
+              active={this.state.activeKey}
+              onChange={(key) =>
+                this.setState({
+                  // @ts-ignore
+                  activeKey: key,
+                })
+              }
+            />
           </Card>
         )}
       >
@@ -40,13 +70,36 @@ class PlayGroundTab extends APlayGround {
             {() => (
               // @ts-ignore
               <Card>
-                <CodeTabPanel {...others} />
+                <CodeTabPanel
+                  {...others}
+                  // @ts-ignore
+                  active={this.state.activeKey}
+                  onChange={(key) =>
+                    this.setState({
+                      // @ts-ignore
+                      activeKey: key,
+                    })
+                  }
+                />
               </Card>
             )}
           </ConditionalRender>
         )}
       </ConditionalRender>
     );
+  }
+
+  /**
+   * getClipboardText
+   */
+  protected getClipboardText(): Promise<string> {
+    // @ts-ignore
+    const { config } = this.props;
+
+    // @ts-ignore
+    const { activeKey } = this.state;
+
+    return Promise.resolve(config.find((c) => c.key === activeKey)?.codeText);
   }
 }
 

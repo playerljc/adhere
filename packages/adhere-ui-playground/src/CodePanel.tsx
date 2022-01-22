@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import PlayGroundExt from 'component-playground';
 
@@ -41,4 +41,4 @@ CodePanel.defaultProps = CodePanelDefaultProps;
 
 CodePanel.propTypes = CodePanelPropTypes;
 
-export default CodePanel;
+export default memo(CodePanel);

@@ -64,7 +64,6 @@ export interface IPlayGroundProps extends ICodePanelProps {
  */
 export interface IPlayGroundMulitProps extends IPlayGroundProps {
     config: IPlayGroundProps[];
-    expand: boolean;
 }
 /**
  * IPlayGroundState
@@ -148,6 +147,7 @@ export interface ICodeTabPanelItemProps extends ICodePanelProps {
 export interface ICodeTabPanelProps {
     active: string;
     config: ICodeTabPanelItemProps[];
+    onChange?: (activeKey: string) => void;
 }
 export interface IPlayGroundTabProps extends ICodeTabPanelProps, IPlayGroundProps {
 }

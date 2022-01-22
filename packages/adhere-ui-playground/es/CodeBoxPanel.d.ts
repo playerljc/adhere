@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ICodeBoxProps } from './types';
 /**
@@ -25,4 +25,5 @@ declare namespace CodeBoxPanel {
         config: PropTypes.Requireable<any[]>;
     };
 }
-export default CodeBoxPanel;
+declare const _default: React.MemoExoticComponent<typeof CodeBoxPanel>;
+export default _default;

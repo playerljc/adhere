@@ -16,17 +16,28 @@ declare abstract class APlayGround extends React.Component<IPlayGroundProps, IPl
     };
     static defaultProps: IPlayGroundProps;
     protected isFirst: boolean;
+    protected clipboardRef: React.RefObject<HTMLElement>;
     protected state: {
         expand: boolean | undefined;
     };
     protected actionConfig: (() => JSX.Element)[];
     /**
-     * isShowNumber - 表格是否显示序号
-     * @return boolean
+     * renderExpandAction
+     * @description - 渲染代码视图
+     * @return React.ReactElement
      */
     protected abstract renderCodeView(): React.ReactElement;
+    /**
+     * getClipboardText
+     * @description - 获取复制的数据
+     * @return Promise<string>
+     */
+    protected abstract getClipboardText(e: React.MouseEvent): Promise<string>;
     protected componentWillReceiveProps(nextProps: any): void;
     componentWillUpdate(nextProps: Readonly<IPlayGroundProps>, nextState: Readonly<IPlayGroundState>, nextContext: any): void;
+    /**
+     * renderAction
+     */
     protected renderAction(): JSX.Element[];
     /**
      * renderClipboardAction

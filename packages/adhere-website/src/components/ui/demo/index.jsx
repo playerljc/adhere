@@ -73,50 +73,43 @@ export default () => {
           },
           config: [
             {
-              title: 'imageselect.jsx',
+              title: 'a.jsx',
               mode: 'code',
               theme: 'eclipse',
               scope: { React },
               codeText: `
-        import React from 'react';
-        import { DelConfirm } from '@baifendian/adhere';
+  import React from 'react';
+  import { DelConfirm } from '@baifendian/adhere';
 
-        <DelConfirm
-          success={() => {
-            return new Promise((resolve) => {
-              alert('点击了确认');
+  <DelConfirm
+    success={() => {
+      return new Promise((resolve) => {
+        alert('点击了确认');
 
-              resolve();
-            });
-          }}
-        >
-          <a>删除</a>
-        </DelConfirm>
+        resolve();
+      });
+    }}
+  >
+    <a>删除</a>
+  </DelConfirm>
                   `,
             },
             {
-              title: 'imageselect.less',
+              title: 'a.less',
               mode: 'code',
               scope: { React },
               codeText: `
-        import React from 'react';
-        import { DelConfirm } from '@baifendian/adhere';
+  .adhere-ui-delconfirm {
+    position: relative;
 
-        <DelConfirm
-          success={() => {
-            return new Promise((resolve) => {
-              alert('点击了确认');
-
-              resolve();
-            });
-          }}
-        >
-          <a>删除</a>
-        </DelConfirm>
+    &:hover {
+      cursor: pointer;
+    }
+  }
                   `,
             },
             {
-              title: 'imageselect.jsx',
+              title: 'b.jsx',
               mode: 'code',
               scope: { React },
               type: 'CodeTabPanel',
@@ -128,6 +121,8 @@ export default () => {
                   codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
+
+  console.log(111);
 
   <DelConfirm
     success={() => {
@@ -149,6 +144,8 @@ export default () => {
                   codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
+
+  console.log(222);
 
   <DelConfirm
     success={() => {
@@ -201,6 +198,8 @@ export default () => {
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
+  console.log(111);
+
   <DelConfirm
     success={() => {
       return new Promise((resolve) => {
@@ -221,6 +220,8 @@ export default () => {
               codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
+
+  console.log(222);
 
   <DelConfirm
     success={() => {

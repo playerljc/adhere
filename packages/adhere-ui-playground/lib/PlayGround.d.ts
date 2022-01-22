@@ -11,5 +11,9 @@ declare class PlayGround extends APlayGround {
      * @return {*}
      */
     protected renderCodeView(): React.ReactElement;
+    /**
+     * getClipboardText
+     */
+    protected getClipboardText(): Promise<string>;
 }
 export default PlayGround;

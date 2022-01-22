@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ICodeTabPanelProps } from './types';
 /**
@@ -20,6 +20,7 @@ declare namespace CodeTabPanel {
             codeText: PropTypes.Requireable<string>;
             theme: PropTypes.Requireable<string>;
         }> | null | undefined)[]>;
+        onChange: PropTypes.Requireable<(...args: any[]) => any>;
     };
 }
 export declare const CodeTabPanelDefaultProps: {
@@ -34,5 +35,7 @@ export declare const CodeTabPanelPropTypes: {
         codeText: PropTypes.Requireable<string>;
         theme: PropTypes.Requireable<string>;
     }> | null | undefined)[]>;
+    onChange: PropTypes.Requireable<(...args: any[]) => any>;
 };
-export default CodeTabPanel;
+declare const _default: React.MemoExoticComponent<typeof CodeTabPanel>;
+export default _default;

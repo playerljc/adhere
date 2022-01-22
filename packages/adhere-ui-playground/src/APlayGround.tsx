@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
@@ -25,6 +25,8 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
 
   protected isFirst: boolean = true;
 
+  protected clipboardRef = React.createRef<HTMLElement>();
+
   // @ts-ignore
   protected state = {
     expand: this.props.expand,
@@ -33,10 +35,18 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
   protected actionConfig = [this.renderClipboardAction, this.renderExpandAction];
 
   /**
-   * isShowNumber - 表格是否显示序号
-   * @return boolean
+   * renderExpandAction
+   * @description - 渲染代码视图
+   * @return React.ReactElement
    */
   protected abstract renderCodeView(): React.ReactElement;
+
+  /**
+   * getClipboardText
+   * @description - 获取复制的数据
+   * @return Promise<string>
+   */
+  protected abstract getClipboardText(e: React.MouseEvent): Promise<string>;
 
   protected componentWillReceiveProps(nextProps) {
     this.setState({
@@ -54,6 +64,9 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
     }
   }
 
+  /**
+   * renderAction
+   */
   protected renderAction() {
     return this.actionConfig.map((config) => config.call(this));
   }
@@ -62,13 +75,15 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
    * renderClipboardAction
    */
   protected renderClipboardAction() {
-    const { codeText } = this.props;
-
     return (
       <div
-        onClick={() => {
-          copy(codeText);
-          Message.success(Intl.v('复制成功'));
+        // @ts-ignore
+        ref={this.clipboardRef}
+        onClick={(e) => {
+          this.getClipboardText(e).then((text) => {
+            copy(text);
+            Message.success(Intl.v('复制成功'));
+          });
         }}
       >
         <img

@@ -8,15 +8,29 @@ import { IPlayGroundMulitProps } from './types';
  * @classdesc PlayGroundMulit
  */
 declare class PlayGroundMulit extends APlayGround {
-    renderMap: Map<string, Function>;
+    configMap: Map<string, {
+        render: (config: any, index: number) => React.ReactElement;
+        getCodeText: (config: any) => string;
+    }>;
+    constructor(props: any);
+    protected componentWillReceiveProps(nextProps: any): void;
+    /**
+     * getClipboardText
+     * @return Promise<string>
+     */
+    protected getClipboardText(e: React.MouseEvent): Promise<string>;
     /**
      * renderCodeView - 代码展示视图
      * @param config
      * @param index
-     *
+     * @return React.ReactElement
      * <CodePanel {...config} />
      */
-    protected renderCodePanelView(config: any, index: any): JSX.Element;
+    protected renderCodePanelView(config: any, index: any): React.ReactElement;
+    /**
+     * renderCodeView
+     * @return React.ReactElement
+     */
     protected renderCodeView(): React.ReactElement;
 }
 export declare const PlayGroundMulitDefaultProps: IPlayGroundMulitProps;
