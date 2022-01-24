@@ -41,7 +41,11 @@ class Revolving extends React.Component<IRevolvingProps> {
     const { speed, delay, loop, direction, stopOnLastSlide, listeners } = this.props;
 
     if (this.swiper) {
-      this.swiper.destory();
+      if ('destory' in this.swiper && this.swiper.destory instanceof Function) {
+        this.swiper.destory();
+      }
+
+      this.swiper = null;
     }
 
     this.swiper = new Swiper(this.el, {

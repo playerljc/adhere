@@ -178,6 +178,7 @@ class FunctionProps extends React.Component<IFunctionProps> {
     const { data, ...others } = this.props;
 
     return (
+      // @ts-ignore*
       <Collapse {...others}>
         <div className={selectorPrefix}>
           <table className={`${selectorPrefix}-inner`}>
@@ -289,12 +290,13 @@ class FunctionProps extends React.Component<IFunctionProps> {
   }
 }
 
-FunctionProps.defaultProps = {
+export const FunctionPropsDefaultProps = {
   ...Collapse.defaultProps,
   data: [],
 };
 
-FunctionProps.propTypes = {
+// @ts-ignore
+export const FunctionPropsPropTypes = {
   ...Collapse.propTypes,
   data: PropTypes.arrayOf(
     PropTypes.shape({
@@ -326,5 +328,9 @@ FunctionProps.propTypes = {
     }),
   ),
 };
+
+FunctionProps.defaultProps = FunctionPropsDefaultProps;
+
+FunctionProps.propTypes = FunctionPropsPropTypes;
 
 export default FunctionProps;

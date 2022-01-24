@@ -70,7 +70,7 @@ const Revolving = lazy(() =>
 const ScrollLoad = lazy(() =>
   import(/* webpackChunkName: "scrollload" */ '@/components/ui/scrollload'),
 );
-const JCategoryTab = lazy(() =>
+const JDCategoryTab = lazy(() =>
   import(/* webpackChunkName: "jcategorytab" */ '@/components/ui/jdcategorytab'),
 );
 const CascadeCompared = lazy(() =>
@@ -157,7 +157,7 @@ const BMaps = lazy(() => import(/* webpackChunkName: "gis" */ '@/components/gall
 
 const Graph = lazy(() => import(/* webpackChunkName: "graph" */ '@/components/gallery/graph'));
 
-// const Demo = lazy(() => import(/* webpackChunkName: "demo" */ '@/components/ui/demo'));
+const Demo = lazy(() => import(/* webpackChunkName: "demo" */ '@/components/ui/demo'));
 
 export default () => [
   {
@@ -194,11 +194,11 @@ export default () => [
                 path: '/',
                 redirect: '/adhere/ui/split',
               },
-              // {
-              //   path: '/adhere/ui/demo',
-              //   name: 'Demo',
-              //   component: Demo,
-              // },
+              {
+                path: '/adhere/ui/demo',
+                name: 'Demo',
+                component: Demo,
+              },
               {
                 path: '/adhere/ui/split',
                 name: 'Split',
@@ -325,9 +325,9 @@ export default () => [
                 component: ScrollLoad,
               },
               {
-                path: '/adhere/ui/jcategorytab',
-                name: 'JCategoryTab',
-                component: JCategoryTab,
+                path: '/adhere/ui/jdcategorytab',
+                name: 'JDCategoryTab',
+                component: JDCategoryTab,
               },
               {
                 path: '/adhere/ui/cascadecompared',

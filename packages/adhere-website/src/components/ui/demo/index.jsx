@@ -1,25 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { DelConfirm } from '@baifendian/adhere';
 
-import AnchorNavigation from '@/lib/AnchorNavigation';
-import CodeBoxPanel from '@/lib/CodeBoxPanel';
-import Props from '@/lib/Props';
-import FunctionProps from '@/lib/FunctionProps';
-import { DelConfirm, Space, PlayGround } from '@baifendian/adhere';
-import PlayGroundTab from '@/lib/PlayGroundTab';
+import PlayGroundPage, {
+  Section,
+  PropsSection,
+  CodeBoxSection,
+  FunctionPropsSection,
+} from '@/lib/PlaygroundPage';
 
 const arr = [];
 arr.length = 10;
 arr.fill(0);
 
 export default () => {
-  const [scrollEl, setScrollEl] = useState();
-  const ref = useRef();
-
   function boxPanelConfig() {
     return arr.map((t, index) => {
       if (index % 3 === 0) {
         return {
           id: `p${index + 1}`,
+          name: `p${index + 1}`,
           mode: 'code',
           scope: { React },
           cardProps: {
@@ -65,10 +64,11 @@ export default () => {
       else if (index % 3 === 1) {
         return {
           id: `p${index + 1}`,
-          cardProps: {
+            name: `p${index + 1}`,
+            cardProps: {
             description: {
               title: '123',
-              info: '123',
+                info: '123',
             },
           },
           config: [
@@ -163,8 +163,8 @@ export default () => {
               ],
             },
           ],
-          type: 'PlayGroundMulit',
-          renderChildren: () => (
+            type: 'PlayGroundMulit',
+            renderChildren: () => (
             <DelConfirm
               success={() => {
                 return new Promise((resolve) => {
@@ -183,6 +183,7 @@ export default () => {
       else if (index % 3 === 2) {
         return {
           id: `p${index + 1}`,
+          name: `p${index + 1}`,
           cardProps: {
             description: {
               title: '123',
@@ -256,92 +257,21 @@ export default () => {
     });
   }
 
-  useEffect(() => {
-    setScrollEl(ref.current.parentElement.parentElement);
-  }, []);
-
   return (
-    <PlayGround.AnchorNavigationContext.Provider
-      value={{
-        scrollEl,
-      }}
-    >
-      <div className="Page" ref={ref}>
-        <AnchorNavigation
-          anchors={arr.map((t, index) => ({ name: '123', anchor: `p${index + 1}` }))}
-          anchorPosition={{
-            top: 77,
-            width: 120,
-          }}
-        >
-          <h1>Component</h1>
-          <p>XXXXXXXXX</p>
+    <PlayGroundPage>
+      <Section title="Component">
+        <p>XXXXXXXXX</p>
+      </Section>
 
-          <Space />
+      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
 
-          <CodeBoxPanel title="代码演示" columnCount={1} config={boxPanelConfig()} />
-
-          <Space />
-
-          <PlayGroundTab
-            cardProps={{
-              description: { title: '123', info: '123' },
-            }}
-            {...{
-              active: 'Typescript',
-              config: [
-                {
-                  key: 'Typescript',
-                  title: 'Typescript',
-                  codeText: `
-  import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
-
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
-
-        resolve();
-      });
-    }}
-  >
-    <a>删除</a>
-  </DelConfirm>
-      `,
-                  theme: 'eclipse',
-                },
-                {
-                  key: 'Javascript',
-                  title: 'Javascript',
-                  codeText: `
-  import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
-
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
-
-        resolve();
-      });
-    }}
-  >
-    <a>删除</a>
-  </DelConfirm>
-      `,
-                },
-              ],
-            }}
-          />
-
-          <Space />
-
-          <h2>Props</h2>
-          <Props
-            border
-            title="FlexLayout"
-            data={[
+      <PropsSection
+        title="Props"
+        config={[
+          {
+            border: true,
+            title: 'FlexLayout',
+            data: [
               {
                 params: 'direction',
                 desc: '方向',
@@ -360,16 +290,18 @@ export default () => {
                 type: 'React.CSSProperties',
                 defaultVal: '',
               },
-            ]}
-          />
+            ],
+          },
+        ]}
+      />
 
-          <Space />
-
-          <h2>Api</h2>
-          <FunctionProps
-            border
-            title="方法"
-            data={[
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: '方法',
+            data: [
               {
                 name: 'init',
                 desc: '进行初始化操作',
@@ -555,10 +487,10 @@ export default () => {
                 returnType: 'Object',
                 returnDesc: '转换后的词条',
               },
-            ]}
-          />
-        </AnchorNavigation>
-      </div>
-    </PlayGround.AnchorNavigationContext.Provider>
+            ],
+          },
+        ]}
+      />
+    </PlayGroundPage>
   );
 };

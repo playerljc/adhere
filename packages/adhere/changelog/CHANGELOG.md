@@ -2,7 +2,7 @@
 
 ***
 
-2022-1-22
+2022-1-23
 
 * **adhere-ui-playground**
   - 加入CodePanel组件
@@ -13,6 +13,8 @@
   - 细化Card组件加入description配置
   - 细化PlayGround组件
   - 细化PlayGroundMulit组件
+* **adhere-ui-revolving**
+  - bug的修改
 * **adhere-util**
   - dom加入新方法
 

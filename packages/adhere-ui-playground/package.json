@@ -45,6 +45,7 @@
     "@baifendian/adhere-util": "^1.0.13-fix.0",
     "@baifendian/adhere-util-intl": "^1.0.13",
     "@baifendian/adhere-ui-contextmenu": "^1.0.13",
+    "@baifendian/adhere-ui-space": "^1.0.13",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

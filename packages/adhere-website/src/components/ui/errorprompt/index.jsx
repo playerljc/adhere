@@ -2,42 +2,27 @@ import React from 'react';
 import { Button } from 'antd';
 import { ErrorPrompt } from '@baifendian/adhere';
 
-import FunctionProps from '@/lib/FunctionProps';
-import Playground from '@/lib/Playground';
+import PlayGroundPage, {
+  Section,
+  CodeBoxSection,
+  FunctionPropsSection,
+} from '@/lib/PlaygroundPage';
 
-export default () => (
-  <div className="Page">
-    <h1>ErrorPrompt</h1>
-    <p>错误的提示(就是为了全局统一)</p>
-
-    <FunctionProps
-      border
-      title="方法"
-      data={[
-        {
-          name: 'ErrorPrompt',
-          desc: '错误的提示',
-          modifier: 'global',
-          params: [
-            {
-              name: 'text',
-              desc: '提示的文本',
-              type: 'string | React.ReactElement',
-              defaultVal: '',
-              required: 'true',
-            },
-          ],
-          returnType: 'void',
-          returnDesc: '',
+export default () => {
+  function boxPanelConfig() {
+    return [
+      {
+        id: `p1`,
+        name: `基本使用`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '基本使用',
+            info: '基本使用',
+          },
         },
-      ]}
-    />
-
-    <h2>基本使用</h2>
-    <Playground
-      mode="code"
-      scope={{ React }}
-      codeText={`
+        codeText: `
   import React from 'react';
   import { Button } from 'antd';
   import { ErrorPrompt } from '@baifendian/adhere';
@@ -50,16 +35,59 @@ export default () => (
   >
     显示警告提示
   </Button>
-    `}
-    >
-      <Button
-        type="primary"
-        onClick={() => {
-          ErrorPrompt('操作失败');
-        }}
-      >
-        显示警告提示
-      </Button>
-    </Playground>
-  </div>
-);
+    `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <Button
+            type="primary"
+            onClick={() => {
+              ErrorPrompt('操作失败');
+            }}
+          >
+            显示警告提示
+          </Button>
+        ),
+      },
+    ];
+  }
+
+  return (
+    <PlayGroundPage>
+      <Section title="ErrorPrompt">
+        <p>
+          <p>错误的提示(就是为了全局统一)</p>
+        </p>
+      </Section>
+
+      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: '方法',
+            data: [
+              {
+                name: 'ErrorPrompt',
+                desc: '错误的提示',
+                modifier: 'global',
+                params: [
+                  {
+                    name: 'text',
+                    desc: '提示的文本',
+                    type: 'string | React.ReactElement',
+                    defaultVal: '',
+                    required: 'true',
+                  },
+                ],
+                returnType: 'void',
+                returnDesc: '',
+              },
+            ],
+          },
+        ]}
+      />
+    </PlayGroundPage>
+  );
+};

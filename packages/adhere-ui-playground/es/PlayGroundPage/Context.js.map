@@ -1,0 +1,1 @@
+{"version":3,"file":"Context.js","sources":["PlayGroundPage/Context.js"],"sourcesContent":["import React from 'react';\r\nexport var PlayGroundPageContext = React.createContext({\r\n    scrollEl: null,\r\n});\r\n"],"names":["React","PlayGroundPageContext","createContext","scrollEl"],"mappings":"OAAOA,kBACA,IAAIC,sBAAwBD,MAAME,cAAc,CACnDC,SAAU,cADHF"}
