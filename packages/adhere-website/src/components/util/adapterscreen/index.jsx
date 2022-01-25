@@ -2,8 +2,11 @@ import React, { useRef } from 'react';
 import { Table, Button } from 'antd';
 import { AdapterScreen } from '@baifendian/adhere';
 
-import FunctionProps from '@/lib/FunctionProps';
-import Playground from '@/lib/Playground';
+import PlayGroundPage, {
+  Section,
+  CodeBoxSection,
+  FunctionPropsSection,
+} from '@/lib/PlaygroundPage';
 
 const dataSource = [
   {
@@ -41,39 +44,20 @@ const columns = [
 export default () => {
   const ref = useRef();
 
-  return (
-    <div className="Page">
-      <h1>AdapterScreen</h1>
-      <p>对屏幕的缩放进行适配的操作</p>
-
-      <FunctionProps
-        border
-        title="方法"
-        data={[
-          {
-            name: 'AdapterScreen',
-            desc: '对一个元素进行缩放的管理',
-            modifier: 'static',
-            params: [
-              {
-                name: 'el',
-                desc: '控制缩放的元素',
-                type: 'HtmlElement',
-                defaultVal: 'window.document.body',
-                required: '',
-              },
-            ],
-            returnType: 'Function',
-            returnDesc: '注销事件的方法',
+  function boxPanelConfig() {
+    return [
+      {
+        id: `p1`,
+        name: `基本使用`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '基本使用',
+            info: '基本使用',
           },
-        ]}
-      />
-
-      <h2>基本使用</h2>
-      <Playground
-        mode="code"
-        scope={{ React }}
-        codeText={`
+        },
+        codeText: `
   import { AdapterScreen } from '@baifendian/adhere';
   import React from 'react';
   import { Button } from 'antd';
@@ -86,29 +70,37 @@ export default () => {
   >
     控制整体页面的缩放
   </Button>
-      `}
-      >
-        <Button
-          type="primary"
-          onClick={() => {
-            const handler = AdapterScreen();
-          }}
-        >
-          控制整体页面的缩放
-        </Button>
-      </Playground>
-
-      <h2>传递不同的元素</h2>
-      <Playground
-        mode="code"
-        scope={{ React }}
-        codeText={`
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <Button
+            type="primary"
+            onClick={() => {
+              const handler = AdapterScreen();
+            }}
+          >
+            控制整体页面的缩放
+          </Button>
+        ),
+      },
+      {
+        id: `p2`,
+        name: `传递不同的元素`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '传递不同的元素',
+            info: '传递不同的元素',
+          },
+        },
+        codeText: `
   import React, { useRef } from 'react';
   import { Table, Button } from 'antd';
   import { AdapterScreen } from '@baifendian/adhere';
-  
+
   const ref = useRef();
-  
+
   <div ref={ref}>
     <Button
       type="primary"
@@ -120,20 +112,60 @@ export default () => {
     </Button>
     <Table dataSource={dataSource} columns={columns} />
   </div>
-      `}
-      >
-        <div ref={ref}>
-          <Button
-            type="primary"
-            onClick={() => {
-              const handler = AdapterScreen(ref.current);
-            }}
-          >
-            控制表格元素的缩放
-          </Button>
-          <Table dataSource={dataSource} columns={columns} />
-        </div>
-      </Playground>
-    </div>
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div ref={ref}>
+            <Button
+              type="primary"
+              onClick={() => {
+                const handler = AdapterScreen(ref.current);
+              }}
+            >
+              控制表格元素的缩放
+            </Button>
+            <Table dataSource={dataSource} columns={columns} />
+          </div>
+        ),
+      },
+    ];
+  }
+
+  return (
+    <PlayGroundPage>
+      <Section title="AdapterScreen">
+        <p>对屏幕的缩放进行适配的操作</p>
+      </Section>
+
+      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: '方法',
+            data: [
+              {
+                name: 'AdapterScreen',
+                desc: '对一个元素进行缩放的管理',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'el',
+                    desc: '控制缩放的元素',
+                    type: 'HtmlElement',
+                    defaultVal: 'window.document.body',
+                    required: '',
+                  },
+                ],
+                returnType: 'Function',
+                returnDesc: '注销事件的方法',
+              },
+            ],
+          },
+        ]}
+      />
+    </PlayGroundPage>
   );
 };

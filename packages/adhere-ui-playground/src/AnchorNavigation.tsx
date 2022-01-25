@@ -83,6 +83,8 @@ function AnchorNavigation(props) {
    * @description mount
    */
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     /**
      * onHashChange
      */
@@ -93,6 +95,8 @@ function AnchorNavigation(props) {
     window.addEventListener('hashchange', onHashChange);
 
     return () => {
+      if (typeof window === 'undefined') return;
+
       window.removeEventListener('hashchange', onHashChange);
     };
   }, []);

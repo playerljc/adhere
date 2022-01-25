@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { IConditionalRenderProps } from './types';
 
+import ConditionalRenderShow from './show';
+import ConditionalRenderVisibility from './visibility';
+
 /**
  * ConditionalRender - 条件渲染
  * @class ConditionalRender
@@ -13,9 +16,11 @@ function ConditionalRender({ conditional, noMatch, children }: IConditionalRende
     return children();
   }
 
-  // @ts-ignore
   return noMatch ? noMatch() : null;
 }
+
+ConditionalRender.Show = ConditionalRenderShow;
+ConditionalRender.Visibility = ConditionalRenderVisibility;
 
 ConditionalRender.defaultProps = {
   conditional: true,
