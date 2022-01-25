@@ -1,20 +1,24 @@
 import React from 'react';
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
+
+import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 export default () => {
-  return (
-    <div className="Page">
-      <h1>资源</h1>
-      <desc>资源是以已字典的方式提供</desc>
-
-      <h2>Normal</h2>
-      <PlaygroundMulit
-        mode="code"
-        scope={{ React }}
-        expand
-        config={[
+  function boxPanelConfig() {
+    return [
+      {
+        id: `p1`,
+        name: `Normal`,
+        cardProps: {
+          description: {
+            title: 'Normal',
+            info: 'Normal',
+          },
+        },
+        config: [
           {
             title: 'static资源',
+            mode: 'code',
+            scope: { React },
             codeText: `
     // 最大层级
     Dict.handlers.ResourceNormalMaxZIndex = () => 19999;
@@ -164,17 +168,23 @@ export default () => {
       ]);
             `,
           },
-        ]}
-      />
-
-      <h2>Form(表单)相关</h2>
-      <PlaygroundMulit
-        mode="code"
-        scope={{ React }}
-        expand
-        config={[
+        ],
+        type: 'PlayGroundMulit',
+      },
+      {
+        id: `p2`,
+        name: `Form(表单)相关`,
+        cardProps: {
+          description: {
+            title: 'Form(表单)相关',
+            info: 'Form(表单)相关',
+          },
+        },
+        config: [
           {
             title: '静态资源',
+            mode: 'code',
+            scope: { React },
             codeText: `
     Dict.handlers.FormInputNumberRule = () => ({
       whitespace: true,
@@ -195,17 +205,23 @@ export default () => {
     Dict.handlers.FormPopupContainer = () => (el) => el.parentElement;
         `,
           },
-        ]}
-      />
-
-      <h2>Gis相关</h2>
-      <PlaygroundMulit
-        mode="code"
-        scope={{ React }}
-        expand
-        config={[
+        ],
+        type: 'PlayGroundMulit',
+      },
+      {
+        id: `p3`,
+        name: `Gis相关`,
+        cardProps: {
+          description: {
+            title: 'Gis相关',
+            info: 'Gis相关',
+          },
+        },
+        config: [
           {
             title: '静态资源',
+            mode: 'code',
+            scope: { React },
             codeText: `
     Dict.handlers.ResourceGisEpsg4326 = () => 'EPSG:4326';
 
@@ -1266,23 +1282,29 @@ export default () => {
     Dict.handlers.ResourceGisXinbeiquCenterPoint = () => [119.879673, 31.933156];
             `,
           },
-        ]}
-      />
-
-      <h2>Locals相关</h2>
-      <PlaygroundMulit
-        mode="code"
-        scope={{ React }}
-        expand
-        config={[
+        ],
+        type: 'PlayGroundMulit',
+      },
+      {
+        id: `p4`,
+        name: `Locals相关`,
+        cardProps: {
+          description: {
+            title: 'Locals相关',
+            info: 'Locals相关',
+          },
+        },
+        config: [
           {
             title: '静态资源',
+            mode: 'code',
+            scope: { React },
             codeText: `
     import moment from 'moment';
     import zhCN from 'antd/es/locale/zh_CN';
     import enUS from 'antd/es/locale/en_US';
     import ptPT from 'antd/lib/locale/pt_PT';
-    
+
     import 'moment/locale/zh-cn';
     import 'moment/locale/en-ca';
     import 'moment/locale/pt';
@@ -1315,17 +1337,23 @@ export default () => {
     });
           `,
           },
-        ]}
-      />
-
-      <h2>Mime相关</h2>
-      <PlaygroundMulit
-        mode="code"
-        scope={{ React }}
-        expand
-        config={[
+        ],
+        type: 'PlayGroundMulit',
+      },
+      {
+        id: `p5`,
+        name: `Mime相关`,
+        cardProps: {
+          description: {
+            title: 'Mime相关',
+            info: 'Mime相关',
+          },
+        },
+        config: [
           {
             title: '静态资源',
+            mode: 'code',
+            scope: { React },
             codeText: `
     Dict.handlers.ResourceMime123 = () => 'application/vnd.lotus-1-2-3';
 
@@ -3360,17 +3388,23 @@ export default () => {
     Dict.handlers.ResourceMimezmm = () => 'application/vnd.handheld-entertainment+xml';
           `,
           },
-        ]}
-      />
-
-      <h2>Moment相关</h2>
-      <PlaygroundMulit
-        mode="code"
-        scope={{ React }}
-        expand
-        config={[
+        ],
+        type: 'PlayGroundMulit',
+      },
+      {
+        id: `p6`,
+        name: `Moment相关`,
+        cardProps: {
+          description: {
+            title: 'Moment相关',
+            info: 'Moment相关',
+          },
+        },
+        config: [
           {
             title: '静态资源',
+            mode: 'code',
+            scope: { React },
             codeText: `
     Dict.handlers.ResourceMomentFormatYear = () => 'YYYY';
 
@@ -3379,8 +3413,20 @@ export default () => {
     Dict.handlers.ResourceMomentFormatFull = () => 'YYYY-MM-DD HH:mm:ss';
           `,
           },
-        ]}
-      />
-    </div>
+        ],
+        type: 'PlayGroundMulit',
+      },
+    ];
+  }
+
+  return (
+    <PlayGroundPage>
+      <Section title="Resource">
+        <p>资源</p>
+        <p>资源是以已字典的方式提供</p>
+      </Section>
+
+      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+    </PlayGroundPage>
   );
 };

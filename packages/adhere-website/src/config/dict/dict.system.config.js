@@ -41,5 +41,7 @@ export default {
     //   },
     // });
   },
-  initRemote() {},
+  initRemote() {
+    Dict.handlers.SystemAuthorized = () => Promise.resolve([]);
+  },
 };
