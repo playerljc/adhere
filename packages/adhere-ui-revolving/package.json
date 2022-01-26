@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-revolving",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "走马灯",
   "main": "lib/index.js",
   "module": "es/index.js",

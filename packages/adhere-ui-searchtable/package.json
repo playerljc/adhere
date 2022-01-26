@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-searchtable",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "一种查询表格的通用模式(如果 UI 没有明确给出查询表格的 UI，就可以用这个默认模式)",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,11 +40,11 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.13",
-    "@baifendian/adhere-ui-css": "^1.0.13",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.13",
-    "@baifendian/adhere-ui-suspense": "^1.0.13",
-    "@baifendian/adhere-util-intl": "^1.0.13",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.14",
+    "@baifendian/adhere-ui-css": "^1.0.14",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.14",
+    "@baifendian/adhere-ui-suspense": "^1.0.14",
+    "@baifendian/adhere-util-intl": "^1.0.14",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

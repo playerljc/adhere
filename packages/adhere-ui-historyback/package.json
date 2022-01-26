@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-historyback",
-  "version": "1.0.13-fix.0",
+  "version": "1.0.14",
   "description": "历史记录返回操作",
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-validator",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "一个验证的库",
   "main": "lib/index.js",
   "module": "es/index.js",

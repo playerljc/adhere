@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-space",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "无侵入性的上下留白和左右留白",
   "main": "lib/index.js",
   "module": "es/index.js",
