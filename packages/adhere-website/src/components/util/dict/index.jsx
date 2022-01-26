@@ -204,7 +204,7 @@ export default () => {
         </ul>
         <p>
           第一次使用的时候才加载到内存，加载过之后就不在加载，如果字典是函数，也会对函数的值进行memoized处理，可以进行设置是否缓存,函数缓存请参考
-          <Link to={`${window.location.origin}/adhere/util/watchmemoized`}>
+          <Link to={`${window.location.origin}/adhere/component/util/watchmemoized`}>
             adhere-util-watchmemoized
           </Link>
         </p>

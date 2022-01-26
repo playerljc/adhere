@@ -90,7 +90,7 @@ export default () => {
           {
             params: 'columns',
             desc: '搜索表单项配置',
-            type: <Link to="/adhere/ui/formitemcreator">FormItemCreator的columns属性</Link>,
+            type: <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>,
             defaultVal: '',
           },
           {
@@ -160,7 +160,7 @@ export default () => {
           {
             params: 'search',
             desc: <span>工具栏搜索配置</span>,
-            type: <Link to="/adhere/ui/formitemcreator">FormItemCreator的columns属性</Link>,
+            type: <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>,
             defaultVal: '',
           },
           {
@@ -201,7 +201,7 @@ export default () => {
                 dataSource: []
               }
             }
-          
+
             fetchData = (params) => {
               console.log('搜索参数', params);
               return requestData(params).then(res => {
@@ -210,13 +210,13 @@ export default () => {
                 }
               })
             }
-          
+
             tableColumns = ([
               { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
               { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
               { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
             ]);
-          
+
             render() {
               const { tableData } = this.state;
               return (
@@ -247,7 +247,7 @@ export default () => {
               );
             }
           }
-          
+
           export default Demo;
           `}
       >
@@ -269,7 +269,7 @@ export default () => {
                 dataSource: []
               }
             }
-          
+
             fetchData = (params) => {
               console.log('搜索参数', params);
               return requestData(params).then(res => {
@@ -278,13 +278,13 @@ export default () => {
                 }
               })
             }
-          
+
             tableColumns = ([
               { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
               { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
               { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
             ]);
-          
+
             render() {
               const { tableData } = this.state;
               return (
@@ -317,7 +317,7 @@ export default () => {
               );
             }
           }
-          
+
           export default Demo;
           `}
       >
@@ -339,7 +339,7 @@ export default () => {
                 dataSource: []
               }
             }
-          
+
             fetchData = (params) => {
               console.log('搜索参数', params);
               return requestData(params).then(res => {
@@ -348,13 +348,13 @@ export default () => {
                 }
               })
             }
-          
+
             tableColumns = ([
               { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
               { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
               { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
             ]);
-          
+
             render() {
               const { tableData } = this.state;
               return (
@@ -389,7 +389,7 @@ export default () => {
               );
             }
           }
-          
+
           export default Demo;
           `}
       >
@@ -411,7 +411,7 @@ export default () => {
                 dataSource: []
               }
             }
-          
+
             fetchData = (params) => {
               console.log('搜索参数', params);
               return requestData(params).then(res => {
@@ -420,13 +420,13 @@ export default () => {
                 }
               })
             }
-          
+
             tableColumns = ([
               { title: '姓名', dataIndex: 'name', key: 'name', ellipsis: true },
               { title: '年龄', dataIndex: 'age', key: 'age', ellipsis: true },
               { title: '性别', dataIndex: 'sex', key: 'sex', ellipsis: true, valueType: 'map', map: [{ value: 1, label: '男'}, { value: 2, label: '女'}] },
             ]);
-          
+
             render() {
               const { tableData } = this.state;
               return (
@@ -459,7 +459,7 @@ export default () => {
               );
             }
           }
-          
+
           export default Demo;
           `}
       >
@@ -502,7 +502,7 @@ export default () => {
               }, 2000)
             })
           }
-          
+
           export class Demo5 extends React.Component {
             constructor(props) {
               super(props);
@@ -510,7 +510,7 @@ export default () => {
                 listData: []
               }
             }
-          
+
             fetchData = (params) => {
               console.log('搜索参数', params);
               return requestData(params).then(res => {
@@ -519,7 +519,7 @@ export default () => {
                 }
               })
             }
-          
+
             render() {
               const { listData } = this.state;
               return (

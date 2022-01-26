@@ -489,7 +489,7 @@ export default () => {
               {
                 params: 'columns',
                 desc: '搜索表单项配置',
-                type: <Link to="/adhere/ui/formitemcreator">FormItemCreator的columns属性</Link>,
+                type: <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>,
                 defaultVal: '',
               },
               {
@@ -555,7 +555,7 @@ export default () => {
               {
                 params: 'search',
                 desc: <span>工具栏搜索配置</span>,
-                type: <Link to="/adhere/ui/formitemcreator">FormItemCreator的columns属性</Link>,
+                type: <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>,
                 defaultVal: '',
               },
               {

@@ -356,6 +356,8 @@ import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Footer from '@/lib/Footer';
+
 import styles from './index.less';
 
 const { SubMenu } = Menu;
@@ -705,6 +707,9 @@ class BasicLayout extends React.Component {
             defaultOpenKeys,
           })}
           <div className={styles.Auto}>{this.props.children}</div>
+          <div className={styles.FooterWrap}>
+            <Footer />
+          </div>
         </div>
       </div>
     );
