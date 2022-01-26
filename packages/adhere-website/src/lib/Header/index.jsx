@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { withRouter } from '@ctsj/router';
-import styles from './index.less';
 import packageJSON from '../../../../../package.json';
+
+import styles from './index.less';
 
 const MenuItemsConfig = [
   {
