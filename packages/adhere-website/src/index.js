@@ -7,6 +7,7 @@ import Router from '@/lib/Router';
 import DictConfig from '@/config/dict.config';
 
 // import 'antd/dist/antd.less';
+import 'nprogress/nprogress.css';
 import '@baifendian/adhere/lib/css.less';
 import './index.less';
 

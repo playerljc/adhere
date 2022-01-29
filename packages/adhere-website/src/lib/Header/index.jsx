@@ -40,7 +40,7 @@ export default withRouter((props) => {
       (menuItemConfig) => pathname.indexOf(menuItemConfig.key) !== -1,
     );
 
-    return findMenuItemConfig ? findMenuItemConfig.key : '';
+    return findMenuItemConfig ? findMenuItemConfig.key : '/adhere/introduction';
   }
 
   return (

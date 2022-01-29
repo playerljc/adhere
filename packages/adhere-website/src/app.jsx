@@ -1,4 +1,5 @@
 import React from 'react';
+import NProgress from 'nprogress';
 
 import Header from '@/lib/Header';
 
@@ -10,8 +11,27 @@ import styles from './app.less';
  * @classdesc App
  */
 class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    NProgress.inc();
+  }
+
+  componentDidMount() {
+    NProgress.done();
+  }
+
+  getSnapshotBeforeUpdate() {
+    NProgress.inc();
+  }
+
+  componentDidUpdate() {
+    NProgress.done();
+  }
+
   render() {
     const { children } = this.props;
+
     return (
       <div className={styles.App}>
         <div className={styles.Fixed}>
