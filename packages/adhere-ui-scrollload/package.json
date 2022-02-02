@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-scrollload",
-  "version": "1.0.14",
+  "version": "1.0.14-fix.0",
   "description": "滚动加载",
   "main": "lib/index.js",
   "module": "es/index.js",

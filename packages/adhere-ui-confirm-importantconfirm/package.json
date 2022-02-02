@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-confirm-importantconfirm",
-  "version": "1.0.14",
+  "version": "1.0.14-fix.0",
   "description": "重要操作确认提示",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,9 +40,9 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-messagedialog": "^1.0.14",
+    "@baifendian/adhere-ui-messagedialog": "^1.0.14-fix.0",
     "@baifendian/adhere-util-intl": "^1.0.14",
-    "@baifendian/adhere-util-resource": "^1.0.14",
+    "@baifendian/adhere-util-resource": "^1.0.14-fix.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

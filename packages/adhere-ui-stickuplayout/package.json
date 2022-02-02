@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-stickuplayout",
-  "version": "1.0.14",
+  "version": "1.0.14-fix.0",
   "description": "滚动固定头额布局",
   "main": "lib/index.js",
   "module": "es/index.js",
