@@ -44,7 +44,7 @@ class Auto extends React.Component<IAutoProps, any> {
           selectorPrefix,
           `${autoFixed ? selectorPrefix + '-autoFixed' : ''}`,
           `${fit ? selectorPrefix + '-fit' : ''}`,
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
       >

@@ -24,7 +24,7 @@ class SearchForm extends React.Component<ISearchFormProps, any> {
 
     return (
       <table
-        className={classNames(selectorPrefix, ...(className || '').split(' '))}
+        className={classNames(selectorPrefix, ...(className || '').split(/\s+/))}
         style={{ ...(style || {}) }}
       >
         <tbody>{children}</tbody>

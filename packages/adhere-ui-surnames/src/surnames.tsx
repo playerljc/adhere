@@ -535,7 +535,7 @@ class Surnames extends React.Component<ISurnamesProps> {
           selectorPrefix,
           `${selectorPrefix}-config-position-${position}`,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}

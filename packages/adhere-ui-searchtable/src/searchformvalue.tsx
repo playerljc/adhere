@@ -21,7 +21,7 @@ class SearchFormValue extends React.Component<ISearchFormValueProps, any> {
     return (
       <td
         {...others}
-        className={classNames(selectorPrefix, ...(className || '').split(' '))}
+        className={classNames(selectorPrefix, ...(className || '').split(/\s+/))}
         style={{ ...(style || {}) }}
       >
         {children}

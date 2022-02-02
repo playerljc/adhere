@@ -155,7 +155,7 @@ class Reveal extends SlideLayout<IRevealProps, ISlideLayoutState> {
             `${selectorPrefix}`,
             direction,
             // @ts-ignore
-            slaveClassName.split(' '),
+            slaveClassName.split(/\s+/),
           )}
           style={{ ...slaveStyle, zIndex }}
           ref={(el) => (this.el = el)}
@@ -166,7 +166,7 @@ class Reveal extends SlideLayout<IRevealProps, ISlideLayoutState> {
           className={classNames(
             `${selectorPrefix}-master`,
             // @ts-ignore
-            masterClassName.split(' '),
+            masterClassName.split(/\s+/),
           )}
           style={{ ...masterStyle, zIndex: zIndex + 1 }}
           ref={(el) => (this.rMasterEl = el)}

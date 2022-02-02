@@ -68,8 +68,7 @@ declare const _default: {
         height: number;
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
-    toPoint(percent: string): number;
-    /**
+    toPoint(percent: string): number; /**
      * 函数节流
      */
     toPercent(point: number): string;
@@ -152,6 +151,9 @@ declare const _default: {
     isIframeEmbed(): boolean;
     addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
     rgb(): string;
+    /**
+     * 函数节流
+     */
     color16(): string;
     isEmpty(value: any): boolean;
     isNumber(val: any): boolean;

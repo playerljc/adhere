@@ -130,7 +130,7 @@ class MenuItem extends React.PureComponent<IMenuItemProps, any> {
               selectorPrefix,
               disabled ? 'disabled' : '',
               // @ts-ignore
-              (className || '').split(' '),
+              (className || '').split(/\s+/),
             )}
             style={{ ...(style || {}) }}
             onClick={this.onClick}

@@ -43,7 +43,7 @@ function PlayGroundPage(props, ref) {
     >
       <div
         ref={ref}
-        className={`${classNames(selectPrefix, (props.className || '').split(' '))}`}
+        className={`${classNames(selectPrefix, (props.className || '').split(/\s+/))}`}
         style={props.style || {}}
       >
         {/*@ts-ignore*/}

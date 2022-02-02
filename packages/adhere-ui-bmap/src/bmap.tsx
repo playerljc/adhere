@@ -200,7 +200,7 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
       <ConditionalRender conditional={isReady} noMatch={() => this.renderLoading()}>
         {() => (
           <div
-            className={classNames(selectorPrefix, className?.split(' '))}
+            className={classNames(selectorPrefix, className?.split(/\s+/))}
             style={{ ...style }}
             /* @ts-ignore */
             ref={this.ref}

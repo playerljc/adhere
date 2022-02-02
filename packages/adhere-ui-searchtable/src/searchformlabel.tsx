@@ -21,7 +21,7 @@ class SearchFormLabel extends React.Component<ISearchFormLabelProps, any> {
     return (
       <td
         {...others}
-        className={classNames(selectorPrefix, ...(className || '').split(' '))}
+        className={classNames(selectorPrefix, ...(className || '').split(/\s+/))}
         style={{ ...(style || {}) }}
       >
         {children}

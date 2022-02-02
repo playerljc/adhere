@@ -315,7 +315,7 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}
@@ -324,7 +324,7 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
           className={classNames(
             `${selectorPrefix}-fixed`,
             // @ts-ignore
-            fixedClassName.split(' '),
+            fixedClassName.split(/\s+/),
           )}
           style={{ ...fixedStyle }}
           ref={(el) => (this.fixedEl = el)}
@@ -333,7 +333,7 @@ class StickupLayout extends React.Component<IStickupLayoutProps> {
           className={classNames(
             `${selectorPrefix}-inner`,
             // @ts-ignore
-            innerClassName.split(' '),
+            innerClassName.split(/\s+/),
           )}
           style={{ ...innerStyle }}
           ref={(el) => (this.innerEl = el)}

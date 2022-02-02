@@ -27,7 +27,7 @@ class SearchFormRow extends React.Component<ISearchFormRowProps, any> {
 
     return (
       <tr
-        className={classNames(selectorPrefix, ...(className || '').split(' '))}
+        className={classNames(selectorPrefix, ...(className || '').split(/\s+/))}
         style={{ ...(style || {}) }}
       >
         {children}

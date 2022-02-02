@@ -13,7 +13,7 @@ function Section(props) {
   const { title, extra, className, style, children } = props;
 
   return (
-    <div className={classNames(selectPrefix, className.split(' '))} style={style}>
+    <div className={classNames(selectPrefix, className.split(/\s+/))} style={style}>
       <div className={`${selectPrefix}-header`}>
         <div className={`${selectPrefix}-header-title`}>{title}</div>
         <div className={`${selectPrefix}-header-extra`}>{extra}</div>

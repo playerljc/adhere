@@ -151,7 +151,7 @@ class SliderScale extends React.Component<ISliderScaleProps, any> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}

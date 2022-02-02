@@ -126,7 +126,7 @@ class SwipeOut extends React.Component<ISwipeOutProps> {
           selectorPrefix,
           'swiper-container',
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         // @ts-ignore
@@ -138,7 +138,7 @@ class SwipeOut extends React.Component<ISwipeOutProps> {
               'swiper-slide',
               `${selectorPrefix}-before`,
               // @ts-ignore
-              beforeClassName.split(' '),
+              beforeClassName.split(/\s+/),
             )}
             style={{ ...beforeStyle }}
           >
@@ -149,7 +149,7 @@ class SwipeOut extends React.Component<ISwipeOutProps> {
               'swiper-slide',
               `${selectorPrefix}-content`,
               // @ts-ignore
-              contentClassName.split(' '),
+              contentClassName.split(/\s+/),
             )}
             style={{ ...contentStyle }}
           >
@@ -160,7 +160,7 @@ class SwipeOut extends React.Component<ISwipeOutProps> {
               'swiper-slide',
               `${selectorPrefix}-after`,
               // @ts-ignore
-              afterClassName.split(' '),
+              afterClassName.split(/\s+/),
             )}
             style={{ ...afterStyle }}
           >

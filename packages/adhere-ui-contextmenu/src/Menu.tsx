@@ -106,7 +106,7 @@ class Menu extends React.PureComponent<IMenuProps, any> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          (className || '').split(' '),
+          (className || '').split(/\s+/),
         )}
         style={{ ...(style || {}), ...this.getStyle() }}
         ref={(el) => (this.el = el)}

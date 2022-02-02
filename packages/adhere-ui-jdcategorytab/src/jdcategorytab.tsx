@@ -126,7 +126,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
               `${selectorPrefix}-menu-item`,
               activeKey === data.key ? 'active' : null,
               // @ts-ignore
-              menuItemClassName.split(' '),
+              menuItemClassName.split(/\s+/),
             )}
             style={{ ...menuItemStyle }}
           >
@@ -149,7 +149,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
             `${selectorPrefix}-menu-item`,
             activeKey === data.key ? 'active' : null,
             // @ts-ignore
-            menuItemClassName.split(' '),
+            menuItemClassName.split(/\s+/),
           )}
           style={{ ...menuItemStyle }}
         >
@@ -192,7 +192,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
           className={classNames(
             selectorPrefix,
             // @ts-ignore
-            className.split(' '),
+            className.split(/\s+/),
           )}
           style={{ ...style }}
           ref={(el) => (this.el = el)}
@@ -202,7 +202,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
             className={classNames(
               `${selectorPrefix}-menu`,
               // @ts-ignore
-              menuClassName.split(' '),
+              menuClassName.split(/\s+/),
             )}
             style={{ ...menuStyle }}
           >
@@ -211,7 +211,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
               className={classNames(
                 `${selectorPrefix}-menu-inner`,
                 // @ts-ignore
-                menuInnerClassName.split(' '),
+                menuInnerClassName.split(/\s+/),
               )}
               style={{ ...menuInnerStyle }}
             >
@@ -222,7 +222,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
             className={classNames(
               `${selectorPrefix}-tab`,
               // @ts-ignore
-              tabClassName.split(' '),
+              tabClassName.split(/\s+/),
             )}
             style={{ ...tabStyle }}
           >

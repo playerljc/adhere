@@ -79,7 +79,7 @@ class Collapse extends React.Component<ICollapseProps, ICollapseState> {
           className={classNames(
             `${selectorPrefix}-header`,
             border ? `${selectorPrefix}-header-border` : '',
-            headerClassName.split(' '),
+            headerClassName.split(/\s+/),
           )}
           style={{ ...headerStyle }}
           onClickCapture={this.onClickHeader}
@@ -107,7 +107,7 @@ class Collapse extends React.Component<ICollapseProps, ICollapseState> {
               className={classNames(
                 `${selectorPrefix}-body`,
                 border ? `${selectorPrefix}-body-border` : '',
-                bodyClassName.split(' '),
+                bodyClassName.split(/\s+/),
                 !!title || !!extra ? `${selectorPrefix}-body-exists-header` : '',
               )}
               style={{ ...bodyStyle }}

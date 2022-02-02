@@ -534,7 +534,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         className={classNames(
           selectorPrefix,
           fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
-          ...(className || '').split(' '),
+          ...(className || '').split(/\s+/),
         )}
         style={{ ...(style || {}) }}
       >
@@ -542,7 +542,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         <Fixed
           className={classNames(
             `${selectorPrefix}-searchwrapper`,
-            ...(searchClassName || '').split(' '),
+            ...(searchClassName || '').split(/\s+/),
           )}
           style={{ ...(searchStyle || {}) }}
           fit={fitSearch}
@@ -569,7 +569,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         <Auto
           className={classNames(
             `${selectorPrefix}-autowrapper`,
-            ...(tableClassName || '').split(' '),
+            ...(tableClassName || '').split(/\s+/),
             autoFixed ? 'autofixed' : '',
           )}
           style={{ ...(tableStyle || {}) }}

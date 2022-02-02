@@ -18,7 +18,7 @@ function JdCategoryTabItem({ id, children, className, style }) {
           `${selectorPrefix}-tab-item`,
           activeKey === id ? 'active' : null,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
       >

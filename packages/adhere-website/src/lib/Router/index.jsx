@@ -119,7 +119,7 @@ export default async () => {
   // 根据路由配置生成实际的路由
   renderRouterLoop(router, config, authorized);
   // eslint-disable-next-line no-unused-vars
-  return browserConfig(router, (routerIns) => {});
+  return browserConfig(router, () => {});
 };
 
 /**

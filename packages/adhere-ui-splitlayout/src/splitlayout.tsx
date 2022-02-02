@@ -497,7 +497,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
         className={classNames(
           selectorPrefix,
           `${selectorPrefix}-${direction}`,
-          className.split(' '),
+          className.split(/\s+/),
         )}
       />
     );

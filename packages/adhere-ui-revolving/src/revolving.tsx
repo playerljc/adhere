@@ -99,7 +99,7 @@ class Revolving extends React.Component<IRevolvingProps> {
           selectorPrefix,
           'swiper-container',
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}
@@ -109,7 +109,7 @@ class Revolving extends React.Component<IRevolvingProps> {
             `${selectorPrefix}-wrapper`,
             'swiper-wrapper',
             // @ts-ignore
-            classNameWrapper.split(' '),
+            classNameWrapper.split(/\s+/),
           )}
           style={{ ...styleWrapper }}
           ref={(el) => (this.wrapperEl = el)}

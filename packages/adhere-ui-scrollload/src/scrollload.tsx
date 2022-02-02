@@ -135,7 +135,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
           className={classNames(
             `${selectorPrefix}-load`,
             // @ts-ignore
-            loadClassName.split(' '),
+            loadClassName.split(/\s+/),
           )}
           style={{ ...loadStyle }}
           ref={(el) => (this.loadEl = el)}
@@ -151,7 +151,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
           `${selectorPrefix}-load`,
           'standard',
           // @ts-ignore
-          loadClassName.split(' '),
+          loadClassName.split(/\s+/),
         )}
         style={{ ...loadStyle }}
         ref={(el) => (this.loadEl = el)}
@@ -170,7 +170,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
           className={classNames(
             `${selectorPrefix}-empty`,
             // @ts-ignore
-            emptyClassName.split(' '),
+            emptyClassName.split(/\s+/),
           )}
           style={{ ...emptyStyle }}
           ref={(el) => (this.emptyEl = el)}
@@ -185,7 +185,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         className={classNames(
           `${selectorPrefix}-empty`,
           // @ts-ignore
-          emptyClassName.split(' '),
+          emptyClassName.split(/\s+/),
         )}
         style={{ ...emptyStyle }}
         ref={(el) => (this.emptyEl = el)}
@@ -204,7 +204,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
           className={classNames(
             `${selectorPrefix}-error`,
             // @ts-ignore
-            errorClassName.split(' '),
+            errorClassName.split(/\s+/),
           )}
           style={{ ...errorStyle }}
           ref={(el) => (this.errorEl = el)}
@@ -219,7 +219,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         className={classNames(
           `${selectorPrefix}-error`,
           // @ts-ignore
-          errorClassName.split(' '),
+          errorClassName.split(/\s+/),
         )}
         style={{ ...errorStyle }}
         ref={(el) => (this.errorEl = el)}
@@ -239,7 +239,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}

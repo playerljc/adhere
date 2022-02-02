@@ -57,7 +57,7 @@ class Table extends React.Component<ITableProps, any> {
                 {...props}
                 className={classNames(
                   `${selectorPrefix}-header-column`,
-                  (className || '').split(' '),
+                  (className || '').split(/\s+/),
                 )}
                 style={{ textAlign: align || 'left', ...style }}
               >
@@ -112,9 +112,9 @@ class Table extends React.Component<ITableProps, any> {
     const { className, style, tableClassName, tableStyle } = this.props;
 
     return (
-      <div className={classNames(`${selectorPrefix}`, className.split(' '))} style={{ ...style }}>
+      <div className={classNames(`${selectorPrefix}`, className.split(/\s+/))} style={{ ...style }}>
         <table
-          className={classNames(`${selectorPrefix}-inner`, tableClassName.split(' '))}
+          className={classNames(`${selectorPrefix}-inner`, tableClassName.split(/\s+/))}
           style={{ ...tableStyle }}
         >
           {this.renderHeader()}

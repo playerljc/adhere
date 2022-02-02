@@ -486,7 +486,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
               <div
                 className={classNames(
                   `${selectorPrefix}-trigger-refresh`,
-                  ...(renderLoadingAnimation as unknown as string).split(' '),
+                  ...(renderLoadingAnimation as unknown as string).split(/\s+/),
                 )}
                 // @ts-ignore
                 ref={this.refreshElRef}
@@ -592,10 +592,10 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
     return (
       // @ts-ignore
-      <div className={classNames(selectorPrefix, ...className.split(' '))} style={{ ...style }}>
+      <div className={classNames(selectorPrefix, ...className.split(/\s+/))} style={{ ...style }}>
         <div
           // @ts-ignore
-          className={classNames(`${selectorPrefix}-scroll`, ...scrollClassName.split(' '))}
+          className={classNames(`${selectorPrefix}-scroll`, ...scrollClassName.split(/\s+/))}
           style={{ ...scrollStyle }}
           // @ts-ignore
           ref={this.scrollElRef}
