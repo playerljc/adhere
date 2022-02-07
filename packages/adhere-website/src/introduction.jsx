@@ -18,25 +18,36 @@ class Introduction extends React.Component {
             <Title level={2}>概述</Title>
             <Paragraph>
               <Text>
-                这个工程中包含很多个 npm
-                包，这些包都是在平时工作中沉淀出来的一些可以高度复用的组件，有 UI
-                相关、功能相关、GIS 相关,使用的是 React 技术，有的可能是对
-                ant-design(还有其他第三方的库)的二次封装
+                这个工程中包含很多个npm包(整体也是一个npm包)，这些包都是在平时工作中沉淀出来的一些可以高度复用的组件，有UI相关、工具相关、GIS相关,使用的是React技术，有的可能是对ant-design(还有其他第三方的库)的二次封装
               </Text>
             </Paragraph>
             <Title level={2}>兼容</Title>
             <Paragraph>
               <ul>
-                <li>- 支持react16.x | 17.x</li>
-                <li>- 支持antd4.x</li>
+                <li>- 支持 react(17.x)</li>
+                <li>- 支持 ant-design(4.x)</li>
                 <li>- 支持国际化</li>
                 <li>- 支持修改主题</li>
                 <li>- 支持动态引入(babel-plugin-import)</li>
+                <li>每一个子包都可以单独安装</li>
+                <li>使用typescript编写</li>
               </ul>
             </Paragraph>
+
+            <Title level={2}>兼容环境</Title>
+            <Paragraph>
+              <ul>
+                <li>- 现代浏览器，不支持IE</li>
+                <li>- 每一个子包对IE的兼容性都不一样需要具体看</li>
+              </ul>
+            </Paragraph>
+
             <Title level={2}>安装</Title>
             <Paragraph>
               <code>npm i @baifendian/adhere --save</code>
+            </Paragraph>
+            <Paragraph>
+              <code>yarn add @baifendian/adhere</code>
             </Paragraph>
           </Typography>
 
