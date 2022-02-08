@@ -9,14 +9,19 @@
   }
 
   > .Auto {
-    display: flex;
     flex-grow: 1;
-    justify-content: flex-end;
     min-width: 0;
+    margin: 0 15px;
 
-    > .Menu {
-      margin-right: 100px;
-      font-size: 17px;
+    > .Inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 200px 0 150px;
+
+      > .Menu {
+        font-size: 17px;
+      }
     }
   }
 }

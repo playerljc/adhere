@@ -35,7 +35,8 @@ export default () => {
 
   return (
     <PlayGroundPage>
-      <Section title="历史记录返回操作">
+      <Section title="HistoryBack">
+        <p>历史记录返回操作</p>
         <p>- 如果历史栈中没有记录则返回主页，或者可以自定义 - 如果可以返回则进行返回</p>
       </Section>
 
