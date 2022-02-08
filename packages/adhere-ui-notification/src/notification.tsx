@@ -149,7 +149,7 @@ class Notification {
   private buildCustom(config: IShowConfig): string {
     const { closed, children } = config;
 
-    console.log('IShowConfig', config);
+    // console.log('IShowConfig', config);
 
     const id = v1();
     const n = document.createElement('li');
@@ -185,7 +185,7 @@ class Notification {
       datetime = '',
     } = config;
 
-    console.log('IShowStandardConfig', config);
+    // console.log('IShowStandardConfig', config);
 
     const id = v1();
     const n = document.createElement('li');

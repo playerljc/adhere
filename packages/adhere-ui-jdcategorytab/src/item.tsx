@@ -7,10 +7,10 @@ import { JdCategoryContext } from './context';
 const selectorPrefix = 'adhere-ui-jdcategorytab';
 
 function JdCategoryTabItem({ id, children, className, style }) {
-  console.log('JdCategoryTabItem', id);
+  // console.log('JdCategoryTabItem', id);
 
   function renderInner({ activeKey }) {
-    console.log('activeKey', activeKey, typeof activeKey, typeof id, activeKey === id);
+    // console.log('activeKey', activeKey, typeof activeKey, typeof id, activeKey === id);
 
     return (
       <li

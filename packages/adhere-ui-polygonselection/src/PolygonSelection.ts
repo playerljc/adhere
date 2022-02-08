@@ -412,7 +412,7 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
    * @param canvasEl
    */
   setFrontCanvas(canvasEl: HTMLCanvasElement): void {
-    console.log('置顶');
+    // console.log('置顶');
     canvasEl.style.zIndex = '9999';
   }
 
@@ -422,7 +422,7 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
    * @param canvasEl
    */
   setBackCanvas(canvasEl: HTMLCanvasElement): void {
-    console.log('置底');
+    // console.log('置底');
     canvasEl.style.zIndex = '1';
   }
 

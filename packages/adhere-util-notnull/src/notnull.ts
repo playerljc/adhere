@@ -45,12 +45,12 @@ function createProxy(target) {
         // 数组是删除
         if (targetLength < srcLength) {
           // @ts-ignore
-          console.log('删除', `key:${key}`, `value:${value}`);
+          // console.log('删除', `key:${key}`, `value:${value}`);
         }
         // 数组是添加
         else if (targetLength > srcLength) {
           // @ts-ignore
-          console.log('添加', `key:${key}`, `value:${value}`);
+          // console.log('添加', `key:${key}`, `value:${value}`);
 
           // 如果可以则会给value继续创建代理
           if (Util.isObject(value) || Util.isArray(value)) {
@@ -61,7 +61,7 @@ function createProxy(target) {
         // 数组修改
         else {
           // @ts-ignore
-          console.log('修改', `key:${key}`, `value:${value}`);
+          // console.log('修改', `key:${key}`, `value:${value}`);
 
           // 如果可以则会给value继续创建代理
           if (Util.isObject(value) || Util.isArray(value)) {

@@ -195,7 +195,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
         // 具备刷新条件
         if (distance >= this.refreshHeight + 80) {
-          console.log('3.具备刷新条件');
+          // console.log('3.具备刷新条件');
           this.rotateIcon(this.iconEl, 0, 150);
 
           this.setState(
@@ -227,7 +227,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
         this.rotateIcon(this.iconEl, 0, 150);
 
-        console.log('4.拉动到了底部');
+        // console.log('4.拉动到了底部');
         this.setState(
           {
             isCan: true,
@@ -271,7 +271,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
         if (distance >= this.refreshHeight + 80) {
           self.refresh();
         } else {
-          console.log('2.没有具备刷新条件弹回');
+          // console.log('2.没有具备刷新条件弹回');
           // self.events.trigger('pullRebound');
           self.trigger('onPullRebound');
           self.reset();

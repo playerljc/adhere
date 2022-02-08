@@ -132,7 +132,7 @@ class Surnames extends React.Component<ISurnamesProps> {
     const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`);
 
     // @ts-ignore
-    console.log('按下获取索引名称', indexItemEl.dataset.name);
+    // console.log('按下获取索引名称', indexItemEl.dataset.name);
 
     // @ts-ignore
     this.curIndexName = indexItemEl.dataset.name;
@@ -208,7 +208,7 @@ class Surnames extends React.Component<ISurnamesProps> {
     const index = this.findIndex(x, y);
 
     if (index) {
-      console.log(index.name);
+      // console.log(index.name);
       // @ts-ignore
       this.highlightedEl.innerText = index.name;
       // @ts-ignore
@@ -303,7 +303,7 @@ class Surnames extends React.Component<ISurnamesProps> {
       });
     }
 
-    console.log(this.indexPositionMap);
+    // console.log(this.indexPositionMap);
   }
 
   private createMask() {
@@ -424,8 +424,8 @@ class Surnames extends React.Component<ISurnamesProps> {
     // @ts-ignore
     const curIndex = this.indexPositionMap.find((t) => t.name === this.curIndexName);
 
-    console.log('获取增量', val);
-    console.log('移动获取当前索引信息', curIndex);
+    // console.log('获取增量', val);
+    // console.log('移动获取当前索引信息', curIndex);
 
     let low = 0;
     // @ts-ignore
@@ -464,7 +464,7 @@ class Surnames extends React.Component<ISurnamesProps> {
         t4 = targetVal.right;
       }
 
-      console.log(t1, t2, t3, t4);
+      // console.log(t1, t2, t3, t4);
 
       if (t1 >= t3 && t1 <= t4) {
         target = targetVal;

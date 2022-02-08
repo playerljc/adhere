@@ -67,7 +67,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
   private findElByKey(key) {
     const index = this.props.menuData.findIndex((t) => t.key === key);
 
-    console.log('index', index);
+    // console.log('index', index);
 
     // @ts-ignore
     const arr = Array.from(this.menuInnerEl?.querySelectorAll(`.${selectorPrefix}-menu-item`));
@@ -90,19 +90,19 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
 
     if (!isCan) return;
 
-    console.log(this.state.activeKey, key, time);
+    // console.log(this.state.activeKey, key, time);
 
     this.scroll.scrollToElement(this.findElByKey(key), time, null, null, easing);
 
     setTimeout(() => {
-      console.log('setTimeout');
+      // console.log('setTimeout');
 
       this.setState(
         {
           activeKey: key,
         },
         () => {
-          console.log('setTimeoutEnd');
+          // console.log('setTimeoutEnd');
 
           if (this.props.onChange) {
             this.props.onChange(key);

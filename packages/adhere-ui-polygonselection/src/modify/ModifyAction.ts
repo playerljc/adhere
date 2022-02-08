@@ -212,7 +212,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   protected onCanvasMousemove(e) {
-    console.log('onCanvasMousemove');
+    // console.log('onCanvasMousemove');
     e.stopPropagation();
 
     if (!this.context) return;
@@ -266,7 +266,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     // 如果已经进入了修改模式则不执行其他操作
     if (this.startPoint || this.moveStartPoint) return;
 
-    console.log('modify-mousemove');
+    // console.log('modify-mousemove');
 
     const point = MathUtil.clientToCtxPoint({
       event: e,
@@ -344,7 +344,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
 
     if (!this.canMove) return;
 
-    console.log('onMoveMousedown', this.canMove);
+    // console.log('onMoveMousedown', this.canMove);
 
     // assistCanvas置顶
     context.setFrontCanvas(assistCanvasEl);
@@ -424,7 +424,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
       return;
     }
 
-    console.log('onMoveMouseup');
+    // console.log('onMoveMouseup');
 
     // assistCanvas置部
     context.setBackCanvas(assistCanvasEl);

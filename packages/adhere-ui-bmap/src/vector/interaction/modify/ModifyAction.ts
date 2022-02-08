@@ -183,7 +183,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   protected onCanvasMousedown(e) {
-    console.log('onCanvasMousedown');
+    // console.log('onCanvasMousedown');
 
     if (!this.context) return;
 
@@ -223,7 +223,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   protected onCanvasMousemove(e) {
-    console.log('onCanvasMousemove');
+    // console.log('onCanvasMousemove');
 
     if (!this.context) return;
 
@@ -253,7 +253,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   protected onCanvasMouseup(e) {
-    console.log('onCanvasMouseup');
+    // console.log('onCanvasMouseup');
 
     this.end(e);
 
@@ -353,7 +353,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   onMoveMousedown(e?: MouseEvent) {
-    console.log('onMoveMousedown');
+    // console.log('onMoveMousedown');
 
     if (!e) return;
 
@@ -393,7 +393,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   onMoveMousemove(e?: MouseEvent) {
-    console.log('onMoveMousemove');
+    // console.log('onMoveMousemove');
 
     if (!e) return;
 
@@ -434,7 +434,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   onMoveMouseup(e?: MouseEvent) {
-    console.log('onMoveMouseup');
+    // console.log('onMoveMouseup');
 
     this.endMove(e);
   }
@@ -443,7 +443,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * start
    */
   start(): void {
-    console.log('start');
+    // console.log('start');
 
     if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
@@ -538,7 +538,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * @param e
    */
   endMove(e?: MouseEvent): void {
-    console.log('onMoveMouseup');
+    // console.log('onMoveMouseup');
 
     if (!e) return;
 

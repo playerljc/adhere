@@ -60,11 +60,11 @@ class SwipeOut extends React.Component<ISwipeOutProps> {
 
     const { beforeShow, afterShow } = this.props;
 
-    console.log('beforeShow-afterShow', beforeShow, afterShow, [beforeShow, afterShow].toString());
+    // console.log('beforeShow-afterShow', beforeShow, afterShow, [beforeShow, afterShow].toString());
 
     const initialSlide = this.map.get([beforeShow, afterShow].toString());
 
-    console.log('initialSlide', initialSlide);
+    // console.log('initialSlide', initialSlide);
 
     this.swiper = new Swiper(this.ref.current, {
       init: false,

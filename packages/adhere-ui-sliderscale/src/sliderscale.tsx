@@ -38,7 +38,7 @@ class SliderScale extends React.Component<ISliderScaleProps, any> {
   };
 
   private touchEvent(e) {
-    console.log('touchEvent', e.target, e.target.value, this.preValue);
+    // console.log('touchEvent', e.target, e.target.value, this.preValue);
 
     const { value } = e.target;
 

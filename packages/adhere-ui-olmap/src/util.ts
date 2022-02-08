@@ -71,7 +71,7 @@ export default {
       layers = [TitleLayer.getOSMTileLayer()],
     } = Config;
 
-    console.log(layers);
+    // console.log(layers);
     // @ts-ignore
     const map = new Map({
       ...config,
