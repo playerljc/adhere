@@ -33,11 +33,11 @@ export default withRouter((props) => {
     }
 
     setFilter(
-      (filter.current = searchVal
+      searchVal
         ? Index.filter(({ kw }) =>
             kw.some((k) => k.toLowerCase().indexOf(searchVal.toLowerCase()) !== -1),
           )
-        : []),
+        : [],
     );
 
     if (!searchVal) {

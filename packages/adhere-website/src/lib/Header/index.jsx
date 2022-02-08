@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import { withRouter } from '@ctsj/router';
 
@@ -29,15 +29,27 @@ const MenuItemsConfig = [
 export default withRouter((props) => {
   const [menuSelectKeys, setMenuSelectKeys] = useState([getDefaultMenuSelectKey()]);
 
+  useEffect(() => {
+    const unRegisterHandler = props.history.listen((location) => {
+      const { pathname } = location;
+
+      const selectKey = getDefaultMenuSelectKey(pathname);
+
+      setMenuSelectKeys([selectKey]);
+    });
+
+    return () => {
+      unRegisterHandler();
+    };
+  }, []);
+
   function onMenuChange(e) {
     const { key, keyPath } = e;
     setMenuSelectKeys(keyPath);
     props.history.replace(key);
   }
 
-  function getDefaultMenuSelectKey() {
-    const { pathname } = window.location;
-
+  function getDefaultMenuSelectKey(pathname = window.location.pathname) {
     const findMenuItemConfig = MenuItemsConfig.find(
       (menuItemConfig) => pathname.indexOf(menuItemConfig.key) !== -1,
     );
