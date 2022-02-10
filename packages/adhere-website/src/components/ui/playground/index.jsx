@@ -280,6 +280,7 @@ export default () => {
             <li>PlayGround - React的代码单文件展示</li>
             <li>PlayGroundTab - React的多标签文件展示</li>
             <li>PlayGroundMulit - React的代码多文件展示</li>
+            <li>PlayGroundPage - React的整体代码展示(包括代码组和导航等)</li>
             <li>Props - React组件的Props说明</li>
             <li>FunctionProps - 类方法说明</li>
             <li>CodePanel - 代码片段</li>
@@ -529,6 +530,148 @@ export default () => {
               },
             ]}
           />
+
+          <Space />
+
+          <Props
+            border
+            title="PlayGroundPage"
+            data={[
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'anchorPosition',
+                desc: '锚点的位置',
+                type: '{top:string,width:string}',
+                defaultVal: '{top:77,width:120}',
+              },
+            ]}
+          />
+
+          <Space />
+
+          <Props
+            border
+            title="PlayGroundPage.Section"
+            data={[
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '标题',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '右侧扩展',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+            ]}
+          />
+
+          <Space />
+
+          <Props
+            border
+            title="PlayGroundPage.PropsSection"
+            data={[
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '标题',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '右侧扩展',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'config',
+                desc: '配置',
+                type: 'Array',
+                defaultVal: '',
+              },
+            ]}
+          />
+
+          <Space />
+
+          <Props
+            border
+            title="PlayGroundPage.FunctionPropsSection"
+            data={[
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '标题',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '右侧扩展',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'config',
+                desc: '配置',
+                type: 'Array',
+                defaultVal: '',
+              },
+            ]}
+          />
+
+          <Space />
+
+          <Props border title="PlayGroundPage.CodeBoxSection" data={[]} />
 
           <Space />
 

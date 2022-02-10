@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { PlayGround } from '@baifendian/adhere';
 
-const { PlayGroundPageContext, PlaygroundPage } = PlayGround;
+const { PlayGroundPageContext, PlayGroundPage } = PlayGround;
 
-const { Section, CodeBoxSection, PropsSection, FunctionPropsSection } = PlaygroundPage;
+const { Section, CodeBoxSection, PropsSection, FunctionPropsSection } = PlayGroundPage;
 
 export { Section, CodeBoxSection, PropsSection, FunctionPropsSection };
 
@@ -28,9 +28,9 @@ function Wrap({ children, ...props }) {
         scrollEl,
       }}
     >
-      <PlaygroundPage ref={ref} {...props}>
+      <PlayGroundPage ref={ref} {...props}>
         {children}
-      </PlaygroundPage>
+      </PlayGroundPage>
     </PlayGroundPageContext.Provider>
   );
 }

@@ -5,9 +5,7 @@ import { BMap, MessageDialog, Resource } from '@baifendian/adhere';
 
 import PlayGroundPage, {
   Section,
-  PropsSection,
   CodeBoxSection,
-  FunctionPropsSection,
 } from '@/lib/PlaygroundPage';
 
 import citys from './data/citys.json';

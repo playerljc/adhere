@@ -5,7 +5,7 @@ import CodeTabPanel from './CodeTabPanel';
 import CodeBoxPanel from './CodeBoxPanel';
 import PlayGround from './PlayGround';
 import PlayGroundTab from './PlayGroundTab';
-import PlaygroundPage from './PlayGroundPage';
+import PlayGroundPage from './PlayGroundPage';
 import PlayGroundMulit from './PlayGroundMulit';
 import AnchorNavigation from './AnchorNavigation';
 import { AnchorNavigationContext } from './AnchorNavigationContext';
@@ -18,7 +18,7 @@ export default {
   PlayGround,
   PlayGroundTab,
   PlayGroundMulit,
-  PlaygroundPage,
+  PlayGroundPage,
   Props,
   FunctionProps,
   AnchorNavigation,
