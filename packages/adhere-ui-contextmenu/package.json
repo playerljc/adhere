@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-contextmenu",
-  "version": "1.0.14-fix.0",
+  "version": "1.0.14-fix.1",
   "description": "上下文菜单，可以移动后显示子菜单那种",
   "main": "lib/index.js",
   "module": "es/index.js",

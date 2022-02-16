@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-splitlayout",
-  "version": "1.0.14-fix.0",
+  "version": "1.0.14-fix.1",
   "description": "实现分割窗体的布局，可以拉动调整大小",
   "main": "lib/index.js",
   "module": "es/index.js",

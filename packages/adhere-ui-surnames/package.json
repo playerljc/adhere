@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-surnames",
-  "version": "1.0.14-fix.0",
+  "version": "1.0.14-fix.1",
   "description": "姓名面板",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,7 +40,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.14-fix.0",
+    "@baifendian/adhere-util": "^1.0.14-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
