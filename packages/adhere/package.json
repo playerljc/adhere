@@ -50,7 +50,6 @@
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
     "@baifendian/adhere-ui-backtopanimation": "^1.0.14-fix.0",
-    "@baifendian/adhere-ui-bmap": "^1.0.14-fix.0",
     "@baifendian/adhere-ui-cascadecompared": "^1.0.14-fix.0",
     "@baifendian/adhere-ui-conditionalrender": "^1.0.14",
     "@baifendian/adhere-ui-confirm-delconfirm": "^1.0.14-fix.0",

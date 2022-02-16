@@ -1,5 +1,4 @@
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
-import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
@@ -57,7 +56,6 @@ import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
   BackTopAnimation,
-  BMap,
   CascadeCompared,
   ConditionalRender,
   DelConfirm,

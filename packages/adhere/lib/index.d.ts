@@ -1,5 +1,4 @@
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
-import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
@@ -54,4 +53,4 @@ import ReactUtil from '@baifendian/adhere-util-reactutil';
 import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-export { BackTopAnimation, BMap, CascadeCompared, ConditionalRender, DelConfirm, ImportantConfirm, ContextMenu, FlexLayout, FontSizeSetting, FormItemCreator, GlobalIndicator, HistoryBack, Hooks, ImageLazy, JdCategoryTab, MessageDialog, Notification, OLMap, Permission, PlayGround, PolygonSelection, Popup, ErrorPrompt, SuccessPrompt, WarnPrompt, PullRefresh, Revolving, ScrollLoad, SearchTable, SlideLayout, SliderScale, Space, Spin, Split, SplitLayout, StickupLayout, Surnames, Suspense, SwipeOut, TableHeadSearch, TableList, Util, AdapterScreen, Browsersniff, Ajax, Decorators, Dict, Domain, Emitter, Intl, NotNull, Preferences, ReactUtil, Resource, Validator, WatchMemoized, };
+export { BackTopAnimation, CascadeCompared, ConditionalRender, DelConfirm, ImportantConfirm, ContextMenu, FlexLayout, FontSizeSetting, FormItemCreator, GlobalIndicator, HistoryBack, Hooks, ImageLazy, JdCategoryTab, MessageDialog, Notification, OLMap, Permission, PlayGround, PolygonSelection, Popup, ErrorPrompt, SuccessPrompt, WarnPrompt, PullRefresh, Revolving, ScrollLoad, SearchTable, SlideLayout, SliderScale, Space, Spin, Split, SplitLayout, StickupLayout, Surnames, Suspense, SwipeOut, TableHeadSearch, TableList, Util, AdapterScreen, Browsersniff, Ajax, Decorators, Dict, Domain, Emitter, Intl, NotNull, Preferences, ReactUtil, Resource, Validator, WatchMemoized, };
