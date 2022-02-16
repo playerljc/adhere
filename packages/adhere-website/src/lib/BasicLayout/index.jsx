@@ -506,6 +506,27 @@ class BasicLayout extends React.Component {
     this.setState({
       authorized: await Dict.value.SystemAuthorized.value,
     });
+
+    this.unregisterCallback = this.props.history.listen((location) => {
+      const { defaultSelectedKeys, defaultOpenKeys } = this.getDefaultKeys(location.pathname);
+
+      if (
+        JSON.stringify(defaultSelectedKeys) !== JSON.stringify(this.state.selectedKeys) ||
+        JSON.stringify(defaultOpenKeys) !== JSON.stringify(this.state.openKeys)
+      ) {
+        this.setState({
+          selectedKeys: defaultSelectedKeys,
+          openKeys: defaultOpenKeys,
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.unregisterCallback) {
+      this.unregisterCallback();
+      this.unregisterCallback = null;
+    }
   }
 
   /**
@@ -667,28 +688,45 @@ class BasicLayout extends React.Component {
   }
 
   /**
-   * getDefault
-   * @return {{defaultOpenKeys: Array, defaultSelectedKeys: Array}}
+   * getDefaultKeys
+   * @param pathname
+   * @return {{defaultOpenKeys: [], defaultSelectedKeys: []}}
    */
-  getDefault() {
+  getDefaultKeys(pathname = window.location.pathname) {
     const { routes = [] } = this.props;
-    const { openKeys, selectedKeys } = this.state;
     const defaultSelectedKeys = [];
     const defaultOpenKeys = [];
+
     BasicLayout.loopRoutes({
       defaultOpenKeys,
       defaultSelectedKeys,
       routes: routes.filter((t) => !t.redirect),
+      pathname,
     });
 
     return {
-      defaultSelectedKeys: selectedKeys.length ? selectedKeys : defaultSelectedKeys,
-      defaultOpenKeys: openKeys.length ? openKeys : defaultOpenKeys,
+      defaultSelectedKeys,
+      defaultOpenKeys,
+    };
+  }
+
+  /**
+   * getDefault
+   * @return {{selectedKeys: ([]|*[]), openKeys: ([]|*[])}}
+   */
+  getKeys(pathname = window.location.pathname) {
+    const { defaultSelectedKeys, defaultOpenKeys } = this.getDefaultKeys(pathname);
+
+    const { selectedKeys, openKeys } = this.state;
+
+    return {
+      selectedKeys: selectedKeys.length ? selectedKeys : defaultSelectedKeys,
+      openKeys: openKeys.length ? openKeys : defaultOpenKeys,
     };
   }
 
   render() {
-    const { defaultSelectedKeys, defaultOpenKeys } = this.getDefault();
+    const { selectedKeys, openKeys } = this.getKeys();
     const { isMenuCollapse } = this.state;
 
     return (
@@ -697,14 +735,14 @@ class BasicLayout extends React.Component {
           className={classNames(styles.Fixed, styles.Sider, isMenuCollapse ? styles.Collapse : '')}
         >
           {this.renderMenu({
-            defaultSelectedKeys,
-            defaultOpenKeys,
+            defaultSelectedKeys: selectedKeys,
+            defaultOpenKeys: openKeys,
           })}
         </div>
         <div className={styles.Auto}>
           {this.renderBreadcrumb({
-            defaultSelectedKeys,
-            defaultOpenKeys,
+            defaultSelectedKeys: selectedKeys,
+            defaultOpenKeys: openKeys,
           })}
           <div className={styles.Auto}>{this.props.children}</div>
           <div className={styles.FooterWrap}>
