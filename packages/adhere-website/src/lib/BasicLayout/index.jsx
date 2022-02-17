@@ -154,13 +154,13 @@ class BasicLayout extends React.Component {
             if (pre.sort < cur.sort) return -1;
             return 0;
           } else {
-            return -1;
+            return 1;
           }
         } else {
           if ('sort' in cur) {
-            return 1;
-          } else {
             return -1;
+          } else {
+            return 0;
           }
         }
       });
