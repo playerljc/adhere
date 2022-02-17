@@ -3,7 +3,7 @@ import { Skeleton } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import { browserConfig } from '@ctsj/router';
 
-import RouterConfig from '@/config/router.config';
+import RouterConfig from '@/config/router/router.config';
 
 import BasicLayout from '../BasicLayout';
 

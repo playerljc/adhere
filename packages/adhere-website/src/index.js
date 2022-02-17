@@ -4,7 +4,7 @@ import { ConfigProvider } from 'antd';
 import { Intl, Util, Resource } from '@baifendian/adhere';
 
 import Router from '@/lib/Router';
-import DictConfig from '@/config/dict.config';
+import DictConfig from '@/config/dict/dict.config';
 
 // import 'antd/dist/antd.less';
 import 'nprogress/nprogress.css';
