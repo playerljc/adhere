@@ -118,6 +118,7 @@ const MessageDialogFactory = {
    * Prompt
    * @param title
    * @param config
+   * @param layout
    * @param width
    * @param zIndex
    * @param local
