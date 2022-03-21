@@ -228,7 +228,7 @@ export default () => {
             <Button
               type="primary"
               onClick={() => {
-                const el = MessageDialog.Modal({
+                const { close } = MessageDialog.Modal({
                   config: {
                     title: '权限所有设置',
                     width: 200,
@@ -241,7 +241,8 @@ export default () => {
                             setPermission(val.split(','));
                             setAllPermission(getPermission());
                           }
-                          MessageDialog.close(el);
+                          // MessageDialog.close(el);
+                          close();
                         }}
                       >
                         确定
@@ -261,7 +262,7 @@ export default () => {
 
             <Button
               onClick={() => {
-                const el = MessageDialog.Modal({
+                const { close } = MessageDialog.Modal({
                   config: {
                     title: '权限当前设置',
                     width: 200,
@@ -273,7 +274,8 @@ export default () => {
                           if (val) {
                             setCurPermission(val.split(','));
                           }
-                          MessageDialog.close(el);
+                          // MessageDialog.close(el);
+                          close();
                         }}
                       >
                         确定
