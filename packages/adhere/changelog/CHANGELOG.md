@@ -4,6 +4,8 @@
 
 2022-1-25
 
+* **adhere-ui-messagedialog**
+  - close方法的修改
 * **adhere-ui-conditionalrender**
   - 加入ConditionalRender.Show组件进行display切换
   - 加入ConditionalRender.Visibility组件进行visibility切换

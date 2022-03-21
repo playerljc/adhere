@@ -1,12 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import { Modal, Button } from 'antd';
-
 import intl from '@baifendian/adhere-util-intl';
-
-import Actions from './actions';
-import Emitter from './emitter';
+import { Button, Modal } from 'antd';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { IModalDialogProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-messagedialog';
@@ -19,44 +14,20 @@ export const selectorPrefix = 'adhere-ui-messagedialog';
 class ModalDialog extends React.Component<IModalDialogProps, any> {
   static defaultProps: any;
   static propTypes: any;
-  constructor(props) {
-    super(props);
 
-    this.onClose = this.onClose.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
 
-  componentDidMount() {
-    Emitter.on(Actions.close, this.onClose);
-  }
+  //   this.onClose = this.onClose.bind(this);
+  // }
 
-  componentWillUnmount() {
-    Emitter.remove(Actions.close, this.onClose);
-  }
+  // componentDidMount() {
+  //   Emitter.on(Actions.close, this.onClose);
+  // }
 
-  /**
-   * onClose
-   * @param el
-   */
-  onClose(el) {
-    const { parent } = this.props;
-
-    function close() {
-      // @ts-ignore
-      const flag = ReactDOM.unmountComponentAtNode(parent);
-      if (flag) {
-        // @ts-ignore
-        parent.parentElement.removeChild(parent);
-      }
-    }
-
-    if (el) {
-      if (el === parent) {
-        close();
-      }
-    } else {
-      close();
-    }
-  }
+  // componentWillUnmount() {
+  //   Emitter.remove(Actions.close, this.onClose);
+  // }
 
   /**
    * renderCloseBtn
@@ -75,7 +46,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
 
       onClick: () => {
         // @ts-ignore
-        this.onClose();
+        this.props.close();
       },
     };
 
@@ -88,7 +59,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
   }
 
   render() {
-    const { config, cloneBtn, children } = this.props;
+    const { config, cloneBtn, close, children } = this.props;
 
     // @ts-ignore
     const { footer = [], centered = true, ...other } = config;
@@ -100,8 +71,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
         centered={centered}
         wrapClassName={selectorPrefix}
         onCancel={() => {
-          // @ts-ignore
-          this.onClose();
+          close();
         }}
         visible
       >
@@ -112,15 +82,14 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
 }
 
 ModalDialog.defaultProps = {
-  parent: null,
   config: {},
   cloneBtn: true,
 };
 
 ModalDialog.propTypes = {
-  parent: PropTypes.object,
   config: PropTypes.object,
   cloneBtn: PropTypes.bool,
+  close: PropTypes.func,
 };
 
 export default ModalDialog;

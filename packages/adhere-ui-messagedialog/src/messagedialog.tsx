@@ -1,18 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ConfigProvider, Button, Form } from 'antd';
-
+import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
-import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
-
+import { Button, ConfigProvider, Form } from 'antd';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ModalDialog, { selectorPrefix } from './modal';
 import { IAlertArgv, IConfirmArgv } from './types';
-
-import Actions from './actions';
-import Emitter from './emitter';
-import ModalDialog from './modal';
-
-import { selectorPrefix } from './modal';
 
 const DEFAULT_LOCAL = 'zh_CN';
 
@@ -58,7 +51,7 @@ const MessageDialogFactory = {
     icon = null,
     onSuccess,
   }: IConfirmArgv) {
-    const el = this.Modal({
+    const { close } = this.Modal({
       config: {
         title,
         centered: true,
@@ -74,10 +67,12 @@ const MessageDialogFactory = {
             onClick={() => {
               if (onSuccess) {
                 onSuccess().then(() => {
-                  Emitter.trigger(Actions.close, el);
+                  // Emitter.trigger(Actions.close, el);
+                  close();
                 });
               } else {
-                Emitter.trigger(Actions.close, el);
+                // Emitter.trigger(Actions.close, el);
+                close();
               }
             }}
           >
@@ -128,7 +123,7 @@ const MessageDialogFactory = {
   Prompt({ title, config, layout = PromptLayout, width = 300, zIndex = 1000, local, onSuccess }) {
     const ref = React.createRef();
 
-    const el = this.Modal({
+    const { close } = this.Modal({
       config: {
         title,
         centered: true,
@@ -145,11 +140,13 @@ const MessageDialogFactory = {
                 // @ts-ignore
                 ref.current.validateFields().then((values) => {
                   onSuccess(values.value).then(() => {
-                    Emitter.trigger(Actions.close, el);
+                    // Emitter.trigger(Actions.close, el);
+                    close();
                   });
                 });
               } else {
-                Emitter.trigger(Actions.close, el);
+                // Emitter.trigger(Actions.close, el);
+                close();
               }
             }}
           >
@@ -244,10 +241,17 @@ const MessageDialogFactory = {
 
     const el = document.createElement('div');
 
+    function close() {
+      const flag = ReactDOM.unmountComponentAtNode(el);
+      if (flag) {
+        el?.parentElement?.removeChild?.(el);
+      }
+    }
+
     // @ts-ignore
     ReactDOM.render(
       <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]}>
-        <ModalDialog parent={el} config={modalConfig} cloneBtn={defaultCloneBtn}>
+        <ModalDialog close={close} config={modalConfig} cloneBtn={defaultCloneBtn}>
           {children}
         </ModalDialog>
       </ConfigProvider>,
@@ -256,14 +260,21 @@ const MessageDialogFactory = {
 
     document.body.appendChild(el);
 
-    return el;
+    return {
+      el,
+      close,
+    };
   },
   /**
    * close
    * @param el
    */
   close(el: HTMLElement) {
-    Emitter.trigger(Actions.close, el);
+    // Emitter.trigger(Actions.close, el);
+    const flag = ReactDOM.unmountComponentAtNode(el);
+    if (flag) {
+      el?.parentElement?.removeChild?.(el);
+    }
   },
 };
 
