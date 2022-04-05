@@ -53,6 +53,31 @@ export interface IConfig {
     response?: any;
     responseText: string;
   }) => void;
+
+  /* 下面是业务上的封装属性 */
+  // 是否支持mock数据
+  mock?: boolean;
+  // loading的配置
+  loading?: {
+    // 是否显示遮罩
+    show: boolean;
+    // 遮罩的内容
+    text: string;
+    // 遮罩的元素
+    el: HTMLElement;
+  };
+  // 和后端定义的三大业务key
+  onBeforeResponse?: () => void;
+  // 数据属性
+  dataKey?: string;
+  // 消息属性
+  messageKey?: string;
+  // 业务code属性
+  codeKey?: number | string;
+  // 业务code成功属性
+  codeSuccess?: number;
+  // 在code不等于200的时候是否使出message的warn
+  showWarn?: boolean;
 }
 
 /**
@@ -74,31 +99,6 @@ export interface ISendArg extends IConfig {
         data: object;
       }
     | object;
-
-  /* 下面是业务上的封装属性 */
-  // 是否支持mock数据
-  mock: boolean;
-  // loading的配置
-  loading: {
-    // 是否显示遮罩
-    show: boolean;
-    // 遮罩的内容
-    text: string;
-    // 遮罩的元素
-    el: HTMLElement;
-  };
-  // 和后端定义的三大业务key
-  onBeforeResponse: () => void;
-  // 数据属性
-  dataKey: string;
-  // 消息属性
-  messageKey: string;
-  // 业务code属性
-  codeKey: number | string;
-  // 业务code成功属性
-  codeSuccess: number;
-  // 在code不等于200的时候是否使出message的warn
-  showWarn: boolean;
 }
 
 /**
@@ -110,3 +110,4 @@ export interface ISendPrepareArg extends ISendArg {
   // 支持的method枚举
   method: 'get' | 'post' | 'put' | 'path' | 'delete';
 }
+

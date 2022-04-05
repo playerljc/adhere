@@ -13,6 +13,8 @@ import Table from './table';
 import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
 import FewTable from './fewTable';
 import StateTable from './stateTable';
+import RowSelectedNormal from './rowSelectedNormal';
+import RowSelectedContinuous from './rowSelectedContinuous';
 
 export default () => {
   function boxPanelConfig() {
@@ -1069,6 +1071,48 @@ export default () => {
           },
         ],
         type: 'PlayGroundMulit',
+      },
+
+      {
+        id: 'p8',
+        name: '标准的RowSelected',
+        cardProps: {
+          description: {
+            title: '标准的RowSelected',
+            info: '标准的RowSelected',
+          },
+        },
+        config: [
+          {
+            title: 'rowSelectedNormal.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+        ],
+        type: 'PlayGroundMulit',
+        renderChildren: () => <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />,
+      },
+
+      {
+        id: 'p9',
+        name: '可以跨页选择的RowSelected',
+        cardProps: {
+          description: {
+            title: '可以跨页选择的RowSelected',
+            info: '可以跨页选择的RowSelected',
+          },
+        },
+        config: [
+          {
+            title: 'rowSelectedContinuous.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+        ],
+        type: 'PlayGroundMulit',
+        renderChildren: () => <RowSelectedContinuous isShowExpandSearch defaultExpandSearchCollapse={false} />,
       },
     ];
   }

@@ -77,6 +77,10 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      */
     protected getNumberGeneratorRule(): Symbol;
     /**
+     * getNumberGeneratorRule - 获取符号列的生成规则
+     */
+    protected getRowSelectionMode(): Symbol;
+    /**
      * getTableNumberColumnWidth
      * @override
      * @description - 表格序号列的宽度

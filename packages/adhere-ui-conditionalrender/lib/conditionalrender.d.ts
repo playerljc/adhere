@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import PropTypes from 'prop-types';
 import { IConditionalRenderProps } from './types';
 import ConditionalRenderShow from './show';
@@ -11,6 +12,12 @@ declare function ConditionalRender({ conditional, noMatch, children }: IConditio
 declare namespace ConditionalRender {
     var Show: typeof ConditionalRenderShow;
     var Visibility: typeof ConditionalRenderVisibility;
+    var conditionalRender: ({ conditional, match, noMatch, }: {
+        conditional: boolean;
+        match: JSX.Element;
+        noMatch: JSX.Element | null;
+    }) => JSX.Element | null;
+    var conditionalArr: (arr: any[]) => any[];
     var defaultProps: {
         conditional: boolean;
         noMatch: () => null;

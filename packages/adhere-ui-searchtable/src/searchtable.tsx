@@ -36,10 +36,15 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
   // @ts-ignore
   static SearchForm: SearchForm = SearchForm;
-  // 单独模式
+  // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
-  // 连续模式
+  // 序号生成的规则 - 连续模式
   static NUMBER_GENERATOR_RULE_CONTINUITY = Symbol();
+
+  // 全选的规则 - 标准模式(不能跨页)
+  static ROW_SELECTION_NORMAL_MODE = Symbol();
+  // 全选的规则 - 可以跨页
+  static ROW_SELECTION_CONTINUOUS_MODE = Symbol();
 
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
 
@@ -53,12 +58,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * getTableNumberColumnWidth - 表格序号列的宽度
    * @return number
    */
-  abstract getTableNumberColumnWidth(): number;
+  abstract getTableNumberColumnWidth(): Symbol;
 
   /**
    * getNumberGeneratorRule - 获取符号列的生成规则
    */
-  abstract getNumberGeneratorRule(): string;
+  abstract getNumberGeneratorRule(): Symbol;
+
+  /**
+   * getRowSelectionMode - 获取全选的生模式
+   */
+  abstract getRowSelectionMode(): string;
 
   /**
    * getRowKey - 获取表格的主键属性
@@ -204,7 +214,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    */
   protected renderTableNumberColumn(
     number: string = '',
-    params: { record: object; index: number },
+    params: { value: any; record: object; index: number },
   ) {
     return <span>{number}</span>;
   }
@@ -354,10 +364,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
               conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
               // @ts-ignore
               noMatch={() =>
-                this.renderTableNumberColumn((page - 1) * limit + (index + 1), { record: v, index })
+                this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
+                  value: v,
+                  record: r,
+                  index,
+                })
               }
             >
-              {() => this.renderTableNumberColumn(index + 1, { record: v, index })}
+              {() => this.renderTableNumberColumn(index + 1, { value: v, record: r, index })}
             </ConditionalRender>
           ),
         },
@@ -551,7 +565,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
           <FlexLayout>
             {/* @ts-ignore */}
             <Fixed>
-              <ConditionalRender conditional={expand} noMatch={null}>
+              <ConditionalRender conditional={expand} noMatch={() => null}>
                 {() => this.renderSearchForm()}
               </ConditionalRender>
             </Fixed>

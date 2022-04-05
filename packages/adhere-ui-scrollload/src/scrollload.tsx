@@ -30,11 +30,8 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
   constructor(props) {
     super(props);
 
-    // @ts-ignore
     this.onScroll = this.onScroll.bind(this);
-    // @ts-ignore
     this.onEmptyClick = this.onEmptyClick.bind(this);
-    // @ts-ignore
     this.onErrorClick = this.onErrorClick.bind(this);
   }
 
@@ -43,12 +40,9 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
   }
 
   private initEvents() {
-    // @ts-ignore
-    this.el.addEventListener('scroll', this.onScroll);
-    // @ts-ignore
-    this.emptyEl.addEventListener('click', this.onEmptyClick);
-    // @ts-ignore
-    this.errorEl.addEventListener('click', this.onErrorClick);
+    this.el!.addEventListener('scroll', this.onScroll);
+    this.emptyEl!.addEventListener('click', this.onEmptyClick);
+    this.errorEl!.addEventListener('click', this.onErrorClick);
   }
 
   private onScroll() {
@@ -60,10 +54,8 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
       props: { distance, onScrollBottom },
     } = this;
 
-    // @ts-ignore
-    const bottomHeight = el.scrollHeight - el.offsetHeight;
-    // @ts-ignore
-    const scrollTop = el.scrollTop;
+    const bottomHeight = el!.scrollHeight - el!.offsetHeight;
+    const scrollTop = el!.scrollTop;
 
     /**
      * 条件完全相等或误差值在1之间
@@ -74,23 +66,19 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
       this.lock = true;
 
       // 先显示loading
-      // @ts-ignore
-      loadEl.style.display = 'flex';
+      loadEl!.style.display = 'flex';
 
       /**
        * 完成
        * @param {string} status [empty(没有数据) | error(有错误) | normal(正常)]
        */
       onScrollBottom((status) => {
-        // @ts-ignore
-        loadEl.style.display = 'none';
+        loadEl!.style.display = 'none';
 
         if (status === ScrollLoad.EMPTY) {
-          // @ts-ignore
-          emptyEl.style.display = 'block';
+          emptyEl!.style.display = 'block';
         } else if (status === ScrollLoad.ERROR) {
-          // @ts-ignore
-          errorEl.style.display = 'block';
+          errorEl!.style.display = 'block';
         }
 
         this.lock = false;
@@ -118,12 +106,9 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
    * hideAll
    */
   hideAll() {
-    // @ts-ignore
-    this.loadEl.style.display = 'none';
-    // @ts-ignore
-    this.errorEl.style.display = 'none';
-    // @ts-ignore
-    this.emptyEl.style.display = 'none';
+    this.loadEl!.style.display = 'none';
+    this.errorEl!.style.display = 'none';
+    this.emptyEl!.style.display = 'none';
   }
 
   private renderLoading(): React.ReactElement {
@@ -134,7 +119,6 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         <div
           className={classNames(
             `${selectorPrefix}-load`,
-            // @ts-ignore
             loadClassName.split(/\s+/),
           )}
           style={{ ...loadStyle }}
@@ -150,7 +134,6 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         className={classNames(
           `${selectorPrefix}-load`,
           'standard',
-          // @ts-ignore
           loadClassName.split(/\s+/),
         )}
         style={{ ...loadStyle }}
@@ -169,7 +152,6 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         <div
           className={classNames(
             `${selectorPrefix}-empty`,
-            // @ts-ignore
             emptyClassName.split(/\s+/),
           )}
           style={{ ...emptyStyle }}
@@ -184,7 +166,6 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
       <div
         className={classNames(
           `${selectorPrefix}-empty`,
-          // @ts-ignore
           emptyClassName.split(/\s+/),
         )}
         style={{ ...emptyStyle }}
@@ -203,7 +184,6 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
         <div
           className={classNames(
             `${selectorPrefix}-error`,
-            // @ts-ignore
             errorClassName.split(/\s+/),
           )}
           style={{ ...errorStyle }}
@@ -218,7 +198,6 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
       <div
         className={classNames(
           `${selectorPrefix}-error`,
-          // @ts-ignore
           errorClassName.split(/\s+/),
         )}
         style={{ ...errorStyle }}
@@ -230,17 +209,11 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
   }
 
   render() {
-    // @ts-ignore
     const { className, style, children } = this.props;
 
-    // @ts-ignore
     return (
       <div
-        className={classNames(
-          selectorPrefix,
-          // @ts-ignore
-          className.split(/\s+/),
-        )}
+        className={classNames(selectorPrefix, (className || '').split(/\s+/))}
         style={{ ...style }}
         ref={(el) => (this.el = el)}
       >

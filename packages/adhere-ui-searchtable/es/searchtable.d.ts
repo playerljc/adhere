@@ -15,6 +15,8 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     static SearchForm: SearchForm;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
+    static ROW_SELECTION_NORMAL_MODE: symbol;
+    static ROW_SELECTION_CONTINUOUS_MODE: symbol;
     protected tableWrapRef: RefObject<HTMLDivElement>;
     /**
      * isShowNumber - 表格是否显示序号
@@ -25,11 +27,15 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      * getTableNumberColumnWidth - 表格序号列的宽度
      * @return number
      */
-    abstract getTableNumberColumnWidth(): number;
+    abstract getTableNumberColumnWidth(): Symbol;
     /**
      * getNumberGeneratorRule - 获取符号列的生成规则
      */
-    abstract getNumberGeneratorRule(): string;
+    abstract getNumberGeneratorRule(): Symbol;
+    /**
+     * getRowSelectionMode - 获取全选的生模式
+     */
+    abstract getRowSelectionMode(): string;
     /**
      * getRowKey - 获取表格的主键属性
      * @return string
@@ -104,6 +110,7 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      * @protected
      */
     protected renderTableNumberColumn(number: string | undefined, params: {
+        value: any;
         record: object;
         index: number;
     }): JSX.Element;

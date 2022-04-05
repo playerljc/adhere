@@ -1,3 +1,18 @@
+# 1.0.15
+
+***
+
+2022-4-5
+
+* **adhere-ui-conditionalrender**
+  - 加入conditionalRender和conditionalArr两个方法
+* **adhere-ui-searchtable**
+  - renderTableNumberColumn修改
+  - 跨页选取的支持
+* **adhere-util-communication-ajax**
+  - 构造函数参数修改
+  - 细节的调整
+
 # 1.0.14
 
 ***
