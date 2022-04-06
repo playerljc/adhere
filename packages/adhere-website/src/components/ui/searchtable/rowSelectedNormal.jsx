@@ -11,9 +11,9 @@ const { Table: $SearchTable } = SearchTable;
  * @classdesc
  */
 class RowSelectedContinuous extends Table {
-    getRowSelectionMode() {
-        return $SearchTable.ROW_SELECTION_NORMAL_MODE;
-    }
+  getRowSelectionMode() {
+    return $SearchTable.ROW_SELECTION_NORMAL_MODE;
+  }
 }
 
 export default RowSelectedContinuous;
