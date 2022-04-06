@@ -1072,7 +1072,6 @@ export default () => {
         ],
         type: 'PlayGroundMulit',
       },
-
       {
         id: 'p8',
         name: '标准的RowSelected',
@@ -1112,7 +1111,6 @@ export default () => {
         type: 'PlayGroundMulit',
         renderChildren: () => <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />,
       },
-
       {
         id: 'p9',
         name: '可以跨页选择的RowSelected',
