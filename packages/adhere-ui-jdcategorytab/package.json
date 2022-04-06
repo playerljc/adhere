@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-jdcategorytab",
-  "version": "1.0.14-fix.1",
+  "version": "1.0.15",
   "description": "京东的面板",
   "main": "lib/index.js",
   "module": "es/index.js",

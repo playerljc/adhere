@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-swipeout",
-  "version": "1.0.14-fix.1",
+  "version": "1.0.15",
   "description": "滑动操作",
   "main": "lib/index.js",
   "module": "es/index.js",

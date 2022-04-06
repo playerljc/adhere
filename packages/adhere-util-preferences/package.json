@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-preferences",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "sessionStore和localStore进行的封装",
   "main": "lib/index.js",
   "module": "es/index.js",

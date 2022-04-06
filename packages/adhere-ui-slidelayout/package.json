@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-slidelayout",
-  "version": "1.0.14-fix.0",
+  "version": "1.0.15",
   "description": "实现抽屉布局",
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-split",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "无侵入性的竖线和横线分割",
   "main": "lib/index.js",
   "module": "es/index.js",

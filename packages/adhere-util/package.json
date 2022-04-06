@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util",
-  "version": "1.0.14-fix.1",
+  "version": "1.0.15",
   "description": "工具类",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,8 +40,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-preferences": "^1.0.14",
-    "@baifendian/adhere-util-watchmemoized": "^1.0.14-fix.1"
+    "@baifendian/adhere-util-preferences": "^1.0.15",
+    "@baifendian/adhere-util-watchmemoized": "^1.0.15"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

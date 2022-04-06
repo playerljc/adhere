@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-flexlayout",
-  "version": "1.0.14-fix.0",
+  "version": "1.0.15",
   "description": "实现flex布局的组件",
   "main": "lib/index.js",
   "module": "es/index.js",
