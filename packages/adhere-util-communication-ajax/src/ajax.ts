@@ -347,11 +347,12 @@ function sendPrepare(
   // 如果用户设置了header
   if (!Util.isEmpty(headers) && Util.isObject(headers)) {
     // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
-    if (!('Content-type' in headers) && method !== ('get' || 'GET')) {
+    if (!('Content-Type' in headers) && method !== ('get' || 'GET')) {
       headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-      contentType = headers['Content-Type'];
       // console.log('设置了header，但是没有设置Content-Type', Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA);
     }
+
+    contentType = headers['Content-Type'] ?? '';
 
     for (const header in headers) {
       xhr.setRequestHeader(header, headers[header]);
@@ -453,7 +454,7 @@ function getSendParams({ data, contentType }) {
   ) {
     // console.log('application/x-www-form-urlencoded转换', JSON.stringify(data));
     return Array.from(Object.keys(data))
-      .map((k) => encodeURIComponent(`${k}=${data[k]}`))
+      .map((k) => `${k}=${encodeURIComponent(data[k])}`)
       .join('&');
   }
 
