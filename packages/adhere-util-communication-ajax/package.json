@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-communication-ajax",
-  "version": "1.0.15",
+  "version": "1.0.15-fix.0",
   "description": "Ajax通信",
   "main": "lib/index.js",
   "module": "es/index.js",

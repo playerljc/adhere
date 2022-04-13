@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere",
-  "version": "1.0.15",
+  "version": "1.0.15-fix.0",
   "description": "adhere",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
-    "@baifendian/adhere-ui-backtopanimation": "^1.0.15",
+    "@baifendian/adhere-ui-backtopanimation": "^1.0.15-fix.0",
     "@baifendian/adhere-ui-cascadecompared": "^1.0.15",
     "@baifendian/adhere-ui-conditionalrender": "^1.0.15",
     "@baifendian/adhere-ui-confirm-delconfirm": "^1.0.15",
@@ -93,7 +93,7 @@
     "@baifendian/adhere-util": "^1.0.15",
     "@baifendian/adhere-util-adapterscreen": "^1.0.15",
     "@baifendian/adhere-util-browsersniff": "^1.0.15",
-    "@baifendian/adhere-util-communication-ajax": "^1.0.15",
+    "@baifendian/adhere-util-communication-ajax": "^1.0.15-fix.0",
     "@baifendian/adhere-util-decorators": "^1.0.15",
     "@baifendian/adhere-util-dict": "^1.0.15",
     "@baifendian/adhere-util-domain": "^1.0.15",
