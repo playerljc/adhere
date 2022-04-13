@@ -12,6 +12,7 @@
 * **adhere-util-communication-ajax**
   - 构造函数参数修改
   - 细节的调整
+  - Content-Type修改
 
 # 1.0.14
 
