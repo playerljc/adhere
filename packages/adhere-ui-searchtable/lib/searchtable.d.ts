@@ -4,6 +4,7 @@ import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePag
 import Suspense from '@baifendian/adhere-ui-suspense';
 import { ISearchTableProps, ISearchTableState } from './types';
 import SearchForm from './searchform';
+export declare const selectorPrefix = "adhere-ui-searchtable";
 /**
  * SearchTable
  * @class SearchTable
@@ -18,6 +19,8 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     static ROW_SELECTION_NORMAL_MODE: symbol;
     static ROW_SELECTION_CONTINUOUS_MODE: symbol;
     protected tableWrapRef: RefObject<HTMLDivElement>;
+    private components;
+    private columnObserver;
     /**
      * isShowNumber - 表格是否显示序号
      * @return boolean
@@ -147,6 +150,11 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      * @return Array<any>
      */
     protected getTableColumns(): Array<any>;
+    /**
+     * renderColumnSetting
+     * @description 创建列设置组件
+     */
+    renderColumnSetting(): React.ReactElement;
     /**
      * renderSearchFooter - 渲染查询工具栏
      * @return React.ReactElement

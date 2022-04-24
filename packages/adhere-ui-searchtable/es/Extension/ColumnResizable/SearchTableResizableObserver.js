@@ -1,0 +1,2 @@
+export default function(l){var n=new MutationObserver(function(e){var t=e.filter(function(e){return"childList"===e.type&&"colgroup"===(null===(e=null===(e=e.target)||void 0===e?void 0:e.tagName)||void 0===e?void 0:e.toLowerCase())});t.length&&(e=l.getTableColumns(),t.length-1===e.length&&(null!==(e=null==n?void 0:n.disconnect)&&void 0!==e&&e.call(n),null!==(e=null==l?void 0:l.forceUpdate)&&void 0!==e&&e.call(l)))});return n.observe(l.tableWrapRef.current,{attributes:!1,childList:!0,subtree:!0}),n}
+//# sourceMappingURL=SearchTableResizableObserver.js.map

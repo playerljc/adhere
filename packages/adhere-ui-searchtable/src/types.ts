@@ -39,6 +39,8 @@ export interface ISearchTableProps extends ISuspenseProps {
   fixedHeaderAutoTable: boolean;
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: boolean;
+  // 是否显示列设置
+  showColumnSetting: boolean;
 }
 
 /**
@@ -49,6 +51,8 @@ export interface ISearchTableState extends ISuspenseState {
   page: number;
   limit: number;
   expand: boolean;
+  scrollY: number;
+  columnSetting: Array<ColumnType<any> & { sort: number; display: boolean }>;
 }
 
 /**
