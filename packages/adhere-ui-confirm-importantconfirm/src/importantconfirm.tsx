@@ -7,8 +7,6 @@ import Resource from '@baifendian/adhere-util-resource';
 
 import { IImportantConfirmProps } from './types';
 
-// import icon from './icon.svg';
-
 const selectorPrefix = 'adhere-ui-importantconfirm';
 
 const icon =
@@ -28,10 +26,12 @@ class ImportantConfirm extends React.Component<IImportantConfirmProps, any> {
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick() {
-    const { success, zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value } = this.props;
+  onClick(e) {
+    e.stopPropagation();
 
-    ImportantConfirm.open(success, zIndex || Resource.Dict.value.ResourceNormalMaxZIndex.value);
+    const { children, ...params } = this.props;
+
+    ImportantConfirm.open({ ...params });
   }
 
   render() {
@@ -46,14 +46,14 @@ class ImportantConfirm extends React.Component<IImportantConfirmProps, any> {
 
   /**
    * open
-   * @param success - 成功的回调
-   * @param zIndex - 层级
    */
-  static open(success, zIndex) {
+  static open({ success, ...params }) {
     MessageDialog.Confirm({
-      title: intl.v('提示'),
-      text: `${intl.v('真的要执行此操作码')}?`,
-      zIndex,
+      ...params,
+      title: params.title || intl.v('提示'),
+      text: params.text || `${intl.v('真的要执行此操作码')}?`,
+      zIndex:
+        'zIndex' in params ? params.zIndex : Resource.Dict.value.ResourceNormalMaxZIndex.value,
       icon: <img src={icon} alt="" width={32} />,
       onSuccess: () => {
         return new Promise((resolve, reject) => {
@@ -79,6 +79,9 @@ ImportantConfirm.defaultProps = {
   className: '',
   success: () => {},
   children: null,
+  title: intl.v('提示'),
+  text: `${intl.v('真的要执行此操作码')}?`,
+  icon: <img src={icon} alt="" width={32} />,
 };
 
 ImportantConfirm.propTypes = {
@@ -86,6 +89,9 @@ ImportantConfirm.propTypes = {
   className: PropTypes.string,
   success: PropTypes.func,
   children: PropTypes.node,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  icon: PropTypes.node,
 };
 
 export default ImportantConfirm;
