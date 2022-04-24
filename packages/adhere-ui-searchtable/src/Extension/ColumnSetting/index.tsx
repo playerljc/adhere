@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover, Dropdown } from 'antd';
+import { /*Popover,*/ Dropdown } from 'antd';
 
 import Setting from './setting';
 
