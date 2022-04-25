@@ -71,6 +71,7 @@ const {
   BMaps,
   Graph,
   Demo,
+  ForceUpdate
 } = Components;
 
 export default () => [
@@ -362,6 +363,11 @@ export default () => [
                 path: '/adhere/component/ui/hooks',
                 name: 'Hooks',
                 component: Hooks,
+              },
+              {
+                path: '/adhere/component/ui/forceupdate',
+                name: 'ForceUpdate',
+                component: ForceUpdate,
               },
             ],
           },

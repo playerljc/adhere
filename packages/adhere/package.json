@@ -90,6 +90,7 @@
     "@baifendian/adhere-ui-swipeout": "^1.0.14-fix.1",
     "@baifendian/adhere-ui-tableheadsearch": "^1.0.14",
     "@baifendian/adhere-ui-tablelist": "^1.0.14",
+    "@baifendian/adhere-ui-forceupdate": "^1.0.14-fix.0",
     "@baifendian/adhere-util": "^1.0.14-fix.1",
     "@baifendian/adhere-util-adapterscreen": "^1.0.14",
     "@baifendian/adhere-util-browsersniff": "^1.0.14",

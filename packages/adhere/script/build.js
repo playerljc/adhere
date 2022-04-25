@@ -59,6 +59,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-polygonselection', 'PolygonSelection'],
   ['@baifendian/adhere-ui-playground', 'PlayGround'],
   // ['@baifendian/adhere-ui-bmap', 'BMap'],
+  ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],

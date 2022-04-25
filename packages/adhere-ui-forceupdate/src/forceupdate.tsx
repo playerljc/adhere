@@ -1,25 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { IForceUpdateProps } from './types';
-
-const selectorPrefix = 'adhere-ui-forceupdate';
+import { IForceUpdateStates } from './types';
 
 /**
  * ForceUpdate
  * @class ForceUpdate
  * @classdesc ForceUpdate
  */
-class ForceUpdate extends React.Component<IForceUpdateProps> {}
+class ForceUpdate extends React.Component<void, IForceUpdateStates> {
+  state = {
+    renderDOM: this.props.children,
+  };
 
-ForceUpdate.defaultProps = {
-  className: '',
-  style: {},
-};
+  remount() {
+    this.setState({ renderDOM: null }, () => {
+      this.setState({ renderDOM: this.props.children });
+    });
+  }
 
-ForceUpdate.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-};
+  render() {
+    return <div>{this.state.renderDOM}</div>;
+  }
+}
 
 export default ForceUpdate;
