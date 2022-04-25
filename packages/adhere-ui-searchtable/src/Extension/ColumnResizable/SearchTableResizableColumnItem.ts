@@ -8,7 +8,6 @@
  */
 function handleResize(context, column, columnsWidth) {
   return (e, { size }) => {
-    console.log('handleResize', column, size, context);
     // 当拖动header的column时
     columnsWidth.set(column.key, size);
 
