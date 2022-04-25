@@ -21,6 +21,7 @@ export interface ISearchTableProps extends ISuspenseProps {
     autoFixed: boolean;
     fixedHeaderAutoTable: boolean;
     fixedTableSpaceBetween: boolean;
+    showColumnSetting: boolean;
 }
 /**
  * ISearchTableState
@@ -30,6 +31,11 @@ export interface ISearchTableState extends ISuspenseState {
     page: number;
     limit: number;
     expand: boolean;
+    scrollY: number;
+    columnSetting: Array<ColumnType<any> & {
+        sort: number;
+        display: boolean;
+    }>;
 }
 /**
  * ISearchFormProps

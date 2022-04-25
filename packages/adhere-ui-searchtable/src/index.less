@@ -6,6 +6,8 @@
 @import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
 @import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
 
+@import './Extension/ColumnSetting/setting';
+
 .adhere-ui-searchtable-wrap {
   display: flex;
   width: 100%;
@@ -115,6 +117,16 @@
           }
         }
       }
+
+      .adhere-ui-searchtable-resizable-handle {
+        position: absolute;
+        right: -5px;
+        bottom: 0;
+        z-index: 1;
+        width: 10px;
+        height: 100%;
+        cursor: col-resize;
+      }
     }
 
     .adhere-ui-searchform {
@@ -141,4 +153,3 @@
     }
   }
 }
-

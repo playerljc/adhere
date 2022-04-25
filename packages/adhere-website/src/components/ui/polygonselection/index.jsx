@@ -212,7 +212,8 @@ export default () => {
                                 localData.splice(index, 1);
                                 Preferences.putObjectByLocal('polygonSelectionData', localData);
                                 message.success('删除成功！');
-                                MessageDialog.close(el);
+                                // MessageDialog.close(el);
+                                close();
                               }
                             }}
                           >
@@ -223,7 +224,8 @@ export default () => {
                             href="#"
                             onClick={() => {
                               message.success('操作成功！');
-                              MessageDialog.close(el);
+                              // MessageDialog.close(el);
+                              close();
                               const { data } = record;
                               polygonSelection.current.setHistoryData(data);
                               polygonSelection.current.clearDraw();
@@ -238,7 +240,7 @@ export default () => {
                   },
                 ];
 
-                const el = MessageDialog.Modal({
+                const { close } = MessageDialog.Modal({
                   config: {
                     title: '设置数据',
                   },
@@ -442,10 +444,8 @@ export default () => {
           },
         ],
         type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <ImageSelect />
-        ),
-      }
+        renderChildren: () => <ImageSelect />,
+      },
     ];
   }
 

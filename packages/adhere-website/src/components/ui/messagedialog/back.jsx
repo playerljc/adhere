@@ -990,7 +990,7 @@ export default () => (
       <Button
         type="primary"
         onClick={() => {
-          const el = MessageDialog.Modal({
+          const { close } = MessageDialog.Modal({
             config: {
               title: '提示',
             },
@@ -1003,7 +1003,8 @@ export default () => (
                     type="primary"
                     key="console"
                     onClick={() => {
-                      MessageDialog.close(el);
+                      // MessageDialog.close(el);
+                      close();
                     }}
                   >
                     Close

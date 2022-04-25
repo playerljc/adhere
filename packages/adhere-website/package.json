@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-website",
   "private": true,
-  "version": "1.0.14-fix.1",
+  "version": "1.0.15-fix.0",
   "description": "adhere的website",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,7 +39,7 @@
   "homepage": "https://gitee.com/playerljc/adhere",
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.15",
+    "@ctsj/build": "^4.0.19",
     "@umijs/fabric": "^2.8.0",
     "babel-plugin-import": "^1.13.3",
     "cross-env": "^7.0.2",
@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.14-fix.1",
+    "@baifendian/adhere": "^1.0.15-fix.0",
     "@ctsj/router": "^1.0.1",
     "@ctsj/state": "^2.0.21",
     "antd": "^4.9.4",

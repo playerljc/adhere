@@ -9,14 +9,6 @@ export declare const selectorPrefix = "adhere-ui-messagedialog";
 declare class ModalDialog extends React.Component<IModalDialogProps, any> {
     static defaultProps: any;
     static propTypes: any;
-    constructor(props: any);
-    componentDidMount(): void;
-    componentWillUnmount(): void;
-    /**
-     * onClose
-     * @param el
-     */
-    onClose(el: any): void;
     /**
      * renderCloseBtn
      * @return {ReactNode}

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 
 import Table from './table';
@@ -8,6 +9,7 @@ import { oneData } from './mock';
  * @classdesc
  */
 class FewTable extends Table {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fetchDataExecute(searchParams) {
     return new Promise((resolve) => {
       this.setState(

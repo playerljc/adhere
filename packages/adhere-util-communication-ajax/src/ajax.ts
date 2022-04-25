@@ -65,16 +65,7 @@ function createXHR() {
  * getDefaultConfig - 返回构造函数config的默认值
  * @return IConfig
  */
-function getDefaultConfig(): IConfig & {
-  loading: {
-    // 是否显示遮罩
-    show: boolean;
-    // 遮罩的内容
-    text: string;
-    // 遮罩的元素
-    el: HTMLElement;
-  };
-} {
+function getDefaultConfig(): IConfig {
   return {
     timeout: Ajax.TIMEOUT,
     withCredentials: true,
@@ -110,6 +101,7 @@ function getDefaultConfig(): IConfig & {
           break;
       }
     },
+    mock: false,
     // loading的配置
     loading: {
       // 是否显示遮罩
@@ -119,6 +111,12 @@ function getDefaultConfig(): IConfig & {
       // 遮罩的元素
       el: document.body,
     },
+    onBeforeResponse: () => {},
+    dataKey: 'data',
+    messageKey: 'message',
+    codeKey: 'code',
+    codeSuccess: 200,
+    showWarn: true,
   };
 }
 
@@ -213,7 +211,7 @@ function onreadystatechange({
         // 只有application/json才进行三大值的判断
         const jsonObj = JSON.parse(xhr.responseText);
 
-        if (showWarn && jsonObj[codeKey] !== codeSuccess) {
+        if (showWarn && codeKey in jsonObj && jsonObj[codeKey] !== codeSuccess) {
           warnInfo(intl.v('提示'), jsonObj[messageKey]);
         }
 
@@ -295,7 +293,7 @@ function sendPrepare(
 
   const defaultLoadingText = `${intl.v('加载中')}...`;
 
-  const { show = false, text = defaultLoadingText, el = document.body } = loading;
+  const { show = false, text = defaultLoadingText, el = document.body } = loading!;
 
   // 显示loading
   if (show) {
@@ -349,11 +347,12 @@ function sendPrepare(
   // 如果用户设置了header
   if (!Util.isEmpty(headers) && Util.isObject(headers)) {
     // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
-    if (!('Content-type' in headers) && method !== ('get' || 'GET')) {
+    if (!('Content-Type' in headers) && method !== ('get' || 'GET')) {
       headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
-      contentType = headers['Content-Type'];
       // console.log('设置了header，但是没有设置Content-Type', Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA);
     }
+
+    contentType = headers['Content-Type'] ?? '';
 
     for (const header in headers) {
       xhr.setRequestHeader(header, headers[header]);
@@ -364,7 +363,9 @@ function sendPrepare(
     if (!Util.isEmpty(data) && Util.isRef(data) && method !== ('get' || 'GET')) {
       if (
         !(
-          'form' in data &&
+          'form' in
+            // @ts-ignore
+            data &&
           'data' in data &&
           !Util.isEmpty(data.form) &&
           !Util.isEmpty(data.data) &&
@@ -436,25 +437,31 @@ function getSendParams({ data, contentType }) {
 
   // console.log('getSendParams', data, contentType);
 
-  // application/json
-  if (contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_JSON) === 0 && Util.isRef(data)) {
+  /**
+   * application/json
+   */
+  if (contentType.startsWith(Ajax.CONTENT_TYPE_APPLICATION_JSON) && Util.isRef(data)) {
     // console.log('数据需要被转换成JSON字符串', JSON.stringify(data));
     return JSON.stringify(data);
   }
 
-  // application/x-www-form-urlencoded
+  /**
+   * application/x-www-form-urlencoded
+   */
   if (
-    contentType.indexOf(Ajax.CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED) === 0 &&
+    contentType.startsWith(Ajax.CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED) &&
     Util.isObject(data)
   ) {
     // console.log('application/x-www-form-urlencoded转换', JSON.stringify(data));
     return Array.from(Object.keys(data))
-      .map((k) => encodeURIComponent(`${k}=${data[k]}`))
+      .map((k) => `${k}=${encodeURIComponent(data[k])}`)
       .join('&');
   }
 
-  // multipart/form-data
-  if (contentType.indexOf(Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA) === 0 && Util.isObject(data)) {
+  /**
+   * multipart/form-data
+   */
+  if (contentType.startsWith(Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA) && Util.isObject(data)) {
     // console.log('multipart/form-data转换');
     // console.log('form', data.form);
 
@@ -467,6 +474,16 @@ function getSendParams({ data, contentType }) {
 
     return formData;
   }
+
+  /**
+   * text/plain
+   */
+  if (contentType.startsWith(Ajax.CONTENT_TYPE_TEXT_PLAIN)) {
+    if (Util.isString(data)) return data;
+    if (Util.isObject(data)) return JSON.stringify(data);
+  }
+
+  return data.toString();
 }
 
 /**
@@ -480,10 +497,14 @@ function complexRequest(method: string, params: ISendArg) {
       // @ts-ignore
       this,
       {
-        ...getDefaultConfig.call(this),
-        ...this.config,
+        // 缺省的
         // @ts-ignore
+        ...getDefaultConfig.call(this),
+        // 构造函数给的
+        // @ts-ignore
+        ...this.config,
         method,
+        // 方法传的
         ...params,
       },
       {
@@ -634,9 +655,12 @@ class Ajax {
       const { xhr } = sendPrepare.call(
         this,
         {
+          // 默认的
           ...getDefaultConfig.call(this),
+          // 用户构造函数传的
           ...this.config,
           method: 'get',
+          // get传的
           ...arg,
         },
         {

@@ -13,9 +13,10 @@ declare class DelConform extends React.Component<IDelConfirmProps, any> {
     render(): JSX.Element;
     /**
      * open
-     * @param success - 成功的回调
-     * @param zIndex - 层级
      */
-    static open(success: any, zIndex: any): void;
+    static open({ success, ...params }: {
+        [x: string]: any;
+        success: any;
+    }): void;
 }
 export default DelConform;

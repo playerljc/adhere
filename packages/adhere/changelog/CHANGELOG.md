@@ -1,9 +1,27 @@
+# 1.0.15
+
+***
+
+2022-4-5
+
+* **adhere-ui-conditionalrender**
+  - 加入conditionalRender和conditionalArr两个方法
+* **adhere-ui-searchtable**
+  - renderTableNumberColumn修改
+  - 跨页选取的支持
+* **adhere-util-communication-ajax**
+  - 构造函数参数修改
+  - 细节的调整
+  - Content-Type修改
+
 # 1.0.14
 
 ***
 
 2022-1-25
 
+* **adhere-ui-messagedialog**
+  - close方法的修改
 * **adhere-ui-conditionalrender**
   - 加入ConditionalRender.Show组件进行display切换
   - 加入ConditionalRender.Visibility组件进行visibility切换

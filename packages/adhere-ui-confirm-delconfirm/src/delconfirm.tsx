@@ -27,9 +27,9 @@ class DelConform extends React.Component<IDelConfirmProps, any> {
   onClick(e) {
     e.stopPropagation();
 
-    const { success, zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value } = this.props;
+    const { children, ...params } = this.props;
 
-    DelConform.open(success, zIndex || Resource.Dict.value.ResourceNormalMaxZIndex.value);
+    DelConform.open({ ...params });
   }
 
   render() {
@@ -44,14 +44,14 @@ class DelConform extends React.Component<IDelConfirmProps, any> {
 
   /**
    * open
-   * @param success - 成功的回调
-   * @param zIndex - 层级
    */
-  static open(success, zIndex) {
+  static open({ success, ...params }) {
     MessageDialog.Confirm({
-      title: intl.v('提示'),
-      text: `${intl.v('确定删除吗')}?`,
-      zIndex,
+      ...params,
+      title: params.title || intl.v('提示'),
+      text: params.text || `${intl.v('确定删除吗')}?`,
+      zIndex:
+        'zIndex' in params ? params.zIndex : Resource.Dict.value.ResourceNormalMaxZIndex.value,
       onSuccess: () => {
         return new Promise((resolve, reject) => {
           if (success) {
@@ -76,6 +76,8 @@ DelConform.defaultProps = {
   className: '',
   success: () => {},
   children: null,
+  title: intl.v('提示'),
+  text: `${intl.v('确定删除吗')}?`,
 };
 
 DelConform.propTypes = {
@@ -83,6 +85,9 @@ DelConform.propTypes = {
   className: PropTypes.string,
   success: PropTypes.func,
   children: PropTypes.node,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  icon: PropTypes.node,
 };
 
 export default DelConform;

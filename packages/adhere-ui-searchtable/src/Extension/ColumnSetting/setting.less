@@ -1,0 +1,56 @@
+//@import '~antd/es/popover/style/index.less';
+@import '~antd/es/dropdown/style/index.less';
+@import '~@baifendian/adhere-ui-css/es/vars.less';
+
+.adhere-ui-searchtable-column-setting {
+  background-color: #fff;
+
+  > .adhere-ui-searchtable-column-setting-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  > .adhere-ui-searchtable-column-setting-body {
+    padding: 10px;
+
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      > li {
+        display: flex;
+        align-items: center;
+        padding: 5px 10px 5px 0;
+
+        &:hover {
+          background-color: rgba(@adhere-primary-color, 0.3);
+        }
+
+        > img {
+          width: 20px;
+          margin-right: 10px;
+
+          &:hover {
+            cursor: row-resize;
+          }
+        }
+      }
+    }
+  }
+}
+
+.adhere-ui-searchtable-sortableHelper {
+  z-index: 19999;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: rgba(@adhere-primary-color, 0.3);
+  border: 1px solid @adhere-primary-color;
+
+  > span {
+    margin-right: 10px;
+  }
+}

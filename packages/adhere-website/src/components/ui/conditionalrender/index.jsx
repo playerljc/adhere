@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { Button, Card, Empty } from 'antd';
+import PlayGroundPage, {
+  CodeBoxSection,
+  PropsSection,
+  Section,
+  FunctionPropsSection,
+} from '@/lib/PlaygroundPage';
 import { ConditionalRender } from '@baifendian/adhere';
-
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import { Button, Card, Empty } from 'antd';
+import React, { useState } from 'react';
 
 export default () => {
   const [baseUseShow, setBaseUserShow] = useState(true);
@@ -667,6 +671,56 @@ export default () => {
                 desc: 'children',
                 type: 'React.ReactElement',
                 defaultVal: 'null',
+              },
+            ],
+          },
+        ]}
+      />
+
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: '方法',
+            data: [
+              {
+                name: 'conditionalRender',
+                desc: '使用方法的ConditionalRender',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'params',
+                    desc: '',
+                    type: `
+                      {
+                        conditional: boolean;
+                        match: JSX.Element;
+                        noMatch: JSX.Element | null;
+                      }
+                    `,
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+                returnType: 'void',
+                returnDesc: '',
+              },
+              {
+                name: 'conditionalArr',
+                desc: '含有PermissionConditional的React.Element的数组',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'arr',
+                    desc: '',
+                    type: 'any[]',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+                returnType: 'any[]',
+                returnDesc: '',
               },
             ],
           },

@@ -1,3 +1,11 @@
+# 1.0.15
+
+***
+
+2022-04-05
+
+* 加入conditionalRender和conditionalArr两个方法
+
 # 1.0.14
 
 ***

@@ -24,6 +24,7 @@ declare const MessageDialogFactory: {
      * Prompt
      * @param title
      * @param config
+     * @param layout
      * @param width
      * @param zIndex
      * @param local
@@ -82,7 +83,10 @@ declare const MessageDialogFactory: {
         children?: null | undefined;
         defaultCloneBtn?: boolean | undefined;
         local?: string | undefined;
-    }): HTMLDivElement;
+    }): {
+        el: HTMLDivElement;
+        close: () => void;
+    };
     /**
      * close
      * @param el
