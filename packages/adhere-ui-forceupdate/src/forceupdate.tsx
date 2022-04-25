@@ -12,14 +12,18 @@ class ForceUpdate extends React.Component<void, IForceUpdateStates> {
     renderDOM: this.props.children,
   };
 
-  remount() {
+  /**
+   * reMount
+   * @description 重新渲染
+   */
+  reMount() {
     this.setState({ renderDOM: null }, () => {
       this.setState({ renderDOM: this.props.children });
     });
   }
 
   render() {
-    return <div>{this.state.renderDOM}</div>;
+    return this.state.renderDOM;
   }
 }
 

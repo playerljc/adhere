@@ -1,13 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
 
-import PlayGroundPage, {
-  Section,
-  CodeBoxSection,
-} from '@/lib/PlaygroundPage';
+import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
 
-export default ()=>{
-
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -28,7 +24,7 @@ const Index = (props) => {
 
   // 2、重新挂载
   function refresh() {
-    refreshRef.current.remount();
+    refreshRef.current.reMount();
   }
 
   return (
@@ -44,11 +40,7 @@ const Index = (props) => {
 export default Index;
       `,
         type: 'PlayGround',
-        renderChildren: () => ( <Button
-          type="primary"
-        >
-          强制刷新组件
-        </Button>),
+        renderChildren: () => <Button type="primary">强制刷新组件</Button>,
       },
     ];
   }
@@ -60,7 +52,6 @@ export default Index;
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
-
-    </PlayGroundPage> 
+    </PlayGroundPage>
   );
-}
+};
