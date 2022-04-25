@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["surnames/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-surnames/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,6DACQA"}

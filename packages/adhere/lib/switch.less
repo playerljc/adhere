@@ -1,0 +1,136 @@
+/**
+  ---------------------------------------------adhere-ui-css-switch------------------------------------------------
+ */
+.adhere-ui-css-switch,
+.adhere-ui-css-switch > .checkbox {
+  position: relative;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.adhere-ui-css-switch.ios,
+.adhere-ui-css-switch.ios > .checkbox {
+  display: inline-block;
+  width: 52px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.adhere-ui-css-switch.material,
+.adhere-ui-css-switch.material > .checkbox {
+  width: 36px;
+  height: 14px;
+  border-radius: 36px;
+}
+
+.adhere-ui-css-switch.material {
+  display: inline-block;
+}
+
+.adhere-ui-css-switch.material > .checkbox {
+  display: block;
+}
+
+.adhere-ui-css-switch > input[type='checkbox'] {
+  display: none;
+  outline: 0;
+}
+
+.adhere-ui-css-switch > .checkbox {
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: 0.3s;
+  -webkit-appearance: none;
+}
+
+.adhere-ui-css-switch.ios > .checkbox::before {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  box-sizing: border-box;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border-radius: 16px;
+  transform: scale(1);
+  transition-duration: 0.3s;
+  content: '';
+}
+
+.adhere-ui-css-switch > .checkbox::after {
+  position: absolute;
+  z-index: 2;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  content: '';
+}
+
+.adhere-ui-css-switch.ios > .checkbox::after {
+  top: 2px;
+  left: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+}
+
+.adhere-ui-css-switch.material > .checkbox::after {
+  top: -3px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+}
+
+.adhere-ui-css-switch.ios > input[type='checkbox']:checked + .checkbox::before {
+  transform: scale(0);
+}
+
+.adhere-ui-css-switch.ios > input[type='checkbox']:checked + .checkbox::after {
+  transform: translateX(20px);
+}
+
+.adhere-ui-css-switch.material > input[type='checkbox']:checked + .checkbox::after {
+  transform: translateX(16px);
+}
+
+/**
+  ----------------------------------------------------adhere-ui-css-switch----------------------------------------------
+ */
+.adhere-ui-css-switch > .checkbox {
+  background: #e5e5e5;
+}
+
+.adhere-ui-css-switch.ios > .checkbox::before {
+  background-color: #fff;
+}
+
+.adhere-ui-css-switch > .checkbox::after {
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.adhere-ui-css-switch.ios > input[type='checkbox']:checked + .checkbox {
+  background: #4cd964;
+}
+
+.adhere-ui-css-switch.ios > input[type='checkbox']:disabled + .checkbox {
+  background: #e5e5e5;
+}
+
+.adhere-ui-css-switch.material > input[type='checkbox']:checked + .checkbox {
+  background: rgba(33, 150, 243, 0.5);
+}
+
+.adhere-ui-css-switch.material > input[type='checkbox']:disabled + .checkbox {
+  background: #e5e5e5;
+}
+
+.adhere-ui-css-switch.material > input[type='checkbox']:checked + .checkbox::after {
+  background: #2196f3;
+}
+
+.adhere-ui-css-switch.material > input[type='checkbox']:disabled + .checkbox::after {
+  background: #fff;
+}

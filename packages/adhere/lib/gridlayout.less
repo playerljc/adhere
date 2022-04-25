@@ -1,0 +1,118 @@
+@grid-list-padding: 20px;
+@grid-list-margin-bottom: 20px;
+@grid-list-item-interval: 20px;
+
+/*
+  多列的列表
+ */
+.g-grid-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: @grid-list-padding @grid-list-padding 0 @grid-list-padding;
+}
+
+.g-grid-list-item {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: @grid-list-margin-bottom;
+}
+
+.g-grid-list.column2 > .g-grid-list-item {
+  width: calc((100% - (2 - 1) * @grid-list-item-interval) / 2);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column2 > .g-grid-list-item:nth-of-type(2n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column3 > .g-grid-list-item {
+  width: calc((100% - (3 - 1) * @grid-list-item-interval) / 3);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column3 > .g-grid-list-item:nth-of-type(3n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column4 > .g-grid-list-item {
+  width: calc((100% - (4 - 1) * @grid-list-item-interval) / 4);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column4 > .g-grid-list-item:nth-of-type(4n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column5 > .g-grid-list-item {
+  width: calc((100% - (5 - 1) * @grid-list-item-interval) / 5);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column5 > .g-grid-list-item:nth-of-type(5n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column6 > .g-grid-list-item {
+  width: calc((100% - (6 - 1) * @grid-list-item-interval) / 6);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column6 > .g-grid-list-item:nth-of-type(6n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column7 > .g-grid-list-item {
+  width: calc((100% - (7 - 1) * @grid-list-item-interval) / 7);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column7 > .g-grid-list-item:nth-of-type(7n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column8 > .g-grid-list-item {
+  width: calc((100% - (8 - 1) * @grid-list-item-interval) / 8);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column8 > .g-grid-list-item:nth-of-type(8n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column9 > .g-grid-list-item {
+  width: calc((100% - (9 - 1) * @grid-list-item-interval) / 9);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column9 > .g-grid-list-item:nth-of-type(9n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column10 > .g-grid-list-item {
+  width: calc((100% - (10 - 1) * @grid-list-item-interval) / 10);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column10 > .g-grid-list-item:nth-of-type(10n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column11 > .g-grid-list-item {
+  width: calc((100% - (11 - 1) * @grid-list-item-interval) / 11);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column11 > .g-grid-list-item:nth-of-type(11n) {
+  margin-right: 0;
+}
+
+.g-grid-list.column12 > .g-grid-list-item {
+  width: calc((100% - (12 - 1) * @grid-list-item-interval) / 12);
+  margin-right: @grid-list-item-interval;
+}
+
+.g-grid-list.column12 > .g-grid-list-item:nth-of-type(12n) {
+  margin-right: 0;
+}

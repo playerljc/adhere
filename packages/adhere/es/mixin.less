@@ -1,0 +1,152 @@
+/* 全局的less函数和mixin */
+
+/**
+  文字在一行上overflow
+ */
+.adhere-text-inline-overflow() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/**
+  文字在多行上overflow，行数可控
+ */
+.adhere-text-overflow-multi(@line: 3) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-align: justify;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+}
+
+/**
+ 显示滚动条
+ */
+.adhere-hover-overflow-auto() {
+  overflow: hidden;
+  &:hover {
+    overflow: auto;
+  }
+}
+
+/**
+  文字换行
+ */
+.adhere-word-break() {
+  white-space: pre-wrap; // 只对中文起作用，强制换行
+  word-wrap: break-word; // 只对英文起作用，以单词作为换行依据
+  word-break: break-all; // 只对英文起作用，以字母作为换行依据
+}
+
+/**
+  不能选取
+ */
+.adhere-no-select() {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/**
+  横向滚动的元素
+ */
+.adhere-scroll-x-block() {
+  font-size: 0;
+  white-space: nowrap;
+
+  // 是否由内容支撑
+  &.fill {
+    display: inline-block;
+  }
+
+  // 是否滚动
+  &.scroll {
+    overflow: auto;
+  }
+
+  > .adhere-scroll-x-block-item {
+    display: inline-block;
+  }
+}
+
+/**
+  文字水平对齐
+ */
+.adhere-text-middle() {
+  vertical-align: middle;
+}
+
+/**
+ 块级元素垂直居中
+ */
+.adhere-block-vertical-center() {
+  position: absolute;
+  left: 50%;
+  transform: translateY(-50%);
+}
+
+/**
+ 块级元素水平居中
+ */
+.adhere-block-horizontal-center() {
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+}
+
+/**
+ 块级元素水平和垂直都居中
+ */
+.adhere-block-center() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+/**
+  哀悼模式
+ */
+.adhere-mourning-mode() {
+  filter: grayscale(1);
+}
+
+/**
+ 首行缩进
+ */
+.adhere-first-line-indent(@indent: 2em) {
+  text-indent: @indent;
+}
+
+/**
+ 首字下沉
+ */
+.adhere-first-letter(@font-size: 40px) {
+  float: left;
+  font-size: @font-size;
+}
+
+/*
+ 字母以大写开头
+ ----重点间隔也算是重新开头
+*/
+.adhere-text-capitalize {
+  text-transform: capitalize;
+}
+
+/*
+ 字母全部大写
+ */
+.adhere-text-uppercase {
+  text-transform: uppercase;
+}
+
+/*
+ 字母全部小写
+ */
+.adhere-text-lowercase {
+  text-transform: lowercase;
+}
