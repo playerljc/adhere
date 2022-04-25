@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["o-l-map/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-olmap/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,0DACQA"}

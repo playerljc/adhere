@@ -38,6 +38,7 @@ import Suspense from '@baifendian/adhere-ui-suspense';
 import SwipeOut from '@baifendian/adhere-ui-swipeout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
+import ForceUpdate from '@baifendian/adhere-ui-forceupdate';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -95,6 +96,7 @@ export {
   SwipeOut,
   TableHeadSearch,
   TableList,
+  ForceUpdate,
   Util,
   AdapterScreen,
   Browsersniff,

@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["swipe-out/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-swipeout/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,6DACQA"}

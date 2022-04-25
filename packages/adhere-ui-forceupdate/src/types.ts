@@ -1,10 +1,9 @@
 import React from 'react';
 
 /**
- * IForceUpdateProps
- * @interface IForceUpdateProps
+ * IForceUpdateStates
+ * @interface IForceUpdateStates
  */
-export interface IForceUpdateProps {
-  className?: string;
-  style?: React.CSSProperties;
+export interface IForceUpdateStates {
+  renderDOM: React.ReactNode | null,
 }

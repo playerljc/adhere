@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sources":["emitter/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-emitter/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,8DACQA"}
