@@ -21,39 +21,39 @@ import ColumnSettingTable from './columnSettingTable';
 export default () => {
   function boxPanelConfig() {
     return [
-      //     {
-      //       id: `p1`,
-      //       name: `基本使用`,
-      //       mode: 'code',
-      //       scope: { React },
-      //       cardProps: {
-      //         description: {
-      //           title: '基本使用',
-      //           info: '基本使用',
-      //         },
-      //       },
-      //       codeText: `
+      // {
+      //   id: `p1`,
+      //   name: `基本使用`,
+      //   mode: 'code',
+      //   scope: { React },
+      //   cardProps: {
+      //     description: {
+      //       title: '基本使用',
+      //       info: '基本使用',
+      //     },
+      //   },
+      //   codeText: `
       // import React from 'react';
       //
       // import Table from './table';
       //
       // <Table isShowExpandSearch defaultExpandSearchCollapse={false} />
       //     `,
-      //       type: 'PlayGround',
-      //       renderChildren: () => <Table isShowExpandSearch defaultExpandSearchCollapse={false} />,
+      //   type: 'PlayGround',
+      //   renderChildren: () => <Table isShowExpandSearch defaultExpandSearchCollapse={false} />,
+      // },
+      // {
+      //   id: `p2`,
+      //   name: `表格体可以滚动`,
+      //   mode: 'code',
+      //   scope: { React },
+      //   cardProps: {
+      //     description: {
+      //       title: '表格体可以滚动',
+      //       info: '表格体可以滚动',
       //     },
-      //     {
-      //       id: `p2`,
-      //       name: `表格体可以滚动`,
-      //       mode: 'code',
-      //       scope: { React },
-      //       cardProps: {
-      //         description: {
-      //           title: '表格体可以滚动',
-      //           info: '表格体可以滚动',
-      //         },
-      //       },
-      //       codeText: `
+      //   },
+      //   codeText: `
       // import React from 'react';
       //
       // import Table from './table';
@@ -67,43 +67,43 @@ export default () => {
       //   />
       // </div>
       //     `,
-      //       type: 'PlayGround',
-      //       renderChildren: () => (
-      //         <>
-      //           <Switch
-      //             checkedChildren="分页"
-      //             checked={pagination1}
-      //             onChange={() => {
-      //               setPagination1(!pagination1);
-      //             }}
-      //           />
+      //   type: 'PlayGround',
+      //   renderChildren: () => (
+      //     <>
+      //       <Switch
+      //         checkedChildren="分页"
+      //         checked={pagination1}
+      //         onChange={() => {
+      //           setPagination1(!pagination1);
+      //         }}
+      //       />
       //
-      //           <Space />
+      //       <Space />
       //
-      //           <div style={{ display: 'flex', height: 400 }}>
-      //             <Table
-      //               style={{ height: '100%' }}
-      //               isShowExpandSearch
-      //               defaultExpandSearchCollapse={false}
-      //               autoFixed
-      //               pagination={pagination1}
-      //             />
-      //           </div>
-      //         </>
-      //       ),
+      //       <div style={{ display: 'flex', height: 400 }}>
+      //         <Table
+      //           style={{ height: '100%' }}
+      //           isShowExpandSearch
+      //           defaultExpandSearchCollapse={false}
+      //           autoFixed
+      //           pagination={pagination1}
+      //         />
+      //       </div>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   id: `p3`,
+      //   name: `固定列头`,
+      //   mode: 'code',
+      //   scope: { React },
+      //   cardProps: {
+      //     description: {
+      //       title: '表格体可以滚动',
+      //       info: '表格体可以滚动',
       //     },
-      //     {
-      //       id: `p3`,
-      //       name: `固定列头`,
-      //       mode: 'code',
-      //       scope: { React },
-      //       cardProps: {
-      //         description: {
-      //           title: '表格体可以滚动',
-      //           info: '表格体可以滚动',
-      //         },
-      //       },
-      //       codeText: `
+      //   },
+      //   codeText: `
       // import React from 'react';
       //
       // import Table from './table';
@@ -117,46 +117,46 @@ export default () => {
       //   />
       // </div>
       //     `,
-      //       type: 'PlayGround',
-      //       renderChildren: () => (
-      //         <>
-      //           <Switch
-      //             checkedChildren="分页"
-      //             checked={pagination2}
-      //             onChange={() => {
-      //               setPagination2(!pagination2);
-      //             }}
-      //           />
+      //   type: 'PlayGround',
+      //   renderChildren: () => (
+      //     <>
+      //       <Switch
+      //         checkedChildren="分页"
+      //         checked={pagination2}
+      //         onChange={() => {
+      //           setPagination2(!pagination2);
+      //         }}
+      //       />
       //
-      //           <Space />
+      //       <Space />
       //
-      //           <div style={{ display: 'flex', height: 700 }}>
-      //             <Table
-      //               style={{ height: '100%' }}
-      //               isShowExpandSearch
-      //               defaultExpandSearchCollapse={false}
-      //               fixedHeaderAutoTable
-      //               pagination={pagination2}
-      //             />
-      //           </div>
-      //         </>
-      //       ),
+      //       <div style={{ display: 'flex', height: 700 }}>
+      //         <Table
+      //           style={{ height: '100%' }}
+      //           isShowExpandSearch
+      //           defaultExpandSearchCollapse={false}
+      //           fixedHeaderAutoTable
+      //           pagination={pagination2}
+      //         />
+      //       </div>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   id: `p4`,
+      //   name: `列表两端的渲染`,
+      //   cardProps: {
+      //     description: {
+      //       title: '列表两端的渲染',
+      //       info: '列表两端的渲染',
       //     },
+      //   },
+      //   config: [
       //     {
-      //       id: `p4`,
-      //       name: `列表两端的渲染`,
-      //       cardProps: {
-      //         description: {
-      //           title: '列表两端的渲染',
-      //           info: '列表两端的渲染',
-      //         },
-      //       },
-      //       config: [
-      //         {
-      //           title: 'fixedTableSpaceBetweenTable.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //       title: 'fixedTableSpaceBetweenTable.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       // import { Button } from 'antd';
       //
@@ -187,12 +187,12 @@ export default () => {
       //
       // export default FixedTableSpaceBetweenTable;
       //           `,
-      //         },
-      //         {
-      //           title: 'fixedTableSpaceBetweenTable.less',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'fixedTableSpaceBetweenTable.less',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // .Header {
       //   display: flex;
       //   align-items: center;
@@ -208,12 +208,12 @@ export default () => {
       //   background-color: #fff;
       // }
       //           `,
-      //         },
-      //         {
-      //           title: 'index.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'index.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       // import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
       //
@@ -226,48 +226,48 @@ export default () => {
       //   />
       // </div>
       //           `,
-      //         },
-      //       ],
-      //       type: 'PlayGroundMulit',
-      //       renderChildren: () => (
-      //         <>
-      //           <Switch
-      //             checkedChildren="分页"
-      //             checked={pagination3}
-      //             onChange={() => {
-      //               setPagination3(!pagination3);
-      //             }}
-      //           />
-      //
-      //           <Space />
-      //
-      //           <div style={{ display: 'flex', height: 800 }}>
-      //             <FixedTableSpaceBetweenTable
-      //               style={{ height: '100%' }}
-      //               isShowExpandSearch
-      //               defaultExpandSearchCollapse={false}
-      //               fixedHeaderAutoTable
-      //               pagination={pagination3}
-      //             />
-      //           </div>
-      //         </>
-      //       ),
       //     },
+      //   ],
+      //   type: 'PlayGroundMulit',
+      //   renderChildren: () => (
+      //     <>
+      //       <Switch
+      //         checkedChildren="分页"
+      //         checked={pagination3}
+      //         onChange={() => {
+      //           setPagination3(!pagination3);
+      //         }}
+      //       />
+      //
+      //       <Space />
+      //
+      //       <div style={{ display: 'flex', height: 800 }}>
+      //         <FixedTableSpaceBetweenTable
+      //           style={{ height: '100%' }}
+      //           isShowExpandSearch
+      //           defaultExpandSearchCollapse={false}
+      //           fixedHeaderAutoTable
+      //           pagination={pagination3}
+      //         />
+      //       </div>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   id: `p5`,
+      //   name: `分页始终居底`,
+      //   cardProps: {
+      //     description: {
+      //       title: '分页始终居底',
+      //       info: '分页始终居底',
+      //     },
+      //   },
+      //   config: [
       //     {
-      //       id: `p5`,
-      //       name: `分页始终居底`,
-      //       cardProps: {
-      //         description: {
-      //           title: '分页始终居底',
-      //           info: '分页始终居底',
-      //         },
-      //       },
-      //       config: [
-      //         {
-      //           title: 'fewTable.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //       title: 'fewTable.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       //
       // import Table from './table';
@@ -314,12 +314,12 @@ export default () => {
       //
       // export default FewTable;
       //           `,
-      //         },
-      //         {
-      //           title: 'index.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'index.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       // import FewTable from './fewTable';
       //
@@ -333,49 +333,49 @@ export default () => {
       //   />
       // </div>
       //           `,
-      //         },
-      //       ],
-      //       type: 'PlayGroundMulit',
-      //       renderChildren: () => (
-      //         <>
-      //           <Switch
-      //             checkedChildren="分页"
-      //             checked={pagination4}
-      //             onChange={() => {
-      //               setPagination4(!pagination4);
-      //             }}
-      //           />
-      //
-      //           <Space />
-      //
-      //           <div style={{ display: 'flex', height: 700 }}>
-      //             <FewTable
-      //               style={{ height: '100%' }}
-      //               isShowExpandSearch
-      //               defaultExpandSearchCollapse={false}
-      //               fixedHeaderAutoTable
-      //               fixedTableSpaceBetween
-      //               pagination={pagination4}
-      //             />
-      //           </div>
-      //         </>
-      //       ),
       //     },
+      //   ],
+      //   type: 'PlayGroundMulit',
+      //   renderChildren: () => (
+      //     <>
+      //       <Switch
+      //         checkedChildren="分页"
+      //         checked={pagination4}
+      //         onChange={() => {
+      //           setPagination4(!pagination4);
+      //         }}
+      //       />
+      //
+      //       <Space />
+      //
+      //       <div style={{ display: 'flex', height: 700 }}>
+      //         <FewTable
+      //           style={{ height: '100%' }}
+      //           isShowExpandSearch
+      //           defaultExpandSearchCollapse={false}
+      //           fixedHeaderAutoTable
+      //           fixedTableSpaceBetween
+      //           pagination={pagination4}
+      //         />
+      //       </div>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   id: `p6`,
+      //   name: `使用@ctsj/state的Table`,
+      //   cardProps: {
+      //     description: {
+      //       title: '使用@ctsj/state的Table',
+      //       info: '使用@ctsj/state的Table',
+      //     },
+      //   },
+      //   config: [
       //     {
-      //       id: `p6`,
-      //       name: `使用@ctsj/state的Table`,
-      //       cardProps: {
-      //         description: {
-      //           title: '使用@ctsj/state的Table',
-      //           info: '使用@ctsj/state的Table',
-      //         },
-      //       },
-      //       config: [
-      //         {
-      //           title: 'serviceRegister.js',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //       title: 'serviceRegister.js',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
       //
       // function serviceRegister() {
@@ -392,22 +392,22 @@ export default () => {
       //
       // serviceRegister();
       //           `,
-      //         },
-      //         {
-      //           title: 'model/user.js',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'model/user.js',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
       //
       // export default () => Object.assign(ServiceRegister.model('user'), {});
       //           `,
-      //         },
-      //         {
-      //           title: 'service/user.js',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'service/user.js',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import { Ajax } from '@baifendian/adhere';
       //
       // const request = new Ajax('');
@@ -437,12 +437,12 @@ export default () => {
       //   messageKey: 'message',
       // };
       //           `,
-      //         },
-      //         {
-      //           title: 'stateTable.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'stateTable.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       // import moment from 'moment';
       // import { Input, InputNumber, Select, DatePicker } from 'antd';
@@ -718,12 +718,12 @@ export default () => {
       //
       // export default StateTable;
       //           `,
-      //         },
-      //         {
-      //           title: 'index.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //     },
+      //     {
+      //       title: 'index.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       // import StateTable from './stateTable';
       //
@@ -737,49 +737,49 @@ export default () => {
       //   />
       // </div>
       //           `,
-      //         },
-      //       ],
-      //       type: 'PlayGroundMulit',
-      //       renderChildren: () => (
-      //         <>
-      //           <Switch
-      //             checkedChildren="分页"
-      //             checked={pagination5}
-      //             onChange={() => {
-      //               setPagination5(!pagination5);
-      //             }}
-      //           />
-      //
-      //           <Space />
-      //
-      //           <div style={{ display: 'flex', height: 700 }}>
-      //             <StateTable
-      //               style={{ height: '100%' }}
-      //               isShowExpandSearch
-      //               defaultExpandSearchCollapse={false}
-      //               fixedHeaderAutoTable
-      //               fixedTableSpaceBetween
-      //               pagination={pagination5}
-      //             />
-      //           </div>
-      //         </>
-      //       ),
       //     },
+      //   ],
+      //   type: 'PlayGroundMulit',
+      //   renderChildren: () => (
+      //     <>
+      //       <Switch
+      //         checkedChildren="分页"
+      //         checked={pagination5}
+      //         onChange={() => {
+      //           setPagination5(!pagination5);
+      //         }}
+      //       />
+      //
+      //       <Space />
+      //
+      //       <div style={{ display: 'flex', height: 700 }}>
+      //         <StateTable
+      //           style={{ height: '100%' }}
+      //           isShowExpandSearch
+      //           defaultExpandSearchCollapse={false}
+      //           fixedHeaderAutoTable
+      //           fixedTableSpaceBetween
+      //           pagination={pagination5}
+      //         />
+      //       </div>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   id: `p7`,
+      //   name: `实现TableImplement的table`,
+      //   cardProps: {
+      //     description: {
+      //       title: '实现TableImplement的table',
+      //       info: '实现TableImplement的table',
+      //     },
+      //   },
+      //   config: [
       //     {
-      //       id: `p7`,
-      //       name: `实现TableImplement的table`,
-      //       cardProps: {
-      //         description: {
-      //           title: '实现TableImplement的table',
-      //           info: '实现TableImplement的table',
-      //         },
-      //       },
-      //       config: [
-      //         {
-      //           title: 'table.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //       title: 'table.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       // import moment from 'moment';
       // import { Input, Select, DatePicker, InputNumber } from 'antd';
@@ -1070,25 +1070,25 @@ export default () => {
       //
       // export default TableImpl;
       //         `,
-      //         },
-      //       ],
-      //       type: 'PlayGroundMulit',
       //     },
+      //   ],
+      //   type: 'PlayGroundMulit',
+      // },
+      // {
+      //   id: 'p8',
+      //   name: '标准的RowSelected',
+      //   cardProps: {
+      //     description: {
+      //       title: '标准的RowSelected',
+      //       info: '标准的RowSelected',
+      //     },
+      //   },
+      //   config: [
       //     {
-      //       id: 'p8',
-      //       name: '标准的RowSelected',
-      //       cardProps: {
-      //         description: {
-      //           title: '标准的RowSelected',
-      //           info: '标准的RowSelected',
-      //         },
-      //       },
-      //       config: [
-      //         {
-      //           title: 'rowSelectedNormal.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //       title: 'rowSelectedNormal.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       //
       // import { SearchTable } from '@baifendian/adhere';
@@ -1108,28 +1108,28 @@ export default () => {
       //
       // export default RowSelectedContinuous;
       //           `,
-      //         },
-      //       ],
-      //       type: 'PlayGroundMulit',
-      //       renderChildren: () => (
-      //         <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />
-      //       ),
       //     },
+      //   ],
+      //   type: 'PlayGroundMulit',
+      //   renderChildren: () => (
+      //     <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //   ),
+      // },
+      // {
+      //   id: 'p9',
+      //   name: '可以跨页选择的RowSelected',
+      //   cardProps: {
+      //     description: {
+      //       title: '可以跨页选择的RowSelected',
+      //       info: '可以跨页选择的RowSelected',
+      //     },
+      //   },
+      //   config: [
       //     {
-      //       id: 'p9',
-      //       name: '可以跨页选择的RowSelected',
-      //       cardProps: {
-      //         description: {
-      //           title: '可以跨页选择的RowSelected',
-      //           info: '可以跨页选择的RowSelected',
-      //         },
-      //       },
-      //       config: [
-      //         {
-      //           title: 'rowSelectedContinuous.jsx',
-      //           mode: 'code',
-      //           scope: { React },
-      //           codeText: `
+      //       title: 'rowSelectedContinuous.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: `
       // import React from 'react';
       //
       // import { SearchTable } from '@baifendian/adhere';
@@ -1149,47 +1149,26 @@ export default () => {
       //
       // export default RowSelectedContinuous;
       //           `,
-      //         },
-      //       ],
-      //       type: 'PlayGroundMulit',
-      //       renderChildren: () => (
-      //         <RowSelectedContinuous isShowExpandSearch defaultExpandSearchCollapse={false} />
-      //       ),
-      //     },
-      // {
-      //   id: 'p10',
-      //   name: '可以拖动的列',
-      //   cardProps: {
-      //     description: {
-      //       title: '可以拖动的列',
-      //       info: '可以拖动的列',
-      //     },
-      //   },
-      //   config: [
-      //     {
-      //       title: 'columnResizeTable.jsx',
-      //       mode: 'code',
-      //       scope: { React },
-      //       codeText: ``,
       //     },
       //   ],
       //   type: 'PlayGroundMulit',
       //   renderChildren: () => (
-      //     <ColumnResizeTable isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //     <RowSelectedContinuous isShowExpandSearch defaultExpandSearchCollapse={false} />
       //   ),
       // },
+
       {
-        id: 'p11',
-        name: '列设置',
+        id: 'p10',
+        name: '可以拖动的列',
         cardProps: {
           description: {
-            title: '列设置',
-            info: '列设置',
+            title: '可以拖动的列',
+            info: '可以拖动的列',
           },
         },
         config: [
           {
-            title: 'columnSettingTable.jsx',
+            title: 'columnResizeTable.jsx',
             mode: 'code',
             scope: { React },
             codeText: ``,
@@ -1197,9 +1176,39 @@ export default () => {
         ],
         type: 'PlayGroundMulit',
         renderChildren: () => (
-          <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
+          <div style={{ display: 'flex', height: 700 }}>
+            <ColumnResizeTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+            />
+          </div>
         ),
       },
+
+      // {
+      //   id: 'p11',
+      //   name: '列设置',
+      //   cardProps: {
+      //     description: {
+      //       title: '列设置',
+      //       info: '列设置',
+      //     },
+      //   },
+      //   config: [
+      //     {
+      //       title: 'columnSettingTable.jsx',
+      //       mode: 'code',
+      //       scope: { React },
+      //       codeText: ``,
+      //     },
+      //   ],
+      //   type: 'PlayGroundMulit',
+      //   renderChildren: () => (
+      //     <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //   ),
+      // },
     ];
   }
 

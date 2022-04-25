@@ -16,10 +16,9 @@ import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import {
+import ColumnResizable, {
   SearchTableResizableTitle,
   SearchTableResizableObserver,
-  SearchTableResizableColumnItem,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
 import { ISearchTableProps, ISearchTableState } from './types';
@@ -59,6 +58,9 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       cell: SearchTableResizableTitle,
     },
   };
+
+  // 列拖动对象
+  private columnResizable = new ColumnResizable();
 
   // 列属性监控对象
   private columnObserver: any = null;
@@ -379,7 +381,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       .map((column, index) => {
         // @ts-ignore
         if ('resizable' in column && !!column.resizable) {
-          return SearchTableResizableColumnItem(this, column);
+          return this.columnResizable.searchTableResizableColumnItem(this, index, column);
         }
 
         return column;

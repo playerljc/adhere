@@ -8,6 +8,7 @@
  */
 function handleResize(context, column, columnsWidth) {
   return (e, { size }) => {
+    console.log('handleResize', column, size, context);
     // 当拖动header的column时
     columnsWidth.set(column.key, size);
 
@@ -17,10 +18,17 @@ function handleResize(context, column, columnsWidth) {
 }
 
 // @ts-ignore
-export default (context: any, column: any) => {
-  // 列的宽度
-  const columnsWidth = new Map<string, { width: number; height: number }>();
-
+export default ({
+  columnsWidth,
+  context,
+  index,
+  column,
+}: {
+  columnsWidth: Map<string, { width: number; height: number }>;
+  context: any;
+  index: number;
+  column: any;
+}) => {
   // 如果设置了列可拖动
   const colEls = context?.tableWrapRef?.current?.querySelectorAll?.(
     '.ant-table-header > table > colgroup > col',

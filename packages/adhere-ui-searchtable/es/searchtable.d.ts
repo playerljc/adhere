@@ -20,6 +20,7 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     static ROW_SELECTION_CONTINUOUS_MODE: symbol;
     protected tableWrapRef: RefObject<HTMLDivElement>;
     private components;
+    private columnResizable;
     private columnObserver;
     /**
      * isShowNumber - 表格是否显示序号
