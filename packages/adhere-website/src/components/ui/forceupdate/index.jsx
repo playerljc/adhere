@@ -47,7 +47,7 @@ export default Index;
 
   return (
     <PlayGroundPage>
-      <Section title="FlexLayout">
+      <Section title="ForceUpdate">
         <p>强制刷新组件及其子组件</p>
       </Section>
 
