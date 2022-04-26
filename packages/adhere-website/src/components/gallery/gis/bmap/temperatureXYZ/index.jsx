@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
 import PlaygroundMulit from '@/lib/PlaygroundMulit';
-import Util from '../util';
 import styles from './index.less';
 
 /**
