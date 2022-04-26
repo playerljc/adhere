@@ -17,6 +17,7 @@ import RowSelectedNormal from './rowSelectedNormal';
 import RowSelectedContinuous from './rowSelectedContinuous';
 import ColumnResizeTable from './columnResizeTable';
 import ColumnSettingTable from './columnSettingTable';
+import TableDensitySetting from './tableDensitySetting';
 
 export default () => {
   const [pagination1, setPagination1] = useState(false);
@@ -1252,6 +1253,51 @@ export default () => {
         type: 'PlayGroundMulit',
         renderChildren: () => (
           <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
+        ),
+      },
+
+      {
+        id: 'p12',
+        name: '表格密度设置',
+        cardProps: {
+          description: {
+            title: '表格密度设置',
+            info: '表格密度设置',
+          },
+        },
+        config: [
+          {
+            title: 'tableDensitySetting.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: `
+  import React from 'react';
+  
+  import Table from './table';
+  import styles from './fixedTableSpaceBetweenTable.less';
+  
+  /**
+   * TableDensitySetting
+   * @classdesc
+   */
+  class TableDensitySetting extends Table {
+    renderTableHeader() {
+      return (
+        <div className={styles.Header}>
+          <h3>查询表格</h3>
+          <div>{this.renderTableDensitySetting()}</div>
+        </div>
+      );
+    }
+  }
+  
+  export default TableDensitySetting;
+            `,
+          },
+        ],
+        type: 'PlayGroundMulit',
+        renderChildren: () => (
+          <TableDensitySetting isShowExpandSearch defaultExpandSearchCollapse={false} />
         ),
       },
     ];

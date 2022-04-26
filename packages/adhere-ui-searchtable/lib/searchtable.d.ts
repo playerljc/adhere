@@ -2,7 +2,7 @@ import React, { RefObject } from 'react';
 import PropTypes from 'prop-types';
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import Suspense from '@baifendian/adhere-ui-suspense';
-import { ISearchTableProps, ISearchTableState } from './types';
+import { ISearchTableProps, ISearchTableState, TableDensity } from './types';
 import SearchForm from './searchform';
 export declare const selectorPrefix = "adhere-ui-searchtable";
 /**
@@ -147,6 +147,11 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     protected sortOrder(columnName: string): string;
     /**
+     * getTableDensity
+     * @description 表格密度
+     */
+    protected getTableDensity(): TableDensity;
+    /**
      * getTableColumns - 获取表格的列数据
      * @return Array<any>
      */
@@ -156,6 +161,11 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      * @description 创建列设置组件
      */
     renderColumnSetting(): React.ReactElement;
+    /**
+     * renderTableDensitySetting
+     * @description 表格密度设置
+     */
+    renderTableDensitySetting(): React.ReactElement;
     /**
      * renderSearchFooter - 渲染查询工具栏
      * @return React.ReactElement

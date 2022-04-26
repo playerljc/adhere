@@ -194,3 +194,12 @@ export interface ISearchTableImplementProps {
    */
   fetchData(): void;
 }
+
+/**
+ * TableDensity
+ */
+export enum TableDensity {
+  DEFAULT = 'default',
+  MIDDLE = 'middle',
+  SMALL = 'small',
+}

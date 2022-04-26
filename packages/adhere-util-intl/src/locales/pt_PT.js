@@ -51,4 +51,7 @@ export default [
   'Clique para confirmar a localização, clique duas vezes para encerrar',
   'fecho',
   'Não pode haver espaços antes e depois do conteúdo de entrada',
+  'predefinição',
+  'médio',
+  'compactar',
 ];

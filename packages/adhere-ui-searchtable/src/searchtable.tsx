@@ -21,7 +21,8 @@ import ColumnResizable, {
   SearchTableResizableObserver,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
-import { ISearchTableProps, ISearchTableState } from './types';
+import TableDensitySetting from './Extension/TableDensitySetting';
+import { ISearchTableProps, ISearchTableState, TableDensity } from './types';
 import SearchForm from './searchform';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
@@ -193,6 +194,8 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         sort: index,
         display: true,
       })),
+      // 表格密度设置
+      tableDensity: this.getTableDensity(),
     };
 
     this.onClear = this.onClear.bind(this);
@@ -361,6 +364,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 
   /**
+   * getTableDensity
+   * @description 表格密度
+   */
+  protected getTableDensity() {
+    return TableDensity.DEFAULT;
+  }
+
+  /**
    * getTableColumns - 获取表格的列数据
    * @return Array<any>
    */
@@ -484,6 +495,31 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 
   /**
+   * renderTableDensitySetting
+   * @description 表格密度设置
+   */
+  renderTableDensitySetting(): React.ReactElement {
+    return (
+      <TableDensitySetting
+        // @ts-ignore
+        density={this.state.tableDensity}
+        onChange={(density) => {
+          // @ts-ignore
+          this.setState({
+            tableDensity: density,
+          });
+        }}
+        onReset={() => {
+          // @ts-ignore
+          this.setState({
+            tableDensity: this.getTableDensity(),
+          });
+        }}
+      />
+    );
+  }
+
+  /**
    * renderSearchFooter - 渲染查询工具栏
    * @return React.ReactElement
    */
@@ -594,7 +630,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     } = this.props;
 
     // @ts-ignore
-    const { columnSetting } = this.state;
+    const { columnSetting, tableDensity } = this.state;
 
     const columns = this.getTableColumns()
       .map((column, index) => ({
@@ -618,6 +654,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
       components: this.components,
+      size: tableDensity,
       ...(antdTableProps || {}),
     };
 
