@@ -5,8 +5,9 @@ import Isobar from './Isobar';
 import Heat from './heat';
 import MassivePoints from './massivePoints';
 import Boundary from './boundary';
-import Humidity from './humidity';
-import Temperature from './temperature';
+import HumidityWMS from './humidityWMS';
+import TemperatureWMS from './temperatureWMS';
+import HumidityXYZ from './humidityXYZ';
 
 export default [
   {
@@ -36,12 +37,17 @@ export default [
   },
   {
     title: '自定义瓦片温度(WMS)',
-    keyword: '自定义瓦片温度',
-    component: <Temperature />,
+    keyword: '自定义瓦片温度(WMS)',
+    component: <TemperatureWMS />,
   },
   {
     title: '自定义瓦片湿度(WMS)',
-    keyword: '自定义瓦片湿度',
-    component: <Humidity />,
+    keyword: '自定义瓦片湿度(WMS)',
+    component: <HumidityWMS />,
+  },
+  {
+    title: '自定义瓦片湿度(XYZ)',
+    keyword: '自定义瓦片湿度(XYZ)',
+    component: <HumidityXYZ />,
   },
 ];
