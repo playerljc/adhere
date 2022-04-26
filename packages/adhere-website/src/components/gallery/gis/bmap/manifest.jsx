@@ -8,6 +8,7 @@ import Boundary from './boundary';
 import HumidityWMS from './humidityWMS';
 import TemperatureWMS from './temperatureWMS';
 import HumidityXYZ from './humidityXYZ';
+import TemperatureXYZ from './temperatureXYZ';
 
 export default [
   {
@@ -39,6 +40,11 @@ export default [
     title: '自定义瓦片温度(WMS)',
     keyword: '自定义瓦片温度(WMS)',
     component: <TemperatureWMS />,
+  },
+  {
+    title: '自定义瓦片温度(XYZ)',
+    keyword: '自定义瓦片温度(XYZ)',
+    component: <TemperatureXYZ />,
   },
   {
     title: '自定义瓦片湿度(WMS)',
