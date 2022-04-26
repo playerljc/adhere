@@ -1,3 +1,23 @@
+# 1.0.16
+
+***
+
+2022-4-26
+
+* **adhere-ui-confirm-delconfirm**
+  - 加入title，text和icon参数
+* **adhere-ui-confirm-importantconfirm**
+  - 加入title，text和icon参数
+* **adhere-ui-forceupdate**
+  - 加入代码
+* **adhere-ui-searchtable**
+  - 加入列拖动功能
+  - 加入列设置功能
+  - 加入表格密度设置功能
+  - 序号列命名修改
+* **adhere-util-intl**
+  - 加入新词条
+
 # 1.0.15
 
 ***
