@@ -1255,7 +1255,6 @@ export default () => {
           <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
         ),
       },
-
       {
         id: 'p12',
         name: '表格密度设置',

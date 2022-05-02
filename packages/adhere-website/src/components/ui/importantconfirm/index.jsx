@@ -137,6 +137,24 @@ export default () => {
                 defaultVal: '() => {}',
               },
               {
+                name: 'title',
+                desc: '标题',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                name: 'text',
+                desc: '文本',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                name: 'icon',
+                desc: '图标',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
                 params: 'children',
                 desc: '子组件',
                 type: 'React.ReactElement',
@@ -165,6 +183,27 @@ export default () => {
                     type: 'Function',
                     defaultVal: '() => {}',
                     required: 'true',
+                  },
+                  {
+                    name: 'title',
+                    desc: '标题',
+                    type: 'string',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'text',
+                    desc: '文本',
+                    type: 'string',
+                    defaultVal: '',
+                    required: 'false',
+                  },
+                  {
+                    name: 'icon',
+                    desc: '图标',
+                    type: 'string',
+                    defaultVal: '',
+                    required: 'false',
                   },
                   {
                     name: 'zIndex',
