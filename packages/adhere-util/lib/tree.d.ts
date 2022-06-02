@@ -1,4 +1,4 @@
-import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
+import { IAntdTreeNode, IFlatTreeArrNode } from './types';
 declare const _default: {
     /**
      * treeToArray
@@ -18,7 +18,22 @@ declare const _default: {
      * @param parentIdAttr - parentId的属性
      * @param rootParentId - root的parentId值
      */
-    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): Array<IAntdTreeNode>;
+    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): {
+        rootParentId: string | number;
+        titleAttr: string;
+        children: any[];
+        keyAttr: string;
+        parentIdAttr: string;
+        title: any;
+        isLeaf: boolean;
+        key: any;
+        properties: {
+            rootParentId: string | number;
+            titleAttr: string;
+            keyAttr: string;
+            parentIdAttr: string;
+        };
+    }[];
     /**
      * arrayToAntdTreeSelect - array转换成TreeSelect
      * @param arr
@@ -27,7 +42,23 @@ declare const _default: {
      * @param parentIdAttr - parentId的属性
      * @param rootParentId - root的parentId值
      */
-    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): IAntdTreeSelectNode[];
+    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): {
+        rootParentId: string | number;
+        titleAttr: string;
+        children: any[];
+        keyAttr: string;
+        parentIdAttr: string;
+        title: any;
+        value: any;
+        isLeaf: boolean;
+        key: any;
+        properties: {
+            rootParentId: string | number;
+            titleAttr: string;
+            keyAttr: string;
+            parentIdAttr: string;
+        };
+    }[];
     /**
      * getAncestor - 获取祖先
      * @param data
@@ -60,7 +91,22 @@ declare const _default: {
         parentIdAttr: string;
         rootParentId: string | number;
         titleAttr: string;
-    }): Array<IAntdTreeNode>;
+    }): {
+        rootParentId: string | number;
+        titleAttr: string;
+        children: any[];
+        keyAttr: string;
+        parentIdAttr: string;
+        title: any;
+        isLeaf: boolean;
+        key: any;
+        properties: {
+            rootParentId: string | number;
+            titleAttr: string;
+            keyAttr: string;
+            parentIdAttr: string;
+        };
+    }[];
     /**
      * findNodeByKey
      * @description - 根据keyAttr查找结点

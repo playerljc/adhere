@@ -3,8 +3,39 @@ declare const _default: {
         parentIdAttr: string;
         rootParentId: string | number;
     }): any[];
-    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeNode[];
-    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): import("./types").IAntdTreeSelectNode[];
+    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): {
+        rootParentId: string | number;
+        titleAttr: string;
+        children: any[];
+        keyAttr: string;
+        parentIdAttr: string;
+        title: any;
+        isLeaf: boolean;
+        key: any;
+        properties: {
+            rootParentId: string | number;
+            titleAttr: string;
+            keyAttr: string;
+            parentIdAttr: string;
+        };
+    }[];
+    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: import("./types").IFlatTreeArrNode): {
+        rootParentId: string | number;
+        titleAttr: string;
+        children: any[];
+        keyAttr: string;
+        parentIdAttr: string;
+        title: any;
+        value: any;
+        isLeaf: boolean;
+        key: any;
+        properties: {
+            rootParentId: string | number;
+            titleAttr: string;
+            keyAttr: string;
+            parentIdAttr: string;
+        };
+    }[];
     getAncestor(data: any[], node: any, config: {
         keyAttr: string;
         parentIdAttr: string;
@@ -21,7 +52,22 @@ declare const _default: {
         parentIdAttr: string;
         rootParentId: string | number;
         titleAttr: string;
-    }): import("./types").IAntdTreeNode[];
+    }): {
+        rootParentId: string | number;
+        titleAttr: string;
+        children: any[];
+        keyAttr: string;
+        parentIdAttr: string;
+        title: any;
+        isLeaf: boolean;
+        key: any;
+        properties: {
+            rootParentId: string | number;
+            titleAttr: string;
+            keyAttr: string;
+            parentIdAttr: string;
+        };
+    }[];
     findNodeByKey(treeData: import("./types").IAntdTreeNode[], val: any, config: {
         keyAttr: string;
     }): import("./types").IAntdTreeNode | null;
@@ -151,9 +197,6 @@ declare const _default: {
     isIframeEmbed(): boolean;
     addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
     rgb(): string;
-    /**
-     * 函数节流
-     */
     color16(): string;
     isEmpty(value: any): boolean;
     isNumber(val: any): boolean;

@@ -505,7 +505,7 @@ export default () => (
               required: '',
             },
             {
-              name: 'defaultCloneBtn',
+              name: 'defaultCloseBtn',
               desc: '是否缺省有关闭按钮',
               type: 'boolean',
               defaultVal: 'true',
@@ -558,7 +558,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -615,7 +615,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -658,7 +658,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog,FormItemCreator } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -719,7 +719,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -778,7 +778,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -837,7 +837,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -896,7 +896,7 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -955,7 +955,7 @@ export default () => (
   import React from 'react';
   import { Result, Button } from 'antd';
   import { MessageDialog } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -963,7 +963,7 @@ export default () => (
         config: {
           title: '提示',
         },
-        defaultCloneBtn: false,
+        defaultCloseBtn: false,
         children: (
           <Result
             title="Your operation has been executed"
@@ -994,7 +994,7 @@ export default () => (
             config: {
               title: '提示',
             },
-            defaultCloneBtn: false,
+            defaultCloseBtn: false,
             children: (
               <Result
                 title="Your operation has been executed"

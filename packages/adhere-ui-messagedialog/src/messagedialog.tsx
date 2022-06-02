@@ -229,9 +229,9 @@ const MessageDialogFactory = {
    *  @param {Boolean} - closable 是否显示关闭 默认true
    *  @param {Array<ReactNode>} - footer
    *  @param {ReactNode} - children
-   *  @param defaultCloneBtn
+   *  @param defaultCloseBtn
    */
-  Modal({ config = {}, children = null, defaultCloneBtn = true, local = DEFAULT_LOCAL }) {
+  Modal({ config = {}, children = null, defaultCloseBtn = true, local = DEFAULT_LOCAL }) {
     const modalConfig = Object.assign(
       {
         maskClosable: false,
@@ -251,7 +251,7 @@ const MessageDialogFactory = {
     // @ts-ignore
     ReactDOM.render(
       <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]}>
-        <ModalDialog close={close} config={modalConfig} cloneBtn={defaultCloneBtn}>
+        <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
           {children}
         </ModalDialog>
       </ConfigProvider>,

@@ -76,12 +76,12 @@ declare const MessageDialogFactory: {
      *  @param {Boolean} - closable 是否显示关闭 默认true
      *  @param {Array<ReactNode>} - footer
      *  @param {ReactNode} - children
-     *  @param defaultCloneBtn
+     *  @param defaultCloseBtn
      */
-    Modal({ config, children, defaultCloneBtn, local }: {
+    Modal({ config, children, defaultCloseBtn, local }: {
         config?: {} | undefined;
         children?: null | undefined;
-        defaultCloneBtn?: boolean | undefined;
+        defaultCloseBtn?: boolean | undefined;
         local?: string | undefined;
     }): {
         el: HTMLDivElement;

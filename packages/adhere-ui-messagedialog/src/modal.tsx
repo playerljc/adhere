@@ -59,7 +59,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
   }
 
   render() {
-    const { config, cloneBtn, close, children } = this.props;
+    const { config, closeBtn, close, children } = this.props;
 
     // @ts-ignore
     const { footer = [], centered = true, ...other } = config;
@@ -67,7 +67,7 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
     return (
       <Modal
         {...other}
-        footer={cloneBtn ? footer.concat(this.renderCloseBtn()) : footer}
+        footer={closeBtn ? footer.concat(this.renderCloseBtn()) : footer}
         centered={centered}
         wrapClassName={selectorPrefix}
         onCancel={() => {
@@ -83,12 +83,12 @@ class ModalDialog extends React.Component<IModalDialogProps, any> {
 
 ModalDialog.defaultProps = {
   config: {},
-  cloneBtn: true,
+  closeBtn: true,
 };
 
 ModalDialog.propTypes = {
   config: PropTypes.object,
-  cloneBtn: PropTypes.bool,
+  closeBtn: PropTypes.bool,
   close: PropTypes.func,
 };
 

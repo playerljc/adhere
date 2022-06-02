@@ -233,7 +233,7 @@ export default () => {
                   config: {
                     title: '设置数据',
                   },
-                  defaultCloneBtn: false,
+                  defaultCloseBtn: false,
                   children: (
                     <div style={{ width: '100%' }}>
                       <Table

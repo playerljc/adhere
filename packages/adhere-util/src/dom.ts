@@ -484,6 +484,7 @@ export default {
       }
 
       return () => {
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         handlers.forEach(({ type, handler }) => {
           // @ts-ignore
           el.removeEventListener(type, handler);

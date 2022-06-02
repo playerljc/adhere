@@ -1,4 +1,4 @@
-import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
+import { IAntdTreeNode, IFlatTreeArrNode } from './types';
 
 export default {
   /**
@@ -53,7 +53,22 @@ export default {
   arrayToAntdTree(
     arr: any[],
     { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode,
-  ): Array<IAntdTreeNode> {
+  ): {
+    rootParentId: string | number;
+    titleAttr: string;
+    children: any[];
+    keyAttr: string;
+    parentIdAttr: string;
+    title: any;
+    isLeaf: boolean;
+    key: any;
+    properties: {
+      rootParentId: string | number;
+      titleAttr: string;
+      keyAttr: string;
+      parentIdAttr: string;
+    };
+  }[] {
     /**
      * findNodesByParentId
      * @param arr
@@ -108,7 +123,23 @@ export default {
   arrayToAntdTreeSelect(
     arr: any[],
     { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode,
-  ): IAntdTreeSelectNode[] {
+  ): {
+    rootParentId: string | number;
+    titleAttr: string;
+    children: any[];
+    keyAttr: string;
+    parentIdAttr: string;
+    title: any;
+    value: any;
+    isLeaf: boolean;
+    key: any;
+    properties: {
+      rootParentId: string | number;
+      titleAttr: string;
+      keyAttr: string;
+      parentIdAttr: string;
+    };
+  }[] {
     /**
      * findNodesByParentId
      * @param arr
@@ -218,7 +249,22 @@ export default {
       rootParentId: string | number;
       titleAttr: string;
     },
-  ): Array<IAntdTreeNode> {
+  ): {
+    rootParentId: string | number;
+    titleAttr: string;
+    children: any[];
+    keyAttr: string;
+    parentIdAttr: string;
+    title: any;
+    isLeaf: boolean;
+    key: any;
+    properties: {
+      rootParentId: string | number;
+      titleAttr: string;
+      keyAttr: string;
+      parentIdAttr: string;
+    };
+  }[] {
     const { filterAttr, ...arrayToAntdTreeConfig } = config;
 
     if (kw) {
@@ -231,16 +277,13 @@ export default {
       arr.forEach((t) => {
         const tops = this.getAncestor(data, t, config);
         const tArr = [...(tops || [])].map((item) => item[config.keyAttr]);
-        // @ts-ignore
-        set = new Set<string>([...set, ...tArr]);
+        set = new Set<string>([...Array.from(set), ...tArr]);
       });
 
-      // @ts-ignore
-      set = new Set<string>([...set, ...arr.map((t) => t[config.keyAttr])]);
+      set = new Set<string>([...Array.from(set), ...arr.map((t) => t[config.keyAttr])]);
 
       return this.arrayToAntdTree(
-        // @ts-ignore
-        [...set].map((t) => data.find((item) => item[config.keyAttr] === t)),
+        [...Array.from(set)].map((t) => data.find((item) => item[config.keyAttr] === t)),
         arrayToAntdTreeConfig,
       );
     } else {
