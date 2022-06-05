@@ -538,6 +538,12 @@ export default () => {
                 type: 'Function',
                 defaultVal: 'JSX',
               },
+              {
+                params: 'getScrollContainer',
+                desc: '滚动元素设置',
+                type: 'Function',
+                defaultVal: '',
+              },
             ],
           },
         ]}
