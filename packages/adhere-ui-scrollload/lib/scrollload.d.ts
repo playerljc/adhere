@@ -1,5 +1,5 @@
 import React from 'react';
-import { IScrollLoadProps } from './types';
+import type { IScrollLoadProps } from './types';
 /**
  * ScrollLoad
  * @class ScrollLoad
@@ -18,6 +18,7 @@ declare class ScrollLoad extends React.Component<IScrollLoadProps> {
     private errorEl;
     constructor(props: any);
     componentDidMount(): void;
+    private getScrollContainer;
     private initEvents;
     private onScroll;
     private onEmptyClick;

@@ -1,9 +1,10 @@
-import React from 'react';
+import type React from 'react';
 /**
  * IScrollLoadProps
  * @interface IScrollLoadProps
  */
 export interface IScrollLoadProps {
+    getScrollContainer?: () => HTMLElement;
     className?: string;
     style?: React.CSSProperties;
     loadClassName: string;

@@ -2,10 +2,12 @@
 
 ***
 
-2022-6-2
+2022-6-5
 
 * **adhere-ui-messagedialog**
   - Modal参数名称修改(cloneBtn修改为closeBtn)
+* **adhere-ui-scrollload**
+  - 加入getScrollContainer自定义滚动元素
 * **adhere-ui-searchtable**
   - SearchForm的children位置修改
 * **adhere-util**

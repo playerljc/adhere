@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { IScrollLoadProps } from './types';
+import type { IScrollLoadProps } from './types';
 
 const selectorPrefix = 'adhere-ui-scrollload';
 
@@ -39,20 +39,25 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
     this.initEvents();
   }
 
+  private getScrollContainer() {
+    return this.props.getScrollContainer ? this.props.getScrollContainer() : this.el;
+  }
+
   private initEvents() {
-    this.el!.addEventListener('scroll', this.onScroll);
+    this.getScrollContainer()!.addEventListener('scroll', this.onScroll);
     this.emptyEl!.addEventListener('click', this.onEmptyClick);
     this.errorEl!.addEventListener('click', this.onErrorClick);
   }
 
   private onScroll() {
     const {
-      el,
       loadEl,
       errorEl,
       emptyEl,
       props: { distance, onScrollBottom },
     } = this;
+
+    const el = this.getScrollContainer();
 
     const bottomHeight = el!.scrollHeight - el!.offsetHeight;
     const scrollTop = el!.scrollTop;
@@ -117,10 +122,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
     if (renderLoading) {
       return (
         <div
-          className={classNames(
-            `${selectorPrefix}-load`,
-            loadClassName.split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-load`, loadClassName.split(/\s+/))}
           style={{ ...loadStyle }}
           ref={(el) => (this.loadEl = el)}
         >
@@ -131,11 +133,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
 
     return (
       <div
-        className={classNames(
-          `${selectorPrefix}-load`,
-          'standard',
-          loadClassName.split(/\s+/),
-        )}
+        className={classNames(`${selectorPrefix}-load`, 'standard', loadClassName.split(/\s+/))}
         style={{ ...loadStyle }}
         ref={(el) => (this.loadEl = el)}
       >
@@ -150,10 +148,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
     if (renderEmpty) {
       return (
         <div
-          className={classNames(
-            `${selectorPrefix}-empty`,
-            emptyClassName.split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-empty`, emptyClassName.split(/\s+/))}
           style={{ ...emptyStyle }}
           ref={(el) => (this.emptyEl = el)}
         >
@@ -164,10 +159,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
 
     return (
       <div
-        className={classNames(
-          `${selectorPrefix}-empty`,
-          emptyClassName.split(/\s+/),
-        )}
+        className={classNames(`${selectorPrefix}-empty`, emptyClassName.split(/\s+/))}
         style={{ ...emptyStyle }}
         ref={(el) => (this.emptyEl = el)}
       >
@@ -182,10 +174,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
     if (renderError) {
       return (
         <div
-          className={classNames(
-            `${selectorPrefix}-error`,
-            errorClassName.split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-error`, errorClassName.split(/\s+/))}
           style={{ ...errorStyle }}
           ref={(el) => (this.errorEl = el)}
         >
@@ -196,10 +185,7 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
 
     return (
       <div
-        className={classNames(
-          `${selectorPrefix}-error`,
-          errorClassName.split(/\s+/),
-        )}
+        className={classNames(`${selectorPrefix}-error`, errorClassName.split(/\s+/))}
         style={{ ...errorStyle }}
         ref={(el) => (this.errorEl = el)}
       >
@@ -245,6 +231,7 @@ ScrollLoad.defaultProps = {
 };
 
 ScrollLoad.propTypes = {
+  getScrollContainer: PropTypes.func,
   className: PropTypes.string,
   style: PropTypes.object,
   loadClassName: PropTypes.string,
