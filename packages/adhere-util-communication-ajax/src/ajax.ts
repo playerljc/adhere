@@ -167,13 +167,13 @@ function initXhrEvents(xhr, events) {
  */
 function resolveData({ show, data, indicator }): boolean | { data: any; hideIndicator: Function } {
   return show
-    ? {
+      ? {
         data,
         hideIndicator: () => {
           GlobalIndicator.hide(indicator);
         },
       }
-    : data;
+      : data;
 }
 
 /**
@@ -190,13 +190,13 @@ function resolveData({ show, data, indicator }): boolean | { data: any; hideIndi
  * @param reject
  */
 function onreadystatechange({
-  xhr,
-  interceptor,
-  loading: { show, indicator },
-  business: { messageKey, codeKey, codeSuccess, showWarn },
-  resolve,
-  reject,
-}) {
+                              xhr,
+                              interceptor,
+                              loading: { show, indicator },
+                              business: { messageKey, codeKey, codeSuccess, showWarn },
+                              resolve,
+                              reject,
+                            }) {
   const { status, readyState, statusText, response, responseText } = xhr;
 
   // readyState === 4
@@ -261,30 +261,30 @@ function onreadystatechange({
  * sendPrepare - send前的准备
  */
 function sendPrepare(
-  {
-    // 当前方法独有
-    method,
+    {
+      // 当前方法独有
+      method,
 
-    // get|post|path|put|delete方法独有
-    path,
-    headers,
-    // 数据
-    data,
-    // 业务参数
-    mock,
-    loading,
-    onBeforeResponse,
-    // 下面是后端返回的三组值
-    dataKey = 'data',
-    messageKey = 'message',
-    codeKey = 'code',
-    codeSuccess = 200,
-    showWarn = true,
+      // get|post|path|put|delete方法独有
+      path,
+      headers,
+      // 数据
+      data,
+      // 业务参数
+      mock,
+      loading,
+      onBeforeResponse,
+      // 下面是后端返回的三组值
+      dataKey = 'data',
+      messageKey = 'message',
+      codeKey = 'code',
+      codeSuccess = 200,
+      showWarn = true,
 
-    // curConfig
-    ...curConfig // timeout && withCredentials && events
-  }: ISendPrepareArg,
-  { resolve, reject },
+      // curConfig
+      ...curConfig // timeout && withCredentials && events
+    }: ISendPrepareArg,
+    { resolve, reject },
 ): {
   xhr: XMLHttpRequest | null;
   contentType: string | null;
@@ -322,11 +322,11 @@ function sendPrepare(
   const { baseURL, config } = this;
 
   const { timeout, withCredentials, interceptor, ...events } = Object.assign(
-    // 默认的属性
-    // @ts-ignore
-    getDefaultConfig.call(this),
-    config,
-    curConfig,
+      // 默认的属性
+      // @ts-ignore
+      getDefaultConfig.call(this),
+      config,
+      curConfig,
   );
 
   // xhr
@@ -347,8 +347,21 @@ function sendPrepare(
   // 如果用户设置了header
   if (!Util.isEmpty(headers) && Util.isObject(headers)) {
     // 不是get请求且如果用户没有定义Content-type 则默认添加application/json
-    if (!('Content-Type' in headers) && method !== ('get' || 'GET')) {
-      headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+    if (!('Content-Type' in headers)) {
+      if (
+          data &&
+          'form' in
+          // @ts-ignore
+          data &&
+          'data' in data &&
+          !Util.isEmpty(data.form) &&
+          !Util.isEmpty(data.data) &&
+          data.form instanceof HTMLFormElement
+      ) {
+        headers['Content-Type'] = Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA;
+      } else {
+        headers['Content-Type'] = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
+      }
       // console.log('设置了header，但是没有设置Content-Type', Ajax.CONTENT_TYPE_MULTIPART_FORM_DATA);
     }
 
@@ -362,15 +375,15 @@ function sendPrepare(
     // 会根据data初始化heeader
     if (!Util.isEmpty(data) && Util.isRef(data) && method !== ('get' || 'GET')) {
       if (
-        !(
-          'form' in
-            // @ts-ignore
-            data &&
-          'data' in data &&
-          !Util.isEmpty(data.form) &&
-          !Util.isEmpty(data.data) &&
-          data.form instanceof HTMLFormElement
-        )
+          !(
+              'form' in
+              // @ts-ignore
+              data &&
+              'data' in data &&
+              !Util.isEmpty(data.form) &&
+              !Util.isEmpty(data.data) &&
+              data.form instanceof HTMLFormElement
+          )
       ) {
         // console.log('默认设置Content-Type', `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`);
         contentType = `${Ajax.CONTENT_TYPE_APPLICATION_JSON};charset=utf-8`;
@@ -449,13 +462,13 @@ function getSendParams({ data, contentType }) {
    * application/x-www-form-urlencoded
    */
   if (
-    contentType.startsWith(Ajax.CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED) &&
-    Util.isObject(data)
+      contentType.startsWith(Ajax.CONTENT_TYPE_APPLICATION_X_WWW_FORM_URLENCODED) &&
+      Util.isObject(data)
   ) {
     // console.log('application/x-www-form-urlencoded转换', JSON.stringify(data));
     return Array.from(Object.keys(data))
-      .map((k) => `${k}=${encodeURIComponent(data[k])}`)
-      .join('&');
+        .map((k) => `${k}=${encodeURIComponent(data[k])}`)
+        .join('&');
   }
 
   /**
@@ -494,32 +507,32 @@ function getSendParams({ data, contentType }) {
 function complexRequest(method: string, params: ISendArg) {
   return new Promise((resolve, reject) => {
     const { xhr, contentType } = sendPrepare.call(
-      // @ts-ignore
-      this,
-      {
-        // 缺省的
         // @ts-ignore
-        ...getDefaultConfig.call(this),
-        // 构造函数给的
-        // @ts-ignore
-        ...this.config,
-        method,
-        // 方法传的
-        ...params,
-      },
-      {
-        resolve,
-        reject,
-      },
+        this,
+        {
+          // 缺省的
+          // @ts-ignore
+          ...getDefaultConfig.call(this),
+          // 构造函数给的
+          // @ts-ignore
+          ...this.config,
+          method,
+          // 方法传的
+          ...params,
+        },
+        {
+          resolve,
+          reject,
+        },
     );
 
     if (xhr) {
       xhr.send(
-        // @ts-ignore
-        getSendParams.call(this, {
-          data: params.data,
-          contentType,
-        }),
+          // @ts-ignore
+          getSendParams.call(this, {
+            data: params.data,
+            contentType,
+          }),
       );
     }
   });
@@ -653,20 +666,20 @@ class Ajax {
   get({ data, ...arg }: ISendArg) {
     return new Promise((resolve, reject) => {
       const { xhr } = sendPrepare.call(
-        this,
-        {
-          // 默认的
-          ...getDefaultConfig.call(this),
-          // 用户构造函数传的
-          ...this.config,
-          method: 'get',
-          // get传的
-          ...arg,
-        },
-        {
-          resolve,
-          reject,
-        },
+          this,
+          {
+            // 默认的
+            ...getDefaultConfig.call(this),
+            // 用户构造函数传的
+            ...this.config,
+            method: 'get',
+            // get传的
+            ...arg,
+          },
+          {
+            resolve,
+            reject,
+          },
       );
 
       if (xhr) {
