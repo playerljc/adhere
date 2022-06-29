@@ -369,6 +369,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
             ...this.getParams(),
           },
           selectedRowKeys: [],
+          selectedRows: [],
         },
         () => {
           resolve();

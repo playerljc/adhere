@@ -7,6 +7,7 @@
 * 构造函数参数修改
 * 细节的调整
 * Content-Type修改
+* MultipartFormData上传修改
 
 # 1.0.12
 
