@@ -4,6 +4,7 @@
 
 2022-6-5
 
+* 按需加载antd
 * **adhere-ui-messagedialog**
   - Modal参数名称修改(cloneBtn修改为closeBtn)
 * **adhere-ui-scrollload**
