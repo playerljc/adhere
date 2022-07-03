@@ -127,6 +127,7 @@ class TableList<RecordType extends object = any> extends React.Component<
     ) {
       const { dataSource, rowKey = defaultRowKey } = nextModeProps;
       const allKeys = (dataSource || []).map(
+        // @ts-ignore
         (v) => v[typeof rowKey === 'function' ? rowKey(v) : rowKey],
       );
       // 得到没有被全选排除的keys

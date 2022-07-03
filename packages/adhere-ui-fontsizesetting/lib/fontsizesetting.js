@@ -1,2 +1,98 @@
-"use strict";var __extends=this&&this.__extends||function(){var r=function(e,t){return(r=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var a in t)t.hasOwnProperty(a)&&(e[a]=t[a])})(e,t)};return function(e,t){function a(){this.constructor=e}r(e,t),e.prototype=null===t?Object.create(t):(a.prototype=t.prototype,new a)}}(),__assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,a=1,r=arguments.length;a<r;a++)for(var n in t=arguments[a])Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e}).apply(this,arguments)},__importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var react_1=__importDefault(require("react")),prop_types_1=__importDefault(require("prop-types")),classnames_1=__importDefault(require("classnames")),omit_js_1=__importDefault(require("omit.js")),antd_1=require("antd"),adhere_util_intl_1=__importDefault(require("@baifendian/adhere-util-intl")),selectorPrefix="adhere-ui-fontsizesetting",FontSizeSetting=function(t){function e(e){e=t.call(this,e)||this;return e.state={value:e.props.value},e}return __extends(e,t),e.prototype.componentWillReceiveProps=function(e,t){e.value!==this.state.value&&this.setState({value:e.value})},e.prototype.render=function(){var t=this,e=this.props,a=e.className,e=e.style;return react_1.default.createElement("div",{className:classnames_1.default(selectorPrefix,a.split(/\s+/)),style:__assign({},e),ref:function(e){return t.el=e}},react_1.default.createElement("div",{className:selectorPrefix+"-rangeWrap"},react_1.default.createElement("div",{className:selectorPrefix+"-separatedtool"},react_1.default.createElement("div",{className:selectorPrefix+"-separated"},react_1.default.createElement("span",null,adhere_util_intl_1.default.v("小"))),react_1.default.createElement("div",{className:selectorPrefix+"-separated"},react_1.default.createElement("span",null,adhere_util_intl_1.default.v("中"))),react_1.default.createElement("div",{className:selectorPrefix+"-separated"},react_1.default.createElement("span",null,adhere_util_intl_1.default.v("大"))),react_1.default.createElement("div",{className:selectorPrefix+"-separated"},react_1.default.createElement("span",null,adhere_util_intl_1.default.v("特大")))),react_1.default.createElement(antd_1.Slider,__assign({},omit_js_1.default(this.props,["className","style","value","onChange"]),{value:this.state.value,onChange:function(e){t.setState({value:e},function(){t.props.onChange(e)})}}))))},e}(react_1.default.Component);FontSizeSetting.defaultProps={className:"",style:{}},FontSizeSetting.propTypes={className:prop_types_1.default.string,style:prop_types_1.default.object,min:prop_types_1.default.number,max:prop_types_1.default.number,step:prop_types_1.default.number,value:prop_types_1.default.number,onChange:prop_types_1.default.func},exports.default=FontSizeSetting;
+'use strict';
+require('core-js/modules/es.object.define-property.js');
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
+Object.defineProperty(exports, '__esModule', { value: !0 }), (exports.default = void 0);
+var _slider = _interopRequireDefault(require('antd/lib/slider'));
+require('core-js/modules/es.regexp.exec.js'), require('core-js/modules/es.string.split.js');
+var _tslib = require('tslib'),
+  _react = _interopRequireDefault(require('react')),
+  _propTypes = _interopRequireDefault(require('prop-types')),
+  _classnames = _interopRequireDefault(require('classnames')),
+  _omit = _interopRequireDefault(require('omit.js')),
+  _adhereUtilIntl = _interopRequireDefault(require('@baifendian/adhere-util-intl')),
+  selectorPrefix = 'adhere-ui-fontsizesetting',
+  FontSizeSetting = (function (t) {
+    function e(e) {
+      e = t.call(this, e) || this;
+      return (e.state = { value: e.props.value }), e;
+    }
+    return (
+      (0, _tslib.__extends)(e, t),
+      (e.prototype.componentWillReceiveProps = function (e, t) {
+        e.value !== this.state.value && this.setState({ value: e.value });
+      }),
+      (e.prototype.render = function () {
+        var t = this,
+          e = this.props,
+          a = e.className,
+          e = e.style;
+        return _react.default.createElement(
+          'div',
+          {
+            className: (0, _classnames.default)(selectorPrefix, a.split(/\s+/)),
+            style: (0, _tslib.__assign)({}, e),
+            ref: function (e) {
+              return (t.el = e);
+            },
+          },
+          _react.default.createElement(
+            'div',
+            { className: ''.concat(selectorPrefix, '-rangeWrap') },
+            _react.default.createElement(
+              'div',
+              { className: ''.concat(selectorPrefix, '-separatedtool') },
+              _react.default.createElement(
+                'div',
+                { className: ''.concat(selectorPrefix, '-separated') },
+                _react.default.createElement('span', null, _adhereUtilIntl.default.v('小')),
+              ),
+              _react.default.createElement(
+                'div',
+                { className: ''.concat(selectorPrefix, '-separated') },
+                _react.default.createElement('span', null, _adhereUtilIntl.default.v('中')),
+              ),
+              _react.default.createElement(
+                'div',
+                { className: ''.concat(selectorPrefix, '-separated') },
+                _react.default.createElement('span', null, _adhereUtilIntl.default.v('大')),
+              ),
+              _react.default.createElement(
+                'div',
+                { className: ''.concat(selectorPrefix, '-separated') },
+                _react.default.createElement('span', null, _adhereUtilIntl.default.v('特大')),
+              ),
+            ),
+            _react.default.createElement(
+              _slider.default,
+              (0, _tslib.__assign)(
+                {},
+                (0, _omit.default)(this.props, ['className', 'style', 'value', 'onChange']),
+                {
+                  value: this.state.value,
+                  onChange: function (e) {
+                    t.setState({ value: e }, function () {
+                      t.props.onChange(e);
+                    });
+                  },
+                },
+              ),
+            ),
+          ),
+        );
+      }),
+      e
+    );
+  })(_react.default.Component);
+(FontSizeSetting.defaultProps = { className: '', style: {} }),
+  (FontSizeSetting.propTypes = {
+    className: _propTypes.default.string,
+    style: _propTypes.default.object,
+    min: _propTypes.default.number,
+    max: _propTypes.default.number,
+    step: _propTypes.default.number,
+    value: _propTypes.default.number,
+    onChange: _propTypes.default.func,
+  });
+var _default = FontSizeSetting;
+exports.default = _default;
 //# sourceMappingURL=fontsizesetting.js.map

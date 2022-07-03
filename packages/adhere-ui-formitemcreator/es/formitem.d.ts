@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const _default: {
     renderText: ({ value, ...others }: {
         [x: string]: any;

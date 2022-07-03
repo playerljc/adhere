@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ErrorPrompt from './errorprompt';\r\nexport default ErrorPrompt;\r\n"],"names":["ErrorPrompt"],"mappings":"OAAOA,+CACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ErrorPrompt from './errorprompt';\nexport default ErrorPrompt;"],"names":["ErrorPrompt"],"mappings":"OAAOA,+CACQA"}

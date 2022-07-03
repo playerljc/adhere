@@ -356,7 +356,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 清空查询条件
    * @override
    */
-  protected clear(): Promise<any> {
+  protected clear(): Promise<void> {
     return new Promise((resolve) => {
       // @ts-ignore
       this.setState(
@@ -449,7 +449,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 点击查询
    * @override
    */
-  protected onSearch(): Promise<any> {
+  protected onSearch(): Promise<void> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {

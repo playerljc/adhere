@@ -74,14 +74,18 @@ module.exports = {
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 
-    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
+    // webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
 
     // 在使用babel-plugin-import的时候让adhere也执行
-    // webpackConfig.module.rules[0].include = [/packages[\\/]adhere-/];
+    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    delete webpackConfig.module.rules[0].exclude;
+
+    webpackConfig.module.rules[1].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    delete webpackConfig.module.rules[1].exclude;
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;
