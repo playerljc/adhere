@@ -60,6 +60,15 @@ ConditionalRender.conditionalArr = function (arr: any[]): any[] {
   });
 };
 
+/**
+ * conditionalNotEmptyArr
+ * @deprecated 去除null和undefined值
+ * @param arr
+ */
+ConditionalRender.conditionalNotEmptyArr = function (arr: any[]): any[] {
+  return arr.filter((t) => !(t === null || t === undefined));
+};
+
 ConditionalRender.defaultProps = {
   conditional: true,
   noMatch: () => null,
