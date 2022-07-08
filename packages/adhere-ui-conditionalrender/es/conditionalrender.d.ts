@@ -18,6 +18,7 @@ declare namespace ConditionalRender {
         noMatch: JSX.Element | null;
     }) => JSX.Element | null;
     var conditionalArr: (arr: any[]) => any[];
+    var conditionalNotEmptyArr: (arr: any[]) => any[];
     var defaultProps: {
         conditional: boolean;
         noMatch: () => null;
