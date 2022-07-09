@@ -6,6 +6,7 @@ import ImportantConfirm from '@baifendian/adhere-ui-confirm-importantconfirm';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
+import ForceUpdate from '@baifendian/adhere-ui-forceupdate';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import HistoryBack from '@baifendian/adhere-ui-historyback';
@@ -38,7 +39,7 @@ import Suspense from '@baifendian/adhere-ui-suspense';
 import SwipeOut from '@baifendian/adhere-ui-swipeout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
-import ForceUpdate from '@baifendian/adhere-ui-forceupdate';
+import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -64,6 +65,7 @@ export {
   ContextMenu,
   FlexLayout,
   FontSizeSetting,
+  ForceUpdate,
   FormItemCreator,
   GlobalIndicator,
   HistoryBack,
@@ -96,7 +98,7 @@ export {
   SwipeOut,
   TableHeadSearch,
   TableList,
-  ForceUpdate,
+  TableGridLayout,
   Util,
   AdapterScreen,
   Browsersniff,

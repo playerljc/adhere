@@ -5,6 +5,10 @@
 2022-6-5
 
 * 按需加载antd
+* **adhere-ui-tablegridlayout**
+  - 加入adhere-ui-tablegridlayout
+* **adhere-ui-imagelazy**
+  - 使用lazysizes进行重构
 * **adhere-ui-conditionalrender**
   - 加入conditionalNotEmptyArr方法
 * **adhere-ui-messagedialog**
