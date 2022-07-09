@@ -4,7 +4,7 @@
   width: 100%;
 
   .adhere-ui-tablegridlayout-inner-wrap {
-    &.adhere-ui-tablegridlayout-inner-wrap-border {
+    &.adhere-ui-tablegridlayout-border {
       border-top: 1px solid rgba(0, 0, 0, 0.1);
       border-right: 1px solid rgba(0, 0, 0, 0.1);
       border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -54,37 +54,35 @@
           color: #222;
           white-space: normal;
 
-          :global {
-            .ant-checkbox-checked {
-              .ant-checkbox-inner {
-                &::after {
-                  display: block !important;
-                }
+          .ant-checkbox-checked {
+            .ant-checkbox-inner {
+              &::after {
+                display: block !important;
               }
             }
+          }
 
-            .ant-form-item {
-              &.ant-form-item-has-error {
-                > .ant-form-item-control {
-                  position: relative;
-                  > .ant-form-item-explain {
-                    &.ant-form-item-explain-connected {
-                      position: absolute;
-                      bottom: -24px;
-                      left: 0;
-                    }
+          .ant-form-item {
+            &.ant-form-item-has-error {
+              > .ant-form-item-control {
+                position: relative;
+                > .ant-form-item-explain {
+                  &.ant-form-item-explain-connected {
+                    position: absolute;
+                    bottom: -24px;
+                    left: 0;
                   }
                 }
               }
-
-              margin-bottom: 0;
             }
 
-            .ant-select,
-            .ant-picker,
-            .ant-input-number {
-              width: 100%;
-            }
+            margin-bottom: 0;
+          }
+
+          .ant-select,
+          .ant-picker,
+          .ant-input-number {
+            width: 100%;
           }
         }
       }

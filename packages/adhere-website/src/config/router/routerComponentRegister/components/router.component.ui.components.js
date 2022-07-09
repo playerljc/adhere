@@ -115,3 +115,7 @@ export const Hooks = lazy(() => import(/* webpackChunkName: "hooks" */ '@/compon
 export const ForceUpdate = lazy(() =>
   import(/* webpackChunkName: "delconfirm" */ '@/components/ui/forceupdate'),
 );
+
+export const TableGridLayout = lazy(() =>
+  import(/* webpackChunkName: "tablegridlayout" */ '@/components/ui/tablegridlayout'),
+);

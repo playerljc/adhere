@@ -71,7 +71,8 @@ const {
   BMaps,
   Graph,
   Demo,
-  ForceUpdate
+  ForceUpdate,
+  TableGridLayout,
 } = Components;
 
 export default () => [
@@ -368,6 +369,11 @@ export default () => [
                 path: '/adhere/component/ui/forceupdate',
                 name: 'ForceUpdate',
                 component: ForceUpdate,
+              },
+              {
+                path: '/adhere/component/ui/tablegridlayout',
+                name: 'TableGridLayout',
+                component: TableGridLayout,
               },
             ],
           },

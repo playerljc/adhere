@@ -9,7 +9,7 @@ export interface IDataItem {
   width?: string | number;
   defaultLabelWidth?: number;
   padding?: string;
-  colgroup?: number[];
+  colgroup?: (number | 'auto' | undefined)[];
   columnCount?: number;
   data?: Array<{
     key: string;

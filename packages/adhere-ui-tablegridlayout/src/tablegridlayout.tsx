@@ -24,10 +24,8 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
     // 一行的列数计数
     let columnsCount = 0;
 
-    for (let i = _index; i < flatData.length; i++) {
-      const item = flatData[i];
-
-      _index = i;
+    while (_index < flatData.length) {
+      const item = flatData[_index];
 
       if (columnsCount !== columnCount) {
         if ('colSpan' in item.props && typeof item.props.colSpan === 'number') {
@@ -37,6 +35,7 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
         }
 
         tdJSXS.push(item);
+        _index++;
       } else {
         break;
       }
@@ -68,7 +67,7 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
 
     rowJSXS.push(rowJSX);
 
-    if (_index < flatData.length - 1) {
+    if (_index < flatData.length) {
       createRow();
     }
   }
@@ -131,10 +130,8 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
     // 一行的列数计数
     let columnsCount = 0;
 
-    for (let i = _index; i < _data.length; i++) {
-      const item = _data[i];
-
-      _index = i;
+    while (_index < _data.length) {
+      const item = _data[_index];
 
       if (columnsCount !== columnCount) {
         if ('colSpan' in item.value.props && typeof item.value.props.colSpan === 'number') {
@@ -145,6 +142,7 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
 
         tdLabelJSXS.push(item.label);
         tdValueJSXS.push(item.value);
+        _index++;
       } else {
         break;
       }
@@ -171,7 +169,10 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
 
     rowJSXS.push(labelRowJSX, valueRowJSX);
 
-    if (_index < _data.length - 1) {
+    console.log('rowJSXS', rowJSXS);
+    console.log('_index', _index);
+
+    if (_index < _data.length) {
       createRow();
     }
   }
@@ -288,7 +289,7 @@ export function renderGridSearchFormGroup(
   return (
     <div
       className={classNames(
-        bordered ? `${selectorPrefix}-bordered` : null,
+        bordered ? `${selectorPrefix}-border` : null,
         `${selectorPrefix}-inner-wrap`,
         innerClassName || '',
       )}
@@ -321,18 +322,6 @@ export function renderGridSearchFormGroup(
   );
 }
 
-export const Label = (props) => (
-  <td className={classNames(`${selectorPrefix}-table-row-label`, props.className || '')} {...props}>
-    {props.children}
-  </td>
-);
-
-export const Value = (props) => (
-  <td className={classNames(`${selectorPrefix}-table-row-value`, props.className || '')} {...props}>
-    {props.children}
-  </td>
-);
-
 /**
  * TableGridLayout
  * @param data
@@ -350,6 +339,28 @@ function TableGridLayout({ data, className, style, ...props }: ITableGridLayoutP
   );
 }
 
+TableGridLayout.Label = (props) => {
+  const { className, ..._props } = props;
+
+  // console.log('labelProps', _props);
+
+  return (
+    <td className={classNames(`${selectorPrefix}-table-row-label`, className || '')} {..._props}>
+      {props.children}
+    </td>
+  );
+};
+
+TableGridLayout.Value = (props) => {
+  const { className, ..._props } = props;
+
+  return (
+    <td className={classNames(`${selectorPrefix}-table-row-value`, className || '')} {..._props}>
+      {props.children}
+    </td>
+  );
+};
+
 TableGridLayout.defaultProps = {
   data: [],
   layout: 'horizontal',
@@ -361,26 +372,37 @@ TableGridLayout.propTypes = {
   style: PropTypes.object,
   innerClassName: PropTypes.string,
   innerStyle: PropTypes.object,
+  // 是否有边框
   bordered: PropTypes.bool,
+  // 布局
   layout: PropTypes.oneOf(['horizontal', 'vertical']),
   // 密度
   density: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // 是否是奇偶数不同色
   parity: PropTypes.bool,
+  // 数据配置，一个数据表示一个表格
   data: PropTypes.arrayOf(
     PropTypes.shape({
       className: PropTypes.string,
       style: PropTypes.object,
+      // group名称
       name: PropTypes.string,
+      // group的宽度，默认是100%
       width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      // 缺省的Label宽度
       defaultLabelWidth: PropTypes.number,
+      // 缺省的padding
       padding: PropTypes.arrayOf(PropTypes.number),
+      // 列设置 auto表示自适应
       colgroup: PropTypes.arrayOf(PropTypes.number).isRequired,
+      // 列数
       columnCount: PropTypes.number.isRequired,
       data: PropTypes.arrayOf(
         PropTypes.shape({
           key: PropTypes.string.isRequired,
+          // Label组件
           label: PropTypes.node.isRequired,
+          // Value组件
           value: PropTypes.node.isRequired,
         }),
       ).isRequired,

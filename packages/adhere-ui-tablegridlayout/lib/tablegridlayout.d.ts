@@ -8,8 +8,6 @@ import { ITableGridLayoutProps, IDataItem } from './types';
  * @return {JSX.Element}
  */
 export declare function renderGridSearchFormGroup(data: IDataItem[], props: Pick<ITableGridLayoutProps, Exclude<keyof ITableGridLayoutProps, 'className' | 'style' | 'data'>>): JSX.Element;
-export declare const Label: (props: any) => JSX.Element;
-export declare const Value: (props: any) => JSX.Element;
 /**
  * TableGridLayout
  * @param data
@@ -21,6 +19,8 @@ export declare const Value: (props: any) => JSX.Element;
  */
 declare function TableGridLayout({ data, className, style, ...props }: ITableGridLayoutProps): JSX.Element;
 declare namespace TableGridLayout {
+    var Label: (props: any) => JSX.Element;
+    var Value: (props: any) => JSX.Element;
     var defaultProps: {
         data: never[];
         layout: string;

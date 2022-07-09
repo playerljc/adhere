@@ -219,6 +219,11 @@
     "group": "组件 - UI",
     "path": "/adhere/component/ui/warnprompt"
   },
+  {
+    "kw": ["表格布局", "TableGridLayout"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/tablegridlayout"
+  },
 
   {
     "kw": ["对屏幕的缩放进行适配的操作", "AdapterScreen"],
