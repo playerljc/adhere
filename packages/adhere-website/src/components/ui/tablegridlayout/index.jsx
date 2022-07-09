@@ -32,7 +32,60 @@ export default () => {
                 info: '简单的展示',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import { TableGridLayout } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  ReactDOM.render(
+    <div>
+      <TableGridLayout
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [, 'auto', , 'auto', , 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
+    </div>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div>
@@ -91,7 +144,61 @@ export default () => {
                 info: '可以设置缺省Label的宽度，默认是120px',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import { TableGridLayout } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  ReactDOM.render(
+    <div>
+      <TableGridLayout
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            defaultLabelWidth: 150,
+            colgroup: [, 'auto', , 'auto', , 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
+    </div>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div>
@@ -151,7 +258,60 @@ export default () => {
                 info: '可以对每一列的Label宽度进行自定义',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import { TableGridLayout } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  ReactDOM.render(
+    <div>
+      <TableGridLayout
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
+    </div>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div>
@@ -210,7 +370,61 @@ export default () => {
                 info: '带有边框',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import { TableGridLayout } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  ReactDOM.render(
+    <div>
+      <TableGridLayout
+        bordered
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value colSpan={3}>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
+    </div>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div>
@@ -270,7 +484,89 @@ export default () => {
                 info: '一个组是一个Table，一般适用于每一组是不同列数',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import { TableGridLayout } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  ReactDOM.render(
+    <div>
+      <TableGridLayout
+        bordered
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value colSpan={3}>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 2,
+            colgroup: [120, 'auto', 150, 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+            ],
+          },
+        ]}
+      />
+    </div>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div>
@@ -358,7 +654,62 @@ export default () => {
                 info: '基偶不同色',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import { TableGridLayout } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  ReactDOM.render(
+    <div>
+      <TableGridLayout
+        bordered
+        parity
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value colSpan={3}>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
+    </div>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div>
@@ -419,7 +770,79 @@ export default () => {
                 info: '三种不同的密度',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React,{ useState } from 'react';
+  import ReactDOM from 'react-dom';
+  import { Radio } from 'antd';
+  import { TableGridLayout,Space } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  const [density, setDensity] = useState('default');
+
+  ReactDOM.render(
+    <Space.Group>
+      <div>
+        <Radio.Group
+          onChange={(e) => {
+            setDensity(e.target.value);
+          }}
+          value={density}
+          options={[
+            { label: 'default', value: 'default' },
+            { label: 'middle', value: 'middle' },
+            { label: 'small', value: 'small' },
+          ]}
+        />
+      </div>
+      <TableGridLayout
+        bordered
+        parity
+        density={density}
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>UserName：</Label>,
+                value: <Value>Zhou Maomao</Value>,
+              },
+              {
+                key: 'Telephone',
+                label: <Label>Telephone：</Label>,
+                value: <Value>1810000000</Value>,
+              },
+              {
+                key: 'Live',
+                label: <Label>Live：</Label>,
+                value: <Value>Hangzhou, Zhejiang</Value>,
+              },
+              {
+                key: 'Remark',
+                label: <Label>Remark：</Label>,
+                value: <Value>empty</Value>,
+              },
+              {
+                key: 'Address',
+                label: <Label valign="top">Address：</Label>,
+                value: (
+                  <Value colSpan={3}>
+                    No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
+    </Space.Group>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <Space.Group>
@@ -494,7 +917,133 @@ export default () => {
                 info: '两种不同布局',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React,{ useState } from 'react';
+  import ReactDOM from 'react-dom';
+  import { Radio } from 'antd';
+  import { TableGridLayout,Space,ConditionalRender } from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  const [layout, setLayout] = useState('horizontal');
+
+  ReactDOM.render(
+    <Space.Group>
+      <div>
+        <Radio.Group
+          onChange={(e) => {
+            setLayout(e.target.value);
+          }}
+          value={layout}
+          options={[
+            { label: 'horizontal', value: 'horizontal' },
+            { label: 'vertical', value: 'vertical' },
+          ]}
+        />
+      </div>
+      <ConditionalRender
+        conditional={layout === 'vertical'}
+        noMatch={() => (
+          <TableGridLayout
+            bordered
+            parity
+            data={[
+              {
+                name: 'g1',
+                width: '100%',
+                columnCount: 3,
+                colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+                data: [
+                  {
+                    key: 'UserName',
+                    label: <Label>UserName：</Label>,
+                    value: <Value>Zhou Maomao</Value>,
+                  },
+                  {
+                    key: 'Telephone',
+                    label: <Label>Telephone：</Label>,
+                    value: <Value>1810000000</Value>,
+                  },
+                  {
+                    key: 'Live',
+                    label: <Label>Live：</Label>,
+                    value: <Value>Hangzhou, Zhejiang</Value>,
+                  },
+                  {
+                    key: 'Remark',
+                    label: <Label>Remark：</Label>,
+                    value: <Value>empty</Value>,
+                  },
+                  {
+                    key: 'Address',
+                    label: <Label valign="top">Address：</Label>,
+                    value: (
+                      <Value colSpan={3}>
+                        No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                      </Value>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        )}
+      >
+        {() => (
+          <TableGridLayout
+            bordered
+            parity
+            layout="vertical"
+            data={[
+              {
+                name: 'g1',
+                width: '100%',
+                columnCount: 3,
+                colgroup: ['auto', 'auto', 'auto'],
+                data: [
+                  {
+                    key: 'UserName',
+                    label: <Label style={{ textAlign: 'left' }}>UserName：</Label>,
+                    value: <Value>Zhou Maomao</Value>,
+                  },
+                  {
+                    key: 'Telephone',
+                    label: <Label style={{ textAlign: 'left' }}>Telephone：</Label>,
+                    value: <Value>1810000000</Value>,
+                  },
+                  {
+                    key: 'Live',
+                    label: <Label style={{ textAlign: 'left' }}>Live：</Label>,
+                    value: <Value>Hangzhou, Zhejiang</Value>,
+                  },
+                  {
+                    key: 'Remark',
+                    label: <Label style={{ textAlign: 'left' }}>Remark：</Label>,
+                    value: <Value>empty</Value>,
+                  },
+                  {
+                    key: 'Address',
+                    label: (
+                      <Label style={{ textAlign: 'left' }} colSpan={2} valign="top">
+                        Address：
+                      </Label>
+                    ),
+                    value: (
+                      <Value colSpan={2}>
+                        No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                      </Value>
+                    ),
+                  },
+                ],
+              },
+            ]}
+          />
+        )}
+      </ConditionalRender>
+    </Space.Group>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <Space.Group>
@@ -623,7 +1172,159 @@ export default () => {
                 info: '配合antd的Form使用',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React,{ useRef } from 'react';
+  import ReactDOM from 'react-dom';
+  import { Radio,Form,Button } from 'antd';
+  import { TableGridLayout,Space} from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  const formRef = useRef();
+
+  ReactDOM.render(
+    <Space.Group>
+      <div>
+        <Button
+          type="primary"
+          onClick={() => {
+            formRef.current.validateFields().then((values) => {
+              alert(JSON.stringify(values));
+            });
+          }}
+        >
+          提交
+        </Button>
+      </div>
+      <Form ref={formRef}>
+        <TableGridLayout
+          innerStyle={{ padding: '0 0 20px 0' }}
+          // bordered
+          // parity
+          // density="middle"
+          data={[
+            {
+              name: 'g1',
+              width: '100%',
+              columnCount: 4,
+              colgroup: [135, 'auto', 130, 'auto', 90, 150, , 'auto'],
+              data: [
+                {
+                  key: 'UserName',
+                  require: true,
+                  label: <Label>UserName：</Label>,
+                  value: (
+                    <Value>
+                      <Form.Item
+                        name="username"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入姓名',
+                          },
+                          Resource.Dict.value.FormInputStringRule.value,
+                        ]}
+                      >
+                        <Input placeholder="username" />
+                      </Form.Item>
+                    </Value>
+                  ),
+                },
+                {
+                  key: 'Telephone',
+                  require: true,
+                  label: <Label>Telephone：</Label>,
+                  value: (
+                    <Value>
+                      <Form.Item
+                        name="Telephone"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入姓名',
+                          },
+                          Resource.Dict.value.FormInputStringRule.value,
+                        ]}
+                      >
+                        <Input placeholder="Telephone" />
+                      </Form.Item>
+                    </Value>
+                  ),
+                },
+                {
+                  key: 'Sex',
+                  require: true,
+                  label: <Label>Sex：</Label>,
+                  value: (
+                    <Value>
+                      <Form.Item
+                        name="Sex"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请选择性别',
+                          },
+                        ]}
+                      >
+                        <Radio.Group
+                          options={[
+                            { label: '男', value: 1 },
+                            { label: '女', value: 0 },
+                          ]}
+                        />
+                      </Form.Item>
+                    </Value>
+                  ),
+                },
+                {
+                  key: 'Birthday',
+                  require: true,
+                  label: <Label>Birthday：</Label>,
+                  value: (
+                    <Value>
+                      <Form.Item
+                        name="Birthday"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请选择出生年月',
+                          },
+                        ]}
+                      >
+                        <DatePicker />
+                      </Form.Item>
+                    </Value>
+                  ),
+                },
+                {
+                  key: 'Address',
+                  require: true,
+                  label: <Label valign="top">Address：</Label>,
+                  value: (
+                    <Value colSpan={7}>
+                      <Form.Item
+                        name="Address"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入地址',
+                          },
+                        ]}
+                      >
+                        <Input.TextArea />
+                      </Form.Item>
+                    </Value>
+                  ),
+                },
+              ],
+            },
+          ]}
+        />
+      </Form>
+    </Space.Group>,
+    document.getElementById('app')
+  )
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <Space.Group>
