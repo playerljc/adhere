@@ -5,6 +5,8 @@
 2022-6-5
 
 * 按需加载antd
+* **adhere-ui-hooks**
+  - 加入useSetState
 * **adhere-ui-tablegridlayout**
   - 加入adhere-ui-tablegridlayout
 * **adhere-ui-imagelazy**
