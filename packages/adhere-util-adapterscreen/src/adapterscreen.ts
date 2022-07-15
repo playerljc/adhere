@@ -35,7 +35,17 @@ export default (el: HTMLElement = window.document.body) => {
     const ratio = detectZoom();
     el.style.transformOrigin = 'left top';
     el.style.transform = `scale(${1 / ratio})`;
+
+    if (ratio !== 1) {
+      el.style.width = `${ratio * 100}%`;
+      el.style.height = `${ratio * 100}%`;
+    } else if (ratio === 1) {
+      el.style.width = `100%`;
+      el.style.height = `100%`;
+    }
   }
+
+  onResize();
 
   window.addEventListener('resize', onResize);
 
