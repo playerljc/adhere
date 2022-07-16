@@ -105,7 +105,14 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     abstract onSearch(): void;
     protected constructor(props: any);
+    componentWillReceiveProps(nextProps: ISearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
+    /**
+     * columnSettingEffect
+     * @param props
+     * @protected
+     */
+    protected columnSettingEffect(props: ISearchTableProps): void;
     /**
      * renderTableNumberColumn
      * @description - 渲染序号列

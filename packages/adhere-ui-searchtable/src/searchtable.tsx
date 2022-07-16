@@ -201,6 +201,12 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     this.onClear = this.onClear.bind(this);
   }
 
+  componentWillReceiveProps(nextProps: ISearchTableProps) {
+    super.componentWillReceiveProps(nextProps);
+
+    this.columnSettingEffect(nextProps);
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot?: any) {
     if (!this.tableWrapRef.current) return;
 
@@ -239,6 +245,52 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
             (tableHeaderHeight + (tablePaginationHeight ? tablePaginationHeight + 16 * 2 : 0)),
         });
       }
+    }
+  }
+
+  /**
+   * columnSettingEffect
+   * @param props
+   * @protected
+   */
+  protected columnSettingEffect(props: ISearchTableProps) {
+    // @ts-ignore
+    const { columnSetting: preColumnSetting } = this.state;
+
+    const columnSetting = this.getTableColumns().map((column, index) => ({
+      ...column,
+      sort: index,
+      display: true,
+    }));
+
+    // 长度不相等
+    if (preColumnSetting.length !== columnSetting) {
+      // @ts-ignore
+      this.setState({
+        columnSetting,
+      });
+
+      return;
+    }
+
+    const preColumnSettingRowKeys = preColumnSetting.map((t) => t[this.getRowKey()]);
+    const columnSettingRowKeys = columnSetting.map((t) => t[this.getRowKey()]);
+
+    // 长度相等但是key有变化
+    if (preColumnSettingRowKeys.toString() !== columnSettingRowKeys.toString()) {
+      const rowKey = this.getRowKey() || 'id';
+
+      // @ts-ignore
+      this.setState({
+        columnSetting: columnSetting.map((t) => {
+          const item = preColumnSetting.find((item) => item[rowKey] === t[rowKey]);
+
+          return {
+            ...t,
+            display: item ? item.display : true,
+          };
+        }),
+      });
     }
   }
 

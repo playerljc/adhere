@@ -20,7 +20,9 @@
 * **adhere-ui-scrollload**
   - 加入getScrollContainer自定义滚动元素
 * **adhere-ui-searchtable**
+  - 重置的修改
   - SearchForm的children位置修改
+  - ColumnSetting修改
 * **adhere-util**
   - tree的set...修改
 

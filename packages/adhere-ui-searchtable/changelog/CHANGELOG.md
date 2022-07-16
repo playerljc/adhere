@@ -6,6 +6,7 @@
 
 * 重置的修改
 * SearchForm的children位置修改
+* ColumnSetting修改
 
 # 1.0.16
 
