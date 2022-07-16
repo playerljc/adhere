@@ -108,6 +108,16 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     componentWillReceiveProps(nextProps: ISearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
     /**
+     * searchTableResizableEffectLayout
+     * @protected
+     */
+    protected searchTableResizableEffectLayout(): void;
+    /**
+     * fixedHeaderAutoTableEffectLayout
+     * @protected
+     */
+    protected fixedHeaderAutoTableEffectLayout(prevProps: any, prevState: any): void;
+    /**
      * columnSettingEffect
      * @param props
      * @protected

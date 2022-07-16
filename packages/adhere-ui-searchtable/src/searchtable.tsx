@@ -210,11 +210,26 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   componentDidUpdate(prevProps, prevState, snapshot?: any) {
     if (!this.tableWrapRef.current) return;
 
+    this.searchTableResizableEffectLayout();
+    this.fixedHeaderAutoTableEffectLayout(prevProps, prevState);
+  }
+
+  /**
+   * searchTableResizableEffectLayout
+   * @protected
+   */
+  protected searchTableResizableEffectLayout() {
     // 监控header的属性变化(colgroup)
     if (!this.columnObserver) {
       this.columnObserver = SearchTableResizableObserver(this);
     }
+  }
 
+  /**
+   * fixedHeaderAutoTableEffectLayout
+   * @protected
+   */
+  protected fixedHeaderAutoTableEffectLayout(prevProps, prevState) {
     // @ts-ignore
     if (this.props.fixedHeaderAutoTable) {
       const dataSource = this.getData();
