@@ -270,8 +270,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    */
   protected columnSettingEffect(props: ISearchTableProps) {
     // @ts-ignore
-    const { columnSetting: preColumnSetting } = this.state;
-
+    const preColumnSetting = this.state.columnSetting || [];
     const columnSetting = this.getTableColumns().map((column, index) => ({
       ...column,
       sort: index,
