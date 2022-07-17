@@ -23,7 +23,6 @@ import ColumnResizable, {
 import ColumnSetting from './Extension/ColumnSetting';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import { ISearchTableProps, ISearchTableState, TableDensity } from './types';
-import SearchForm from './searchform';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
 
@@ -39,8 +38,6 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   static defaultProps: any;
   static propTypes: any;
 
-  // @ts-ignore
-  static SearchForm: SearchForm = SearchForm;
   // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 序号生成的规则 - 连续模式

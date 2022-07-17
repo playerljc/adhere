@@ -38,30 +38,6 @@ export interface ISearchTableState extends ISuspenseState {
     }>;
 }
 /**
- * ISearchFormProps
- * @interface ISearchFormProps
- */
-export interface ISearchFormProps extends ISearchTableProps {
-}
-/**
- * ISearchFormRowProps
- * @interface ISearchFormRowProps
- */
-export interface ISearchFormRowProps extends ISearchTableProps {
-}
-/**
- * ISearchFormLabelProps
- * @interface ISearchFormLabelProps
- */
-export interface ISearchFormLabelProps extends ISearchTableProps {
-}
-/**
- * ISearchFormValueProps
- * @interface ISearchFormValueProps
- */
-export interface ISearchFormValueProps extends ISearchTableProps {
-}
-/**
  * ISearchTableImplementProps
  * @interface ISearchTableImplementProps
  */

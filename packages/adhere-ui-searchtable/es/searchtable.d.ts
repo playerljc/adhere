@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import { ISearchTableProps, ISearchTableState, TableDensity } from './types';
-import SearchForm from './searchform';
 export declare const selectorPrefix = "adhere-ui-searchtable";
 /**
  * SearchTable
@@ -13,7 +12,6 @@ export declare const selectorPrefix = "adhere-ui-searchtable";
 declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState> {
     static defaultProps: any;
     static propTypes: any;
-    static SearchForm: SearchForm;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static ROW_SELECTION_NORMAL_MODE: symbol;

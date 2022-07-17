@@ -7,6 +7,7 @@
 * 重置的修改
 * SearchForm的children位置修改
 * ColumnSetting修改
+* 去掉SearchFrom组件，改用TableGridLayout
 
 # 1.0.16
 
