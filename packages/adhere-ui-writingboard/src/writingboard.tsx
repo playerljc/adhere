@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { IPoint, IWritingBoardProps, Mode } from './types';
 
