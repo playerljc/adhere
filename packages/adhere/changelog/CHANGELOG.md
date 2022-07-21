@@ -5,6 +5,8 @@
 2022-6-5
 
 * **按需加载antd**
+* **adhere-util-browsersniff**
+  - 大小写区分
 * **adhere-util-adapterscreen**
   - 修改实现逻辑，增加默认计算
 * **adhere-ui-hooks**

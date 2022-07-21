@@ -53,225 +53,225 @@ export default {
   },
 
   isBrowserSafari(): boolean {
-    return this.browser() === 'Safari';
+    return this.browser().toLowerCase().indexOf('safari') !== -1;
   },
   isBrowserChrome(): boolean {
-    return this.browser() === 'Chrome';
+    return this.browser().toLowerCase().indexOf('chrome') !== -1;
   },
   isBrowserIE(): boolean {
-    return this.browser() === 'IE';
+    return this.browser().toLowerCase().indexOf('ie') !== -1;
   },
   isBrowserEdge(): boolean {
-    return this.browser() === 'Edge';
+    return this.browser().toLowerCase().indexOf('edge') !== -1;
   },
   isBrowserFirefox(): boolean {
-    return this.browser() === 'Firefox';
+    return this.browser().toLowerCase().indexOf('firefox') !== -1;
   },
   isBrowserFirefoxFocus(): boolean {
-    return this.browser() === 'Firefox Focus';
+    return this.browser().toLowerCase().indexOf('firefox focus') !== -1;
   },
   isBrowserChromium(): boolean {
-    return this.browser() === 'Chromium';
+    return this.browser().toLowerCase().indexOf('chromium') !== -1;
   },
   isBrowserOpera(): boolean {
-    return this.browser() === 'Opera';
+    return this.browser().toLowerCase().indexOf('opera') !== -1;
   },
   isBrowserVivaldi(): boolean {
-    return this.browser() === 'Vivaldi';
+    return this.browser().toLowerCase().indexOf('vivaldi') !== -1;
   },
   isBrowserYandex(): boolean {
-    return this.browser() === 'Yandex';
+    return this.browser().toLowerCase().indexOf('yandex') !== -1;
   },
   isBrowserArora(): boolean {
-    return this.browser() === 'Arora';
+    return this.browser().toLowerCase().indexOf('arora') !== -1;
   },
   isBrowserLunascape(): boolean {
-    return this.browser() === 'Lunascape';
+    return this.browser().toLowerCase().indexOf('lunascape') !== -1;
   },
   isBrowserQupZilla(): boolean {
-    return this.browser() === 'QupZilla';
+    return this.browser().toLowerCase().indexOf('qupzilla') !== -1;
   },
   isBrowserCocCoc(): boolean {
-    return this.browser() === 'Coc Coc';
+    return this.browser().toLowerCase().indexOf('coc coc') !== -1;
   },
   isBrowserKindle(): boolean {
-    return this.browser() === 'Kindle';
+    return this.browser().toLowerCase().indexOf('kindle') !== -1;
   },
   isBrowserIceweasel(): boolean {
-    return this.browser() === 'Iceweasel';
+    return this.browser().toLowerCase().indexOf('iceweasel') !== -1;
   },
   isBrowserKonqueror(): boolean {
-    return this.browser() === 'Konqueror';
+    return this.browser().toLowerCase().indexOf('konqueror') !== -1;
   },
   isBrowserIceape(): boolean {
-    return this.browser() === 'Iceape';
+    return this.browser().toLowerCase().indexOf('iceape') !== -1;
   },
   isBrowserSeaMonkey(): boolean {
-    return this.browser() === 'SeaMonkey';
+    return this.browser().toLowerCase().indexOf('seamonkey') !== -1;
   },
   isBrowserEpiphany(): boolean {
-    return this.browser() === 'Epiphany';
+    return this.browser().toLowerCase().indexOf('epiphany') !== -1;
   },
   isBrowser360(): boolean {
-    return this.browser() === '360';
+    return this.browser().toLowerCase().indexOf('360') !== -1;
   },
   isBrowser360EE(): boolean {
-    return this.browser() === '360EE';
+    return this.browser().toLowerCase().indexOf('360ee') !== -1;
   },
   isBrowser360SE(): boolean {
-    return this.browser() === '360SE';
+    return this.browser().toLowerCase().indexOf('360se') !== -1;
   },
   isBrowserUC(): boolean {
-    return this.browser() === 'UC';
+    return this.browser().toLowerCase().indexOf('uc') !== -1;
   },
   isBrowserQQBrowser(): boolean {
-    return this.browser() === 'QQBrowser';
+    return this.browser().toLowerCase().indexOf('qqbrowser') !== -1;
   },
   isBrowserQQ(): boolean {
-    return this.browser() === 'QQ';
+    return this.browser().toLowerCase().indexOf('qq') !== -1;
   },
   isBrowserBaidu(): boolean {
-    return this.browser() === 'Baidu';
+    return this.browser().toLowerCase().indexOf('baidu') !== -1;
   },
   isBrowserMaxthon(): boolean {
-    return this.browser() === 'Maxthon';
+    return this.browser().toLowerCase().indexOf('maxthon') !== -1;
   },
   isBrowserSogou(): boolean {
-    return this.browser() === 'Sogou';
+    return this.browser().toLowerCase().indexOf('sogou') !== -1;
   },
   isBrowserLiebao(): boolean {
-    return this.browser() === 'Liebao';
+    return this.browser().toLowerCase().indexOf('liebao') !== -1;
   },
   isBrowser2345Explorer(): boolean {
-    return this.browser() === '2345Explorer';
+    return this.browser().toLowerCase().indexOf('2345explorer') !== -1;
   },
   isBrowser115Browser(): boolean {
-    return this.browser() === '115Browser';
+    return this.browser().toLowerCase().indexOf('115browser') !== -1;
   },
   isBrowserTheWorld(): boolean {
-    return this.browser() === 'TheWorld';
+    return this.browser().toLowerCase().indexOf('theworld') !== -1;
   },
   isBrowserXiaoMi(): boolean {
-    return this.browser() === 'XiaoMi';
+    return this.browser().toLowerCase().indexOf('xiaomi') !== -1;
   },
   isBrowserQuark(): boolean {
-    return this.browser() === 'Quark';
+    return this.browser().toLowerCase().indexOf('quark') !== -1;
   },
   isBrowserQiyu(): boolean {
-    return this.browser() === 'Qiyu';
+    return this.browser().toLowerCase().indexOf('qiyu') !== -1;
   },
   isBrowserWechat(): boolean {
-    return this.browser() === 'Wechat';
+    return this.browser().toLowerCase().indexOf('wechat') !== -1;
   },
   isBrowserWechatWork(): boolean {
-    return this.browser() === 'WechatWork';
+    return this.browser().toLowerCase().indexOf('wechatwork') !== -1;
   },
   isBrowserTaobao(): boolean {
-    return this.browser() === 'Taobao';
+    return this.browser().toLowerCase().indexOf('taobao') !== -1;
   },
   isBrowserAlipay(): boolean {
-    return this.browser() === 'Alipay';
+    return this.browser().toLowerCase().indexOf('alipay') !== -1;
   },
   isBrowserWeibo(): boolean {
-    return this.browser() === 'Weibo';
+    return this.browser().toLowerCase().indexOf('weibo') !== -1;
   },
   isBrowserDouban(): boolean {
-    return this.browser() === 'Douban';
+    return this.browser().toLowerCase().indexOf('douban') !== -1;
   },
   isBrowserSuning(): boolean {
-    return this.browser() === 'Suning';
+    return this.browser().toLowerCase().indexOf('suning') !== -1;
   },
   isBrowseriQiYi(): boolean {
-    return this.browser() === 'iQiYi';
+    return this.browser().toLowerCase().indexOf('iqiyi') !== -1;
   },
   isBrowserDingTalk(): boolean {
-    return this.browser() === 'DingTalk';
+    return this.browser().toLowerCase().indexOf('dingtalk') !== -1;
   },
   isBrowserHuawei(): boolean {
-    return this.browser() === 'Huawei';
+    return this.browser().toLowerCase().indexOf('huawei') !== -1;
   },
   isBrowserVivo(): boolean {
-    return this.browser() === 'Vivo';
+    return this.browser().toLowerCase().indexOf('vivo') !== -1;
   },
   isBrowserNightly(): boolean {
-    return this.browser() === 'Nightly';
+    return this.browser().toLowerCase().indexOf('nightly') !== -1;
   },
 
   isDevicePC(): boolean {
-    return this.device() === 'PC';
+    return this.device().toLowerCase().indexOf('pc') !== -1;
   },
   isDeviceMobile(): boolean {
-    return this.device() === 'Mobile';
+    return this.device().toLowerCase().indexOf('mobile') !== -1;
   },
   isDeviceTablet(): boolean {
-    return this.device() === 'Tablet';
+    return this.device().toLowerCase().indexOf('tablet') !== -1;
   },
 
   isEngineWebKit(): boolean {
-    return this.engine() === 'WebKit';
+    return this.engine().toLowerCase().indexOf('webkit') !== -1;
   },
   isEngineTrident(): boolean {
-    return this.engine() === 'Trident';
+    return this.engine().toLowerCase().indexOf('trident') !== -1;
   },
   isEngineGecko(): boolean {
-    return this.engine() === 'Gecko';
+    return this.engine().toLowerCase().indexOf('gecko') !== -1;
   },
   isEnginePresto(): boolean {
-    return this.engine() === 'Presto';
+    return this.engine().toLowerCase().indexOf('presto') !== -1;
   },
   isEngineKHTML(): boolean {
-    return this.engine() === 'KHTML';
+    return this.engine().toLowerCase().indexOf('khtml') !== -1;
   },
   isEngineBlink(): boolean {
-    return this.engine() === 'Blink';
+    return this.engine().toLowerCase().indexOf('blink') !== -1;
   },
   isEngineEdgeHTML(): boolean {
-    return this.engine() === 'EdgeHTML';
+    return this.engine().toLowerCase().indexOf('edgehtml') !== -1;
   },
 
   iSOSWindows(): boolean {
-    return this.os() === 'Windows';
+    return this.os().toLowerCase().indexOf('windows') !== -1;
   },
   iSOSLinux(): boolean {
-    return this.os() === 'Linux';
+    return this.os().toLowerCase().indexOf('linux') !== -1;
   },
   iSOSMaxOS(): boolean {
-    return this.os() === 'Mac OS';
+    return this.os().toLowerCase().indexOf('mac os') !== -1;
   },
   iSOSAndroid(): boolean {
-    return this.os() === 'Android';
+    return this.os().toLowerCase().indexOf('android') !== -1;
   },
   iSOSHarmonyOS(): boolean {
-    return this.os() === 'HarmonyOS';
+    return this.os().toLowerCase().indexOf('harmonyos') !== -1;
   },
   iSOSUbuntu(): boolean {
-    return this.os() === 'Ubuntu';
+    return this.os().toLowerCase().indexOf('ubuntu') !== -1;
   },
   iSOSFreeBSD(): boolean {
-    return this.os() === 'FreeBSD';
+    return this.os().toLowerCase().indexOf('freebsd') !== -1;
   },
   iSOSDebian(): boolean {
-    return this.os() === 'Debian';
+    return this.os().toLowerCase().indexOf('debian') !== -1;
   },
   iSOSiOS(): boolean {
-    return this.os() === 'iOS';
+    return this.os().toLowerCase().indexOf('ios') !== -1;
   },
   iSOSWindowsPhone(): boolean {
-    return this.os() === 'Windows Phone';
+    return this.os().toLowerCase().indexOf('windows phone') !== -1;
   },
   iSOSBlackBerry(): boolean {
-    return this.os() === 'BlackBerry';
+    return this.os().toLowerCase().indexOf('blackberry') !== -1;
   },
   iSOSMeeGo(): boolean {
-    return this.os() === 'MeeGo';
+    return this.os().toLowerCase().indexOf('meego') !== -1;
   },
   iSOSSymbian(): boolean {
-    return this.os() === 'Symbian';
+    return this.os().toLowerCase().indexOf('symbian') !== -1;
   },
   iSOSChromeOS(): boolean {
-    return this.os() === 'Chrome OS';
+    return this.os().toLowerCase().indexOf('chrome os') !== -1;
   },
   iSOSWebOS(): boolean {
-    return this.os() === 'WebOS';
+    return this.os().toLowerCase().indexOf('webos') !== -1;
   },
 };
