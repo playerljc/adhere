@@ -323,10 +323,6 @@ const PopupFactory = {
    * @return boolean
    */
   closeAll() {
-    if (prePopup) {
-      return this.close(prePopup);
-    }
-
     const flags: boolean[] = [];
 
     popups.forEach((p) => {

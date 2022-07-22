@@ -48,6 +48,13 @@ const PopupInner = React.forwardRef((props, ref) => {
         >
           Close
         </a>
+        <a
+          onClick={() => {
+            Popup.closeAll();
+          }}
+        >
+          CloseAll
+        </a>
       </div>
 
       <div className={styles.Auto}>
@@ -126,6 +133,13 @@ const PopupClosePreInner = React.forwardRef((props, ref) => {
           }}
         >
           Close
+        </a>
+        <a
+          onClick={() => {
+            Popup.closeAll();
+          }}
+        >
+          CloseAll
         </a>
       </div>
 
