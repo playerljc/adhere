@@ -21,7 +21,10 @@ export default () => {
             <Radio.Group
               defaultValue="line"
               value={mode}
-              onChange={(v) => setMode(v)}
+              onChange={(e) => {
+                setMode(e.target.value);
+                ref.current.setMode(e.target.value);
+              }}
               buttonStyle="solid"
             >
               <Space direction="horizontal">
@@ -36,11 +39,23 @@ export default () => {
           </Card>
 
           <Card title="线条颜色">
-            <SketchPicker color={color} onChangeComplete={(c) => setColor(c.hex)} />
+            <SketchPicker
+              color={color}
+              onChangeComplete={(c) => {
+                setColor(c.hex);
+                ref.current.setStrokeStyle(c.hex);
+              }}
+            />
           </Card>
 
           <Card title="线条宽度">
-            <Select value={width} onChange={(v) => setWidth(v)}>
+            <Select
+              value={width}
+              onChange={(v) => {
+                setWidth(v);
+                ref.current.setLineWidth(v);
+              }}
+            >
               <Option value={2}>2</Option>
               <Option value={3}>3</Option>
               <Option value={4}>4</Option>
@@ -98,7 +113,12 @@ export default () => {
       </FlexLayout.Fixed>
 
       <FlexLayout.Auto fit>
-        <WritingBoard ref={ref} />
+        <WritingBoard
+          ref={ref}
+          defaultMode={mode}
+          defaultLineWidth={width}
+          defaultStrokeStyle={color}
+        />
       </FlexLayout.Auto>
     </FlexLayout>
   );

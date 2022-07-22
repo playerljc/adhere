@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -16,11 +16,12 @@ function WritingBoard(props: IWritingBoardProps, ref) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
-  const rect = useRef<DOMRect | null>(null);
 
   const startPoint = useRef<IPoint | null>(null);
   const prePoint = useRef<IPoint | null>(null);
-  const curShape = useRef<Mode>(props.mode);
+  const curShape = useRef<Mode>(props.defaultMode);
+  const lineWidth = useRef<number>(props.defaultLineWidth);
+  const strokeStyle = useRef<string>(props.defaultStrokeStyle);
   const stack = useRef<any>([]);
   const stackIndex = useRef<number>(0);
 
@@ -41,9 +42,11 @@ function WritingBoard(props: IWritingBoardProps, ref) {
               targetPoint,
             });
 
+            console.log('Draw Mode.Free', lineWidth?.current, strokeStyle?.current);
+
             style({
-              lineWidth: props.lineWidth,
-              strokeStyle: props.strokeStyle,
+              lineWidth: lineWidth?.current,
+              strokeStyle: strokeStyle?.current,
             });
 
             // 描边
@@ -53,6 +56,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
             ctx?.current?.beginPath();
             ctx?.current?.moveTo(item.sourcePoint.x, item.sourcePoint.y);
             ctx?.current?.lineTo(item.targetPoint.x, item.targetPoint.y);
+
+            console.log('DrawStack Mode.Free', item.lineWidth, item.strokeStyle);
 
             style({
               lineWidth: item.lineWidth,
@@ -79,8 +84,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
             ctx?.current?.lineTo(targetPoint.x, targetPoint.y);
 
             style({
-              lineWidth: props.lineWidth,
-              strokeStyle: props.strokeStyle,
+              lineWidth: lineWidth?.current,
+              strokeStyle: strokeStyle?.current,
             });
 
             // 描边
@@ -129,8 +134,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
             );
 
             style({
-              lineWidth: props.lineWidth,
-              strokeStyle: props.strokeStyle,
+              lineWidth: lineWidth?.current,
+              strokeStyle: strokeStyle?.current,
             });
 
             // 描边
@@ -186,8 +191,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
             );
 
             style({
-              lineWidth: props.lineWidth,
-              strokeStyle: props.strokeStyle,
+              lineWidth: lineWidth?.current,
+              strokeStyle: strokeStyle?.current,
             });
 
             // 描边
@@ -247,8 +252,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
             ctx?.current?.closePath();
 
             style({
-              lineWidth: props.lineWidth,
-              strokeStyle: props.strokeStyle,
+              lineWidth: lineWidth?.current,
+              strokeStyle: strokeStyle?.current,
             });
 
             // 描边
@@ -326,6 +331,9 @@ function WritingBoard(props: IWritingBoardProps, ref) {
    * @param strokeStyle
    */
   function style({ lineWidth, strokeStyle }) {
+    console.log('callStylelineWidth', lineWidth);
+    console.log('callStylestrokeStyle', strokeStyle);
+
     (ctx.current as CanvasRenderingContext2D).lineWidth = lineWidth;
     (ctx.current as CanvasRenderingContext2D).strokeStyle = strokeStyle;
     (ctx.current as CanvasRenderingContext2D).lineCap = 'round';
@@ -362,15 +370,15 @@ function WritingBoard(props: IWritingBoardProps, ref) {
 
   /**
    * devicePointToCanvasPoint
-   * @param pageX
-   * @param pageY
+   * @param clientX
+   * @param clientY
    */
-  function devicePointToCanvasPoint({ pageX, pageY }): IPoint {
-    const { x, y } = rect.current!;
+  function devicePointToCanvasPoint({ clientX, clientY }): IPoint {
+    const { x, y } = canvasRef?.current?.getBoundingClientRect()!;
 
     return {
-      x: pageX - x,
-      y: pageY - y,
+      x: clientX - x,
+      y: clientY - y,
     };
   }
 
@@ -441,8 +449,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
   function onTouchmove(e) {
     move({
       ...e,
-      pageX: e.targetTouches[0].pageX,
-      pageY: e.targetTouches[0].pageY,
+      clientX: e.targetTouches[0].clientX,
+      clientY: e.targetTouches[0].clientY,
     });
   }
 
@@ -453,8 +461,8 @@ function WritingBoard(props: IWritingBoardProps, ref) {
   function onTouchend(e) {
     end({
       ...e,
-      pageX: e.changedTouches[0].pageX,
-      pageY: e.changedTouches[0].pageY,
+      clientX: e.changedTouches[0].clientX,
+      clientY: e.changedTouches[0].clientY,
     });
   }
 
@@ -464,9 +472,9 @@ function WritingBoard(props: IWritingBoardProps, ref) {
    */
   function start(e) {
     // 屏幕坐标转换成canvas坐标
-    const { pageX, pageY } = e;
+    const { clientX, clientY } = e;
 
-    startPoint.current = prePoint.current = devicePointToCanvasPoint({ pageX, pageY });
+    startPoint.current = prePoint.current = devicePointToCanvasPoint({ clientX, clientY });
 
     containerRef?.current?.addEventListener('mousemove', onMousemove);
     containerRef?.current?.addEventListener('mouseup', onMouseup);
@@ -479,9 +487,9 @@ function WritingBoard(props: IWritingBoardProps, ref) {
    * @param e
    */
   function move(e) {
-    const { pageX, pageY } = e;
+    const { clientX, clientY } = e;
 
-    const point = devicePointToCanvasPoint({ pageX, pageY });
+    const point = devicePointToCanvasPoint({ clientX, clientY });
     draw({ sourcePoint: prePoint.current, targetPoint: point });
     prePoint.current = point;
   }
@@ -491,9 +499,9 @@ function WritingBoard(props: IWritingBoardProps, ref) {
    * @param e
    */
   function end(e) {
-    const { pageX, pageY } = e;
+    const { clientX, clientY } = e;
 
-    const point = devicePointToCanvasPoint({ pageX, pageY });
+    const point = devicePointToCanvasPoint({ clientX, clientY });
 
     config?.current.get(curShape.current)?.mouseup(point);
 
@@ -507,6 +515,15 @@ function WritingBoard(props: IWritingBoardProps, ref) {
   }
 
   useImperativeHandle(ref, () => ({
+    setMode: (mode) => {
+      curShape.current = mode;
+    },
+    setStrokeStyle: (style) => {
+      strokeStyle.current = style;
+    },
+    setLineWidth: (width) => {
+      lineWidth.current = width;
+    },
     /**
      * clear
      * @description 清除画布
@@ -527,9 +544,13 @@ function WritingBoard(props: IWritingBoardProps, ref) {
     toDataURL: () => canvasRef?.current?.toDataURL('image/png', 1.0),
   }));
 
+  useEffect(() => {
+    console.log('lineWidth?.current', lineWidth?.current);
+    console.log('strokeStyle?.current', strokeStyle?.current);
+  }, [lineWidth?.current, strokeStyle?.current]);
+
   useLayoutEffect(() => {
     ctx.current = canvasRef?.current?.getContext('2d')!;
-    rect.current = canvasRef?.current?.getBoundingClientRect()!;
     (canvasRef.current as HTMLCanvasElement).width = containerRef?.current?.offsetWidth!;
     (canvasRef.current as HTMLCanvasElement).height = containerRef?.current?.offsetHeight!;
   }, []);
@@ -540,7 +561,7 @@ function WritingBoard(props: IWritingBoardProps, ref) {
     }
 
     function onTouchstart(e) {
-      start({ ...e, pageX: e.targetTouches[0].pageX, pageY: e.targetTouches[0].pageY });
+      start({ ...e, clientX: e.targetTouches[0].clientX, clientY: e.targetTouches[0].clientY });
     }
 
     containerRef?.current?.addEventListener('mousedown', onMousedown);
@@ -568,20 +589,20 @@ const Wrap = forwardRef(WritingBoard);
 Wrap.defaultProps = {
   className: '',
   style: {},
-  mode: Mode.FREE,
-  strokeStyle: '#000',
-  lineWidth: 2,
+  defaultMode: Mode.FREE,
+  defaultStrokeStyle: '#000',
+  defaultLineWidth: 2,
 };
 
 Wrap.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   // @ts-ignore
-  mode: PropTypes.string,
+  defaultMode: PropTypes.string,
   // @ts-ignore
-  strokeStyle: PropTypes.string,
+  defaultStrokeStyle: PropTypes.string,
   // @ts-ignore
-  lineWidth: PropTypes.number,
+  defaultLineWidth: PropTypes.number,
 };
 
 export default Wrap;

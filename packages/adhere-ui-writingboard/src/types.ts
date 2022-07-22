@@ -8,11 +8,11 @@ export interface IWritingBoardProps {
   className?: string;
   style?: React.CSSProperties;
   // 绘制模式
-  mode: Mode;
+  defaultMode: Mode;
   // 线条颜色
-  strokeStyle: string;
+  defaultStrokeStyle: string;
   // 线条宽度
-  lineWidth: number;
+  defaultLineWidth: number;
 }
 
 /**

@@ -6,9 +6,9 @@ import React from 'react';
 export interface IWritingBoardProps {
     className?: string;
     style?: React.CSSProperties;
-    mode: Mode;
-    strokeStyle: string;
-    lineWidth: number;
+    defaultMode: Mode;
+    defaultStrokeStyle: string;
+    defaultLineWidth: number;
 }
 /**
  * IPoint
