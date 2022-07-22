@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(r){return r&&r.__esModule?r:{default:r}};Object.defineProperty(exports,"__esModule",{value:!0});var errorprompt_1=__importDefault(require("./errorprompt"));exports.default=errorprompt_1.default;
+"use strict";require("core-js/modules/es.object.define-property.js");var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _errorprompt=_interopRequireDefault(require("./errorprompt")),_default=_errorprompt.default;exports.default=_default;
 //# sourceMappingURL=index.js.map

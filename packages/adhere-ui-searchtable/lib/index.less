@@ -6,6 +6,9 @@
 @import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
 @import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
 
+@import './Extension/ColumnSetting/setting';
+@import './Extension/TableDensitySetting/setting';
+
 .adhere-ui-searchtable-wrap {
   display: flex;
   width: 100%;
@@ -115,24 +118,15 @@
           }
         }
       }
-    }
 
-    .adhere-ui-searchform {
-      min-width: 100%;
-      table-layout: fixed;
-      border-collapse: separate;
-      border-spacing: 0 20px;
-
-      > tbody {
-        > .adhere-ui-searchform-row {
-          > .adhere-ui-searchform-label {
-            //max-width: 60px;
-            padding-right: 10px;
-            white-space: nowrap;
-            text-align: right;
-            word-break: keep-all;
-          }
-        }
+      .adhere-ui-searchtable-resizable-handle {
+        position: absolute;
+        right: -5px;
+        bottom: 0;
+        z-index: 1;
+        width: 10px;
+        height: 100%;
+        cursor: col-resize;
       }
     }
 
@@ -141,4 +135,3 @@
     }
   }
 }
-

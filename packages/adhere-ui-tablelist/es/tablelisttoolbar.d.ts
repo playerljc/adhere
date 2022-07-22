@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare const ToolbarSelectAll: ({ selectAll, rowSelection, rowKey, dataSource, setSelectAll }: {
     selectAll: any;
     rowSelection: any;

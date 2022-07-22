@@ -125,12 +125,13 @@ class Props extends React.Component<IPropsProps, any> {
   }
 }
 
-Props.defaultProps = {
+export const PropsDefaultProps = {
   ...Collapse.defaultProps,
   data: [],
 };
 
-Props.propTypes = {
+// @ts-ignore
+export const PropsPropTypes = {
   ...Collapse.propTypes,
   data: PropTypes.arrayOf(
     PropTypes.shape({
@@ -141,5 +142,9 @@ Props.propTypes = {
     }),
   ),
 };
+
+Props.defaultProps = PropsDefaultProps;
+
+Props.propTypes = PropsPropTypes;
 
 export default Props;

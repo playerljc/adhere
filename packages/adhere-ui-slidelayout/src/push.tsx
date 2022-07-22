@@ -124,7 +124,7 @@ class Push extends SlideLayout<IPushProps, ISlideLayoutState> {
         className={classNames(
           `${selectorPrefix}-master`,
           // @ts-ignore
-          masterClassName.split(' '),
+          masterClassName.split(/\s+/),
         )}
         style={{ ...masterStyle, zIndex: zIndex - 1 }}
         ref={(el) => (this.pMasterEl = el)}
@@ -134,7 +134,7 @@ class Push extends SlideLayout<IPushProps, ISlideLayoutState> {
             selectorPrefix,
             direction,
             // @ts-ignore
-            className.split(' '),
+            className.split(/\s+/),
           )}
           style={{ ...style, zIndex }}
           ref={(el) => (this.el = el)}
@@ -146,7 +146,7 @@ class Push extends SlideLayout<IPushProps, ISlideLayoutState> {
           className={classNames(
             `${selectorPrefix}-slave`,
             // @ts-ignore
-            slaveClassName.split(' '),
+            slaveClassName.split(/\s+/),
           )}
           style={{ ...slaveStyle, zIndex: zIndex - 2 }}
           ref={(el) => (this.pSlaveEl = el)}

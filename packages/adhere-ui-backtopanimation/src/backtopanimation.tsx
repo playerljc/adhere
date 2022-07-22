@@ -31,8 +31,10 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
 
   componentWillUnmount() {
     if (this.maskEl) {
-      // @ts-ignore
-      this.maskEl.parentElement.removeChild(this.maskEl);
+      try {
+        // @ts-ignore
+        this.maskEl.parentElement.removeChild(this.maskEl);
+      } catch (e) {}
     }
   }
 
@@ -44,15 +46,17 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
     function onScroll() {
       // @ts-ignore
       if (self.scrollEl.scrollTop !== 0) {
-        typeof window !== 'undefined' && window.requestAnimationFrame(() => {
-          // @ts-ignore
-          self.el.style.display = 'block';
-        });
+        typeof window !== 'undefined' &&
+          window.requestAnimationFrame(() => {
+            // @ts-ignore
+            self.el.style.display = 'block';
+          });
       } else {
-        typeof window !== 'undefined' && window.requestAnimationFrame(() => {
-          // @ts-ignore
-          self.el.style.display = 'none';
-        });
+        typeof window !== 'undefined' &&
+          window.requestAnimationFrame(() => {
+            // @ts-ignore
+            self.el.style.display = 'none';
+          });
       }
     }
 
@@ -159,7 +163,7 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}

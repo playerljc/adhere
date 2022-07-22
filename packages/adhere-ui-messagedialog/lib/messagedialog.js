@@ -1,2 +1,285 @@
-"use strict";var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,r=1,a=arguments.length;r<a;r++)for(var i in t=arguments[r])Object.prototype.hasOwnProperty.call(t,i)&&(e[i]=t[i]);return e}).apply(this,arguments)},__rest=this&&this.__rest||function(e,t){var r={};for(i in e)Object.prototype.hasOwnProperty.call(e,i)&&t.indexOf(i)<0&&(r[i]=e[i]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols)for(var a=0,i=Object.getOwnPropertySymbols(e);a<i.length;a++)t.indexOf(i[a])<0&&Object.prototype.propertyIsEnumerable.call(e,i[a])&&(r[i[a]]=e[i[a]]);return r},__importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var react_1=__importDefault(require("react")),react_dom_1=__importDefault(require("react-dom")),antd_1=require("antd"),adhere_util_intl_1=__importDefault(require("@baifendian/adhere-util-intl")),adhere_util_resource_1=__importDefault(require("@baifendian/adhere-util-resource")),adhere_ui_formitemcreator_1=__importDefault(require("@baifendian/adhere-ui-formitemcreator")),actions_1=__importDefault(require("./actions")),emitter_1=__importDefault(require("./emitter")),modal_1=__importDefault(require("./modal")),modal_2=require("./modal"),DEFAULT_LOCAL="zh_CN",LOCAL=adhere_util_resource_1.default.Dict.value.LocalsAntd.value,PromptLayout={labelCol:{span:6},wrapperCol:{span:18}};function renderByIcon(e,t){return react_1.default.createElement("div",{className:modal_2.selectorPrefix+"-renderByIcon"},react_1.default.createElement("div",{className:modal_2.selectorPrefix+"-renderByIcon-fixed"},e),react_1.default.createElement("div",{className:modal_2.selectorPrefix+"-renderByIcon-auto"},t))}var MessageDialogFactory={Confirm:function(e){var t=e.title,r=e.text,a=void 0===r?null:r,i=e.width,o=e.zIndex,n=e.local,r=e.icon,r=void 0===r?null:r,l=e.onSuccess,_=this.Modal({config:{title:t,centered:!0,width:(void 0===i?300:i)||300,closable:!1,zIndex:void 0===o?1e3:o,footer:[react_1.default.createElement(antd_1.Button,{key:"submit",type:"primary",title:adhere_util_intl_1.default.v("确定"),onClick:function(){l?l().then(function(){emitter_1.default.trigger(actions_1.default.close,_)}):emitter_1.default.trigger(actions_1.default.close,_)}},adhere_util_intl_1.default.v("确定"))]},local:n,children:r?renderByIcon(r,a):a})},Alert:function(e){var t=e.title,r=e.text,a=void 0===r?null:r,i=e.width,o=e.zIndex,r=e.local,e=e.icon;this.Modal({config:{title:t,centered:!0,width:(void 0===i?300:i)||300,closable:!1,zIndex:void 0===o?1e3:o},local:r,children:e?renderByIcon(e,a):a})},Prompt:function(e){var t=e.title,r=e.config,a=e.layout,i=void 0===a?PromptLayout:a,o=e.width,n=void 0===o?300:o,a=e.zIndex,o=void 0===a?1e3:a,a=e.local,l=e.onSuccess,_=react_1.default.createRef(),c=this.Modal({config:{title:t,centered:!0,width:n||300,closable:!1,zIndex:o,footer:[react_1.default.createElement(antd_1.Button,{key:"submit",type:"primary",title:adhere_util_intl_1.default.v("确定"),onClick:function(){l?_.current.validateFields().then(function(e){l(e.value).then(function(){emitter_1.default.trigger(actions_1.default.close,c)})}):emitter_1.default.trigger(actions_1.default.close,c)}},adhere_util_intl_1.default.v("确定"))]},local:a,children:react_1.default.createElement(antd_1.Form,{name:"Prompt",ref:_,style:{width:"100%"}},react_1.default.createElement(adhere_ui_formitemcreator_1.default,{columns:[__assign(__assign({},r||{label:"normal",type:adhere_ui_formitemcreator_1.default.TEXT,initialValue:""}),{name:"value"})],layout:i||PromptLayout}))})},InputPrompt:function(e){var t=e.config,e=__rest(e,["config"]);MessageDialogFactory.Prompt(__assign(__assign({},e),{config:__assign(__assign({},t),{type:adhere_ui_formitemcreator_1.default.INPUT})}))},TextAreaPrompt:function(e){var t=e.config,e=__rest(e,["config"]);MessageDialogFactory.Prompt(__assign(__assign({},e),{config:__assign(__assign({},t),{type:adhere_ui_formitemcreator_1.default.TEXTAREA})}))},PassWordPrompt:function(e){var t=e.config,e=__rest(e,["config"]);MessageDialogFactory.Prompt(__assign(__assign({},e),{config:__assign(__assign({},t),{type:adhere_ui_formitemcreator_1.default.PASSWORD})}))},NumberPrompt:function(e){var t=e.config,e=__rest(e,["config"]);MessageDialogFactory.Prompt(__assign(__assign({},e),{config:__assign(__assign({},t),{type:adhere_ui_formitemcreator_1.default.NUMBER})}))},Modal:function(e){var t=e.config,r=e.children,a=void 0===r?null:r,i=e.defaultCloneBtn,r=void 0===i||i,i=e.local,e=void 0===i?DEFAULT_LOCAL:i,i=Object.assign({maskClosable:!1},void 0===t?{}:t),t=document.createElement("div");return react_dom_1.default.render(react_1.default.createElement(antd_1.ConfigProvider,{locale:LOCAL[e||DEFAULT_LOCAL]},react_1.default.createElement(modal_1.default,{parent:t,config:i,cloneBtn:r},a)),t),document.body.appendChild(t),t},close:function(e){emitter_1.default.trigger(actions_1.default.close,e)}};exports.default=MessageDialogFactory;
+'use strict';
+require('core-js/modules/es.array.iterator.js'),
+  require('core-js/modules/es.object.to-string.js'),
+  require('core-js/modules/es.string.iterator.js'),
+  require('core-js/modules/es.weak-map.js'),
+  require('core-js/modules/esnext.weak-map.delete-all.js'),
+  require('core-js/modules/web.dom-collections.iterator.js'),
+  require('core-js/modules/es.object.define-property.js'),
+  require('core-js/modules/es.object.get-own-property-descriptor.js');
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault'),
+  _typeof = require('@babel/runtime/helpers/typeof');
+Object.defineProperty(exports, '__esModule', { value: !0 }),
+  (exports.default = void 0),
+  require('core-js/modules/es.object.assign.js');
+var _configProvider = _interopRequireDefault(require('antd/lib/config-provider')),
+  _form = _interopRequireDefault(require('antd/lib/form')),
+  _button = _interopRequireDefault(require('antd/lib/button')),
+  _tslib = require('tslib'),
+  _adhereUiFormitemcreator = _interopRequireDefault(
+    require('@baifendian/adhere-ui-formitemcreator'),
+  ),
+  _adhereUtilIntl = _interopRequireDefault(require('@baifendian/adhere-util-intl')),
+  _adhereUtilResource = _interopRequireDefault(require('@baifendian/adhere-util-resource')),
+  _react = _interopRequireDefault(require('react')),
+  _reactDom = _interopRequireDefault(require('react-dom')),
+  _modal = _interopRequireWildcard(require('./modal'));
+function _getRequireWildcardCache(e) {
+  if ('function' != typeof WeakMap) return null;
+  var t = new WeakMap(),
+    r = new WeakMap();
+  return (_getRequireWildcardCache = function (e) {
+    return e ? r : t;
+  })(e);
+}
+function _interopRequireWildcard(e, t) {
+  if (!t && e && e.__esModule) return e;
+  if (null === e || ('object' !== _typeof(e) && 'function' != typeof e)) return { default: e };
+  t = _getRequireWildcardCache(t);
+  if (t && t.has(e)) return t.get(e);
+  var r,
+    i,
+    o = {},
+    a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (r in e)
+    'default' !== r &&
+      Object.prototype.hasOwnProperty.call(e, r) &&
+      ((i = a ? Object.getOwnPropertyDescriptor(e, r) : null) && (i.get || i.set)
+        ? Object.defineProperty(o, r, i)
+        : (o[r] = e[r]));
+  return (o.default = e), t && t.set(e, o), o;
+}
+var DEFAULT_LOCAL = 'zh_CN',
+  LOCAL = _adhereUtilResource.default.Dict.value.LocalsAntd.value,
+  PromptLayout = { labelCol: { span: 6 }, wrapperCol: { span: 18 } };
+function renderByIcon(e, t) {
+  return _react.default.createElement(
+    'div',
+    { className: ''.concat(_modal.selectorPrefix, '-renderByIcon') },
+    _react.default.createElement(
+      'div',
+      { className: ''.concat(_modal.selectorPrefix, '-renderByIcon-fixed') },
+      e,
+    ),
+    _react.default.createElement(
+      'div',
+      { className: ''.concat(_modal.selectorPrefix, '-renderByIcon-auto') },
+      t,
+    ),
+  );
+}
+var MessageDialogFactory = {
+    Confirm: function (e) {
+      var t = e.title,
+        r = e.text,
+        i = void 0 === r ? null : r,
+        o = e.width,
+        a = e.zIndex,
+        l = e.local,
+        r = e.icon,
+        r = void 0 === r ? null : r,
+        n = e.onSuccess,
+        c = this.Modal({
+          config: {
+            title: t,
+            centered: !0,
+            width: (void 0 === o ? 300 : o) || 300,
+            closable: !1,
+            zIndex: void 0 === a ? 1e3 : a,
+            footer: [
+              _react.default.createElement(
+                _button.default,
+                {
+                  key: 'submit',
+                  type: 'primary',
+                  title: _adhereUtilIntl.default.v('确定'),
+                  onClick: function () {
+                    n
+                      ? n().then(function () {
+                          c();
+                        })
+                      : c();
+                  },
+                },
+                _adhereUtilIntl.default.v('确定'),
+              ),
+            ],
+          },
+          local: l,
+          children: r ? renderByIcon(r, i) : i,
+        }).close;
+    },
+    Alert: function (e) {
+      var t = e.title,
+        r = e.text,
+        i = void 0 === r ? null : r,
+        o = e.width,
+        a = e.zIndex,
+        r = e.local,
+        e = e.icon;
+      this.Modal({
+        config: {
+          title: t,
+          centered: !0,
+          width: (void 0 === o ? 300 : o) || 300,
+          closable: !1,
+          zIndex: void 0 === a ? 1e3 : a,
+        },
+        local: r,
+        children: e ? renderByIcon(e, i) : i,
+      });
+    },
+    Prompt: function (e) {
+      var t = e.title,
+        r = e.config,
+        i = e.layout,
+        o = void 0 === i ? PromptLayout : i,
+        a = e.width,
+        l = e.zIndex,
+        i = e.local,
+        n = e.onSuccess,
+        c = _react.default.createRef(),
+        u = this.Modal({
+          config: {
+            title: t,
+            centered: !0,
+            width: (void 0 === a ? 300 : a) || 300,
+            closable: !1,
+            zIndex: void 0 === l ? 1e3 : l,
+            footer: [
+              _react.default.createElement(
+                _button.default,
+                {
+                  key: 'submit',
+                  type: 'primary',
+                  title: _adhereUtilIntl.default.v('确定'),
+                  onClick: function () {
+                    n
+                      ? c.current.validateFields().then(function (e) {
+                          n(e.value).then(function () {
+                            u();
+                          });
+                        })
+                      : u();
+                  },
+                },
+                _adhereUtilIntl.default.v('确定'),
+              ),
+            ],
+          },
+          local: i,
+          children: _react.default.createElement(
+            _form.default,
+            { name: 'Prompt', ref: c, style: { width: '100%' } },
+            _react.default.createElement(_adhereUiFormitemcreator.default, {
+              columns: [
+                (0, _tslib.__assign)(
+                  (0, _tslib.__assign)(
+                    {},
+                    r || {
+                      label: 'normal',
+                      type: _adhereUiFormitemcreator.default.TEXT,
+                      initialValue: '',
+                    },
+                  ),
+                  { name: 'value' },
+                ),
+              ],
+              layout: o || PromptLayout,
+            }),
+          ),
+        }).close;
+    },
+    InputPrompt: function (e) {
+      var t = e.config,
+        e = (0, _tslib.__rest)(e, ['config']);
+      MessageDialogFactory.Prompt(
+        (0, _tslib.__assign)((0, _tslib.__assign)({}, e), {
+          config: (0, _tslib.__assign)((0, _tslib.__assign)({}, t), {
+            type: _adhereUiFormitemcreator.default.INPUT,
+          }),
+        }),
+      );
+    },
+    TextAreaPrompt: function (e) {
+      var t = e.config,
+        e = (0, _tslib.__rest)(e, ['config']);
+      MessageDialogFactory.Prompt(
+        (0, _tslib.__assign)((0, _tslib.__assign)({}, e), {
+          config: (0, _tslib.__assign)((0, _tslib.__assign)({}, t), {
+            type: _adhereUiFormitemcreator.default.TEXTAREA,
+          }),
+        }),
+      );
+    },
+    PassWordPrompt: function (e) {
+      var t = e.config,
+        e = (0, _tslib.__rest)(e, ['config']);
+      MessageDialogFactory.Prompt(
+        (0, _tslib.__assign)((0, _tslib.__assign)({}, e), {
+          config: (0, _tslib.__assign)((0, _tslib.__assign)({}, t), {
+            type: _adhereUiFormitemcreator.default.PASSWORD,
+          }),
+        }),
+      );
+    },
+    NumberPrompt: function (e) {
+      var t = e.config,
+        e = (0, _tslib.__rest)(e, ['config']);
+      MessageDialogFactory.Prompt(
+        (0, _tslib.__assign)((0, _tslib.__assign)({}, e), {
+          config: (0, _tslib.__assign)((0, _tslib.__assign)({}, t), {
+            type: _adhereUiFormitemcreator.default.NUMBER,
+          }),
+        }),
+      );
+    },
+    Modal: function (e) {
+      var t = e.config,
+        r = e.children,
+        i = void 0 === r ? null : r,
+        r = e.defaultCloseBtn,
+        r = void 0 === r || r,
+        e = e.local,
+        e = void 0 === e ? DEFAULT_LOCAL : e,
+        t = Object.assign({ maskClosable: !1 }, void 0 === t ? {} : t),
+        o = document.createElement('div');
+      function a() {
+        var e, t;
+        _reactDom.default.unmountComponentAtNode(o) &&
+          null !==
+            (t =
+              null === (e = null == o ? void 0 : o.parentElement) || void 0 === e
+                ? void 0
+                : e.removeChild) &&
+          void 0 !== t &&
+          t.call(e, o);
+      }
+      return (
+        _reactDom.default.render(
+          _react.default.createElement(
+            _configProvider.default,
+            { locale: LOCAL[e || DEFAULT_LOCAL] },
+            _react.default.createElement(_modal.default, { close: a, config: t, closeBtn: r }, i),
+          ),
+          o,
+        ),
+        document.body.appendChild(o),
+        { el: o, close: a }
+      );
+    },
+    close: function (e) {
+      var t, r;
+      _reactDom.default.unmountComponentAtNode(e) &&
+        null !==
+          (r =
+            null === (t = null == e ? void 0 : e.parentElement) || void 0 === t
+              ? void 0
+              : t.removeChild) &&
+        void 0 !== r &&
+        r.call(t, e);
+    },
+  },
+  _default = MessageDialogFactory;
+exports.default = _default;
 //# sourceMappingURL=messagedialog.js.map

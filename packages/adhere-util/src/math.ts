@@ -7,7 +7,7 @@ export default {
    * @param percent
    */
   toPoint(percent: string): number {
-    let str = percent.replace('%', '');
+    const str = percent.replace('%', '');
 
     // @ts-ignore
     return str / 100;

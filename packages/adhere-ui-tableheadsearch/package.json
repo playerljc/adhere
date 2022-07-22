@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tableheadsearch",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "基于antd-design的Table的列头筛选",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.15",
+    "@ctsj/build": "^4.0.19",
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
   },

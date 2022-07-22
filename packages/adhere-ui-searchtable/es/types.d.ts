@@ -21,6 +21,7 @@ export interface ISearchTableProps extends ISuspenseProps {
     autoFixed: boolean;
     fixedHeaderAutoTable: boolean;
     fixedTableSpaceBetween: boolean;
+    showColumnSetting: boolean;
 }
 /**
  * ISearchTableState
@@ -30,30 +31,11 @@ export interface ISearchTableState extends ISuspenseState {
     page: number;
     limit: number;
     expand: boolean;
-}
-/**
- * ISearchFormProps
- * @interface ISearchFormProps
- */
-export interface ISearchFormProps extends ISearchTableProps {
-}
-/**
- * ISearchFormRowProps
- * @interface ISearchFormRowProps
- */
-export interface ISearchFormRowProps extends ISearchTableProps {
-}
-/**
- * ISearchFormLabelProps
- * @interface ISearchFormLabelProps
- */
-export interface ISearchFormLabelProps extends ISearchTableProps {
-}
-/**
- * ISearchFormValueProps
- * @interface ISearchFormValueProps
- */
-export interface ISearchFormValueProps extends ISearchTableProps {
+    scrollY: number;
+    columnSetting: Array<ColumnType<any> & {
+        sort: number;
+        display: boolean;
+    }>;
 }
 /**
  * ISearchTableImplementProps
@@ -146,4 +128,12 @@ export interface ISearchTableImplementProps {
      * fetchData - 加载数据
      */
     fetchData(): void;
+}
+/**
+ * TableDensity
+ */
+export declare enum TableDensity {
+    DEFAULT = "default",
+    MIDDLE = "middle",
+    SMALL = "small"
 }

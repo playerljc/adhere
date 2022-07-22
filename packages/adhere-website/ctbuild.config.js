@@ -51,7 +51,9 @@ module.exports = {
     // webpackConfig.resolve.modules.unshift(path.join(__dirname, '../../node_modules'));
 
     // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
-    webpackConfig.module.rules[webpackConfig.module.rules.length - 1].exclude = [/packages[\\/]adhere-website[\\/]src/];
+    webpackConfig.module.rules[webpackConfig.module.rules.length - 1].exclude = [
+      /packages[\\/]adhere-website[\\/]src/,
+    ];
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].include.push(
       /packages[\\/]adhere[\\/]lib[\\/].*[\\/]style[\\/]index\.less/,
       /packages[\\/]adhere[\\/]lib[\\/].*\.less/,
@@ -70,16 +72,20 @@ module.exports = {
       use: 'raw-loader',
     });
 
-    webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/);
+    webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 
-    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
+    // webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
 
     // 在使用babel-plugin-import的时候让adhere也执行
-    // webpackConfig.module.rules[0].include = [/packages[\\/]adhere-/];
+    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    delete webpackConfig.module.rules[0].exclude;
+
+    webpackConfig.module.rules[1].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    delete webpackConfig.module.rules[1].exclude;
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;

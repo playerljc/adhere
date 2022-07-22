@@ -51,6 +51,18 @@ export interface IConfig {
         response?: any;
         responseText: string;
     }) => void;
+    mock?: boolean;
+    loading?: {
+        show: boolean;
+        text: string;
+        el: HTMLElement;
+    };
+    onBeforeResponse?: () => void;
+    dataKey?: string;
+    messageKey?: string;
+    codeKey?: number | string;
+    codeSuccess?: number;
+    showWarn?: boolean;
 }
 /**
  * ISendArg
@@ -64,18 +76,6 @@ export interface ISendArg extends IConfig {
         form?: HTMLFormElement;
         data: object;
     } | object;
-    mock: boolean;
-    loading: {
-        show: boolean;
-        text: string;
-        el: HTMLElement;
-    };
-    onBeforeResponse: () => void;
-    dataKey: string;
-    messageKey: string;
-    codeKey: number | string;
-    codeSuccess: number;
-    showWarn: boolean;
 }
 /**
  * ISendPrepareArg

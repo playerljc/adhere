@@ -195,7 +195,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
         // 具备刷新条件
         if (distance >= this.refreshHeight + 80) {
-          console.log('3.具备刷新条件');
+          // console.log('3.具备刷新条件');
           this.rotateIcon(this.iconEl, 0, 150);
 
           this.setState(
@@ -227,7 +227,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
         this.rotateIcon(this.iconEl, 0, 150);
 
-        console.log('4.拉动到了底部');
+        // console.log('4.拉动到了底部');
         this.setState(
           {
             isCan: true,
@@ -271,7 +271,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
         if (distance >= this.refreshHeight + 80) {
           self.refresh();
         } else {
-          console.log('2.没有具备刷新条件弹回');
+          // console.log('2.没有具备刷新条件弹回');
           // self.events.trigger('pullRebound');
           self.trigger('onPullRebound');
           self.reset();
@@ -486,7 +486,7 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
               <div
                 className={classNames(
                   `${selectorPrefix}-trigger-refresh`,
-                  ...(renderLoadingAnimation as unknown as string).split(' '),
+                  ...(renderLoadingAnimation as unknown as string).split(/\s+/),
                 )}
                 // @ts-ignore
                 ref={this.refreshElRef}
@@ -592,10 +592,10 @@ class PullRefresh extends React.Component<IPullRefreshProps, IPullRefreshState> 
 
     return (
       // @ts-ignore
-      <div className={classNames(selectorPrefix, ...className.split(' '))} style={{ ...style }}>
+      <div className={classNames(selectorPrefix, ...className.split(/\s+/))} style={{ ...style }}>
         <div
           // @ts-ignore
-          className={classNames(`${selectorPrefix}-scroll`, ...scrollClassName.split(' '))}
+          className={classNames(`${selectorPrefix}-scroll`, ...scrollClassName.split(/\s+/))}
           style={{ ...scrollStyle }}
           // @ts-ignore
           ref={this.scrollElRef}

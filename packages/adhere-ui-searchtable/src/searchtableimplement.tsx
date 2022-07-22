@@ -36,6 +36,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
         ...this.getParams(),
       },
       selectedRowKeys: [],
+      selectedRows: [],
     });
   }
 
@@ -165,6 +166,13 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
   }
 
   /**
+   * getNumberGeneratorRule - 获取符号列的生成规则
+   */
+  protected getRowSelectionMode(): Symbol {
+    return SearchTable.ROW_SELECTION_NORMAL_MODE;
+  }
+
+  /**
    * getTableNumberColumnWidth
    * @override
    * @description - 表格序号列的宽度
@@ -227,14 +235,58 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取表格行选择对象
    */
   protected getRowSelection(): TableRowSelection<object> {
+    const self = this;
+
+    function filter(this: any, selected: boolean, records: Array<any>): void {
+      const rowKey = self.getRowKey();
+
+      if (selected) {
+        // add
+        // @ts-ignore
+        self.setState({
+          // @ts-ignore
+          selectedRowKeys: [...self.state.selectedRowKeys, ...records.map((r) => r[rowKey])],
+          // @ts-ignore
+          selectedRows: [...self.state.selectedRows, ...records],
+        });
+      } else {
+        // remove
+        // @ts-ignore
+        self.setState({
+          // @ts-ignore
+          selectedRows: self.state.selectedRows.filter(
+            (row) => !records.find((r) => r[rowKey] === row[rowKey]),
+          ),
+          // @ts-ignore
+          selectedRowKeys: self.state.selectedRowKeys.filter(
+            (key) => !records.find((r) => r[rowKey] === key),
+          ),
+        });
+      }
+    }
+
     return {
       // @ts-ignore
       selectedRowKeys: this.state.selectedRowKeys,
-      onChange: (selectedRowKeys: Array<any>) => {
+      onChange: (selectedRowKeys: Array<any>, selectedRows: Array<any>) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
+
+        // 如果是缺省模式(不能跨页选取)
         // @ts-ignore
         this.setState({
           selectedRowKeys,
+          selectedRows,
         });
+      },
+      onSelect: (record, selected) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+
+        filter(selected, [record]);
+      },
+      onSelectAll: (selected, selectedRows, changeRows) => {
+        if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
+
+        filter(selected, changeRows);
       },
     };
   }
@@ -304,7 +356,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 清空查询条件
    * @override
    */
-  protected clear(): Promise<any> {
+  protected clear(): Promise<void> {
     return new Promise((resolve) => {
       // @ts-ignore
       this.setState(
@@ -317,6 +369,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
             ...this.getParams(),
           },
           selectedRowKeys: [],
+          selectedRows: [],
         },
         () => {
           resolve();
@@ -396,7 +449,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 点击查询
    * @override
    */
-  protected onSearch(): Promise<any> {
+  protected onSearch(): Promise<void> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {

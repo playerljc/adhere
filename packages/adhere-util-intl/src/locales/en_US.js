@@ -52,4 +52,7 @@ export default [
   'Click to confirm the location, double-click to end',
   'closure',
   'There can be no spaces before and after the input content',
+  'default',
+  'medium',
+  'compact',
 ];

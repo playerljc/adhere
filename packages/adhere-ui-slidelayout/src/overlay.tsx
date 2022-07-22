@@ -145,7 +145,7 @@ class Overlay extends SlideLayout<IOverlayProps, ISlideLayoutState> {
           selectorPrefix,
           direction,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style, zIndex }}
         ref={(el) => (this.el = el)}

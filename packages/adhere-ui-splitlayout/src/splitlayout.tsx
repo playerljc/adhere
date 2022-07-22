@@ -313,7 +313,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   }
 
   onMouseenter = (e) => {
-    console.log('mouseenter');
+    // console.log('mouseenter');
 
     const {
       el: splitEl,
@@ -336,7 +336,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   onMousedown = (e) => {
-    console.log('mousedown');
+    // console.log('mousedown');
 
     const {
       el: splitEl,
@@ -365,7 +365,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   onMouseup = (e) => {
-    console.log('mouseup');
+    // console.log('mouseup');
 
     const { el: splitEl } = this;
 
@@ -393,7 +393,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   onMouseleave = (e) => {
-    console.log('onMouseleave');
+    // console.log('onMouseleave');
 
     if (this.isDown) {
       // @ts-ignore
@@ -421,7 +421,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
     // @ts-ignore
     const { onChange } = this.props;
 
-    console.log(this.isEnter, this.isDown);
+    // console.log(this.isEnter, this.isDown);
 
     if (this.isEnter && this.isDown) {
       this.isMove = true;
@@ -466,7 +466,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   onMouseout = (e) => {
-    console.log('onMouseout');
+    // console.log('onMouseout');
 
     this.isOut = true;
 
@@ -484,7 +484,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
   };
 
   renderInner = ({ direction }): React.ReactElement => {
-    console.log('renderInner-direction',direction);
+    // console.log('renderInner-direction',direction);
     this.direction = direction;
 
     // @ts-ignore
@@ -497,7 +497,7 @@ class SplitLayout extends React.Component<ISplitLayoutProps, any> {
         className={classNames(
           selectorPrefix,
           `${selectorPrefix}-${direction}`,
-          className.split(' '),
+          className.split(/\s+/),
         )}
       />
     );

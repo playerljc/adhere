@@ -44,7 +44,7 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
           className={classNames(
             selectorPrefix,
             `${selectorPrefix}-${direction}`,
-            ...className.split(' '),
+            ...className.split(/\s+/),
           )}
           style={{ ...style }}
         >

@@ -3,7 +3,7 @@ import { Skeleton } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import { browserConfig } from '@ctsj/router';
 
-import RouterConfig from '@/config/router.config';
+import RouterConfig from '@/config/router/router.config';
 
 import BasicLayout from '../BasicLayout';
 
@@ -119,7 +119,7 @@ export default async () => {
   // 根据路由配置生成实际的路由
   renderRouterLoop(router, config, authorized);
   // eslint-disable-next-line no-unused-vars
-  return browserConfig(router, (routerIns) => {});
+  return browserConfig(router, () => {});
 };
 
 /**

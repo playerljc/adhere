@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Suspense from './suspense';\r\nexport default Suspense;\r\n"],"names":["Suspense"],"mappings":"OAAOA,yCACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Suspense from './suspense';\nexport default Suspense;"],"names":["Suspense"],"mappings":"OAAOA,yCACQA"}

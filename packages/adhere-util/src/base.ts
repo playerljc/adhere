@@ -218,7 +218,7 @@ export default {
       \`${parameters.join(',')}\`,
       \`return eval("with(context){${expressionStr}}")\`,
     );
-  
+
     fun.apply(window, argv);
   `,
     );
@@ -358,6 +358,7 @@ export default {
    * @return object
    */
   omitObject(obj: object): object {
+    // eslint-disable-next-line no-param-reassign
     obj = obj || {};
 
     const res = {};

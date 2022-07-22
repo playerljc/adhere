@@ -1,3 +1,34 @@
+# 1.0.17
+
+***
+
+2022-06-02
+
+* 重置的修改
+* SearchForm的children位置修改
+* ColumnSetting修改
+* 去掉SearchFrom组件，改用TableGridLayout
+
+# 1.0.16
+
+***
+
+2022-04-25
+
+* 加入列拖动功能
+* 加入列设置功能
+* 加入表格密度设置功能
+* 序号列命名修改
+
+# 1.0.15
+
+***
+
+2022-04-05
+
+* renderTableNumberColumn修改
+* 跨页选取的支持
+
 # 1.0.12
 
 ***

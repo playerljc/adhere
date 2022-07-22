@@ -70,11 +70,11 @@ class Card extends React.Component<ICardProps> {
     } = this.props;
 
     return (
-      <div className={classNames(selectorPrefix, className.split(' '))} style={{ ...style }}>
+      <div className={classNames(selectorPrefix, className.split(/\s+/))} style={{ ...style }}>
         <ConditionalRender conditional={!!title || !!extra}>
           {() => (
             <div
-              className={classNames(`${selectorPrefix}-header`, headerClassName.split(' '))}
+              className={classNames(`${selectorPrefix}-header`, headerClassName.split(/\s+/))}
               style={{ ...headerStyle }}
             >
               <ConditionalRender conditional={!!title}>
@@ -91,7 +91,7 @@ class Card extends React.Component<ICardProps> {
         <ConditionalRender conditional={!!children}>
           {() => (
             <div
-              className={classNames(`${selectorPrefix}-body`, bodyClassName.split(' '))}
+              className={classNames(`${selectorPrefix}-body`, bodyClassName.split(/\s+/))}
               style={{ ...bodyStyle }}
             >
               {children}
@@ -120,7 +120,7 @@ class Card extends React.Component<ICardProps> {
         <ConditionalRender conditional={!!actions}>
           {() => (
             <ul
-              className={classNames(`${selectorPrefix}-action`, actionClassName.split(' '))}
+              className={classNames(`${selectorPrefix}-action`, actionClassName.split(/\s+/))}
               style={{ ...actionStyle }}
             >
               {actions.map((action, index) => (

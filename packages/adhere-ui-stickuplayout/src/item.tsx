@@ -17,7 +17,7 @@ function StickupLayoutItem(props) {
       className={classNames(
         selectorPrefix,
         // @ts-ignore
-        className.split(' '),
+        className.split(/\s+/),
       )}
       style={{ ...style }}
     >

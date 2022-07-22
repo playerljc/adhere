@@ -20,5 +20,5 @@ yarn add adhere-ui-jdcategorytab
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/jcategorytab](http://49.232.163.126:8083/adhere/ui/jcategorytab)
+[http://49.232.163.126:8083/adhere/ui/jdcategorytab](http://49.232.163.126:8083/adhere/ui/jdcategorytab)
 

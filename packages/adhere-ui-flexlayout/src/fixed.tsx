@@ -46,7 +46,7 @@ class Fixed extends React.Component<IFixedProps, any> {
         className={classNames(
           selectorPrefix,
           `${fit ? selectorPrefix + '-fit' : ''}`,
-          className.split(' '),
+          className.split(/\s+/),
         )}
       >
         {children}

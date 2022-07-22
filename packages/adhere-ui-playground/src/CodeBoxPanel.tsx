@@ -39,6 +39,8 @@ function CodeBoxPanel(props: ICodeBoxProps) {
    * useEffect mount
    */
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     function onHashChange() {
       const hash = window.location.hash.substring(1);
       setAnchor(hash);
@@ -47,6 +49,8 @@ function CodeBoxPanel(props: ICodeBoxProps) {
     window.addEventListener('hashchange', onHashChange);
 
     return () => {
+      if (typeof window === 'undefined') return;
+
       window.removeEventListener('hashchange', onHashChange);
     };
   }, []);
@@ -63,7 +67,7 @@ function CodeBoxPanel(props: ICodeBoxProps) {
    */
   useEffect(() => {
     expandLock.current = false;
-  },[expandAll]);
+  }, [expandAll]);
 
   /**
    * renderPlayGroundMulit

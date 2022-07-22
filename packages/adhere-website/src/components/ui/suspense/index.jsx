@@ -1,89 +1,34 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import { Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
-import FunctionProps from '@/lib/FunctionProps';
-import Playground from '@/lib/Playground';
+import PlayGroundPage, {
+  Section,
+  PropsSection,
+  CodeBoxSection,
+  FunctionPropsSection,
+} from '@/lib/PlaygroundPage';
 
 import { Spin } from '@baifendian/adhere';
 
 import Table from './table';
 
 export default () => {
-  const [reset, setReset] = useState(false);
-
-  const [reser1, setReset1] = useState(false);
-
-  return (
-    <div className="Page">
-      <h1>Suspense</h1>
-      <p>
-        数据加载单元(如第一次是骷髅骨架，其他是loading)，有数据加载的单元，第一次是骷髅骨架(或其他)mount，更新是loading
-      </p>
-      <p>
-        此组件是一个父类，使用的时候需要写一个子类，人后重写fetchData、renderInner和showLoading三个方法，所以只能使用class的方式，不能使用hooks
-      </p>
-
-      <Props
-        border
-        title="属性"
-        data={[
-          {
-            params: 'reset',
-            desc: '是否重置',
-            type: 'boolean',
-            defaultVal: 'false',
+  function boxPanelConfig() {
+    return [
+      {
+        id: `p1`,
+        name: `基本使用`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '基本使用',
+            info: '基本使用',
           },
-          {
-            params: 'firstLoading',
-            desc: '自定义firstLoading',
-            type: 'React.ReactElement | null',
-            defaultVal: 'null',
-          },
-        ]}
-      />
-
-      <Space />
-
-      <FunctionProps
-        border
-        title="重写的方法"
-        data={[
-          {
-            name: 'fetchData',
-            desc: '加载数据',
-            modifier: 'public',
-            params: [],
-            returnType: 'void',
-            returnDesc: '',
-          },
-          {
-            name: 'renderInner',
-            desc: '渲染的UI',
-            modifier: 'public',
-            params: [],
-            returnType: 'React.ReactElement',
-            returnDesc: '',
-          },
-          {
-            name: 'showLoading',
-            desc: '是否显示遮罩',
-            modifier: 'public',
-            params: [],
-            returnType: 'boolean',
-            returnDesc: '',
-          },
-        ]}
-      />
-
-      <h2>基本使用</h2>
-      <Playground
-        mode="code"
-        scope={{ React }}
-        codeText={`
+        },
+        codeText: `
   // table.jsx
-  
+
   import React from 'react';
   import { Table } from 'antd';
   import { Suspense } from '@baifendian/adhere';
@@ -91,7 +36,7 @@ export default () => {
   class TableWrap extends Suspense {
     constructor(props) {
       super(props);
-  
+
       this.state = {
         dataSource: [],
         loading: false,
@@ -101,10 +46,10 @@ export default () => {
         },
       };
     }
-  
+
     componentWillReceiveProps(nextProps) {
       super.componentWillReceiveProps(nextProps);
-  
+
       if (nextProps.reset) {
         this.setState(
           {
@@ -119,7 +64,7 @@ export default () => {
         );
       }
     }
-  
+
     getColumns() {
       return [
         {
@@ -149,12 +94,12 @@ export default () => {
         },
       ];
     }
-  
+
     fetchData() {
       const list = [];
       list.length = 10;
       list.fill(0);
-  
+
       this.setState(
         {
           loading: true,
@@ -169,7 +114,7 @@ export default () => {
               height: 180,
               width: 180,
             }));
-  
+
             this.setState(
               {
                 dataSource,
@@ -186,11 +131,11 @@ export default () => {
         },
       );
     }
-  
+
     showLoading() {
       return this.state.loading;
     }
-  
+
     handleTableChange = (pagination) => {
       this.setState(
         {
@@ -201,7 +146,7 @@ export default () => {
         },
       );
     };
-  
+
     renderInner() {
       return (
         <div style={{ position: 'relative' }}>
@@ -217,7 +162,7 @@ export default () => {
       );
     }
   }
-  
+
   export default TableWrap;
 
   import React, { useState } from 'react';
@@ -235,25 +180,35 @@ export default () => {
   </Button>
 
   <Table reset={reset} />
-      `}
-      >
-        <Button
-          type="primary"
-          onClick={() => {
-            setReset(true);
-          }}
-        >
-          重置
-        </Button>
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <>
+            <Button
+              type="primary"
+              onClick={() => {
+                setReset(true);
+              }}
+            >
+              重置
+            </Button>
 
-        <Table reset={reset} />
-      </Playground>
-
-      <h2>自定义firstLoading的UI</h2>
-      <Playground
-        mode="code"
-        scope={{ React }}
-        codeText={`
+            <Table reset={reset} />
+          </>
+        ),
+      },
+      {
+        id: `p2`,
+        name: `自定义firstLoading的UI`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '自定义firstLoading的UI',
+            info: '自定义firstLoading的UI',
+          },
+        },
+        codeText: `
   import React, { useState } from 'react';
   import { Button } from 'antd';
   import { Spin } from '@baifendian/adhere';
@@ -278,26 +233,109 @@ export default () => {
   />
 
   <Table reset={reset} />
-      `}
-      >
-        <Button
-          type="primary"
-          onClick={() => {
-            setReset1(true);
-          }}
-        >
-          重置
-        </Button>
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <>
+            <Button
+              type="primary"
+              onClick={() => {
+                setReset1(true);
+              }}
+            >
+              重置
+            </Button>
 
-        <Table
-          firstLoading={
-            <div style={{ position: 'relative' }}>
-              <Spin spinning />
-            </div>
-          }
-          reset={reser1}
-        />
-      </Playground>
-    </div>
+            <Table
+              firstLoading={
+                <div style={{ position: 'relative' }}>
+                  <Spin spinning />
+                </div>
+              }
+              reset={reser1}
+            />
+          </>
+        ),
+      },
+    ];
+  }
+
+  const [reset, setReset] = useState(false);
+
+  const [reser1, setReset1] = useState(false);
+
+  return (
+    <PlayGroundPage>
+      <Section title="Suspense">
+        <p>
+          数据加载单元(如第一次是骷髅骨架，其他是loading)，有数据加载的单元，第一次是骷髅骨架(或其他)mount，更新是loading
+        </p>
+        <p>
+          此组件是一个父类，使用的时候需要写一个子类，人后重写fetchData、renderInner和showLoading三个方法，所以只能使用class的方式，不能使用hooks
+        </p>
+      </Section>
+
+      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+      <PropsSection
+        title="Props"
+        config={[
+          {
+            border: true,
+            title: '属性',
+            data: [
+              {
+                params: 'reset',
+                desc: '是否重置',
+                type: 'boolean',
+                defaultVal: 'false',
+              },
+              {
+                params: 'firstLoading',
+                desc: '自定义firstLoading',
+                type: 'React.ReactElement | null',
+                defaultVal: 'null',
+              },
+            ],
+          },
+        ]}
+      />
+
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: '重写的方法',
+            data: [
+              {
+                name: 'fetchData',
+                desc: '加载数据',
+                modifier: 'public',
+                params: [],
+                returnType: 'void',
+                returnDesc: '',
+              },
+              {
+                name: 'renderInner',
+                desc: '渲染的UI',
+                modifier: 'public',
+                params: [],
+                returnType: 'React.ReactElement',
+                returnDesc: '',
+              },
+              {
+                name: 'showLoading',
+                desc: '是否显示遮罩',
+                modifier: 'public',
+                params: [],
+                returnType: 'boolean',
+                returnDesc: '',
+              },
+            ],
+          },
+        ]}
+      />
+    </PlayGroundPage>
   );
 };

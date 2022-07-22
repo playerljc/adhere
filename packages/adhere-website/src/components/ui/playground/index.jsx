@@ -1,26 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
-import AnchorNavigation from '@/lib/AnchorNavigation';
-import CodeBoxPanel from '@/lib/CodeBoxPanel';
-import Props from '@/lib/Props';
-import { DelConfirm, Space, PlayGround } from '@baifendian/adhere';
-import PlayGroundTab from '@/lib/PlayGroundTab';
+import { DelConfirm } from '@baifendian/adhere';
+
+import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 const arr = [];
 arr.length = 10;
 arr.fill(0);
 
 export default () => {
-  const [scrollEl, setScrollEl] = useState();
-  const ref = useRef();
-
   function boxPanelConfig() {
     return arr.map((t, index) => {
       if (index % 3 === 0) {
         return {
           id: `p${index + 1}`,
-          mode: 'code',
-          scope: { React },
+          name: `p${index + 1}`,
           cardProps: {
             description: {
               title: '123',
@@ -44,7 +38,6 @@ export default () => {
   </DelConfirm>
       `,
           type: 'PlayGround',
-          theme: 'eclipse',
           renderChildren: () => (
             <DelConfirm
               success={() => {
@@ -64,6 +57,7 @@ export default () => {
       else if (index % 3 === 1) {
         return {
           id: `p${index + 1}`,
+          name: `p${index + 1}`,
           cardProps: {
             description: {
               title: '123',
@@ -182,6 +176,7 @@ export default () => {
       else if (index % 3 === 2) {
         return {
           id: `p${index + 1}`,
+          name: `p${index + 1}`,
           cardProps: {
             description: {
               title: '123',
@@ -255,104 +250,33 @@ export default () => {
     });
   }
 
-  useEffect(() => {
-    setScrollEl(ref.current.parentElement.parentElement);
-  }, []);
-
   return (
-    <PlayGround.AnchorNavigationContext.Provider
-      value={{
-        scrollEl,
-      }}
-    >
-      <div className="Page" ref={ref}>
-        <AnchorNavigation
-          anchors={arr.map((t, index) => ({ name: '123', anchor: `p${index + 1}` }))}
-          anchorPosition={{
-            top: 77,
-            width: 120,
-          }}
-        >
-          <h1>PlayGround</h1>
-          <h2>一个代码展示的组件</h2>
+    <PlayGroundPage>
+      <Section title="PlayGround">
+        <p>一个代码展示的组件</p>
+        <ul style={{ listStyle: 'disc', marginLeft: 20 }}>
+          <li>PlayGround - React的代码单文件展示</li>
+          <li>PlayGroundTab - React的多标签文件展示</li>
+          <li>PlayGroundMulit - React的代码多文件展示</li>
+          <li>PlayGroundPage - React的整体代码展示(包括代码组和导航等)</li>
+          <li>Props - React组件的Props说明</li>
+          <li>FunctionProps - 类方法说明</li>
+          <li>CodePanel - 代码片段</li>
+          <li>CodeTabPanel - 多标签代码片段</li>
+          <li>CodeBoxPanel - 代码片段组</li>
+          <li>AnchorNavigation - 带有锚点的导航</li>
+        </ul>
+      </Section>
 
-          <ul style={{ listStyle: 'disc', marginLeft: 20 }}>
-            <li>PlayGround - React的代码单文件展示</li>
-            <li>PlayGroundTab - React的多标签文件展示</li>
-            <li>PlayGroundMulit - React的代码多文件展示</li>
-            <li>Props - React组件的Props说明</li>
-            <li>FunctionProps - 类方法说明</li>
-            <li>CodePanel - 代码片段</li>
-            <li>CodeTabPanel - 多标签代码片段</li>
-            <li>CodeBoxPanel - 代码片段组</li>
-            <li>AnchorNavigation - 带有锚点的导航</li>
-          </ul>
+      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
 
-          <Space />
-
-          <CodeBoxPanel title="代码演示" columnCount={1} config={boxPanelConfig()} />
-
-          <Space />
-
-          <PlayGroundTab
-            cardProps={{
-              description: { title: '123', info: '123' },
-            }}
-            {...{
-              active: 'Typescript',
-              config: [
-                {
-                  key: 'Typescript',
-                  title: 'Typescript',
-                  codeText: `
-  import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
-
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
-
-        resolve();
-      });
-    }}
-  >
-    <a>删除</a>
-  </DelConfirm>
-      `,
-                  theme: 'eclipse',
-                },
-                {
-                  key: 'Javascript',
-                  title: 'Javascript',
-                  codeText: `
-  import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
-
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
-
-        resolve();
-      });
-    }}
-  >
-    <a>删除</a>
-  </DelConfirm>
-      `,
-                },
-              ],
-            }}
-          />
-
-          <Space />
-
-          <h2>Api</h2>
-          <Props
-            border
-            title="CodePanel"
-            data={[
+      <PropsSection
+        title="Props"
+        config={[
+          {
+            border: true,
+            title: 'CodePanel',
+            data: [
               {
                 params: 'codeText',
                 desc: '展示的代码',
@@ -365,15 +289,12 @@ export default () => {
                 type: 'boolean',
                 defaultVal: 'false',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="CodeTabPanel"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'CodeTabPanel',
+            data: [
               {
                 params: 'active',
                 desc: '激活项',
@@ -392,15 +313,12 @@ export default () => {
                 type: 'Function',
                 defaultVal: '',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="PlayGround"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGround',
+            data: [
               {
                 params: 'id',
                 desc: 'id',
@@ -431,15 +349,12 @@ export default () => {
                 type: 'boolean',
                 defaultVal: 'false',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="PlayGroundTab"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundTab',
+            data: [
               {
                 params: 'id',
                 desc: 'id',
@@ -488,15 +403,12 @@ export default () => {
                 type: 'Function',
                 defaultVal: '',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="PlayGroundMulit"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundMulit',
+            data: [
               {
                 params: 'id',
                 desc: 'id',
@@ -527,15 +439,143 @@ export default () => {
                 type: 'boolean',
                 defaultVal: 'false',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="CodeBoxPanel"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundPage',
+            data: [
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'anchorPosition',
+                desc: '锚点的位置',
+                type: '{top:string,width:string}',
+                defaultVal: '{top:77,width:120}',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundPage.Section',
+            data: [
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '标题',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '右侧扩展',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundPage.PropsSection',
+            data: [
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '标题',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '右侧扩展',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'config',
+                desc: '配置',
+                type: 'Array',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundPage.FunctionPropsSection',
+            data: [
+              {
+                params: 'className',
+                desc: '样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '样式',
+                type: 'object',
+                defaultVal: '',
+              },
+              {
+                params: 'title',
+                desc: '标题',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'extra',
+                desc: '右侧扩展',
+                type: 'string | React.ReactElement',
+                defaultVal: '',
+              },
+              {
+                params: 'config',
+                desc: '配置',
+                type: 'Array',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'PlayGroundPage.CodeBoxSection',
+            data: [],
+          },
+          {
+            border: true,
+            title: 'CodeBoxPanel',
+            data: [
               {
                 params: 'title',
                 desc: '',
@@ -572,15 +612,12 @@ export default () => {
                 type: 'ICodeBoxProps',
                 defaultVal: '[]',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="AnchorNavigation"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'AnchorNavigation',
+            data: [
               {
                 params: 'activeAnchor',
                 desc: '',
@@ -599,45 +636,36 @@ export default () => {
                 type: '{top: number, width: number}}',
                 defaultVal: '{top: 77, width: 120}',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="Props"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'Props',
+            data: [
               {
                 params: 'data',
                 desc: '数据',
                 type: 'IProps[]',
                 defaultVal: '[]',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="FunctionProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'FunctionProps',
+            data: [
               {
                 params: 'data',
                 desc: '数据',
                 type: 'IFunctionProps[]',
                 defaultVal: '[]',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="IProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'IProps',
+            data: [
               {
                 params: 'params',
                 desc: '参数名称',
@@ -662,15 +690,12 @@ export default () => {
                 type: 'string',
                 defaultVal: '',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="IFunctionProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'IFunctionProps',
+            data: [
               {
                 params: 'name',
                 desc: '函数名称',
@@ -707,15 +732,12 @@ export default () => {
                 type: 'string',
                 defaultVal: '',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="IParams"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'IParams',
+            data: [
               {
                 params: 'name',
                 desc: '参数名称',
@@ -746,15 +768,12 @@ export default () => {
                 type: 'boolean',
                 defaultVal: 'false',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="ICodeBoxProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'ICodeBoxProps',
+            data: [
               {
                 params: 'title',
                 desc: '',
@@ -791,15 +810,12 @@ export default () => {
                 type: 'Array<ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps>',
                 defaultVal: '[]',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="ICodeBoxPlayGroundProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'ICodeBoxPlayGroundProps',
+            data: [
               {
                 params: 'type',
                 desc: '',
@@ -812,15 +828,12 @@ export default () => {
                 type: 'Function',
                 defaultVal: '',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="ICodeBoxPlayGroundMulitProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'ICodeBoxPlayGroundMulitProps',
+            data: [
               {
                 params: 'type',
                 desc: '',
@@ -839,15 +852,12 @@ export default () => {
                 type: 'Function',
                 defaultVal: '',
               },
-            ]}
-          />
-
-          <Space />
-
-          <Props
-            border
-            title="ICodeTabPanelItemProps"
-            data={[
+            ],
+          },
+          {
+            border: true,
+            title: 'ICodeTabPanelItemProps',
+            data: [
               {
                 params: 'key',
                 desc: '',
@@ -872,10 +882,10 @@ export default () => {
                 type: 'string',
                 defaultVal: '',
               },
-            ]}
-          />
-        </AnchorNavigation>
-      </div>
-    </PlayGround.AnchorNavigationContext.Provider>
+            ],
+          },
+        ]}
+      />
+    </PlayGroundPage>
   );
 };

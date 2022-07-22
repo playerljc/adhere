@@ -19,7 +19,7 @@ class RevolvingItem extends React.Component<IRevolvingitemProps, any> {
           selectorPrefix,
           'swiper-slide',
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
       >

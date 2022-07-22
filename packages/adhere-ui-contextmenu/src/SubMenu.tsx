@@ -55,7 +55,7 @@ class SubMenu extends React.PureComponent<ISubMenuProps, any> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          (className || '').split(' '),
+          (className || '').split(/\s+/),
         )}
         style={{ ...(style || {}), ...this.getStyle() }}
       >

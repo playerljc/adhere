@@ -249,7 +249,7 @@ class PolygonDrawAction extends DrawAction {
    * @param e
    */
   protected onCanvasClick(e): void {
-    console.log('多边形Click');
+    // console.log('多边形Click');
     if (!this.context) {
       return;
     }

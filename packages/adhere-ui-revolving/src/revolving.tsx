@@ -41,7 +41,11 @@ class Revolving extends React.Component<IRevolvingProps> {
     const { speed, delay, loop, direction, stopOnLastSlide, listeners } = this.props;
 
     if (this.swiper) {
-      this.swiper.destory();
+      if ('destory' in this.swiper && this.swiper.destory instanceof Function) {
+        this.swiper.destory();
+      }
+
+      this.swiper = null;
     }
 
     this.swiper = new Swiper(this.el, {
@@ -95,7 +99,7 @@ class Revolving extends React.Component<IRevolvingProps> {
           selectorPrefix,
           'swiper-container',
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}
@@ -105,7 +109,7 @@ class Revolving extends React.Component<IRevolvingProps> {
             `${selectorPrefix}-wrapper`,
             'swiper-wrapper',
             // @ts-ignore
-            classNameWrapper.split(' '),
+            classNameWrapper.split(/\s+/),
           )}
           style={{ ...styleWrapper }}
           ref={(el) => (this.wrapperEl = el)}

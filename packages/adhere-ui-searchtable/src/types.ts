@@ -39,6 +39,8 @@ export interface ISearchTableProps extends ISuspenseProps {
   fixedHeaderAutoTable: boolean;
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: boolean;
+  // 是否显示列设置
+  showColumnSetting: boolean;
 }
 
 /**
@@ -49,31 +51,9 @@ export interface ISearchTableState extends ISuspenseState {
   page: number;
   limit: number;
   expand: boolean;
+  scrollY: number;
+  columnSetting: Array<ColumnType<any> & { sort: number; display: boolean }>;
 }
-
-/**
- * ISearchFormProps
- * @interface ISearchFormProps
- */
-export interface ISearchFormProps extends ISearchTableProps {}
-
-/**
- * ISearchFormRowProps
- * @interface ISearchFormRowProps
- */
-export interface ISearchFormRowProps extends ISearchTableProps {}
-
-/**
- * ISearchFormLabelProps
- * @interface ISearchFormLabelProps
- */
-export interface ISearchFormLabelProps extends ISearchTableProps {}
-
-/**
- * ISearchFormValueProps
- * @interface ISearchFormValueProps
- */
-export interface ISearchFormValueProps extends ISearchTableProps {}
 
 /**
  * ISearchTableImplementProps
@@ -189,4 +169,13 @@ export interface ISearchTableImplementProps {
    * fetchData - 加载数据
    */
   fetchData(): void;
+}
+
+/**
+ * TableDensity
+ */
+export enum TableDensity {
+  DEFAULT = 'default',
+  MIDDLE = 'middle',
+  SMALL = 'small',
 }

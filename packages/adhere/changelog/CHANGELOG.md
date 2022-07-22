@@ -1,9 +1,86 @@
+# 1.0.17
+
+***
+
+2022-6-5
+
+* **按需加载antd**
+* **adhere-ui-writingboard**
+  - 加入adhere-ui-writingboard组件
+* **adhere-ui-popup**
+  - 添加showClosePrePopup
+  - bug修改
+* **adhere-util-browsersniff**
+  - 大小写区分
+* **adhere-util-adapterscreen**
+  - 修改实现逻辑，增加默认计算
+* **adhere-ui-hooks**
+  - 加入useSetState
+* **adhere-ui-tablegridlayout**
+  - 加入adhere-ui-tablegridlayout
+* **adhere-ui-imagelazy**
+  - 使用lazysizes进行重构
+* **adhere-ui-conditionalrender**
+  - 加入conditionalNotEmptyArr方法
+* **adhere-ui-messagedialog**
+  - Modal参数名称修改(cloneBtn修改为closeBtn)
+* **adhere-ui-scrollload**
+  - 加入getScrollContainer自定义滚动元素
+* **adhere-ui-searchtable**
+  - 重置的修改
+  - SearchForm的children位置修改
+  - ColumnSetting修改
+  - 去掉SearchFrom组件，改用TableGridLayout
+* **adhere-util**
+  - tree的set...修改
+
+# 1.0.16
+
+***
+
+2022-4-26
+
+* **adhere-ui-confirm-delconfirm**
+  - 加入title，text和icon参数
+* **adhere-ui-confirm-importantconfirm**
+  - 加入title，text和icon参数
+* **adhere-ui-forceupdate**
+  - 加入代码
+* **adhere-ui-searchtable**
+  - 加入列拖动功能
+  - 加入列设置功能
+  - 加入表格密度设置功能
+  - 序号列命名修改
+* **adhere-util-intl**
+  - 加入新词条
+
+# 1.0.15
+
+***
+
+2022-4-5
+
+* **adhere-ui-conditionalrender**
+  - 加入conditionalRender和conditionalArr两个方法
+* **adhere-ui-searchtable**
+  - renderTableNumberColumn修改
+  - 跨页选取的支持
+* **adhere-util-communication-ajax**
+  - 构造函数参数修改
+  - 细节的调整
+  - Content-Type修改
+
 # 1.0.14
 
 ***
 
-2022-1-22
+2022-1-25
 
+* **adhere-ui-messagedialog**
+  - close方法的修改
+* **adhere-ui-conditionalrender**
+  - 加入ConditionalRender.Show组件进行display切换
+  - 加入ConditionalRender.Visibility组件进行visibility切换
 * **adhere-ui-playground**
   - 加入CodePanel组件
   - 加入CodeTabPanel组件
@@ -13,6 +90,8 @@
   - 细化Card组件加入description配置
   - 细化PlayGround组件
   - 细化PlayGroundMulit组件
+* **adhere-ui-revolving**
+  - bug的修改
 * **adhere-util**
   - dom加入新方法
 

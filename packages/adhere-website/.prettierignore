@@ -1,5 +1,4 @@
 **/*.svg
-lib/
 node_modules/
 packages/**/*node_modules/
 es/

@@ -67,7 +67,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
   private findElByKey(key) {
     const index = this.props.menuData.findIndex((t) => t.key === key);
 
-    console.log('index', index);
+    // console.log('index', index);
 
     // @ts-ignore
     const arr = Array.from(this.menuInnerEl?.querySelectorAll(`.${selectorPrefix}-menu-item`));
@@ -90,19 +90,19 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
 
     if (!isCan) return;
 
-    console.log(this.state.activeKey, key, time);
+    // console.log(this.state.activeKey, key, time);
 
     this.scroll.scrollToElement(this.findElByKey(key), time, null, null, easing);
 
     setTimeout(() => {
-      console.log('setTimeout');
+      // console.log('setTimeout');
 
       this.setState(
         {
           activeKey: key,
         },
         () => {
-          console.log('setTimeoutEnd');
+          // console.log('setTimeoutEnd');
 
           if (this.props.onChange) {
             this.props.onChange(key);
@@ -126,7 +126,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
               `${selectorPrefix}-menu-item`,
               activeKey === data.key ? 'active' : null,
               // @ts-ignore
-              menuItemClassName.split(' '),
+              menuItemClassName.split(/\s+/),
             )}
             style={{ ...menuItemStyle }}
           >
@@ -149,7 +149,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
             `${selectorPrefix}-menu-item`,
             activeKey === data.key ? 'active' : null,
             // @ts-ignore
-            menuItemClassName.split(' '),
+            menuItemClassName.split(/\s+/),
           )}
           style={{ ...menuItemStyle }}
         >
@@ -192,7 +192,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
           className={classNames(
             selectorPrefix,
             // @ts-ignore
-            className.split(' '),
+            className.split(/\s+/),
           )}
           style={{ ...style }}
           ref={(el) => (this.el = el)}
@@ -202,7 +202,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
             className={classNames(
               `${selectorPrefix}-menu`,
               // @ts-ignore
-              menuClassName.split(' '),
+              menuClassName.split(/\s+/),
             )}
             style={{ ...menuStyle }}
           >
@@ -211,7 +211,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
               className={classNames(
                 `${selectorPrefix}-menu-inner`,
                 // @ts-ignore
-                menuInnerClassName.split(' '),
+                menuInnerClassName.split(/\s+/),
               )}
               style={{ ...menuInnerStyle }}
             >
@@ -222,7 +222,7 @@ class JdCategoryTab extends React.Component<IJdCategoryTabProps, IJdCategoryTabS
             className={classNames(
               `${selectorPrefix}-tab`,
               // @ts-ignore
-              tabClassName.split(' '),
+              tabClassName.split(/\s+/),
             )}
             style={{ ...tabStyle }}
           >

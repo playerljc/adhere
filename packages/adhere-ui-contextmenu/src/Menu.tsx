@@ -36,20 +36,20 @@ class Menu extends React.PureComponent<IMenuProps, any> {
     const clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
     const clientHeight = document.body.clientHeight || document.documentElement.clientHeight;
 
-    console.log(
-      'x',
-      x,
-      'y',
-      y,
-      'menuWidth',
-      menuWidth,
-      'menuHeight',
-      menuHeight,
-      'clientWidth',
-      clientWidth,
-      'clientHeight',
-      clientHeight,
-    );
+    // console.log(
+    //   'x',
+    //   x,
+    //   'y',
+    //   y,
+    //   'menuWidth',
+    //   menuWidth,
+    //   'menuHeight',
+    //   menuHeight,
+    //   'clientWidth',
+    //   clientWidth,
+    //   'clientHeight',
+    //   clientHeight,
+    // );
 
     // @ts-ignore
     if (clientWidth - x < menuWidth) {
@@ -106,7 +106,7 @@ class Menu extends React.PureComponent<IMenuProps, any> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          (className || '').split(' '),
+          (className || '').split(/\s+/),
         )}
         style={{ ...(style || {}), ...this.getStyle() }}
         ref={(el) => (this.el = el)}

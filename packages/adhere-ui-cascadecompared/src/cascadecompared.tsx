@@ -143,7 +143,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
         className={classNames(
           `${selectorPrefix}-indicator`,
           // @ts-ignore
-          (indicatorClassName || '').split(' '),
+          (indicatorClassName || '').split(/\s+/),
         )}
         style={{ ...indicatorStyle }}
       >
@@ -151,7 +151,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
           className={classNames(
             `${selectorPrefix}-fixedWrap`,
             // @ts-ignore
-            (indicatorFixedWrapClassName || '').split(' '),
+            (indicatorFixedWrapClassName || '').split(/\s+/),
           )}
           style={{
             ...(indicatorFixedWrapStyle || {}),
@@ -163,7 +163,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
               className={classNames(
                 `${selectorPrefix}-cell`,
                 // @ts-ignore
-                (fixedColumnConfig.className || '').split(' '),
+                (fixedColumnConfig.className || '').split(/\s+/),
               )}
               style={{
                 // @ts-ignore
@@ -182,7 +182,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
           className={classNames(
             `${selectorPrefix}-autoWrap`,
             // @ts-ignore
-            (indicatorAutoWrapClassName || '').split(' '),
+            (indicatorAutoWrapClassName || '').split(/\s+/),
           )}
           style={{ ...(indicatorAutoWrapStyle || {}) }}
         >
@@ -195,7 +195,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
                   className={classNames(
                     `${selectorPrefix}-cell`,
                     // @ts-ignore
-                    (column.className || '').split(' '),
+                    (column.className || '').split(/\s+/),
                   )}
                   style={{ ...(column.style || {}), width: column?.width || defaultCellWidth }}
                 >
@@ -226,7 +226,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
           className={classNames(
             `${selectorPrefix}-fixedWrap`,
             // @ts-ignore
-            (fixedWrapClassName || '').split(' '),
+            (fixedWrapClassName || '').split(/\s+/),
           )}
           style={{ ...(fixedWrapStyle || {}), width: fixedColumnConfig?.width || defaultCellWidth }}
         >
@@ -237,7 +237,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
                   className={classNames(
                     `${selectorPrefix}-cell`,
                     // @ts-ignore
-                    (fixedColumnConfig.className || '').split(' '),
+                    (fixedColumnConfig.className || '').split(/\s+/),
                   )}
                   style={{
                     // @ts-ignore
@@ -258,7 +258,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
           className={classNames(
             `${selectorPrefix}-autoWrap`,
             // @ts-ignore
-            (autoWrapClassName || '').split(' '),
+            (autoWrapClassName || '').split(/\s+/),
           )}
           style={{ ...(autoWrapStyle || {}) }}
         >
@@ -266,7 +266,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
             className={classNames(
               `${selectorPrefix}-autoInner`,
               // @ts-ignore
-              (autoInnerClassName || '').split(' '),
+              (autoInnerClassName || '').split(/\s+/),
             )}
             style={{ ...autoInnerStyle }}
           >
@@ -281,7 +281,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
                         className={classNames(
                           `${selectorPrefix}-cell`,
                           // @ts-ignore
-                          (column.className || '').split(' '),
+                          (column.className || '').split(/\s+/),
                         )}
                         style={{
                           ...(column.style || {}),
@@ -306,7 +306,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
     return (
       <StickupLayout.Item
         key={index}
-        className={classNames((className || '').split(' '))}
+        className={classNames((className || '').split(/\s+/))}
         style={{ ...(style || {}) }}
         title={title}
         content={this.renderMasterGroupContent(config)}
@@ -333,7 +333,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
         className={classNames(
           `${selectorPrefix}-master`,
           // @ts-ignore
-          (masterClassName || '').split(' '),
+          (masterClassName || '').split(/\s+/),
         )}
         style={{ ...(masterStyle || {}) }}
       >
@@ -344,17 +344,17 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
           className={classNames(
             `${selectorPrefix}-master-inner`,
             // @ts-ignore
-            (masterInnerClassName || '').split(' '),
+            (masterInnerClassName || '').split(/\s+/),
           )}
           style={{ ...(masterInnerStyle || {}) }}
           fixedClassName={classNames(
             // @ts-ignore
-            (masterStickFixedClassName || '').split(' '),
+            (masterStickFixedClassName || '').split(/\s+/),
           )}
           fixedStyle={{ ...(masterStickFixedStyle || {}) }}
           innerClassName={classNames(
             // @ts-ignore
-            (masterStickInnerClassName || '').split(' '),
+            (masterStickInnerClassName || '').split(/\s+/),
           )}
           innerStyle={{ ...(masterStickInnerStyle || {}) }}
           onChange={onStickChange}
@@ -411,7 +411,7 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          (className || '').split(' '),
+          (className || '').split(/\s+/),
         )}
         style={{ ...(style || {}) }}
         ref={(el) => (this.el = el)}

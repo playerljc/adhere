@@ -16,6 +16,7 @@ class InferType<T> {}
  * @class Collapse
  * @classdesc Collapse
  */
+// @ts-ignore
 class Collapse extends React.Component<ICollapseProps, ICollapseState> {
   static propTypes: {
     border: Requireable<boolean>;
@@ -78,7 +79,7 @@ class Collapse extends React.Component<ICollapseProps, ICollapseState> {
           className={classNames(
             `${selectorPrefix}-header`,
             border ? `${selectorPrefix}-header-border` : '',
-            headerClassName.split(' '),
+            headerClassName.split(/\s+/),
           )}
           style={{ ...headerStyle }}
           onClickCapture={this.onClickHeader}
@@ -106,7 +107,7 @@ class Collapse extends React.Component<ICollapseProps, ICollapseState> {
               className={classNames(
                 `${selectorPrefix}-body`,
                 border ? `${selectorPrefix}-body-border` : '',
-                bodyClassName.split(' '),
+                bodyClassName.split(/\s+/),
                 !!title || !!extra ? `${selectorPrefix}-body-exists-header` : '',
               )}
               style={{ ...bodyStyle }}
@@ -139,6 +140,7 @@ Collapse.propTypes = {
   bodyClassName: PropTypes.string,
   bodyStyle: PropTypes.object,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  // @ts-ignore
   extra: PropTypes.node,
   defaultCollapse: PropTypes.bool,
   border: PropTypes.bool,

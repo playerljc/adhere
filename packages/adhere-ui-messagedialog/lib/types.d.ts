@@ -23,7 +23,7 @@ export interface IConfirmArgv extends IAlertArgv {
  * @interface IModalDialogProps
  */
 export interface IModalDialogProps {
-    cloneBtn: boolean;
-    parent: HTMLElement | null;
+    closeBtn: boolean;
     config: Object;
+    close(): void;
 }

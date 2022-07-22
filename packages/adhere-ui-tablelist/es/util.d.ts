@@ -39,7 +39,7 @@ declare class Util {
      * 发起请求
      * @param {*} params
      */
-    fetchList: (params?: object | undefined) => void;
+    fetchList: (params?: object) => void;
     /**
      * 搜索
      */

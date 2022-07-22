@@ -58,7 +58,10 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-swipeout', 'SwipeOut'],
   ['@baifendian/adhere-ui-polygonselection', 'PolygonSelection'],
   ['@baifendian/adhere-ui-playground', 'PlayGround'],
-  ['@baifendian/adhere-ui-bmap', 'BMap'],
+  ['@baifendian/adhere-ui-tablegridlayout', 'TableGridLayout'],
+  ['@baifendian/adhere-ui-writingboard', 'WritingBoard'],
+  // ['@baifendian/adhere-ui-bmap', 'BMap'],
+  ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -120,7 +123,10 @@ for (const packageName in dependencies) {
     }
 
     // index.js写入文件
-    fs.writeFileSync(indexPath, `import Model from '${packageName}/${type}';\r\nexport default Model;`);
+    fs.writeFileSync(
+      indexPath,
+      `import Model from '${packageName}/${type}';\r\nexport default Model;`,
+    );
 
     if (!fs.existsSync(stylePath)) {
       // 不存在
@@ -130,10 +136,7 @@ for (const packageName in dependencies) {
     // 查看packages中是否存在index.less
     if (fs.existsSync(path.join(packagesPath, name, 'src', 'index.less'))) {
       // index.less写入文件
-      fs.writeFileSync(
-        styleIndexPath,
-        `@import '~${packageName}/${type}/index.less';`,
-      );
+      fs.writeFileSync(styleIndexPath, `@import '~${packageName}/${type}/index.less';`);
       indexLessContent.push(`@import '~${packageName}/${type}/index.less';\r\n`);
     } else {
       fs.writeFileSync(styleIndexPath, '');

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Util from '@baifendian/adhere-util';
+
 import { AnchorNavigationContext } from './AnchorNavigationContext';
 
 const selectPrefix = 'adhere-ui-playground-anchor-navigation';
@@ -38,7 +40,7 @@ function AnchorNavigation(props) {
     props.anchors.forEach(({ anchor }, index) => {
       const el = document.getElementById(anchor) as HTMLElement;
 
-      if(!el) return;
+      if (!el) return;
 
       const top = Util.getTopUntil({ el, untilEl: container });
 
@@ -81,6 +83,8 @@ function AnchorNavigation(props) {
    * @description mount
    */
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     /**
      * onHashChange
      */
@@ -91,6 +95,8 @@ function AnchorNavigation(props) {
     window.addEventListener('hashchange', onHashChange);
 
     return () => {
+      if (typeof window === 'undefined') return;
+
       window.removeEventListener('hashchange', onHashChange);
     };
   }, []);
@@ -158,26 +164,31 @@ function AnchorNavigation(props) {
             <div className={`${selectPrefix}-auto`}>
               <div className={`${selectPrefix}-inner`}>{props.children}</div>
             </div>
-            <div
-              className={`${selectPrefix}-fixed`}
-              style={{ width: `${props.anchorPosition.width}px` }}
-            >
-              {/* @ts-ignore */}
-              <ul
-                className={`${selectPrefix}-anchor`}
-                // @ts-ignore
-                ref={anchorRef}
-              >
-                {props.anchors.map((anchor) => (
-                  <li
-                    className={anchor.anchor === activeAnchor ? `${selectPrefix}-active` : ''}
-                    title={anchor.name}
+
+            <ConditionalRender conditional={!!props.anchors.length}>
+              {() => (
+                <div
+                  className={`${selectPrefix}-fixed`}
+                  style={{ width: `${props.anchorPosition.width}px` }}
+                >
+                  {/* @ts-ignore */}
+                  <ul
+                    className={`${selectPrefix}-anchor`}
+                    // @ts-ignore
+                    ref={anchorRef}
                   >
-                    <a href={`#${anchor.anchor}`}>{anchor.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                    {props.anchors.map((anchor) => (
+                      <li
+                        className={anchor.anchor === activeAnchor ? `${selectPrefix}-active` : ''}
+                        title={anchor.name}
+                      >
+                        <a href={`#${anchor.anchor}`}>{anchor.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </ConditionalRender>
           </div>
         );
       }}

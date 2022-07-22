@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Input, InputNumber, Select, DatePicker } from 'antd';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { createState } from '@ctsj/state/lib/react';
-import { Resource, SearchTable, Dict } from '@baifendian/adhere';
+import { Resource, SearchTable, TableGridLayout } from '@baifendian/adhere';
 
 import './serviceRegister';
 
@@ -12,13 +12,9 @@ const { Option } = Select;
 
 const { RangePicker } = DatePicker;
 
-const { Table, TableStateImplement } = SearchTable;
+const { TableStateImplement } = SearchTable;
 
-const { SearchForm } = Table;
-
-const { SearchFormRow } = SearchForm;
-
-const { SearchFormLabel, SearchFormValue } = SearchFormRow;
+const { Label, Value } = TableGridLayout;
 
 const serviceName = 'user';
 
@@ -90,111 +86,142 @@ class StateTable extends TableStateImplement {
 
   renderSearchForm() {
     return (
-      <SearchForm>
-        {/* eslint-disable-next-line react/jsx-no-undef */}
-        <SearchFormRow>
-          <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
-          <SearchFormValue>
-            <Input
-              style={{ width: '90%' }}
-              placeholder="姓名"
-              value={this.state.name}
-              onChange={(e) => {
-                this.onInputChange('name', e);
-              }}
-            />
-          </SearchFormValue>
-
-          <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
-          <SearchFormValue>
-            <Select
-              style={{ width: '90%' }}
-              value={this.state.sex}
-              onChange={(v) => {
-                this.onSelectChange('sex', v);
-              }}
-              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-            >
-              {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
-                <Option key={t.value} value={t.value}>
-                  {t.label}
-                </Option>
-              ))}
-            </Select>
-          </SearchFormValue>
-
-          <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
-          <SearchFormValue>
-            <RangePicker
-              style={{ width: '90%' }}
-              value={[this.state.startTime, this.state.endTime]}
-              onChange={(moments) => {
-                this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
-              }}
-              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-            />
-          </SearchFormValue>
-        </SearchFormRow>
-
-        {/* eslint-disable-next-line react/jsx-no-undef */}
-        <SearchFormRow>
-          <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
-          <SearchFormValue>
-            <Input
-              style={{ width: '90%' }}
-              placeholder="籍贯"
-              value={this.state.homeTown}
-              onChange={(e) => {
-                this.onInputChange('homeTown', e);
-              }}
-            />
-          </SearchFormValue>
-
-          <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
-          <SearchFormValue>
-            <InputNumber
-              style={{ width: '90%' }}
-              placeholder="身高"
-              value={this.state.height}
-              onChange={(v) => {
-                this.onSelectChange('height', v);
-              }}
-            />
-          </SearchFormValue>
-
-          <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
-          <SearchFormValue>
-            <InputNumber
-              style={{ width: '90%' }}
-              placeholder="体重"
-              value={this.state.width}
-              onChange={(v) => {
-                this.onSelectChange('width', v);
-              }}
-            />
-          </SearchFormValue>
-        </SearchFormRow>
-
-        {/* eslint-disable-next-line react/jsx-no-undef */}
-        <SearchFormRow>
-          <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
-          <SearchFormValue>
-            <Select
-              style={{ width: '90%' }}
-              value={this.state.deptCode}
-              getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-              onChange={(v) => {
-                this.onSelectChange('deptCode', v);
-              }}
-            >
-              <Option value="">全部</Option>
-              <Option value="0">产品部</Option>
-              <Option value="1">开发部</Option>
-              <Option value="2">工程部</Option>
-            </Select>
-          </SearchFormValue>
-        </SearchFormRow>
-      </SearchForm>
+      <TableGridLayout
+        density="middle"
+        data={[
+          {
+            name: 'g1',
+            width: '100%',
+            columnCount: 3,
+            colgroup: [, 'auto', , 'auto', , 'auto'],
+            data: [
+              {
+                key: 'UserName',
+                label: <Label>姓名：</Label>,
+                value: (
+                  <Value>
+                    <Input
+                      style={{ width: '90%' }}
+                      placeholder="姓名"
+                      value={this.state.name}
+                      onChange={(e) => {
+                        this.onInputChange('name', e);
+                      }}
+                    />
+                  </Value>
+                ),
+              },
+              {
+                key: 'sex',
+                label: <Label>性别：</Label>,
+                value: (
+                  <Value>
+                    <Select
+                      style={{ width: '90%' }}
+                      value={this.state.sex}
+                      onChange={(v) => {
+                        this.onSelectChange('sex', v);
+                      }}
+                      getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+                    >
+                      {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
+                        <Option key={t.value} value={t.value}>
+                          {t.label}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Value>
+                ),
+              },
+              {
+                key: 'birthday',
+                label: <Label>出生年月：</Label>,
+                value: (
+                  <Value>
+                    <RangePicker
+                      style={{ width: '90%' }}
+                      value={[this.state.startTime, this.state.endTime]}
+                      onChange={(moments) => {
+                        this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
+                      }}
+                      getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+                    />
+                  </Value>
+                ),
+              },
+              {
+                key: 'homeTown',
+                label: <Label>籍贯：</Label>,
+                value: (
+                  <Value>
+                    <Input
+                      style={{ width: '90%' }}
+                      placeholder="籍贯"
+                      value={this.state.homeTown}
+                      onChange={(e) => {
+                        this.onInputChange('homeTown', e);
+                      }}
+                    />
+                  </Value>
+                ),
+              },
+              {
+                key: 'height',
+                label: <Label>身高：</Label>,
+                value: (
+                  <Value>
+                    <InputNumber
+                      style={{ width: '90%' }}
+                      placeholder="身高"
+                      value={this.state.height}
+                      onChange={(v) => {
+                        this.onSelectChange('height', v);
+                      }}
+                    />
+                  </Value>
+                ),
+              },
+              {
+                key: 'width',
+                label: <Label>体重：</Label>,
+                value: (
+                  <Value>
+                    <InputNumber
+                      style={{ width: '90%' }}
+                      placeholder="体重"
+                      value={this.state.width}
+                      onChange={(v) => {
+                        this.onSelectChange('width', v);
+                      }}
+                    />
+                  </Value>
+                ),
+              },
+              {
+                key: 'deptCode',
+                label: <Label>所在部门：</Label>,
+                value: (
+                  <Value>
+                    <Select
+                      style={{ width: '90%' }}
+                      value={this.state.deptCode}
+                      getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+                      onChange={(v) => {
+                        this.onSelectChange('deptCode', v);
+                      }}
+                    >
+                      <Option value="">全部</Option>
+                      <Option value="0">产品部</Option>
+                      <Option value="1">开发部</Option>
+                      <Option value="2">工程部</Option>
+                    </Select>
+                  </Value>
+                ),
+              },
+            ],
+          },
+        ]}
+      />
     );
   }
 

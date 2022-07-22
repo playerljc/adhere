@@ -77,6 +77,10 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      */
     protected getNumberGeneratorRule(): Symbol;
     /**
+     * getNumberGeneratorRule - 获取符号列的生成规则
+     */
+    protected getRowSelectionMode(): Symbol;
+    /**
      * getTableNumberColumnWidth
      * @override
      * @description - 表格序号列的宽度
@@ -161,7 +165,7 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      * @description - 清空查询条件
      * @override
      */
-    protected clear(): Promise<any>;
+    protected clear(): Promise<void>;
     /**
      * renderSearchFooterItems
      * @description - 渲染表格的工具栏
@@ -198,6 +202,6 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      * @description - 点击查询
      * @override
      */
-    protected onSearch(): Promise<any>;
+    protected onSearch(): Promise<void>;
 }
 export default SearchTableImplement;

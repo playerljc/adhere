@@ -34,6 +34,11 @@ declare class Popup {
      */
     show(): boolean;
     /**
+     * show - 显示一个popup
+     * @return boolean
+     */
+    showClosePrePopup(): boolean;
+    /**
      * close - 关闭一个popup
      * @return boolean
      */
@@ -77,6 +82,13 @@ declare const PopupFactory: {
      * @return boolean
      */
     show(popup: Popup): boolean;
+    /**
+     * showClosePrePopup
+     * @description 关闭之前的显示
+     * @param popup
+     * @return boolean
+     */
+    showClosePrePopup(popup: Popup): boolean;
     /**
      * close - 关闭一个popup
      * @param {Popup} popup

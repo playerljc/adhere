@@ -47,7 +47,7 @@ class FontSizeSetting extends React.Component<IFontSizeSettingProps, IFontSizeSe
         className={classNames(
           selectorPrefix,
           // @ts-ignore
-          className.split(' '),
+          className.split(/\s+/),
         )}
         style={{ ...style }}
         ref={(el) => (this.el = el)}

@@ -1,3 +1,6 @@
+/**
+ * Emitter
+ */
 declare const _default: {
     /**
      * on
@@ -18,7 +21,4 @@ declare const _default: {
      */
     trigger(type: any, ...params: any[]): any;
 };
-/**
- * Emitter
- */
 export default _default;

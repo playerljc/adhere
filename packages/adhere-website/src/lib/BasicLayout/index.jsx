@@ -1,32 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import pathToRegexp from 'path-to-regexp';
-import classNames from 'classnames';
+import { Decorators, Dict } from '@baifendian/adhere';
 import { Link } from '@ctsj/router';
-import { Menu, Breadcrumb, Tooltip } from 'antd';
-import { Decorators } from '@baifendian/adhere';
-
+import { Breadcrumb, Menu, Tooltip } from 'antd';
+import classNames from 'classnames';
+import pathToRegexp from 'path-to-regexp';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Footer from '@/lib/Footer';
 
 import styles from './index.less';
 
 const { SubMenu } = Menu;
 
-/**
- * isAuthority
- * @param authoritys
- * @param allAuthority
- * @return {boolean}
- */
 function isAuthority(authoritys = [], allAuthority = []) {
-  let flag = true;
-  for (let i = 0; i < authoritys.length; i++) {
-    if (allAuthority.indexOf(authoritys[i]) === -1) {
-      flag = false;
-      break;
-    }
-  }
-  return flag;
+  return authoritys.some((authority) => allAuthority.includes(authority));
 }
 
 /**
@@ -36,14 +22,6 @@ function isAuthority(authoritys = [], allAuthority = []) {
  */
 @Decorators.ReactErrorBoundaries
 class BasicLayout extends React.Component {
-  state = {
-    authorized: [],
-    isMenuCollapse: false,
-
-    selectedKeys: [],
-    openKeys: [],
-  };
-
   /**
    * fillKey
    * @param key
@@ -96,7 +74,6 @@ class BasicLayout extends React.Component {
     for (let i = 0; i < routes.length; i++) {
       const item = routes[i];
 
-      // eslint-disable-next-line no-continue
       if ('redirect' in item) continue;
 
       const keys = [];
@@ -129,7 +106,6 @@ class BasicLayout extends React.Component {
     const { pathname } = window.location;
     for (let i = 0; i < routes.length; i++) {
       const route = routes[i];
-
       if (pathname.indexOf(route.path) !== -1) {
         if (
           route.routes &&
@@ -146,8 +122,8 @@ class BasicLayout extends React.Component {
             // 如果是hide，找到第一个不是hide的route
             if ('hide' in route && route.hide) {
               const firstIncludeRoute = routes
-                  .filter((t) => !('redirect' in t))
-                  .find((r) => (!('hide' in r) || !r.hide) && pathname.indexOf(r.path) !== -1);
+                .filter((t) => !('redirect' in t))
+                .find((r) => (!('hide' in r) || !r.hide) && pathname.indexOf(r.path) !== -1);
 
               if (firstIncludeRoute) {
                 defaultSelectedKeys.push({
@@ -164,6 +140,89 @@ class BasicLayout extends React.Component {
           }
         }
       }
+    }
+  }
+
+  static sortRouters(_routes) {
+    const routes = _routes.map((t) => ({ ...t }));
+
+    function loop(children) {
+      children.sort((pre, cur) => {
+        if ('sort' in pre) {
+          if ('sort' in cur) {
+            if (pre.sort > cur.sort) return 1;
+            if (pre.sort < cur.sort) return -1;
+            return 0;
+          } else {
+            return 1;
+          }
+        } else {
+          if ('sort' in cur) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      });
+
+      children.forEach((node) => {
+        if ('routes' in node && node.routes.length) {
+          node.routes = BasicLayout.sortRouters(node.routes);
+        }
+      });
+    }
+
+    loop(routes);
+
+    return routes;
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authorized: [],
+      isMenuCollapse: false,
+
+      selectedKeys: [],
+      openKeys: [],
+
+      routes: BasicLayout.sortRouters(this.props.routes),
+    };
+  }
+
+  async componentDidMount() {
+    this.setState({
+      authorized: await Dict.value.SystemAuthorized.value,
+    });
+
+    this.unregisterCallback = this.props.history.listen((location) => {
+      const { defaultSelectedKeys, defaultOpenKeys } = this.getDefaultKeys(location.pathname);
+
+      if (
+        JSON.stringify(defaultSelectedKeys) !== JSON.stringify(this.state.selectedKeys) ||
+        JSON.stringify(defaultOpenKeys) !== JSON.stringify(this.state.openKeys)
+      ) {
+        this.setState({
+          selectedKeys: defaultSelectedKeys,
+          openKeys: defaultOpenKeys,
+        });
+      }
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(this.props.routes) !== JSON.stringify(nextProps.routes)) {
+      this.setState({
+        routes: BasicLayout.sortRouters(nextProps.routes),
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.unregisterCallback) {
+      this.unregisterCallback();
+      this.unregisterCallback = null;
     }
   }
 
@@ -205,20 +264,20 @@ class BasicLayout extends React.Component {
       });
   }
 
-  // renderMenuBar() {
-  //   return (
-  //     <div className={styles.MenuBar}>
-  //       <i
-  //         className="icon iconfont iconbuoumaotubiao09"
-  //         onClick={() => {
-  //           this.setState({
-  //             isMenuCollapse: !this.state.isMenuCollapse,
-  //           });
-  //         }}
-  //       />
-  //     </div>
-  //   );
-  // }
+  renderMenuBar() {
+    return (
+      <div className={styles.MenuBar}>
+        <i
+          className="icon iconfont iconbuoumaotubiao09"
+          onClick={() => {
+            this.setState({
+              isMenuCollapse: !this.state.isMenuCollapse,
+            });
+          }}
+        />
+      </div>
+    );
+  }
 
   /**
    * renderMenu
@@ -227,7 +286,7 @@ class BasicLayout extends React.Component {
    * @return {*}
    */
   renderMenu({ defaultSelectedKeys, defaultOpenKeys }) {
-    const { routes = [] } = this.props;
+    const { routes = [] } = this.state;
 
     return (
       <Menu
@@ -235,9 +294,43 @@ class BasicLayout extends React.Component {
         selectedKeys={defaultSelectedKeys.map((t) => t.path)}
         openKeys={defaultOpenKeys.map((t) => t.path)}
         onOpenChange={(openKeys) => {
+          // 展开多个
           this.setState({
             openKeys: openKeys.map((key) => BasicLayout.fillKey(key, routes)),
           });
+
+          // 只能展开一个
+          // if (openKeys.length === 1) {
+          //   this.setState({
+          //     openKeys: [BasicLayout.fillKey(openKeys[0], routes)],
+          //   });
+          //
+          //   return;
+          // }
+          //
+          // let flag = true;
+          //
+          // // 1,2,3
+          // for (let i = 0; i < openKeys.length - 1; i++) {
+          //   if (openKeys[i + 1].indexOf(openKeys[i]) === -1) {
+          //     flag = false;
+          //     break;
+          //   }
+          // }
+          //
+          // if (flag) {
+          //   this.setState({
+          //     openKeys: openKeys.map((key) => BasicLayout.fillKey(key, routes)),
+          //   });
+          //
+          //   return;
+          // }
+          //
+          // this.setState({
+          //   openKeys: openKeys
+          //       .slice(openKeys.length - 1)
+          //       .map((key) => BasicLayout.fillKey(key, routes)),
+          // });
         }}
         onSelect={({ selectedKeys }) => {
           this.setState({
@@ -247,7 +340,7 @@ class BasicLayout extends React.Component {
         mode="inline"
         theme="dark"
       >
-        {/* {this.renderMenuBar()} */}
+        {this.renderMenuBar()}
         {this.renderMenuItem(routes)}
       </Menu>
     );
@@ -255,12 +348,11 @@ class BasicLayout extends React.Component {
 
   /**
    * renderBreadcrumb
-   // * @param defaultSelectedKeys
-   // * @param defaultOpenKeys
    * @return {*}
    */
   renderBreadcrumb() {
-    const { name, routes } = this.props;
+    const { name } = this.props;
+    const { routes } = this.state;
 
     const selectKey = window.location.pathname;
 
@@ -271,7 +363,13 @@ class BasicLayout extends React.Component {
       selectKey,
     });
 
-    const paths = path.filter((t) => !t.redirect);
+    const paths = path
+      .filter((t) => !t.redirect)
+      .sort((p1, p2) => {
+        if (p1.path.length > p2.path.length) return 1;
+        else if (p1.path.length < p2.path.length) return -1;
+        else return 0;
+      });
 
     return (
       <div className={styles.BreadcrumbWrap}>
@@ -288,28 +386,45 @@ class BasicLayout extends React.Component {
   }
 
   /**
-   * getDefault
-   * @return {{defaultOpenKeys: Array, defaultSelectedKeys: Array}}
+   * getDefaultKeys
+   * @param pathname
+   * @return {{defaultOpenKeys: [], defaultSelectedKeys: []}}
    */
-  getDefault() {
+  getDefaultKeys(pathname = window.location.pathname) {
     const { routes = [] } = this.props;
-    const { openKeys, selectedKeys } = this.state;
     const defaultSelectedKeys = [];
     const defaultOpenKeys = [];
+
     BasicLayout.loopRoutes({
       defaultOpenKeys,
       defaultSelectedKeys,
       routes: routes.filter((t) => !t.redirect),
+      pathname,
     });
 
     return {
-      defaultSelectedKeys: selectedKeys.length ? selectedKeys : defaultSelectedKeys,
-      defaultOpenKeys: openKeys.length ? openKeys : defaultOpenKeys,
+      defaultSelectedKeys,
+      defaultOpenKeys,
+    };
+  }
+
+  /**
+   * getDefault
+   * @return {{selectedKeys: ([]|*[]), openKeys: ([]|*[])}}
+   */
+  getKeys(pathname = window.location.pathname) {
+    const { defaultSelectedKeys, defaultOpenKeys } = this.getDefaultKeys(pathname);
+
+    const { selectedKeys, openKeys } = this.state;
+
+    return {
+      selectedKeys: selectedKeys.length ? selectedKeys : defaultSelectedKeys,
+      openKeys: openKeys.length ? openKeys : defaultOpenKeys,
     };
   }
 
   render() {
-    const { defaultSelectedKeys, defaultOpenKeys } = this.getDefault();
+    const { selectedKeys, openKeys } = this.getKeys();
     const { isMenuCollapse } = this.state;
 
     return (
@@ -318,14 +433,14 @@ class BasicLayout extends React.Component {
           className={classNames(styles.Fixed, styles.Sider, isMenuCollapse ? styles.Collapse : '')}
         >
           {this.renderMenu({
-            defaultSelectedKeys,
-            defaultOpenKeys,
+            defaultSelectedKeys: selectedKeys,
+            defaultOpenKeys: openKeys,
           })}
         </div>
         <div className={styles.Auto}>
           {this.renderBreadcrumb({
-            defaultSelectedKeys,
-            defaultOpenKeys,
+            defaultSelectedKeys: selectedKeys,
+            defaultOpenKeys: openKeys,
           })}
           <div className={styles.Auto}>{this.props.children}</div>
           <div className={styles.FooterWrap}>

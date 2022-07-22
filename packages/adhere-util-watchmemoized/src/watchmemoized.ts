@@ -70,8 +70,8 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
 
       // 是数组
       if (Util.isArray(target)) {
-        console.log(target, key);
-        console.log('是数组');
+        // console.log(target, key);
+        // console.log('是数组');
 
         // 数组的原始长度
         const srcLength = (target as Array<any>).length;
@@ -93,12 +93,12 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
         // 数组是删除
         if (targetLength < srcLength) {
           // @ts-ignore
-          console.log('删除', `key:${key}`, `value:${value}`);
+          // console.log('删除', `key:${key}`, `value:${value}`);
         }
         // 数组是添加
         else if (targetLength > srcLength) {
           // @ts-ignore
-          console.log('添加', `key:${key}`, `value:${value}`);
+          // console.log('添加', `key:${key}`, `value:${value}`);
 
           // 如果可以则会给value继续创建代理
           if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
@@ -112,7 +112,7 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
         // 数组修改
         else {
           // @ts-ignore
-          console.log('修改', `key:${key}`, `value:${value}`);
+          // console.log('修改', `key:${key}`, `value:${value}`);
 
           // 如果可以则会给value继续创建代理
           if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
@@ -124,18 +124,18 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
           }
         }
 
-        console.log('数组完成');
+        // console.log('数组完成');
         return result;
       }
 
       // 是对象
       if (Util.isObject(target)) {
-        console.log(target, key);
-        console.log('是对象');
+        // console.log(target, key);
+        // console.log('是对象');
         // 一个表达式路径 比如a.b.c.d这样的一个路径，key是target的一个键，但是target也是其他对象键的值，
         // 这个方法会返回追溯到整个的一个访问链
         const propertyAccessStr = Util.getPropertyVisitPathStr(target, key);
-        console.log('propertyAccessStr', propertyAccessStr);
+        // console.log('propertyAccessStr', propertyAccessStr);
 
         let cloneValue;
 
@@ -143,7 +143,7 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
         // 新的值
         const newVal = cloneDeep(value);
 
-        console.log('newVal', newVal);
+        // console.log('newVal', newVal);
 
         events.trigger(propertyAccessStr, value, newVal);
 
@@ -154,7 +154,7 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
 
         noProxy[propertyAccessStr] = cloneValue;
 
-        console.log('noProxy[propertyAccessStr]', noProxy[propertyAccessStr]);
+        // console.log('noProxy[propertyAccessStr]', noProxy[propertyAccessStr]);
 
         // 如果不是私有属性且是对象或数组继续loop，给value进行代理
         if ((Util.isObject(value) || Util.isArray(value)) && !(PATH_SYMBOLS[0] in value)) {
@@ -164,11 +164,11 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
           value[PATH_SYMBOLS[1]] = target /* [key] */;
         }
 
-        console.log('对象完成');
+        // console.log('对象完成');
         return Reflect.set(target, key, value, receiver);
       }
 
-      console.log('完成');
+      // console.log('完成');
       return Reflect.set(target, key, value, receiver);
     },
     /**
@@ -238,17 +238,17 @@ const WatchMemoized: IWatchMemoized = {
       set(curValue: any) {
         const preVal = value;
 
-        console.log('preValue', preVal);
+        // console.log('preValue', preVal);
 
         value = curValue;
 
-        console.log('curValue', curValue);
+        // console.log('curValue', curValue);
 
         // @ts-ignore
         Emitter.trigger(Symbol.keyFor(property), { oldValue: preVal, newValue: curValue });
       },
       get(): any {
-        console.log('get', value);
+        // console.log('get', value);
         return value;
       },
     });
@@ -564,7 +564,7 @@ const WatchMemoized: IWatchMemoized = {
         // @ts-ignore
         let result = find(arv);
 
-        console.log('find', result);
+        // console.log('find', result);
 
         // 没找到返回值
         if (!result) {
@@ -572,7 +572,7 @@ const WatchMemoized: IWatchMemoized = {
           // @ts-ignore
           result = handler.apply(this, arv);
 
-          console.log('callfinish', result);
+          // console.log('callfinish', result);
 
           // 如果memoized大于stackMaxSize
           if (memoized.length >= stackMaxSize) {
@@ -581,11 +581,11 @@ const WatchMemoized: IWatchMemoized = {
 
           // @ts-ignore
           if (result instanceof Promise) {
-            console.log('函数返回值是Promise');
+            // console.log('函数返回值是Promise');
 
             // @ts-ignore
             const p = result.then((res) => {
-              console.log('返回res', res);
+              // console.log('返回res', res);
               return res;
             });
 

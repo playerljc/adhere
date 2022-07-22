@@ -2,7 +2,6 @@ import React, { createRef, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Table, Button } from 'antd';
-
 import {
   ColumnType,
   FilterValue,
@@ -17,10 +16,15 @@ import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { ISearchTableProps, ISearchTableState } from './types';
-import SearchForm from './searchform';
+import ColumnResizable, {
+  SearchTableResizableTitle,
+  SearchTableResizableObserver,
+} from './Extension/ColumnResizable';
+import ColumnSetting from './Extension/ColumnSetting';
+import TableDensitySetting from './Extension/TableDensitySetting';
+import { ISearchTableProps, ISearchTableState, TableDensity } from './types';
 
-const selectorPrefix = 'adhere-ui-searchtable';
+export const selectorPrefix = 'adhere-ui-searchtable';
 
 const { Fixed, Auto } = FlexLayout;
 
@@ -34,14 +38,30 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   static defaultProps: any;
   static propTypes: any;
 
-  // @ts-ignore
-  static SearchForm: SearchForm = SearchForm;
-  // 单独模式
+  // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
-  // 连续模式
+  // 序号生成的规则 - 连续模式
   static NUMBER_GENERATOR_RULE_CONTINUITY = Symbol();
 
+  // 全选的规则 - 标准模式(不能跨页)
+  static ROW_SELECTION_NORMAL_MODE = Symbol();
+  // 全选的规则 - 可以跨页
+  static ROW_SELECTION_CONTINUOUS_MODE = Symbol();
+
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
+
+  // 自定义表格部分
+  private components = {
+    header: {
+      cell: SearchTableResizableTitle,
+    },
+  };
+
+  // 列拖动对象
+  private columnResizable = new ColumnResizable();
+
+  // 列属性监控对象
+  private columnObserver: any = null;
 
   /**
    * isShowNumber - 表格是否显示序号
@@ -53,12 +73,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * getTableNumberColumnWidth - 表格序号列的宽度
    * @return number
    */
-  abstract getTableNumberColumnWidth(): number;
+  abstract getTableNumberColumnWidth(): Symbol;
 
   /**
    * getNumberGeneratorRule - 获取符号列的生成规则
    */
-  abstract getNumberGeneratorRule(): string;
+  abstract getNumberGeneratorRule(): Symbol;
+
+  /**
+   * getRowSelectionMode - 获取全选的生模式
+   */
+  abstract getRowSelectionMode(): string;
 
   /**
    * getRowKey - 获取表格的主键属性
@@ -156,12 +181,52 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       scrollY: 0,
     };
 
+    // @ts-ignore
+    this.state = {
+      // @ts-ignore
+      ...this.state,
+      // 列设置
+      columnSetting: this.getTableColumns().map((column, index) => ({
+        ...column,
+        sort: index,
+        display: true,
+      })),
+      // 表格密度设置
+      tableDensity: this.getTableDensity(),
+    };
+
     this.onClear = this.onClear.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps: ISearchTableProps) {
+    super.componentWillReceiveProps(nextProps);
+
+    this.columnSettingEffect(nextProps);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot?: any) {
     if (!this.tableWrapRef.current) return;
 
+    this.searchTableResizableEffectLayout();
+    this.fixedHeaderAutoTableEffectLayout(prevProps, prevState);
+  }
+
+  /**
+   * searchTableResizableEffectLayout
+   * @protected
+   */
+  protected searchTableResizableEffectLayout() {
+    // 监控header的属性变化(colgroup)
+    if (!this.columnObserver) {
+      this.columnObserver = SearchTableResizableObserver(this);
+    }
+  }
+
+  /**
+   * fixedHeaderAutoTableEffectLayout
+   * @protected
+   */
+  protected fixedHeaderAutoTableEffectLayout(prevProps, prevState) {
     // @ts-ignore
     if (this.props.fixedHeaderAutoTable) {
       const dataSource = this.getData();
@@ -196,6 +261,51 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 
   /**
+   * columnSettingEffect
+   * @param props
+   * @protected
+   */
+  protected columnSettingEffect(props: ISearchTableProps) {
+    // @ts-ignore
+    const preColumnSetting = this.state.columnSetting || [];
+    const columnSetting = this.getTableColumns().map((column, index) => ({
+      ...column,
+      sort: index,
+      display: true,
+    }));
+
+    // 长度不相等
+    if (preColumnSetting.length !== columnSetting) {
+      // @ts-ignore
+      this.setState({
+        columnSetting,
+      });
+
+      return;
+    }
+
+    const preColumnSettingRowKeys = preColumnSetting.map((t) => t[this.getRowKey()]);
+    const columnSettingRowKeys = columnSetting.map((t) => t[this.getRowKey()]);
+
+    // 长度相等但是key有变化
+    if (preColumnSettingRowKeys.toString() !== columnSettingRowKeys.toString()) {
+      const rowKey = this.getRowKey() || 'id';
+
+      // @ts-ignore
+      this.setState({
+        columnSetting: columnSetting.map((t) => {
+          const item = preColumnSetting.find((item) => item[rowKey] === t[rowKey]);
+
+          return {
+            ...t,
+            display: item ? item.display : true,
+          };
+        }),
+      });
+    }
+  }
+
+  /**
    * renderTableNumberColumn
    * @description - 渲染序号列
    * @param number
@@ -204,7 +314,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    */
   protected renderTableNumberColumn(
     number: string = '',
-    params: { record: object; index: number },
+    params: { value: any; record: object; index: number },
   ) {
     return <span>{number}</span>;
   }
@@ -317,6 +427,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 
   /**
+   * getTableDensity
+   * @description 表格密度
+   */
+  protected getTableDensity() {
+    return TableDensity.DEFAULT;
+  }
+
+  /**
    * getTableColumns - 获取表格的列数据
    * @return Array<any>
    */
@@ -325,14 +443,23 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     const getTableNumberColumnWidth = this.getTableNumberColumnWidth();
 
     // 对权限进行过滤
-    const columns = this.getColumns().filter((column) => {
-      if ('authorized' in column) {
-        // @ts-ignore
-        return column.authorized();
-      }
+    const columns = this.getColumns()
+      .filter((column) => {
+        if ('authorized' in column) {
+          // @ts-ignore
+          return column.authorized();
+        }
 
-      return true;
-    });
+        return true;
+      })
+      .map((column, index) => {
+        // @ts-ignore
+        if ('resizable' in column && !!column.resizable) {
+          return this.columnResizable.searchTableResizableColumnItem(this, index, column);
+        }
+
+        return column;
+      });
 
     if (isShowNumber) {
       const numberGeneratorRule =
@@ -344,8 +471,8 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       return [
         {
           title: Intl.v('序号'),
-          dataIndex: 'number',
-          key: 'number',
+          dataIndex: '_number',
+          key: '_number',
           align: 'center',
           width: getTableNumberColumnWidth ?? 80,
           render: (v, r, index) => (
@@ -354,10 +481,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
               conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
               // @ts-ignore
               noMatch={() =>
-                this.renderTableNumberColumn((page - 1) * limit + (index + 1), { record: v, index })
+                this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
+                  value: v,
+                  record: r,
+                  index,
+                })
               }
             >
-              {() => this.renderTableNumberColumn(index + 1, { record: v, index })}
+              {() => this.renderTableNumberColumn(index + 1, { value: v, record: r, index })}
             </ConditionalRender>
           ),
         },
@@ -365,6 +496,90 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     }
 
     return columns;
+  }
+
+  /**
+   * renderColumnSetting
+   * @description 创建列设置组件
+   */
+  renderColumnSetting(): React.ReactElement {
+    // @ts-ignore
+    const columns = [...this.state.columnSetting];
+
+    columns.sort((c1, c2) => {
+      if (c1.sort > c2.sort) return 1;
+      if (c1.sort < c2.sort) return -1;
+      return 0;
+    });
+
+    return (
+      <ColumnSetting
+        // @ts-ignore
+        columns={columns}
+        onShowColumns={(checked) => {
+          // @ts-ignore
+          this.setState(({ columnSetting }) => ({
+            columnSetting: columnSetting.map((column) => ({
+              ...column,
+              display: checked,
+            })),
+          }));
+        }}
+        onReset={() => {
+          // @ts-ignore
+          this.setState(() => ({
+            columnSetting: this.getTableColumns().map((column, index) => ({
+              ...column,
+              display: true,
+              sort: index,
+            })),
+          }));
+        }}
+        onDisplayColumn={(column, checked) => {
+          // @ts-ignore
+          this.setState(({ columnSetting }) => ({
+            columnSetting: columnSetting.map((_column) => ({
+              ..._column,
+              display: _column.key === column.key ? checked : _column.display,
+            })),
+          }));
+        }}
+        onSortEnd={(map) => {
+          // @ts-ignore
+          this.setState(({ columnSetting }) => ({
+            columnSetting: columnSetting.map((column) => ({
+              ...column,
+              sort: map.get(column.key),
+            })),
+          }));
+        }}
+      />
+    );
+  }
+
+  /**
+   * renderTableDensitySetting
+   * @description 表格密度设置
+   */
+  renderTableDensitySetting(): React.ReactElement {
+    return (
+      <TableDensitySetting
+        // @ts-ignore
+        density={this.state.tableDensity}
+        onChange={(density) => {
+          // @ts-ignore
+          this.setState({
+            tableDensity: density,
+          });
+        }}
+        onReset={() => {
+          // @ts-ignore
+          this.setState({
+            tableDensity: this.getTableDensity(),
+          });
+        }}
+      />
+    );
   }
 
   /**
@@ -456,8 +671,10 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
     return (
       <div className={`${selectorPrefix}-searchfooterwrapper`}>
-        {items.map((t) => (
-          <div className={`${selectorPrefix}-searchfooteritem`}>{t}</div>
+        {items.map((t, index) => (
+          <div key={index} className={`${selectorPrefix}-searchfooteritem`}>
+            {t}
+          </div>
         ))}
       </div>
     );
@@ -475,14 +692,32 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       // @ts-ignore
     } = this.props;
 
+    // @ts-ignore
+    const { columnSetting, tableDensity } = this.state;
+
+    const columns = this.getTableColumns()
+      .map((column, index) => ({
+        ...columnSetting[index],
+        ...column,
+      }))
+      .filter((column) => column.display);
+
+    columns.sort((c1, c2) => {
+      if (c1.sort > c2.sort) return 1;
+      if (c1.sort < c2.sort) return -1;
+      return 0;
+    });
+
     // Table的antdProps配置
     const tableProps = {
       rowKey: this.getRowKey(),
       dataSource: this.getData(),
-      columns: this.getTableColumns(),
+      columns,
       onChange: this.onTableChange,
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
+      components: this.components,
+      size: tableDensity,
       ...(antdTableProps || {}),
     };
 
@@ -534,7 +769,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         className={classNames(
           selectorPrefix,
           fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
-          ...(className || '').split(' '),
+          ...(className || '').split(/\s+/),
         )}
         style={{ ...(style || {}) }}
       >
@@ -542,7 +777,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         <Fixed
           className={classNames(
             `${selectorPrefix}-searchwrapper`,
-            ...(searchClassName || '').split(' '),
+            ...(searchClassName || '').split(/\s+/),
           )}
           style={{ ...(searchStyle || {}) }}
           fit={fitSearch}
@@ -551,7 +786,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
           <FlexLayout>
             {/* @ts-ignore */}
             <Fixed>
-              <ConditionalRender conditional={expand} noMatch={null}>
+              <ConditionalRender conditional={expand} noMatch={() => null}>
                 {() => this.renderSearchForm()}
               </ConditionalRender>
             </Fixed>
@@ -569,7 +804,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         <Auto
           className={classNames(
             `${selectorPrefix}-autowrapper`,
-            ...(tableClassName || '').split(' '),
+            ...(tableClassName || '').split(/\s+/),
             autoFixed ? 'autofixed' : '',
           )}
           style={{ ...(tableStyle || {}) }}

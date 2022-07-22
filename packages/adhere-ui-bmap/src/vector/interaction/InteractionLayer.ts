@@ -187,7 +187,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
       }
 
       if (finsEntitys.length) {
-        console.log('点击了节点');
+        // console.log('点击了节点');
         // 原始数据-需要转换成坐标数据
         this.emitter.trigger(
           InteractionLayerActions.CanvasClickGeometry,
@@ -195,7 +195,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
         );
       } else {
         if (historyData.length) {
-          console.log('点击拉画布');
+          // console.log('点击拉画布');
           this.emitter.trigger(InteractionLayerActions.CanvasClickEmpty);
         }
       }
