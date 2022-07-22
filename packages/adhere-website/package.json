@@ -82,6 +82,7 @@
     "react-dom": "^17.0.1",
     "react-markdown": "^7.0.1",
     "remark-gfm": "^2.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "react-color": "^2.19.3"
   }
 }

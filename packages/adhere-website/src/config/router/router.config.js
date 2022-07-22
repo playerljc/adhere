@@ -73,6 +73,7 @@ const {
   Demo,
   ForceUpdate,
   TableGridLayout,
+  WritingBoard,
 } = Components;
 
 export default () => [
@@ -374,6 +375,11 @@ export default () => [
                 path: '/adhere/component/ui/tablegridlayout',
                 name: 'TableGridLayout',
                 component: TableGridLayout,
+              },
+              {
+                path: '/adhere/component/ui/writingboard',
+                name: 'WritingBoard',
+                component: WritingBoard,
               },
             ],
           },

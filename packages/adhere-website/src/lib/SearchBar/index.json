@@ -224,6 +224,11 @@
     "group": "组件 - UI",
     "path": "/adhere/component/ui/tablegridlayout"
   },
+  {
+    "kw": ["写字板", "WritingBoard"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/writingboard"
+  },
 
   {
     "kw": ["对屏幕的缩放进行适配的操作", "AdapterScreen"],

@@ -119,3 +119,7 @@ export const ForceUpdate = lazy(() =>
 export const TableGridLayout = lazy(() =>
   import(/* webpackChunkName: "tablegridlayout" */ '@/components/ui/tablegridlayout'),
 );
+
+export const WritingBoard = lazy(() =>
+  import(/* webpackChunkName: "writingboard" */ '@/components/ui/writingboard'),
+);

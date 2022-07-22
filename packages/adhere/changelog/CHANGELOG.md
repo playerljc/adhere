@@ -5,6 +5,9 @@
 2022-6-5
 
 * **按需加载antd**
+* **adhere-ui-popup**
+  - 添加showClosePrePopup
+  - bug修改
 * **adhere-util-browsersniff**
   - 大小写区分
 * **adhere-util-adapterscreen**

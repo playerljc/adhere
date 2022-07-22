@@ -40,6 +40,7 @@ import SwipeOut from '@baifendian/adhere-ui-swipeout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
+import WritingBoard from '@baifendian/adhere-ui-writingboard';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -99,6 +100,7 @@ export {
   TableHeadSearch,
   TableList,
   TableGridLayout,
+  WritingBoard,
   Util,
   AdapterScreen,
   Browsersniff,
