@@ -15,7 +15,7 @@ export default () => {
 
   return (
     <FlexLayout direction="horizontal" className={styles.Wrap}>
-      <FlexLayout.Fixed>
+      <FlexLayout.Fixed style={{ width: 300 }}>
         <Space direction="vertical">
           <Card title="绘制模式">
             <Radio.Group
@@ -27,7 +27,7 @@ export default () => {
               }}
               buttonStyle="solid"
             >
-              <Space direction="horizontal">
+              <Space direction="horizontal" wrap>
                 <Radio.Button value="line">直线</Radio.Button>
                 <Radio.Button value="rectangle">矩形</Radio.Button>
                 <Radio.Button value="circle">圆形</Radio.Button>
@@ -65,7 +65,7 @@ export default () => {
           </Card>
 
           <Card title="操作">
-            <Space direction="horizontal">
+            <Space direction="horizontal" wrap>
               <Button
                 type="primary"
                 onClick={() => {
@@ -79,6 +79,8 @@ export default () => {
                 type="primary"
                 onClick={() => {
                   const base64 = ref.current.toDataURL();
+
+                  debugger;
 
                   const save_link = document.createElement('a');
                   save_link.href = base64;
@@ -112,7 +114,7 @@ export default () => {
         </Space>
       </FlexLayout.Fixed>
 
-      <FlexLayout.Auto fit>
+      <FlexLayout.Auto fit style={{ border: '1px solid #ccc' }}>
         <WritingBoard
           ref={ref}
           defaultMode={mode}

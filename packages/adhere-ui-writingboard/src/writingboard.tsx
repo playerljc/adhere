@@ -42,8 +42,6 @@ function WritingBoard(props: IWritingBoardProps, ref) {
               targetPoint,
             });
 
-            console.log('Draw Mode.Free', lineWidth?.current, strokeStyle?.current);
-
             style({
               lineWidth: lineWidth?.current,
               strokeStyle: strokeStyle?.current,
@@ -56,8 +54,6 @@ function WritingBoard(props: IWritingBoardProps, ref) {
             ctx?.current?.beginPath();
             ctx?.current?.moveTo(item.sourcePoint.x, item.sourcePoint.y);
             ctx?.current?.lineTo(item.targetPoint.x, item.targetPoint.y);
-
-            console.log('DrawStack Mode.Free', item.lineWidth, item.strokeStyle);
 
             style({
               lineWidth: item.lineWidth,
@@ -331,9 +327,6 @@ function WritingBoard(props: IWritingBoardProps, ref) {
    * @param strokeStyle
    */
   function style({ lineWidth, strokeStyle }) {
-    console.log('callStylelineWidth', lineWidth);
-    console.log('callStylestrokeStyle', strokeStyle);
-
     (ctx.current as CanvasRenderingContext2D).lineWidth = lineWidth;
     (ctx.current as CanvasRenderingContext2D).strokeStyle = strokeStyle;
     (ctx.current as CanvasRenderingContext2D).lineCap = 'round';
@@ -544,15 +537,20 @@ function WritingBoard(props: IWritingBoardProps, ref) {
     toDataURL: () => canvasRef?.current?.toDataURL('image/png', 1.0),
   }));
 
-  useEffect(() => {
-    console.log('lineWidth?.current', lineWidth?.current);
-    console.log('strokeStyle?.current', strokeStyle?.current);
-  }, [lineWidth?.current, strokeStyle?.current]);
+  useEffect(() => {}, [lineWidth?.current, strokeStyle?.current]);
 
   useLayoutEffect(() => {
     ctx.current = canvasRef?.current?.getContext('2d')!;
     (canvasRef.current as HTMLCanvasElement).width = containerRef?.current?.offsetWidth!;
     (canvasRef.current as HTMLCanvasElement).height = containerRef?.current?.offsetHeight!;
+
+    (ctx.current as CanvasRenderingContext2D).fillStyle = '#fff';
+    (ctx.current as CanvasRenderingContext2D).fillRect(
+      0,
+      0,
+      canvasRef?.current?.width!,
+      canvasRef?.current?.height!,
+    );
   }, []);
 
   useLayoutEffect(() => {
