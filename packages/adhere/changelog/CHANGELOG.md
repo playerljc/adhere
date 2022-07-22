@@ -5,6 +5,8 @@
 2022-6-5
 
 * **按需加载antd**
+* **adhere-ui-writingboard**
+  - 加入adhere-ui-writingboard组件
 * **adhere-ui-popup**
   - 添加showClosePrePopup
   - bug修改
