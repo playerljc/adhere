@@ -1,6 +1,9 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import debounce from 'lodash/debounce';
+// @ts-ignore
+import { ResizeObserver } from '@juggle/resize-observer';
 
 import { IPoint, IWritingBoardProps, Mode } from './types';
 
@@ -16,6 +19,7 @@ function WritingBoard(props: IWritingBoardProps, ref) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
+  const ro = useRef<any>(null);
 
   const startPoint = useRef<IPoint | null>(null);
   const prePoint = useRef<IPoint | null>(null);
@@ -541,16 +545,18 @@ function WritingBoard(props: IWritingBoardProps, ref) {
 
   useLayoutEffect(() => {
     ctx.current = canvasRef?.current?.getContext('2d')!;
-    (canvasRef.current as HTMLCanvasElement).width = containerRef?.current?.offsetWidth!;
-    (canvasRef.current as HTMLCanvasElement).height = containerRef?.current?.offsetHeight!;
 
-    (ctx.current as CanvasRenderingContext2D).fillStyle = '#fff';
-    (ctx.current as CanvasRenderingContext2D).fillRect(
-      0,
-      0,
-      canvasRef?.current?.width!,
-      canvasRef?.current?.height!,
-    );
+    const onResize = debounce(() => {
+      (canvasRef.current as HTMLCanvasElement).width = containerRef?.current?.offsetWidth!;
+      (canvasRef.current as HTMLCanvasElement).height = containerRef?.current?.offsetHeight!;
+    }, props.resizeTime);
+
+    ro.current = new ResizeObserver(onResize);
+
+    // @ts-ignore
+    ro?.current?.observe?.(document.body);
+
+    return () => ro?.current?.disconnect();
   }, []);
 
   useLayoutEffect(() => {
@@ -590,6 +596,7 @@ Wrap.defaultProps = {
   defaultMode: Mode.FREE,
   defaultStrokeStyle: '#000',
   defaultLineWidth: 2,
+  resizeTime: 300,
 };
 
 Wrap.propTypes = {
@@ -601,6 +608,8 @@ Wrap.propTypes = {
   defaultStrokeStyle: PropTypes.string,
   // @ts-ignore
   defaultLineWidth: PropTypes.number,
+  // @ts-ignore
+  resizeTime: PropTypes.number,
 };
 
 export default Wrap;

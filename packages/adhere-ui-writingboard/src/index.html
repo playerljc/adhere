@@ -17,8 +17,22 @@
         padding: 0;
       }
     </style>
+      <script>
+          window.onload = function () {
+              debugger
+              const ob = new MutationObserver((entries, observer) => {
+                  console.log('Body has resized!');
+              });
+
+              ob.observe(document.body,{
+                  attributes: true, childList: true, subtree: true
+              }); // Watch dimension changes on body
+          }
+      </script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+
+    </div>
   </body>
 </html>

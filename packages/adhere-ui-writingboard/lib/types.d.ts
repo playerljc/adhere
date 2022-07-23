@@ -9,6 +9,7 @@ export interface IWritingBoardProps {
     defaultMode: Mode;
     defaultStrokeStyle: string;
     defaultLineWidth: number;
+    resizeTime: number;
 }
 /**
  * IPoint
