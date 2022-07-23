@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere",
-  "version": "1.0.17-fix.1",
+  "version": "1.0.17-fix.2",
   "description": "adhere",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -92,7 +92,7 @@
     "@baifendian/adhere-ui-tablegridlayout": "^1.0.17",
     "@baifendian/adhere-ui-tableheadsearch": "^1.0.15",
     "@baifendian/adhere-ui-tablelist": "^1.0.17",
-    "@baifendian/adhere-ui-writingboard": "^1.0.17-fix.1",
+    "@baifendian/adhere-ui-writingboard": "^1.0.17-fix.2",
     "@baifendian/adhere-util": "^1.0.17-fix.0",
     "@baifendian/adhere-util-adapterscreen": "^1.0.17",
     "@baifendian/adhere-util-browsersniff": "^1.0.17",

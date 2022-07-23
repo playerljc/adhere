@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-writingboard",
-  "version": "1.0.17-fix.1",
+  "version": "1.0.17-fix.2",
   "description": "写字板",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -42,10 +42,10 @@
   },
   "dependencies": {
     "@juggle/resize-observer": "^3.3.1",
-    "lodash": "^4.17.21",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
+    "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
