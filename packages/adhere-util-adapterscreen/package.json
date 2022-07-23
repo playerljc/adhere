@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-adapterscreen",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "对屏幕的缩放进行适配的操作",
   "main": "lib/index.js",
   "module": "es/index.js",
