@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-website",
   "private": true,
-  "version": "1.0.17",
+  "version": "1.0.17-fix.0",
   "description": "adhere的website",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.17",
+    "@baifendian/adhere": "^1.0.17-fix.0",
     "@ctsj/router": "^1.0.1",
     "@ctsj/state": "^2.0.21",
     "antd": "^4.9.4",

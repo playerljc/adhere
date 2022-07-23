@@ -28,7 +28,8 @@ export default {
         const item = data[i];
 
         result.push({
-          ...item.properties,
+          ...('properties' in item ? item.properties : item),
+          // ...item.properties,
           [parentIdAttr]: parentId,
         });
 
@@ -75,6 +76,7 @@ export default {
      * @param parentId
      * @return {*}
      */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     function findNodesByParentId(arr: IFlatTreeArrNode[], parentId: string | number) {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
@@ -99,6 +101,7 @@ export default {
         delete node.children;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       (node.children || []).forEach((node) => {
         Recursion(node);
       });
@@ -146,6 +149,7 @@ export default {
      * @param parentId
      * @return {*}
      */
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     function findNodesByParentId(arr: IFlatTreeArrNode[], parentId: string | number) {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
@@ -171,6 +175,7 @@ export default {
         delete node.children;
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       (node.children || []).forEach((node) => {
         Recursion(node);
       });
@@ -200,6 +205,7 @@ export default {
     let curNode = node;
 
     while (curNode && curNode[config.parentIdAttr] != config.rootParentId) {
+      // eslint-disable-next-line @typescript-eslint/no-loop-func
       const item = data.find((t) => t[config.keyAttr] === curNode[config.parentIdAttr]);
       if (item) {
         result.push(item);
@@ -222,6 +228,7 @@ export default {
     function loop(n: any) {
       const children = data.filter((t) => t[config.parentIdAttr] === n[config.keyAttr]);
       children.forEach((t) => {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         result.push(t);
         loop(t);
       });
@@ -277,12 +284,15 @@ export default {
       arr.forEach((t) => {
         const tops = this.getAncestor(data, t, config);
         const tArr = [...(tops || [])].map((item) => item[config.keyAttr]);
+        // @ts-ignore
         set = new Set<string>([...Array.from(set), ...tArr]);
       });
 
+      // @ts-ignore
       set = new Set<string>([...Array.from(set), ...arr.map((t) => t[config.keyAttr])]);
 
       return this.arrayToAntdTree(
+        // @ts-ignore
         [...Array.from(set)].map((t) => data.find((item) => item[config.keyAttr] === t)),
         arrayToAntdTreeConfig,
       );
