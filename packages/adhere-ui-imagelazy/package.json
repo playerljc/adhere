@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-imagelazy",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "图片懒加载",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -42,9 +42,9 @@
   "dependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "lazysizes": "^5.3.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "lazysizes": "^5.3.2"
+    "react-dom": "^17.0.1"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

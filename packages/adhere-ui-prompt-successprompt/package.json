@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-successprompt",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "成功的提示(就是为了全局统一)",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -34,11 +34,11 @@
     "access": "public"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
     "@babel/runtime": "^7.7.4",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^3.8.2",
     "@ctsj/buildv": "^5.0.4",
-    "@babel/preset-react": "^7.14.5"
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.8.2"
   },
   "dependencies": {
     "@baifendian/adhere-util-intl": "^1.0.16",
