@@ -270,7 +270,7 @@ function renderGridSearchForm(params) {
  * @param props
  * @return {JSX.Element}
  */
-export function renderGridSearchFormGroup(
+TableGridLayout.renderGridSearchFormGroup =  function (
   data: IDataItem[],
   props: Pick<
     ITableGridLayoutProps,
@@ -334,7 +334,7 @@ export function renderGridSearchFormGroup(
 function TableGridLayout({ data, className, style, ...props }: ITableGridLayoutProps): JSX.Element {
   return (
     <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
-      {renderGridSearchFormGroup(data, props)}
+      {TableGridLayout.renderGridSearchFormGroup(data, props)}
     </div>
   );
 }
