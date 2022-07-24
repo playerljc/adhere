@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tablegridlayout",
-  "version": "1.0.17",
+  "version": "1.0.17-fix.3",
   "description": "表格布局",
   "main": "lib/index.js",
   "module": "es/index.js",
