@@ -169,9 +169,6 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
 
     rowJSXS.push(labelRowJSX, valueRowJSX);
 
-    console.log('rowJSXS', rowJSXS);
-    console.log('_index', _index);
-
     if (_index < _data.length) {
       createRow();
     }

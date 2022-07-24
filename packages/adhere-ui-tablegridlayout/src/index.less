@@ -2,136 +2,136 @@
 
 .adhere-ui-tablegridlayout {
   width: 100%;
+}
 
-  .adhere-ui-tablegridlayout-inner-wrap {
-    &.adhere-ui-tablegridlayout-border {
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
+.adhere-ui-tablegridlayout-inner-wrap {
+  &.adhere-ui-tablegridlayout-border {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
 
-      .adhere-ui-tablegridlayout-table {
-        tr {
-          > td {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    .adhere-ui-tablegridlayout-table {
+      tr {
+        > td {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
-            &:not(:last-child) {
-              border-right: 1px solid rgba(0, 0, 0, 0.1);
-            }
+          &:not(:last-child) {
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+          }
 
-            &.adhere-ui-tablegridlayout-table-noborder {
-              border: 0;
-            }
+          &.adhere-ui-tablegridlayout-table-noborder {
+            border: 0;
           }
         }
       }
     }
+  }
 
-    .adhere-ui-tablegridlayout-table {
-      min-width: 100%;
-      table-layout: fixed;
-      border-collapse: collapse;
+  .adhere-ui-tablegridlayout-table {
+    min-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
 
-      .adhere-ui-tablegridlayout-table-row {
-        > .adhere-ui-tablegridlayout-table-row-label {
-          padding-right: 10px;
-          color: #888;
-          white-space: nowrap;
-          text-align: right;
-          word-break: keep-all;
+    .adhere-ui-tablegridlayout-table-row {
+      > .adhere-ui-tablegridlayout-table-row-label {
+        padding-right: 10px;
+        color: #888;
+        white-space: nowrap;
+        text-align: right;
+        word-break: keep-all;
 
-          &.require {
-            &::before {
-              margin-right: 5px;
-              color: red;
-              vertical-align: middle;
-              content: '*';
+        &.require {
+          &::before {
+            margin-right: 5px;
+            color: red;
+            vertical-align: middle;
+            content: '*';
+          }
+        }
+      }
+
+      > .adhere-ui-tablegridlayout-table-row-value {
+        .adhere-word-break();
+        color: #222;
+        white-space: normal;
+
+        .ant-checkbox-checked {
+          .ant-checkbox-inner {
+            &::after {
+              display: block !important;
             }
           }
         }
 
-        > .adhere-ui-tablegridlayout-table-row-value {
-          .adhere-word-break();
-          color: #222;
-          white-space: normal;
-
-          .ant-checkbox-checked {
-            .ant-checkbox-inner {
-              &::after {
-                display: block !important;
-              }
-            }
-          }
-
-          .ant-form-item {
-            &.ant-form-item-has-error {
-              > .ant-form-item-control {
-                position: relative;
-                > .ant-form-item-explain {
-                  &.ant-form-item-explain-connected {
-                    position: absolute;
-                    bottom: -24px;
-                    left: 0;
-                  }
+        .ant-form-item {
+          &.ant-form-item-has-error {
+            > .ant-form-item-control {
+              position: relative;
+              > .ant-form-item-explain {
+                &.ant-form-item-explain-connected {
+                  position: absolute;
+                  bottom: -24px;
+                  left: 0;
                 }
               }
             }
-
-            margin-bottom: 0;
           }
 
-          .ant-select,
-          .ant-picker,
-          .ant-input-number {
-            width: 100%;
-          }
+          margin-bottom: 0;
+        }
+
+        .ant-select,
+        .ant-picker,
+        .ant-input-number {
+          width: 100%;
         }
       }
+    }
 
-      &.parity {
-        .adhere-ui-tablegridlayout-table-row {
-          &.odd {
-            background-color: #fff;
-          }
+    &.parity {
+      .adhere-ui-tablegridlayout-table-row {
+        &.odd {
+          background-color: #fff;
+        }
 
-          &.even {
-            background-color: #fafafa;
-          }
+        &.even {
+          background-color: #fafafa;
         }
       }
+    }
 
-      &.densitydefault {
-        .adhere-ui-tablegridlayout-table-row {
-          > .adhere-ui-tablegridlayout-table-row-label {
-            padding: 20px;
-          }
+    &.densitydefault {
+      .adhere-ui-tablegridlayout-table-row {
+        > .adhere-ui-tablegridlayout-table-row-label {
+          padding: 20px;
+        }
 
-          > .adhere-ui-tablegridlayout-table-row-value {
-            padding: 20px;
-          }
+        > .adhere-ui-tablegridlayout-table-row-value {
+          padding: 20px;
         }
       }
+    }
 
-      &.densitymiddle {
-        .adhere-ui-tablegridlayout-table-row {
-          > .adhere-ui-tablegridlayout-table-row-label {
-            padding: 10px;
-          }
+    &.densitymiddle {
+      .adhere-ui-tablegridlayout-table-row {
+        > .adhere-ui-tablegridlayout-table-row-label {
+          padding: 10px;
+        }
 
-          > .adhere-ui-tablegridlayout-table-row-value {
-            padding: 10px;
-          }
+        > .adhere-ui-tablegridlayout-table-row-value {
+          padding: 10px;
         }
       }
+    }
 
-      &.densitysmall {
-        .adhere-ui-tablegridlayout-table-row {
-          > .adhere-ui-tablegridlayout-table-row-label {
-            padding: 0;
-          }
+    &.densitysmall {
+      .adhere-ui-tablegridlayout-table-row {
+        > .adhere-ui-tablegridlayout-table-row-label {
+          padding: 0;
+        }
 
-          > .adhere-ui-tablegridlayout-table-row-value {
-            padding: 0;
-          }
+        > .adhere-ui-tablegridlayout-table-row-value {
+          padding: 0;
         }
       }
     }
