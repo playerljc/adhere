@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
@@ -511,6 +511,19 @@ function WritingBoard(props: IWritingBoardProps, ref) {
     containerRef?.current?.removeEventListener('touchend', onTouchend);
   }
 
+  /**
+   * clear
+   */
+  function clear() {
+    ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
+
+    prePoint.current = startPoint.current = null;
+
+    stack.current = [];
+
+    stackIndex.current = 0;
+  }
+
   useImperativeHandle(ref, () => ({
     setMode: (mode) => {
       curShape.current = mode;
@@ -525,15 +538,7 @@ function WritingBoard(props: IWritingBoardProps, ref) {
      * clear
      * @description 清除画布
      */
-    clear: () => {
-      ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
-
-      prePoint.current = startPoint.current = null;
-
-      stack.current = [];
-
-      stackIndex.current = 0;
-    },
+    clear,
     /**
      * toDataURL
      * @description 获取base64
@@ -541,14 +546,16 @@ function WritingBoard(props: IWritingBoardProps, ref) {
     toDataURL: () => canvasRef?.current?.toDataURL('image/png', 1.0),
   }));
 
-  useEffect(() => {}, [lineWidth?.current, strokeStyle?.current]);
-
   useLayoutEffect(() => {
     ctx.current = canvasRef?.current?.getContext('2d')!;
 
     const onResize = debounce(() => {
       (canvasRef.current as HTMLCanvasElement).width = containerRef?.current?.offsetWidth!;
       (canvasRef.current as HTMLCanvasElement).height = containerRef?.current?.offsetHeight!;
+
+      ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
+
+      drawStack();
     }, props.resizeTime);
 
     ro.current = new ResizeObserver(onResize);

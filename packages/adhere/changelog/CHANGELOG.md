@@ -1,3 +1,17 @@
+# 1.0.18
+
+***
+
+2022-7-25
+
+* **adhere-ui-flexlayout**
+  - adhere-ui-contourblock组件
+* **adhere-ui-contourblock**
+  - 加入HorizontalFlexLayout布局
+  - 加入VerticalFlexLayout布局
+  - 加入ToolBarLayout布局
+  - 加入BackLayout布局
+
 # 1.0.17
 
 ***

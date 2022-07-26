@@ -37,10 +37,11 @@ import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
 import Surnames from '@baifendian/adhere-ui-surnames';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import SwipeOut from '@baifendian/adhere-ui-swipeout';
+import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
-import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
+import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -97,10 +98,11 @@ export {
   Surnames,
   Suspense,
   SwipeOut,
+  TableGridLayout,
   TableHeadSearch,
   TableList,
-  TableGridLayout,
   WritingBoard,
+  ContourBlock,
   Util,
   AdapterScreen,
   Browsersniff,

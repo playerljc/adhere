@@ -60,6 +60,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-playground', 'PlayGround'],
   ['@baifendian/adhere-ui-tablegridlayout', 'TableGridLayout'],
   ['@baifendian/adhere-ui-writingboard', 'WritingBoard'],
+  ['@baifendian/adhere-ui-contourblock', 'ContourBlock'],
   // ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-util', 'Util'],

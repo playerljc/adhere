@@ -1,0 +1,2 @@
+import React from"react";import PropTypes from"prop-types";var selectorPrefix="adhere-ui-contourblock";function ContourBlock(e){return React.createElement("div",{className:e.className,style:e.style},React.createElement("div",{className:""+selectorPrefix},React.createElement("div",{className:selectorPrefix+"-inner"},e.children)))}ContourBlock.defaultProps={className:"",style:{}},ContourBlock.propTypes={className:PropTypes.string,style:PropTypes.object};export default ContourBlock;
+//# sourceMappingURL=contourblock.js.map

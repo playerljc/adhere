@@ -74,6 +74,7 @@ const {
   ForceUpdate,
   TableGridLayout,
   WritingBoard,
+  ContourBlock,
 } = Components;
 
 export default () => [
@@ -380,6 +381,11 @@ export default () => [
                 path: '/adhere/component/ui/writingboard',
                 name: 'WritingBoard',
                 component: WritingBoard,
+              },
+              {
+                path: '/adhere/component/ui/contourblock',
+                name: 'ContourBlock',
+                component: ContourBlock,
               },
             ],
           },

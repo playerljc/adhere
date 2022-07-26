@@ -123,3 +123,7 @@ export const TableGridLayout = lazy(() =>
 export const WritingBoard = lazy(() =>
   import(/* webpackChunkName: "writingboard" */ '@/components/ui/writingboard'),
 );
+
+export const ContourBlock = lazy(() =>
+  import(/* webpackChunkName: "contourblock" */ '@/components/ui/contourblock'),
+);

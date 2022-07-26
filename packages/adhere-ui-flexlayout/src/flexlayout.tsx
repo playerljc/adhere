@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { IFlexLayoutProps } from './types';
+import {
+  IFlexLayoutProps,
+  IHorizontalFlexLayoutProps,
+  IVerticalFlexLayoutProps,
+  IToolBarLayoutProps,
+  IBackLayoutProps,
+} from './types';
 // @ts-ignore
 import { FlexContext } from './context';
 
@@ -26,6 +32,14 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
   static Context = FlexContext;
 
   static selectorPrefix = selectorPrefix;
+
+  static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => JSX.Element;
+
+  static VerticalFlexLayout: (props: IVerticalFlexLayoutProps) => JSX.Element;
+
+  static ToolBarLayout: (props: IToolBarLayoutProps) => JSX.Element;
+
+  static BackLayout: (props: IBackLayoutProps) => JSX.Element;
 
   // @ts-ignore
   private props: IFlexLayoutProps | undefined;

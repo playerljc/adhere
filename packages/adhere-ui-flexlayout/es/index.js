@@ -1,2 +1,2 @@
-import FlexLayout from"./flexlayout";export default FlexLayout;
+import BackLayout from"./backLayout";import HorizontalFlexLayout from"./horizontalFlexLayout";import VerticalFlexLayout from"./verticalFlexLayout";import ToolBarLayout from"./toolBarLayout";import FlexLayout from"./flexlayout";FlexLayout.HorizontalFlexLayout=HorizontalFlexLayout,FlexLayout.VerticalFlexLayout=VerticalFlexLayout,FlexLayout.ToolBarLayout=ToolBarLayout,FlexLayout.BackLayout=BackLayout;export default FlexLayout;
 //# sourceMappingURL=index.js.map
