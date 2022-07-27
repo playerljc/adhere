@@ -127,3 +127,7 @@ export const WritingBoard = lazy(() =>
 export const ContourBlock = lazy(() =>
   import(/* webpackChunkName: "contourblock" */ '@/components/ui/contourblock'),
 );
+
+export const DateDisplay = lazy(() =>
+  import(/* webpackChunkName: "datedisplay" */ '@/components/ui/datedisplay'),
+);

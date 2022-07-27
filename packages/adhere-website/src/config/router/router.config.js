@@ -75,6 +75,7 @@ const {
   TableGridLayout,
   WritingBoard,
   ContourBlock,
+  DateDisplay,
 } = Components;
 
 export default () => [
@@ -386,6 +387,11 @@ export default () => [
                 path: '/adhere/component/ui/contourblock',
                 name: 'ContourBlock',
                 component: ContourBlock,
+              },
+              {
+                path: '/adhere/component/ui/datedisplay',
+                name: 'DateDisplay',
+                component: DateDisplay,
               },
             ],
           },

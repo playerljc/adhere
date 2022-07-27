@@ -137,3 +137,43 @@
     }
   }
 }
+
+.adm-form {
+  > .adm-list {
+    > .adm-list-body {
+      > .adm-list-body-inner {
+        .adhere-ui-tablegridlayout-table {
+          .adhere-ui-tablegridlayout-table-row {
+            > .adhere-ui-tablegridlayout-table-row-label {
+              text-align: left;
+            }
+
+            > .adhere-ui-tablegridlayout-table-row-value {
+              padding-top: 0;
+
+              .adm-list-item.adm-form-item {
+                padding-left: 0;
+
+                > .adm-list-item-content {
+                  border-top: 0;
+
+                  > .adm-list-item-content-main {
+                    padding-top: 0;
+                  }
+                }
+              }
+            }
+
+            &:not(:last-child) {
+              > .adhere-ui-tablegridlayout-table-row-value {
+                .adm-list-item.adm-form-item {
+                  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

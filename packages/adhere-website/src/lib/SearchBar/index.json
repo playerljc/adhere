@@ -229,7 +229,16 @@
     "group": "组件 - UI",
     "path": "/adhere/component/ui/writingboard"
   },
-
+  {
+    "kw": ["宽度和高度相等的元素", "ContourBlock"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/contourblock"
+  },
+  {
+    "kw": ["时间显示组件", "DateDisplay"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/datedisplay"
+  },
   {
     "kw": ["对屏幕的缩放进行适配的操作", "AdapterScreen"],
     "group": "组件 - Util",

@@ -186,7 +186,15 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
     if ('require' in t && !!t.require) {
       t.label = React.cloneElement(
         label,
-        { ...label.props, className: `${label.props.className} require` },
+        // { ...label.props, className: `${label.props.className} require` },
+        {
+          ...label.props,
+          className: classNames(
+            `${selectorPrefix}-table-row-label`,
+            'require',
+            label.props.className || '',
+          ),
+        },
         label.props.children,
       );
     }
@@ -267,7 +275,7 @@ function renderGridSearchForm(params) {
  * @param props
  * @return {JSX.Element}
  */
-TableGridLayout.renderGridSearchFormGroup =  function (
+TableGridLayout.renderGridSearchFormGroup = function (
   data: IDataItem[],
   props: Pick<
     ITableGridLayoutProps,
@@ -317,7 +325,7 @@ TableGridLayout.renderGridSearchFormGroup =  function (
       ))}
     </div>
   );
-}
+};
 
 /**
  * TableGridLayout

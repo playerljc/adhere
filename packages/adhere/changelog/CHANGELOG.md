@@ -4,13 +4,19 @@
 
 2022-7-25
 
+* **adhere-ui-datedisplay**
+  - 加入adhere-ui-datedisplay组件
 * **adhere-ui-flexlayout**
-  - adhere-ui-contourblock组件
+  - 加入adhere-ui-contourblock组件
 * **adhere-ui-contourblock**
   - 加入HorizontalFlexLayout布局
   - 加入VerticalFlexLayout布局
   - 加入ToolBarLayout布局
   - 加入BackLayout布局
+* **adhere-util-resource**
+  - dict.moment.config.js资源的修改
+* **adhere-ui-tablegridlayout**
+  - BUG的修改
 
 # 1.0.17
 

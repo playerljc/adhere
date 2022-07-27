@@ -10,7 +10,7 @@ import type { IConfig, ISendArg, ISendPrepareArg } from './types';
 let trigger402 = false;
 
 // notification的节流时间(毫秒)
-const notificationThrottlingTime = 2000;
+const notificationThrottlingTime = 300;
 
 let errorInfoHandler;
 let warnInfoHandler;
