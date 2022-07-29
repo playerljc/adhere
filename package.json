@@ -42,10 +42,10 @@
   "author": "playerljc <playerljc@163.com>",
   "repository": {
     "type": "git",
-    "url": "http://git.baifendian.com/SYYF/adhere"
+    "url": "https://github.com/playerljc/adhere"
   },
   "bugs": {
-    "url": "http://git.baifendian.com/SYYF/adhere/issues"
+    "url": "https://github.com/playerljc/adhere/issues"
   },
   "license": "ISC",
   "browserslist": {
