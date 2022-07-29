@@ -90,6 +90,7 @@ declare const VerticalFlexLayout: {
         leftProps: PropTypes.Requireable<object>;
         mainProps: PropTypes.Requireable<object>;
         mainAutoWrapProps: PropTypes.Requireable<object>;
+        children: PropTypes.Requireable<any>;
     };
 };
 export declare const defaultProps: {
@@ -149,5 +150,6 @@ export declare const propTypes: {
     leftProps: PropTypes.Requireable<object>;
     mainProps: PropTypes.Requireable<object>;
     mainAutoWrapProps: PropTypes.Requireable<object>;
+    children: PropTypes.Requireable<any>;
 };
 export default VerticalFlexLayout;

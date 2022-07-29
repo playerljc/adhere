@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// @ts-ignore
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import FlexLayout from './flexlayout';
@@ -69,11 +68,9 @@ const VerticalFlexLayout = ({
   mainAutoWrapProps,
 }: IVerticalFlexLayoutProps) => {
   return (
-    // @ts-ignore
     <FlexLayout className={className} style={{ ...style }} direction="vertical">
       <ConditionalRender conditional={!!renderTop}>
         {() => (
-          // @ts-ignore
           <Fixed className={topClassName} style={{ ...topStyle }} fit {...topProps}>
             {renderTop}
           </Fixed>
@@ -82,7 +79,6 @@ const VerticalFlexLayout = ({
 
       <ConditionalRender conditional={!!renderMain}>
         {() => (
-          // @ts-ignore
           <Auto
             className={mainAutoWrapClassName}
             style={{ ...mainAutoStyle }}
@@ -90,7 +86,6 @@ const VerticalFlexLayout = ({
             autoFixed
             {...mainAutoWrapProps}
           >
-            {/*@ts-ignore*/}
             <FlexLayout
               direction="horizontal"
               className={mainWrapClassName}
@@ -98,21 +93,18 @@ const VerticalFlexLayout = ({
             >
               <ConditionalRender conditional={!!renderLeft}>
                 {() => (
-                  // @ts-ignore
                   <Fixed className={leftClassName} style={{ ...leftStyle }} fit {...leftProps}>
                     {renderLeft}
                   </Fixed>
                 )}
               </ConditionalRender>
 
-              {/*@ts-ignore*/}
               <Auto autoFixed fit className={mainClassName} style={{ ...mainStyle }} {...mainProps}>
                 {renderMain}
               </Auto>
 
               <ConditionalRender conditional={!!renderRight}>
                 {() => (
-                  // @ts-ignore
                   <Fixed className={rightClassName} style={{ ...rightStyle }} fit {...rightProps}>
                     {renderRight}
                   </Fixed>
@@ -125,7 +117,6 @@ const VerticalFlexLayout = ({
 
       <ConditionalRender conditional={!!renderBottom}>
         {() => (
-          // @ts-ignore
           <Fixed className={bottomClassName} style={{ ...bottomStyle }} fit {...bottomProps}>
             {renderBottom}
           </Fixed>
@@ -193,6 +184,7 @@ export const propTypes = {
   leftProps: PropTypes.object,
   mainProps: PropTypes.object,
   mainAutoWrapProps: PropTypes.object,
+  children: PropTypes.any,
 };
 
 VerticalFlexLayout.defaultProps = defaultProps;

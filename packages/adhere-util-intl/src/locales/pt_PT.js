@@ -54,4 +54,10 @@ export default [
   'predefinição',
   'médio',
   'compactar',
+  'Responder',
+  'Carregar mais respostas',
+  'Parar de responder',
+  'Mostrar conteúdo da resposta',
+  'Por favor, insira o conteúdo da resposta',
+  'Adicionar à',
 ];

@@ -8,12 +8,10 @@ import {
   IVerticalFlexLayoutProps,
   IToolBarLayoutProps,
   IBackLayoutProps,
+  IFixedProps,
+  IAutoProps,
 } from './types';
-// @ts-ignore
 import { FlexContext } from './context';
-
-import Fixed from './fixed';
-import Auto from './auto';
 
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
@@ -26,26 +24,30 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
   static propTypes: any;
   static defaultProps: any;
 
-  static Fixed = Fixed;
-  static Auto = Auto;
+  static Fixed: (props: IFixedProps) => React.ReactElement;
+  static Auto: (props: IAutoProps) => React.ReactElement;
 
   static Context = FlexContext;
 
   static selectorPrefix = selectorPrefix;
 
-  static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => JSX.Element;
+  static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => React.ReactElement;
 
-  static VerticalFlexLayout: (props: IVerticalFlexLayoutProps) => JSX.Element;
+  static VerticalFlexLayout: (props: IVerticalFlexLayoutProps) => React.ReactElement;
 
-  static ToolBarLayout: (props: IToolBarLayoutProps) => JSX.Element;
+  static ToolBarLayout: (props: IToolBarLayoutProps) => React.ReactElement;
 
-  static BackLayout: (props: IBackLayoutProps) => JSX.Element;
+  static BackLayout: (props: IBackLayoutProps) => React.ReactElement;
 
-  // @ts-ignore
-  private props: IFlexLayoutProps | undefined;
+  static HorizontalFlexLayoutDefaultProps: any;
 
-  render() {
-    // @ts-ignore
+  static HorizontalFlexLayoutPropTypes: any;
+
+  static VerticalFlexLayoutDefaultProps: any;
+
+  static VerticalFlexLayoutPropTypes: any;
+
+  render(): React.ReactElement {
     const { className, direction, children, style } = this.props;
 
     return (
@@ -58,7 +60,7 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
           className={classNames(
             selectorPrefix,
             `${selectorPrefix}-${direction}`,
-            ...className.split(/\s+/),
+            ...(className || '').split(/\s+/),
           )}
           style={{ ...style }}
         >

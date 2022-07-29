@@ -6,7 +6,6 @@ import { IAutoProps } from './types';
  * @classdesc Fixed
  */
 declare class Auto extends React.Component<IAutoProps, any> {
-    private props;
     private direction;
     private ref;
     static defaultProps: any;

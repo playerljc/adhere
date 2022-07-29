@@ -4,6 +4,12 @@
 
 2022-7-25
 
+* **adhere-ui-scrollload**
+  - BUG修改
+* **adhere-util-intl**
+  - 加入新词条
+* **adhere-ui-comment**
+  - 加入adhere-ui-comment组件
 * **adhere-ui-datedisplay**
   - 加入adhere-ui-datedisplay组件
 * **adhere-ui-flexlayout**

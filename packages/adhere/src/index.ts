@@ -43,6 +43,7 @@ import TableList from '@baifendian/adhere-ui-tablelist';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
+import Comment from '@baifendian/adhere-ui-comment';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -105,6 +106,7 @@ export {
   WritingBoard,
   ContourBlock,
   DateDisplay,
+  Comment,
   Util,
   AdapterScreen,
   Browsersniff,

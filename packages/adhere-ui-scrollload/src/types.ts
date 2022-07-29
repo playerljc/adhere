@@ -14,7 +14,7 @@ export interface IScrollLoadProps {
   emptyStyle: React.CSSProperties;
   errorClassName: string;
   errorStyle: React.CSSProperties;
-  distance: 50;
+  distance: number;
   onScrollBottom: Function;
   onEmptyClick: Function;
   onErrorClick: Function;

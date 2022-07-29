@@ -1,23 +1,23 @@
 import React from 'react';
-
 export interface IFlexLayoutProps {
   direction: 'vertical' | 'horizontal';
-  className?: '';
+  className?: string;
   style?: React.CSSProperties;
+  children?: React.ReactNode | null;
 }
-
 export interface IFixedProps {
-  className?: '';
+  className?: string;
+  fit?: boolean;
   style?: React.CSSProperties;
+  children?: React.ReactNode | null;
 }
-
 export interface IAutoProps {
   autoFixed?: boolean;
   fit?: boolean;
-  className?: '';
+  className?: string;
   style?: React.CSSProperties;
+  children?: React.ReactNode | null;
 }
-
 export interface IVerticalFlexLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -46,8 +46,8 @@ export interface IVerticalFlexLayoutProps {
   leftProps?: object;
   mainProps?: object;
   mainAutoWrapProps?: object;
+  children?: any;
 }
-
 export interface IHorizontalFlexLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -76,8 +76,8 @@ export interface IHorizontalFlexLayoutProps {
   leftProps?: object;
   mainProps?: object;
   mainAutoWrapProps?: object;
+  children?: any;
 }
-
 export interface IToolBarLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -99,7 +99,6 @@ export interface IToolBarLayoutProps {
   mainAutoWrapProps?: object;
   children?: any;
 }
-
 export interface IBackLayoutProps {
   className?: string;
   style?: React.CSSProperties;

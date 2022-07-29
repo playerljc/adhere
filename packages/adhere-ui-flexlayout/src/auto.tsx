@@ -13,8 +13,6 @@ const selectorPrefix = 'adhere-ui-flexlayout-auto';
  * @classdesc Fixed
  */
 class Auto extends React.Component<IAutoProps, any> {
-  // @ts-ignore
-  private props: IAutoProps | undefined;
   private direction: string | undefined;
   private ref: RefObject<HTMLDivElement> | null | undefined;
 
@@ -34,7 +32,6 @@ class Auto extends React.Component<IAutoProps, any> {
   renderInner({ direction }) {
     this.direction = direction;
 
-    // @ts-ignore
     const { children, autoFixed, className = '', style, fit } = this.props;
 
     return (
@@ -70,6 +67,7 @@ Auto.propTypes = {
   fit: PropTypes.bool,
   className: PropTypes.string,
   style: PropTypes.object,
+  children: PropTypes.any,
 };
 
 export default Auto;

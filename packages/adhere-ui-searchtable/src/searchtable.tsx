@@ -11,6 +11,7 @@ import {
   TableRowSelection,
 } from 'antd/lib/table/interface';
 
+// @ts-ignore
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
@@ -773,7 +774,6 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         )}
         style={{ ...(style || {}) }}
       >
-        {/* @ts-ignore */}
         <Fixed
           className={classNames(
             `${selectorPrefix}-searchwrapper`,
@@ -782,25 +782,19 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
           style={{ ...(searchStyle || {}) }}
           fit={fitSearch}
         >
-          {/* @ts-ignore */}
-          <FlexLayout>
-            {/* @ts-ignore */}
+          {/*@ts-ignore*/}
+          <FlexLayout direction="vertical">
             <Fixed>
               <ConditionalRender conditional={expand} noMatch={() => null}>
                 {() => this.renderSearchForm()}
               </ConditionalRender>
             </Fixed>
-            {/* @ts-ignore */}
             <Fixed>{this.renderSearchFooter()}</Fixed>
           </FlexLayout>
         </Fixed>
         <ConditionalRender conditional={!!this.renderTableHeader}>
-          {() => (
-            // @ts-ignore
-            <Fixed>{this.renderTableHeader()}</Fixed>
-          )}
+          {() => <Fixed>{this.renderTableHeader()}</Fixed>}
         </ConditionalRender>
-        {/* @ts-ignore */}
         <Auto
           className={classNames(
             `${selectorPrefix}-autowrapper`,
@@ -816,10 +810,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
           </div>
         </Auto>
         <ConditionalRender conditional={!!this.renderTableFooter}>
-          {() => (
-            // @ts-ignore
-            <Fixed>{this.renderTableFooter()}</Fixed>
-          )}
+          {() => <Fixed>{this.renderTableFooter()}</Fixed>}
         </ConditionalRender>
       </FlexLayout>
     );

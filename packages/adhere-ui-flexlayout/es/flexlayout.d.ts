@@ -1,7 +1,5 @@
 import React from 'react';
-import { IFlexLayoutProps, IHorizontalFlexLayoutProps, IVerticalFlexLayoutProps, IToolBarLayoutProps, IBackLayoutProps } from './types';
-import Fixed from './fixed';
-import Auto from './auto';
+import { IFlexLayoutProps, IHorizontalFlexLayoutProps, IVerticalFlexLayoutProps, IToolBarLayoutProps, IBackLayoutProps, IFixedProps, IAutoProps } from './types';
 export declare const selectorPrefix = "adhere-ui-flexlayout";
 /**
  * FlexLayout
@@ -11,17 +9,20 @@ export declare const selectorPrefix = "adhere-ui-flexlayout";
 declare class FlexLayout extends React.Component<IFlexLayoutProps, any> {
     static propTypes: any;
     static defaultProps: any;
-    static Fixed: typeof Fixed;
-    static Auto: typeof Auto;
+    static Fixed: (props: IFixedProps) => React.ReactElement;
+    static Auto: (props: IAutoProps) => React.ReactElement;
     static Context: React.Context<{
         direction: string;
     }>;
     static selectorPrefix: string;
-    static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => JSX.Element;
-    static VerticalFlexLayout: (props: IVerticalFlexLayoutProps) => JSX.Element;
-    static ToolBarLayout: (props: IToolBarLayoutProps) => JSX.Element;
-    static BackLayout: (props: IBackLayoutProps) => JSX.Element;
-    private props;
-    render(): JSX.Element;
+    static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => React.ReactElement;
+    static VerticalFlexLayout: (props: IVerticalFlexLayoutProps) => React.ReactElement;
+    static ToolBarLayout: (props: IToolBarLayoutProps) => React.ReactElement;
+    static BackLayout: (props: IBackLayoutProps) => React.ReactElement;
+    static HorizontalFlexLayoutDefaultProps: any;
+    static HorizontalFlexLayoutPropTypes: any;
+    static VerticalFlexLayoutDefaultProps: any;
+    static VerticalFlexLayoutPropTypes: any;
+    render(): React.ReactElement;
 }
 export default FlexLayout;

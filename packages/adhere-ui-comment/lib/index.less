@@ -1,0 +1,28 @@
+@import "./Reply/index.less";
+@import "./ListStandard/index.less";
+@import "./List/index.less";
+@import "./Commit/index.less";
+
+.adhere-ui-comment-yg-comment-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > .adhere-ui-comment-yg-comment-list-item {
+    padding: 0 10px 0 10px;
+
+    &:first-child {
+      padding-top: 10px;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.adhere-ui-comment-yg-comment-loading-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

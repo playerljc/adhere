@@ -62,6 +62,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-writingboard', 'WritingBoard'],
   ['@baifendian/adhere-ui-contourblock', 'ContourBlock'],
   ['@baifendian/adhere-ui-datedisplay', 'DateDisplay'],
+  ['@baifendian/adhere-ui-comment', 'Comment'],
   // ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-util', 'Util'],

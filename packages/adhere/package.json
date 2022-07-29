@@ -95,6 +95,7 @@
     "@baifendian/adhere-ui-writingboard": "^1.0.17-fix.2",
     "@baifendian/adhere-ui-contourblock": "^1.0.0",
     "@baifendian/adhere-ui-datedisplay": "^1.0.0",
+    "@baifendian/adhere-ui-comment": "^1.0.0",
     "@baifendian/adhere-util": "^1.0.17-fix.0",
     "@baifendian/adhere-util-adapterscreen": "^1.0.17",
     "@baifendian/adhere-util-browsersniff": "^1.0.17",

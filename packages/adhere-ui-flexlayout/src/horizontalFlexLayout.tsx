@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// @ts-ignore
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import FlexLayout from './flexlayout';
@@ -69,11 +68,9 @@ const HorizontalFlexLayout = ({
   mainAutoWrapProps,
 }: IHorizontalFlexLayoutProps) => {
   return (
-    // @ts-ignore
     <FlexLayout className={className} style={{ ...style }} direction="horizontal">
       <ConditionalRender conditional={!!renderLeft}>
         {() => (
-          // @ts-ignore
           <Fixed className={leftClassName} style={{ ...leftStyle }} fit {...leftProps}>
             {renderLeft}
           </Fixed>
@@ -82,7 +79,6 @@ const HorizontalFlexLayout = ({
 
       <ConditionalRender conditional={!!renderMain}>
         {() => (
-          // @ts-ignore
           <Auto
             className={mainAutoWrapClassName}
             style={{ ...mainAutoStyle }}
@@ -90,7 +86,6 @@ const HorizontalFlexLayout = ({
             autoFixed
             {...mainAutoWrapProps}
           >
-            {/*@ts-ignore*/}
             <FlexLayout
               direction="vertical"
               className={mainWrapClassName}
@@ -98,27 +93,19 @@ const HorizontalFlexLayout = ({
             >
               <ConditionalRender conditional={!!renderTop}>
                 {() => (
-                  // @ts-ignore
                   <Fixed className={topClassName} style={{ ...topStyle }} fit {...topProps}>
                     {renderTop}
                   </Fixed>
                 )}
               </ConditionalRender>
 
-              {/*@ts-ignore*/}
               <Auto autoFixed fit className={mainClassName} style={{ ...mainStyle }} {...mainProps}>
                 {renderMain}
               </Auto>
 
               <ConditionalRender conditional={!!renderBottom}>
                 {() => (
-                  // @ts-ignore
-                  <Fixed
-                    className={bottomClassName}
-                    style={{ ...bottomStyle }}
-                    fit
-                    {...bottomProps}
-                  >
+                  <Fixed className={''} style={{ ...bottomStyle }} fit {...bottomProps}>
                     {renderBottom}
                   </Fixed>
                 )}
@@ -130,7 +117,6 @@ const HorizontalFlexLayout = ({
 
       <ConditionalRender conditional={!!renderRight}>
         {() => (
-          // @ts-ignore
           <Fixed className={rightClassName} style={{ ...rightStyle }} fit {...rightProps}>
             {renderRight}
           </Fixed>
@@ -140,7 +126,7 @@ const HorizontalFlexLayout = ({
   );
 };
 
-HorizontalFlexLayout.defaultProps = {
+export const defaultProps = {
   className: '',
   style: {},
   topClassName: '',
@@ -165,7 +151,7 @@ HorizontalFlexLayout.defaultProps = {
   mainAutoWrapProps: {},
 };
 
-HorizontalFlexLayout.propTypes = {
+export const propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   topClassName: PropTypes.string,
@@ -194,5 +180,9 @@ HorizontalFlexLayout.propTypes = {
   mainProps: PropTypes.object,
   mainAutoWrapProps: PropTypes.object,
 };
+
+HorizontalFlexLayout.defaultProps = defaultProps;
+
+HorizontalFlexLayout.propTypes = propTypes;
 
 export default HorizontalFlexLayout;
