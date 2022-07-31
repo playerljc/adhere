@@ -1,5 +1,7 @@
 import React from 'react';
-import { IFlexLayoutProps, IHorizontalFlexLayoutProps, IVerticalFlexLayoutProps, IToolBarLayoutProps, IBackLayoutProps, IFixedProps, IAutoProps } from './types';
+import { IFlexLayoutProps, IHorizontalFlexLayoutProps, IVerticalFlexLayoutProps, IToolBarLayoutProps, IBackLayoutProps } from './types';
+import Fixed from './fixed';
+import Auto from './auto';
 export declare const selectorPrefix = "adhere-ui-flexlayout";
 /**
  * FlexLayout
@@ -9,12 +11,12 @@ export declare const selectorPrefix = "adhere-ui-flexlayout";
 declare class FlexLayout extends React.Component<IFlexLayoutProps, any> {
     static propTypes: any;
     static defaultProps: any;
-    static Fixed: (props: IFixedProps) => React.ReactElement;
-    static Auto: (props: IAutoProps) => React.ReactElement;
     static Context: React.Context<{
         direction: string;
     }>;
     static selectorPrefix: string;
+    static Fixed: typeof Fixed;
+    static Auto: typeof Auto;
     static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => React.ReactElement;
     static VerticalFlexLayout: (props: IVerticalFlexLayoutProps) => React.ReactElement;
     static ToolBarLayout: (props: IToolBarLayoutProps) => React.ReactElement;

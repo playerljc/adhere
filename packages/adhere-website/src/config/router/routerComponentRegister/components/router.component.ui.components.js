@@ -131,3 +131,7 @@ export const ContourBlock = lazy(() =>
 export const DateDisplay = lazy(() =>
   import(/* webpackChunkName: "datedisplay" */ '@/components/ui/datedisplay'),
 );
+
+export const Comment = lazy(() =>
+  import(/* webpackChunkName: "comment" */ '@/components/ui/comment'),
+);

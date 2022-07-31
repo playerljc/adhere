@@ -105,7 +105,12 @@ const HorizontalFlexLayout = ({
 
               <ConditionalRender conditional={!!renderBottom}>
                 {() => (
-                  <Fixed className={''} style={{ ...bottomStyle }} fit {...bottomProps}>
+                  <Fixed
+                    className={bottomClassName}
+                    style={{ ...bottomStyle }}
+                    fit
+                    {...bottomProps}
+                  >
                     {renderBottom}
                   </Fixed>
                 )}

@@ -1,3 +1,3 @@
-import Comment from './comment';
+import Comment from './Comment';
 
 export default Comment;

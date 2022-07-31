@@ -1,24 +1,49 @@
 import React from 'react';
 import { IFlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
-export declare type IYgCommentProps = Partial<{
+export declare type ICommentProps = Partial<{
     getScrollWrapContainer: () => HTMLElement;
-    fetchData: () => Promise<any>;
-    fetchReply: (params?: any) => Promise<any>;
-    dataKeys: {
+    fetchCommentData: () => Promise<any>;
+    commentDataKeys: {
         current: string;
         totalPage: string;
         list: string;
         totalCount: string;
     };
-    limit: number;
+    commentLimit: number;
+    commentKeyProp: string;
+    renderCommentActions: () => React.ReactNode[] | null;
+    renderCommentAuthor: () => React.ReactNode | null;
+    renderCommentAvatar: () => React.ReactNode | null;
+    renderCommentContent: () => React.ReactNode | null;
+    renderCommentDateTime: () => React.ReactNode | null;
+    renderCommentLoading: () => React.ReactNode | null;
+    fetchReplyData: () => Promise<any>;
+    replyDataKeys: {
+        current: string;
+        totalPage: string;
+        list: string;
+        totalCount: string;
+    };
+    replyLimit: number;
+    replyKeyProp: string;
+    renderReplyActions: () => React.ReactNode[] | null;
+    renderReplyAuthor: () => React.ReactNode | null;
+    renderReplyAvatar: () => React.ReactNode | null;
+    renderReplyContent: () => React.ReactNode | null;
+    renderReplyDateTime: () => React.ReactNode | null;
+    renderReplyLoading: () => React.ReactNode | null;
+    fetchReply: (params?: any) => Promise<any>;
     listProps: any;
-    keyProp: string;
     isMoreProp: string;
-    renderActions: () => React.ReactNode[] | null;
-    renderAuthor: () => React.ReactNode | null;
-    renderAvatar: () => React.ReactNode | null;
-    renderContent: () => React.ReactNode | null;
-    renderDateTime: () => React.ReactNode | null;
+    flexLayoutProps: IFlexLayoutProps;
+    renderEmpty: () => React.ReactElement | null;
+    renderFirstLoading: () => React.ReactNode;
+    showReplyText: string | Function;
+    hideReplyText: string | Function;
+    loadMoreReplyText: string | Function;
+    showReplyTextIcon: React.ReactNode | Function;
+    hideReplyTextIcon: React.ReactNode | Function;
+    loadMoreCollapseTextIcon: React.ReactNode | Function;
 }>;
 export declare type IReplyProps = Partial<{
     onCancel: Function;
@@ -68,7 +93,9 @@ export declare type IListProps = Partial<{
     };
     children: React.ReactNode;
 }>;
-export declare type ICommitProps = Partial<{
+export interface INodeCommonProps {
+}
+export declare type INodeProps = Partial<{
     isReply: boolean;
     data: {
         key: string;
@@ -90,4 +117,11 @@ export declare type ICommitProps = Partial<{
     renderAvatar: (params: any) => React.ReactNode | null;
     renderContent: (params: any) => React.ReactNode | null;
     renderDateTime: (params: any) => React.ReactNode | null;
+    children: Function;
+    showReplyText: string | Function;
+    hideReplyText: string | Function;
+    loadMoreReplyText: string | Function;
+    showReplyTextIcon: React.ReactNode | Function;
+    hideReplyTextIcon: React.ReactNode | Function;
+    loadMoreCollapseTextIcon: React.ReactNode | Function;
 }>;

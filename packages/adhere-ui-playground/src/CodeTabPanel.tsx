@@ -70,4 +70,4 @@ CodeTabPanel.defaultProps = CodeTabPanelDefaultProps;
 
 CodeTabPanel.propTypes = CodeTabPanelPropTypes;
 
-export default memo(CodeTabPanel);
+export default memo<any>(CodeTabPanel);

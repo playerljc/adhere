@@ -11,7 +11,10 @@ import {
   IFixedProps,
   IAutoProps,
 } from './types';
+
 import { FlexContext } from './context';
+import Fixed from './fixed';
+import Auto from './auto';
 
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
@@ -24,12 +27,13 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
   static propTypes: any;
   static defaultProps: any;
 
-  static Fixed: (props: IFixedProps) => React.ReactElement;
-  static Auto: (props: IAutoProps) => React.ReactElement;
-
   static Context = FlexContext;
 
   static selectorPrefix = selectorPrefix;
+
+  static Fixed = Fixed;
+
+  static Auto = Auto;
 
   static HorizontalFlexLayout: (props: IHorizontalFlexLayoutProps) => React.ReactElement;
 

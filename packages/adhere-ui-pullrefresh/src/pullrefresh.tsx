@@ -635,7 +635,7 @@ PullRefresh.defaultProps = {
   renderLoadingAnimation: 'la-ball-circus la-dark',
   isShowUpdateTime: true,
   updateTime: moment().valueOf(),
-  updateTimeFormat: Resource.Dict.value.ResourceMomentFormatFull.value,
+  updateTimeFormat: Resource.Dict.value.ResourceMomentFormat18.value(),
 };
 
 PullRefresh.propTypes = {

@@ -52,6 +52,8 @@
     "@baifendian/adhere-ui-conditionalrender": "^1.0.17",
     "@baifendian/adhere-ui-scrollload": "^1.0.17",
     "@baifendian/adhere-ui-backtopanimation": "^1.0.17-fix.0",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.15"
+    "@baifendian/adhere-ui-flexlayout": "^1.0.15",
+    "@baifendian/adhere-ui-css": "^1.0.15",
+    "@baifendian/adhere-util": "^1.0.17-fix.0"
   }
 }

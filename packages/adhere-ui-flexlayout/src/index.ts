@@ -1,4 +1,3 @@
-import BackLayout from './backLayout';
 import HorizontalFlexLayout, {
   defaultProps as HorizontalFlexLayoutDefaultProps,
   propTypes as HorizontalFlexLayoutPropTypes,
@@ -7,6 +6,7 @@ import VerticalFlexLayout, {
   defaultProps as VerticalFlexLayoutDefaultProps,
   propTypes as VerticalFlexLayoutPropTypes,
 } from './verticalFlexLayout';
+import BackLayout from './backLayout';
 // @ts-ignore
 import ToolBarLayout from './toolBarLayout';
 import FlexLayout from './flexlayout';

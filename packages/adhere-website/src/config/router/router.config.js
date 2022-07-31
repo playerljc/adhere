@@ -76,6 +76,7 @@ const {
   WritingBoard,
   ContourBlock,
   DateDisplay,
+  Comment,
 } = Components;
 
 export default () => [
@@ -392,6 +393,11 @@ export default () => [
                 path: '/adhere/component/ui/datedisplay',
                 name: 'DateDisplay',
                 component: DateDisplay,
+              },
+              {
+                path: '/adhere/component/ui/comment',
+                name: 'Comment',
+                component: Comment,
               },
             ],
           },

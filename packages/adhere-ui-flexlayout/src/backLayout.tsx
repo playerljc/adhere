@@ -6,7 +6,7 @@ import HistoryBack from '@baifendian/adhere-ui-historyback';
 import Intl from '@baifendian/adhere-util-intl';
 
 // @ts-ignore
-import ToolBarLayout from './ToolBarLayout';
+import ToolBarLayout from './toolBarLayout';
 import { IBackLayoutProps } from './types';
 
 /**

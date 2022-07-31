@@ -41,4 +41,4 @@ CodePanel.defaultProps = CodePanelDefaultProps;
 
 CodePanel.propTypes = CodePanelPropTypes;
 
-export default memo(CodePanel);
+export default memo<any>(CodePanel);
