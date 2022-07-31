@@ -122,7 +122,7 @@ export type INodeProps = Partial<{
   fetchReply: (params: any) => Promise<any>;
   keyProp: string;
   isMoreProp: string;
-  renderActions: (params: any) => React.ReactNode[] | null;
+  renderActions: (params: any, callback: (data?: any) => void) => React.ReactNode[] | null;
   renderAuthor: (params: any) => React.ReactNode | null;
   renderAvatar: (params: any) => React.ReactNode | null;
   renderContent: (params: any) => React.ReactNode | null;

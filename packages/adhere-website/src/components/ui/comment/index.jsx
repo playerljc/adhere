@@ -54,16 +54,30 @@ export default () => {
     return <img src={record?.icon} alt="" />;
   }
 
-  function renderCommentActions(record) {
+  function renderCommentActions(record, callback) {
     return [
       <Tooltip key="comment-basic-like" title="Like">
-        <span>
+        <span
+          onClick={() => {
+            setTimeout(() => {
+              record.like = faker.random.number();
+              callback({ ...record });
+            }, 1000);
+          }}
+        >
           <LikeFilled />
           <span style={{ marginLeft: 5 }}>{record.like}</span>
         </span>
       </Tooltip>,
       <Tooltip key="comment-basic-dislike" title="Dislike">
-        <span>
+        <span
+          onClick={() => {
+            setTimeout(() => {
+              record.dislike = faker.random.number();
+              callback({ ...record });
+            }, 1000);
+          }}
+        >
           <DislikeOutlined />
           <span style={{ marginLeft: 5 }}>{record.dislike}</span>
         </span>
@@ -102,16 +116,30 @@ export default () => {
     return <img src={record?.icon} alt="" />;
   }
 
-  function renderReplyActions(record) {
+  function renderReplyActions(record, callback) {
     return [
       <Tooltip key="comment-basic-like" title="Like">
-        <span>
+        <span
+          onClick={() => {
+            setTimeout(() => {
+              record.like = faker.random.number();
+              callback({ ...record });
+            }, 1000);
+          }}
+        >
           <LikeFilled />
           <span style={{ marginLeft: 5 }}>{record.like}</span>
         </span>
       </Tooltip>,
       <Tooltip key="comment-basic-dislike" title="Dislike">
-        <span>
+        <span
+          onClick={() => {
+            setTimeout(() => {
+              record.dislike = faker.random.number();
+              callback({ ...record });
+            }, 1000);
+          }}
+        >
           <DislikeOutlined />
           <span style={{ marginLeft: 5 }}>{record.dislike}</span>
         </span>

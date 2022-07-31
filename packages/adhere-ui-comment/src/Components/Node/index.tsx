@@ -1,5 +1,5 @@
 import { INodeProps } from '@/types';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -25,6 +25,9 @@ function Node(props: INodeProps) {
     [props.dataKeys!.totalCount]: 0,
     [props.dataKeys!.totalPage]: 0,
   });
+
+  const [data, setData] = useState(props?.data);
+
   const [collapse, setCollapse] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showReply, setShowReply] = useState(false);
@@ -36,7 +39,11 @@ function Node(props: INodeProps) {
 
   function renderActions() {
     return [
-      ...(props?.renderActions?.(props?.data) || []).map((action, index) => (
+      ...(
+        props?.renderActions?.({ ...data }, (_data) => {
+          setData(_data);
+        }) || []
+      ).map((action, index) => (
         <li key={index} className={`${selectorPrefix}-actions-action`}>
           {action}
         </li>
@@ -225,7 +232,7 @@ function Node(props: INodeProps) {
     return props
       ?.fetchData?.({
         ...paging.current,
-        record: props?.data, //?.[props.keyProp!],
+        record: { ...data }, //?.[props.keyProp!],
       })
       .then((data) => {
         callback(data);
@@ -241,28 +248,32 @@ function Node(props: INodeProps) {
       });
   }
 
+  useEffect(() => {
+    setData(props.data);
+  }, [props?.data]);
+
   return (
     <FlexLayout
       direction="horizontal"
       className={classNames(selectorPrefix, props.isReply ? `${selectorPrefix}-reply` : null)}
     >
       <FlexLayout.Fixed className={`${selectorPrefix}-avatar-wrap`}>
-        {props?.renderAvatar?.(props.data)}
+        {props?.renderAvatar?.({ ...data })}
       </FlexLayout.Fixed>
 
       <FlexLayout.Auto autoFixed fit>
         <FlexLayout direction="vertical">
           <FlexLayout.Fixed className={`${selectorPrefix}-title-row`} fit={false}>
             <div className={`${selectorPrefix}-title-row-author`}>
-              {props?.renderAuthor?.(props.data)}
+              {props?.renderAuthor?.({ ...data })}
             </div>
             <div className={`${selectorPrefix}-title-row-date-time`}>
-              {props?.renderDateTime?.(props.data)}
+              {props?.renderDateTime?.({ ...data })}
             </div>
           </FlexLayout.Fixed>
 
           <FlexLayout.Auto className={`${selectorPrefix}-content-wrap`}>
-            {props?.renderContent?.(props.data)}
+            {props?.renderContent?.({ ...data })}
           </FlexLayout.Auto>
 
           <FlexLayout.Fixed>
@@ -277,8 +288,8 @@ function Node(props: INodeProps) {
                   onResult={(reply) => {
                     props
                       ?.fetchReply?.({
-                        id: props?.data?.[props.keyProp!],
-                        record: props?.data,
+                        id: data?.[props.keyProp!],
+                        record: { ...data },
                         reply,
                       })
                       ?.then(() => {
@@ -291,7 +302,7 @@ function Node(props: INodeProps) {
             )}
           </ConditionalRender>
 
-          <ConditionalRender conditional={props?.data?.[props.isMoreProp!]}>
+          <ConditionalRender conditional={data?.[props.isMoreProp!]}>
             {() => (
               <>
                 <ConditionalRender conditional={!loading}>{() => renderMore()}</ConditionalRender>
