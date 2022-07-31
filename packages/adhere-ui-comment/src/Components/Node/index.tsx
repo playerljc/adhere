@@ -225,7 +225,7 @@ function Node(props: INodeProps) {
     return props
       ?.fetchData?.({
         ...paging.current,
-        id: props?.data?.[props.keyProp!],
+        record: props?.data, //?.[props.keyProp!],
       })
       .then((data) => {
         callback(data);
@@ -278,6 +278,7 @@ function Node(props: INodeProps) {
                     props
                       ?.fetchReply?.({
                         id: props?.data?.[props.keyProp!],
+                        record: props?.data,
                         reply,
                       })
                       ?.then(() => {

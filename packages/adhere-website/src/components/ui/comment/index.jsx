@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Tooltip, Spin, Empty } from 'antd';
-import { Comment, DateDisplay } from '@baifendian/adhere';
+import { Comment, DateDisplay, GlobalIndicator } from '@baifendian/adhere';
 import faker from 'faker';
 import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 import { LikeFilled, DislikeOutlined } from '@ant-design/icons';
@@ -79,8 +79,8 @@ export default () => {
     return <DateDisplay.DateDisplayFromNow value={record?.time} />;
   }
 
-  function fetchReplyData({ page, limit, id }) {
-    console.log('fetchReplyData', page, limit, id);
+  function fetchReplyData({ page, limit, record }) {
+    console.log('fetchReplyData', page, limit, record);
 
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -127,7 +127,15 @@ export default () => {
     return <DateDisplay.DateDisplayFromNow value={record?.time} />;
   }
 
-  function fetchReply() {}
+  function fetchReply({ id, record, reply }) {
+    const indicator = GlobalIndicator.show(document.body, '');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+        GlobalIndicator.hide(indicator);
+      }, 1000);
+    });
+  }
 
   return (
     <PlayGroundPage>
