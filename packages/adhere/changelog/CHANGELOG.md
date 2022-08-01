@@ -4,6 +4,10 @@
 
 2022-7-25
 
+* **adhere-ui-hooks**
+  - useSetState加入泛型
+* **adhere-ui-searchtable**
+  - onTableChange的BUG修改
 * **adhere-ui-scrollload**
   - BUG修改
 * **adhere-util-intl**

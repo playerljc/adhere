@@ -20,6 +20,7 @@ const selectorPrefix = 'adhere-ui-comment';
  * Comment
  * @param props
  * @constructor
+ * @classdesc 评论
  */
 function Comment(props: ICommentProps) {
   function renderList(data) {
@@ -48,6 +49,7 @@ function Comment(props: ICommentProps) {
               showReplyTextIcon={props.showReplyTextIcon}
               hideReplyTextIcon={props.hideReplyTextIcon}
               loadMoreCollapseTextIcon={props.loadMoreCollapseTextIcon}
+              local={props.local}
             >
               {(record) => (
                 <ReplyInfo
@@ -70,6 +72,7 @@ function Comment(props: ICommentProps) {
                   showReplyTextIcon={props.showReplyTextIcon}
                   hideReplyTextIcon={props.hideReplyTextIcon}
                   loadMoreCollapseTextIcon={props.loadMoreCollapseTextIcon}
+                  local={props.local}
                 />
               )}
             </CommentInfo>
@@ -135,6 +138,7 @@ Comment.defaultProps = {
   showReplyTextIcon: <CaretDownOutlined />,
   hideReplyTextIcon: <CaretUpOutlined />,
   loadMoreCollapseTextIcon: <EnterOutlined className="reply-icon" />,
+  local: 'zh',
 };
 
 Comment.propTypes = {
@@ -204,6 +208,8 @@ Comment.propTypes = {
     renderEmpty: PropTypes.func,
     renderError: PropTypes.func,
   }),
+
+  local: PropTypes.string,
 };
 
 export default Comment;

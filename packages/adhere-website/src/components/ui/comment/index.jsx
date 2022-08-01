@@ -1,11 +1,13 @@
-import React, { useRef } from 'react';
-import { Tooltip } from 'antd';
+import React, { useRef, useState } from 'react';
+import { Tooltip, Popover } from 'antd';
 import { Comment, DateDisplay, GlobalIndicator } from '@baifendian/adhere';
 import faker from 'faker';
 import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 import { LikeFilled, DislikeOutlined } from '@ant-design/icons';
-
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 import styles from './index.less';
+import zh from '@emoji-mart/data/i18n/zh.json';
 
 const CommentData = Array.from({ length: 300 }).map((t, index) => ({
   id: index + 1,
@@ -31,6 +33,8 @@ const ReplyData = Array.from({ length: 300 }).map((t, index) => ({
 
 export default () => {
   const ref = useRef();
+
+  const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
 
   function fetchCommentData({ page, limit }) {
     console.log('fetchCommentData', page, limit);
@@ -188,36 +192,49 @@ export default () => {
             codeText: ``,
             type: 'PlayGround',
             renderChildren: () => (
-              <div className={styles.ScrollWrap} ref={ref}>
-                <div className={styles.Scroll}>
-                  <Comment
-                    getScrollWrapContainer={() => ref.current}
-                    fetchCommentData={fetchCommentData}
-                    renderCommentActions={renderCommentActions}
-                    renderCommentAuthor={renderCommentAuthor}
-                    renderCommentAvatar={renderCommentAvatar}
-                    renderCommentContent={renderCommentContent}
-                    renderCommentDateTime={renderCommentDateTime}
-                    fetchReplyData={fetchReplyData}
-                    renderReplyActions={renderReplyActions}
-                    renderReplyAuthor={renderReplyAuthor}
-                    renderReplyAvatar={renderReplyAvatar}
-                    renderReplyContent={renderReplyContent}
-                    renderReplyDateTime={renderReplyDateTime}
-                    fetchReply={fetchReply}
-                    // replyLimit={1}
-                    // renderCommentLoading={() => <Spin />}
-                    // renderFirstLoading={() => <Spin />}
-                    // listProps={{
-                    //   scrollLoadProps: {
-                    //     renderLoading: () => <Spin />,
-                    //     renderEmpty: () => <Empty />,
-                    //     renderError: () => <div>error</div>,
-                    //   },
-                    // }}
-                  />
+              <>
+                <div className={styles.ScrollWrap} ref={ref}>
+                  <div className={styles.Scroll}>
+                    <Comment
+                      getScrollWrapContainer={() => ref.current}
+                      fetchCommentData={fetchCommentData}
+                      renderCommentActions={renderCommentActions}
+                      renderCommentAuthor={renderCommentAuthor}
+                      renderCommentAvatar={renderCommentAvatar}
+                      renderCommentContent={renderCommentContent}
+                      renderCommentDateTime={renderCommentDateTime}
+                      fetchReplyData={fetchReplyData}
+                      renderReplyActions={renderReplyActions}
+                      renderReplyAuthor={renderReplyAuthor}
+                      renderReplyAvatar={renderReplyAvatar}
+                      renderReplyContent={renderReplyContent}
+                      renderReplyDateTime={renderReplyDateTime}
+                      fetchReply={fetchReply}
+                      // replyLimit={1}
+                      // renderCommentLoading={() => <Spin />}
+                      // renderFirstLoading={() => <Spin />}
+                      // listProps={{
+                      //   scrollLoadProps: {
+                      //     renderLoading: () => <Spin />,
+                      //     renderEmpty: () => <Empty />,
+                      //     renderError: () => <div>error</div>,
+                      //   },
+                      // }}
+                    />
+                  </div>
                 </div>
-              </div>
+
+                <Popover
+                  placement="bottomLeft"
+                  content={<Picker data={data} onEmojiSelect={console.log} i18n={zh} />}
+                  // trigger="click"
+                  visible={emojiIconWrapVisible}
+                >
+                  <button onClick={() => setEmojiIconWrapVisible(!emojiIconWrapVisible)}>
+                    Emoji
+                  </button>
+                </Popover>
+              </>
             ),
           },
         ]}

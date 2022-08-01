@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
  * @param props
  * @return {JSX.Element}
  * @constructor
+ * @classdesc 上拉下拽
  */
 declare function ListStandard(props: IListStandardProps): JSX.Element;
 declare namespace ListStandard {

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
  * Comment
  * @param props
  * @constructor
+ * @classdesc 评论
  */
 declare function Comment(props: ICommentProps): JSX.Element;
 declare namespace Comment {
@@ -32,6 +33,7 @@ declare namespace Comment {
         showReplyTextIcon: JSX.Element;
         hideReplyTextIcon: JSX.Element;
         loadMoreCollapseTextIcon: JSX.Element;
+        local: string;
     };
     var propTypes: {
         getScrollWrapContainer: PropTypes.Requireable<(...args: any[]) => any>;
@@ -94,6 +96,7 @@ declare namespace Comment {
             renderEmpty: PropTypes.Requireable<(...args: any[]) => any>;
             renderError: PropTypes.Requireable<(...args: any[]) => any>;
         }>>;
+        local: PropTypes.Requireable<string>;
     };
 }
 export default Comment;

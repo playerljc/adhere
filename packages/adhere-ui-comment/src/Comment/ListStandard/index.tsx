@@ -22,6 +22,7 @@ const selectorPrefix = 'adhere-ui-comment-list-standard';
  * @param props
  * @return {JSX.Element}
  * @constructor
+ * @classdesc 上拉下拽
  */
 function ListStandard(props: IListStandardProps) {
   const paging = useRef({

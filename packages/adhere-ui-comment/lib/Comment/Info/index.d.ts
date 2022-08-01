@@ -1,5 +1,11 @@
 /// <reference types="react" />
 import { INodeProps } from '@/types';
+/**
+ * CommentInfo
+ * @param props
+ * @constructor
+ * @classdesc 评论节点
+ */
 declare function CommentInfo(props: INodeProps): JSX.Element;
 declare namespace CommentInfo {
     var defaultProps: {
@@ -11,6 +17,7 @@ declare namespace CommentInfo {
             list: string;
             totalCount: string;
         };
+        local: string;
     };
     var propTypes: {
         isReply: import("prop-types").Requireable<boolean>;
@@ -40,6 +47,7 @@ declare namespace CommentInfo {
         showReplyTextIcon: import("prop-types").Requireable<string | number | boolean | {} | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
         hideReplyTextIcon: import("prop-types").Requireable<string | number | boolean | {} | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
         loadMoreCollapseTextIcon: import("prop-types").Requireable<string | number | boolean | {} | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
+        local: import("prop-types").Requireable<string>;
     };
 }
 export default CommentInfo;

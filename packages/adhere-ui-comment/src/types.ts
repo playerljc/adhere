@@ -1,6 +1,23 @@
 import React from 'react';
 import { IFlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
 
+export type ILocal =
+  | 'ar'
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'fa'
+  | 'fr'
+  | 'it'
+  | 'ja'
+  | 'nl'
+  | 'pl'
+  | 'pt'
+  | 'ru'
+  | 'uk'
+  | 'zh'
+  | string;
+
 export type ICommentProps = Partial<{
   getScrollWrapContainer: () => HTMLElement;
 
@@ -50,11 +67,13 @@ export type ICommentProps = Partial<{
   showReplyTextIcon: React.ReactNode | Function;
   hideReplyTextIcon: React.ReactNode | Function;
   loadMoreCollapseTextIcon: React.ReactNode | Function;
+  local: ILocal;
 }>;
 
 export type IReplyProps = Partial<{
   onCancel: Function;
   onResult: Function;
+  local: ILocal;
 }>;
 
 export type IListStandardProps = Partial<{
@@ -103,8 +122,6 @@ export type IListProps = Partial<{
   children: React.ReactNode;
 }>;
 
-export interface INodeCommonProps {}
-
 export type INodeProps = Partial<{
   isReply: boolean;
   data: {
@@ -128,11 +145,11 @@ export type INodeProps = Partial<{
   renderContent: (params: any) => React.ReactNode | null;
   renderDateTime: (params: any) => React.ReactNode | null;
   children: Function;
-
   showReplyText: string | Function;
   hideReplyText: string | Function;
   loadMoreReplyText: string | Function;
   showReplyTextIcon: React.ReactNode | Function;
   hideReplyTextIcon: React.ReactNode | Function;
   loadMoreCollapseTextIcon: React.ReactNode | Function;
+  local: ILocal;
 }>;

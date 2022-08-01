@@ -83,6 +83,14 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     abstract getOrderProp(): string;
     /**
+     * getOrderPropValue - 获取默认排序方式
+     */
+    abstract getOrderPropValue(): 'descend' | 'ascend';
+    /**
+     * getOrderFieldValue - 获取默认排序字段的值
+     */
+    abstract getOrderFieldValue(): string;
+    /**
      * onSubTableChange - 获取表格change句柄
      * @param pagination
      * @param filters

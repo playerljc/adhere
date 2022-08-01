@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
  * Node
  * @param props
  * @constructor
+ * @classdesc 节点(评论 | 回复)
  */
 declare function Node(props: INodeProps): JSX.Element;
 declare namespace Node {
@@ -17,6 +18,7 @@ declare namespace Node {
             list: string;
             totalCount: string;
         };
+        local: string;
     };
     var propTypes: {
         isReply: PropTypes.Requireable<boolean>;
@@ -46,6 +48,7 @@ declare namespace Node {
         showReplyTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         hideReplyTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         loadMoreCollapseTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+        local: PropTypes.Requireable<string>;
     };
 }
 export declare const defaultProps: {
@@ -57,6 +60,7 @@ export declare const defaultProps: {
         list: string;
         totalCount: string;
     };
+    local: string;
 };
 export declare const propTypes: {
     isReply: PropTypes.Requireable<boolean>;
@@ -86,5 +90,6 @@ export declare const propTypes: {
     showReplyTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
     hideReplyTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
     loadMoreCollapseTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+    local: PropTypes.Requireable<string>;
 };
 export default Node;

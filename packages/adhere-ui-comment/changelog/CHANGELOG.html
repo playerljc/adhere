@@ -7,14 +7,31 @@
       content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover"
     />
     <title></title>
+    <script>
+      window.onload = function () {
+        const btn = document.getElementById('btn');
+        const textarea = document.getElementById('textarea');
+        btn.addEventListener('click', () => {
+          // textarea.selectionStart;
+          textarea.focus();
+          textarea.setSelectionRange(3, 3);
+        });
+
+        debugger
+          const str = '123';
+          const arr = [...str];
+      };
+    </script>
   </head>
 
   <body>
-    <h1>1.0.0</h1>
+    <!--    <h1>1.0.0</h1>
     <hr />
     <div>2022-7-29</div>
     <ul>
       <li>加入adhere-ui-comment</li>
-    </ul>
+    </ul>-->
+    <textarea id="textarea"></textarea>
+    <button id="btn">111</button>
   </body>
 </html>

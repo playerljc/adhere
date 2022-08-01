@@ -21,6 +21,7 @@ class BackTopAnimationImpl extends BackTopAnimation {
 /**
  * CommentList
  * @constructor
+ * @classdesc 评论列表
  */
 function CommentList({
   className,

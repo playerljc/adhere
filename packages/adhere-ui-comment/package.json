@@ -54,6 +54,10 @@
     "@baifendian/adhere-ui-backtopanimation": "^1.0.17-fix.0",
     "@baifendian/adhere-ui-flexlayout": "^1.0.15",
     "@baifendian/adhere-ui-css": "^1.0.15",
-    "@baifendian/adhere-util": "^1.0.17-fix.0"
+    "@baifendian/adhere-util": "^1.0.17-fix.0",
+    "@baifendian/adhere-ui-hooks": "^1.0.17",
+    "emoji-mart" :"^5.2.0",
+    "@emoji-mart/data":"^1.0.3",
+    "@emoji-mart/react": "^1.0.0"
   }
 }

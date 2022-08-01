@@ -1,5 +1,6 @@
 import React from 'react';
 import { IFlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
+export declare type ILocal = 'ar' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'it' | 'ja' | 'nl' | 'pl' | 'pt' | 'ru' | 'uk' | 'zh' | string;
 export declare type ICommentProps = Partial<{
     getScrollWrapContainer: () => HTMLElement;
     fetchCommentData: () => Promise<any>;
@@ -44,10 +45,12 @@ export declare type ICommentProps = Partial<{
     showReplyTextIcon: React.ReactNode | Function;
     hideReplyTextIcon: React.ReactNode | Function;
     loadMoreCollapseTextIcon: React.ReactNode | Function;
+    local: ILocal;
 }>;
 export declare type IReplyProps = Partial<{
     onCancel: Function;
     onResult: Function;
+    local: ILocal;
 }>;
 export declare type IListStandardProps = Partial<{
     getScrollWrapContainer: () => HTMLElement;
@@ -93,8 +96,6 @@ export declare type IListProps = Partial<{
     };
     children: React.ReactNode;
 }>;
-export interface INodeCommonProps {
-}
 export declare type INodeProps = Partial<{
     isReply: boolean;
     data: {
@@ -124,4 +125,5 @@ export declare type INodeProps = Partial<{
     showReplyTextIcon: React.ReactNode | Function;
     hideReplyTextIcon: React.ReactNode | Function;
     loadMoreCollapseTextIcon: React.ReactNode | Function;
+    local: ILocal;
 }>;

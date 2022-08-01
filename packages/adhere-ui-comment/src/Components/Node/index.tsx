@@ -17,6 +17,7 @@ const selectorPrefix = 'adhere-ui-comment-node';
  * Node
  * @param props
  * @constructor
+ * @classdesc 节点(评论 | 回复)
  */
 function Node(props: INodeProps) {
   const [listData, setListData] = useState({
@@ -297,6 +298,7 @@ function Node(props: INodeProps) {
                         loadData();
                       });
                   }}
+                  local={props.local}
                 />
               </FlexLayout.Fixed>
             )}
@@ -332,6 +334,7 @@ export const defaultProps = {
     list: 'list',
     totalCount: 'totalCount',
   },
+  local: 'zh',
 };
 
 export const propTypes = {
@@ -362,6 +365,7 @@ export const propTypes = {
   showReplyTextIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   hideReplyTextIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   loadMoreCollapseTextIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  local: PropTypes.string,
 };
 
 Node.defaultProps = defaultProps;
