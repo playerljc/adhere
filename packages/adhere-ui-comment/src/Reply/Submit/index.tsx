@@ -88,13 +88,13 @@ function Reply(props: IReplyProps) {
 
   useLayoutEffect(() => {
     function onDocBodyClick(e) {
-      console.log('onDocBodyClick');
+      // console.log('onDocBodyClick');
       const target = e.target;
 
       const textareaEl = textAreaRef?.current as unknown as HTMLElement;
 
-      console.log('target', target);
-      console.log('textAreaRef.current', textareaEl);
+      // console.log('target', target);
+      // console.log('textAreaRef.current', textareaEl);
 
       if (![textareaEl.querySelector('textarea')].includes(target)) {
         setEmojiIconWrapVisible(false);
@@ -102,7 +102,7 @@ function Reply(props: IReplyProps) {
     }
 
     function onEmojiWrapClick(e) {
-      console.log('onEmojiIconWrapClick');
+      // console.log('onEmojiIconWrapClick');
       e.stopPropagation();
     }
 
