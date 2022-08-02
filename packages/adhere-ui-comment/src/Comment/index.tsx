@@ -50,6 +50,7 @@ function Comment(props: ICommentProps) {
               hideReplyTextIcon={props.hideReplyTextIcon}
               loadMoreCollapseTextIcon={props.loadMoreCollapseTextIcon}
               local={props.local}
+              emojiPickerProps={props.emojiPickerProps}
             >
               {(record) => (
                 <ReplyInfo
@@ -73,6 +74,7 @@ function Comment(props: ICommentProps) {
                   hideReplyTextIcon={props.hideReplyTextIcon}
                   loadMoreCollapseTextIcon={props.loadMoreCollapseTextIcon}
                   local={props.local}
+                  emojiPickerProps={props.emojiPickerProps}
                 />
               )}
             </CommentInfo>
@@ -210,6 +212,7 @@ Comment.propTypes = {
   }),
 
   local: PropTypes.string,
+  emojiPickerProps: PropTypes.object,
 };
 
 export default Comment;

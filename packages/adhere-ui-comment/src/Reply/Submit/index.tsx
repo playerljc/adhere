@@ -77,13 +77,17 @@ function Reply(props: IReplyProps) {
     // 光标开始索引
     const { selectionStart } = textareaEl;
 
-    const str = [...value];
-    str.splice(selectionStart, 0, native);
-
-    setValue(str.join(''), () => {
-      textareaEl.focus();
-      textareaEl.setSelectionRange(selectionStart + 1, selectionStart + 1);
-    });
+    // (0) 1 (1) 2 (2) 3 (3)
+    setValue(
+      `${value.substring(0, selectionStart)}${native}${value.substring(selectionStart)}`,
+      () => {
+        textareaEl.focus();
+        textareaEl.setSelectionRange(
+          selectionStart + native.length,
+          selectionStart + native.length,
+        );
+      },
+    );
   }
 
   useLayoutEffect(() => {
@@ -143,6 +147,7 @@ function Reply(props: IReplyProps) {
               data={data}
               i18n={LOCAL_MAP.get(props.local || 'zh')}
               onEmojiSelect={onEmojiSelect}
+              {...(props.emojiPickerProps || {})}
             />
           }
           visible={emojiIconWrapVisible}
@@ -184,6 +189,7 @@ Reply.propTypes = {
   onCancel: PropTypes.func,
   onResult: PropTypes.func,
   local: PropTypes.string,
+  emojiPickerProps: PropTypes.object,
 };
 
 export default Reply;

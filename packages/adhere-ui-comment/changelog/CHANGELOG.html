@@ -12,14 +12,20 @@
         const btn = document.getElementById('btn');
         const textarea = document.getElementById('textarea');
         btn.addEventListener('click', () => {
-          // textarea.selectionStart;
-          textarea.focus();
-          textarea.setSelectionRange(3, 3);
-        });
+          const { selectionStart } = textarea;
 
-        debugger
-          const str = '123';
-          const arr = [...str];
+          debugger
+
+          const value = textarea.value;
+
+          const str = [...value];
+          str.splice(selectionStart - 2, 0, '😍');
+
+          textarea.value = str.join('');
+
+          textarea.focus();
+          textarea.setSelectionRange(selectionStart + 2, selectionStart + 2);
+        });
       };
     </script>
   </head>
@@ -30,8 +36,9 @@
     <div>2022-7-29</div>
     <ul>
       <li>加入adhere-ui-comment</li>
+      😍😆😅😜
     </ul>-->
-    <textarea id="textarea"></textarea>
+    <textarea id="textarea">😀😘</textarea>
     <button id="btn">111</button>
   </body>
 </html>

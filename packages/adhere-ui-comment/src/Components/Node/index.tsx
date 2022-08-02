@@ -299,6 +299,7 @@ function Node(props: INodeProps) {
                       });
                   }}
                   local={props.local}
+                  emojiPickerProps={props.emojiPickerProps}
                 />
               </FlexLayout.Fixed>
             )}
@@ -366,6 +367,7 @@ export const propTypes = {
   hideReplyTextIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   loadMoreCollapseTextIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   local: PropTypes.string,
+  emojiPickerProps: PropTypes.object,
 };
 
 Node.defaultProps = defaultProps;

@@ -68,12 +68,14 @@ export type ICommentProps = Partial<{
   hideReplyTextIcon: React.ReactNode | Function;
   loadMoreCollapseTextIcon: React.ReactNode | Function;
   local: ILocal;
+  emojiPickerProps: any;
 }>;
 
 export type IReplyProps = Partial<{
   onCancel: Function;
   onResult: Function;
   local: ILocal;
+  emojiPickerProps: any;
 }>;
 
 export type IListStandardProps = Partial<{
@@ -152,4 +154,5 @@ export type INodeProps = Partial<{
   hideReplyTextIcon: React.ReactNode | Function;
   loadMoreCollapseTextIcon: React.ReactNode | Function;
   local: ILocal;
+  emojiPickerProps: any;
 }>;

@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { Tooltip, Popover } from 'antd';
+import { Tooltip /*Popover*/ } from 'antd';
 import { Comment, DateDisplay, GlobalIndicator } from '@baifendian/adhere';
 import faker from 'faker';
 import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 import { LikeFilled, DislikeOutlined } from '@ant-design/icons';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+// import data from '@emoji-mart/data';
+// import Picker from '@emoji-mart/react';
+// import zh from '@emoji-mart/data/i18n/zh.json';
 import styles from './index.less';
-import zh from '@emoji-mart/data/i18n/zh.json';
 
 const CommentData = Array.from({ length: 300 }).map((t, index) => ({
   id: index + 1,
@@ -34,7 +34,7 @@ const ReplyData = Array.from({ length: 300 }).map((t, index) => ({
 export default () => {
   const ref = useRef();
 
-  const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
+  // const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
 
   function fetchCommentData({ page, limit }) {
     console.log('fetchCommentData', page, limit);
@@ -224,7 +224,7 @@ export default () => {
                   </div>
                 </div>
 
-                <Popover
+                {/*<Popover
                   placement="bottomLeft"
                   content={<Picker data={data} onEmojiSelect={console.log} i18n={zh} />}
                   // trigger="click"
@@ -233,7 +233,7 @@ export default () => {
                   <button onClick={() => setEmojiIconWrapVisible(!emojiIconWrapVisible)}>
                     Emoji
                   </button>
-                </Popover>
+                </Popover>*/}
               </>
             ),
           },
