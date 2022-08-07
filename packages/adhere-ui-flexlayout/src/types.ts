@@ -5,12 +5,14 @@ export interface IFlexLayoutProps {
   style?: React.CSSProperties;
   children?: React.ReactNode | null;
 }
+
 export interface IFixedProps {
   className?: string;
   fit?: boolean;
   style?: React.CSSProperties;
   children?: React.ReactNode | null;
 }
+
 export interface IAutoProps {
   autoFixed?: boolean;
   fit?: boolean;
@@ -18,6 +20,7 @@ export interface IAutoProps {
   style?: React.CSSProperties;
   children?: React.ReactNode | null;
 }
+
 export interface IVerticalFlexLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -48,6 +51,7 @@ export interface IVerticalFlexLayoutProps {
   mainAutoWrapProps?: object;
   children?: any;
 }
+
 export interface IHorizontalFlexLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -78,6 +82,7 @@ export interface IHorizontalFlexLayoutProps {
   mainAutoWrapProps?: object;
   children?: any;
 }
+
 export interface IToolBarLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -99,6 +104,7 @@ export interface IToolBarLayoutProps {
   mainAutoWrapProps?: object;
   children?: any;
 }
+
 export interface IBackLayoutProps {
   className?: string;
   style?: React.CSSProperties;
@@ -122,5 +128,12 @@ export interface IBackLayoutProps {
   isShowBack?: boolean;
   history: any;
   backTitle?: string | JSX.Element;
+  children?: any;
+}
+
+export interface IScrollLayoutProps {
+  className?: string;
+  style?: React.CSSProperties;
+  scrollY: boolean;
   children?: any;
 }

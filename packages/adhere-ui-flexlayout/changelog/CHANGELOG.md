@@ -8,6 +8,7 @@
 * 加入VerticalFlexLayout布局
 * 加入ToolBarLayout布局
 * 加入BackLayout布局
+* 加入ScrollLayout布局
 
 # 1.0.7
 

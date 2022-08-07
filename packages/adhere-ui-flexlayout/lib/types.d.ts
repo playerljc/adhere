@@ -124,3 +124,9 @@ export interface IBackLayoutProps {
     backTitle?: string | JSX.Element;
     children?: any;
 }
+export interface IScrollLayoutProps {
+    className?: string;
+    style?: React.CSSProperties;
+    scrollY: boolean;
+    children?: any;
+}

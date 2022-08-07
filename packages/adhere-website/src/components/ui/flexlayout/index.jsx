@@ -1,11 +1,37 @@
 import React from 'react';
 import { FlexLayout, Space } from '@baifendian/adhere';
-import { Button } from 'antd';
+import { Button, Select } from 'antd';
 
 import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 
-const { Fixed, Auto, HorizontalFlexLayout, VerticalFlexLayout, ToolBarLayout, BackLayout } =
-  FlexLayout;
+const {
+  Fixed,
+  Auto,
+  HorizontalFlexLayout,
+  VerticalFlexLayout,
+  ToolBarLayout,
+  BackLayout,
+  ScrollLayout,
+  useScrollLayout,
+} = FlexLayout;
+
+const { Option } = Select;
+
+function FormItemWrap() {
+  const { getEl } = useScrollLayout();
+
+  const data = Array.from({ length: 10 }).fill(1);
+
+  return (
+    <Select style={{ width: 200 }} getPopupContainer={() => getEl()}>
+      {data.map((t, _index) => (
+        <Option key={`${_index + 1}`} value={_index + 1}>
+          {_index + 1}
+        </Option>
+      ))}
+    </Select>
+  );
+}
 
 export default (props) => {
   function boxPanelConfig() {
@@ -445,6 +471,25 @@ export default (props) => {
             info: '分为Left、Main和Right',
           },
         },
+        codeText: `
+  import React from 'react';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    HorizontalFlexLayout,
+  } = FlexLayout;
+
+  export default () => (
+    <HorizontalFlexLayout
+      style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
+      leftStyle={{ borderRight: '1px solid #ccc', width: 100 }}
+      rightStyle={{ borderLeft: '1px solid #ccc', width: 100 }}
+      renderLeft={<div>Left</div>}
+      renderMain={<div>Main</div>}
+      renderRight={<div>Right</div>}
+    />
+  )
+        `,
         renderChildren: () => (
           <HorizontalFlexLayout
             style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
@@ -468,6 +513,25 @@ export default (props) => {
             info: '分为Top、Main和Bottom',
           },
         },
+        codeText: `
+  import React from 'react';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    VerticalFlexLayout,
+  } = FlexLayout;
+
+  export default () => (
+    <VerticalFlexLayout
+      style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
+      topStyle={{ borderBottom: '1px solid #ccc', height: 80 }}
+      bottomStyle={{ borderTop: '1px solid #ccc', height: 80 }}
+      renderTop={<div>Top</div>}
+      renderMain={<div>Main</div>}
+      renderBottom={<div>Bottom</div>}
+    />
+  )
+        `,
         renderChildren: () => (
           <VerticalFlexLayout
             style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
@@ -491,6 +555,35 @@ export default (props) => {
             info: '组合嵌套',
           },
         },
+        codeText: `
+  import React from 'react';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    VerticalFlexLayout,
+    HorizontalFlexLayout
+  } = FlexLayout;
+
+  export default () => (
+    <HorizontalFlexLayout
+      style={{ width: '100%', border: '1px solid #ccc' }}
+      leftStyle={{ borderRight: '1px solid #ccc', width: 100 }}
+      rightStyle={{ borderLeft: '1px solid #ccc', width: 100 }}
+      renderLeft={<div>Left</div>}
+      renderMain={
+        <VerticalFlexLayout
+          style={{ width: '100%', height: 300 }}
+          topStyle={{ borderBottom: '1px solid #ccc', height: 80 }}
+          bottomStyle={{ borderTop: '1px solid #ccc', height: 80 }}
+          renderTop={<div>Top</div>}
+          renderMain={<div>Main</div>}
+          renderBottom={<div>Bottom</div>}
+        />
+      }
+      renderRight={<div>Right</div>}
+    />
+  )
+        `,
         renderChildren: () => (
           <HorizontalFlexLayout
             style={{ width: '100%', border: '1px solid #ccc' }}
@@ -523,6 +616,44 @@ export default (props) => {
             info: '包含上下的工具栏',
           },
         },
+        codeText: `
+  import React from 'react';
+  import { Button } from 'antd';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    ToolBarLayout
+  } = FlexLayout;
+
+  export default () => (
+    <ToolBarLayout
+      topToolBarItems={[
+        <Button type="primary" key="add">
+          添加
+        </Button>,
+        <Button type="primary" key="remove">
+          删除
+        </Button>,
+        <Button type="primary" key="update">
+          修改
+        </Button>,
+      ]}
+      bottomToolBarItems={[
+        <Button type="primary" key="add">
+          添加
+        </Button>,
+        <Button type="primary" key="remove">
+          删除
+        </Button>,
+        <Button type="primary" key="update">
+          修改
+        </Button>,
+      ]}
+    >
+      Main
+    </ToolBarLayout>
+  )
+        `,
         renderChildren: () => (
           <ToolBarLayout
             topToolBarItems={[
@@ -564,6 +695,36 @@ export default (props) => {
             info: '带有返回操作的布局',
           },
         },
+        codeText: `
+  import React from 'react';
+  import { Button } from 'antd';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    BackLayout
+  } = FlexLayout;
+
+  export default () => (
+    <BackLayout
+      topToolBarItems={[<Button key="add">新增</Button>]}
+      bottomToolBarItems={[
+        <Button type="primary" key="add">
+          添加
+        </Button>,
+        <Button type="primary" key="remove">
+          删除
+        </Button>,
+        <Button type="primary" key="update">
+          修改
+        </Button>,
+      ]}
+      history={props.history}
+      backTitle="返回"
+    >
+      Main
+    </BackLayout>
+  )
+        `,
         renderChildren: () => (
           <BackLayout
             topToolBarItems={[<Button key="add">新增</Button>]}
@@ -583,6 +744,75 @@ export default (props) => {
           >
             Main
           </BackLayout>
+        ),
+      },
+      {
+        id: 'p9',
+        name: `ScrollLayout`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGround',
+        cardProps: {
+          description: {
+            title: '可以滚动的布局',
+            info: '一般用在路由组件的外层，作为带有getPopupContainer的FormItem的parent',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Select } from 'antd';
+  import { FlexLayout, Space } from '@baifendian/adhere';
+
+  const {
+    ScrollLayout,
+    useScrollLayout,
+  } = FlexLayout;
+
+  const { Option } = Select;
+
+  export default () => {
+    function FormItemWrap() {
+      const { getEl } = useScrollLayout();
+
+      const data = Array.from({ length: 10 }).fill(1);
+
+      return (
+        <Select style={{ width: 200 }} getPopupContainer={() => getEl()}>
+          {data.map((t, _index) => (
+            <Option key={\`\${_index + 1}\`} value={_index + 1}>
+              {_index + 1}
+            </Option>
+          ))}
+        </Select>
+      );
+    }
+
+    return (
+      <div style={{ height: 500 }}>
+        <ScrollLayout scrollY>
+          <Space.Group direction="vertical">
+            {Array.from({ length: 20 })
+              .fill(1)
+              .map((t, _index) => (
+                <FormItemWrap key={\`\${_index + 1}\`} />
+              ))}
+          </Space.Group>
+        </ScrollLayout>
+      </div>
+    )
+  }        `,
+        renderChildren: () => (
+          <div style={{ height: 500 }}>
+            <ScrollLayout scrollY>
+              <Space.Group direction="vertical">
+                {Array.from({ length: 20 })
+                  .fill(1)
+                  .map((t, _index) => (
+                    <FormItemWrap key={`${_index + 1}`} />
+                  ))}
+              </Space.Group>
+            </ScrollLayout>
+          </div>
         ),
       },
     ];
@@ -1185,6 +1415,54 @@ export default (props) => {
                 desc: '返回按钮的文本',
                 type: 'string | JSX.Element',
                 defaultVal: '返回',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'FlexLayout.ScrollLayout',
+            data: [
+              {
+                params: 'className',
+                desc: '最外层className',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '最外层style',
+                type: 'React.CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'scrollY',
+                desc: '是否可以滚动',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'FlexLayout.useScrollLayout',
+            data: [
+              {
+                params: 'getEl',
+                desc: '获取Scroll的el元素',
+                type: 'HTMLElement',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'FlexLayout.ScrollLayoutContext',
+            data: [
+              {
+                params: 'getEl',
+                desc: '获取Scroll的el元素',
+                type: 'HTMLElement',
+                defaultVal: '',
               },
             ],
           },

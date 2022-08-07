@@ -8,8 +8,7 @@ import {
   IVerticalFlexLayoutProps,
   IToolBarLayoutProps,
   IBackLayoutProps,
-  IFixedProps,
-  IAutoProps,
+  IScrollLayoutProps,
 } from './types';
 
 import { FlexContext } from './context';
@@ -42,6 +41,14 @@ class FlexLayout extends React.Component<IFlexLayoutProps, any> {
   static ToolBarLayout: (props: IToolBarLayoutProps) => React.ReactElement;
 
   static BackLayout: (props: IBackLayoutProps) => React.ReactElement;
+
+  static ScrollLayout: React.ForwardRefExoticComponent<
+    React.PropsWithoutRef<IScrollLayoutProps> & React.RefAttributes<unknown>
+  >;
+
+  static useScrollLayout: () => { getEl: () => HTMLElement };
+
+  static ScrollLayoutContext: React.Context<{ getEl: () => HTMLElement }>;
 
   static HorizontalFlexLayoutDefaultProps: any;
 
