@@ -11,8 +11,14 @@ import PlayGroundPage, {
 import { Spin } from '@baifendian/adhere';
 
 import Table from './table';
+import Sync from './sync';
+import ASync from './async';
 
 export default () => {
+  const [reset, setReset] = useState(false);
+
+  const [reser1, setReset1] = useState(false);
+
   function boxPanelConfig() {
     return [
       {
@@ -257,12 +263,38 @@ export default () => {
           </>
         ),
       },
+      {
+        id: `p3`,
+        name: `不调用接口值传递数据`,
+        mode: 'code',
+        scope: { React },
+        codeText: ``,
+        cardProps: {
+          description: {
+            title: '不调用接口值传递数据',
+            info: '不调用接口值传递数据',
+          },
+        },
+        type: 'PlayGround',
+        renderChildren: () => <Sync />,
+      },
+      {
+        id: `p4`,
+        name: `调用接口传递数据`,
+        mode: 'code',
+        scope: { React },
+        codeText: ``,
+        cardProps: {
+          description: {
+            title: '调用接口传递数据',
+            info: '调用接口传递数据',
+          },
+        },
+        type: 'PlayGround',
+        renderChildren: () => <ASync />,
+      },
     ];
   }
-
-  const [reset, setReset] = useState(false);
-
-  const [reser1, setReset1] = useState(false);
 
   return (
     <PlayGroundPage>

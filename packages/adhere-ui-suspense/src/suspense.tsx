@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Skeleton, Spin } from 'antd';
 
 import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
+// import type SuspenseSync from './sync';
+// import type SuspenseAsync from './async';
 
 const selectorPrefix = 'adhere-ui-suspense';
 
@@ -16,8 +18,8 @@ const selectorPrefix = 'adhere-ui-suspense';
  * renderInner
  * showLoading
  */
-abstract class Suspense
-  extends React.Component<ISuspenseProps, ISuspenseState>
+abstract class Suspense<T extends ISuspenseProps, P extends ISuspenseState>
+  extends React.Component<T, P>
   implements ISuspense
 {
   // 第一次
@@ -28,6 +30,8 @@ abstract class Suspense
 
   static defaultProps: any;
   static propTypes: any;
+  static Sync: Function;
+  static ASync: Function;
 
   /**
    * fetchData - 加载数据
@@ -59,7 +63,7 @@ abstract class Suspense
   }
 
   componentDidMount() {
-    this.fetchData();
+    this?.fetchData?.();
   }
 
   /**
@@ -82,7 +86,6 @@ abstract class Suspense
    * @return {React.Element}
    */
   private renderFirstLoading() {
-    // @ts-ignore
     const { firstLoading } = this.props;
 
     if (firstLoading !== undefined && firstLoading !== null) {

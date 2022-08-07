@@ -4,6 +4,9 @@
 
 2022-7-25
 
+* **adhere-ui-suspense**
+  - 加入sync组件
+  - 加入async组件
 * **adhere-ui-hooks**
   - useSetState加入泛型
 * **adhere-ui-searchtable**

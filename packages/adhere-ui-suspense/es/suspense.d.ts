@@ -10,11 +10,13 @@ import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
  * renderInner
  * showLoading
  */
-declare abstract class Suspense extends React.Component<ISuspenseProps, ISuspenseState> implements ISuspense {
+declare abstract class Suspense<T extends ISuspenseProps, P extends ISuspenseState> extends React.Component<T, P> implements ISuspense {
     isFirst: boolean;
     isFirstLoading: boolean;
     static defaultProps: any;
     static propTypes: any;
+    static Sync: Function;
+    static ASync: Function;
     /**
      * fetchData - 加载数据
      */
