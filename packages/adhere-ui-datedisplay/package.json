@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-datedisplay",
-  "version": "1.0.0",
+  "version": "1.0.18",
   "description": "时间显示组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,12 +40,12 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^1.0.17-fix.0",
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.17",
-    "dayjs": "^1.11.4",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
+    "@baifendian/adhere-util-resource": "^1.0.18",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
+    "dayjs": "^1.11.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

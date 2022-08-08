@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-forceupdate",
-  "version": "1.0.16",
+  "version": "1.0.18",
   "description": "组件强制刷新",
   "main": "lib/index.js",
   "module": "es/index.js",

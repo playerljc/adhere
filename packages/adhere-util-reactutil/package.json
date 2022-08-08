@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-reactutil",
-  "version": "1.0.15",
+  "version": "1.0.18",
   "description": "react的扩展操作",
   "main": "lib/index.js",
   "module": "es/index.js",

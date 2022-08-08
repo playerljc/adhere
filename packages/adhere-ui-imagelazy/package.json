@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-imagelazy",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "图片懒加载",
   "main": "lib/index.js",
   "module": "es/index.js",

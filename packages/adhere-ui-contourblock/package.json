@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-contourblock",
-  "version": "1.0.0",
+  "version": "1.0.18",
   "description": "宽度和高度相等的元素",
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-flexlayout",
-  "version": "1.0.15",
+  "version": "1.0.18",
   "description": "实现flex布局的组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -42,12 +42,12 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-historyback": "^1.0.15",
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.17",
-    "@baifendian/adhere-util-intl": "^1.0.16",
-    "antd": "^4.9.4",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
+    "@baifendian/adhere-ui-historyback": "^1.0.18",
+    "@baifendian/adhere-util-intl": "^1.0.18",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "antd": "^4.9.4",
     "classnames": "^2.2.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
