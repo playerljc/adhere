@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Skeleton, Spin } from 'antd';
 
 import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
