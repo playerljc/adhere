@@ -7,6 +7,8 @@ export interface ISuspense {
     isFirstLoading: boolean;
 }
 export interface ISuspenseProps {
+    className?: string;
+    style?: React.CSSProperties;
     reset: boolean;
     firstLoading: React.ReactElement;
 }

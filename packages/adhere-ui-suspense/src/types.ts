@@ -11,6 +11,8 @@ export interface ISuspense {
 }
 
 export interface ISuspenseProps {
+  className?: string;
+  style?: React.CSSProperties;
   reset: boolean;
   firstLoading: React.ReactElement;
 }

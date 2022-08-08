@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Skeleton, Spin } from 'antd';
@@ -129,16 +130,27 @@ abstract class Suspense<T extends ISuspenseProps, P extends ISuspenseState>
   }
 
   render() {
-    return <div className={selectorPrefix}>{this.renderDispatch()}</div>;
+    return (
+      <div
+        className={classNames(selectorPrefix, this.props.className || '')}
+        style={this.props.style || {}}
+      >
+        {this.renderDispatch()}
+      </div>
+    );
   }
 }
 
 Suspense.defaultProps = {
+  className: '',
+  style: {},
   reset: false,
   firstLoading: null,
 };
 
 Suspense.propTypes = {
+  className: PropTypes.string,
+  style: PropTypes.object,
   reset: PropTypes.bool,
   firstLoading: PropTypes.node,
 };
