@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Skeleton, Spin } from 'antd';
 
 import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
-// import type SuspenseSync from './sync';
-// import type SuspenseAsync from './async';
 
 const selectorPrefix = 'adhere-ui-suspense';
 

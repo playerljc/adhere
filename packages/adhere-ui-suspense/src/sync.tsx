@@ -76,9 +76,7 @@ class SuspenseSync
   protected fetchData(): void {}
 }
 
-SuspenseSync.defaultProps = {
-  reset: false,
-};
+SuspenseSync.defaultProps = {};
 
 SuspenseSync.propTypes = {
   firstLoading: PropTypes.node,
