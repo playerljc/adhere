@@ -104,7 +104,7 @@ class Surnames extends React.Component<ISurnamesProps> {
 
     const target = e.target;
 
-    const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`);
+    const indexItemEl = Util.getTopDom(target, `${selectorPrefix}-index-item`) as HTMLElement;
 
     this.curIndexName = indexItemEl.dataset.name;
 
@@ -285,8 +285,8 @@ class Surnames extends React.Component<ISurnamesProps> {
 
     // 计算每一项距离视口的top和bottom
     for (let i = 0; i < indexItemEls.length; i++) {
-      const indexItemEl = indexItemEls[i];
-      const indexName = indexItemEl.dataset.name;
+      const indexItemEl = indexItemEls[i] as HTMLElement;
+      const indexName = indexItemEl.dataset.name as string;
 
       const rect = indexItemEl.getBoundingClientRect();
 

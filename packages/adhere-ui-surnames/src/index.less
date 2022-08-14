@@ -1,6 +1,8 @@
 @import '~@baifendian/adhere-ui-css/lib/vars';
 
 @adhere-ui-surnames-index-item-active-color: #0bc2b4;
+@adhere-ui-surnames-group-title-color: #9c9c9c;
+@adhere-ui-surnames-group-title-background-color: rgb(247, 247, 247);
 
 .adhere-ui-surnames {
   position: relative;
@@ -206,10 +208,10 @@
       > .adhere-ui-surnames-group-title {
         display: block;
         height: 1.5rem;
-        color: #9c9c9c;
+        color: @adhere-ui-surnames-group-title-color;
         line-height: 1.5rem;
         text-indent: 1rem;
-        background: rgb(247, 247, 247);
+        background: @adhere-ui-surnames-group-title-background-color;
       }
     }
   }

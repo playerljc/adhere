@@ -11,6 +11,7 @@
 @import './Extension/TableDensitySetting/setting';
 
 @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color: #fff;
+@adhere-ui-searchtable-background-color: #f0f2f5;
 
 .adhere-ui-searchtable-wrap {
   display: flex;
@@ -22,7 +23,7 @@
     .adhere-ui-searchtable {
       position: relative;
       padding: 24px;
-      background-color: #f0f2f5;
+      background-color: @adhere-ui-searchtable-background-color;
 
       .adhere-ui-searchtable-tablewrapper {
         > .ant-table-wrapper {
@@ -64,8 +65,8 @@
             }
 
             .adhere-ui-searchtable-searchfooteritem-search-btn-icon {
-              font-size: 14px;
               color: @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color;
+              font-size: 14px;
             }
 
             > .adhere-ui-searchtable-searchfooteritem-expand-search-up-btn {
@@ -77,8 +78,8 @@
               }
 
               > i {
-                font-size: 16px;
                 color: @adhere-primary-color;
+                font-size: 16px;
               }
             }
 
@@ -91,8 +92,8 @@
               }
 
               > i {
-                font-size: 16px;
                 color: @adhere-primary-color;
+                font-size: 16px;
               }
             }
           }

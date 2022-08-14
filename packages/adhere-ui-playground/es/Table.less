@@ -1,6 +1,8 @@
 @adhere-ui-playground-table-color: #f0f0f0;
 @adhere-ui-playground-table-font-color: #595959;
 @adhere-ui-playground-table-highlight-color: #f2f4f5;
+@adhere-ui-playground-table-header-column-color: #5c6b77;
+@adhere-ui-playground-table-row-hover-color: rgb(60, 90, 100);
 
 .adhere-ui-playground-table {
   > .adhere-ui-playground-table-inner {
@@ -21,11 +23,11 @@
         > .adhere-ui-playground-table-header-column {
           padding: 12px;
           padding-top: 14px;
-          color: #5c6b77;
+          color: @adhere-ui-playground-table-header-column-color;
           font-weight: 500;
           white-space: nowrap;
           text-align: left;
-          background: rgba(0, 0, 0, 0.02);
+          background: rgba(@adhere-black-color, 0.02);
           border: 1px solid @adhere-ui-playground-table-color;
 
           &:first-child {
@@ -44,7 +46,7 @@
         transition: all 0.3s;
 
         &:hover {
-          background: rgba(60, 90, 100, 0.04);
+          background: rgba(@adhere-ui-playground-table-row-hover-color, 0.04);
         }
 
         > .adhere-ui-playground-table-cell {
