@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-communication-ajax",
-  "version": "1.0.18",
+  "version": "1.0.18-fix.1",
   "description": "Ajax通信",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,7 +40,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-globalindicator": "^1.0.18",
+    "@baifendian/adhere-ui-globalindicator": "^1.0.18-fix.1",
     "@baifendian/adhere-util": "^1.0.18",
     "@baifendian/adhere-util-intl": "^1.0.18",
     "@types/react": "^17.0.0",

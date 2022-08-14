@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-backtopanimation",
-  "version": "1.0.18",
+  "version": "1.0.18-fix.1",
   "description": "动画的回到顶部",
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tablelist",
-  "version": "1.0.18",
+  "version": "1.0.18-fix.1",
   "description": "表格和列表",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -42,9 +42,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
     "@baifendian/adhere-ui-formitemcreator": "^1.0.18",
     "@baifendian/adhere-util-intl": "^1.0.18",
-    "@baifendian/adhere-ui-css": "^1.0.18",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

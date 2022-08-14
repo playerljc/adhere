@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-globalindicator",
-  "version": "1.0.18",
+  "version": "1.0.18-fix.1",
   "description": "全局无侵入的遮罩",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,7 +40,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^1.0.18",
+    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
     "@baifendian/adhere-util-resource": "^1.0.18"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"

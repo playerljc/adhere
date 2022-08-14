@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tablegridlayout",
-  "version": "1.0.18",
+  "version": "1.0.18-fix.1",
   "description": "表格布局",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
-    "@baifendian/adhere-ui-css": "^1.0.18",
+    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
