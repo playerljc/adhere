@@ -108,7 +108,7 @@ export const PolygonSelection = lazy(() =>
 export const PlayGround = lazy(() =>
   import(/* webpackChunkName: "playground" */ '@/components/ui/playground'),
 );
-// export const BMap = lazy(() => import(/* webpackChunkName: "bmap" */ '@/components/ui/bmap'));
+export const BMap = lazy(() => import(/* webpackChunkName: "bmap" */ '@/components/ui/bmap'));
 
 export const Hooks = lazy(() => import(/* webpackChunkName: "hooks" */ '@/components/ui/hooks'));
 

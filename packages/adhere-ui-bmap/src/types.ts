@@ -8,7 +8,6 @@ import React from 'react';
 export interface IBMapProps {
   className?: string;
   style?: React.CSSProperties;
-  ak: string;
   config: IMapOptions;
   zoom?: number;
   center?: {
@@ -16,8 +15,6 @@ export interface IBMapProps {
     lat: number;
   };
   onBMapInitReady: Function;
-  onBMapScriptReady: Function;
-  externalImportBMapScript: boolean;
 }
 
 export interface IBMapState {

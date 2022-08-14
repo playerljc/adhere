@@ -45,44 +45,17 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
    * componentDidMount
    */
   protected componentDidMount() {
-    const { externalImportBMapScript } = this.props;
+    // @ts-ignore
+    this.BMap = typeof window !== 'undefined' && window.BMap;
 
-    // 外部载入bmap.js
-    if (externalImportBMapScript) {
-      // @ts-ignore
-      this.BMap = typeof window !== 'undefined' && window.BMap;
-
-      this.setState(
-        {
-          isReady: true,
-        },
-        () => {
-          this.initMap();
-        },
-      );
-    }
-    // 内部引入bmap.js
-    else {
-      this.importBMapJS().then((BMap) => {
-        this.BMap = BMap;
-
-        if (typeof window !== 'undefined') {
-          // @ts-ignore
-          window.BMap = BMap;
-        }
-
-        this.props.onBMapScriptReady && this.props.onBMapScriptReady();
-
-        this.setState(
-          {
-            isReady: true,
-          },
-          () => {
-            this.initMap();
-          },
-        );
-      });
-    }
+    this.setState(
+      {
+        isReady: true,
+      },
+      () => {
+        this.initMap();
+      },
+    );
   }
 
   /**
@@ -137,50 +110,6 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
   }
 
   /**
-   * importBMapJS
-   * @return Promise<any>
-   */
-  protected importBMapJS(): Promise<any> {
-    function importReal(src) {
-      return new Promise((resolve) => {
-        const script = document.createElement('script');
-        script.onload = () => {
-          // @ts-ignore
-          resolve(typeof window !== 'undefined' && window.BMap);
-        };
-        script.src = src;
-        // @ts-ignore
-        document.querySelector('head').appendChild(script);
-      });
-    }
-
-    return new Promise((resolve) => {
-      const preWrite = document.write;
-
-      document.write = (html) => {
-        const el = document.createElement('div');
-        el.innerHTML = html;
-        const first = el.firstElementChild;
-
-        if (
-          first?.tagName.toLowerCase() === 'script' &&
-          first?.getAttribute('src')?.indexOf('http://api.map.baidu.com') !== -1
-        ) {
-          importReal(first.getAttribute('src')).then((res) => {
-            resolve(res);
-          });
-        } else {
-          preWrite(html);
-        }
-      };
-
-      const script = document.createElement('script');
-      script.src = `http://api.map.baidu.com/api?v=3.0&ak=${this.props.ak}`;
-      document?.querySelector('head')?.appendChild(script);
-    });
-  }
-
-  /**
    * renderLoading
    */
   protected renderLoading() {
@@ -214,7 +143,6 @@ class BMap extends React.Component<IBMapProps, IBMapState> {
 BMap.defaultProps = {
   className: '',
   style: {},
-  ak: 'bxFuXXDt1oKdlgu6mXCCnK51cDgDGBLp',
   config: {
     minZoom: 2,
     maxZoom: 20,
@@ -227,13 +155,11 @@ BMap.defaultProps = {
     lon: 116.404,
     lat: 39.915,
   },
-  externalImportBMapScript: false,
 };
 
 BMap.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
-  ak: PropTypes.string,
   zoom: PropTypes.number,
   center: PropTypes.object,
   config: PropTypes.shape({
@@ -252,10 +178,6 @@ BMap.propTypes = {
   }),
   // 百度地图组件初始化完成
   onBMapInitReady: PropTypes.func,
-  // bmap.js引入成功的回调
-  onBMapScriptReady: PropTypes.func,
-  // 是否外部引入bmap.js
-  externalImportBMapScript: PropTypes.bool,
 };
 
 export default BMap;
