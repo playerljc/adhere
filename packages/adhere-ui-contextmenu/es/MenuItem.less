@@ -1,4 +1,5 @@
 @import '~@baifendian/adhere-ui-css/lib/vars.less';
+@adhere-ui-contextmenu-menuitem-more-color: #ccc;
 
 .adhere-ui-contextmenu-menuitem() {
   position: relative;
@@ -17,15 +18,15 @@
     }
 
     > .adhere-ui-contextmenu-menuitem-icon {
-      color: rgba(0, 0, 0, 0.1);
+      color: @adhere-border-color;
     }
 
     > .adhere-ui-contextmenu-menuitem-name {
-      color: rgba(0, 0, 0, 0.1);
+      color: @adhere-border-color;
     }
 
     > .adhere-ui-contextmenu-menuitem-more {
-      color: rgba(0, 0, 0, 0.1);
+      color: @adhere-border-color;
     }
   }
 
@@ -52,7 +53,7 @@
     flex-grow: 1;
     min-width: 0;
     overflow: hidden;
-    color: rgba(#000, 0.85);
+    color: rgba(@adhere-black-color, 0.85);
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -60,7 +61,7 @@
   > .adhere-ui-contextmenu-menuitem-more {
     flex-shrink: 0;
     margin-right: 5px;
-    color: #ccc;
+    color: @adhere-ui-contextmenu-menuitem-more-color;
     font-size: 12px;
   }
 
@@ -74,5 +75,5 @@
 .adhere-ui-contextmenu-menuitem-separation() {
   height: 1px;
   margin: 5px 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: @adhere-border-color;
 }

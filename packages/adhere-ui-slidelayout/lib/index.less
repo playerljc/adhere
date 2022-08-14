@@ -1,3 +1,5 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
 .adhere-ui {
   &-slidelayout {
     &-overlay,
@@ -32,19 +34,19 @@
       overflow-scrolling: touch;
 
       &.left {
-        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        border-right: 1px solid @adhere-border-color;
       }
 
       &.right {
-        border-left: 1px solid rgba(0, 0, 0, 0.1);
+        border-left: 1px solid @adhere-border-color;
       }
 
       &.top {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid @adhere-border-color;
       }
 
       &.bottom {
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        border-top: 1px solid @adhere-border-color;
       }
     }
 

@@ -1,4 +1,11 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
 @import '~@baifendian/adhere-ui-css/lib/mixin';
+
+@adhere-ui-tablegridlayout-table-row-label-color: #888;
+@adhere-ui-tablegridlayout-table-row-label-require-color: red;
+@adhere-ui-tablegridlayout-table-row-value-color: #222;
+@adhere-ui-tablegridlayout-table-row-odd-color: #fff;
+@adhere-ui-tablegridlayout-table-row-even-color: #fafafa;
 
 .adhere-ui-tablegridlayout {
   width: 100%;
@@ -6,17 +13,17 @@
 
 .adhere-ui-tablegridlayout-inner-wrap {
   &.adhere-ui-tablegridlayout-border {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid @adhere-border-color;
+    border-right: 1px solid @adhere-border-color;
+    border-left: 1px solid @adhere-border-color;
 
     .adhere-ui-tablegridlayout-table {
       tr {
         > td {
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid @adhere-border-color;
 
           &:not(:last-child) {
-            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            border-right: 1px solid @adhere-border-color;
           }
 
           &.adhere-ui-tablegridlayout-table-noborder {
@@ -35,7 +42,7 @@
     .adhere-ui-tablegridlayout-table-row {
       > .adhere-ui-tablegridlayout-table-row-label {
         padding-right: 10px;
-        color: #888;
+        color: @adhere-ui-tablegridlayout-table-row-label-color;
         white-space: nowrap;
         text-align: right;
         word-break: keep-all;
@@ -43,7 +50,7 @@
         &.require {
           &::before {
             margin-right: 5px;
-            color: red;
+            color: @adhere-ui-tablegridlayout-table-row-label-require-color;
             vertical-align: middle;
             content: '*';
           }
@@ -51,9 +58,9 @@
       }
 
       > .adhere-ui-tablegridlayout-table-row-value {
-        .adhere-word-break();
-        color: #222;
+        color: @adhere-ui-tablegridlayout-table-row-value-color;
         white-space: normal;
+        .adhere-word-break();
 
         .ant-checkbox-checked {
           .ant-checkbox-inner {
@@ -91,11 +98,11 @@
     &.parity {
       .adhere-ui-tablegridlayout-table-row {
         &.odd {
-          background-color: #fff;
+          background-color: @adhere-ui-tablegridlayout-table-row-odd-color;
         }
 
         &.even {
-          background-color: #fafafa;
+          background-color: @adhere-ui-tablegridlayout-table-row-even-color;
         }
       }
     }
@@ -167,7 +174,7 @@
             &:not(:last-child) {
               > .adhere-ui-tablegridlayout-table-row-value {
                 .adm-list-item.adm-form-item {
-                  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                  border-bottom: 1px solid @adhere-border-color;
                 }
               }
             }

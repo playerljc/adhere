@@ -48,6 +48,7 @@ declare namespace CommentInfo {
         hideReplyTextIcon: import("prop-types").Requireable<string | number | boolean | {} | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
         loadMoreCollapseTextIcon: import("prop-types").Requireable<string | number | boolean | {} | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
         local: import("prop-types").Requireable<string>;
+        emojiPickerProps: import("prop-types").Requireable<object>;
     };
 }
 export default CommentInfo;

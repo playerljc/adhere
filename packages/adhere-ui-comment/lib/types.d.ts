@@ -46,11 +46,13 @@ export declare type ICommentProps = Partial<{
     hideReplyTextIcon: React.ReactNode | Function;
     loadMoreCollapseTextIcon: React.ReactNode | Function;
     local: ILocal;
+    emojiPickerProps: any;
 }>;
 export declare type IReplyProps = Partial<{
     onCancel: Function;
     onResult: Function;
     local: ILocal;
+    emojiPickerProps: any;
 }>;
 export declare type IListStandardProps = Partial<{
     getScrollWrapContainer: () => HTMLElement;
@@ -126,4 +128,5 @@ export declare type INodeProps = Partial<{
     hideReplyTextIcon: React.ReactNode | Function;
     loadMoreCollapseTextIcon: React.ReactNode | Function;
     local: ILocal;
+    emojiPickerProps: any;
 }>;

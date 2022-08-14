@@ -14,6 +14,7 @@ declare namespace Reply {
         onCancel: PropTypes.Requireable<(...args: any[]) => any>;
         onResult: PropTypes.Requireable<(...args: any[]) => any>;
         local: PropTypes.Requireable<string>;
+        emojiPickerProps: PropTypes.Requireable<object>;
     };
 }
 export default Reply;

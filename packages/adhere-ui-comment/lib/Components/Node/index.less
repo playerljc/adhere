@@ -1,3 +1,6 @@
+@adhere-ui-comment-color: #030303;
+@adhere-ui-comment-color-second: #606060;
+
 .adhere-ui-comment-node {
   .adhere-ui-comment-node-avatar-wrap {
     display: flex;
@@ -22,19 +25,19 @@
 
     .adhere-ui-comment-node-title-row-author {
       margin-right: 10px;
-      color: #030303;
+      color: @adhere-ui-comment-color;
       font-weight: 500;
     }
 
     .adhere-ui-comment-node-title-row-date-time {
-      color: #606060;
+      color: @adhere-ui-comment-color-second;
       font-size: 12px;
     }
   }
 
   .adhere-ui-comment-node-content-wrap {
     margin: 10px 0;
-    color: #030303;
+    color: @adhere-ui-comment-color;
     font-weight: 400;
     .adhere-word-break();
   }
@@ -47,7 +50,7 @@
     list-style: none;
 
     > .adhere-ui-comment-node-actions-action {
-      color: #606060;
+      color: @adhere-ui-comment-color-second;
       font-weight: 400;
 
       &:hover {

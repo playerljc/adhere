@@ -192,9 +192,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       scrollY: 0,
     };
 
-    // @ts-ignore
     this.state = {
-      // @ts-ignore
       ...this.state,
       // 列设置
       columnSetting: this.getTableColumns().map((column, index) => ({
@@ -203,6 +201,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         display: true,
       })),
       // 表格密度设置
+      // @ts-ignore
       tableDensity: this.getTableDensity(),
     };
 
@@ -286,6 +285,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     }));
 
     // 长度不相等
+    // @ts-ignore
     if (preColumnSetting.length !== columnSetting) {
       // @ts-ignore
       this.setState({
@@ -385,6 +385,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   protected onTableChange = (pagination, filters, sorter) => {
     // @ts-ignore
     this.setState(
+      // @ts-ignore
       {
         [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
         [this.getOrderProp()]: sorter.order || this.getOrderPropValue(),
@@ -578,14 +579,15 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         // @ts-ignore
         density={this.state.tableDensity}
         onChange={(density) => {
-          // @ts-ignore
           this.setState({
+            // @ts-ignore
             tableDensity: density,
           });
         }}
         onReset={() => {
           // @ts-ignore
           this.setState({
+            // @ts-ignore
             tableDensity: this.getTableDensity(),
           });
         }}
@@ -738,12 +740,16 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       const { scrollY } = this.state;
 
       if (antdTableProps) {
+        // @ts-ignore
         if (antdTableProps.scroll) {
+          // @ts-ignore
           tableProps.scroll.y = scrollY;
         } else {
+          // @ts-ignore
           tableProps.scroll = { y: scrollY };
         }
       } else {
+        // @ts-ignore
         tableProps.scroll = { y: scrollY };
       }
     }

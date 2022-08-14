@@ -97,6 +97,7 @@ declare namespace Comment {
             renderError: PropTypes.Requireable<(...args: any[]) => any>;
         }>>;
         local: PropTypes.Requireable<string>;
+        emojiPickerProps: PropTypes.Requireable<object>;
     };
 }
 export default Comment;

@@ -6,17 +6,12 @@
  * @LastEditTime: 2021-05-06 14:25:16
  */
 import React from 'react';
-
 import { Tooltip, Checkbox, Popover } from 'antd';
-// import Tooltip from 'antd/lib/tooltip';
-// import Checkbox from 'antd/lib/checkbox';
-// import Popover from 'antd/lib/popover';
-
 import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import intl from '@baifendian/adhere-util-intl';
 
-const selectorPrefix = 'adhere-ui-tablelist';
+import { selectorPrefix } from './tablelist';
 
 export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, setSelectAll }) => {
   if (!rowSelection) return null;
@@ -96,7 +91,7 @@ export const ToolbarSetting = ({
   const SettingContent = ({ columns = [], selectedColumnKeys = [], onChange, onSortEnd }) => {
     return (
       <SortableWrapper
-        helperClass="set-dragging"
+        helperClass={`${selectorPrefix}-set-dragging`}
         value={selectedColumnKeys}
         onChange={onChange}
         onSortEnd={onSortEnd}

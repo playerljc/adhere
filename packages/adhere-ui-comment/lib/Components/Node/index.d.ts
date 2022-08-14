@@ -49,6 +49,7 @@ declare namespace Node {
         hideReplyTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         loadMoreCollapseTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         local: PropTypes.Requireable<string>;
+        emojiPickerProps: PropTypes.Requireable<object>;
     };
 }
 export declare const defaultProps: {
@@ -91,5 +92,6 @@ export declare const propTypes: {
     hideReplyTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
     loadMoreCollapseTextIcon: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
     local: PropTypes.Requireable<string>;
+    emojiPickerProps: PropTypes.Requireable<object>;
 };
 export default Node;

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-// @ts-ignore
 import Resource from '@baifendian/adhere-util-resource';
 
 import { IBackTopAnimationProps } from './types';
@@ -32,8 +31,7 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
   componentWillUnmount() {
     if (this.maskEl) {
       try {
-        // @ts-ignore
-        this.maskEl.parentElement.removeChild(this.maskEl);
+        this.maskEl!.parentElement!.removeChild(this.maskEl);
       } catch (e) {}
     }
   }
@@ -48,29 +46,26 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
       if (self.scrollEl.scrollTop !== 0) {
         typeof window !== 'undefined' &&
           window.requestAnimationFrame(() => {
-            // @ts-ignore
-            self.el.style.display = 'block';
+            self.el!.style.display = 'block';
           });
       } else {
         typeof window !== 'undefined' &&
           window.requestAnimationFrame(() => {
-            // @ts-ignore
-            self.el.style.display = 'none';
+            self.el!.style.display = 'none';
           });
       }
     }
 
-    // @ts-ignore
     this.scrollEl.addEventListener('scroll', onScroll, false);
   }
 
   private renderMask(): void {
-    // @ts-ignore
-    this.maskEl = document.body.querySelector(`.${selectorPrefix}-mask`);
+    this.maskEl = document.body.querySelector(`.${selectorPrefix}-mask`) as HTMLDivElement;
 
     if (!this.maskEl) {
       this.maskEl = document.createElement('div');
       this.maskEl.className = `${selectorPrefix}-mask`;
+      this.maskEl.style.zIndex = `${this.props.zIndex}`;
       document.body.appendChild(this.maskEl);
     }
   }
@@ -80,7 +75,6 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
 
     if (self.key) return;
 
-    // @ts-ignore
     const { onTrigger, onScrollTop, duration } = this.props;
 
     if (!onTrigger) return;
@@ -88,8 +82,7 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
     onTrigger().then(() => {
       self.key = true;
 
-      // @ts-ignore
-      self.maskEl.style.display = 'block';
+      self.maskEl!.style.display = 'block';
 
       // @ts-ignore
       const srcTop = self.scrollEl.scrollTop;
@@ -125,7 +118,6 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
         self.scrollEl.scrollTop = scrollVal;
 
         if (onScrollTop) {
-          // @ts-ignore
           onScrollTop(scrollVal);
         }
 
@@ -142,8 +134,7 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
         }
 
         function clear() {
-          // @ts-ignore
-          self.maskEl.style.display = 'none';
+          self.maskEl!.style.display = 'none';
 
           self.key = false;
         }
@@ -154,18 +145,12 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
   };
 
   render() {
-    // @ts-ignore
-    const { className, style } = this.props;
+    const { className, style, zIndex } = this.props;
 
-    // @ts-ignore
     return (
       <div
-        className={classNames(
-          selectorPrefix,
-          // @ts-ignore
-          className.split(/\s+/),
-        )}
-        style={{ ...style }}
+        className={classNames(selectorPrefix, className?.split(/\s+/))}
+        style={{ ...style, zIndex }}
         ref={(el) => (this.el = el)}
         onClick={this.onTrigger}
       />
