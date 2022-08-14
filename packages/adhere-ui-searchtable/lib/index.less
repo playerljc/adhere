@@ -5,9 +5,12 @@
 @import '~@baifendian/adhere-ui-suspense/lib/index.less';
 @import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
 @import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
+@import '~@baifendian/adhere-ui-css/lib/vars';
 
 @import './Extension/ColumnSetting/setting';
 @import './Extension/TableDensitySetting/setting';
+
+@adhere-ui-searchtable-searchfooteritem-search-btn-icon-color: #fff;
 
 .adhere-ui-searchtable-wrap {
   display: flex;
@@ -58,6 +61,39 @@
 
             &.ant-btn {
               display: flex;
+            }
+
+            .adhere-ui-searchtable-searchfooteritem-search-btn-icon {
+              font-size: 14px;
+              color: @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color;
+            }
+
+            > .adhere-ui-searchtable-searchfooteritem-expand-search-up-btn {
+              display: flex;
+              align-items: center;
+
+              > span {
+                margin-right: 5px;
+              }
+
+              > i {
+                font-size: 16px;
+                color: @adhere-primary-color;
+              }
+            }
+
+            > .adhere-ui-searchtable-searchfooteritem-expand-search-down-btn {
+              display: flex;
+              align-items: center;
+
+              > span {
+                margin-right: 5px;
+              }
+
+              > i {
+                font-size: 16px;
+                color: @adhere-primary-color;
+              }
             }
           }
         }
