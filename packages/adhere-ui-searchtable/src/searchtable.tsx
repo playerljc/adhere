@@ -111,9 +111,21 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   abstract getRowSelection(): TableRowSelection<object>;
 
   /**
+   * renderSearchBefore
+   * @description 渲染查询面板之前
+   */
+  abstract renderSearchFormBefore(): React.ReactElement | null;
+
+  /**
    * renderSearchForm - 渲染查询的UI
    */
   abstract renderSearchForm(): React.ReactElement | null;
+
+  /**
+   * renderSearchBefore
+   * @description 渲染查询面板之后
+   */
+  abstract renderSearchFormAfter(): React.ReactElement | null;
 
   /**
    * renderTableHeader - 渲染表格的头
@@ -187,7 +199,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     // @ts-ignore
     this.state = {
       page: 1,
-      limit: 10,
+      limit: this.getLimit(),
       expand: props.defaultExpandSearchCollapse,
       scrollY: 0,
     };
@@ -334,6 +346,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 
   /**
+   * getLimit
+   * @description limit参数
+   */
+  protected getLimit(): number {
+    return 10;
+  }
+
+  /**
    * getPagination - 获取分页信息
    */
   protected getPagination() {
@@ -408,18 +428,22 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   /**
    * onClear - 清除操作
    */
-  protected onClear() {
-    this.setState(
-      {
-        page: 1,
-        limit: 10,
-      },
-      () => {
-        this.clear().then(() => {
-          this.fetchData();
-        });
-      },
-    );
+  protected onClear(): Promise<void> {
+    return new Promise((resolve) => {
+      this.setState(
+        {
+          page: 1,
+          limit: this.getLimit(),
+        },
+        () => {
+          this.clear().then(() => {
+            this.fetchData();
+
+            resolve();
+          });
+        },
+      );
+    });
   }
 
   /**
@@ -774,12 +798,20 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         >
           {/*@ts-ignore*/}
           <FlexLayout direction="vertical">
+            <ConditionalRender conditional={!!this.renderSearchFormBefore}>
+              {() => <Fixed>{this.renderSearchFormBefore()}</Fixed>}
+            </ConditionalRender>
+
             <Fixed>
               <ConditionalRender conditional={expand} noMatch={() => null}>
                 {() => this.renderSearchForm()}
               </ConditionalRender>
             </Fixed>
             <Fixed>{this.renderSearchFooter()}</Fixed>
+
+            <ConditionalRender conditional={!!this.renderSearchFormAfter}>
+              {() => <Fixed>{this.renderSearchFormAfter()}</Fixed>}
+            </ConditionalRender>
           </FlexLayout>
         </Fixed>
         <ConditionalRender conditional={!!this.renderTableHeader}>

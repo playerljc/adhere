@@ -1,3 +1,16 @@
+# 1.0.19
+
+***
+
+2022-8-17
+
+* **adhere-ui-searchtable**
+  - 加入renderSearchFormBefore和renderSearchFormAfter方法
+  - onClear加入Promise
+  - 加入getLimit方法
+* **adhere-ui-bmap**
+  - 加载BMap机制的修改
+
 # 1.0.18
 
 ***

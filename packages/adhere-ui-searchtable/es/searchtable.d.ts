@@ -59,9 +59,19 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     abstract getRowSelection(): TableRowSelection<object>;
     /**
+     * renderSearchBefore
+     * @description 渲染查询面板之前
+     */
+    abstract renderSearchFormBefore(): React.ReactElement | null;
+    /**
      * renderSearchForm - 渲染查询的UI
      */
     abstract renderSearchForm(): React.ReactElement | null;
+    /**
+     * renderSearchBefore
+     * @description 渲染查询面板之后
+     */
+    abstract renderSearchFormAfter(): React.ReactElement | null;
     /**
      * renderTableHeader - 渲染表格的头
      */
@@ -142,6 +152,11 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
         index: number;
     }): JSX.Element;
     /**
+     * getLimit
+     * @description limit参数
+     */
+    protected getLimit(): number;
+    /**
      * getPagination - 获取分页信息
      */
     protected getPagination(): {
@@ -160,7 +175,7 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     /**
      * onClear - 清除操作
      */
-    protected onClear(): void;
+    protected onClear(): Promise<void>;
     /**
      * sortOrder - table的column中加入
      * sorter: true,
