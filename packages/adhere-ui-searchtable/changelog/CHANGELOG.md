@@ -1,13 +1,3 @@
-# 1.0.19
-
-***
-
-2022-08-17
-
-* 加入renderSearchFormBefore和renderSearchFormAfter方法
-* onClear加入Promise
-* 加入getLimit方法
-
 # 1.0.18
 
 ***
@@ -15,6 +5,9 @@
 2022-08-01
 
 * onTableChange的BUG修改
+* 加入renderSearchFormBefore和renderSearchFormAfter方法
+* onClear加入Promise
+* 加入getLimit方法
 
 # 1.0.17
 

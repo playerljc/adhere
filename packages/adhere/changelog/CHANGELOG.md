@@ -1,27 +1,15 @@
-# 1.0.19
-
-***
-
-2022-8-17
-
-* **adhere-ui-historyback**
-  - 修改为window.location.length
-* **adhere-ui-bmap**
-  - 加载BMap机制的修改
-
-* **adhere-ui-searchtable**
-  - 加入renderSearchFormBefore和renderSearchFormAfter方法
-  - onClear加入Promise
-  - 加入getLimit方法
-* **adhere-ui-bmap**
-  - 加载BMap机制的修改
-
 # 1.0.18
 
 ***
 
 2022-7-25
 
+* **adhere-ui-bmap**
+  - 加载BMap机制的修改
+* **adhere-ui-historyback**
+  - 修改为window.location.length
+* **adhere-ui-bmap**
+  - 加载BMap机制的修改
 * **adhere-ui-suspense**
   - 加入sync组件
   - 加入async组件
@@ -29,6 +17,9 @@
   - useSetState加入泛型
 * **adhere-ui-searchtable**
   - onTableChange的BUG修改
+  - 加入renderSearchFormBefore和renderSearchFormAfter方法
+  - onClear加入Promise
+  - 加入getLimit方法
 * **adhere-ui-scrollload**
   - BUG修改
 * **adhere-util-intl**
