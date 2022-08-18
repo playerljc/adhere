@@ -11,6 +11,7 @@ import PlayGroundPage, {
 
 import Table from './table';
 import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
+import RenderSearchBetweenTable from './renderSearchBetweenTable';
 import FewTable from './fewTable';
 import StateTable from './stateTable';
 import RowSelectedNormal from './rowSelectedNormal';
@@ -1297,6 +1298,50 @@ export default () => {
         type: 'PlayGroundMulit',
         renderChildren: () => (
           <TableDensitySetting isShowExpandSearch defaultExpandSearchCollapse={false} />
+        ),
+      },
+      {
+        id: 'p13',
+        name: '查询面板两端的渲染',
+        cardProps: {
+          description: {
+            title: '查询面板两端的渲染',
+            info: '查询面板两端的渲染',
+          },
+        },
+        config: [
+          {
+            title: 'fixedTableSpaceBetweenTable.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+          {
+            title: 'fixedTableSpaceBetweenTable.less',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+          {
+            title: 'index.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+        ],
+        type: 'PlayGroundMulit',
+        renderChildren: () => (
+          <>
+            <div style={{ display: 'flex', height: 800 }}>
+              <RenderSearchBetweenTable
+                style={{ height: '100%' }}
+                isShowExpandSearch
+                defaultExpandSearchCollapse={false}
+                fixedHeaderAutoTable
+                pagination={pagination3}
+              />
+            </div>
+          </>
         ),
       },
     ];
