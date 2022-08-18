@@ -4,6 +4,11 @@
 
 2022-8-17
 
+* **adhere-ui-historyback**
+  - 修改为window.location.length
+* **adhere-ui-bmap**
+  - 加载BMap机制的修改
+
 * **adhere-ui-searchtable**
   - 加入renderSearchFormBefore和renderSearchFormAfter方法
   - onClear加入Promise
