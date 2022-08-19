@@ -111,6 +111,7 @@ const ins: {
           value: initValue(p, null),
           refresh(params) {
             receiver[p].value = initValue(p, params);
+            return this;
           },
         };
       }

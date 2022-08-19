@@ -4,8 +4,8 @@
 
 2022-7-25
 
-* **adhere-ui-bmap**
-  - 加载BMap机制的修改
+* **adhere-util-dict**
+  - refresh加入链式调用
 * **adhere-ui-historyback**
   - 修改为window.location.length
 * **adhere-ui-bmap**
