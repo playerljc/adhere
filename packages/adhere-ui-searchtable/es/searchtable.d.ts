@@ -119,7 +119,7 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     /**
      * onSearch - 进行查询
      */
-    abstract onSearch(): void;
+    abstract onSearch(): Promise<void>;
     protected constructor(props: any);
     componentWillReceiveProps(nextProps: ISearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;

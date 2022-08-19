@@ -191,7 +191,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   /**
    * onSearch - 进行查询
    */
-  abstract onSearch(): void;
+  abstract onSearch(): Promise<void>;
 
   protected constructor(props) {
     super(props);
