@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-bmap",
-  "version": "1.0.18-fix.1",
+  "version": "1.0.18-fix.2",
   "description": "百度地图3.0的封装",
   "main": "lib/index.js",
   "module": "es/index.js",

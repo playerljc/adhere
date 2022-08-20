@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-backtopanimation",
-  "version": "1.0.18-fix.1",
+  "version": "1.0.18-fix.2",
   "description": "动画的回到顶部",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,7 +40,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^1.0.18",
+    "@baifendian/adhere-util-resource": "^1.0.18-fix.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
