@@ -65,6 +65,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-comment', 'Comment'],
   ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
+  ['@baifendian/adhere-ui-configprovider', 'ConfigProvider'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],

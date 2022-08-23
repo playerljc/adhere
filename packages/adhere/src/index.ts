@@ -1,4 +1,5 @@
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
+import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
 import Comment from '@baifendian/adhere-ui-comment';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -44,7 +45,7 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
-import BMap from '@baifendian/adhere-ui-bmap';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -63,6 +64,7 @@ import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
   BackTopAnimation,
+  BMap,
   CascadeCompared,
   Comment,
   ConditionalRender,
@@ -108,7 +110,7 @@ export {
   TableHeadSearch,
   TableList,
   WritingBoard,
-  BMap,
+  ConfigProvider,
   Util,
   AdapterScreen,
   Browsersniff,

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ConfigProvider } from 'antd';
-import { Intl, Util, Resource } from '@baifendian/adhere';
+import { Util, Resource, ConfigProvider as AdhereConfigProvider } from '@baifendian/adhere';
 
 import Router from '@/lib/Router';
 import DictConfig from '@/config/dict/dict.config';
@@ -17,21 +17,41 @@ DictConfig();
 // 获取当前语言
 const lang = Util.getLang();
 
-Resource.Dict.value.LocalsMoment.value[lang]();
+Router().then((routerConfig) => {
+  ReactDOM.render(
+    <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
+      <AdhereConfigProvider
+        intl={{
+          lang,
+          locales: {
+            en_US: require('./locales/en_US').default,
+            zh_CN: require('./locales/zh_CN').default,
+            pt_PT: require('./locales/pt_PT').default,
+          },
+        }}
+      >
+        {() => routerConfig}
+      </AdhereConfigProvider>
+    </ConfigProvider>,
+    document.getElementById('app'),
+  );
+});
+
+// Resource.Dict.value.LocalsMoment.value[lang]();
 
 // 初始化国际化
-Intl.init({
-  currentLocale: lang,
-}).then(() => {
-  Router().then((routerConfig) => {
-    ReactDOM.render(
-      <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
-        {routerConfig}
-      </ConfigProvider>,
-      document.getElementById('app'),
-    );
-  });
-});
+// Intl.init({
+//   currentLocale: lang,
+// }).then(() => {
+//   Router().then((routerConfig) => {
+//     ReactDOM.render(
+//       <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
+//         {routerConfig}
+//       </ConfigProvider>,
+//       document.getElementById('app'),
+//     );
+//   });
+// });
 
 // import React, { createRef } from 'react';
 // import ReactDOM from 'react-dom';

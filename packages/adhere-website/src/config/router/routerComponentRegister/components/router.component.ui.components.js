@@ -135,3 +135,7 @@ export const DateDisplay = lazy(() =>
 export const Comment = lazy(() =>
   import(/* webpackChunkName: "comment" */ '@/components/ui/comment'),
 );
+
+export const ConfigProvider = lazy(() =>
+  import(/* webpackChunkName: "comment" */ '@/components/ui/configprovider'),
+);

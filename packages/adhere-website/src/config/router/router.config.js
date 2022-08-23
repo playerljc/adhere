@@ -77,6 +77,7 @@ const {
   ContourBlock,
   DateDisplay,
   Comment,
+  ConfigProvider,
 } = Components;
 
 export default () => [
@@ -398,6 +399,11 @@ export default () => [
                 path: '/adhere/component/ui/comment',
                 name: 'Comment',
                 component: Comment,
+              },
+              {
+                path: '/adhere/component/ui/configprovider',
+                name: 'ConfigProvider',
+                component: ConfigProvider,
               },
             ],
           },

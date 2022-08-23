@@ -245,6 +245,16 @@
     "path": "/adhere/component/ui/comment"
   },
   {
+    "kw": ["全局配置", "ConfigProvider"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/configprovider"
+  },
+  {
+    "kw": ["组件强制刷新", "ForceUpdate"],
+    "group": "组件 - Util",
+    "path": "/adhere/component/ui/forceupdate"
+  },
+  {
     "kw": ["对屏幕的缩放进行适配的操作", "AdapterScreen"],
     "group": "组件 - Util",
     "path": "/adhere/component/util/adapterscreen"
