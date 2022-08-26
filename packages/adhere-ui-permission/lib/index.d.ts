@@ -1,4 +1,5 @@
 /// <reference types="react" />
+import { PermissionFun } from './permission';
 declare const _default: {
     Permission: {
         ({ allPermission, permissions, children, noMatch, }: import("./types").IPermissionProps): JSX.Element;
@@ -18,5 +19,6 @@ declare const _default: {
     setPermission: (permission: any) => void;
     checkPermission: (allPermission: any, currentPermissions: any) => boolean;
     getPermission: () => any;
+    PermissionFun: typeof PermissionFun;
 };
 export default _default;
