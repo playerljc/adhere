@@ -1,11 +1,7 @@
+/// <reference types="react" />
 declare const _default: {
     Permission: {
-        ({ allPermission, permissions, children, noMatch, }: {
-            allPermission?: any;
-            permissions: any;
-            children: any;
-            noMatch?: null | undefined;
-        }): import("./types").IPermissionProps;
+        ({ allPermission, permissions, children, noMatch, }: import("./types").IPermissionProps): JSX.Element;
         defaultProps: {
             allPermission: undefined;
             permissions: string;
