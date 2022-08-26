@@ -255,7 +255,7 @@ export default () => {
         config={[
           {
             border: true,
-            title: 'setPermission',
+            title: 'Api',
             data: [
               {
                 name: 'setPermission',
@@ -273,12 +273,6 @@ export default () => {
                 returnType: 'void',
                 returnDesc: '',
               },
-            ],
-          },
-          {
-            border: true,
-            title: 'getPermission',
-            data: [
               {
                 name: 'getPermission',
                 desc: '获取所有的权限',
@@ -287,12 +281,6 @@ export default () => {
                 returnType: 'Array<String>',
                 returnDesc: '返回所有权限的数组',
               },
-            ],
-          },
-          {
-            border: true,
-            title: 'checkPermission',
-            data: [
               {
                 name: 'checkPermission',
                 desc: '监测是否有指定的权限',
@@ -315,6 +303,66 @@ export default () => {
                 ],
                 returnType: 'boolean',
                 returnDesc: '是否存在指定的权限',
+              },
+              {
+                name: 'checkPermission',
+                desc: '监测是否有指定的权限',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'allPermission',
+                    desc: '所有的权限',
+                    type: 'Array<String>',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'currentPermissions',
+                    desc: '监测的权限',
+                    type: 'Array<String>',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+                returnType: 'boolean',
+                returnDesc: '是否存在指定的权限',
+              },
+              {
+                name: 'PermissionFun',
+                desc: '函数方式实现',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'allPermission',
+                    desc: '所有的权限',
+                    type: 'Array<String>',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'permissions',
+                    desc: '监测的权限',
+                    type: 'Array<String>',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'match',
+                    desc: '符合条件',
+                    type: 'any',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'noMatch',
+                    desc: '不符合条件',
+                    type: 'any',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+                returnType: 'React.Element | null',
+                returnDesc: '',
               },
             ],
           },
