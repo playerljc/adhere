@@ -423,6 +423,20 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   }
 
   /**
+   * onSearchPanelCollapse
+   * @description 查询面板展开之前
+   * @protected
+   */
+  protected onSearchPanelCollapseBefore() {}
+
+  /**
+   * onSearchPanelCollapseAfter
+   * @description 查询面板展开之后
+   * @protected
+   */
+  protected onSearchPanelCollapseAfter() {}
+
+  /**
    * onTableChange - 表格change
    */
   protected onTableChange = (pagination, filters, sorter) => {
@@ -637,6 +651,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       <Button
         className={`${selectorPrefix}-searchfooteritem`}
         type="primary"
+        key="search"
         icon={
           <i
             className={classNames(
@@ -658,7 +673,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       >
         {Intl.v('查询')}
       </Button>,
-      <Button className={`${selectorPrefix}-searchfooteritem`} onClick={this.onClear}>
+      <Button className={`${selectorPrefix}-searchfooteritem`} key="reset" onClick={this.onClear}>
         {Intl.v('重置')}
       </Button>,
     ];
@@ -669,11 +684,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
           conditional={this.state.expand}
           noMatch={() => (
             <a
+              key="expand"
               className={`${selectorPrefix}-searchfooteritem-expand-search-up-btn`}
               onClick={() => {
-                this.setState({
-                  expand: true,
-                });
+                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+
+                this.setState(
+                  {
+                    expand: true,
+                  },
+                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+                );
               }}
             >
               <span>{Intl.v('展开')}</span>
@@ -683,11 +704,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         >
           {() => (
             <a
+              key="hide"
               className={`${selectorPrefix}-searchfooteritem-expand-search-down-btn`}
               onClick={() => {
-                this.setState({
-                  expand: false,
-                });
+                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+
+                this.setState(
+                  {
+                    expand: false,
+                  },
+                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+                );
               }}
             >
               <span>{Intl.v('关闭')}</span>

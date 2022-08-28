@@ -2,7 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Radio, Form, Button, Input, DatePicker } from 'antd';
 import { TableGridLayout, Space, ConditionalRender, Resource } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, {
+  Section,
+  PropsSection,
+  CodeBoxSection,
+  FunctionPropsSection,
+} from '@/lib/PlaygroundPage';
 
 const { Label, Value } = TableGridLayout;
 
@@ -11,6 +16,52 @@ export default () => {
   const [layout, setLayout] = useState('horizontal');
 
   const formRef = useRef();
+
+  // console.log(
+  //   'getRenderDetail',
+  //   TableGridLayout.getRenderDetail(
+  //     [
+  //       {
+  //         name: 'g1',
+  //         width: '100%',
+  //         columnCount: 3,
+  //         colgroup: [120, 'auto', 150, 'auto', 170, 'auto'],
+  //         data: [
+  //           {
+  //             key: 'UserName',
+  //             label: <Label>UserName：</Label>,
+  //             value: <Value>Zhou Maomao</Value>,
+  //           },
+  //           {
+  //             key: 'Telephone',
+  //             label: <Label>Telephone：</Label>,
+  //             value: <Value>1810000000</Value>,
+  //           },
+  //           {
+  //             key: 'Live',
+  //             label: <Label>Live：</Label>,
+  //             value: <Value>Hangzhou, Zhejiang</Value>,
+  //           },
+  //           {
+  //             key: 'Remark',
+  //             label: <Label>Remark：</Label>,
+  //             value: <Value>empty</Value>,
+  //           },
+  //           {
+  //             key: 'Address',
+  //             label: <Label valign="top">Address：</Label>,
+  //             value: (
+  //               <Value colSpan={3}>
+  //                 No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+  //               </Value>
+  //             ),
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //     { layout: 'horizontal' },
+  //   ),
+  // );
 
   return (
     <PlayGroundPage>
@@ -1471,6 +1522,94 @@ export default () => {
         ]}
       />
 
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: 'TableGridLayout',
+            data: [
+              {
+                name: 'renderGridSearchFormGroup',
+                desc: '渲染TableGrodLayout',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'data',
+                    desc: '分组数据',
+                    type: 'IDataItem[]',
+                    defaultVal: '[]',
+                    required: '',
+                  },
+                  {
+                    name: 'props',
+                    desc: 'TableGridLayout配置信息',
+                    type: `
+                      Pick<
+                        ITableGridLayoutProps,
+                        Exclude<keyof ITableGridLayoutProps, 'className' | 'style' | 'data'>
+                      >
+                    `,
+                    defaultVal: '{}',
+                    required: '',
+                  },
+                ],
+                returnType: 'React.Element',
+                returnDesc: '',
+              },
+              {
+                name: 'getRenderDetail',
+                desc: '获取渲染细节',
+                modifier: 'static',
+                params: [
+                  {
+                    name: 'data',
+                    desc: '分组数据',
+                    type: 'IDataItem[]',
+                    defaultVal: '[]',
+                    required: '',
+                  },
+                  {
+                    name: 'props',
+                    desc: 'TableGridLayout配置信息',
+                    type: `
+                      Pick<
+                        ITableGridLayoutProps,
+                        Exclude<keyof ITableGridLayoutProps, 'className' | 'style' | 'data'>
+                      >
+                    `,
+                    defaultVal: '{}',
+                    required: '',
+                  },
+                ],
+                returnType: (
+                  <pre>
+                    {`
+  {
+    // 总行数
+    rowCount: number;
+    // 渲染时候的布局
+    layout: 'horizontal' | 'vertical';
+    // 细节
+    detail: Array<{
+      // 组名称
+      name: string;
+      // 总行数
+      rowCount: number;
+      // 细节
+      detail: GroupRenderDetail;
+    }>;
+  }
+                      `}
+                  </pre>
+                ),
+                returnDesc: '',
+              },
+            ],
+          },
+        ]}
+      />
+
       <PropsSection
         title="Props"
         config={[
@@ -1597,6 +1736,42 @@ export default () => {
                   }>
                 `,
                 defaultVal: '[]',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Label',
+            data: [
+              {
+                params: 'className',
+                desc: '附加的样式表',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '附加的样式',
+                type: 'React.CSSProperties',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Value',
+            data: [
+              {
+                params: 'className',
+                desc: '附加的样式表',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '附加的样式',
+                type: 'React.CSSProperties',
+                defaultVal: '',
               },
             ],
           },

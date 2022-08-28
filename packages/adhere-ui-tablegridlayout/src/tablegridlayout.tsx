@@ -3,23 +3,31 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { ITableGridLayoutProps, IDataItem } from './types';
+import { ITableGridLayoutProps, IDataItem, RenderDetail, GroupRenderDetail } from './types';
 
 const selectorPrefix = 'adhere-ui-tablegridlayout';
 
 /**
  * renderHorizontal
  * @description 渲染横向布局
- * @return JSX.Element[]
+ * @return {
+ *   element: JSX.Element[];
+     detail: GroupRenderDetail;
+ * }
  */
-function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, rowCountRef }) {
+function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, rowCountRef }): {
+  element: JSX.Element[];
+  detail: GroupRenderDetail;
+} {
   /**
    * createRow
    * @description 创建一行
    */
   function createRow() {
+    const startIndex = _index;
+
     // 一行的所有列
-    const tdJSXS: JSX.Element[] = [];
+    const tdJSXChildren: JSX.Element[] = [];
 
     // 一行的列数计数
     let columnsCount = 0;
@@ -34,7 +42,7 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
           columnsCount = columnsCount + 1;
         }
 
-        tdJSXS.push(item);
+        tdJSXChildren.push(item);
         _index++;
       } else {
         break;
@@ -43,13 +51,11 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
 
     // 一行
     if (columnsCount < columnCount) {
-      const fillCount = columnCount - columnsCount;
-      const fillCountArr: number[] = [];
-      fillCountArr.length = fillCount;
-      fillCountArr.fill(0);
-      fillCountArr.forEach(() => {
-        tdJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
-      });
+      Array.from({ length: columnCount - columnsCount })
+        .fill(0)
+        .forEach(() => {
+          tdJSXChildren.push(<td className={`${selectorPrefix}-table-noborder`} />);
+        });
     }
 
     const rowJSX = (
@@ -59,26 +65,38 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
           rowCountRef.current % 2 === 0 ? 'odd' : 'even',
         )}
       >
-        {tdJSXS}
+        {tdJSXChildren}
       </tr>
     );
     // eslint-disable-next-line no-plusplus
     rowCountRef.current++;
 
-    rowJSXS.push(rowJSX);
+    rowJSXChildren.push(rowJSX);
+
+    const endIndex = _index - 1;
+
+    detail.push({
+      startIndex: startIndex / 2,
+      endIndex: (endIndex - 1) / 2,
+    });
 
     if (_index < flatData.length) {
       createRow();
     }
+
+    // 0 1 2 3 4 5 6 7
+    // 第一行 0 1 2 3 4 5 | 0 1 2
+    // 第二行 6 7 8 9 10 11 | 3 4 5
   }
+
+  const detail: GroupRenderDetail = [];
 
   // 一行多少列
   const columnCount = _columnCount * 2;
-  const columnCountArr: number[] = [];
-  columnCountArr.length = columnCount;
-  columnCountArr.fill(0);
 
+  // 拉平的数据
   const flatData: JSX.Element[] = [];
+
   _data.forEach((t) => {
     let label = t.label;
 
@@ -101,13 +119,17 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
     flatData.push(t.value);
   });
 
+  // 迭代的索引
   let _index = 0;
 
-  const rowJSXS: JSX.Element[] = [];
+  const rowJSXChildren: JSX.Element[] = [];
 
   createRow();
 
-  return rowJSXS;
+  return {
+    element: rowJSXChildren,
+    detail,
+  };
 }
 
 /**
@@ -115,9 +137,16 @@ function renderHorizontal({ data: { columnCount: _columnCount, data: _data }, ro
  * @description 渲染纵向布局
  * @param _columnCount
  * @param _data
+ * @param rowCountRef
  * @return JSX.Element[]
  */
-function renderVertical({ columnCount: _columnCount, data: _data }) {
+function renderVertical(
+  { columnCount: _columnCount, data: _data },
+  rowCountRef,
+): {
+  element: JSX.Element[];
+  detail: GroupRenderDetail;
+} {
   /**
    * createRow
    * @description 创建一行
@@ -129,6 +158,11 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
 
     // 一行的列数计数
     let columnsCount = 0;
+
+    // 0 1 2
+    // 3 4 5
+
+    const startIndex = _index;
 
     while (_index < _data.length) {
       const item = _data[_index];
@@ -151,13 +185,12 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
     // 一行
     if (columnsCount < columnCount) {
       const fillCount = columnCount - columnsCount;
-      const fillCountArr: number[] = [];
-      fillCountArr.length = fillCount;
-      fillCountArr.fill(0);
-      fillCountArr.forEach(() => {
-        tdLabelJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
-        tdValueJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
-      });
+      Array.from({ length: fillCount })
+        .fill(0)
+        .forEach(() => {
+          tdLabelJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
+          tdValueJSXS.push(<td className={`${selectorPrefix}-table-noborder`} />);
+        });
     }
 
     const labelRowJSX = (
@@ -167,18 +200,25 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
       <tr className={classNames(`${selectorPrefix}-table-row`, 'odd')}>{tdValueJSXS}</tr>
     );
 
-    rowJSXS.push(labelRowJSX, valueRowJSX);
+    rowJSXChildren.push(labelRowJSX, valueRowJSX);
+    rowCountRef.current += 2;
+
+    const endIndex = _index - 1;
+
+    detail.push({
+      startIndex,
+      endIndex,
+    });
 
     if (_index < _data.length) {
       createRow();
     }
   }
 
+  const detail: GroupRenderDetail = [];
+
   // 一行多少列
   const columnCount = _columnCount;
-  const columnCountArr: number[] = [];
-  columnCountArr.length = columnCount;
-  columnCountArr.fill(0);
 
   _data.forEach((t) => {
     let label = t.label;
@@ -186,7 +226,6 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
     if ('require' in t && !!t.require) {
       t.label = React.cloneElement(
         label,
-        // { ...label.props, className: `${label.props.className} require` },
         {
           ...label.props,
           className: classNames(
@@ -202,11 +241,14 @@ function renderVertical({ columnCount: _columnCount, data: _data }) {
 
   let _index = 0;
 
-  const rowJSXS: JSX.Element[] = [];
+  const rowJSXChildren: JSX.Element[] = [];
 
   createRow();
 
-  return rowJSXS;
+  return {
+    element: rowJSXChildren,
+    detail,
+  };
 }
 
 /**
@@ -226,6 +268,7 @@ function renderGridSearchForm(params) {
     layout,
     density: _density,
     parity: _parity = false,
+    rowCountRef,
   } = params;
 
   const densityClass = new Map([
@@ -261,27 +304,77 @@ function renderGridSearchForm(params) {
       <ConditionalRender
         conditional={layout === 'horizontal'}
         // @ts-ignore
-        noMatch={() => renderVertical(params.data)}
+        noMatch={() => renderVertical(params.data, rowCountRef).element}
       >
-        {() => renderHorizontal(params)}
+        {() => renderHorizontal(params).element}
       </ConditionalRender>
     </table>
   );
 }
 
 /**
+ * TableGridLayout
+ * @param data
+ * @param className
+ * @param style
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
+function TableGridLayout({ data, className, style, ...props }: ITableGridLayoutProps): JSX.Element {
+  return (
+    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
+      {TableGridLayout.renderGridSearchFormGroup(data, props)}
+    </div>
+  );
+}
+
+/**
+ * Label
+ * @description 左侧Label
+ * @param props
+ * @constructor
+ */
+TableGridLayout.Label = (props) => {
+  const { className, ..._props } = props;
+
+  return (
+    <td className={classNames(`${selectorPrefix}-table-row-label`, className || '')} {..._props}>
+      {props.children}
+    </td>
+  );
+};
+
+/**
+ * Value
+ * @description 右侧Value
+ * @param props
+ * @constructor
+ */
+TableGridLayout.Value = (props) => {
+  const { className, ..._props } = props;
+
+  return (
+    <td className={classNames(`${selectorPrefix}-table-row-value`, className || '')} {..._props}>
+      {props.children}
+    </td>
+  );
+};
+
+/**
  * renderGridSearchFormGroup
+ * @description - 渲染TableGridLayout
  * @param data
  * @param props
  * @return {JSX.Element}
  */
-TableGridLayout.renderGridSearchFormGroup = function (
+TableGridLayout.renderGridSearchFormGroup = (
   data: IDataItem[],
   props: Pick<
     ITableGridLayoutProps,
     Exclude<keyof ITableGridLayoutProps, 'className' | 'style' | 'data'>
   >,
-) {
+) => {
   const rowCountRef = { current: 0 };
 
   const {
@@ -328,42 +421,57 @@ TableGridLayout.renderGridSearchFormGroup = function (
 };
 
 /**
- * TableGridLayout
- * @param data
- * @param className
- * @param style
- * @param props
- * @return {JSX.Element}
- * @constructor
+ * getRenderDetail
+ * @description 获取渲染细节
+ * @param data - 组数据
+ * @param props - 配置
+ * @return RenderDetail
  */
-function TableGridLayout({ data, className, style, ...props }: ITableGridLayoutProps): JSX.Element {
-  return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
-      {TableGridLayout.renderGridSearchFormGroup(data, props)}
-    </div>
-  );
-}
+TableGridLayout.getRenderDetail = (
+  data: IDataItem[],
+  props: Pick<
+    ITableGridLayoutProps,
+    Exclude<keyof ITableGridLayoutProps, 'className' | 'style' | 'data'>
+  >,
+): RenderDetail => {
+  const {
+    bordered = false,
+    innerClassName,
+    innerStyle,
+    ...renderGridSearchFormProps
+  } = props || {};
 
-TableGridLayout.Label = (props) => {
-  const { className, ..._props } = props;
+  const result: RenderDetail = { rowCount: 0, layout: props.layout, detail: [] };
 
-  // console.log('labelProps', _props);
+  data.forEach((g) => {
+    const rowCountRef = { current: 0 };
 
-  return (
-    <td className={classNames(`${selectorPrefix}-table-row-label`, className || '')} {..._props}>
-      {props.children}
-    </td>
-  );
-};
+    const params = {
+      data: g,
+      rowCountRef,
+      ...renderGridSearchFormProps,
+    };
 
-TableGridLayout.Value = (props) => {
-  const { className, ..._props } = props;
+    let detail: GroupRenderDetail = [];
 
-  return (
-    <td className={classNames(`${selectorPrefix}-table-row-value`, className || '')} {..._props}>
-      {props.children}
-    </td>
-  );
+    if (props.layout === 'horizontal') {
+      // @ts-ignore
+      detail = renderHorizontal(params).detail;
+    } else {
+      // @ts-ignore
+      detail = renderVertical(params.data, rowCountRef).detail;
+    }
+
+    result.rowCount += rowCountRef.current;
+
+    result.detail.push({
+      name: g.name!,
+      rowCount: props.layout === 'horizontal' ? rowCountRef.current : rowCountRef.current / 2,
+      detail,
+    });
+  });
+
+  return result;
 };
 
 TableGridLayout.defaultProps = {

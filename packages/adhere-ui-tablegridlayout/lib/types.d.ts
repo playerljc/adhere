@@ -33,3 +33,24 @@ export interface ITableGridLayoutProps {
     parity?: boolean;
     data: IDataItem[];
 }
+/**
+ * GroupDetail
+ * @description 组的渲染细节
+ */
+export declare type GroupRenderDetail = Array<{
+    startIndex: number;
+    endIndex: number;
+}>;
+/**
+ * RenderDetail
+ * @description 渲染细节
+ */
+export declare type RenderDetail = {
+    rowCount: number;
+    layout: 'horizontal' | 'vertical';
+    detail: Array<{
+        name: string;
+        rowCount: number;
+        detail: GroupRenderDetail;
+    }>;
+};

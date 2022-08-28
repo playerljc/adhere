@@ -5,6 +5,8 @@
 2022-08-26
 
 * table样式修改
+* 加入onSearchPanelCollapseBefore和onSearchPanelCollapseAfter钩子
+* searchfooteritem加入key
 
 # 1.0.18
 
