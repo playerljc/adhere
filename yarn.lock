@@ -2382,7 +2382,7 @@
     xml-loader "^1.2.1"
     yaml-loader "^0.6.0"
 
-"@ctsj/router@^1.0.1":
+"@ctsj/router@^1.0.1", "@ctsj/router@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@ctsj/router/-/router-1.0.3.tgz#e5862dce730bfde4d31af28a7baf84a9bfd27433"
   integrity sha512-tGJz+LQgg/tkJ7gWWAaZduGn2yg5hSb7T3LuvzfLy51D/sBDXFZjnS0TUgsZLVLeEqMgOmPGxEKFJfdXhuTA6A==
@@ -16929,7 +16929,7 @@ react-color@^2.19.3:
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
 
-react-dom@^17.0.1:
+react-dom@^17.0.1, react-dom@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
   integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==

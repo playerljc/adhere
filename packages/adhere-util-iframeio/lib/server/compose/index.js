@@ -1,0 +1,2 @@
+"use strict";function Compose(u){return function(o,i){return new Promise(function(e){var n=-1,t=Array.from({length:u.length}).fill(void 0),r=function(){if(!(n+1>=u.length))return t[++n]=u[n](o,function(){return r()}),t[n];Promise.all(t.filter(function(n){return n instanceof Promise})).then(function(){if(i){var n=i();if(n&&n.then)return void n.then(function(){e()})}e()})};r()})}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=Compose;
+//# sourceMappingURL=index.js.map

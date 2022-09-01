@@ -1,0 +1,1 @@
+{"version":3,"file":"Constent.js","sources":["Constent.js"],"sourcesContent":["export var OK_MESSAGE = 'ok';\r\nexport var ERROR_MESSAGE = 'error';\r\n"],"names":["OK_MESSAGE","ERROR_MESSAGE"],"mappings":"AAAO,IAAIA,WAAa,KACbC,cAAgB,eADhBD,WACAC"}
