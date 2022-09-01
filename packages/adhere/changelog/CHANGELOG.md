@@ -1,3 +1,22 @@
+# 1.0.19
+
+***
+
+2022-09-01
+
+* **adhere-util-iframeio**
+  - 加入adhere-util-iframeio组件
+* **adhere-ui-tablegridlayout**
+  - 加入getRenderDetail方法
+* **adhere-util-permission**
+  - 加入PermissionFun
+* **adhere-ui-searchtable**
+  - table样式修改
+  - 加入onSearchPanelCollapseBefore和onSearchPanelCollapseAfter钩子
+  - searchfooteritem加入key
+* **adhere-util-watchmemoized**
+  - Events对象引用修改
+
 # 1.0.18
 
 ***

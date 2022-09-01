@@ -81,6 +81,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-browsersniff', 'Browsersniff'],
   ['@baifendian/adhere-util-validator', 'Validator'],
   ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
+  ['@baifendian/adhere-util-iframeio', 'IframeIO'],
 ]);
 
 /**
