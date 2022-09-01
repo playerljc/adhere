@@ -19,7 +19,7 @@ import { ToolbarSelectAll, ToolbarReload, ToolbarSetting } from './tablelisttool
 import Util from './util';
 import { ITableListProps } from './types';
 
-const selectorPrefix = 'adhere-ui-tablelist';
+export const selectorPrefix = 'adhere-ui-tablelist';
 const defaultRowKey = 'id';
 /**
  * Template

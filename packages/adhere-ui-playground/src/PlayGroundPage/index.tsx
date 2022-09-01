@@ -31,7 +31,8 @@ function PlayGroundPage(props, ref) {
           name: t.name,
           anchor: t.id,
         })),
-      )?.flat();
+      )
+      ?.flat();
   }
 
   return (

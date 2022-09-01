@@ -1,6 +1,9 @@
 @import '~@baifendian/adhere-ui-css/lib/vars.less';
 @import './load-awesome.less';
 
+@adhere-ui-pullrefresh-trigger-label-color: #999;
+@adhere-ui-pullrefresh-trigger-update-color: #ccc;
+
 .adhere-ui-pullrefresh {
   position: relative;
   overflow: hidden;
@@ -62,12 +65,12 @@
       }
 
       > .adhere-ui-pullrefresh-trigger-label {
-        color: #999;
+        color: @adhere-ui-pullrefresh-trigger-label-color;
         font-size: 16px;
       }
 
       > .adhere-ui-pullrefresh-trigger-update {
-        color: #ccc;
+        color: @adhere-ui-pullrefresh-trigger-update-color;
         font-size: 14px;
       }
     }

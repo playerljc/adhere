@@ -60,8 +60,12 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-playground', 'PlayGround'],
   ['@baifendian/adhere-ui-tablegridlayout', 'TableGridLayout'],
   ['@baifendian/adhere-ui-writingboard', 'WritingBoard'],
-  // ['@baifendian/adhere-ui-bmap', 'BMap'],
+  ['@baifendian/adhere-ui-contourblock', 'ContourBlock'],
+  ['@baifendian/adhere-ui-datedisplay', 'DateDisplay'],
+  ['@baifendian/adhere-ui-comment', 'Comment'],
+  ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
+  ['@baifendian/adhere-ui-configprovider', 'ConfigProvider'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -77,6 +81,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-browsersniff', 'Browsersniff'],
   ['@baifendian/adhere-util-validator', 'Validator'],
   ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
+  ['@baifendian/adhere-util-iframeio', 'IframeIO'],
 ]);
 
 /**

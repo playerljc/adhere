@@ -6,11 +6,10 @@
  * @LastEditTime: 2021-04-28 17:10:18
  */
 import React from 'react';
-
 import { Table } from 'antd';
-// import Table from 'antd/lib/table';
-
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
+import { selectorPrefix } from './tablelist';
 
 import { TSortTableProps } from './types';
 
@@ -69,7 +68,7 @@ class SortableTable<RecordType extends object = any> extends React.Component<
    */
   DraggableContainer = (containerProps) => (
     <SortableWrapper
-      helperClass="row-dragging"
+      helperClass={`${selectorPrefix}-row-dragging`}
       onSortEnd={this.onSortEnd}
       distance={2}
       {...(this.props.sortable &&

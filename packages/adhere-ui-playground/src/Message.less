@@ -1,3 +1,8 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
+@adhere-ui-playground-message-notice-content-box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+@adhere-ui-playground-message-success-color: #52c41a;
+
 .adhere-ui-playground-message {
   position: fixed;
   top: 8px;
@@ -7,7 +12,7 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  color: #000000d9;
+  color: @adhere-black-color;
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5715;
@@ -28,8 +33,9 @@
       padding: 10px 16px;
       background: #fff;
       border-radius: 2px;
-      box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+      box-shadow: @adhere-ui-playground-message-notice-content-box-shadow;
       pointer-events: all;
+
       > .adhere-ui-playground-message-success {
         margin: 0;
         padding: 0;
@@ -37,7 +43,7 @@
           position: relative;
           top: 1px;
           margin-right: 8px;
-          color: #52c41a;
+          color: @adhere-ui-playground-message-success-color;
           font-size: 16px;
         }
       }

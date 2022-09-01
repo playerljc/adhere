@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ConfigProviderProps from './configprovider';\r\nexport default ConfigProviderProps;\r\n"],"names":["ConfigProviderProps"],"mappings":"OAAOA,0DACQA"}

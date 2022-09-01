@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-split",
-  "version": "1.0.15",
+  "version": "1.0.18-fix.2",
   "description": "无侵入性的竖线和横线分割",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/playerljc/adhere"
+    "url": "https://github.com/playerljc/adhere"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
@@ -27,9 +27,9 @@
   "author": "playerljc",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitee.com/playerljc/adhere/issues"
+    "url": "https://github.com/playerljc/adhere/issues"
   },
-  "homepage": "https://gitee.com/playerljc/adhere",
+  "homepage": "https://github.com/playerljc/adhere",
   "publishConfig": {
     "access": "public"
   },
@@ -40,6 +40,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",

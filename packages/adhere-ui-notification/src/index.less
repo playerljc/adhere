@@ -1,3 +1,6 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+@import '~@baifendian/adhere-ui-css/lib/mixin';
+
 @adhere-ui-notification-transitionduration: 600ms;
 @adhere-ui-notification-standard-header-icon-width: 50px;
 @adhere-ui-notification-standard-header-icon-height: 50px;
@@ -5,7 +8,7 @@
 @adhere-ui-notification-ios-closebtn-height: 30px;
 @adhere-ui-notification-material-closebtn-width: 30px;
 @adhere-ui-notification-material-closebtn-height: 30px;
-@adhere-ui-notification-border-color: rgba(0, 0, 0, 0.1);
+@adhere-ui-notification-border-color: @adhere-border-color;
 @adhere-ui-notification-standard-content-color: #8e8e93;
 @adhere-ui-notification-material-ul-backgroundcolor: #323232;
 
@@ -38,9 +41,9 @@
             min-width: 0;
             padding: 10px 10px 10px 0;
             font-size: 14px;
-            word-break: break-all;
             opacity: 0;
             transition: opacity @adhere-ui-notification-transitionduration 0ms;
+            .adhere-word-break();
 
             > .adhere-ui-notification-standard-header {
               display: flex;
@@ -58,10 +61,8 @@
               }
 
               > .adhere-ui-notification-standard-header-label {
-                overflow: hidden;
                 font-size: 14px;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+                .adhere-text-inline-overflow();
               }
             }
 
@@ -90,7 +91,7 @@
                 margin: 10px;
                 overflow: hidden;
                 font-size: 14px;
-                word-break: break-all;
+                .adhere-word-break();
               }
 
               > .adhere-ui-notification-standard-content-row {
@@ -99,16 +100,14 @@
 
                 > .adhere-ui-notification-standard-content-row-title {
                   margin-bottom: 10px;
-                  overflow: hidden;
                   font-size: 16px;
-                  white-space: nowrap;
-                  text-overflow: ellipsis;
+                  .adhere-text-inline-overflow();
                 }
 
                 > .adhere-ui-notification-standard-content-row-text {
                   font-size: 14px;
                   line-height: 21px;
-                  word-break: break-all;
+                  .adhere-word-break();
                 }
               }
             }
@@ -130,14 +129,30 @@
 
     &-ios {
       > ul {
+        background-color: transparent;
         > li {
           margin: 10px;
+          background-color: rgba(255, 255, 255, 0.7);
           border-radius: 5px;
+          box-shadow: rgba(@adhere-black-color, 0.7) 0 5px 25px -10px;
+
+          > .info {
+            color: @adhere-black-color;
+            > .adhere-ui-notification-standard-content {
+              > .adhere-ui-notification-standard-content-row {
+                > .adhere-ui-notification-standard-content-row-title {
+                  color: @adhere-black-color;
+                }
+              }
+            }
+          }
 
           > .closeBtn {
             width: @adhere-ui-notification-ios-closebtn-width;
             height: @adhere-ui-notification-ios-closebtn-height;
             margin-top: 10px;
+            background: url('./images/ioscha.svg') no-repeat;
+            background-size: 100% 100%;
           }
         }
       }
@@ -145,12 +160,41 @@
 
     &-material {
       > ul {
+        background-color: @adhere-ui-notification-material-ul-backgroundcolor;
+
         > li {
+          border-bottom: 1px solid @adhere-ui-notification-border-color;
           border-radius: 5px;
+
+          > .info {
+            color: #fff;
+
+            > .adhere-ui-notification-standard-header {
+              border-bottom: 1px solid @adhere-ui-notification-border-color;
+            }
+
+            > .adhere-ui-notification-standard-content {
+              > .adhere-ui-notification-standard-content-media-r {
+                color: @adhere-ui-notification-standard-content-color;
+              }
+
+              > .adhere-ui-notification-standard-content-row {
+                > .adhere-ui-notification-standard-content-row-text {
+                  color: @adhere-ui-notification-standard-content-color;
+                }
+
+                > .adhere-ui-notification-standard-content-row-title {
+                  color: #fff;
+                }
+              }
+            }
+          }
 
           > .closeBtn {
             width: @adhere-ui-notification-material-closebtn-width;
             height: @adhere-ui-notification-material-closebtn-height;
+            background: url('./images/materialcha.png') no-repeat;
+            background-size: 100% 100%;
           }
         }
       }
@@ -168,94 +212,6 @@
     &-material,
     &-ios {
       bottom: 0;
-    }
-  }
-}
-
-.adhere-ui-notification {
-  &-top,
-  &-bottom {
-    &-material {
-      > ul {
-        > li {
-          border-bottom: 1px solid @adhere-ui-notification-border-color;
-
-          > .info {
-            > .adhere-ui-notification-standard-header {
-              border-bottom: 1px solid @adhere-ui-notification-border-color;
-            }
-
-            > .adhere-ui-notification-standard-content {
-              > .adhere-ui-notification-standard-content-media-r {
-                color: @adhere-ui-notification-standard-content-color;
-              }
-
-              > .adhere-ui-notification-standard-content-row {
-                > .adhere-ui-notification-standard-content-row-text {
-                  color: @adhere-ui-notification-standard-content-color;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &-top,
-  &-bottom {
-    &-material {
-      > ul {
-        background-color: @adhere-ui-notification-material-ul-backgroundcolor;
-
-        > li {
-          > .info {
-            color: #fff;
-
-            > .adhere-ui-notification-standard-content {
-              > .adhere-ui-notification-standard-content-row {
-                > .adhere-ui-notification-standard-content-row-title {
-                  color: #fff;
-                }
-              }
-            }
-          }
-
-          > .closeBtn {
-            background: url('./images/materialcha.png') no-repeat;
-            background-size: 100% 100%;
-          }
-        }
-      }
-    }
-  }
-
-  &-top,
-  &-bottom {
-    &-ios {
-      > ul {
-        background-color: transparent;
-        > li {
-          background-color: rgba(255, 255, 255, 0.7);
-          box-shadow: rgba(0, 0, 0, 0.7) 0 5px 25px -10px;
-
-          > .info {
-            color: #000;
-            > .adhere-ui-notification-standard-content {
-              > .adhere-ui-notification-standard-content-row {
-                > .adhere-ui-notification-standard-content-row-title {
-                  color: #000;
-                }
-              }
-            }
-          }
-
-          > .closeBtn {
-            background: url('./images/ioscha.svg') no-repeat;
-            background-size: 100% 100%;
-          }
-        }
-      }
     }
   }
 }

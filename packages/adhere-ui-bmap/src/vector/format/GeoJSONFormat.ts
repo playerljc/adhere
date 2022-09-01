@@ -228,7 +228,7 @@ export default {
         geoJSON.features.push({
           type: GeoJSONType.Feature,
           geometry: {
-            //  @ts-ignore
+            // @ts-ignore
             type,
             coordinates: getCoordinatesByType(feature.getGeometry()),
           },

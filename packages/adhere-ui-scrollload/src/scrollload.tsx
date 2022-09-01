@@ -200,7 +200,10 @@ class ScrollLoad extends React.Component<IScrollLoadProps> {
     return (
       <div
         className={classNames(selectorPrefix, (className || '').split(/\s+/))}
-        style={{ ...style }}
+        style={{
+          ...style,
+          overflowY: this.getScrollContainer() === this.el ? 'auto' : 'initial',
+        }}
         ref={(el) => (this.el = el)}
       >
         {children}

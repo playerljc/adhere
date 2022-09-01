@@ -26,6 +26,11 @@ function initIntlMap(zh_CN) {
     // 中文key 国际化值为值
     intlMap[zh_CN[p]] = intl.get(p);
 
+    // p:local1
+    // intlMap.姓名 = '姓名'
+
+    // intlKey.姓名 = local1
+
     // 中文key 属性是值
     intlKey[zh_CN[p]] = p;
   });
@@ -75,18 +80,22 @@ export default {
    * @param {String} - currentLocale
    * @param {Object} - locales
    * @param {Object} - ...other
+   * @param reload 是否是重新载入
    */
-  init({
-    prefix = 'local',
-    currentLocale = 'zh_CN',
-    locales = {},
-    ...other
-  }: {
-    prefix: string;
-    currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
-    locales: any;
-  }): Promise<any> {
-    if (isInit) {
+  init(
+    {
+      prefix = 'local',
+      currentLocale = 'zh_CN',
+      locales = {},
+      ...other
+    }: {
+      prefix: string;
+      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
+      locales: any;
+    },
+    reload: boolean = false,
+  ): Promise<any> {
+    if (!reload && isInit) {
       return new Promise((resolve, reject) => {
         reject();
       });
@@ -138,6 +147,14 @@ export default {
   },
 
   /**
+   * isInit
+   * @description 是否进行了初始化
+   */
+  isInit(): boolean {
+    return isInit;
+  },
+
+  /**
    * v - 以中文获取国际化值
    * @return {String}
    * @param key
@@ -145,6 +162,10 @@ export default {
    */
   v(key: string, variables?: object | null): string {
     if (!isInit) return '';
+
+    // p:local1
+    // intlMap.姓名 = '姓名'
+    // intlKey.姓名 = local1
 
     if (variables) {
       return intl.get(intlKey[key], variables);

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-flexlayout",
-  "version": "1.0.15",
+  "version": "1.0.19",
   "description": "实现flex布局的组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -11,15 +11,16 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildpackage:cjs": "ctbuildv buildpackagets -c ctbuildv.package.ts.cjs.config.js -o lib",
+    "buildpackage:es": "ctbuildv buildpackagets -c ctbuildv.package.ts.esm.config.js -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
-    "buildumd": "ctbuild buildumd --packagename AdhereFlexLayout --define alias=@,evnVars=true",
+    "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereFlexLayout --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/playerljc/adhere"
+    "url": "https://github.com/playerljc/adhere"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
@@ -27,21 +28,27 @@
   "author": "playerljc",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitee.com/playerljc/adhere/issues"
+    "url": "https://github.com/playerljc/adhere/issues"
   },
-  "homepage": "https://gitee.com/playerljc/adhere",
+  "homepage": "https://github.com/playerljc/adhere",
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
+    "@ctsj/buildv": "^5.0.4",
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
+    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
+    "@baifendian/adhere-ui-historyback": "^1.0.18-fix.2",
+    "@baifendian/adhere-util-intl": "^1.0.19",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "antd": "^4.9.4",
     "classnames": "^2.2.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"

@@ -1,0 +1,123 @@
+@adhere-ui-comment-color: #030303;
+@adhere-ui-comment-color-second: #606060;
+
+.adhere-ui-comment-node {
+  .adhere-ui-comment-node-avatar-wrap {
+    display: flex;
+    align-items: flex-start;
+    box-sizing: content-box !important;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    padding: 0 10px 10px 0;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .adhere-ui-comment-node-title-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    .adhere-ui-comment-node-title-row-author {
+      margin-right: 10px;
+      color: @adhere-ui-comment-color;
+      font-weight: 500;
+    }
+
+    .adhere-ui-comment-node-title-row-date-time {
+      color: @adhere-ui-comment-color-second;
+      font-size: 12px;
+    }
+  }
+
+  .adhere-ui-comment-node-content-wrap {
+    margin: 10px 0;
+    color: @adhere-ui-comment-color;
+    font-weight: 400;
+    .adhere-word-break();
+  }
+
+  .adhere-ui-comment-node-actions {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > .adhere-ui-comment-node-actions-action {
+      color: @adhere-ui-comment-color-second;
+      font-weight: 400;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+
+      &.adhere-ui-comment-node-actions-action-reply-btn {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .adhere-ui-comment-node-children {
+    > .adhere-ui-comment-node-children-item {
+      padding: 0 10px 0 0;
+
+      &:first-child {
+        padding-top: 10px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &.more {
+        margin-bottom: 20px;
+        margin-left: 20px;
+
+        > a {
+          > span {
+            vertical-align: middle;
+
+            > .reply-icon {
+              margin-right: 10px;
+              font-weight: 600;
+              font-size: 20px;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .adhere-ui-comment-node-collapse {
+    margin-top: 10px;
+    font-weight: 400;
+    vertical-align: middle;
+
+    > span {
+      vertical-align: middle;
+      &:first-child {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  &.adhere-ui-comment-node-reply {
+    .adhere-ui-comment-node-avatar-wrap {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

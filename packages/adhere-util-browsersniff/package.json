@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-browsersniff",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "浏览器嗅探的库",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/playerljc/adhere"
+    "url": "https://github.com/playerljc/adhere"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
@@ -28,9 +28,9 @@
   "author": "playerljc",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitee.com/playerljc/adhere/issues"
+    "url": "https://github.com/playerljc/adhere/issues"
   },
-  "homepage": "https://gitee.com/playerljc/adhere",
+  "homepage": "https://github.com/playerljc/adhere",
   "publishConfig": {
     "access": "public"
   },

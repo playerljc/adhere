@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Suspense from './suspense';\nexport default Suspense;"],"names":["Suspense"],"mappings":"OAAOA,yCACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Suspense from './suspense';\nimport Sync from './sync';\nimport ASync from './async';\nSuspense.Sync = Sync;\nSuspense.ASync = ASync;\nexport default Suspense;"],"names":["Suspense","Sync","ASync"],"mappings":"OAAOA,iCACAC,yBACAC,oBACPF,SAASC,KAAOA,KAChBD,SAASE,MAAQA,qBACFF"}

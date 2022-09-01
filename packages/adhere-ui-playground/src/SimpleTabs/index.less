@@ -1,3 +1,5 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
 .adhere-ui-playground-simple-tabs {
   display: flex;
   flex-direction: column;
@@ -11,7 +13,7 @@
     margin: 0 0 30px 0;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid @adhere-border-color;
 
     > li {
       position: relative;
@@ -26,7 +28,7 @@
         color: @adhere-primary-color;
         transition: all 0.2s;
 
-        &:before {
+        &::before {
           position: absolute;
           right: 0;
           bottom: 0;

@@ -1,3 +1,67 @@
+# 1.0.19
+
+***
+
+2022-09-01
+
+* **adhere-util-iframeio**
+  - 加入adhere-util-iframeio组件
+* **adhere-ui-configprovider**
+  - adhere-ui-configprovider组件
+* **adhere-ui-tablegridlayout**
+  - 加入getRenderDetail方法
+* **adhere-util-permission**
+  - 加入PermissionFun
+* **adhere-ui-searchtable**
+  - table样式修改
+  - 加入onSearchPanelCollapseBefore和onSearchPanelCollapseAfter钩子
+  - searchfooteritem加入key
+* **adhere-util-watchmemoized**
+  - Events对象引用修改
+
+# 1.0.18
+
+***
+
+2022-7-25
+
+* **adhere-util-dict**
+  - refresh加入链式调用
+* **adhere-ui-historyback**
+  - 修改为window.location.length
+* **adhere-ui-bmap**
+  - 加载BMap机制的修改
+* **adhere-ui-suspense**
+  - 加入sync组件
+  - 加入async组件
+* **adhere-ui-hooks**
+  - useSetState加入泛型
+* **adhere-ui-searchtable**
+  - onTableChange的BUG修改
+  - 加入renderSearchFormBefore和renderSearchFormAfter方法
+  - onClear加入Promise
+  - 加入getLimit方法
+* **adhere-ui-scrollload**
+  - BUG修改
+* **adhere-util-intl**
+  - 加入新词条
+* **adhere-ui-comment**
+  - 加入adhere-ui-comment组件
+* **adhere-ui-datedisplay**
+  - 加入adhere-ui-datedisplay组件
+* **adhere-ui-flexlayout**
+  - 加入HorizontalFlexLayout布局
+  - 加入VerticalFlexLayout布局
+  - 加入ToolBarLayout布局
+  - 加入BackLayout布局
+  - 加入ScrollLayout布局
+* **adhere-ui-contourblock**
+  - 加入adhere-ui-contourblock组件
+* **adhere-util-resource**
+  - dict.moment.config.js资源的修改
+* **adhere-ui-tablegridlayout**
+  - BUG的修改
+
 # 1.0.17
 
 ***

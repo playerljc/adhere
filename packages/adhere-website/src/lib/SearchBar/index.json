@@ -229,7 +229,31 @@
     "group": "组件 - UI",
     "path": "/adhere/component/ui/writingboard"
   },
-
+  {
+    "kw": ["宽度和高度相等的元素", "ContourBlock"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/contourblock"
+  },
+  {
+    "kw": ["时间显示组件", "DateDisplay"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/datedisplay"
+  },
+  {
+    "kw": ["评论", "Comment"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/comment"
+  },
+  {
+    "kw": ["全局配置", "ConfigProvider"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/configprovider"
+  },
+  {
+    "kw": ["组件强制刷新", "ForceUpdate"],
+    "group": "组件 - Util",
+    "path": "/adhere/component/ui/forceupdate"
+  },
   {
     "kw": ["对屏幕的缩放进行适配的操作", "AdapterScreen"],
     "group": "组件 - Util",
@@ -304,6 +328,11 @@
     "kw": ["对值的监控和缓存", "WatchMemoized"],
     "group": "组件 - Util",
     "path": "/adhere/component/util/watchmemoized"
+  },
+  {
+    "kw": ["iframe的通信客户端和服务端", "IframeIO"],
+    "group": "组件 - Util",
+    "path": "/adhere/component/util/iframeio"
   },
 
   {

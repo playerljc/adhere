@@ -2,11 +2,12 @@ import cloneDeep from 'lodash/cloneDeep';
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter';
 // @ts-ignore
-import Events from '@baifendian/adhere-util-emitter/lib/events';
-// @ts-ignore
 import Util from '@baifendian/adhere-util';
 
 import { IWatchMemoized, ICompareConfig } from './types';
+
+// @ts-ignore
+const Events = Emitter.Events;
 
 /**
  * 原始对象
@@ -49,6 +50,7 @@ function isProxyProperty(property) {
  * @param events
  * @return Proxy;
  */
+// @ts-ignore
 function createProxy(srcObj: object, noProxy: object, events: Events) {
   const proxy = new Proxy(srcObj, {
     /**

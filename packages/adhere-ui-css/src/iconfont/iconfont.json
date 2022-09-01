@@ -6,6 +6,20 @@
   "description": "adhere",
   "glyphs": [
     {
+      "icon_id": "13074968",
+      "name": "down arrow",
+      "font_class": "downarrow",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "19959153",
+      "name": "up",
+      "font_class": "up",
+      "unicode": "e748",
+      "unicode_decimal": 59208
+    },
+    {
       "icon_id": "680702",
       "name": "搜索",
       "font_class": "sousuo",

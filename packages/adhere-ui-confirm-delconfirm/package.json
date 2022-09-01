@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-confirm-delconfirm",
-  "version": "1.0.17-fix.0",
+  "version": "1.0.19",
   "description": "删除确认提示",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/playerljc/adhere"
+    "url": "https://github.com/playerljc/adhere"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
@@ -27,9 +27,9 @@
   "author": "playerljc",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitee.com/playerljc/adhere/issues"
+    "url": "https://github.com/playerljc/adhere/issues"
   },
-  "homepage": "https://gitee.com/playerljc/adhere",
+  "homepage": "https://github.com/playerljc/adhere",
   "publishConfig": {
     "access": "public"
   },
@@ -40,9 +40,9 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-messagedialog": "^1.0.17-fix.0",
-    "@baifendian/adhere-util-intl": "^1.0.16",
-    "@baifendian/adhere-util-resource": "^1.0.17-fix.0",
+    "@baifendian/adhere-ui-messagedialog": "^1.0.19",
+    "@baifendian/adhere-util-intl": "^1.0.19",
+    "@baifendian/adhere-util-resource": "^1.0.19",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

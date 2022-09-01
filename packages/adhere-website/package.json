@@ -1,7 +1,7 @@
 {
   "name": "@baifendian/adhere-website",
   "private": true,
-  "version": "1.0.17-fix.0",
+  "version": "1.0.19",
   "description": "adhere的website",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/playerljc/adhere"
+    "url": "https://github.com/playerljc/adhere"
   },
   "resolutions": {
     "graceful-fs": "4.2.2"
@@ -34,9 +34,9 @@
   "author": "playerljc",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitee.com/playerljc/adhere/issues"
+    "url": "https://github.com/playerljc/adhere/issues"
   },
-  "homepage": "https://gitee.com/playerljc/adhere",
+  "homepage": "https://github.com/playerljc/adhere",
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.19",
@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.17-fix.0",
+    "@baifendian/adhere": "^1.0.19",
     "@ctsj/router": "^1.0.1",
     "@ctsj/state": "^2.0.21",
     "antd": "^4.9.4",

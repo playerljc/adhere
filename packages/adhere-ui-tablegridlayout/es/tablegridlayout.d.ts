@@ -1,13 +1,6 @@
 /// <reference types="react" />
 import PropTypes from 'prop-types';
-import { ITableGridLayoutProps, IDataItem } from './types';
-/**
- * renderGridSearchFormGroup
- * @param data
- * @param props
- * @return {JSX.Element}
- */
-export declare function renderGridSearchFormGroup(data: IDataItem[], props: Pick<ITableGridLayoutProps, Exclude<keyof ITableGridLayoutProps, 'className' | 'style' | 'data'>>): JSX.Element;
+import { ITableGridLayoutProps, IDataItem, RenderDetail } from './types';
 /**
  * TableGridLayout
  * @param data
@@ -21,6 +14,8 @@ declare function TableGridLayout({ data, className, style, ...props }: ITableGri
 declare namespace TableGridLayout {
     var Label: (props: any) => JSX.Element;
     var Value: (props: any) => JSX.Element;
+    var renderGridSearchFormGroup: (data: IDataItem[], props: Pick<ITableGridLayoutProps, "layout" | "density" | "parity" | "innerClassName" | "innerStyle" | "bordered">) => JSX.Element;
+    var getRenderDetail: (data: IDataItem[], props: Pick<ITableGridLayoutProps, "layout" | "density" | "parity" | "innerClassName" | "innerStyle" | "bordered">) => RenderDetail;
     var defaultProps: {
         data: never[];
         layout: string;

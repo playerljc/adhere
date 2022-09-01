@@ -2,6 +2,8 @@
 //@import '~antd/es/dropdown/style/index.less';
 @import '~@baifendian/adhere-ui-css/es/vars.less';
 
+@adhere-ui-searchtable-table-density-setting-body-li-hover-color: #ccc;
+
 .adhere-ui-searchtable-table-density-setting {
   background-color: #fff;
 
@@ -9,7 +11,7 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid @adhere-border-color;
   }
 
   > .adhere-ui-searchtable-table-density-setting-body {
@@ -27,7 +29,10 @@
         }
 
         &:hover {
-          background-color: rgba(#ccc, 0.3);
+          background-color: rgba(
+            @adhere-ui-searchtable-table-density-setting-body-li-hover-color,
+            0.3
+          );
           cursor: pointer;
         }
       }

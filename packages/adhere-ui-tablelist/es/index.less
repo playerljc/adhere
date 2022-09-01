@@ -7,48 +7,54 @@
 @import '~antd/es/popover/style/index.less';
 @import '~antd/es/skeleton/style/index.less';
 @import '~@baifendian/adhere-ui-formitemcreator/lib/index.less';
+@import '~@baifendian/adhere-ui-css/lib/vars';
 
 // tablelist-search
-@tablelist-search-padding: 10px;
-@tablelist-search-bg: #fff;
-@tablelist-search-boxshadow: none;
-@tablelist-search-border: none;
-@tablelist-search-border-radius: 4px;
+@adhere-ui-tablelist-search-padding: 10px;
+@adhere-ui-tablelist-search-bg: #fff;
+@adhere-ui-tablelist-search-boxshadow: none;
+@adhere-ui-tablelist-search-border: none;
+@adhere-ui-tablelist-search-border-radius: 4px;
 
 // tablelist-content
-@tablelist-content-margin: 20px 0 0;
-@tablelist-content-padding: 0 10px 10px;
-@tablelist-content-bg: #fff;
-@tablelist-content-boxshadow: none;
-@tablelist-content-border: none;
-@tablelist-content-border-radius: 4px;
+@adhere-ui-tablelist-content-margin: 20px 0 0;
+@adhere-ui-tablelist-content-padding: 0 10px 10px;
+@adhere-ui-tablelist-content-bg: #fff;
+@adhere-ui-tablelist-content-boxshadow: none;
+@adhere-ui-tablelist-content-border: none;
+@adhere-ui-tablelist-content-border-radius: 4px;
 
 // tablelist-toolbar
-@tablelist-toolbar-padding: 10px 0;
+@adhere-ui-tablelist-toolbar-padding: 10px 0;
 
 .adhere-ui-tablelist {
   display: flex;
   flex: auto;
   flex-direction: column;
   height: 100%;
+
   .adhere-ui-tablelist-search {
     display: flex;
     align-items: center;
-    padding: @tablelist-search-padding;
-    background: @tablelist-search-bg;
-    border: @tablelist-search-border;
-    border-radius: @tablelist-search-border-radius;
-    box-shadow: @tablelist-search-boxshadow;
+    padding: @adhere-ui-tablelist-search-padding;
+    background: @adhere-ui-tablelist-search-bg;
+    border: @adhere-ui-tablelist-search-border;
+    border-radius: @adhere-ui-tablelist-search-border-radius;
+    box-shadow: @adhere-ui-tablelist-search-boxshadow;
+
     .adhere-ui-tablelist-search-form {
       flex: auto;
+
       &.ant-form-inline {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
+
         .ant-form-search {
           display: flex;
           flex: auto;
         }
+
         .ant-form-btngroup {
           display: flex;
           align-items: center;
@@ -57,23 +63,29 @@
           }
         }
       }
+
       &.adhere-ui-tablelist-search-form-havebefore {
         margin-left: 16px;
       }
+
       &.adhere-ui-tablelist-search-form-haveafter {
         margin-right: 16px;
       }
     }
   }
+
   .adhere-ui-tablelist-toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: @tablelist-toolbar-padding;
+    padding: @adhere-ui-tablelist-toolbar-padding;
+
     .adhere-ui-tablelist-toolbar-left {
       display: flex;
+
       > span {
         margin-right: 10px;
+
         &.adhere-ui-tablelist-toolbar-left-total {
           em {
             color: @primary-color;
@@ -83,32 +95,39 @@
         }
       }
     }
+
     .adhere-ui-tablelist-toolbar-right {
       display: flex;
       flex: auto;
       align-items: center;
       justify-content: flex-end;
+
       > * {
         margin: 0 5px;
       }
+
       .ant-form-item {
         margin-bottom: 0;
       }
+
       > .anticon {
         padding: 0 10px;
         font-size: 16px;
       }
     }
   }
+
   .adhere-ui-tablelist-content {
-    margin: @tablelist-content-margin;
-    padding: @tablelist-content-padding;
-    background: @tablelist-content-bg;
-    border: @tablelist-content-border;
-    border-radius: @tablelist-content-border-radius;
-    box-shadow: @tablelist-content-boxshadow;
+    margin: @adhere-ui-tablelist-content-margin;
+    padding: @adhere-ui-tablelist-content-padding;
+    background: @adhere-ui-tablelist-content-bg;
+    border: @adhere-ui-tablelist-content-border;
+    border-radius: @adhere-ui-tablelist-content-border-radius;
+    box-shadow: @adhere-ui-tablelist-content-boxshadow;
+
     .ant-spin-nested-loading {
       height: 100%;
+
       .ant-spin-container {
         display: flex;
         flex-direction: column;
@@ -124,9 +143,11 @@
     justify-content: space-between;
     padding: 8px 16px;
   }
+
   .ant-popover-inner-content {
     .ant-checkbox-group {
       width: 100%;
+
       .ant-checkbox-wrapper {
         display: flex;
         margin-bottom: 5px;
@@ -136,23 +157,23 @@
   }
 }
 
-.row-dragging {
+.adhere-ui-tablelist-row-dragging {
   background: #fafafa;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(@adhere-black-color, .1);
+
+  td {
+    padding: 16px;
+  }
+
+  .drag-visible {
+    visibility: visible;
+  }
 }
 
-.row-dragging td {
-  padding: 16px;
-}
+.adhere-ui-tablelist-set-dragging {
+  z-index: @adhere-common-max-zindex;
 
-.row-dragging .drag-visible {
-  visibility: visible;
-}
-
-.set-dragging {
-  z-index: 10000;
-}
-
-.set-dragging .drag-visible {
-  visibility: visible;
+  .drag-visible {
+    visibility: visible;
+  }
 }

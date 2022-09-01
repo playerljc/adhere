@@ -271,7 +271,7 @@ class StateTable extends TableStateImplement {
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
         render: (val) =>
-          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value) : '',
+          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
       },
       {
         title: '所在部门',

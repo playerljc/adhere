@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Skeleton, Spin } from 'antd';
 
 import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
@@ -16,8 +17,8 @@ const selectorPrefix = 'adhere-ui-suspense';
  * renderInner
  * showLoading
  */
-abstract class Suspense
-  extends React.Component<ISuspenseProps, ISuspenseState>
+abstract class Suspense<T extends ISuspenseProps, P extends ISuspenseState>
+  extends React.Component<T, P>
   implements ISuspense
 {
   // 第一次
@@ -28,6 +29,8 @@ abstract class Suspense
 
   static defaultProps: any;
   static propTypes: any;
+  static Sync: Function;
+  static ASync: Function;
 
   /**
    * fetchData - 加载数据
@@ -59,7 +62,7 @@ abstract class Suspense
   }
 
   componentDidMount() {
-    this.fetchData();
+    this?.fetchData?.();
   }
 
   /**
@@ -82,7 +85,6 @@ abstract class Suspense
    * @return {React.Element}
    */
   private renderFirstLoading() {
-    // @ts-ignore
     const { firstLoading } = this.props;
 
     if (firstLoading !== undefined && firstLoading !== null) {
@@ -128,16 +130,27 @@ abstract class Suspense
   }
 
   render() {
-    return <div className={selectorPrefix}>{this.renderDispatch()}</div>;
+    return (
+      <div
+        className={classNames(selectorPrefix, this.props.className || '')}
+        style={this.props.style || {}}
+      >
+        {this.renderDispatch()}
+      </div>
+    );
   }
 }
 
 Suspense.defaultProps = {
+  className: '',
+  style: {},
   reset: false,
   firstLoading: null,
 };
 
 Suspense.propTypes = {
+  className: PropTypes.string,
+  style: PropTypes.object,
   reset: PropTypes.bool,
   firstLoading: PropTypes.node,
 };

@@ -55,7 +55,7 @@ export default () => {
 
         `,
         type: 'PlayGround',
-      }
+      },
     ];
   }
 
@@ -104,6 +104,13 @@ export default () => {
                     type: '',
                     defaultVal: '',
                     required: 'true',
+                  },
+                  {
+                    name: 'reload',
+                    desc: '是否是重新载入',
+                    type: 'boolean',
+                    defaultVal: 'false',
+                    required: '',
                   },
                 ],
                 returnType: 'Promise',

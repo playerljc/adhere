@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover"
+    />
+    <title></title>
+    <script>
+      window.onload = function () {
+        const btn = document.getElementById('btn');
+        const textarea = document.getElementById('textarea');
+        btn.addEventListener('click', () => {
+          const { selectionStart } = textarea;
+
+          debugger
+
+          const value = textarea.value;
+
+          const str = [...value];
+          str.splice(selectionStart - 2, 0, '😍');
+
+          textarea.value = str.join('');
+
+          textarea.focus();
+          textarea.setSelectionRange(selectionStart + 2, selectionStart + 2);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <!--    <h1>1.0.0</h1>
+    <hr />
+    <div>2022-7-29</div>
+    <ul>
+      <li>加入adhere-ui-comment</li>
+      😍😆😅😜
+    </ul>-->
+    <textarea id="textarea">😀😘</textarea>
+    <button id="btn">111</button>
+  </body>
+</html>

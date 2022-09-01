@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(e,r){void 0===r&&(r="/"),"undefined"!=typeof document&&(!("referrer"in document)||""!==document.referrer?window.history.go(-1):e&&r&&e.replace(r||"/"))};
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(e,t){void 0===t&&(t="/"),window.history.length?window.history.back():e.replace(t||"/")};
 //# sourceMappingURL=historyback.js.map

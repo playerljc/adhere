@@ -295,7 +295,6 @@ export const FunctionPropsDefaultProps = {
   data: [],
 };
 
-// @ts-ignore
 export const FunctionPropsPropTypes = {
   ...Collapse.propTypes,
   data: PropTypes.arrayOf(

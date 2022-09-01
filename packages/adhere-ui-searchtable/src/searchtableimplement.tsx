@@ -166,7 +166,8 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
   }
 
   /**
-   * getNumberGeneratorRule - 获取符号列的生成规则
+   * getNumberGeneratorRule
+   * @description 获取符号列的生成规则
    */
   protected getRowSelectionMode(): Symbol {
     return SearchTable.ROW_SELECTION_NORMAL_MODE;

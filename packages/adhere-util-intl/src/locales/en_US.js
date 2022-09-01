@@ -55,4 +55,10 @@ export default [
   'default',
   'medium',
   'compact',
+  'Reply',
+  'Load more replies',
+  'Stop reply',
+  'Show reply content',
+  'Please enter the reply content',
+  'Add to',
 ];

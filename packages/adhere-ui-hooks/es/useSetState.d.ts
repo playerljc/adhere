@@ -1,6 +1,7 @@
-declare const _default: (defaultValue: any) => any[];
+declare type Dispatch<A> = (value: A, callback?: () => void) => void;
+declare function useSetState<T>(defaultValue: T): [T, Dispatch<T>];
 /**
  * useSetState
  * @param defaultValue - 初始值
  */
-export default _default;
+export default useSetState;

@@ -287,4 +287,4 @@ CodeBoxPanel.propTypes = {
   ),
 };
 
-export default memo(CodeBoxPanel);
+export default memo<any>(CodeBoxPanel);

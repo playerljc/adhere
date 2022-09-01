@@ -21,69 +21,104 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     private columnResizable;
     private columnObserver;
     /**
-     * isShowNumber - 表格是否显示序号
+     * isShowNumber
+     * @description 表格是否显示序号
      * @return boolean
      */
     abstract isShowNumber(): boolean;
     /**
-     * getTableNumberColumnWidth - 表格序号列的宽度
+     * getTableNumberColumnWidth
+     * @description 表格序号列的宽度
      * @return number
      */
     abstract getTableNumberColumnWidth(): Symbol;
     /**
-     * getNumberGeneratorRule - 获取符号列的生成规则
+     * getNumberGeneratorRule
+     * @description 获取符号列的生成规则
      */
     abstract getNumberGeneratorRule(): Symbol;
     /**
-     * getRowSelectionMode - 获取全选的生模式
+     * getRowSelectionMode
+     * @description 获取全选的生模式
      */
     abstract getRowSelectionMode(): string;
     /**
-     * getRowKey - 获取表格的主键属性
+     * getRowKey
+     * @description 获取表格的主键属性
      * @return string
      */
     abstract getRowKey(): string;
     /**
-     * getData - 获取表格数据
+     * getData
+     * @description 获取表格数据
      * @return Array<Object>
      */
     abstract getData(): Array<object>;
     /**
-     * getColumns - 获取表格列的信息
+     * getColumns
+     * @description 获取表格列的信息
      * @return Array<object>
      */
     abstract getColumns(): Array<ColumnType<object>>;
     /**
      *
-     * getRowSelection - 获取表格行选择对象
+     * getRowSelection
+     * @description 获取表格行选择对象
      */
     abstract getRowSelection(): TableRowSelection<object>;
     /**
-     * renderSearchForm - 渲染查询的UI
+     * renderSearchBefore
+     * @description 渲染查询面板之前
+     */
+    abstract renderSearchFormBefore(): React.ReactElement | null;
+    /**
+     * renderSearchForm
+     * @description 渲染查询的UI
      */
     abstract renderSearchForm(): React.ReactElement | null;
     /**
-     * renderTableHeader - 渲染表格的头
+     * renderSearchBefore
+     * @description 渲染查询面板之后
+     */
+    abstract renderSearchFormAfter(): React.ReactElement | null;
+    /**
+     * renderTableHeader
+     * @description 渲染表格的头
      */
     abstract renderTableHeader(): React.ReactElement | null;
     /**
-     * renderTableFooter - 渲染表格的脚
+     * renderTableFooter
+     * @description 渲染表格的脚
      */
     abstract renderTableFooter(): React.ReactElement | null;
     /**
-     * getTotal - 获取表格数据的总数
+     * getTotal
+     * @description 获取表格数据的总数
      */
     abstract getTotal(): number;
     /**
-     * getOrderFieldProp - 获取表格的排序字段
+     * getOrderFieldProp
+     * @description 获取表格的排序字段
      */
     abstract getOrderFieldProp(): string;
     /**
-     * getOrderProp - 获取表格的排序属性
+     * getOrderProp
+     * @description 获取表格的排序属性
      */
     abstract getOrderProp(): string;
     /**
-     * onSubTableChange - 获取表格change句柄
+     * getOrderPropValue
+     * @description 获取默认排序方式
+     */
+    abstract getOrderPropValue(): 'descend' | 'ascend';
+    /**
+     * getOrderFieldValue
+     * @description 获取默认排序字段的值
+     */
+    abstract getOrderFieldValue(): string;
+    /**
+     * onSubTableChange
+     * @description 获取表格change句柄
      * @param pagination
      * @param filters
      * @param sorter
@@ -91,17 +126,20 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
      */
     abstract onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra: TableCurrentDataSource<object>): void;
     /**
-     * clear - 清除操作
+     * clear
+     * @description  清除操作
      */
     abstract clear(): Promise<any>;
     /**
-     * renderSearchFooterItems - 渲染SearchFooter的按钮组
+     * renderSearchFooterItems
+     * @description 渲染SearchFooter的按钮组
      */
     abstract renderSearchFooterItems(defaultItems: Array<React.ReactElement>): Array<React.ReactElement> | null;
     /**
-     * onSearch - 进行查询
+     * onSearch
+     * @description 进行查询
      */
-    abstract onSearch(): void;
+    abstract onSearch(): Promise<void>;
     protected constructor(props: any);
     componentWillReceiveProps(nextProps: ISearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
@@ -134,17 +172,34 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
         index: number;
     }): JSX.Element;
     /**
+     * getLimit
+     * @description limit参数
+     */
+    protected getLimit(): number;
+    /**
      * getPagination - 获取分页信息
      */
     protected getPagination(): {
         onChange: (page: any, limit: any) => void;
         onShowSizeChange: (page: any, limit: any) => void;
         total: number;
-        current: any;
-        pageSize: any;
+        current: number;
+        pageSize: number;
         showQuickJumper: boolean;
         showTotal: (total: any) => string;
     };
+    /**
+     * onSearchPanelCollapse
+     * @description 查询面板展开之前
+     * @protected
+     */
+    protected onSearchPanelCollapseBefore(): void;
+    /**
+     * onSearchPanelCollapseAfter
+     * @description 查询面板展开之后
+     * @protected
+     */
+    protected onSearchPanelCollapseAfter(): void;
     /**
      * onTableChange - 表格change
      */
@@ -152,7 +207,7 @@ declare abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTa
     /**
      * onClear - 清除操作
      */
-    protected onClear(): void;
+    protected onClear(): Promise<void>;
     /**
      * sortOrder - table的column中加入
      * sorter: true,

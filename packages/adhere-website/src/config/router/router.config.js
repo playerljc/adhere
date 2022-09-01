@@ -4,6 +4,7 @@ import React from 'react';
 import BasicLayout from '@/lib/BasicLayout';
 
 import Components from '@/config/router/routerComponentRegister';
+import IframeServer from '@/components/util/iframeio/server';
 
 const {
   App,
@@ -74,6 +75,11 @@ const {
   ForceUpdate,
   TableGridLayout,
   WritingBoard,
+  ContourBlock,
+  DateDisplay,
+  Comment,
+  ConfigProvider,
+  IframeIO,
 } = Components;
 
 export default () => [
@@ -381,6 +387,26 @@ export default () => [
                 name: 'WritingBoard',
                 component: WritingBoard,
               },
+              {
+                path: '/adhere/component/ui/contourblock',
+                name: 'ContourBlock',
+                component: ContourBlock,
+              },
+              {
+                path: '/adhere/component/ui/datedisplay',
+                name: 'DateDisplay',
+                component: DateDisplay,
+              },
+              {
+                path: '/adhere/component/ui/comment',
+                name: 'Comment',
+                component: Comment,
+              },
+              {
+                path: '/adhere/component/ui/configprovider',
+                name: 'ConfigProvider',
+                component: ConfigProvider,
+              },
             ],
           },
           {
@@ -466,10 +492,19 @@ export default () => [
                 name: 'ReactUtil',
                 component: ReactUtil,
               },
+              {
+                path: '/adhere/component/util/iframeio',
+                name: 'IframeIO',
+                component: IframeIO,
+              },
             ],
           },
         ],
       },
     ],
+  },
+  {
+    path: '/iframeServer',
+    component: IframeServer,
   },
 ];

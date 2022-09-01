@@ -1,12 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Select } from 'antd';
 import { v1 } from 'uuid';
-import { BMap, MessageDialog, Resource } from '@baifendian/adhere';
+import { BMap, ConditionalRender, MessageDialog, Resource, Spin } from '@baifendian/adhere';
 
-import PlayGroundPage, {
-  Section,
-  CodeBoxSection,
-} from '@/lib/PlaygroundPage';
+import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 import citys from './data/citys.json';
 import isoline from './data/isoline';
@@ -16,61 +13,110 @@ import icon from './站点.svg';
 
 const { Option } = Select;
 
-const {
-  BMap: BMapComponent,
-  BMapWindLayer,
-  BMapAirPressureLayer,
-  HeatMapLayer,
-  Vector: {
-    Feature,
-    InnerTextFeature,
-    VectorLayer,
-    VectorSource,
-    Trajectory: { Trajectory, TrajectoryPlayBackLayer },
-    Interaction: {
-      InteractionLayer,
-      CircleDrawAction,
-      DiamondDrawAction,
-      FreeDrawAction,
-      PolygonDrawAction,
-      DistanceDrawAction,
-      RectangleDrawAction,
-      StartDrawAction,
-      TriangleDrawAction,
-      CircleModifyAction,
-      DiamondModifyAction,
-      PolygonModifyAction,
-      RectangleModifyAction,
-      StartModifyAction,
-      TriangleModifyAction,
-      Types: InteractionTypes,
-    },
-    Geom: {
-      PointGeometry,
-      MulitPointGeometry,
-      PolygonGeometry,
-      MulitPolygonGeometry,
-      LineStringGeometry,
-      // 正多边形
-      RegularPolygonGeometry,
-      // 矩形
-      RectGeometry,
-      // 圆角矩形
-      RadiusRectGeometry,
-      // 圆形
-      CircleGeometry,
-      // 扇形
-      SectorGeometry,
-      // 五角星
-      StartGeometry,
-      // n叶草
-      LeafGeometry,
-      // 文字
-      TextGeometry,
-    },
-  },
-  Util,
-} = BMap;
+// const {
+//   BMap: BMapComponent,
+//   BMapWindLayer,
+//   BMapAirPressureLayer,
+//   HeatMapLayer,
+//   Vector: {
+//     Feature,
+//     InnerTextFeature,
+//     VectorLayer,
+//     VectorSource,
+//     Trajectory: { Trajectory, TrajectoryPlayBackLayer },
+//     Interaction: {
+//       InteractionLayer,
+//       CircleDrawAction,
+//       DiamondDrawAction,
+//       FreeDrawAction,
+//       PolygonDrawAction,
+//       DistanceDrawAction,
+//       RectangleDrawAction,
+//       StartDrawAction,
+//       TriangleDrawAction,
+//       CircleModifyAction,
+//       DiamondModifyAction,
+//       PolygonModifyAction,
+//       RectangleModifyAction,
+//       StartModifyAction,
+//       TriangleModifyAction,
+//       Types: InteractionTypes,
+//     },
+//     Geom: {
+//       PointGeometry,
+//       MulitPointGeometry,
+//       PolygonGeometry,
+//       MulitPolygonGeometry,
+//       LineStringGeometry,
+//       // 正多边形
+//       RegularPolygonGeometry,
+//       // 矩形
+//       RectGeometry,
+//       // 圆角矩形
+//       RadiusRectGeometry,
+//       // 圆形
+//       CircleGeometry,
+//       // 扇形
+//       SectorGeometry,
+//       // 五角星
+//       StartGeometry,
+//       // n叶草
+//       LeafGeometry,
+//       // 文字
+//       TextGeometry,
+//     },
+//   },
+//   Util,
+// } = BMap;
+
+let BMapComponent;
+let BMapWindLayer;
+let BMapAirPressureLayer;
+let HeatMapLayer;
+let Feature;
+let InnerTextFeature;
+let VectorLayer;
+let VectorSource;
+let Trajectory;
+let TrajectoryPlayBackLayer;
+let InteractionLayer;
+let CircleDrawAction;
+let DiamondDrawAction;
+let FreeDrawAction;
+let PolygonDrawAction;
+let DistanceDrawAction;
+let RectangleDrawAction;
+let StartDrawAction;
+let TriangleDrawAction;
+let CircleModifyAction;
+let DiamondModifyAction;
+let PolygonModifyAction;
+let RectangleModifyAction;
+let StartModifyAction;
+let TriangleModifyAction;
+let InteractionTypes;
+let PointGeometry;
+let MulitPointGeometry;
+let PolygonGeometry;
+let MulitPolygonGeometry;
+let LineStringGeometry;
+// 正多边形
+let RegularPolygonGeometry;
+// 矩形
+let RectGeometry;
+// 圆角矩形
+let RadiusRectGeometry;
+// 圆形
+let CircleGeometry;
+// 扇形
+let SectorGeometry;
+// 五角星
+let StartGeometry;
+// n叶草
+let LeafGeometry;
+// 文字
+let TextGeometry;
+let Util;
 
 const defaultStyle = {
   lineWidth: 1,
@@ -84,6 +130,113 @@ function getRandomArbitrary(min, max) {
 
 export default () => {
   let index = 0;
+
+  const [isLoad, setIsLoad] = useState(false);
+
+  const baseMapRef = useRef();
+
+  const winLayerRef = useRef();
+  const windLayerOverlay = useRef();
+
+  const hotLayerRef = useRef();
+  const hotLayerOverlay = useRef();
+
+  const airPressureRef = useRef();
+  const airPressureOverlay = useRef();
+
+  const pointLayerRef = useRef();
+  const pointLayerOverlay = useRef();
+  const pointLayerSource = useRef();
+  const [pointType, setPointType] = useState('-1');
+
+  const mulitPointLayerRef = useRef();
+  const mulitPointLayerOverlay = useRef();
+  const mulitPointLayerSource = useRef();
+  const preMulitPointFeature = useRef(null);
+  const [mulitPointType, setMulitPointType] = useState('-1');
+
+  const geometryLayerRef = useRef();
+  const geometryLayerOverlay = useRef();
+  const geometryLayerSource = useRef();
+
+  const polygonLayerRef = useRef();
+  const polygonLayerOverlay = useRef();
+  const polygonLayerSource = useRef();
+
+  const mulitPolygonLayerRef = useRef();
+  const mulitPolygonOverlay = useRef();
+  const mulitPolygonSource = useRef();
+
+  const lineStringRef = useRef();
+  const lineStringOverlay = useRef();
+  const lineStringSource = useRef();
+  const preLineStringFeature = useRef(null);
+  const [lineStringType, setLineStringType] = useState('-1');
+
+  const regularPolygonRef = useRef();
+  const regularPolygonOverlay = useRef();
+  const regularPolygonSource = useRef();
+  const preRegularPolygonFeature = useRef(null);
+  const [regularPolygonCount, setRegularPolygonCount] = useState('-1');
+
+  const leafRef = useRef();
+  const leafOverlay = useRef();
+  const leafSource = useRef();
+  const preLeafFeature = useRef(null);
+  const [leafCount, setLeafCount] = useState('-1');
+
+  const textRef = useRef();
+  const textOverlay = useRef();
+  const textSource = useRef();
+  const preTextFeature = useRef(null);
+  const [textCount, setTextCount] = useState('-1');
+
+  const geoJSONRef = useRef();
+  const geoJSONOverlay = useRef();
+  const geoJSONSource = useRef();
+
+  const rangingRef = useRef();
+  const rangingOverlay = useRef();
+
+  const trajectoryPlayBackLayerRef = useRef();
+  const trajectoryRef = useRef();
+  const trajector = useRef();
+  const trajectorDuration = useRef(60 * 2);
+  const [isTrajectorPause, setTrajecorPause] = useState(false);
+
+  const interactionRef = useRef();
+  const interactionLayer = useRef();
+  const [interactionValue, setInteractionValue] = useState('-1');
+  const interactionModifyTypeActionMap = useRef();
+  const interactionDrawTypeActionMap = useRef();
+
+  function createVectorLayer({ overlay, ref, source, zIndex }) {
+    if (overlay.current) return;
+
+    const map = ref.current.getMap();
+
+    // eslint-disable-next-line no-param-reassign
+    source.current = new VectorSource([]);
+    // eslint-disable-next-line no-param-reassign
+    overlay.current = new VectorLayer(map, {
+      paneName: 'vertexPane',
+      zIndex,
+      source: source.current,
+    });
+
+    map.addOverlay(overlay.current);
+  }
+
+  function createInteractionLayer({ overlay, ref, defaultData, listeners }) {
+    if (overlay.current) return;
+
+    const map = ref.current.getMap();
+
+    // eslint-disable-next-line no-param-reassign
+    overlay.current = new InteractionLayer(map, defaultData || [], listeners || {});
+
+    map.addOverlay(overlay.current);
+  }
 
   function boxPanelConfig() {
     return [
@@ -3492,220 +3645,230 @@ export default () => {
     ];
   }
 
-  const baseMapRef = useRef();
+  useEffect(() => {
+    BMap().then((modules) => {
+      const {
+        BMap: _BMapComponent,
+        BMapWindLayer: _BMapWindLayer,
+        BMapAirPressureLayer: _BMapAirPressureLayer,
+        HeatMapLayer: _HeatMapLayer,
+        Vector: {
+          Feature: _Feature,
+          InnerTextFeature: _InnerTextFeature,
+          VectorLayer: _VectorLayer,
+          VectorSource: _VectorSource,
+          Trajectory: {
+            Trajectory: _Trajectory,
+            TrajectoryPlayBackLayer: _TrajectoryPlayBackLayer,
+          },
+          Interaction: {
+            InteractionLayer: _InteractionLayer,
+            CircleDrawAction: _CircleDrawAction,
+            DiamondDrawAction: _DiamondDrawAction,
+            FreeDrawAction: _FreeDrawAction,
+            PolygonDrawAction: _PolygonDrawAction,
+            DistanceDrawAction: _DistanceDrawAction,
+            RectangleDrawAction: _RectangleDrawAction,
+            StartDrawAction: _StartDrawAction,
+            TriangleDrawAction: _TriangleDrawAction,
+            CircleModifyAction: _CircleModifyAction,
+            DiamondModifyAction: _DiamondModifyAction,
+            PolygonModifyAction: _PolygonModifyAction,
+            RectangleModifyAction: _RectangleModifyAction,
+            StartModifyAction: _StartModifyAction,
+            TriangleModifyAction: _TriangleModifyAction,
+            Types: _InteractionTypes,
+          },
+          Geom: {
+            PointGeometry: _PointGeometry,
+            MulitPointGeometry: _MulitPointGeometry,
+            PolygonGeometry: _PolygonGeometry,
+            MulitPolygonGeometry: _MulitPolygonGeometry,
+            LineStringGeometry: _LineStringGeometry,
+            // 正多边形
+            RegularPolygonGeometry: _RegularPolygonGeometry,
+            // 矩形
+            RectGeometry: _RectGeometry,
+            // 圆角矩形
+            RadiusRectGeometry: _RadiusRectGeometry,
+            // 圆形
+            CircleGeometry: _CircleGeometry,
+            // 扇形
+            SectorGeometry: _SectorGeometry,
+            // 五角星
+            StartGeometry: _StartGeometry,
+            // n叶草
+            LeafGeometry: _LeafGeometry,
+            // 文字
+            TextGeometry: _TextGeometry,
+          },
+        },
+        Util: _Util,
+      } = modules;
 
-  const winLayerRef = useRef();
-  const windLayerOverlay = useRef();
+      BMapComponent = _BMapComponent;
+      BMapWindLayer = _BMapWindLayer;
+      BMapAirPressureLayer = _BMapAirPressureLayer;
+      HeatMapLayer = _HeatMapLayer;
+      Feature = _Feature;
+      InnerTextFeature = _InnerTextFeature;
+      VectorLayer = _VectorLayer;
+      VectorSource = _VectorSource;
+      Trajectory = _Trajectory;
+      TrajectoryPlayBackLayer = _TrajectoryPlayBackLayer;
+      InteractionLayer = _InteractionLayer;
+      CircleDrawAction = _CircleDrawAction;
+      DiamondDrawAction = _DiamondDrawAction;
+      FreeDrawAction = _FreeDrawAction;
+      PolygonDrawAction = _PolygonDrawAction;
+      DistanceDrawAction = _DistanceDrawAction;
+      RectangleDrawAction = _RectangleDrawAction;
+      StartDrawAction = _StartDrawAction;
+      TriangleDrawAction = _TriangleDrawAction;
+      CircleModifyAction = _CircleModifyAction;
+      DiamondModifyAction = _DiamondModifyAction;
+      PolygonModifyAction = _PolygonModifyAction;
+      RectangleModifyAction = _RectangleModifyAction;
+      StartModifyAction = _StartModifyAction;
+      TriangleModifyAction = _TriangleModifyAction;
+      InteractionTypes = _InteractionTypes;
+      PointGeometry = _PointGeometry;
+      MulitPointGeometry = _MulitPointGeometry;
+      PolygonGeometry = _PolygonGeometry;
+      MulitPolygonGeometry = _MulitPolygonGeometry;
+      LineStringGeometry = _LineStringGeometry;
+      // 正多边形
+      RegularPolygonGeometry = _RegularPolygonGeometry;
+      // 矩形
+      RectGeometry = _RectGeometry;
+      // 圆角矩形
+      RadiusRectGeometry = _RadiusRectGeometry;
+      // 圆形
+      CircleGeometry = _CircleGeometry;
+      // 扇形
+      SectorGeometry = _SectorGeometry;
+      // 五角星
+      StartGeometry = _StartGeometry;
+      // n叶草
+      LeafGeometry = _LeafGeometry;
+      // 文字
+      TextGeometry = _TextGeometry;
+      Util = _Util;
 
-  const hotLayerRef = useRef();
-  const hotLayerOverlay = useRef();
+      interactionModifyTypeActionMap.current = new Map([
+        ['Polygon', PolygonModifyAction],
+        ['Circle', CircleModifyAction],
+        ['Rectangle', RectangleModifyAction],
+        ['Triangle', TriangleModifyAction],
+        ['Diamond', DiamondModifyAction],
+        ['Start', StartModifyAction],
+      ]);
 
-  const airPressureRef = useRef();
-  const airPressureOverlay = useRef();
+      interactionDrawTypeActionMap.current = new Map([
+        ['Polygon', PolygonDrawAction],
+        ['Circle', CircleDrawAction],
+        ['Rectangle', RectangleDrawAction],
+        ['Triangle', TriangleDrawAction],
+        ['Diamond', DiamondDrawAction],
+        ['Free', FreeDrawAction],
+        ['Start', StartDrawAction],
+      ]);
 
-  const pointLayerRef = useRef();
-  const pointLayerOverlay = useRef();
-  const pointLayerSource = useRef();
-  const [pointType, setPointType] = useState('-1');
-
-  const mulitPointLayerRef = useRef();
-  const mulitPointLayerOverlay = useRef();
-  const mulitPointLayerSource = useRef();
-  const preMulitPointFeature = useRef(null);
-  const [mulitPointType, setMulitPointType] = useState('-1');
-
-  const geometryLayerRef = useRef();
-  const geometryLayerOverlay = useRef();
-  const geometryLayerSource = useRef();
-
-  const polygonLayerRef = useRef();
-  const polygonLayerOverlay = useRef();
-  const polygonLayerSource = useRef();
-
-  const mulitPolygonLayerRef = useRef();
-  const mulitPolygonOverlay = useRef();
-  const mulitPolygonSource = useRef();
-
-  const lineStringRef = useRef();
-  const lineStringOverlay = useRef();
-  const lineStringSource = useRef();
-  const preLineStringFeature = useRef(null);
-  const [lineStringType, setLineStringType] = useState('-1');
-
-  const regularPolygonRef = useRef();
-  const regularPolygonOverlay = useRef();
-  const regularPolygonSource = useRef();
-  const preRegularPolygonFeature = useRef(null);
-  const [regularPolygonCount, setRegularPolygonCount] = useState('-1');
-
-  const leafRef = useRef();
-  const leafOverlay = useRef();
-  const leafSource = useRef();
-  const preLeafFeature = useRef(null);
-  const [leafCount, setLeafCount] = useState('-1');
-
-  const textRef = useRef();
-  const textOverlay = useRef();
-  const textSource = useRef();
-  const preTextFeature = useRef(null);
-  const [textCount, setTextCount] = useState('-1');
-
-  const geoJSONRef = useRef();
-  const geoJSONOverlay = useRef();
-  const geoJSONSource = useRef();
-
-  const rangingRef = useRef();
-  const rangingOverlay = useRef();
-
-  const trajectoryPlayBackLayerRef = useRef();
-  const trajectoryRef = useRef();
-  const trajector = useRef();
-  const trajectorDuration = useRef(60 * 2);
-  const [isTrajectorPause, setTrajecorPause] = useState(false);
-
-  const interactionRef = useRef();
-  const interactionLayer = useRef();
-  const [interactionValue, setInteractionValue] = useState('-1');
-  const interactionModifyTypeActionMap = useRef(
-    new Map([
-      ['Polygon', PolygonModifyAction],
-      ['Circle', CircleModifyAction],
-      ['Rectangle', RectangleModifyAction],
-      ['Triangle', TriangleModifyAction],
-      ['Diamond', DiamondModifyAction],
-      ['Start', StartModifyAction],
-    ]),
-  );
-
-  const interactionDrawTypeActionMap = useRef(
-    new Map([
-      ['Polygon', PolygonDrawAction],
-      ['Circle', CircleDrawAction],
-      ['Rectangle', RectangleDrawAction],
-      ['Triangle', TriangleDrawAction],
-      ['Diamond', DiamondDrawAction],
-      ['Free', FreeDrawAction],
-      ['Start', StartDrawAction],
-    ]),
-  );
-
-  function createVectorLayer({ overlay, ref, source, zIndex }) {
-    if (overlay.current) return;
-
-    const map = ref.current.getMap();
-
-    // eslint-disable-next-line no-param-reassign
-    source.current = new VectorSource([]);
-    // eslint-disable-next-line no-param-reassign
-    overlay.current = new VectorLayer(map, {
-      paneName: 'vertexPane',
-      zIndex,
-      source: source.current,
+      setIsLoad(true);
     });
-
-    map.addOverlay(overlay.current);
-  }
-
-  function createInteractionLayer({ overlay, ref, defaultData, listeners }) {
-    if (overlay.current) return;
-
-    const map = ref.current.getMap();
-
-    // eslint-disable-next-line no-param-reassign
-    overlay.current = new InteractionLayer(map, defaultData || [], listeners || {});
-
-    map.addOverlay(overlay.current);
-  }
+  });
 
   return (
-    <PlayGroundPage>
-      <Section title="BMap">
-        <p>百度地图</p>
-        <ul className="adhere-ui-playground-page-list">
-          <li>
-            VectorLayer
-            <ul className="adhere-ui-playground-page-list">
-              <li>VectorSource</li>
-              <li>
-                Geometry
-                <ul className="adhere-ui-playground-page-list">
-                  <li>CircleGeometry</li>
-                  <li>LeafGeometry</li>
-                  <li>LineStringGeometry</li>
-                  <li>MulitCircleGeometry</li>
-                  <li>MulitLeafGeometry</li>
-                  <li>MulitLineStringGeometry</li>
-                  <li>MulitPointGeometry</li>
-                  <li>MulitPolygonGeometry</li>
-                  <li>MulitRadiusRectGeometry</li>
-                  <li>MulitRectGeometry</li>
-                  <li>MulitRegularPolygonGeometry</li>
-                  <li>MulitSectorGeometry</li>
-                  <li>MulitStartGeometry</li>
-                  <li>PointGeometry</li>
-                  <li>PolygonGeometry</li>
-                  <li>RadiusRectGeometry</li>
-                  <li>RectGeometry</li>
-                  <li>RegularPolygonGeometry</li>
-                  <li>SectorGeometry</li>
-                  <li>StartGeometry</li>
-                  <li>TextGeometry</li>
-                </ul>
-              </li>
-              <li>
-                Format
-                <ul className="adhere-ui-playground-page-list">
-                  <li>GeoJSON</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            interaction(交互式绘制)
+    <ConditionalRender conditional={isLoad} noMatch={() => <Spin spinning />}>
+      {() => (
+        <PlayGroundPage>
+          <Section title="BMap">
+            <p>百度地图</p>
             <ul className="adhere-ui-playground-page-list">
               <li>
-                DrawAction
+                VectorLayer
                 <ul className="adhere-ui-playground-page-list">
-                  <li>CircleDrawAction</li>
-                  <li>DiamondDrawAction</li>
-                  <li>DistanceDrawAction</li>
-                  <li>FreeDrawAction</li>
-                  <li>PolygonDrawAction</li>
-                  <li>RectangleDrawAction</li>
-                  <li>StartDrawAction</li>
-                  <li>TriangleDrawAction</li>
+                  <li>VectorSource</li>
+                  <li>
+                    Geometry
+                    <ul className="adhere-ui-playground-page-list">
+                      <li>CircleGeometry</li>
+                      <li>LeafGeometry</li>
+                      <li>LineStringGeometry</li>
+                      <li>MulitCircleGeometry</li>
+                      <li>MulitLeafGeometry</li>
+                      <li>MulitLineStringGeometry</li>
+                      <li>MulitPointGeometry</li>
+                      <li>MulitPolygonGeometry</li>
+                      <li>MulitRadiusRectGeometry</li>
+                      <li>MulitRectGeometry</li>
+                      <li>MulitRegularPolygonGeometry</li>
+                      <li>MulitSectorGeometry</li>
+                      <li>MulitStartGeometry</li>
+                      <li>PointGeometry</li>
+                      <li>PolygonGeometry</li>
+                      <li>RadiusRectGeometry</li>
+                      <li>RectGeometry</li>
+                      <li>RegularPolygonGeometry</li>
+                      <li>SectorGeometry</li>
+                      <li>StartGeometry</li>
+                      <li>TextGeometry</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Format
+                    <ul className="adhere-ui-playground-page-list">
+                      <li>GeoJSON</li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
               <li>
-                ModifyAction
+                interaction(交互式绘制)
                 <ul className="adhere-ui-playground-page-list">
-                  <li>CircleModifyAction</li>
-                  <li>DiamondModifyAction</li>
-                  <li>PolygonModifyAction</li>
-                  <li>RectangleModifyAction</li>
-                  <li>StartModifyAction</li>
-                  <li>TriangleModifyAction</li>
+                  <li>
+                    DrawAction
+                    <ul className="adhere-ui-playground-page-list">
+                      <li>CircleDrawAction</li>
+                      <li>DiamondDrawAction</li>
+                      <li>DistanceDrawAction</li>
+                      <li>FreeDrawAction</li>
+                      <li>PolygonDrawAction</li>
+                      <li>RectangleDrawAction</li>
+                      <li>StartDrawAction</li>
+                      <li>TriangleDrawAction</li>
+                    </ul>
+                  </li>
+                  <li>
+                    ModifyAction
+                    <ul className="adhere-ui-playground-page-list">
+                      <li>CircleModifyAction</li>
+                      <li>DiamondModifyAction</li>
+                      <li>PolygonModifyAction</li>
+                      <li>RectangleModifyAction</li>
+                      <li>StartModifyAction</li>
+                      <li>TriangleModifyAction</li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
+              <li>WindLayer(风场)</li>
+              <li>AirPressureLayer(气压)</li>
+              <li>热力图-温度、湿度</li>
+              <li>轨迹回放</li>
+              <li>Util</li>
             </ul>
-          </li>
-          <li>WindLayer(风场)</li>
-          <li>AirPressureLayer(气压)</li>
-          <li>热力图-温度、湿度</li>
-          <li>轨迹回放</li>
-          <li>Util</li>
-        </ul>
-      </Section>
+          </Section>
 
-      <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+          <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
 
-      <CodeBoxSection
-        title="几何图形绘制代码演示"
-        columnCount={1}
-        config={geometryBoxPanelConfig()}
-      />
+          <CodeBoxSection
+            title="几何图形绘制代码演示"
+            columnCount={1}
+            config={geometryBoxPanelConfig()}
+          />
 
-      {/*<PropsSection
+          {/*<PropsSection
         title="Props"
         config={[
           {
@@ -3718,7 +3881,7 @@ export default () => {
         ]}
       />*/}
 
-      {/*<FunctionPropsSection
+          {/*<FunctionPropsSection
         title="Api"
         config={[
           {
@@ -3730,6 +3893,8 @@ export default () => {
           },
         ]}
       />*/}
-    </PlayGroundPage>
+        </PlayGroundPage>
+      )}
+    </ConditionalRender>
   );
 };

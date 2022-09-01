@@ -1,5 +1,6 @@
+/// <reference types="react" />
 import PropTypes from 'prop-types';
-import { IPermissionProps } from './types';
+import { IPermissionProps, IPermissionFun } from './types';
 /**
  * setPermission - 设置拥有的所有权限
  * @param {Array<String>} permission
@@ -26,12 +27,7 @@ export declare const checkPermission: (allPermission: any, currentPermissions: a
  * @return {String | ReactElement}
  */
 export declare const Permission: {
-    ({ allPermission, permissions, children, noMatch, }: {
-        allPermission?: any;
-        permissions: any;
-        children: any;
-        noMatch?: null | undefined;
-    }): IPermissionProps;
+    ({ allPermission, permissions, children, noMatch, }: IPermissionProps): JSX.Element;
     defaultProps: {
         allPermission: undefined;
         permissions: string;
@@ -45,3 +41,12 @@ export declare const Permission: {
         children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
     };
 };
+/**
+ * PermissionFun - 函数方式实现
+ * @param allPermission
+ * @param permissions
+ * @param match
+ * @param noMatch
+ * @constructor
+ */
+export declare function PermissionFun({ allPermission, permissions, match, noMatch, }: IPermissionFun): JSX.Element | null;

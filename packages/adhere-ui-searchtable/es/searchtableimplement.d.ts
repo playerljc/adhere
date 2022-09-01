@@ -77,7 +77,8 @@ declare class SearchTableImplement extends SearchTable<ISearchTableImplementProp
      */
     protected getNumberGeneratorRule(): Symbol;
     /**
-     * getNumberGeneratorRule - 获取符号列的生成规则
+     * getNumberGeneratorRule
+     * @description 获取符号列的生成规则
      */
     protected getRowSelectionMode(): Symbol;
     /**

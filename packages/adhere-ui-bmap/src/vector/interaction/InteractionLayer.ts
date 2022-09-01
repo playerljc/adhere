@@ -30,6 +30,7 @@ const zIndex = 19999;
  * @class
  * @classdesc - InteractionLayer
  */
+
 class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // map
   protected map: any | null = null;

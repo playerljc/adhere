@@ -108,7 +108,7 @@ export const PolygonSelection = lazy(() =>
 export const PlayGround = lazy(() =>
   import(/* webpackChunkName: "playground" */ '@/components/ui/playground'),
 );
-// export const BMap = lazy(() => import(/* webpackChunkName: "bmap" */ '@/components/ui/bmap'));
+export const BMap = lazy(() => import(/* webpackChunkName: "bmap" */ '@/components/ui/bmap'));
 
 export const Hooks = lazy(() => import(/* webpackChunkName: "hooks" */ '@/components/ui/hooks'));
 
@@ -122,4 +122,20 @@ export const TableGridLayout = lazy(() =>
 
 export const WritingBoard = lazy(() =>
   import(/* webpackChunkName: "writingboard" */ '@/components/ui/writingboard'),
+);
+
+export const ContourBlock = lazy(() =>
+  import(/* webpackChunkName: "contourblock" */ '@/components/ui/contourblock'),
+);
+
+export const DateDisplay = lazy(() =>
+  import(/* webpackChunkName: "datedisplay" */ '@/components/ui/datedisplay'),
+);
+
+export const Comment = lazy(() =>
+  import(/* webpackChunkName: "comment" */ '@/components/ui/comment'),
+);
+
+export const ConfigProvider = lazy(() =>
+  import(/* webpackChunkName: "comment" */ '@/components/ui/configprovider'),
 );

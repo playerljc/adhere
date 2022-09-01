@@ -60,10 +60,10 @@ class TableImpl extends TableImplement {
 
     return {
       startTime: startTime
-        ? `${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 00:00:00`
+        ? `${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 00:00:00`
         : null,
       endTime: endTime
-        ? `${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 23:59:59`
+        ? `${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 23:59:59`
         : null,
     };
   }
@@ -111,7 +111,7 @@ class TableImpl extends TableImplement {
         sorter: true,
         sortOrder: this.sortOrder('birthday'),
         render: (val) =>
-          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value) : '',
+          val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
       },
       {
         title: '所在部门',

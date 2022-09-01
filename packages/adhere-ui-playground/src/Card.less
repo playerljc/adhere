@@ -1,7 +1,12 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
+@adhere-ui-playground-card-description-title-color: #777;
+@adhere-ui-playground-card-action-item-color: #00000073;
+
 .adhere-ui-playground-card {
   position: relative;
   background: #fff;
-  border: 1px solid #f0f0f0;
+  border: 1px solid @adhere-border-color;
   border-radius: 2px;
 
   > .adhere-ui-playground-card-header {
@@ -10,11 +15,11 @@
     min-height: 48px;
     margin-bottom: -1px;
     padding: 0 24px;
-    color: #000000d9;
+    color: @adhere-black-color;
     font-weight: 500;
     font-size: 16px;
     background: 0 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid @adhere-border-color;
     border-radius: 2px 2px 0 0;
 
     > .adhere-ui-playground-card-header-title {
@@ -30,7 +35,7 @@
       float: right;
       margin-left: auto;
       padding: 16px 0;
-      color: #000000d9;
+      color: @adhere-black-color;
       font-weight: 400;
       font-size: 14px;
     }
@@ -43,7 +48,7 @@
   > .adhere-ui-playground-card-description {
     position: relative;
     padding: 18px 24px 12px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid @adhere-border-color;
 
     > .adhere-ui-playground-card-description-title {
       position: absolute;
@@ -52,7 +57,7 @@
       margin-left: 16px;
       padding: 1px 8px;
       overflow: hidden;
-      color: #777;
+      color: @adhere-ui-playground-card-description-title-color;
       white-space: nowrap;
       text-overflow: ellipsis;
       background: #fff;
@@ -69,15 +74,15 @@
     padding: 0;
     list-style: none;
     background: #fff;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid @adhere-border-color;
 
     > .adhere-ui-playground-card-action-item {
       margin: 12px 0;
-      color: #00000073;
+      color: @adhere-ui-playground-card-action-item-color;
       text-align: center;
 
       &:not(:last-child) {
-        border-right: 1px solid #f0f0f0;
+        border-right: 1px solid @adhere-border-color;
       }
     }
   }

@@ -18,12 +18,18 @@ declare const _default: {
      * @param {String} - currentLocale
      * @param {Object} - locales
      * @param {Object} - ...other
+     * @param reload 是否是重新载入
      */
     init({ prefix, currentLocale, locales, ...other }: {
         prefix: string;
         currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
         locales: any;
-    }): Promise<any>;
+    }, reload?: boolean): Promise<any>;
+    /**
+     * isInit
+     * @description 是否进行了初始化
+     */
+    isInit(): boolean;
     /**
      * v - 以中文获取国际化值
      * @return {String}

@@ -1,0 +1,40 @@
+.adhere-ui-comment-reply {
+  .adhere-ui-comment-reply-textarea-wrap {
+    margin-bottom: 20px;
+
+    .adhere-ui-comment-reply-textarea {
+      height: 80px;
+    }
+  }
+
+  .adhere-ui-comment-reply-toolbar-emoji-wrap {
+    position: absolute;
+  }
+
+  .adhere-ui-comment-reply-toolbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 0;
+
+    .adhere-ui-comment-reply-toolbar-item-emoji {
+      font-size: 25px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .adhere-ui-comment-reply-toolbar-inner {
+      display: flex;
+      align-items: center;
+
+      > .adhere-ui-comment-reply-toolbar-item {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

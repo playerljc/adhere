@@ -1,0 +1,12 @@
+{
+  "extends": "../../node_modules/@ctsj/buildv/buildpackagetsconfig-base",
+  "compilerOptions": {
+    "outDir": "./lib",
+    "baseUrl": "./",
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "downlevelIteration": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*"]
+}

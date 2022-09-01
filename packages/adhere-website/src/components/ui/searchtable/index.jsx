@@ -11,6 +11,7 @@ import PlayGroundPage, {
 
 import Table from './table';
 import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
+import RenderSearchBetweenTable from './renderSearchBetweenTable';
 import FewTable from './fewTable';
 import StateTable from './stateTable';
 import RowSelectedNormal from './rowSelectedNormal';
@@ -685,7 +686,7 @@ export default () => {
               sorter: true,
               sortOrder: this.sortOrder('birthday'),
               render: (val) =>
-                val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value) : '',
+                val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
             },
             {
               title: '所在部门',
@@ -842,10 +843,10 @@ export default () => {
 
           return {
             startTime: startTime
-              ? \`\${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 00:00:00\`
+              ? \`\${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 00:00:00\`
               : null,
             endTime: endTime
-              ? \`\${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 23:59:59\`
+              ? \`\${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 23:59:59\`
               : null,
           };
         }
@@ -883,7 +884,7 @@ export default () => {
               sorter: true,
               sortOrder: this.sortOrder('birthday'),
               render: (val) =>
-                val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value) : '',
+                val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
             },
             {
               title: '所在部门',
@@ -1179,9 +1180,9 @@ export default () => {
             scope: { React },
             codeText: `
   import React from 'react';
-  
+
   import Table from './table';
-  
+
   /**
    * ColumnResizeTable
    * @classdesc
@@ -1194,7 +1195,7 @@ export default () => {
       }));
     }
   }
-  
+
   export default ColumnResizeTable;
             `,
           },
@@ -1227,10 +1228,10 @@ export default () => {
             scope: { React },
             codeText: `
   import React from 'react';
-  
+
   import Table from './table';
   import styles from './fixedTableSpaceBetweenTable.less';
-  
+
   /**
    * ColumnSettingTable
    * @classdesc
@@ -1245,7 +1246,7 @@ export default () => {
       );
     }
   }
-  
+
   export default ColumnSettingTable;
             `,
           },
@@ -1271,10 +1272,10 @@ export default () => {
             scope: { React },
             codeText: `
   import React from 'react';
-  
+
   import Table from './table';
   import styles from './fixedTableSpaceBetweenTable.less';
-  
+
   /**
    * TableDensitySetting
    * @classdesc
@@ -1289,7 +1290,7 @@ export default () => {
       );
     }
   }
-  
+
   export default TableDensitySetting;
             `,
           },
@@ -1297,6 +1298,50 @@ export default () => {
         type: 'PlayGroundMulit',
         renderChildren: () => (
           <TableDensitySetting isShowExpandSearch defaultExpandSearchCollapse={false} />
+        ),
+      },
+      {
+        id: 'p13',
+        name: '查询面板两端的渲染',
+        cardProps: {
+          description: {
+            title: '查询面板两端的渲染',
+            info: '查询面板两端的渲染',
+          },
+        },
+        config: [
+          {
+            title: 'fixedTableSpaceBetweenTable.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+          {
+            title: 'fixedTableSpaceBetweenTable.less',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+          {
+            title: 'index.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: ``,
+          },
+        ],
+        type: 'PlayGroundMulit',
+        renderChildren: () => (
+          <>
+            <div style={{ display: 'flex', height: 800 }}>
+              <RenderSearchBetweenTable
+                style={{ height: '100%' }}
+                isShowExpandSearch
+                defaultExpandSearchCollapse={false}
+                fixedHeaderAutoTable
+                pagination={pagination3}
+              />
+            </div>
+          </>
         ),
       },
     ];
@@ -1910,8 +1955,24 @@ export default () => {
                 returnDesc: '',
               },
               {
+                name: 'renderSearchFormBefore',
+                desc: '渲染Table查询的表单之前的UI',
+                modifier: 'public',
+                params: [],
+                returnType: 'React.ReactElement | null',
+                returnDesc: '',
+              },
+              {
                 name: 'renderSearchForm',
                 desc: '渲染Table查询的表单',
+                modifier: 'public',
+                params: [],
+                returnType: 'React.ReactElement | null',
+                returnDesc: '',
+              },
+              {
+                name: 'renderSearchFormAfter',
+                desc: '渲染Table查询的表单之后的UI',
                 modifier: 'public',
                 params: [],
                 returnType: 'React.ReactElement | null',
@@ -1939,6 +2000,14 @@ export default () => {
                 modifier: 'public',
                 params: [],
                 returnType: 'string',
+                returnDesc: '',
+              },
+              {
+                name: 'getLimit',
+                desc: '获取分页条数',
+                modifier: 'public',
+                params: [],
+                returnType: 'number',
                 returnDesc: '',
               },
               {
@@ -1979,6 +2048,14 @@ export default () => {
                 modifier: 'public',
                 params: [],
                 returnType: 'Promise<any>',
+                returnDesc: '',
+              },
+              {
+                name: 'onClear',
+                desc: '点击重置按钮',
+                modifier: 'public',
+                params: [],
+                returnType: 'Promise<void>',
                 returnDesc: '',
               },
               {

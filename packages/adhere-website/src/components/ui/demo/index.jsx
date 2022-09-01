@@ -64,11 +64,11 @@ export default () => {
       else if (index % 3 === 1) {
         return {
           id: `p${index + 1}`,
-            name: `p${index + 1}`,
-            cardProps: {
+          name: `p${index + 1}`,
+          cardProps: {
             description: {
               title: '123',
-                info: '123',
+              info: '123',
             },
           },
           config: [
@@ -163,8 +163,8 @@ export default () => {
               ],
             },
           ],
-            type: 'PlayGroundMulit',
-            renderChildren: () => (
+          type: 'PlayGroundMulit',
+          renderChildren: () => (
             <DelConfirm
               success={() => {
                 return new Promise((resolve) => {

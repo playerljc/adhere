@@ -293,7 +293,6 @@ export default {
     let offsetParent: HTMLElement = el.offsetParent as HTMLElement;
 
     do {
-      // @ts-ignore
       left += offsetParent.offsetLeft;
     } while (!!(offsetParent = offsetParent.offsetParent as HTMLElement));
 
@@ -459,13 +458,10 @@ export default {
           handler: touchEndHandler,
         });
 
-        // @ts-ignore
         el.addEventListener('touchstart', touchStartHandler, capture || false);
 
-        // @ts-ignore
         el.addEventListener('touchmove', touchMoveHandler, capture || false);
 
-        // @ts-ignore
         el.addEventListener('touchend', touchEndHandler, capture || false);
       }
       // 是PC端浏览器
@@ -479,12 +475,10 @@ export default {
           handler: clickHandler,
         });
 
-        // @ts-ignore
         el.addEventListener('click', clickHandler, capture || false);
       }
 
       return () => {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
         handlers.forEach(({ type, handler }) => {
           // @ts-ignore
           el.removeEventListener(type, handler);

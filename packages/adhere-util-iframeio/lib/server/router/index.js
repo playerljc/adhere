@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var Router=function(){function t(){this.controllers=new Map}return t.prototype.controller=function(r,o){return this.controllers.set(r,function(t,e){r!==t.getRequest().getPathname()?e&&e():o(t,e)}),this},t.prototype.routers=function(){return Array.from(this.controllers.values())},t}();exports.default=Router;
+//# sourceMappingURL=index.js.map
