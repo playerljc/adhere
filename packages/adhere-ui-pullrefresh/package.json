@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-pullrefresh",
-  "version": "1.0.18-fix.2",
+  "version": "1.0.19",
   "description": "下拉刷新",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -43,9 +43,9 @@
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
     "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-util": "^1.0.18",
-    "@baifendian/adhere-util-intl": "^1.0.18",
-    "@baifendian/adhere-util-resource": "^1.0.18-fix.2",
+    "@baifendian/adhere-util": "^1.0.19",
+    "@baifendian/adhere-util-intl": "^1.0.19",
+    "@baifendian/adhere-util-resource": "^1.0.19",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

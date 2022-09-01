@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-datedisplay",
-  "version": "1.0.18-fix.2",
+  "version": "1.0.19",
   "description": "时间显示组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
-    "@baifendian/adhere-util-resource": "^1.0.18-fix.2",
+    "@baifendian/adhere-util-resource": "^1.0.19",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

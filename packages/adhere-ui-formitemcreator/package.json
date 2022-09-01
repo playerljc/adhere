@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-formitemcreator",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Form表单配置项",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -41,7 +41,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^1.0.18",
+    "@baifendian/adhere-util-intl": "^1.0.19",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",
