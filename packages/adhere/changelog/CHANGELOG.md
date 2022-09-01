@@ -6,6 +6,8 @@
 
 * **adhere-util-iframeio**
   - 加入adhere-util-iframeio组件
+* **adhere-ui-configprovider**
+  - adhere-ui-configprovider组件
 * **adhere-ui-tablegridlayout**
   - 加入getRenderDetail方法
 * **adhere-util-permission**

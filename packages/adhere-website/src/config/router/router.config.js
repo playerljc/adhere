@@ -4,6 +4,7 @@ import React from 'react';
 import BasicLayout from '@/lib/BasicLayout';
 
 import Components from '@/config/router/routerComponentRegister';
+import IframeServer from '@/components/util/iframeio/server';
 
 const {
   App,
@@ -78,6 +79,7 @@ const {
   DateDisplay,
   Comment,
   ConfigProvider,
+  IframeIO,
 } = Components;
 
 export default () => [
@@ -490,10 +492,19 @@ export default () => [
                 name: 'ReactUtil',
                 component: ReactUtil,
               },
+              {
+                path: '/adhere/component/util/iframeio',
+                name: 'IframeIO',
+                component: IframeIO,
+              },
             ],
           },
         ],
       },
     ],
+  },
+  {
+    path: '/iframeServer',
+    component: IframeServer,
   },
 ];

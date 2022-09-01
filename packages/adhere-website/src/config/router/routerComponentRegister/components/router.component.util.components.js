@@ -37,3 +37,6 @@ export const Validator = lazy(() =>
 export const ReactUtil = lazy(() =>
   import(/* webpackChunkName: "reactutil" */ '@/components/util/reactutil'),
 );
+export const IframeIO = lazy(() =>
+  import(/* webpackChunkName: "iframeio" */ '@/components/util/iframeio'),
+);

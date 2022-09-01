@@ -329,6 +329,11 @@
     "group": "组件 - Util",
     "path": "/adhere/component/util/watchmemoized"
   },
+  {
+    "kw": ["iframe的通信客户端和服务端", "IframeIO"],
+    "group": "组件 - Util",
+    "path": "/adhere/component/util/iframeio"
+  },
 
   {
     "kw": ["echarts", "echarts"],
