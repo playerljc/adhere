@@ -1,15 +1,10 @@
-import React, {
-  forwardRef,
-  ForwardRefRenderFunction,
-  useImperativeHandle,
-  useLayoutEffect,
-  useRef,
-} from 'react';
+import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import type { ForwardRefRenderFunction } from 'react';
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
+import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
-
-import { CascadeComparedProps, ColumnConfig, IMasterItem } from './types';
+import { CascadeComparedProps, CascadeComparedHandle, ColumnConfig, IMasterItem } from './types';
 
 const selectorPrefix = 'adhere-ui-cascadecompared';
 
@@ -58,7 +53,7 @@ initTouch();
  * @param ref
  * @constructor
  */
-const CascadeCompared: ForwardRefRenderFunction<unknown, CascadeComparedProps> = (
+const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeComparedProps> = (
   props,
   ref,
 ): React.ReactElement => {
@@ -85,7 +80,7 @@ const CascadeCompared: ForwardRefRenderFunction<unknown, CascadeComparedProps> =
   } = props;
 
   const el = useRef<HTMLDivElement>(null);
-  const stickup = useRef<StickupLayout>(null);
+  const stickup = useRef<StickupLayoutHandle>(null);
   const scrolls = useRef<IScroll[]>([]);
 
   /**
@@ -283,7 +278,7 @@ const CascadeCompared: ForwardRefRenderFunction<unknown, CascadeComparedProps> =
    * @param index
    */
   function renderMasterGroup(config: IMasterItem, index): React.ReactElement {
-    const { title = null, className = '', style = {} } = config;
+    const { title = undefined, className = '', style = {} } = config;
 
     return (
       <StickupLayout.Item
@@ -300,21 +295,23 @@ const CascadeCompared: ForwardRefRenderFunction<unknown, CascadeComparedProps> =
    * renderMaster
    */
   function renderMaster(): React.ReactElement {
+    const stickupLayoutProps = {
+      ref: stickup,
+      className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName || ''),
+      style: { ...(masterInnerStyle || {}) },
+      fixedClassName: classNames(masterStickFixedClassName || ''),
+      fixedStyle: { ...(masterStickFixedStyle || {}) },
+      innerClassName: classNames(masterStickInnerClassName || ''),
+      innerStyle: { ...(masterStickInnerStyle || {}) },
+      onChange: onStickChange,
+    };
+
     return (
       <div
         className={classNames(`${selectorPrefix}-master`, masterClassName || '')}
         style={{ ...(masterStyle || {}) }}
       >
-        <StickupLayout
-          ref={stickup}
-          className={classNames(`${selectorPrefix}-master-inner`, masterInnerClassName || '')}
-          style={{ ...(masterInnerStyle || {}) }}
-          fixedClassName={classNames(masterStickFixedClassName || '')}
-          fixedStyle={{ ...(masterStickFixedStyle || {}) }}
-          innerClassName={classNames(masterStickInnerClassName || '')}
-          innerStyle={{ ...(masterStickInnerStyle || {}) }}
-          onChange={onStickChange}
-        >
+        <StickupLayout {...stickupLayoutProps}>
           {master.map((config, index) => renderMasterGroup(config, index))}
         </StickupLayout>
       </div>
@@ -378,4 +375,4 @@ const CascadeCompared: ForwardRefRenderFunction<unknown, CascadeComparedProps> =
   );
 };
 
-export default forwardRef<unknown, CascadeComparedProps>(CascadeCompared);
+export default forwardRef<CascadeComparedHandle, CascadeComparedProps>(CascadeCompared);

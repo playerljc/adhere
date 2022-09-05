@@ -1,2 +1,2 @@
-import StickupLayout from"./stickuplayout";export default StickupLayout;
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var i,a=1,o=arguments.length;a<o;a++)for(var r in i=arguments[a])Object.prototype.hasOwnProperty.call(i,r)&&(t[r]=i[r]);return t}).apply(this,arguments)};import StickupLayout from"./stickuplayout";import StickupLayoutItem from"./item";export default __assign(__assign({},StickupLayout),{Item:StickupLayoutItem});
 //# sourceMappingURL=index.js.map

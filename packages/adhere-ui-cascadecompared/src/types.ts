@@ -1,23 +1,23 @@
 import type { CSSProperties, ReactElement } from 'react';
 
-export type ColumnConfig = {
+export interface ColumnConfig {
   dataIndex: string;
   isFixed: boolean;
   width: string | number;
   render: Function;
   className: string;
   style: CSSProperties;
-};
+}
 
 export interface ITableConfig {
   columns: ColumnConfig[];
   dataSource: Record<string, any>[];
 }
 
-export type IndicatorTableConfig = {
+export interface IndicatorTableConfig {
   columns: ColumnConfig[];
   dataSource: Record<string, any>;
-};
+}
 
 export interface IMasterItem extends ITableConfig {
   title: ReactElement;
@@ -34,7 +34,7 @@ export interface IMasterItem extends ITableConfig {
 /**
  * CascadeComparedProps
  */
-export type CascadeComparedProps = {
+export interface CascadeComparedProps {
   className?: string;
   style?: CSSProperties;
   indicatorClassName?: string;
@@ -53,6 +53,12 @@ export type CascadeComparedProps = {
   masterStickInnerStyle?: CSSProperties;
   indicator: IndicatorTableConfig;
   master: IMasterItem[];
-  onStickChange: Function;
+  onStickChange: (index: number) => void;
   defaultCellWidth: number | string;
-};
+}
+
+export interface CascadeComparedHandle {
+  scrollToByIndex: (index: number, duration: number) => void;
+  scrollToByHeaderEl: (headerEl: HTMLElement, duration: number) => void;
+  scrollToByColumn: (columnIndex: number) => void;
+}

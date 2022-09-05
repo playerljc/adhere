@@ -18,8 +18,14 @@ export type StickupLayoutProps = {
   innerClassName?: string;
   innerStyle?: CSSProperties;
   onChange?: (index: number) => void;
-  children: ReactElement[] | null;
+  children: ReactElement<StickupLayoutItemProps>[] | null;
 };
+
+export interface StickupLayoutHandle {
+  refresh: () => void;
+  scrollToByIndex: (_index: number, _duration: number) => void;
+  scrollToByHeaderEl: (_headerEl: HTMLElement, _duration: number) => void;
+}
 
 /**
  * StickupLayoutItemProps
