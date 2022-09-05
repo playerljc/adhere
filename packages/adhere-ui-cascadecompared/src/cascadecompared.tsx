@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
-import type { ForwardRefRenderFunction } from 'react';
+import type { ForwardRefRenderFunction, ReactElement } from 'react';
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
 import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
@@ -56,7 +56,7 @@ initTouch();
 const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeComparedProps> = (
   props,
   ref,
-): React.ReactElement => {
+): ReactElement => {
   const {
     className = '',
     style = {},
@@ -136,7 +136,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
   function renderCell(
     config: ColumnConfig | null,
     dataSource: Record<string, any>,
-  ): React.ReactElement | null {
+  ): ReactElement | null {
     if (!config) return null;
 
     if (config.render) {
@@ -217,7 +217,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
     autoWrapStyle = {},
     autoInnerClassName = '',
     autoInnerStyle = {},
-  }: IMasterItem): React.ReactElement {
+  }: IMasterItem): ReactElement {
     const fixedColumnConfig = getFixedColumnConfig(columns);
 
     return (
@@ -277,7 +277,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
    * @param config
    * @param index
    */
-  function renderMasterGroup(config: IMasterItem, index): React.ReactElement {
+  function renderMasterGroup(config: IMasterItem, index): ReactElement {
     const { title = undefined, className = '', style = {} } = config;
 
     return (
@@ -294,7 +294,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
   /**
    * renderMaster
    */
-  function renderMaster(): React.ReactElement {
+  function renderMaster(): ReactElement {
     const stickupLayoutProps = {
       ref: stickup,
       className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName || ''),

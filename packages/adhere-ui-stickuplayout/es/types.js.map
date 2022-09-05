@@ -1,1 +1,1 @@
-{"version":3,"file":"types.js","sources":["types.js"],"sourcesContent":["var StickupLayoutHOCType = /** @class */ (function () {\r\n    function StickupLayoutHOCType() {\r\n    }\r\n    return StickupLayoutHOCType;\r\n}());\r\nexport { StickupLayoutHOCType };\r\n"],"names":["StickupLayoutHOCType"],"mappings":"AAAA,IAAIA,qBACA,oBAIKA"}
+{"version":3,"file":"types.js","sources":[],"sourcesContent":[],"names":[],"mappings":""}

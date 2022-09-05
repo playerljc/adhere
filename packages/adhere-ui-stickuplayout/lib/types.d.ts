@@ -1,14 +1,8 @@
-import type { FC, CSSProperties, ReactElement, ForwardRefExoticComponent } from 'react';
-/**
- * StickupLayoutType
- */
-export interface StickupLayoutHOCType extends ForwardRefExoticComponent<StickupLayoutProps> {
-    Item: FC<StickupLayoutItemProps>;
-}
+import type { CSSProperties, ReactElement } from 'react';
 /**
  * StickupLayoutProps
  */
-export declare type StickupLayoutProps = {
+export interface StickupLayoutProps {
     className?: string;
     style?: CSSProperties;
     fixedClassName?: string;
@@ -17,7 +11,7 @@ export declare type StickupLayoutProps = {
     innerStyle?: CSSProperties;
     onChange?: (index: number) => void;
     children: ReactElement<StickupLayoutItemProps>[] | null;
-};
+}
 export interface StickupLayoutHandle {
     refresh: () => void;
     scrollToByIndex: (_index: number, _duration: number) => void;
@@ -26,20 +20,18 @@ export interface StickupLayoutHandle {
 /**
  * StickupLayoutItemProps
  */
-export declare type StickupLayoutItemProps = {
+export interface StickupLayoutItemProps {
     className?: string;
     style?: CSSProperties;
     title?: string | ReactElement;
     content?: string | ReactElement;
-};
+}
 /**
  * IndexItem
  */
-export declare type IndexItem = {
+export interface IndexItem {
     start: number;
     end: number;
     dom: HTMLElement;
     index: number;
-};
-export declare class StickupLayoutHOCType {
 }
