@@ -67,7 +67,7 @@ export default () => {
       />
     </div>
     <BackTopAnimation
-      target={() => ref.current}
+      onScrollTop={() => ref.current}
       onTrigger={() => {
         return new Promise((resolve) => resolve());
       }}
@@ -98,7 +98,7 @@ export default () => {
                   />
                 </div>
                 <BackTopAnimation
-                  target={() => ref.current}
+                  getContainer={() => ref.current}
                   onTrigger={() => {
                     return new Promise((resolve) => resolve());
                   }}
@@ -144,9 +144,9 @@ export default () => {
                 defaultVal: '300',
               },
               {
-                params: 'target',
+                params: 'onScrollTop',
                 desc: '获取滚动的目标元素',
-                type: '() => HtmlElement | Window',
+                type: '() => HtmlElement',
                 defaultVal: '',
               },
               {

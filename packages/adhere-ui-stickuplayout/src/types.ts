@@ -1,22 +1,44 @@
-import React from 'react';
+import type { FC, CSSProperties, ReactElement, ForwardRefExoticComponent } from 'react';
 
 /**
- * IStickupLayoutProps
- * @interface IStickupLayoutProps
+ * StickupLayoutType
  */
-export interface IStickupLayoutProps {
-  className?: string;
-  style?: React.CSSProperties;
-  fixedClassName?: string;
-  fixedStyle?: React.CSSProperties;
-  innerClassName?: string;
-  innerStyle?: React.CSSProperties;
-  onChange?: Function;
+export interface StickupLayoutHOCType extends ForwardRefExoticComponent<StickupLayoutProps> {
+  Item: FC<StickupLayoutItemProps>;
 }
 
-export interface IIndexItem {
+/**
+ * StickupLayoutProps
+ */
+export type StickupLayoutProps = {
+  className?: string;
+  style?: CSSProperties;
+  fixedClassName?: string;
+  fixedStyle?: CSSProperties;
+  innerClassName?: string;
+  innerStyle?: CSSProperties;
+  onChange?: (index: number) => void;
+  children: ReactElement[] | null;
+};
+
+/**
+ * StickupLayoutItemProps
+ */
+export type StickupLayoutItemProps = {
+  className?: string;
+  style?: CSSProperties;
+  title?: string | ReactElement;
+  content?: string | ReactElement;
+};
+
+/**
+ * IndexItem
+ */
+export type IndexItem = {
   start: number;
   end: number;
   dom: HTMLElement;
   index: number;
-}
+};
+
+export class StickupLayoutHOCType {}
