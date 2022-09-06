@@ -1,4 +1,3 @@
-import React from 'react';
-import { StickupLayoutProps, StickupLayoutHandle } from './types';
-declare const _default: React.ForwardRefExoticComponent<StickupLayoutProps & React.RefAttributes<StickupLayoutHandle>>;
-export default _default;
+import { StickupLayoutProps, StickupLayoutHandle, StickupLayoutHOCType } from './types';
+declare const StickupLayoutHOC: StickupLayoutHOCType<StickupLayoutHandle, StickupLayoutProps>;
+export default StickupLayoutHOC;

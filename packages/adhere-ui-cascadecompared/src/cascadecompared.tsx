@@ -10,6 +10,10 @@ const selectorPrefix = 'adhere-ui-cascadecompared';
 
 const defaultCellWidth = 120;
 
+const { Item } = StickupLayout;
+
+const StickupLayoutItem = Item!;
+
 /**
  * initTouch
  */
@@ -281,7 +285,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
     const { title = undefined, className = '', style = {} } = config;
 
     return (
-      <StickupLayout.Item
+      <StickupLayoutItem
         key={index}
         className={classNames(className || '')}
         style={{ ...(style || {}) }}
