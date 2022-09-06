@@ -1,13 +1,12 @@
-import React, { useEffect, createContext, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, useEffect, createContext, useState } from 'react';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
-import { IConfigProviderProps, IConfigProviderContext } from './types';
+import { ConfigProviderProps, ConfigProviderContext } from './types';
 
-const Context = createContext<IConfigProviderContext>({});
+const Context = createContext<ConfigProviderContext>({});
 const { useForceUpdate } = Hooks;
 
 /**
@@ -15,7 +14,7 @@ const { useForceUpdate } = Hooks;
  * @constructor
  * @classdesc 全局配置 国际化、字典配置
  */
-function ConfigProvider(props: IConfigProviderProps): JSX.Element {
+const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   const {
     intl: { lang, locales, prefix },
     children,
@@ -49,12 +48,6 @@ function ConfigProvider(props: IConfigProviderProps): JSX.Element {
       {() => <Context.Provider value={{}}>{children()}</Context.Provider>}
     </ConditionalRender>
   );
-}
-
-ConfigProvider.defaultProps = {};
-
-ConfigProvider.propTypes = {
-  intl: PropTypes.object,
 };
 
 export default ConfigProvider;

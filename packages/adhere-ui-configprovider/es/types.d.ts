@@ -1,8 +1,8 @@
 /**
- * IConfigProviderProps
- * @interface IConfigProviderProps
+ * ConfigProviderProps
+ * @interface ConfigProviderProps
  */
-export interface IConfigProviderProps {
+export interface ConfigProviderProps {
     intl: {
         lang: 'en_US' | 'zh_CN' | 'pt_PT';
         locales: object;
@@ -10,5 +10,5 @@ export interface IConfigProviderProps {
     };
     children: any;
 }
-export interface IConfigProviderContext {
+export interface ConfigProviderContext {
 }
