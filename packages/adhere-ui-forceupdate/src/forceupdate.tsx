@@ -1,30 +1,23 @@
-import React from 'react';
+import React, { forwardRef, ForwardRefRenderFunction, useImperativeHandle } from 'react';
+import Hooks from '@baifendian/adhere-ui-hooks';
 
-import { IForceUpdateStates } from './types';
+import { ForceUpdateRefHandle, ForceUpdateProps } from './types';
 
-/**
- * ForceUpdate
- * @class ForceUpdate
- * @classdesc ForceUpdate
- */
-class ForceUpdate extends React.Component<void, IForceUpdateStates> {
-  state = {
-    renderDOM: this.props.children,
-  };
+const { useSetState } = Hooks;
 
-  /**
-   * reMount
-   * @description 重新渲染
-   */
-  reMount() {
-    this.setState({ renderDOM: null }, () => {
-      this.setState({ renderDOM: this.props.children });
-    });
-  }
+const ForceUpdate: ForwardRefRenderFunction<ForceUpdateRefHandle, ForceUpdateProps> = (
+  props,
+  ref,
+) => {
+  const { children } = props;
+  const [display, setDisplay] = useSetState<boolean>(true);
 
-  render() {
-    return this.state.renderDOM;
-  }
-}
+  useImperativeHandle(ref, () => ({
+    reMount: () =>
+      new Promise<void>((resolve) => setDisplay(false, () => setDisplay(true, () => resolve()))),
+  }));
 
-export default ForceUpdate;
+  return display ? children : null;
+};
+
+export default forwardRef<ForceUpdateRefHandle, ForceUpdateProps>(ForceUpdate);
