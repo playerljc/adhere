@@ -1,10 +1,10 @@
 /**
- * IImageLazyProps
- * @interface IImageLazyProps
+ * ImageLazyProps
+ * @interface ImageLazyProps
  */
-export interface IImageLazyProps {
-  className?: string | null;
-  imgArgs: {
+export interface ImageLazyProps {
+  className?: string;
+  imgArgs?: {
     originSrc: string;
     targetSrc: string;
   };

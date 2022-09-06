@@ -21,13 +21,12 @@ export default {
        <div class="${selectorPrefix}-text">${text}</div>
       </div>`;
 
-    const indicatorDom: Element | null = el.firstElementChild;
+    const indicatorDom: HTMLElement = el.firstElementChild as HTMLElement;
 
     if (parent === document.body) {
       (indicatorDom as HTMLElement).style.position = 'fixed';
     }
 
-    // @ts-ignore
     parent.appendChild(indicatorDom);
 
     return indicatorDom;
@@ -38,8 +37,7 @@ export default {
    */
   hide(indicatorDom: HTMLElement) {
     if (indicatorDom) {
-      // @ts-ignore
-      indicatorDom.parentElement.removeChild(indicatorDom);
+      indicatorDom?.parentElement?.removeChild?.(indicatorDom);
     }
   },
 };
