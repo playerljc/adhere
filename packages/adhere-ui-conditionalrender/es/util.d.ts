@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { IDeal } from './types';
+import type { Deal } from './types';
 /**
  * deal
  * @description - 处理
@@ -8,4 +8,4 @@ import { IDeal } from './types';
  * @param prop
  * @param value
  */
-export declare function deal({ element, conditional, prop, value, }: IDeal): ReactElement | ReactElement[] | null;
+export declare function deal({ element, conditional, prop, value, }: Deal): ReactElement | ReactElement[] | null;
