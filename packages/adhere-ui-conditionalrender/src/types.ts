@@ -1,4 +1,4 @@
-import type { FC, ReactElement, FunctionComponent } from 'react';
+import type { FC, FunctionComponent } from 'react';
 
 /**
  * ConditionalRenderProps

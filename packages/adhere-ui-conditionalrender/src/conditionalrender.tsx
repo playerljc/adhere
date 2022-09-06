@@ -5,19 +5,6 @@ import type { ConditionalRenderProps, ConditionalRenderFunction } from './types'
 import ConditionalRenderShow from './show';
 import ConditionalRenderVisibility from './visibility';
 
-// /**
-//  * ConditionalRender - 条件渲染
-//  * @class ConditionalRender
-//  * @classdesc ConditionalRender
-//  */
-// function ConditionalRender({ conditional, noMatch, children }: IConditionalRenderProps) {
-//   if (conditional) {
-//     return children();
-//   }
-//
-//   return noMatch ? noMatch() : null;
-// }
-
 const ConditionalRender: ConditionalRenderFunction<ConditionalRenderProps> = (props) => {
   const { conditional, noMatch, children } = props;
 
