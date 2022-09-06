@@ -1,31 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { Button } from 'antd';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import HistoryBack from '@baifendian/adhere-ui-historyback';
 import Intl from '@baifendian/adhere-util-intl';
 
-// @ts-ignore
 import ToolBarLayout from './toolBarLayout';
-import { IBackLayoutProps } from './types';
+import type { BackLayoutProps } from './types';
 
 /**
  * BackLayout
  * @class BackLayout
  * @classdesc BackLayout
  */
-const BackLayout = ({
-  topToolBarItems,
-  isShowBack,
-  backPath,
-  enforceBackPath,
-  history,
-  backTitle,
-  children,
-  ...otherProps
-}: IBackLayoutProps) => {
+const BackLayout: FC<BackLayoutProps> = (props) => {
+  const {
+    topToolBarItems = [],
+    isShowBack = true,
+    backPath = '/',
+    enforceBackPath = '/',
+    history,
+    backTitle,
+    children,
+    ...otherProps
+  } = props;
+
   const toolbar = [
-    ...topToolBarItems,
+    ...(topToolBarItems || []),
     <ConditionalRender key="backBtn" conditional={isShowBack}>
       {() => (
         <Button
@@ -51,36 +51,6 @@ const BackLayout = ({
       {children}
     </ToolBarLayout>
   );
-};
-
-BackLayout.defaultProps = {
-  topToolBarItems: [],
-  backPath: '',
-  isShowBack: true,
-};
-
-BackLayout.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  topClassName: PropTypes.string,
-  topStyle: PropTypes.object,
-  bottomClassName: PropTypes.string,
-  bottomStyle: PropTypes.object,
-  mainClassName: PropTypes.string,
-  mainStyle: PropTypes.object,
-  mainAutoWrapClassName: PropTypes.string,
-  mainAutoStyle: PropTypes.object,
-  mainWrapClassName: PropTypes.string,
-  mainWrapStyle: PropTypes.object,
-  topToolBarItems: PropTypes.arrayOf(PropTypes.node),
-  topProps: PropTypes.object,
-  mainProps: PropTypes.object,
-  mainAutoWrapProps: PropTypes.object,
-  backPath: PropTypes.string,
-  enforceBackPath: PropTypes.string,
-  isShowBack: PropTypes.bool,
-  history: PropTypes.object,
-  backTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
 export default BackLayout;

@@ -1,48 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import classNames from 'classnames';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-import { IToolBarLayoutProps } from './types';
 
+import type { ToolBarLayoutProps } from './types';
 import VerticalFlexLayout from './verticalFlexLayout';
 
 const selectorPrefix = 'adhere-ui-flexlayout-toolbarlayout';
 
 /**
  * ToolBarLayout
- * @param topToolBarItems
- * @param bottomToolBarItems
- * @param children
- * @param className
- * @param topClassName
- * @param bottomClassName
- * @param mainAutoWrapClassName
- * @param topProps
- * @param bottomProps
- * @param otherProps
  * @constructor
+ * @param props
  */
-function ToolBarLayout({
-  topToolBarItems,
-  bottomToolBarItems,
-  children,
-  className,
-  topClassName,
-  bottomClassName,
-  mainAutoWrapClassName,
-  topProps,
-  bottomProps,
-  ...otherProps
-}: IToolBarLayoutProps) {
+const ToolBarLayout: FC<ToolBarLayoutProps> = (props) => {
+  const {
+    topToolBarItems = [],
+    bottomToolBarItems = [],
+    children,
+    className = '',
+    topClassName = '',
+    bottomClassName = '',
+    mainAutoWrapClassName = '',
+    topProps = {},
+    bottomProps = {},
+    ...otherProps
+  } = props;
+
   return (
     <VerticalFlexLayout
       className={classNames(selectorPrefix, className || '')}
       topClassName={classNames(
-        topToolBarItems.length ? `${selectorPrefix}-top` : null,
+        (topToolBarItems || []).length ? `${selectorPrefix}-top` : null,
         topClassName || '',
       )}
       bottomClassName={classNames(
-        bottomToolBarItems.length ? `${selectorPrefix}-bottom` : null,
+        (bottomToolBarItems || []).length ? `${selectorPrefix}-bottom` : null,
         bottomClassName || '',
       )}
       mainAutoWrapClassName={classNames(
@@ -53,7 +45,7 @@ function ToolBarLayout({
       bottomProps={{ fit: false, ...(bottomProps || {}) }}
       {...otherProps}
       renderTop={
-        <ConditionalRender conditional={!!topToolBarItems.length}>
+        <ConditionalRender conditional={!!(topToolBarItems || []).length}>
           {() =>
             topToolBarItems.map((t, index) => (
               <div key={index} className={`${selectorPrefix}-toolbar-item`}>
@@ -65,7 +57,7 @@ function ToolBarLayout({
       }
       renderMain={children}
       renderBottom={
-        <ConditionalRender conditional={!!bottomToolBarItems.length}>
+        <ConditionalRender conditional={!!(bottomToolBarItems || []).length}>
           {() =>
             bottomToolBarItems.map((t, index) => (
               <div key={index} className={`${selectorPrefix}-toolbar-item`}>
@@ -77,32 +69,6 @@ function ToolBarLayout({
       }
     />
   );
-}
-
-ToolBarLayout.defaultProps = {
-  topToolBarItems: [],
-  bottomToolBarItems: [],
-};
-
-ToolBarLayout.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  topClassName: PropTypes.string,
-  topStyle: PropTypes.object,
-  bottomClassName: PropTypes.string,
-  bottomStyle: PropTypes.object,
-  mainClassName: PropTypes.string,
-  mainStyle: PropTypes.object,
-  mainAutoWrapClassName: PropTypes.string,
-  mainAutoStyle: PropTypes.object,
-  mainWrapClassName: PropTypes.string,
-  mainWrapStyle: PropTypes.object,
-  topToolBarItems: PropTypes.arrayOf(PropTypes.node),
-  bottomToolBarItems: PropTypes.arrayOf(PropTypes.node),
-  topProps: PropTypes.object,
-  bottomProps: PropTypes.object,
-  mainProps: PropTypes.object,
-  mainAutoWrapProps: PropTypes.object,
 };
 
 export default ToolBarLayout;

@@ -1,17 +1,14 @@
 import React from 'react';
-import { IScrollLayoutProps } from './types';
+import { ScrollLayoutProps, ScrollLayoutContextType } from './types';
 /**
  * ScrollLayoutContext
- * @type {React.Context<{store: {}}>}
  */
-export declare const ScrollLayoutContext: React.Context<{
-    getEl: () => HTMLElement;
-}>;
+export declare const ScrollLayoutContext: React.Context<ScrollLayoutContextType>;
 /**
  * useScrollLayout
  */
-export declare function useScrollLayout(): {
-    getEl: () => HTMLElement;
+export declare const useScrollLayout: () => {
+    getEl: () => HTMLElement | null;
 };
-declare const Wrap: React.ForwardRefExoticComponent<IScrollLayoutProps & React.RefAttributes<unknown>>;
-export default Wrap;
+declare const _default: React.ForwardRefExoticComponent<ScrollLayoutProps & React.RefAttributes<HTMLDivElement>>;
+export default _default;

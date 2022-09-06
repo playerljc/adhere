@@ -1,132 +1,151 @@
-import React from 'react';
-export interface IFlexLayoutProps {
+import { FC } from 'react';
+import type { FunctionComponent, ReactElement, CSSProperties, Context } from 'react';
+export interface ContextType {
     direction: 'vertical' | 'horizontal';
-    className?: string;
-    style?: React.CSSProperties;
-    children?: React.ReactNode | null;
 }
-export interface IFixedProps {
+export interface FlexLayoutFunction<P> extends FunctionComponent<P> {
+    Fixed: FC<FixedProps>;
+    Auto: FC<AutoProps>;
+    Context: Context<ContextType>;
+    HorizontalFlexLayout: FC<HorizontalFlexLayoutProps>;
+    VerticalFlexLayout: FC<VerticalFlexLayoutProps>;
+    ToolBarLayout: FC<ToolBarLayoutProps>;
+    BackLayout: FC<BackLayoutProps>;
+    ScrollLayout: FC<ScrollLayoutProps>;
+    useScrollLayout: () => ScrollLayoutContextType;
+    ScrollLayoutContext: Context<ScrollLayoutContextType>;
+}
+export interface FlexLayoutProps {
     className?: string;
+    style?: CSSProperties;
+    direction?: 'vertical' | 'horizontal';
+    children?: any;
+}
+export interface FixedProps {
+    className?: string;
+    style?: CSSProperties;
     fit?: boolean;
-    style?: React.CSSProperties;
-    children?: React.ReactNode | null;
+    children?: any;
 }
-export interface IAutoProps {
+export interface AutoProps {
+    className?: string;
+    style?: CSSProperties;
     autoFixed?: boolean;
     fit?: boolean;
-    className?: string;
-    style?: React.CSSProperties;
-    children?: React.ReactNode | null;
+    children?: any;
 }
-export interface IVerticalFlexLayoutProps {
+export interface VerticalFlexLayoutProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     topClassName?: string;
-    topStyle?: React.CSSProperties;
+    topStyle?: CSSProperties;
     rightClassName?: string;
-    rightStyle?: React.CSSProperties;
+    rightStyle?: CSSProperties;
     bottomClassName?: string;
-    bottomStyle?: React.CSSProperties;
+    bottomStyle?: CSSProperties;
     leftClassName?: string;
-    leftStyle?: React.CSSProperties;
+    leftStyle?: CSSProperties;
     mainClassName?: string;
-    mainStyle?: React.CSSProperties;
+    mainStyle?: CSSProperties;
     mainAutoWrapClassName?: string;
-    mainAutoStyle?: React.CSSProperties;
+    mainAutoStyle?: CSSProperties;
     mainWrapClassName?: string;
-    mainWrapStyle?: React.CSSProperties;
-    renderTop?: JSX.Element;
-    renderRight?: JSX.Element;
-    renderBottom?: JSX.Element;
-    renderLeft?: JSX.Element;
-    renderMain?: JSX.Element;
-    topProps?: object;
-    rightProps?: object;
-    bottomProps?: object;
-    leftProps?: object;
-    mainProps?: object;
-    mainAutoWrapProps?: object;
+    mainWrapStyle?: CSSProperties;
+    renderTop?: any;
+    renderRight?: any;
+    renderBottom?: any;
+    renderLeft?: any;
+    renderMain?: any;
+    topProps?: FixedProps;
+    rightProps?: FixedProps;
+    bottomProps?: FixedProps;
+    leftProps?: FixedProps;
+    mainProps?: AutoProps;
+    mainAutoWrapProps?: AutoProps;
     children?: any;
 }
-export interface IHorizontalFlexLayoutProps {
+export interface HorizontalFlexLayoutProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     topClassName?: string;
-    topStyle?: React.CSSProperties;
+    topStyle?: CSSProperties;
     rightClassName?: string;
-    rightStyle?: React.CSSProperties;
+    rightStyle?: CSSProperties;
     bottomClassName?: string;
-    bottomStyle?: React.CSSProperties;
+    bottomStyle?: CSSProperties;
     leftClassName?: string;
-    leftStyle?: React.CSSProperties;
+    leftStyle?: CSSProperties;
     mainClassName?: string;
-    mainStyle?: React.CSSProperties;
+    mainStyle?: CSSProperties;
     mainAutoWrapClassName?: string;
-    mainAutoStyle?: React.CSSProperties;
+    mainAutoStyle?: CSSProperties;
     mainWrapClassName?: string;
-    mainWrapStyle?: React.CSSProperties;
-    renderTop?: JSX.Element;
-    renderRight?: JSX.Element;
-    renderBottom?: JSX.Element;
-    renderLeft?: JSX.Element;
-    renderMain?: JSX.Element;
-    topProps?: object;
-    rightProps?: object;
-    bottomProps?: object;
-    leftProps?: object;
-    mainProps?: object;
-    mainAutoWrapProps?: object;
+    mainWrapStyle?: CSSProperties;
+    renderTop?: any;
+    renderRight?: any;
+    renderBottom?: any;
+    renderLeft?: any;
+    renderMain?: any;
+    topProps?: FixedProps;
+    rightProps?: FixedProps;
+    bottomProps?: FixedProps;
+    leftProps?: FixedProps;
+    mainProps?: AutoProps;
+    mainAutoWrapProps?: AutoProps;
     children?: any;
 }
-export interface IToolBarLayoutProps {
+export interface ToolBarLayoutProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     topClassName?: string;
-    topStyle?: React.CSSProperties;
+    topStyle?: CSSProperties;
     bottomClassName?: string;
-    bottomStyle?: React.CSSProperties;
+    bottomStyle?: CSSProperties;
     mainClassName?: string;
-    mainStyle?: React.CSSProperties;
+    mainStyle?: CSSProperties;
     mainAutoWrapClassName?: string;
-    mainAutoStyle?: React.CSSProperties;
+    mainAutoStyle?: CSSProperties;
     mainWrapClassName?: string;
-    mainWrapStyle?: React.CSSProperties;
-    topToolBarItems: JSX.Element[];
-    bottomToolBarItems: JSX.Element[];
-    topProps?: object;
-    bottomProps?: object;
-    mainProps?: object;
-    mainAutoWrapProps?: object;
+    mainWrapStyle?: CSSProperties;
+    topToolBarItems?: ReactElement[];
+    bottomToolBarItems?: ReactElement[];
+    topProps?: FixedProps;
+    bottomProps?: FixedProps;
+    mainProps?: AutoProps;
+    mainAutoWrapProps?: AutoProps;
     children?: any;
 }
-export interface IBackLayoutProps {
+export interface BackLayoutProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     topClassName?: string;
-    topStyle?: React.CSSProperties;
+    topStyle?: CSSProperties;
     bottomClassName?: string;
-    bottomStyle?: React.CSSProperties;
+    bottomStyle?: CSSProperties;
     mainClassName?: string;
-    mainStyle?: React.CSSProperties;
+    mainStyle?: CSSProperties;
     mainAutoWrapClassName?: string;
-    mainAutoStyle?: React.CSSProperties;
+    mainAutoStyle?: CSSProperties;
     mainWrapClassName?: string;
-    mainWrapStyle?: React.CSSProperties;
-    topToolBarItems: JSX.Element[];
-    topProps?: object;
-    bottomProps?: object;
-    mainProps?: object;
-    mainAutoWrapProps?: object;
+    mainWrapStyle?: CSSProperties;
+    topToolBarItems?: ReactElement[];
+    topProps?: FixedProps;
+    bottomProps?: FixedProps;
+    mainProps?: AutoProps;
+    mainAutoWrapProps?: AutoProps;
     backPath?: string;
     enforceBackPath?: string;
     isShowBack?: boolean;
-    history: any;
-    backTitle?: string | JSX.Element;
+    history?: any;
+    backTitle?: string | ReactElement;
     children?: any;
 }
-export interface IScrollLayoutProps {
+export interface ScrollLayoutProps {
     className?: string;
-    style?: React.CSSProperties;
-    scrollY: boolean;
+    style?: CSSProperties;
+    scrollY?: boolean;
     children?: any;
+}
+export interface ScrollLayoutContextType {
+    getEl: () => HTMLElement | null;
 }
