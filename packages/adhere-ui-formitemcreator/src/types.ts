@@ -1,32 +1,59 @@
-import React from 'react';
-import { FormItemProps } from 'antd/lib/form/FormItem';
-import { ColProps } from 'antd/lib/col';
+import type { ReactElement, PropsWithChildren, ValidationMap, WeakValidationMap } from 'react';
+import type { FormItemProps } from 'antd/lib/form/FormItem';
+import type { ColProps, ColSize } from 'antd/lib/col';
+import type { RowProps } from 'antd/lib/row';
+
+export interface FormItemCreatorFunction<P> {
+  (props: PropsWithChildren<P>, context?: any): any;
+  propTypes?: WeakValidationMap<P> | undefined;
+  contextTypes?: ValidationMap<any> | undefined;
+  defaultProps?: Partial<P> | undefined;
+  displayName?: string | undefined;
+  TEXT: Symbol;
+  INPUT: Symbol;
+  SEARCH: Symbol;
+  PASSWORD: Symbol;
+  TEXTAREA: Symbol;
+  NUMBER: Symbol;
+  RADIO: Symbol;
+  CHECKBOX: Symbol;
+  DATEPICKER: Symbol;
+  RANGEPICKER: Symbol;
+  TIMEPICKER: Symbol;
+  SWITCH: Symbol;
+  SELECT: Symbol;
+  SLIDER: Symbol;
+  RATE: Symbol;
+  UPLOAD: Symbol;
+  DEFINE: Symbol;
+}
 
 /**
- * IFormItemProps
+ * FormItemCreatorProps
+ * @interface FormItemCreatorProps
  */
-export interface IFormItemProps extends FormItemProps {
+export interface FormItemCreatorProps {
+  columns: ColumnItemProps[];
+  layout?: FormItemLayoutProps;
+  row?: RowProps;
+}
+
+/**
+ * ColumnItemProps
+ */
+export interface ColumnItemProps extends FormItemProps {
   name?: string | number | (string | number)[];
   type?: Symbol;
   contentProps?: any;
   skip?: boolean;
-  content?: React.ReactElement;
+  content?: ReactElement;
   col?: ColProps;
 }
 
 /**
- * IFormItemLayoutProps
+ * FormItemLayoutProps
  */
-export interface IFormItemLayoutProps {
-  labelCol?: object;
-  wrapperCol?: object;
-}
-
-/**
- * ITemplateProps
- * @interface IFormItemCreatorProps
- */
-export interface IFormItemCreatorProps {
-  columns: IFormItemProps[];
-  layout?: IFormItemLayoutProps;
+export interface FormItemLayoutProps {
+  labelCol?: ColSize;
+  wrapperCol?: ColSize;
 }

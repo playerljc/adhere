@@ -1,4 +1,4 @@
-import { IAlertArgv, IConfirmArgv } from './types';
+import type { AlertArgv, ConfirmArgv, PromptArgv, ModalArgv } from './types';
 declare const MessageDialogFactory: {
     /**
      * Confirm
@@ -9,7 +9,7 @@ declare const MessageDialogFactory: {
      * @param icon {React.ReactElement}
      * @param {Function} - onSuccess
      */
-    Confirm({ title, text, width, zIndex, local, icon, onSuccess, }: IConfirmArgv): void;
+    Confirm({ title, text, width, zIndex, local, icon, onSuccess, }: ConfirmArgv): void;
     /**
      * Alert
      * @param title - {String | ReactNode}
@@ -19,7 +19,7 @@ declare const MessageDialogFactory: {
      * @param zIndex
      * @param icon - {React.ReactElement | null}
      */
-    Alert({ title, text, width, zIndex, local, icon }: IAlertArgv): void;
+    Alert({ title, text, width, zIndex, local, icon }: AlertArgv): void;
     /**
      * Prompt
      * @param title
@@ -31,26 +31,8 @@ declare const MessageDialogFactory: {
      * @param onSuccess
      * @constructor
      */
-    Prompt({ title, config, layout, width, zIndex, local, onSuccess }: {
-        title: any;
-        config: any;
-        layout?: {
-            labelCol: {
-                span: number;
-            };
-            wrapperCol: {
-                span: number;
-            };
-        } | undefined;
-        width?: number | undefined;
-        zIndex?: number | undefined;
-        local: any;
-        onSuccess: any;
-    }): void;
-    InputPrompt({ config, ...params }: {
-        [x: string]: any;
-        config: any;
-    }): void;
+    Prompt({ title, config, layout, width, zIndex, local, onSuccess, }: PromptArgv): void;
+    InputPrompt({ config, ...params }: PromptArgv): void;
     TextAreaPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
@@ -78,12 +60,7 @@ declare const MessageDialogFactory: {
      *  @param {ReactNode} - children
      *  @param defaultCloseBtn
      */
-    Modal({ config, children, defaultCloseBtn, local }: {
-        config?: {} | undefined;
-        children?: null | undefined;
-        defaultCloseBtn?: boolean | undefined;
-        local?: string | undefined;
-    }): {
+    Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
         el: HTMLDivElement;
         close: () => void;
     };

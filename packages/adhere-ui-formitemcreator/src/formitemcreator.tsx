@@ -1,61 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import renderItem from './formitem';
-import { IFormItemCreatorProps, IFormItemProps } from './types';
+import { FormItemCreatorProps, ColumnItemProps, FormItemCreatorFunction } from './types';
 
-/**
- * FormItemCreator
- * @class FormItemCreator
- * @classdesc 表单项的创建组件
- */
-class FormItemCreator extends React.Component<IFormItemCreatorProps> {
-  static defaultProps: any;
-  static propTypes: any;
-
-  static TEXT = Symbol('text');
-  static INPUT = Symbol('input');
-  static SEARCH = Symbol('search');
-  static PASSWORD = Symbol('password');
-  static TEXTAREA = Symbol('textarea');
-  static NUMBER = Symbol('number');
-  static RADIO = Symbol('radio');
-  static CHECKBOX = Symbol('checkbox');
-  static DATEPICKER = Symbol('datepicker');
-  static RANGEPICKER = Symbol('rangepicker');
-  static TIMEPICKER = Symbol('timepicker');
-  static SWITCH = Symbol('switch');
-  static SELECT = Symbol('select');
-  static SLIDER = Symbol('slider');
-  static RATE = Symbol('rate');
-  static UPLOAD = Symbol('upload');
-  static DEFINE = Symbol('define');
-
-  private readonly FORM_ITEM_CONFIG = new Map([
-    [FormItemCreator.TEXT, 'renderText'],
-    [FormItemCreator.INPUT, 'renderInput'],
-    [FormItemCreator.SEARCH, 'renderSearch'],
-    [FormItemCreator.PASSWORD, 'renderPassword'],
-    [FormItemCreator.TEXTAREA, 'renderInputArea'],
-    [FormItemCreator.NUMBER, 'renderInputNumber'],
-    [FormItemCreator.RADIO, 'renderRadio'],
-    [FormItemCreator.CHECKBOX, 'renderCheckbox'],
-    [FormItemCreator.DATEPICKER, 'renderDatePicker'],
-    [FormItemCreator.RANGEPICKER, 'renderRangePicker'],
-    [FormItemCreator.TIMEPICKER, 'renderTimePicker'],
-    [FormItemCreator.SWITCH, 'renderSwitch'],
-    [FormItemCreator.SELECT, 'renderSelect'],
-    [FormItemCreator.SLIDER, 'renderSlider'],
-    [FormItemCreator.RATE, 'renderRate'],
-    [FormItemCreator.UPLOAD, 'renderUpload'],
-  ]);
+const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) => {
+  const { columns, layout, row } = props;
 
   /**
-   * getDefaultItemProps - 表单单项的默认配置 通过type来制定
-   * @param {Object} item
+   * renderFormItem
+   * @description 表单单项渲染 通过type来制定
+   * @param item
    */
-  private getDefaultItemProps(item: IFormItemProps) {
+  function renderFormItem(item: ColumnItemProps) {
+    const { type, contentProps = {} } = item;
+
+    if (type === FormItemCreator.DEFINE) {
+      return item.content;
+    } else {
+      const renderMethodName = FORM_ITEM_CONFIG.get(type || FormItemCreator.INPUT);
+
+      return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
+    }
+  }
+
+  /**
+   * getDefaultItemProps
+   * @description 表单单项的默认配置 通过type来制定
+   * @param item
+   */
+  function getDefaultItemProps(item: ColumnItemProps) {
     switch (item.type) {
       case FormItemCreator.SWITCH:
         return { valuePropName: 'checked' };
@@ -68,69 +42,66 @@ class FormItemCreator extends React.Component<IFormItemCreatorProps> {
     }
   }
 
-  /**
-   * renderFormItem - 表单单项渲染 通过type来制定
-   * @param {Object} item
-   */
-  private renderFormItem(item: IFormItemProps) {
-    const { type, contentProps = {} } = item;
-
-    // @ts-ignore
-    if (type === FormItemCreator.DEFINE) {
-      return item.content;
-    } else {
-      // @ts-ignore
-      const renderMethodName = this.FORM_ITEM_CONFIG.get(type || FormItemCreator.INPUT);
-
-      // @ts-ignore
-      return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
-    }
-  }
-
-  render() {
-    // @ts-ignore
-    const { columns, layout, row } = this.props;
-
-    const formItems = columns.map((item: IFormItemProps) => {
-      const { skip, contentProps, col, ...itemProps } = item;
-
-      if (skip) return;
-
-      const formItem = (
-        <Form.Item {...this.getDefaultItemProps(item)} {...layout} {...itemProps}>
-          {this.renderFormItem(item)}
-        </Form.Item>
-      );
-      return col ? <Col {...col}>{formItem}</Col> : formItem;
-    });
-    return row ? <Row {...row}>{formItems}</Row> : formItems;
-  }
-}
-
-FormItemCreator.defaultProps = {
-  columns: [],
-};
-
-FormItemCreator.propTypes = {
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      labelCol: PropTypes.object,
-      wrapperCol: PropTypes.object,
-    }),
-  ),
-  layout: PropTypes.shape({
-    name: PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  const FORM_ITEM_CONFIG = useMemo(
+    () =>
+      new Map([
+        [FormItemCreator.TEXT, 'renderText'],
+        [FormItemCreator.INPUT, 'renderInput'],
+        [FormItemCreator.SEARCH, 'renderSearch'],
+        [FormItemCreator.PASSWORD, 'renderPassword'],
+        [FormItemCreator.TEXTAREA, 'renderInputArea'],
+        [FormItemCreator.NUMBER, 'renderInputNumber'],
+        [FormItemCreator.RADIO, 'renderRadio'],
+        [FormItemCreator.CHECKBOX, 'renderCheckbox'],
+        [FormItemCreator.DATEPICKER, 'renderDatePicker'],
+        [FormItemCreator.RANGEPICKER, 'renderRangePicker'],
+        [FormItemCreator.TIMEPICKER, 'renderTimePicker'],
+        [FormItemCreator.SWITCH, 'renderSwitch'],
+        [FormItemCreator.SELECT, 'renderSelect'],
+        [FormItemCreator.SLIDER, 'renderSlider'],
+        [FormItemCreator.RATE, 'renderRate'],
+        [FormItemCreator.UPLOAD, 'renderUpload'],
       ]),
-    ),
-    type: PropTypes.symbol,
-    contentProps: PropTypes.any,
-    skip: PropTypes.bool,
-    content: PropTypes.node,
-  }),
+    [],
+  );
+
+  const formItems = useMemo(
+    () =>
+      columns
+        .filter((item) => !('skip' in item))
+        .map((item) => {
+          const { contentProps, col, ...itemProps } = item;
+
+          const formItem = (
+            <Form.Item {...getDefaultItemProps(item)} {...layout} {...itemProps}>
+              {renderFormItem(item)}
+            </Form.Item>
+          );
+
+          return col ? <Col {...col}>{formItem}</Col> : formItem;
+        }),
+    [columns],
+  );
+
+  return row ? <Row {...row}>{formItems}</Row> : formItems;
 };
+
+FormItemCreator.TEXT = Symbol('text');
+FormItemCreator.INPUT = Symbol('input');
+FormItemCreator.SEARCH = Symbol('search');
+FormItemCreator.PASSWORD = Symbol('password');
+FormItemCreator.TEXTAREA = Symbol('textarea');
+FormItemCreator.NUMBER = Symbol('number');
+FormItemCreator.RADIO = Symbol('radio');
+FormItemCreator.CHECKBOX = Symbol('checkbox');
+FormItemCreator.DATEPICKER = Symbol('datepicker');
+FormItemCreator.RANGEPICKER = Symbol('rangepicker');
+FormItemCreator.TIMEPICKER = Symbol('timepicker');
+FormItemCreator.SWITCH = Symbol('switch');
+FormItemCreator.SELECT = Symbol('select');
+FormItemCreator.SLIDER = Symbol('slider');
+FormItemCreator.RATE = Symbol('rate');
+FormItemCreator.UPLOAD = Symbol('upload');
+FormItemCreator.DEFINE = Symbol('define');
 
 export default FormItemCreator;

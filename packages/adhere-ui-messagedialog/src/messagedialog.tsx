@@ -1,11 +1,13 @@
-import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
-import intl from '@baifendian/adhere-util-intl';
-import Resource from '@baifendian/adhere-util-resource';
-import { Button, ConfigProvider, Form } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Button, ConfigProvider, Form } from 'antd';
+import type { FormInstance } from 'antd/lib/form';
+import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
+import Intl from '@baifendian/adhere-util-intl';
+import Resource from '@baifendian/adhere-util-resource';
+
 import ModalDialog, { selectorPrefix } from './modal';
-import { IAlertArgv, IConfirmArgv } from './types';
+import type { AlertArgv, ConfirmArgv, PromptArgv, ModalArgv } from './types';
 
 const DEFAULT_LOCAL = 'zh_CN';
 
@@ -31,7 +33,6 @@ function renderByIcon(icon, text) {
   );
 }
 
-// @ts-ignore
 const MessageDialogFactory = {
   /**
    * Confirm
@@ -50,7 +51,7 @@ const MessageDialogFactory = {
     local,
     icon = null,
     onSuccess,
-  }: IConfirmArgv) {
+  }: ConfirmArgv) {
     const { close } = this.Modal({
       config: {
         title,
@@ -58,30 +59,24 @@ const MessageDialogFactory = {
         width: width || 300,
         closable: false,
         zIndex,
-        // icon,
         footer: [
           <Button
             key="submit"
             type="primary"
-            title={intl.v('确定')}
+            title={Intl.v('确定')}
             onClick={() => {
               if (onSuccess) {
-                onSuccess().then(() => {
-                  // Emitter.trigger(Actions.close, el);
-                  close();
-                });
+                onSuccess().then(() => close());
               } else {
-                // Emitter.trigger(Actions.close, el);
                 close();
               }
             }}
           >
-            {intl.v('确定')}
+            {Intl.v('确定')}
           </Button>,
         ],
       },
       local,
-      // @ts-ignore
       children: icon ? renderByIcon(icon, text) : text,
     });
   },
@@ -94,7 +89,7 @@ const MessageDialogFactory = {
    * @param zIndex
    * @param icon - {React.ReactElement | null}
    */
-  Alert({ title, text = null, width = 300, zIndex = 1000, local, icon }: IAlertArgv) {
+  Alert({ title, text = null, width = 300, zIndex = 1000, local, icon }: AlertArgv) {
     this.Modal({
       config: {
         title,
@@ -102,10 +97,8 @@ const MessageDialogFactory = {
         width: width || 300,
         closable: false,
         zIndex,
-        // icon,
       },
       local,
-      // @ts-ignore
       children: icon ? renderByIcon(icon, text) : text,
     });
   },
@@ -120,8 +113,16 @@ const MessageDialogFactory = {
    * @param onSuccess
    * @constructor
    */
-  Prompt({ title, config, layout = PromptLayout, width = 300, zIndex = 1000, local, onSuccess }) {
-    const ref = React.createRef();
+  Prompt({
+    title,
+    config,
+    layout = PromptLayout,
+    width = 300,
+    zIndex = 1000,
+    local,
+    onSuccess,
+  }: PromptArgv) {
+    const ref = React.createRef<FormInstance>();
 
     const { close } = this.Modal({
       config: {
@@ -134,30 +135,23 @@ const MessageDialogFactory = {
           <Button
             key="submit"
             type="primary"
-            title={intl.v('确定')}
+            title={Intl.v('确定')}
             onClick={() => {
               if (onSuccess) {
-                // @ts-ignore
-                ref.current.validateFields().then((values) => {
-                  onSuccess(values.value).then(() => {
-                    // Emitter.trigger(Actions.close, el);
-                    close();
-                  });
+                ref.current!.validateFields().then((values) => {
+                  onSuccess(values?.value).then(() => close());
                 });
               } else {
-                // Emitter.trigger(Actions.close, el);
                 close();
               }
             }}
           >
-            {intl.v('确定')}
+            {Intl.v('确定')}
           </Button>,
         ],
       },
       local,
-      // @ts-ignore
       children: (
-        // @ts-ignore
         <Form name="Prompt" ref={ref} style={{ width: '100%' }}>
           <FormItemCreator
             columns={[
@@ -176,8 +170,7 @@ const MessageDialogFactory = {
       ),
     });
   },
-  InputPrompt({ config, ...params }) {
-    // @ts-ignore
+  InputPrompt({ config, ...params }: PromptArgv) {
     MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -187,7 +180,6 @@ const MessageDialogFactory = {
     });
   },
   TextAreaPrompt({ config, ...params }) {
-    // @ts-ignore
     MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -197,7 +189,6 @@ const MessageDialogFactory = {
     });
   },
   PassWordPrompt({ config, ...params }) {
-    // @ts-ignore
     MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -207,7 +198,6 @@ const MessageDialogFactory = {
     });
   },
   NumberPrompt({ config, ...params }) {
-    // @ts-ignore
     MessageDialogFactory.Prompt({
       ...params,
       config: {
@@ -231,7 +221,12 @@ const MessageDialogFactory = {
    *  @param {ReactNode} - children
    *  @param defaultCloseBtn
    */
-  Modal({ config = {}, children = null, defaultCloseBtn = true, local = DEFAULT_LOCAL }) {
+  Modal({
+    config = {},
+    children = null,
+    defaultCloseBtn = true,
+    local = DEFAULT_LOCAL,
+  }: ModalArgv) {
     const modalConfig = Object.assign(
       {
         maskClosable: false,
@@ -248,7 +243,6 @@ const MessageDialogFactory = {
       }
     }
 
-    // @ts-ignore
     ReactDOM.render(
       <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]}>
         <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
@@ -270,7 +264,6 @@ const MessageDialogFactory = {
    * @param el
    */
   close(el: HTMLElement) {
-    // Emitter.trigger(Actions.close, el);
     const flag = ReactDOM.unmountComponentAtNode(el);
     if (flag) {
       el?.parentElement?.removeChild?.(el);

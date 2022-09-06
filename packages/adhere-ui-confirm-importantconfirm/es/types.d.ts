@@ -1,10 +1,20 @@
+import { ConfirmArgv } from '@baifendian/adhere-ui-messagedialog/lib/types';
+import { FunctionComponent } from 'react';
+import type { CSSProperties } from 'react';
 /**
- * IImportantConfirmProps
- * @interface IImportantConfirmProps
+ * ImportantConfirmProps
+ * @interface ImportantConfirmProps
  */
-export interface IImportantConfirmProps {
-    children: any;
-    zIndex: number;
-    className: string | null;
-    success: () => {};
+export interface ImportantConfirmProps {
+    children?: any;
+    zIndex?: number;
+    className?: string;
+    style?: CSSProperties;
+    success?: () => void;
+}
+export interface ImportantConfirmFunction<P> extends FunctionComponent<P> {
+    open: (messageDialogParams: any) => void;
+}
+export interface OpenFunction extends Omit<ConfirmArgv, 'onSuccess'> {
+    success?: () => Promise<void>;
 }
