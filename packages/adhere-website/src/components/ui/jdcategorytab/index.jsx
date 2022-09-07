@@ -102,6 +102,12 @@ const listData = [
 ];
 
 export default () => {
+  const [activeKey, setActiveKey] = useState('1');
+  const [activeKey1, setActiveKey1] = useState('1');
+  const [loading, setLoading] = useState(false);
+
+  const ref = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -235,7 +241,7 @@ export default () => {
       activeKey="1"
     >
       {data.map((t, index) => (
-        <JdCategoryTab.Item key={String(index + 1)} id={String(index + 1)}>
+        <JdCategoryTab.Item key={String(index + 1)}>
           <ConditionalRender
             conditional={index % 2 === 0}
             noMatch={
@@ -284,7 +290,7 @@ export default () => {
               activeKey="1"
             >
               {data.map((t, index) => (
-                <JdCategoryTab.Item key={`${index + 1}`} id={`${index + 1}`}>
+                <JdCategoryTab.Item key={`${index + 1}`}>
                   <ConditionalRender
                     conditional={index % 2 === 0}
                     noMatch={() => (
@@ -348,7 +354,7 @@ export default () => {
         setActiveKey(k);
       }}
     >
-      <JdCategoryTab.Item id={activeKey}>
+      <JdCategoryTab.Item key={activeKey}>
         <ConditionalRender
           conditional={parseInt(activeKey) % 2 === 0}
           noMatch={
@@ -398,7 +404,7 @@ export default () => {
                 setActiveKey(k);
               }}
             >
-              <JdCategoryTab.Item id={activeKey}>
+              <JdCategoryTab.Item key={activeKey}>
                 <ConditionalRender
                   conditional={parseInt(activeKey) % 2 === 0}
                   noMatch={() => (
@@ -496,7 +502,7 @@ export default () => {
       }}
     >
       {data.map((t, index) => (
-        <JdCategoryTab.Item key={String(index + 1)} id={String(index + 1)}>
+        <JdCategoryTab.Item key={String(index + 1)}>
           <ConditionalRender
             conditional={index % 2 === 0}
             noMatch={
@@ -557,7 +563,7 @@ export default () => {
               </Button>
             </BSpace.Group>
 
-            <BSpace />
+            <BSpace direction="vertical" />
 
             <div
               style={{
@@ -585,7 +591,7 @@ export default () => {
                 }}
               >
                 {data.map((t, index) => (
-                  <JdCategoryTab.Item key={`${index + 1}`} id={`${index + 1}`}>
+                  <JdCategoryTab.Item key={`${index + 1}`}>
                     <ConditionalRender
                       conditional={index % 2 === 0}
                       noMatch={() => (
@@ -625,12 +631,6 @@ export default () => {
       },
     ];
   }
-
-  const [activeKey, setActiveKey] = useState('1');
-  const [activeKey1, setActiveKey1] = useState('1');
-  const [loading, setLoading] = useState(false);
-
-  const ref = useRef();
 
   return (
     <PlayGroundPage>
