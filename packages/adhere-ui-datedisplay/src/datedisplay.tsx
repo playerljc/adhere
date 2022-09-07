@@ -1,6 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { ConditionalRender, Resource } from '@baifendian/adhere';
+import Resource from '@baifendian/adhere-util-resource';
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import 'dayjs/locale/zh-cn';
 import 'dayjs/locale/pt';

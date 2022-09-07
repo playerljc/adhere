@@ -317,6 +317,7 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
   );
 };
 
+// @ts-ignore
 const StickupLayoutHOC: StickupLayoutHOCFunction<StickupLayoutHandle, StickupLayoutProps> =
   forwardRef<StickupLayoutHandle, StickupLayoutProps>(StickupLayout);
 StickupLayoutHOC.Item = StickupLayoutItem;

@@ -1,40 +1,18 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import classNames from 'classnames';
 
-import type { JdCategoryTabItemProps, JdCategoryTabContext } from './types';
-import { JdCategoryContext } from './context';
+import type { JdCategoryTabItemProps } from './types';
 
 const selectorPrefix = 'adhere-ui-jdcategorytab';
 
 const JdCategoryTabItem: FC<JdCategoryTabItemProps> = (props) => {
-  const { id, children, className, style } = props;
-
-  const { activeKey } = useContext<JdCategoryTabContext>(JdCategoryContext);
+  const { children, className = '', style = {} } = props;
 
   return (
-    <li
-      className={classNames(
-        `${selectorPrefix}-tab-item`,
-        activeKey === id ? 'active' : null,
-        className || '',
-      )}
-      style={style || {}}
-    >
+    <li className={classNames(`${selectorPrefix}-tab-item`, className || '')} style={style || {}}>
       {children}
     </li>
   );
 };
-
-// JdCategoryTabItem.defaultProps = {
-//   className: '',
-//   style: {},
-//   id: '',
-// };
-//
-// JdCategoryTabItem.propTypes = {
-//   className: PropTypes.string,
-//   style: PropTypes.object,
-//   id: PropTypes.string,
-// };
 
 export default JdCategoryTabItem;

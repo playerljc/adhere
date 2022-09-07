@@ -1,4 +1,3 @@
-import './index.less';
 import { IConfig, IShowConfig, IShowStandardConfig } from './types';
 /**
  * Notification

@@ -29,9 +29,13 @@ export default () => {
           },
         },
         codeText: `
-  import { StickupLayout, Space } from '@baifendian/adhere';
+  import { StickupLayout, Space } from '@baifendian/adhere'; import {Component} from "react";
 
-  <div style={{ height: 500, overflow: 'hidden' }}>
+  class Item extends Component {
+  render() {
+    return null
+  }
+} <div style={{ height: 500, overflow: 'hidden' }}>
     <StickupLayout>
       <Item
         title={<span className="title">基本参数</span>}

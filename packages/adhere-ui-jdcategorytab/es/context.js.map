@@ -1,1 +1,0 @@
-{"version":3,"file":"context.js","sources":["context.js"],"sourcesContent":["import { createContext } from 'react';\r\n/**\r\n * JdCategoryContext\r\n */\r\nexport var JdCategoryContext = createContext({\r\n    activeKey: '',\r\n});\r\n"],"names":["createContext","JdCategoryContext","activeKey"],"mappings":"OAASA,0BAIF,IAAIC,kBAAoBD,cAAc,CACzCE,UAAW,YADJD"}

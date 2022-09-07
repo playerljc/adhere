@@ -1,5 +1,5 @@
-import { StickupLayoutItemProps } from '@baifendian/adhere-ui-stickuplayout/lib/types';
-import { CSSProperties, FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import type { CSSProperties, FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import type { StickupLayoutItemProps } from '@baifendian/adhere-ui-stickuplayout/lib/types';
 export interface JdCategoryTabRefHandle {
     scrollTo: (key: string, time?: number, easing?: any) => void;
 }
@@ -7,7 +7,7 @@ export interface JdCategoryTabRefHandle {
  * JdCategoryTabHOCFunction
  */
 export interface JdCategoryTabHOCFunction<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
-    Item?: FC<StickupLayoutItemProps>;
+    Item: FC<StickupLayoutItemProps>;
 }
 /**
  * JdCategoryTabProps
@@ -32,16 +32,12 @@ export interface JdCategoryTabProps {
     onBeforeChange?: (activeKey: string, currentKey: string) => boolean;
 }
 export interface JdCategoryTabItemProps {
-    id?: string | number;
-    children?: any;
     className?: string;
     style?: CSSProperties;
+    children?: any;
 }
 export interface MenuDataItem {
     key: string;
     name: string;
-    properties: any;
-}
-export interface JdCategoryTabContext {
-    activeKey: string;
+    properties?: any;
 }
