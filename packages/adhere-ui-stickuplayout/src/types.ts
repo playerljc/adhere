@@ -4,7 +4,7 @@ import type { CSSProperties, ReactElement } from 'react';
 /**
  * StickupLayoutHOCType
  */
-export interface StickupLayoutHOCType<T, P>
+export interface StickupLayoutHOCFunction<T, P>
   extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
   Item?: FC<StickupLayoutItemProps>;
 }

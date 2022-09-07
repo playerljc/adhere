@@ -7,7 +7,12 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 
-import { StickupLayoutProps, StickupLayoutHandle, IndexItem, StickupLayoutHOCType } from './types';
+import {
+  StickupLayoutProps,
+  StickupLayoutHandle,
+  IndexItem,
+  StickupLayoutHOCFunction,
+} from './types';
 import StickupLayoutItem from './item';
 
 const selectorPrefix = 'adhere-ui-stickuplayout';
@@ -312,9 +317,7 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
   );
 };
 
-const StickupLayoutHOC: StickupLayoutHOCType<StickupLayoutHandle, StickupLayoutProps> = forwardRef<
-  StickupLayoutHandle,
-  StickupLayoutProps
->(StickupLayout);
+const StickupLayoutHOC: StickupLayoutHOCFunction<StickupLayoutHandle, StickupLayoutProps> =
+  forwardRef<StickupLayoutHandle, StickupLayoutProps>(StickupLayout);
 StickupLayoutHOC.Item = StickupLayoutItem;
 export default StickupLayoutHOC;

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { createContext } from 'react';
+
+import type { JdCategoryTabContext } from './types';
 
 /**
  * JdCategoryContext
- * @type {React.Context<{store: {}}>}
  */
-export const JdCategoryContext = React.createContext({
+export const JdCategoryContext = createContext<JdCategoryTabContext>({
   activeKey: '',
 });

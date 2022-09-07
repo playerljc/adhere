@@ -41,8 +41,10 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
+    "@baifendian/adhere-ui-hooks": "^1.0.18",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/iscroll": "^5.2.5",
     "classnames": "^2.2.6",
     "iscroll": "^5.2.0",
     "react": "^17.0.1",

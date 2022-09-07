@@ -1,7 +1,7 @@
-import React from 'react';
-import { IFlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
+import type { ReactNode, ReactElement, CSSProperties } from 'react';
+import type { FlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
 
-export type ILocal =
+export type Local =
   | 'ar'
   | 'de'
   | 'en'
@@ -18,101 +18,100 @@ export type ILocal =
   | 'zh'
   | string;
 
-export type ICommentProps = Partial<{
-  getScrollWrapContainer: () => HTMLElement;
-
-  fetchCommentData: () => Promise<any>;
-  commentDataKeys: {
+export interface CommentProps {
+  getScrollWrapContainer?: () => HTMLElement;
+  fetchCommentData?: () => Promise<any>;
+  commentDataKeys?: {
     current: string;
     totalPage: string;
     list: string;
     totalCount: string;
   };
-  commentLimit: number;
-  commentKeyProp: string;
-  renderCommentActions: () => React.ReactNode[] | null;
-  renderCommentAuthor: () => React.ReactNode | null;
-  renderCommentAvatar: () => React.ReactNode | null;
-  renderCommentContent: () => React.ReactNode | null;
-  renderCommentDateTime: () => React.ReactNode | null;
-  renderCommentLoading: () => React.ReactNode | null;
+  commentLimit?: number;
+  commentKeyProp?: string;
+  renderCommentActions?: () => ReactNode[] | null;
+  renderCommentAuthor?: () => ReactNode | null;
+  renderCommentAvatar?: () => ReactNode | null;
+  renderCommentContent?: () => ReactNode | null;
+  renderCommentDateTime?: () => ReactNode | null;
+  renderCommentLoading?: () => ReactNode | null;
 
-  fetchReplyData: () => Promise<any>;
-  replyDataKeys: {
+  fetchReplyData?: () => Promise<any>;
+  replyDataKeys?: {
     current: string;
     totalPage: string;
     list: string;
     totalCount: string;
   };
-  replyLimit: number;
-  replyKeyProp: string;
-  renderReplyActions: () => React.ReactNode[] | null;
-  renderReplyAuthor: () => React.ReactNode | null;
-  renderReplyAvatar: () => React.ReactNode | null;
-  renderReplyContent: () => React.ReactNode | null;
-  renderReplyDateTime: () => React.ReactNode | null;
-  renderReplyLoading: () => React.ReactNode | null;
+  replyLimit?: number;
+  replyKeyProp?: string;
+  renderReplyActions?: () => ReactNode[] | null;
+  renderReplyAuthor?: () => ReactNode | null;
+  renderReplyAvatar?: () => ReactNode | null;
+  renderReplyContent?: () => ReactNode | null;
+  renderReplyDateTime?: () => ReactNode | null;
+  renderReplyLoading?: () => ReactNode | null;
 
-  fetchReply: (params?: any) => Promise<any>;
-  listProps: any;
-  isMoreProp: string;
+  fetchReply?: (params?: any) => Promise<any>;
+  listProps?: any;
+  isMoreProp?: string;
 
-  flexLayoutProps: IFlexLayoutProps;
-  renderEmpty: () => React.ReactElement | null;
-  renderFirstLoading: () => React.ReactNode;
+  flexLayoutProps?: FlexLayoutProps;
+  renderEmpty?: () => ReactElement | null;
+  renderFirstLoading?: () => ReactNode;
 
-  showReplyText: string | Function;
-  hideReplyText: string | Function;
-  loadMoreReplyText: string | Function;
-  showReplyTextIcon: React.ReactNode | Function;
-  hideReplyTextIcon: React.ReactNode | Function;
-  loadMoreCollapseTextIcon: React.ReactNode | Function;
-  local: ILocal;
-  emojiPickerProps: any;
-}>;
+  showReplyText?: string | Function;
+  hideReplyText?: string | Function;
+  loadMoreReplyText?: string | Function;
+  showReplyTextIcon?: ReactNode | Function;
+  hideReplyTextIcon?: ReactNode | Function;
+  loadMoreCollapseTextIcon?: ReactNode | Function;
+  local?: Local;
+  emojiPickerProps?: any;
+}
 
-export type IReplyProps = Partial<{
-  onCancel: Function;
-  onResult: Function;
-  local: ILocal;
-  emojiPickerProps: any;
-}>;
+export interface ReplyProps {
+  onCancel?: () => void;
+  onResult?: (value?: string) => void;
+  local?: Local;
+  emojiPickerProps?: any;
+}
 
-export type IListStandardProps = Partial<{
-  getScrollWrapContainer: () => HTMLElement;
-  flexLayoutProps: IFlexLayoutProps;
-  listProps: IListProps;
-  limit: number;
-  renderList: (params: any) => React.ReactNode;
-  renderEmpty: () => React.ReactElement | null;
-  renderFirstLoading: () => React.ReactNode;
-  fetchData: (params: any) => Promise<any>;
-  renderLoading: () => React.ReactNode | null;
-  dataKeys: {
+export interface ListStandardProps {
+  getScrollWrapContainer?: () => HTMLElement;
+  flexLayoutProps?: FlexLayoutProps;
+  listProps?: ListProps;
+  limit?: number;
+  renderList?: (params?: any) => ReactNode;
+  renderEmpty?: () => ReactElement | null;
+  renderFirstLoading?: () => ReactNode;
+  fetchData?: (params?: any) => Promise<any>;
+  renderLoading?: () => ReactNode | null;
+  dataKeys?: {
     current: string;
     totalPage: string;
     list: string;
     totalCount: string;
   };
-}>;
+}
 
-export type IListProps = Partial<{
-  getScrollWrapContainer: () => HTMLElement;
-  className: string;
-  style: React.CSSProperties;
-  isLoading: boolean;
-  hasMore: boolean;
-  onLoadMore: Function;
-  renderFirstLoading: () => React.ReactNode | null;
-  scrollLoadProps: {
+export interface ListProps {
+  getScrollWrapContainer?: () => HTMLElement;
+  className?: string;
+  style?: CSSProperties;
+  isLoading?: boolean;
+  hasMore?: boolean;
+  onLoadMore?: Function;
+  renderFirstLoading?: () => ReactNode | null;
+  scrollLoadProps?: {
     className: string;
-    style: React.CSSProperties;
+    style: CSSProperties;
     loadClassName: string;
-    loadStyle: React.CSSProperties;
+    loadStyle: CSSProperties;
     emptyClassName: string;
-    emptyStyle: React.CSSProperties;
+    emptyStyle: CSSProperties;
     errorClassName: string;
-    errorStyle: React.CSSProperties;
+    errorStyle: CSSProperties;
     distance: number;
     onScrollBottom: Function;
     onEmptyClick: Function;
@@ -121,38 +120,38 @@ export type IListProps = Partial<{
     renderEmpty: Function | undefined;
     renderError: Function | undefined;
   };
-  children: React.ReactNode;
-}>;
+  children?: any;
+}
 
-export type INodeProps = Partial<{
-  isReply: boolean;
-  data: {
+export interface NodeProps {
+  isReply?: boolean;
+  data?: {
     key: string;
   };
-  dataKeys: {
+  dataKeys?: {
     current: string;
     totalPage: string;
     list: string;
     totalCount: string;
   };
-  renderLoading: () => React.ReactNode | null;
-  limit: number;
-  fetchData: (params: any) => Promise<any>;
-  fetchReply: (params: any) => Promise<any>;
-  keyProp: string;
-  isMoreProp: string;
-  renderActions: (params: any, callback: (data?: any) => void) => React.ReactNode[] | null;
-  renderAuthor: (params: any) => React.ReactNode | null;
-  renderAvatar: (params: any) => React.ReactNode | null;
-  renderContent: (params: any) => React.ReactNode | null;
-  renderDateTime: (params: any) => React.ReactNode | null;
-  children: Function;
-  showReplyText: string | Function;
-  hideReplyText: string | Function;
-  loadMoreReplyText: string | Function;
-  showReplyTextIcon: React.ReactNode | Function;
-  hideReplyTextIcon: React.ReactNode | Function;
-  loadMoreCollapseTextIcon: React.ReactNode | Function;
-  local: ILocal;
-  emojiPickerProps: any;
-}>;
+  renderLoading?: () => ReactNode | null;
+  limit?: number;
+  fetchData?: (params?: any) => Promise<any> | undefined;
+  fetchReply?: (params?: any) => Promise<any>;
+  keyProp?: string;
+  isMoreProp?: string;
+  renderActions?: (params: any, callback: (data?: any) => void) => ReactNode[] | null;
+  renderAuthor?: (params?: any) => ReactNode | null;
+  renderAvatar?: (params?: any) => ReactNode | null;
+  renderContent?: (params?: any) => ReactNode | null;
+  renderDateTime?: (params?: any) => ReactNode | null;
+  children?: any;
+  showReplyText?: string | Function;
+  hideReplyText?: string | Function;
+  loadMoreReplyText?: string | Function;
+  showReplyTextIcon?: ReactNode | Function;
+  hideReplyTextIcon?: ReactNode | Function;
+  loadMoreCollapseTextIcon?: ReactNode | Function;
+  local?: Local;
+  emojiPickerProps?: any;
+}
