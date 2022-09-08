@@ -1,2 +1,2 @@
-import{__assign}from"tslib";import React from"react";import Node,{defaultProps,propTypes}from"../../Components/Node";function CommentInfo(t){return React.createElement(Node,__assign({},t,{isReply:!1}),function(o){var e;return null===(e=null==t?void 0:t.children)||void 0===e?void 0:e.call(t,o)})}CommentInfo.defaultProps=defaultProps,CommentInfo.propTypes=propTypes;export default CommentInfo;
+import{__assign}from"tslib";import React from"react";import Node from"../../Components/Node";var CommentInfo=function(n){return React.createElement(Node,__assign({},n,{isReply:!1}),function(o){var e;return null===(e=null==n?void 0:n.children)||void 0===e?void 0:e.call(n,o)})};export default CommentInfo;
 //# sourceMappingURL=index.js.map

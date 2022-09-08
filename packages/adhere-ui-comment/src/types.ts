@@ -1,6 +1,6 @@
 import type { ReactNode, ReactElement, CSSProperties } from 'react';
 import type { FlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
-
+import type { ScrollLoadProps } from '@baifendian/adhere-ui-scrollload/es/types';
 export type Local =
   | 'ar'
   | 'de'
@@ -101,25 +101,9 @@ export interface ListProps {
   style?: CSSProperties;
   isLoading?: boolean;
   hasMore?: boolean;
-  onLoadMore?: Function;
+  onLoadMore?: (handle?: (status?: string) => void) => void;
   renderFirstLoading?: () => ReactNode | null;
-  scrollLoadProps?: {
-    className: string;
-    style: CSSProperties;
-    loadClassName: string;
-    loadStyle: CSSProperties;
-    emptyClassName: string;
-    emptyStyle: CSSProperties;
-    errorClassName: string;
-    errorStyle: CSSProperties;
-    distance: number;
-    onScrollBottom: Function;
-    onEmptyClick: Function;
-    onErrorClick: Function;
-    renderLoading: Function | undefined;
-    renderEmpty: Function | undefined;
-    renderError: Function | undefined;
-  };
+  scrollLoadProps?: ScrollLoadProps;
   children?: any;
 }
 
