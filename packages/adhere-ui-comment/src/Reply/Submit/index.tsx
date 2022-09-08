@@ -109,7 +109,7 @@ const Reply: FC<ReplyProps> = (props) => {
       document.body.removeEventListener('click', onDocBodyClick);
       (emojiWrapRef?.current! as HTMLElement)?.removeEventListener?.('click', onEmojiWrapClick);
     };
-  }, []);
+  });
 
   return (
     <div className={`${selectorPrefix}`}>

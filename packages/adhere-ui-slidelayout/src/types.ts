@@ -1,57 +1,51 @@
-import React from 'react';
+import { CSSProperties } from 'react';
 
+export interface Slide
 /**
- * ISlideLayoutProps
- * @interface ISlideLayoutProps
+ * SlideLayoutProps
+ * @interface SlideLayoutProps
  */
-export interface ISlideLayoutProps {
+export interface SlideLayoutProps {
   className?: string;
-  style?: React.CSSProperties;
-  width: string | number;
-  height: string | number;
-  mask: boolean;
-  zIndex: number;
-  time: number;
-  collapse: boolean;
-  onAfterShow: Function;
-  onAfterClose: Function;
-  onBeforeShow: Function;
-  onBeforeClose: Function;
-  direction: string;
+  style?: CSSProperties;
+  width?: string | number;
+  height?: string | number;
+  mask?: boolean;
+  zIndex?: number;
+  time?: number;
+  collapse?: boolean;
+  direction?: string;
+  onAfterShow?: Function;
+  onAfterClose?: Function;
+  onBeforeShow?: Function;
+  onBeforeClose?: Function;
+  children?: any;
 }
 
 /**
- * IOverlayProps
- * @interface IOverlayProps
+ * OverlayProps
+ * @interface OverlayProps
  */
-export interface IOverlayProps extends ISlideLayoutProps {
-  direction: 'left' | 'right' | 'top' | 'bottom';
+export interface OverlayProps extends SlideLayoutProps {
+  direction?: 'left' | 'right' | 'top' | 'bottom';
 }
 
 /**
- * IPushProps
- * @interface IPushProps
+ * PushProps
+ * @interface PushProps
  */
-export interface IPushProps extends ISlideLayoutProps {
+export interface PushProps extends SlideLayoutProps {
   masterClassName?: string;
-  masterStyle?: React.CSSProperties;
+  masterStyle?: CSSProperties;
   slaveClassName?: string;
-  slaveStyle?: React.CSSProperties;
-  direction: 'left' | 'right';
-  slide: React.ReactElement;
-  master: React.ReactElement;
+  slaveStyle?: CSSProperties;
+  direction?: 'left' | 'right';
+  slide?: any;
+  master?: any;
 }
 
 /**
- * IRevealProps
- * @interface IRevealProps
+ * RevealProps
+ * @interface RevealProps
  */
-export interface IRevealProps extends IPushProps {}
-
-/**
- * ISlideLayoutState
- * @interface ISlideLayoutState
- */
-export interface ISlideLayoutState {
-  collapse: boolean;
-}
+export interface RevealProps extends PushProps {}

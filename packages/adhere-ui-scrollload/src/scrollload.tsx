@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useRef,
   ForwardRefRenderFunction,
+  useLayoutEffect,
 } from 'react';
 import classNames from 'classnames';
 import Intl from '@baifendian/adhere-util-intl';
@@ -51,6 +52,12 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     _getScrollContainer()?.addEventListener('scroll', _onScroll);
     emptyEl.current?.addEventListener('click', _onEmptyClick);
     errorEl.current?.addEventListener('click', _onErrorClick);
+  }
+
+  function removeEvents() {
+    _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+    emptyEl.current?.removeEventListener('click', _onEmptyClick);
+    errorEl.current?.removeEventListener('click', _onErrorClick);
   }
 
   function _onScroll() {
@@ -181,7 +188,11 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     hideAll,
   }));
 
-  useEffect(() => initEvents(), []);
+  useLayoutEffect(() => {
+    initEvents();
+
+    return () => removeEvents();
+  });
 
   return (
     <div

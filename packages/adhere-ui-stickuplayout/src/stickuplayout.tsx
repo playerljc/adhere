@@ -128,13 +128,13 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
   function initial() {
     key.current = false;
     index.current = [];
-    headerEls.current = el.current!.querySelectorAll<HTMLElement>(`.${selectorPrefix}-item-header`);
+    headerEls.current = el.current?.querySelectorAll<HTMLElement>(`.${selectorPrefix}-item-header`);
 
     createIndex();
     position();
 
-    innerEl.current!.removeEventListener('scroll', onScroll);
-    innerEl.current!.addEventListener('scroll', onScroll);
+    innerEl.current?.removeEventListener('scroll', onScroll);
+    innerEl.current?.addEventListener('scroll', onScroll);
   }
 
   /**
@@ -293,7 +293,7 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
 
     return () => {
       if (maskEl.current) {
-        maskEl.current!.parentElement?.removeChild(maskEl.current);
+        maskEl.current?.parentElement?.removeChild(maskEl.current);
       }
     };
   }, []);

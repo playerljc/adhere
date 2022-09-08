@@ -115,13 +115,9 @@ const BackTopAnimation: FC<BackTopAnimationProps> = (props): React.ReactElement 
     }
   }
 
-  /**
-   * useLayoutEffect
-   */
+  useLayoutEffect(() => renderMask(), []);
+
   useLayoutEffect(() => {
-    /**
-     * initScrollEvent
-     */
     const container = getContainer();
 
     function onScroll() {
@@ -134,10 +130,8 @@ const BackTopAnimation: FC<BackTopAnimationProps> = (props): React.ReactElement 
 
     container.addEventListener('scroll', onScroll);
 
-    renderMask();
-
     return () => container.removeEventListener('scroll', onScroll);
-  }, []);
+  });
 
   return (
     <div

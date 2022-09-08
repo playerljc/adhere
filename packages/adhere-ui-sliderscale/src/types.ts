@@ -1,12 +1,12 @@
-import React from 'react';
+import type { CSSProperties } from 'react';
 
 /**
- * ISliderScaleProps
- * @interface ISliderScaleProps
+ * SliderScaleProps
+ * @interface SliderScaleProps
  */
-export interface ISliderScaleProps {
+export interface SliderScaleProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   // 最小值
   min?: number;
   // 最大值
@@ -17,5 +17,5 @@ export interface ISliderScaleProps {
   value?: number;
   // 刻度的间隔
   interval?: number;
-  onChange: Function;
+  onChange?: (value?: any) => void;
 }

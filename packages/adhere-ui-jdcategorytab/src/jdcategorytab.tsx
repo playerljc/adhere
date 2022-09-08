@@ -46,12 +46,6 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
   const menuInnerEl = useRef<HTMLUListElement>(null);
   const scroll = useRef<IScroll>();
 
-  function initMenuScroll() {
-    scroll.current = new IScroll(menuEl.current, { mouseWheel: true, click: true });
-
-    menuEl.current?.addEventListener('touchmove', (e) => e.preventDefault());
-  }
-
   function findElByKey(key) {
     const index = menuData.findIndex((t) => t.key === key);
 
@@ -139,7 +133,19 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
 
   useEffect(() => setActiveKey(props.activeKey), [props.activeKey]);
 
-  useEffect(() => initMenuScroll(), []);
+  useEffect(() => {
+    if (!scroll.current) {
+      scroll.current = new IScroll(menuEl.current, { mouseWheel: true, click: true });
+    }
+
+    function onTouchmove(e) {
+      e.preventDefault();
+    }
+
+    menuEl.current?.addEventListener('touchmove', onTouchmove);
+
+    return () => menuEl.current?.removeEventListener('touchmove', onTouchmove);
+  });
 
   useImperativeHandle(ref, () => ({
     scrollTo,
