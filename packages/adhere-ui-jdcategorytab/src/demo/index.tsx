@@ -6,6 +6,7 @@ import JdCategoryTab from '../index';
 
 import './index.less';
 
+// ReactDOM.render(<div>111</div>, document.getElementById('app'));
 const data = Array.from({ length: 100 }).fill(0);
 
 const columns = [

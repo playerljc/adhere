@@ -1,4 +1,4 @@
-import { IConfig, IShowConfig, IShowStandardConfig } from './types';
+import type { Config, ShowConfig, ShowStandardConfig } from './types';
 /**
  * Notification
  * @class Notification
@@ -11,7 +11,7 @@ declare class Notification {
     private notificationContainer;
     private notifications;
     private key;
-    constructor(container: any, config: IConfig);
+    constructor(container: any, config: Config);
     /**
      * createInnerContainer
      * @private
@@ -68,13 +68,13 @@ declare class Notification {
      * @param {Object} config
      * @return {string} id
      */
-    show(config: IShowConfig): string;
+    show(config: ShowConfig): string;
     /**
      * showStandard
      * @param {Object} config
      * @return {string} id
      */
-    showStandard(config: IShowStandardConfig): string;
+    showStandard(config: ShowStandardConfig): string;
     /**
      * close
      * @param {string} id
@@ -88,7 +88,7 @@ declare const _default: {
      * @param config
      * @return Notification
      */
-    build(container: HTMLElement, config: IConfig): Notification;
+    build(container: HTMLElement, config: Config): Notification;
 };
 /**
  * NotificationFactory

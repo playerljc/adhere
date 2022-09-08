@@ -1,9 +1,9 @@
-import React from 'react';
+import type { ReactElement } from 'react';
 /**
- * IConfig
- * @interface IConfig
+ * Config
+ * @interface Config
  */
-export interface IConfig {
+export interface Config {
     style: 'ios' | 'material';
     type: 'top' | 'bottom';
     onCreate?: () => void;
@@ -12,23 +12,23 @@ export interface IConfig {
     onCloseAfter?: () => void;
 }
 /**
- * IShowConfig
- * @interface IShowConfig
+ * ShowConfig
+ * @interface ShowConfig
  */
-export interface IShowConfig {
+export interface ShowConfig {
     closed: boolean;
-    children: React.ReactElement;
+    children: ReactElement;
 }
 /**
- * IShowStandardConfig
- * @interface IShowStandardConfig
+ * ShowStandardConfig
+ * @interface ShowStandardConfig
  */
-export interface IShowStandardConfig {
+export interface ShowStandardConfig {
     closed: boolean;
-    headerLabel: string | React.ReactElement;
+    headerLabel: string | ReactElement;
     headerIcon: string;
-    title: string | React.ReactElement;
-    text: string | React.ReactElement;
+    title: string | ReactElement;
+    text: string | ReactElement;
     icon: string;
-    datetime: string | React.ReactElement;
+    datetime: string | ReactElement;
 }

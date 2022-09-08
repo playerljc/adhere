@@ -1,6 +1,4 @@
-// @ts-ignore
 import React from 'react';
-// @ts-ignore
 import ReactDOM from 'react-dom';
 import { v1 } from 'uuid';
 
@@ -8,8 +6,7 @@ import { IConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
 
-// @ts-ignore
-let prePopup: this;
+let prePopup: Popup | null = null;
 let popups: Popup[] = [];
 let maskEl;
 let el = null;
@@ -47,8 +44,7 @@ class Popup {
    * createMask
    */
   private createMask(): void {
-    // @ts-ignore
-    const { zIndex } = this.config;
+    const { zIndex } = this.config!;
 
     maskEl = document.createElement('div');
 
@@ -56,8 +52,7 @@ class Popup {
 
     maskEl.style.zIndex = String((zIndex || 11000) - 1500);
 
-    // @ts-ignore
-    this.el.appendChild(maskEl);
+    (this.el as HTMLElement).appendChild(maskEl);
 
     maskEl.addEventListener('transitionend', this.onMaskElTransitionend);
   }
@@ -66,8 +61,7 @@ class Popup {
    * render
    */
   private render(): void {
-    // @ts-ignore
-    const { children, zIndex } = this.config;
+    const { children, zIndex } = this.config!;
 
     this.popupEl = document.createElement('div');
 
@@ -78,8 +72,7 @@ class Popup {
     this.popupEl.style.zIndex = String(zIndex || 11000);
 
     ReactDOM.render(children, this.popupEl, () => {
-      // @ts-ignore
-      this.el.appendChild(this.popupEl);
+      (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
       this.trigger('onCreate');
     });
   }
@@ -89,9 +82,7 @@ class Popup {
    * @param hookName
    */
   private trigger(hookName: string): void {
-    // @ts-ignore
-    if (this.config[hookName]) {
-      // @ts-ignore
+    if (this.config?.[hookName]) {
       return this.config[hookName]();
     }
   }
@@ -111,8 +102,7 @@ class Popup {
 
     maskEl.style.display = 'block';
 
-    // @ts-ignore
-    this.popupEl.style.display = 'block';
+    (this.popupEl as HTMLElement).style.display = 'block';
 
     this.isShow = true;
 
@@ -120,8 +110,7 @@ class Popup {
 
     setTimeout(() => {
       maskEl.classList.add('modal-in');
-      // @ts-ignore
-      this.popupEl.classList.add('modal-in');
+      (this.popupEl as HTMLElement).classList.add('modal-in');
     }, 100);
 
     return true;
@@ -142,8 +131,7 @@ class Popup {
 
     maskEl.style.display = 'block';
 
-    // @ts-ignore
-    this.popupEl.style.display = 'block';
+    (this.popupEl as HTMLElement).style.display = 'block';
 
     this.isShow = true;
 
@@ -151,8 +139,7 @@ class Popup {
 
     setTimeout(() => {
       maskEl.classList.add('modal-in');
-      // @ts-ignore
-      this.popupEl.classList.add('modal-in');
+      (this.popupEl as HTMLElement).classList.add('modal-in');
     }, 100);
 
     return true;
@@ -169,19 +156,16 @@ class Popup {
 
     this.isShow = false;
 
-    const promise = this.trigger('onBeforeClose');
+    const promise = this.trigger('onBeforeClose') as any;
 
-    // @ts-ignore
-    if (promise) {
-      (promise as unknown as Promise<null>).then(() => {
-        // @ts-ignore
-        this.popupEl.classList.remove('modal-in');
+    if (promise && 'then' in promise && promise.then instanceof Function) {
+      promise.then(() => {
+        (this.popupEl as HTMLElement).classList.remove('modal-in');
 
         maskEl.classList.remove('modal-in');
       });
     } else {
-      // @ts-ignore
-      this.popupEl.classList.remove('modal-in');
+      (this.popupEl as HTMLElement).classList.remove('modal-in');
 
       maskEl.classList.remove('modal-in');
     }
@@ -193,10 +177,8 @@ class Popup {
    * destroy - 销毁一个popup
    */
   destroy(): boolean {
-    // @ts-ignore
-    if (ReactDOM.unmountComponentAtNode(this.popupEl)) {
-      // @ts-ignore
-      this.popupEl.parentNode.removeChild(this.popupEl);
+    if (ReactDOM.unmountComponentAtNode(this.popupEl!)) {
+      (this.popupEl as HTMLElement).parentNode?.removeChild(this.popupEl!);
       this.popupEl = null;
     }
 
@@ -228,8 +210,7 @@ class Popup {
     if (!this.isShow) {
       prePopup = null;
 
-      // @ts-ignore
-      this.popupEl.style.display = 'none';
+      (this.popupEl as HTMLElement).style.display = 'none';
 
       this.trigger('onAfterClose');
     } else {

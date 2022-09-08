@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { IPermissionProps, IPermissionFun } from './types';
+import { PermissionProps, PermissionFunction } from './types';
 
 // 所有的权限
 let permissions = [];
@@ -57,7 +57,7 @@ export const Permission = ({
   permissions,
   children,
   noMatch,
-}: IPermissionProps): JSX.Element => (
+}: PermissionProps): JSX.Element => (
   <ConditionalRender conditional={checkPermission(allPermission, permissions)} noMatch={noMatch}>
     {children}
   </ConditionalRender>
@@ -76,7 +76,7 @@ export function PermissionFun({
   permissions,
   match,
   noMatch,
-}: IPermissionFun) {
+}: PermissionFunction) {
   return ConditionalRender.conditionalRender({
     conditional: checkPermission(allPermission, permissions),
     match,

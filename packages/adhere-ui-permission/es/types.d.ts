@@ -1,20 +1,20 @@
 import React from 'react';
 /**
- * IPermissionProps
- * @interface IPermissionProps
+ * PermissionProps
+ * @interface PermissionProps
  */
-export interface IPermissionProps {
-    allPermission: undefined | Array<string>;
-    permissions: Array<string> | string;
+export interface PermissionProps {
+    allPermission: undefined | string[];
+    permissions: string[] | string;
     children: any;
     noMatch: () => React.ReactElement | null;
 }
 /**
- * IPermissionFun
+ * PermissionFunction
  */
-export interface IPermissionFun {
-    allPermission: undefined | Array<string>;
-    permissions: Array<string> | string;
+export interface PermissionFunction {
+    allPermission: undefined | string[];
+    permissions: string[] | string;
     match: any;
     noMatch: any;
 }

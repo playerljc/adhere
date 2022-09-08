@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { v1 } from 'uuid';
 
-import { IConfig, IShowConfig, IShowStandardConfig } from './types';
+import type { Config, ShowConfig, ShowStandardConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-notification';
 
@@ -12,7 +12,7 @@ const selectorPrefix = 'adhere-ui-notification';
  * @classdesc Notification
  */
 class Notification {
-  private readonly config: IConfig = {
+  private readonly config: Config = {
     style: 'material',
     type: 'top',
   };
@@ -30,7 +30,7 @@ class Notification {
   private notifications = {};
   private key: boolean = false;
 
-  constructor(container, config: IConfig) {
+  constructor(container, config: Config) {
     this.container = container;
 
     this.config = Object.assign(this.config, config);
@@ -49,8 +49,7 @@ class Notification {
   private createInnerContainer(): void {
     const innerContainer = this.container.querySelector(`.${selectorPrefix}`);
     if (innerContainer) {
-      // @ts-ignore
-      innerContainer.parentElement.removeChild(innerContainer);
+      innerContainer?.parentElement?.removeChild(innerContainer);
     }
 
     this.innerContainer = document.createElement('div');
@@ -69,15 +68,11 @@ class Notification {
   private init(): void {
     const { config } = this;
 
-    // @ts-ignore
-    this.innerContainer.classList.remove(
-      // @ts-ignore
+    this.innerContainer?.classList.remove(
       [selectorPrefix].concat([config.type === 'top' ? 'bottom' : 'top', config.style]).join('-'),
     );
 
-    // @ts-ignore
-    this.innerContainer.classList.add(
-      // @ts-ignore
+    this.innerContainer?.classList.add(
       [selectorPrefix].concat([config.type, config.style]).join('-'),
     );
   }
@@ -89,12 +84,12 @@ class Notification {
   private initEvents(): void {
     const self = this;
 
-    // @ts-ignore
-    this.notificationContainer.addEventListener('click', (e: HTMLElement) => {
-      // @ts-ignore
-      if (e.target.classList.contains('closeBtn')) {
-        // @ts-ignore
-        self.closeNotification.call(self, e.target.parentNode.dataset.id);
+    this.notificationContainer?.addEventListener('click', (e: MouseEvent) => {
+      if ((e.target as HTMLElement).classList.contains('closeBtn')) {
+        self.closeNotification.call(
+          self,
+          ((e.target as HTMLElement).parentNode as HTMLElement).dataset.id as string,
+        );
       }
     });
   }
@@ -144,7 +139,7 @@ class Notification {
    * @return string
    * @private
    */
-  private buildCustom(config: IShowConfig): string {
+  private buildCustom(config: ShowConfig): string {
     const { closed, children } = config;
 
     // console.log('IShowConfig', config);
@@ -172,7 +167,7 @@ class Notification {
    * @return string
    * @private
    */
-  private buildStandard(config: IShowStandardConfig): string {
+  private buildStandard(config: ShowStandardConfig): string {
     const {
       headerLabel = '',
       headerIcon = '',
@@ -282,7 +277,7 @@ class Notification {
    * @param {Object} config
    * @return {string} id
    */
-  show(config: IShowConfig): string {
+  show(config: ShowConfig): string {
     return this.buildCustom(config);
   }
 
@@ -291,7 +286,7 @@ class Notification {
    * @param {Object} config
    * @return {string} id
    */
-  showStandard(config: IShowStandardConfig): string {
+  showStandard(config: ShowStandardConfig): string {
     return this.buildStandard(config);
   }
 
@@ -314,7 +309,7 @@ export default {
    * @param config
    * @return Notification
    */
-  build(container: HTMLElement, config: IConfig): Notification {
+  build(container: HTMLElement, config: Config): Notification {
     return new Notification(container, config);
   },
 };

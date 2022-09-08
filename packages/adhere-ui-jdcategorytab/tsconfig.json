@@ -5,7 +5,8 @@
     "declarationDir": "./lib",
     "outDir": "./lib",
     "baseUrl": "./",
-    "module": "esnext"
+    "module": "esnext",
+    "target": "es6"
   },
   "exclude": [
     "node_modules"
