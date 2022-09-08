@@ -221,7 +221,7 @@ const Node: FC<NodeProps> = (props) => {
     return (listData[dataKeys.list] as []).length <= listData[dataKeys.totalCount];
   }
 
-  function loadData() {
+  function loadData(): Promise<any> | undefined {
     setLoading(true);
 
     paging.current = {
@@ -229,33 +229,33 @@ const Node: FC<NodeProps> = (props) => {
       limit: limit,
     };
 
-    return fetchData((res) => setListData(res));
+    return fetchData()?.then((res) => {
+      setListData(res);
+    });
   }
 
-  function appendData() {
+  function appendData(): Promise<any> | undefined {
     setLoading(true);
 
     paging.current.page = paging.current.page + 1;
 
     const { list } = dataKeys;
 
-    return fetchData((res) => {
-      setListData({
+    return fetchData()?.then((res) => {
+      setListData((_listData) => ({
         ...res,
-        [dataKeys.list]: [...(listData[list] as any), ...res[list]],
-      });
+        [dataKeys.list]: [...(_listData[list] as any), ...res[list]],
+      }));
     });
   }
 
-  function fetchData(callback) {
+  function fetchData(): Promise<any> | undefined {
     return props
       ?.fetchData?.({
         ...paging.current,
         record: { ...data },
       })
       ?.then((data) => {
-        callback(data);
-
         setLoading(false);
 
         return data;
@@ -267,9 +267,7 @@ const Node: FC<NodeProps> = (props) => {
       });
   }
 
-  useEffect(() => {
-    setData(data);
-  }, [props?.data]);
+  useEffect(() => setData(props.data), [props?.data]);
 
   return (
     <FlexLayout

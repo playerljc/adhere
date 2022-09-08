@@ -144,7 +144,7 @@ const Reply: FC<ReplyProps> = (props) => {
           <div
             onClick={(e) => {
               e.stopPropagation();
-              setEmojiIconWrapVisible(!emojiIconWrapVisible);
+              setEmojiIconWrapVisible((v) => !v);
             }}
           >
             <EmojiIcon className={`${selectorPrefix}-toolbar-item-emoji`} />

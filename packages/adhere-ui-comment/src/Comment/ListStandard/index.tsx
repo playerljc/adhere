@@ -80,9 +80,11 @@ const ListStandard: FC<ListStandardProps> = (props) => {
     const { list } = dataKeys!;
 
     return fetchData((res) => {
-      setData({
-        ...res,
-        [dataKeys.list]: [...(data[list] as any), ...res[list]],
+      setData((_data) => {
+        return {
+          ...res,
+          [dataKeys.list]: [...(_data[list] as any), ...res[list]],
+        };
       });
     });
   }
