@@ -19,6 +19,10 @@ data.fill(0);
 data = data.map((t, index) => `Ant Design Title ${index + 1}`);
 
 export default () => {
+  const ref1 = useRef();
+  const ref2 = useRef();
+  const ref3 = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -72,10 +76,11 @@ export default () => {
         type: 'PlayGround',
         renderChildren: () => (
           <PullRefresh
+            ref={ref1}
             className={styles.Wrap}
-            onPullRefresh={(ins) => {
+            onPullRefresh={() => {
               setTimeout(() => {
-                ins.reset();
+                ref1.current.reset();
               }, 1000 * 3);
             }}
           >
@@ -163,10 +168,10 @@ export default () => {
           <>
             <PullRefresh
               className={styles.Wrap}
-              ref={ref}
-              onPullRefresh={(ins) => {
+              ref={ref2}
+              onPullRefresh={() => {
                 setTimeout(() => {
-                  ins.reset();
+                  ref2.current.reset();
                 }, 1000 * 3);
               }}
             >
@@ -191,7 +196,7 @@ export default () => {
             <Button
               type="primary"
               onClick={() => {
-                ref.current.refresh();
+                ref2.current.refresh();
               }}
             >
               触发下拉刷新
@@ -302,6 +307,7 @@ export default () => {
         type: 'PlayGroundMulit',
         renderChildren: () => (
           <PullRefresh
+            ref={ref3}
             className={styles.Wrap}
             isShowUpdateTime={false}
             renderIcon={() => (
@@ -317,9 +323,9 @@ export default () => {
                 <div>刷新中...</div>
               </div>
             )}
-            onPullRefresh={(ins) => {
+            onPullRefresh={() => {
               setTimeout(() => {
-                ins.reset();
+                ref3.current.reset();
               }, 1000 * 3);
             }}
           >
@@ -343,8 +349,6 @@ export default () => {
       },
     ];
   }
-
-  const ref = useRef();
 
   return (
     <PlayGroundPage>

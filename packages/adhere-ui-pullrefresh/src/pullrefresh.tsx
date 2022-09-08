@@ -36,6 +36,8 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
     renderLabel = () => Intl.v('下拉刷新'),
     renderCanLabel = () => Intl.v('松开刷新'),
     renderLoadingAnimation = 'la-ball-circus la-dark',
+    isShowUpdateTime = true,
+    updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18.value(),
     children,
   } = props;
 
@@ -104,11 +106,6 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
    * renderUpdateTime
    */
   function renderUpdateTime() {
-    const {
-      isShowUpdateTime = true,
-      updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18.value(),
-    } = props;
-
     return (
       <ConditionalRender conditional={isShowUpdateTime}>
         {() => (
