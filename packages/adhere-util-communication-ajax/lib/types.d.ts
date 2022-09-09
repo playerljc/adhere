@@ -63,6 +63,7 @@ export interface IConfig {
     codeKey?: number | string;
     codeSuccess?: number;
     showWarn?: boolean;
+    responseType?: XMLHttpRequestResponseType;
 }
 /**
  * ISendArg
@@ -83,5 +84,6 @@ export interface ISendArg extends IConfig {
  * @classdesc sendPrepare的参数
  */
 export interface ISendPrepareArg extends ISendArg {
-    method: 'get' | 'post' | 'put' | 'path' | 'delete';
+    method: Method;
 }
+export declare type Method = 'get' | 'post' | 'put' | 'path' | 'delete';

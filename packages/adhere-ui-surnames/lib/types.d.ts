@@ -1,35 +1,39 @@
-import React from 'react';
-export interface IIndexConfig {
-    index: string;
-    renderIndex: Function;
-    renderTitle: Function;
-    renderContent: Function;
-}
-export interface IRecord {
-    index: string;
-    data: Array<object>;
-}
-export interface IPosition {
-    name: string;
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
-    offsetTop: number;
-    offsetLeft: number;
-    width: number;
-    height: number;
+import type { CSSProperties } from 'react';
+export interface SurnamesRefHandle {
+    scrollToAnimation: (name?: string, duration?: number) => void;
+    scrollTo: (name?: any) => void;
 }
 /**
- * ISurnamesProps
- * @interface ISurnamesProps
+ * SurnamesProps
+ * @interface SurnamesProps
  */
-export interface ISurnamesProps {
+export interface SurnamesProps {
     className?: string;
-    style?: React.CSSProperties;
-    position: 'top' | 'right' | 'bottom' | 'left';
-    indexes: Array<IIndexConfig>;
-    dataSource: Array<IRecord>;
-    onBeforeScroll: Function;
-    onScroll: Function;
+    style?: CSSProperties;
+    position?: 'top' | 'right' | 'bottom' | 'left';
+    indexes?: IndexConfig[];
+    dataSource?: Record[];
+    onBeforeScroll?: Function;
+    onScroll?: (params?: any) => void;
+}
+export interface IndexConfig {
+    index?: string;
+    renderIndex?: Function;
+    renderTitle?: Function;
+    renderContent?: Function;
+}
+export interface Record {
+    index?: string;
+    data?: object[];
+}
+export interface Position {
+    name?: string;
+    top?: number;
+    bottom?: number;
+    left?: number;
+    right?: number;
+    offsetTop?: number;
+    offsetLeft?: number;
+    width?: number;
+    height?: number;
 }
