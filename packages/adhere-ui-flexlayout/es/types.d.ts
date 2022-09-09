@@ -14,6 +14,7 @@ export interface FlexLayoutFunction<P> extends FunctionComponent<P> {
     ScrollLayout: FC<ScrollLayoutProps>;
     useScrollLayout: () => ScrollLayoutContextType;
     ScrollLayoutContext: Context<ScrollLayoutContextType>;
+    selectorPrefix: string;
 }
 export interface FlexLayoutProps {
     className?: string;

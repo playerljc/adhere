@@ -14,7 +14,7 @@ import type { FlexLayoutFunction, FlexLayoutProps } from './types';
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
 const FlexLayout: FlexLayoutFunction<FlexLayoutProps> = (props) => {
-  const { className = '', style = {}, direction = 'horizontal', children } = props;
+  const { className = '', style = {}, direction = 'vertical', children } = props;
 
   return (
     <FlexContext.Provider
@@ -32,6 +32,7 @@ const FlexLayout: FlexLayoutFunction<FlexLayoutProps> = (props) => {
   );
 };
 
+FlexLayout.selectorPrefix = selectorPrefix;
 FlexLayout.Context = FlexContext;
 FlexLayout.Fixed = Fixed;
 FlexLayout.Auto = Auto;

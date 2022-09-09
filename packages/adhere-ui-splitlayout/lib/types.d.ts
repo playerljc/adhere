@@ -1,12 +1,15 @@
-import React from 'react';
-export interface ISplitLayoutProps {
-    onCanDrag: Function;
-    onDragStarted: Function;
-    onDragFinished: Function;
-    onOut: Function;
-    onChange: Function;
-    maxSize: string;
-    minSize: number;
-    className: '';
-    style: React.CSSProperties;
+import type { CSSProperties } from 'react';
+/**
+ * SplitLayoutProps
+ */
+export interface SplitLayoutProps {
+    className?: '';
+    style?: CSSProperties;
+    maxSize?: string | number;
+    minSize?: string | number;
+    onCanDrag?: (params?: any) => void;
+    onDragStarted?: (params?: any) => void;
+    onDragFinished?: (params?: any) => void;
+    onChange?: (params?: any) => void;
+    onOut?: Function;
 }
