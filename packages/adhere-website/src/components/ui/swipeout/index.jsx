@@ -3,13 +3,36 @@ import { List, Avatar, Radio } from 'antd';
 
 import { SwipeOut, Space } from '@baifendian/adhere';
 
-import PlayGroundPage, {
-  Section,
-  PropsSection,
-  CodeBoxSection,
-} from '@/lib/PlaygroundPage';
+import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 export default () => {
+  const [data, setData] = useState([
+    {
+      title: 'Ant Design Title 1',
+      beforeShow: false,
+      afterShow: false,
+      duration: 200,
+    },
+    {
+      title: 'Ant Design Title 2',
+      beforeShow: false,
+      afterShow: false,
+      duration: 200,
+    },
+    {
+      title: 'Ant Design Title 3',
+      beforeShow: false,
+      afterShow: false,
+      duration: 200,
+    },
+    {
+      title: 'Ant Design Title 4',
+      beforeShow: false,
+      afterShow: false,
+      duration: 200,
+    },
+  ]);
+
   function boxPanelConfig() {
     return [
       {
@@ -209,33 +232,6 @@ export default () => {
       },
     ];
   }
-
-  const [data, setData] = useState([
-    {
-      title: 'Ant Design Title 1',
-      beforeShow: false,
-      afterShow: false,
-      duration: 200,
-    },
-    {
-      title: 'Ant Design Title 2',
-      beforeShow: false,
-      afterShow: false,
-      duration: 200,
-    },
-    {
-      title: 'Ant Design Title 3',
-      beforeShow: false,
-      afterShow: false,
-      duration: 200,
-    },
-    {
-      title: 'Ant Design Title 4',
-      beforeShow: false,
-      afterShow: false,
-      duration: 200,
-    },
-  ]);
 
   return (
     <PlayGroundPage>

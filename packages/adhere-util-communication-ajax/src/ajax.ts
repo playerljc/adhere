@@ -305,22 +305,15 @@ function initXhrEvents(xhr, events) {
  * @param indicator
  * @param xhr
  */
-function resolveData({
-  show,
-  data,
-  indicator,
-  xhr,
-}): boolean | { data: any; hideIndicator?: () => void; xhr: XMLHttpRequest } {
-  return show
-    ? {
-        xhr,
-        data,
-        hideIndicator: () => GlobalIndicator.hide(indicator),
-      }
-    : {
-        xhr,
-        data,
-      };
+function resolveData({ show, data, indicator, xhr }): {
+  data: any;
+  xhr: XMLHttpRequest;
+  hideIndicator?: () => void;
+} {
+  return {
+    ...{ xhr, data },
+    ...(show ? { hideIndicator: () => GlobalIndicator.hide(indicator) } : {}),
+  };
 }
 
 /**
