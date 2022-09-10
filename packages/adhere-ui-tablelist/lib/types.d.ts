@@ -1,63 +1,63 @@
-import React from 'react';
-import { IFormItemProps } from '@baifendian/adhere-ui-formitemcreator/lib/types';
+import type { ReactElement } from 'react';
+import { ColumnItemProps } from '@baifendian/adhere-ui-formitemcreator/lib/types';
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import { TableProps } from 'antd/lib/table';
 import { ListProps } from 'antd/lib/list';
 import { TooltipProps } from 'antd/lib/tooltip';
 /**
- * ITemplateProps
- * @interface ITemplateProps
+ * TableListProps
+ * @interface TableListProps
  */
-export interface ITableListProps<T> {
+export interface TableListProps<T> {
     className?: string;
     mode?: 'table' | 'list';
-    search?: ISearchProps;
-    toolbar?: IToolbarProps;
+    search?: SearchProps;
+    toolbar?: ToolbarProps;
     table?: ITableProps<T>;
     list?: ListProps<T>;
     request?: Function;
 }
 export interface ITableProps<RecordType> extends TableProps<RecordType> {
-    sortable?: boolean | ISortableProps;
+    sortable?: boolean | SortableProps;
     showNumber?: boolean | object;
 }
 export interface TSortTableProps<RecordType> extends TableProps<RecordType> {
-    sortable?: boolean | ISortableProps;
+    sortable?: boolean | SortableProps;
     [proName: string]: any;
 }
 /**
  * 搜索栏
  */
-export interface ISearchProps {
+export interface SearchProps {
     className?: string;
-    beforeContent?: string | number | React.ReactElement;
-    afterContent?: string | number | React.ReactElement;
-    columns?: IFormItemProps;
-    optionRender?: boolean | React.ReactElement;
+    beforeContent?: string | number | ReactElement;
+    afterContent?: string | number | ReactElement;
+    columns?: ColumnItemProps;
+    optionRender?: boolean | ReactElement;
     searchText?: string;
     resetText?: string;
     size?: SizeType;
 }
-export interface ISortableProps {
+export interface SortableProps {
     itemProps?: object;
     containerProps?: object;
 }
 /**
  * 工具栏
  */
-export interface IToolbarProps {
+export interface ToolbarProps {
     className?: string;
-    title?: string | React.ReactElement;
-    total?: boolean | string | React.ReactElement;
-    selectAll?: boolean | IToolbarSelectAllProps;
-    search?: IFormItemProps;
+    title?: string | ReactElement;
+    total?: boolean | string | ReactElement;
+    selectAll?: boolean | ToolbarSelectAllProps;
+    search?: ColumnItemProps;
     reload?: boolean | object;
     setting?: boolean | object;
-    toolbarOptionRender?: undefined | React.ReactElement;
+    toolbarOptionRender?: undefined | ReactElement;
 }
 /**
  * 工具栏-选中全部
  */
-export declare type IToolbarSelectAllProps = TooltipProps & {
+export declare type ToolbarSelectAllProps = TooltipProps & {
     total?: boolean;
 };

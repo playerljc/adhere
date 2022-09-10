@@ -1,12 +1,12 @@
 import React from 'react';
-import { ITableListProps } from './types';
+import { TableListProps } from './types';
 export declare const selectorPrefix = "adhere-ui-tablelist";
 /**
  * Template
  * @class Template
  * @classdesc Template
  */
-declare class TableList<RecordType extends object = any> extends React.Component<ITableListProps<RecordType>, any> {
+declare class TableList<RecordType extends object = any> extends React.Component<TableListProps<RecordType>, any> {
     static defaultProps: any;
     static propTypes: any;
     private readonly searchFormRef;
@@ -28,11 +28,11 @@ declare class TableList<RecordType extends object = any> extends React.Component
     onTableChange: any;
     SortableTableRef: any;
     constructor(props: any);
-    static getDerivedStateFromProps(nextProps: Readonly<ITableListProps<object>>, prevState: any): {
+    static getDerivedStateFromProps(nextProps: Readonly<TableListProps<object>>, prevState: any): {
         firstLoading: boolean;
     } | null;
     componentDidMount(): void;
-    shouldComponentUpdate(nextProps: ITableListProps<RecordType>, nextState: any): boolean;
+    shouldComponentUpdate(nextProps: TableListProps<RecordType>, nextState: any): boolean;
     /**
      * 渲染搜索
      */

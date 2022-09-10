@@ -1,11 +1,11 @@
-import React from 'react';
+import type { CSSProperties } from 'react';
 /**
- * IWritingBoardProps
- * @interface IWritingBoardProps
+ * WritingBoardProps
+ * @interface WritingBoardProps
  */
-export interface IWritingBoardProps {
+export interface WritingBoardProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     defaultMode: Mode;
     defaultStrokeStyle: string;
     defaultLineWidth: number;
@@ -14,7 +14,7 @@ export interface IWritingBoardProps {
 /**
  * IPoint
  */
-export interface IPoint {
+export interface Point {
     x: number;
     y: number;
 }

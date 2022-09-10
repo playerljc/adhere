@@ -1,21 +1,21 @@
-/// <reference types="react" />
+import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import { ITableGridLayoutProps, IDataItem, RenderDetail } from './types';
+import type { TableGridLayoutProps, DataItem, RenderDetail } from './types';
 /**
  * TableGridLayout
  * @param data
  * @param className
  * @param style
  * @param props
- * @return {JSX.Element}
+ * @return {ReactElement}
  * @constructor
  */
-declare function TableGridLayout({ data, className, style, ...props }: ITableGridLayoutProps): JSX.Element;
+declare function TableGridLayout({ data, className, style, ...props }: TableGridLayoutProps): ReactElement;
 declare namespace TableGridLayout {
     var Label: (props: any) => JSX.Element;
     var Value: (props: any) => JSX.Element;
-    var renderGridSearchFormGroup: (data: IDataItem[], props: Pick<ITableGridLayoutProps, "layout" | "density" | "parity" | "innerClassName" | "innerStyle" | "bordered">) => JSX.Element;
-    var getRenderDetail: (data: IDataItem[], props: Pick<ITableGridLayoutProps, "layout" | "density" | "parity" | "innerClassName" | "innerStyle" | "bordered">) => RenderDetail;
+    var renderGridSearchFormGroup: (data?: DataItem[] | undefined, props?: Pick<TableGridLayoutProps, "className" | "style" | "bordered" | "innerClassName" | "innerStyle" | "layout" | "density" | "parity"> | undefined) => JSX.Element;
+    var getRenderDetail: (data: DataItem[], props: Pick<TableGridLayoutProps, "className" | "style" | "bordered" | "innerClassName" | "innerStyle" | "layout" | "density" | "parity">) => RenderDetail;
     var defaultProps: {
         data: never[];
         layout: string;

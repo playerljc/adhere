@@ -17,7 +17,7 @@ import { cloneDeep } from 'lodash';
 import SortableTable from './sortabletable';
 import { ToolbarSelectAll, ToolbarReload, ToolbarSetting } from './tablelisttoolbar';
 import Util from './util';
-import { ITableListProps } from './types';
+import { TableListProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-tablelist';
 const defaultRowKey = 'id';
@@ -27,7 +27,7 @@ const defaultRowKey = 'id';
  * @classdesc Template
  */
 class TableList<RecordType extends object = any> extends React.Component<
-  ITableListProps<RecordType>,
+  TableListProps<RecordType>,
   any
 > {
   static defaultProps: any;
@@ -89,7 +89,7 @@ class TableList<RecordType extends object = any> extends React.Component<
     };
   }
 
-  static getDerivedStateFromProps(nextProps: Readonly<ITableListProps<object>>, prevState: any) {
+  static getDerivedStateFromProps(nextProps: Readonly<TableListProps<object>>, prevState: any) {
     const { dataSource } = nextProps[nextProps.mode || 'table'] || {};
     if (!nextProps.request && prevState?.firstLoading && dataSource) {
       return {
@@ -118,7 +118,7 @@ class TableList<RecordType extends object = any> extends React.Component<
     this.setState({ tableColumns: this.getTableColumns() });
   }
 
-  shouldComponentUpdate(nextProps: ITableListProps<RecordType>, nextState: any) {
+  shouldComponentUpdate(nextProps: TableListProps<RecordType>, nextState: any) {
     const nextModeProps = nextProps[nextProps.mode || 'table'] || {};
     const modeProps = this.getModeProps();
     if (

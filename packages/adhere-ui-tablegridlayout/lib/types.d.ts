@@ -1,56 +1,96 @@
-/// <reference types="react" />
+import type { CSSProperties, ReactElement } from 'react';
 /**
- * IDataItem
- * @interface IDataItem
+ * RowCountRef
  */
-export interface IDataItem {
+export interface RowCountRef {
+    current: number;
+}
+/**
+ * RenderHorizontal
+ */
+export interface RenderHorizontal {
+    (params: {
+        data: DataItem;
+        rowCountRef?: RowCountRef;
+    }): {
+        element: ReactElement[];
+        detail: GroupRenderDetail;
+    };
+}
+/**
+ * RenderVertical
+ */
+export interface RenderVertical {
+    (data: DataItem, rowCountRef: any): {
+        element: ReactElement[];
+        detail: GroupRenderDetail;
+    };
+}
+/**
+ * RenderGridSearchForm
+ */
+export interface RenderGridSearchForm {
+    (params: {
+        data: DataItem;
+        rowCountRef?: RowCountRef;
+        layout?: 'horizontal' | 'vertical';
+        density?: string;
+        parity?: boolean;
+    }): ReactElement;
+}
+/**
+ * DataItem
+ * @interface DataItem
+ */
+export interface DataItem {
     className?: string;
-    style?: object;
+    style?: CSSProperties;
     name?: string;
     width?: string | number;
     defaultLabelWidth?: number;
     padding?: string;
-    colgroup?: (number | 'auto' | undefined)[];
+    colgroup?: (number | 'auto')[];
     columnCount?: number;
-    data?: Array<{
+    data?: {
         key: string;
-        label: JSX.Element;
-        value: JSX.Element;
-    }>;
+        require?: boolean;
+        label: any;
+        value: any;
+    }[];
 }
 /**
- * ITableGridLayoutProps
- * @interface ITableGridLayoutProps
+ * TableGridLayoutProps
+ * @interface TableGridLayoutProps
  */
-export interface ITableGridLayoutProps {
-    className?: string;
-    style?: object;
-    innerClassName?: string;
-    innerStyle?: object;
+export interface TableGridLayoutProps {
     bordered?: boolean;
+    innerClassName?: string;
+    innerStyle?: CSSProperties;
+    data?: DataItem[];
+    className?: string;
+    style?: CSSProperties;
     layout: 'horizontal' | 'vertical';
-    density?: string | number;
+    density?: string;
     parity?: boolean;
-    data: IDataItem[];
 }
 /**
  * GroupDetail
  * @description 组的渲染细节
  */
-export declare type GroupRenderDetail = Array<{
+export declare type GroupRenderDetail = {
     startIndex: number;
     endIndex: number;
-}>;
+}[];
 /**
  * RenderDetail
  * @description 渲染细节
  */
-export declare type RenderDetail = {
+export interface RenderDetail {
     rowCount: number;
     layout: 'horizontal' | 'vertical';
-    detail: Array<{
+    detail: {
         name: string;
         rowCount: number;
         detail: GroupRenderDetail;
-    }>;
-};
+    }[];
+}

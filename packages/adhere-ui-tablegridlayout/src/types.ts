@@ -1,66 +1,110 @@
+import type { CSSProperties, ReactElement } from 'react';
+
 /**
- * IDataItem
- * @interface IDataItem
+ * RowCountRef
  */
-export interface IDataItem {
+export interface RowCountRef {
+  current: number;
+}
+
+/**
+ * RenderHorizontal
+ */
+export interface RenderHorizontal {
+  (params: { data: DataItem; rowCountRef?: RowCountRef }): {
+    element: ReactElement[];
+    detail: GroupRenderDetail;
+  };
+}
+
+/**
+ * RenderVertical
+ */
+export interface RenderVertical {
+  (data: DataItem, rowCountRef): {
+    element: ReactElement[];
+    detail: GroupRenderDetail;
+  };
+}
+
+/**
+ * RenderGridSearchForm
+ */
+export interface RenderGridSearchForm {
+  (params: {
+    data: DataItem;
+    rowCountRef?: RowCountRef;
+    layout?: 'horizontal' | 'vertical';
+    density?: string;
+    parity?: boolean;
+  }): ReactElement;
+}
+
+/**
+ * DataItem
+ * @interface DataItem
+ */
+export interface DataItem {
   className?: string;
-  style?: object;
+  style?: CSSProperties;
   name?: string;
   width?: string | number;
   defaultLabelWidth?: number;
   padding?: string;
-  colgroup?: (number | 'auto' | undefined)[];
+  colgroup?: (number | 'auto')[];
   columnCount?: number;
-  data?: Array<{
+  data?: {
     key: string;
-    label: JSX.Element;
-    value: JSX.Element;
-  }>;
+    require?: boolean;
+    label: any;
+    value: any;
+  }[];
 }
 
 /**
- * ITableGridLayoutProps
- * @interface ITableGridLayoutProps
+ * TableGridLayoutProps
+ * @interface TableGridLayoutProps
  */
-export interface ITableGridLayoutProps {
-  className?: string;
-  style?: object;
-  innerClassName?: string;
-  innerStyle?: object;
+export interface TableGridLayoutProps {
   bordered?: boolean;
+  innerClassName?: string;
+  innerStyle?: CSSProperties;
+  data?: DataItem[];
+  //
+  className?: string;
+  style?: CSSProperties;
   layout: 'horizontal' | 'vertical';
-  density?: string | number;
+  density?: string;
   parity?: boolean;
-  data: IDataItem[];
 }
 
 /**
  * GroupDetail
  * @description 组的渲染细节
  */
-export type GroupRenderDetail = Array<{
+export type GroupRenderDetail = {
   // 一行开始数据的索引
   startIndex: number;
   // 一行结束数据的索引
   endIndex: number;
-}>;
+}[];
 
 /**
  * RenderDetail
  * @description 渲染细节
  */
-export type RenderDetail = {
+export interface RenderDetail {
   // 总行数
   rowCount: number;
   // 渲染时候的布局
   layout: 'horizontal' | 'vertical';
   // 细节
-  detail: Array<{
+  detail: {
     // 组名称
     name: string;
     // 总行数
     rowCount: number;
     // 细节
     detail: GroupRenderDetail;
-  }>;
-};
+  }[];
+}

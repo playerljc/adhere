@@ -9,7 +9,7 @@ import React from 'react';
 import { Tooltip, Checkbox, Popover } from 'antd';
 import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import intl from '@baifendian/adhere-util-intl';
+import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from './tablelist';
 
@@ -30,7 +30,7 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
   }
 
   return (
-    <Tooltip title={intl.v('全选')} placement="top" {...selectAll}>
+    <Tooltip title={Intl.v('全选')} placement="top" {...selectAll}>
       {
         <Checkbox
           indeterminate={
@@ -46,7 +46,7 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
           }
           onChange={onChange}
         >
-          {selectAll.title || intl.v('全选')}
+          {selectAll.title || Intl.v('全选')}
         </Checkbox>
       }
     </Tooltip>
@@ -55,7 +55,7 @@ export const ToolbarSelectAll = ({ selectAll, rowSelection, rowKey, dataSource, 
 
 export const ToolbarReload = ({ reload, onSearch }) => {
   return (
-    <Tooltip title={intl.v('刷新')} placement="top" {...reload}>
+    <Tooltip title={Intl.v('刷新')} placement="top" {...reload}>
       {reload.render || <ReloadOutlined onClick={() => onSearch()} />}
     </Tooltip>
   );
@@ -82,7 +82,7 @@ export const ToolbarSetting = ({
           checked={selectedColumnKeys?.length === columns?.length}
           onChange={(e) => onChange(e.target.checked ? columns.map((v: any) => v.key) : [])}
         >
-          {intl.v('列展示')}
+          {Intl.v('列展示')}
         </Checkbox>
       </>
     );
@@ -128,7 +128,7 @@ export const ToolbarSetting = ({
       overlayClassName={`${selectorPrefix}-settingOverlay`}
       {...setting.Popover}
     >
-      <Tooltip title={intl.v('设置')} placement="top" {...setting}>
+      <Tooltip title={Intl.v('设置')} placement="top" {...setting}>
         {setting.render || <SettingOutlined type="setting" />}
       </Tooltip>
     </Popover>

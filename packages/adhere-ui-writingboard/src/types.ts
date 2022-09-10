@@ -1,12 +1,12 @@
-import React from 'react';
+import type { CSSProperties } from 'react';
 
 /**
- * IWritingBoardProps
- * @interface IWritingBoardProps
+ * WritingBoardProps
+ * @interface WritingBoardProps
  */
-export interface IWritingBoardProps {
+export interface WritingBoardProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   // 绘制模式
   defaultMode: Mode;
   // 线条颜色
@@ -20,7 +20,7 @@ export interface IWritingBoardProps {
 /**
  * IPoint
  */
-export interface IPoint {
+export interface Point {
   x: number;
   y: number;
 }
