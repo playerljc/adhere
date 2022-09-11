@@ -1,8 +1,9 @@
-import React, { createRef, RefObject } from 'react';
+import React, { createRef, ReactElement, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Table, Button } from 'antd';
-import {
+import type { TableProps } from 'antd/lib/table/Table';
+import type {
   ColumnType,
   FilterValue,
   SorterResult,
@@ -10,8 +11,6 @@ import {
   TablePaginationConfig,
   TableRowSelection,
 } from 'antd/lib/table/interface';
-
-// @ts-ignore
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
@@ -23,7 +22,7 @@ import ColumnResizable, {
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
 import TableDensitySetting from './Extension/TableDensitySetting';
-import { ISearchTableProps, ISearchTableState, TableDensity } from './types';
+import { SearchTableProps, SearchTableState, TableDensity, ColumnTypeExt } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
 
@@ -34,11 +33,10 @@ const { Fixed, Auto } = FlexLayout;
  * @class SearchTable
  * @classdesc SearchTable
  */
-// @ts-ignore
-abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState> {
-  static defaultProps: any;
-  static propTypes: any;
-
+abstract class SearchTable<
+  P extends SearchTableProps = SearchTableProps,
+  S extends SearchTableState = SearchTableState,
+> extends Suspense<P, S> {
   // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 序号生成的规则 - 连续模式
@@ -76,7 +74,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @description 表格序号列的宽度
    * @return number
    */
-  abstract getTableNumberColumnWidth(): Symbol;
+  abstract getTableNumberColumnWidth(): number;
 
   /**
    * getNumberGeneratorRule
@@ -88,7 +86,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * getRowSelectionMode
    * @description 获取全选的生模式
    */
-  abstract getRowSelectionMode(): string;
+  abstract getRowSelectionMode(): Symbol;
 
   /**
    * getRowKey
@@ -122,31 +120,31 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * renderSearchBefore
    * @description 渲染查询面板之前
    */
-  abstract renderSearchFormBefore(): React.ReactElement | null;
+  abstract renderSearchFormBefore(): ReactElement | null;
 
   /**
    * renderSearchForm
    * @description 渲染查询的UI
    */
-  abstract renderSearchForm(): React.ReactElement | null;
+  abstract renderSearchForm(): ReactElement | null;
 
   /**
    * renderSearchBefore
    * @description 渲染查询面板之后
    */
-  abstract renderSearchFormAfter(): React.ReactElement | null;
+  abstract renderSearchFormAfter(): ReactElement | null;
 
   /**
    * renderTableHeader
    * @description 渲染表格的头
    */
-  abstract renderTableHeader(): React.ReactElement | null;
+  abstract renderTableHeader(): ReactElement | null;
 
   /**
    * renderTableFooter
    * @description 渲染表格的脚
    */
-  abstract renderTableFooter(): React.ReactElement | null;
+  abstract renderTableFooter(): ReactElement | null;
 
   /**
    * getTotal
@@ -190,7 +188,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>,
     sorter: SorterResult<object> | SorterResult<object>[],
-    extra: TableCurrentDataSource<object>,
+    extra?: TableCurrentDataSource<object>,
   ): void;
 
   /**
@@ -203,9 +201,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * renderSearchFooterItems
    * @description 渲染SearchFooter的按钮组
    */
-  abstract renderSearchFooterItems(
-    defaultItems: Array<React.ReactElement>,
-  ): Array<React.ReactElement> | null;
+  abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
 
   /**
    * onSearch
@@ -213,7 +209,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    */
   abstract onSearch(): Promise<void>;
 
-  protected constructor(props) {
+  constructor(props) {
     super(props);
 
     // @ts-ignore
@@ -224,8 +220,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       scrollY: 0,
     };
 
-    this.state = {
-      ...this.state,
+    Object.assign(this.state, {
       // 列设置
       columnSetting: this.getTableColumns().map((column, index) => ({
         ...column,
@@ -233,14 +228,13 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         display: true,
       })),
       // 表格密度设置
-      // @ts-ignore
       tableDensity: this.getTableDensity(),
-    };
+    });
 
     this.onClear = this.onClear.bind(this);
   }
 
-  componentWillReceiveProps(nextProps: ISearchTableProps) {
+  componentWillReceiveProps(nextProps: SearchTableProps) {
     super.componentWillReceiveProps(nextProps);
 
     this.columnSettingEffect(nextProps);
@@ -257,7 +251,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * searchTableResizableEffectLayout
    * @protected
    */
-  protected searchTableResizableEffectLayout() {
+  searchTableResizableEffectLayout() {
     // 监控header的属性变化(colgroup)
     if (!this.columnObserver) {
       this.columnObserver = SearchTableResizableObserver(this);
@@ -268,19 +262,15 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * fixedHeaderAutoTableEffectLayout
    * @protected
    */
-  protected fixedHeaderAutoTableEffectLayout(prevProps, prevState) {
-    // @ts-ignore
+  fixedHeaderAutoTableEffectLayout(prevProps, prevState) {
     if (this.props.fixedHeaderAutoTable) {
       const dataSource = this.getData();
 
       if (
         dataSource &&
         dataSource.length &&
-        // @ts-ignore
         ((prevState.scrollY === 0 && this.state.scrollY === 0) ||
-          // @ts-ignore
           prevState.scrollY !== this.state.scrollY ||
-          // @ts-ignore
           prevState.expand !== this.state.expand)
       ) {
         const tableWrapRef = this.tableWrapRef.current as HTMLElement;
@@ -291,9 +281,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         const tablePaginationHeight =
           (tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement)?.offsetHeight || 0;
 
-        // @ts-ignore
         this.setState({
-          // @ts-ignore
           scrollY:
             tableWrapRef.clientHeight -
             (tableHeaderHeight + (tablePaginationHeight ? tablePaginationHeight + 16 * 2 : 0)),
@@ -307,8 +295,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @param props
    * @protected
    */
-  protected columnSettingEffect(props: ISearchTableProps) {
-    // @ts-ignore
+  columnSettingEffect(props: SearchTableProps) {
     const preColumnSetting = this.state.columnSetting || [];
     const columnSetting = this.getTableColumns().map((column, index) => ({
       ...column,
@@ -317,9 +304,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     }));
 
     // 长度不相等
-    // @ts-ignore
-    if (preColumnSetting.length !== columnSetting) {
-      // @ts-ignore
+    if (preColumnSetting?.length !== columnSetting.length) {
       this.setState({
         columnSetting,
       });
@@ -327,18 +312,14 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       return;
     }
 
-    // @ts-ignore
     const preColumnSettingRowKeys = preColumnSetting?.map?.((t) => t[this.getRowKey()]);
-    // @ts-ignore
     const columnSettingRowKeys = columnSetting?.map?.((t) => t[this.getRowKey()]);
 
     // 长度相等但是key有变化
-    if (preColumnSettingRowKeys.toString() !== columnSettingRowKeys.toString()) {
+    if (preColumnSettingRowKeys?.toString() !== columnSettingRowKeys.toString()) {
       const rowKey = this.getRowKey() || 'id';
 
-      // @ts-ignore
       this.setState({
-        // @ts-ignore
         columnSetting: columnSetting?.map((t) => {
           const item = preColumnSetting?.find((item) => item[rowKey] === t[rowKey]);
 
@@ -358,7 +339,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @param params
    * @protected
    */
-  protected renderTableNumberColumn(
+  renderTableNumberColumn(
     number: string = '',
     params: { value: any; record: object; index: number },
   ) {
@@ -369,52 +350,47 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * getLimit
    * @description limit参数
    */
-  protected getLimit(): number {
+  getLimit(): number {
     return 10;
   }
 
   /**
    * getPagination - 获取分页信息
    */
-  protected getPagination() {
+  getPagination() {
     return {
       onChange: (page, limit) => {
-        // @ts-ignore
         this.setState(
           {
             page,
             limit,
           },
           () => {
-            // @ts-ignore
             this.fetchData();
           },
         );
       },
       onShowSizeChange: (page, limit) => {
-        // @ts-ignore
         this.setState(
           {
             page,
             limit,
           },
           () => {
-            // @ts-ignore
             this.fetchData();
           },
         );
       },
       total: this.getTotal(),
-      // @ts-ignore
+
       current: this.state.page,
-      // @ts-ignore
+
       pageSize: this.state.limit,
       showQuickJumper: true,
       showTotal: (total /* [page, pageSize] */) => {
         return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
-          // @ts-ignore
           page: this.state.page,
-          // @ts-ignore
+
           pageSize: this.state.limit,
           total,
         });
@@ -427,21 +403,20 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @description 查询面板展开之前
    * @protected
    */
-  protected onSearchPanelCollapseBefore() {}
+  onSearchPanelCollapseBefore() {}
 
   /**
    * onSearchPanelCollapseAfter
    * @description 查询面板展开之后
    * @protected
    */
-  protected onSearchPanelCollapseAfter() {}
+  onSearchPanelCollapseAfter() {}
 
   /**
    * onTableChange - 表格change
    */
-  protected onTableChange = (pagination, filters, sorter) => {
+  onTableChange = (pagination, filters, sorter) => {
     this.setState(
-      // @ts-ignore
       {
         [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
         [this.getOrderProp()]: sorter.order || this.getOrderPropValue(),
@@ -453,7 +428,6 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
         this.fetchData();
 
-        // @ts-ignore
         this.onSubTableChange(pagination, filters, sorter);
       },
     );
@@ -462,7 +436,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
   /**
    * onClear - 清除操作
    */
-  protected onClear(): Promise<void> {
+  onClear(): Promise<void> {
     return new Promise((resolve) => {
       this.setState(
         {
@@ -487,7 +461,9 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @param columnName
    * @return {*}
    */
-  protected sortOrder(columnName: string): string {
+  sortOrder(columnName: string): string {
+    if (!this.state) return '';
+
     return this.state[this.getOrderFieldProp()] === columnName
       ? this.state[this.getOrderProp()]
       : '';
@@ -497,7 +473,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * getTableDensity
    * @description 表格密度
    */
-  protected getTableDensity() {
+  getTableDensity() {
     return TableDensity.DEFAULT;
   }
 
@@ -505,23 +481,21 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * getTableColumns - 获取表格的列数据
    * @return Array<any>
    */
-  protected getTableColumns(): Array<any> {
+  getTableColumns(): any[] {
     const isShowNumber = this.isShowNumber();
     const getTableNumberColumnWidth = this.getTableNumberColumnWidth();
 
     // 对权限进行过滤
     const columns = this.getColumns()
-      .filter((column) => {
+      .filter((column: ColumnTypeExt) => {
         if ('authorized' in column) {
-          // @ts-ignore
-          return column.authorized();
+          return column?.authorized?.() as boolean;
         }
 
         return true;
       })
-      .map((column, index) => {
-        // @ts-ignore
-        if ('resizable' in column && !!column.resizable) {
+      .map((column: ColumnTypeExt, index) => {
+        if ('resizable' in column && !!column?.resizable) {
           return this.columnResizable.searchTableResizableColumnItem(this, index, column);
         }
 
@@ -532,7 +506,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       const numberGeneratorRule =
         this.getNumberGeneratorRule() ?? SearchTable.NUMBER_GENERATOR_RULE_ALONE;
 
-      const { page, limit } = this.state;
+      const { page = 0, limit = 10 } = this.state;
 
       return [
         {
@@ -556,7 +530,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
             </ConditionalRender>
           ),
         },
-      ].concat(columns as Array<any>);
+      ].concat(columns as any[]);
     }
 
     return columns;
@@ -566,8 +540,8 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * renderColumnSetting
    * @description 创建列设置组件
    */
-  renderColumnSetting(): React.ReactElement {
-    const columns = [...this.state.columnSetting];
+  renderColumnSetting(): ReactElement {
+    const columns = [...(this.state.columnSetting as Array<any>)];
 
     columns.sort((c1, c2) => {
       if (c1.sort > c2.sort) return 1;
@@ -580,7 +554,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         columns={columns}
         onShowColumns={(checked) => {
           this.setState(({ columnSetting }) => ({
-            columnSetting: columnSetting.map((column) => ({
+            columnSetting: (columnSetting || [])?.map((column) => ({
               ...column,
               display: checked,
             })),
@@ -597,7 +571,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         }}
         onDisplayColumn={(column, checked) => {
           this.setState(({ columnSetting }) => ({
-            columnSetting: columnSetting.map((_column) => ({
+            columnSetting: (columnSetting || [])?.map((_column) => ({
               ..._column,
               display: _column.key === column.key ? checked : _column.display,
             })),
@@ -605,7 +579,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         }}
         onSortEnd={(map) => {
           this.setState(({ columnSetting }) => ({
-            columnSetting: columnSetting.map((column) => ({
+            columnSetting: (columnSetting || [])?.map((column) => ({
               ...column,
               sort: map.get(column.key),
             })),
@@ -619,20 +593,17 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * renderTableDensitySetting
    * @description 表格密度设置
    */
-  renderTableDensitySetting(): React.ReactElement {
+  renderTableDensitySetting(): ReactElement {
     return (
       <TableDensitySetting
-        // @ts-ignore
         density={this.state.tableDensity}
         onChange={(density) => {
           this.setState({
-            // @ts-ignore
             tableDensity: density,
           });
         }}
         onReset={() => {
           this.setState({
-            // @ts-ignore
             tableDensity: this.getTableDensity(),
           });
         }}
@@ -642,9 +613,9 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
   /**
    * renderSearchFooter - 渲染查询工具栏
-   * @return React.ReactElement
+   * @return ReactElement
    */
-  protected renderSearchFooter(): React.ReactElement {
+  renderSearchFooter(): ReactElement {
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
@@ -681,7 +652,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     if (isShowExpandSearch) {
       defaultItems.push(
         <ConditionalRender
-          conditional={this.state.expand}
+          conditional={this.state.expand as boolean}
           noMatch={() => (
             <a
               key="expand"
@@ -743,15 +714,10 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * @description - 认选表格体
    * @protected
    */
-  protected renderTable() {
-    const {
-      antdTableProps,
-      fixedHeaderAutoTable,
-      // @ts-ignore
-    } = this.props;
+  renderTable() {
+    const { antdTableProps, fixedHeaderAutoTable } = this.props;
 
-    // @ts-ignore
-    const { columnSetting, tableDensity } = this.state;
+    const { columnSetting = [], tableDensity } = this.state;
 
     const columns = this.getTableColumns()
       .map((column, index) => ({
@@ -767,7 +733,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
     });
 
     // Table的antdProps配置
-    const tableProps = {
+    const tableProps: TableProps<any> = {
       rowKey: this.getRowKey(),
       dataSource: this.getData(),
       columns,
@@ -781,20 +747,15 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
     // 是否支持锁定列头，表格体滚动
     if (fixedHeaderAutoTable) {
-      // @ts-ignore
       const { scrollY } = this.state;
 
       if (antdTableProps) {
-        // @ts-ignore
         if (antdTableProps.scroll) {
-          // @ts-ignore
-          tableProps.scroll.y = scrollY;
+          (tableProps as any).scroll.y = scrollY;
         } else {
-          // @ts-ignore
           tableProps.scroll = { y: scrollY };
         }
       } else {
-        // @ts-ignore
         tableProps.scroll = { y: scrollY };
       }
     }
@@ -804,9 +765,9 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
 
   /**
    * renderInner - 渲染SearchTable
-   * @return React.ReactElement | null
+   * @return ReactElement | null
    */
-  protected renderInner(): React.ReactElement | null {
+  renderInner(): ReactElement | null {
     const {
       className,
       style,
@@ -818,32 +779,25 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
       fitTable,
       autoFixed,
       fixedTableSpaceBetween,
-      // @ts-ignore
     } = this.props;
 
-    // @ts-ignore
-    const { expand } = this.state;
+    const { expand = false } = this.state;
 
     return (
-      // @ts-ignore
       <FlexLayout
         direction="vertical"
         className={classNames(
           selectorPrefix,
           fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
-          ...(className || '').split(/\s+/),
+          className || '',
         )}
         style={{ ...(style || {}) }}
       >
         <Fixed
-          className={classNames(
-            `${selectorPrefix}-searchwrapper`,
-            ...(searchClassName || '').split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName || '')}
           style={{ ...(searchStyle || {}) }}
           fit={fitSearch}
         >
-          {/*@ts-ignore*/}
           <FlexLayout direction="vertical">
             <ConditionalRender conditional={!!this.renderSearchFormBefore}>
               {() => <Fixed>{this.renderSearchFormBefore()}</Fixed>}
@@ -867,7 +821,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
         <Auto
           className={classNames(
             `${selectorPrefix}-autowrapper`,
-            ...(tableClassName || '').split(/\s+/),
+            tableClassName || '',
             autoFixed ? 'autofixed' : '',
           )}
           style={{ ...(tableStyle || {}) }}
@@ -889,7 +843,7 @@ abstract class SearchTable extends Suspense<ISearchTableProps, ISearchTableState
    * render
    * @protected
    */
-  protected render(): JSX.Element {
+  render(): ReactElement {
     return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
   }
 }

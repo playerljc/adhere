@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Skeleton, Spin } from 'antd';
 
-import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
+import { ISuspense, SuspenseProps, SuspenseState } from './types';
 
 const selectorPrefix = 'adhere-ui-suspense';
 
@@ -17,8 +17,11 @@ const selectorPrefix = 'adhere-ui-suspense';
  * renderInner
  * showLoading
  */
-abstract class Suspense<T extends ISuspenseProps, P extends ISuspenseState>
-  extends React.Component<T, P>
+abstract class Suspense<
+    P extends SuspenseProps = SuspenseProps,
+    S extends SuspenseState = SuspenseState,
+  >
+  extends React.Component<P, S>
   implements ISuspense
 {
   // 第一次

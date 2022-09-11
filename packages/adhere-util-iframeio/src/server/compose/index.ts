@@ -46,11 +46,8 @@ function Compose(middleWares: MiddleWare[]) {
         index++;
 
         // 调用中间件方法
-        middleWareQueueResults[index] = middleWares[index](
-          ctx,
-          // @ts-ignore
-          () => loop(),
-        );
+        // @ts-ignore
+        middleWareQueueResults[index] = middleWares[index](ctx, () => loop());
 
         return middleWareQueueResults[index];
       };

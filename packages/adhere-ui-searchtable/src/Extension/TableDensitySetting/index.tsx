@@ -17,10 +17,8 @@ function TableDensitySetting(props) {
     <Popover
       content={<Setting {...props} />}
       placement="bottomRight"
-      // @ts-ignore
       trigger="click"
-      // @ts-ignore
-      getPopupContainer={(el) => el.parentElement}
+      getPopupContainer={(el) => el.parentElement as HTMLElement}
     >
       <a>
         <img

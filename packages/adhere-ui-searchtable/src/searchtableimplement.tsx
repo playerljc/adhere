@@ -1,15 +1,19 @@
-import React, { createRef, RefObject } from 'react';
+import React, { createRef, RefObject, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import {
-  // ColumnType,
-  // FilterValue,
-  // SorterResult,
-  // TableCurrentDataSource,
-  // TablePaginationConfig,
+  ColumnType,
+  FilterValue,
+  SorterResult,
+  TableCurrentDataSource,
+  TablePaginationConfig,
   TableRowSelection,
 } from 'antd/lib/table/interface';
 
-import { ISearchTableImplementProps } from './types';
+import {
+  SearchTableImplementProps,
+  SearchTableImplementState,
+  ISearchTableImplement,
+} from './types';
 import SearchTable, { defaultProps, propTypes } from './searchtable';
 
 const selectorPrefix = 'adhere-ui-searchtableimplement';
@@ -19,14 +23,15 @@ const selectorPrefix = 'adhere-ui-searchtableimplement';
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
-// @ts-ignore
-class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> {
-  protected innerWrapRef: RefObject<HTMLDivElement> = createRef();
+class SearchTableImplement
+  extends SearchTable<SearchTableImplementProps, SearchTableImplementState>
+  implements ISearchTableImplement
+{
+  innerWrapRef: RefObject<HTMLDivElement> = createRef();
 
   constructor(props) {
     super(props);
 
-    // @ts-ignore
     Object.assign(this.state, {
       ...this.getParams(),
       [this.getOrderFieldProp()]: this.getOrderFieldValue(),
@@ -40,10 +45,9 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
     });
   }
 
-  protected componentDidMount() {
+  componentDidMount() {
     super.componentDidMount();
 
-    // @ts-ignore
     const { getTableWrapperInstance } = this.props;
 
     if (getTableWrapperInstance) {
@@ -56,7 +60,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 获取调用列表接口的函数名
    */
-  protected getFetchListPropName(): string {
+  getFetchListPropName(): string {
     return '';
   }
 
@@ -66,7 +70,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取调用列表接口的函数名首字母大写
    * @return string
    */
-  protected getFetchListPropNameToFirstUpper(): string {
+  getFetchListPropNameToFirstUpper(): string {
     const fetchListPropName = this.getFetchListPropName();
 
     if (fetchListPropName.length > 1) {
@@ -83,8 +87,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @param property
    * @param v
    */
-  protected onSelectChange = (property: string, v: string): void => {
-    // @ts-ignore
+  onSelectChange = (property: string, v: string): void => {
     this.setState({
       [property]: v,
     });
@@ -96,8 +99,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @param property
    * @param e
    */
-  protected onInputChange = (property: string, e): void => {
-    // @ts-ignore
+  onInputChange = (property: string, e): void => {
     this.setState({
       [property]: e.target.value.trim(),
     });
@@ -109,8 +111,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @param propertys
    * @param moments
    */
-  protected onDateTimeRangeChange = (propertys: Array<string>, moments: Array<any>) => {
-    // @ts-ignore
+  onDateTimeRangeChange = (propertys: Array<string>, moments: Array<any>) => {
     this.setState({
       [propertys[0]]: moments && moments.length ? moments[0] : null,
       [propertys[1]]: moments && moments.length ? moments[1] : null,
@@ -124,7 +125,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 获取查询参数对象
    */
-  protected getParams(): object {
+  getParams(): object {
     return {};
   }
 
@@ -133,7 +134,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 获取接口服务的model名称
    */
-  protected getServiceName(): string {
+  getServiceName(): string {
     return '';
   }
 
@@ -142,7 +143,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 获取调用数据接口的参数
    */
-  protected getFetchDataParams(): object {
+  getFetchDataParams(): object {
     return {};
   }
 
@@ -152,7 +153,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @return {boolean}
    */
-  protected isShowNumber(): boolean {
+  isShowNumber(): boolean {
     return true;
   }
 
@@ -161,7 +162,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 表格序号列的生成规则
    */
-  protected getNumberGeneratorRule(): Symbol {
+  getNumberGeneratorRule(): Symbol {
     return SearchTable.NUMBER_GENERATOR_RULE_CONTINUITY;
   }
 
@@ -169,7 +170,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * getNumberGeneratorRule
    * @description 获取符号列的生成规则
    */
-  protected getRowSelectionMode(): Symbol {
+  getRowSelectionMode(): Symbol {
     return SearchTable.ROW_SELECTION_NORMAL_MODE;
   }
 
@@ -178,7 +179,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 表格序号列的宽度
    */
-  protected getTableNumberColumnWidth(): number {
+  getTableNumberColumnWidth(): number {
     return 80;
   }
 
@@ -187,7 +188,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 数据的主键
    */
-  protected getRowKey(): string {
+  getRowKey(): string {
     return 'id';
   }
 
@@ -196,7 +197,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取数据的key
    * @protected
    */
-  protected getDataKey(): string {
+  getDataKey(): string {
     return 'list';
   }
 
@@ -205,7 +206,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取total的key
    * @protected
    */
-  protected getTotalKey(): string {
+  getTotalKey(): string {
     return 'totalCount';
   }
 
@@ -215,8 +216,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @return {Array}
    */
-  protected getData(): Array<object> {
-    // @ts-ignore
+  getData(): Array<object> {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
   }
 
@@ -225,8 +225,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - Table数据的总条数
    * @override
    */
-  protected getTotal(): number {
-    // @ts-ignore
+  getTotal(): number {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
   }
 
@@ -235,45 +234,42 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 获取表格行选择对象
    */
-  protected getRowSelection(): TableRowSelection<object> {
-    const self = this;
-
-    function filter(this: any, selected: boolean, records: Array<any>): void {
-      const rowKey = self.getRowKey();
+  getRowSelection(): TableRowSelection<object> {
+    const filter = (selected: boolean, records: Array<any>): void => {
+      const rowKey = this.getRowKey();
 
       if (selected) {
         // add
-        // @ts-ignore
-        self.setState({
-          // @ts-ignore
-          selectedRowKeys: [...self.state.selectedRowKeys, ...records.map((r) => r[rowKey])],
-          // @ts-ignore
-          selectedRows: [...self.state.selectedRows, ...records],
+
+        this.setState({
+          selectedRowKeys: [
+            ...(this.state.selectedRowKeys || []),
+            ...records.map((r) => r[rowKey]),
+          ],
+          selectedRows: [...(this.state.selectedRowKeys || []), ...records],
         });
       } else {
         // remove
-        // @ts-ignore
-        self.setState({
-          // @ts-ignore
-          selectedRows: self.state.selectedRows.filter(
+
+        this.setState({
+          selectedRows: (this.state.selectedRows || []).filter(
             (row) => !records.find((r) => r[rowKey] === row[rowKey]),
           ),
-          // @ts-ignore
-          selectedRowKeys: self.state.selectedRowKeys.filter(
+
+          selectedRowKeys: (this.state.selectedRowKeys || []).filter(
             (key) => !records.find((r) => r[rowKey] === key),
           ),
         });
       }
-    }
+    };
 
     return {
-      // @ts-ignore
       selectedRowKeys: this.state.selectedRowKeys,
       onChange: (selectedRowKeys: Array<any>, selectedRows: Array<any>) => {
         if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
 
         // 如果是缺省模式(不能跨页选取)
-        // @ts-ignore
+
         this.setState({
           selectedRowKeys,
           selectedRows,
@@ -297,7 +293,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 渲染Table查询的表单
    */
-  protected renderSearchForm(): React.ReactElement | null {
+  renderSearchForm(): ReactElement | null {
     return null;
   }
 
@@ -306,7 +302,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @description - 渲染主体
    */
-  protected renderInner(): React.ReactElement | null {
+  renderInner(): ReactElement | null {
     const innerJSX = super.renderInner();
     return (
       <div ref={this.innerWrapRef} className={`${selectorPrefix}-tablewrapper`}>
@@ -320,7 +316,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取排序字段
    * @override
    */
-  protected getOrderFieldProp(): string {
+  getOrderFieldProp(): string {
     return 'orderField';
   }
 
@@ -330,7 +326,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @override
    * @protected
    */
-  protected getOrderFieldValue(): string {
+  getOrderFieldValue(): string {
     return '';
   }
 
@@ -338,7 +334,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * getOrderProp
    * @description - 获取排序方式
    */
-  protected getOrderProp(): string {
+  getOrderProp(): string {
     return 'order';
   }
 
@@ -348,7 +344,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取默认排序方式
    * @protected
    */
-  protected getOrderPropValue(): 'descend' | 'ascend' {
+  getOrderPropValue(): 'descend' | 'ascend' {
     return 'descend';
   }
 
@@ -357,9 +353,8 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 清空查询条件
    * @override
    */
-  protected clear(): Promise<void> {
+  clear(): Promise<void> {
     return new Promise((resolve) => {
-      // @ts-ignore
       this.setState(
         {
           ...this.getParams(),
@@ -384,7 +379,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 渲染表格的工具栏
    * @override
    */
-  protected renderSearchFooterItems(): Array<any> {
+  renderSearchFooterItems(): Array<any> {
     return [];
   }
 
@@ -393,8 +388,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 是否显示遮罩
    * @override
    */
-  protected showLoading(): boolean {
-    // @ts-ignore
+  showLoading(): boolean {
     return this.props.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
@@ -403,11 +397,9 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 获取查询参数
    * @protected
    */
-  protected getSearchParams(): any {
-    // @ts-ignore
+  getSearchParams(): any {
     const { page, limit, searchParams } = this.state;
 
-    // @ts-ignore
     const order = this.state[this.getOrderProp()];
 
     return {
@@ -416,7 +408,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
         limit,
         ...searchParams,
         [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
-        // @ts-ignore
+
         [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
       },
@@ -428,7 +420,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 加载数据
    * @override
    */
-  protected fetchData(): Promise<any> {
+  fetchData(): Promise<any> {
     return this.fetchDataExecute(this.getSearchParams());
   }
 
@@ -438,8 +430,7 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @param searchParams
    * @protected
    */
-  protected fetchDataExecute(searchParams: object): Promise<any> {
-    // @ts-ignore
+  fetchDataExecute(searchParams: object): Promise<any> {
     return this.props[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
@@ -450,23 +441,21 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
    * @description - 点击查询
    * @override
    */
-  protected onSearch(): Promise<void> {
+  onSearch(): Promise<void> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
-      // @ts-ignore
       params[key] = this.state[key];
     });
 
     return new Promise((resolve) => {
-      // @ts-ignore
       this.setState(
         {
           searchParams: {
             ...params,
-            // @ts-ignore
+
             [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
-            // @ts-ignore
+
             [this.getOrderProp()]: this.state[this.getOrderProp()],
           },
         },
@@ -477,6 +466,33 @@ class SearchTableImplement extends SearchTable<ISearchTableImplementProps, any> 
         },
       );
     });
+  }
+
+  getColumns(): Array<ColumnType<object>> {
+    return [];
+  }
+
+  onSubTableChange(
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<object> | SorterResult<object>[],
+    extra?: TableCurrentDataSource<object> | undefined,
+  ): void {}
+
+  renderSearchFormAfter(): ReactElement | null {
+    return null;
+  }
+
+  renderSearchFormBefore(): ReactElement | null {
+    return null;
+  }
+
+  renderTableFooter(): ReactElement | null {
+    return null;
+  }
+
+  renderTableHeader(): ReactElement | null {
+    return null;
   }
 }
 
@@ -489,5 +505,4 @@ SearchTableImplement.propTypes = {
   getTableWrapperInstance: PropTypes.func,
 };
 
-// @ts-ignore
 export default SearchTableImplement;

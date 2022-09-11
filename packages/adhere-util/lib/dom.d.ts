@@ -47,7 +47,7 @@ declare const _default: {
      * @param type
      * @param handler
      */
-    off(el: Element, tag: string, type: string, handler: Function): void;
+    off(el: HTMLElement, tag: string, type: string, handler: Function): void;
     /**
      * addClass
      * @param {HTMLElement} el

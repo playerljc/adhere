@@ -284,15 +284,12 @@ export default {
       arr.forEach((t) => {
         const tops = this.getAncestor(data, t, config);
         const tArr = [...(tops || [])].map((item) => item[config.keyAttr]);
-        // @ts-ignore
         set = new Set<string>([...Array.from(set), ...tArr]);
       });
 
-      // @ts-ignore
       set = new Set<string>([...Array.from(set), ...arr.map((t) => t[config.keyAttr])]);
 
       return this.arrayToAntdTree(
-        // @ts-ignore
         [...Array.from(set)].map((t) => data.find((item) => item[config.keyAttr] === t)),
         arrayToAntdTreeConfig,
       );
@@ -316,8 +313,11 @@ export default {
           result = data[i];
           break;
         } else {
-          // @ts-ignore
-          if ('children' in data[i] && Array.isArray(data[i].children) && data[i].children.length) {
+          if (
+            'children' in data[i] &&
+            Array.isArray(data[i].children) &&
+            data[i]?.children?.length
+          ) {
             // @ts-ignore
             result = findLoop(data[i].children);
             if (result) break;

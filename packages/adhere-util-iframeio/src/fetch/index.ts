@@ -47,7 +47,7 @@ class Fetch {
         body: options?.data,
       });
 
-      const onMessage = (evt: MessageEvent) => {
+      const onMessage = (evt) => {
         const response = new Response(evt.data);
         response.setRequestId(evt.data.requestId);
 
@@ -59,7 +59,6 @@ class Fetch {
           return;
         }
 
-        // @ts-ignore
         this.source.removeEventListener('message', onMessage);
 
         if (response.getStatusCode() === 500) {
@@ -70,7 +69,6 @@ class Fetch {
         resolve(response);
       };
 
-      // @ts-ignore
       this.source.addEventListener('message', onMessage);
 
       // @ts-ignore

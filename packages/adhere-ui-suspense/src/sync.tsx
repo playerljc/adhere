@@ -4,25 +4,21 @@ import { Empty } from 'antd';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import Suspense from './suspense';
-import { ISuspenseSyncProps, ISuspenseSyncState, ISuspenseSync } from './types';
+import { SuspenseSyncProps, SuspenseSyncState, ISuspenseSync } from './types';
 
 /**
  * SuspenseSync
  * @class
  * @classdesc 传数据
  */
-// @ts-ignore
-class SuspenseSync
-  extends Suspense<ISuspenseSyncProps, ISuspenseSyncState>
-  implements ISuspenseSync
-{
+class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implements ISuspenseSync {
   state = {
     loading: true,
   };
 
   isLoading = true;
 
-  protected componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { data } = this.props;
 
     if (this.isLoading && JSON.stringify(nextProps.data || []) !== JSON.stringify(data || [])) {
@@ -56,11 +52,11 @@ class SuspenseSync
     });
   }
 
-  protected showLoading(): boolean {
+  showLoading(): boolean {
     return this.state.loading;
   }
 
-  protected renderInner(): React.ReactElement | null {
+  renderInner(): React.ReactElement | null {
     const { isEmpty, renderEmpty, children } = this.props;
 
     return (
@@ -73,7 +69,7 @@ class SuspenseSync
     );
   }
 
-  protected fetchData(): void {}
+  fetchData(): void {}
 }
 
 SuspenseSync.defaultProps = {};

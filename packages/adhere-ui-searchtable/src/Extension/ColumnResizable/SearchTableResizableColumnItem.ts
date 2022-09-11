@@ -11,12 +11,10 @@ function handleResize(context, column, columnsWidth) {
     // 当拖动header的column时
     columnsWidth.set(column.key, size);
 
-    // @ts-ignore
     context.forceUpdate();
   };
 }
 
-// @ts-ignore
 export default ({
   columnsWidth,
   context,
@@ -44,26 +42,17 @@ export default ({
   }
 
   let computedWidth =
-    // @ts-ignore
     colEls && colEls.length > spanCount ? colEls?.[spanCount + index]?.style?.width : null;
 
   if (computedWidth) {
     computedWidth = parseInt(computedWidth);
   }
 
-  // @ts-ignore
   const columnSizeItem = columnsWidth.get(column.key as string);
 
-  const width = columnSizeItem
-    ? columnSizeItem.width
-    : // @ts-ignore
-    column.width
-    ? // @ts-ignore
-      column.width
-    : computedWidth;
+  const width = columnSizeItem ? columnSizeItem.width : column.width ? column.width : computedWidth;
 
   return {
-    // @ts-ignore
     ...column,
     width,
     // 加入onHeaderCell

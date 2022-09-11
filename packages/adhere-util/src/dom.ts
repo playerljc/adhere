@@ -111,7 +111,7 @@ export default {
    * @param type
    * @param handler
    */
-  off(el: Element, tag: string, type: string, handler: Function) {
+  off(el: HTMLElement, tag: string, type: string, handler: Function) {
     if (tag && type && handler) {
       const value = eventListenerHandlers.get(el);
       if (value && value[tag] && value[tag][type]) {
@@ -197,8 +197,7 @@ export default {
   prepend(el, children) {
     let childrenEl;
     if (children instanceof String) {
-      // @ts-ignore
-      childrenEl = this.createElement(children);
+      childrenEl = this.createElement(children as string);
     } else {
       childrenEl = children;
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover /*Dropdown*/ } from 'antd';
+import { Popover } from 'antd';
 
 import Setting from './setting';
 
@@ -15,10 +15,8 @@ function ColumnSetting(props) {
     <Popover
       content={<Setting {...props} />}
       placement="bottomRight"
-      // @ts-ignore
       trigger="click"
-      // @ts-ignore
-      getPopupContainer={(el) => el.parentElement}
+      getPopupContainer={(el) => el.parentElement as HTMLElement}
     >
       <a>
         <img

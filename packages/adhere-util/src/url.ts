@@ -19,7 +19,7 @@ const methods = {
    * @return object
    */
   parse(path?: string, config: IUrlConfig = { ...defaultConfig }): object | null {
-    if(typeof window === 'undefined') return null;
+    if (typeof window === 'undefined') return null;
 
     let href = window.location.search;
 
@@ -62,22 +62,16 @@ const methods = {
   stringify(record: object, config: IUrlConfig = { ...defaultConfig }): string {
     const keys = Object.keys(record || {});
 
-    const getStr = [];
+    const getStr: string[] = [];
 
     keys.forEach((key) => {
       const value = config.isEncode ? window.encodeURIComponent(record[key]) : record[key];
 
       if (!config.ignoreInvalid) {
-        getStr.push(
-          // @ts-ignore
-          `${key.trim()}=${value?.trim()}`,
-        );
+        getStr.push(`${key.trim()}=${value?.trim()}`);
       } else {
         if (!['undefined', ''].includes(value)) {
-          getStr.push(
-            // @ts-ignore
-            `${key.trim()}=${value.trim()}`,
-          );
+          getStr.push(`${key.trim()}=${value.trim()}`);
         }
       }
     });

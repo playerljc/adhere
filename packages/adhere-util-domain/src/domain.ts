@@ -1,4 +1,3 @@
-// @ts-ignore
 import EventEmitter from 'events';
 
 import { IDomain } from './types';
@@ -14,7 +13,6 @@ class Domain extends EventEmitter implements IDomain {
    * @param e
    */
   protected emitError(e): void {
-    // @ts-ignore
     this.emit('error', e);
   }
 
@@ -52,7 +50,6 @@ class Domain extends EventEmitter implements IDomain {
    * @return IDomain
    */
   dispose(): IDomain {
-    // @ts-ignore
     this.removeAllListeners();
     return this;
   }
