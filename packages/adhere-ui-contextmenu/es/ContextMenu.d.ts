@@ -1,4 +1,4 @@
-import { IData, IConfig } from './types';
+import type { MenuData, Config } from './types';
 declare const ContextMenu: {
     /**
      * config
@@ -22,7 +22,7 @@ declare const ContextMenu: {
      * @param data
      * @param config
      */
-    open(data: IData, config: IConfig): HTMLDivElement;
+    open(data: MenuData[], config: Config): HTMLDivElement;
     close(el: any): void;
 };
 export default ContextMenu;

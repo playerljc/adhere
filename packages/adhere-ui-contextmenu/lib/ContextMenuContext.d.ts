@@ -1,9 +1,6 @@
 import React from 'react';
+import { ContextMenuContext } from './types';
 /**
  * ProviderContext
- * @type {React.Context<{config: {}}>}
  */
-export declare const ProviderContext: React.Context<{
-    config: {};
-    el: null;
-}>;
+export declare const ProviderContext: React.Context<ContextMenuContext>;
