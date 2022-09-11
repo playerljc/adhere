@@ -1,12 +1,9 @@
 import cloneDeep from 'lodash/cloneDeep';
-// @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter';
-// @ts-ignore
 import Util from '@baifendian/adhere-util';
 
-import { IWatchMemoized, ICompareConfig } from './types';
+import { IWatchMemoized, ICompareConfig, ICompareModeFun } from './types';
 
-// @ts-ignore
 const Events = Emitter.Events;
 
 /**
@@ -50,8 +47,7 @@ function isProxyProperty(property) {
  * @param events
  * @return Proxy;
  */
-// @ts-ignore
-function createProxy(srcObj: object, noProxy: object, events: Events) {
+function createProxy(srcObj: object, noProxy: object, events) {
   const proxy = new Proxy(srcObj, {
     /**
      * set 陷阱的函数
@@ -62,7 +58,6 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
      * @param receiver
      * @return {boolean}
      */
-    // @ts-ignore
     set(target, key, value, receiver) {
       // 如果不是代理属性则不处理
       // 比如已$等开头的key不进行处理 或者是计算属性的key
@@ -179,7 +174,6 @@ function createProxy(srcObj: object, noProxy: object, events: Events) {
      * @param property - 删除的属性
      * @return Object
      */
-    // @ts-ignore
     deleteProperty(target, property) {
       if (!isProxyProperty(property)) {
         return Reflect.deleteProperty(target, property);
@@ -246,8 +240,10 @@ const WatchMemoized: IWatchMemoized = {
 
         // console.log('curValue', curValue);
 
-        // @ts-ignore
-        Emitter.trigger(Symbol.keyFor(property), { oldValue: preVal, newValue: curValue });
+        Emitter.trigger(Symbol.keyFor(property) as string, {
+          oldValue: preVal,
+          newValue: curValue,
+        });
       },
       get(): any {
         // console.log('get', value);
@@ -288,8 +284,9 @@ const WatchMemoized: IWatchMemoized = {
         // 改变的处理
         function changeDetail(type) {
           const change = changelog.find((t) => t.type === type);
-          // @ts-ignore
-          change.isChange = true;
+          if (change) {
+            change.isChange = true;
+          }
 
           if (changelog.every((e) => e.isChange)) {
             changelog.forEach((e) => (e.isChange = false));
@@ -299,16 +296,13 @@ const WatchMemoized: IWatchMemoized = {
 
         // 迭代进行订阅操作
         depends.forEach((depend) => {
-          // @ts-ignore
           let type;
 
           // 获取订阅的type，订阅的type就是depend符号的字符串值
           if (Util.isSymbol(depend)) {
-            // @ts-ignore
-            type = Symbol.keyFor(depend);
+            type = Symbol.keyFor(depend as symbol);
           } else {
-            // @ts-ignore
-            type = Symbol.keyFor((depend as ICompareConfig).property);
+            type = Symbol.keyFor((depend as ICompareConfig).property as symbol);
           }
 
           // changelog赋初值
@@ -352,8 +346,7 @@ const WatchMemoized: IWatchMemoized = {
                 }
               } else if (Util.isFunction(config.mode)) {
                 // 如果是自定义比较
-                // @ts-ignore
-                const result = config.mode({ oldValue, newValue });
+                const result = (config.mode as ICompareModeFun)(oldValue, newValue);
                 if (!result) {
                   changeDetail(type);
                 }
@@ -361,7 +354,6 @@ const WatchMemoized: IWatchMemoized = {
             }
           }
 
-          // @ts-ignore
           subscriptionHandlers.push({
             type,
             handler: onSubscription,
@@ -392,16 +384,13 @@ const WatchMemoized: IWatchMemoized = {
 
         // 迭代进行订阅操作
         depends.forEach((depend) => {
-          // @ts-ignore
           let type;
 
           // 获取订阅的type，订阅的type就是depend符号的字符串值
           if (Util.isSymbol(depend)) {
-            // @ts-ignore
-            type = Symbol.keyFor(depend);
+            type = Symbol.keyFor(depend as symbol);
           } else {
-            // @ts-ignore
-            type = Symbol.keyFor((depend as ICompareConfig).property);
+            type = Symbol.keyFor((depend as ICompareConfig).property as symbol);
           }
 
           /**
@@ -439,8 +428,7 @@ const WatchMemoized: IWatchMemoized = {
                 }
               } else if (Util.isFunction(config.mode)) {
                 // 如果是自定义比较
-                // @ts-ignore
-                const result = config.mode({ oldValue, newValue });
+                const result = (config.mode as ICompareModeFun)(oldValue, newValue);
                 if (!result) {
                   handler();
                 }
@@ -448,7 +436,6 @@ const WatchMemoized: IWatchMemoized = {
             }
           }
 
-          // @ts-ignore
           subscriptionHandlers.push({
             type,
             handler: onSubscription,
@@ -524,7 +511,6 @@ const WatchMemoized: IWatchMemoized = {
 
         for (let i = 0; i < checkChain.length; i++) {
           const chain = checkChain[i];
-          // @ts-ignore
           result = chain(depends, params);
 
           if (!result) break;
@@ -538,16 +524,14 @@ const WatchMemoized: IWatchMemoized = {
        * @param params
        * @return boolean
        */
-      function find(params = []) {
+      function find(params: any[] = []) {
         let result = null;
 
         for (let i = 0; i < memoized.length; i++) {
-          // @ts-ignore
           const { resultVal, depends } = memoized[i];
 
           const flag = check(depends, params);
 
-          // @ts-ignore
           if (flag) {
             result = resultVal;
             break;
@@ -562,8 +546,7 @@ const WatchMemoized: IWatchMemoized = {
        * @param arv
        * @return object
        */
-      function getMemoized(arv: Array<any> = []) {
-        // @ts-ignore
+      function getMemoized(arv: any[] = []) {
         let result = find(arv);
 
         // console.log('find', result);
@@ -585,15 +568,13 @@ const WatchMemoized: IWatchMemoized = {
           if (result instanceof Promise) {
             // console.log('函数返回值是Promise');
 
-            // @ts-ignore
-            const p = result.then((res) => {
+            const p = (result as Promise<void>).then((res) => {
               // console.log('返回res', res);
               return res;
             });
 
             memoized.push({
               depends: arv,
-              // @ts-ignore
               resultVal: p,
             });
 
