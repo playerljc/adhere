@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-notification",
-  "version": "1.0.18-fix.1",
+  "version": "1.0.20",
   "description": "通知",
   "main": "lib/index.js",
   "module": "es/index.js",

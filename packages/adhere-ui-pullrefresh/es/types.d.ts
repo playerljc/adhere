@@ -1,32 +1,31 @@
-import React from 'react';
+import type { CSSProperties, ReactElement } from 'react';
+export interface PullRefreshRefHandle {
+    refresh: () => void;
+    reset: () => void;
+    resetUpdateTime: (updateTime: number) => Promise<void>;
+    getUpdateTime: () => number;
+}
 /**
- * IPullRefreshProps
- * @interface IPullRefreshProps
+ * PullRefreshProps
+ * @interface PullRefreshProps
  */
-export interface IPullRefreshProps {
+export interface PullRefreshProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     scrollClassName?: string;
-    scrollStyle?: React.CSSProperties;
-    pullHeight: number;
+    scrollStyle?: CSSProperties;
+    pullHeight?: number;
     isShowUpdateTime?: boolean;
     updateTime?: number;
     updateTimeFormat?: string;
-    renderIcon?: () => React.ReactElement;
-    renderLabel: () => React.ReactElement;
-    renderCanLabel: () => React.ReactElement;
-    renderLoadingAnimation?: () => React.ReactElement | string;
-    onPullStart: () => void;
-    onPullCanRefresh: () => void;
-    onPullRefresh: () => void;
-    onPullBottom: () => void;
-    onPullRebound: () => void;
-}
-/**
- * IPullRefreshState
- * @interface IPullRefreshState
- */
-export interface IPullRefreshState {
-    isCan: boolean;
-    preUpdateTime: number;
+    renderIcon?: () => any;
+    renderLabel?: () => any;
+    renderCanLabel: () => any;
+    renderLoadingAnimation?: () => ReactElement | string;
+    onPullStart?: () => void;
+    onPullCanRefresh?: () => void;
+    onPullRefresh?: () => void;
+    onPullBottom?: () => void;
+    onPullRebound?: () => void;
+    children?: any;
 }

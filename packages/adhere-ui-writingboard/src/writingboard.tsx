@@ -2,10 +2,9 @@ import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
-// @ts-ignore
 import { ResizeObserver } from '@juggle/resize-observer';
 
-import { IPoint, IWritingBoardProps, Mode } from './types';
+import { Point, WritingBoardProps, Mode } from './types';
 
 const selectorPrefix = 'adhere-ui-writingboard';
 
@@ -15,14 +14,14 @@ const selectorPrefix = 'adhere-ui-writingboard';
  * @param ref
  * @constructor
  */
-function WritingBoard(props: IWritingBoardProps, ref) {
+function WritingBoard(props: WritingBoardProps, ref) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
   const ro = useRef<any>(null);
 
-  const startPoint = useRef<IPoint | null>(null);
-  const prePoint = useRef<IPoint | null>(null);
+  const startPoint = useRef<Point | null>(null);
+  const prePoint = useRef<Point | null>(null);
   const curShape = useRef<Mode>(props.defaultMode);
   const lineWidth = useRef<number>(props.defaultLineWidth);
   const strokeStyle = useRef<string>(props.defaultStrokeStyle);
@@ -370,7 +369,7 @@ function WritingBoard(props: IWritingBoardProps, ref) {
    * @param clientX
    * @param clientY
    */
-  function devicePointToCanvasPoint({ clientX, clientY }): IPoint {
+  function devicePointToCanvasPoint({ clientX, clientY }): Point {
     const { x, y } = canvasRef?.current?.getBoundingClientRect()!;
 
     return {
@@ -560,7 +559,6 @@ function WritingBoard(props: IWritingBoardProps, ref) {
 
     ro.current = new ResizeObserver(onResize);
 
-    // @ts-ignore
     ro?.current?.observe?.(document.body);
 
     return () => ro?.current?.disconnect();
@@ -610,13 +608,10 @@ Wrap.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   // @ts-ignore
-  defaultMode: PropTypes.string,
-  // @ts-ignore
-  defaultStrokeStyle: PropTypes.string,
-  // @ts-ignore
-  defaultLineWidth: PropTypes.number,
-  // @ts-ignore
-  resizeTime: PropTypes.number,
+  defaultMode: PropTypes.string.isRequired,
+  defaultStrokeStyle: PropTypes.string.isRequired,
+  defaultLineWidth: PropTypes.number.isRequired,
+  resizeTime: PropTypes.number.isRequired,
 };
 
 export default Wrap;

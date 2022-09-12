@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["// @ts-ignore\r\nimport ScrollLoad from './scrollload';\r\nexport default ScrollLoad;\r\n"],"names":["ScrollLoad"],"mappings":"OACOA,6CACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ScrollLoad from './scrollload';\r\nexport default ScrollLoad;\r\n"],"names":["ScrollLoad"],"mappings":"OAAOA,6CACQA"}

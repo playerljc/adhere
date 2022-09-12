@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Tabs } from 'antd';
-import { Notification, Space } from '@baifendian/adhere';
+import { Notification } from '@baifendian/adhere';
 
 import PlayGroundPage, {
   Section,
@@ -21,6 +21,8 @@ const config = [
 ];
 
 export default () => {
+  const [activeKey, setActiveKey] = useState('ios-top');
+
   function boxPanelConfig() {
     return [
       {
@@ -244,8 +246,6 @@ export default () => {
       },
     ];
   }
-
-  const [activeKey, setActiveKey] = useState('ios-top');
 
   useEffect(() => {
     // eslint-disable-next-line no-use-before-define

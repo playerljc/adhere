@@ -3,6 +3,17 @@ import React, { useState } from 'react';
 import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 export default () => {
+  const list = [];
+  list.length = 50;
+  list.fill(0);
+
+  const [gridData, setGridData] = useState(
+    list.map((t, index) => ({
+      name: `姓名${index + 1}`,
+      sex: '男',
+    })),
+  );
+
   function boxPanelConfig() {
     return [
       {
@@ -1007,17 +1018,6 @@ export default () => {
       },
     ];
   }
-
-  const list = [];
-  list.length = 50;
-  list.fill(0);
-
-  const [gridData, setGridData] = useState(
-    list.map((t, index) => ({
-      name: `姓名${index + 1}`,
-      sex: '男',
-    })),
-  );
 
   return (
     <PlayGroundPage>

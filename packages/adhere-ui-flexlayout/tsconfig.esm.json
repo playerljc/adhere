@@ -1,0 +1,11 @@
+{
+  "extends": "../../node_modules/@ctsj/buildv/buildpackagetsconfig-base",
+  "compilerOptions": {
+    "outDir": "./es",
+    "baseUrl": "./",
+    "jsx": "react",
+    "module": "esnext"
+  },
+  "exclude": ["node_modules","src/demo"],
+  "include": ["src/**/*"]
+}

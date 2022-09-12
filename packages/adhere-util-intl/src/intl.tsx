@@ -42,7 +42,6 @@ function initIntlMap(zh_CN) {
  * @param data
  */
 export function getLocal(prefix: string = 'local', data: Array<string>): object {
-  // @ts-ignore
   const result = [...Array.from(new Set(data))];
 
   const local = {};
@@ -128,7 +127,6 @@ export default {
     for (const p in masterLocales) {
       mainLocales[p] = getLocal(
         prefix,
-        // @ts-ignore
         Array.from(new Set([...masterLocales[p], ...(slaveLocales[p] || [])])),
       );
     }

@@ -1,11 +1,11 @@
-import React from 'react';
+import type { CSSProperties } from 'react';
 
 /**
- * IContourBlockProps
- * @interface IContourBlockProps
+ * ContourBlockProps
+ * @interface ContourBlockProps
  */
-export interface IContourBlockProps {
+export interface ContourBlockProps {
   className?: string;
-  style?: React.CSSProperties;
-  children?: JSX.Element;
+  style?: CSSProperties;
+  children?: any;
 }

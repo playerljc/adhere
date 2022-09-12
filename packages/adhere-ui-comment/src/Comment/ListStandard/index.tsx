@@ -1,19 +1,13 @@
-import { IListStandardProps } from '@/types';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Empty } from 'antd';
-
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
-import CommentList, {
-  propTypes as SystemListPropTypes,
-  defaultProps as SystemListDefaultProps,
-} from '../List';
+import { ListStandardProps } from '../../types';
+import CommentList from '../List';
 
-const { VerticalFlexLayout, VerticalFlexLayoutDefaultProps, VerticalFlexLayoutPropTypes } =
-  FlexLayout;
+const { VerticalFlexLayout } = FlexLayout;
 
 const selectorPrefix = 'adhere-ui-comment-list-standard';
 
@@ -24,20 +18,36 @@ const selectorPrefix = 'adhere-ui-comment-list-standard';
  * @constructor
  * @classdesc 上拉下拽
  */
-function ListStandard(props: IListStandardProps) {
+const ListStandard: FC<ListStandardProps> = (props) => {
+  const {
+    limit = 10,
+    dataKeys = {
+      current: 'current',
+      totalPage: 'totalPage',
+      list: 'list',
+      totalCount: 'totalCount',
+    },
+    listProps = {},
+    flexLayoutProps = {},
+    renderFirstLoading,
+    renderEmpty = () => <Empty />,
+    renderList,
+    getScrollWrapContainer,
+  } = props;
+
   const paging = useRef({
     page: 1,
-    limit: props.limit,
+    limit,
   });
-  const callbackHandler = useRef();
+  const callbackHandler = useRef<(params?: any) => void>();
   const status = useRef(ScrollLoad.NORMAL);
-  const mainRef = useRef<HTMLDivElement | null>();
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const [data, setData] = useState({
-    [props.dataKeys!.current]: 1,
-    [props.dataKeys!.totalPage]: 0,
-    [props.dataKeys!.list]: [],
-    [props.dataKeys!.totalCount]: 0,
+    [dataKeys.current]: 1,
+    [dataKeys.totalPage]: 0,
+    [dataKeys.list]: [],
+    [dataKeys.totalCount]: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -51,12 +61,10 @@ function ListStandard(props: IListStandardProps) {
 
     paging.current = {
       page: 1,
-      limit: props.limit,
+      limit,
     };
 
-    return fetchData((res) => {
-      setData(res);
-    });
+    return fetchData((res) => setData(res));
   }
 
   /**
@@ -69,12 +77,14 @@ function ListStandard(props: IListStandardProps) {
 
     paging.current.page = paging.current.page + 1;
 
-    const { list } = props.dataKeys!;
+    const { list } = dataKeys!;
 
     return fetchData((res) => {
-      setData({
-        ...res,
-        [props.dataKeys!.list]: [...(data[list] as any), ...res[list]],
+      setData((_data) => {
+        return {
+          ...res,
+          [dataKeys.list]: [...(_data[list] as any), ...res[list]],
+        };
       });
     });
   }
@@ -98,7 +108,6 @@ function ListStandard(props: IListStandardProps) {
 
         if (callbackHandler.current) {
           status.current = ScrollLoad.ERROR;
-          // @ts-ignore
           callbackHandler?.current?.(status.current);
         }
 
@@ -127,7 +136,7 @@ function ListStandard(props: IListStandardProps) {
    * @return {boolean}
    */
   function isEmpty() {
-    return paging.current.page === 1 && (data[props.dataKeys!.list] as Array<any>).length === 0;
+    return paging.current.page === 1 && (data[dataKeys!.list] as Array<any>).length === 0;
   }
 
   useEffect(() => {
@@ -137,87 +146,33 @@ function ListStandard(props: IListStandardProps) {
   useLayoutEffect(() => {
     if (callbackHandler.current) {
       status.current =
-        paging.current.page < data[props.dataKeys!.totalPage]
-          ? ScrollLoad.NORMAL
-          : ScrollLoad.EMPTY;
-      // @ts-ignore
+        paging.current.page < data[dataKeys!.totalPage] ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
       callbackHandler?.current(status.current);
     }
   }, [data]);
 
   return (
     <VerticalFlexLayout
-      {...props.flexLayoutProps}
+      {...(flexLayoutProps || {})}
       className={`${selectorPrefix}`}
       renderMain={
-        // @ts-ignore
         <div className={`${selectorPrefix}-auto`} ref={mainRef}>
           <CommentList
-            getScrollWrapContainer={props.getScrollWrapContainer}
+            getScrollWrapContainer={getScrollWrapContainer}
             isLoading={loading}
-            hasMore={
-              (data[props.dataKeys!.list] as Array<any>).length <= data[props.dataKeys!.totalCount]
-            }
+            hasMore={(data[dataKeys!.list] as Array<any>).length <= data[dataKeys!.totalCount]}
             onLoadMore={onLoadMore}
-            renderFirstLoading={props.renderFirstLoading}
-            {...props.listProps}
+            renderFirstLoading={renderFirstLoading}
+            {...(listProps || {})}
           >
-            {/*@ts-ignore*/}
-            <ConditionalRender conditional={!isEmpty()} noMatch={() => props?.renderEmpty?.()}>
-              {() => props?.renderList?.(data)}
+            <ConditionalRender conditional={!isEmpty()} noMatch={() => renderEmpty()}>
+              {() => renderList?.(data)}
             </ConditionalRender>
           </CommentList>
         </div>
       }
     />
   );
-}
-
-ListStandard.defaultProps = {
-  flexLayoutProps: { ...VerticalFlexLayoutDefaultProps },
-  listProps: { ...SystemListDefaultProps },
-  limit: 10,
-  renderEmpty: () => <Empty />,
-  dataKeys: {
-    current: 'current',
-    totalPage: 'totalPage',
-    list: 'list',
-    totalCount: 'totalCount',
-  },
-};
-
-ListStandard.propTypes = {
-  getScrollWrapContainer: PropTypes.func,
-  flexLayoutProps: PropTypes.shape({ ...VerticalFlexLayoutPropTypes }),
-  listProps: PropTypes.shape({ ...SystemListPropTypes }),
-  limit: PropTypes.number,
-  renderList: PropTypes.func,
-  renderEmpty: PropTypes.func,
-  renderFirstLoading: PropTypes.func,
-  fetchData: PropTypes.func,
-  dataKeys: PropTypes.shape({
-    current: PropTypes.string,
-    totalPage: PropTypes.string,
-    list: PropTypes.string,
-    totalCount: PropTypes.string,
-  }),
-  scrollLoadProps: PropTypes.shape({
-    className: PropTypes.string,
-    style: PropTypes.object,
-    loadClassName: PropTypes.string,
-    loadStyle: PropTypes.object,
-    emptyClassName: PropTypes.string,
-    emptyStyle: PropTypes.object,
-    errorClassName: PropTypes.string,
-    errorStyle: PropTypes.object,
-    distance: PropTypes.number,
-    onScrollBottom: PropTypes.func,
-    onEmptyClick: PropTypes.func,
-    onErrorClick: PropTypes.func,
-    renderLoading: PropTypes.func,
-    renderEmpty: PropTypes.func,
-    renderError: PropTypes.func,
-  }),
 };
 
 export default ListStandard;

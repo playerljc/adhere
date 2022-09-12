@@ -9,8 +9,7 @@ export default {
   toPoint(percent: string): number {
     const str = percent.replace('%', '');
 
-    // @ts-ignore
-    return str / 100;
+    return parseInt(str) / 100;
   },
   /**
    * point - 小数转化为百分数
@@ -243,8 +242,7 @@ export default {
   distance(value: number, unit: 'kilometer'): number {
     const map = new Map<string, number>([['kilometer', 1000]]);
 
-    // @ts-ignore
-    return value / map.get(unit);
+    return value / (map.get(unit) as number);
   },
   /**
    * getCirclePoint

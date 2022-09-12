@@ -15,20 +15,18 @@ export const selectorPrefix = 'adhere-ui-slidelayout';
  * @param callback
  */
 export function slider(
-  el: HTMLElement | null | undefined,
+  el: HTMLElement,
   x: string,
   y: string,
   z: string,
   time = '0',
-  callback: Function,
+  callback?: Function,
 ) {
   if (callback) {
     callback(el);
   }
 
-  // @ts-ignore
   el.style.transform = el.style.webkitTransform = `translate3d(${x},${y},${z})`;
-  // @ts-ignore
   el.style.transition = el.style.webkitTransition = `all ${time} ease`;
 }
 
@@ -37,22 +35,18 @@ export function slider(
  * @param zIndex
  * @param closeCallback
  */
-export function createMask(zIndex: number | string, closeCallback: Function): HTMLElement {
+export function createMask(zIndex: number | string, closeCallback: () => void): HTMLDivElement {
   const el = document.createElement('div');
 
   el.innerHTML = `<div class='${selectorPrefix}-mask'></div>`;
 
-  const maskEl = el.firstElementChild;
+  const maskEl = el.firstElementChild as HTMLDivElement;
 
-  // @ts-ignore
-  maskEl.style.zIndex = zIndex - 1;
+  maskEl.style.zIndex = typeof zIndex === 'number' ? `${zIndex - 1}` : zIndex;
 
-  // @ts-ignore
-  maskEl.addEventListener('click', () => {
-    closeCallback();
-  });
+  maskEl.addEventListener('click', () => closeCallback());
 
-  return maskEl as HTMLElement;
+  return maskEl;
 }
 
 export default {

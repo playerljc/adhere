@@ -8,7 +8,7 @@ import CodePanel, { CodePanelPropTypes } from './CodePanel';
 import CodeTabPanel, { CodeTabPanelPropTypes } from './CodeTabPanel';
 import APlayGround, { APlayGroundDefaultProps, APlayGroundPropTypes } from './APlayGround';
 
-import { IPlayGroundMulitProps } from './types';
+import { PlayGroundMulitProps, PlayGroundMulitState } from './types';
 
 const selectPrefix = 'adhere-ui-playground-mulit';
 
@@ -17,7 +17,7 @@ const selectPrefix = 'adhere-ui-playground-mulit';
  * @class PlayGroundMulit
  * @classdesc PlayGroundMulit
  */
-class PlayGroundMulit extends APlayGround {
+class PlayGroundMulit extends APlayGround<PlayGroundMulitProps, PlayGroundMulitState> {
   configMap = new Map<
     string,
     {
@@ -40,13 +40,11 @@ class PlayGroundMulit extends APlayGround {
             <CodeTabPanel
               {...props}
               onChange={(key) => {
-                // @ts-ignore
-                const config = [...this.state.config];
+                const config = [...(this.state.config || [])];
 
                 config[index].active = key;
 
                 this.setState({
-                  // @ts-ignore
                   config,
                 });
               }}
@@ -61,18 +59,15 @@ class PlayGroundMulit extends APlayGround {
   constructor(props) {
     super(props);
 
-    this.state = {
-      ...this.state,
-      // @ts-ignore
+    Object.assign(this.state, {
       config: [...(props.config || [])],
-    };
+    });
   }
 
-  protected componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     super.componentWillReceiveProps(nextProps);
 
     this.setState({
-      // @ts-ignore
       config: [...(nextProps.config || [])],
     });
   }
@@ -82,12 +77,11 @@ class PlayGroundMulit extends APlayGround {
    * @return Promise<string>
    */
   protected getClipboardText(e: React.MouseEvent): Promise<string> {
-    // @ts-ignore
     const { config } = this.state;
 
     return new Promise<string>((resolve) => {
       ContextMenu.open(
-        config.map((c, index) => ({
+        (config || []).map((c, index) => ({
           name: c.title,
           id: `${index}`,
           separation: false,
@@ -96,15 +90,18 @@ class PlayGroundMulit extends APlayGround {
           },
           children: [],
         })),
-        // @ts-ignore
+
         {
           width: 200,
           x: e.clientX,
           y: e.clientY,
           maskClosable: true,
           handler: (id, attribute) => {
-            // @ts-ignore
-            resolve(this.configMap.get(attribute.config.type || 'CodePanel')?.getCodeText(attribute.config));
+            resolve(
+              this.configMap
+                .get(attribute.config.type || 'CodePanel')
+                ?.getCodeText(attribute.config),
+            );
           },
         },
       );
@@ -115,16 +112,14 @@ class PlayGroundMulit extends APlayGround {
    * renderCodeView - 代码展示视图
    * @param config
    * @param index
-   * @return React.ReactElement
    * <CodePanel {...config} />
    */
-  protected renderCodePanelView(config, index): React.ReactElement {
+  protected renderCodePanelView(config, index) {
     return (
       <div key={`${index}`} className={`${selectPrefix}-codeviewwrap`}>
         <div className={`${selectPrefix}-codeviewwrap-title`}>{config.title}</div>
         <div className={`${selectPrefix}-codeviewwrap-inner`}>
-          {/*@ts-ignore*/}
-          {this.configMap.get(config.type || 'CodePanel').render(config, index)}
+          {this.configMap.get(config.type || 'CodePanel')?.render(config, index)}
         </div>
       </div>
     );
@@ -132,28 +127,24 @@ class PlayGroundMulit extends APlayGround {
 
   /**
    * renderCodeView
-   * @return React.ReactElement
    */
-  protected renderCodeView(): React.ReactElement {
-    // @ts-ignore*
+  protected renderCodeView() {
+    // @ts-ignore
     const { config, expand } = this.state;
 
     const { isFirst } = this;
     return (
       <ConditionalRender
         conditional={isFirst}
-        // @ts-ignore
         noMatch={() => (
-          // @ts-ignore
           <Card style={{ display: expand ? '' : 'none' }}>
             {(config || []).map((c, index) => this.renderCodePanelView(c, index))}
           </Card>
         )}
       >
         {() => (
-          <ConditionalRender conditional={expand}>
+          <ConditionalRender conditional={!!expand}>
             {() => (
-              // @ts-ignore
               <Card>{(config || []).map((c, index) => this.renderCodePanelView(c, index))}</Card>
             )}
           </ConditionalRender>
@@ -163,18 +154,21 @@ class PlayGroundMulit extends APlayGround {
   }
 }
 
-export const PlayGroundMulitDefaultProps: IPlayGroundMulitProps = {
+export const PlayGroundMulitDefaultProps: PlayGroundMulitProps = {
   config: [],
   ...APlayGroundDefaultProps,
 };
 
 export const PlayGroundMulitPropTypes = {
-  // @ts-ignore
-  config: PropTypes.arrayOf(PropTypes.oneOfType([CodePanelPropTypes, CodeTabPanelPropTypes])),
+  config: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.shape(CodePanelPropTypes),
+      PropTypes.shape(CodeTabPanelPropTypes),
+    ]),
+  ),
   ...APlayGroundPropTypes,
 };
 
-// @ts-ignore
 PlayGroundMulit.defaultProps = {
   ...PlayGroundMulitDefaultProps,
 };

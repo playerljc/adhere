@@ -58,8 +58,8 @@ import styles from './client.less'
     const [iframeReady, setIframeReady] = useState(false);
     const iframeRef = useRef();
 
-    const sourceOrigin = 'http://localhost:8080';
-    const targetOrigin = 'http://localhost:8080';
+    const sourceOrigin = window.location.origin;
+    const targetOrigin = window.location.origin;
 
     const fetch = useRef(new Fetch(window, sourceOrigin));
 
@@ -330,7 +330,7 @@ import styles from './server.less';
     const server = useRef();
     const router = useRef();
 
-    const sourceOrigin = 'http://localhost:8080';
+    const sourceOrigin = window.location.origin;
     const whiteList = [sourceOrigin];
 
     useEffect(() => {

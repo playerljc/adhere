@@ -1,5 +1,5 @@
 import React from 'react';
-import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
+import { ISuspense, SuspenseProps, SuspenseState } from './types';
 /**
  * Suspense
  * @class Suspense
@@ -10,7 +10,7 @@ import { ISuspense, ISuspenseProps, ISuspenseState } from './types';
  * renderInner
  * showLoading
  */
-declare abstract class Suspense<T extends ISuspenseProps, P extends ISuspenseState> extends React.Component<T, P> implements ISuspense {
+declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S extends SuspenseState = SuspenseState> extends React.Component<P, S> implements ISuspense {
     isFirst: boolean;
     isFirstLoading: boolean;
     static defaultProps: any;

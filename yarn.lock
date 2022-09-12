@@ -4744,6 +4744,13 @@
   dependencies:
     "@types/ms" "*"
 
+"@types/emoji-mart@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@types/emoji-mart/-/emoji-mart-3.0.9.tgz#2f7ef5d9ec194f28029c46c81a5fc1e5b0efa73c"
+  integrity sha512-qdBo/2Y8MXaJ/2spKjDZocuq79GpnOhkwMHnK2GnVFa8WYFgfA+ei6sil3aeWQPCreOKIx9ogPpR5+7MaOqYAA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.4.tgz#37fc1223f0786c39627068a12e94d6e6fc61de16"
@@ -4838,6 +4845,11 @@
   integrity sha512-QsbSjA/fSk7xB+UXlCT3wHBy5ai9wOcNDWwZAtud+jXhwOM3l+EYZh8Lng4+/6n8uar0J7xILzqftJdJ/Wdfkw==
   dependencies:
     "@types/node" "*"
+
+"@types/iscroll@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@types/iscroll/-/iscroll-5.2.5.tgz#291353748c58156ad1a35a52fa7959bb4f6b3b17"
+  integrity sha512-4qxDZB/7hu7AmzK3MEtU3yErxUaMt5oMTecawgevW4+4sHVtU0w+JBqENSou7tfsy33m586+0Pxd3X1M5uZyGw==
 
 "@types/json-schema@*", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.7", "@types/json-schema@^7.0.8":
   version "7.0.9"

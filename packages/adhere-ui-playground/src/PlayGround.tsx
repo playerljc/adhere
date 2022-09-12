@@ -15,29 +15,25 @@ class PlayGround extends APlayGround {
    * renderCodeView - 代码展示视图
    * @return {*}
    */
-  protected renderCodeView(): React.ReactElement {
+  protected renderCodeView() {
     const { expand } = this.state;
 
     const { isFirst } = this;
 
-    // @ts-ignore
     const { cardProps, id, isActive, ...others } = this.props;
 
     return (
       <ConditionalRender
         conditional={isFirst}
-        // @ts-ignore
         noMatch={() => (
-          // @ts-ignore
           <Card style={{ display: expand ? '' : 'none' }}>
             <CodePanel {...others} />
           </Card>
         )}
       >
         {() => (
-          <ConditionalRender conditional={expand}>
+          <ConditionalRender conditional={!!expand}>
             {() => (
-              // @ts-ignore
               <Card>
                 <CodePanel {...others} />
               </Card>
@@ -61,7 +57,6 @@ PlayGround.defaultProps = {
   ...CodePanelDefaultProps,
 };
 
-// @ts-ignore
 PlayGround.propTypes = {
   ...APlayGroundPropTypes,
   ...CodePanelPropTypes,

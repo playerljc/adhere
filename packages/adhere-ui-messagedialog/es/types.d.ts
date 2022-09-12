@@ -1,29 +1,50 @@
-import React from 'react';
+import type { ReactElement } from 'react';
+import type { ModalProps } from 'antd/lib/modal/Modal';
+import type { ColumnItemProps, FormItemLayoutProps } from '@baifendian/adhere-ui-formitemcreator/lib/types';
 /**
- * IAlertArgv
- * @interface IAlertArgv
+ * AlertArgv
  */
-export interface IAlertArgv {
-    title?: string | null | React.ReactElement;
-    text?: string | null | React.ReactElement;
+export interface AlertArgv {
+    title?: string | null | ReactElement;
+    text?: string | null | ReactElement;
     width?: number;
     zIndex?: number;
     local?: string;
-    icon?: React.ReactElement | null;
+    icon?: ReactElement | null;
 }
 /**
- * IConfirmArgv
- * @interface IConfirmArgv
+ * ConfirmArgv
  */
-export interface IConfirmArgv extends IAlertArgv {
-    onSuccess?: Function;
+export interface ConfirmArgv extends AlertArgv {
+    onSuccess?: (params?: any) => Promise<void>;
 }
 /**
- * IModalDialogProps
- * @interface IModalDialogProps
+ * PromptArgv
  */
-export interface IModalDialogProps {
+export interface PromptArgv {
+    title?: string | null | ReactElement;
+    config?: ColumnItemProps;
+    layout?: FormItemLayoutProps;
+    width?: number;
+    zIndex?: number;
+    local?: string;
+    onSuccess?: (params?: any) => Promise<void>;
+}
+/**
+ * ModalArgv
+ */
+export interface ModalArgv {
+    children?: any;
+    defaultCloseBtn?: boolean;
+    local?: string;
+    config?: ModalProps;
+}
+/**
+ * ModalDialogProps
+ */
+export interface ModalDialogProps {
+    config: ModalProps;
     closeBtn: boolean;
-    config: Object;
-    close(): void;
+    close?: () => void;
+    children?: any;
 }

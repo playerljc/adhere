@@ -1,102 +1,60 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useLayoutEffect, useRef, FC } from 'react';
 import classNames from 'classnames';
-
 import Resource from '@baifendian/adhere-util-resource';
 
-import { IBackTopAnimationProps } from './types';
+import { BackTopAnimationProps } from './types';
 
 const selectorPrefix = 'adhere-ui-backtopanimation';
 
 /**
  * BackTopAnimation
- * @class BackTopAnimation
- * @classdesc BackTopAnimation
+ * @param props
+ * @constructor
  */
-class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
-  static defaultProps: any;
-  static propTypes: any;
+const BackTopAnimation: FC<BackTopAnimationProps> = (props): React.ReactElement => {
+  const {
+    className,
+    style,
+    zIndex = Resource.Dict.value.ResourceNormalMaxZIndex.value,
+    getContainer,
+    onScrollTop,
+    duration = 300,
+  } = props;
 
-  private el: HTMLDivElement | null | undefined;
-  private maskEl: HTMLDivElement | undefined | null;
-  private scrollEl: HTMLElement | Window | undefined;
-  private key: boolean = false;
+  const elRef = useRef<HTMLDivElement>(null);
+  const mask = useRef<HTMLDivElement | null>(null);
+  const key = useRef(false);
 
-  componentDidMount() {
-    this.initScrollEvent();
-
-    this.renderMask();
+  /**
+   * getUpdateInterval
+   */
+  function getUpdateInterval() {
+    return 'updateInterval' in screen ? screen['updateInterval'] : 16.7;
   }
 
-  componentWillUnmount() {
-    if (this.maskEl) {
-      try {
-        this.maskEl!.parentElement!.removeChild(this.maskEl);
-      } catch (e) {}
-    }
-  }
+  /**
+   * onTrigger
+   */
+  function onTrigger() {
+    if (key.current) return;
 
-  private initScrollEvent() {
-    this.scrollEl = this.props.target();
+    if (!props.onTrigger) return;
 
-    const self = this;
+    props.onTrigger().then(() => {
+      key.current = true;
 
-    function onScroll() {
-      // @ts-ignore
-      if (self.scrollEl.scrollTop !== 0) {
-        typeof window !== 'undefined' &&
-          window.requestAnimationFrame(() => {
-            self.el!.style.display = 'block';
-          });
-      } else {
-        typeof window !== 'undefined' &&
-          window.requestAnimationFrame(() => {
-            self.el!.style.display = 'none';
-          });
-      }
-    }
+      mask.current!.style.display = 'block';
 
-    this.scrollEl.addEventListener('scroll', onScroll, false);
-  }
+      const container = getContainer();
 
-  private renderMask(): void {
-    this.maskEl = document.body.querySelector(`.${selectorPrefix}-mask`) as HTMLDivElement;
-
-    if (!this.maskEl) {
-      this.maskEl = document.createElement('div');
-      this.maskEl.className = `${selectorPrefix}-mask`;
-      this.maskEl.style.zIndex = `${this.props.zIndex}`;
-      document.body.appendChild(this.maskEl);
-    }
-  }
-
-  private onTrigger = () => {
-    const self = this;
-
-    if (self.key) return;
-
-    const { onTrigger, onScrollTop, duration } = this.props;
-
-    if (!onTrigger) return;
-
-    onTrigger().then(() => {
-      self.key = true;
-
-      self.maskEl!.style.display = 'block';
-
-      // @ts-ignore
-      const srcTop = self.scrollEl.scrollTop;
+      const srcTop = container.scrollTop;
       let scrollVal = srcTop;
       const targetTop = 0;
 
       // 一次滚动的步进
       const step =
-        // @ts-ignore
-        self.scrollEl.scrollHeight /
-        // @ts-ignore
-        (duration / (screen.updateInterval || 16.7) +
-          // @ts-ignore
-          (duration % (screen.updateInterval || 16.7) !== 0 ? 1 : 0));
+        container.scrollHeight /
+        (duration / getUpdateInterval() + (duration % getUpdateInterval() !== 0 ? 1 : 0));
 
       /**
        * 动画的滚动
@@ -114,8 +72,7 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
           scrollVal -= step;
         }
 
-        // @ts-ignore
-        self.scrollEl.scrollTop = scrollVal;
+        container.scrollTop = scrollVal;
 
         if (onScrollTop) {
           onScrollTop(scrollVal);
@@ -134,46 +91,56 @@ class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
         }
 
         function clear() {
-          self.maskEl!.style.display = 'none';
+          mask.current!.style.display = 'none';
 
-          self.key = false;
+          key.current = false;
         }
       }
 
       typeof window !== 'undefined' && window.requestAnimationFrame(scrollAnimation);
     });
-  };
-
-  render() {
-    const { className, style, zIndex } = this.props;
-
-    return (
-      <div
-        className={classNames(selectorPrefix, className?.split(/\s+/))}
-        style={{ ...style, zIndex }}
-        ref={(el) => (this.el = el)}
-        onClick={this.onTrigger}
-      />
-    );
   }
-}
 
-BackTopAnimation.defaultProps = {
-  className: '',
-  style: {},
-  zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
-  duration: 300,
-  target: () => window,
-};
+  /**
+   * renderMask
+   */
+  function renderMask() {
+    mask.current = document.body.querySelector(`.${selectorPrefix}-mask`);
 
-BackTopAnimation.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  zIndex: PropTypes.string,
-  duration: PropTypes.number,
-  target: PropTypes.func,
-  onTrigger: PropTypes.func,
-  onScrollTop: PropTypes.func,
+    if (!mask.current) {
+      mask.current = document.createElement('div');
+      mask.current.className = `${selectorPrefix}-mask`;
+      mask.current.style.zIndex = `${zIndex}`;
+      document.body.appendChild(mask.current);
+    }
+  }
+
+  useLayoutEffect(() => renderMask(), []);
+
+  useLayoutEffect(() => {
+    const container = getContainer();
+
+    function onScroll() {
+      if (container.scrollTop !== 0) {
+        elRef.current!.style.display = 'block';
+      } else {
+        elRef.current!.style.display = 'none';
+      }
+    }
+
+    container.addEventListener('scroll', onScroll);
+
+    return () => container.removeEventListener('scroll', onScroll);
+  });
+
+  return (
+    <div
+      ref={elRef}
+      className={classNames(selectorPrefix, className || '')}
+      style={{ zIndex, ...(style || {}) }}
+      onClick={onTrigger}
+    />
+  );
 };
 
 export default BackTopAnimation;

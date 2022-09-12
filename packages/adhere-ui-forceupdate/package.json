@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-forceupdate",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "组件强制刷新",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,6 +40,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-hooks": "^1.0.18",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.1",

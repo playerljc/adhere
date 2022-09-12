@@ -1,210 +1,315 @@
-import React, { CSSProperties } from 'react';
+import PropTypes from 'prop-types';
+import {
+  FC,
+  ForwardRefExoticComponent,
+  FunctionComponent,
+  PropsWithoutRef,
+  RefAttributes,
+} from 'react';
+import type { ReactNode, CSSProperties } from 'react';
+import PlayGroundPageForward from './PlayGroundPage';
+import CodeBoxSection from './PlayGroundPage/CodeBoxSection';
+import FunctionPropsSection from './PlayGroundPage/FunctionPropsSection';
+import PropsSection from './PlayGroundPage/PropsSection';
+import Section from './PlayGroundPage/Section';
 
 /**
- * ICardProps
+ * CardProps
  */
-export interface ICardProps {
-  className: string;
-  style: object;
-  headerClassName: string;
-  headerStyle: object;
-  bodyClassName: string;
-  bodyStyle: object;
-  actionClassName: string;
-  actionStyle: object;
-  title: React.ReactNode;
-  extra: React.ReactNode;
-  description: {
-    title: string | React.ReactNode;
-    info: string | React.ReactNode;
+export interface CardProps {
+  className?: string;
+  style?: CSSProperties;
+  headerClassName?: string;
+  headerStyle?: CSSProperties;
+  bodyClassName?: string;
+  bodyStyle?: CSSProperties;
+  actionClassName?: string;
+  actionStyle?: CSSProperties;
+  title?: ReactNode | string;
+  extra?: ReactNode;
+  description?: {
+    title: string | ReactNode;
+    info: string | ReactNode;
   };
-  actions: React.ReactNode[];
+  actions?: ReactNode[];
+  children?: any;
 }
 
 /**
- * ITableColumn
+ * TableColumn
  */
-export interface ITableColumn {
+export interface TableColumn {
   key: string;
   dataIndex: string;
-  title: React.ReactNode | string;
+  title: ReactNode | string;
   width: string;
-  align: 'left' | 'right' | 'center';
-  valign: 'top' | 'middle' | 'bottom';
-  render: (text: any, record: object, rowIndex: number, columnIndex: number) => void;
-  className: string;
-  style: object;
+  align?: 'left' | 'right' | 'center';
+  valign?: 'top' | 'middle' | 'bottom';
+  render?: (text: any, record: object, rowIndex: number, columnIndex: number) => void;
+  className?: string;
+  style?: CSSProperties;
 }
 
 /**
- * ITableProps
+ * TableProps
  */
-export interface ITableProps {
-  className: string;
-  style: CSSProperties | null;
-  tableClassName: string;
-  tableStyle: CSSProperties;
-  columns: ITableColumn[];
-  dataSource: Object[];
-  rowKey: string;
+export interface TableProps {
+  className?: string;
+  style?: CSSProperties;
+  tableClassName?: string;
+  tableStyle?: CSSProperties;
+  columns: TableColumn[];
+  dataSource: object[];
+  rowKey?: string;
 }
 
-export interface ICodePanelProps {
+export interface CodePanelProps {
   codeText: string;
   theme?: string;
 }
 
 /**
- * IPlayGroundProps
- * @interface IPlayGroundProps
+ * PlayGroundProps
+ * @interface PlayGroundProps
  */
-export interface IPlayGroundProps extends ICodePanelProps {
+export interface PlayGroundProps extends CodePanelProps {
   id?: string;
-  cardProps: ICardProps;
+  cardProps: CardProps;
   isActive: boolean;
   expand?: boolean;
+  title?: any;
+  active?: string;
 }
 
 /**
- * IPlayGroundMulitProps
+ * PlayGroundMulitProps
  */
-export interface IPlayGroundMulitProps extends IPlayGroundProps {
-  config: IPlayGroundProps[];
+export interface PlayGroundMulitProps extends PlayGroundProps {
+  config?: PlayGroundProps[];
+}
+
+export interface PlayGroundMulitState extends PlayGroundState {
+  config?: PlayGroundProps[];
 }
 
 /**
- * IPlayGroundState
- * @interface IPlayGroundState
+ * PlayGroundState
+ * @interface PlayGroundState
  */
-export interface IPlayGroundState {
-  expand: boolean;
+export interface PlayGroundState {
+  expand?: boolean;
+  config?: PlayGroundProps[];
+  activeKey?: string;
 }
 
 /**
- * IPropsProps
+ * PropsProps
  */
-export interface IPropsProps {
+export interface PropsProps extends CollapseProps {
   data: Array<{
-    params: string | React.ReactNode;
-    desc: string | React.ReactNode;
-    type: string | React.ReactNode;
-    defaultVal: string | React.ReactNode;
+    params: string | ReactNode;
+    desc: string | ReactNode;
+    type: string | ReactNode;
+    defaultVal: string | ReactNode;
   }>;
 }
 
 /**
- * IFunctionProps
+ * FunctionProps
  */
-export interface IFunctionProps {
+export interface FunctionProps extends CollapseProps {
   data: Array<{
     // 函数名称
-    name: string | React.ReactNode;
+    name: string | ReactNode;
     // 函数描述
-    desc: string | React.ReactNode;
+    desc: string | ReactNode;
     // 函数修饰符
     modifier: 'static' | 'public' | 'private' | 'protected';
     // 函数参数
     params: Array<{
       // 参数名称
-      name: string | React.ReactNode;
+      name: string | ReactNode;
       // 参数说明
-      desc: string | React.ReactNode;
+      desc: string | ReactNode;
       // 参数类型
-      type: string | React.ReactNode;
+      type: string | ReactNode;
       // 默认值
-      defaultVal: string | React.ReactNode;
+      defaultVal: string | ReactNode;
       // 是否必填
       required: string | boolean;
     }>;
     // 函数返回值类型
-    returnType: string | React.ReactNode;
+    returnType: string | ReactNode;
     // 函数返回值说明
-    returnDesc: string | React.ReactNode;
+    returnDesc: string | ReactNode;
   }>;
 }
 
-export interface ICollapseProps {
-  headerClassName: string;
-  headerStyle: CSSProperties | null;
-  bodyClassName: string;
-  bodyStyle: CSSProperties | null;
-  title: React.ReactNode | string;
-  extra: React.ReactNode | string;
-  defaultCollapse: boolean;
-  border: boolean;
-  scrollY: boolean;
-  fixedHeaderScrollBody: boolean;
+export interface CollapseProps {
+  headerClassName?: string;
+  headerStyle?: CSSProperties;
+  bodyClassName?: string;
+  bodyStyle?: CSSProperties;
+  title?: ReactNode | string;
+  extra?: ReactNode | string;
+  defaultCollapse?: boolean;
+  border?: boolean;
+  scrollY?: boolean;
+  fixedHeaderScrollBody?: boolean;
+  children?: ReactNode;
 }
 
-export interface ICodeBoxPlayGroundProps extends IPlayGroundProps {
+export interface CodeBoxPlayGroundProps extends PlayGroundProps {
   type: 'PlayGround';
   renderWrap?: (
     columnIndex: number,
     index: number,
-    config: IPlayGroundProps,
-    children: React.ReactElement,
-  ) => React.ReactElement;
+    config: PlayGroundProps,
+    children: ReactNode,
+  ) => ReactNode;
   renderChildren?: (
     columnIndex: number,
     index: number,
-    config: Array<ICodeBoxPlayGroundProps>,
-  ) => React.ReactElement;
+    config: Array<CodeBoxPlayGroundProps>,
+  ) => ReactNode;
 }
 
-export interface ICodeBoxPlayGroundMulitProps extends IPlayGroundMulitProps {
+export interface CodeBoxPlayGroundMulitProps extends PlayGroundMulitProps {
   type: 'PlayGroundMulit';
   renderWrap?: (
     columnIndex: number,
     index: number,
-    config: Array<ICodeBoxPlayGroundMulitProps>,
-    children: React.ReactElement,
-  ) => React.ReactElement;
+    config: Array<CodeBoxPlayGroundMulitProps>,
+    children: ReactNode,
+  ) => ReactNode;
   renderChildren?: (
     columnIndex: number,
     index: number,
-    config: Array<ICodeBoxPlayGroundMulitProps>,
-  ) => React.ReactElement;
+    config: Array<CodeBoxPlayGroundMulitProps>,
+  ) => ReactNode;
 }
 
-export interface ICodeBoxPlayGroundTabProps extends IPlayGroundTabProps {
+export interface CodeBoxPlayGroundTabProps extends PlayGroundTabProps {
   type: 'PlayGroundTab';
   renderWrap?: (
     columnIndex: number,
     index: number,
-    config: IPlayGroundTabProps,
-    children: React.ReactElement,
-  ) => React.ReactElement;
+    config: PlayGroundTabProps,
+    children: ReactNode,
+  ) => ReactNode;
   renderChildren?: (
     columnIndex: number,
     index: number,
-    config: Array<IPlayGroundTabProps>,
-  ) => React.ReactElement;
+    config: Array<PlayGroundTabProps>,
+  ) => ReactNode;
 }
 
-export interface ICodeBoxProps {
-  title?: string | React.ReactElement;
-  extra?: React.ReactElement;
+export interface CodeBoxProps {
+  title?: string | ReactNode;
+  extra?: ReactNode;
   isShowExpandAllBtn: boolean;
   columnCount: number;
   expandAll?: boolean;
-  config: Array<
-    ICodeBoxPlayGroundProps | ICodeBoxPlayGroundMulitProps | ICodeBoxPlayGroundTabProps
-  >;
+  config: Array<CodeBoxPlayGroundProps | CodeBoxPlayGroundMulitProps | CodeBoxPlayGroundTabProps>;
 }
 
-export interface ICollapseState {
+export interface CollapseState {
   collapse: boolean;
 }
 
-export interface ICodeTabPanelItemProps extends ICodePanelProps {
-  key: string;
-  title: string | React.ReactElement;
+export interface CodeTabPanelItemProps extends CodePanelProps {
+  key?: string;
+  title: string | ReactNode;
 }
 
-export interface ICodeTabPanelProps {
-  active: string;
-  config: ICodeTabPanelItemProps[];
+export interface CodeTabPanelProps {
+  active?: string;
+  config?: CodeTabPanelItemProps[];
   onChange?: (activeKey: string) => void;
 }
 
-export interface IPlayGroundTabProps extends ICodeTabPanelProps, IPlayGroundProps {}
+export interface PlayGroundTabProps extends CodeTabPanelProps, PlayGroundProps {}
+
+export interface PlayGroundTabState extends PlayGroundState {
+  activeKey?: string;
+}
+
+export interface CodeBoxContextValue {
+  activeAnchor: string;
+}
+
+export interface AnchorNavigationContextValue {
+  scrollEl: HTMLElement | null;
+}
+
+export interface AnchorNavigationProps {
+  activeAnchor?: string;
+  anchors?: Array<{
+    anchor: string;
+    name: string;
+  }>;
+  anchorPosition: {
+    top: number;
+    width: number;
+  };
+  children?: any;
+}
+
+export interface TabContextValue {
+  activeKey: string;
+}
+
+export interface TabPanelProps {
+  className?: string;
+  index?: number | string;
+  children?: any;
+}
+
+export interface SimpleTabsFunction<P> extends FunctionComponent<P> {
+  TabPanel: FC<TabPanelProps>;
+}
+
+export interface SimpleTabsProps {
+  activeKey?: string;
+  className?: string;
+  onChange: (activeKey?: string) => void;
+  children?: any;
+}
+
+export interface SectionProps {
+  className?: string;
+  style?: CSSProperties;
+  title?: ReactNode | string;
+  extra?: ReactNode;
+  children?: any;
+}
+
+export interface PropsSectionProps extends SectionProps {
+  config: Array<PropsProps>;
+}
+
+export interface FunctionPropsSectionProps extends SectionProps {
+  config: Array<FunctionProps>;
+}
+
+export interface PlayGroundPageContextValue {
+  scrollEl?: HTMLElement | null;
+}
+
+export interface PlayGroundPageHOC<T, P>
+  extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
+  Section: FC<SectionProps>;
+  CodeBoxSection: FC<CodeBoxProps>;
+  PropsSection: FC<PropsSectionProps>;
+  FunctionPropsSection: FC<FunctionPropsSectionProps>;
+}
+
+export interface PlayGroundPageProps {
+  className?: string;
+  style?: CSSProperties;
+  anchorPosition: {
+    top: number;
+    width: number;
+  };
+  children?: any;
+}

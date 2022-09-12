@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   getTsConfigPath() {
-    return path.join(__dirname, 'tsconfig.json');
+    return path.join(__dirname, 'tsconfig.cjs.json');
   },
   getBabelConfig(defaultBabelConfig) {
     defaultBabelConfig.presets.push('@babel/preset-react');

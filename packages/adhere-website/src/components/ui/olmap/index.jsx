@@ -18,6 +18,13 @@ import PlayGroundPage, {
 const { TitleLayer, OLMap: OLMapComponent, HeatMap, Util, AnimationManager } = OLMap;
 
 export default () => {
+  const xbqRef = useRef();
+  const changeRef = useRef();
+  const heatRef = useRef();
+  const fRef = useRef();
+  const animationRef = useRef();
+  const windRef = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -793,8 +800,7 @@ export default () => {
                 const { vectorSource } = animationRef.current.addDataLayer();
 
                 const lineData = new Map();
-                const lines = [
-                ];
+                const lines = [];
                 const ps =
                   Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value.features[0].geometry
                     .coordinates[0][0];
@@ -895,13 +901,6 @@ export default () => {
       },
     ];
   }
-
-  const xbqRef = useRef();
-  const changeRef = useRef();
-  const heatRef = useRef();
-  const fRef = useRef();
-  const animationRef = useRef();
-  const windRef = useRef();
 
   return (
     <PlayGroundPage>

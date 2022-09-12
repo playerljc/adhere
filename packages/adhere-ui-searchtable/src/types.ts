@@ -1,30 +1,37 @@
-import React from 'react';
+import type { TableProps } from 'antd/lib/table/Table';
+import { RefObject } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 
-import {
+import type {
   ColumnType,
-  FilterValue,
-  SorterResult,
-  TableCurrentDataSource,
-  TablePaginationConfig,
-  TableRowSelection,
+  // FilterValue,
+  // SorterResult,
+  // TableCurrentDataSource,
+  // TablePaginationConfig,
+  // TableRowSelection,
 } from 'antd/lib/table/interface';
 
-import { ISuspenseProps, ISuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+
+export interface ColumnTypeExt extends ColumnType<any> {
+  authorized?: () => boolean;
+  resizable?: boolean;
+}
 
 /**
- * ISearchTableProps
- * @interface ISearchTableProps
+ * SearchTableProps
+ * @interface SearchTableProps
  */
-export interface ISearchTableProps extends ISuspenseProps {
+export interface SearchTableProps extends SuspenseProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   tableClassName: string;
-  tableStyle: React.CSSProperties;
+  tableStyle: CSSProperties;
   searchClassName: string;
-  searchStyle: React.CSSProperties;
-  firstLoading: React.ReactElement;
+  searchStyle: CSSProperties;
+  firstLoading: ReactElement;
   // antdTable的Props
-  antdTableProps: object;
+  antdTableProps: TableProps<any>;
   // 是否有展开和收缩的功能
   isShowExpandSearch: boolean;
   // 展开和收缩的默认状态
@@ -44,122 +51,20 @@ export interface ISearchTableProps extends ISuspenseProps {
 }
 
 /**
- * ISearchTableState
- * @interface ISearchTableState
+ * SearchTableState
+ * @interface SearchTableState
  */
-export interface ISearchTableState extends ISuspenseState {
-  page: number;
-  limit: number;
-  expand: boolean;
-  scrollY: number;
-  columnSetting: Array<ColumnType<any> & { sort: number; display: boolean }>;
+export interface SearchTableState extends SuspenseState {
+  [props: string]: any;
+  page?: number;
+  limit?: number;
+  expand?: boolean;
+  scrollY?: number;
+  columnSetting?: Array<ColumnType<any> & { sort: number; display: boolean }>;
+  tableDensity?: TableDensity;
 }
 
-/**
- * ISearchTableImplementProps
- * @interface ISearchTableImplementProps
- */
-export interface ISearchTableImplementProps {
-  /**
-   * isShowNumber - 表格是否显示序号
-   * @return boolean
-   */
-  isShowNumber(): boolean;
-
-  /**
-   * getTableNumberColumnWidth - 表格序号列的宽度
-   * @return number
-   */
-  getTableNumberColumnWidth(): number;
-
-  /**
-   * getNumberGeneratorRule - 获取符号列的生成规则
-   */
-  getNumberGeneratorRule(): string;
-
-  /**
-   * getRowKey - 获取表格的主键属性
-   * @return string
-   */
-  getRowKey(): string;
-
-  /**
-   * getData - 获取表格数据
-   * @return Array<Object>
-   */
-  getData(): Array<object>;
-
-  /**
-   * getColumns - 获取表格列的信息
-   * @return Array<object>
-   */
-  getColumns(): Array<ColumnType<object>>;
-
-  /**
-   *
-   * getRowSelection - 获取表格行选择对象
-   */
-  getRowSelection(): TableRowSelection<object>;
-
-  /**
-   * renderSearchForm - 渲染查询的UI
-   */
-  renderSearchForm(): React.ReactElement | null;
-
-  /**
-   * renderTableHeader - 渲染表格的头
-   */
-  renderTableHeader(): React.ReactElement | null;
-
-  /**
-   * renderTableFooter - 渲染表格的脚
-   */
-  renderTableFooter(): React.ReactElement | null;
-
-  /**
-   * getTotal - 获取表格数据的总数
-   */
-  getTotal(): number;
-
-  /**
-   * getOrderFieldProp - 获取表格的排序字段
-   */
-  getOrderFieldProp(): string;
-
-  /**
-   * getOrderProp - 获取表格的排序属性
-   */
-  getOrderProp(): string;
-
-  /**
-   * onSubTableChange - 获取表格change句柄
-   * @param pagination
-   * @param filters
-   * @param sorter
-   * @param extra
-   */
-  onSubTableChange(
-    pagination: TablePaginationConfig,
-    filters: Record<string, FilterValue | null>,
-    sorter: SorterResult<object> | SorterResult<object>[],
-    extra: TableCurrentDataSource<object>,
-  ): void;
-
-  /**
-   * clear - 清除操作
-   */
-  clear(): Promise<any>;
-
-  /**
-   * renderSearchFooterItems - 渲染SearchFooter的按钮组
-   */
-  renderSearchFooterItems(): Array<React.ReactElement> | null;
-
-  /**
-   * onSearch - 进行查询
-   */
-  onSearch(): void;
-
+export interface ISearchTableImplement {
   /**
    * showLoading - 是否显示遮罩
    */
@@ -169,6 +74,22 @@ export interface ISearchTableImplementProps {
    * fetchData - 加载数据
    */
   fetchData(): void;
+}
+
+/**
+ * SearchTableImplementProps
+ * @interface SearchTableImplementProps
+ */
+export interface SearchTableImplementProps extends SearchTableProps {
+  [props: string]: any;
+  getTableWrapperInstance?: (ref?: RefObject<HTMLDivElement>) => void;
+}
+
+export interface SearchTableImplementState extends SearchTableState {
+  [props: string]: any;
+  selectedRowKeys?: string[];
+  selectedRows?: any[];
+  searchParams?: any;
 }
 
 /**

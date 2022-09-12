@@ -2,7 +2,7 @@
 import { PermissionFun } from './permission';
 declare const _default: {
     Permission: {
-        ({ allPermission, permissions, children, noMatch, }: import("./types").IPermissionProps): JSX.Element;
+        ({ allPermission, permissions, children, noMatch, }: import("./types").PermissionProps): JSX.Element;
         defaultProps: {
             allPermission: undefined;
             permissions: string;

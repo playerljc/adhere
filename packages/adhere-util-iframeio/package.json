@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-iframeio",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "iframe的通信客户端和服务端",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.19",
+    "@baifendian/adhere-util": "^1.0.20",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

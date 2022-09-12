@@ -22,6 +22,8 @@ let ref2Status = ScrollLoad.NORMAL;
 let ref3Status = ScrollLoad.NORMAL;
 
 export default () => {
+  const [data, setData] = useState(getData());
+
   function boxPanelConfig() {
     return [
       {
@@ -411,15 +413,6 @@ export default () => {
     ];
   }
 
-  const [data, setData] = useState(getData());
-
-  useEffect(() => {
-    if (callbackHandler) {
-      callbackHandler(ScrollLoad.NORMAL);
-      callbackHandler = null;
-    }
-  }, [data]);
-
   function getData() {
     const result = [];
     result.length = page * 10;
@@ -432,6 +425,13 @@ export default () => {
       title: `Ant Design Title ${index + 1}`,
     }));
   }
+
+  useEffect(() => {
+    if (callbackHandler) {
+      callbackHandler(ScrollLoad.NORMAL);
+      callbackHandler = null;
+    }
+  }, [data]);
 
   return (
     <PlayGroundPage>

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-writingboard",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "写字板",
   "main": "lib/index.js",
   "module": "es/index.js",

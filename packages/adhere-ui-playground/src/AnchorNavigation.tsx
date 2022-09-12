@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Util from '@baifendian/adhere-util';
 
+import { AnchorNavigationProps } from './types';
 import { AnchorNavigationContext } from './AnchorNavigationContext';
 
 const selectPrefix = 'adhere-ui-playground-anchor-navigation';
@@ -12,20 +12,30 @@ const selectPrefix = 'adhere-ui-playground-anchor-navigation';
  * @classdesc 带有锚点导航的面板
  * @constructor
  */
-function AnchorNavigation(props) {
-  const [activeAnchor, setActiveAnchor] = useState<string>(props.activeAnchor);
-  const [scrollEl, setScrollEl] = useState<HTMLElement | null>(null);
+const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
+  const {
+    anchors = [],
+    anchorPosition = {
+      top: 77,
+      width: 120,
+    },
+    children,
+  } = props;
 
-  const anchorRef = useRef<HTMLElement>();
+  const [activeAnchor, setActiveAnchor] = useState<string>(props.activeAnchor || '');
+
+  const anchorRef = useRef<HTMLUListElement>(null);
   const anchorDimensionIndex = useRef<
     {
       anchor: string;
       range: {
         top: number;
-        bottom?: number;
+        bottom?: number | undefined;
       };
     }[]
   >([]);
+
+  const { scrollEl } = useContext(AnchorNavigationContext);
 
   /**
    * createAnchorDimensionIndex
@@ -37,7 +47,7 @@ function AnchorNavigation(props) {
 
     anchorDimensionIndex.current = [];
 
-    props.anchors.forEach(({ anchor }, index) => {
+    (anchors || []).forEach(({ anchor }, index) => {
       const el = document.getElementById(anchor) as HTMLElement;
 
       if (!el) return;
@@ -48,20 +58,15 @@ function AnchorNavigation(props) {
         anchor,
         range: {
           top,
-          bottom: undefined,
+          bottom:
+            index === anchorDimensionIndex.current.length - 1 ? top + el.offsetHeight : undefined,
         },
       };
 
       anchorDimensionIndex.current.push(entry);
 
       if (index !== 0) {
-        // @ts-ignore
         anchorDimensionIndex.current[index - 1].range.bottom = top;
-      }
-
-      if (index === anchorDimensionIndex.current.length - 1) {
-        // @ts-ignore
-        entry.range.bottom = top + el.offsetHeight;
       }
     });
   }
@@ -73,8 +78,8 @@ function AnchorNavigation(props) {
   function findAnchorByScrollVal(scrollVal: number) {
     return anchorDimensionIndex.current.find(
       (anchorIndexItem) =>
-        // @ts-ignore
-        scrollVal >= anchorIndexItem.range.top && scrollVal <= anchorIndexItem.range.bottom,
+        scrollVal >= anchorIndexItem.range.top &&
+        scrollVal <= (anchorIndexItem.range.bottom as number),
     );
   }
 
@@ -127,7 +132,7 @@ function AnchorNavigation(props) {
         // (anchorRef.current as HTMLElement).style.top = '0';
       } else {
         (anchorRef.current as HTMLElement).classList.add(`${selectPrefix}-affix`);
-        (anchorRef.current as HTMLElement).style.top = `${props.anchorPosition.top}px`;
+        (anchorRef.current as HTMLElement).style.top = `${anchorPosition.top}px`;
       }
     }
 
@@ -145,78 +150,58 @@ function AnchorNavigation(props) {
    * useEffect
    * @description activeAnchor change
    */
-  useEffect(() => {
-    setActiveAnchor(props.activeAnchor);
-  }, [props.activeAnchor]);
+  useEffect(() => setActiveAnchor(props.activeAnchor || ''), [props.activeAnchor]);
 
   /**
    * render jsx
    */
   return (
-    <AnchorNavigationContext.Consumer>
-      {({ scrollEl: _scrollEl }) => {
-        // @ts-ignore
-        setScrollEl(_scrollEl);
+    <div className={selectPrefix}>
+      <div className={`${selectPrefix}-auto`}>
+        <div className={`${selectPrefix}-inner`}>{children}</div>
+      </div>
 
-        return (
-          // @ts-ignore
-          <div className={selectPrefix}>
-            <div className={`${selectPrefix}-auto`}>
-              <div className={`${selectPrefix}-inner`}>{props.children}</div>
-            </div>
-
-            <ConditionalRender conditional={!!props.anchors.length}>
-              {() => (
-                <div
-                  className={`${selectPrefix}-fixed`}
-                  style={{ width: `${props.anchorPosition.width}px` }}
+      <ConditionalRender conditional={!!(anchors || []).length}>
+        {() => (
+          <div className={`${selectPrefix}-fixed`} style={{ width: `${anchorPosition.width}px` }}>
+            <ul className={`${selectPrefix}-anchor`} ref={anchorRef}>
+              {(anchors || []).map((anchor) => (
+                <li
+                  className={anchor.anchor === activeAnchor ? `${selectPrefix}-active` : ''}
+                  title={anchor.name}
                 >
-                  {/* @ts-ignore */}
-                  <ul
-                    className={`${selectPrefix}-anchor`}
-                    // @ts-ignore
-                    ref={anchorRef}
-                  >
-                    {props.anchors.map((anchor) => (
-                      <li
-                        className={anchor.anchor === activeAnchor ? `${selectPrefix}-active` : ''}
-                        title={anchor.name}
-                      >
-                        <a href={`#${anchor.anchor}`}>{anchor.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </ConditionalRender>
+                  <a href={`#${anchor.anchor}`}>{anchor.name}</a>
+                </li>
+              ))}
+            </ul>
           </div>
-        );
-      }}
-    </AnchorNavigationContext.Consumer>
+        )}
+      </ConditionalRender>
+    </div>
   );
-}
-
-AnchorNavigation.defaultProps = {
-  activeAnchor: '',
-  anchors: [],
-  anchorPosition: {
-    top: 77,
-    width: 120,
-  },
 };
 
-AnchorNavigation.propTypes = {
-  activeAnchor: PropTypes.string,
-  anchors: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-      anchor: PropTypes.string,
-    }),
-  ),
-  anchorPosition: PropTypes.shape({
-    top: PropTypes.number,
-    width: PropTypes.number,
-  }),
-};
+// AnchorNavigation.defaultProps = {
+//   activeAnchor: '',
+//   anchors: [],
+//   anchorPosition: {
+//     top: 77,
+//     width: 120,
+//   },
+// };
+//
+// AnchorNavigation.propTypes = {
+//   activeAnchor: PropTypes.string,
+//   anchors: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+//       anchor: PropTypes.string,
+//     }),
+//   ),
+//   anchorPosition: PropTypes.shape({
+//     top: PropTypes.number,
+//     width: PropTypes.number,
+//   }),
+// };
 
 export default AnchorNavigation;

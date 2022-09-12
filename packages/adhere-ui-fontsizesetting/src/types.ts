@@ -1,20 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { CSSProperties } from 'react';
 
 /**
- * IFontSizeSettingProps
- * @interface IFontSizeSettingProps
+ * FontSizeSettingProps
+ * @interface FontSizeSettingProps
  */
-export interface IFontSizeSettingProps {
+export interface FontSizeSettingProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   min: number;
   max: number;
   step: number;
   value: number;
-  onChange: Function;
-}
-
-export interface IFontSizeSettingState {
-  value: number;
+  onChange?: (value?: number) => void;
 }

@@ -1,8 +1,8 @@
 export default (context) => {
   const observer = new MutationObserver((mutationsList) => {
     const list = mutationsList.filter(
-      // @ts-ignore
-      (t) => t.type === 'childList' && t.target?.tagName?.toLowerCase() === 'colgroup',
+      (t) =>
+        t.type === 'childList' && (t.target as HTMLElement).tagName.toLowerCase() === 'colgroup',
     );
 
     if (list.length) {

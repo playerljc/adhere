@@ -1,10 +1,11 @@
 import React from 'react';
 
+import { ContextMenuContext } from './types';
+
 /**
  * ProviderContext
- * @type {React.Context<{config: {}}>}
  */
-export const ProviderContext = React.createContext({
+export const ProviderContext = React.createContext<ContextMenuContext>({
   config: {},
   el: null,
 });

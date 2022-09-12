@@ -6,7 +6,7 @@ declare const _default: {
      * @param text
      * @param zIndex
      */
-    show(parent?: HTMLElement, text?: string, zIndex?: number): Element | null;
+    show(parent?: HTMLElement, text?: string, zIndex?: number): HTMLElement;
     /**
      * hide
      * @param indicatorDom

@@ -1,40 +1,37 @@
-import React from 'react';
-import moment from 'moment';
-import Resource from '@baifendian/adhere-util-resource';
+import type { CSSProperties, ReactElement } from 'react';
+
+export interface PullRefreshRefHandle {
+  refresh: () => void;
+  reset: () => void;
+  resetUpdateTime: (updateTime: number) => Promise<void>;
+  getUpdateTime: () => number;
+}
 
 /**
- * IPullRefreshProps
- * @interface IPullRefreshProps
+ * PullRefreshProps
+ * @interface PullRefreshProps
  */
-export interface IPullRefreshProps {
+export interface PullRefreshProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   scrollClassName?: string;
-  scrollStyle?: React.CSSProperties;
+  scrollStyle?: CSSProperties;
   // pull的高
-  pullHeight: number;
+  pullHeight?: number;
   // 是否显示更新时间
   isShowUpdateTime?: boolean;
   // 更新时间毫秒数
   updateTime?: number;
   // 更新时间的格式化
   updateTimeFormat?: string;
-  renderIcon?: () => React.ReactElement;
-  renderLabel: () => React.ReactElement;
-  renderCanLabel: () => React.ReactElement;
-  renderLoadingAnimation?: () => React.ReactElement | string;
-  onPullStart: () => void;
-  onPullCanRefresh: () => void;
-  onPullRefresh: () => void;
-  onPullBottom: () => void;
-  onPullRebound: () => void;
-}
-
-/**
- * IPullRefreshState
- * @interface IPullRefreshState
- */
-export interface IPullRefreshState {
-  isCan: boolean;
-  preUpdateTime: number;
+  renderIcon?: () => any;
+  renderLabel?: () => any;
+  renderCanLabel: () => any;
+  renderLoadingAnimation?: () => ReactElement | string;
+  onPullStart?: () => void;
+  onPullCanRefresh?: () => void;
+  onPullRefresh?: () => void;
+  onPullBottom?: () => void;
+  onPullRebound?: () => void;
+  children?: any;
 }

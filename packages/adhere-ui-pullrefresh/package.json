@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-pullrefresh",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "下拉刷新",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -11,9 +11,10 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true",
     "prebuildpackage": "node ./script/build-load-awesome.js",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --packagename AdherePullRefresh --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
@@ -41,11 +42,12 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
     "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-util": "^1.0.19",
-    "@baifendian/adhere-util-intl": "^1.0.19",
-    "@baifendian/adhere-util-resource": "^1.0.19",
+    "@baifendian/adhere-ui-hooks": "^1.0.18",
+    "@baifendian/adhere-util": "^1.0.20",
+    "@baifendian/adhere-util-intl": "^1.0.20",
+    "@baifendian/adhere-util-resource": "^1.0.20",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

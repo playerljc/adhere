@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactElement, CSSProperties } from 'react';
 
 export interface ISuspense {
   fetchData?: fetchData;
@@ -10,39 +10,39 @@ export interface ISuspense {
   isFirstLoading: boolean;
 }
 
-export interface ISuspenseProps {
+export interface SuspenseProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   reset: boolean;
-  firstLoading: React.ReactElement;
+  firstLoading: ReactElement;
 }
 
-export interface ISuspenseState {}
+export interface SuspenseState {}
 
 export interface ISuspenseSync {
   isLoading: boolean;
   reset: Function;
 }
 
-export interface ISuspenseSyncProps extends ISuspenseProps {
+export interface SuspenseSyncProps extends SuspenseProps {
   data: any;
   isEmpty: () => boolean;
   renderEmpty?: Function;
   children?: any;
 }
 
-export interface ISuspenseSyncState extends ISuspenseState {
+export interface SuspenseSyncState extends SuspenseState {
   loading: boolean;
 }
 
-export interface ISuspenseASyncProps extends ISuspenseProps {
+export interface SuspenseASyncProps extends SuspenseProps {
   isEmpty: () => boolean;
   renderEmpty?: Function;
   children?: Function;
   fetchData?: Function;
 }
 
-export interface ISuspenseASyncState extends ISuspenseState {
+export interface SuspenseASyncState extends SuspenseState {
   loading: boolean;
 }
 
@@ -55,5 +55,5 @@ export interface showLoading {
 }
 
 export interface renderInner {
-  (): React.ReactElement | null;
+  (): ReactElement | null;
 }

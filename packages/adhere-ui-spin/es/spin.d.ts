@@ -1,13 +1,4 @@
-import React from 'react';
-import { ISpinProps } from './types';
-/**
- * Spin
- * @class Spin
- * @classdesc Spin
- */
-declare class Spin extends React.Component<ISpinProps, any> {
-    static defaultProps: any;
-    static propTypes: any;
-    render(): JSX.Element | null;
-}
+import { FC } from 'react';
+import { SpinProps } from './types';
+declare const Spin: FC<SpinProps>;
 export default Spin;

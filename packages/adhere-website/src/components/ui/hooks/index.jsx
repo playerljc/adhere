@@ -7,6 +7,20 @@ import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
 const { useFirst, useForceUpdate, usePrevious, useSetState } = Hooks;
 
 export default () => {
+  const [count1, setCount1] = useSetState(0);
+
+  const [count2, setCount2] = useSetState(0);
+
+  const [count3, setCount3] = useSetState(0);
+
+  const [isFirst, updateFirst] = useFirst();
+
+  const val = usePrevious(3);
+
+  console.log(val);
+
+  const forceUpdate = useForceUpdate();
+
   function boxPanelConfig() {
     return [
       {
@@ -177,20 +191,6 @@ export default () => {
       },
     ];
   }
-
-  const [count1, setCount1] = useSetState(0);
-
-  const [count2, setCount2] = useSetState(0);
-
-  const [count3, setCount3] = useSetState(0);
-
-  const [isFirst, updateFirst] = useFirst();
-
-  const val = usePrevious(3);
-
-  console.log(val);
-
-  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     console.log('isFirst', isFirst);

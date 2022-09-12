@@ -1,23 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { IConditionalRenderProps } from './types';
+import type { ConditionalRenderProps, ConditionalRenderFunction } from './types';
 
 import ConditionalRenderShow from './show';
 import ConditionalRenderVisibility from './visibility';
 
-/**
- * ConditionalRender - 条件渲染
- * @class ConditionalRender
- * @classdesc ConditionalRender
- */
-function ConditionalRender({ conditional, noMatch, children }: IConditionalRenderProps) {
+const ConditionalRender: ConditionalRenderFunction<ConditionalRenderProps> = (props) => {
+  const { conditional, noMatch, children } = props;
+
   if (conditional) {
-    return children();
+    return children?.();
   }
 
   return noMatch ? noMatch() : null;
-}
+};
 
 ConditionalRender.Show = ConditionalRenderShow;
 ConditionalRender.Visibility = ConditionalRenderVisibility;
@@ -29,15 +25,7 @@ ConditionalRender.Visibility = ConditionalRenderVisibility;
  * @param match
  * @param noMatch
  */
-ConditionalRender.conditionalRender = function ({
-  conditional,
-  match,
-  noMatch,
-}: {
-  conditional: boolean;
-  match: JSX.Element;
-  noMatch: JSX.Element | null;
-}): JSX.Element | null {
+ConditionalRender.conditionalRender = function ({ conditional, match, noMatch }) {
   return conditional ? match : noMatch || null;
 };
 
@@ -51,8 +39,7 @@ ConditionalRender.conditionalArr = function (arr: any[]): any[] {
   return arr.filter((t) => {
     if ('props' in t && 'conditional' in t.props) {
       if (!t.props.conditional) {
-        if (t.props.noMatch && t.props.noMatch?.() !== null) return true;
-        return false;
+        return t.props.noMatch && t.props.noMatch?.() !== null;
       }
     }
 
@@ -67,16 +54,6 @@ ConditionalRender.conditionalArr = function (arr: any[]): any[] {
  */
 ConditionalRender.conditionalNotEmptyArr = function (arr: any[]): any[] {
   return arr.filter((t) => !(t === null || t === undefined));
-};
-
-ConditionalRender.defaultProps = {
-  conditional: true,
-  noMatch: () => null,
-};
-
-ConditionalRender.propTypes = {
-  conditional: PropTypes.bool,
-  noMatch: PropTypes.func,
 };
 
 export default ConditionalRender;

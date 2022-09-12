@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Requireable } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
@@ -9,7 +9,7 @@ import Card, { cardPropTypes } from './Card';
 import Message from './Message';
 import Constant from './constant';
 
-import { IPlayGroundProps, IPlayGroundState } from './types';
+import { PlayGroundProps, PlayGroundState } from './types';
 
 const selectPrefix = 'adhere-ui-playground';
 
@@ -18,21 +18,23 @@ const selectPrefix = 'adhere-ui-playground';
  * @class APlayGround
  * @classdesc APlayGround
  */
-abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
-  static propTypes: { cardProps: any; expand: any; id: any; isActive: any; config: any };
-
-  static defaultProps: IPlayGroundProps;
-
+abstract class APlayGround<
+  P extends PlayGroundProps = PlayGroundProps,
+  S extends PlayGroundState = PlayGroundState,
+> extends React.Component<P, S> {
   protected isFirst: boolean = true;
 
-  protected clipboardRef = React.createRef<HTMLElement>();
-
-  // @ts-ignore
-  protected state = {
-    expand: this.props.expand,
-  };
+  protected clipboardRef = React.createRef<HTMLDivElement>();
 
   protected actionConfig = [this.renderClipboardAction, this.renderExpandAction];
+
+  static defaultProps: PlayGroundProps;
+  static propTypes: {
+    cardProps: any;
+    expand: Requireable<boolean>;
+    id: any;
+    isActive: Requireable<boolean>;
+  };
 
   /**
    * renderExpandAction
@@ -48,15 +50,25 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
    */
   protected abstract getClipboardText(e: React.MouseEvent): Promise<string>;
 
-  protected componentWillReceiveProps(nextProps) {
+  constructor(props) {
+    super(props);
+
+    // @ts-ignore
+    this.state = {
+      expand: this.props.expand,
+      config: [],
+      activeKey: '',
+    };
+  }
+  componentWillReceiveProps(nextProps) {
     this.setState({
       expand: nextProps.expand,
     });
   }
 
   componentWillUpdate(
-    nextProps: Readonly<IPlayGroundProps>,
-    nextState: Readonly<IPlayGroundState>,
+    nextProps: Readonly<PlayGroundProps>,
+    nextState: Readonly<PlayGroundState>,
     nextContext: any,
   ) {
     if (this.isFirst && nextState.expand) {
@@ -77,7 +89,6 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
   protected renderClipboardAction() {
     return (
       <div
-        // @ts-ignore
         ref={this.clipboardRef}
         onClick={(e) => {
           this.getClipboardText(e).then((text) => {
@@ -105,14 +116,9 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
 
     return (
       <ConditionalRender
-        conditional={expand}
-        // @ts-ignore
+        conditional={!!expand}
         noMatch={() => (
-          <div
-            onClick={() => {
-              this.setState({ expand: true });
-            }}
-          >
+          <div onClick={() => this.setState({ expand: true })}>
             <img
               title={Intl.v('收起')}
               className={`${selectPrefix}-action-btn`}
@@ -123,11 +129,7 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
         )}
       >
         {() => (
-          <div
-            onClick={() => {
-              this.setState({ expand: false });
-            }}
-          >
+          <div onClick={() => this.setState({ expand: false })}>
             <img
               title={Intl.v('展开')}
               className={`${selectPrefix}-action-btn`}
@@ -144,19 +146,18 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
    * render
    * @return {*}
    */
-  protected render() {
+  render() {
     const { children, cardProps, isActive, id } = this.props;
 
-    const idProps = {};
-    // @ts-ignore
-    id && (idProps.id = id);
+    const idProps = {
+      id,
+    };
 
     return (
       <div
         {...idProps}
         className={classNames(selectPrefix, isActive ? `${selectPrefix}-active` : '')}
       >
-        {/* @ts-ignore*/}
         <Card actions={this.renderAction()} {...(cardProps || {})}>
           {children}
         </Card>
@@ -166,18 +167,16 @@ abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGround
   }
 }
 
-export const APlayGroundDefaultProps: IPlayGroundProps = {
-  id: undefined,
-  // @ts-ignore
-  cardProps: null,
+export const APlayGroundDefaultProps: PlayGroundProps = {
+  codeText: '',
+  id: '',
+  cardProps: {},
   isActive: false,
   expand: false,
 };
 
 export const APlayGroundPropTypes = {
-  // @ts-ignore
   id: PropTypes.string,
-  // @ts-ignore
   cardProps: PropTypes.shape(cardPropTypes),
   isActive: PropTypes.bool,
   expand: PropTypes.bool,
@@ -185,7 +184,6 @@ export const APlayGroundPropTypes = {
 
 APlayGround.defaultProps = APlayGroundDefaultProps;
 
-// @ts-ignore
 APlayGround.propTypes = APlayGroundPropTypes;
 
 export default APlayGround;

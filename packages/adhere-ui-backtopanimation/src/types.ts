@@ -1,15 +1,15 @@
-import React from 'react';
+import type { CSSProperties } from 'react';
 
 /**
- * IBackTopAnimationProps
- * @interface IBackTopAnimationProps
+ * BackTopAnimationProps
+ * @interface BackTopAnimationProps
  */
-export interface IBackTopAnimationProps {
+export type BackTopAnimationProps = {
   className?: string;
-  style?: React.CSSProperties;
-  zIndex?: string;
+  style?: CSSProperties;
+  zIndex?: string | number;
   duration?: number;
-  target: () => HTMLElement | Window;
-  onTrigger: () => Promise<null>;
+  getContainer: () => HTMLElement;
+  onTrigger: () => Promise<void>;
   onScrollTop?: (scrollTopVal: number) => void;
-}
+};

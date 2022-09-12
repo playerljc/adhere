@@ -37,7 +37,12 @@ export default () => {
   // const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
 
   function fetchCommentData({ page, limit }) {
-    console.log('fetchCommentData', page, limit);
+    console.log(
+      'fetchCommentData',
+      page,
+      limit,
+      CommentData.slice((page - 1) * limit, page * limit),
+    );
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({

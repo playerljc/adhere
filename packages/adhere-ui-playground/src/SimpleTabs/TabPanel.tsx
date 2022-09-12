@@ -1,32 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, useContext } from 'react';
 
+import { TabPanelProps } from '../types';
 import { TabContext } from './Context';
 
 const selectorPrefix = 'adhere-ui-playground-simple-tabs-panel';
 
-const TabPanel = ({ className, children, index }) => (
-  <TabContext.Consumer>
-    {({ activeKey = '' }) => {
-      return (
-        <div className={`${selectorPrefix} ${className} ${activeKey === index ? `active` : ''}`}>
-          {children}
-        </div>
-      );
-    }}
-  </TabContext.Consumer>
-);
+const TabPanel: FC<TabPanelProps> = ({ className = '', children, index = '' }) => {
+  const { activeKey } = useContext(TabContext);
 
-TabPanel.defaultProps = {
-  title: '',
-  index: '',
-  className: '',
+  return (
+    <div className={`${selectorPrefix} ${className} ${activeKey === index ? `active` : ''}`}>
+      {children}
+    </div>
+  );
 };
 
-TabPanel.propTypes = {
-  title: PropTypes.node,
-  index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string,
-};
+// TabPanel.defaultProps = {
+//   title: '',
+//   index: '',
+//   className: '',
+// };
+//
+// TabPanel.propTypes = {
+//   title: PropTypes.node,
+//   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+//   className: PropTypes.string,
+// };
 
 export default TabPanel;

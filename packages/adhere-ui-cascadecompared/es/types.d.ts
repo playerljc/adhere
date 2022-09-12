@@ -1,54 +1,58 @@
-import React from 'react';
-export interface IColumnConfig {
+import type { ReactElement, CSSProperties } from 'react';
+export interface ColumnConfig {
     dataIndex: string;
     isFixed: boolean;
     width: string | number;
     render: Function;
     className: string;
-    style: React.CSSProperties;
+    style: CSSProperties;
 }
 export interface ITableConfig {
-    columns: Array<IColumnConfig>;
-    dataSource: Array<object>;
+    columns: ColumnConfig[];
+    dataSource: Record<string, any>[];
 }
-export interface IIndicatorTableConfig {
-    columns: Array<IColumnConfig>;
-    dataSource: object;
+export interface IndicatorTableConfig {
+    columns: ColumnConfig[];
+    dataSource: Record<string, any>;
 }
 export interface IMasterItem extends ITableConfig {
-    title: React.ReactElement;
+    title: ReactElement;
     className: string;
-    style: React.CSSProperties;
+    style: CSSProperties;
     fixedWrapClassName: string;
-    fixedWrapStyle: React.CSSProperties;
+    fixedWrapStyle: CSSProperties;
     autoWrapClassName: string;
-    autoWrapStyle: React.CSSProperties;
+    autoWrapStyle: CSSProperties;
     autoInnerClassName: string;
-    autoInnerStyle: React.CSSProperties;
+    autoInnerStyle: CSSProperties;
 }
 /**
- * ICascadeComparedProps
- * @interface ICascadeComparedProps
+ * CascadeComparedProps
  */
-export interface ICascadeComparedProps {
+export interface CascadeComparedProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     indicatorClassName?: string;
-    indicatorStyle?: React.CSSProperties;
+    indicatorStyle?: CSSProperties;
     indicatorFixedWrapClassName?: string;
-    indicatorFixedWrapStyle?: React.CSSProperties;
+    indicatorFixedWrapStyle?: CSSProperties;
     indicatorAutoWrapClassName?: string;
-    indicatorAutoWrapStyle?: React.CSSProperties;
+    indicatorAutoWrapStyle?: CSSProperties;
     masterClassName?: string;
-    masterStyle?: React.CSSProperties;
+    masterStyle?: CSSProperties;
     masterInnerClassName?: string;
-    masterInnerStyle?: React.CSSProperties;
+    masterInnerStyle?: CSSProperties;
     masterStickFixedClassName?: string;
-    masterStickFixedStyle?: React.CSSProperties;
+    masterStickFixedStyle?: CSSProperties;
     masterStickInnerClassName?: string;
-    masterStickInnerStyle?: React.CSSProperties;
-    indicator: IIndicatorTableConfig;
-    master: Array<IMasterItem>;
-    onStickChange: Function;
+    masterStickInnerStyle?: CSSProperties;
+    indicator: IndicatorTableConfig;
+    master: IMasterItem[];
+    onStickChange: (index: number) => void;
     defaultCellWidth: number | string;
+}
+export interface CascadeComparedHandle {
+    scrollToByIndex: (index: number, duration: number) => void;
+    scrollToByHeaderEl: (headerEl: HTMLElement, duration: number) => void;
+    scrollToByColumn: (columnIndex: number) => void;
 }

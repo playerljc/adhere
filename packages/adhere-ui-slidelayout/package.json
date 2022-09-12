@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-slidelayout",
-  "version": "1.0.18-fix.1",
+  "version": "1.0.20",
   "description": "实现抽屉布局",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -11,8 +11,9 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --packagename AdhereSlideLayout --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"

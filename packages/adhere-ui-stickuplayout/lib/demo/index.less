@@ -1,0 +1,57 @@
+.StickupLayout {
+  .adhere-ui-stickuplayout-fixed {
+    > .adhere-ui-stickuplayout-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      > .title {
+        font-weight: bold;
+      }
+    }
+  }
+  .adhere-ui-stickuplayout-inner {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    > .adhere-ui-stickuplayout-item {
+      position: static;
+      margin: 0;
+      padding: 0;
+      &::before {
+        width: 0;
+        height: 0;
+        content: '';
+      }
+      > .adhere-ui-stickuplayout-item-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        > .title {
+          font-weight: bold;
+        }
+      }
+
+      > .adhere-ui-stickuplayout-item-content {
+        > table {
+          width: 100%;
+          table-layout: fixed;
+          border-collapse: collapse;
+          > tr {
+            > td {
+              padding: 15px;
+              font-size: 12px;
+              border: 1px solid rgba(0, 0, 0, 0.1);
+              &:first-child {
+                background-color: #f8f8f8;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

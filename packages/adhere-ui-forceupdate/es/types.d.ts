@@ -1,8 +1,10 @@
-import React from 'react';
 /**
- * IForceUpdateStates
- * @interface IForceUpdateStates
+ * ForceUpdateProps
+ * @interface ForceUpdateProps
  */
-export interface IForceUpdateStates {
-    renderDOM: React.ReactNode | null;
+export interface ForceUpdateProps {
+    children?: any;
+}
+export interface ForceUpdateRefHandle {
+    reMount: () => Promise<void>;
 }

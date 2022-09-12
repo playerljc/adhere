@@ -1,22 +1,9 @@
-import React from 'react';
-import { IBackTopAnimationProps } from './types';
+import { FC } from 'react';
+import { BackTopAnimationProps } from './types';
 /**
  * BackTopAnimation
- * @class BackTopAnimation
- * @classdesc BackTopAnimation
+ * @param props
+ * @constructor
  */
-declare class BackTopAnimation extends React.Component<IBackTopAnimationProps> {
-    static defaultProps: any;
-    static propTypes: any;
-    private el;
-    private maskEl;
-    private scrollEl;
-    private key;
-    componentDidMount(): void;
-    componentWillUnmount(): void;
-    private initScrollEvent;
-    private renderMask;
-    private onTrigger;
-    render(): JSX.Element;
-}
+declare const BackTopAnimation: FC<BackTopAnimationProps>;
 export default BackTopAnimation;

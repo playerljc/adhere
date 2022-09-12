@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from 'antd';
+
+import Parent from './parent';
 
 import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
 
@@ -9,38 +10,68 @@ export default () => {
       {
         id: `p1`,
         name: `强制刷新组件及其子组件`,
-        mode: 'code',
-        scope: { React },
-        codeText: `
-import React,{ useRef } from 'react';
-import { Button} from 'antd';
-import { ForceUpdate } from '@baifendian/adhere'; // 1、引入组件
+        type: 'PlayGroundTab',
+        active: 'parent.jsx',
+        config: [
+          {
+            key: 'parent.jsx',
+            title: 'parent.jsx',
+            codeText: `
+  import React, { useRef } from 'react';
+  import { Button } from 'antd';
+  import { ForceUpdate, Hooks, Space } from '@baifendian/adhere';
 
-import styles from './index.less';
+  import Sub from './sub';
 
-const Index = (props) => {
-  // 1、定义ref
-  const refreshRef = useRef(null);
+  const { useSetState } = Hooks;
 
-  // 2、重新挂载
-  function refresh() {
-    refreshRef.current.reMount();
-  }
+  export default () => {
+    const ref = useRef();
+    const [count, setCount] = useSetState(0);
 
-  return (
-    <div>
-      <button onClick={refresh}>重新挂载</button>
-      <ForceUpdate ref={refreshRef}>
-        // 需要更新的组件放在这里。
+    return (
+      <ForceUpdate ref={ref}>
+        <div>
+          <Space.Group direction="horizontal">
+            <Button type="primary" onClick={() => setCount((_count) => _count + 1)}>
+              递增
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                setCount(0, () => ref.current.reMount());
+              }}
+            >
+              重置
+            </Button>
+          </Space.Group>
+          <Sub count={count} />
+        </div>
       </ForceUpdate>
-    </div>
-  );
-};
+    );
+  };
+            `,
+          },
+          {
+            key: 'sub.jsx',
+            title: 'sub.jsx',
+            codeText: `
+  import React, { useEffect } from 'react';
 
-export default Index;
-      `,
-        type: 'PlayGround',
-        renderChildren: () => <Button type="primary">强制刷新组件</Button>,
+  export default (props) => {
+    useEffect(() => {
+      console.log('子组件挂载');
+    }, []);
+
+    useEffect(() => {
+      console.log('子组件更新');
+    });
+    return <div>子组件:{props.count}</div>;
+  };
+            `,
+          },
+        ],
+        renderChildren: () => <Parent />,
       },
     ];
   }

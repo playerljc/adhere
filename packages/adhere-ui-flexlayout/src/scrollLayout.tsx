@@ -1,27 +1,25 @@
-import React, { forwardRef, useContext, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef, createContext, ForwardRefRenderFunction, useContext } from 'react';
 import classNames from 'classnames';
 
-import { IScrollLayoutProps } from './types';
+import { ScrollLayoutProps, ScrollLayoutContextType } from './types';
 
 const selectorPrefix = 'adhere-ui-flexlayout-scrolllayout';
 
 /**
  * ScrollLayoutContext
- * @type {React.Context<{store: {}}>}
  */
-export const ScrollLayoutContext = React.createContext({
+export const ScrollLayoutContext = createContext<ScrollLayoutContextType>({
   getEl: () => document.body,
 });
 
 /**
  * useScrollLayout
  */
-export function useScrollLayout() {
+export const useScrollLayout = () => {
   const result = useContext(ScrollLayoutContext);
 
   return { ...result };
-}
+};
 
 /**
  * ScrollLayout
@@ -30,43 +28,27 @@ export function useScrollLayout() {
  * @return {JSX.Element}
  * @constructor
  */
-function ScrollLayout(props: IScrollLayoutProps, wrapRef) {
-  console.log('wrapRef', wrapRef);
-
-  const ref = useRef(wrapRef);
+const ScrollLayout: ForwardRefRenderFunction<HTMLDivElement, ScrollLayoutProps> = (
+  props,
+  wrapRef,
+) => {
+  const { children, className, style, scrollY } = props;
 
   return (
     <ScrollLayoutContext.Provider
       value={{
-        getEl: () => {
-          console.log('wrapRef', ref?.current);
-          return ref?.current;
-        },
+        getEl: () => wrapRef?.['current'],
       }}
     >
       <div
-        ref={ref}
-        className={classNames(selectorPrefix, props.className || '')}
-        style={{ overflowY: props.scrollY ? 'auto' : 'hidden', ...(props.style || {}) }}
+        ref={wrapRef}
+        className={classNames(selectorPrefix, className || '')}
+        style={{ overflowY: scrollY ? 'auto' : 'hidden', ...(style || {}) }}
       >
-        {props.children}
+        {children}
       </div>
     </ScrollLayoutContext.Provider>
   );
-}
-
-const Wrap = forwardRef(ScrollLayout);
-
-Wrap.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  scrollY: PropTypes.bool.isRequired,
 };
 
-Wrap.defaultProps = {
-  className: '',
-  style: {},
-  scrollY: true,
-};
-
-export default Wrap;
+export default forwardRef<HTMLDivElement, ScrollLayoutProps>(ScrollLayout);

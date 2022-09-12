@@ -21,8 +21,8 @@ export default function () {
   const [iframeReady, setIframeReady] = useState(false);
   const iframeRef = useRef();
 
-  const sourceOrigin = 'http://localhost:8080';
-  const targetOrigin = 'http://localhost:8080';
+  const sourceOrigin = window.location.origin;
+  const targetOrigin = window.location.origin;
 
   const fetch = useRef(new Fetch(window, sourceOrigin));
 

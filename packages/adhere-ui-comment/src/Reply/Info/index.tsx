@@ -1,7 +1,7 @@
-import { INodeProps } from '@/types';
-import React from 'react';
+import React, { FC } from 'react';
+import { NodeProps } from '../../types';
 
-import Node, { defaultProps, propTypes } from '../../Components/Node';
+import Node from '../../Components/Node';
 
 /**
  * ReplyInfo
@@ -9,12 +9,6 @@ import Node, { defaultProps, propTypes } from '../../Components/Node';
  * @constructor
  * @classdesc 回复节点
  */
-function ReplyInfo(props: INodeProps) {
-  return <Node {...props} isReply />;
-}
-
-ReplyInfo.defaultProps = defaultProps;
-
-ReplyInfo.propTypes = propTypes;
+const ReplyInfo: FC<NodeProps> = (props) => <Node {...props} isReply />;
 
 export default ReplyInfo;

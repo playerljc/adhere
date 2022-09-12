@@ -1,6 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-// @ts-ignore
+import React, { FC, useLayoutEffect, useRef, useState } from 'react';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { Button, Input, Popover } from 'antd';
@@ -23,7 +21,7 @@ import uk from '@emoji-mart/data/i18n/uk.json';
 import zh from '@emoji-mart/data/i18n/zh.json';
 
 import EmojiIcon from './emoji';
-import { IReplyProps } from '@/types';
+import { ReplyProps } from '../../types';
 
 const { TextArea } = Input;
 
@@ -54,13 +52,15 @@ const LOCAL_MAP = new Map<string, any>([
  * @constructor
  * @classdesc 回复
  */
-function Reply(props: IReplyProps) {
+const Reply: FC<ReplyProps> = (props) => {
+  const { local = 'zh', emojiPickerProps = {}, onResult, onCancel } = props;
+
   const [value, setValue] = useSetState<string>('');
 
   // 回复内容的textarea
-  const textAreaRef = useRef();
+  const textAreaRef = useRef<HTMLDivElement>(null);
 
-  const emojiWrapRef = useRef<HTMLDivElement>();
+  const emojiWrapRef = useRef<HTMLDivElement>(null);
 
   const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
 
@@ -70,9 +70,7 @@ function Reply(props: IReplyProps) {
    */
   function onEmojiSelect({ native }) {
     // 获取textarea的dom
-    const textareaEl = (textAreaRef?.current as unknown as HTMLElement)?.querySelector(
-      'textarea',
-    ) as HTMLTextAreaElement;
+    const textareaEl = textAreaRef?.current?.querySelector('textarea') as HTMLTextAreaElement;
 
     // 光标开始索引
     const { selectionStart } = textareaEl;
@@ -92,13 +90,9 @@ function Reply(props: IReplyProps) {
 
   useLayoutEffect(() => {
     function onDocBodyClick(e) {
-      // console.log('onDocBodyClick');
       const target = e.target;
 
-      const textareaEl = textAreaRef?.current as unknown as HTMLElement;
-
-      // console.log('target', target);
-      // console.log('textAreaRef.current', textareaEl);
+      const textareaEl = textAreaRef?.current as HTMLDivElement;
 
       if (![textareaEl.querySelector('textarea')].includes(target)) {
         setEmojiIconWrapVisible(false);
@@ -106,7 +100,6 @@ function Reply(props: IReplyProps) {
     }
 
     function onEmojiWrapClick(e) {
-      // console.log('onEmojiIconWrapClick');
       e.stopPropagation();
     }
 
@@ -116,11 +109,10 @@ function Reply(props: IReplyProps) {
       document.body.removeEventListener('click', onDocBodyClick);
       (emojiWrapRef?.current! as HTMLElement)?.removeEventListener?.('click', onEmojiWrapClick);
     };
-  }, []);
+  });
 
   return (
     <div className={`${selectorPrefix}`}>
-      {/*@ts-ignore*/}
       <div className={`${selectorPrefix}-textarea-wrap`} ref={textAreaRef}>
         <TextArea
           className={`${selectorPrefix}-textarea`}
@@ -133,21 +125,18 @@ function Reply(props: IReplyProps) {
         />
       </div>
 
-      {/*@ts-ignore*/}
       <div ref={emojiWrapRef} className={`${selectorPrefix}-emoji-wrap`} />
 
       <div className={`${selectorPrefix}-toolbar`}>
         <Popover
           placement="bottomLeft"
-          // trigger="click"
-          // @ts-ignore
-          getPopupContainer={() => emojiWrapRef.current}
+          getPopupContainer={() => emojiWrapRef.current!}
           content={
             <Picker
               data={data}
-              i18n={LOCAL_MAP.get(props.local || 'zh')}
+              i18n={LOCAL_MAP.get(local || 'zh')}
               onEmojiSelect={onEmojiSelect}
-              {...(props.emojiPickerProps || {})}
+              {...(emojiPickerProps || {})}
             />
           }
           visible={emojiIconWrapVisible}
@@ -155,7 +144,7 @@ function Reply(props: IReplyProps) {
           <div
             onClick={(e) => {
               e.stopPropagation();
-              setEmojiIconWrapVisible(!emojiIconWrapVisible);
+              setEmojiIconWrapVisible((v) => !v);
             }}
           >
             <EmojiIcon className={`${selectorPrefix}-toolbar-item-emoji`} />
@@ -168,28 +157,19 @@ function Reply(props: IReplyProps) {
             className={`${selectorPrefix}-toolbar-item`}
             disabled={!value}
             onClick={() => {
-              props?.onResult?.(value.trim());
+              onResult?.(value.trim());
             }}
           >
             {Intl.v('添加')}
           </Button>
 
-          <Button className={`${selectorPrefix}-toolbar-item`} onClick={() => props?.onCancel?.()}>
+          <Button className={`${selectorPrefix}-toolbar-item`} onClick={() => onCancel?.()}>
             {Intl.v('取消')}
           </Button>
         </div>
       </div>
     </div>
   );
-}
-
-Reply.defaultProps = {};
-
-Reply.propTypes = {
-  onCancel: PropTypes.func,
-  onResult: PropTypes.func,
-  local: PropTypes.string,
-  emojiPickerProps: PropTypes.object,
 };
 
 export default Reply;

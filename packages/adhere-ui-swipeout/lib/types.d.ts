@@ -1,24 +1,25 @@
-import React from 'react';
+import { CSSProperties, ReactElement } from 'react';
 /**
- * ISwipeOutProps
- * @interface ISwipeOutProps
+ * SwipeOutProps
+ * @interface SwipeOutProps
  */
-export interface ISwipeOutProps {
+export interface SwipeOutProps {
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     beforeClassName?: string;
-    beforeStyle?: React.CSSProperties;
+    beforeStyle?: CSSProperties;
     afterClassName?: string;
-    afterStyle?: React.CSSProperties;
+    afterStyle?: CSSProperties;
     contentClassName?: string;
-    contentStyle?: React.CSSProperties;
-    beforeShow: boolean;
-    afterShow: boolean;
-    direction: 'horizontal' | 'vertical';
-    before: () => React.ReactElement;
-    after: () => React.ReactElement;
-    duration: number;
-    onInit: () => void;
-    slideChangeTransitionStart: () => void;
-    slideChangeTransitionEnd: () => void;
+    contentStyle?: CSSProperties;
+    beforeShow?: boolean;
+    afterShow?: boolean;
+    direction?: 'horizontal' | 'vertical';
+    before?: () => ReactElement;
+    after?: () => ReactElement;
+    duration?: number;
+    onInit?: () => void;
+    slideChangeTransitionStart?: (...args: any) => any;
+    slideChangeTransitionEnd?: (...args: any) => any;
+    children?: any;
 }

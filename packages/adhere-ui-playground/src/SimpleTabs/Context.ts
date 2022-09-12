@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const TabContext = React.createContext({
+import { TabContextValue } from '../types';
+
+export const TabContext = React.createContext<TabContextValue>({
   activeKey: '',
 });

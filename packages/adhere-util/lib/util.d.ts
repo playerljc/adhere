@@ -114,9 +114,7 @@ declare const _default: {
         height: number;
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
-    toPoint(percent: string): number; /**
-     * 函数节流
-     */
+    toPoint(percent: string): number;
     toPercent(point: number): string;
     straightLineIntersection(p1: import("./types").IPoint, p2: import("./types").IPoint, p3: import("./types").IPoint, p4: import("./types").IPoint): import("./types").IPoint;
     getA3Point({ p1, p2, distance }: {
@@ -158,7 +156,7 @@ declare const _default: {
     createElement(htmlStr: string): HTMLElement;
     getTopDom(target: any, selector: string): HTMLElement | null;
     on(el: any, tag: string, type: string, handler: Function, capture?: boolean): void;
-    off(el: Element, tag: string, type: string, handler: Function): void;
+    off(el: HTMLElement, tag: string, type: string, handler: Function): void;
     addClass(el: any, classes?: string): void;
     removeClass(el: any, classes?: string): void;
     hasClass(el: any, className: string): boolean;

@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import { Input, Button, Card, Space, Progress } from 'antd';
 
 import Iframe from '../index';
-// @ts-ignore
+//
 import styles from './client.less';
 
 type UpLoadItem = {
@@ -31,7 +31,7 @@ export default function () {
    */
   function onSend() {
     fetch.current
-      // @ts-ignore
+      //
       .put(iframeRef?.current?.contentWindow, targetOrigin, '/display', {
         data: value,
       });
@@ -42,7 +42,7 @@ export default function () {
    */
   function onGetDoc() {
     fetch.current
-      // @ts-ignore
+      //
       .get(iframeRef?.current?.contentWindow, targetOrigin, '/getDoc', {
         data: value,
       })
@@ -64,9 +64,9 @@ export default function () {
 
     reader.addEventListener('load', (e1) => {
       fetch.current
-        // @ts-ignore
+        //
         .put(iframeRef?.current?.contentWindow, targetOrigin, '/uploadImg', {
-          // @ts-ignore
+          //
           data: e1.target.result,
         });
     });
@@ -93,7 +93,7 @@ export default function () {
 
     const reader = new FileReader();
     reader.addEventListener('load', (e1) => {
-      // @ts-ignore
+      //
       const buffer = e1.target.result as ArrayBuffer;
 
       // 段的大小 1kb
@@ -128,7 +128,7 @@ export default function () {
         console.log(`第${index + 1}次上传开始`);
 
         fetch.current
-          // @ts-ignore
+          //
           .get(iframeRef?.current?.contentWindow, targetOrigin, '/progressUploadFile', {
             data: {
               segmentSize,
@@ -225,7 +225,7 @@ export default function () {
         <h1 style={{ textAlign: 'center' }}>Iframe</h1>
         <iframe
           name="server"
-          // @ts-ignore
+          //
           ref={iframeRef}
           className={styles.Iframe}
           src="/server"

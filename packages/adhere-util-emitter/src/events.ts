@@ -3,7 +3,10 @@
  * @class Events
  * @classdesc Events
  */
+
 class Events {
+  Events = Events;
+
   private events: {};
 
   /**
@@ -121,11 +124,11 @@ class Events {
     let changeLogs: Array<{ key: symbol; status: boolean; fn: Function }> = [];
 
     types.forEach((type) => {
-      const key = Symbol.for(type);
-
       const fn = () => {
-        // @ts-ignore
-        changeLogs.find((t) => t.key === key).status = true;
+        const item = changeLogs.find((t) => t.key === key);
+        if (item) {
+          item.status = true;
+        }
 
         if (changeLogs.every((t) => t.status)) {
           if (handler) {
@@ -135,6 +138,8 @@ class Events {
           }
         }
       };
+
+      const key = Symbol.for(type);
 
       changeLogs.push({
         key,
@@ -164,8 +169,11 @@ class Events {
       const key = Symbol.for(type);
 
       const fn = () => {
-        // @ts-ignore
-        changeLogs.find((t) => t.key === key).status = true;
+        const item = changeLogs.find((t) => t.key === key);
+
+        if (item) {
+          item.status = true;
+        }
 
         if (changeLogs.some((t) => t.status)) {
           if (handler) {
@@ -227,13 +235,11 @@ class Events {
    * @param {string} type
    * @param {Object} params
    */
-  // @ts-ignore
-  trigger(type: string | symbol, ...params: Array) {
-    let result;
+  trigger(type: string | symbol, ...params: Array<any>) {
+    let result = null;
 
     if (this.hasType(type)) {
       this.events[type].handlers.forEach((handler) => {
-        // @ts-ignore
         result = handler(...params);
 
         // type是字符串的时候发送symbol消息

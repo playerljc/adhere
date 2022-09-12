@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { IDeal } from './types';
+import type { Deal } from './types';
 
 /**
  * check
@@ -72,8 +72,6 @@ function arrayDeal({
   prop: string;
   value: string;
 }): ReactElement[] {
-  // console.log('arrayDeal', element);
-
   return element.map((c) =>
     checkAndDeal({
       element: c,
@@ -111,11 +109,8 @@ export function deal({
   conditional,
   prop,
   value,
-}: IDeal): ReactElement | ReactElement[] | null {
-  // console.log('element', element);
+}: Deal): ReactElement | ReactElement[] | null {
   if (!element) return element;
-  // console.log('typeString', element.type.toString());
-  // console.log('type', element.type === Symbol.for('react.fragment'));
 
   // array
   if (Array.isArray(element)) {
@@ -123,7 +118,6 @@ export function deal({
   }
   // fragment
   else {
-    // @ts-ignore
     if (element.type === Symbol.for('react.fragment')) {
       const frChildren = deal({ element: element.props.children, conditional, prop, value });
       element = cloneElement(

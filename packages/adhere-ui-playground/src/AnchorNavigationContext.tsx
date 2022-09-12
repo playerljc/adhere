@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const AnchorNavigationContext = React.createContext({
+import { AnchorNavigationContextValue } from './types';
+
+export const AnchorNavigationContext = React.createContext<AnchorNavigationContextValue>({
   scrollEl: null,
 });

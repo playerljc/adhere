@@ -1,72 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import React, { FC } from 'react';
 
-import { ISplitProps } from './types';
+import { SplitFunction, SplitProps, SplitGroupProps } from './types';
 
 const selectorPrefix = 'adhere-ui-split';
 
-/**
- * SplitGroup
- * @class SplitGroup
- * @classdesc SplitGroup
- */
-class SplitGroup extends React.Component<ISplitProps, any> {
-  static defaultProps: any;
-  static propTypes: any;
+const SplitGroup: FC<SplitGroupProps> = (props) => {
+  const { children, ...others } = props;
 
-  render() {
-    const { children, ...others } = this.props;
-    // 3
-    // 0 1 2
+  return (
+    <>
+      {Array.isArray(children)
+        ? children.map((component, index) => {
+            if (index !== 0) {
+              return (
+                <>
+                  <Split {...others} key={index} />
+                  {component}
+                </>
+              );
+            }
 
-    return (
-      <>
-        {Array.isArray(children)
-          ? // @ts-ignore
-            children.map((component, index) => {
-              if (index !== 0) {
-                // @ts-ignore
-                return (
-                  <>
-                    <Split {...others} key={index} />
-                    {component}
-                  </>
-                );
-              }
-
-              return component;
-            })
-          : children}
-      </>
-    );
-  }
-}
-
-SplitGroup.defaultProps = {
-  direction: 'vertical',
-  size: 20,
-  className: '',
+            return component;
+          })
+        : children}
+    </>
+  );
 };
 
-SplitGroup.propTypes = {
-  direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  className: PropTypes.string,
-};
+const Split: SplitFunction<SplitProps> = (props) => {
+  const { className = '', direction = 'vertical', size = 20 } = props;
 
-/**
- * Split
- * @class Split
- * @classdesc Split
- */
-class Split extends React.Component<ISplitProps, any> {
-  static defaultProps: any;
-  static propTypes: any;
-  static Group = SplitGroup;
-
-  getStyle() {
-    const { direction, size } = this.props;
-
+  function getStyle() {
     if (direction === 'horizontal') {
       return {
         display: 'inline-block',
@@ -83,23 +48,8 @@ class Split extends React.Component<ISplitProps, any> {
     };
   }
 
-  render(): React.ReactElement {
-    const { className } = this.props;
-
-    return <div className={`${selectorPrefix} ${className}`} style={this.getStyle()} />;
-  }
-}
-
-Split.defaultProps = {
-  direction: 'vertical',
-  size: 20,
-  className: '',
+  return <div className={classNames(selectorPrefix, className || '')} style={getStyle()} />;
 };
-
-Split.propTypes = {
-  direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  className: PropTypes.string,
-};
+Split.Group = SplitGroup;
 
 export default Split;

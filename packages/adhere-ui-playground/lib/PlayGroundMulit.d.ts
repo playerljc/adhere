@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import APlayGround from './APlayGround';
-import { IPlayGroundMulitProps } from './types';
+import { PlayGroundMulitProps, PlayGroundMulitState } from './types';
 /**
  * PlayGroundMulit
  * @class PlayGroundMulit
  * @classdesc PlayGroundMulit
  */
-declare class PlayGroundMulit extends APlayGround {
+declare class PlayGroundMulit extends APlayGround<PlayGroundMulitProps, PlayGroundMulitState> {
     configMap: Map<string, {
         render: (config: any, index: number) => React.ReactElement;
         getCodeText: (config: any) => string;
     }>;
     constructor(props: any);
-    protected componentWillReceiveProps(nextProps: any): void;
+    componentWillReceiveProps(nextProps: any): void;
     /**
      * getClipboardText
      * @return Promise<string>
@@ -23,17 +23,15 @@ declare class PlayGroundMulit extends APlayGround {
      * renderCodeView - 代码展示视图
      * @param config
      * @param index
-     * @return React.ReactElement
      * <CodePanel {...config} />
      */
-    protected renderCodePanelView(config: any, index: any): React.ReactElement;
+    protected renderCodePanelView(config: any, index: any): JSX.Element;
     /**
      * renderCodeView
-     * @return React.ReactElement
      */
-    protected renderCodeView(): React.ReactElement;
+    protected renderCodeView(): JSX.Element;
 }
-export declare const PlayGroundMulitDefaultProps: IPlayGroundMulitProps;
+export declare const PlayGroundMulitDefaultProps: PlayGroundMulitProps;
 export declare const PlayGroundMulitPropTypes: {
     id: PropTypes.Requireable<string>;
     cardProps: PropTypes.Requireable<PropTypes.InferProps<{
@@ -55,6 +53,18 @@ export declare const PlayGroundMulitPropTypes: {
     }>>;
     isActive: PropTypes.Requireable<boolean>;
     expand: PropTypes.Requireable<boolean>;
-    config: PropTypes.Requireable<any[]>;
+    config: PropTypes.Requireable<(PropTypes.InferProps<{
+        codeText: PropTypes.Requireable<string>;
+        theme: PropTypes.Requireable<string>;
+    }> | PropTypes.InferProps<{
+        active: PropTypes.Requireable<string>;
+        config: PropTypes.Requireable<(PropTypes.InferProps<{
+            key: PropTypes.Requireable<string>;
+            title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            codeText: PropTypes.Requireable<string>;
+            theme: PropTypes.Requireable<string>;
+        }> | null | undefined)[]>;
+        onChange: PropTypes.Requireable<(...args: any[]) => any>;
+    }> | null | undefined)[]>;
 };
 export default PlayGroundMulit;

@@ -1,38 +1,48 @@
-import React from 'react';
-export interface IMenuProps {
-    data: Array<IData>;
-    className: string;
-    style: React.CSSProperties;
+import type { ReactElement, CSSProperties } from 'react';
+export interface MenuRefHandle {
+    mount: () => void;
 }
-export interface IMenuItemProps {
-    data: IData;
+export interface MenuProps {
+    className?: string;
+    style?: CSSProperties;
+    data: MenuData[];
 }
-export interface ISubMenuProps extends IMenuProps {
+export interface MenuItemProps {
+    data: MenuData;
 }
-export interface IContextMenuComponentProps {
-    data: Array<IData>;
-    config: IData;
+export interface SubMenuProps extends MenuProps {
+}
+export interface ContextMenuContext {
+    config: Config;
+    el: HTMLElement | null;
+}
+export interface ContextMenuComponentRefHandle {
+    mount: () => void;
+}
+export interface ContextMenuComponentProps {
+    data: MenuData[];
+    config: Config;
     el: HTMLElement;
 }
-export interface IConfig {
+export interface Config {
+    className?: string;
+    style?: CSSProperties;
     x: number;
     y: number;
     width: number;
     maskClosable: boolean;
-    handler: Function;
-    className: string;
-    style: React.CSSProperties;
+    handler?: Function;
 }
-export interface IData {
-    name: string | React.ReactElement;
-    icon: string | React.ReactElement;
-    id: string;
-    disabled: boolean;
-    separation: boolean;
-    attribute: Object;
-    children: Array<IData>;
-    className: string;
-    style: React.CSSProperties;
-    subMenuClassName: string;
-    subMenuStyle: React.CSSProperties;
+export interface MenuData {
+    className?: string;
+    style?: CSSProperties;
+    subMenuClassName?: string;
+    subMenuStyle?: CSSProperties;
+    attribute?: object;
+    name?: string | ReactElement;
+    icon?: string | ReactElement;
+    id?: string;
+    disabled?: boolean;
+    separation?: boolean;
+    children?: MenuData[];
 }

@@ -4,30 +4,26 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Card from './Card';
 import CodeTabPanel, { CodeTabPanelDefaultProps, CodeTabPanelPropTypes } from './CodeTabPanel';
 import APlayGround, { APlayGroundDefaultProps, APlayGroundPropTypes } from './APlayGround';
-import { IPlayGroundTabProps } from './types';
+import { PlayGroundTabProps, PlayGroundTabState } from './types';
 
 /**
  * PlayGroundTab
  * @class PlayGroundTab
  * @classdesc PlayGroundTab
  */
-class PlayGroundTab extends APlayGround {
-  // @ts-ignore
+class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> {
   constructor(props) {
     super(props);
 
-    this.state = {
-      ...this.state,
-      // @ts-ignore
+    Object.assign(this.state, {
       activeKey: props.active,
-    };
+    });
   }
 
-  protected componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     super.componentWillReceiveProps(nextProps);
 
     this.setState({
-      // @ts-ignore
       activeKey: nextProps.active,
     });
   }
@@ -36,28 +32,23 @@ class PlayGroundTab extends APlayGround {
    * renderCodeView - 代码展示视图
    * @return {*}
    */
-  protected renderCodeView(): React.ReactElement {
-    const { expand } = this.state;
+  protected renderCodeView() {
+    const { expand, activeKey } = this.state;
 
     const { isFirst } = this;
 
-    // @ts-ignore
     const { cardProps, id, isActive, ...others } = this.props;
 
     return (
       <ConditionalRender
         conditional={isFirst}
-        // @ts-ignore
         noMatch={() => (
-          // @ts-ignore
           <Card style={{ display: expand ? '' : 'none' }}>
             <CodeTabPanel
               {...others}
-              // @ts-ignore
-              active={this.state.activeKey}
+              active={activeKey}
               onChange={(key) =>
                 this.setState({
-                  // @ts-ignore
                   activeKey: key,
                 })
               }
@@ -66,17 +57,14 @@ class PlayGroundTab extends APlayGround {
         )}
       >
         {() => (
-          <ConditionalRender conditional={expand}>
+          <ConditionalRender conditional={!!expand}>
             {() => (
-              // @ts-ignore
               <Card>
                 <CodeTabPanel
                   {...others}
-                  // @ts-ignore
-                  active={this.state.activeKey}
+                  active={activeKey}
                   onChange={(key) =>
                     this.setState({
-                      // @ts-ignore
                       activeKey: key,
                     })
                   }
@@ -93,17 +81,17 @@ class PlayGroundTab extends APlayGround {
    * getClipboardText
    */
   protected getClipboardText(): Promise<string> {
-    // @ts-ignore
     const { config } = this.props;
 
-    // @ts-ignore
     const { activeKey } = this.state;
 
-    return Promise.resolve(config.find((c) => c.key === activeKey)?.codeText);
+    const item = config.find((c) => c.key === activeKey);
+
+    return Promise.resolve(item ? item.codeText : '');
   }
 }
 
-export const PlayGroundTabDefaultProps: IPlayGroundTabProps = {
+export const PlayGroundTabDefaultProps: PlayGroundTabProps = {
   ...APlayGroundDefaultProps,
   ...CodeTabPanelDefaultProps,
 };
@@ -113,10 +101,8 @@ export const PlayGroundTabPropTypes = {
   ...CodeTabPanelPropTypes,
 };
 
-// @ts-ignore
 PlayGroundTab.defaultProps = PlayGroundTabDefaultProps;
 
-// @ts-ignore
 PlayGroundTab.propTypes = PlayGroundTabPropTypes;
 
 export default PlayGroundTab;

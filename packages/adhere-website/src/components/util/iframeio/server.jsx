@@ -33,7 +33,7 @@ export default function () {
   const server = useRef();
   const router = useRef();
 
-  const sourceOrigin = 'http://localhost:8080';
+  const sourceOrigin = window.location.origin;
   const whiteList = [sourceOrigin];
 
   useEffect(() => {

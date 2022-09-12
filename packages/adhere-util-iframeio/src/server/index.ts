@@ -33,7 +33,7 @@ class Server {
    * @description 接收到消息
    * @param evt
    */
-  private onMessage(evt: MessageEvent) {
+  private onMessage(evt) {
     // 略掉不是白名单中的请求，或没有request的请求
     if (
       !this.whitelist.includes(evt.origin) ||
@@ -99,8 +99,8 @@ class Server {
     });
 
     this.middleWareQueueReduce(context).then(() => {
-      // @ts-ignore
       // 返回响应
+      // @ts-ignore
       evt?.source?.postMessage?.(context.response, evt.origin);
     });
   }
@@ -111,7 +111,6 @@ class Server {
    */
   start(): Promise<void> {
     return new Promise<void>((resolve) => {
-      // @ts-ignore
       this.source.addEventListener('message', this.onMessage);
 
       resolve();
@@ -124,7 +123,6 @@ class Server {
    */
   close(): Promise<void> {
     return new Promise<void>((resolve) => {
-      // @ts-ignore
       this.source.removeEventListener('message', this.onMessage);
 
       resolve();

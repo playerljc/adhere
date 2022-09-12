@@ -1,5 +1,4 @@
-import React, { useContext, forwardRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, forwardRef, ForwardRefRenderFunction } from 'react';
 import classNames from 'classnames';
 import Space from '@baifendian/adhere-ui-space';
 
@@ -12,18 +11,31 @@ import CodeBoxSection from './CodeBoxSection';
 import PropsSection from './PropsSection';
 import FunctionPropsSection from './FunctionPropsSection';
 
+import { PlayGroundPageHOC, PlayGroundPageProps } from '../types';
+
 const selectPrefix = 'adhere-ui-playground-page';
 
 /**
  * PlayGroundPage
  * @constructor
  */
-function PlayGroundPage(props, ref) {
+const PlayGroundPage: ForwardRefRenderFunction<HTMLDivElement, PlayGroundPageProps> = (
+  props,
+  ref,
+) => {
+  const {
+    className = '',
+    style = {},
+    anchorPosition = {
+      top: 77,
+      width: 120,
+    },
+    children,
+  } = props;
+
   const { scrollEl } = useContext(PlayGroundPageContext);
 
   function getAnchors() {
-    const { children } = props;
-
     return children
       .filter((c) => 'type' in c && c.type instanceof Function && c.type === CodeBoxSection)
       .map((c) =>
@@ -38,55 +50,45 @@ function PlayGroundPage(props, ref) {
   return (
     <AnchorNavigationContext.Provider
       value={{
-        // @ts-ignore
-        scrollEl,
+        scrollEl: scrollEl!,
       }}
     >
-      <div
-        ref={ref}
-        className={`${classNames(selectPrefix, (props.className || '').split(/\s+/))}`}
-        style={props.style || {}}
-      >
-        {/*@ts-ignore*/}
-        <AnchorNavigation anchors={getAnchors()} anchorPosition={props.anchorPosition}>
-          <Space.Group direction="vertical">{props.children}</Space.Group>
+      <div ref={ref} className={`${classNames(selectPrefix, className || '')}`} style={style || {}}>
+        <AnchorNavigation anchors={getAnchors()} anchorPosition={anchorPosition}>
+          <Space.Group direction="vertical">{children}</Space.Group>
         </AnchorNavigation>
       </div>
     </AnchorNavigationContext.Provider>
   );
-}
-
-PlayGroundPage.defaultProps = {
-  className: '',
-  style: {},
-  anchorPosition: {
-    top: 77,
-    width: 120,
-  },
 };
 
-PlayGroundPage.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  anchorPosition: PropTypes.shape({
-    top: PropTypes.number,
-    width: PropTypes.number,
-  }),
-};
+// PlayGroundPage.defaultProps = {
+//   className: '',
+//   style: {},
+//   anchorPosition: {
+//     top: 77,
+//     width: 120,
+//   },
+// };
+//
+// PlayGroundPage.propTypes = {
+//   className: PropTypes.string,
+//   style: PropTypes.object,
+//   anchorPosition: PropTypes.shape({
+//     top: PropTypes.number,
+//     width: PropTypes.number,
+//   }),
+// };
 
-// @ts-ignore*
-const PlayGroundPageForward = forwardRef(PlayGroundPage);
+// @ts-ignore
+const PlayGroundPageForward: PlayGroundPageHOC<HTMLDivElement, PlayGroundPageProps> = forwardRef<
+  HTMLDivElement,
+  PlayGroundPageProps
+>(PlayGroundPage);
 
-// @ts-ignore*
 PlayGroundPageForward.Section = Section;
-
-// @ts-ignore*
 PlayGroundPageForward.CodeBoxSection = CodeBoxSection;
-
-// @ts-ignore*
 PlayGroundPageForward.PropsSection = PropsSection;
-
-// @ts-ignore*
 PlayGroundPageForward.FunctionPropsSection = FunctionPropsSection;
 
 export default PlayGroundPageForward;

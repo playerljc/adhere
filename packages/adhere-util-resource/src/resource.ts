@@ -1,6 +1,4 @@
-// @ts-ignore
 import Util from '@baifendian/adhere-util';
-// @ts-ignore
 import Dict from '@baifendian/adhere-util-dict';
 
 /**

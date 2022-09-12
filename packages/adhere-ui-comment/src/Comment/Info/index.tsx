@@ -1,7 +1,7 @@
-import { INodeProps } from '@/types';
-import React from 'react';
+import React, { FC } from 'react';
 
-import Node, { defaultProps, propTypes } from '../../Components/Node';
+import { NodeProps } from '../../types';
+import Node from '../../Components/Node';
 
 /**
  * CommentInfo
@@ -9,16 +9,10 @@ import Node, { defaultProps, propTypes } from '../../Components/Node';
  * @constructor
  * @classdesc 评论节点
  */
-function CommentInfo(props: INodeProps) {
-  return (
-    <Node {...props} isReply={false}>
-      {(record) => props?.children?.(record)}
-    </Node>
-  );
-}
-
-CommentInfo.defaultProps = defaultProps;
-
-CommentInfo.propTypes = propTypes;
+const CommentInfo: FC<NodeProps> = (props) => (
+  <Node {...props} isReply={false}>
+    {(record) => props?.children?.(record)}
+  </Node>
+);
 
 export default CommentInfo;

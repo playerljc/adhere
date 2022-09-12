@@ -1,9 +1,9 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import CodePanel, { CodePanelPropTypes } from './CodePanel';
 
-import { ICodeTabPanelProps } from './types';
+import { CodeTabPanelProps } from './types';
 import SimpleTabs from './SimpleTabs';
 
 const selectPrefix = 'adhere-ui-playground-code-tab-panel';
@@ -15,15 +15,15 @@ const { TabPanel } = SimpleTabs;
  * @param props
  * @constructor
  */
-function CodeTabPanel(props: ICodeTabPanelProps) {
+const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
+  const { config = [], onChange } = props;
+
   const [active, setActive] = useState(props.active);
 
   /**
    * useEffect props.active
    */
-  useEffect(() => {
-    setActive(props.active);
-  }, [props.active]);
+  useEffect(() => setActive(props.active), [props.active]);
 
   return (
     <div className={selectPrefix}>
@@ -32,12 +32,11 @@ function CodeTabPanel(props: ICodeTabPanelProps) {
         onChange={(key) => {
           setActive(key);
 
-          if (props.onChange) {
-            props.onChange(key);
-          }
+          onChange && onChange(key as string);
         }}
       >
-        {props.config.map(({ key, title, ...codePanelConfig }) => (
+        {(config || []).map(({ key, title, ...codePanelConfig }) => (
+          // @ts-ignore
           <TabPanel title={title} key={key} index={key}>
             <ConditionalRender conditional={active === key}>
               {() => <CodePanel {...codePanelConfig} />}
@@ -47,7 +46,7 @@ function CodeTabPanel(props: ICodeTabPanelProps) {
       </SimpleTabs>
     </div>
   );
-}
+};
 
 export const CodeTabPanelDefaultProps = {
   active: '',
@@ -66,8 +65,8 @@ export const CodeTabPanelPropTypes = {
   onChange: PropTypes.func,
 };
 
-CodeTabPanel.defaultProps = CodeTabPanelDefaultProps;
+// CodeTabPanel.defaultProps = CodeTabPanelDefaultProps;
 
-CodeTabPanel.propTypes = CodeTabPanelPropTypes;
+// CodeTabPanel.propTypes = CodeTabPanelPropTypes;
 
 export default memo<any>(CodeTabPanel);

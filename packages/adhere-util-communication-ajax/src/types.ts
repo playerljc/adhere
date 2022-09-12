@@ -78,6 +78,8 @@ export interface IConfig {
   codeSuccess?: number;
   // 在code不等于200的时候是否使出message的warn
   showWarn?: boolean;
+  // 数据的类型
+  responseType?: XMLHttpRequestResponseType;
 }
 
 /**
@@ -108,6 +110,7 @@ export interface ISendArg extends IConfig {
  */
 export interface ISendPrepareArg extends ISendArg {
   // 支持的method枚举
-  method: 'get' | 'post' | 'put' | 'path' | 'delete';
+  method: Method;
 }
 
+export type Method = 'get' | 'post' | 'put' | 'path' | 'delete';

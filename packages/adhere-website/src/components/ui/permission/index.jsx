@@ -14,6 +14,13 @@ const { Permission: PermissionWrap, setPermission, getPermission } = Permission;
 setPermission(['1']);
 
 export default () => {
+  const [allPermission, setAllPermission] = useState(getPermission());
+  const [curPermission, setCurPermission] = useState(['2']);
+
+  const ref1 = useRef();
+
+  const ref2 = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -185,21 +192,14 @@ export default () => {
               </Button>,
             ]}
           >
-            <PermissionWrap permissions={curPermission} noMatch={<Empty />}>
-              <Button>有权限才能看到这个按钮</Button>
+            <PermissionWrap permissions={curPermission} noMatch={() => <Empty />}>
+              {() => <Button>有权限才能看到这个按钮</Button>}
             </PermissionWrap>
           </Card>
         ),
       },
     ];
   }
-
-  const [allPermission, setAllPermission] = useState(getPermission());
-  const [curPermission, setCurPermission] = useState(['2']);
-
-  const ref1 = useRef();
-
-  const ref2 = useRef();
 
   return (
     <PlayGroundPage>

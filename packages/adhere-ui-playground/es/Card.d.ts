@@ -1,42 +1,7 @@
-import React from 'react';
-import PropTypes, { Requireable, ReactNodeLike, InferType, ReactElementLike, ReactNodeArray } from 'prop-types';
-import { ICardProps } from './types';
-/**
- * Card
- * @class Card
- * @classdesc Card
- */
-declare class Card extends React.Component<ICardProps> {
-    static propTypes: {
-        className: string;
-        style: object;
-        headerClassName: string;
-        actionStyle: object;
-        bodyClassName: string;
-        extra: Requireable<ReactNodeLike>;
-        bodyStyle: object;
-        description: any;
-        actionClassName: string;
-        title: Requireable<NonNullable<InferType<Requireable<ReactNodeLike> | any>>>;
-        actions: Requireable<({} | ReactElementLike | ReactNodeArray | string | number | boolean | null | undefined)[]>;
-        headerStyle: any;
-    };
-    static defaultProps: {
-        className: string;
-        style: {};
-        headerClassName: string;
-        actionStyle: {};
-        bodyClassName: string;
-        extra: null;
-        bodyStyle: {};
-        description: null;
-        actionClassName: string;
-        title: null;
-        actions: null;
-        headerStyle: {};
-    };
-    protected render(): JSX.Element;
-}
+import { FC } from 'react';
+import PropTypes from 'prop-types';
+import { CardProps } from './types';
+declare const Card: FC<CardProps>;
 export declare const cardPropTypes: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;

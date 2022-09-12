@@ -1,69 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import React, { FC } from 'react';
 
-import { ISpaceProps } from './types';
+import { SpaceFunction, SpaceProps, SpaceGroupProps } from './types';
 
 const selectorPrefix = 'adhere-ui-space';
 
-/**
- * SpaceGroup
- * @class SpaceGroup
- * @classdesc SpaceGroup
- */
-class SpaceGroup extends React.Component<ISpaceProps, any> {
-  static defaultProps: any;
-  static propTypes: any;
+const SpaceGroup: FC<SpaceGroupProps> = (props) => {
+  const { children, ...others } = props;
 
-  render() {
-    const { children, ...others } = this.props;
+  return (
+    <>
+      {Array.isArray(children)
+        ? children.map((component, index) => {
+            if (index !== 0) {
+              return (
+                <>
+                  <Space {...others} key={index} />
+                  {component}
+                </>
+              );
+            }
 
-    return (
-      <>
-        {Array.isArray(children)
-          ? children.map((component, index) => {
-              if (index !== 0) {
-                // @ts-ignore
-                return (
-                  <>
-                    <Space {...others} key={index} />
-                    {component}
-                  </>
-                );
-              }
-
-              return component;
-            })
-          : children}
-      </>
-    );
-  }
-}
-
-SpaceGroup.defaultProps = {
-  direction: 'vertical',
-  size: 20,
-  className: '',
+            return component;
+          })
+        : children}
+    </>
+  );
 };
 
-SpaceGroup.propTypes = {
-  direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  className: PropTypes.string,
-};
+const Space: SpaceFunction<SpaceProps> = (props) => {
+  const { className = '', style = {}, direction = 'horizontal', size = 20 } = props;
 
-/**
- * Space
- * @class Space
- * @classdesc Space
- */
-class Space extends React.Component<ISpaceProps, any> {
-  static defaultProps: any;
-  static propTypes: any;
-  static Group = SpaceGroup;
-
-  getStyle() {
-    const { direction, size } = this.props;
-
+  function getStyle() {
     if (direction === 'horizontal') {
       return {
         display: 'inline-block',
@@ -78,23 +46,13 @@ class Space extends React.Component<ISpaceProps, any> {
     };
   }
 
-  render(): React.ReactElement {
-    const { className } = this.props;
-
-    return <div className={`${selectorPrefix} ${className}`} style={this.getStyle()} />;
-  }
-}
-
-Space.defaultProps = {
-  direction: 'vertical',
-  size: 20,
-  className: '',
+  return (
+    <div
+      className={classNames(selectorPrefix, className || '')}
+      style={{ ...getStyle(), ...(style || {}) }}
+    />
+  );
 };
-
-Space.propTypes = {
-  direction: PropTypes.oneOf(['vertical', 'horizontal']),
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  className: PropTypes.string,
-};
+Space.Group = SpaceGroup;
 
 export default Space;

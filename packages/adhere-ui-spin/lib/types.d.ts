@@ -1,8 +1,9 @@
 /**
- * ISpinProps
- * @interface ISpinProps
+ * SpinProps
+ * @interface SpinProps
  */
-export interface ISpinProps {
-    spinning: boolean;
+export interface SpinProps {
+    spinning?: boolean;
     text?: string;
+    zIndex?: string | number;
 }

@@ -4,24 +4,23 @@ import { Empty } from 'antd';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import Suspense from './suspense';
-import { ISuspenseASyncProps, ISuspenseASyncState } from './types';
+import { SuspenseASyncProps, SuspenseASyncState } from './types';
 
 /**
  * SuspenseAsync
  * @class
  * @classdesc 调用接口
  */
-// @ts-ignore
-class SuspenseAsync extends Suspense<ISuspenseASyncProps, ISuspenseASyncState> {
+class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
   state = {
     loading: false,
   };
 
-  protected showLoading(): boolean {
+  showLoading(): boolean {
     return this.state.loading;
   }
 
-  protected renderInner(): React.ReactElement | null {
+  renderInner(): React.ReactElement | null {
     const { isEmpty, renderEmpty, children } = this.props;
 
     return (

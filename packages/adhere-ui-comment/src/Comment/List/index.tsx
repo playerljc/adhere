@@ -1,46 +1,40 @@
-import { IListProps } from '@/types';
-import React, { forwardRef, useRef } from 'react';
+import React, { FC, ReactElement, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Skeleton } from 'antd';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 
-const selectorPrefix = 'adhere-ui-comment-inner-list';
+import { ListProps } from '../../types';
 
-class BackTopAnimationImpl extends BackTopAnimation {
-  componentWillUnmount() {
-    try {
-      super.componentWillUnmount();
-    } catch (e) {}
-  }
-}
+const selectorPrefix = 'adhere-ui-comment-inner-list';
 
 /**
  * CommentList
  * @constructor
  * @classdesc 评论列表
  */
-function CommentList({
-  className,
-  style,
-  isLoading,
-  hasMore,
-  onLoadMore,
-  scrollLoadProps,
-  renderFirstLoading,
-  getScrollWrapContainer,
-  children,
-}: IListProps) {
+const CommentList: FC<ListProps> = (props) => {
+  const {
+    className = '',
+    style = {},
+    isLoading = false,
+    hasMore = false,
+    onLoadMore,
+    scrollLoadProps = {},
+    renderFirstLoading,
+    getScrollWrapContainer,
+    children,
+  } = props;
+
   // 第一次
   const isFirst = useRef(true);
 
   // 第一次加载
   const isFirstLoading = useRef(false);
 
-  const wrapRef = useRef<HTMLDivElement>();
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   /**
    * renderDispatch
@@ -76,10 +70,9 @@ function CommentList({
       return renderFirstLoading();
     }
 
-    const result = [];
+    const result: ReactElement[] = [];
 
     for (let i = 0; i < 7; i++) {
-      // @ts-ignore
       result.push(<Skeleton key={i + 1} loading avatar />);
     }
 
@@ -101,7 +94,6 @@ function CommentList({
       <ConditionalRender conditional={hasMore}>
         {() => (
           <div className={`${selectorPrefix}-normal-wrap`}>
-            {/*@ts-ignore*/}
             <ScrollLoad
               {...defaultScrollLoadProps}
               {...(scrollLoadProps || {})}
@@ -113,21 +105,23 @@ function CommentList({
             <ConditionalRender
               conditional={!!(getScrollWrapContainer ? getScrollWrapContainer() : null)}
               noMatch={() => (
-                <BackTopAnimationImpl
-                  target={() =>
+                <BackTopAnimation
+                  getContainer={() =>
                     wrapRef?.current?.querySelector?.('.adhere-ui-scrollload') as HTMLElement
                   }
-                  onTrigger={() => Promise.resolve(null)}
+                  onTrigger={() => Promise.resolve()}
                 />
               )}
             >
               {() =>
                 ReactDOM.createPortal(
-                  <BackTopAnimationImpl
-                    target={() => getScrollWrapContainer?.()?.firstElementChild as HTMLElement}
-                    onTrigger={() => Promise.resolve(null)}
+                  <BackTopAnimation
+                    getContainer={() =>
+                      getScrollWrapContainer?.()?.firstElementChild as HTMLElement
+                    }
+                    onTrigger={() => Promise.resolve()}
                   />,
-                  getScrollWrapContainer?.()!,
+                  getScrollWrapContainer?.() as HTMLElement,
                 )
               }
             </ConditionalRender>
@@ -138,48 +132,10 @@ function CommentList({
   }
 
   return (
-    // @ts-ignore
-    <div className={classnames(selectorPrefix, className || '')} style={{ ...style }} ref={wrapRef}>
+    <div className={classnames(selectorPrefix, className || '')} style={style || {}} ref={wrapRef}>
       {renderDispatch()}
     </div>
   );
-}
-
-export const defaultProps = {};
-
-export const propTypes = {
-  getScrollWrapContainer: PropTypes.func,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  // 是否是加载数据
-  isLoading: PropTypes.bool,
-  // 是否还有更多
-  hasMore: PropTypes.bool,
-  // 加载更多
-  onLoadMore: PropTypes.func,
-  renderFirstLoading: PropTypes.func,
-  scrollLoadProps: PropTypes.shape({
-    className: PropTypes.string,
-    style: PropTypes.object,
-    loadClassName: PropTypes.string,
-    loadStyle: PropTypes.object,
-    emptyClassName: PropTypes.string,
-    emptyStyle: PropTypes.object,
-    errorClassName: PropTypes.string,
-    errorStyle: PropTypes.object,
-    distance: PropTypes.number,
-    onScrollBottom: PropTypes.func,
-    onEmptyClick: PropTypes.func,
-    onErrorClick: PropTypes.func,
-    renderLoading: PropTypes.func,
-    renderEmpty: PropTypes.func,
-    renderError: PropTypes.func,
-  }),
 };
 
-CommentList.defaultProps = defaultProps;
-
-CommentList.propTypes = propTypes;
-
-// @ts-ignore
-export default forwardRef(CommentList);
+export default CommentList;

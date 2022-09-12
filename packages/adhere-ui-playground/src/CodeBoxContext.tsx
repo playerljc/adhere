@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const CodeBoxContext = React.createContext({
+import { CodeBoxContextValue } from './types';
+
+export const CodeBoxContext = React.createContext<CodeBoxContextValue>({
   activeAnchor: '',
 });

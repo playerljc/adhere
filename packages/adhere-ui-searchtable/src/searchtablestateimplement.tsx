@@ -9,23 +9,19 @@ import { defaultProps, propTypes } from './searchtable';
  * @classdesc - SearchTable的state实现
  */
 class SearchTableStateImplement extends SearchTableImplement {
-  protected getData(): Array<object> {
-    // @ts-ignore
+  getData(): object[] {
     return this.state[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
   }
 
-  protected getTotal(): number {
-    // @ts-ignore
+  getTotal(): number {
     return this.state[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
   }
 
-  protected showLoading(): boolean {
-    // @ts-ignore
+  showLoading(): boolean {
     return this.state.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
-  protected fetchDataExecute(searchParams: object): Promise<any> {
-    // @ts-ignore
+  fetchDataExecute(searchParams?: object): Promise<any> {
     return this.state[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );

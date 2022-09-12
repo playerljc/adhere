@@ -1,14 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import type { ForwardRefRenderFunction, ReactElement } from 'react';
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
+import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
-
-import { ICascadeComparedProps, IColumnConfig, IMasterItem } from './types';
+import { CascadeComparedProps, CascadeComparedHandle, ColumnConfig, IMasterItem } from './types';
 
 const selectorPrefix = 'adhere-ui-cascadecompared';
 
 const defaultCellWidth = 120;
+
+const { Item } = StickupLayout;
+
+const StickupLayoutItem = Item!;
 
 /**
  * initTouch
@@ -48,39 +52,52 @@ function initTouch() {
 initTouch();
 
 /**
- * CascadeCompared
- * @class CascadeCompared
- * @classdesc CascadeCompared
+ * CascadeComparedProps
+ * @param props
+ * @param ref
+ * @constructor
  */
-class CascadeCompared extends React.Component<ICascadeComparedProps> {
-  static defaultProps: any;
-  static propTypes: any;
+const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeComparedProps> = (
+  props,
+  ref,
+): ReactElement => {
+  const {
+    className = '',
+    style = {},
+    indicatorClassName = '',
+    indicatorStyle = {},
+    indicatorFixedWrapClassName = '',
+    indicatorFixedWrapStyle = {},
+    indicatorAutoWrapClassName = '',
+    indicatorAutoWrapStyle = {},
+    indicator: { columns = [], dataSource = {} },
+    masterClassName = '',
+    masterStyle = {},
+    masterInnerClassName = '',
+    masterInnerStyle = {},
+    masterStickFixedClassName = '',
+    masterStickFixedStyle = {},
+    masterStickInnerClassName = '',
+    masterStickInnerStyle = {},
+    master = [],
+    onStickChange,
+  } = props;
 
-  private el: HTMLDivElement | null | undefined;
-  private scrolls: Array<IScroll> = [];
-  private stickup: StickupLayout | undefined;
+  const el = useRef<HTMLDivElement>(null);
+  const stickup = useRef<StickupLayoutHandle>(null);
+  const scrolls = useRef<IScroll[]>([]);
 
-  componentDidMount() {
-    // @ts-ignore
-    this.stickup.refresh();
-    this.initScroll();
-  }
+  /**
+   * initScroll
+   */
+  function initScroll() {
+    const wrapEls = el.current!.querySelectorAll(`.${selectorPrefix}-autoWrap`);
 
-  componentDidUpdate() {
-    // @ts-ignore
-    this.stickup.refresh();
-    this.initScroll();
-  }
-
-  private initScroll() {
-    // @ts-ignore
-    const wrapEls = this.el.querySelectorAll(`.${selectorPrefix}-autoWrap`);
-
-    for (let i = 0; i < this.scrolls.length; i++) {
-      this.scrolls[i].destroy();
+    for (let i = 0; i < scrolls.current.length; i++) {
+      scrolls.current[i].destroy();
     }
 
-    this.scrolls = [];
+    scrolls.current = [];
 
     for (let i = 0; i < wrapEls.length; i++) {
       const scroll = new IScroll(wrapEls[i], {
@@ -91,25 +108,23 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
         preventDefault: false,
       });
 
-      this.scrolls.push(scroll);
+      scrolls.current.push(scroll);
 
       scroll.on('scroll', () => {
-        for (let j = 0; j < this.scrolls.length; j++) {
-          if (this.scrolls[j] !== scroll) {
-            this.scrolls[j].scrollTo(scroll.x, scroll.y);
+        for (let j = 0; j < scrolls.current.length; j++) {
+          if (scrolls.current[j] !== scroll) {
+            scrolls.current[j].scrollTo(scroll.x, scroll.y);
           }
         }
       });
-
-      // scroll.on('scrollEnd', () => {
-      //   if (self.stickup.events.scrollEnd) {
-      //     self.stickup.events.scrollEnd();
-      //   }
-      // });
     }
   }
 
-  private getFixedColumnConfig(columns: Array<IColumnConfig>): IColumnConfig | null {
+  /**
+   * getFixedColumnConfig
+   * @param columns
+   */
+  function getFixedColumnConfig(columns: ColumnConfig[]): ColumnConfig | null {
     const config = columns.find((t) => t.isFixed);
 
     if (config) return config;
@@ -117,7 +132,17 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
     return columns.length ? columns[0] : null;
   }
 
-  private renderCell(config: IColumnConfig, dataSource: object): React.ReactElement {
+  /**
+   * renderCell
+   * @param config
+   * @param dataSource
+   */
+  function renderCell(
+    config: ColumnConfig | null,
+    dataSource: Record<string, any>,
+  ): ReactElement | null {
+    if (!config) return null;
+
     if (config.render) {
       return config.render(dataSource[config.dataIndex], dataSource);
     }
@@ -125,34 +150,19 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
     return dataSource[config.dataIndex];
   }
 
-  private renderIndicator(): React.ReactElement {
-    const {
-      indicatorClassName = '',
-      indicatorStyle = {},
-      indicatorFixedWrapClassName = '',
-      indicatorFixedWrapStyle = {},
-      indicatorAutoWrapClassName = '',
-      indicatorAutoWrapStyle = {},
-      indicator: { columns = [], dataSource = {} },
-    } = this.props;
-
-    const fixedColumnConfig = this.getFixedColumnConfig(columns);
+  /**
+   * renderIndicator
+   */
+  function renderIndicator() {
+    const fixedColumnConfig = getFixedColumnConfig(columns);
 
     return (
       <div
-        className={classNames(
-          `${selectorPrefix}-indicator`,
-          // @ts-ignore
-          (indicatorClassName || '').split(/\s+/),
-        )}
+        className={classNames(`${selectorPrefix}-indicator`, indicatorClassName || '')}
         style={{ ...indicatorStyle }}
       >
         <div
-          className={classNames(
-            `${selectorPrefix}-fixedWrap`,
-            // @ts-ignore
-            (indicatorFixedWrapClassName || '').split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-fixedWrap`, indicatorFixedWrapClassName || '')}
           style={{
             ...(indicatorFixedWrapStyle || {}),
             width: fixedColumnConfig?.width || defaultCellWidth,
@@ -160,30 +170,17 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
         >
           <div className={`${selectorPrefix}-item`}>
             <div
-              className={classNames(
-                `${selectorPrefix}-cell`,
-                // @ts-ignore
-                (fixedColumnConfig.className || '').split(/\s+/),
-              )}
+              className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className || '')}
               style={{
-                // @ts-ignore
-                ...(fixedColumnConfig.style || {}),
+                ...(fixedColumnConfig?.style || {}),
               }}
             >
-              {this.renderCell(
-                // @ts-ignore
-                fixedColumnConfig,
-                dataSource,
-              )}
+              {renderCell(fixedColumnConfig, dataSource)}
             </div>
           </div>
         </div>
         <div
-          className={classNames(
-            `${selectorPrefix}-autoWrap`,
-            // @ts-ignore
-            (indicatorAutoWrapClassName || '').split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-autoWrap`, indicatorAutoWrapClassName || '')}
           style={{ ...(indicatorAutoWrapStyle || {}) }}
         >
           <div className={`${selectorPrefix}-item`}>
@@ -192,14 +189,10 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
               .map((column) => (
                 <div
                   key={column.dataIndex}
-                  className={classNames(
-                    `${selectorPrefix}-cell`,
-                    // @ts-ignore
-                    (column.className || '').split(/\s+/),
-                  )}
+                  className={classNames(`${selectorPrefix}-cell`, column.className || '')}
                   style={{ ...(column.style || {}), width: column?.width || defaultCellWidth }}
                 >
-                  {this.renderCell(column, dataSource)}
+                  {renderCell(column, dataSource)}
                 </div>
               ))}
           </div>
@@ -208,7 +201,18 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
     );
   }
 
-  private renderMasterGroupContent({
+  /**
+   * renderMasterGroupContent
+   * @param dataSource
+   * @param columns
+   * @param fixedWrapClassName
+   * @param fixedWrapStyle
+   * @param autoWrapClassName
+   * @param autoWrapStyle
+   * @param autoInnerClassName
+   * @param autoInnerStyle
+   */
+  function renderMasterGroupContent({
     dataSource = [],
     columns = [],
     fixedWrapClassName = '',
@@ -217,292 +221,162 @@ class CascadeCompared extends React.Component<ICascadeComparedProps> {
     autoWrapStyle = {},
     autoInnerClassName = '',
     autoInnerStyle = {},
-  }: IMasterItem): React.ReactElement {
-    const fixedColumnConfig = this.getFixedColumnConfig(columns);
+  }: IMasterItem): ReactElement {
+    const fixedColumnConfig = getFixedColumnConfig(columns);
 
     return (
       <>
         <div
-          className={classNames(
-            `${selectorPrefix}-fixedWrap`,
-            // @ts-ignore
-            (fixedWrapClassName || '').split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-fixedWrap`, fixedWrapClassName || '')}
           style={{ ...(fixedWrapStyle || {}), width: fixedColumnConfig?.width || defaultCellWidth }}
         >
-          {dataSource.map((record, index) => {
-            return (
-              <div key={index} className={`${selectorPrefix}-item`}>
-                <div
-                  className={classNames(
-                    `${selectorPrefix}-cell`,
-                    // @ts-ignore
-                    (fixedColumnConfig.className || '').split(/\s+/),
-                  )}
-                  style={{
-                    // @ts-ignore
-                    ...(fixedColumnConfig.style || {}),
-                  }}
-                >
-                  {this.renderCell(
-                    // @ts-ignore
-                    fixedColumnConfig,
-                    record,
-                  )}
-                </div>
+          {dataSource.map((record, index) => (
+            <div key={index} className={`${selectorPrefix}-item`}>
+              <div
+                className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className || '')}
+                style={{
+                  ...(fixedColumnConfig?.style || {}),
+                }}
+              >
+                {renderCell(fixedColumnConfig, record)}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
+
         <div
-          className={classNames(
-            `${selectorPrefix}-autoWrap`,
-            // @ts-ignore
-            (autoWrapClassName || '').split(/\s+/),
-          )}
+          className={classNames(`${selectorPrefix}-autoWrap`, autoWrapClassName || '')}
           style={{ ...(autoWrapStyle || {}) }}
         >
           <div
-            className={classNames(
-              `${selectorPrefix}-autoInner`,
-              // @ts-ignore
-              (autoInnerClassName || '').split(/\s+/),
-            )}
+            className={classNames(`${selectorPrefix}-autoInner`, autoInnerClassName || '')}
             style={{ ...autoInnerStyle }}
           >
-            {dataSource.map((record, index) => {
-              return (
-                <div key={index} className={`${selectorPrefix}-item`}>
-                  {columns
-                    .filter((column) => column !== fixedColumnConfig)
-                    .map((column) => (
-                      <div
-                        key={column.dataIndex}
-                        className={classNames(
-                          `${selectorPrefix}-cell`,
-                          // @ts-ignore
-                          (column.className || '').split(/\s+/),
-                        )}
-                        style={{
-                          ...(column.style || {}),
-                          width: column?.width || defaultCellWidth,
-                        }}
-                      >
-                        {this.renderCell(column, record)}
-                      </div>
-                    ))}
-                </div>
-              );
-            })}
+            {dataSource.map((record, index) => (
+              <div key={index} className={`${selectorPrefix}-item`}>
+                {columns
+                  .filter((column) => column !== fixedColumnConfig)
+                  .map((column) => (
+                    <div
+                      key={column.dataIndex}
+                      className={classNames(`${selectorPrefix}-cell`, column.className || '')}
+                      style={{
+                        ...(column.style || {}),
+                        width: column?.width || defaultCellWidth,
+                      }}
+                    >
+                      {renderCell(column, record)}
+                    </div>
+                  ))}
+              </div>
+            ))}
           </div>
         </div>
       </>
     );
   }
 
-  private renderMasterGroup(config: IMasterItem, index): React.ReactElement {
-    const { title = null, className = '', style = {} } = config;
+  /**
+   * renderMasterGroup
+   * @param config
+   * @param index
+   */
+  function renderMasterGroup(config: IMasterItem, index): ReactElement {
+    const { title = undefined, className = '', style = {} } = config;
 
     return (
-      <StickupLayout.Item
+      <StickupLayoutItem
         key={index}
-        className={classNames((className || '').split(/\s+/))}
+        className={classNames(className || '')}
         style={{ ...(style || {}) }}
         title={title}
-        content={this.renderMasterGroupContent(config)}
+        content={renderMasterGroupContent(config)}
       />
     );
   }
 
-  private renderMaster(): React.ReactElement {
-    const {
-      masterClassName = '',
-      masterStyle = {},
-      masterInnerClassName = '',
-      masterInnerStyle = {},
-      masterStickFixedClassName = '',
-      masterStickFixedStyle = {},
-      masterStickInnerClassName = '',
-      masterStickInnerStyle = {},
-      master = [],
-      onStickChange,
-    } = this.props;
+  /**
+   * renderMaster
+   */
+  function renderMaster(): ReactElement {
+    const stickupLayoutProps = {
+      ref: stickup,
+      className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName || ''),
+      style: { ...(masterInnerStyle || {}) },
+      fixedClassName: classNames(masterStickFixedClassName || ''),
+      fixedStyle: { ...(masterStickFixedStyle || {}) },
+      innerClassName: classNames(masterStickInnerClassName || ''),
+      innerStyle: { ...(masterStickInnerStyle || {}) },
+      onChange: onStickChange,
+    };
 
     return (
       <div
-        className={classNames(
-          `${selectorPrefix}-master`,
-          // @ts-ignore
-          (masterClassName || '').split(/\s+/),
-        )}
+        className={classNames(`${selectorPrefix}-master`, masterClassName || '')}
         style={{ ...(masterStyle || {}) }}
       >
-        <StickupLayout
-          ref={(
-            ins, // @ts-ignore
-          ) => (this.stickup = ins)}
-          className={classNames(
-            `${selectorPrefix}-master-inner`,
-            // @ts-ignore
-            (masterInnerClassName || '').split(/\s+/),
-          )}
-          style={{ ...(masterInnerStyle || {}) }}
-          fixedClassName={classNames(
-            // @ts-ignore
-            (masterStickFixedClassName || '').split(/\s+/),
-          )}
-          fixedStyle={{ ...(masterStickFixedStyle || {}) }}
-          innerClassName={classNames(
-            // @ts-ignore
-            (masterStickInnerClassName || '').split(/\s+/),
-          )}
-          innerStyle={{ ...(masterStickInnerStyle || {}) }}
-          onChange={onStickChange}
-        >
-          {master.map((config, index) => this.renderMasterGroup(config, index))}
+        <StickupLayout {...stickupLayoutProps}>
+          {master.map((config, index) => renderMasterGroup(config, index))}
         </StickupLayout>
       </div>
     );
   }
 
   /**
-   * scrollToByIndex
-   * @param {number} index
-   * @param {number} duration
-   * @return {boolean}
+   * useImperativeHandle
    */
-  scrollToByIndex(index: number, duration = 300) {
-    // @ts-ignore
-    this.stickup.scrollToByIndex(index, duration);
-  }
+  useImperativeHandle(ref, () => ({
+    /**
+     * scrollToByIndex
+     * @param index
+     * @param duration
+     */
+    scrollToByIndex(index: number, duration = 300) {
+      stickup.current!.scrollToByIndex(index, duration);
+    },
+
+    /**
+     * scrollToByHeaderEl
+     * @param headerEl
+     * @param duration
+     */
+    scrollToByHeaderEl(headerEl: HTMLElement, duration = 300) {
+      stickup.current!.scrollToByHeaderEl(headerEl, duration);
+    },
+
+    /**
+     * scrollToByColumn
+     * @param columnIndex
+     */
+    scrollToByColumn(columnIndex: number) {
+      const scroll = scrolls.current[0];
+
+      const el = scroll.wrapper.querySelector(
+        `.${selectorPrefix}-item .${selectorPrefix}-cell:nth-of-type(${columnIndex})`,
+      );
+
+      scroll.scrollToElement(el);
+    },
+  }));
 
   /**
-   * scrollToByHeaderEl
-   * @param {HtmlElement} headerEl
-   * @param {number} duration
-   * @return {boolean}
+   * useLayoutEffect
    */
-  scrollToByHeaderEl(headerEl: HTMLElement, duration = 300) {
-    // @ts-ignore
-    this.stickup.scrollToByHeaderEl(headerEl, duration);
-  }
+  useLayoutEffect(() => {
+    stickup.current!.refresh();
+    initScroll();
+  });
 
-  /**
-   * scrollToByColumn
-   * @param {number} columnIndex
-   */
-  scrollToByColumn(columnIndex: number) {
-    const scroll = this.scrolls[0];
-
-    const el = scroll.wrapper.querySelector(
-      `.${selectorPrefix}-item .${selectorPrefix}-cell:nth-of-type(${columnIndex})`,
-    );
-
-    scroll.scrollToElement(el);
-  }
-
-  render() {
-    // @ts-ignore
-    const { className = '', style = {} } = this.props;
-
-    // @ts-ignore
-    return (
-      <div
-        className={classNames(
-          selectorPrefix,
-          // @ts-ignore
-          (className || '').split(/\s+/),
-        )}
-        style={{ ...(style || {}) }}
-        ref={(el) => (this.el = el)}
-      >
-        {this.renderIndicator()}
-        {this.renderMaster()}
-      </div>
-    );
-  }
-}
-
-CascadeCompared.defaultProps = {
-  className: '',
-  style: {},
-  indicatorClassName: '',
-  indicatorStyle: {},
-  indicatorFixedWrapClassName: '',
-  indicatorFixedWrapStyle: {},
-  indicatorAutoWrapClassName: '',
-  indicatorAutoWrapStyle: {},
-  masterClassName: '',
-  masterStyle: {},
-  masterInnerClassName: '',
-  masterInnerStyle: {},
-  masterStickFixedClassName: '',
-  masterStickFixedStyle: {},
-  masterStickInnerClassName: '',
-  masterStickInnerStyle: {},
-  indicator: {
-    columns: [],
-    dataSource: [],
-  },
-  master: [],
-  defaultCellWidth: defaultCellWidth,
+  return (
+    <div
+      className={classNames(selectorPrefix, className || '')}
+      style={{ ...(style || {}) }}
+      ref={el}
+    >
+      {renderIndicator()}
+      {renderMaster()}
+    </div>
+  );
 };
 
-CascadeCompared.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  indicatorClassName: PropTypes.string,
-  indicatorStyle: PropTypes.object,
-  indicatorFixedWrapClassName: PropTypes.string,
-  indicatorFixedWrapStyle: PropTypes.object,
-  indicatorAutoWrapClassName: PropTypes.string,
-  indicatorAutoWrapStyle: PropTypes.object,
-  masterClassName: PropTypes.string,
-  masterStyle: PropTypes.object,
-  masterInnerClassName: PropTypes.string,
-  masterInnerStyle: PropTypes.object,
-  masterStickFixedClassName: PropTypes.string,
-  masterStickFixedStyle: PropTypes.object,
-  masterStickInnerClassName: PropTypes.string,
-  masterStickInnerStyle: PropTypes.object,
-  indicator: PropTypes.shape({
-    columns: PropTypes.arrayOf(
-      PropTypes.shape({
-        dataIndex: PropTypes.string.isRequired,
-        isFixed: PropTypes.bool,
-        width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        render: PropTypes.func,
-        className: PropTypes.string,
-        style: PropTypes.object,
-      }),
-    ),
-    dataSource: PropTypes.object.isRequired,
-  }).isRequired,
-  master: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.node,
-      columns: PropTypes.arrayOf(
-        PropTypes.shape({
-          dataIndex: PropTypes.string.isRequired,
-          isFixed: PropTypes.bool,
-          render: PropTypes.func,
-          className: PropTypes.string,
-          style: PropTypes.object,
-        }),
-      ),
-      dataSource: PropTypes.arrayOf(PropTypes.object).isRequired,
-      className: PropTypes.string,
-      style: PropTypes.object,
-      fixedWrapClassName: PropTypes.string,
-      fixedWrapStyle: PropTypes.object,
-      autoWrapClassName: PropTypes.string,
-      autoWrapStyle: PropTypes.object,
-      autoInnerClassName: PropTypes.string,
-      autoInnerStyle: PropTypes.object,
-    }),
-  ).isRequired,
-  onStickChange: PropTypes.func,
-  defaultCellWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-};
-
-export default CascadeCompared;
+export default forwardRef<CascadeComparedHandle, CascadeComparedProps>(CascadeCompared);

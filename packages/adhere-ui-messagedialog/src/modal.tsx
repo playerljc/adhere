@@ -1,95 +1,72 @@
-import intl from '@baifendian/adhere-util-intl';
+import React, { FC, useMemo } from 'react';
 import { Button, Modal } from 'antd';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { IModalDialogProps } from './types';
+import Intl from '@baifendian/adhere-util-intl';
+
+import { ModalDialogProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-messagedialog';
 
-/**
- * ModalDialog
- * @class Modal
- * @classdesc Modal
- */
-class ModalDialog extends React.Component<IModalDialogProps, any> {
-  static defaultProps: any;
-  static propTypes: any;
+const ModalDialog: FC<ModalDialogProps> = (props) => {
+  const { config, closeBtn, close, children } = props;
 
-  // constructor(props) {
-  //   super(props);
-
-  //   this.onClose = this.onClose.bind(this);
-  // }
-
-  // componentDidMount() {
-  //   Emitter.on(Actions.close, this.onClose);
-  // }
-
-  // componentWillUnmount() {
-  //   Emitter.remove(Actions.close, this.onClose);
-  // }
+  const { footer = [], centered = true, ...other } = config;
 
   /**
    * renderCloseBtn
    * @return {ReactNode}
    */
-  renderCloseBtn() {
-    const {
-      // @ts-ignore
-      config: { footer = [] },
-    } = this.props;
-
+  function renderCloseBtn() {
     const props = {
       key: 'close',
-      title: intl.v('取消'),
-      type: undefined,
-
-      onClick: () => {
-        // @ts-ignore
-        this.props.close();
-      },
+      title: Intl.v('取消'),
+      type: 'default',
+      onClick: () => close?.(),
     };
 
-    if (footer.length === 0) {
-      // @ts-ignore
-      props.type = 'primary';
+    if (Array.isArray(footer) && footer.length === 0) {
+      props['type'] = 'primary';
     }
 
-    return <Button {...props}>{intl.v('取消')}</Button>;
-  }
-
-  render() {
-    const { config, closeBtn, close, children } = this.props;
-
     // @ts-ignore
-    const { footer = [], centered = true, ...other } = config;
-
-    return (
-      <Modal
-        {...other}
-        footer={closeBtn ? footer.concat(this.renderCloseBtn()) : footer}
-        centered={centered}
-        wrapClassName={selectorPrefix}
-        onCancel={() => {
-          close();
-        }}
-        visible
-      >
-        {children}
-      </Modal>
-    );
+    return <Button {...props}>{Intl.v('取消')}</Button>;
   }
-}
 
-ModalDialog.defaultProps = {
-  config: {},
-  closeBtn: true,
-};
+  const footerNode = useMemo(() => {
+    const closeBtnNode = renderCloseBtn();
 
-ModalDialog.propTypes = {
-  config: PropTypes.object,
-  closeBtn: PropTypes.bool,
-  close: PropTypes.func,
+    let footerNode;
+
+    if (footer) {
+      if (closeBtn) {
+        if (Array.isArray(footer)) {
+          footerNode = [...footer, closeBtnNode];
+        } else {
+          footerNode = [footer, closeBtnNode];
+        }
+      } else {
+        footerNode = footer;
+      }
+    } else {
+      if (closeBtn) {
+        footerNode = closeBtnNode;
+      }
+    }
+
+    return footerNode;
+  }, [footer, closeBtn]);
+
+  return (
+    <Modal
+      {...other}
+      footer={footerNode}
+      centered={centered}
+      wrapClassName={selectorPrefix}
+      onCancel={() => close?.()}
+      visible
+    >
+      {children}
+    </Modal>
+  );
 };
 
 export default ModalDialog;

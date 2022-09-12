@@ -4,6 +4,7 @@
  * @classdesc Events
  */
 declare class Events {
+    Events: typeof Events;
     private events;
     /**
      * @constructor
@@ -67,7 +68,7 @@ declare class Events {
      * @param {string} type
      * @param {Object} params
      */
-    trigger(type: string | symbol, ...params: Array): any;
+    trigger(type: string | symbol, ...params: Array<any>): null;
     /**
      * document自定义事件的触发
      * @param el

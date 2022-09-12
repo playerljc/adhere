@@ -1,12 +1,10 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, memo, useEffect, useRef, useState } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { APlayGroundPropTypes } from './APlayGround';
 import PlayGround from './PlayGround';
-import PlayGroundTab, { PlayGroundTabPropTypes } from './PlayGroundTab';
-import PlayGroundMulit, { PlayGroundMulitPropTypes } from './PlayGroundMulit';
-import { ICodeBoxProps } from './types';
+import PlayGroundTab from './PlayGroundTab';
+import PlayGroundMulit from './PlayGroundMulit';
+import { CodeBoxProps, CodeBoxPlayGroundMulitProps, CodeBoxPlayGroundProps } from './types';
 import Constant from './constant';
 
 const selectPrefix = 'adhere-ui-playground-code-box';
@@ -16,17 +14,17 @@ const selectPrefix = 'adhere-ui-playground-code-box';
  * @classdesc - 代码组
  * @constructor
  */
-function CodeBoxPanel(props: ICodeBoxProps) {
+const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
+  const { columnCount = 1, config = [], title, isShowExpandAllBtn = true } = props;
+
   const [activeAnchor, setAnchor] = useState('');
   const [expandAll, setExpandAll] = useState(props.expandAll);
   const expandLock = useRef(false);
-  const { columnCount, config } = props;
 
-  const column = [];
+  const column: any[] = [];
   if (columnCount != null) {
     column.length = columnCount;
   }
-  // @ts-ignore
   column.fill(undefined);
 
   const renderMap = new Map<string, Function>([
@@ -58,9 +56,7 @@ function CodeBoxPanel(props: ICodeBoxProps) {
   /**
    * useEffect props.expandAll
    */
-  useEffect(() => {
-    setExpandAll(props.expandAll);
-  }, [props.expandAll]);
+  useEffect(() => setExpandAll(props.expandAll), [props.expandAll]);
 
   /**
    * useEffect expandAll
@@ -76,10 +72,9 @@ function CodeBoxPanel(props: ICodeBoxProps) {
    * @param index
    * @return JSX
    */
-  function renderPlayGroundMulit(columnIndex: number, index: number): React.ReactElement {
+  function renderPlayGroundMulit(columnIndex: number, index: number) {
     const { config } = props;
 
-    // @ts-ignore
     const { renderWrap, renderChildren, type, ...playGroundProps } = config[index];
     // activeAnchor
 
@@ -87,22 +82,18 @@ function CodeBoxPanel(props: ICodeBoxProps) {
       // @ts-ignore
       <PlayGroundMulit
         {...playGroundProps}
-        // @ts-ignore
         isActive={activeAnchor === playGroundProps.id}
         expand={expandAll}
       >
         <ConditionalRender conditional={!!renderChildren}>
-          {/*@ts-ignore*/}
-          {() => renderChildren(columnIndex, index, config)}
+          {() => renderChildren?.(columnIndex, index, config as Array<any>)}
         </ConditionalRender>
       </PlayGroundMulit>
     );
 
     return (
-      // @ts-ignore
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {/*@ts-ignore*/}
-        {() => renderWrap(columnIndex, index, config, children)}
+        {() => renderWrap?.(columnIndex, index, config as any, children)}
       </ConditionalRender>
     );
   }
@@ -114,33 +105,25 @@ function CodeBoxPanel(props: ICodeBoxProps) {
    * @param index
    * @return JSX
    */
-  function renderPlayGround(columnIndex: number, index: number): React.ReactElement {
-    const { config } = props;
-
-    // @ts-ignore
+  function renderPlayGround(columnIndex: number, index: number) {
     const { renderWrap, renderChildren, type, ...playGroundProps } = config[index];
     // activeAnchor
 
     const children = (
-      // @ts-ignore
       <PlayGround
         {...playGroundProps}
-        // @ts-ignore
         isActive={activeAnchor === playGroundProps.id}
         expand={expandAll}
       >
         <ConditionalRender conditional={!!renderChildren}>
-          {/*@ts-ignore*/}
-          {() => renderChildren(columnIndex, index, config)}
+          {() => renderChildren?.(columnIndex, index, config as any)}
         </ConditionalRender>
       </PlayGround>
     );
 
     return (
-      // @ts-ignore
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {/*@ts-ignore*/}
-        {() => renderWrap(columnIndex, index, config, children)}
+        {() => renderWrap?.(columnIndex, index, config as any, children)}
       </ConditionalRender>
     );
   }
@@ -148,10 +131,7 @@ function CodeBoxPanel(props: ICodeBoxProps) {
   /**
    * renderPlayGroundTab
    */
-  function renderPlayGroundTab(columnIndex: number, index: number): React.ReactElement {
-    const { config } = props;
-
-    // @ts-ignore
+  function renderPlayGroundTab(columnIndex: number, index: number) {
     const { renderWrap, renderChildren, type, ...playGroundTabProps } = config[index];
     // activeAnchor
 
@@ -159,22 +139,18 @@ function CodeBoxPanel(props: ICodeBoxProps) {
       // @ts-ignore
       <PlayGroundTab
         {...playGroundTabProps}
-        // @ts-ignore
         isActive={activeAnchor === playGroundTabProps.id}
         expand={expandAll}
       >
         <ConditionalRender conditional={!!renderChildren}>
-          {/*@ts-ignore*/}
-          {() => renderChildren(columnIndex, index, config)}
+          {() => renderChildren?.(columnIndex, index, config as any)}
         </ConditionalRender>
       </PlayGroundTab>
     );
 
     return (
-      // @ts-ignore
       <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
-        {/*@ts-ignore*/}
-        {() => renderWrap(columnIndex, index, config, children)}
+        {() => renderWrap?.(columnIndex, index, config as any, children)}
       </ConditionalRender>
     );
   }
@@ -182,15 +158,14 @@ function CodeBoxPanel(props: ICodeBoxProps) {
   return (
     <div className={selectPrefix}>
       <div className={`${selectPrefix}-header`}>
-        <ConditionalRender conditional={!!props.title}>
-          {() => <div className={`${selectPrefix}-header-title`}>{props.title}</div>}
+        <ConditionalRender conditional={!!title}>
+          {() => <div className={`${selectPrefix}-header-title`}>{title}</div>}
         </ConditionalRender>
         <div className={`${selectPrefix}-header-extra`}>
-          <ConditionalRender conditional={props.isShowExpandAllBtn}>
+          <ConditionalRender conditional={isShowExpandAllBtn}>
             {() => (
               <ConditionalRender
-                conditional={expandAll}
-                // @ts-ignore
+                conditional={!!expandAll}
                 noMatch={() => (
                   <img
                     className={`${selectPrefix}-expand-code`}
@@ -224,14 +199,13 @@ function CodeBoxPanel(props: ICodeBoxProps) {
       </div>
 
       <div className={`${selectPrefix}-main`}>
-        {column.map((item, columnIndex) => (
+        {column.map((_v, columnIndex) => (
           <div className={`${selectPrefix}-column`}>
             {config.map((item, index) => {
               if (index % columnCount === columnIndex) {
                 return (
                   <div className={`${selectPrefix}-item`} key={item.id}>
-                    {/*@ts-ignore*/}
-                    {renderMap.get(item.type)(columnIndex, index)}
+                    {renderMap?.get(item.type)?.(columnIndex, index)}
                   </div>
                 );
               }
@@ -243,48 +217,48 @@ function CodeBoxPanel(props: ICodeBoxProps) {
       </div>
     </div>
   );
-}
-
-CodeBoxPanel.defaultProps = {
-  title: '',
-  extra: null,
-  isShowExpandAllBtn: true,
-  columnCount: 1,
-  expandAll: false,
-  config: [],
 };
 
-CodeBoxPanel.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  extra: PropTypes.node,
-  isShowExpandAllBtn: PropTypes.bool,
-  columnCount: PropTypes.number,
-  expandAll: PropTypes.bool,
-  config: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      {
-        ...PlayGroundMulitPropTypes,
-        // @ts-ignore
-        type: PropTypes.string,
-        renderWrap: PropTypes.func,
-        renderChildren: PropTypes.func,
-      },
-      {
-        ...APlayGroundPropTypes,
-        // @ts-ignore
-        type: PropTypes.string,
-        renderWrap: PropTypes.func,
-        renderChildren: PropTypes.func,
-      },
-      {
-        ...PlayGroundTabPropTypes,
-        // @ts-ignore
-        type: PropTypes.string,
-        renderWrap: PropTypes.func,
-        renderChildren: PropTypes.func,
-      },
-    ]),
-  ),
-};
+// CodeBoxPanel.defaultProps = {
+//   title: '',
+//   extra: null,
+//   isShowExpandAllBtn: true,
+//   columnCount: 1,
+//   expandAll: false,
+//   config: [],
+// };
+
+// CodeBoxPanel.propTypes = {
+//   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+//   extra: PropTypes.node,
+//   isShowExpandAllBtn: PropTypes.bool,
+//   columnCount: PropTypes.number,
+//   expandAll: PropTypes.bool,
+//   config: PropTypes.arrayOf(
+//     PropTypes.oneOfType([
+//       {
+//         ...PlayGroundMulitPropTypes,
+//
+//         type: PropTypes.string,
+//         renderWrap: PropTypes.func,
+//         renderChildren: PropTypes.func,
+//       },
+//       {
+//         ...APlayGroundPropTypes,
+//
+//         type: PropTypes.string,
+//         renderWrap: PropTypes.func,
+//         renderChildren: PropTypes.func,
+//       },
+//       {
+//         ...PlayGroundTabPropTypes,
+//
+//         type: PropTypes.string,
+//         renderWrap: PropTypes.func,
+//         renderChildren: PropTypes.func,
+//       },
+//     ]),
+//   ),
+// };
 
 export default memo<any>(CodeBoxPanel);
