@@ -112,8 +112,7 @@ class Notification {
     function transitionendAction() {
       n.removeEventListener('transitionend', transitionendAction);
 
-      // @ts-ignore
-      self.notificationContainer.removeChild(n);
+      self?.notificationContainer?.removeChild(n);
 
       self.key = false;
 
@@ -155,7 +154,6 @@ class Notification {
       </>
     );
 
-    // @ts-ignore
     ReactDOM.render(<Component />, n);
 
     return this.build(id, n);

@@ -368,10 +368,8 @@ class TableList<RecordType extends object = any> extends React.Component<
   }
 
   render() {
-    // @ts-ignore
     const { className } = this.props;
 
-    // @ts-ignore
     return (
       <div
         className={classNames(selectorPrefix, className)}

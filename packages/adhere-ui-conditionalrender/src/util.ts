@@ -118,7 +118,6 @@ export function deal({
   }
   // fragment
   else {
-    // @ts-ignore
     if (element.type === Symbol.for('react.fragment')) {
       const frChildren = deal({ element: element.props.children, conditional, prop, value });
       element = cloneElement(

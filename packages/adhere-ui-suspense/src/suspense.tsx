@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Skeleton, Spin } from 'antd';
@@ -73,10 +73,9 @@ abstract class Suspense<
    * @return React.ReactElement
    */
   private static renderNormalFirstLoading() {
-    const result = [];
+    const result: ReactElement[] = [];
 
     for (let i = 0; i < 7; i++) {
-      // @ts-ignore
       result.push(<Skeleton key={i + 1} loading active avatar />);
     }
 
@@ -120,7 +119,6 @@ abstract class Suspense<
       this.isFirstLoading = true;
     }
 
-    // @ts-ignore
     if (this.isFirst && this.isFirstLoading && !loading) {
       this.isFirst = false;
       this.isFirstLoading = false;
