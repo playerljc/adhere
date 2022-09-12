@@ -192,8 +192,8 @@ export default () => {
               </Button>,
             ]}
           >
-            <PermissionWrap permissions={curPermission} noMatch={<Empty />}>
-              <Button>有权限才能看到这个按钮</Button>
+            <PermissionWrap permissions={curPermission} noMatch={() => <Empty />}>
+              {() => <Button>有权限才能看到这个按钮</Button>}
             </PermissionWrap>
           </Card>
         ),
