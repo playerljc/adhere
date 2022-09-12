@@ -1,4 +1,3 @@
 import React from 'react';
-export declare const AnchorNavigationContext: React.Context<{
-    scrollEl: null;
-}>;
+import { AnchorNavigationContextValue } from './types';
+export declare const AnchorNavigationContext: React.Context<AnchorNavigationContextValue>;

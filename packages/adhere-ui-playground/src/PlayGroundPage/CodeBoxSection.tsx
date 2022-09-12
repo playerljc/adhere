@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import CodeBoxPanel from '../CodeBoxPanel';
+import { CodeBoxProps } from '../types';
 
 /**
  * CodeBoxSection
  * @param props
  * @constructor
  */
-function CodeBoxSection(props) {
-  return <CodeBoxPanel {...props} />;
-}
+const CodeBoxSection: FC<CodeBoxProps> = (props) => <CodeBoxPanel {...props} />;
 
 export default CodeBoxSection;

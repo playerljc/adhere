@@ -1,4 +1,3 @@
 import React from 'react';
-export declare const PlayGroundPageContext: React.Context<{
-    scrollEl: null;
-}>;
+import { PlayGroundPageContextValue } from '../types';
+export declare const PlayGroundPageContext: React.Context<PlayGroundPageContextValue>;

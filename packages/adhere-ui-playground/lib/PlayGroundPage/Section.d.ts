@@ -1,23 +1,12 @@
-/// <reference types="react" />
+import { FC } from 'react';
 import PropTypes from 'prop-types';
+import { SectionProps } from '../types';
 /**
  * Section
  * @param props
  * @constructor
  */
-declare function Section(props: any): JSX.Element;
-declare namespace Section {
-    var defaultProps: {
-        className: string;
-        style: {};
-    };
-    var propTypes: {
-        className: PropTypes.Requireable<string>;
-        style: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
-        extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-    };
-}
+declare const Section: FC<SectionProps>;
 export declare const SectionDefaultProps: {
     className: string;
     style: {};

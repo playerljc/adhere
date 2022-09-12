@@ -16,6 +16,6 @@ export interface SpaceProps {
 /**
  * SpaceGroupProps
  */
-export interface SpaceGroupProps {
+export interface SpaceGroupProps extends SpaceProps {
     children?: any;
 }

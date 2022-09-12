@@ -1,25 +1,25 @@
-import React from 'react';
+/// <reference types="react" />
 import APlayGround from './APlayGround';
-import { IPlayGroundTabProps } from './types';
+import { PlayGroundTabProps, PlayGroundTabState } from './types';
 /**
  * PlayGroundTab
  * @class PlayGroundTab
  * @classdesc PlayGroundTab
  */
-declare class PlayGroundTab extends APlayGround {
+declare class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> {
     constructor(props: any);
-    protected componentWillReceiveProps(nextProps: any): void;
+    componentWillReceiveProps(nextProps: any): void;
     /**
      * renderCodeView - 代码展示视图
      * @return {*}
      */
-    protected renderCodeView(): React.ReactElement;
+    protected renderCodeView(): JSX.Element;
     /**
      * getClipboardText
      */
     protected getClipboardText(): Promise<string>;
 }
-export declare const PlayGroundTabDefaultProps: IPlayGroundTabProps;
+export declare const PlayGroundTabDefaultProps: PlayGroundTabProps;
 export declare const PlayGroundTabPropTypes: {
     active: import("prop-types").Requireable<string>;
     config: import("prop-types").Requireable<(import("prop-types").InferProps<{

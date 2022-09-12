@@ -20,6 +20,6 @@ export interface SplitProps {
 /**
  * SplitGroupProps
  */
-export interface SplitGroupProps {
+export interface SplitGroupProps extends SplitProps {
   children?: any;
 }

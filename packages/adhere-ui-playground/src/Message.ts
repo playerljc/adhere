@@ -31,9 +31,7 @@ export default {
     setTimeout(() => {
       const notice = message.querySelector(`.${selectPrefix}-notice`) as HTMLElement;
       notice.classList.add(`${selectPrefix}-move-up-leave`);
-      setTimeout(() => {
-        (message as HTMLDivElement)?.parentElement?.removeChild(message);
-      }, 300);
+      setTimeout(() => (message as HTMLDivElement)?.parentElement?.removeChild(message), 300);
     }, 4000);
   },
 };

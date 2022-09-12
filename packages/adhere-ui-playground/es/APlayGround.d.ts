@@ -1,26 +1,22 @@
-import React from 'react';
+import React, { Requireable } from 'react';
 import PropTypes from 'prop-types';
-import { IPlayGroundProps, IPlayGroundState } from './types';
+import { PlayGroundProps, PlayGroundState } from './types';
 /**
  * APlayGround
  * @class APlayGround
  * @classdesc APlayGround
  */
-declare abstract class APlayGround extends React.Component<IPlayGroundProps, IPlayGroundState> {
+declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, S extends PlayGroundState = PlayGroundState> extends React.Component<P, S> {
+    protected isFirst: boolean;
+    protected clipboardRef: React.RefObject<HTMLDivElement>;
+    protected actionConfig: (() => JSX.Element)[];
+    static defaultProps: PlayGroundProps;
     static propTypes: {
         cardProps: any;
-        expand: any;
+        expand: Requireable<boolean>;
         id: any;
-        isActive: any;
-        config: any;
+        isActive: Requireable<boolean>;
     };
-    static defaultProps: IPlayGroundProps;
-    protected isFirst: boolean;
-    protected clipboardRef: React.RefObject<HTMLElement>;
-    protected state: {
-        expand: boolean | undefined;
-    };
-    protected actionConfig: (() => JSX.Element)[];
     /**
      * renderExpandAction
      * @description - 渲染代码视图
@@ -33,8 +29,9 @@ declare abstract class APlayGround extends React.Component<IPlayGroundProps, IPl
      * @return Promise<string>
      */
     protected abstract getClipboardText(e: React.MouseEvent): Promise<string>;
-    protected componentWillReceiveProps(nextProps: any): void;
-    componentWillUpdate(nextProps: Readonly<IPlayGroundProps>, nextState: Readonly<IPlayGroundState>, nextContext: any): void;
+    constructor(props: any);
+    componentWillReceiveProps(nextProps: any): void;
+    componentWillUpdate(nextProps: Readonly<PlayGroundProps>, nextState: Readonly<PlayGroundState>, nextContext: any): void;
     /**
      * renderAction
      */
@@ -52,9 +49,9 @@ declare abstract class APlayGround extends React.Component<IPlayGroundProps, IPl
      * render
      * @return {*}
      */
-    protected render(): JSX.Element;
+    render(): JSX.Element;
 }
-export declare const APlayGroundDefaultProps: IPlayGroundProps;
+export declare const APlayGroundDefaultProps: PlayGroundProps;
 export declare const APlayGroundPropTypes: {
     id: PropTypes.Requireable<string>;
     cardProps: PropTypes.Requireable<PropTypes.InferProps<{

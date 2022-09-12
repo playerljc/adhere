@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const PlayGroundPageContext = React.createContext({
+import { PlayGroundPageContextValue } from '../types';
+
+export const PlayGroundPageContext = React.createContext<PlayGroundPageContextValue>({
   scrollEl: null,
 });

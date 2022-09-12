@@ -1,4 +1,3 @@
 import React from 'react';
-export declare const TabContext: React.Context<{
-    activeKey: string;
-}>;
+import { TabContextValue } from '../types';
+export declare const TabContext: React.Context<TabContextValue>;
