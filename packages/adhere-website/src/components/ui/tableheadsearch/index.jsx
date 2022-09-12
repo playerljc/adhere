@@ -113,6 +113,24 @@ function getColumns() {
 }
 
 export default () => {
+  const [dataSource, setDataSource] = useState([
+    {
+      name: '张三',
+      sex: '男',
+      dept: '产品部',
+    },
+    {
+      name: '李四',
+      sex: '男',
+      dept: '研发部',
+    },
+    {
+      name: '王五',
+      sex: '女',
+      dept: '产品部',
+    },
+  ]);
+
   function boxPanelConfig() {
     return [
       {
@@ -261,24 +279,6 @@ export default () => {
       },
     ];
   }
-
-  const [dataSource, setDataSource] = useState([
-    {
-      name: '张三',
-      sex: '男',
-      dept: '产品部',
-    },
-    {
-      name: '李四',
-      sex: '男',
-      dept: '研发部',
-    },
-    {
-      name: '王五',
-      sex: '女',
-      dept: '产品部',
-    },
-  ]);
 
   return (
     <PlayGroundPage>

@@ -6,6 +6,20 @@ import { FormItemCreator } from '@baifendian/adhere';
 import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 export default () => {
+  const [skip, setSkip] = useState(true);
+  const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 12 },
+  };
+
+  const onFinish = (values) => {
+    console.log('success', values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('failed', errorInfo);
+  };
+
   function boxPanelConfig() {
     return [
       {
@@ -857,20 +871,6 @@ export default () => {
       },
     ];
   }
-
-  const [skip, setSkip] = useState(true);
-  const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 12 },
-  };
-
-  const onFinish = (values) => {
-    console.log('success', values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('failed', errorInfo);
-  };
 
   return (
     <PlayGroundPage>

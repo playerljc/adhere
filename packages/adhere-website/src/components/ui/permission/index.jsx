@@ -14,6 +14,13 @@ const { Permission: PermissionWrap, setPermission, getPermission } = Permission;
 setPermission(['1']);
 
 export default () => {
+  const [allPermission, setAllPermission] = useState(getPermission());
+  const [curPermission, setCurPermission] = useState(['2']);
+
+  const ref1 = useRef();
+
+  const ref2 = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -193,13 +200,6 @@ export default () => {
       },
     ];
   }
-
-  const [allPermission, setAllPermission] = useState(getPermission());
-  const [curPermission, setCurPermission] = useState(['2']);
-
-  const ref1 = useRef();
-
-  const ref2 = useRef();
 
   return (
     <PlayGroundPage>

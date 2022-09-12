@@ -58,6 +58,8 @@ function getDataSource() {
 }
 
 export default () => {
+  const ref1 = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -321,8 +323,6 @@ export default () => {
       },
     ];
   }
-
-  const ref1 = useRef();
 
   return (
     <PlayGroundPage className="Surnames">

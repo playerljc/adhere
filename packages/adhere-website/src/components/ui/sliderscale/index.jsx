@@ -8,6 +8,8 @@ import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/Pla
 import './index.less';
 
 export default () => {
+  const [value, setValue] = useState(0);
+
   function boxPanelConfig() {
     return [
       {
@@ -133,8 +135,6 @@ export default () => {
       },
     ];
   }
-
-  const [value, setValue] = useState(0);
 
   return (
     <PlayGroundPage className="SliderScale">

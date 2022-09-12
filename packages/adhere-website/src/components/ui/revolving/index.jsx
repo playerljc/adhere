@@ -10,6 +10,8 @@ import PlayGroundPage, {
 } from '@/lib/PlaygroundPage';
 
 export default () => {
+  const ref = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -365,8 +367,6 @@ export default () => {
       },
     ];
   }
-
-  const ref = useRef();
 
   return (
     <PlayGroundPage>

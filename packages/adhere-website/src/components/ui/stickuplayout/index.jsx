@@ -15,6 +15,8 @@ import './index.less';
 const { Item } = StickupLayout;
 
 export default () => {
+  const ref1 = useRef();
+
   function boxPanelConfig() {
     return [
       {
@@ -367,48 +369,48 @@ export default () => {
                   <table>
                     <tr>
                       <td>厂商指导价(元)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>本地参考底价(元)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>厂商</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>级别</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>能源类型</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>上市时间</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大功率(KW)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>发动机</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                   </table>
                 }
@@ -420,48 +422,48 @@ export default () => {
                   <table>
                     <tr>
                       <td>长度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>宽度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>高度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>轴距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>前轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>后轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>车身结构</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                   </table>
                 }
@@ -473,48 +475,48 @@ export default () => {
                   <table>
                     <tr>
                       <td>长度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>宽度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>高度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>轴距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>前轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>后轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>车身结构</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                   </table>
                 }
@@ -526,48 +528,48 @@ export default () => {
                   <table>
                     <tr>
                       <td>长度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>宽度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>高度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>轴距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>前轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>后轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>车身结构</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                   </table>
                 }
@@ -579,48 +581,48 @@ export default () => {
                   <table>
                     <tr>
                       <td>长度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>宽度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>高度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>轴距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>前轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>后轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>车身结构</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                   </table>
                 }
@@ -632,48 +634,48 @@ export default () => {
                   <table>
                     <tr>
                       <td>长度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>宽度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>高度(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>轴距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>前轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>后轮距(mm)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>车身结构</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                     <tr>
                       <td>最大扭矩(NH)</td>
-                      <td></td>
-                      <td></td>
+                      <td />
+                      <td />
                     </tr>
                   </table>
                 }
@@ -1099,48 +1101,48 @@ export default () => {
                     <table>
                       <tr>
                         <td>厂商指导价(元)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>本地参考底价(元)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>厂商</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>级别</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>能源类型</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>上市时间</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大功率(KW)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>发动机</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                     </table>
                   }
@@ -1152,48 +1154,48 @@ export default () => {
                     <table>
                       <tr>
                         <td>长度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>宽度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>高度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>轴距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>前轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>后轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>车身结构</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                     </table>
                   }
@@ -1205,48 +1207,48 @@ export default () => {
                     <table>
                       <tr>
                         <td>长度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>宽度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>高度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>轴距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>前轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>后轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>车身结构</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                     </table>
                   }
@@ -1258,48 +1260,48 @@ export default () => {
                     <table>
                       <tr>
                         <td>长度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>宽度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>高度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>轴距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>前轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>后轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>车身结构</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                     </table>
                   }
@@ -1311,48 +1313,48 @@ export default () => {
                     <table>
                       <tr>
                         <td>长度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>宽度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>高度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>轴距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>前轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>后轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>车身结构</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                     </table>
                   }
@@ -1364,48 +1366,48 @@ export default () => {
                     <table>
                       <tr>
                         <td>长度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>宽度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>高度(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>轴距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>前轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>后轮距(mm)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>车身结构</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                       <tr>
                         <td>最大扭矩(NH)</td>
-                        <td></td>
-                        <td></td>
+                        <td />
+                        <td />
                       </tr>
                     </table>
                   }
@@ -1417,8 +1419,6 @@ export default () => {
       },
     ];
   }
-
-  const ref1 = useRef();
 
   return (
     <PlayGroundPage className="StickupLayout">

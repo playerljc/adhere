@@ -5,6 +5,8 @@ import { Spin } from '@baifendian/adhere';
 import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 
 export default () => {
+  const [show, setShow] = useState(false);
+
   function boxPanelConfig() {
     return [
       {
@@ -82,8 +84,6 @@ export default () => {
       },
     ];
   }
-
-  const [show, setShow] = useState(false);
 
   return (
     <PlayGroundPage>
