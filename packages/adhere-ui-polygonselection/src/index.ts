@@ -1,4 +1,3 @@
-// @ts-ignore
 import PolygonSelection from './PolygonSelection';
 import CircleDrawAction from './draw/CircleDrawAction';
 import DiamondDrawAction from './draw/DiamondDrawAction';

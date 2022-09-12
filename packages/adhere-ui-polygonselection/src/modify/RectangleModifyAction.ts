@@ -1,5 +1,4 @@
 import * as turf from '@turf/turf';
-// @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 
 import { IPoint, IRectangleData, SelectType } from '../types';

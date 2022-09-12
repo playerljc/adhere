@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
 
-export interface Slide
 /**
  * SlideLayoutProps
  * @interface SlideLayoutProps
@@ -11,7 +10,7 @@ export interface SlideLayoutProps {
   width?: string | number;
   height?: string | number;
   mask?: boolean;
-  zIndex?: number;
+  zIndex?: number | string;
   time?: number;
   collapse?: boolean;
   direction?: string;

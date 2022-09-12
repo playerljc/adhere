@@ -21,6 +21,22 @@ const verticalCSS = {
 };
 
 export default () => {
+  const [collapse1, setCollapse1] = useState(true);
+
+  const [collapse2, setCollapse2] = useState(true);
+
+  const [collapse3, setCollapse3] = useState(true);
+
+  const [collapse4, setCollapse4] = useState(true);
+
+  const [collapse5, setCollapse5] = useState(true);
+
+  const [collapse6, setCollapse6] = useState(true);
+
+  const [collapse7, setCollapse7] = useState(true);
+
+  const [collapse8, setCollapse8] = useState(true);
+
   function boxPanelConfig() {
     return [
       {
@@ -107,7 +123,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div style={{ ...horizontalCSS }}>
           <SlideLayout.Overlay
@@ -144,7 +160,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div
           style={{
@@ -188,7 +204,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div style={{ ...verticalCSS }}>
           <SlideLayout.Overlay
@@ -226,7 +242,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div
           style={{
@@ -273,7 +289,7 @@ export default () => {
                     </Button>
                   </div>
 
-                  <Space />
+                  <Space direction="vertical" />
 
                   <div style={{ ...horizontalCSS }}>
                     <SlideLayout.Overlay
@@ -310,7 +326,7 @@ export default () => {
                     </Button>
                   </div>
 
-                  <Space />
+                  <Space direction="vertical" />
 
                   <div
                     style={{
@@ -354,7 +370,7 @@ export default () => {
                     </Button>
                   </div>
 
-                  <Space />
+                  <Space direction="vertical" />
 
                   <div style={{ ...verticalCSS }}>
                     <SlideLayout.Overlay
@@ -392,7 +408,7 @@ export default () => {
                     </Button>
                   </div>
 
-                  <Space />
+                  <Space direction="vertical" />
 
                   <div
                     style={{
@@ -452,7 +468,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div style={{ ...horizontalCSS }}>
           <SlideLayout.Push
@@ -489,7 +505,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div
           style={{
@@ -535,7 +551,7 @@ export default () => {
                   </Button>
                 </div>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div style={{ ...horizontalCSS }}>
                   <SlideLayout.Push
@@ -572,7 +588,7 @@ export default () => {
                   </Button>
                 </div>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div
                   style={{
@@ -631,7 +647,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div style={{ ...horizontalCSS }}>
           <SlideLayout.Revolving
@@ -668,7 +684,7 @@ export default () => {
           </Button>
         </div>
 
-        <Space />
+        <Space direction="vertical" />
 
         <div
           style={{
@@ -714,7 +730,7 @@ export default () => {
                   </Button>
                 </div>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div style={{ ...horizontalCSS }}>
                   <SlideLayout.Revolving
@@ -751,7 +767,7 @@ export default () => {
                   </Button>
                 </div>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div
                   style={{
@@ -775,22 +791,6 @@ export default () => {
       },
     ];
   }
-
-  const [collapse1, setCollapse1] = useState(true);
-
-  const [collapse2, setCollapse2] = useState(true);
-
-  const [collapse3, setCollapse3] = useState(true);
-
-  const [collapse4, setCollapse4] = useState(true);
-
-  const [collapse5, setCollapse5] = useState(true);
-
-  const [collapse6, setCollapse6] = useState(true);
-
-  const [collapse7, setCollapse7] = useState(true);
-
-  const [collapse8, setCollapse8] = useState(true);
 
   return (
     <PlayGroundPage>

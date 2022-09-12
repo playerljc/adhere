@@ -1,6 +1,4 @@
-import Overlay from './overlay';
-import Push from './push';
-import Revolving from './reveal';
+import React from 'react';
 export declare const selectorPrefix = "adhere-ui-slidelayout";
 /**
  * slider
@@ -11,16 +9,16 @@ export declare const selectorPrefix = "adhere-ui-slidelayout";
  * @param time
  * @param callback
  */
-export declare function slider(el: HTMLElement | null | undefined, x: string, y: string, z: string, time: string | undefined, callback: Function): void;
+export declare function slider(el: HTMLElement, x: string, y: string, z: string, time?: string, callback?: Function): void;
 /**
  * createMask
  * @param zIndex
  * @param closeCallback
  */
-export declare function createMask(zIndex: number | string, closeCallback: Function): HTMLElement;
+export declare function createMask(zIndex: number | string, closeCallback: () => void): HTMLDivElement;
 declare const _default: {
-    Overlay: typeof Overlay;
-    Push: typeof Push;
-    Revolving: typeof Revolving;
+    Overlay: React.FC<import("./types").OverlayProps>;
+    Push: React.FC<import("./types").PushProps>;
+    Revolving: React.FC<import("./types").RevealProps>;
 };
 export default _default;

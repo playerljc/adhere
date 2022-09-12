@@ -1,6 +1,5 @@
 import * as turf from '@turf/turf';
 
-// @ts-ignore
 import BaseUtil from '@baifendian/adhere-util';
 
 import {

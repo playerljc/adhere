@@ -1,5 +1,4 @@
 import React, { FC, useRef } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { OverlayProps } from './types';
@@ -12,14 +11,10 @@ const Overlay: FC<OverlayProps> = (props) => {
   const {
     className = '',
     style = {},
-    width = '80%',
-    height = '40%',
-    mask = true,
     zIndex = 9999,
-    time = 300,
     direction = 'left',
-    collapse = false,
     onAfterShow,
+    onAfterClose,
     children,
   } = props;
 
@@ -50,84 +45,97 @@ const Overlay: FC<OverlayProps> = (props) => {
       left: (time) => {
         slider(el.current as HTMLElement, '0', '0', '0', `${getDuration(time)}ms`, onAfterShow);
 
-        if (maskEl.current) maskEl.style.display = 'block';
+        if (maskEl.current) maskEl.current.style.display = 'block';
       },
       right: (time) => {
         slider(
-          this.el,
-          `${this.el?.parentElement?.offsetWidth - this.el.offsetWidth}px`,
+          el.current as HTMLElement,
+          `${
+            (el.current?.parentElement as HTMLElement).offsetWidth -
+            (el.current as HTMLElement).offsetWidth
+          }px`,
           '0',
           '0',
-          `${this.getDuration(time)}ms`,
-          this.props.onAfterShow,
+          `${getDuration(time)}ms`,
+          onAfterShow,
         );
 
-        if (this.maskEl) this.maskEl.style.display = 'block';
+        if (maskEl.current) maskEl.current.style.display = 'block';
       },
       top: (time) => {
-        slider(this.el, '0', '0', '0', `${this.getDuration(time)}ms`, this.props.onAfterShow);
+        slider(el.current as HTMLElement, '0', '0', '0', `${getDuration(time)}ms`, onAfterShow);
 
-        if (this.maskEl) this.maskEl.style.display = 'block';
+        if (maskEl.current) maskEl.current.style.display = 'block';
       },
       bottom: (time) => {
         slider(
-          this.el,
+          el.current as HTMLElement,
           '0',
-          `${this.el?.parentElement?.offsetHeight - this.el.offsetHeight}px`,
+          `${
+            (el.current?.parentElement as HTMLElement).offsetHeight -
+            (el.current as HTMLElement).offsetHeight
+          }px`,
           '0',
-          `${this.getDuration(time)}ms`,
-          this.props.onAfterShow,
+          `${getDuration(time)}ms`,
+          onAfterShow,
         );
 
-        if (this.maskEl) this.maskEl.style.display = 'block';
+        if (maskEl.current) maskEl.current.style.display = 'block';
       },
     },
     close: {
       left: (time) => {
-        slider(this.el, '-100%', '0', '0', `${this.getDuration(time)}ms`, this.props.onAfterClose);
+        slider(
+          el.current as HTMLElement,
+          '-100%',
+          '0',
+          '0',
+          `${getDuration(time)}ms`,
+          onAfterClose,
+        );
 
-        if (this.maskEl) this.maskEl.style.display = 'none';
+        if (maskEl.current) maskEl.current.style.display = 'none';
       },
       right: (time) => {
         slider(
-          this.el,
-          `${this.el?.parentElement?.offsetWidth}px`,
+          el.current as HTMLElement,
+          `${(el.current?.parentElement as HTMLElement).offsetWidth}px`,
           '0',
           '0',
-          `${this.getDuration(time)}ms`,
-          this.props.onAfterClose,
+          `${getDuration(time)}ms`,
+          onAfterClose,
         );
 
-        if (this.maskEl) this.maskEl.style.display = 'none';
+        if (maskEl.current) maskEl.current.style.display = 'none';
       },
       top: (time) => {
         slider(
-          this.el,
+          el.current as HTMLElement,
           '0',
-          `-${this.el?.parentElement?.offsetHeight}px`,
+          `-${(el.current?.parentElement as HTMLElement).offsetHeight}px`,
           '0',
-          `${this.getDuration(time)}ms`,
-          this.props.onAfterClose,
+          `${getDuration(time)}ms`,
+          onAfterClose,
         );
 
-        if (this.maskEl) this.maskEl.style.display = 'none';
+        if (maskEl.current) maskEl.current.style.display = 'none';
       },
       bottom: (time) => {
         slider(
-          this.el,
+          el.current as HTMLElement,
           '0',
-          `${this.el?.parentElement?.offsetHeight}px`,
+          `${(el.current?.parentElement as HTMLElement).offsetHeight}px`,
           '0',
-          `${this.getDuration(time)}ms`,
-          this.props.onAfterClose,
+          `${getDuration(time)}ms`,
+          onAfterClose,
         );
 
-        if (this.maskEl) this.maskEl.style.display = 'none';
+        if (maskEl.current) maskEl.current.style.display = 'none';
       },
     },
   });
 
-  const {} = useSlide(props);
+  const { getDuration, maskEl } = useSlide(props, el, positionConfig);
 
   return (
     <div
