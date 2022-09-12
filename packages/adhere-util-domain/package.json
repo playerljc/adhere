@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-domain",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "domain模块的浏览器端实现",
   "main": "lib/index.js",
   "module": "es/index.js",

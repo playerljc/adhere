@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-comment",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "评论",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -43,23 +43,23 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@baifendian/adhere-ui-backtopanimation": "^1.0.19",
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.18",
+    "@baifendian/adhere-ui-backtopanimation": "^1.0.20",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
     "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.19",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.20",
     "@baifendian/adhere-ui-hooks": "^1.0.18",
-    "@baifendian/adhere-ui-scrollload": "^1.0.19",
-    "@baifendian/adhere-util": "^1.0.19",
-    "@baifendian/adhere-util-intl": "^1.0.19",
+    "@baifendian/adhere-ui-scrollload": "^1.0.20",
+    "@baifendian/adhere-util": "^1.0.20",
+    "@baifendian/adhere-util-intl": "^1.0.20",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
+    "@types/emoji-mart": "^3.0.9",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.22.2",
     "classnames": "^2.2.6",
     "emoji-mart": "^5.2.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "@types/emoji-mart": "^3.0.9"
+    "react-dom": "^17.0.1"
   }
 }

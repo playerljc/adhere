@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-conditionalrender",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "条件渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
