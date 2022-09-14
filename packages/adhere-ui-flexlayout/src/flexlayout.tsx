@@ -1,15 +1,15 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 
-import Fixed from './fixed';
 import Auto from './auto';
-import HorizontalFlexLayout from './horizontalFlexLayout';
-import VerticalFlexLayout from './verticalFlexLayout';
-import ToolBarLayout from './toolBarLayout';
 import BackLayout from './backLayout';
-import ScrollLayout, { ScrollLayoutContext, useScrollLayout } from './scrollLayout';
 import { FlexContext } from './context';
+import Fixed from './fixed';
+import HorizontalFlexLayout from './horizontalFlexLayout';
+import ScrollLayout, { ScrollLayoutContext, useScrollLayout } from './scrollLayout';
+import ToolBarLayout from './toolBarLayout';
 import type { FlexLayoutFunction, FlexLayoutProps } from './types';
+import VerticalFlexLayout from './verticalFlexLayout';
 
 export const selectorPrefix = 'adhere-ui-flexlayout';
 

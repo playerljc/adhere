@@ -1,17 +1,18 @@
-import React, { ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import type {
-  TableGridLayoutProps,
   DataItem,
-  RenderDetail,
   GroupRenderDetail,
-  RowCountRef,
+  RenderDetail,
+  RenderGridSearchForm,
   RenderHorizontal,
   RenderVertical,
-  RenderGridSearchForm,
+  RowCountRef,
+  TableGridLayoutProps,
 } from './types';
 
 const selectorPrefix = 'adhere-ui-tablegridlayout';

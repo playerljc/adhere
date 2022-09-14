@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
+import React, { useState } from 'react';
+
 import { Spin } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   const [show, setShow] = useState(false);

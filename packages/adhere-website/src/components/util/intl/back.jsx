@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { Space } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
-import { Space } from '@baifendian/adhere';
 
 export default () => {
   return (
@@ -215,7 +216,7 @@ export default () => {
         expand
         codeText={`
   import { Intl } from '@baifendian/adhere';
-        
+
   // 初始化国际化
   Intl.init({
     currentLocale: 'zh_CN',
@@ -227,25 +228,25 @@ export default () => {
   }).then(() => {
     console.log('国际化初始化完成');
   });
-  
-  
+
+
   // zh_CN.js文件
-  
+
   export default [
     'XXX系统',
   ];
-  
+
   // pt_PT.js文件
-  
+
   export default [
     'XXX系统',
   ];
-  
+
   // en_US.js文件
   export default [
     'XXX系统',
   ];
-  
+
         `}
       />
     </div>

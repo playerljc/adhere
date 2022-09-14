@@ -1,14 +1,19 @@
-import React, { useRef } from 'react';
-import { /* Card, */ Radio, Button } from 'antd';
-import { OLMap, Resource, Space } from '@baifendian/adhere';
-
-import Props from '@/lib/Props';
-import FunctionProps from '@/lib/FunctionProps';
-import Playground from '@/lib/Playground';
-
-import { Vector as VectorSource } from 'ol/source';
+import {
+  Button,
+  /* Card, */
+  Radio,
+} from 'antd';
 import GeoJSON from 'ol/format/GeoJSON';
 import { fromLonLat } from 'ol/proj.js';
+import { Vector as VectorSource } from 'ol/source';
+import React, { useRef } from 'react';
+
+import { OLMap, Resource, Space } from '@baifendian/adhere';
+
+import FunctionProps from '@/lib/FunctionProps';
+import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
+
 // import { Fill, Stroke, Style } from 'ol/style.js';
 // import Circle from 'ol/geom/Circle';
 // import Feature from 'ol/Feature.js';
@@ -2172,11 +2177,11 @@ export default () => {
         codeText={`
   import { OLMap, Resource } from '@baifendian/adhere';
   import 'ol/ol.css';
-  
+
   const {
     OLMap: OLMapComponent,
   } = OLMap;
-  
+
   <div style={{ width: '100%', height: 500 }}>
     <OLMapComponent zoom={11.5} />
   </div>
@@ -2194,14 +2199,14 @@ export default () => {
         codeText={`
   import { OLMap, Resource } from '@baifendian/adhere';
   import 'ol/ol.css';
-  
+
   const {
     OLMap: OLMapComponent,
     HeatMap,
     Util,
     AnimationManager,
   } = OLMap;
-  
+
   <div style={{ width: '100%', height: 500 }}>
     <Button
       type="primary"
@@ -2273,14 +2278,14 @@ export default () => {
         codeText={`
   import { OLMap, Resource } from '@baifendian/adhere';
   import 'ol/ol.css';
-  
+
   const {
     OLMap: OLMapComponent,
     HeatMap,
     Util,
     AnimationManager,
   } = OLMap;
-  
+
   <div style={{ width: '100%', height: 500 }}>
     <Radio.Group
       defaultValue="OSM"
@@ -2382,14 +2387,14 @@ export default () => {
         codeText={`
   import { OLMap, Resource } from '@baifendian/adhere';
   import 'ol/ol.css';
-  
+
   const {
     OLMap: OLMapComponent,
     HeatMap,
     Util,
     AnimationManager,
   } = OLMap;
-  
+
   <div style={{ width: '100%', height: 500 }}>
     <Button
       type="primary"
@@ -2409,7 +2414,7 @@ export default () => {
           [119.7701492, 31.8512531],
           [119.7730089, 31.8507856],
         ];
-  
+
         const feas = [];
         for (let i = 0, len = dataSource.length; i < len; i++) {
           const provinceInfo = dataSource[i];
@@ -2423,21 +2428,21 @@ export default () => {
           };
           feas.push(fea);
         }
-  
+
         const heatData = {
           type: 'FeatureCollection',
           features: feas,
         };
-  
+
         const vectorSource = new VectorSource({
           features: new GeoJSON().readFeatures(heatData, {
             dataProjection: 'EPSG:3857',
             featureProjection: 'EPSG:3857',
           }),
         });
-  
+
         heatRef.current.addLayer();
-  
+
         const layer = heatRef.current.getHeatmapLayer();
         layer.setSource(vectorSource);
       }}
@@ -2513,14 +2518,14 @@ export default () => {
         codeText={`
   import { OLMap, Resource } from '@baifendian/adhere';
   import 'ol/ol.css';
-  
+
   const {
     OLMap: OLMapComponent,
     HeatMap,
     Util,
     AnimationManager,
   } = OLMap;
-  
+
   <div style={{ width: '100%', height: 500 }}>
     <Button
       type="primary"
@@ -2826,14 +2831,14 @@ export default () => {
         codeText={`
   import { OLMap, Resource } from '@baifendian/adhere';
   import 'ol/ol.css';
-  
+
   const {
     OLMap: OLMapComponent,
     HeatMap,
     Util,
     AnimationManager,
   } = OLMap;
-  
+
   <div style={{ width: '100%', height: 500 }}>
     <Button
       type="primary"
@@ -2843,7 +2848,7 @@ export default () => {
 
         const lineData = new Map();
         const lines = [];
-        
+
         const ps =
           Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value.features[0].geometry
             .coordinates[0][0];

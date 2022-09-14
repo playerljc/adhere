@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import type { ConditionalRenderShowProps } from './types';
-
 import { deal } from './util';
 
 /**

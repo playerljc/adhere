@@ -1,6 +1,7 @@
+import { Avatar, List } from 'antd';
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
-import { List, Avatar } from 'antd';
+
 import AdhereConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import PullRefresh from '../index';

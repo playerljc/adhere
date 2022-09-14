@@ -1,12 +1,14 @@
-import React, { useRef, useEffect, useState } from 'react';
 import * as echarts from 'echarts';
 import ReactECharts from 'echarts-for-react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Playground from '@/lib/Playground';
-import point from './point_y.png';
-import geoJson from './guangxi.geo.json';
-import styles from './index.less';
+
 import data from './config';
+import geoJson from './guangxi.geo.json';
+import point from './point_y.png';
+
+import styles from './index.less';
 
 // 绘制地图
 echarts.registerMap('guangxi', geoJson);
@@ -603,9 +605,9 @@ export default () => {
         codeText={`
       import React from 'react';
       import ReactECharts from 'echarts-for-react';
-      
+
       const option = ${JSON.stringify(option, null, 2)}
-      
+
       <ReactECharts option={option} />
         `}
       >

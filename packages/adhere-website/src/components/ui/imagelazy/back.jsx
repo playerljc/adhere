@@ -1,9 +1,10 @@
+import { Avatar, List } from 'antd';
 import React from 'react';
-import { List, Avatar } from 'antd';
+
 import { ImageLazy, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 export default () => {
   const listData = [];
@@ -79,7 +80,7 @@ export default () => {
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { ImageLazy } from '@baifendian/adhere';
-  
+
   const listData = [];
 
   for (let i = 0; i < 6; i++) {
@@ -93,7 +94,7 @@ export default () => {
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
     });
   }
-  
+
   <List
     itemLayout="vertical"
     size="large"
@@ -160,7 +161,7 @@ export default () => {
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { ImageLazy } from '@baifendian/adhere';
-  
+
   const listData = [];
 
   for (let i = 0; i < 6; i++) {
@@ -174,7 +175,7 @@ export default () => {
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
     });
   }
-  
+
   <List
     itemLayout="vertical"
     size="large"

@@ -1,5 +1,6 @@
-import React, { useLayoutEffect, useRef, FC } from 'react';
 import classNames from 'classnames';
+import React, { FC, useLayoutEffect, useRef } from 'react';
+
 import Resource from '@baifendian/adhere-util-resource';
 
 import { BackTopAnimationProps } from './types';

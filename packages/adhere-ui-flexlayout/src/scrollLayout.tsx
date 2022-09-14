@@ -1,7 +1,7 @@
-import React, { forwardRef, createContext, ForwardRefRenderFunction, useContext } from 'react';
 import classNames from 'classnames';
+import React, { ForwardRefRenderFunction, createContext, forwardRef, useContext } from 'react';
 
-import { ScrollLayoutProps, ScrollLayoutContextType } from './types';
+import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 
 const selectorPrefix = 'adhere-ui-flexlayout-scrolllayout';
 

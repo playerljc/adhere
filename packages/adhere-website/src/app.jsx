@@ -1,5 +1,5 @@
-import React from 'react';
 import NProgress from 'nprogress';
+import React from 'react';
 
 import Header from '@/lib/Header';
 

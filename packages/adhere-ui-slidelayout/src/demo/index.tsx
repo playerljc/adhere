@@ -1,10 +1,11 @@
+import { Button } from 'antd';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from 'antd';
+
 import SlideLayout from '../index';
 
-import './index.less';
 import '../index.less';
+import './index.less';
 
 const horizontalCSS = {
   position: 'relative',

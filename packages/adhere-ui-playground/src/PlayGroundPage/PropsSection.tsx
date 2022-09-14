@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-// import PropTypes from 'prop-types';
 
-import { PropsSectionProps } from '../types';
 import Space from '@baifendian/adhere-ui-space';
-import Section from './Section';
+
 import Props from '../Props';
+// import PropTypes from 'prop-types';
+import { PropsSectionProps } from '../types';
+import Section from './Section';
 
 /**
  * PropsSection

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Table } from 'antd';
+import React from 'react';
 
 import { Suspense } from '@baifendian/adhere';
 

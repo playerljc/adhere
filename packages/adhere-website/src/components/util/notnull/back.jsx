@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button } from 'antd';
+import React from 'react';
 
 import { NotNull } from '@baifendian/adhere';
 
@@ -42,7 +42,7 @@ export default () => {
         expand
         codeText={`
   import { NotNull } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -90,13 +90,13 @@ export default () => {
         expand
         codeText={`
   import { NotNull } from '@baifendian/adhere';
-  
+
   <Button
     type="primary"
     onClick={() => {
       const arr = NotNull([]);
       console.log(arr[5].a.b.c);
-  
+
       arr[5] = {
         a: {
           b: {
@@ -104,7 +104,7 @@ export default () => {
           },
         },
       };
-  
+
       console.log(arr[5]);
       console.log(arr.length);
     }}

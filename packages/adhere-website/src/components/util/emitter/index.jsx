@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
+
 import { Emitter } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 export default () => {

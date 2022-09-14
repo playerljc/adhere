@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import { Button, Tabs } from 'antd';
+import React, { useEffect, useState } from 'react';
+
 import { Notification } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 import styles from './index.less';

@@ -1,5 +1,3 @@
-import React, { createRef, RefObject, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import {
   ColumnType,
   FilterValue,
@@ -8,13 +6,15 @@ import {
   TablePaginationConfig,
   TableRowSelection,
 } from 'antd/lib/table/interface';
+import PropTypes from 'prop-types';
+import React, { ReactElement, RefObject, createRef } from 'react';
 
+import SearchTable, { defaultProps, propTypes } from './searchtable';
 import {
+  ISearchTableImplement,
   SearchTableImplementProps,
   SearchTableImplementState,
-  ISearchTableImplement,
 } from './types';
-import SearchTable, { defaultProps, propTypes } from './searchtable';
 
 const selectorPrefix = 'adhere-ui-searchtableimplement';
 

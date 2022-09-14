@@ -1,14 +1,15 @@
+import { Button, Result } from 'antd';
 import React from 'react';
-import { Result, Button } from 'antd';
-import { MessageDialog, FormItemCreator } from '@baifendian/adhere';
 
-import icon from './icon.svg';
+import { FormItemCreator, MessageDialog } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
+
+import icon from './icon.svg';
 
 export default () => {
   function boxPanelConfig() {

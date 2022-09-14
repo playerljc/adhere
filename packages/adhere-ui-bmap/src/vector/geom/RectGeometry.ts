@@ -1,16 +1,17 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
 import {
   GeometryType,
+  IGeometryStyle,
+  IPixel,
   IRectGeometry,
   IRectGeometryData,
-  IGeometryStyle,
   VectorActions,
-  IPixel,
 } from '../types';
 import Geometry from './Geometry';
-import GeometryStyle from '../style/GeometryStyle';
-import Util from '../../util';
 
 /**
  * RectGeometry

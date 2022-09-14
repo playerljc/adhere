@@ -1,14 +1,14 @@
+import TextStyle from '../style/TextStyle';
 import {
   GeometryType,
-  ITextGeometry,
-  VectorActions,
-  ITextStyle,
-  ITextGeometryData,
   ICoordinate,
   IPixel,
+  ITextGeometry,
+  ITextGeometryData,
+  ITextStyle,
+  VectorActions,
 } from '../types';
 import Geometry from './Geometry';
-import TextStyle from '../style/TextStyle';
 
 /**
  * TextGeometry

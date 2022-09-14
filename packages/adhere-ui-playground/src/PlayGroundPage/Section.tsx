@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
 import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 
 import { SectionProps } from '../types';
 

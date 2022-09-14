@@ -1,13 +1,13 @@
-import React from 'react';
 import ReactECharts from 'echarts-for-react';
 import 'echarts-wordcloud';
+import 'echarts/lib/component/legend';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/legend';
-
-import data from './data';
+import React from 'react';
 
 import Playground from '@/lib/Playground';
+
+import data from './data';
 
 // circle(default),cardioid,diamond,square,triangle-forward,triangle,pentagon,star
 const option = {
@@ -69,9 +69,9 @@ export default () => (
   import 'echarts/lib/component/title';
   import 'echarts/lib/component/tooltip';
   import 'echarts/lib/component/legend';
-      
+
   const option = ${JSON.stringify(option, null, 2)}
-      
+
   <ReactECharts option={option} />
     `}
   >

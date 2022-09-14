@@ -1,11 +1,12 @@
+import { Button, Table } from 'antd';
 import React, { useRef } from 'react';
-import { Table, Button } from 'antd';
+
 import { AdapterScreen } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 const dataSource = [

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 export default () => (
   <div className="Page">
@@ -84,7 +84,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Space } from '@baifendian/adhere';
-  
+
   <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
     <a>编辑</a>
     <Space direction="horizontal" />
@@ -110,7 +110,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Space } from '@baifendian/adhere';
-  
+
   <div>
     <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
     <Space direction="vertical" />
@@ -132,7 +132,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Space } from '@baifendian/adhere';
-  
+
   <div>
     <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
       <a>编辑</a>
@@ -141,7 +141,7 @@ export default () => (
       <Space direction="horizontal" size={10} />
       <a>删除</a>
     </div>
-  
+
     <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
     <Space direction="vertical" size={10} />
     <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
@@ -170,7 +170,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Space } from '@baifendian/adhere';
-  
+
   <div>
     <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
       <Space.Group direction="horizontal" >
@@ -179,7 +179,7 @@ export default () => (
         <a>删除</a>
       </Space.Group>
     </div>
-  
+
     <Space.Group direction="vertical">
       <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
       <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>

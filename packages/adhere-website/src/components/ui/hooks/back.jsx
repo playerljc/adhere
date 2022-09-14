@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
 import { Button } from 'antd';
+import React, { useEffect } from 'react';
+
 import { Hooks } from '@baifendian/adhere';
 
 import Playground from '@/lib/Playground';
@@ -37,23 +38,23 @@ export default () => {
   import React, { useEffect } from 'react';
   import { Button } from 'antd';
   import { Hooks } from '@baifendian/adhere';
-  
+
   const { useFirst, useForceUpdate, usePrevious } = Hooks;
-  
+
   return () => {
     const [isFirst, updateFirst] = useFirst();
 
     const val = usePrevious(3);
-  
+
     console.log(val);
-  
+
     const forceUpdate = useForceUpdate();
-  
+
     useEffect(() => {
       console.log('isFirst', isFirst);
       updateFirst(true);
     }, []);
-    
+
     return (
        <Button
         type="primary"

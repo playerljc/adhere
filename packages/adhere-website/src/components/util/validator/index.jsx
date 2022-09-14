@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PlayGroundPage, { Section, FunctionPropsSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { FunctionPropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   return (

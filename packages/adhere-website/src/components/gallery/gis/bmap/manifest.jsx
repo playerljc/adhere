@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Wind from './wind';
 import Isobar from './Isobar';
-import Heat from './heat';
-import MassivePoints from './massivePoints';
 import Boundary from './boundary';
+import Heat from './heat';
 import HumidityWMS from './humidityWMS';
-import TemperatureWMS from './temperatureWMS';
 import HumidityXYZ from './humidityXYZ';
+import MassivePoints from './massivePoints';
+import TemperatureWMS from './temperatureWMS';
 import TemperatureXYZ from './temperatureXYZ';
+import Wind from './wind';
 
 export default [
   {

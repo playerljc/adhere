@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Split } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   function boxPanelConfig() {

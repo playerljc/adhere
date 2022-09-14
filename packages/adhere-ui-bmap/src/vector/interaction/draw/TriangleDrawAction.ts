@@ -1,6 +1,6 @@
-import * as turf from '@turf/turf';
 // @ts-ignore
 import BaseUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
 import {
   ActionEvents,
@@ -12,8 +12,8 @@ import {
   ITriangleData,
   SelectType,
 } from '../types';
-import DrawAction from './DrawAction';
 import Util from '../util';
+import DrawAction from './DrawAction';
 
 /**
  * TriangleDrawAction

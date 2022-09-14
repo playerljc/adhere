@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import type { FunctionComponent, ReactElement, CSSProperties, Context } from 'react';
+import type { CSSProperties, Context, FunctionComponent, ReactElement } from 'react';
 
 export interface ContextType {
   direction: 'vertical' | 'horizontal';

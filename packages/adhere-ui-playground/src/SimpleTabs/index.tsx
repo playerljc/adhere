@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import { SimpleTabsFunction, SimpleTabsProps } from '../types';
 import { TabContext } from './Context';
 import TabPanel from './TabPanel';
-import { SimpleTabsFunction, SimpleTabsProps } from '../types';
 
 const selectorPrefix = 'adhere-ui-playground-simple-tabs';
 

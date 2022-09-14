@@ -1,20 +1,21 @@
+import classNames from 'classnames';
+import moment from 'moment';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
   useEffect,
+  useImperativeHandle,
   useLayoutEffect,
   useRef,
-  useImperativeHandle,
 } from 'react';
-import classNames from 'classnames';
-import moment from 'moment';
-import Intl from '@baifendian/adhere-util-intl';
-import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-import Util from '@baifendian/adhere-util';
-import Resource from '@baifendian/adhere-util-resource';
-import Hooks from '@baifendian/adhere-ui-hooks';
 
-import { PullRefreshRefHandle, PullRefreshProps } from './types';
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Hooks from '@baifendian/adhere-ui-hooks';
+import Util from '@baifendian/adhere-util';
+import Intl from '@baifendian/adhere-util-intl';
+import Resource from '@baifendian/adhere-util-resource';
+
+import { PullRefreshProps, PullRefreshRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-pullrefresh';
 

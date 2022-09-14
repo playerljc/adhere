@@ -1,12 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Checkbox } from 'antd';
+import { arrayMoveImmutable } from 'array-move';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {
   SortableContainer as SortableContainerHOC,
   SortableElement,
   SortableHandle,
 } from 'react-sortable-hoc';
-import { arrayMoveImmutable } from 'array-move';
+
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../searchtable';

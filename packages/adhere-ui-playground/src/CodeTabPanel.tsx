@@ -1,10 +1,11 @@
-import React, { FC, memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-import CodePanel, { CodePanelPropTypes } from './CodePanel';
+import React, { FC, memo, useEffect, useState } from 'react';
 
-import { CodeTabPanelProps } from './types';
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+
+import CodePanel, { CodePanelPropTypes } from './CodePanel';
 import SimpleTabs from './SimpleTabs';
+import { CodeTabPanelProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-code-tab-panel';
 

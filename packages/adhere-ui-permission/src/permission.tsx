@@ -1,8 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { PermissionProps, PermissionFunction } from './types';
+import { PermissionFunction, PermissionProps } from './types';
 
 // 所有的权限
 let permissions = [];

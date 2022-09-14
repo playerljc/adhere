@@ -1,7 +1,7 @@
 import Emitter from '@baifendian/adhere-util-emitter';
 
-import { ActionStatus, IAction, IPolygonSelection, IStyle } from '../types';
 import DefaultStyle from '../defaultStyle';
+import { ActionStatus, IAction, IPolygonSelection, IStyle } from '../types';
 
 /**
  * DrawAction

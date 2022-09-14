@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
-import { Space } from '@baifendian/adhere';
+import React, { useState } from 'react';
 
-import Props from '@/lib/Props';
+import { Space } from '@baifendian/adhere';
+import { Spin } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
-
-import { Spin } from '@baifendian/adhere';
+import Props from '@/lib/Props';
 
 import Table from './table';
 
@@ -83,7 +83,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   // table.jsx
-  
+
   import React from 'react';
   import { Table } from 'antd';
   import { Suspense } from '@baifendian/adhere';
@@ -91,7 +91,7 @@ export default () => {
   class TableWrap extends Suspense {
     constructor(props) {
       super(props);
-  
+
       this.state = {
         dataSource: [],
         loading: false,
@@ -101,10 +101,10 @@ export default () => {
         },
       };
     }
-  
+
     componentWillReceiveProps(nextProps) {
       super.componentWillReceiveProps(nextProps);
-  
+
       if (nextProps.reset) {
         this.setState(
           {
@@ -119,7 +119,7 @@ export default () => {
         );
       }
     }
-  
+
     getColumns() {
       return [
         {
@@ -149,12 +149,12 @@ export default () => {
         },
       ];
     }
-  
+
     fetchData() {
       const list = [];
       list.length = 10;
       list.fill(0);
-  
+
       this.setState(
         {
           loading: true,
@@ -169,7 +169,7 @@ export default () => {
               height: 180,
               width: 180,
             }));
-  
+
             this.setState(
               {
                 dataSource,
@@ -186,11 +186,11 @@ export default () => {
         },
       );
     }
-  
+
     showLoading() {
       return this.state.loading;
     }
-  
+
     handleTableChange = (pagination) => {
       this.setState(
         {
@@ -201,7 +201,7 @@ export default () => {
         },
       );
     };
-  
+
     renderInner() {
       return (
         <div style={{ position: 'relative' }}>
@@ -217,7 +217,7 @@ export default () => {
       );
     }
   }
-  
+
   export default TableWrap;
 
   import React, { useState } from 'react';

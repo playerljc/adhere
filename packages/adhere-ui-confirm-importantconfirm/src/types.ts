@@ -1,6 +1,7 @@
-import { ConfirmArgv } from '@baifendian/adhere-ui-messagedialog/lib/types';
 import { FunctionComponent } from 'react';
 import type { CSSProperties } from 'react';
+
+import { ConfirmArgv } from '@baifendian/adhere-ui-messagedialog/lib/types';
 
 /**
  * ImportantConfirmProps

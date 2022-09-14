@@ -1,8 +1,9 @@
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter';
-import { IVectorSource, IFeature, VectorActions, IVectorLayer, GeoJSONNode } from './types';
+
 import GeoJSONFormat from './format/GeoJSONFormat';
 import Geometry from './geom/Geometry';
+import { GeoJSONNode, IFeature, IVectorLayer, IVectorSource, VectorActions } from './types';
 
 /**
  * VectorSource

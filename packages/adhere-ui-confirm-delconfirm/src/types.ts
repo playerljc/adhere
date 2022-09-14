@@ -3,6 +3,7 @@
  * @interface DelConfirmProps
  */
 import type { CSSProperties, FunctionComponent } from 'react';
+
 import type { ConfirmArgv } from '@baifendian/adhere-ui-messagedialog/lib/types';
 
 export interface DelConfirmProps {

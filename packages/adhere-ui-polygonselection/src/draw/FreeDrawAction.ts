@@ -3,11 +3,11 @@ import BaseUtil from '@baifendian/adhere-util';
 import {
   ActionEvents,
   ActionStatus,
-  IPoint,
+  ActionType,
   IFreeData,
+  IPoint,
   IStyle,
   SelectType,
-  ActionType,
 } from '../types';
 import DrawAction from './DrawAction';
 

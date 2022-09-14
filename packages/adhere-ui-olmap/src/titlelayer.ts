@@ -1,5 +1,5 @@
 import Tile from 'ol/layer/Tile';
-import { XYZ, OSM, TileWMS, WMTS } from 'ol/source.js';
+import { OSM, TileWMS, WMTS, XYZ } from 'ol/source.js';
 
 /**
  * getOSM - OSM的resource

@@ -1,9 +1,9 @@
 import {
   Permission,
-  setPermission,
+  PermissionFun,
   checkPermission,
   getPermission,
-  PermissionFun,
+  setPermission,
 } from './permission';
 
 export default {

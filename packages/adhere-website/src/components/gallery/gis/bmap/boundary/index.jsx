@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
 import { Select } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { GlobalIndicator, Resource } from '@baifendian/adhere';
 
 import PlaygroundMulit from '@/lib/PlaygroundMulit';
@@ -20,7 +21,7 @@ import data from './data.json';
 import styles from './index.less';
 
 const { Option } = Select;
- 
+
 const defaultStyle = {
   fillColor: 'rgba(0,0,0,.1)',
   fillOpacity: 0.7,

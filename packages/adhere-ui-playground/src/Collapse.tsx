@@ -1,5 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
+import React, { FC, useEffect, useState } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import { CollapseProps } from './types';

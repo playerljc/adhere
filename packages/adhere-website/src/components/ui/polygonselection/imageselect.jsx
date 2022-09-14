@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
 import { Button, Table, message } from 'antd';
+import React, { useEffect, useRef } from 'react';
+
 import {
+  MessageDialog,
   PolygonSelection as PolygonSelectionModule,
   Preferences,
-  MessageDialog,
   Split,
 } from '@baifendian/adhere';
 

@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
+
 import { Revolving, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 // import 'swiper/dist/css/swiper.css';
 
@@ -146,7 +147,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   <Revolving direction="left">
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
@@ -181,7 +182,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   <Revolving direction="right">
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
@@ -216,7 +217,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   <Revolving direction="top" style={{ height: 50 }}>
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
@@ -251,7 +252,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   <Revolving direction="bottom" style={{ height: 50 }}>
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
@@ -286,7 +287,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   <Revolving direction="bottom" speed={1000 * 3} style={{ height: 50 }}>
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
@@ -321,7 +322,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }}>
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
@@ -358,9 +359,9 @@ export default () => {
   import React, { useRef } from 'react';
   import { Button } from 'antd';
   import { Revolving, Space } from '@baifendian/adhere';
-  
+
   const ref = useRef();
-  
+
   <div style={{ display: 'flex', alignItems: 'center' }}>
     <Space.Group direction="horizontal">
       <Button

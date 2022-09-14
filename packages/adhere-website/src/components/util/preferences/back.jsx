@@ -1,5 +1,6 @@
-import React from 'react';
 import { Button } from 'antd';
+import React from 'react';
+
 import { Preferences, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -217,7 +218,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Preferences } from '@baifendian/adhere';
-  
+
   Preferences.putStringByLocal('a', 'a');
   Preferences.putObjectByLocal('b', { a: 1, b: 2 });
 

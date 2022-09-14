@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 
 import Intl from '@baifendian/adhere-util-intl';
 
+import FunctionProps from './FunctionProps';
 import PlayGround from './PlayGround';
 import PlayGroundMulit from './PlayGroundMulit';
 import Props from './Props';
-import FunctionProps from './FunctionProps';
 
 import './index.less';
 

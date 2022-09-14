@@ -1,7 +1,7 @@
 import Emitter from '@baifendian/adhere-util-emitter';
 
-import { ActionStatus, IAction, IInteractionLayer, IStyle, SelectType } from '../types';
 import DefaultStyle from '../DefaultStyle';
+import { ActionStatus, IAction, IInteractionLayer, IStyle, SelectType } from '../types';
 
 /**
  * DrawAction

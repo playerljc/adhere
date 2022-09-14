@@ -1,10 +1,11 @@
+import { Skeleton } from 'antd';
+import classnames from 'classnames';
 import React, { FC, ReactElement, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import classnames from 'classnames';
-import { Skeleton } from 'antd';
+
+import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
-import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 
 import { ListProps } from '../../types';
 

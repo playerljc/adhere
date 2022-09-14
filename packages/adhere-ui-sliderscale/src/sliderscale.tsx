@@ -1,5 +1,5 @@
-import React, { FC, useRef, useLayoutEffect, ReactElement } from 'react';
 import classNames from 'classnames';
+import React, { FC, ReactElement, useLayoutEffect, useRef } from 'react';
 
 import { SliderScaleProps } from './types';
 

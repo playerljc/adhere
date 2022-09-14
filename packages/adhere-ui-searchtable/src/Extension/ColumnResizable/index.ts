@@ -1,6 +1,6 @@
-import SearchTableResizableTitle from './SearchTableResizableTitle';
-import SearchTableResizableObserver from './SearchTableResizableObserver';
 import SearchTableResizableColumnItem from './SearchTableResizableColumnItem';
+import SearchTableResizableObserver from './SearchTableResizableObserver';
+import SearchTableResizableTitle from './SearchTableResizableTitle';
 
 class ColumnResizable {
   // 列的宽度

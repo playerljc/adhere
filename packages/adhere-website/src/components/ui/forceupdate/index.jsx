@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Parent from './parent';
+import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
 
-import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
+import Parent from './parent';
 
 export default () => {
   function boxPanelConfig() {

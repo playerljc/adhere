@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
 import { Switch } from 'antd';
+import React, { useState } from 'react';
+
 import { Space } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
-import Table from './table';
-import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
-import RenderSearchBetweenTable from './renderSearchBetweenTable';
-import FewTable from './fewTable';
-import StateTable from './stateTable';
-import RowSelectedNormal from './rowSelectedNormal';
-import RowSelectedContinuous from './rowSelectedContinuous';
 import ColumnResizeTable from './columnResizeTable';
 import ColumnSettingTable from './columnSettingTable';
+import FewTable from './fewTable';
+import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
+import RenderSearchBetweenTable from './renderSearchBetweenTable';
+import RowSelectedContinuous from './rowSelectedContinuous';
+import RowSelectedNormal from './rowSelectedNormal';
+import StateTable from './stateTable';
+import Table from './table';
 import TableDensitySetting from './tableDensitySetting';
 
 export default () => {

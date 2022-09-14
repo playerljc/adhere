@@ -1,6 +1,6 @@
-import { v1 } from 'uuid';
 import algebra from 'algebra.js';
 import { fromLonLat } from 'ol/proj.js';
+import { v1 } from 'uuid';
 
 import Util from './util';
 

@@ -1,12 +1,13 @@
+import { Avatar, Button, List } from 'antd';
 import React, { useRef } from 'react';
-import { List, Avatar, Button } from 'antd';
+
 import { PullRefresh, Space } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 import refreshIcon from './refresh.svg';

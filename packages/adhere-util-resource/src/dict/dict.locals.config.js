@@ -1,11 +1,10 @@
-import moment from 'moment';
-import zhCN from 'antd/es/locale/zh_CN';
 import enUS from 'antd/es/locale/en_US';
+import zhCN from 'antd/es/locale/zh_CN';
 import ptPT from 'antd/lib/locale/pt_PT';
-
-import 'moment/locale/zh-cn';
+import moment from 'moment';
 import 'moment/locale/en-ca';
 import 'moment/locale/pt';
+import 'moment/locale/zh-cn';
 
 import Dict from '@baifendian/adhere-util-dict';
 

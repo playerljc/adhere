@@ -1,7 +1,4 @@
-import React, { createRef, ReactElement, RefObject } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { Table, Button } from 'antd';
+import { Button, Table } from 'antd';
 import type { TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType,
@@ -11,18 +8,22 @@ import type {
   TablePaginationConfig,
   TableRowSelection,
 } from 'antd/lib/table/interface';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React, { ReactElement, RefObject, createRef } from 'react';
+
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
-import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import ColumnResizable, {
-  SearchTableResizableTitle,
   SearchTableResizableObserver,
+  SearchTableResizableTitle,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
 import TableDensitySetting from './Extension/TableDensitySetting';
-import { SearchTableProps, SearchTableState, TableDensity, ColumnTypeExt } from './types';
+import { ColumnTypeExt, SearchTableProps, SearchTableState, TableDensity } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
 

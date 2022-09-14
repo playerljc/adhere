@@ -1,11 +1,12 @@
+import { Button, Input, Select, Table } from 'antd';
 import React, { useState } from 'react';
-import { Table, Input, Button, Select } from 'antd';
+
 import { Resource, TableHeadSearch } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 const { Option } = Select;

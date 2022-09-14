@@ -5,12 +5,11 @@
  * @LastEditor: yumeng.qin
  * @LastEditTime: 2021-04-28 17:10:18
  */
-import React from 'react';
 import { Table } from 'antd';
+import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { selectorPrefix } from './tablelist';
-
 import { TSortTableProps } from './types';
 
 const SortableItem = SortableElement((props) => <tr {...props} />);

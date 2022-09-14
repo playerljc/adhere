@@ -1,11 +1,12 @@
 import React, {
-  RefObject,
   MutableRefObject,
+  RefObject,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
-  useLayoutEffect,
 } from 'react';
+
 import { createMask } from './slidelayout';
 import type { OverlayProps } from './types';
 

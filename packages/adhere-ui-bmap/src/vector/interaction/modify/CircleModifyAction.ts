@@ -1,10 +1,10 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 
-import { ICircleData, IPoint, IInteractionLayer, SelectType } from '../types';
-import ModifyAction from './ModifyAction';
-import CircleDrawAction from '../draw/CircleDrawAction';
 import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import CircleDrawAction from '../draw/CircleDrawAction';
+import { ICircleData, IInteractionLayer, IPoint, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
 
 /**
  * CircleModifyAction

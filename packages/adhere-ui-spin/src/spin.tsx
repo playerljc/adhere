@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import Resource from '@baifendian/adhere-util-resource';
 
 import { SpinProps } from './types';

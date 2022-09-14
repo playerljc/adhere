@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
-import { Space, Suspense, Hooks } from '@baifendian/adhere';
 import { Button, Table } from 'antd';
 import faker from 'faker';
+import React, { useRef } from 'react';
+
+import { Hooks, Space, Suspense } from '@baifendian/adhere';
 
 const { useSetState } = Hooks;
 

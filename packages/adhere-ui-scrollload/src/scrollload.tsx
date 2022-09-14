@@ -1,15 +1,16 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useRef,
-  ForwardRefRenderFunction,
-  useLayoutEffect,
-} from 'react';
 import classNames from 'classnames';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
+
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { ScrollLoadHOCFunction, ScrollLoadRefHandle, ScrollLoadProps } from './types';
+import type { ScrollLoadHOCFunction, ScrollLoadProps, ScrollLoadRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-scrollload';
 

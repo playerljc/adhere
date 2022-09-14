@@ -1,7 +1,7 @@
-import RectGeometry from './RectGeometry';
-import { GeometryType, IRadiusRectGeometryData, IGeometryStyle, IPixel } from '../types';
-import GeometryStyle from '../style/GeometryStyle';
 import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
+import { GeometryType, IGeometryStyle, IPixel, IRadiusRectGeometryData } from '../types';
+import RectGeometry from './RectGeometry';
 
 /**
  * RadiusRectGeometry

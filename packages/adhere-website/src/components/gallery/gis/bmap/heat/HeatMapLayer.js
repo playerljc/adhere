@@ -10,7 +10,6 @@ class HeatMapLayer {
     this.init();
   }
 
-
   init() {
     const points = citys.map((t) => {
       return {
@@ -23,7 +22,7 @@ class HeatMapLayer {
     this.map.addOverlay(this.heatmapOverlay);
     this.heatmapOverlay.setDataSet({ data: points, max: 100 });
     this.heatmapOverlay.show();
-  };
+  }
 }
 
 export default HeatMapLayer;

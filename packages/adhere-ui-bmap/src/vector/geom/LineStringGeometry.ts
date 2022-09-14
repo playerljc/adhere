@@ -1,21 +1,20 @@
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
+import TextStyle from '../style/TextStyle';
 import {
   GeometryType,
-  ILineStringGeometryStyle,
+  IGeometryStyle,
   ILineStringGeometry,
   ILineStringGeometryData,
-  VectorActions,
+  ILineStringGeometryStyle,
   IPixel,
   ITextStyle,
-  IGeometryStyle,
+  VectorActions,
 } from '../types';
-
 import Geometry from './Geometry';
-import GeometryStyle from '../style/GeometryStyle';
-import Util from '../../util';
-import TextStyle from '../style/TextStyle';
 
 const SIZE = new Map<string, number>([
   ['small', 3],

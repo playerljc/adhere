@@ -1,11 +1,12 @@
-import React from 'react';
 import { Button } from 'antd';
-import { WatchMemoized, Space } from '@baifendian/adhere';
+import React from 'react';
+
+import { Space, WatchMemoized } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 const { createRef, memoized, watch } = WatchMemoized;

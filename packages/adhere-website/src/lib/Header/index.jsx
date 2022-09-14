@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
+import React, { useEffect, useState } from 'react';
+
 import { withRouter } from '@ctsj/router';
 
 import SearchBar from '@/lib/SearchBar';
+
 import packageJSON from '../../../../../package.json';
 
 import styles from './index.less';

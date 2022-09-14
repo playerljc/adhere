@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+
 import { FontSizeSetting, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 export default () => {
   const [fontSize, setFontSize] = useState(12);
@@ -62,9 +63,9 @@ export default () => {
         codeText={`
   import React, { useState } from 'react';
   import { FontSizeSetting, Space } from '@baifendian/adhere';
-  
+
   const [fontSize, setFontSize] = useState(12);
-  
+
   <FontSizeSetting
     min={12}
     max={40}

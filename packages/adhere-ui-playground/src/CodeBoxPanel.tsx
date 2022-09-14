@@ -1,11 +1,12 @@
 import React, { FC, memo, useEffect, useRef, useState } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import PlayGround from './PlayGround';
-import PlayGroundTab from './PlayGroundTab';
 import PlayGroundMulit from './PlayGroundMulit';
-import { CodeBoxProps, CodeBoxPlayGroundMulitProps, CodeBoxPlayGroundProps } from './types';
+import PlayGroundTab from './PlayGroundTab';
 import Constant from './constant';
+import { CodeBoxPlayGroundMulitProps, CodeBoxPlayGroundProps, CodeBoxProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-code-box';
 

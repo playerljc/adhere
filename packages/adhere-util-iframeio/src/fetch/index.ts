@@ -1,7 +1,7 @@
-import type { SendOptions } from '../types';
-import Response from '../Response';
-import Request from '../Request';
 import { ERROR_MESSAGE } from '../Constent';
+import Request from '../Request';
+import Response from '../Response';
+import type { SendOptions } from '../types';
 
 /**
  * Fetch

@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
 import { Button, Card, Radio, Select, Space } from 'antd';
+import React, { useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
+
 import { FlexLayout, WritingBoard } from '@baifendian/adhere';
 
 import styles from './index.less';

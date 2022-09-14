@@ -1,10 +1,9 @@
-import React, { FC, useLayoutEffect, useRef, useState } from 'react';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
 import { Button, Input, Popover } from 'antd';
-import Intl from '@baifendian/adhere-util-intl';
-import Hooks from '@baifendian/adhere-ui-hooks';
+import React, { FC, useLayoutEffect, useRef, useState } from 'react';
 
+import Hooks from '@baifendian/adhere-ui-hooks';
+import Intl from '@baifendian/adhere-util-intl';
+import data from '@emoji-mart/data';
 import ar from '@emoji-mart/data/i18n/ar.json';
 import de from '@emoji-mart/data/i18n/de.json';
 import en from '@emoji-mart/data/i18n/en.json';
@@ -19,9 +18,10 @@ import pt from '@emoji-mart/data/i18n/pt.json';
 import ru from '@emoji-mart/data/i18n/ru.json';
 import uk from '@emoji-mart/data/i18n/uk.json';
 import zh from '@emoji-mart/data/i18n/zh.json';
+import Picker from '@emoji-mart/react';
 
-import EmojiIcon from './emoji';
 import { ReplyProps } from '../../types';
+import EmojiIcon from './emoji';
 
 const { TextArea } = Input;
 

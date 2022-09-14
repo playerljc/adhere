@@ -1,17 +1,17 @@
 // @ts-ignore
 import Util from '@baifendian/adhere-util';
 
-import DrawAction from './DrawAction';
 import {
   ActionEvents,
   ActionStatus,
-  IPoint,
+  ActionType,
   ICircleData,
+  IInteractionLayer,
+  IPoint,
   IStyle,
   SelectType,
-  ActionType,
-  IInteractionLayer,
 } from '../types';
+import DrawAction from './DrawAction';
 
 /**
  * CircleDrawAction
@@ -46,10 +46,7 @@ class CircleDrawAction extends DrawAction {
    * @param data
    */
   static booleanPointInData(context: IInteractionLayer, point: IPoint, data: ICircleData): boolean {
-    return Util.isPointInCircle(
-      point,
-      CircleDrawAction.transformOriginToReal(context, data.data),
-    );
+    return Util.isPointInCircle(point, CircleDrawAction.transformOriginToReal(context, data.data));
   }
 
   /**

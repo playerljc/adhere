@@ -1,8 +1,8 @@
 import intl from 'react-intl-universal';
 
 import en_US from './locales/en_US';
-import zh_CN from './locales/zh_CN';
 import pt_PT from './locales/pt_PT';
+import zh_CN from './locales/zh_CN';
 
 // 是否进行过初始化
 let isInit = false;

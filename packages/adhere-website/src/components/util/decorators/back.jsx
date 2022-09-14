@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Decorators } from '@baifendian/adhere';
+
 import Playground from '@/lib/Playground';
 
 function Component() {
@@ -22,12 +23,12 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   @Decorators.ReactErrorBoundaries
   class MyComponent extends React.Component {
-    
+
   }
       `}
       />
@@ -38,13 +39,13 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   function MyComponent() {
-  
+
   }
-  
+
   export default Decorators.ReactErrorBoundaries(MyComponent);
       `}
       />
@@ -55,16 +56,16 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   function MyComponent() {
-  
+
   }
-  
+
   // 设置全局缺省UI
   Decorators.ReactErrorBoundaries.setDefaultErrorUI(<div>error</div>);
-  
+
   export default Decorators.ReactErrorBoundaries(MyComponent);
       `}
       />
@@ -75,16 +76,16 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   function MyComponent() {
-  
+
   }
-  
+
   // 自定义组件发生错误时候显示的UI(类组件也是一样)
   MyComponent.getReactErrorBoundariesErrorUI = () => <div>error</div>
-  
+
   export default Decorators.ReactErrorBoundaries(MyComponent);
       `}
       />
@@ -95,7 +96,7 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   @Decorators.ReactErrorBoundaries
@@ -103,7 +104,7 @@ function Component() {
     // 自定义组件发生错误时候显示的UI(类组件也是一样)
     getReactErrorBoundariesErrorUI = () => <div>error</div>
   }
-  
+
   export default MyComponent;
       `}
       />
@@ -114,7 +115,7 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   class MyComponent extends React.Component {
@@ -126,7 +127,7 @@ function Component() {
        return name;
     }
   }
-  
+
   export default MyComponent;
       `}
       />
@@ -137,7 +138,7 @@ function Component() {
         scope={{ React }}
         expand
         codeText={`
-  import React from 'react';      
+  import React from 'react';
   import { Decorators } from '@baifendian/adhere';
 
   class MyComponent extends React.Component {
@@ -151,7 +152,7 @@ function Component() {
        return name;
     }
   }
-  
+
   export default MyComponent;
       `}
       />

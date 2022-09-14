@@ -1,5 +1,6 @@
 // @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter';
+
 import { IPoint } from './interaction/types';
 
 /**

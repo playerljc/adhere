@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { DateDisplay, TableGridLayout } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, CodeBoxSection, PropsSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 const { Label, Value } = TableGridLayout;
 

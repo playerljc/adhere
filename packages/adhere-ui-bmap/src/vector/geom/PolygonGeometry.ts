@@ -1,16 +1,17 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
+import GeometryStyle from '../style/GeometryStyle';
 import {
   GeometryType,
-  IPolygonGeometry,
-  IGeometryStyle,
-  ICoordinate,
-  IPixel,
-  VectorActions,
   ICircleGeometryData,
+  ICoordinate,
+  IGeometryStyle,
+  IPixel,
+  IPolygonGeometry,
+  VectorActions,
 } from '../types';
 import Geometry from './Geometry';
-import GeometryStyle from '../style/GeometryStyle';
 
 /**
  * PolygonGeometry

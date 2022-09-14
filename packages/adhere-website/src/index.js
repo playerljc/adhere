@@ -1,15 +1,17 @@
+import { ConfigProvider } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ConfigProvider } from 'antd';
-import { Util, Resource, ConfigProvider as AdhereConfigProvider } from '@baifendian/adhere';
 
-import Router from '@/lib/Router';
+import { ConfigProvider as AdhereConfigProvider, Resource, Util } from '@baifendian/adhere';
+
 import DictConfig from '@/config/dict/dict.config';
+import Router from '@/lib/Router';
 
+import '@baifendian/adhere/lib/css.less';
+
+import './index.less';
 // import 'antd/dist/antd.less';
 import 'nprogress/nprogress.css';
-import '@baifendian/adhere/lib/css.less';
-import './index.less';
 
 // 配置字典
 DictConfig();

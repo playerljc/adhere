@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
+
 import Space from '@baifendian/adhere-ui-space';
 
-import Section from './Section';
 import FunctionProps from '../FunctionProps';
 import { FunctionPropsSectionProps } from '../types';
+import Section from './Section';
 
 /**
  * FunctionPropsSection

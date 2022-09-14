@@ -1,6 +1,6 @@
-import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
 import {
   ICoordinate,
@@ -379,7 +379,7 @@ class Trajectory implements ITrajectory {
     // 2 5
     // 0 1   (2)     3 4    (5)
 
-    if(typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return;
 
     this.loopHeader = window.requestAnimationFrame(() => {
       // 暂停则不执行其他操作

@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import FlexLayout from './flexlayout';
-import Fixed from './fixed';
 import Auto from './auto';
+import Fixed from './fixed';
+import FlexLayout from './flexlayout';
 import type { HorizontalFlexLayoutProps } from './types';
 
 /**

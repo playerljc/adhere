@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, ConfigProvider, Form } from 'antd';
 import type { FormInstance } from 'antd/lib/form';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 
 import ModalDialog, { selectorPrefix } from './modal';
-import type { AlertArgv, ConfirmArgv, PromptArgv, ModalArgv } from './types';
+import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 
 const DEFAULT_LOCAL = 'zh_CN';
 

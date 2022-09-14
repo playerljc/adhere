@@ -1,16 +1,16 @@
+import classNames from 'classnames';
 import React, { ForwardRefRenderFunction, forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames';
 
+import { ProviderContext } from './ContextMenuContext';
+import Menu from './Menu';
 import type {
-  ContextMenuComponentRefHandle,
-  ContextMenuComponentProps,
-  MenuData,
   Config,
+  ContextMenuComponentProps,
+  ContextMenuComponentRefHandle,
+  MenuData,
   MenuRefHandle,
 } from './types';
-import Menu from './Menu';
-import { ProviderContext } from './ContextMenuContext';
 
 const selectorPrefix = 'adhere-ui-contextmenu';
 

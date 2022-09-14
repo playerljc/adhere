@@ -1,16 +1,15 @@
+import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
-  useImperativeHandle,
   useEffect,
+  useImperativeHandle,
   useRef,
 } from 'react';
-import classNames from 'classnames';
 import Swiper from 'swiper';
 
-import { RevolvingHOCFunction, RevolvingRefHandle, RevolvingProps } from './types';
-
 import RevolvingItem from './item';
+import { RevolvingHOCFunction, RevolvingProps, RevolvingRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-revolving';
 

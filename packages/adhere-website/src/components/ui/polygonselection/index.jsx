@@ -1,9 +1,9 @@
 import React from 'react';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 import ImageSelect from './imageselect';

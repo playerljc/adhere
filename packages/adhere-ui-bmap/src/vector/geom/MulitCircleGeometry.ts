@@ -1,17 +1,17 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
+import GeometryStyle from '../style/GeometryStyle';
 import {
   GeometryType,
-  IMulitCircleGeometry,
-  VectorActions,
   ICircleGeometryData,
   IGeometryStyle,
+  IMulitCircleGeometry,
   IPixel,
+  VectorActions,
 } from '../types';
-
-import Geometry from './Geometry';
 import CircleGeometry from './CircleGeometry';
-import GeometryStyle from '../style/GeometryStyle';
+import Geometry from './Geometry';
 
 /**
  * MulitCircleGeometry

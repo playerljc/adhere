@@ -1,4 +1,4 @@
-import { InitFunc, IConfig } from './types';
+import { IConfig, InitFunc } from './types';
 
 const target = {};
 

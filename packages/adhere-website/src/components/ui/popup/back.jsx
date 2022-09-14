@@ -1,5 +1,6 @@
-import React from 'react';
 import { Button } from 'antd';
+import React from 'react';
+
 import { Popup, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -333,9 +334,9 @@ export default () => (
   import React from 'react';
   import { Button } from 'antd';
   import { Popup } from '@baifendian/adhere';
-  
+
   import PopupInner from './popup';
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -365,17 +366,17 @@ export default () => (
   >
     Open Popup
   </Button>
-  
+
   /*-----------popup.jsx---------*/
-  
+
   import React, { useImperativeHandle, useRef, useState } from 'react';
   import { Popup } from '@baifendian/adhere';
-  
+
   import styles from './index.less';
-  
+
   function openPopup() {
     const ref = React.createRef();
-  
+
     const popup = Popup.create({
       onCreate: () => {},
       onBeforeShow: () => {},
@@ -392,24 +393,24 @@ export default () => (
       children: <PopupInner ref={ref} />,
       zIndex: 9999,
     });
-  
+
     ref.current.setPopup(popup);
-  
+
     popup.show();
   }
-  
+
   const PopupInner = React.forwardRef((props, ref) => {
     const popupRef = useRef();
-  
+
     const [id, setId] = useState('');
-  
+
     useImperativeHandle(ref, () => ({
       setPopup: (popup) => {
         popupRef.current = popup;
         setId(popup.getId());
       },
     }));
-  
+
     return (
       <div className={styles.Wrap}>
         <div className={styles.Fixed}>
@@ -429,7 +430,7 @@ export default () => (
             Close
           </a>
         </div>
-  
+
         <div className={styles.Auto}>
           <div className="block">
             <p className="">
@@ -461,16 +462,16 @@ export default () => (
       </div>
     );
   });
-  
+
   export default PopupInner;
-  
-  
+
+
   /*-----------index.less---------*/
-  
+
   .Wrap {
     display: flex;
     flex-direction: column;
-  
+
     > .Fixed {
       flex-shrink: 0;
       height: 3rem;
@@ -478,7 +479,7 @@ export default () => (
       justify-content: space-between;
       align-items: center;
     }
-  
+
     > .Auto {
       font-size: 14px;
       flex-grow: 1;

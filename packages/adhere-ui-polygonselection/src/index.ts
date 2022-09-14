@@ -1,4 +1,7 @@
 import PolygonSelection from './PolygonSelection';
+import DefaultAnchorStyle from './defaultAnchorStyle';
+import DefaultMoveGemStyle from './defaultMoveGemStyle';
+import DefaultStyle from './defaultStyle';
 import CircleDrawAction from './draw/CircleDrawAction';
 import DiamondDrawAction from './draw/DiamondDrawAction';
 import DrawAction from './draw/DrawAction';
@@ -14,11 +17,8 @@ import PolygonModifyAction from './modify/PolygonModifyAction';
 import RectangleModifyAction from './modify/RectangleModifyAction';
 import StartModifyAction from './modify/StartModifyAction';
 import TriangleModifyAction from './modify/TriangleModifyAction';
-import DefaultAnchorStyle from './defaultAnchorStyle';
-import DefaultMoveGemStyle from './defaultMoveGemStyle';
-import DefaultStyle from './defaultStyle';
-import Util from './util';
 import * as Types from './types';
+import Util from './util';
 
 export default {
   PolygonSelection,

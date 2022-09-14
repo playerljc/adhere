@@ -1,9 +1,9 @@
 import React from 'react';
 
 import PlayGroundPage, {
-  Section,
-  FunctionPropsSection,
   CodeBoxSection,
+  FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 import Client from './client';

@@ -1,8 +1,8 @@
 import Emitter from '@baifendian/adhere-util-emitter';
 
-import { ITrajectory, ITrajectoryPlayBackLayer, TrajectoryStatus } from '../../types';
-import { InteractionLayerActions, IPoint } from '../../interaction/types';
 import Util from '../../../util';
+import { IPoint, InteractionLayerActions } from '../../interaction/types';
+import { ITrajectory, ITrajectoryPlayBackLayer, TrajectoryStatus } from '../../types';
 
 const selectorPrefix = 'adhere-ui-trajectoryplaybacklayer';
 

@@ -1,12 +1,13 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
 import {
   GeometryType,
-  IMulitLeafGeometry,
-  ILeafGeometryData,
   IGeometryStyle,
-  VectorActions,
+  ILeafGeometryData,
+  IMulitLeafGeometry,
   IPixel,
+  VectorActions,
 } from '../types';
 import Geometry from './Geometry';
 import LeafGeometry from './LeafGeometry';

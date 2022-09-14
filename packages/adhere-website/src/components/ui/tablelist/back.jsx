@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from '@ctsj/router';
-import { Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
+import { Space } from '@baifendian/adhere';
+import { Link } from '@ctsj/router';
+
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 import { Demo1, Demo2, Demo3, Demo4, Demo5 } from './TableDemo';
 
@@ -90,7 +91,9 @@ export default () => {
           {
             params: 'columns',
             desc: '搜索表单项配置',
-            type: <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>,
+            type: (
+              <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>
+            ),
             defaultVal: '',
           },
           {
@@ -160,7 +163,9 @@ export default () => {
           {
             params: 'search',
             desc: <span>工具栏搜索配置</span>,
-            type: <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>,
+            type: (
+              <Link to="/adhere/component/ui/formitemcreator">FormItemCreator的columns属性</Link>
+            ),
             defaultVal: '',
           },
           {

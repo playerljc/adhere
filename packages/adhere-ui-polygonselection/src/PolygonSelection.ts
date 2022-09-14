@@ -1,24 +1,23 @@
+import MathUtil from '@baifendian/adhere-util';
 import Emitter from '@baifendian/adhere-util-emitter';
 
+import CircleDrawAction from './draw/CircleDrawAction';
+import DiamondDrawAction from './draw/DiamondDrawAction';
+import FreeDrawAction from './draw/FreeDrawAction';
+import PolygonDrawAction from './draw/PolygonDrawAction';
+import RectangleDrawAction from './draw/RectangleDrawAction';
+import StartDrawAction from './draw/StartDrawAction';
+import TriangleDrawAction from './draw/TriangleDrawAction';
 import {
   ActionStatus,
   IAction,
   IActionData,
+  IListeners,
   IPolygonSelection,
   IStyle,
   PolygonSelectionActions,
   SelectType,
-  IListeners,
 } from './types';
-
-import PolygonDrawAction from './draw/PolygonDrawAction';
-import CircleDrawAction from './draw/CircleDrawAction';
-import RectangleDrawAction from './draw/RectangleDrawAction';
-import TriangleDrawAction from './draw/TriangleDrawAction';
-import DiamondDrawAction from './draw/DiamondDrawAction';
-import StartDrawAction from './draw/StartDrawAction';
-import FreeDrawAction from './draw/FreeDrawAction';
-import MathUtil from '@baifendian/adhere-util';
 
 const selectorPrefix = 'adhere-ui-polygonselection';
 

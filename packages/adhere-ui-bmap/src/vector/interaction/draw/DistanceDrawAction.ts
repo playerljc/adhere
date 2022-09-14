@@ -1,13 +1,13 @@
 import MathUtil from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
-import { IGeometryStyle } from '../../types';
-import PolygonDrawAction from './PolygonDrawAction';
-import DistancePointStyle from '../../style/DistancePointStyle';
 import RadiusRectGeometry from '../../geom/RadiusRectGeometry';
+import DistancePointStyle from '../../style/DistancePointStyle';
 import GeometryStyle from '../../style/GeometryStyle';
+import { IGeometryStyle } from '../../types';
 import DefaultStyle from '../DefaultStyle';
+import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
+import PolygonDrawAction from './PolygonDrawAction';
 
 /**
  * DistanceDrawAction

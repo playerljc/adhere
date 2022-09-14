@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Popover } from 'antd';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import Setting from './setting';
 

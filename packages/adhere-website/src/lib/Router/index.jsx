@@ -1,6 +1,7 @@
-import React, { Suspense } from 'react';
 import { Skeleton } from 'antd';
 import QueueAnim from 'rc-queue-anim';
+import React, { Suspense } from 'react';
+
 import { browserConfig } from '@ctsj/router';
 
 import RouterConfig from '@/config/router/router.config';

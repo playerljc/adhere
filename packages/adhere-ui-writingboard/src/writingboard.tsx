@@ -1,10 +1,11 @@
-import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
+import PropTypes from 'prop-types';
+import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+
 import { ResizeObserver } from '@juggle/resize-observer';
 
-import { Point, WritingBoardProps, Mode } from './types';
+import { Mode, Point, WritingBoardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-writingboard';
 

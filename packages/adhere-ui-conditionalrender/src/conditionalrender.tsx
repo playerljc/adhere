@@ -1,8 +1,7 @@
 import React from 'react';
 
-import type { ConditionalRenderProps, ConditionalRenderFunction } from './types';
-
 import ConditionalRenderShow from './show';
+import type { ConditionalRenderFunction, ConditionalRenderProps } from './types';
 import ConditionalRenderVisibility from './visibility';
 
 const ConditionalRender: ConditionalRenderFunction<ConditionalRenderProps> = (props) => {

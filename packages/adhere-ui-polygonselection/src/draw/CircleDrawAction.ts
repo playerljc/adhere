@@ -1,15 +1,15 @@
 import BaseUtil from '@baifendian/adhere-util';
 
-import DrawAction from './DrawAction';
 import {
   ActionEvents,
   ActionStatus,
-  IPoint,
+  ActionType,
   ICircleData,
+  IPoint,
   IStyle,
   SelectType,
-  ActionType,
 } from '../types';
+import DrawAction from './DrawAction';
 
 /**
  * CircleDrawAction

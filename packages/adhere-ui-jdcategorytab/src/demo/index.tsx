@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import { Avatar, Button, List, Space, Table, Tag } from 'antd';
+import React, { useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { List, Avatar, Table, Tag, Space, Button } from 'antd';
-import { ConditionalRender, Space as BSpace, Spin } from '@baifendian/adhere';
+
+import { Space as BSpace, ConditionalRender, Spin } from '@baifendian/adhere';
+
 import JdCategoryTab from '../index';
 
 import './index.less';

@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { Slider } from 'antd';
 import classNames from 'classnames';
 import omit from 'omit.js';
-import { Slider } from 'antd';
+import React, { FC, useEffect, useRef, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 

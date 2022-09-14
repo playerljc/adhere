@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import moment from 'dayjs';
+import React, { useEffect, useState } from 'react';
 
-import { statusIcon, timeIcon, statusColor, statusTexts } from '../../config';
+import { statusColor, statusIcon, statusTexts, timeIcon } from '../../config';
 
 import styles from './index.less';
 

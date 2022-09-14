@@ -1,22 +1,22 @@
-import React from 'react';
 import { Button, Radio } from 'antd';
+import React from 'react';
+
 import {
-  FolderAddOutlined,
-  FileAddOutlined,
-  ArrowsAltOutlined,
   ArrowDownOutlined,
   ArrowUpOutlined,
-  DownloadOutlined,
+  ArrowsAltOutlined,
   DeleteOutlined,
+  DownloadOutlined,
   EditOutlined,
+  FileAddOutlined,
+  FolderAddOutlined,
   FolderOutlined,
 } from '@ant-design/icons';
-
 import { ContextMenu, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 /**
  * 上下文菜单数据
@@ -487,12 +487,12 @@ export default () => {
         codeText={`
  import { ContextMenu } from '@baifendian/adhere';
  import { Button } from 'antd';
- 
+
  <Button
     type="primary"
     onContextMenu={(e) => {
       e.preventDefault();
-  
+
       ContextMenu.open([].concat(contextMenuData), {
         width: 200,
         x: e.clientX,
@@ -545,7 +545,7 @@ export default () => {
         codeText={`
  import { ContextMenu } from '@baifendian/adhere';
  import { Radio } from 'antd';
- 
+
  <Radio.Group
     value="large"
     onChange={(e) => {

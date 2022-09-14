@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import { Slider } from 'antd';
+import React, { useState } from 'react';
 
 import { SliderScale, Space } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 import './index.less';
 

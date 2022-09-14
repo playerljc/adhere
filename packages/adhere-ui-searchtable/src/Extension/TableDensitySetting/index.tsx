@@ -1,9 +1,11 @@
-import React from 'react';
+import {
+  Popover,
+  /*Dropdown*/
+} from 'antd';
 import PropTypes from 'prop-types';
-import { Popover /*Dropdown*/ } from 'antd';
+import React from 'react';
 
 import { TableDensity } from '../../types';
-
 import Setting from './setting';
 
 /**

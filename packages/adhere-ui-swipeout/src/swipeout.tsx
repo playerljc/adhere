@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
 import classNames from 'classnames';
+import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
 import Swiper from 'swiper';
 
 import { SwipeOutProps } from './types';

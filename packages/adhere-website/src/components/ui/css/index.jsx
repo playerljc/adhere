@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   const list = [];

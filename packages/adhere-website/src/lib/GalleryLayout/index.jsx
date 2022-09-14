@@ -1,6 +1,6 @@
-import React from 'react';
+import { Card, Col, Input, Row } from 'antd';
 import PropTypes from 'prop-types';
-import { Card, Col, Row, Input } from 'antd';
+import React from 'react';
 
 import styles from './index.less';
 

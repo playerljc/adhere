@@ -1,15 +1,15 @@
-import React, { createRef } from 'react';
-import PropTypes from 'prop-types';
 import { Fill, Stroke, Style, Text } from 'ol/style.js';
+import PropTypes from 'prop-types';
+import React, { createRef } from 'react';
 
 import Resource from '@baifendian/adhere-util-resource';
-// import intl from '@baifendian/adhere-util-intl';
 
+import Constent from './constent';
+// import intl from '@baifendian/adhere-util-intl';
 import GeoLayer from './geolayer';
 // import * as TitleLayer from './titlelayer';
 import { IOLMapProps } from './types';
 import Util from './util';
-import Constent from './constent';
 
 // import 'ol/ol.css';
 // import './olmap.less';

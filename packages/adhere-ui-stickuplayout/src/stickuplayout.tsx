@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
@@ -5,15 +6,14 @@ import React, {
   useLayoutEffect,
   useRef,
 } from 'react';
-import classNames from 'classnames';
 
+import StickupLayoutItem from './item';
 import {
-  StickupLayoutProps,
-  StickupLayoutHandle,
   IndexItem,
   StickupLayoutHOCFunction,
+  StickupLayoutHandle,
+  StickupLayoutProps,
 } from './types';
-import StickupLayoutItem from './item';
 
 const selectorPrefix = 'adhere-ui-stickuplayout';
 

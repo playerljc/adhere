@@ -5,10 +5,11 @@
  * @LastEditor: yumeng.qin
  * @LastEditTime: 2021-05-21 10:41:27
  */
-import React from 'react';
 import { Tooltip } from 'antd';
-import { isEmpty, difference, union } from 'lodash';
+import { difference, isEmpty, union } from 'lodash';
 import moment from 'moment';
+import React from 'react';
+
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import intl from '@baifendian/adhere-util-intl';
 

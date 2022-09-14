@@ -1,7 +1,8 @@
-import React, { forwardRef, ForwardRefRenderFunction, useImperativeHandle } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, useImperativeHandle } from 'react';
+
 import Hooks from '@baifendian/adhere-ui-hooks';
 
-import { ForceUpdateRefHandle, ForceUpdateProps } from './types';
+import { ForceUpdateProps, ForceUpdateRefHandle } from './types';
 
 const { useSetState } = Hooks;
 

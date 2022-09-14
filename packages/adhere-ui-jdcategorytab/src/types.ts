@@ -5,6 +5,7 @@ import type {
   PropsWithoutRef,
   RefAttributes,
 } from 'react';
+
 import type { StickupLayoutItemProps } from '@baifendian/adhere-ui-stickuplayout/lib/types';
 
 export interface JdCategoryTabRefHandle {

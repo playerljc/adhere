@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import { NodeProps } from '../../types';
 import Node from '../../Components/Node';
+import { NodeProps } from '../../types';
 
 /**
  * CommentInfo

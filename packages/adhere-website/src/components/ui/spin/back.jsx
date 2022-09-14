@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
+import React, { useState } from 'react';
+
 import { Spin } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 export default () => {
   const [show, setShow] = useState(false);
@@ -47,7 +48,7 @@ export default () => {
   import React, { useState } from 'react';
   import { Button } from 'antd';
   import { Spin } from '@baifendian/adhere';
-  
+
   <div>
     <div style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}>
       In the process of internal desktop applications development, many different design specs

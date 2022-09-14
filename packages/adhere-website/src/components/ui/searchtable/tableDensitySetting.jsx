@@ -2,6 +2,7 @@
 import React from 'react';
 
 import Table from './table';
+
 import styles from './fixedTableSpaceBetweenTable.less';
 
 /**

@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
 import { Switch } from 'antd';
+import React, { useState } from 'react';
+
 import { Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
-import Playground from '@/lib/Playground';
 import PlayGroundMulit from '@/lib/PlayGroundMulit';
+import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
-import Table from './table';
-import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
 import FewTable from './fewTable';
+import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
 import StateTable from './stateTable';
+import Table from './table';
 
 export default () => {
   const [pagination1, setPagination1] = useState(false);
@@ -746,11 +747,11 @@ export default () => {
             codeText: `
   import React from 'react';
   import { Button } from 'antd';
-  
+
   import Table from './table';
-  
+
   import styles from './fixedTableSpaceBetweenTable.less';
-  
+
   /**
    * FixedTableSpaceBetweenTable
    * @classdesc
@@ -766,12 +767,12 @@ export default () => {
         </div>
       );
     }
-  
+
     renderTableFooter() {
       return <div className={styles.Footer}>renderTableFooter</div>;
     }
   }
-  
+
   export default FixedTableSpaceBetweenTable;
             `,
           },
@@ -785,7 +786,7 @@ export default () => {
     padding: 0 20px;
     background-color: #fff;
   }
-  
+
   .Footer {
     padding: 0 20px 20px 20px;
     font-size: 16px;
@@ -799,7 +800,7 @@ export default () => {
             codeText: `
   import React from 'react';
   import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
-  
+
   <div style={{ display: 'flex', height: 800 }}>
     <FixedTableSpaceBetweenTable
       style={{ height: '100%' }}
@@ -847,7 +848,7 @@ export default () => {
 
   import Table from './table';
   import { oneData } from './mock';
-  
+
   /**
    * FewTable
    * @classdesc
@@ -886,7 +887,7 @@ export default () => {
       });
     }
   }
-  
+
   export default FewTable;
             `,
           },
@@ -895,7 +896,7 @@ export default () => {
             codeText: `
   import React from 'react';
   import FewTable from './fewTable';
-  
+
   <div style={{ display: 'flex', height: 700 }}>
     <FewTable
       style={{ height: '100%' }}
@@ -945,16 +946,16 @@ export default () => {
 
   function serviceRegister() {
     const requireComponent = require.context('./service', false, /.*\\.(js)$/);
-  
+
     const services = {};
     requireComponent.keys().forEach((fileName) => {
       const serviceKey = fileName.substring(2, fileName.length - 3);
       services[serviceKey] = requireComponent(fileName);
     });
-  
+
     ServiceRegister.initConfig(services);
   }
-  
+
   serviceRegister();
             `,
           },
@@ -962,7 +963,7 @@ export default () => {
             title: 'model/user.js',
             codeText: `
   import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-  
+
   export default () => Object.assign(ServiceRegister.model('user'), {});
             `,
           },
@@ -972,7 +973,7 @@ export default () => {
   import { Ajax } from '@baifendian/adhere';
 
   const request = new Ajax('');
-  
+
   export const fetchList = (() => {
     return {
       call: () => {
@@ -990,7 +991,7 @@ export default () => {
       }),
     };
   })();
-  
+
   export default {
     codeKey: 'code',
     codeSuccessKey: 200,
@@ -1008,39 +1009,39 @@ export default () => {
   import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
   import { createState } from '@ctsj/state/lib/react';
   import { Resource, SearchTable, Dict } from '@baifendian/adhere';
-  
+
   import './serviceRegister';
-  
+
   const { Option } = Select;
-  
+
   const { RangePicker } = DatePicker;
-  
+
   const { Table, TableStateImplement } = SearchTable;
-  
+
   const { SearchForm } = Table;
-  
+
   const { SearchFormRow } = SearchForm;
-  
+
   const { SearchFormLabel, SearchFormValue } = SearchFormRow;
-  
+
   const serviceName = 'user';
-  
+
   /**
    * StateTable
    */
   class StateTable extends TableStateImplement {
     constructor(props) {
       super(props);
-  
+
       const models = [];
-  
+
       const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-  
+
       requireComponent.keys().forEach((fileName) => {
         const model = requireComponent(fileName);
         models.push(model.default());
       });
-  
+
       this.unsubscribe = createState({
         initialState: { ...this.state },
         models,
@@ -1064,27 +1065,27 @@ export default () => {
         reducer: null,
       });
     }
-  
+
     componentWillUnmount() {
       this.unsubscribe();
     }
-  
+
     getServiceName() {
       return serviceName;
     }
-  
+
     getOrderFieldValue() {
       return 'height';
     }
-  
+
     getTotalKey() {
       return 'total';
     }
-  
+
     renderSearchForm() {
       return (
         <SearchForm>
-           eslint-disable-next-line react/jsx-no-undef 
+           eslint-disable-next-line react/jsx-no-undef
           <SearchFormRow>
             <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
             <SearchFormValue>
@@ -1097,7 +1098,7 @@ export default () => {
                 }}
               />
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
             <SearchFormValue>
               <Select
@@ -1115,7 +1116,7 @@ export default () => {
                 ))}
               </Select>
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
             <SearchFormValue>
               <RangePicker
@@ -1128,8 +1129,8 @@ export default () => {
               />
             </SearchFormValue>
           </SearchFormRow>
-  
-           eslint-disable-next-line react/jsx-no-undef 
+
+           eslint-disable-next-line react/jsx-no-undef
           <SearchFormRow>
             <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
             <SearchFormValue>
@@ -1142,7 +1143,7 @@ export default () => {
                 }}
               />
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
             <SearchFormValue>
               <InputNumber
@@ -1154,7 +1155,7 @@ export default () => {
                 }}
               />
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
             <SearchFormValue>
               <InputNumber
@@ -1167,8 +1168,8 @@ export default () => {
               />
             </SearchFormValue>
           </SearchFormRow>
-  
-           eslint-disable-next-line react/jsx-no-undef 
+
+           eslint-disable-next-line react/jsx-no-undef
           <SearchFormRow>
             <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
             <SearchFormValue>
@@ -1190,11 +1191,11 @@ export default () => {
         </SearchForm>
       );
     }
-  
+
     renderSearchFooterItems(defaultItems) {
       return [...defaultItems];
     }
-  
+
     getParams() {
       return {
         name: '',
@@ -1207,7 +1208,7 @@ export default () => {
         height: '',
       };
     }
-  
+
     getColumns() {
       return [
         {
@@ -1263,18 +1264,18 @@ export default () => {
         },
       ];
     }
-  
+
     getFetchListPropName() {
       return 'fetchList';
     }
-  
+
     fetchDataExecute(searchParams) {
       return super.fetchDataExecute(searchParams);
     }
-  
+
     onSubTableChange(pagination, filters, sorter) {}
   }
-  
+
   export default StateTable;
             `,
           },
@@ -1333,21 +1334,21 @@ export default () => {
   import React from 'react';
   import moment from 'moment';
   import { Input, Select, DatePicker, InputNumber } from 'antd';
-  
+
   import { SearchTable, Resource, Ajax } from '@baifendian/adhere';
-  
+
   const { Table, TableImplement } = SearchTable;
-  
+
   const { SearchForm } = Table;
-  
+
   const { SearchFormRow } = SearchForm;
-  
+
   const { SearchFormLabel, SearchFormValue } = SearchFormRow;
-  
+
   const { Option } = Select;
-  
+
   const { RangePicker } = DatePicker;
-  
+
   /**
    * Table
    * @class TableImpl
@@ -1357,14 +1358,14 @@ export default () => {
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
       super(props);
-  
+
       this.request = new Ajax('');
-  
+
       Object.assign(this.state, {
         loading: false,
       });
     }
-  
+
     getParams() {
       return {
         name: '',
@@ -1377,12 +1378,12 @@ export default () => {
         height: '',
       };
     }
-  
+
     getFetchDataParams() {
       const {
         searchParams: { startTime, endTime },
       } = this.state;
-  
+
       return {
         startTime: startTime
           ? \`\${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value)} 00:00:00\`
@@ -1392,11 +1393,11 @@ export default () => {
           : null,
       };
     }
-  
+
     getData() {
       return this.state.dataSource.list;
     }
-  
+
     getColumns() {
       return [
         {
@@ -1452,12 +1453,12 @@ export default () => {
         },
       ];
     }
-  
+
     renderSearchForm() {
       return (
         // eslint-disable-next-line react/jsx-no-undef
         <SearchForm>
-           eslint-disable-next-line react/jsx-no-undef 
+           eslint-disable-next-line react/jsx-no-undef
           <SearchFormRow>
             <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
             <SearchFormValue>
@@ -1470,7 +1471,7 @@ export default () => {
                 }}
               />
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
             <SearchFormValue>
               <Select
@@ -1488,7 +1489,7 @@ export default () => {
                 ))}
               </Select>
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
             <SearchFormValue>
               <RangePicker
@@ -1501,8 +1502,8 @@ export default () => {
               />
             </SearchFormValue>
           </SearchFormRow>
-  
-           eslint-disable-next-line react/jsx-no-undef 
+
+           eslint-disable-next-line react/jsx-no-undef
           <SearchFormRow>
             <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
             <SearchFormValue>
@@ -1515,7 +1516,7 @@ export default () => {
                 }}
               />
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
             <SearchFormValue>
               <InputNumber
@@ -1527,7 +1528,7 @@ export default () => {
                 }}
               />
             </SearchFormValue>
-  
+
             <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
             <SearchFormValue>
               <InputNumber
@@ -1540,8 +1541,8 @@ export default () => {
               />
             </SearchFormValue>
           </SearchFormRow>
-  
-           eslint-disable-next-line react/jsx-no-undef 
+
+           eslint-disable-next-line react/jsx-no-undef
           <SearchFormRow>
             <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
             <SearchFormValue>
@@ -1563,26 +1564,26 @@ export default () => {
         </SearchForm>
       );
     }
-  
+
     getTotal() {
       return this.state.dataSource.total;
     }
-  
+
     getOrderFieldValue() {
       return 'height';
     }
-  
+
     renderSearchFooterItems() {
       return null;
     }
-  
+
     showLoading() {
       return this.state.loading;
     }
-  
+
     // eslint-disable-next-line no-unused-vars
     onSubTableChange(pagination, filters, sorter) {}
-  
+
     fetchDataExecute(searchParams) {
       return new Promise((resolve) => {
         this.setState(
@@ -1617,7 +1618,7 @@ export default () => {
       });
     }
   }
-  
+
   export default TableImpl;
           `,
           },

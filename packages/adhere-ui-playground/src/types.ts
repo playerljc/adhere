@@ -6,7 +6,8 @@ import {
   PropsWithoutRef,
   RefAttributes,
 } from 'react';
-import type { ReactNode, CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+
 import PlayGroundPageForward from './PlayGroundPage';
 import CodeBoxSection from './PlayGroundPage/CodeBoxSection';
 import FunctionPropsSection from './PlayGroundPage/FunctionPropsSection';

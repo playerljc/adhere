@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { List, Avatar, Table, Tag, Space, Button } from 'antd';
-import { JdCategoryTab, ConditionalRender, Space as BSpace, Spin } from '@baifendian/adhere';
+import { Avatar, Button, List, Space, Table, Tag } from 'antd';
+import React, { useRef, useState } from 'react';
 
-import Props from '@/lib/Props';
+import { Space as BSpace, ConditionalRender, JdCategoryTab, Spin } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const data = [];
 data.length = 100;
@@ -281,7 +282,7 @@ export default () => {
   const data = [];
   data.length = 100;
   data.fill(0);
-  
+
   const columns = [
     {
       title: 'Name',
@@ -330,7 +331,7 @@ export default () => {
       ),
     },
   ];
-  
+
   const tableData = [
     {
       key: '1',
@@ -354,7 +355,7 @@ export default () => {
       tags: ['cool', 'teacher'],
     },
   ];
-  
+
   const listData = [
     {
       title: 'Ant Design Title 1',
@@ -485,7 +486,7 @@ export default () => {
   import React, { useState, useRef } from 'react';
   import { List, Avatar, Table, Tag, Space, Button } from 'antd';
   import { JdCategoryTab, ConditionalRender, Space as BSpace, Spin } from '@baifendian/adhere';
-  
+
   <div style={{ width: 600, height: 600, border: '1px solid rgba(0,0,0,.1)' }}>
     <JdCategoryTab
       menuData={data.map((t, index) => ({
@@ -590,7 +591,7 @@ export default () => {
   import React, { useState, useRef } from 'react';
   import { List, Avatar, Table, Tag, Space, Button } from 'antd';
   import { JdCategoryTab, ConditionalRender, Space as BSpace, Spin } from '@baifendian/adhere';
-  
+
   <BSpace.Group direction="horizontal">
     <Button
       type="primary"

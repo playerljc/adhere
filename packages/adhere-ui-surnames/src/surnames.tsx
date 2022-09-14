@@ -1,14 +1,15 @@
+import classNames from 'classnames';
 import React, {
-  forwardRef,
   ForwardRefRenderFunction,
+  forwardRef,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
 } from 'react';
-import classNames from 'classnames';
+
 import Util from '@baifendian/adhere-util';
 
-import { SurnamesRefHandle, SurnamesProps, Position } from './types';
+import { Position, SurnamesProps, SurnamesRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-surnames';
 

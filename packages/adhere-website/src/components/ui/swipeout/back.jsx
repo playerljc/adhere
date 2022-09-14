@@ -1,10 +1,10 @@
+import { Avatar, List, Radio } from 'antd';
 import React, { useState } from 'react';
-import { List, Avatar, Radio } from 'antd';
 
-import Props from '@/lib/Props';
+import { Space, SwipeOut } from '@baifendian/adhere';
+
 import Playground from '@/lib/Playground';
-
-import { SwipeOut, Space } from '@baifendian/adhere';
+import Props from '@/lib/Props';
 
 export default () => {
   const [data, setData] = useState([
@@ -155,7 +155,7 @@ export default () => {
         codeText={`
   import React, { useState } from 'react';
   import { List, Avatar, Radio } from 'antd';
-  
+
   import { SwipeOut, Space } from '@baifendian/adhere';
 
   const [data, setData] = useState([
@@ -184,7 +184,7 @@ export default () => {
       duration: 200,
     },
   ]);
-  
+
   <div>
     <Radio.Group>
       <Radio.Button

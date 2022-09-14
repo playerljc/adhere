@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { FlexLayout, SplitLayout, Space } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+import { FlexLayout, Space, SplitLayout } from '@baifendian/adhere';
+
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const { Fixed, Auto } = FlexLayout;
 
@@ -80,7 +81,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, SplitLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed style={{ width: 30 }} />
     <SplitLayout />
@@ -149,7 +150,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, SplitLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed style={{ width: 30 }} />
     <SplitLayout />
@@ -194,7 +195,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, SplitLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed style={{ width: 30 }} />
     <SplitLayout />
@@ -271,7 +272,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, SplitLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed style={{ width: 30 }} />
     <SplitLayout minSize="20%" maxSize="50%" />

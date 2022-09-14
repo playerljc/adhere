@@ -1,11 +1,12 @@
+import classNames from 'classnames';
 import React, { FC, useContext } from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { MenuItemProps, ContextMenuContext } from './types';
-import SubMenu from './SubMenu';
 import { ProviderContext } from './ContextMenuContext';
+import SubMenu from './SubMenu';
+import { ContextMenuContext, MenuItemProps } from './types';
 
 const selectorPrefix = 'adhere-ui-contextmenu-menuitem';
 

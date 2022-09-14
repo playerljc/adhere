@@ -1,10 +1,11 @@
-import React, { FC, useEffect, createContext, useState } from 'react';
-import Intl from '@baifendian/adhere-util-intl';
-import Resource from '@baifendian/adhere-util-resource';
+import React, { FC, createContext, useEffect, useState } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
+import Intl from '@baifendian/adhere-util-intl';
+import Resource from '@baifendian/adhere-util-resource';
 
-import { ConfigProviderProps, ConfigProviderContext } from './types';
+import { ConfigProviderContext, ConfigProviderProps } from './types';
 
 const Context = createContext<ConfigProviderContext>({});
 const { useForceUpdate } = Hooks;

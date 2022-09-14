@@ -1,9 +1,9 @@
 import type {
+  CSSProperties,
   FC,
   ForwardRefExoticComponent,
   PropsWithoutRef,
   RefAttributes,
-  CSSProperties,
 } from 'react';
 
 export interface RevolvingHOCFunction<T, P>

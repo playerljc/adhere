@@ -1,14 +1,14 @@
-import Geometry from './Geometry';
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
 import {
-  IRegularPolygonGeometryData,
-  IRegularPolygonGeometry,
-  VectorActions,
   GeometryType,
   IGeometryStyle,
   IPixel,
+  IRegularPolygonGeometry,
+  IRegularPolygonGeometryData,
+  VectorActions,
 } from '../types';
-import GeometryStyle from '../style/GeometryStyle';
-import Util from '../../util';
+import Geometry from './Geometry';
 
 /**
  * RegularPolygonGeometry
