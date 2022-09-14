@@ -17,7 +17,7 @@ const BackLayout: FC<BackLayoutProps> = (props) => {
     topToolBarItems = [],
     isShowBack = true,
     backPath = '/',
-    enforceBackPath = '/',
+    enforceBackPath = '',
     history,
     backTitle,
     children,
