@@ -7,11 +7,12 @@ import { ConfigProvider as AdhereConfigProvider, Resource, Util } from '@baifend
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
 
+// import 'antd/dist/antd.less';
+import 'nprogress/nprogress.css';
+
 import '@baifendian/adhere/lib/css.less';
 
 import './index.less';
-// import 'antd/dist/antd.less';
-import 'nprogress/nprogress.css';
 
 // 配置字典
 DictConfig();
