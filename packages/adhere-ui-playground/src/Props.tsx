@@ -1,10 +1,9 @@
 import React, { FC, useMemo } from 'react';
+
 import Intl from '@baifendian/adhere-util-intl';
 
-import Table from './Table';
-
 import Collapse from './Collapse';
-
+import Table from './Table';
 import { PropsProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-props';

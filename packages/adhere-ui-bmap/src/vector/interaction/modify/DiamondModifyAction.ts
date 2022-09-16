@@ -1,12 +1,11 @@
-import * as turf from '@turf/turf';
-
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
-import { IPoint, IDiamondData, SelectType, IInteractionLayer } from '../types';
-import ModifyAction from './ModifyAction';
-import DiamondDrawAction from '../draw/DiamondDrawAction';
 import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import DiamondDrawAction from '../draw/DiamondDrawAction';
+import { IDiamondData, IInteractionLayer, IPoint, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
 
 /**
  * DiamondModifyAction

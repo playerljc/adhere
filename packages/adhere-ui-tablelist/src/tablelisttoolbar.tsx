@@ -5,10 +5,11 @@
  * @LastEditor: yumeng.qin
  * @LastEditTime: 2021-05-06 14:25:16
  */
+import { Checkbox, Popover, Tooltip } from 'antd';
 import React from 'react';
-import { Tooltip, Checkbox, Popover } from 'antd';
-import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
+import { ReloadOutlined, SettingOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from './tablelist';

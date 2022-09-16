@@ -1,8 +1,8 @@
+import { Col, Form, Row } from 'antd';
 import React, { useMemo } from 'react';
-import { Form, Row, Col } from 'antd';
 
 import renderItem from './formitem';
-import { FormItemCreatorProps, ColumnItemProps, FormItemCreatorFunction } from './types';
+import { ColumnItemProps, FormItemCreatorFunction, FormItemCreatorProps } from './types';
 
 const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) => {
   const { columns, layout, row } = props;

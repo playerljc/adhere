@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { Button, Tabs } from 'antd';
+import React, { useEffect, useState } from 'react';
+
 import { Notification, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -261,11 +262,11 @@ export default () => {
   import React, { useState, useEffect } from 'react';
   import { Button, Tabs } from 'antd';
   import { Notification, Space } from '@baifendian/adhere';
-  
+
   import styles from './index.less';
-  
+
   const { TabPane } = Tabs;
-  
+
   const config = [
     { key: 'ios-top', ref: React.createRef(), ins: null },
     { key: 'ios-bottom', ref: React.createRef(), ins: null },
@@ -285,15 +286,15 @@ export default () => {
         type,
       });
     }, [activeKey]);
-  
+
     function onChange(key) {
       setActiveKey(key);
     }
-  
+
     function getRecord(curKey) {
       return config.find(({ key }) => key === curKey);
     }
-    
+
     <Tabs tabPosition="left" activeKey={activeKey} onChange={onChange}>
       {config.map((t) => (
         <TabPane tab={t.key} key={t.key}>
@@ -367,13 +368,13 @@ export default () => {
         </TabPane>
       ))}
     </Tabs>
-    
+
     /*----------------------------index.less-------------------------*/
     .Tab {
       display: flex;
       flex-direction: column;
       height: 600px;
-    
+
       > .Fixed {
         display: flex;
         flex-shrink: 0;
@@ -383,7 +384,7 @@ export default () => {
           }
         }
       }
-    
+
       > .Auto {
         position: relative;
         flex-grow: 1;

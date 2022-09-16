@@ -1,12 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
 import { Button } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { CascadeCompared, Space } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 const columns = [];

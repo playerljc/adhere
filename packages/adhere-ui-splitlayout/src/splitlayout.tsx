@@ -1,5 +1,6 @@
-import React, { FC, useContext, useLayoutEffect, useRef } from 'react';
 import classNames from 'classnames';
+import React, { FC, useContext, useLayoutEffect, useRef } from 'react';
+
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
 import { SplitLayoutProps } from './types';

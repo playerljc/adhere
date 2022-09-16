@@ -1,5 +1,5 @@
-import React from 'react';
 import ReactECharts from 'echarts-for-react';
+import React from 'react';
 
 import Playground from '@/lib/Playground';
 
@@ -435,9 +435,9 @@ export default () => (
     codeText={`
   import React from 'react';
   import ReactECharts from 'echarts-for-react';
-      
+
   const option = ${JSON.stringify(option, null, 2)}
-      
+
   <ReactECharts option={option} />
     `}
   >

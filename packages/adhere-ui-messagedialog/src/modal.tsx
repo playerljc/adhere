@@ -1,5 +1,6 @@
-import React, { FC, useMemo } from 'react';
 import { Button, Modal } from 'antd';
+import React, { FC, useMemo } from 'react';
+
 import Intl from '@baifendian/adhere-util-intl';
 
 import { ModalDialogProps } from './types';

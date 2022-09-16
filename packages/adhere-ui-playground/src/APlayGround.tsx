@@ -1,14 +1,14 @@
-import React, { Requireable } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
+import PropTypes from 'prop-types';
+import React, { Requireable } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
 import Card, { cardPropTypes } from './Card';
 import Message from './Message';
 import Constant from './constant';
-
 import { PlayGroundProps, PlayGroundState } from './types';
 
 const selectPrefix = 'adhere-ui-playground';

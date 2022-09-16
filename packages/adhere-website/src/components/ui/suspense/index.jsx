@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
-
-import PlayGroundPage, {
-  Section,
-  PropsSection,
-  CodeBoxSection,
-  FunctionPropsSection,
-} from '@/lib/PlaygroundPage';
+import React, { useState } from 'react';
 
 import { Spin } from '@baifendian/adhere';
 
-import Table from './table';
-import Sync from './sync';
+import PlayGroundPage, {
+  CodeBoxSection,
+  FunctionPropsSection,
+  PropsSection,
+  Section,
+} from '@/lib/PlaygroundPage';
+
 import ASync from './async';
+import Sync from './sync';
+import Table from './table';
 
 export default () => {
   const [reset, setReset] = useState(false);

@@ -1,8 +1,8 @@
-import React, { FC, useRef } from 'react';
 import classNames from 'classnames';
+import React, { FC, useRef } from 'react';
 
-import { PushProps } from './types';
 import { slider } from './slidelayout';
+import { PushProps } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slidelayout-push';

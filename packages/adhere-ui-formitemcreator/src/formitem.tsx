@@ -1,18 +1,18 @@
-import React from 'react';
 import {
+  Checkbox,
+  DatePicker,
   Input,
   InputNumber,
   Radio,
-  Checkbox,
-  Select,
-  DatePicker,
-  Switch,
-  TreeSelect,
-  Slider,
-  TimePicker,
   Rate,
+  Select,
+  Slider,
+  Switch,
+  TimePicker,
+  TreeSelect,
   Upload,
 } from 'antd';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 

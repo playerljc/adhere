@@ -1,10 +1,11 @@
+import { Avatar, Button, Progress } from 'antd';
 import React, { useRef, useState } from 'react';
-import { Button, Progress, Avatar } from 'antd';
 
-import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+import { Ajax, GlobalIndicator, Space } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const k007Ajax = new Ajax('http://k007-pe.baifendian.com');
 
@@ -245,9 +246,9 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-  
+
   const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-  
+
   k007Ajax
     .get({
       path:
@@ -298,9 +299,9 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-  
+
   const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-  
+
   k007Ajax
     .post({
       path: '/api/controlledObject/facade/fq/queryList',
@@ -366,9 +367,9 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-  
+
   const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-  
+
   <form encType="multipart/form-data" method="post" ref={uploadFormFef}>
     <div>
       <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
@@ -497,9 +498,9 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-  
+
   const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-  
+
   <Button
     type="primary"
     onClick={() => {

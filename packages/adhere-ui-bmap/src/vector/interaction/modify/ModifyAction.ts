@@ -2,19 +2,18 @@
 import MathUtil from '@baifendian/adhere-util';
 import Emitter from '@baifendian/adhere-util-emitter';
 
+import defaultAnchorStyle from '../DefaultAnchorStyle';
 import {
+  ActionEvents,
   ActionStatus,
-  IModifyAction,
-  IMoveAction,
+  ActionType,
   IActionData,
   IInteractionLayer,
+  IModifyAction,
+  IMoveAction,
   IPoint,
-  ActionEvents,
   SelectType,
-  ActionType,
 } from '../types';
-
-import defaultAnchorStyle from '../DefaultAnchorStyle';
 
 /**
  * ModifyAction

@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Space, Suspense } from '@baifendian/adhere';
 import { Button, Table } from 'antd';
 import faker from 'faker';
+import React, { useEffect, useRef, useState } from 'react';
+
+import { Space, Suspense } from '@baifendian/adhere';
 
 export default () => {
   const [data, setData] = useState([]);

@@ -1,8 +1,8 @@
-import React, { FC, useRef } from 'react';
 import classNames from 'classnames';
+import React, { FC, useRef } from 'react';
 
-import { RevealProps } from './types';
 import { slider } from './slidelayout';
+import { RevealProps } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slidelayout-reveal';

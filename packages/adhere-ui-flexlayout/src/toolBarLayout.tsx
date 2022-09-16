@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
 import classNames from 'classnames';
+import React, { FC } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import type { ToolBarLayoutProps } from './types';

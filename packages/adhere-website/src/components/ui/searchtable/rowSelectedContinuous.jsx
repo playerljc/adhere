@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { SearchTable } from '@baifendian/adhere';
+
 import Table from './table';
 
 const { Table: $SearchTable } = SearchTable;

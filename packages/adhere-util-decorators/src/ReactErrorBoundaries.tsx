@@ -1,9 +1,8 @@
-import React from 'react';
 import { Empty } from 'antd';
-
-import intl from '@baifendian/adhere-util-intl';
+import React from 'react';
 
 import Util from '@baifendian/adhere-util';
+import intl from '@baifendian/adhere-util-intl';
 
 import { IReactErrorBoundariesState } from './types';
 

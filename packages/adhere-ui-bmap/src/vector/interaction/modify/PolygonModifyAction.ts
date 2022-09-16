@@ -1,10 +1,10 @@
-import * as turf from '@turf/turf';
 import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
-import { IPoint, IPolygonData, IInteractionLayer, SelectType } from '../types';
-import ModifyAction from './ModifyAction';
-import PolygonDrawAction from '../draw/PolygonDrawAction';
 import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import PolygonDrawAction from '../draw/PolygonDrawAction';
+import { IInteractionLayer, IPoint, IPolygonData, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
 
 /**
  * PolygonModifyAction

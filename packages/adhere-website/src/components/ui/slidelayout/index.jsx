@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
-import { SlideLayout, FlexLayout, Space } from '@baifendian/adhere';
+import React, { useState } from 'react';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import { FlexLayout, SlideLayout, Space } from '@baifendian/adhere';
+
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 const horizontalCSS = {
   position: 'relative',

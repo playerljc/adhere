@@ -1,9 +1,9 @@
+import { Button, Form } from 'antd';
 import React, { useState } from 'react';
-import { Form, Button } from 'antd';
 
 import { FormItemCreator } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   const [skip, setSkip] = useState(true);

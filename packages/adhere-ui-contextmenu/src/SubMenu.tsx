@@ -1,9 +1,9 @@
-import React, { FC, useContext } from 'react';
 import classNames from 'classnames';
+import React, { FC, useContext } from 'react';
 
-import { SubMenuProps, ContextMenuContext } from './types';
-import MenuItem from './MenuItem';
 import { ProviderContext } from './ContextMenuContext';
+import MenuItem from './MenuItem';
+import { ContextMenuContext, SubMenuProps } from './types';
 
 const selectorPrefix = 'adhere-ui-contextmenu-submenu';
 

@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from 'react';
 import PlaygroundMulit from '@/lib/PlaygroundMulit';
 
 import VectorLayer from './VectoryLayer';
-
 import data from './data.json';
 
 import styles from './index.less';
@@ -12,7 +11,7 @@ const indexJsCodeText = `
  import React, { useEffect, useRef } from 'react';
  import VectorLayer from './VectoryLayer';
  import styles from './index.less';
- 
+
  function MassivePoints() {
    const ref = useRef();
 
@@ -39,10 +38,10 @@ const indexJsCodeText = `
       ),
     );
   }, []);
-  
+
   return <div className={styles.Wrap} ref={ref} />;
  }
- 
+
  export default MassivePoints;
 `;
 

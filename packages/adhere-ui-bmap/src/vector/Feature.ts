@@ -1,14 +1,14 @@
+import GeometryStyle from './style/GeometryStyle';
 import {
-  IVectorLayer,
-  IFeatureParams,
-  IVectorSource,
   IFeature,
+  IFeatureParams,
   IGeometry,
   IGeometryStyle,
   IPixel,
+  IVectorLayer,
+  IVectorSource,
   VectorActions,
 } from './types';
-import GeometryStyle from './style/GeometryStyle';
 
 /**
  * Feature

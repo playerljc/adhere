@@ -1,16 +1,17 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-  ForwardRefRenderFunction,
-} from 'react';
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
+
 import Hooks from '@baifendian/adhere-ui-hooks';
 
-import type { JdCategoryTabHOCFunction, JdCategoryTabProps, JdCategoryTabRefHandle } from './types';
 import JdCategoryTabItem from './item';
+import type { JdCategoryTabHOCFunction, JdCategoryTabProps, JdCategoryTabRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-jdcategorytab';
 

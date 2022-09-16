@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { v1 } from 'uuid';
 import { Skeleton } from 'antd';
-
 import { Empty } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { v1 } from 'uuid';
 
+import Carousel from './components/Carousel';
+import Circle from './components/Circle';
 import Sector from './components/Sector';
 import StackedSector from './components/StackedSector';
-import Circle from './components/Circle';
-import Carousel from './components/Carousel';
-import { statusColor, legendColor, legendItem, everyLengthConfig } from './config';
+import { everyLengthConfig, legendColor, legendItem, statusColor } from './config';
+import { data } from './data';
 
 import styles from './index.less';
-
-import { data } from './data';
 
 const Windmill = ({
   resData = undefined,

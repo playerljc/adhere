@@ -1,6 +1,7 @@
-import React from 'react';
 import { Button } from 'antd';
-import { TableList, FormItemCreator } from '@baifendian/adhere';
+import React from 'react';
+
+import { FormItemCreator, TableList } from '@baifendian/adhere';
 
 const requestData = (params) => {
   return new Promise((resolve, reject) => {

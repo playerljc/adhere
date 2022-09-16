@@ -1,22 +1,22 @@
+import ImageCache from '../ImageCache';
+import GeometryStyle from '../style/GeometryStyle';
 import {
   GeometryType,
   ICoordinate,
-  IPointGeometryStyle,
-  IPointGeometry,
-  IPixel,
-  VectorActions,
   IGeometryStyle,
+  IPixel,
+  IPointGeometry,
+  IPointGeometryStyle,
+  VectorActions,
 } from '../types';
-import Geometry from './Geometry';
-import GeometryStyle from '../style/GeometryStyle';
-import RegularPolygonGeometry from './RegularPolygonGeometry';
-import StartGeometry from './StartGeometry';
-import SectorGeometry from './SectorGeometry';
 import CircleGeometry from './CircleGeometry';
-import RectGeometry from './RectGeometry';
-import RadiusRectGeometry from './RadiusRectGeometry';
+import Geometry from './Geometry';
 import LeafGeometry from './LeafGeometry';
-import ImageCache from '../ImageCache';
+import RadiusRectGeometry from './RadiusRectGeometry';
+import RectGeometry from './RectGeometry';
+import RegularPolygonGeometry from './RegularPolygonGeometry';
+import SectorGeometry from './SectorGeometry';
+import StartGeometry from './StartGeometry';
 
 /**
  * PointGeometry

@@ -1,8 +1,10 @@
 import React from 'react';
-import { GithubOutlined, FieldTimeOutlined } from '@ant-design/icons';
+
+import { FieldTimeOutlined, GithubOutlined } from '@ant-design/icons';
 import { Link } from '@ctsj/router';
 
 import PackageJSON from '../../../../../package.json';
+
 import styles from './index.less';
 
 export default () => {
@@ -17,11 +19,7 @@ export default () => {
                 自主研发
                 <ul>
                   <li>
-                    <a
-                      href="http://49.232.163.126:8084/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href="http://49.232.163.126:8084/" target="_blank" rel="noopener noreferrer">
                       adherev
                     </a>
                   </li>

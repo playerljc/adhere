@@ -1,6 +1,6 @@
-import React, { FC, memo } from 'react';
-import PropTypes from 'prop-types';
 import PlayGroundExt from 'component-playground';
+import PropTypes from 'prop-types';
+import React, { FC, memo } from 'react';
 
 import { CodePanelProps } from './types';
 

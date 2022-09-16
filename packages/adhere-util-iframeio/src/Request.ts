@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
-import type { stateCode, RequestOptions } from './types';
+
+import type { RequestOptions, stateCode } from './types';
 
 /**
  * Request

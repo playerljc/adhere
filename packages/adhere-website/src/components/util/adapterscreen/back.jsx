@@ -1,5 +1,6 @@
+import { Button, Table } from 'antd';
 import React, { useRef } from 'react';
-import { Table, Button } from 'antd';
+
 import { AdapterScreen } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -106,9 +107,9 @@ export default () => {
   import React, { useRef } from 'react';
   import { Table, Button } from 'antd';
   import { AdapterScreen } from '@baifendian/adhere';
-  
+
   const ref = useRef();
-  
+
   <div ref={ref}>
     <Button
       type="primary"

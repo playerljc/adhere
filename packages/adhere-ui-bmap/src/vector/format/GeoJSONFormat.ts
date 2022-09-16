@@ -1,25 +1,25 @@
 import Util from '@baifendian/adhere-util';
 
-import {
-  IFeature,
-  GeoJSONNode,
-  GeoJSONType,
-  IGeoJSONFeatureCollection,
-  IGeometry,
-  IPointGeometry,
-  IMulitPointGeometry,
-  ILineStringGeometry,
-  IMulitLineStringGeometry,
-  IPolygonGeometry,
-  IMulitPolygonGeometry,
-} from '../types';
-import PointGeometry from '../geom/PointGeometry';
-import MulitPointGeometry from '../geom/MulitPointGeometry';
 import Geometry from '../geom/Geometry';
 import LineStringGeometry from '../geom/LineStringGeometry';
 import MulitLineStringGeometry from '../geom/MulitLineStringGeometry';
-import PolygonGeometry from '../geom/PolygonGeometry';
+import MulitPointGeometry from '../geom/MulitPointGeometry';
 import MulitPolygonGeometry from '../geom/MulitPolygonGeometry';
+import PointGeometry from '../geom/PointGeometry';
+import PolygonGeometry from '../geom/PolygonGeometry';
+import {
+  GeoJSONNode,
+  GeoJSONType,
+  IFeature,
+  IGeoJSONFeatureCollection,
+  IGeometry,
+  ILineStringGeometry,
+  IMulitLineStringGeometry,
+  IMulitPointGeometry,
+  IMulitPolygonGeometry,
+  IPointGeometry,
+  IPolygonGeometry,
+} from '../types';
 
 export default {
   /**

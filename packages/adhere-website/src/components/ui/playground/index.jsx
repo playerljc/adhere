@@ -2,7 +2,7 @@ import React from 'react';
 
 import { DelConfirm } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 const arr = [];
 arr.length = 10;

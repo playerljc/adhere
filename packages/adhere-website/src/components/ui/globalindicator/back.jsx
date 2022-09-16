@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
+
 import { GlobalIndicator } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -75,7 +76,7 @@ export default () => {
   import React from 'react';
   import { Button } from 'antd';
   import { GlobalIndicator } from '@baifendian/adhere';
-  
+
   <Button
     onClick={() => {
       setTimeout(() => {
@@ -112,10 +113,10 @@ export default () => {
   import React, { useRef } from 'react';
   import { Button } from 'antd';
   import { GlobalIndicator } from '@baifendian/adhere';
-  
+
   let handler = null;
   const ref = useRef();
-  
+
   <div>
     <div
       ref={ref}

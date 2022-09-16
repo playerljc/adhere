@@ -1,8 +1,8 @@
-import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
-import { Space } from '@baifendian/adhere';
 import React from 'react';
 
+import { Space } from '@baifendian/adhere';
 
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   function boxPanelConfig() {

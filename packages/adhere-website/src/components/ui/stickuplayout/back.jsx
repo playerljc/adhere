@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
 
-import { StickupLayout, Space } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+import { Space, StickupLayout } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 import './index.less';
 
@@ -150,7 +151,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { StickupLayout, Space } from '@baifendian/adhere';
-  
+
   <div style={{ height: 500, overflow: 'hidden' }}>
     <StickupLayout>
       <Item
@@ -803,7 +804,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { StickupLayout, Space } from '@baifendian/adhere';
-  
+
   <Space.Group direction="horizontal" size={10}>
     <Button
       type="primary"

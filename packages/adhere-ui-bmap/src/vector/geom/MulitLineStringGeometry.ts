@@ -1,18 +1,18 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
+import GeometryStyle from '../style/GeometryStyle';
 import {
   GeometryType,
+  IGeometryStyle,
   ILineStringGeometryData,
   ILineStringGeometryStyle,
   IMulitLineStringGeometry,
-  VectorActions,
   IPixel,
-  IGeometryStyle,
+  VectorActions,
 } from '../types';
-
 import Geometry from './Geometry';
 import LineStringGeometry from './LineStringGeometry';
-import GeometryStyle from '../style/GeometryStyle';
 
 /**
  * MulitLineStringGeometry

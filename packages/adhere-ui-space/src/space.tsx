@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
-import { SpaceFunction, SpaceProps, SpaceGroupProps } from './types';
+import { SpaceFunction, SpaceGroupProps, SpaceProps } from './types';
 
 const selectorPrefix = 'adhere-ui-space';
 

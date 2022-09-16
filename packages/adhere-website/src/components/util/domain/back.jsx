@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
+
 import { Domain, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -162,7 +163,7 @@ export default () => {
   import { Domain } from '@baifendian/adhere';
 
   const console1Ref = useRef();
-  
+
   <Button
     type="primary"
     onClick={() => {
@@ -219,7 +220,7 @@ export default () => {
   import { Domain } from '@baifendian/adhere';
 
   const console2Ref = useRef();
-  
+
   <Button
     type="primary"
     onClick={() => {

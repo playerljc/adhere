@@ -1,8 +1,8 @@
 import React from 'react';
 
+import iconFailed from './images/icon-failed.png';
 import iconProcessing from './images/icon-processing.png';
 import iconSuccess from './images/icon-success.png';
-import iconFailed from './images/icon-failed.png';
 import iconTime from './images/icon-time.png';
 
 const icon = (img, size, imgSize, color, styles = {}) => {

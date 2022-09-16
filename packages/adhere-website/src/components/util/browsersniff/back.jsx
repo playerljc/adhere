@@ -1,5 +1,6 @@
-import React from 'react';
 import { Table } from 'antd';
+import React from 'react';
+
 import { Browsersniff, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -700,7 +701,7 @@ export default () => {
   import React from 'react';
   import { Table } from 'antd';
   import { Browsersniff } from '@baifendian/adhere';
-  
+
   <Table
     columns={[
       {

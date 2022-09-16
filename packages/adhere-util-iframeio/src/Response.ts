@@ -1,4 +1,4 @@
-import type { stateCode, ResponseOptions } from './types';
+import type { ResponseOptions, stateCode } from './types';
 
 /**
  * Response

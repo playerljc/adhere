@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { List, Avatar, Spin, Empty } from 'antd';
+import { Avatar, Empty, List, Spin } from 'antd';
+import React, { useEffect, useState } from 'react';
+
 import { ScrollLoad, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const globalData = [];
 globalData.length = 10;
@@ -171,15 +172,15 @@ export default () => {
   const globalData = [];
   globalData.length = 10;
   globalData.fill(1);
-  
+
   let page = 1;
-  
+
   let callbackHandler = null;
-  
+
   let ref1Status = ScrollLoad.NORMAL;
   let ref2Status = ScrollLoad.NORMAL;
   let ref3Status = ScrollLoad.NORMAL;
-  
+
   // eslint-disable-next-line no-use-before-define,no-shadow
   const [data, setData] = useState(getData());
 
@@ -212,7 +213,7 @@ export default () => {
         codeText={`
   import { List, Avatar } from 'antd';
   import { ScrollLoad } from '@baifendian/adhere';
-  
+
   <ScrollLoad
     style={{ width: 400, height: 600 }}
     onScrollBottom={(callback) => {
@@ -275,7 +276,7 @@ export default () => {
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { ScrollLoad } from '@baifendian/adhere';
-  
+
   <ScrollLoad
     style={{ width: 400, height: 600 }}
     onScrollBottom={(callback) => {
@@ -356,7 +357,7 @@ export default () => {
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { ScrollLoad } from '@baifendian/adhere';
-  
+
   <ScrollLoad
     style={{ width: 400, height: 600 }}
     onScrollBottom={(callback) => {
@@ -437,7 +438,7 @@ export default () => {
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { ScrollLoad } from '@baifendian/adhere';
-  
+
   <ScrollLoad
     style={{ width: 400, height: 400 }}
     onScrollBottom={(callback) => {

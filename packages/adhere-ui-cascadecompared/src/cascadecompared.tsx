@@ -1,10 +1,12 @@
-import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
-import type { ForwardRefRenderFunction, ReactElement } from 'react';
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
-import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
+import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import type { ForwardRefRenderFunction, ReactElement } from 'react';
+
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
-import { CascadeComparedProps, CascadeComparedHandle, ColumnConfig, IMasterItem } from './types';
+import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
+
+import { CascadeComparedHandle, CascadeComparedProps, ColumnConfig, IMasterItem } from './types';
 
 const selectorPrefix = 'adhere-ui-cascadecompared';
 

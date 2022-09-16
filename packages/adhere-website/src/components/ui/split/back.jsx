@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Space, Split } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 export default () => (
   <div className="Page">
@@ -86,7 +86,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Split } from '@baifendian/adhere';
-  
+
   <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
     <a>编辑</a>
     <Split direction="horizontal" />
@@ -112,7 +112,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Split } from '@baifendian/adhere';
-  
+
   <div>
     <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
     <Split direction="vertical" />
@@ -134,7 +134,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Split } from '@baifendian/adhere';
-  
+
   <div>
     <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
       <a>编辑</a>
@@ -143,7 +143,7 @@ export default () => (
       <Split direction="horizontal" size={10} />
       <a>删除</a>
     </div>
-  
+
     <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
     <Split direction="vertical" size={10} />
     <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
@@ -172,7 +172,7 @@ export default () => (
       codeText={`
   import React from 'react';
   import { Split } from '@baifendian/adhere';
-  
+
   <div>
     <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
       <Split.Group direction="horizontal" >
@@ -181,7 +181,7 @@ export default () => (
         <a>删除</a>
       </Split.Group>
     </div>
-  
+
     <Split.Group direction="vertical">
       <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
       <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>

@@ -1,12 +1,13 @@
 // @ts-ignore
 import * as turf from '@turf/turf';
+
 import {
   GeometryType,
-  IMulitRegularPolygonGeometry,
-  IRegularPolygonGeometryData,
   IGeometryStyle,
-  VectorActions,
+  IMulitRegularPolygonGeometry,
   IPixel,
+  IRegularPolygonGeometryData,
+  VectorActions,
 } from '../types';
 import Geometry from './Geometry';
 import RegularPolygonGeometry from './RegularPolygonGeometry';

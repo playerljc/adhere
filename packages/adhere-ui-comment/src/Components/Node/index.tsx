@@ -1,14 +1,14 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import React, { FC, useEffect, useRef, useState } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
-import Intl from '@baifendian/adhere-util-intl';
 import Util from '@baifendian/adhere-util';
+import Intl from '@baifendian/adhere-util-intl';
 
-import { NodeProps } from '../../types';
-import ReplySubmit from '../../Reply/Submit';
 import ReplyInfo from '../../Reply/Info';
+import ReplySubmit from '../../Reply/Submit';
+import { NodeProps } from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-node';
 

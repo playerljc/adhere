@@ -1,5 +1,6 @@
+import { Avatar, Button, List } from 'antd';
 import React from 'react';
-import { List, Avatar, Button } from 'antd';
+
 import { PullRefresh, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -196,14 +197,14 @@ export default () => (
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { PullRefresh  } from '@baifendian/adhere';
-  
+
   import styles from './index.less';
-  
+
   let data = [];
   data.length = 100;
   data.fill(0);
   data = data.map((t, index) => "Ant Design Title" + (index + 1));
-  
+
   <PullRefresh
     className={styles.Wrap}
     onPullRefresh={(ins) => {
@@ -266,16 +267,16 @@ export default () => (
   import React from 'react';
   import { List, Avatar, Button } from 'antd';
   import { PullRefresh, Space } from '@baifendian/adhere';
-  
+
   import styles from './index.less';
-  
+
   let data = [];
   data.length = 100;
   data.fill(0);
   data = data.map((t, index) => "Ant Design Title" + (index + 1));
-  
+
   const ref = React.createRef();
-  
+
   <PullRefresh
     className={styles.Wrap}
     ref={ref}
@@ -363,16 +364,16 @@ export default () => (
   import React from 'react';
   import { List, Avatar } from 'antd';
   import { PullRefresh } from '@baifendian/adhere';
-  
+
   import refreshIcon from './refresh.svg';
-  
+
   import styles from './index.less';
-  
+
   let data = [];
   data.length = 100;
   data.fill(0);
   data = data.map((t, index) => "Ant Design Title" + (index + 1));
-  
+
   <PullRefresh
     className={styles.Wrap}
     isShowUpdateTime={false}
@@ -421,13 +422,13 @@ export default () => (
   .Wrap {
     height: 300px;
   }
-  
+
   .RefreshCustom1 {
     display: flex;
     align-items: center;
     justify-content: center;
     color: #000;
-  
+
     img {
       margin-right: 15px;
       :local {
@@ -435,7 +436,7 @@ export default () => (
       }
     }
   }
-  
+
   @keyframes RefreshCustom1 {
     to {
       transform: rotate(405deg);

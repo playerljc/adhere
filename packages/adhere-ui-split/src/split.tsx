@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
-import { SplitFunction, SplitProps, SplitGroupProps } from './types';
+import { SplitFunction, SplitGroupProps, SplitProps } from './types';
 
 const selectorPrefix = 'adhere-ui-split';
 

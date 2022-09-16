@@ -1,7 +1,8 @@
 import { notification } from 'antd';
+
+import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
-import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 
 import type { IConfig, ISendArg, ISendPrepareArg, Method } from './types';
 

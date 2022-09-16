@@ -8,7 +8,7 @@
 
 ### Pull Requests
 
-We gladly accept any PR's assuming they are well written, documented ( if necessary ) and have test code. 
+We gladly accept any PR's assuming they are well written, documented ( if necessary ) and have test code.
 
 If you're unsure if we'll accept a new feature please open an issue requesting it and we can have a discussion before you code and submit a PR.
 
@@ -18,10 +18,9 @@ If you change the list of test numbers for a regular expression, you must update
 
 ### Issues
 
-Please use the issue tracker *strictly* for bugs you think are caused by a regular expression issue in ChinaMobilePhoneNumberRegex. We’re very busy and as a free open source library do not have the time to adequately help with questions that are more tutorial/training in nature and recommend using Stack Overflow and Google as alternatives.
+Please use the issue tracker _strictly_ for bugs you think are caused by a regular expression issue in ChinaMobilePhoneNumberRegex. We’re very busy and as a free open source library do not have the time to adequately help with questions that are more tutorial/training in nature and recommend using Stack Overflow and Google as alternatives.
 
 Please do not be offended if we close your issue and reference this document. If you believe the issue is truly a fault in ChinaMobilePhoneNumberRegex’s regular expressions, re-open it.
-
 
 ---
 
@@ -49,8 +48,6 @@ Please do not be offended if we close your issue and reference this document. If
 
 如果我们关闭您的问题，请不要生气。 如果您认为 ChinaMobilePhoneNumberRegex 的正则表达式确实有错误，请重新打开它。
 
-
 [mail]: mailto:vincentxueios@gmail.com
-[Twitter]: https://twitter.com/SuetFungSit
-[Telegram]: https://telegram.me/VincentXue
-
+[twitter]: https://twitter.com/SuetFungSit
+[telegram]: https://telegram.me/VincentXue

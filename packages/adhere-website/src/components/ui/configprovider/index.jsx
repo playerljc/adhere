@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { ConfigProvider, TableGridLayout, Intl } from '@baifendian/adhere';
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
 import { Radio } from 'antd';
+import React, { useState } from 'react';
+
+import { ConfigProvider, Intl, TableGridLayout } from '@baifendian/adhere';
+
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 const { Label, Value } = TableGridLayout;
 

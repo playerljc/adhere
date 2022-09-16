@@ -1,7 +1,8 @@
 import React from 'react';
+
 import { WritingBoard } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 import Simple from './simple';
 
@@ -73,23 +74,23 @@ export default () => {
               },
             },
             type: 'PlayGroundMulit',
-            config:[
+            config: [
               {
                 title: 'index.jsx',
                 mode: 'code',
                 scope: { React },
-                codeText:`
+                codeText: `
   import React from 'react';
   import Simple from './simple';
 
   export default () => <Simple />
-                `
+                `,
               },
               {
                 title: 'simple.jsx',
                 mode: 'code',
                 scope: { React },
-                codeText:`
+                codeText: `
   import React, { useState, useRef } from 'react';
   import { Button, Card, Radio, Select, Space } from 'antd';
   import { SketchPicker } from 'react-color';
@@ -217,8 +218,8 @@ export default () => {
       </FlexLayout>
     );
   };
-                `
-              }
+                `,
+              },
             ],
             renderChildren: () => <Simple />,
           },

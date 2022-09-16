@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import Intl from '@baifendian/adhere-util-intl';
 import BaseUtil from '@baifendian/adhere-util/lib/base';
 
 import BMap from './bmap';
-
-import styles from './temp.less';
-
 import citys from './citys.json';
-
 import isoline from './isoline';
-
 import icon from './站点.svg';
 
 import './index.less';
+import styles from './temp.less';
 
 const ref = React.createRef();
 

@@ -1,22 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PolygonSelection from './index.ts';
-import PolygonDrawAction from './draw/polygonDrawAction';
 import CircleDrawAction from './draw/circleDrawAction';
-import RectangleDrawAction from './draw/rectangleDrawAction';
-import TriangleDrawAction from './draw/triangleDrawAction';
 import DiamondDrawAction from './draw/diamondDrawAction';
-import StartDrawAction from './draw/startDrawAction';
 import FreeDrawAction from './draw/freeDrawAction';
-
+import PolygonDrawAction from './draw/polygonDrawAction';
+import RectangleDrawAction from './draw/rectangleDrawAction';
+import StartDrawAction from './draw/startDrawAction';
+import TriangleDrawAction from './draw/triangleDrawAction';
+import PolygonSelection from './index.ts';
 import CircleModifyAtion from './modify/circleModifyAction';
 import DiamondModifyAction from './modify/diamondModifyAction';
 import PolygonModifyAction from './modify/polygonModifyAction';
 import RectangleModifyAction from './modify/rectangleModifyAction';
-import TriangleModifyAction from './modify/triangleModifyAction';
 import StartModifyAction from './modify/startModifyAction';
-
+import TriangleModifyAction from './modify/triangleModifyAction';
 import { ActionEvents, PolygonSelectionActions, SelectType } from './types';
 
 import './index.less';

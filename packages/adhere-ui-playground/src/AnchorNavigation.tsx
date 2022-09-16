@@ -1,9 +1,10 @@
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Util from '@baifendian/adhere-util';
 
-import { AnchorNavigationProps } from './types';
 import { AnchorNavigationContext } from './AnchorNavigationContext';
+import { AnchorNavigationProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-anchor-navigation';
 

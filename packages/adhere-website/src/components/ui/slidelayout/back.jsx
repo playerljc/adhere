@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
+import React, { useState } from 'react';
 
-import { SlideLayout, FlexLayout, Space } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+import { FlexLayout, SlideLayout, Space } from '@baifendian/adhere';
+
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const horizontalCSS = {
   position: 'relative',
@@ -387,7 +388,7 @@ export default () => {
     border: '1px solid rgba(0,0,0,.1)',
     overflow: 'hidden',
   };
-  
+
   const verticalCSS = {
     position: 'relative',
     width: 400,
@@ -395,7 +396,7 @@ export default () => {
     border: '1px solid rgba(0,0,0,.1)',
     overflow: 'hidden',
   };
-  
+
   const [collapse1, setCollapse1] = useState(true);
 
   const [collapse2, setCollapse2] = useState(true);
@@ -420,7 +421,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { SlideLayout, FlexLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal">
     <FlexLayout.Auto>
       <div>
@@ -755,7 +756,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { SlideLayout, FlexLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal">
     <FlexLayout.Auto>
       <div>
@@ -926,7 +927,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { SlideLayout, FlexLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout direction="horizontal">
     <FlexLayout.Auto>
       <div>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+
 import { FontSizeSetting, Space } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   const [fontSize, setFontSize] = useState(12);

@@ -1,10 +1,9 @@
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
 import React from 'react';
 
-import BasicLayout from '@/lib/BasicLayout';
-
-import Components from '@/config/router/routerComponentRegister';
 import IframeServer from '@/components/util/iframeio/server';
+import Components from '@/config/router/routerComponentRegister';
+import BasicLayout from '@/lib/BasicLayout';
 
 const {
   App,

@@ -1,11 +1,11 @@
-import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
-import { IStartData, IPoint, SelectType, IInteractionLayer } from '../types';
-import ModifyAction from './ModifyAction';
-import StartDrawAction from '../draw/StartDrawAction';
 import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import StartDrawAction from '../draw/StartDrawAction';
+import { IInteractionLayer, IPoint, IStartData, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
 
 /**
  * StartModifyAction

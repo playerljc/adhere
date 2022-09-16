@@ -1,15 +1,16 @@
-import React from 'react';
 import { Button } from 'antd';
+import React from 'react';
+
 import { Popup } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
-import { PopupInner, PopupClosePreInner } from './popup';
+import { PopupClosePreInner, PopupInner } from './popup';
 
 export default () => {
   function boxPanelConfig() {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { FlexLayout, SplitLayout, Space } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import { FlexLayout, Space, SplitLayout } from '@baifendian/adhere';
+
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 const { Fixed, Auto } = FlexLayout;
 

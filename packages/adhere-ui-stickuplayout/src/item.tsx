@@ -1,5 +1,5 @@
-import React, { FC, ReactElement } from 'react';
 import classNames from 'classnames';
+import React, { FC, ReactElement } from 'react';
 
 import { StickupLayoutItemProps } from './types';
 

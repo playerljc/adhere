@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { Button, Select } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 import { v1 } from 'uuid';
+
 import { BMap, ConditionalRender, MessageDialog, Resource, Spin } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
 
 import citys from './data/citys.json';
 import isoline from './data/isoline';
+import icon from './站点.svg';
 
 import styles from './index.less';
-import icon from './站点.svg';
 
 const { Option } = Select;
 

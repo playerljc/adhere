@@ -1,11 +1,12 @@
-import React from 'react';
 import { Table } from 'antd';
+import React from 'react';
+
 import { Browsersniff } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
   CodeBoxSection,
   FunctionPropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 export default () => {

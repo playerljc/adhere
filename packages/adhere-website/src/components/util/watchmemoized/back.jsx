@@ -1,6 +1,7 @@
-import React from 'react';
 import { Button } from 'antd';
-import { WatchMemoized, Space } from '@baifendian/adhere';
+import React from 'react';
+
+import { Space, WatchMemoized } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
@@ -236,9 +237,9 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { WatchMemoized, Space } from '@baifendian/adhere';
-  
+
   const { createRef, memoized } = WatchMemoized;
-  
+
   // 单值监控light比较
   const [get1Value, set1Value, property1] = createRef([{ a: 1 }]);
   console.log('srcValue1', get1Value());
@@ -250,7 +251,7 @@ export default () => {
       mode: 'light',
     },
   ]);
-  
+
   // 单值监控deep比较
   const [get2Value, set2Value, property2] = createRef([{ a: 1 }]);
   console.log('srcValue2', get2Value());
@@ -276,7 +277,7 @@ export default () => {
       },
     },
   ]);
-  
+
   <Space.Group direction="horizontal" size={10}>
     <Button
       onClick={() => {
@@ -339,9 +340,9 @@ export default () => {
   import React from 'react';
   import { Button } from 'antd';
   import { WatchMemoized, Space } from '@baifendian/adhere';
-  
+
   const { createRef, memoized } = WatchMemoized;
-  
+
   // 多值监控light比较
   const [get4Value, property4] = createRef([{ a: 1 }]);
   const [get5Value, property5] = createRef([{ a: 2 }]);
@@ -360,7 +361,7 @@ export default () => {
       mode: 'light',
     },
   ]);
-  
+
   <Space.Group direction="horizontal" size={10}>
     <Button
       onClick={() => {
@@ -403,9 +404,9 @@ export default () => {
   import React from 'react';
   import { Button } from 'antd';
   import { WatchMemoized, Space } from '@baifendian/adhere';
-  
+
   const { watch } = WatchMemoized;
-  
+
   // watch监控对象的变化
   const srcObj1 = {};
   const watchObj1 = watch.create(srcObj1, {
@@ -428,7 +429,7 @@ export default () => {
   watchObj1.on('c.c1.c111', () => {
     console.log('c.c1.c111改变了');
   });
-  
+
   <Space.Group direction="horizontal" size={10}>
     <Button
       onClick={() => {
@@ -481,15 +482,15 @@ export default () => {
   import React from 'react';
   import { Button } from 'antd';
   import { WatchMemoized, Space } from '@baifendian/adhere';
-  
+
   const {  memoized } = WatchMemoized;
-  
+
   // 创建一个memoized的函数
   const sumFun = memoized.createMemoFun((...params) => {
     console.log('callSumFun');
     return params.reduce((pre, current) => pre + current, 0);
   });
-  
+
   <Space.Group direction="horizontal" size={10}>
     <Button
       onClick={() => {
@@ -522,9 +523,9 @@ export default () => {
   import React from 'react';
   import { Button } from 'antd';
   import { WatchMemoized, Space } from '@baifendian/adhere';
-  
+
   const { memoized } = WatchMemoized;
-  
+
   // 创建一个memoized的Promise函数
   const anyncFun = memoized.createMemoFun((...params) => {
     console.log('callAnyncFun');
@@ -532,7 +533,7 @@ export default () => {
       resolve(params.reduce((pre, current) => pre + current, 0));
     });
   });
-  
+
   <Space.Group direction="horizontal" size={10}>
     <Button
       onClick={() => {

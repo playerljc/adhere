@@ -1,8 +1,9 @@
 import cloneDeep from 'lodash/cloneDeep';
-import Emitter from '@baifendian/adhere-util-emitter';
-import Util from '@baifendian/adhere-util';
 
-import { IWatchMemoized, ICompareConfig, ICompareModeFun } from './types';
+import Util from '@baifendian/adhere-util';
+import Emitter from '@baifendian/adhere-util-emitter';
+
+import { ICompareConfig, ICompareModeFun, IWatchMemoized } from './types';
 
 const Events = Emitter.Events;
 

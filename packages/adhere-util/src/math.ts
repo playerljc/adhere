@@ -1,4 +1,4 @@
-import { IPoint, ICircle } from './types';
+import { ICircle, IPoint } from './types';
 
 export default {
   /**--------------------------math-start----------------------**/

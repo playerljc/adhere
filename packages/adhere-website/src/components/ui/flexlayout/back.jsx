@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { FlexLayout, Space } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const { Fixed, Auto } = FlexLayout;
 
@@ -103,7 +104,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed>
       <div
@@ -129,9 +130,9 @@ export default () => (
       </div>
     </Fixed>
   </FlexLayout>
-  
+
   <Space />
-  
+
   <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed>
       <div
@@ -188,9 +189,9 @@ export default () => (
       </div>
     </Fixed>
   </FlexLayout>
-  
+
   <Space />
-  
+
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed
       style={{
@@ -382,7 +383,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout style={{ height: 500, border: '1px solid #ccc' }}>
     <Fixed>fixed1</Fixed>
     <Fixed>fixed2</Fixed>
@@ -431,7 +432,7 @@ export default () => (
       scope={{ React }}
       codeText={`
   import { FlexLayout, Space } from '@baifendian/adhere';
-  
+
   <FlexLayout style={{ height: 100, border: '1px solid #ccc' }}>
     <Fixed>Top</Fixed>
     <Auto fit={false} autoFixed={false} style={{ overflowY: 'auto' }}>

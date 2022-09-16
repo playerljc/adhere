@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { ImportantConfirm } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 export default () => {

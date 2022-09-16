@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
 import { Slider } from 'antd';
+import React, { useState } from 'react';
 
 import { SliderScale, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 import './index.less';
 
@@ -77,7 +77,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { SliderScale, Space } from '@baifendian/adhere';
-  
+
   <SliderScale min={0} max={10} step={1} interval={5} />
   <Space />
   <SliderScale min={0} max={60} step={1} interval={5} />
@@ -94,7 +94,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { SliderScale, Space } from '@baifendian/adhere';
-  
+
   <SliderScale min={0} max={60} step={1} interval={10} />
   <Space />
   <SliderScale min={0} max={60} step={1} interval={20} />
@@ -113,9 +113,9 @@ export default () => {
   import React, { useState } from 'react';
   import { Slider } from 'antd';
   import { SliderScale, Space } from '@baifendian/adhere';
-  
+
   const [value, setValue] = useState(0);
-  
+
   <Slider
     min={0}
     max={60}

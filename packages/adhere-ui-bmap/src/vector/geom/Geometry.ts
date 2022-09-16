@@ -1,15 +1,14 @@
+import GeometryStyle from '../style/GeometryStyle';
+import TextStyle from '../style/TextStyle';
 import {
-  IGeometry,
-  IPixel,
   GeometryType,
   IFeature,
-  IVectorLayer,
-  ITextStyle,
+  IGeometry,
   IGeometryStyle,
+  IPixel,
+  ITextStyle,
+  IVectorLayer,
 } from '../types';
-
-import TextStyle from '../style/TextStyle';
-import GeometryStyle from '../style/GeometryStyle';
 
 /**
  * Geometry

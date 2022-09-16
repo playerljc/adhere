@@ -1,12 +1,13 @@
-import React, { useState, useRef } from 'react';
-import { List, Avatar, Table, Tag, Space, Button } from 'antd';
-import { JdCategoryTab, ConditionalRender, Space as BSpace, Spin } from '@baifendian/adhere';
+import { Avatar, Button, List, Space, Table, Tag } from 'antd';
+import React, { useRef, useState } from 'react';
+
+import { Space as BSpace, ConditionalRender, JdCategoryTab, Spin } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 const data = [];

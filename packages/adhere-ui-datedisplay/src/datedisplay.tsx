@@ -1,14 +1,13 @@
-import React from 'react';
 import dayjs from 'dayjs';
-import Resource from '@baifendian/adhere-util-resource';
-import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/pt';
 import 'dayjs/locale/en';
-
-import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/pt';
+import 'dayjs/locale/zh-cn';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import React from 'react';
+
+import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Resource from '@baifendian/adhere-util-resource';
 
 dayjs.extend(LocalizedFormat);
 dayjs.extend(relativeTime);

@@ -1,10 +1,10 @@
+import { Button, Form } from 'antd';
 import React, { useState } from 'react';
-import { Form, Button } from 'antd';
-
-import Props from '@/lib/Props';
-import Playground from '@/lib/Playground';
 
 import { FormItemCreator } from '@baifendian/adhere';
+
+import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 // { label: '爱好',
 //       name: 'hobby',
@@ -60,7 +60,7 @@ export default () => {
           {
             params: 'type',
             desc: `表单项类型, 可选【\n
-              FormItemCreator.INPUT, FormItemCreator.PASSWORD, FormItemCreator.TEXTAREA, FormItemCreator.NUMBER, FormItemCreator.RADIO, FormItemCreator.CHECKBOX, FormItemCreator.SELECT, \n 
+              FormItemCreator.INPUT, FormItemCreator.PASSWORD, FormItemCreator.TEXTAREA, FormItemCreator.NUMBER, FormItemCreator.RADIO, FormItemCreator.CHECKBOX, FormItemCreator.SELECT, \n
               FormItemCreator.SWITCH, FormItemCreator.SLIDER, FormItemCreator.RATE, FormItemCreator.DATEPICKER, FormItemCreator.RANGEPICKER, FormItemCreator.TIMEPICKER, FormItemCreator.DEFINE \n
             】`,
             type: 'string',
@@ -109,23 +109,23 @@ export default () => {
   import React from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             { label: '就是一个查看', name: 'name', initialValue: '我就是一个查看', type: FormItemCreator.TEXT }
@@ -171,23 +171,23 @@ export default () => {
   import React from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="inputDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             {
@@ -277,23 +277,23 @@ export default () => {
   import React from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="selectDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             {
@@ -428,23 +428,23 @@ export default () => {
   import React from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="switchDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             {
@@ -536,23 +536,23 @@ export default () => {
   import React from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="pickerDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             {
@@ -708,23 +708,23 @@ export default () => {
   import React from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="uploadDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             {
@@ -798,24 +798,24 @@ export default () => {
   import React, { useState } from 'react';
   import { Form, Button } from 'antd';
   import { FormItemCreator } from '@baifendian/adhere';
-  
+
   export default () => {
     const [skip, setSkip] = useState(true);
     const layout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     };
-  
+
     const onFinish = (values) => {
       console.log('success', values);
     };
-  
+
     const onFinishFailed = (errorInfo) => {
       console.log('failed', errorInfo);
     };
 
     return (
-      <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>  
+      <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <FormItemCreator
           columns={[
             {

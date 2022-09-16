@@ -1,7 +1,7 @@
-import type { ReactElement, PropsWithChildren, ValidationMap, WeakValidationMap } from 'react';
-import type { FormItemProps } from 'antd/lib/form/FormItem';
 import type { ColProps, ColSize } from 'antd/lib/col';
+import type { FormItemProps } from 'antd/lib/form/FormItem';
 import type { RowProps } from 'antd/lib/row';
+import type { PropsWithChildren, ReactElement, ValidationMap, WeakValidationMap } from 'react';
 
 export interface FormItemCreatorFunction<P> {
   (props: PropsWithChildren<P>, context?: any): any;

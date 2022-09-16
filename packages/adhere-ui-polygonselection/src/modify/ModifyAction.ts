@@ -1,19 +1,18 @@
 import MathUtil from '@baifendian/adhere-util';
 import Emitter from '@baifendian/adhere-util-emitter';
 
+import defaultAnchorStyle from '../defaultAnchorStyle';
 import {
+  ActionEvents,
   ActionStatus,
+  ActionType,
+  IActionData,
   IModifyAction,
   IMoveAction,
-  IActionData,
-  IPolygonSelection,
   IPoint,
-  ActionEvents,
+  IPolygonSelection,
   SelectType,
-  ActionType,
 } from '../types';
-
-import defaultAnchorStyle from '../defaultAnchorStyle';
 
 /**
  * ModifyAction

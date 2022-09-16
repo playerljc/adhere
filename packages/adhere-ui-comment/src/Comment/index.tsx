@@ -1,17 +1,18 @@
-import React, { FC } from 'react';
 import { Spin } from 'antd';
+import React, { FC } from 'react';
+
 import {
+  CaretDownOutlined,
   CaretUpOutlined,
   EnterOutlined,
   LoadingOutlined,
-  CaretDownOutlined,
 } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { CommentProps } from '../types';
-import ListStandard from './ListStandard';
-import CommentInfo from './Info';
 import ReplyInfo from '../Reply/Info';
+import type { CommentProps } from '../types';
+import CommentInfo from './Info';
+import ListStandard from './ListStandard';
 
 const selectorPrefix = 'adhere-ui-comment';
 

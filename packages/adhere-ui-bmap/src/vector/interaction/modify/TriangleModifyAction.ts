@@ -1,11 +1,11 @@
-import * as turf from '@turf/turf';
 // @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
-import { IPoint, IInteractionLayer, ITriangleData, SelectType } from '../types';
-import ModifyAction from './ModifyAction';
-import TriangleDrawAction from '../draw/TriangleDrawAction';
 import defaultMoveGemStyle from '../DefaultMoveGemStyle';
+import TriangleDrawAction from '../draw/TriangleDrawAction';
+import { IInteractionLayer, IPoint, ITriangleData, SelectType } from '../types';
+import ModifyAction from './ModifyAction';
 
 /**
  * TriangleModifyAction

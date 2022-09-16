@@ -1,31 +1,30 @@
-import { v4 } from 'uuid';
-
-import Map from 'ol/Map';
-import Circle from 'ol/geom/Circle';
-import Polygon from 'ol/geom/Polygon';
-import LinearRing from 'ol/geom/LinearRing';
-import { LineString, Point } from 'ol/geom';
-import View from 'ol/View';
 import Feature from 'ol/Feature.js';
-import Text from 'ol/style/Text';
+import Map from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
-import { fromLonLat, transform, toLonLat, transformExtent } from 'ol/proj.js';
-import { getBottomLeft, getTopRight, boundingExtent } from 'ol/extent.js';
-import { createStringXY } from 'ol/coordinate';
-import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
-import { Vector as VectorSource } from 'ol/source.js';
-import { Fill, Stroke, Style, Icon, RegularShape, Circle as CircleStyle } from 'ol/style.js';
-import Draw, { createBox } from 'ol/interaction/Draw.js';
-import Modify from 'ol/interaction/Modify';
+import View from 'ol/View';
 import { defaults as defaultControls } from 'ol/control.js';
-import Zoom from 'ol/control/Zoom.js';
 import MousePosition from 'ol/control/MousePosition.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
+import Zoom from 'ol/control/Zoom.js';
+import { createStringXY } from 'ol/coordinate';
+import { boundingExtent, getBottomLeft, getTopRight } from 'ol/extent.js';
+import { LineString, Point } from 'ol/geom';
+import Circle from 'ol/geom/Circle';
+import LinearRing from 'ol/geom/LinearRing';
+import Polygon from 'ol/geom/Polygon';
+import Draw, { createBox } from 'ol/interaction/Draw.js';
+import Modify from 'ol/interaction/Modify';
+import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { fromLonLat, toLonLat, transform, transformExtent } from 'ol/proj.js';
+import { Vector as VectorSource } from 'ol/source.js';
+import { Circle as CircleStyle, Fill, Icon, RegularShape, Stroke, Style } from 'ol/style.js';
+import Text from 'ol/style/Text';
+import { v4 } from 'uuid';
 
 import Resource from '@baifendian/adhere-util-resource';
 
-import * as TitleLayer from './titlelayer';
 import GeoLayer from './geolayer';
+import * as TitleLayer from './titlelayer';
 import WindLayer from './windlayer';
 
 const EARTH_RADIUS = Resource.Dict.value.ResourceGisEarthRadius.value; // 单位M

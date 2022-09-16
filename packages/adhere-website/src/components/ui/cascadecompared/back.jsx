@@ -1,10 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react';
 import { Button } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { CascadeCompared, Space } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 import './index.less';
 
@@ -459,11 +460,11 @@ export default () => {
   const columns = [];
   columns.length = 10;
   columns.fill(0);
-  
+
   const data = [];
   data.length = 10;
   data.fill(0);
-  
+
   function getIndicator() {
     return {
       columns: columns.map((t, i) => ({
@@ -486,7 +487,7 @@ export default () => {
       },
     };
   }
-  
+
   function getMaster() {
     return data.map((t, i) => ({
       title: (
@@ -552,7 +553,7 @@ export default () => {
         expand
         codeText={`
   import { CascadeCompared } from '@baifendian/adhere';
-  
+
   <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
     <CascadeCompared indicator={getIndicator()} master={getMaster()} />
   </div>
@@ -571,7 +572,7 @@ export default () => {
   import React, { useState } from 'react';
   import { Button } from 'antd';
   import { CascadeCompared, Space } from '@baifendian/adhere';
-  
+
   const [data1, setData1] = useState(getMaster());
 
   <Button
@@ -732,9 +733,9 @@ export default () => {
   import React, { useRef } from 'react';
   import { Button } from 'antd';
   import { CascadeCompared, Space } from '@baifendian/adhere';
-  
+
   const ref2 = useRef();
-  
+
   <Space.Group direction="horizontal">
     <Button
       type="primary"
@@ -811,9 +812,9 @@ export default () => {
   import React, { useRef } from 'react';
   import { Button } from 'antd';
   import { CascadeCompared, Space } from '@baifendian/adhere';
-  
+
   const ref3 = useRef();
-  
+
   <Space.Group direction="horizontal">
     <Button
       type="primary"

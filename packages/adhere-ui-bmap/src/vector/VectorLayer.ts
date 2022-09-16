@@ -1,7 +1,7 @@
 // @ts-ignore
-import Emitter from '@baifendian/adhere-util-emitter';
 // @ts-ignore
 import Util from '@baifendian/adhere-util';
+import Emitter from '@baifendian/adhere-util-emitter';
 
 import {
   IPixel,

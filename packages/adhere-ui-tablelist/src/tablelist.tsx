@@ -1,23 +1,22 @@
-import React from 'react';
-import classNames from 'classnames';
-
-import { Form, Button, Skeleton, Table, List, Checkbox } from 'antd';
+import { Button, Checkbox, Form, List, Skeleton, Table } from 'antd';
 // import Form from 'antd/lib/form';
 // import Button from 'antd/lib/button';
 // import Skeleton from 'antd/lib/skeleton';
 // import Table from 'antd/lib/table';
 // import List from 'antd/lib/list';
 // import Checkbox from 'antd/lib/checkbox';
-
 import { FormInstance } from 'antd/lib/form';
+import classNames from 'classnames';
+import { cloneDeep } from 'lodash';
+import React from 'react';
+
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import intl from '@baifendian/adhere-util-intl';
-import { cloneDeep } from 'lodash';
 
 import SortableTable from './sortabletable';
-import { ToolbarSelectAll, ToolbarReload, ToolbarSetting } from './tablelisttoolbar';
-import Util from './util';
+import { ToolbarReload, ToolbarSelectAll, ToolbarSetting } from './tablelisttoolbar';
 import { TableListProps } from './types';
+import Util from './util';
 
 export const selectorPrefix = 'adhere-ui-tablelist';
 const defaultRowKey = 'id';

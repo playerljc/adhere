@@ -1,3 +1,5 @@
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
 import {
   GeometryType,
   ICircleGeometry,
@@ -6,8 +8,6 @@ import {
   IPixel,
   VectorActions,
 } from '../types';
-import Util from '../../util';
-import GeometryStyle from '../style/GeometryStyle';
 import Geometry from './Geometry';
 
 /**

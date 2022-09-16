@@ -1,14 +1,16 @@
-import React, { useRef, useState } from 'react';
 import { Button, Select } from 'antd';
+import React, { useRef, useState } from 'react';
 import { v1 } from 'uuid';
-import {BMap, MessageDialog, Resource} from '@baifendian/adhere';
+
+import { BMap, MessageDialog, Resource } from '@baifendian/adhere';
 
 import Playground from '@/lib/Playground';
+
 import citys from './data/citys.json';
 import isoline from './data/isoline';
+import icon from './站点.svg';
 
 import styles from './index.less';
-import icon from './站点.svg';
 
 const { Option } = Select;
 
@@ -291,11 +293,11 @@ export default () => {
   import React from 'react';
   import ReactDOM from 'react-dom';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
   } = BMap;
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <BMapComponent
@@ -327,15 +329,15 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { Button } from 'antd';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
     BMapWindLayer
   } = BMap;
-  
+
   const winLayerRef = useRef();
   const windLayerOverlay = useRef();
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <div className={styles.ToolBar}>
@@ -410,21 +412,21 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { Button } from 'antd';
   import { BMap } from '@baifendian/adhere';
-  
+
   import citys from './data/citys.json';
-  
+
   const {
     BMap: BMapComponent,
     HeatMapLayer
   } = BMap;
-  
+
   const hotLayerRef = useRef();
   const hotLayerOverlay = useRef();
-  
+
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <div className={styles.ToolBar}>
@@ -521,17 +523,17 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { Button } from 'antd';
   import { BMap } from '@baifendian/adhere';
-  
+
   import isoline from './data/isoline';
-  
+
   const {
     BMap: BMapComponent,
     BMapAirPressureLayer
   } = BMap;
-  
+
   const airPressureRef = useRef();
   const airPressureOverlay = useRef();
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <div className={styles.ToolBar}>
@@ -665,7 +667,7 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { Select } from 'antd';
   import { BMap } from '@baifendian/adhere';
-  
+
   const { Option } = Select;
   const {
     BMap: BMapComponent,
@@ -678,12 +680,12 @@ export default () => {
       },
     },
   } = BMap;
-  
+
   const pointLayerRef = useRef();
   const pointLayerOverlay = useRef();
   const pointLayerSource = useRef();
   const [pointType, setPointType] = useState('-1');
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -698,7 +700,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <div className={styles.ToolBar}>
@@ -708,18 +710,18 @@ export default () => {
           value={pointType}
           onSelect={(value) => {
             setPointType(value);
-  
+
             if (value === '-1') return;
-  
+
             createVectorLayer({
               overlay: pointLayerOverlay,
               ref: pointLayerRef,
               source: pointLayerSource,
               zIndex: 9999,
             });
-  
+
             const pointGeom = new PointGeometry({ lng: 121.487899486, lat: 31.24916171 });
-  
+
             const id = \`${new Date().getTime()}\`;
             const feature = new Feature({
               name: id,
@@ -765,9 +767,9 @@ export default () => {
                 pointType: value,
               },
             });
-  
+
             pointLayerSource.current.addFeature(feature);
-  
+
             const map = pointLayerRef.current.getMap();
             map.panTo(new window.BMap.Point(121.487899486, 31.24916171));
           }}
@@ -911,7 +913,7 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { Select } from 'antd';
   import { BMap } from '@baifendian/adhere';
-  
+
   const { Option } = Select;
   const {
     BMap: BMapComponent,
@@ -924,13 +926,13 @@ export default () => {
       },
     },
   } = BMap;
-  
+
   const mulitPointLayerRef = useRef();
   const mulitPointLayerOverlay = useRef();
   const mulitPointLayerSource = useRef();
   const preMulitPointFeature = useRef(null);
   const [mulitPointType, setMulitPointType] = useState('-1');
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -945,7 +947,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -1168,9 +1170,9 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   import citys from './data/citys.json';
-  
+
   const {
     BMap: BMapComponent,
       Vector: {
@@ -1188,11 +1190,11 @@ export default () => {
       },
     },
   } = BMap;
-  
+
   const geometryLayerRef = useRef();
   const geometryLayerOverlay = useRef();
   const geometryLayerSource = useRef();
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -1207,13 +1209,13 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   const defaultStyle = {
     lineWidth: 1,
     strokeStyle: 'yellow',
     fillStyle: 'red',
   };
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <BMapComponent
@@ -1222,14 +1224,14 @@ export default () => {
         externalImportBMapScript={true}
         onBMapInitReady={() => {
           geometryLayerRef.current.getMap().enableScrollWheelZoom(true);
-  
+
           createVectorLayer({
             overlay: geometryLayerOverlay,
             ref: geometryLayerRef,
             source: geometryLayerSource,
             zIndex: 9999,
           });
-  
+
           const geom = new Map([
             // 正多边形
             [
@@ -1325,7 +1327,7 @@ export default () => {
               },
             ],
           ]);
-  
+
           const features = citys.map(
             (city, i) =>
               new Feature({
@@ -1338,7 +1340,7 @@ export default () => {
                 style: geom.get(i % geom.size).getStyle(),
               }),
           );
-  
+
           geometryLayerSource.current.addFeatures(features);
         }}
       />
@@ -1486,7 +1488,7 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
       Vector: {
@@ -1499,11 +1501,11 @@ export default () => {
     },
     Util
   } = BMap;
-  
+
   const polygonLayerRef = useRef();
   const polygonLayerOverlay = useRef();
   const polygonLayerSource = useRef();
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -1518,7 +1520,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <BMapComponent
@@ -1641,7 +1643,7 @@ export default () => {
   import ReactDOM from 'react-dom';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
       Vector: {
@@ -1654,11 +1656,11 @@ export default () => {
     },
     Util
   } = BMap;
-  
+
   const mulitPolygonLayerRef = useRef();
   const mulitPolygonOverlay = useRef();
   const mulitPolygonSource = useRef();
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -1673,7 +1675,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <BMapComponent
@@ -1881,9 +1883,9 @@ export default () => {
   import { Select } from 'antd';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   const { Option } = Select;
-  
+
   const {
     BMap: BMapComponent,
       Vector: {
@@ -1896,13 +1898,13 @@ export default () => {
     },
     Util
   } = BMap;
-  
+
   const lineStringRef = useRef();
   const lineStringOverlay = useRef();
   const lineStringSource = useRef();
   const preLineStringFeature = useRef(null);
   const [lineStringType, setLineStringType] = useState('-1');
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -1917,7 +1919,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -1926,19 +1928,19 @@ export default () => {
           value={lineStringType}
           onChange={(value) => {
             const map = lineStringRef.current.getMap();
-  
+
             setLineStringType(value);
-  
+
             if (value === '-1') return;
-  
+
             if (preLineStringFeature.current) {
               lineStringSource.current.removeFeature(preLineStringFeature.current);
             }
-  
+
             let style;
             const fromPoint = [123.47052, 41.684476];
             const toPoint = [116.401889, 39.917344];
-  
+
             const lineStringGemo = new LineStringGeometry({
               point1: {
                 lng: fromPoint[0],
@@ -1949,7 +1951,7 @@ export default () => {
                 lat: toPoint[1],
               },
             });
-  
+
             // 设置几何形状
             if (value === 'base') {
               // 无箭头
@@ -2002,16 +2004,16 @@ export default () => {
                 },
               };
             }
-  
+
             preLineStringFeature.current = new Feature({
               id: v1(),
               name: v1(),
               geometry: lineStringGemo,
               style,
             });
-  
+
             lineStringSource.current.addFeature(preLineStringFeature.current);
-  
+
             Util.fit(map, [
               new window.BMap.Point(fromPoint[0], fromPoint[1]),
               new window.BMap.Point(toPoint[0], toPoint[1]),
@@ -2033,7 +2035,7 @@ export default () => {
           onBMapInitReady={() => {
             const map = lineStringRef.current.getMap();
             map.enableScrollWheelZoom(true);
-  
+
             createVectorLayer({
               overlay: lineStringOverlay,
               ref: lineStringRef,
@@ -2184,9 +2186,9 @@ export default () => {
   import { Select } from 'antd';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   const { Option } = Select;
-  
+
   const {
     BMap: BMapComponent,
       Vector: {
@@ -2199,13 +2201,13 @@ export default () => {
     },
     Util
   } = BMap;
-  
+
   const regularPolygonRef = useRef();
   const regularPolygonOverlay = useRef();
   const regularPolygonSource = useRef();
   const preRegularPolygonFeature = useRef(null);
   const [regularPolygonCount, setRegularPolygonCount] = useState('-1');
-  
+
   const defaultStyle = {
     lineWidth: 1,
     strokeStyle: 'yellow',
@@ -2226,7 +2228,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -2362,9 +2364,9 @@ export default () => {
   import { Select } from 'antd';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   const { Option } = Select;
-  
+
   const {
     BMap: BMapComponent,
       Vector: {
@@ -2377,13 +2379,13 @@ export default () => {
     },
     Util
   } = BMap;
-  
+
   const leafRef = useRef();
   const leafOverlay = useRef();
   const leafSource = useRef();
   const preLeafFeature = useRef(null);
   const [leafCount, setLeafCount] = useState('-1');
-  
+
   const defaultStyle = {
     lineWidth: 1,
     strokeStyle: 'yellow',
@@ -2404,7 +2406,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -2544,9 +2546,9 @@ export default () => {
   import { Select } from 'antd';
   import { v1 } from 'uuid';
   import { BMap } from '@baifendian/adhere';
-  
+
   const { Option } = Select;
-  
+
   const {
     BMap: BMapComponent,
     Vector: {
@@ -2561,13 +2563,13 @@ export default () => {
     },
     Util
   } = BMap;
-  
+
   const textRef = useRef();
   const textOverlay = useRef();
   const textSource = useRef();
   const preTextFeature = useRef(null);
   const [textCount, setTextCount] = useState('-1');
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -2582,7 +2584,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -2779,7 +2781,7 @@ export default () => {
   import React,{ useRef } from 'react';
   import ReactDOM from 'react-dom';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
     Vector: {
@@ -2788,11 +2790,11 @@ export default () => {
       VectorSource,
     },
   } = BMap;
-  
+
   const geoJSONRef = useRef();
   const geoJSONOverlay = useRef();
   const geoJSONSource = useRef();
-  
+
   function createVectorLayer({ overlay, ref, source, zIndex }) {
     if (overlay.current) return;
 
@@ -2807,7 +2809,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <div className={styles.BMapWrap}>
       <BMapComponent
@@ -2817,14 +2819,14 @@ export default () => {
         onBMapInitReady={() => {
           const map = geoJSONRef.current.getMap();
           map.enableScrollWheelZoom(true);
-  
+
           createVectorLayer({
             overlay: geoJSONOverlay,
             ref: geoJSONRef,
             source: geoJSONSource,
             zIndex: 9999,
           });
-  
+
           geoJSONSource.current.appendGeoJSON(
             {
               type: 'GeometryCollection',
@@ -2849,15 +2851,15 @@ export default () => {
             (geom) => {
               const feature = new Feature();
               feature.setGeometry(geom);
-  
+
               feature.setStyle({
                 lineWidth: 1,
                 strokeStyle: 'yellow',
                 fillStyle: 'red',
-  
+
                 pointType: 'circle',
                 radius: 30,
-  
+
                 arrow: {
                   // 是否绘制
                   draw: true,
@@ -2869,7 +2871,7 @@ export default () => {
                   size: 'normal',
                 },
               });
-  
+
               return feature;
             },
           );
@@ -2957,7 +2959,7 @@ export default () => {
   import React,{ useRef } from 'react';
   import ReactDOM from 'react-dom';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
     Vector: {
@@ -2984,7 +2986,7 @@ export default () => {
       },
     },
   } = BMap;
-  
+
   const interactionRef = useRef();
   const interactionLayer = useRef();
   const [interactionValue, setInteractionValue] = useState('-1');
@@ -3038,7 +3040,7 @@ export default () => {
 
     map.addOverlay(overlay.current);
   }
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -3247,7 +3249,7 @@ export default () => {
   import React,{ useRef } from 'react';
   import ReactDOM from 'react-dom';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
     Vector: {
@@ -3260,10 +3262,10 @@ export default () => {
       },
     },
   } = BMap;
-  
+
   const rangingRef = useRef();
   const rangingOverlay = useRef();
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>
@@ -3355,7 +3357,7 @@ export default () => {
   import React,{ useRef } from 'react';
   import ReactDOM from 'react-dom';
   import { BMap } from '@baifendian/adhere';
-  
+
   const {
     BMap: BMapComponent,
     Vector: {
@@ -3365,13 +3367,13 @@ export default () => {
       Trajectory: { Trajectory, TrajectoryPlayBackLayer },
     },
   } = BMap;
-  
+
   const trajectoryPlayBackLayerRef = useRef();
   const trajectoryRef = useRef();
   const trajector = useRef();
   const trajectorDuration = useRef(60 * 2);
   const [isTrajectorPause, setTrajecorPause] = useState(false);
-  
+
   ReactDOM.render(
     <>
       <div className={styles.ToolBar}>

@@ -4,7 +4,7 @@ import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 
-import { DelConfirmProps, DelConfirmFunction, OpenFunction } from './types';
+import { DelConfirmFunction, DelConfirmProps, OpenFunction } from './types';
 
 const selectorPrefix = 'adhere-ui-delconfirm';
 

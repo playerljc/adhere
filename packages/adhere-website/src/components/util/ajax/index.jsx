@@ -1,13 +1,13 @@
+import { Avatar, Button, Progress } from 'antd';
 import React, { useRef, useState } from 'react';
-import { Button, Progress, Avatar } from 'antd';
 
-import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
+import { Ajax, GlobalIndicator, Space } from '@baifendian/adhere';
 
 import PlayGroundPage, {
-  Section,
-  PropsSection,
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
+  Section,
 } from '@/lib/PlaygroundPage';
 
 const k007Ajax = new Ajax('http://k007-pe.baifendian.com');

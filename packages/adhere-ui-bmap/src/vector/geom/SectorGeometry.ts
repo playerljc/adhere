@@ -1,14 +1,14 @@
-import Geometry from './Geometry';
+import Util from '../../util';
+import GeometryStyle from '../style/GeometryStyle';
 import {
-  ISectorGeometryData,
-  ISectorGeometry,
-  VectorActions,
   GeometryType,
   IGeometryStyle,
   IPixel,
+  ISectorGeometry,
+  ISectorGeometryData,
+  VectorActions,
 } from '../types';
-import GeometryStyle from '../style/GeometryStyle';
-import Util from '../../util';
+import Geometry from './Geometry';
 
 /**
  * SectorGeometry

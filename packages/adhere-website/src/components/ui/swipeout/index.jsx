@@ -1,9 +1,9 @@
+import { Avatar, List, Radio } from 'antd';
 import React, { useState } from 'react';
-import { List, Avatar, Radio } from 'antd';
 
-import { SwipeOut, Space } from '@baifendian/adhere';
+import { Space, SwipeOut } from '@baifendian/adhere';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
   const [data, setData] = useState([

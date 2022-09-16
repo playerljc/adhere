@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { Card, Empty, Button } from 'antd';
-import { Permission, MessageDialog, Space } from '@baifendian/adhere';
+import { Button, Card, Empty } from 'antd';
+import React, { useRef, useState } from 'react';
 
-import Props from '@/lib/Props';
+import { MessageDialog, Permission, Space } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 const { Permission: PermissionWrap, setPermission, getPermission } = Permission;
 
@@ -143,11 +144,11 @@ export default () => {
   import React, { useState, useRef } from 'react';
   import { Card, Empty, Button } from 'antd';
   import { Permission, MessageDialog } from '@baifendian/adhere';
-  
+
   const { Permission: PermissionWrap, setPermission, getPermission } = Permission;
 
   setPermission(['1']);
-  
+
   <Card
   actions={[
     <Button

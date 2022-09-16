@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { DelConfirm, Space } from '@baifendian/adhere';
 
-import Props from '@/lib/Props';
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 export default () => {
   return (
@@ -82,7 +83,7 @@ export default () => {
         codeText={`
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
-  
+
   <DelConfirm
     success={() => {
       return new Promise((resolve) => {
@@ -116,7 +117,7 @@ export default () => {
         codeText={`
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
-  
+
   <a
     onClick={() => {
       DelConfirm.open(() => {

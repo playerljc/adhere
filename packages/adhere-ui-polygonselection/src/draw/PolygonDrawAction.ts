@@ -1,14 +1,14 @@
-import * as turf from '@turf/turf';
 import BaseUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
 import {
   ActionEvents,
   ActionStatus,
-  IPolygonData,
+  ActionType,
   IPoint,
+  IPolygonData,
   IStyle,
   SelectType,
-  ActionType,
 } from '../types';
 import DrawAction from './DrawAction';
 

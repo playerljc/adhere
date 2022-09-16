@@ -1,15 +1,13 @@
 import type { TableProps } from 'antd/lib/table/Table';
-import { RefObject } from 'react';
-import type { CSSProperties, ReactElement } from 'react';
-
 import type {
-  ColumnType,
-  // FilterValue,
+  ColumnType, // FilterValue,
   // SorterResult,
   // TableCurrentDataSource,
   // TablePaginationConfig,
   // TableRowSelection,
 } from 'antd/lib/table/interface';
+import { RefObject } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 

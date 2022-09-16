@@ -1,5 +1,5 @@
+import { Button, Col, Row, Statistic } from 'antd';
 import React from 'react';
-import { Statistic, Row, Button, Col } from 'antd';
 
 import Table from './table';
 

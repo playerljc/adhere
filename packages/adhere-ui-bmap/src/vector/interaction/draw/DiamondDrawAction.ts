@@ -1,18 +1,18 @@
-import * as turf from '@turf/turf';
 import BaseUtil from '@baifendian/adhere-util';
+import * as turf from '@turf/turf';
 
 import {
   ActionEvents,
   ActionStatus,
   ActionType,
-  IPoint,
   IDiamondData,
+  IInteractionLayer,
+  IPoint,
   IStyle,
   SelectType,
-  IInteractionLayer,
 } from '../types';
-import DrawAction from './DrawAction';
 import Util from '../util';
+import DrawAction from './DrawAction';
 
 /**
  * DiamondDrawAction

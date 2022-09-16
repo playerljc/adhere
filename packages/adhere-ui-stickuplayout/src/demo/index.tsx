@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import StickupLayout from '../index';
-import './index.less';
+
 import '../index.less';
+import './index.less';
 
 const { Item } = StickupLayout;
 

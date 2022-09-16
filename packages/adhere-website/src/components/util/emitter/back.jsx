@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
+
 import { Emitter, Space } from '@baifendian/adhere';
 
 import FunctionProps from '@/lib/FunctionProps';
@@ -277,7 +278,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Emitter } from '@baifendian/adhere';
-  
+
   <Button
     style={{ marginRight: 20 }}
     onClick={() => {
@@ -350,7 +351,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Emitter } from '@baifendian/adhere';
-  
+
   <Button
     style={{ marginRight: 20 }}
     onClick={() => {
@@ -399,7 +400,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Emitter } from '@baifendian/adhere';
-  
+
   <Button
     style={{ marginRight: 20 }}
     onClick={() => {
@@ -582,18 +583,18 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Emitter } from '@baifendian/adhere';
-  
+
   <Button
     style={{ marginRight: 20 }}
     onClick={() => {
       Emitter.once('type7', () => {
         alert('type7');
       });
-  
+
       Emitter.once('type8', () => {
         alert('type8');
       });
-  
+
       Emitter.once('type9', () => {
         alert('type9');
       });
@@ -606,7 +607,7 @@ export default () => {
       const fun = Emitter.race(['type7', 'type8', 'type9'], () => {
         alert('type7,type8,type9 - changed');
       });
-  
+
       Emitter.trigger('type7');
       Emitter.trigger('type8');
       Emitter.trigger('type9');
@@ -655,7 +656,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Emitter } from '@baifendian/adhere';
-  
+
   <Button
     style={{ marginRight: 20 }}
     onClick={() => {

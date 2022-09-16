@@ -1,8 +1,9 @@
-import React from 'react';
-import { FlexLayout, Space } from '@baifendian/adhere';
 import { Button, Select } from 'antd';
+import React from 'react';
 
-import PlayGroundPage, { Section, PropsSection, CodeBoxSection } from '@/lib/PlaygroundPage';
+import { FlexLayout, Space } from '@baifendian/adhere';
+
+import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 const {
   Fixed,

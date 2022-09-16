@@ -1,4 +1,5 @@
 import { WindLayer } from 'bmap-wind';
+
 import defaultData from './windData.json';
 
 const DEFAULT_DATA = defaultData;

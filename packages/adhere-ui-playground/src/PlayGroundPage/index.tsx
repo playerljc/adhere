@@ -1,17 +1,16 @@
-import React, { useContext, forwardRef, ForwardRefRenderFunction } from 'react';
 import classNames from 'classnames';
+import React, { ForwardRefRenderFunction, forwardRef, useContext } from 'react';
+
 import Space from '@baifendian/adhere-ui-space';
 
-import { PlayGroundPageContext } from './Context';
-import { AnchorNavigationContext } from '../AnchorNavigationContext';
 import AnchorNavigation from '../AnchorNavigation';
-
-import Section from './Section';
-import CodeBoxSection from './CodeBoxSection';
-import PropsSection from './PropsSection';
-import FunctionPropsSection from './FunctionPropsSection';
-
+import { AnchorNavigationContext } from '../AnchorNavigationContext';
 import { PlayGroundPageHOC, PlayGroundPageProps } from '../types';
+import CodeBoxSection from './CodeBoxSection';
+import { PlayGroundPageContext } from './Context';
+import FunctionPropsSection from './FunctionPropsSection';
+import PropsSection from './PropsSection';
+import Section from './Section';
 
 const selectPrefix = 'adhere-ui-playground-page';
 

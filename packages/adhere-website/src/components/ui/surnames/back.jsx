@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
 import { Button } from 'antd';
+import React, { useRef } from 'react';
 
-import { Surnames, Space } from '@baifendian/adhere';
-import Props from '@/lib/Props';
+import { Space, Surnames } from '@baifendian/adhere';
+
 import FunctionProps from '@/lib/FunctionProps';
 import Playground from '@/lib/Playground';
+import Props from '@/lib/Props';
 
 import './index.less';
 
@@ -222,13 +223,13 @@ export default () => {
   function getIndexesProps() {
     const startCharCode = 'A'.charCodeAt();
     const endCharCode = 'Z'.charCodeAt();
-  
+
     const indexes = [];
-  
+
     const count = [];
     count.length = 10;
     count.fill(1);
-  
+
     for (let i = startCharCode; i <= endCharCode; i++) {
       indexes.push({
         index: String.fromCharCode(i),
@@ -244,23 +245,23 @@ export default () => {
         ),
       });
     }
-  
+
     return indexes;
   }
-  
+
   function getDataSource() {
     const startCharCode = 'A'.charCodeAt();
     const endCharCode = 'Z'.charCodeAt();
-  
+
     const dataSource = [];
-  
+
     for (let i = startCharCode; i <= endCharCode; i++) {
       dataSource.push({
         index: String.fromCharCode(i),
         data: [],
       });
     }
-  
+
     return dataSource;
   }
         `}
@@ -272,7 +273,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Surnames, Space } from '@baifendian/adhere';
-  
+
   <div style={{ display: 'flex' }}>
     <Space.Group direction="horizontal">
       <div style={{ width: 300 }}>
@@ -323,7 +324,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Surnames, Space } from '@baifendian/adhere';
-  
+
   <div style={{ display: 'flex' }}>
     <Space.Group direction="horizontal">
       <div style={{ height: 516 }}>
@@ -376,7 +377,7 @@ export default () => {
         scope={{ React }}
         codeText={`
   import { Surnames, Space } from '@baifendian/adhere';
-  
+
   const ref1 = useRef();
 
   <Space.Group direction="horizontal">
@@ -398,7 +399,7 @@ export default () => {
   </Space.Group>
 
   <Space />
-  
+
   <div style={{ width: 300 }}>
     <Surnames
       ref={ref1}
