@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import PlayGround from './PlayGround';
-import PlayGroundTab from './PlayGroundTab';
 import PlayGroundMulit from './PlayGroundMulit';
+import PlayGroundTab from './PlayGroundTab';
 declare const _default: {
     CodePanel: import("react").MemoExoticComponent<any>;
     CodeTabPanel: import("react").MemoExoticComponent<any>;

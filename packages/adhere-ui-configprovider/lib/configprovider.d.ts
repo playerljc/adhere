@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { ConfigProviderProps } from './types';
-/**
- * ConfigProvider
- * @constructor
- * @classdesc 全局配置 国际化、字典配置
- */
-declare const ConfigProvider: FC<ConfigProviderProps>;
-export default ConfigProvider;
+declare const _default: React.NamedExoticComponent<ConfigProviderProps>;
+export default _default;

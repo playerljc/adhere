@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useContext } from 'react';
+import React, { FC, memo, useCallback, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -42,36 +42,40 @@ const MenuItem: FC<MenuItemProps> = (props) => {
     }
   }
 
-  function renderIcon() {
-    return (
+  const renderIcon = useCallback(
+    () => (
       <ConditionalRender
         conditional={typeof icon === 'string'}
         noMatch={() => <span className={classNames(`${selectorPrefix}-icon`)}>{icon}</span>}
       >
-        {() => <span className={classNames(`${selectorPrefix}-icon`, icon)} />}
+        {() => <span className={classNames(`${selectorPrefix}-icon`, icon as string)} />}
       </ConditionalRender>
-    );
-  }
+    ),
+    [icon],
+  );
 
-  function renderName() {
-    return <span className={`${selectorPrefix}-name`}>{name}</span>;
-  }
+  const renderName = useCallback(
+    () => <span className={`${selectorPrefix}-name`}>{name}</span>,
+    [name],
+  );
 
-  function renderMore() {
-    return (
+  const renderMore = useCallback(
+    () => (
       <ConditionalRender conditional={(children || []).length !== 0}>
         {() => <span className={`${selectorPrefix}-more fa fa-caret-right`} />}
       </ConditionalRender>
-    );
-  }
+    ),
+    [children],
+  );
 
-  function renderSubMenu() {
-    return (
+  const renderSubMenu = useCallback(
+    () => (
       <ConditionalRender conditional={(children || []).length !== 0}>
         {() => <SubMenu data={children} className={subMenuClassName} style={subMenuStyle} />}
       </ConditionalRender>
-    );
-  }
+    ),
+    [children, subMenuClassName, subMenuStyle],
+  );
 
   return (
     <ConditionalRender
@@ -81,7 +85,7 @@ const MenuItem: FC<MenuItemProps> = (props) => {
       {() => (
         <li
           className={classNames(selectorPrefix, disabled ? 'disabled' : '', className || '')}
-          style={{ ...(style || {}) }}
+          style={style || {}}
           onClick={onClick}
         >
           {renderIcon()}
@@ -94,4 +98,4 @@ const MenuItem: FC<MenuItemProps> = (props) => {
   );
 };
 
-export default MenuItem;
+export default memo(MenuItem);

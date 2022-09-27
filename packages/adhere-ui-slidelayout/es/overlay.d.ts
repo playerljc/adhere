@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { OverlayProps } from './types';
-declare const Overlay: FC<OverlayProps>;
-export default Overlay;
+declare const _default: React.NamedExoticComponent<OverlayProps>;
+export default _default;

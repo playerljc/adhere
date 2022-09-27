@@ -1,6 +1,6 @@
 import React from 'react';
 import Suspense from './suspense';
-import { SuspenseSyncProps, SuspenseSyncState, ISuspenseSync } from './types';
+import { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
 /**
  * SuspenseSync
  * @class

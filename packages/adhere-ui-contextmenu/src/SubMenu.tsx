@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useContext } from 'react';
+import React, { FC, memo, useContext } from 'react';
 
 import { ProviderContext } from './ContextMenuContext';
 import MenuItem from './MenuItem';
@@ -33,4 +33,4 @@ const SubMenu: FC<SubMenuProps> = (props) => {
   );
 };
 
-export default SubMenu;
+export default memo(SubMenu);

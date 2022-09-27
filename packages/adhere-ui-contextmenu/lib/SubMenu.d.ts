@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { SubMenuProps } from './types';
-declare const SubMenu: FC<SubMenuProps>;
-export default SubMenu;
+declare const _default: React.NamedExoticComponent<SubMenuProps>;
+export default _default;

@@ -1,31 +1,27 @@
 import type { ColProps, ColSize } from 'antd/lib/col';
 import type { FormItemProps } from 'antd/lib/form/FormItem';
 import type { RowProps } from 'antd/lib/row';
-import type { PropsWithChildren, ReactElement, ValidationMap, WeakValidationMap } from 'react';
+import { NamedExoticComponent } from 'react';
+import type { ReactElement } from 'react';
 
-export interface FormItemCreatorFunction<P> {
-  (props: PropsWithChildren<P>, context?: any): any;
-  propTypes?: WeakValidationMap<P> | undefined;
-  contextTypes?: ValidationMap<any> | undefined;
-  defaultProps?: Partial<P> | undefined;
-  displayName?: string | undefined;
-  TEXT: Symbol;
-  INPUT: Symbol;
-  SEARCH: Symbol;
-  PASSWORD: Symbol;
-  TEXTAREA: Symbol;
-  NUMBER: Symbol;
-  RADIO: Symbol;
-  CHECKBOX: Symbol;
-  DATEPICKER: Symbol;
-  RANGEPICKER: Symbol;
-  TIMEPICKER: Symbol;
-  SWITCH: Symbol;
-  SELECT: Symbol;
-  SLIDER: Symbol;
-  RATE: Symbol;
-  UPLOAD: Symbol;
-  DEFINE: Symbol;
+export interface FormItemCreatorFunction<P> extends NamedExoticComponent<P> {
+  TEXT: symbol;
+  INPUT: symbol;
+  SEARCH: symbol;
+  PASSWORD: symbol;
+  TEXTAREA: symbol;
+  NUMBER: symbol;
+  RADIO: symbol;
+  CHECKBOX: symbol;
+  DATEPICKER: symbol;
+  RANGEPICKER: symbol;
+  TIMEPICKER: symbol;
+  SWITCH: symbol;
+  SELECT: symbol;
+  SLIDER: symbol;
+  RATE: symbol;
+  UPLOAD: symbol;
+  DEFINE: symbol;
 }
 
 /**
@@ -43,7 +39,7 @@ export interface FormItemCreatorProps {
  */
 export interface ColumnItemProps extends FormItemProps {
   name?: string | number | (string | number)[];
-  type?: Symbol;
+  type?: symbol;
   contentProps?: any;
   skip?: boolean;
   content?: ReactElement;

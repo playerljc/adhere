@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -43,8 +43,8 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
     mainAutoWrapProps = {},
   } = props;
 
-  return (
-    <FlexLayout className={className || ''} style={style || {}} direction="horizontal">
+  const _renderLeft = useMemo(
+    () => (
       <ConditionalRender conditional={!!renderLeft}>
         {() => (
           <Fixed className={leftClassName || ''} style={leftStyle || {}} fit {...(leftProps || {})}>
@@ -52,7 +52,12 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
           </Fixed>
         )}
       </ConditionalRender>
+    ),
+    [renderLeft, leftClassName, leftStyle, leftProps],
+  );
 
+  const _renderMain = useMemo(
+    () => (
       <ConditionalRender conditional={!!renderMain}>
         {() => (
           <Auto
@@ -106,7 +111,30 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
           </Auto>
         )}
       </ConditionalRender>
+    ),
+    [
+      renderMain,
+      mainAutoWrapClassName,
+      mainAutoStyle,
+      mainAutoWrapProps,
+      mainWrapClassName,
+      mainWrapStyle,
+      renderTop,
+      topClassName,
+      topStyle,
+      topProps,
+      mainClassName,
+      mainStyle,
+      mainProps,
+      renderBottom,
+      bottomClassName,
+      bottomStyle,
+      bottomProps,
+    ],
+  );
 
+  const _renderRight = useMemo(
+    () => (
       <ConditionalRender conditional={!!renderRight}>
         {() => (
           <Fixed
@@ -119,8 +147,17 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
           </Fixed>
         )}
       </ConditionalRender>
+    ),
+    [renderRight, rightClassName, rightStyle, rightProps],
+  );
+
+  return (
+    <FlexLayout className={className || ''} style={style || {}} direction="horizontal">
+      {_renderLeft}
+      {_renderMain}
+      {_renderRight}
     </FlexLayout>
   );
 };
 
-export default HorizontalFlexLayout;
+export default memo(HorizontalFlexLayout);

@@ -1,5 +1,11 @@
 import classNames from 'classnames';
-import React, { ForwardRefRenderFunction, createContext, forwardRef, useContext } from 'react';
+import React, {
+  ForwardRefRenderFunction,
+  createContext,
+  forwardRef,
+  memo,
+  useContext,
+} from 'react';
 
 import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 
@@ -51,4 +57,4 @@ const ScrollLayout: ForwardRefRenderFunction<HTMLDivElement, ScrollLayoutProps> 
   );
 };
 
-export default forwardRef<HTMLDivElement, ScrollLayoutProps>(ScrollLayout);
+export default memo(forwardRef<HTMLDivElement, ScrollLayoutProps>(ScrollLayout));

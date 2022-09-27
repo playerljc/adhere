@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -43,8 +43,8 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
     mainAutoWrapProps = {},
   } = props;
 
-  return (
-    <FlexLayout className={className || ''} style={style || {}} direction="vertical">
+  const _renderTop = useMemo(
+    () => (
       <ConditionalRender conditional={!!renderTop}>
         {() => (
           <Fixed className={topClassName || ''} style={topStyle || {}} fit {...(topProps || {})}>
@@ -52,7 +52,12 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
           </Fixed>
         )}
       </ConditionalRender>
+    ),
+    [renderTop, topClassName, topStyle, topProps],
+  );
 
+  const _renderMain = useMemo(
+    () => (
       <ConditionalRender conditional={!!renderMain}>
         {() => (
           <Auto
@@ -106,7 +111,30 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
           </Auto>
         )}
       </ConditionalRender>
+    ),
+    [
+      renderMain,
+      mainAutoWrapClassName,
+      mainAutoStyle,
+      mainAutoWrapProps,
+      mainWrapClassName,
+      mainWrapStyle,
+      renderLeft,
+      leftClassName,
+      leftStyle,
+      leftProps,
+      mainClassName,
+      mainStyle,
+      mainProps,
+      renderRight,
+      rightClassName,
+      rightStyle,
+      rightProps,
+    ],
+  );
 
+  const _renderBottom = useMemo(
+    () => (
       <ConditionalRender conditional={!!renderBottom}>
         {() => (
           <Fixed
@@ -119,6 +147,15 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
           </Fixed>
         )}
       </ConditionalRender>
+    ),
+    [renderBottom, bottomClassName, bottomStyle, bottomProps],
+  );
+
+  return (
+    <FlexLayout className={className || ''} style={style || {}} direction="vertical">
+      {_renderTop}
+      {_renderMain}
+      {_renderBottom}
     </FlexLayout>
   );
 };

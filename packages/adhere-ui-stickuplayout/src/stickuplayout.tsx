@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
+  memo,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -318,7 +319,8 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
 };
 
 // @ts-ignore
-const StickupLayoutHOC: StickupLayoutHOCFunction<StickupLayoutHandle, StickupLayoutProps> =
-  forwardRef<StickupLayoutHandle, StickupLayoutProps>(StickupLayout);
+const StickupLayoutHOC: StickupLayoutHOCFunction<StickupLayoutHandle, StickupLayoutProps> = memo(
+  forwardRef<StickupLayoutHandle, StickupLayoutProps>(StickupLayout),
+);
 StickupLayoutHOC.Item = StickupLayoutItem;
 export default StickupLayoutHOC;

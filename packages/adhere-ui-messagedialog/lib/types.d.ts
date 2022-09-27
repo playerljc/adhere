@@ -1,5 +1,5 @@
-import type { ReactElement } from 'react';
 import type { ModalProps } from 'antd/lib/modal/Modal';
+import type { ReactElement } from 'react';
 import type { ColumnItemProps, FormItemLayoutProps } from '@baifendian/adhere-ui-formitemcreator/lib/types';
 /**
  * AlertArgv

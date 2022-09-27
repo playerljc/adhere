@@ -1,5 +1,5 @@
-import React, { Requireable } from 'react';
 import PropTypes from 'prop-types';
+import React, { Requireable } from 'react';
 import { PlayGroundProps, PlayGroundState } from './types';
 /**
  * APlayGround
@@ -63,12 +63,12 @@ export declare const APlayGroundPropTypes: {
         bodyStyle: PropTypes.Requireable<object>;
         actionClassName: PropTypes.Requireable<string>;
         actionStyle: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+        title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
         actions: PropTypes.Requireable<PropTypes.ReactNodeLike[]>;
         description: PropTypes.Requireable<PropTypes.InferProps<{
-            title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
-            info: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            info: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         }>>;
     }>>;
     isActive: PropTypes.Requireable<boolean>;

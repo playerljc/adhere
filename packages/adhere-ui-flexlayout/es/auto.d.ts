@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { AutoProps } from './types';
-declare const Auto: FC<AutoProps>;
-export default Auto;
+declare const _default: React.NamedExoticComponent<AutoProps>;
+export default _default;

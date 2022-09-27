@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { FontSizeSettingProps } from './types';
-declare const FontSizeSetting: FC<FontSizeSettingProps>;
-export default FontSizeSetting;
+declare const _default: React.NamedExoticComponent<FontSizeSettingProps>;
+export default _default;

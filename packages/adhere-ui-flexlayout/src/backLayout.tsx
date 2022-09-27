@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React, { FC } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import HistoryBack from '@baifendian/adhere-ui-historyback';
@@ -25,27 +25,31 @@ const BackLayout: FC<BackLayoutProps> = (props) => {
     ...otherProps
   } = props;
 
-  const toolbar = [
-    ...(topToolBarItems || []),
-    <ConditionalRender key="backBtn" conditional={isShowBack}>
-      {() => (
-        <Button
-          onClick={() => {
-            if (enforceBackPath) {
-              history.replace(enforceBackPath);
-            } else {
-              HistoryBack(history, backPath);
-            }
-          }}
-        >
-          {backTitle || Intl.v('返回')}
-        </Button>
-      )}
-    </ConditionalRender>,
-  ].filter((t) => {
-    if ('props' in t && 'conditional' in t.props) return t.props.conditional;
-    return true;
-  });
+  const toolbar = useMemo(
+    () =>
+      [
+        ...(topToolBarItems || []),
+        <ConditionalRender key="backBtn" conditional={isShowBack}>
+          {() => (
+            <Button
+              onClick={() => {
+                if (enforceBackPath) {
+                  history.replace(enforceBackPath);
+                } else {
+                  HistoryBack(history, backPath);
+                }
+              }}
+            >
+              {backTitle || Intl.v('返回')}
+            </Button>
+          )}
+        </ConditionalRender>,
+      ].filter((t) => {
+        if ('props' in t && 'conditional' in t.props) return t.props.conditional;
+        return true;
+      }),
+    [topToolBarItems, isShowBack],
+  );
 
   return (
     <ToolBarLayout {...otherProps} topToolBarItems={toolbar}>
@@ -54,4 +58,4 @@ const BackLayout: FC<BackLayoutProps> = (props) => {
   );
 };
 
-export default BackLayout;
+export default memo(BackLayout);

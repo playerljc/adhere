@@ -1,8 +1,8 @@
-import { FC, FunctionComponent } from 'react';
+import { FC, NamedExoticComponent } from 'react';
 /**
  * SplitFunction
  */
-export interface SplitFunction<P> extends FunctionComponent<P> {
+export interface SplitFunction<P> extends NamedExoticComponent<P> {
     Group: FC<SplitGroupProps>;
 }
 /**

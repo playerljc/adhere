@@ -1,11 +1,18 @@
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
-import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+// import PropTypes from 'prop-types';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
 import { ResizeObserver } from '@juggle/resize-observer';
 
-import { Mode, Point, WritingBoardProps } from './types';
+import { Mode, Point, WritingBoardHandle, WritingBoardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-writingboard';
 
@@ -15,7 +22,17 @@ const selectorPrefix = 'adhere-ui-writingboard';
  * @param ref
  * @constructor
  */
-function WritingBoard(props: WritingBoardProps, ref) {
+const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardProps> = (
+  props,
+  ref,
+) => {
+  const {
+    defaultMode = Mode.FREE,
+    defaultLineWidth = 2,
+    defaultStrokeStyle = '#000',
+    resizeTime = 300,
+  } = props;
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
@@ -23,9 +40,9 @@ function WritingBoard(props: WritingBoardProps, ref) {
 
   const startPoint = useRef<Point | null>(null);
   const prePoint = useRef<Point | null>(null);
-  const curShape = useRef<Mode>(props.defaultMode);
-  const lineWidth = useRef<number>(props.defaultLineWidth);
-  const strokeStyle = useRef<string>(props.defaultStrokeStyle);
+  const curShape = useRef<Mode>(defaultMode);
+  const lineWidth = useRef<number>(defaultLineWidth);
+  const strokeStyle = useRef<string>(defaultStrokeStyle);
   const stack = useRef<any>([]);
   const stackIndex = useRef<number>(0);
 
@@ -556,7 +573,7 @@ function WritingBoard(props: WritingBoardProps, ref) {
       ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
 
       drawStack();
-    }, props.resizeTime);
+    }, resizeTime);
 
     ro.current = new ResizeObserver(onResize);
 
@@ -592,27 +609,27 @@ function WritingBoard(props: WritingBoardProps, ref) {
       <canvas ref={canvasRef} />
     </div>
   );
-}
-
-const Wrap = forwardRef(WritingBoard);
-
-Wrap.defaultProps = {
-  className: '',
-  style: {},
-  defaultMode: Mode.FREE,
-  defaultStrokeStyle: '#000',
-  defaultLineWidth: 2,
-  resizeTime: 300,
 };
 
-Wrap.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  // @ts-ignore
-  defaultMode: PropTypes.string.isRequired,
-  defaultStrokeStyle: PropTypes.string.isRequired,
-  defaultLineWidth: PropTypes.number.isRequired,
-  resizeTime: PropTypes.number.isRequired,
-};
+const Wrap = memo(forwardRef(WritingBoard));
+
+// Wrap.defaultProps = {
+//   className: '',
+//   style: {},
+//   defaultMode: Mode.FREE,
+//   defaultStrokeStyle: '#000',
+//   defaultLineWidth: 2,
+//   resizeTime: 300,
+// };
+//
+// Wrap.propTypes = {
+//   className: PropTypes.string,
+//   style: PropTypes.object,
+//   // @ts-ignore
+//   defaultMode: PropTypes.string.isRequired,
+//   defaultStrokeStyle: PropTypes.string.isRequired,
+//   defaultLineWidth: PropTypes.number.isRequired,
+//   resizeTime: PropTypes.number.isRequired,
+// };
 
 export default Wrap;

@@ -1,9 +1,9 @@
-import { FC } from 'react';
-import type { FunctionComponent, ReactElement, CSSProperties, Context } from 'react';
+import { FC, NamedExoticComponent } from 'react';
+import type { CSSProperties, Context, ReactElement } from 'react';
 export interface ContextType {
     direction: 'vertical' | 'horizontal';
 }
-export interface FlexLayoutFunction<P> extends FunctionComponent<P> {
+export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
     Fixed: FC<FixedProps>;
     Auto: FC<AutoProps>;
     Context: Context<ContextType>;

@@ -2,7 +2,8 @@ import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
-  useEffect,
+  memo,
+  useCallback,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -113,12 +114,12 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     (emptyEl.current as HTMLElement).style.display = 'none';
   }
 
-  function _renderLoading() {
+  const _renderLoading = useCallback(() => {
     if (renderLoading) {
       return (
         <div
           className={classNames(`${selectorPrefix}-load`, loadClassName || '')}
-          style={{ ...loadStyle }}
+          style={loadStyle || {}}
           ref={loadEl}
         >
           {renderLoading()}
@@ -135,9 +136,9 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
         {Intl.v('数据加载中')}
       </div>
     );
-  }
+  }, [renderLoading, loadClassName, loadStyle]);
 
-  function _renderEmpty() {
+  const _renderEmpty = useCallback(() => {
     if (renderEmpty) {
       return (
         <div
@@ -159,9 +160,9 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
         ~{Intl.v('没有更多')}
       </div>
     );
-  }
+  }, [renderEmpty, emptyClassName, emptyStyle]);
 
-  function _renderError() {
+  const _renderError = useCallback(() => {
     if (renderError) {
       return (
         <div
@@ -183,7 +184,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
         {Intl.v('出现错误')}
       </div>
     );
-  }
+  }, [renderError, errorClassName, errorStyle]);
 
   useImperativeHandle(ref, () => ({
     hideAll,
@@ -213,10 +214,9 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
 };
 
 // @ts-ignore
-const ScrollLoadHOC: ScrollLoadHOCFunction<ScrollLoadRefHandle, ScrollLoadProps> = forwardRef<
-  ScrollLoadRefHandle,
-  ScrollLoadProps
->(ScrollLoad);
+const ScrollLoadHOC: ScrollLoadHOCFunction<ScrollLoadRefHandle, ScrollLoadProps> = memo(
+  forwardRef<ScrollLoadRefHandle, ScrollLoadProps>(ScrollLoad),
+);
 ScrollLoadHOC.EMPTY = 'empty';
 ScrollLoadHOC.ERROR = 'error';
 ScrollLoadHOC.NORMAL = 'normal';

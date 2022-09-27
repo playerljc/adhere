@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { ImageLazyProps } from './types';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
-declare const ImageLazy: FC<ImageLazyProps>;
-export default ImageLazy;
+import React from 'react';
+import { ImageLazyProps } from './types';
+declare const _default: React.NamedExoticComponent<ImageLazyProps>;
+export default _default;

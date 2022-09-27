@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { SplitFunction, SplitGroupProps, SplitProps } from './types';
 
@@ -28,7 +28,7 @@ const SplitGroup: FC<SplitGroupProps> = (props) => {
   );
 };
 
-const Split: SplitFunction<SplitProps> = (props) => {
+const Split: FC<SplitProps> = (props) => {
   const { className = '', direction = 'vertical', size = 20 } = props;
 
   function getStyle() {
@@ -50,6 +50,10 @@ const Split: SplitFunction<SplitProps> = (props) => {
 
   return <div className={classNames(selectorPrefix, className || '')} style={getStyle()} />;
 };
-Split.Group = SplitGroup;
 
-export default Split;
+// @ts-ignore
+const MemoWrap: SplitFunction<SplitProps> = memo(Split);
+
+MemoWrap.Group = SplitGroup;
+
+export default MemoWrap;

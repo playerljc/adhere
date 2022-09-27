@@ -1,3 +1,3 @@
-import { FormItemCreatorProps, FormItemCreatorFunction } from './types';
-declare const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps>;
-export default FormItemCreator;
+import { FormItemCreatorFunction, FormItemCreatorProps } from './types';
+declare const MemoWrap: FormItemCreatorFunction<FormItemCreatorProps>;
+export default MemoWrap;

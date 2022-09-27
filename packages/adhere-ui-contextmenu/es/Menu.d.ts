@@ -1,4 +1,4 @@
 import React from 'react';
-import { MenuRefHandle, MenuProps } from './types';
-declare const _default: React.ForwardRefExoticComponent<MenuProps & React.RefAttributes<MenuRefHandle>>;
+import { MenuProps, MenuRefHandle } from './types';
+declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<MenuProps & React.RefAttributes<MenuRefHandle>>>;
 export default _default;

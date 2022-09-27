@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import Resource from '@baifendian/adhere-util-resource';
 
@@ -26,4 +26,4 @@ const Spin: FC<SpinProps> = (props) => {
   ) : null;
 };
 
-export default Spin;
+export default memo(Spin);

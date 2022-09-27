@@ -1,4 +1,4 @@
-import React, { FC, createContext, useEffect, useState } from 'react';
+import React, { FC, createContext, memo, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
@@ -51,4 +51,4 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   );
 };
 
-export default ConfigProvider;
+export default memo(ConfigProvider);

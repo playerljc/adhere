@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useRef } from 'react';
+import React, { FC, memo, useRef } from 'react';
 
 import { slider } from './slidelayout';
 import { RevealProps } from './types';
@@ -349,4 +349,4 @@ const Reveal: FC<RevealProps> = (props) => {
 //   master: PropTypes.node,
 // };
 
-export default Reveal;
+export default memo(Reveal);

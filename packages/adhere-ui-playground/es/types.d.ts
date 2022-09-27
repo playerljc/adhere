@@ -1,5 +1,5 @@
 import { FC, ForwardRefExoticComponent, FunctionComponent, PropsWithoutRef, RefAttributes } from 'react';
-import type { ReactNode, CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 /**
  * CardProps
  */

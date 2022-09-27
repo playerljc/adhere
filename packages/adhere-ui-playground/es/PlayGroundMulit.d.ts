@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import APlayGround from './APlayGround';
 import { PlayGroundMulitProps, PlayGroundMulitState } from './types';
 /**
@@ -43,12 +43,12 @@ export declare const PlayGroundMulitPropTypes: {
         bodyStyle: PropTypes.Requireable<object>;
         actionClassName: PropTypes.Requireable<string>;
         actionStyle: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+        title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
         actions: PropTypes.Requireable<PropTypes.ReactNodeLike[]>;
         description: PropTypes.Requireable<PropTypes.InferProps<{
-            title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
-            info: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            info: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
         }>>;
     }>>;
     isActive: PropTypes.Requireable<boolean>;
@@ -60,7 +60,7 @@ export declare const PlayGroundMulitPropTypes: {
         active: PropTypes.Requireable<string>;
         config: PropTypes.Requireable<(PropTypes.InferProps<{
             key: PropTypes.Requireable<string>;
-            title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
             codeText: PropTypes.Requireable<string>;
             theme: PropTypes.Requireable<string>;
         }> | null | undefined)[]>;

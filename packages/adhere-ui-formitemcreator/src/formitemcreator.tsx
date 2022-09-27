@@ -1,10 +1,28 @@
 import { Col, Form, Row } from 'antd';
-import React, { useMemo } from 'react';
+import React, { FC, ReactElement, memo, useMemo } from 'react';
 
 import renderItem from './formitem';
 import { ColumnItemProps, FormItemCreatorFunction, FormItemCreatorProps } from './types';
 
-const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) => {
+const TEXT = Symbol('text');
+const INPUT = Symbol('input');
+const SEARCH = Symbol('search');
+const PASSWORD = Symbol('password');
+const TEXTAREA = Symbol('textarea');
+const NUMBER = Symbol('number');
+const RADIO = Symbol('radio');
+const CHECKBOX = Symbol('checkbox');
+const DATEPICKER = Symbol('datepicker');
+const RANGEPICKER = Symbol('rangepicker');
+const TIMEPICKER = Symbol('timepicker');
+const SWITCH = Symbol('switch');
+const SELECT = Symbol('select');
+const SLIDER = Symbol('slider');
+const RATE = Symbol('rate');
+const UPLOAD = Symbol('upload');
+const DEFINE = Symbol('define');
+
+const FormItemCreator: FC<FormItemCreatorProps> = (props) => {
   const { columns, layout, row } = props;
 
   /**
@@ -15,10 +33,10 @@ const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) =
   function renderFormItem(item: ColumnItemProps) {
     const { type, contentProps = {} } = item;
 
-    if (type === FormItemCreator.DEFINE) {
+    if (type === DEFINE) {
       return item.content;
     } else {
-      const renderMethodName = FORM_ITEM_CONFIG.get(type || FormItemCreator.INPUT);
+      const renderMethodName = FORM_ITEM_CONFIG.get(type || INPUT);
 
       return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
     }
@@ -31,11 +49,11 @@ const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) =
    */
   function getDefaultItemProps(item: ColumnItemProps) {
     switch (item.type) {
-      case FormItemCreator.SWITCH:
+      case SWITCH:
         return { valuePropName: 'checked' };
-      case FormItemCreator.CHECKBOX:
+      case CHECKBOX:
         return { valuePropName: 'checked' };
-      case FormItemCreator.UPLOAD:
+      case UPLOAD:
         return { valuePropName: 'fileList' };
       default:
         return null;
@@ -45,27 +63,27 @@ const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) =
   const FORM_ITEM_CONFIG = useMemo(
     () =>
       new Map([
-        [FormItemCreator.TEXT, 'renderText'],
-        [FormItemCreator.INPUT, 'renderInput'],
-        [FormItemCreator.SEARCH, 'renderSearch'],
-        [FormItemCreator.PASSWORD, 'renderPassword'],
-        [FormItemCreator.TEXTAREA, 'renderInputArea'],
-        [FormItemCreator.NUMBER, 'renderInputNumber'],
-        [FormItemCreator.RADIO, 'renderRadio'],
-        [FormItemCreator.CHECKBOX, 'renderCheckbox'],
-        [FormItemCreator.DATEPICKER, 'renderDatePicker'],
-        [FormItemCreator.RANGEPICKER, 'renderRangePicker'],
-        [FormItemCreator.TIMEPICKER, 'renderTimePicker'],
-        [FormItemCreator.SWITCH, 'renderSwitch'],
-        [FormItemCreator.SELECT, 'renderSelect'],
-        [FormItemCreator.SLIDER, 'renderSlider'],
-        [FormItemCreator.RATE, 'renderRate'],
-        [FormItemCreator.UPLOAD, 'renderUpload'],
+        [TEXT, 'renderText'],
+        [INPUT, 'renderInput'],
+        [SEARCH, 'renderSearch'],
+        [PASSWORD, 'renderPassword'],
+        [TEXTAREA, 'renderInputArea'],
+        [NUMBER, 'renderInputNumber'],
+        [RADIO, 'renderRadio'],
+        [CHECKBOX, 'renderCheckbox'],
+        [DATEPICKER, 'renderDatePicker'],
+        [RANGEPICKER, 'renderRangePicker'],
+        [TIMEPICKER, 'renderTimePicker'],
+        [SWITCH, 'renderSwitch'],
+        [SELECT, 'renderSelect'],
+        [SLIDER, 'renderSlider'],
+        [RATE, 'renderRate'],
+        [UPLOAD, 'renderUpload'],
       ]),
     [],
   );
 
-  const formItems = useMemo(
+  const formItems = useMemo<ReactElement[]>(
     () =>
       columns
         .filter((item) => !('skip' in item))
@@ -83,25 +101,28 @@ const FormItemCreator: FormItemCreatorFunction<FormItemCreatorProps> = (props) =
     [columns],
   );
 
-  return row ? <Row {...row}>{formItems}</Row> : formItems;
+  return <>{row ? <Row {...row}>{formItems}</Row> : formItems}</>;
 };
 
-FormItemCreator.TEXT = Symbol('text');
-FormItemCreator.INPUT = Symbol('input');
-FormItemCreator.SEARCH = Symbol('search');
-FormItemCreator.PASSWORD = Symbol('password');
-FormItemCreator.TEXTAREA = Symbol('textarea');
-FormItemCreator.NUMBER = Symbol('number');
-FormItemCreator.RADIO = Symbol('radio');
-FormItemCreator.CHECKBOX = Symbol('checkbox');
-FormItemCreator.DATEPICKER = Symbol('datepicker');
-FormItemCreator.RANGEPICKER = Symbol('rangepicker');
-FormItemCreator.TIMEPICKER = Symbol('timepicker');
-FormItemCreator.SWITCH = Symbol('switch');
-FormItemCreator.SELECT = Symbol('select');
-FormItemCreator.SLIDER = Symbol('slider');
-FormItemCreator.RATE = Symbol('rate');
-FormItemCreator.UPLOAD = Symbol('upload');
-FormItemCreator.DEFINE = Symbol('define');
+//@ts-ignore
+const MemoWrap: FormItemCreatorFunction<FormItemCreatorProps> = memo(FormItemCreator);
 
-export default FormItemCreator;
+MemoWrap.TEXT = TEXT;
+MemoWrap.INPUT = INPUT;
+MemoWrap.SEARCH = SEARCH;
+MemoWrap.PASSWORD = PASSWORD;
+MemoWrap.TEXTAREA = TEXTAREA;
+MemoWrap.NUMBER = NUMBER;
+MemoWrap.RADIO = RADIO;
+MemoWrap.CHECKBOX = CHECKBOX;
+MemoWrap.DATEPICKER = DATEPICKER;
+MemoWrap.RANGEPICKER = RANGEPICKER;
+MemoWrap.TIMEPICKER = TIMEPICKER;
+MemoWrap.SWITCH = SWITCH;
+MemoWrap.SELECT = SELECT;
+MemoWrap.SLIDER = SLIDER;
+MemoWrap.RATE = RATE;
+MemoWrap.UPLOAD = UPLOAD;
+MemoWrap.DEFINE = DEFINE;
+
+export default MemoWrap;

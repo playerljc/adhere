@@ -1,3 +1,3 @@
-import type { ScrollLoadHOCFunction, ScrollLoadRefHandle, ScrollLoadProps } from './types';
+import type { ScrollLoadHOCFunction, ScrollLoadProps, ScrollLoadRefHandle } from './types';
 declare const ScrollLoadHOC: ScrollLoadHOCFunction<ScrollLoadRefHandle, ScrollLoadProps>;
 export default ScrollLoadHOC;

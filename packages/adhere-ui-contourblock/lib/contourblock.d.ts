@@ -1,8 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { ContourBlockProps } from './types';
-/**
- * ContourBlock
- * @constructor
- */
-declare const ContourBlock: FC<ContourBlockProps>;
-export default ContourBlock;
+declare const _default: React.NamedExoticComponent<ContourBlockProps>;
+export default _default;

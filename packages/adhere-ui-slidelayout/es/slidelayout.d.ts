@@ -17,8 +17,8 @@ export declare function slider(el: HTMLElement, x: string, y: string, z: string,
  */
 export declare function createMask(zIndex: number | string, closeCallback: () => void): HTMLDivElement;
 declare const _default: {
-    Overlay: React.FC<import("./types").OverlayProps>;
-    Push: React.FC<import("./types").PushProps>;
-    Revolving: React.FC<import("./types").RevealProps>;
+    Overlay: React.NamedExoticComponent<import("./types").OverlayProps>;
+    Push: React.NamedExoticComponent<import("./types").PushProps>;
+    Revolving: React.NamedExoticComponent<import("./types").RevealProps>;
 };
 export default _default;

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { RevealProps } from './types';
-declare const Reveal: FC<RevealProps>;
-export default Reveal;
+declare const _default: React.NamedExoticComponent<RevealProps>;
+export default _default;

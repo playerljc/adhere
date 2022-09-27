@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
+  memo,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -111,10 +112,9 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
 };
 
 // @ts-ignore
-const RevolvingHOC: RevolvingHOCFunction<RevolvingRefHandle, RevolvingProps> = forwardRef<
-  RevolvingRefHandle,
-  RevolvingProps
->(Revolving);
+const RevolvingHOC: RevolvingHOCFunction<RevolvingRefHandle, RevolvingProps> = memo(
+  forwardRef<RevolvingRefHandle, RevolvingProps>(Revolving),
+);
 RevolvingHOC.Item = RevolvingItem;
 
 export default RevolvingHOC;

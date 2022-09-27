@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import type { HorizontalFlexLayoutProps } from './types';
-/**
- * HorizontalFlexLayout
- * @constructor
- * @param props
- */
-declare const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps>;
-export default HorizontalFlexLayout;
+declare const _default: React.NamedExoticComponent<HorizontalFlexLayoutProps>;
+export default _default;

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { SliderScaleProps } from './types';
-declare const SliderScale: FC<SliderScaleProps>;
-export default SliderScale;
+declare const _default: React.NamedExoticComponent<SliderScaleProps>;
+export default _default;

@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import type { BackLayoutProps } from './types';
-/**
- * BackLayout
- * @class BackLayout
- * @classdesc BackLayout
- */
-declare const BackLayout: FC<BackLayoutProps>;
-export default BackLayout;
+declare const _default: React.NamedExoticComponent<BackLayoutProps>;
+export default _default;

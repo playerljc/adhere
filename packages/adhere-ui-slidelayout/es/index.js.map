@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SlideLayout from './slidelayout';\r\nexport default SlideLayout;\r\n"],"names":["SlideLayout"],"mappings":"OAAOA,+CACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SlideLayout from './slidelayout';\r\nexport default SlideLayout;\r\n"],"names":["SlideLayout"],"mappings":"OAAOA,gBAAiB,+BACTA"}

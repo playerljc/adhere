@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { ContourBlockProps } from './types';
 
@@ -20,4 +20,4 @@ const ContourBlock: FC<ContourBlockProps> = (props) => {
   );
 };
 
-export default ContourBlock;
+export default memo(ContourBlock);

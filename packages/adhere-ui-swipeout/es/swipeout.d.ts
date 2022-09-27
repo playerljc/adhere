@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { SwipeOutProps } from './types';
-declare const SwipeOut: FC<SwipeOutProps>;
-export default SwipeOut;
+declare const _default: React.NamedExoticComponent<SwipeOutProps>;
+export default _default;

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
-import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, { forwardRef, memo, useImperativeHandle, useLayoutEffect, useRef } from 'react';
 import type { ForwardRefRenderFunction, ReactElement } from 'react';
 
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
@@ -304,11 +304,11 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
     const stickupLayoutProps = {
       ref: stickup,
       className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName || ''),
-      style: { ...(masterInnerStyle || {}) },
+      style: masterInnerStyle || {},
       fixedClassName: classNames(masterStickFixedClassName || ''),
-      fixedStyle: { ...(masterStickFixedStyle || {}) },
+      fixedStyle: masterStickFixedStyle || {},
       innerClassName: classNames(masterStickInnerClassName || ''),
-      innerStyle: { ...(masterStickInnerStyle || {}) },
+      innerStyle: masterStickInnerStyle || {},
       onChange: onStickChange,
     };
 
@@ -381,4 +381,4 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
   );
 };
 
-export default forwardRef<CascadeComparedHandle, CascadeComparedProps>(CascadeCompared);
+export default memo(forwardRef<CascadeComparedHandle, CascadeComparedProps>(CascadeCompared));

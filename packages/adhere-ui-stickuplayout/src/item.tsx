@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, memo } from 'react';
 
 import { StickupLayoutItemProps } from './types';
 
@@ -16,4 +16,4 @@ const StickupLayoutItem: FC<StickupLayoutItemProps> = (props): ReactElement => {
   );
 };
 
-export default StickupLayoutItem;
+export default memo(StickupLayoutItem);

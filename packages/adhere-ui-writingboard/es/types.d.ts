@@ -1,4 +1,11 @@
 import type { CSSProperties } from 'react';
+export interface WritingBoardHandle {
+    setMode: (mode: Mode) => void;
+    setStrokeStyle: (style: string) => void;
+    setLineWidth: (width: number) => void;
+    clear: () => void;
+    toDataURL: () => string | undefined;
+}
 /**
  * WritingBoardProps
  * @interface WritingBoardProps

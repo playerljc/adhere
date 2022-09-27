@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import PropTypes from 'prop-types';
+import { FC } from 'react';
 import { SectionProps } from '../types';
 /**
  * Section
@@ -14,7 +14,7 @@ export declare const SectionDefaultProps: {
 export declare const SectionPropTypes: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;
-    title: PropTypes.Requireable<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+    title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
     extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
 };
 export default Section;

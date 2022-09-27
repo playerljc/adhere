@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { StickupLayoutItemProps } from './types';
-declare const StickupLayoutItem: FC<StickupLayoutItemProps>;
-export default StickupLayoutItem;
+declare const _default: React.NamedExoticComponent<StickupLayoutItemProps>;
+export default _default;

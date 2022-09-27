@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, ReactElement, useLayoutEffect, useRef } from 'react';
+import React, { FC, ReactElement, memo, useCallback, useLayoutEffect, useRef } from 'react';
 
 import { SliderScaleProps } from './types';
 
@@ -21,7 +21,7 @@ const SliderScale: FC<SliderScaleProps> = (props) => {
   const rangeEl = useRef<HTMLInputElement>(null);
   const preValue = useRef<string | number | undefined>('');
 
-  function renderScale() {
+  const renderScale = useCallback(() => {
     const itResult: ReactElement[] = [];
 
     for (let i = min; i < max; i++) {
@@ -87,15 +87,15 @@ const SliderScale: FC<SliderScaleProps> = (props) => {
     }
 
     return result.concat(itResult);
-  }
+  }, [min, max, interval]);
 
-  function onMousemove(e) {
+  const onMousemove = useCallback((e) => {
     touchEvent(e);
-  }
+  }, []);
 
-  function onTouchmove(e) {
+  const onTouchmove = useCallback((e) => {
     touchEvent(e);
-  }
+  }, []);
 
   function touchEvent(e) {
     const { value } = e.target;
@@ -133,4 +133,4 @@ const SliderScale: FC<SliderScaleProps> = (props) => {
   );
 };
 
-export default SliderScale;
+export default memo(SliderScale);

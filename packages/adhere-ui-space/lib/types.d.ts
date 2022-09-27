@@ -1,6 +1,6 @@
-import { FC, FunctionComponent } from 'react';
+import { FC, NamedExoticComponent } from 'react';
 import type { CSSProperties } from 'react';
-export interface SpaceFunction<P> extends FunctionComponent<P> {
+export interface SpaceFunction<P> extends NamedExoticComponent<P> {
     Group: FC<SpaceGroupProps>;
 }
 /**
