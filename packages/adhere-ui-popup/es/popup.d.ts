@@ -61,10 +61,6 @@ declare class Popup {
      * onInnerElTransitionend
      */
     onInnerElTransitionend(): void;
-    /**
-     * onMaskElTransitionend
-     */
-    onMaskElTransitionend(): void;
 }
 /**
  * PopupFactory

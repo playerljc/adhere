@@ -5,7 +5,8 @@
 2022-09-27
 
 * **组件加入memo**
-* **adhere-util的tree加入若干方法*
+* **adhere-util的tree加入若干方法**
+* **adhere-ui-popup的close方法修改*
 
 # 1.0.20
 
