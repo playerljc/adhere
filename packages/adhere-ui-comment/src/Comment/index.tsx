@@ -1,5 +1,5 @@
 import { Spin } from 'antd';
-import React, { FC } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 
 import {
   CaretDownOutlined,
@@ -71,8 +71,8 @@ const Comment: FC<CommentProps> = (props) => {
     emojiPickerProps,
   } = props;
 
-  function renderList(data) {
-    return (
+  const renderList = useCallback(
+    (data) => (
       <ul className={`${selectorPrefix}-list`}>
         {data?.list?.map?.((record) => (
           <li className={`${selectorPrefix}-list-item`} key={record[commentKeyProp!]}>
@@ -128,11 +128,37 @@ const Comment: FC<CommentProps> = (props) => {
           </li>
         ))}
       </ul>
-    );
-  }
+    ),
+    [
+      replyDataKeys,
+      replyLimit,
+      replyKeyProp,
+      isMoreProp,
+      fetchReplyData,
+      fetchReply,
+      renderCommentActions,
+      renderCommentAuthor,
+      renderCommentAvatar,
+      renderCommentContent,
+      renderReplyDateTime,
+      renderCommentLoading,
+      showReplyText,
+      hideReplyText,
+      loadMoreReplyText,
+      showReplyTextIcon,
+      hideReplyTextIcon,
+      loadMoreCollapseTextIcon,
+      local,
+      emojiPickerProps,
+      renderReplyContent,
+      renderReplyAvatar,
+      renderReplyAuthor,
+      renderReplyActions,
+    ],
+  );
 
-  function renderLoading() {
-    return (
+  const renderLoading = useCallback(
+    () => (
       <div className={`${selectorPrefix}-loading`}>
         <Spin
           indicator={
@@ -144,8 +170,9 @@ const Comment: FC<CommentProps> = (props) => {
           }
         />
       </div>
-    );
-  }
+    ),
+    [],
+  );
 
   return (
     <ListStandard
@@ -163,4 +190,4 @@ const Comment: FC<CommentProps> = (props) => {
   );
 };
 
-export default Comment;
+export default memo(Comment);

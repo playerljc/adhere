@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import Node from '../../Components/Node';
 import { NodeProps } from '../../types';
@@ -11,4 +11,4 @@ import { NodeProps } from '../../types';
  */
 const ReplyInfo: FC<NodeProps> = (props) => <Node {...props} isReply />;
 
-export default ReplyInfo;
+export default memo(ReplyInfo);

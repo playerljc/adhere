@@ -155,7 +155,7 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
           </div>
         );
       }),
-    [dataSource],
+    [dataSource, indexes],
   );
 
   const renderIndex = useCallback(

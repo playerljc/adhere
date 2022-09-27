@@ -16,10 +16,13 @@ const FontSizeSetting: FC<FontSizeSettingProps> = (props) => {
 
   const el = useRef<HTMLDivElement>(null);
 
-  const onSliderChange = useCallback((v) => {
-    setValue(v);
-    onChange?.(v);
-  }, []);
+  const onSliderChange = useCallback(
+    (v) => {
+      setValue(v);
+      onChange?.(v);
+    },
+    [value],
+  );
 
   useEffect(() => setValue(props.value), [props.value]);
 

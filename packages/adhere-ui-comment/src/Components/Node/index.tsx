@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -65,30 +65,41 @@ const Node: FC<NodeProps> = (props) => {
     limit: limit,
   });
 
-  function renderActions() {
-    return [
-      ...(
-        props?.renderActions?.({ ...data }, (_data) => {
-          setData(_data);
-        }) || []
-      ).map((action, index) => (
-        <li key={index} className={`${selectorPrefix}-actions-action`}>
-          {action}
-        </li>
-      )),
-      <li
-        className={classNames(
-          `${selectorPrefix}-actions-action`,
-          `${selectorPrefix}-actions-action-reply-btn`,
-        )}
-        onClick={() => setShowReply(true)}
-      >
-        {Intl.v('回复')}
-      </li>,
+  const renderActions = useCallback(() => {
+    const actions = [
+      ...(props?.renderActions?.({ ...data }, (_data) => setData(_data)) || []).map(
+        (action, index) =>
+          ConditionalRender.conditionalRender({
+            conditional: !(action as any)?.props?.className?.endsWith('-actions-action'),
+            noMatch: action,
+            match: (
+              <li key={index} className={`${selectorPrefix}-actions-action`}>
+                {action}
+              </li>
+            ),
+          }),
+      ),
     ];
-  }
 
-  function renderChildren() {
+    if (!actions.find((t) => t?.props?.children?.key === 'reply')) {
+      actions.push(
+        <li
+          key="reply"
+          className={classNames(
+            `${selectorPrefix}-actions-action`,
+            `${selectorPrefix}-actions-action-reply-btn`,
+          )}
+          onClick={() => setShowReply(true)}
+        >
+          {Intl.v('回复')}
+        </li>,
+      );
+    }
+
+    return actions;
+  }, [props?.renderActions, data, showReply]);
+
+  const renderChildren = useCallback(() => {
     return (
       <ul className={`${selectorPrefix}-children`}>
         {((listData[dataKeys.list] as []) || [])?.map?.((record) => (
@@ -152,9 +163,27 @@ const Node: FC<NodeProps> = (props) => {
         </ConditionalRender>
       </ul>
     );
-  }
+  }, [
+    listData,
+    dataKeys.list,
+    keyProp,
+    isMoreProp,
+    renderActions,
+    renderAuthor,
+    renderAvatar,
+    renderContent,
+    renderDateTime,
+    renderLoading,
+    showReplyText,
+    hideReplyText,
+    loadMoreReplyText,
+    showReplyTextIcon,
+    hideReplyTextIcon,
+    loadMoreCollapseTextIcon,
+    loading,
+  ]);
 
-  function renderMore() {
+  const renderMore = useCallback(() => {
     return (
       <ConditionalRender
         conditional={!collapse}
@@ -215,11 +244,20 @@ const Node: FC<NodeProps> = (props) => {
         )}
       </ConditionalRender>
     );
-  }
+  }, [
+    collapse,
+    listData,
+    dataKeys.list,
+    hideReplyText,
+    hideReplyTextIcon,
+    showReplyText,
+    showReplyTextIcon,
+  ]);
 
-  function hasMore() {
-    return (listData[dataKeys.list] as []).length <= listData[dataKeys.totalCount];
-  }
+  const hasMore = useCallback(
+    () => (listData[dataKeys.list] as []).length <= listData[dataKeys.totalCount],
+    [listData, dataKeys.list, dataKeys.totalCount],
+  );
 
   function loadData(): Promise<any> | undefined {
     setLoading(true);
@@ -249,7 +287,7 @@ const Node: FC<NodeProps> = (props) => {
     });
   }
 
-  function fetchData(): Promise<any> | undefined {
+  const fetchData = useCallback(() => {
     return props
       ?.fetchData?.({
         ...paging.current,
@@ -265,7 +303,7 @@ const Node: FC<NodeProps> = (props) => {
 
         return error;
       });
-  }
+  }, [props?.fetchData, paging.current.page, paging.current.limit, data]);
 
   useEffect(() => setData(props.data), [props?.data]);
 
@@ -340,4 +378,4 @@ const Node: FC<NodeProps> = (props) => {
   );
 };
 
-export default Node;
+export default memo(Node);

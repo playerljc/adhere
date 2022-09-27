@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
 import classnames from 'classnames';
-import React, { FC, ReactElement, useRef } from 'react';
+import React, { FC, ReactElement, memo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
@@ -139,4 +139,4 @@ const CommentList: FC<ListProps> = (props) => {
   );
 };
 
-export default CommentList;
+export default memo(CommentList);

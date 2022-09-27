@@ -3,7 +3,7 @@ import {
   /*Popover*/
 } from 'antd';
 import faker from 'faker';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { DislikeOutlined, LikeFilled } from '@ant-design/icons';
 import { Comment, DateDisplay, GlobalIndicator } from '@baifendian/adhere';

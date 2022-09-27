@@ -1,13 +1,15 @@
+// import { Tooltip } from 'antd';
+// import faker from 'faker';
 // import React, { useRef } from 'react';
 // import ReactDOM from 'react-dom';
-// import faker from 'faker';
-// import { Tooltip } from 'antd';
+//
 // import { DislikeOutlined, LikeFilled } from '@ant-design/icons';
-// import DateDisplay from '@baifendian/adhere-ui-datedisplay';
 // import GlobalIndicator from '@baifendian/adhere-ui-conditionalrender';
 // import AdhereConfigProvider from '@baifendian/adhere-ui-configprovider';
+// import DateDisplay from '@baifendian/adhere-ui-datedisplay';
 //
 // import Comment from '../index';
+//
 // import '../index.less';
 // import './index.less';
 //

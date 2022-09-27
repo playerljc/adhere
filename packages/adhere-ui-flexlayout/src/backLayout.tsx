@@ -48,7 +48,7 @@ const BackLayout: FC<BackLayoutProps> = (props) => {
         if ('props' in t && 'conditional' in t.props) return t.props.conditional;
         return true;
       }),
-    [topToolBarItems, isShowBack],
+    [topToolBarItems, isShowBack, enforceBackPath, backPath, backTitle],
   );
 
   return (
