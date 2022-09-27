@@ -38,7 +38,15 @@ const FormItemCreator: FC<FormItemCreatorProps> = (props) => {
     } else {
       const renderMethodName = FORM_ITEM_CONFIG.get(type || INPUT);
 
-      return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
+      if (renderMethodName) {
+        const FormItem = renderItem[renderMethodName];
+
+        return <FormItem {...contentProps} />;
+      }
+
+      return null;
+
+      // return renderMethodName ? renderItem[renderMethodName](contentProps) : null;
     }
   }
 
