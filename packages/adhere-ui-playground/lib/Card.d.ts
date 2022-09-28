@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-import { FC } from 'react';
+import React from 'react';
 import { CardProps } from './types';
-declare const Card: FC<CardProps>;
 export declare const cardPropTypes: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;
@@ -19,4 +18,5 @@ export declare const cardPropTypes: {
         info: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
     }>>;
 };
-export default Card;
+declare const _default: React.NamedExoticComponent<CardProps>;
+export default _default;

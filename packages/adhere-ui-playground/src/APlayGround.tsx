@@ -21,7 +21,7 @@ const selectPrefix = 'adhere-ui-playground';
 abstract class APlayGround<
   P extends PlayGroundProps = PlayGroundProps,
   S extends PlayGroundState = PlayGroundState,
-> extends React.Component<P, S> {
+> extends React.PureComponent<P, S> {
   protected isFirst: boolean = true;
 
   protected clipboardRef = React.createRef<HTMLDivElement>();

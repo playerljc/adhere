@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { AnchorNavigationProps } from './types';
-/**
- * AnchorNavigation
- * @classdesc 带有锚点导航的面板
- * @constructor
- */
-declare const AnchorNavigation: FC<AnchorNavigationProps>;
-export default AnchorNavigation;
+declare const _default: React.NamedExoticComponent<AnchorNavigationProps>;
+export default _default;

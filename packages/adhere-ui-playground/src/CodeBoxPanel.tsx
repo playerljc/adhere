@@ -162,6 +162,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
         <ConditionalRender conditional={!!title}>
           {() => <div className={`${selectPrefix}-header-title`}>{title}</div>}
         </ConditionalRender>
+
         <div className={`${selectPrefix}-header-extra`}>
           <ConditionalRender conditional={isShowExpandAllBtn}>
             {() => (
@@ -262,4 +263,4 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
 //   ),
 // };
 
-export default memo<any>(CodeBoxPanel);
+export default memo<CodeBoxProps>(CodeBoxPanel);

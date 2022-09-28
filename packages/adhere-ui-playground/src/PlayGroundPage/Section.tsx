@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { SectionProps } from '../types';
 
@@ -41,4 +41,4 @@ Section.defaultProps = SectionDefaultProps;
 
 Section.propTypes = SectionPropTypes;
 
-export default Section;
+export default memo(Section);

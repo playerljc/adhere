@@ -43,7 +43,7 @@
  *
  * */
 
-import React, { FC } from 'react';
+import React, { FC,memo } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import intl from '@baifendian/adhere-util-intl';
 
@@ -437,4 +437,4 @@ const FunctionProps: FC<FunctionProps> = (props) => {
 //
 // FunctionProps.propTypes = FunctionPropsPropTypes;
 
-export default FunctionProps;
+export default memo(FunctionProps);

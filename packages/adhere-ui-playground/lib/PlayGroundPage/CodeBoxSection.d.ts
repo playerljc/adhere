@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { CodeBoxProps } from '../types';
-/**
- * CodeBoxSection
- * @param props
- * @constructor
- */
-declare const CodeBoxSection: FC<CodeBoxProps>;
-export default CodeBoxSection;
+declare const _default: React.NamedExoticComponent<CodeBoxProps>;
+export default _default;

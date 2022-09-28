@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { PropsSectionProps } from '../types';
-/**
- * PropsSection
- * @constructor
- * @param props
- */
-declare const PropsSection: FC<PropsSectionProps>;
-export default PropsSection;
+declare const _default: React.NamedExoticComponent<PropsSectionProps>;
+export default _default;

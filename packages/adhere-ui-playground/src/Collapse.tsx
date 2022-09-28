@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -219,4 +219,4 @@ const Collapse: FC<CollapseProps> = (props) => {
 //   fixedHeaderScrollBody: PropTypes.bool,
 // };
 
-export default Collapse;
+export default memo(Collapse);

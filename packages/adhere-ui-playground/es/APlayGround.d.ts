@@ -6,7 +6,7 @@ import { PlayGroundProps, PlayGroundState } from './types';
  * @class APlayGround
  * @classdesc APlayGround
  */
-declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, S extends PlayGroundState = PlayGroundState> extends React.Component<P, S> {
+declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, S extends PlayGroundState = PlayGroundState> extends React.PureComponent<P, S> {
     protected isFirst: boolean;
     protected clipboardRef: React.RefObject<HTMLDivElement>;
     protected actionConfig: (() => JSX.Element)[];

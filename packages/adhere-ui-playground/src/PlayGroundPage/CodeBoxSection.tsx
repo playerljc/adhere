@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import CodeBoxPanel from '../CodeBoxPanel';
 import { CodeBoxProps } from '../types';
@@ -10,4 +10,4 @@ import { CodeBoxProps } from '../types';
  */
 const CodeBoxSection: FC<CodeBoxProps> = (props) => <CodeBoxPanel {...props} />;
 
-export default CodeBoxSection;
+export default memo(CodeBoxSection);

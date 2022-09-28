@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, memo, useContext } from 'react';
 
 import { TabPanelProps } from '../types';
 import { TabContext } from './Context';
@@ -27,4 +27,4 @@ const TabPanel: FC<TabPanelProps> = ({ className = '', children, index = '' }) =
 //   className: PropTypes.string,
 // };
 
-export default TabPanel;
+export default memo(TabPanel);

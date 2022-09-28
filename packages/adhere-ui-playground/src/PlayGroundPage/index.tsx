@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ForwardRefRenderFunction, forwardRef, useContext } from 'react';
+import React, { ForwardRefRenderFunction, ReactElement, forwardRef, memo, useContext } from 'react';
 
 import Space from '@baifendian/adhere-ui-space';
 
@@ -36,7 +36,12 @@ const PlayGroundPage: ForwardRefRenderFunction<HTMLDivElement, PlayGroundPagePro
 
   function getAnchors() {
     return children
-      .filter((c) => 'type' in c && c.type instanceof Function && c.type === CodeBoxSection)
+      .filter(
+        (c) =>
+          'type' in c &&
+          c.type?.type instanceof Function &&
+          c.type?.type === (CodeBoxSection as unknown as ReactElement)?.type,
+      )
       .map((c) =>
         c?.props?.config?.map((t) => ({
           name: t.name,
@@ -80,10 +85,9 @@ const PlayGroundPage: ForwardRefRenderFunction<HTMLDivElement, PlayGroundPagePro
 // };
 
 // @ts-ignore
-const PlayGroundPageForward: PlayGroundPageHOC<HTMLDivElement, PlayGroundPageProps> = forwardRef<
-  HTMLDivElement,
-  PlayGroundPageProps
->(PlayGroundPage);
+const PlayGroundPageForward: PlayGroundPageHOC<HTMLDivElement, PlayGroundPageProps> = memo(
+  forwardRef<HTMLDivElement, PlayGroundPageProps>(PlayGroundPage),
+);
 
 PlayGroundPageForward.Section = Section;
 PlayGroundPageForward.CodeBoxSection = CodeBoxSection;

@@ -1,18 +1,11 @@
-import PropTypes from 'prop-types';
 import {
   FC,
   ForwardRefExoticComponent,
-  FunctionComponent,
+  NamedExoticComponent,
   PropsWithoutRef,
   RefAttributes,
 } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-
-import PlayGroundPageForward from './PlayGroundPage';
-import CodeBoxSection from './PlayGroundPage/CodeBoxSection';
-import FunctionPropsSection from './PlayGroundPage/FunctionPropsSection';
-import PropsSection from './PlayGroundPage/PropsSection';
-import Section from './PlayGroundPage/Section';
 
 /**
  * CardProps
@@ -266,7 +259,7 @@ export interface TabPanelProps {
   children?: any;
 }
 
-export interface SimpleTabsFunction<P> extends FunctionComponent<P> {
+export interface SimpleTabsFunction<P> extends NamedExoticComponent<P> {
   TabPanel: FC<TabPanelProps>;
 }
 

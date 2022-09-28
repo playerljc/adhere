@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import { SimpleTabsFunction, SimpleTabsProps } from '../types';
 import { TabContext } from './Context';
@@ -6,16 +6,16 @@ import TabPanel from './TabPanel';
 
 const selectorPrefix = 'adhere-ui-playground-simple-tabs';
 
-const SimpleTabs: SimpleTabsFunction<SimpleTabsProps> = (props) => {
+const SimpleTabs: FC<SimpleTabsProps> = (props) => {
   const { className = '', onChange, children } = props;
 
   const [activeKey, setActiveKey] = useState(props.activeKey);
 
-  function renderHead() {
+  const renderHead = useCallback(() => {
     return children instanceof Array
       ? children.map((t) => renderHeadItem(t))
       : renderHeadItem(children);
-  }
+  }, [children]);
 
   function renderHeadItem({ props: { index, title } }) {
     return (
@@ -49,7 +49,10 @@ const SimpleTabs: SimpleTabsFunction<SimpleTabsProps> = (props) => {
   );
 };
 
-SimpleTabs.TabPanel = TabPanel;
+// @ts-ignore
+const MemoWrap: SimpleTabsFunction<SimpleTabsProps> = memo(SimpleTabs);
+
+MemoWrap.TabPanel = TabPanel;
 
 // /**
 //  * SimpleTabs
@@ -139,4 +142,4 @@ SimpleTabs.TabPanel = TabPanel;
 //   onChange: PropTypes.func,
 // };
 
-export default SimpleTabs;
+export default MemoWrap;

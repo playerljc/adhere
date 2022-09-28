@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { CodeTabPanelProps } from './types';
 export declare const CodeTabPanelDefaultProps: {
     active: string;
     config: never[];
@@ -14,5 +15,5 @@ export declare const CodeTabPanelPropTypes: {
     }> | null | undefined)[]>;
     onChange: PropTypes.Requireable<(...args: any[]) => any>;
 };
-declare const _default: React.MemoExoticComponent<any>;
+declare const _default: React.NamedExoticComponent<CodeTabPanelProps>;
 export default _default;

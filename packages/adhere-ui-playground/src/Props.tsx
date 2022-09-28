@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -186,4 +186,4 @@ const Props: FC<PropsProps> = (props) => {
 //
 // Props.propTypes = PropsPropTypes;
 
-export default Props;
+export default memo(Props);
