@@ -9,7 +9,7 @@ import Resource from '@baifendian/adhere-util-resource';
  * @class GeoLayer
  * @classdesc openlayers中的geojson的layer
  */
-class GeoLayer extends VectorLayer {
+class GeoLayer extends VectorLayer<any> {
   private vectorSource: VectorSource;
 
   /**
