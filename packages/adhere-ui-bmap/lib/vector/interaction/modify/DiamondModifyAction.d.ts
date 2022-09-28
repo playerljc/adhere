@@ -1,4 +1,4 @@
-import { IPoint, IDiamondData, SelectType } from '../types';
+import { IDiamondData, IPoint, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 /**
  * DiamondModifyAction
@@ -7,6 +7,7 @@ import ModifyAction from './ModifyAction';
  * @remark:
  */
 declare class DiamondModifyAction extends ModifyAction {
+    setCursor(): void;
     private rectangleAnchorPoints;
     private indexToModifyHandlerMapping;
     protected ResizeCursorMapping: Map<number, string>;
@@ -44,7 +45,7 @@ declare class DiamondModifyAction extends ModifyAction {
     /**
      * getSelectType
      */
-    protected getSelectType(): SelectType;
+    getSelectType(): SelectType;
     /**
      * getBox
      */

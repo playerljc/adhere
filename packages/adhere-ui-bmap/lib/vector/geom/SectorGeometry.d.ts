@@ -1,5 +1,5 @@
+import { GeometryType, IGeometryStyle, IPixel, ISectorGeometry, ISectorGeometryData } from '../types';
 import Geometry from './Geometry';
-import { ISectorGeometryData, ISectorGeometry, GeometryType, IGeometryStyle, IPixel } from '../types';
 /**
  * SectorGeometry
  * @class SectorGeometry

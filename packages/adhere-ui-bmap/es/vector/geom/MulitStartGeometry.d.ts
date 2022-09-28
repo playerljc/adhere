@@ -1,4 +1,4 @@
-import { GeometryType, IMulitStartGeometry, IStartGeometryData, IGeometryStyle, IPixel } from '../types';
+import { GeometryType, IGeometryStyle, IMulitStartGeometry, IPixel, IStartGeometryData } from '../types';
 import Geometry from './Geometry';
 /**
  * MulitStartGeometry

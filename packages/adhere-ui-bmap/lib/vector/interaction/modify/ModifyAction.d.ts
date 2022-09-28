@@ -1,5 +1,5 @@
 import Emitter from '@baifendian/adhere-util-emitter';
-import { IModifyAction, IMoveAction, IActionData, IInteractionLayer, IPoint, SelectType } from '../types';
+import { IActionData, IInteractionLayer, IModifyAction, IMoveAction, IPoint, SelectType } from '../types';
 /**
  * ModifyAction
  * @class ModifyAction

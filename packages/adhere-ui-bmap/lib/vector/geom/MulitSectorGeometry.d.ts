@@ -1,4 +1,4 @@
-import { GeometryType, IMulitSectorGeometry, ISectorGeometryData, IGeometryStyle, IPixel } from '../types';
+import { GeometryType, IGeometryStyle, IMulitSectorGeometry, IPixel, ISectorGeometryData } from '../types';
 import Geometry from './Geometry';
 /**
  * MulitSectorGeometry

@@ -1,4 +1,4 @@
-import { IStartData, IPoint, SelectType } from '../types';
+import { IPoint, IStartData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 /**
  * StartModifyAction
@@ -42,7 +42,7 @@ declare class StartModifyAction extends ModifyAction {
     /**
      * getSelectType
      */
-    protected getSelectType(): SelectType;
+    getSelectType(): SelectType;
     /**
      * isCanMove
      * @param targetPoint
@@ -53,5 +53,6 @@ declare class StartModifyAction extends ModifyAction {
      * @description 绘制移动时的几何图形
      */
     drawMoveGeometry(): void;
+    setCursor(): void;
 }
 export default StartModifyAction;

@@ -1,5 +1,5 @@
+import { GeometryType, IGeometryStyle, ILeafGeometry, ILeafGeometryData, IPixel } from '../types';
 import Geometry from './Geometry';
-import { ILeafGeometryData, ILeafGeometry, GeometryType, IGeometryStyle, IPixel } from '../types';
 /**
  * LeafGeometry
  * @class LeafGeometry

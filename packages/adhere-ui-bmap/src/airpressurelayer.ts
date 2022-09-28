@@ -5,6 +5,7 @@ import { BMapAirPressureLayerConfig } from './types';
  * @class BMapAirPressureLayer
  * @classdesc 气压层(绘制多边形)
  */
+// @ts-ignore
 class BMapAirPressureLayer extends BMap.CanvasLayer {
   map: any = null;
   data: any = null;

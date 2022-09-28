@@ -1,4 +1,3 @@
-// @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 
 import defaultMoveGemStyle from '../DefaultMoveGemStyle';
@@ -245,7 +244,7 @@ class CircleModifyAction extends ModifyAction {
   /**
    * getSelectType
    */
-  protected getSelectType(): SelectType {
+  getSelectType(): SelectType {
     return SelectType.Circle;
   }
 
@@ -330,6 +329,8 @@ class CircleModifyAction extends ModifyAction {
       );
     }
   }
+
+  setCursor(): void {}
 }
 
 export default CircleModifyAction;

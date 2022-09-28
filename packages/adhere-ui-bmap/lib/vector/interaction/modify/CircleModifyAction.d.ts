@@ -42,7 +42,7 @@ declare class CircleModifyAction extends ModifyAction {
     /**
      * getSelectType
      */
-    protected getSelectType(): SelectType;
+    getSelectType(): SelectType;
     /**
      * isCanMove
      * @param targetPixel
@@ -53,5 +53,6 @@ declare class CircleModifyAction extends ModifyAction {
      * @description 绘制移动时的几何图形
      */
     drawMoveGeometry(): void;
+    setCursor(): void;
 }
 export default CircleModifyAction;

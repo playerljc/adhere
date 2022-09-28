@@ -1,4 +1,3 @@
-// @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
@@ -242,7 +241,7 @@ class StartModifyAction extends ModifyAction {
   /**
    * getSelectType
    */
-  protected getSelectType(): SelectType {
+  getSelectType(): SelectType {
     return SelectType.Start;
   }
 
@@ -351,6 +350,8 @@ class StartModifyAction extends ModifyAction {
       );
     }
   }
+
+  setCursor(): void {}
 }
 
 export default StartModifyAction;

@@ -1,5 +1,3 @@
-// @ts-ignore
-// @ts-ignore
 import Util from '@baifendian/adhere-util';
 import Emitter from '@baifendian/adhere-util-emitter';
 
@@ -23,7 +21,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
   config: IVectorLayerConfig;
   source: IVectorSource;
   isLoad: boolean = false;
-  emitter: Emitter = new Emitter.Events();
+  emitter = new Emitter.Events();
 
   // @ts-ignore
   constructor(map, config: IVectorLayerConfig) {
@@ -116,7 +114,7 @@ class VectorLayer extends BMap.CanvasLayer implements IVectorLayer {
     return this.map;
   }
 
-  getEmitter(): Emitter.Events {
+  getEmitter() {
     return this.emitter;
   }
 

@@ -1,4 +1,3 @@
-// @ts-ignore
 import * as turf from '@turf/turf';
 
 import Util from '../../util';

@@ -1,4 +1,4 @@
-import { GeometryType, ILineStringGeometryData, IMulitLineStringGeometry, IPixel, IGeometryStyle } from '../types';
+import { GeometryType, IGeometryStyle, ILineStringGeometryData, IMulitLineStringGeometry, IPixel } from '../types';
 import Geometry from './Geometry';
 /**
  * MulitLineStringGeometry

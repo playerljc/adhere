@@ -1,4 +1,4 @@
-import { GeometryType, IMulitLeafGeometry, ILeafGeometryData, IGeometryStyle, IPixel } from '../types';
+import { GeometryType, IGeometryStyle, ILeafGeometryData, IMulitLeafGeometry, IPixel } from '../types';
 import Geometry from './Geometry';
 /**
  * MulitLeafGeometry

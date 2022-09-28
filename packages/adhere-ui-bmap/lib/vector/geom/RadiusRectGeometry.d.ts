@@ -1,5 +1,5 @@
+import { GeometryType, IGeometryStyle, IRadiusRectGeometryData } from '../types';
 import RectGeometry from './RectGeometry';
-import { GeometryType, IRadiusRectGeometryData, IGeometryStyle } from '../types';
 /**
  * RadiusRectGeometry
  * @class RadiusRectGeometry
