@@ -1,5 +1,5 @@
-import { IFeature, GeoJSONNode, IGeoJSONFeatureCollection } from '../types';
 import Geometry from '../geom/Geometry';
+import { GeoJSONNode, IFeature, IGeoJSONFeatureCollection } from '../types';
 declare const _default: {
     /**
      * parse - GeoJSON转IFeature[]
