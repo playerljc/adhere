@@ -13,7 +13,7 @@
     "buildpackage:cjs": "ctbuild buildpackagets",
     "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
-    "postbuildpackage": "./scripts/postbuildpackage.js",
+    "postbuildpackage": "node ./scripts/postbuildpackage.js",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "repository": {
