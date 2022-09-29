@@ -1,8 +1,9 @@
-import { Button, Form } from 'antd';
+import { Button, Form, Select } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import FormItemCreator from '../index';
+import './index.less';
 
 const onFinish = (values) => {
   console.log('success', values);
@@ -27,6 +28,27 @@ ReactDOM.render(
           initialValue: '我就是一个查看',
           type: FormItemCreator.TEXT,
         },
+        {
+          label: '这是一个可操作tag',
+          name: 'hobby',
+          type: FormItemCreator.TAG,
+          initialValue: ['篮球'],
+          contentProps: {
+            disabled: true,
+          }
+        },
+        {
+          label: '这是一个autocomplete的select',
+          name: '打标签',
+          type: FormItemCreator.SELECT,
+          contentProps: {
+            autoComplete: true,
+            options: [
+              { label: '标签1', value: '1'},
+              { label: '标签2', value: '2'}
+            ]
+          }
+        }
       ]}
       layout={layout}
     />

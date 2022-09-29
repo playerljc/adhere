@@ -20,6 +20,7 @@ const SELECT = Symbol('select');
 const SLIDER = Symbol('slider');
 const RATE = Symbol('rate');
 const UPLOAD = Symbol('upload');
+const TAG = Symbol('tag');
 const DEFINE = Symbol('define');
 
 const FormItemCreator: FC<FormItemCreatorProps> = (props) => {
@@ -87,6 +88,7 @@ const FormItemCreator: FC<FormItemCreatorProps> = (props) => {
         [SLIDER, 'renderSlider'],
         [RATE, 'renderRate'],
         [UPLOAD, 'renderUpload'],
+        [TAG, 'renderTag'],
       ]),
     [],
   );
@@ -96,15 +98,15 @@ const FormItemCreator: FC<FormItemCreatorProps> = (props) => {
       columns
         .filter((item) => !('skip' in item))
         .map((item) => {
-          const { contentProps, col, ...itemProps } = item;
+          const { contentProps, col, type, ...itemProps } = item;
 
           const formItem = (
-            <Form.Item {...getDefaultItemProps(item)} {...layout} {...itemProps}>
+            <Form.Item {...getDefaultItemProps(item)} {...layout} {...itemProps} key={item.name as React.Key}>
               {renderFormItem(item)}
             </Form.Item>
           );
 
-          return col ? <Col {...col}>{formItem}</Col> : formItem;
+          return col ? <Col {...col} key={item.name as React.Key}>{formItem}</Col> : formItem;
         }),
     [columns],
   );
@@ -131,6 +133,7 @@ MemoWrap.SELECT = SELECT;
 MemoWrap.SLIDER = SLIDER;
 MemoWrap.RATE = RATE;
 MemoWrap.UPLOAD = UPLOAD;
+MemoWrap.TAG = TAG;
 MemoWrap.DEFINE = DEFINE;
 
 export default MemoWrap;
