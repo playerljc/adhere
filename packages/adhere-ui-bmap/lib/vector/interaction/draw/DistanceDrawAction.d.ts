@@ -1,5 +1,5 @@
-import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
 import { IGeometryStyle } from '../../types';
+import { IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
 import PolygonDrawAction from './PolygonDrawAction';
 /**
  * DistanceDrawAction

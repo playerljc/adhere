@@ -1,5 +1,5 @@
+import { GeometryType, IGeometryStyle, IPixel, IRegularPolygonGeometry, IRegularPolygonGeometryData } from '../types';
 import Geometry from './Geometry';
-import { IRegularPolygonGeometryData, IRegularPolygonGeometry, GeometryType, IGeometryStyle, IPixel } from '../types';
 /**
  * RegularPolygonGeometry
  * @class RegularPolygonGeometry

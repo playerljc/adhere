@@ -41,12 +41,13 @@ declare class PolygonModifyAction extends ModifyAction {
     /**
      * getSelectType
      */
-    protected getSelectType(): SelectType;
+    getSelectType(): SelectType;
     isCanMove(targetPoint: IPoint): boolean;
     /**
      * drawMoveGeometry
      * @description 绘制移动时的几何图形
      */
     drawMoveGeometry(): void;
+    setCursor(): void;
 }
 export default PolygonModifyAction;

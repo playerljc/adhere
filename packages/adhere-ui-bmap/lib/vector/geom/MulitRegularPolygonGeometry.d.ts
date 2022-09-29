@@ -1,4 +1,4 @@
-import { GeometryType, IMulitRegularPolygonGeometry, IRegularPolygonGeometryData, IGeometryStyle, IPixel } from '../types';
+import { GeometryType, IGeometryStyle, IMulitRegularPolygonGeometry, IPixel, IRegularPolygonGeometryData } from '../types';
 import Geometry from './Geometry';
 /**
  * MulitRegularPolygonGeometry

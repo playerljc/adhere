@@ -1,4 +1,4 @@
-import { GeometryType, IMulitCircleGeometry, ICircleGeometryData, IGeometryStyle, IPixel } from '../types';
+import { GeometryType, ICircleGeometryData, IGeometryStyle, IMulitCircleGeometry, IPixel } from '../types';
 import Geometry from './Geometry';
 /**
  * MulitCircleGeometry

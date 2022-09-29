@@ -1,4 +1,3 @@
-// @ts-ignore
 import DefaultAnchorStyle from './DefaultAnchorStyle';
 import DefaultMoveGemStyle from './DefaultMoveGemStyle';
 import DefaultStyle from './DefaultStyle';

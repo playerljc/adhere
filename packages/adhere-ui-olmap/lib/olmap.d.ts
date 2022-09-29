@@ -1,12 +1,12 @@
 import React from 'react';
 import GeoLayer from './geolayer';
-import { IOLMapProps } from './types';
+import { OLMapProps } from './types';
 /**
  * OlMap
  * @class OlMap
  * @classdesc openlayers的地图组件
  */
-declare class OlMap extends React.Component<IOLMapProps, any> {
+declare class OlMap extends React.Component<OLMapProps, any> {
     private mainGeoLayer;
     private el;
     private zoom;

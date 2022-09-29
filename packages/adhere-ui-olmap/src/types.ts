@@ -1,14 +1,14 @@
 /**
- * IOLMapProps
- * @interface IOLMapProps
+ * OLMapProps
+ * @interface OLMapProps
  */
-export interface IOLMapProps {
+export interface OLMapProps {
   type: 'administrative' | 'satellite';
   mapConfig: object;
   geoJSONStyle: object;
   geoJSONData: object;
   maxZoom: number | string;
   minZoom: number | string;
-  center: Array<number>;
-  extent: Array<Array<number>>;
+  center: number[];
+  extent: number[][];
 }

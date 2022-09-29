@@ -1,4 +1,4 @@
-import { GeometryType, ICoordinate, IPointGeometryStyle, IPointGeometry, IPixel, IGeometryStyle } from '../types';
+import { GeometryType, ICoordinate, IGeometryStyle, IPixel, IPointGeometry, IPointGeometryStyle } from '../types';
 import Geometry from './Geometry';
 /**
  * PointGeometry

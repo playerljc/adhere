@@ -1,8 +1,8 @@
-import OLMap from './olmap';
-import HeatMap from './heatmap';
-import GeoLayer from './geolayer';
-import * as TitleLayer from './titlelayer';
 import AnimationManager from './animationmanager';
+import GeoLayer from './geolayer';
+import HeatMap from './heatmap';
+import OLMap from './olmap';
+import * as TitleLayer from './titlelayer';
 declare const _default: {
     AnimationManager: typeof AnimationManager;
     GeoLayer: typeof GeoLayer;

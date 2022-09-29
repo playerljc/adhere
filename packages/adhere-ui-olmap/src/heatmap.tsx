@@ -13,8 +13,8 @@ import Util from './util';
 class HeatMap extends OlMap {
   static defaultProps: any;
   static propTypes: any;
-  private vectorSource: VectorSource;
-  private layer: HeatMapLayer;
+  private vectorSource: VectorSource | undefined;
+  private layer: HeatMapLayer | undefined;
 
   /**
    * addLayer - 添加一个热力图图层
@@ -29,7 +29,7 @@ class HeatMap extends OlMap {
   }
 
   getHeatMapLayer(): HeatMapLayer {
-    return this.layer;
+    return this.layer as HeatMapLayer;
   }
 }
 

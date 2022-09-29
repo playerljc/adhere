@@ -1,5 +1,5 @@
 import Feature from './Feature';
-import { IInnerTextFeatureParams, IInnerTextFeature, ITextStyle } from './types';
+import { IInnerTextFeature, IInnerTextFeatureParams, ITextStyle } from './types';
 /**
  * InnerTextFeature
  * @class InnerTextFeature

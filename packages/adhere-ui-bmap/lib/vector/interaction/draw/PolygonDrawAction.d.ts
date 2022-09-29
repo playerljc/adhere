@@ -1,4 +1,4 @@
-import { IPolygonData, IPoint, IStyle, SelectType, IInteractionLayer } from '../types';
+import { IInteractionLayer, IPoint, IPolygonData, IStyle, SelectType } from '../types';
 import DrawAction from './DrawAction';
 /**
  * PolygonAction

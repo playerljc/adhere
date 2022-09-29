@@ -25,7 +25,7 @@ class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPla
       | 'vertexPane';
     zIndex: number;
   };
-  protected emitter: Emitter = new Emitter.Events();
+  protected emitter = new Emitter.Events();
   protected isLoad: boolean = false;
   protected source: ITrajectory[] = [];
 
@@ -126,7 +126,7 @@ class TrajectoryPlayBackLayer extends BMap.CanvasLayer implements ITrajectoryPla
     return this.canvasEl;
   }
 
-  getEmitter(): Emitter.Events {
+  getEmitter() {
     return this.emitter;
   }
 

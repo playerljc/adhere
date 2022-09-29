@@ -1,4 +1,4 @@
-import { IPoint, IDiamondData, IStyle, SelectType, IInteractionLayer } from '../types';
+import { IDiamondData, IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
 import DrawAction from './DrawAction';
 /**
  * DiamondDrawAction
