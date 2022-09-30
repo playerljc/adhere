@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-css",
-  "version": "1.0.18-fix.1",
+  "version": "1.0.21",
   "description": "提供很多公共的样式",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.less",
   "files": [
     "lib",
@@ -16,27 +26,17 @@
     "postbuildpackage": "node ./scripts/postbuildpackage.js",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
-  },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.19",
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-playground",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "一个代码展示的组件",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -18,36 +28,16 @@
     "buildumd": "ctbuild buildumd --packagename AdherePlayground --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^3.8.2",
-    "antd": "^4.23.2"
-  },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
-    "@baifendian/adhere-ui-contextmenu": "^1.0.20",
-    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-ui-space": "^1.0.20",
-    "@baifendian/adhere-util": "^1.0.20",
-    "@baifendian/adhere-util-intl": "^1.0.20",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.21",
+    "@baifendian/adhere-ui-contextmenu": "^1.0.21",
+    "@baifendian/adhere-ui-css": "^1.0.21",
+    "@baifendian/adhere-ui-space": "^1.0.21",
+    "@baifendian/adhere-util": "^1.0.21",
+    "@baifendian/adhere-util-intl": "^1.0.21",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",
@@ -55,5 +45,15 @@
     "copy-to-clipboard": "^3.3.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/build": "^4.0.19",
+    "antd": "^4.23.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

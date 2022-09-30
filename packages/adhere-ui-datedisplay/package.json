@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-datedisplay",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "时间显示组件",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -17,21 +27,18 @@
     "buildumd": "ctbuild buildumd --packagename AdhereDateDisplay --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.21",
+    "@baifendian/adhere-util-resource": "^1.0.21",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "classnames": "^2.2.6",
+    "dayjs": "^1.11.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
@@ -39,14 +46,7 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
   },
-  "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
-    "@baifendian/adhere-util-resource": "^1.0.20",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "classnames": "^2.2.6",
-    "dayjs": "^1.11.4",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+  "publishConfig": {
+    "access": "public"
   }
 }

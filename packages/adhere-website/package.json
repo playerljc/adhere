@@ -1,11 +1,19 @@
 {
   "name": "@baifendian/adhere-website",
+  "version": "1.0.21",
   "private": true,
-  "version": "1.0.20",
   "description": "adhere的website",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "buildapp": "cross-env environment=dev mode=production ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -14,7 +22,9 @@
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
-    "prettier": "prettier -c --write \"**/*\""
+    "prettier": "prettier -c --write \"**/*\"",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -24,19 +34,39 @@
     ],
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
+  "dependencies": {
+    "@ant-design/icons": "^4.4.0",
+    "@baifendian/adhere": "^1.0.21",
+    "@ctsj/router": "^1.0.1",
+    "@ctsj/state": "^2.0.21",
+    "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+    "antd": "^4.9.4",
+    "bmap-wind": "^1.1.1-alpha.2",
+    "classnames": "^2.2.6",
+    "component-playground": "^3.2.1",
+    "copy-to-clipboard": "^3.3.1",
+    "core-js": "^3.6.5",
+    "echarts": "^5.1.1",
+    "echarts-for-react": "^3.0.1",
+    "echarts-wordcloud": "^2.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "faker": "^5.4.0",
+    "font-awesome": "^4.7.0",
+    "mark.js": "^8.11.1",
+    "moment": "^2.29.1",
+    "nprogress": "^0.2.0",
+    "ol": "^6.5.0",
+    "rc-queue-anim": "^1.8.5",
+    "react": "^17.0.1",
+    "react-color": "^2.19.3",
+    "react-dom": "^17.0.1",
+    "react-markdown": "^7.0.1",
+    "remark-gfm": "^2.0.0",
+    "uuid": "^8.3.2"
   },
-  "homepage": "https://github.com/playerljc/adhere",
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.19",
@@ -56,35 +86,5 @@
     "prettier": "^2.4.1",
     "raw-loader": "^4.0.2",
     "stylelint": "^13.13.1"
-  },
-  "dependencies": {
-    "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.20",
-    "@ctsj/router": "^1.0.1",
-    "@ctsj/state": "^2.0.21",
-    "antd": "^4.9.4",
-    "bmap-wind": "^1.1.1-alpha.2",
-    "classnames": "^2.2.6",
-    "component-playground": "^3.2.1",
-    "copy-to-clipboard": "^3.3.1",
-    "core-js": "^3.6.5",
-    "echarts": "^5.1.1",
-    "echarts-for-react": "^3.0.1",
-    "echarts-wordcloud": "^2.0.0",
-    "faker": "^5.4.0",
-    "font-awesome": "^4.7.0",
-    "mark.js": "^8.11.1",
-    "moment": "^2.29.1",
-    "nprogress": "^0.2.0",
-    "ol": "^6.5.0",
-    "rc-queue-anim": "^1.8.5",
-    "react": "^17.0.1",
-    "react-color": "^2.19.3",
-    "react-dom": "^17.0.1",
-    "react-markdown": "^7.0.1",
-    "remark-gfm": "^2.0.0",
-    "uuid": "^8.3.2",
-    "@trivago/prettier-plugin-sort-imports": "^3.3.0",
-    "eslint-plugin-unused-imports": "^2.0.0"
   }
 }
