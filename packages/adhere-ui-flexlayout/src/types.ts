@@ -1,5 +1,5 @@
 import { FC, NamedExoticComponent } from 'react';
-import type { CSSProperties, Context, FunctionComponent, ReactElement } from 'react';
+import type { CSSProperties, Context, ReactElement } from 'react';
 
 export interface ContextType {
   direction: 'vertical' | 'horizontal';

@@ -259,6 +259,24 @@ const Node: FC<NodeProps> = (props) => {
     [listData, dataKeys.list, dataKeys.totalCount],
   );
 
+  const fetchData = useCallback(() => {
+    return props
+      ?.fetchData?.({
+        ...paging.current,
+        record: { ...data },
+      })
+      ?.then((data) => {
+        setLoading(false);
+
+        return data;
+      })
+      ?.catch((error) => {
+        setLoading(false);
+
+        return error;
+      });
+  }, [props?.fetchData, paging.current.page, paging.current.limit, data]);
+
   function loadData(): Promise<any> | undefined {
     setLoading(true);
 
@@ -286,24 +304,6 @@ const Node: FC<NodeProps> = (props) => {
       }));
     });
   }
-
-  const fetchData = useCallback(() => {
-    return props
-      ?.fetchData?.({
-        ...paging.current,
-        record: { ...data },
-      })
-      ?.then((data) => {
-        setLoading(false);
-
-        return data;
-      })
-      ?.catch((error) => {
-        setLoading(false);
-
-        return error;
-      });
-  }, [props?.fetchData, paging.current.page, paging.current.limit, data]);
 
   useEffect(() => setData(props.data), [props?.data]);
 

@@ -81,8 +81,6 @@ export default () => {
                 onClick={() => {
                   const base64 = ref.current.toDataURL();
 
-                  debugger;
-
                   const save_link = document.createElement('a');
                   save_link.href = base64;
                   save_link.download = 'img';

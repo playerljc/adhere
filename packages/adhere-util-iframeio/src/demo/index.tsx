@@ -17,12 +17,12 @@ ReactDOM.render(
       },
       {
         path: '/client',
-        //
+        // @ts-ignore
         component: Client,
       },
       {
         path: '/server',
-        //
+        // @ts-ignore
         component: Server,
       },
     ],
