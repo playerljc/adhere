@@ -140,7 +140,7 @@ const Reply: FC<ReplyProps> = (props) => {
         />
       </div>
 
-      <div ref={emojiWrapRef} className={`${selectorPrefix}-emoji-wrap`} />
+      <div ref={emojiWrapRef} className={`${selectorPrefix}-toolbar-emoji-wrap`} />
 
       <div className={`${selectorPrefix}-toolbar`}>
         <Popover
