@@ -111,8 +111,8 @@ const Node: FC<NodeProps> = (props) => {
                   data={record}
                   keyProp={keyProp}
                   isMoreProp={isMoreProp}
-                  fetchData={fetchData}
-                  renderActions={renderActions}
+                  fetchData={props?.fetchData}
+                  renderActions={props?.renderActions}
                   renderAuthor={renderAuthor}
                   renderAvatar={renderAvatar}
                   renderContent={renderContent}
@@ -129,6 +129,7 @@ const Node: FC<NodeProps> = (props) => {
             </ConditionalRender>
           </li>
         ))}
+
         <ConditionalRender conditional={!loading && hasMore()}>
           {() => (
             <li className={classNames(`${selectorPrefix}-children-item`, 'more')}>
@@ -145,6 +146,7 @@ const Node: FC<NodeProps> = (props) => {
                     }
                   </ConditionalRender>
                 </span>
+
                 <span>
                   <ConditionalRender
                     conditional={Util.isFunction(loadMoreReplyText)}
@@ -362,9 +364,9 @@ const Node: FC<NodeProps> = (props) => {
               <>
                 <ConditionalRender conditional={!loading}>{() => renderMore()}</ConditionalRender>
 
-                <ConditionalRender conditional={collapse}>
-                  {() => renderChildren()}
-                </ConditionalRender>
+                <ConditionalRender.Show conditional={collapse}>
+                  {renderChildren()}
+                </ConditionalRender.Show>
 
                 <ConditionalRender conditional={loading}>
                   {() => renderLoading?.()}
