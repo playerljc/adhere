@@ -109,9 +109,12 @@ const Node: FC<NodeProps> = (props) => {
                 <ReplyInfo
                   isReply
                   data={record}
+                  dataKeys={dataKeys}
+                  limit={limit}
                   keyProp={keyProp}
                   isMoreProp={isMoreProp}
                   fetchData={props?.fetchData}
+                  fetchReply={props?.fetchReply}
                   renderActions={props?.renderActions}
                   renderAuthor={renderAuthor}
                   renderAvatar={renderAvatar}
@@ -124,6 +127,8 @@ const Node: FC<NodeProps> = (props) => {
                   showReplyTextIcon={showReplyTextIcon}
                   hideReplyTextIcon={hideReplyTextIcon}
                   loadMoreCollapseTextIcon={loadMoreCollapseTextIcon}
+                  local={local}
+                  emojiPickerProps={emojiPickerProps}
                 />
               )}
             </ConditionalRender>
