@@ -138,15 +138,27 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
    * renderCell
    * @param config
    * @param dataSource
+   * @param groupIndex
+   * @param rowIndex
+   * @param columnIndex
    */
   function renderCell(
     config: ColumnConfig | null,
     dataSource: Record<string, any>,
+    groupIndex: number,
+    rowIndex: number,
+    columnIndex: number,
   ): ReactElement | null {
     if (!config) return null;
 
     if (config.render) {
-      return config.render(dataSource[config.dataIndex], dataSource);
+      return config.render(
+        dataSource[config.dataIndex],
+        dataSource,
+        groupIndex,
+        rowIndex,
+        columnIndex,
+      );
     }
 
     return dataSource[config.dataIndex];
@@ -177,7 +189,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
                 ...(fixedColumnConfig?.style || {}),
               }}
             >
-              {renderCell(fixedColumnConfig, dataSource)}
+              {renderCell(fixedColumnConfig, dataSource, -1, -1, -1)}
             </div>
           </div>
         </div>
@@ -188,13 +200,13 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
           <div className={`${selectorPrefix}-item`}>
             {columns
               .filter((column) => column !== fixedColumnConfig)
-              .map((column) => (
+              .map((column, columnIndex) => (
                 <div
                   key={column.dataIndex}
                   className={classNames(`${selectorPrefix}-cell`, column.className || '')}
                   style={{ ...(column.style || {}), width: column?.width || defaultCellWidth }}
                 >
-                  {renderCell(column, dataSource)}
+                  {renderCell(column, dataSource, -1, -1, columnIndex)}
                 </div>
               ))}
           </div>
@@ -213,17 +225,21 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
    * @param autoWrapStyle
    * @param autoInnerClassName
    * @param autoInnerStyle
+   * @param groupIndex
    */
-  function renderMasterGroupContent({
-    dataSource = [],
-    columns = [],
-    fixedWrapClassName = '',
-    fixedWrapStyle = {},
-    autoWrapClassName = '',
-    autoWrapStyle = {},
-    autoInnerClassName = '',
-    autoInnerStyle = {},
-  }: IMasterItem): ReactElement {
+  function renderMasterGroupContent(
+    {
+      dataSource = [],
+      columns = [],
+      fixedWrapClassName = '',
+      fixedWrapStyle = {},
+      autoWrapClassName = '',
+      autoWrapStyle = {},
+      autoInnerClassName = '',
+      autoInnerStyle = {},
+    }: IMasterItem,
+    groupIndex: number,
+  ): ReactElement {
     const fixedColumnConfig = getFixedColumnConfig(columns);
 
     return (
@@ -232,15 +248,15 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
           className={classNames(`${selectorPrefix}-fixedWrap`, fixedWrapClassName || '')}
           style={{ ...(fixedWrapStyle || {}), width: fixedColumnConfig?.width || defaultCellWidth }}
         >
-          {dataSource.map((record, index) => (
-            <div key={index} className={`${selectorPrefix}-item`}>
+          {dataSource.map((record, rowIndex) => (
+            <div key={rowIndex} className={`${selectorPrefix}-item`}>
               <div
                 className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className || '')}
                 style={{
                   ...(fixedColumnConfig?.style || {}),
                 }}
               >
-                {renderCell(fixedColumnConfig, record)}
+                {renderCell(fixedColumnConfig, record, groupIndex, rowIndex, -1)}
               </div>
             </div>
           ))}
@@ -254,11 +270,11 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
             className={classNames(`${selectorPrefix}-autoInner`, autoInnerClassName || '')}
             style={{ ...autoInnerStyle }}
           >
-            {dataSource.map((record, index) => (
-              <div key={index} className={`${selectorPrefix}-item`}>
+            {dataSource.map((record, rowIndex) => (
+              <div key={rowIndex} className={`${selectorPrefix}-item`}>
                 {columns
                   .filter((column) => column !== fixedColumnConfig)
-                  .map((column) => (
+                  .map((column, columnIndex) => (
                     <div
                       key={column.dataIndex}
                       className={classNames(`${selectorPrefix}-cell`, column.className || '')}
@@ -267,7 +283,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
                         width: column?.width || defaultCellWidth,
                       }}
                     >
-                      {renderCell(column, record)}
+                      {renderCell(column, record, groupIndex, rowIndex, columnIndex)}
                     </div>
                   ))}
               </div>
@@ -281,18 +297,18 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
   /**
    * renderMasterGroup
    * @param config
-   * @param index
+   * @param groupIndex
    */
-  function renderMasterGroup(config: IMasterItem, index): ReactElement {
+  function renderMasterGroup(config: IMasterItem, groupIndex): ReactElement {
     const { title = undefined, className = '', style = {} } = config;
 
     return (
       <StickupLayoutItem
-        key={index}
+        key={groupIndex}
         className={classNames(className || '')}
         style={{ ...(style || {}) }}
         title={title}
-        content={renderMasterGroupContent(config)}
+        content={renderMasterGroupContent(config, groupIndex)}
       />
     );
   }

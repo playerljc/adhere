@@ -262,7 +262,10 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
           break;
         }
       }
-      if (!item) return false;
+
+      if (!item) {
+        item = index.current[index.current.length - 1];
+      }
 
       scrollTo(item, _duration);
     },
@@ -283,7 +286,10 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
           break;
         }
       }
-      if (!item) return false;
+
+      if (!item) {
+        item = index.current[index.current.length - 1];
+      }
 
       scrollTo(item, _duration);
     },
