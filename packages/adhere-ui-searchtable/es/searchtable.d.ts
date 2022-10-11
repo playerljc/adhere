@@ -158,35 +158,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     columnSettingEffect(props: SearchTableProps): void;
     /**
-     * renderTableNumberColumn
-     * @description - 渲染序号列
-     * @param number
-     * @param params
-     * @protected
-     */
-    renderTableNumberColumn(number: string | undefined, params: {
-        value: any;
-        record: object;
-        index: number;
-    }): JSX.Element;
-    /**
-     * getLimit
-     * @description limit参数
-     */
-    getLimit(): number;
-    /**
-     * getPagination - 获取分页信息
-     */
-    getPagination(): {
-        onChange: (page: any, limit: any) => void;
-        onShowSizeChange: (page: any, limit: any) => void;
-        total: number;
-        current: S["page"] | undefined;
-        pageSize: S["limit"] | undefined;
-        showQuickJumper: boolean;
-        showTotal: (total: any) => string;
-    };
-    /**
      * onSearchPanelCollapse
      * @description 查询面板展开之前
      * @protected
@@ -215,6 +186,23 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     sortOrder(columnName: string): string;
     /**
+     * getLimit
+     * @description limit参数
+     */
+    getLimit(): number;
+    /**
+     * getPagination - 获取分页信息
+     */
+    getPagination(): {
+        onChange: (page: any, limit: any) => void;
+        onShowSizeChange: (page: any, limit: any) => void;
+        showTotal: (total: any) => string;
+        total: number;
+        current: S["page"] | undefined;
+        pageSize: S["limit"] | undefined;
+        showQuickJumper: boolean;
+    };
+    /**
      * getTableDensity
      * @description 表格密度
      */
@@ -224,6 +212,18 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return Array<any>
      */
     getTableColumns(): any[];
+    /**
+     * renderTableNumberColumn
+     * @description - 渲染序号列
+     * @param number
+     * @param params
+     * @protected
+     */
+    renderTableNumberColumn(number: string | undefined, params: {
+        value: any;
+        record: object;
+        index: number;
+    }): JSX.Element;
     /**
      * renderColumnSetting
      * @description 创建列设置组件

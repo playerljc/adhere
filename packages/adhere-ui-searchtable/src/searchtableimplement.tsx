@@ -246,7 +246,7 @@ class SearchTableImplement
             ...(this.state.selectedRowKeys || []),
             ...records.map((r) => r[rowKey]),
           ],
-          selectedRows: [...(this.state.selectedRowKeys || []), ...records],
+          selectedRows: [...(this.state.selectedRows || []), ...records],
         });
       } else {
         // remove
@@ -312,6 +312,15 @@ class SearchTableImplement
   }
 
   /**
+   * renderSearchFooterItems
+   * @description - 渲染表格的工具栏
+   * @override
+   */
+  renderSearchFooterItems(): Array<any> {
+    return [];
+  }
+
+  /**
    * getOrderFieldProp
    * @description - 获取排序字段
    * @override
@@ -354,7 +363,7 @@ class SearchTableImplement
    * @override
    */
   clear(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.setState(
         {
           ...this.getParams(),
@@ -372,15 +381,6 @@ class SearchTableImplement
         },
       );
     });
-  }
-
-  /**
-   * renderSearchFooterItems
-   * @description - 渲染表格的工具栏
-   * @override
-   */
-  renderSearchFooterItems(): Array<any> {
-    return [];
   }
 
   /**
@@ -448,7 +448,7 @@ class SearchTableImplement
       params[key] = this.state[key];
     });
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.setState(
         {
           searchParams: {

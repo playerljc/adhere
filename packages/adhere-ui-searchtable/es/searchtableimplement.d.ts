@@ -137,6 +137,12 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
      */
     renderInner(): ReactElement | null;
     /**
+     * renderSearchFooterItems
+     * @description - 渲染表格的工具栏
+     * @override
+     */
+    renderSearchFooterItems(): Array<any>;
+    /**
      * getOrderFieldProp
      * @description - 获取排序字段
      * @override
@@ -167,12 +173,6 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
      * @override
      */
     clear(): Promise<void>;
-    /**
-     * renderSearchFooterItems
-     * @description - 渲染表格的工具栏
-     * @override
-     */
-    renderSearchFooterItems(): Array<any>;
     /**
      * showLoading
      * @description - 是否显示遮罩

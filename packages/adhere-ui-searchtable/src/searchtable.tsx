@@ -334,72 +334,6 @@ abstract class SearchTable<
   }
 
   /**
-   * renderTableNumberColumn
-   * @description - 渲染序号列
-   * @param number
-   * @param params
-   * @protected
-   */
-  renderTableNumberColumn(
-    number: string = '',
-    params: { value: any; record: object; index: number },
-  ) {
-    return <span>{number}</span>;
-  }
-
-  /**
-   * getLimit
-   * @description limit参数
-   */
-  getLimit(): number {
-    return 10;
-  }
-
-  /**
-   * getPagination - 获取分页信息
-   */
-  getPagination() {
-    return {
-      onChange: (page, limit) => {
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            this.fetchData();
-          },
-        );
-      },
-      onShowSizeChange: (page, limit) => {
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            this.fetchData();
-          },
-        );
-      },
-      total: this.getTotal(),
-
-      current: this.state.page,
-
-      pageSize: this.state.limit,
-      showQuickJumper: true,
-      showTotal: (total /* [page, pageSize] */) => {
-        return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
-          page: this.state.page,
-
-          pageSize: this.state.limit,
-          total,
-        });
-      },
-    };
-  }
-
-  /**
    * onSearchPanelCollapse
    * @description 查询面板展开之前
    * @protected
@@ -471,6 +405,55 @@ abstract class SearchTable<
   }
 
   /**
+   * getLimit
+   * @description limit参数
+   */
+  getLimit(): number {
+    return 10;
+  }
+
+  /**
+   * getPagination - 获取分页信息
+   */
+  getPagination() {
+    return {
+      onChange: (page, limit) => {
+        this.setState(
+          {
+            page,
+            limit,
+          },
+          () => {
+            this.fetchData();
+          },
+        );
+      },
+      onShowSizeChange: (page, limit) => {
+        this.setState(
+          {
+            page,
+            limit,
+          },
+          () => {
+            this.fetchData();
+          },
+        );
+      },
+      showTotal: (total /* [page, pageSize] */) => {
+        return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
+          page: this.state.page,
+          pageSize: this.state.limit,
+          total,
+        });
+      },
+      total: this.getTotal(),
+      current: this.state.page,
+      pageSize: this.state.limit,
+      showQuickJumper: true,
+    };
+  }
+
+  /**
    * getTableDensity
    * @description 表格密度
    */
@@ -535,6 +518,20 @@ abstract class SearchTable<
     }
 
     return columns;
+  }
+
+  /**
+   * renderTableNumberColumn
+   * @description - 渲染序号列
+   * @param number
+   * @param params
+   * @protected
+   */
+  renderTableNumberColumn(
+    number: string = '',
+    params: { value: any; record: object; index: number },
+  ) {
+    return <span>{number}</span>;
   }
 
   /**
@@ -809,6 +806,7 @@ abstract class SearchTable<
                 {() => this.renderSearchForm()}
               </ConditionalRender>
             </Fixed>
+
             <Fixed>{this.renderSearchFooter()}</Fixed>
 
             <ConditionalRender conditional={!!this.renderSearchFormAfter}>
@@ -816,9 +814,11 @@ abstract class SearchTable<
             </ConditionalRender>
           </FlexLayout>
         </Fixed>
+
         <ConditionalRender conditional={!!this.renderTableHeader}>
           {() => <Fixed>{this.renderTableHeader()}</Fixed>}
         </ConditionalRender>
+
         <Auto
           className={classNames(
             `${selectorPrefix}-autowrapper`,
@@ -833,6 +833,7 @@ abstract class SearchTable<
             {this.renderTable()}
           </div>
         </Auto>
+
         <ConditionalRender conditional={!!this.renderTableFooter}>
           {() => <Fixed>{this.renderTableFooter()}</Fixed>}
         </ConditionalRender>
