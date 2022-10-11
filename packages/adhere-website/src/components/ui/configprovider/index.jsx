@@ -105,73 +105,29 @@ export default () => {
         config={[
           {
             border: true,
-            title: 'IData',
+            title: '属性',
             data: [
               {
-                params: 'name',
-                desc: '菜单名称',
-                type: 'string',
-                defaultVal: '',
-              },
-              {
-                params: 'icon',
-                desc: '菜单图标',
-                type: 'string',
-                defaultVal: '',
-              },
-              {
-                params: 'id',
-                desc: '菜单的唯一id',
-                type: 'string',
-                defaultVal: '',
-              },
-              {
-                params: 'disabled',
-                desc: '是否可用',
-                type: 'boolean',
-                defaultVal: 'true',
-              },
-              {
-                params: 'separation',
-                desc: '是否是分割线',
-                type: 'boolean',
-                defaultVal: 'false',
-              },
-              {
-                params: 'attribute',
-                desc: '自定义参数',
-                type: 'Object',
-                defaultVal: '',
+                params: 'intl',
+                desc: '国际化',
+                type: `
+                  {
+                    lang: 'en_US' | 'zh_CN' | 'pt_PT';
+                    locales: object;
+                    prefix: string;
+                  }
+                `,
+                defaultVal: `{
+                  lang: 'zh_CN',
+                  locales: {},
+                  prefix: 'local',
+                }`,
               },
               {
                 params: 'children',
-                desc: '孩子',
-                type: 'Array<IData>',
-                defaultVal: '[]',
-              },
-              {
-                params: 'className',
-                desc: '附加样式',
-                type: 'string',
-                defaultVal: '',
-              },
-              {
-                params: 'style',
-                desc: '附加样式',
-                type: 'Object',
-                defaultVal: '',
-              },
-              {
-                params: 'subMenuClassName',
-                desc: '附加样式',
-                type: 'string',
-                defaultVal: '',
-              },
-              {
-                params: 'subMenuStyle',
-                desc: '附加样式',
-                type: 'Object',
-                defaultVal: '',
+                desc: 'children',
+                type: '() => React.ReactNode',
+                defaultVal: 'null',
               },
             ],
           },
