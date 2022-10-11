@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-splitlayout",
-  "version": "1.0.21",
+  "version": "1.0.21-fix.1",
   "description": "实现分割窗体的布局，可以拉动调整大小",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-css": "^1.0.21",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.21",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.21-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

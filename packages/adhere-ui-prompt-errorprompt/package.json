@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-errorprompt",
-  "version": "1.0.21",
+  "version": "1.0.21-fix.1",
   "description": "错误的提示(就是为了全局统一)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,7 +31,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^1.0.21",
+    "@baifendian/adhere-util-intl": "^1.0.21-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

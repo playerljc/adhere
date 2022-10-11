@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-decorators",
-  "version": "1.0.21",
+  "version": "1.0.21-fix.1",
   "description": "装饰器",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-util": "^1.0.21",
-    "@baifendian/adhere-util-intl": "^1.0.21",
+    "@baifendian/adhere-util-intl": "^1.0.21-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",
