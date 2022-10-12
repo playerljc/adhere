@@ -441,7 +441,6 @@ export default () => {
                           </Value>
                         ),
                       },
-
                       {
                         key: 'YYYY/MM/DD H-m-s',
                         label: <Label>YYYY-MM-DD H-m-s</Label>,
@@ -451,7 +450,6 @@ export default () => {
                           </Value>
                         ),
                       },
-
                       {
                         key: 'YYYY/M/D HH-mm-ss',
                         label: <Label>YYYY/MM/DD HH-mm-ss</Label>,

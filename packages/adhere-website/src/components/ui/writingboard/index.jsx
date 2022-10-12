@@ -69,7 +69,7 @@ export default () => {
             name: `简易写字板`,
             cardProps: {
               description: {
-                title: '建议写字板',
+                title: '简易写字板',
                 info: '切换类型、颜色和粗细',
               },
             },
@@ -246,34 +246,43 @@ export default () => {
                 defaultVal: '',
               },
               {
-                params: 'zIndex',
-                desc: '层级',
-                type: 'boolean',
-                defaultVal: '',
+                params: 'defaultMode',
+                desc: '绘制模式',
+                type: `
+                  {
+                    // 直线
+                    LINE = 'line',
+                    // 矩形
+                    RECTANGLE = 'rectangle',
+                    // 圆形
+                    CIRCLE = 'circle',
+                    // 三角形
+                    TRIANGLE = 'triangle',
+                    // 自由绘制
+                    FREE = 'free',
+                    // 橡皮
+                    RUBBER = 'rubber',
+                  }
+                `,
+                defaultVal: 'line',
               },
               {
-                params: 'duration',
-                desc: '动画持续的事件',
+                params: 'defaultStrokeStyle',
+                desc: '线条颜色',
+                type: 'string',
+                defaultVal: '#000',
+              },
+              {
+                params: 'defaultLineWidth',
+                desc: '线条宽度',
+                type: 'number',
+                defaultVal: '1',
+              },
+              {
+                params: 'resizeTime',
+                desc: '防抖的事件',
                 type: 'number',
                 defaultVal: '300',
-              },
-              {
-                params: 'target',
-                desc: '获取滚动的目标元素',
-                type: '() => HtmlElement | Window',
-                defaultVal: '',
-              },
-              {
-                params: 'onTrigger',
-                desc: '点击事件',
-                type: '() => void',
-                defaultVal: '',
-              },
-              {
-                params: 'onScrollTop',
-                desc: '滚动',
-                type: '(value: number) => void',
-                defaultVal: '',
               },
             ],
           },
