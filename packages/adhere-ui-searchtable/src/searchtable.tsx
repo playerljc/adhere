@@ -499,25 +499,28 @@ abstract class SearchTable<
 
       return [
         {
-          title: Intl.v('序号'),
-          dataIndex: '_number',
-          key: '_number',
-          align: 'center',
-          width: getTableNumberColumnWidth ?? 80,
-          render: (v, r, index) => (
-            <ConditionalRender
-              conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
-              noMatch={() =>
-                this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
-                  value: v,
-                  record: r,
-                  index,
-                })
-              }
-            >
-              {() => this.renderTableNumberColumn(index + 1, { value: v, record: r, index })}
-            </ConditionalRender>
-          ),
+          ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() || {} : {}),
+          ...{
+            title: Intl.v('序号'),
+            dataIndex: '_number',
+            key: '_number',
+            align: 'center',
+            width: getTableNumberColumnWidth ?? 80,
+            render: (v, r, index) => (
+              <ConditionalRender
+                conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
+                noMatch={() =>
+                  this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
+                    value: v,
+                    record: r,
+                    index,
+                  })
+                }
+              >
+                {() => this.renderTableNumberColumn(index + 1, { value: v, record: r, index })}
+              </ConditionalRender>
+            ),
+          },
         },
       ].concat(columns as any[]);
     }
