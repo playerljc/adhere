@@ -31,6 +31,10 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getTableNumberColumnWidth(): number;
     /**
+     * getTableNumberColumnProps - 获取序号列的Props
+     */
+    abstract getTableNumberColumnProps(): object;
+    /**
      * getNumberGeneratorRule
      * @description 获取符号列的生成规则
      */

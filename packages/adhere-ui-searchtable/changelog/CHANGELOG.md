@@ -1,3 +1,11 @@
+# 1.0.20
+
+***
+
+2022-10-12
+
+* 加入getTableNumberColumnProps方法
+
 # 1.0.19
 
 ***

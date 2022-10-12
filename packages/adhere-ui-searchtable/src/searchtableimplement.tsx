@@ -184,6 +184,13 @@ class SearchTableImplement
   }
 
   /**
+   * getTableNumberColumnProps
+   */
+  getTableNumberColumnProps(): object {
+    return {};
+  }
+
+  /**
    * getRowKey
    * @override
    * @description - 数据的主键

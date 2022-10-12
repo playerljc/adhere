@@ -88,6 +88,10 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
      */
     getTableNumberColumnWidth(): number;
     /**
+     * getTableNumberColumnProps
+     */
+    getTableNumberColumnProps(): object;
+    /**
      * getRowKey
      * @override
      * @description - 数据的主键
