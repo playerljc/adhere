@@ -470,7 +470,7 @@ export default () => {
         config={[
           {
             border: true,
-            title: '属性',
+            title: 'SuspenseProps',
             data: [
               {
                 params: 'reset',
@@ -483,6 +483,42 @@ export default () => {
                 desc: '自定义firstLoading',
                 type: 'React.ReactElement | null',
                 defaultVal: 'null',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'SuspenseSyncProps',
+            data: [
+              {
+                params: 'data',
+                desc: '数据',
+                type: 'any',
+                defaultVal: '{}',
+              },
+              {
+                params: 'isEmpty',
+                desc: '是否是空数据',
+                type: '() => boolean',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'SuspenseASyncProps',
+            data: [
+              {
+                params: 'isEmpty',
+                desc: '是否是空数据',
+                type: '() => boolean',
+                defaultVal: '',
+              },
+              {
+                params: 'fetchData',
+                desc: '加载数据',
+                type: '(params?:any) => Promise<void>',
+                defaultVal: '',
               },
             ],
           },
@@ -518,6 +554,14 @@ export default () => {
                 modifier: 'public',
                 params: [],
                 returnType: 'boolean',
+                returnDesc: '',
+              },
+              {
+                name: 'reset',
+                desc: '重置',
+                modifier: 'public',
+                params: [],
+                returnType: 'Promise<void>',
                 returnDesc: '',
               },
             ],
