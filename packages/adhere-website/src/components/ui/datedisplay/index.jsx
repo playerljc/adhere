@@ -811,7 +811,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -841,7 +841,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -871,7 +871,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -901,7 +901,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -931,7 +931,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -961,7 +961,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -991,7 +991,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1021,7 +1021,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1051,7 +1051,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1081,7 +1081,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1111,7 +1111,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1135,7 +1135,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1159,7 +1159,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1184,7 +1184,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1202,7 +1202,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1220,7 +1220,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1238,7 +1238,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1256,7 +1256,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1274,7 +1274,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1292,7 +1292,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1310,7 +1310,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1328,7 +1328,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
@@ -1346,7 +1346,7 @@ export default () => {
               {
                 params: 'value',
                 desc: '值',
-                type: '通datejs',
+                type: 'Date',
                 defaultVal: '',
               },
               {
