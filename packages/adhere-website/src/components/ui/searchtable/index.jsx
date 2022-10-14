@@ -1312,22 +1312,77 @@ export default () => {
         },
         config: [
           {
-            title: 'fixedTableSpaceBetweenTable.jsx',
+            title: 'renderSearchBetweenTable.jsx',
             mode: 'code',
             scope: { React },
-            codeText: ``,
-          },
-          {
-            title: 'fixedTableSpaceBetweenTable.less',
-            mode: 'code',
-            scope: { React },
-            codeText: ``,
+            codeText: `
+  import { Button, Col, Row, Statistic } from 'antd';
+  import React from 'react';
+
+  import Table from './table';
+
+  /**
+   * RenderSearchBetweenTable
+   * @classdesc
+   */
+  class RenderSearchBetweenTable extends Table {
+    renderSearchFormBefore() {
+      return (
+        <Row gutter={16}>
+          <Col span={12}>
+            <Statistic title="Active Users" value={112893} />
+          </Col>
+          <Col span={12}>
+            <Statistic title="Account Balance (CNY)" value={112893} precision={2} />
+            <Button style={{ marginTop: 16 }} type="primary">
+              Recharge
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Statistic title="Active Users" value={112893} loading />
+          </Col>
+        </Row>
+      );
+    }
+
+    renderSearchFormAfter() {
+      return (
+        <Row gutter={16}>
+          <Col span={12}>
+            <Statistic title="Active Users" value={112893} />
+          </Col>
+          <Col span={12}>
+            <Statistic title="Account Balance (CNY)" value={112893} precision={2} />
+            <Button style={{ marginTop: 16 }} type="primary">
+              Recharge
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Statistic title="Active Users" value={112893} loading />
+          </Col>
+        </Row>
+      );
+    }
+  }
+
+  export default RenderSearchBetweenTable;
+            `,
           },
           {
             title: 'index.jsx',
             mode: 'code',
             scope: { React },
-            codeText: ``,
+            codeText: `
+  <div style={{ display: 'flex', height: 800 }}>
+    <RenderSearchBetweenTable
+      style={{ height: '100%' }}
+      isShowExpandSearch
+      defaultExpandSearchCollapse={false}
+      fixedHeaderAutoTable
+      pagination={pagination3}
+    />
+  </div>
+            `,
           },
         ],
         type: 'PlayGroundMulit',
