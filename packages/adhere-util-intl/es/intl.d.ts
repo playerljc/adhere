@@ -1,6 +1,7 @@
 import intl from 'react-intl-universal';
 /**
  * getLocal
+ * @description 生成k,v的对象
  * @param prefix
  * @param data
  */
@@ -20,10 +21,11 @@ declare const _default: {
      * @param {Object} - ...other
      * @param reload 是否是重新载入
      */
-    init({ prefix, currentLocale, locales, ...other }: {
+    init({ prefix, currentLocale, locales, mainLanguage, ...other }: {
         prefix: string;
         currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
         locales: any;
+        mainLanguage: string;
     }, reload?: boolean): Promise<any>;
     /**
      * isInit
