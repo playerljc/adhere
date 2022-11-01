@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-confirm-importantconfirm",
-  "version": "1.0.21-fix.1",
+  "version": "1.0.21-fix.3",
   "description": "重要操作确认提示",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,9 +31,9 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-messagedialog": "^1.0.21-fix.1",
-    "@baifendian/adhere-util-intl": "^1.0.21-fix.1",
-    "@baifendian/adhere-util-resource": "^1.0.21-fix.1",
+    "@baifendian/adhere-ui-messagedialog": "^1.0.21-fix.3",
+    "@baifendian/adhere-util-intl": "^1.0.21-fix.3",
+    "@baifendian/adhere-util-resource": "^1.0.21-fix.3",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

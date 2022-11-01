@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-comment",
-  "version": "1.0.21-fix.1",
+  "version": "1.0.21-fix.3",
   "description": "评论",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -33,14 +33,14 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@baifendian/adhere-ui-backtopanimation": "^1.0.21-fix.1",
+    "@baifendian/adhere-ui-backtopanimation": "^1.0.21-fix.3",
     "@baifendian/adhere-ui-conditionalrender": "^1.0.21",
     "@baifendian/adhere-ui-css": "^1.0.21",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.21-fix.1",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.21-fix.3",
     "@baifendian/adhere-ui-hooks": "^1.0.21",
-    "@baifendian/adhere-ui-scrollload": "^1.0.21-fix.1",
+    "@baifendian/adhere-ui-scrollload": "^1.0.21-fix.3",
     "@baifendian/adhere-util": "^1.0.21",
-    "@baifendian/adhere-util-intl": "^1.0.21-fix.1",
+    "@baifendian/adhere-util-intl": "^1.0.21-fix.3",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
     "@types/emoji-mart": "^3.0.9",
