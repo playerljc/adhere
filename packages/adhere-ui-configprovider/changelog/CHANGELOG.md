@@ -4,7 +4,7 @@
 
 2022-11-01
 
-* 加入adhere-ui-configprovider组件
+* Intl修改
 
 # 1.0.0
 
