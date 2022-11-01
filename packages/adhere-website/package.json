@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-website",
-  "version": "1.0.21-fix.3",
+  "version": "1.0.21-fix.4",
   "private": true,
   "description": "adhere的website",
   "homepage": "https://github.com/playerljc/adhere",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.21-fix.3",
+    "@baifendian/adhere": "^1.0.21-fix.4",
     "@ctsj/router": "^1.0.1",
     "@ctsj/state": "^2.0.21",
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
