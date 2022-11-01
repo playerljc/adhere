@@ -17,7 +17,7 @@ const { useForceUpdate } = Hooks;
  */
 const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   const {
-    intl: { lang, locales, prefix },
+    intl: { lang, locales, prefix, mainLanguage },
     children,
   } = props;
 
@@ -31,6 +31,7 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
         prefix: prefix || 'local',
         currentLocale: lang,
         locales: locales || {},
+        mainLanguage: mainLanguage || 'zh_CN',
       },
       Intl.isInit(),
     ).then(() => {
