@@ -16,7 +16,7 @@ export default (history, routePath = '/') => {
   //   window.history.go(-1);
   // }
 
-  if (!!window.history.length) {
+  if (/*!!window.history.length*/window.history.length > 1) {
     window.history.back();
   } else {
     history.replace(routePath || '/');
