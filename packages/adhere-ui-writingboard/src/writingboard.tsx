@@ -578,8 +578,6 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
         }
       }
 
-      console.log('设置完背景色的imageData', imageData.data);
-
       ctx?.current?.putImageData(imageData, 0, 0);
 
       // 生成base64字符串
