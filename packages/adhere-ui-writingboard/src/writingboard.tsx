@@ -10,6 +10,7 @@ import React, {
   useRef,
 } from 'react';
 
+import Util from '@baifendian/adhere-util';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 import { Mode, Point, WritingBoardHandle, WritingBoardProps } from './types';
@@ -541,6 +542,68 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
     stackIndex.current = 0;
   }
 
+  /**
+   * toDataURL
+   * @default canvas导出base64
+   * @param backgroundColor
+   * @param type
+   * @param quality
+   */
+  function toDataURL(backgroundColor?: string, type?: string, quality?: any) {
+    if (backgroundColor) {
+      const [R, G, B] = Util.colorToRgb(backgroundColor);
+
+      const fillsIndex: number[] = [];
+
+      // 先设置背景
+      let imageData = ctx?.current?.getImageData(
+        0,
+        0,
+        canvasRef?.current?.width!,
+        canvasRef?.current?.height!,
+      )!;
+
+      for (let i = 0; i < imageData?.data?.length; i += 4) {
+        // 当该像素是透明的，则设置成backgroundColor
+        if (imageData.data[i + 3] === 0) {
+          imageData.data[i] = R; // R
+          imageData.data[i + 1] = G; // G
+          imageData.data[i + 2] = B; // B
+          imageData.data[i + 3] = 255;
+
+          fillsIndex.push(i);
+          fillsIndex.push(i + 1);
+          fillsIndex.push(i + 2);
+          fillsIndex.push(i + 3);
+        }
+      }
+
+      console.log('设置完背景色的imageData', imageData.data);
+
+      ctx?.current?.putImageData(imageData, 0, 0);
+
+      // 生成base64字符串
+      const base64 = canvasRef?.current?.toDataURL(type || 'image/png', quality);
+
+      // 删除背景
+      imageData = ctx?.current?.getImageData(
+        0,
+        0,
+        canvasRef?.current?.width!,
+        canvasRef?.current?.height!,
+      )!;
+
+      fillsIndex.forEach((index) => {
+        imageData.data[index] = 0;
+      });
+      ctx?.current?.putImageData(imageData, 0, 0);
+
+      return base64;
+    }
+
+    return canvasRef?.current?.toDataURL(type || 'image/png', quality);
+  }
+
   useImperativeHandle(ref, () => ({
     setMode: (mode) => {
       curShape.current = mode;
@@ -559,8 +622,11 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
     /**
      * toDataURL
      * @description 获取base64
+     * @param backgroundColor 背景色
+     * @param type 导出的图片类型
+     * @param quality 搭配出图片的质量
      */
-    toDataURL: () => canvasRef?.current?.toDataURL('image/png', 1.0),
+    toDataURL,
   }));
 
   useLayoutEffect(() => {

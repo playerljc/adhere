@@ -79,7 +79,7 @@ export default () => {
               <Button
                 type="primary"
                 onClick={() => {
-                  const base64 = ref.current.toDataURL();
+                  const base64 = ref.current.toDataURL('#fff', 'image/png', 1.0);
 
                   const save_link = document.createElement('a');
                   save_link.href = base64;

@@ -38,7 +38,7 @@ export default {
           result.push(`${number}`, `${number}`);
           return result;
         }, [])
-        .join();
+        .join('');
     }
 
     // 都变成6位了

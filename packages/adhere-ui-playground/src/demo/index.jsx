@@ -127,8 +127,6 @@ const Com = () => {
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
-  console.log(111);
-
   <DelConfirm
     success={() => {
       return new Promise((resolve) => {
@@ -149,8 +147,6 @@ const Com = () => {
                   codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
-
-  console.log(222);
 
   <DelConfirm
     success={() => {
@@ -204,8 +200,6 @@ const Com = () => {
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
 
-  console.log(111);
-
   <DelConfirm
     success={() => {
       return new Promise((resolve) => {
@@ -226,8 +220,6 @@ const Com = () => {
               codeText: `
   import React from 'react';
   import { DelConfirm } from '@baifendian/adhere';
-
-  console.log(222);
 
   <DelConfirm
     success={() => {

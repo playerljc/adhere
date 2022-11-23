@@ -153,8 +153,6 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
    */
   useEffect(() => setActiveAnchor(props.activeAnchor || ''), [props.activeAnchor]);
 
-  console.log('anchors', anchors);
-
   /**
    * render jsx
    */
