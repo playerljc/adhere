@@ -6,6 +6,8 @@
 
 * **adhere-ui-historyback**
   - 修改为返回的判断逻辑
+* **adhere-util**
+  - color加入新方法
 
 # 1.0.21
 
