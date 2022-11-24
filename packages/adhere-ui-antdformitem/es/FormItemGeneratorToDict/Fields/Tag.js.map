@@ -1,0 +1,1 @@
+{"version":3,"file":"Tag.js","sources":["FormItemGeneratorToDict/Fields/Tag.js"],"sourcesContent":["var FormItemComponents = {};\r\nexport default (function () { return FormItemComponents; });\r\n"],"names":["FormItemComponents"],"mappings":"AAAA,IAAIA,mBAAqB,kBACV,WAAe,OAAOA,kBAAqB"}

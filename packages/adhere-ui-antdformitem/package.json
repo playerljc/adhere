@@ -1,0 +1,56 @@
+{
+  "name": "@baifendian/adhere-ui-antdformitem",
+  "version": "1.0.0",
+  "description": "Antd的FormItem进阶",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "lib",
+    "es",
+    "umd"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage:cjs": "ctbuild buildpackagets",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
+    "buildumd": "ctbuild buildumd --packagename AdhereAntdFormItem --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.2"
+  },
+  "dependencies": {
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.21",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.21-fix.3",
+    "@baifendian/adhere-ui-hooks": "^1.0.21",
+    "@baifendian/adhere-util-dict": "^1.0.21",
+    "@baifendian/adhere-util-intl": "^1.0.21-fix.3",
+    "@baifendian/adhere-util-resource": "^1.0.21-fix.3",
+    "@baifendian/adhere-util-watchmemoized": "^1.0.21",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "antd": "^4.22.2"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/build": "^4.0.19",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

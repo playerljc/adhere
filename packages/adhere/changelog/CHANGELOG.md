@@ -10,6 +10,8 @@
   - color加入新方法
 * **adhere-ui-writingboard**
   - 加入导出图片设置背景色
+* **adhere-ui-antdformitem**
+  - 加入adhere-ui-antdformitem代码
 
 # 1.0.21
 
