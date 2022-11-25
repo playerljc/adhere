@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import React from 'react';
 
+// @ts-ignore
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Resource from '@baifendian/adhere-util-resource';
 
@@ -36,10 +37,14 @@ function createFactory(Component, defaultProps) {
     const props = { ...defaultProps, ..._props };
 
     if (!('getPopupContainer' in props)) {
-      props.getPopupContainer = (el) => getEl?.() || el?.parentElement || document.body;
+      props.getPopupContainer = (el) => {
+        return getEl?.() || el?.parentElement || document.body;
+      };
     }
 
-    return <Component {...props}>{props.children}</Component>;
+    const { children, ...reset } = props;
+
+    return <Component {...reset}>{children}</Component>;
   }
 
   Object.assign(fn, Component);
@@ -59,10 +64,14 @@ export const MultipleSelect = createFactory(AntSelect, {
   filterOption: (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
 });
 
-export const TreeSelect = createFactory(AntTreeSelect, {});
+export const TreeSelect = createFactory(AntTreeSelect, {
+  showSearch: true,
+  allowClear: true,
+});
 
 export const AutoComplete = createFactory(AntAutoComplete, {
   allowClear: true,
+  filterOption: (input, option) => option!.value.toUpperCase().indexOf(input.toUpperCase()) >= 0,
 });
 
 export const DatePicker = createFactory(AntDatePicker, {

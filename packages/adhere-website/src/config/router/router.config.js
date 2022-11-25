@@ -1,6 +1,4 @@
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-import React from 'react';
-
 import IframeServer from '@/components/util/iframeio/server';
 import Components from '@/config/router/routerComponentRegister';
 import BasicLayout from '@/lib/BasicLayout';
@@ -79,6 +77,7 @@ const {
   Comment,
   ConfigProvider,
   IframeIO,
+  AntdFormItem,
 } = Components;
 
 export default () => [
@@ -405,6 +404,11 @@ export default () => [
                 path: '/adhere/component/ui/configprovider',
                 name: 'ConfigProvider',
                 component: ConfigProvider,
+              },
+              {
+                path: '/adhere/component/ui/antdformitem',
+                name: 'AntdFormItem',
+                component: AntdFormItem,
               },
             ],
           },
