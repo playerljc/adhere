@@ -114,6 +114,19 @@ declare const _default: (superClass: any, searchAndPaginParamsMemo: any) => {
          */
         assignSearchConfig(searchConfig: any, column: any): any;
         /**
+         * getGridSearchFormGroupParams
+         */
+        getGridSearchFormGroupParams(): ({
+            name: string;
+            columnCount: number;
+            colgroup: (string | undefined)[];
+            data: any;
+        }[] | {
+            rowCount?: undefined;
+        } | {
+            rowCount: number;
+        })[];
+        /**
          * renderSearchForm
          * 渲染Table查询的表单
          * @override

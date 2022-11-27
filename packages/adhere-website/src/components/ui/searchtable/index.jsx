@@ -14,6 +14,7 @@ import ColumnResizeTable from './columnResizeTable';
 import ColumnSettingTable from './columnSettingTable';
 import FewTable from './fewTable';
 import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
+import ProSearchStateTableImpl from './proStateSearchTable';
 import RenderSearchBetweenTable from './renderSearchBetweenTable';
 import RowSelectedContinuous from './rowSelectedContinuous';
 import RowSelectedNormal from './rowSelectedNormal';
@@ -1398,6 +1399,32 @@ export default () => {
               />
             </div>
           </>
+        ),
+      },
+      {
+        id: `p14`,
+        name: `ProSearchStateTable`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'ProSearchStateTable',
+            info: 'ProSearchStateTable',
+          },
+        },
+        codeText: ``,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ display: 'flex', height: 700 }}>
+            <ProSearchStateTableImpl
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination4}
+            />
+          </div>
         ),
       },
     ];

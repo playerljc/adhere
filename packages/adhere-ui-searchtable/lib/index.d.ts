@@ -29,6 +29,16 @@ declare const _default: {
             getLinkColumnDataIndex(): string;
             getPagination(): any;
             assignSearchConfig(searchConfig: any, column: any): any;
+            getGridSearchFormGroupParams(): ({
+                name: string;
+                columnCount: number;
+                colgroup: (string | undefined)[];
+                data: any;
+            }[] | {
+                rowCount?: undefined;
+            } | {
+                rowCount: number;
+            })[];
             renderSearchForm(): JSX.Element;
             renderSearchFooterItems(_defaultItems: any): any[];
             renderSearchFooterItemsImpl(defaultItems: any): any[];
@@ -66,6 +76,16 @@ declare const _default: {
             getLinkColumnDataIndex(): string;
             getPagination(): any;
             assignSearchConfig(searchConfig: any, column: any): any;
+            getGridSearchFormGroupParams(): ({
+                name: string;
+                columnCount: number;
+                colgroup: (string | undefined)[];
+                data: any;
+            }[] | {
+                rowCount?: undefined;
+            } | {
+                rowCount: number;
+            })[];
             renderSearchForm(): JSX.Element;
             renderSearchFooterItems(_defaultItems: any): any[];
             renderSearchFooterItemsImpl(defaultItems: any): any[];

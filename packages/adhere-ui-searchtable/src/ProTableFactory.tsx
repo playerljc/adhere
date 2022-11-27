@@ -606,12 +606,10 @@ export default (superClass, searchAndPaginParamsMemo) =>
     }
 
     /**
-     * renderSearchForm
-     * 渲染Table查询的表单
-     * @override
+     * getGridSearchFormGroupParams
      */
-    renderSearchForm() {
-      return this.renderGridSearchFormGroup(
+    getGridSearchFormGroupParams() {
+      return [
         [
           {
             name: 'g1',
@@ -631,7 +629,17 @@ export default (superClass, searchAndPaginParamsMemo) =>
           // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
           // insertSearchButton: null,
         },
-      );
+      ];
+    }
+
+    /**
+     * renderSearchForm
+     * 渲染Table查询的表单
+     * @override
+     */
+    renderSearchForm() {
+      // @ts-ignore
+      return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
     }
 
     /***

@@ -71,4 +71,5 @@ export default [
   'Mostrar conteúdo da resposta',
   'Por favor, insira o conteúdo da resposta',
   'Adicionar à',
+  'Busca Avançada',
 ];

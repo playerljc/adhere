@@ -71,4 +71,5 @@ export default [
   'Show reply content',
   'Please enter the reply content',
   'Add to',
+  'Advanced Search',
 ];
