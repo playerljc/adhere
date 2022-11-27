@@ -44,6 +44,16 @@ declare const _default: (superClass: any, searchAndPaginParamsMemo: any) => {
          */
         hasOptionColumnFixed(): boolean;
         /**
+         * getPathName
+         * @description 不同路由模式下获取pathname的方法
+         */
+        getPathName(): string;
+        /**
+         * getSearch
+         * @description 不同路由模式下获取search的方法
+         */
+        getSearch(): string;
+        /**
          * getParams
          * @description 根据列设置返回查询参数
          * @default params

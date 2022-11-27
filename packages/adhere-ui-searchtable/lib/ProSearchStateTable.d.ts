@@ -11,6 +11,8 @@ declare const _default: {
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;
         hasOptionColumnFixed(): boolean;
+        getPathName(): string;
+        getSearch(): string;
         getParams(): any;
         getDateState(state: any): {};
         getDataKey(): string;

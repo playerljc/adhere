@@ -32,49 +32,13 @@ const {
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
 
-/**
- * getPathName
- * @description 不同路由模式下获取pathname的方法
- */
-const getPathName = () => {
-  if (window.location.hash) {
-    const hash = window.location.hash;
-    if (hash.lastIndexOf('?') !== -1) {
-      return hash.substring(1, hash.lastIndexOf('?'));
-    } else {
-      return hash.substring(1);
-    }
-  }
-
-  return window.location.pathname;
-};
-
-/**
- * getSearch
- * @description 不同路由模式下获取search的方法
- */
-const getSearch = () => {
-  if (window.location.hash) {
-    const hash = window.location.hash;
-
-    const index = hash.lastIndexOf('?');
-    if (index !== -1) {
-      return hash.substring(index);
-    }
-
-    return '';
-  }
-
-  return window.location.search;
-};
-
 export default (superClass, searchAndPaginParamsMemo) =>
   class extends superClass {
     constructor(props) {
       super(props);
 
       // 地址栏的pathname
-      this.pathname = typeof window !== 'undefined' ? getPathName() : '';
+      this.pathname = typeof window !== 'undefined' ? this.getPathName() : '';
 
       // 获取浏览器地址栏上默认的searchQuery和分页参数
       const defaultSearchAndPaginParams = this.initSearchAndPaginParams();
@@ -215,7 +179,7 @@ export default (superClass, searchAndPaginParamsMemo) =>
      * @description - 初始化组件的查询和分页参数
      */
     initSearchAndPaginParams() {
-      const query = qs.parse(getSearch(), { ignoreQueryPrefix: true });
+      const query = qs.parse(this.getSearch(), { ignoreQueryPrefix: true });
 
       const queryParams = {};
 
@@ -272,6 +236,22 @@ export default (superClass, searchAndPaginParamsMemo) =>
      */
     hasOptionColumnFixed() {
       return true;
+    }
+
+    /**
+     * getPathName
+     * @description 不同路由模式下获取pathname的方法
+     */
+    getPathName() {
+      return window.location.pathname;
+    }
+
+    /**
+     * getSearch
+     * @description 不同路由模式下获取search的方法
+     */
+    getSearch() {
+      return window.location.search;
     }
 
     /**

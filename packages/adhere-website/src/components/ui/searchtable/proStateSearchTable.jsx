@@ -62,7 +62,12 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   }
 
   componentWillUnmount() {
+    super.componentWillUnmount();
     this.unsubscribe();
+  }
+
+  getComponentId() {
+    return 'ProSearchStateTableImpl';
   }
 
   getServiceName() {

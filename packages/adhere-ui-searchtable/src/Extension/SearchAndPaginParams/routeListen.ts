@@ -24,6 +24,7 @@ export default ({ location, action }) => {
   const { pathname } = location;
 
   const findIndex = historyStack.lastIndexOf(pathname);
+
   // 没找到
   if (findIndex === -1) {
     // 清除查询条件
