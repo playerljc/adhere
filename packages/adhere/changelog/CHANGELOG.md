@@ -13,7 +13,7 @@
 * **adhere-ui-antdformitem**
   - 加入adhere-ui-antdformitem代码
 * **adhere-ui-searchtable**
-  - 加入ProTable
+  - 加入ProSearchTable
 
 # 1.0.21
 

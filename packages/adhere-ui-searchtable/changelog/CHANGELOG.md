@@ -4,7 +4,7 @@
 
 2022-11-26
 
-* 加入ProTable
+* 加入ProSearchTable
 
 # 1.0.20
 
