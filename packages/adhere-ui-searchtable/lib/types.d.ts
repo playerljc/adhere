@@ -1,7 +1,7 @@
 import type { TableProps } from 'antd/lib/table/Table';
 import type { ColumnType } from 'antd/lib/table/interface';
 import { RefObject } from 'react';
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 export interface ColumnTypeExt extends ColumnType<any> {
     authorized?: () => boolean;
@@ -68,6 +68,63 @@ export interface SearchTableImplementState extends SearchTableState {
     selectedRowKeys?: string[];
     selectedRows?: any[];
     searchParams?: any;
+}
+export interface AdvancedSearchPanelGroupData {
+    className: string;
+    style: CSSProperties;
+    name: string;
+    width: string | number;
+    defaultLabelWidth: number;
+    padding: number;
+    colgroup: number[];
+    columnCount: number;
+    data: {
+        key: string;
+        label: ReactNode;
+        value: ReactNode;
+    }[];
+}
+export interface AdvancedSearchPanelTableGridLayoutConfig {
+    className?: string;
+    style?: CSSProperties;
+    innerClassName?: string;
+    innerStyle?: CSSProperties;
+    bordered: boolean;
+    layout: 'horizontal' | 'vertical';
+    density?: string | number;
+    parity?: boolean;
+}
+export interface AdvancedSearchPanelSearchConfig {
+    rowCount: string;
+    showStrategy: string;
+    advancedSearch: {
+        className: string;
+        style: CSSProperties;
+        width: number | string;
+        mask: boolean;
+        zIndex: number;
+        time: number;
+        direction: string;
+        collapse: boolean;
+        getPopupContainer: Function;
+        onBeforeShow: Function;
+        onBeforeClose: Function;
+        onAfterShow: Function;
+        onAfterClose: Function;
+    };
+    renderTitleLabel?: Function;
+    renderCollapse?: Function;
+    renderSearchButton?: Function;
+    insertSearchButton?: Function;
+}
+export interface AdvancedSearchPanelProps {
+    groupData: AdvancedSearchPanelGroupData[];
+    tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+    remainingGroupData: AdvancedSearchPanelGroupData[];
+    advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+    onSearch: Function;
+    onReset: Function;
+    onCollapse: Function;
 }
 /**
  * TableDensity

@@ -1,0 +1,56 @@
+.adhere-ui-searchtable-advancedsearchpanel {
+  padding: 0;
+}
+
+.adhere-ui-searchtable-advancedsearchpanel-inner {
+  height: 100%;
+
+  .adhere-ui-searchtable-advancedsearchpanel-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+
+    > .adhere-ui-searchtable-advancedsearchpanel-title {
+      display: flex;
+      align-items: center;
+    }
+
+    > .adhere-ui-searchtable-advancedsearchpanel-collapse {
+      display: flex;
+      align-items: center;
+      color: #999;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .adhere-ui-searchtable-advancedsearchpanel-main {
+    > .adhere-ui-searchtable-advancedsearchpanel-main-inner {
+      display: flex;
+      flex-direction: column;
+      //max-height: 100%;
+      overflow: hidden;
+
+      > .adhere-ui-searchtable-advancedsearchpanel-scroll {
+        flex-grow: 1;
+        min-height: 0;
+      }
+
+      > .adhere-ui-searchtable-advancedsearchpanel-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0;
+
+        > .adhere-ui-searchtable-advancedsearchpanel-item {
+          &:not(:last-child) {
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+}

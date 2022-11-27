@@ -12,6 +12,8 @@
   - 加入导出图片设置背景色
 * **adhere-ui-antdformitem**
   - 加入adhere-ui-antdformitem代码
+* **adhere-ui-searchtable**
+  - 加入ProTable
 
 # 1.0.21
 

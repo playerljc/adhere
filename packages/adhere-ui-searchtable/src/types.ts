@@ -6,8 +6,9 @@ import type {
   // TablePaginationConfig,
   // TableRowSelection,
 } from 'antd/lib/table/interface';
+import PropTypes from 'prop-types';
 import { RefObject } from 'react';
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 
@@ -88,6 +89,79 @@ export interface SearchTableImplementState extends SearchTableState {
   selectedRowKeys?: string[];
   selectedRows?: any[];
   searchParams?: any;
+}
+
+export interface AdvancedSearchPanelGroupData {
+  className: string;
+  style: CSSProperties;
+  // group名称
+  name: string;
+  // group的宽度，默认是100%
+  width: string | number;
+  // 缺省的Label宽度
+  defaultLabelWidth: number;
+  // 缺省的padding
+  padding: number;
+  // 列设置 auto表示自适应
+  colgroup: number[];
+  // 列数
+  columnCount: number;
+  data: {
+    key: string;
+    // Label组件
+    label: ReactNode;
+    // Value组件
+    value: ReactNode;
+  }[];
+}
+
+export interface AdvancedSearchPanelTableGridLayoutConfig {
+  className?: string;
+  style?: CSSProperties;
+  innerClassName?: string;
+  innerStyle?: CSSProperties;
+  // 是否有边框
+  bordered: boolean;
+  // 布局
+  layout: 'horizontal' | 'vertical';
+  // 密度
+  density?: string | number;
+  // 是否是奇偶数不同色
+  parity?: boolean;
+}
+
+export interface AdvancedSearchPanelSearchConfig {
+  rowCount: string;
+  showStrategy: string;
+  advancedSearch: {
+    className: string;
+    style: CSSProperties;
+    width: number | string;
+    mask: boolean;
+    zIndex: number;
+    time: number;
+    direction: string;
+    collapse: boolean;
+    getPopupContainer: Function;
+    onBeforeShow: Function;
+    onBeforeClose: Function;
+    onAfterShow: Function;
+    onAfterClose: Function;
+  };
+  renderTitleLabel?: Function;
+  renderCollapse?: Function;
+  renderSearchButton?: Function;
+  insertSearchButton?: Function;
+}
+
+export interface AdvancedSearchPanelProps {
+  groupData: AdvancedSearchPanelGroupData[];
+  tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+  remainingGroupData: AdvancedSearchPanelGroupData[];
+  advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+  onSearch: Function;
+  onReset: Function;
+  onCollapse: Function;
 }
 
 /**

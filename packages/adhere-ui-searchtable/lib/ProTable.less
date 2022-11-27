@@ -1,0 +1,38 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
+.adhere-ui-searchtable-protable-headeritem {
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  > a {
+    > img {
+      width: 25px;
+    }
+  }
+}
+
+.adhere-ui-searchtable-protable-gridsearchformgroupwrap {
+  width: 100%;
+}
+
+.adhere-ui-searchtable-protable-headersearchwrap {
+  > .adhere-ui-searchtable-protable-headersearchwrap-main {
+    padding: 5px 5px 10px 5px;
+
+    :global {
+      .ant-select,
+      .ant-picker,
+      .ant-input-number {
+        width: 100%;
+      }
+    }
+  }
+
+  > .adhere-ui-searchtable-protable-headersearchwrap-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid @adhere-border-color;
+  }
+}
