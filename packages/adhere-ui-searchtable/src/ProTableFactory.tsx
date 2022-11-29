@@ -387,7 +387,7 @@ export default (superClass, searchAndPaginParamsMemo) =>
      */
     getColumns(columns) {
       return (columns || super.getColumns()).map((t) => ({
-        ellipsis: 'ellipsis' in t ? t.ellipsis : true,
+        // ellipsis: 'ellipsis' in t ? t.ellipsis : true,
         ...t,
       }));
     }
@@ -418,8 +418,15 @@ export default (superClass, searchAndPaginParamsMemo) =>
       const linkColumn = columns.find(
         (t) => t.dataIndex === (this.getLinkColumnDataIndex() || '_linkColumn'),
       );
-      if (linkColumn && !('ellipsis' in linkColumn)) {
-        linkColumn.ellipsis = false;
+
+      if (linkColumn) {
+        if (!('ellipsis' in linkColumn)) {
+          linkColumn.ellipsis = false;
+        }
+
+        if (!('align' in linkColumn)) {
+          linkColumn.align = 'left';
+        }
       }
 
       return (
