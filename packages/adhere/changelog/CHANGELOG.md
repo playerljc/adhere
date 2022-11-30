@@ -14,6 +14,8 @@
   - 加入adhere-ui-antdformitem代码
 * **adhere-ui-searchtable**
   - 加入ProSearchTable
+* **adhere-util**
+  - 加入dateUtil
 
 # 1.0.21
 

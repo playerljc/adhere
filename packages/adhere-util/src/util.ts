@@ -1,6 +1,7 @@
 import Base from './base';
 import clientDetection from './clientDetection';
 import Color from './color';
+import Date from './date';
 import Dom from './dom';
 import Geometry from './geometry';
 import Math from './math';
@@ -21,4 +22,5 @@ export default {
   ...SystemManager,
   ...Tree,
   ...Url,
+  ...Date,
 };

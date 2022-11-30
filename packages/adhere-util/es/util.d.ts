@@ -1,12 +1,14 @@
 declare const _default: {
+    toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
+    toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
+    getCurrentTimestamp(): number;
+    getTimezone(): number;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
     }) => {
         [props: string]: any;
-        children?: any[] | undefined; /**
-         * 函数节流
-         */
+        children?: any[] | undefined;
         key?: string | number | undefined;
     }[];
     arrayToAntdTree: (arr: {
