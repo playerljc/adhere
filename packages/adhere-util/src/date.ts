@@ -2,7 +2,7 @@ const DateUtil = {
   /**
    * toTimestampByTimeZone
    * @description 根据format字符串和时区获取时间错
-   * @param str format的str
+   * @param str format的str YYYY-MM-DD HH:mm:ss
    * @param timezone utc的字符串 11 ~ 0 ~ -12
    * @return number timestamp 时间错
    */
@@ -35,11 +35,14 @@ const DateUtil = {
   },
   /**
    * getTimezone
-   * @description 获取当前Timezone
+   * @description 获取当前Timezone(时区) 11 ~ 0 ~ -12
    * @return number
    */
   getTimezone() {
-    return -Math.floor(new Date().getTimezoneOffset() / 60);
+    return -Math.floor(
+      //获取本地计算机上的时间与世界协调时间（UTC）之间的分钟差
+      new Date().getTimezoneOffset() / 60,
+    );
   },
 };
 

@@ -4,7 +4,9 @@
 
 2022-11-30
 
-* 加入dateUtil
+* 加入DateUtil
+* 加入FormatUtil
+* 加入EncryptUtil
 
 # 1.0.19
 

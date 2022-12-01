@@ -15,7 +15,9 @@
 * **adhere-ui-searchtable**
   - 加入ProSearchTable
 * **adhere-util**
-  - 加入dateUtil
+  - 加入DateUtil
+  - 加入FormatUtil
+  - 加入EncryptUtil
 
 # 1.0.21
 
