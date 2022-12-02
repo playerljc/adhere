@@ -1,6 +1,6 @@
 declare const _default: {
-    prettierJSON(_jsonStr?: string): string | undefined;
-    compressJSON(_jsonStr?: string): string | undefined;
+    prettierJSON(_jsonStr?: string): string;
+    compressJSON(_jsonStr?: string): string;
     prettierXML(_xmlStr?: string): any;
     compressXML(_xmlStr?: string): any;
     prettierHTML(_htmlStr?: string): any;

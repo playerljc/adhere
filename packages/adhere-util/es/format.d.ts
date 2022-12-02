@@ -5,14 +5,14 @@ declare const FormatUtil: {
      * @return string
      * @param _jsonStr
      */
-    prettierJSON(_jsonStr?: string): string | undefined;
+    prettierJSON(_jsonStr?: string): string;
     /**
      * compressJSON
      * @description 压缩JSON
      * @return string
      * @param _jsonStr
      */
-    compressJSON(_jsonStr?: string): string | undefined;
+    compressJSON(_jsonStr?: string): string;
     /**
      * prettierXML
      * @description 格式化XML

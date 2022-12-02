@@ -34,7 +34,6 @@
   "dependencies": {
     "@baifendian/adhere-util-preferences": "^1.0.18",
     "@baifendian/adhere-util-watchmemoized": "^1.0.21",
-    "jsonlint": "^1.6.3",
     "vkbeautify": "^0.99.3",
     "xml-objtree": "^0.24.2",
     "crypto-js": "^4.1.1"

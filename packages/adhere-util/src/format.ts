@@ -1,5 +1,3 @@
-// @ts-ignore
-import jsonlint from 'jsonlint';
 import vkbeautify from 'vkbeautify';
 import ObjTree from 'xml-objtree';
 
@@ -15,14 +13,9 @@ const FormatUtil = {
   prettierJSON(_jsonStr: string = '') {
     let jsonStr = (_jsonStr || '').trim();
     const glue = '  ';
-    let result = jsonlint.parse(jsonStr);
 
     try {
-      jsonlint.parse(jsonStr);
-
-      if (result) {
-        return JSON.stringify(JSON.parse(jsonStr), null, glue);
-      }
+      return JSON.stringify(JSON.parse(jsonStr), null, glue);
     } catch (e) {
       return _jsonStr;
     }
@@ -36,14 +29,9 @@ const FormatUtil = {
   compressJSON(_jsonStr: string = '') {
     let jsonStr = (_jsonStr || '').trim();
     const glue = '';
-    let result = jsonlint.parse(jsonStr);
 
     try {
-      jsonlint.parse(jsonStr);
-
-      if (result) {
-        return JSON.stringify(JSON.parse(jsonStr), null, glue);
-      }
+      return JSON.stringify(JSON.parse(jsonStr), null, glue);
     } catch (e) {
       return _jsonStr;
     }
