@@ -117,13 +117,6 @@ declare const _default: (superClass: any, searchAndPaginParamsMemo: any) => {
          */
         getPagination(): any;
         /**
-         * assignSearchConfig
-         * @description assign searchConfig
-         * @param searchConfig
-         * @param column
-         */
-        assignSearchConfig(searchConfig: any, column: any): any;
-        /**
          * getGridSearchFormGroupParams
          */
         getGridSearchFormGroupParams(): ({
@@ -136,6 +129,19 @@ declare const _default: (superClass: any, searchAndPaginParamsMemo: any) => {
         } | {
             rowCount: number;
         })[];
+        /**
+         * getGridSearchFormGroupDataByColumnConfig
+         * @description 通过列设置获取gridSearchFormGroup的Data数据
+         * @return Array
+         */
+        getGridSearchFormGroupDataByColumnConfig(): any;
+        /**
+         * assignSearchConfig
+         * @description assign searchConfig
+         * @param searchConfig
+         * @param column
+         */
+        assignSearchConfig(searchConfig: any, column: any): any;
         /**
          * renderSearchForm
          * 渲染Table查询的表单
@@ -167,12 +173,6 @@ declare const _default: (superClass: any, searchAndPaginParamsMemo: any) => {
             column: any;
             dataIndex: any;
         }): React.ReactNode;
-        /**
-         * getGridSearchFormGroupDataByColumnConfig
-         * @description 通过列设置获取gridSearchFormGroup的Data数据
-         * @return Array
-         */
-        getGridSearchFormGroupDataByColumnConfig(): any;
         /**
          * renderGridSearchFormGroup
          * @param group - TableGridLayout的分组数据

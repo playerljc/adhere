@@ -24,7 +24,6 @@ declare const _default: {
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
-        assignSearchConfig(searchConfig: any, column: any): any;
         getGridSearchFormGroupParams(): ({
             name: string;
             columnCount: number;
@@ -35,6 +34,8 @@ declare const _default: {
         } | {
             rowCount: number;
         })[];
+        getGridSearchFormGroupDataByColumnConfig(): any;
+        assignSearchConfig(searchConfig: any, column: any): any;
         renderSearchForm(): JSX.Element;
         renderSearchFooterItems(_defaultItems: any): any[];
         renderSearchFooterItemsImpl(defaultItems: any): any[];
@@ -43,7 +44,6 @@ declare const _default: {
             column: any;
             dataIndex: any;
         }): React.ReactNode;
-        getGridSearchFormGroupDataByColumnConfig(): any;
         renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
         renderOptionColumn(defaultItems: any, params: any): any;
     };

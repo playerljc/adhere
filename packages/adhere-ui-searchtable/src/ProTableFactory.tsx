@@ -549,6 +549,76 @@ export default (superClass, searchAndPaginParamsMemo) =>
     }
 
     /**
+     * getGridSearchFormGroupParams
+     */
+    getGridSearchFormGroupParams() {
+      return [
+        [
+          {
+            name: 'g1',
+            columnCount: 3,
+            colgroup: [, 'auto', , 'auto', , 'auto'],
+            data: this.getGridSearchFormGroupDataByColumnConfig(),
+          },
+        ],
+        {},
+        {
+          rowCount: 1,
+          // renderTitleLabel: () => <div>搜索</div>,
+          // // 渲染高级查询面板的Collapse
+          // renderCollapse: (collapse) => <div>收起</div>,
+          // // 渲染高级查询面板显示的按钮
+          // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
+          // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
+          // insertSearchButton: null,
+        },
+      ];
+    }
+
+    /**
+     * getGridSearchFormGroupDataByColumnConfig
+     * @description 通过列设置获取gridSearchFormGroup的Data数据
+     * @return Array
+     */
+    getGridSearchFormGroupDataByColumnConfig() {
+      const columns = this.getColumns(super.getColumns());
+
+      return columns
+        .filter((t) => '$search' in t && !!t.$search.visible)
+        .map((t) => {
+          const { $search, ...column } = t;
+
+          const searchConfig = this.assignSearchConfig($search, column);
+          const type = searchConfig?.type || 'input';
+          const dataIndex = searchConfig.dataIndex || t.dataIndex;
+          const title = $search.title || t.title;
+
+          return {
+            key: dataIndex,
+            label: <Label {...($search.labelAttrs || {})}>{title}：</Label>,
+            value: ConditionalRender.conditionalRender({
+              conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
+              /*Dict.value.SystemAuthoritySwitch.value
+                            ? Util.isAuthority(searchConfig.authority, this.authorized)
+                            : true*/ match: (
+                <Value {...($search.valueAttrs || {})}>
+                  {this.renderGridSearchFormGroupDataItem(type, {
+                    searchConfig,
+                    column,
+                    dataIndex,
+                  })}
+                </Value>
+              ),
+              noMatch: $search.renderNoAuthority ? (
+                <Value {...($search.valueAttrs || {})}>{$search?.renderNoAuthority?.()}</Value>
+              ) : null,
+            }),
+          };
+        })
+        .filter((t) => !!t.value);
+    }
+
+    /**
      * assignSearchConfig
      * @description assign searchConfig
      * @param searchConfig
@@ -590,33 +660,6 @@ export default (superClass, searchAndPaginParamsMemo) =>
         ...defaultSearchConfig,
         ...(searchConfig || {}),
       };
-    }
-
-    /**
-     * getGridSearchFormGroupParams
-     */
-    getGridSearchFormGroupParams() {
-      return [
-        [
-          {
-            name: 'g1',
-            columnCount: 3,
-            colgroup: [, 'auto', , 'auto', , 'auto'],
-            data: this.getGridSearchFormGroupDataByColumnConfig(),
-          },
-        ],
-        {},
-        {
-          rowCount: 1,
-          // renderTitleLabel: () => <div>搜索</div>,
-          // // 渲染高级查询面板的Collapse
-          // renderCollapse: (collapse) => <div>收起</div>,
-          // // 渲染高级查询面板显示的按钮
-          // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
-          // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
-          // insertSearchButton: null,
-        },
-      ];
     }
 
     /**
@@ -1294,49 +1337,6 @@ export default (superClass, searchAndPaginParamsMemo) =>
         column,
         dataIndex,
       });
-    }
-
-    /**
-     * getGridSearchFormGroupDataByColumnConfig
-     * @description 通过列设置获取gridSearchFormGroup的Data数据
-     * @return Array
-     */
-    getGridSearchFormGroupDataByColumnConfig() {
-      const columns = this.getColumns(super.getColumns());
-
-      return columns
-        .filter((t) => '$search' in t && !!t.$search.visible)
-        .map((t) => {
-          const { $search, ...column } = t;
-
-          const searchConfig = this.assignSearchConfig($search, column);
-          const type = searchConfig?.type || 'input';
-          const dataIndex = searchConfig.dataIndex || t.dataIndex;
-          const title = $search.title || t.title;
-
-          return {
-            key: dataIndex,
-            label: <Label {...($search.labelAttrs || {})}>{title}：</Label>,
-            value: ConditionalRender.conditionalRender({
-              conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
-              /*Dict.value.SystemAuthoritySwitch.value
-                ? Util.isAuthority(searchConfig.authority, this.authorized)
-                : true*/ match: (
-                <Value {...($search.valueAttrs || {})}>
-                  {this.renderGridSearchFormGroupDataItem(type, {
-                    searchConfig,
-                    column,
-                    dataIndex,
-                  })}
-                </Value>
-              ),
-              noMatch: $search.renderNoAuthority ? (
-                <Value {...($search.valueAttrs || {})}>{$search?.renderNoAuthority?.()}</Value>
-              ) : null,
-            }),
-          };
-        })
-        .filter((t) => !!t.value);
     }
 
     /**
