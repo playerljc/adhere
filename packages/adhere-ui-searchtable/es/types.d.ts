@@ -1,11 +1,37 @@
 import type { TableProps } from 'antd/lib/table/Table';
 import type { ColumnType } from 'antd/lib/table/interface';
-import { RefObject } from 'react';
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+/**
+ * ColumnSearchConfig
+ * @description 列的查询设置
+ */
+export interface ColumnSearchConfig {
+    type: 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom';
+    visible?: boolean;
+    showColumnHeader?: boolean;
+    props?: any;
+    labelAttrs?: any;
+    valueAttrs?: any;
+    authority?: string[];
+    renderNoAuthority?: (params?: any) => ReactNode | null;
+    dataIndex?: string;
+    title?: ReactNode;
+    dictName?: string;
+    renderChildren?: (params?: any) => ReactNode | null;
+    render?: () => ReactNode | null;
+    startName?: string;
+    endName?: string;
+}
+/**
+ * ColumnTypeExt
+ * @description Column列的扩展设置
+ */
 export interface ColumnTypeExt extends ColumnType<any> {
-    authorized?: () => boolean;
-    resizable?: boolean;
+    $authorized?: () => boolean;
+    $resizable?: boolean;
+    $hide?: boolean;
+    $search?: ColumnSearchConfig;
 }
 /**
  * SearchTableProps

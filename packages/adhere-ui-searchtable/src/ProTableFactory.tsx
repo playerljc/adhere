@@ -1302,7 +1302,7 @@ export default (superClass, searchAndPaginParamsMemo) =>
      * @return Array
      */
     getGridSearchFormGroupDataByColumnConfig() {
-      const columns = this.getTableColumns();
+      const columns = this.getColumns(super.getColumns());
 
       return columns
         .filter((t) => '$search' in t && !!t.$search.visible)

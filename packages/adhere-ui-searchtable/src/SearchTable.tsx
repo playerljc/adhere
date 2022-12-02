@@ -477,14 +477,14 @@ abstract class SearchTable<
     // 对权限进行过滤
     const columns = this.getColumns()
       .filter((column: ColumnTypeExt) => {
-        if ('authorized' in column) {
-          return column?.authorized?.() as boolean;
-        }
+        if ('$hide' in column && !column.$hide) return false;
+
+        if ('$authorized' in column) return column?.$authorized?.();
 
         return true;
       })
       .map((column: ColumnTypeExt, index) => {
-        if ('resizable' in column && !!column?.resizable) {
+        if ('$resizable' in column && !!column?.$resizable) {
           return this.columnResizable.searchTableResizableColumnItem(this, index, column);
         }
 

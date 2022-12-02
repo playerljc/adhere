@@ -6,15 +6,106 @@ import type {
   // TablePaginationConfig,
   // TableRowSelection,
 } from 'antd/lib/table/interface';
-import PropTypes from 'prop-types';
-import { RefObject } from 'react';
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 
+/**
+ * ColumnSearchConfig
+ * @description 列的查询设置
+ */
+export interface ColumnSearchConfig {
+  type:
+    | 'input'
+    | 'textArea'
+    | 'inputNumber'
+    | 'inputNumberDecimal1'
+    | 'inputNumberDecimal2'
+    | 'inputNumberInteger'
+    | 'select'
+    | 'multiSelect'
+    | 'checkAllMultiSelect'
+    | 'autoCompleteSelect'
+    | 'autoCompleteSelectMulti'
+    | 'autoCompleteSelectCheckAllMulti'
+    | 'radioHorizontal'
+    | 'radioButton'
+    | 'radioSelect'
+    | 'radioCustom'
+    | 'checkBoxHorizontal'
+    | 'checkBoxCheckAllHorizontal'
+    | 'checkboxSelect'
+    | 'checkBoxCheckAllSelect'
+    | 'checkBoxCustom'
+    | 'checkBoxCheckAllCustom'
+    | 'transferSelect'
+    | 'tableSelect'
+    | 'tableMultiSelect'
+    | 'tablePagingSelect'
+    | 'tablePagingMultiSelect'
+    | 'listSelect'
+    | 'listMultiSelect'
+    | 'listPagingSelect'
+    | 'listPagingMultiSelect'
+    | 'treeSelect'
+    | 'treeMultiSelect'
+    | 'treeSelectLeaf'
+    | 'treeMultiSelectLeaf'
+    | 'cascaderSelect'
+    | 'cascaderMultiSelect'
+    | 'cascaderSelectLeaf'
+    | 'cascaderMultiSelectLeaf'
+    | 'datePicker'
+    | 'timePicker'
+    | 'rangePicker'
+    | 'slider'
+    | 'sliderRange'
+    | 'rate'
+    | 'switch'
+    | 'custom';
+  // 是否显示
+  visible?: boolean;
+  // 是否显示在列头上
+  showColumnHeader?: boolean;
+  // 控件的props
+  props?: any;
+  // TableGridLayout的Label的attrs
+  labelAttrs?: any;
+  // TableGridLayout的Value的attrs
+  valueAttrs?: any;
+  // 权限码
+  authority?: string[];
+  // 渲染无权限的UI
+  renderNoAuthority?: (params?: any) => ReactNode | null;
+  // 如果有此属性，则不用column的dataIndex
+  dataIndex?: string; //column.dataIndex;
+  // 如果有此属性则不用column的title
+  title?: ReactNode; //column.title;
+  // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
+  dictName?: string;
+  // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
+  renderChildren?: (params?: any) => ReactNode | null;
+  // 自定义组件的渲染
+  render?: () => ReactNode | null;
+  // 时间区间控件的startName
+  startName?: string;
+  // 时间区间控件的endName
+  endName?: string;
+}
+
+/**
+ * ColumnTypeExt
+ * @description Column列的扩展设置
+ */
 export interface ColumnTypeExt extends ColumnType<any> {
-  authorized?: () => boolean;
-  resizable?: boolean;
+  // 列的权限设置，有权限才显示，没权限不显示
+  $authorized?: () => boolean;
+  // 列头是否可以拖动
+  $resizable?: boolean;
+  // 列是否显示
+  $hide?: boolean;
+  // 列的查询设置
+  $search?: ColumnSearchConfig;
 }
 
 /**
