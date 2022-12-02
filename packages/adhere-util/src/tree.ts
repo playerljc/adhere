@@ -350,7 +350,8 @@ const TreeUtil: TreeUtilType = {
     );
   },
   /**
-   * filterTreeByFlatData - 本地过滤tree
+   * filterTreeByFlatData
+   * @description 本地过滤tree
    * @param treeFlatNodes
    * @param kw
    * @param config
