@@ -22,6 +22,8 @@ import ColumnResizable, {
   SearchTableResizableTitle,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
+import EditableCell from './Extension/EditableCell/EditableCell';
+import EditableRow from './Extension/EditableCell/EditableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import { ColumnTypeExt, SearchTableProps, SearchTableState, TableDensity } from './types';
 
@@ -55,6 +57,11 @@ abstract class SearchTable<
     header: {
       cell: SearchTableResizableTitle,
     },
+    // body: {
+    //   row: EditableRow,
+    //   cell: EditableCell,
+    // },
+    body: {},
   };
 
   // 列拖动对象
@@ -483,12 +490,27 @@ abstract class SearchTable<
 
         return true;
       })
+      // $resizable 设置
       .map((column: ColumnTypeExt, index) => {
         if ('$resizable' in column && !!column?.$resizable) {
           return this.columnResizable.searchTableResizableColumnItem(this, index, column);
         }
 
         return column;
+      })
+      .map((column: ColumnTypeExt, index) => {
+        return {
+          ...column,
+          onCell: (record, rowIndex) => {
+            return {
+              record,
+              column,
+              rowIndex,
+              columns,
+              $context: this,
+            };
+          },
+        };
       });
 
     if (isShowNumber) {
@@ -738,6 +760,17 @@ abstract class SearchTable<
       return 0;
     });
 
+    const existsEditor = columns.some(
+      (column) => '$editable' in column && column.$editable.editable,
+    );
+
+    if (existsEditor) {
+      this.components.body = {
+        row: EditableRow,
+        cell: EditableCell,
+      };
+    }
+
     // Table的antdProps配置
     const tableProps: TableProps<any> = {
       rowKey: this.getRowKey(),
@@ -748,6 +781,12 @@ abstract class SearchTable<
       rowSelection: this.getRowSelection(),
       components: this.components,
       size: tableDensity,
+      onRow: (record, rowIndex) => ({
+        record,
+        rowIndex,
+        columns,
+        $context: this,
+      }),
       ...(antdTableProps || {}),
     };
 

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   getTsConfigPath() {
-    return path.join(__dirname, 'tsconfig.module.json');
+    return path.join(__dirname, 'tsconfig.esm.json');
   },
   getBabelConfig(defaultBabelConfig) {
     defaultBabelConfig.presets.push('@babel/preset-react');
@@ -16,6 +16,6 @@ module.exports = {
         style: false,
       },
       'ant',
-    ],)
+    ]);
   },
 };
