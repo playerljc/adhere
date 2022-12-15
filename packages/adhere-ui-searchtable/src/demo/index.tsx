@@ -15,6 +15,7 @@ import './index.less';
 DictConfig();
 
 const ProSearchStateTableImpl = lazy(
+  // @ts-ignore
   () => import(/* webpackChunkName: "conditionalrender" */ './proStateSearchTable'),
 );
 

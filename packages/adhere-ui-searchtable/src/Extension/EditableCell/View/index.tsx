@@ -2,8 +2,7 @@ import React, { FC } from 'react';
 
 import { EditOutlined } from '@ant-design/icons';
 
-// @ts-ignore
-import { selectorPrefix } from '../../../searchtable';
+import { selectorPrefix } from '../../../SearchTable';
 import type { EditableCellViewProps } from '../../../types';
 
 /**
@@ -26,7 +25,7 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
 
   // 不使用句柄则返回原始组件
   if (!useTrigger) {
-    return restProps?.children;
+    return <>{restProps?.children}</>;
   }
 
   function renderTrigger() {
