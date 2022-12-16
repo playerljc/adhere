@@ -149,13 +149,23 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         },
         $editable: {
           editable: true,
-          type: 'inputNumber',
+          type: 'input',
           rules: [
             {
               required: true,
               message: '请选择',
             },
           ],
+          useKeepEdit: true,
+          props: {
+            onBlur: (e, { form, rowIndex, dataIndex }) => {
+              console.log(form, dataIndex, rowIndex);
+              form.validateFields().then((values) => {
+                // 调用修改接口
+                // 修改当前数据
+              });
+            },
+          },
           onSave: (params) => {
             return new Promise((resolve) => {
               this.fetchData();

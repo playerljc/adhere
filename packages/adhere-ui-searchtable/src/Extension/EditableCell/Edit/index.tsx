@@ -132,6 +132,29 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     return item ? item?.() : record?.[dataIndex as string];
   }
 
+  function renderFormItem() {
+    const formItemNode = FormItemGenerator.render({
+      type,
+      props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
+      dictName: props.editableConfig.dictName,
+      renderChildren: props.editableConfig.renderChildren,
+      form,
+      dataIndex,
+      rowIndex,
+    });
+
+    return render
+      ? render({
+          value: record?.[dataIndex as string],
+          record,
+          dataIndex,
+          rowIndex,
+          form,
+          children: formItemNode,
+        })
+      : formItemNode;
+  }
+
   useEffect(() => {
     form?.setFieldValue(dataIndex as string, valueToFormItemValue());
   }, [record?.[dataIndex as string]]);
@@ -146,17 +169,13 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
           {...(formItemProps || {})}
         >
           {type !== 'custom'
-            ? FormItemGenerator.render({
-                type,
-                props: props.editableConfig.props,
-                dictName: props.editableConfig.dictName,
-                renderChildren: props.editableConfig.renderChildren,
-              })
+            ? renderFormItem()
             : render?.({
                 value: record?.[dataIndex as string],
                 record,
                 dataIndex,
                 rowIndex,
+                form,
               })}
         </Form.Item>
       </div>

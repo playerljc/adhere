@@ -1,3 +1,4 @@
+import { FormInstance } from 'antd/es/form';
 import { Rule } from 'antd/lib/form/index';
 import type { TableProps } from 'antd/lib/table/Table';
 import type {
@@ -125,6 +126,10 @@ export interface FormItemGeneratorConfig {
   dictName?: string;
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
   renderChildren?: (params?: any) => ReactNode | null;
+  // 表单的实例
+  form?: FormInstance<any> | null;
+  dataIndex?: DataIndex;
+  rowIndex?: number;
 }
 
 export interface EditableRowProps {
@@ -154,7 +159,14 @@ export interface ColumnEditableConfig {
   // 编辑控件的类型
   type?: FormItemType | string;
   // 自定义的渲染(type是custom的时候)
-  render?: (params: ColumnParams) => ReactNode;
+  render?: (params: {
+    form: FormInstance<any> | null;
+    dataIndex: string | number | readonly (string | number)[] | undefined;
+    record: any;
+    rowIndex: number;
+    value: any;
+    children?: ReactNode;
+  }) => ReactNode;
   // 点击ToEdit句柄之前触发，resolve则将继续，reject则不能切换状态
   onBeforeToEdit?: (params: ColumnParams) => Promise<void>;
   // 点击了save句柄，resolve则切换到view状态

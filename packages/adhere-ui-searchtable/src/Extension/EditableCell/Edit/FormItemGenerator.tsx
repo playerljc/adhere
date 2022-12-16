@@ -25,84 +25,108 @@ export default {
    * @param renderChildren 渲染孩子
    * @param props 控件的props
    * @param dictName distName
+   * @param form 表单的form实例
+   * @param dataIndex
+   * @param rowIndex
    */
-  render({ type, renderChildren, props, dictName }: FormItemGeneratorConfig) {
+  render({
+    type,
+    renderChildren,
+    props,
+    dictName,
+    form,
+    dataIndex,
+    rowIndex,
+  }: FormItemGeneratorConfig) {
     const defaultProps = {
       autoFocus: true,
     };
 
+    const needProps = {
+      onBlur: (e) => {
+        if (props.onBlur) {
+          props.onBlur(e, { form, dataIndex, rowIndex });
+        }
+      },
+      onChange: (e) => {
+        if (props.onChange) {
+          props.onChange(e, { form, dataIndex, rowIndex });
+        }
+      },
+    };
+
     const renderInput = () => {
-      return <Input {...defaultProps} {...(props || {})} />;
+      return <Input {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderTextArea = () => {
-      return <Input.TextArea {...defaultProps} {...(props || {})} />;
+      return <Input.TextArea {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderInputNumber = () => {
-      return <InputNumber {...defaultProps} {...(props || {})} />;
+      return <InputNumber {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderInputNumberDecimal1 = () => {
-      return <InputNumberDecimal1 {...defaultProps} {...(props || {})} />;
+      return <InputNumberDecimal1 {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderInputNumberDecimal2 = () => {
-      return <InputNumberDecimal2 {...defaultProps} {...(props || {})} />;
+      return <InputNumberDecimal2 {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderInputNumberInteger = () => {
-      return <InputNumberInteger {...defaultProps} {...(props || {})} />;
+      return <InputNumberInteger {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}FormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}MulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCheckAllMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}CheckAllMulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderAutoCompleteSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}FormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderAutoCompleteSelectMulti = () => {
       const Component = FormItemGeneratorToDict[`${dictName}MulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderAutoCompleteSelectCheckAllMulti = () => {
       const Component = FormItemGeneratorToDict[`${dictName}CheckAllMulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderRadioHorizontal = () => {
       const Component = FormItemGeneratorToDict[`${dictName}HorizontalFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderRadioButton = () => {
       const Component = FormItemGeneratorToDict[`${dictName}ButtonFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderRadioSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}SelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderRadioCustom = () => {
       const Component = FormItemGeneratorToDict[`${dictName}CustomFormItem`];
 
       return (
-        <Component {...defaultProps} {...(props || {})}>
+        <Component {...defaultProps} {...(props || {})} {...needProps}>
           {(data) => renderChildren?.(data)}
         </Component>
       );
@@ -111,28 +135,28 @@ export default {
     const renderCheckBoxHorizontal = () => {
       const Component = FormItemGeneratorToDict[`${dictName}HorizontalFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCheckBoxCheckAllHorizontal = () => {
       const Component = FormItemGeneratorToDict[`${dictName}CheckAllHorizontalFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCheckboxSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}SelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCheckBoxCheckAllSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}CheckAllSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCheckBoxCustom = () => {
       const Component = FormItemGeneratorToDict[`${dictName}CustomFormItem`];
 
       return (
-        <Component {...defaultProps} {...(props || {})}>
+        <Component {...defaultProps} {...(props || {})} {...needProps}>
           {(dataSource) => renderChildren?.(dataSource)}
         </Component>
       );
@@ -141,7 +165,7 @@ export default {
       const Component = FormItemGeneratorToDict[`${dictName}CheckAllCustomFormItem`];
 
       return (
-        <Component {...defaultProps} {...(props || {})}>
+        <Component {...defaultProps} {...(props || {})} {...needProps}>
           {(dataSource) => renderChildren?.(dataSource)}
         </Component>
       );
@@ -150,115 +174,115 @@ export default {
     const renderTransferSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}SelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderTableSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}SelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTableMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}MulitSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTablePagingSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}PaginationSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTablePagingMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}PaginationMulitSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderListSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}SelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderListMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}MulitSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderListPagingSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}PaginationSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderListPagingMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}PaginationMulitSelectFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderTreeSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}FormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTreeMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}MulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTreeSelectLeaf = () => {
       const Component = FormItemGeneratorToDict[`${dictName}LeafFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTreeMultiSelectLeaf = () => {
       const Component = FormItemGeneratorToDict[`${dictName}LeafMulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderCascaderSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}FormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCascaderMultiSelect = () => {
       const Component = FormItemGeneratorToDict[`${dictName}MulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCascaderSelectLeaf = () => {
       const Component = FormItemGeneratorToDict[`${dictName}LeafFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderCascaderMultiSelectLeaf = () => {
       const Component = FormItemGeneratorToDict[`${dictName}LeafMulitFormItem`];
 
-      return <Component {...defaultProps} {...(props || {})} />;
+      return <Component {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderDatePicker = () => {
-      return <DatePicker {...defaultProps} {...(props || {})} />;
+      return <DatePicker {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderTimePicker = () => {
-      return <TimePicker {...defaultProps} {...(props || {})} />;
+      return <TimePicker {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderRangePicker = () => {
-      return <RangePicker {...(props || {})} />;
+      return <RangePicker {...(props || {})} {...needProps} />;
     };
 
     const renderSlider = () => {
-      return <Slider {...defaultProps} {...(props || {})} />;
+      return <Slider {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderSliderRange = () => {
-      return <Slider range {...defaultProps} {...(props || {})} />;
+      return <Slider range {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const renderRate = () => {
-      return <Rate {...defaultProps} {...(props || {})} />;
+      return <Rate {...defaultProps} {...(props || {})} {...needProps} />;
     };
     const renderSwitch = () => {
-      return <Switch {...defaultProps} {...(props || {})} />;
+      return <Switch {...defaultProps} {...(props || {})} {...needProps} />;
     };
 
     const typeMap = new Map<string, () => ReactNode>([
