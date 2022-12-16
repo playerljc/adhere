@@ -4,7 +4,8 @@
     "outDir": "./es",
     "baseUrl": "./",
     "jsx": "react",
-    "module": "esnext"
+    "module": "esnext",
+    "allowJs": true
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

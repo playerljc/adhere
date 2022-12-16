@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { defaultProps, propTypes } from './searchtable';
-import SearchTableImplement from './searchtableimplement';
+import { defaultProps, propTypes } from './SearchTable';
+import SearchTableImplement from './SearchTableImplement';
 
 /**
  * SearchTableStateImplement

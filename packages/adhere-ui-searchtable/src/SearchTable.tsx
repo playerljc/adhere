@@ -220,7 +220,7 @@ abstract class SearchTable<
     rowIndex: number;
     editorConfig: ColumnEditableConfig;
     record: any;
-  }): ColumnEditableConfig;
+  }): void;
 
   /**
    * clear

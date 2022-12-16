@@ -14,6 +14,7 @@
   - 加入adhere-ui-antdformitem代码
 * **adhere-ui-searchtable**
   - 加入ProSearchTable
+  - 加入editor功能
 * **adhere-util**
   - 加入DateUtil
   - 加入FormatUtil

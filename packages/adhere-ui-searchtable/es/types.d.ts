@@ -1,13 +1,18 @@
+import { FormInstance } from 'antd/es/form';
+import { Rule } from 'antd/lib/form/index';
 import type { TableProps } from 'antd/lib/table/Table';
 import type { ColumnType } from 'antd/lib/table/interface';
+import { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
+import type SearchTable from './SearchTable';
+export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom';
 /**
  * ColumnSearchConfig
  * @description 列的查询设置
  */
 export interface ColumnSearchConfig {
-    type: 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom';
+    type: FormItemType;
     visible?: boolean;
     showColumnHeader?: boolean;
     props?: any;
@@ -23,6 +28,75 @@ export interface ColumnSearchConfig {
     startName?: string;
     endName?: string;
 }
+export interface ColumnParams {
+    value: string;
+    record: any;
+    dataIndex?: DataIndex;
+    rowIndex: number;
+}
+export interface EditableCellViewProps extends EditableCellProps {
+    editableConfig: ColumnEditableConfig;
+    onTriggerChange?: () => void;
+}
+export interface EditableCellEditProps extends EditableCellProps {
+    editableConfig: ColumnEditableConfig;
+    onTriggerChange?: () => void;
+}
+export interface FormItemGeneratorConfig {
+    type?: FormItemType | string;
+    props?: any;
+    dictName?: string;
+    renderChildren?: (params?: any) => ReactNode | null;
+    form?: FormInstance<any> | null;
+    dataIndex?: DataIndex;
+    rowIndex?: number;
+}
+export interface EditableRowProps {
+    record: any;
+    rowIndex: number;
+    columns: any[];
+    $context: SearchTable;
+}
+export interface EditableCellProps {
+    record: any;
+    column: ColumnTypeExt;
+    rowIndex: number;
+    columns: any[];
+    $context: SearchTable;
+}
+/**
+ * ColumnEditableConfig
+ * @description 可编辑的单元格
+ */
+export interface ColumnEditableConfig {
+    editable: boolean;
+    defaultStatus?: 'view' | 'edit' | string;
+    type?: FormItemType | string;
+    render?: (params: {
+        form: FormInstance<any> | null;
+        dataIndex: string | number | readonly (string | number)[] | undefined;
+        record: any;
+        rowIndex: number;
+        value: any;
+        children?: ReactNode;
+    }) => ReactNode;
+    onBeforeToEdit?: (params: ColumnParams) => Promise<void>;
+    onSave?: (params: ColumnParams & {
+        values: any;
+    }) => Promise<void>;
+    onBeforeCancel?: (params: ColumnParams) => Promise<void>;
+    formItemProps?: any;
+    props?: any;
+    useTrigger?: boolean;
+    renderToEditTrigger?: (params: ColumnParams) => ReactNode;
+    renderSaveTrigger?: (params: ColumnParams) => ReactNode;
+    renderCancelTrigger?: (params: ColumnParams) => ReactNode;
+    rules?: Rule[];
+    dataIndex?: DataIndex;
+    dictName?: string;
+    renderChildren?: (params?: any) => ReactNode | null;
+    useKeepEdit?: boolean;
+}
 /**
  * ColumnTypeExt
  * @description Column列的扩展设置
@@ -32,6 +106,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
     $resizable?: boolean;
     $hide?: boolean;
     $search?: ColumnSearchConfig;
+    $editable?: ColumnEditableConfig;
 }
 /**
  * SearchTableProps

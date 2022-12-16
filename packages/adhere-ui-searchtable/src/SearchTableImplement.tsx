@@ -9,8 +9,9 @@ import {
 import PropTypes from 'prop-types';
 import React, { ReactElement, RefObject, createRef } from 'react';
 
-import SearchTable, { defaultProps, propTypes } from './searchtable';
+import SearchTable, { defaultProps, propTypes } from './SearchTable';
 import {
+  ColumnEditableConfig,
   ISearchTableImplement,
   SearchTableImplementProps,
   SearchTableImplementState,
@@ -485,6 +486,8 @@ class SearchTableImplement
     sorter: SorterResult<object> | SorterResult<object>[],
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
+
+  onEditorCell(params: { rowIndex: number; editorConfig: ColumnEditableConfig; record: any }) {}
 
   renderSearchFormAfter(): ReactElement | null {
     return null;

@@ -1,7 +1,7 @@
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
+import SearchTable from './SearchTable';
 import SearchTableImplement from './SearchTableImplement';
 import SearchTableStateImplement from './SearchTableStateImplement';
-import SearchTable from './Searchtable';
 declare const _default: {
     Table: typeof SearchTable;
     TableImplement: typeof SearchTableImplement;
@@ -123,6 +123,7 @@ declare const _default: {
         className?: string | undefined;
         style?: {} | undefined;
     }) => JSX.Element;
+    EditableContext: import("react").Context<import("antd/es/form").FormInstance<any> | null>;
     SearchAndPaginParams: typeof SearchAndPaginParams;
 };
 export default _default;

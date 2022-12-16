@@ -2,7 +2,7 @@ import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, Tab
 import PropTypes from 'prop-types';
 import { ReactElement, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
-import { SearchTableProps, SearchTableState, TableDensity } from './types';
+import { ColumnEditableConfig, SearchTableProps, SearchTableState, TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
 /**
  * SearchTable
@@ -127,6 +127,16 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param extra
      */
     abstract onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object>): void;
+    /**
+     * onEditorCell
+     * @description 每一个可编辑的单元格的props
+     * @param params
+     */
+    abstract onEditorCell(params: {
+        rowIndex: number;
+        editorConfig: ColumnEditableConfig;
+        record: any;
+    }): void;
     /**
      * clear
      * @description  清除操作

@@ -1,7 +1,7 @@
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import { ReactElement, RefObject } from 'react';
-import SearchTable from './searchtable';
-import { ISearchTableImplement, SearchTableImplementProps, SearchTableImplementState } from './types';
+import SearchTable from './SearchTable';
+import { ColumnEditableConfig, ISearchTableImplement, SearchTableImplementProps, SearchTableImplementState } from './types';
 /**
  * SearchTableImplement
  * @class SearchTableImplement
@@ -210,6 +210,11 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
     onSearch(): Promise<void>;
     getColumns(): Array<ColumnType<object>>;
     onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object> | undefined): void;
+    onEditorCell(params: {
+        rowIndex: number;
+        editorConfig: ColumnEditableConfig;
+        record: any;
+    }): void;
     renderSearchFormAfter(): ReactElement | null;
     renderSearchFormBefore(): ReactElement | null;
     renderTableFooter(): ReactElement | null;

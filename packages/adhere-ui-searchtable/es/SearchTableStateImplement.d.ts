@@ -1,4 +1,4 @@
-import SearchTableImplement from './searchtableimplement';
+import SearchTableImplement from './SearchTableImplement';
 /**
  * SearchTableStateImplement
  * @class
