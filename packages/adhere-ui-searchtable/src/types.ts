@@ -128,7 +128,9 @@ export interface FormItemGeneratorConfig {
   renderChildren?: (params?: any) => ReactNode | null;
   // 表单的实例
   form?: FormInstance<any> | null;
+  // 行的索引值
   dataIndex?: DataIndex;
+  // 列的索引值
   rowIndex?: number;
 }
 
@@ -165,6 +167,7 @@ export interface ColumnEditableConfig {
     record: any;
     rowIndex: number;
     value: any;
+    // 已经生成好的孩子节点
     children?: ReactNode;
   }) => ReactNode;
   // 点击ToEdit句柄之前触发，resolve则将继续，reject则不能切换状态
@@ -194,6 +197,7 @@ export interface ColumnEditableConfig {
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
   renderChildren?: (params?: any) => ReactNode | null;
   // 是否一直保持编辑状态，也就是说view和edit都显示的是控件，如果设置为true则相当于设置了useTrigger是false，useTrigger的设置将失效
+  // 最好不使用这种模式
   useKeepEdit?: boolean;
 }
 
