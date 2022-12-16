@@ -1,5 +1,6 @@
 import { Form } from 'antd';
 import { FormInstance } from 'antd/es/form';
+import moment from 'moment';
 import React, { FC, useContext, useEffect } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
@@ -34,6 +35,32 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
   const form = useContext<FormInstance | null>(EditableContext);
 
   const value = Form.useWatch(dataIndex as string, form as FormInstance);
+
+  const valueToFormItemValueMap = new Map<string, () => any>([
+    [
+      'rangePicker',
+      () => {
+        let value = record?.[dataIndex as string];
+        return Array.isArray(value) && value.length === 2
+          ? [moment(value[0]), moment(value[1])]
+          : [moment(), moment()];
+      },
+    ],
+    [
+      'datePicker',
+      () => {
+        let value = record?.[dataIndex as string];
+        return moment(value);
+      },
+    ],
+    [
+      'timePicker',
+      () => {
+        let value = record?.[dataIndex as string];
+        return moment(value);
+      },
+    ],
+  ]);
 
   function renderDefaultSaveTrigger() {
     return <CheckOutlined />;
@@ -78,17 +105,21 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     onTriggerChange?.();
   }
 
-  useEffect(() => {
-    form?.setFieldValue(dataIndex as string, record?.[dataIndex as string]);
-  }, [record?.[dataIndex as string]]);
+  function valueToFormItemValue() {
+    const item = valueToFormItemValueMap.get(type as string);
 
-  debugger;
+    return item ? item?.() : record?.[dataIndex as string];
+  }
+
+  useEffect(() => {
+    form?.setFieldValue(dataIndex as string, valueToFormItemValue());
+  }, [record?.[dataIndex as string]]);
 
   return (
     <div className={`${selectorPrefix}-editablecell-edit`}>
       <div className={`${selectorPrefix}-editablecell-edit-inner`}>
         <Form.Item
-          initialValue={record[dataIndex as string]}
+          // initialValue={record[dataIndex as string]}
           name={dataIndex as string}
           rules={rules}
           {...(formItemProps || {})}

@@ -147,6 +147,23 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           visible: true,
           dictName: 'SystemTestSexSelect',
         },
+        $editable: {
+          editable: true,
+          type: 'select',
+          dictName: 'SystemTestSexSelect',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: (params) => {
+            return new Promise((resolve) => {
+              this.fetchData();
+              resolve();
+            });
+          },
+        },
       },
       {
         title: '出生年月',
@@ -163,6 +180,22 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           startName: 'birthDayStart',
           endName: 'birthDayEnd',
         },
+        $editable: {
+          editable: true,
+          type: 'datePicker',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: (params) => {
+            return new Promise((resolve) => {
+              this.fetchData();
+              resolve();
+            });
+          },
+        },
       },
       {
         title: '身高',
@@ -175,6 +208,22 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'inputNumberDecimal2',
           visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'inputNumberDecimal2',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: (params) => {
+            return new Promise((resolve) => {
+              this.fetchData();
+              resolve();
+            });
+          },
         },
       },
       {
@@ -189,15 +238,48 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           type: 'inputNumberDecimal2',
           visible: true,
         },
+        $editable: {
+          editable: true,
+          type: 'inputNumberDecimal2',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: (params) => {
+            return new Promise((resolve) => {
+              this.fetchData();
+              resolve();
+            });
+          },
+        },
       },
       {
         title: '籍贯',
         dataIndex: 'homeTown',
         key: 'homeTown',
+        ellipsis: true,
         width: 200,
         $search: {
           type: 'input',
           visible: true,
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: (params) => {
+            return new Promise((resolve) => {
+              this.fetchData();
+              resolve();
+            });
+          },
         },
       },
       {
@@ -210,6 +292,22 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           visible: true,
           valueAttrs: {
             colSpan: 5,
+          },
+        },
+        $editable: {
+          editable: true,
+          type: 'input',
+          rules: [
+            {
+              required: true,
+              message: '请选择',
+            },
+          ],
+          onSave: (params) => {
+            return new Promise((resolve) => {
+              this.fetchData();
+              resolve();
+            });
           },
         },
       },

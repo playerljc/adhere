@@ -34,6 +34,7 @@ export default {
       name: faker.internet.userName(),
       sex: `${Util.generatorRandom(0, 1)}`,
       homeTown: faker.address.city(),
+      address: faker.address.city(),
       birthday: new Date().getTime(),
       deptName: faker.company.companyName(),
       height: faker.random.number(),

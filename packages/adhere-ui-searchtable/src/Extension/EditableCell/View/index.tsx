@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { FC } from 'react';
 
 import { EditOutlined } from '@ant-design/icons';
@@ -48,7 +49,16 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
 
   return (
     <div className={`${selectorPrefix}-editablecell-view`}>
-      <div className={`${selectorPrefix}-editablecell-view-inner`}>{restProps?.children}</div>
+      <div
+        className={classNames(
+          `${selectorPrefix}-editablecell-view-inner`,
+          'ellipsis' in column && column.ellipsis
+            ? `${selectorPrefix}-editablecell-view-inner-ellipsis`
+            : '',
+        )}
+      >
+        {restProps?.children}
+      </div>
       <div className={`${selectorPrefix}-editablecell-view-trigger`}>
         <div className={`${selectorPrefix}-editablecell-view-trigger-inner`} onClick={onTrigger}>
           {!!renderToEditTrigger &&

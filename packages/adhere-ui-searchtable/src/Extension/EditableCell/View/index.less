@@ -1,8 +1,11 @@
 @import '~@baifendian/adhere-ui-css/lib/vars';
+@import '~@baifendian/adhere-ui-css/lib/mixin';
 
 .adhere-ui-searchtable-editablecell-view {
   position: relative;
   display: flex;
+  align-items: center;
+  min-height: 32px;
 
   &:hover {
     > .adhere-ui-searchtable-editablecell-view-trigger {
@@ -15,6 +18,10 @@
   > .adhere-ui-searchtable-editablecell-view-inner {
     flex-grow: 1;
     min-width: 0;
+
+    &.adhere-ui-searchtable-editablecell-view-inner-ellipsis {
+      .adhere-text-inline-overflow();
+    }
   }
 
   > .adhere-ui-searchtable-editablecell-view-trigger {

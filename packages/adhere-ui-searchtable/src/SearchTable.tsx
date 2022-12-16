@@ -501,12 +501,18 @@ abstract class SearchTable<
       .map((column: ColumnTypeExt, index) => {
         return {
           ...column,
+          // 每个单元格都会调用
           onCell: (record, rowIndex) => {
             return {
-              record,
-              column,
+              // 行的索引
               rowIndex,
+              // 行的数据
+              record,
+              // 列的配置
+              column,
+              // 所有列的配置
               columns,
+              // 上下文的对象
               $context: this,
             };
           },
