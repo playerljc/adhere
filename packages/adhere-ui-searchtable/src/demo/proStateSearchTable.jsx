@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { DeleteOutlined, UserAddOutlined } from '@ant-design/icons';
 import {
@@ -15,11 +15,35 @@ import { createState } from '@ctsj/state/lib/react';
 import SearchTable from '../index';
 import './serviceRegister';
 
-const { ProSearchStateTable, OptionsWrap, DisabledOption } = SearchTable;
+const { ProSearchStateTable, OptionsWrap, DisabledOption, EditableContext } = SearchTable;
 
 const serviceName = 'user';
 
-console.log('组件1');
+function RowEditorCell({ record, onEditor, onSave, editorRowId }) {
+  const form = useContext(EditableContext);
+
+  return (
+    <div>
+      <ConditionalRender
+        conditional={editorRowId !== record.id}
+        noMatch={() => (
+          <a
+            onClick={() => {
+              form.validateFields().then((values) => {
+                onSave(values);
+              });
+            }}
+          >
+            保存
+          </a>
+        )}
+      >
+        {() => <a onClick={() => onEditor(record.id)}>编辑行</a>}
+      </ConditionalRender>
+    </div>
+  );
+}
+
 /**
  * ProSearchStateTableImpl
  * @class ProSearchStateTableImpl
@@ -60,6 +84,11 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
       middleWares: [],
       reducer: null,
     });
+
+    this.state = {
+      ...this.state,
+      editorRowId: '',
+    };
   }
 
   componentWillUnmount() {
@@ -316,7 +345,27 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
         width: 200,
-        render: (v, record) => (
+        render: (v, record, rowIndex) => (
+          <RowEditorCell
+            value={v}
+            record={record}
+            rowIndex={rowIndex}
+            editorRowId={this.state.editorRowId}
+            onEditor={(id) => {
+              this.setState({
+                editorRowId: id,
+              });
+            }}
+            onSave={(values) => {
+              this.fetchData().then(() =>
+                this.setState({
+                  editorRowId: '',
+                }),
+              );
+            }}
+          />
+        ),
+        /*(
           <OptionsWrap style={{ justifyContent: 'center' }}>
             {this.renderOptionColumn(
               [
@@ -324,10 +373,20 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
                   key: 'edit',
                   value: (
                     <ConditionalRender
-                      conditional={false}
+                      conditional={true}
                       noMatch={() => <DisabledOption>编辑</DisabledOption>}
                     >
-                      {() => <a>编辑</a>}
+                      {() => (
+                        <a
+                          onClick={() => {
+                            this.setState({
+                              editorRowId: rowIndex,
+                            });
+                          }}
+                        >
+                          编辑行
+                        </a>
+                      )}
                     </ConditionalRender>
                   ),
                 },
@@ -353,9 +412,26 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
               { value: v, record },
             )}
           </OptionsWrap>
-        ),
+        )*/
       },
     ]);
+  }
+
+  onEditorCell({ rowIndex, record, editorConfig }) {
+    if (record.id === this.state.editorRowId) {
+      if (editorConfig) {
+        editorConfig.defaultStatus = 'edit';
+      }
+    }
+  }
+
+  fetchData(...params) {
+    return super.fetchData(...params).then((res) => {
+      this.setState({
+        editorRowId: '',
+      });
+      return res;
+    });
   }
 
   /**

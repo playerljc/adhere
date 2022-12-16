@@ -1,4 +1,5 @@
 import DisabledOption from './Extension/DisabledOption';
+import { EditableContext } from './Extension/EditableCell/EditableRow';
 import LinkColumn from './Extension/LinkColumn';
 import OptionsWrap from './Extension/OptionsWrap';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
@@ -17,5 +18,6 @@ export default {
   DisabledOption,
   LinkColumn,
   OptionsWrap,
+  EditableContext,
   SearchAndPaginParams,
 };

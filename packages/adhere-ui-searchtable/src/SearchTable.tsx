@@ -9,6 +9,7 @@ import type {
   TableRowSelection,
 } from 'antd/lib/table/interface';
 import classNames from 'classnames';
+import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
 import React, { ReactElement, RefObject, createRef } from 'react';
 
@@ -25,7 +26,13 @@ import ColumnSetting from './Extension/ColumnSetting';
 import EditableCell from './Extension/EditableCell/EditableCell';
 import EditableRow from './Extension/EditableCell/EditableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
-import { ColumnTypeExt, SearchTableProps, SearchTableState, TableDensity } from './types';
+import {
+  ColumnEditableConfig,
+  ColumnTypeExt,
+  SearchTableProps,
+  SearchTableState,
+  TableDensity,
+} from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
 
@@ -203,6 +210,17 @@ abstract class SearchTable<
     sorter: SorterResult<object> | SorterResult<object>[],
     extra?: TableCurrentDataSource<object>,
   ): void;
+
+  /**
+   * onEditorCell
+   * @description 每一个可编辑的单元格的props
+   * @param params
+   */
+  abstract onEditorCell(params: {
+    rowIndex: number;
+    editorConfig: ColumnEditableConfig;
+    record: any;
+  }): ColumnEditableConfig;
 
   /**
    * clear
@@ -503,13 +521,23 @@ abstract class SearchTable<
           ...column,
           // 每个单元格都会调用
           onCell: (record, rowIndex) => {
+            const _column = cloneDeep(column);
+
+            if ('$editable' in _column && _column.$editable?.editable && this.onEditorCell) {
+              this.onEditorCell({
+                rowIndex,
+                editorConfig: _column.$editable,
+                record: { ...record },
+              });
+            }
+
             return {
               // 行的索引
               rowIndex,
               // 行的数据
               record,
               // 列的配置
-              column,
+              column: _column,
               // 所有列的配置
               columns,
               // 上下文的对象

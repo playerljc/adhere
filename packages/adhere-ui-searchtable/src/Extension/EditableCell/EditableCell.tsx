@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 
-import SearchTable from '../../SearchTable';
-import { ColumnEditableConfig, ColumnTypeExt, EditableCellProps } from '../../types';
+import { ColumnEditableConfig, EditableCellProps } from '../../types';
 import EditableCellEdit from './Edit';
 import EditableCellView from './View';
 
@@ -33,7 +32,15 @@ const EditableCell: FC<EditableCellProps> = (props) => {
     editableConfig.defaultStatus as string,
   );
 
-  useEffect(() => setStatus(editableConfig.defaultStatus as string), [$context?.getData()]);
+  useEffect(() => setStatus('view'), [$context?.getData()]);
+
+  // useEffect(() => {
+  //   setStatus((column || {})?.$editable?.defaultStatus as string);
+  // }, [(column || {})?.$editable?.defaultStatus]);
+
+  useEffect(() => {
+    setStatus(editableConfig?.defaultStatus as string);
+  }, [editableConfig?.defaultStatus]);
 
   // 单元格不是可编辑的单元格
   if (!editableConfig.editable) {
