@@ -10,12 +10,10 @@ export const EditableContext = createContext<FormInstance<any> | null>(null);
  * EditableRow
  * @description 行编辑
  *
- *
  * record: any;
  *   rowIndex: number;
  *   columns: any[];
  *   $context: SearchTable;
- *
  */
 const EditableRow: FC<EditableRowProps> = ({
   record = {},

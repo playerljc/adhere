@@ -29,10 +29,18 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
     return <>{restProps?.children}</>;
   }
 
+  /**
+   * renderTrigger
+   * @description 渲染句柄
+   */
   function renderTrigger() {
     return <EditOutlined />;
   }
 
+  /**
+   * onTrigger
+   * @description 点击了句柄
+   */
   function onTrigger() {
     if (onBeforeToEdit) {
       onBeforeToEdit({

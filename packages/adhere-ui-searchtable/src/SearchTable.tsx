@@ -523,6 +523,7 @@ abstract class SearchTable<
           onCell: (record, rowIndex) => {
             const _column = cloneDeep(column);
 
+            // 如果设置了$editable则调用onEditorCell方法对每个cell进行props注入
             if ('$editable' in _column && _column.$editable?.editable && this.onEditorCell) {
               this.onEditorCell({
                 rowIndex,

@@ -18,6 +18,14 @@ const {
 } = AntdFormItem;
 
 export default {
+  /**
+   * render
+   * @description 对表单控件进行渲染
+   * @param type 控件类型
+   * @param renderChildren 渲染孩子
+   * @param props 控件的props
+   * @param dictName distName
+   */
   render({ type, renderChildren, props, dictName }: FormItemGeneratorConfig) {
     const defaultProps = {
       autoFocus: true,

@@ -36,6 +36,10 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
 
   const value = Form.useWatch(dataIndex as string, form as FormInstance);
 
+  /**
+   * valueToFormItemValueMap
+   * @description 值和表单控件值之间的转换，现在只涉及到时间控件
+   */
   const valueToFormItemValueMap = new Map<string, () => any>([
     [
       'rangePicker',
@@ -62,15 +66,28 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     ],
   ]);
 
+  /**
+   * renderDefaultSaveTrigger
+   * @description 渲染缺省的保存句柄
+   */
   function renderDefaultSaveTrigger() {
     return <CheckOutlined />;
   }
 
+  /**
+   * renderDefaultCancelTrigger
+   * @description 渲染缺省的取消句柄
+   */
   function renderDefaultCancelTrigger() {
     return <CloseOutlined />;
   }
 
+  /**
+   * onSaveTrigger
+   * @description 点击了保存句柄
+   */
   function onSaveTrigger() {
+    // 对表单进行校验
     form?.validateFields().then((values) => {
       if (onSave) {
         onSave({
@@ -105,6 +122,10 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     onTriggerChange?.();
   }
 
+  /**
+   * valueToFormItemValue
+   * @description 值和表单值的转换
+   */
   function valueToFormItemValue() {
     const item = valueToFormItemValueMap.get(type as string);
 

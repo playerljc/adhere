@@ -11,6 +11,10 @@ import EditableCellView from './View';
 const EditableCell: FC<EditableCellProps> = (props) => {
   const { record, column, rowIndex, columns, $context, ...restProps } = props;
 
+  /**
+   * defaultConfig
+   * @description 缺省的单元格配置
+   */
   const defaultConfig = {
     editable: false,
     defaultStatus: 'view',
@@ -23,21 +27,31 @@ const EditableCell: FC<EditableCellProps> = (props) => {
     useKeepEdit: false,
   };
 
+  /**
+   * editableConfig
+   * @description 实际的单元格配置
+   */
   const editableConfig: ColumnEditableConfig = useMemo(
     () => ({ ...defaultConfig, ...(column?.$editable || {}) }),
     [column, column?.dataIndex],
   );
 
+  /**
+   * status
+   * @description 单元格的状态
+   */
   const [status, setStatus] = useState<'view' | 'edit' | string>(
     editableConfig.defaultStatus as string,
   );
 
+  /**
+   * 数据改变则切换成查看状态
+   */
   useEffect(() => setStatus('view'), [$context?.getData()]);
 
-  // useEffect(() => {
-  //   setStatus((column || {})?.$editable?.defaultStatus as string);
-  // }, [(column || {})?.$editable?.defaultStatus]);
-
+  /**
+   * 缺省状态改变切换到缺省状态
+   */
   useEffect(() => {
     setStatus(editableConfig?.defaultStatus as string);
   }, [editableConfig?.defaultStatus]);
