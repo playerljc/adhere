@@ -4,7 +4,8 @@ import { DateDisplay, DelConfirm, Resource, SearchTable } from '@baifendian/adhe
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProSearchStateTable, OptionsWrap } = SearchTable;
+const { SearchTableStateImplementFactory, ProEditorCellSearchStateTable, OptionsWrap } =
+  SearchTable;
 
 const serviceName = 'user';
 
@@ -24,7 +25,7 @@ function getModels() {
  * @class EditorCellStateSearchTable
  * @classdesc EditorCellStateSearchTable
  */
-class EditorCellStateSearchTable extends ProSearchStateTable {
+class EditorCellStateSearchTable extends ProEditorCellSearchStateTable {
   getComponentId() {
     return 'EditorCellStateSearchTable';
   }

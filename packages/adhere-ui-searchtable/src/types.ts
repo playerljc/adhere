@@ -455,6 +455,7 @@ export interface EditorRowControlProps {
   styles?: CSSProperties;
   renderEditorRow?: () => ReactNode;
   renderSave?: () => ReactNode;
+  renderCancel?: () => ReactNode;
 }
 
 /**

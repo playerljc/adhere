@@ -4,6 +4,10 @@ import EditorRowControl from './Extension/EditableCell/EditorRowControl';
 import LinkColumn from './Extension/LinkColumn';
 import OptionsWrap from './Extension/OptionsWrap';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
+import ProEditorCellSearchStateTable from './ProEditorCellSearchStateTable';
+import ProEditorCellSearchTable from './ProEditorCellSearchTable';
+import ProEditorRowSearchStateTable from './ProEditorRowSearchStateTable';
+import ProEditorRowSearchTable from './ProEditorRowSearchTable';
 import ProSearchStateTable from './ProSearchStateTable';
 import ProSearchTable from './ProSearchTable';
 import SearchEditorCellStateTable from './SearchEditorCellStateTable';
@@ -29,6 +33,10 @@ export default {
   SearchEditorRowTable,
   ProSearchTable,
   ProSearchStateTable,
+  ProEditorCellSearchStateTable,
+  ProEditorCellSearchTable,
+  ProEditorRowSearchStateTable,
+  ProEditorRowSearchTable,
   DisabledOption,
   LinkColumn,
   OptionsWrap,

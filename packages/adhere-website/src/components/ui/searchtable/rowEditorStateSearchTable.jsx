@@ -4,7 +4,8 @@ import { DateDisplay, Resource, SearchTable } from '@baifendian/adhere';
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProSearchStateTable, EditorRowControl } = SearchTable;
+const { SearchTableStateImplementFactory, ProEditorRowSearchStateTable, EditorRowControl } =
+  SearchTable;
 
 const serviceName = 'user';
 
@@ -24,7 +25,7 @@ function getModels() {
  * @class RowEditorStateSearchTable
  * @classdesc RowEditorStateSearchTable
  */
-class RowEditorStateSearchTable extends ProSearchStateTable {
+class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
   getComponentId() {
     return 'RowEditorStateSearchTable';
   }
@@ -293,18 +294,6 @@ class RowEditorStateSearchTable extends ProSearchStateTable {
             record={record}
             rowKey={this.getRowKey()}
             editorRowId={this.state.editorRowId}
-            // onEditor={(id) =>
-            //   this.setState({
-            //     editorRowId: id,
-            //   })
-            // }
-            // onSave={(values) =>
-            //   this.updateEditorCellRowData({ values, record }).then(() =>
-            //     this.setState({
-            //       editorRowId: '',
-            //     }),
-            //   )
-            // }
           />
         ),
       },

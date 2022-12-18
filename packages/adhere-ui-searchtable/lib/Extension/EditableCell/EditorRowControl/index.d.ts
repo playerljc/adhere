@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import { EditorRowControlProps } from '../../types';
+import { EditorRowControlProps } from '../../../types';
 /**
  * EditorRowControl
  * @description 编辑行的控制器
  * @param record
+ * @param renderCancel
  * @param onEditor
  * @param onSave
  * @param editorRowId

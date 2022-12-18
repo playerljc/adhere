@@ -116,8 +116,10 @@ class SearchEditorRowStateTable extends SearchEditorCellStateTable<
    * @param editorConfig
    */
   onEditorCell({ record, editorConfig }) {
-    if (record[this.getRowKey()] === this.state.editorRowId) {
-      if (editorConfig) {
+    if (editorConfig) {
+      editorConfig.useTrigger = false;
+
+      if (record[this.getRowKey()] === this.state.editorRowId) {
         editorConfig.defaultStatus = 'edit';
       }
     }
