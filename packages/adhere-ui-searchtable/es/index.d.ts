@@ -8,6 +8,7 @@ import { SearchTableImplement } from './SearchTableImplement';
 import { SearchTableStateImplement } from './SearchTableStateImplement';
 declare const _default: {
     Table: typeof SearchTable;
+    SearchTableContext: import("react").Context<SearchTable<import("./types").SearchTableProps, import("./types").SearchTableState> | null>;
     TableImplement: typeof SearchTableImplement;
     TableStateImplement: typeof SearchTableStateImplement;
     SearchTableImplementFactory: import("./types").SearchTableImplementFactoryFunction<any, any>;

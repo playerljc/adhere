@@ -10,7 +10,7 @@ import SearchEditorCellStateTable from './SearchEditorCellStateTable';
 import SearchEditorCellTable from './SearchEditorCellTable';
 import SearchEditorRowStateTable from './SearchEditorRowStateTable';
 import SearchEditorRowTable from './SearchEditorRowTable';
-import SearchTable from './SearchTable';
+import SearchTable, { SearchTableContext } from './SearchTable';
 import SearchTableImplementFactory, { SearchTableImplement } from './SearchTableImplement';
 import SearchTableStateImplementFactory, {
   SearchTableStateImplement,
@@ -18,6 +18,7 @@ import SearchTableStateImplementFactory, {
 
 export default {
   Table: SearchTable,
+  SearchTableContext,
   TableImplement: SearchTableImplement,
   TableStateImplement: SearchTableStateImplement,
   SearchTableImplementFactory,
