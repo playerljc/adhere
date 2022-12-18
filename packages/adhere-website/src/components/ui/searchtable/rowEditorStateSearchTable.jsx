@@ -95,6 +95,7 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
               }).then(() => resolve());
             }),
         },
+        $resizable: true,
       },
       {
         title: '性别',

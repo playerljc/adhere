@@ -11,7 +11,7 @@ class ColumnResizeTable extends Table {
   getColumns() {
     return super.getColumns().map((column) => ({
       ...column,
-      resizable: true,
+      $resizable: true,
     }));
   }
 }

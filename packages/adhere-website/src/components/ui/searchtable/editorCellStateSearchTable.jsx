@@ -96,6 +96,7 @@ class EditorCellStateSearchTable extends ProEditorCellSearchStateTable {
             });
           },
         },
+        $resizable: true,
       },
       {
         title: '性别',
