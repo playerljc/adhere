@@ -49,18 +49,18 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
       <ConditionalRender
         conditional={editorRowId !== record[rowKey]}
         noMatch={() => (
-          <div
-            onClick={() => {
-              form?.validateFields().then((values) => onSave?.(values));
-            }}
-          >
-            {renderSave ? renderSave() : renderDefaultSave()}
+          <div onClick={() => form?.validateFields().then((values) => onSave?.(values))}>
+            <ConditionalRender conditional={!renderSave} noMatch={() => renderSave?.()}>
+              {() => renderDefaultSave()}
+            </ConditionalRender>
           </div>
         )}
       >
         {() => (
           <div onClick={() => onEditor?.(record[rowKey])}>
-            {renderEditorRow ? renderEditorRow() : renderDefaultEditorRow()}
+            <ConditionalRender conditional={!renderEditorRow} noMatch={() => renderEditorRow?.()}>
+              {() => renderDefaultEditorRow()}
+            </ConditionalRender>
           </div>
         )}
       </ConditionalRender>
