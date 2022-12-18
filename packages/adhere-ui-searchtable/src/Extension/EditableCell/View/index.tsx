@@ -11,16 +11,8 @@ import type { EditableCellViewProps } from '../../../types';
  * @description 可编辑单元格的查看状态
  */
 const EditableCellView: FC<EditableCellViewProps> = (props) => {
-  const {
-    record,
-    column,
-    rowIndex,
-    columns,
-    $context,
-    editableConfig,
-    onTriggerChange,
-    ...restProps
-  } = props;
+  const { record, column, rowIndex, columns, editableConfig, onTriggerChange, ...restProps } =
+    props;
 
   const { useTrigger, renderToEditTrigger, dataIndex, onBeforeToEdit } = editableConfig;
 

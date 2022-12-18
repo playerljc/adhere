@@ -13,13 +13,11 @@ export const EditableContext = createContext<FormInstance<any> | null>(null);
  * record: any;
  * rowIndex: number;
  * columns: any[];
- * $context: SearchTable;
  */
 const EditableRow: FC<EditableRowProps> = ({
   record = {},
   columns = [],
   rowIndex,
-  $context,
   rowConfig,
   ...restProps
 }) => {

@@ -5,7 +5,6 @@ import type { ColumnType } from 'antd/lib/table/interface';
 import { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
-import type SearchTable from './SearchTable';
 import type SearchTableImplement from './SearchTableImplement';
 import { SearchTableStateImplement } from './SearchTableStateImplement';
 export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom';
@@ -64,7 +63,6 @@ export interface EditableRowProps {
     };
     rowIndex: number;
     columns: any[];
-    $context: SearchTable;
     rowConfig: RowConfig;
 }
 export interface EditableCellProps {
@@ -74,7 +72,6 @@ export interface EditableCellProps {
     column: ColumnTypeExt;
     rowIndex: number;
     columns: any[];
-    $context: SearchTable;
 }
 /**
  * ColumnEditableConfig

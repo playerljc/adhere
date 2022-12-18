@@ -1,11 +1,12 @@
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
 import { TableComponents } from 'rc-table/lib/interface';
-import { ReactElement, RefObject } from 'react';
+import React, { ReactElement, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
 import { CellReducer, ColumnEditableConfig, ColumnTypeExt, RowConfig, RowEditableConfig, RowReducer, SearchTableProps, SearchTableState, TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
+export declare const SearchTableContext: React.Context<SearchTable<SearchTableProps, SearchTableState> | null>;
 /**
  * SearchTable
  * @class SearchTable

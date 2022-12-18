@@ -293,18 +293,18 @@ class RowEditorStateSearchTable extends ProSearchStateTable {
             record={record}
             rowKey={this.getRowKey()}
             editorRowId={this.state.editorRowId}
-            onEditor={(id) =>
-              this.setState({
-                editorRowId: id,
-              })
-            }
-            onSave={(values) =>
-              this.updateEditorCellRowData({ values, record }).then(() =>
-                this.setState({
-                  editorRowId: '',
-                }),
-              )
-            }
+            // onEditor={(id) =>
+            //   this.setState({
+            //     editorRowId: id,
+            //   })
+            // }
+            // onSave={(values) =>
+            //   this.updateEditorCellRowData({ values, record }).then(() =>
+            //     this.setState({
+            //       editorRowId: '',
+            //     }),
+            //   )
+            // }
           />
         ),
       },

@@ -1,5 +1,6 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 
+import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { ColumnEditableConfig, EditableCellProps } from '../../types';
 import EditableCellEdit from './Edit';
 import EditableCellView from './View';
@@ -9,7 +10,7 @@ import EditableCellView from './View';
  * @description 单元格编辑
  */
 const EditableCell: FC<EditableCellProps> = (props) => {
-  const { record, column, rowIndex, columns, $context, ...restProps } = props;
+  const { record, column, rowIndex, columns, ...restProps } = props;
 
   /**
    * defaultConfig
@@ -44,10 +45,12 @@ const EditableCell: FC<EditableCellProps> = (props) => {
     editableConfig.defaultStatus as string,
   );
 
+  const context = useContext<SearchTable | null>(SearchTableContext);
+
   /**
    * 数据改变则切换成查看状态
    */
-  useEffect(() => setStatus('view'), [$context?.getData()]);
+  useEffect(() => setStatus('view'), [context?.getData()]);
 
   /**
    * 缺省状态改变切换到缺省状态

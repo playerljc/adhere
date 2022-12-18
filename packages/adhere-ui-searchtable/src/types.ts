@@ -152,7 +152,6 @@ export interface EditableRowProps {
   record: { [prop: string]: any };
   rowIndex: number;
   columns: any[];
-  $context: SearchTable;
   rowConfig: RowConfig;
 }
 
@@ -161,7 +160,6 @@ export interface EditableCellProps {
   column: ColumnTypeExt;
   rowIndex: number;
   columns: any[];
-  $context: SearchTable;
 }
 
 /**

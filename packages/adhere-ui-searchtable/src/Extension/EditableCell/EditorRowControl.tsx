@@ -5,7 +5,9 @@ import React, { FC, useCallback, useContext } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
+import SearchEditorRowTable from '../../SearchEditorRowTable';
 import { selectorPrefix } from '../../SearchTable';
+import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { EditorRowControlProps } from '../../types';
 import { EditableContext } from './EditableRow';
 
@@ -41,6 +43,42 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
 
   const renderDefaultEditorRow = useCallback(() => <a>{Intl.v('编辑行')}</a>, []);
 
+  const context = useContext<SearchTable | null>(SearchTableContext);
+
+  const validateFieldsSuccess = useCallback((values) => {
+    if (onSave) {
+      onSave(values).then(() => updateEditorCellRowData(values));
+      return;
+    }
+
+    updateEditorCellRowData(values);
+  }, []);
+
+  const _onEditor = useCallback(() => {
+    if (onEditor) {
+      onEditor?.(record[rowKey])?.then(() => updateRowEdit());
+
+      return;
+    }
+
+    updateRowEdit();
+  }, []);
+
+  const updateEditorCellRowData = (values) =>
+    (context as SearchEditorRowTable<any, any>)
+      ?.updateEditorCellRowData({ values, record })
+      ?.then(() => reset());
+
+  const reset = () =>
+    context?.setState({
+      editorRowId: '',
+    });
+
+  const updateRowEdit = () =>
+    context?.setState({
+      editorRowId: record[rowKey],
+    });
+
   return (
     <div
       className={classNames(`${selectorPrefix}-editor-row-control`, className)}
@@ -49,7 +87,9 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
       <ConditionalRender
         conditional={editorRowId !== record[rowKey]}
         noMatch={() => (
-          <div onClick={() => form?.validateFields().then((values) => onSave?.(values))}>
+          <div
+            onClick={() => form?.validateFields().then((values) => validateFieldsSuccess(values))}
+          >
             <ConditionalRender conditional={!renderSave} noMatch={() => renderSave?.()}>
               {() => renderDefaultSave()}
             </ConditionalRender>
@@ -57,7 +97,7 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
         )}
       >
         {() => (
-          <div onClick={() => onEditor?.(record[rowKey])}>
+          <div onClick={_onEditor}>
             <ConditionalRender conditional={!renderEditorRow} noMatch={() => renderEditorRow?.()}>
               {() => renderDefaultEditorRow()}
             </ConditionalRender>

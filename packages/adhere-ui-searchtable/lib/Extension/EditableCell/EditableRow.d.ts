@@ -9,7 +9,6 @@ export declare const EditableContext: React.Context<FormInstance<any> | null>;
  * record: any;
  * rowIndex: number;
  * columns: any[];
- * $context: SearchTable;
  */
 declare const EditableRow: FC<EditableRowProps>;
 export default EditableRow;

@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
 import { TableComponents } from 'rc-table/lib/interface';
-import React, { ReactElement, RefObject, createRef } from 'react';
+import React, { ReactElement, RefObject, createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -40,6 +40,8 @@ import {
 export const selectorPrefix = 'adhere-ui-searchtable';
 
 const { Fixed, Auto } = FlexLayout;
+
+export const SearchTableContext = createContext<SearchTable | null>(null);
 
 /**
  * SearchTable
@@ -615,8 +617,6 @@ abstract class SearchTable<
               }),
               // 所有列的配置
               columns,
-              // 上下文的对象
-              $context: this,
             };
           },
         };
@@ -887,7 +887,6 @@ abstract class SearchTable<
           record,
           rowIndex,
           columns,
-          $context: this,
           rowConfig: this.onRowReducers({
             rowIndex: Number(rowIndex),
             record,
@@ -1002,7 +1001,11 @@ abstract class SearchTable<
    * @protected
    */
   render(): ReactElement {
-    return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
+    return (
+      <SearchTableContext.Provider value={this}>
+        <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>
+      </SearchTableContext.Provider>
+    );
   }
 }
 
