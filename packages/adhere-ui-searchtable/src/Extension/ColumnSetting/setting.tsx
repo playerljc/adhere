@@ -10,7 +10,7 @@ import {
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { selectorPrefix } from '../../searchtable';
+import { selectorPrefix } from '../../SearchTable';
 
 const DragHandle = SortableHandle(() => (
   <img

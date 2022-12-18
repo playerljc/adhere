@@ -7,24 +7,32 @@ import {
   TableRowSelection,
 } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
-import React, { ReactElement, RefObject, createRef } from 'react';
+import { TableComponents } from 'rc-table/lib/interface';
+import React, { ReactElement, RefObject, createRef, forwardRef } from 'react';
+
+import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
 import SearchTable, { defaultProps, propTypes } from './SearchTable';
 import {
   ColumnEditableConfig,
+  ColumnTypeExt,
   ISearchTableImplement,
+  RowEditableConfig,
+  SearchTableImplementFactoryFunction,
   SearchTableImplementProps,
   SearchTableImplementState,
+  SearchTableProps,
+  SearchTableState,
 } from './types';
 
-const selectorPrefix = 'adhere-ui-searchtableimplement';
+export const selectorPrefix = 'adhere-ui-searchtableimplement';
 
 /**
  * SearchTableImplement
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
-class SearchTableImplement
+export class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState>
   extends SearchTable<SearchTableImplementProps, SearchTableImplementState>
   implements ISearchTableImplement
 {
@@ -487,8 +495,6 @@ class SearchTableImplement
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
 
-  onEditorCell(params: { rowIndex: number; editorConfig: ColumnEditableConfig; record: any }) {}
-
   renderSearchFormAfter(): ReactElement | null {
     return null;
   }
@@ -504,6 +510,22 @@ class SearchTableImplement
   renderTableHeader(): ReactElement | null {
     return null;
   }
+
+  onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any> {
+    return components;
+  }
+
+  onEditorCell(params: { rowIndex: number; editorConfig: ColumnEditableConfig; record: any }) {}
+
+  onEditorRow(params: {
+    columns: ColumnTypeExt[];
+    rowIndex: number;
+    record: any;
+  }): RowEditableConfig {
+    return {
+      editable: false,
+    };
+  }
 }
 
 SearchTableImplement.defaultProps = {
@@ -515,4 +537,53 @@ SearchTableImplement.propTypes = {
   getTableWrapperInstance: PropTypes.func,
 };
 
-export default SearchTableImplement;
+/**
+ * SearchTableImplementFactory
+ * @description 创建SearchTableImplementFactory
+ * @param serviceNames
+ * @param mapStateToProps
+ * @param mapDispatchToProps
+ * @constructor
+ */
+const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any> = ({
+  serviceNames = [],
+  mapStateToProps,
+  mapDispatchToProps,
+}) => {
+  const _mapStateToProps = (state) => ({
+    ...ServiceRegister.mapStateToProps({
+      namespaces: serviceNames || [],
+      state,
+    }),
+    ...{
+      loading: state.loading,
+    },
+    ...(mapStateToProps ? mapStateToProps(state) : {}),
+  });
+
+  const _mapDispatchToProps = (dispatch) => ({
+    ...ServiceRegister.mapDispatchToProps({
+      namespaces: serviceNames || [],
+      dispatch,
+    }),
+    ...(mapDispatchToProps ? mapDispatchToProps(dispatch) : {}),
+  });
+
+  return (Component) =>
+    ServiceRegister.connect(serviceNames || [])(_mapStateToProps, _mapDispatchToProps)(
+      forwardRef<any, any>((props, ref) => (
+        // @ts-ignore
+        <Component
+          ref={ref}
+          className={`${selectorPrefix}-wrap`}
+          isShowExpandSearch
+          defaultExpandSearchCollapse={false}
+          fixedHeaderAutoTable
+          fixedTableSpaceBetween
+          {...props}
+        />
+      )),
+    );
+};
+
+export default SearchTableImplementFactory;

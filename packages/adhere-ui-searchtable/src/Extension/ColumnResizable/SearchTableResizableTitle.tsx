@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Resizable } from 'react-resizable';
 
-import { selectorPrefix } from '../../searchtable';
+import { selectorPrefix } from '../../SearchTable';
 
 /**
  * SearchTableResizableTitle.tsx

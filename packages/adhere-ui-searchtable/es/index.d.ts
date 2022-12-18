@@ -1,11 +1,21 @@
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
+import SearchEditorCellStateTable from './SearchEditorCellStateTable';
+import SearchEditorCellTable from './SearchEditorCellTable';
+import SearchEditorRowStateTable from './SearchEditorRowStateTable';
+import SearchEditorRowTable from './SearchEditorRowTable';
 import SearchTable from './SearchTable';
-import SearchTableImplement from './SearchTableImplement';
-import SearchTableStateImplement from './SearchTableStateImplement';
+import { SearchTableImplement } from './SearchTableImplement';
+import { SearchTableStateImplement } from './SearchTableStateImplement';
 declare const _default: {
     Table: typeof SearchTable;
     TableImplement: typeof SearchTableImplement;
     TableStateImplement: typeof SearchTableStateImplement;
+    SearchTableImplementFactory: import("./types").SearchTableImplementFactoryFunction<any, any>;
+    SearchTableStateImplementFactory: import("./types").SearchTableStateImplementFactoryFunction<any, any>;
+    SearchEditorCellStateTable: typeof SearchEditorCellStateTable;
+    SearchEditorCellTable: typeof SearchEditorCellTable;
+    SearchEditorRowStateTable: typeof SearchEditorRowStateTable;
+    SearchEditorRowTable: typeof SearchEditorRowTable;
     ProSearchTable: {
         new (props: any): {
             [x: string]: any;
@@ -124,6 +134,7 @@ declare const _default: {
         style?: {} | undefined;
     }) => JSX.Element;
     EditableContext: import("react").Context<import("antd/es/form").FormInstance<any> | null>;
+    EditorRowControl: import("react").FC<import("./types").EditorRowControlProps>;
     SearchAndPaginParams: typeof SearchAndPaginParams;
 };
 export default _default;

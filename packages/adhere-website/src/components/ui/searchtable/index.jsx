@@ -12,10 +12,12 @@ import PlayGroundPage, {
 
 import ColumnResizeTable from './columnResizeTable';
 import ColumnSettingTable from './columnSettingTable';
+import EditorCellStateSearchTable from './editorCellStateSearchTable';
 import FewTable from './fewTable';
 import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
 import ProSearchStateTableImpl from './proStateSearchTable';
 import RenderSearchBetweenTable from './renderSearchBetweenTable';
+import RowEditorStateSearchTable from './rowEditorStateSearchTable';
 import RowSelectedContinuous from './rowSelectedContinuous';
 import RowSelectedNormal from './rowSelectedNormal';
 import StateTable from './stateTable';
@@ -31,1392 +33,1444 @@ export default () => {
 
   function boxPanelConfig() {
     return [
+      //     {
+      //       id: `p1`,
+      //       name: `基本使用`,
+      //       mode: 'code',
+      //       scope: { React },
+      //       cardProps: {
+      //         description: {
+      //           title: '基本使用',
+      //           info: '基本使用',
+      //         },
+      //       },
+      //       codeText: `
+      //     import React from 'react';
+      //
+      //     import Table from './table';
+      //
+      //     <Table isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //         `,
+      //       type: 'PlayGround',
+      //       renderChildren: () => <Table isShowExpandSearch defaultExpandSearchCollapse={false} />,
+      //     },
+      //     {
+      //       id: `p2`,
+      //       name: `表格体可以滚动`,
+      //       mode: 'code',
+      //       scope: { React },
+      //       cardProps: {
+      //         description: {
+      //           title: '表格体可以滚动',
+      //           info: '表格体可以滚动',
+      //         },
+      //       },
+      //       codeText: `
+      //     import React from 'react';
+      //
+      //     import Table from './table';
+      //
+      //     <div style={{ display: 'flex', height: 400 }}>
+      //       <Table
+      //         style={{ height: '100%' }}
+      //         isShowExpandSearch
+      //         defaultExpandSearchCollapse={false}
+      //         autoFixed
+      //       />
+      //     </div>
+      //         `,
+      //       type: 'PlayGround',
+      //       renderChildren: () => (
+      //         <>
+      //           <Switch
+      //             checkedChildren="分页"
+      //             checked={pagination1}
+      //             onChange={() => {
+      //               setPagination1(!pagination1);
+      //             }}
+      //           />
+      //
+      //           <Space />
+      //
+      //           <div style={{ display: 'flex', height: 400 }}>
+      //             <Table
+      //               style={{ height: '100%' }}
+      //               isShowExpandSearch
+      //               defaultExpandSearchCollapse={false}
+      //               autoFixed
+      //               pagination={pagination1}
+      //             />
+      //           </div>
+      //         </>
+      //       ),
+      //     },
+      //     {
+      //       id: `p3`,
+      //       name: `固定列头`,
+      //       mode: 'code',
+      //       scope: { React },
+      //       cardProps: {
+      //         description: {
+      //           title: '固定列头',
+      //           info: '固定列头',
+      //         },
+      //       },
+      //       codeText: `
+      //     import React from 'react';
+      //
+      //     import Table from './table';
+      //
+      //     <div style={{ display: 'flex', height: 700 }}>
+      //       <Table
+      //         style={{ height: '100%' }}
+      //         isShowExpandSearch
+      //         defaultExpandSearchCollapse={false}
+      //         fixedHeaderAutoTable
+      //       />
+      //     </div>
+      //         `,
+      //       type: 'PlayGround',
+      //       renderChildren: () => (
+      //         <>
+      //           <Switch
+      //             checkedChildren="分页"
+      //             checked={pagination2}
+      //             onChange={() => {
+      //               setPagination2(!pagination2);
+      //             }}
+      //           />
+      //
+      //           <Space />
+      //
+      //           <div style={{ display: 'flex', height: 700 }}>
+      //             <Table
+      //               style={{ height: '100%' }}
+      //               isShowExpandSearch
+      //               defaultExpandSearchCollapse={false}
+      //               fixedHeaderAutoTable
+      //               pagination={pagination2}
+      //             />
+      //           </div>
+      //         </>
+      //       ),
+      //     },
+      //     {
+      //       id: `p4`,
+      //       name: `列表两端的渲染`,
+      //       cardProps: {
+      //         description: {
+      //           title: '列表两端的渲染',
+      //           info: '列表两端的渲染',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'fixedTableSpaceBetweenTable.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //     import { Button } from 'antd';
+      //
+      //     import Table from './table';
+      //
+      //     import styles from './fixedTableSpaceBetweenTable.less';
+      //
+      //     /**
+      //      * FixedTableSpaceBetweenTable
+      //      * @classdesc
+      //      */
+      //     class FixedTableSpaceBetweenTable extends Table {
+      //       renderTableHeader() {
+      //         return (
+      //           <div className={styles.Header}>
+      //             <h3>查询表格</h3>
+      //             <div>
+      //               <Button type="primary">新建</Button>
+      //             </div>
+      //           </div>
+      //         );
+      //       }
+      //
+      //       renderTableFooter() {
+      //         return <div className={styles.Footer}>renderTableFooter</div>;
+      //       }
+      //     }
+      //
+      //     export default FixedTableSpaceBetweenTable;
+      //               `,
+      //         },
+      //         {
+      //           title: 'fixedTableSpaceBetweenTable.less',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     .Header {
+      //       display: flex;
+      //       align-items: center;
+      //       justify-content: space-between;
+      //       padding: 0 20px;
+      //       background-color: #fff;
+      //     }
+      //
+      //     .Footer {
+      //       padding: 0 20px 20px 20px;
+      //       font-size: 16px;
+      //       text-align: center;
+      //       background-color: #fff;
+      //     }
+      //               `,
+      //         },
+      //         {
+      //           title: 'index.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //     import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
+      //
+      //     <div style={{ display: 'flex', height: 800 }}>
+      //       <FixedTableSpaceBetweenTable
+      //         style={{ height: '100%' }}
+      //         isShowExpandSearch
+      //         defaultExpandSearchCollapse={false}
+      //         fixedHeaderAutoTable
+      //       />
+      //     </div>
+      //               `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <>
+      //           <Switch
+      //             checkedChildren="分页"
+      //             checked={pagination3}
+      //             onChange={() => {
+      //               setPagination3(!pagination3);
+      //             }}
+      //           />
+      //
+      //           <Space />
+      //
+      //           <div style={{ display: 'flex', height: 800 }}>
+      //             <FixedTableSpaceBetweenTable
+      //               style={{ height: '100%' }}
+      //               isShowExpandSearch
+      //               defaultExpandSearchCollapse={false}
+      //               fixedHeaderAutoTable
+      //               pagination={pagination3}
+      //             />
+      //           </div>
+      //         </>
+      //       ),
+      //     },
+      //     {
+      //       id: `p5`,
+      //       name: `分页始终居底`,
+      //       cardProps: {
+      //         description: {
+      //           title: '分页始终居底',
+      //           info: '分页始终居底',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'fewTable.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //
+      //     import Table from './table';
+      //     import { oneData } from './mock';
+      //
+      //     /**
+      //      * FewTable
+      //      * @classdesc
+      //      */
+      //     class FewTable extends Table {
+      //       fetchDataExecute(searchParams) {
+      //         return new Promise((resolve) => {
+      //           this.setState(
+      //             {
+      //               loading: true,
+      //             },
+      //             () => {
+      //               setTimeout(() => {
+      //                 this.request
+      //                   .get({
+      //                     mock: true,
+      //                     path: oneData.data,
+      //                   })
+      //                   .then((result) => {
+      //                     this.setState(
+      //                       {
+      //                         dataSource: {
+      //                           total: result.total,
+      //                           list: result.list,
+      //                         },
+      //                         loading: false,
+      //                       },
+      //                       () => {
+      //                         resolve();
+      //                       },
+      //                     );
+      //                   });
+      //               }, 2000);
+      //             },
+      //           );
+      //         });
+      //       }
+      //     }
+      //
+      //     export default FewTable;
+      //               `,
+      //         },
+      //         {
+      //           title: 'index.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //     import FewTable from './fewTable';
+      //
+      //     <div style={{ display: 'flex', height: 700 }}>
+      //       <FewTable
+      //         style={{ height: '100%' }}
+      //         isShowExpandSearch
+      //         defaultExpandSearchCollapse={false}
+      //         fixedHeaderAutoTable
+      //         fixedTableSpaceBetween
+      //       />
+      //     </div>
+      //               `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <>
+      //           <Switch
+      //             checkedChildren="分页"
+      //             checked={pagination4}
+      //             onChange={() => {
+      //               setPagination4(!pagination4);
+      //             }}
+      //           />
+      //
+      //           <Space />
+      //
+      //           <div style={{ display: 'flex', height: 700 }}>
+      //             <FewTable
+      //               style={{ height: '100%' }}
+      //               isShowExpandSearch
+      //               defaultExpandSearchCollapse={false}
+      //               fixedHeaderAutoTable
+      //               fixedTableSpaceBetween
+      //               pagination={pagination4}
+      //             />
+      //           </div>
+      //         </>
+      //       ),
+      //     },
+      //     {
+      //       id: `p6`,
+      //       name: `使用@ctsj/state的Table`,
+      //       cardProps: {
+      //         description: {
+      //           title: '使用@ctsj/state的Table',
+      //           info: '使用@ctsj/state的Table',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'serviceRegister.js',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+      //
+      //     function serviceRegister() {
+      //       const requireComponent = require.context('./service', false, /.*\\.(js)$/);
+      //
+      //       const services = {};
+      //       requireComponent.keys().forEach((fileName) => {
+      //         const serviceKey = fileName.substring(2, fileName.length - 3);
+      //         services[serviceKey] = requireComponent(fileName);
+      //       });
+      //
+      //       ServiceRegister.initConfig(services);
+      //     }
+      //
+      //     serviceRegister();
+      //               `,
+      //         },
+      //         {
+      //           title: 'model/user.js',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+      //
+      //     export default () => Object.assign(ServiceRegister.model('user'), {});
+      //               `,
+      //         },
+      //         {
+      //           title: 'service/user.js',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import { Ajax } from '@baifendian/adhere';
+      //
+      //     const request = new Ajax('');
+      //
+      //     export const fetchList = (() => {
+      //       return {
+      //         call: () => {
+      //           return request.get({
+      //             path: require('../mock.js').default,
+      //             mock: true,
+      //             loading: {
+      //               show: false,
+      //             },
+      //           });
+      //         },
+      //         defaultResult: () => ({
+      //           total: 0,
+      //           list: [],
+      //         }),
+      //       };
+      //     })();
+      //
+      //     export default {
+      //       codeKey: 'code',
+      //       codeSuccessKey: 200,
+      //       dataKey: 'data',
+      //       messageKey: 'message',
+      //     };
+      //               `,
+      //         },
+      //         {
+      //           title: 'stateTable.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //     import moment from 'moment';
+      //     import { Input, InputNumber, Select, DatePicker } from 'antd';
+      //     import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
+      //     import { createState } from '@ctsj/state/lib/react';
+      //     import { Resource, SearchTable, Dict } from '@baifendian/adhere';
+      //
+      //     import './serviceRegister';
+      //
+      //     const { Option } = Select;
+      //
+      //     const { RangePicker } = DatePicker;
+      //
+      //     const { Table, TableStateImplement } = SearchTable;
+      //
+      //     const { SearchForm } = Table;
+      //
+      //     const { SearchFormRow } = SearchForm;
+      //
+      //     const { SearchFormLabel, SearchFormValue } = SearchFormRow;
+      //
+      //     const serviceName = 'user';
+      //
+      //     /**
+      //      * StateTable
+      //      */
+      //     class StateTable extends TableStateImplement {
+      //       constructor(props) {
+      //         super(props);
+      //
+      //         const models = [];
+      //
+      //         const requireComponent = require.context('./model', false, /.*\\.(js)$/);
+      //
+      //         requireComponent.keys().forEach((fileName) => {
+      //           const model = requireComponent(fileName);
+      //           models.push(model.default());
+      //         });
+      //
+      //         this.unsubscribe = createState({
+      //           initialState: { ...this.state },
+      //           models,
+      //           mapState: (state) =>
+      //             Object.assign(
+      //               ServiceRegister.mapStateToProps({
+      //                 namespaces: [serviceName],
+      //                 state,
+      //               }),
+      //               {
+      //                 loading: state.loading,
+      //               },
+      //             ),
+      //           mapDispatch: (dispatch) =>
+      //             ServiceRegister.mapDispatchToProps({
+      //               namespaces: [serviceName],
+      //               dispatch,
+      //             }),
+      //           ref: this,
+      //           middleWares: [],
+      //           reducer: null,
+      //         });
+      //       }
+      //
+      //       componentWillUnmount() {
+      //         this.unsubscribe();
+      //       }
+      //
+      //       getServiceName() {
+      //         return serviceName;
+      //       }
+      //
+      //       getOrderFieldValue() {
+      //         return 'height';
+      //       }
+      //
+      //       getTotalKey() {
+      //         return 'total';
+      //       }
+      //
+      //       renderSearchForm() {
+      //         return (
+      //           <SearchForm>
+      //              eslint-disable-next-line react/jsx-no-undef
+      //             <SearchFormRow>
+      //               <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Input
+      //                   style={{ width: '90%' }}
+      //                   placeholder="姓名"
+      //                   value={this.state.name}
+      //                   onChange={(e) => {
+      //                     this.onInputChange('name', e);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Select
+      //                   style={{ width: '90%' }}
+      //                   value={this.state.sex}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('sex', v);
+      //                   }}
+      //                   getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+      //                 >
+      //                   {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
+      //                     <Option key={t.value} value={t.value}>
+      //                       {t.label}
+      //                     </Option>
+      //                   ))}
+      //                 </Select>
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <RangePicker
+      //                   style={{ width: '90%' }}
+      //                   value={[this.state.startTime, this.state.endTime]}
+      //                   onChange={(moments) => {
+      //                     this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
+      //                   }}
+      //                   getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+      //                 />
+      //               </SearchFormValue>
+      //             </SearchFormRow>
+      //
+      //              eslint-disable-next-line react/jsx-no-undef
+      //             <SearchFormRow>
+      //               <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Input
+      //                   style={{ width: '90%' }}
+      //                   placeholder="籍贯"
+      //                   value={this.state.homeTown}
+      //                   onChange={(e) => {
+      //                     this.onInputChange('homeTown', e);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <InputNumber
+      //                   style={{ width: '90%' }}
+      //                   placeholder="身高"
+      //                   value={this.state.height}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('height', v);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <InputNumber
+      //                   style={{ width: '90%' }}
+      //                   placeholder="体重"
+      //                   value={this.state.width}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('width', v);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //             </SearchFormRow>
+      //
+      //              eslint-disable-next-line react/jsx-no-undef
+      //             <SearchFormRow>
+      //               <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Select
+      //                   style={{ width: '90%' }}
+      //                   value={this.state.deptCode}
+      //                   getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('deptCode', v);
+      //                   }}
+      //                 >
+      //                   <Option value="">全部</Option>
+      //                   <Option value="0">产品部</Option>
+      //                   <Option value="1">开发部</Option>
+      //                   <Option value="2">工程部</Option>
+      //                 </Select>
+      //               </SearchFormValue>
+      //             </SearchFormRow>
+      //           </SearchForm>
+      //         );
+      //       }
+      //
+      //       renderSearchFooterItems(defaultItems) {
+      //         return [...defaultItems];
+      //       }
+      //
+      //       getParams() {
+      //         return {
+      //           name: '',
+      //           sex: '',
+      //           startTime: null,
+      //           endTime: null,
+      //           deptCode: '',
+      //           homeTown: '',
+      //           width: '',
+      //           height: '',
+      //         };
+      //       }
+      //
+      //       getColumns() {
+      //         return [
+      //           {
+      //             title: '姓名',
+      //             dataIndex: 'name',
+      //             key: 'name',
+      //             align: 'center',
+      //           },
+      //           {
+      //             title: '性别',
+      //             dataIndex: 'sex',
+      //             key: 'sex',
+      //             align: 'center',
+      //             render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
+      //           },
+      //           {
+      //             title: '籍贯',
+      //             dataIndex: 'homeTown',
+      //             key: 'homeTown',
+      //             align: 'center',
+      //           },
+      //           {
+      //             title: '出生年月',
+      //             dataIndex: 'birthday',
+      //             key: 'birthday',
+      //             align: 'center',
+      //             sorter: true,
+      //             sortOrder: this.sortOrder('birthday'),
+      //             render: (val) =>
+      //               val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
+      //           },
+      //           {
+      //             title: '所在部门',
+      //             dataIndex: 'deptName',
+      //             key: 'deptName',
+      //             align: 'center',
+      //           },
+      //           {
+      //             title: '身高',
+      //             dataIndex: 'height',
+      //             key: 'height',
+      //             align: 'center',
+      //             sorter: true,
+      //             sortOrder: this.sortOrder('height'),
+      //           },
+      //           {
+      //             title: '体重',
+      //             dataIndex: 'width',
+      //             key: 'width',
+      //             align: 'center',
+      //             sorter: true,
+      //             sortOrder: this.sortOrder('width'),
+      //           },
+      //         ];
+      //       }
+      //
+      //       getFetchListPropName() {
+      //         return 'fetchList';
+      //       }
+      //
+      //       fetchDataExecute(searchParams) {
+      //         return super.fetchDataExecute(searchParams);
+      //       }
+      //
+      //       onSubTableChange(pagination, filters, sorter) {}
+      //     }
+      //
+      //     export default StateTable;
+      //               `,
+      //         },
+      //         {
+      //           title: 'index.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //     import StateTable from './stateTable';
+      //
+      //     <div style={{ display: 'flex', height: 700 }}>
+      //       <StateTable
+      //         style={{ height: '100%' }}
+      //         isShowExpandSearch
+      //         defaultExpandSearchCollapse={false}
+      //         fixedHeaderAutoTable
+      //         fixedTableSpaceBetween
+      //       />
+      //     </div>
+      //               `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <>
+      //           <Switch
+      //             checkedChildren="分页"
+      //             checked={pagination5}
+      //             onChange={() => {
+      //               setPagination5(!pagination5);
+      //             }}
+      //           />
+      //
+      //           <Space />
+      //
+      //           <div style={{ display: 'flex', height: 700 }}>
+      //             <StateTable
+      //               style={{ height: '100%' }}
+      //               isShowExpandSearch
+      //               defaultExpandSearchCollapse={false}
+      //               fixedHeaderAutoTable
+      //               fixedTableSpaceBetween
+      //               pagination={pagination5}
+      //             />
+      //           </div>
+      //         </>
+      //       ),
+      //     },
+      //     {
+      //       id: `p7`,
+      //       name: `实现TableImplement的table`,
+      //       cardProps: {
+      //         description: {
+      //           title: '实现TableImplement的table',
+      //           info: '实现TableImplement的table',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'table.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //     import moment from 'moment';
+      //     import { Input, Select, DatePicker, InputNumber } from 'antd';
+      //
+      //     import { SearchTable, Resource, Ajax } from '@baifendian/adhere';
+      //
+      //     const { Table, TableImplement } = SearchTable;
+      //
+      //     const { SearchForm } = Table;
+      //
+      //     const { SearchFormRow } = SearchForm;
+      //
+      //     const { SearchFormLabel, SearchFormValue } = SearchFormRow;
+      //
+      //     const { Option } = Select;
+      //
+      //     const { RangePicker } = DatePicker;
+      //
+      //     /**
+      //      * Table
+      //      * @class TableImpl
+      //      * @classdesc TableImpl
+      //      */
+      //     class TableImpl extends TableImplement {
+      //       // eslint-disable-next-line no-useless-constructor
+      //       constructor(props) {
+      //         super(props);
+      //
+      //         this.request = new Ajax('');
+      //
+      //         Object.assign(this.state, {
+      //           loading: false,
+      //         });
+      //       }
+      //
+      //       getParams() {
+      //         return {
+      //           name: '',
+      //           sex: '',
+      //           startTime: null,
+      //           endTime: null,
+      //           deptCode: '',
+      //           homeTown: '',
+      //           width: '',
+      //           height: '',
+      //         };
+      //       }
+      //
+      //       getFetchDataParams() {
+      //         const {
+      //           searchParams: { startTime, endTime },
+      //         } = this.state;
+      //
+      //         return {
+      //           startTime: startTime
+      //             ? \`\${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 00:00:00\`
+      //             : null,
+      //           endTime: endTime
+      //             ? \`\${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 23:59:59\`
+      //             : null,
+      //         };
+      //       }
+      //
+      //       getData() {
+      //         return this.state.dataSource.list;
+      //       }
+      //
+      //       getColumns() {
+      //         return [
+      //           {
+      //             title: '姓名',
+      //             dataIndex: 'name',
+      //             key: 'name',
+      //             align: 'center',
+      //           },
+      //           {
+      //             title: '性别',
+      //             dataIndex: 'sex',
+      //             key: 'sex',
+      //             align: 'center',
+      //             render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
+      //           },
+      //           {
+      //             title: '籍贯',
+      //             dataIndex: 'homeTown',
+      //             key: 'homeTown',
+      //             align: 'center',
+      //           },
+      //           {
+      //             title: '出生年月',
+      //             dataIndex: 'birthday',
+      //             key: 'birthday',
+      //             align: 'center',
+      //             sorter: true,
+      //             sortOrder: this.sortOrder('birthday'),
+      //             render: (val) =>
+      //               val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
+      //           },
+      //           {
+      //             title: '所在部门',
+      //             dataIndex: 'deptName',
+      //             key: 'deptName',
+      //             align: 'center',
+      //           },
+      //           {
+      //             title: '身高',
+      //             dataIndex: 'height',
+      //             key: 'height',
+      //             align: 'center',
+      //             sorter: true,
+      //             sortOrder: this.sortOrder('height'),
+      //           },
+      //           {
+      //             title: '体重',
+      //             dataIndex: 'width',
+      //             key: 'width',
+      //             align: 'center',
+      //             sorter: true,
+      //             sortOrder: this.sortOrder('width'),
+      //           },
+      //         ];
+      //       }
+      //
+      //       renderSearchForm() {
+      //         return (
+      //           // eslint-disable-next-line react/jsx-no-undef
+      //           <SearchForm>
+      //              eslint-disable-next-line react/jsx-no-undef
+      //             <SearchFormRow>
+      //               <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Input
+      //                   style={{ width: '90%' }}
+      //                   placeholder="姓名"
+      //                   value={this.state.name}
+      //                   onChange={(e) => {
+      //                     this.onInputChange('name', e);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Select
+      //                   style={{ width: '90%' }}
+      //                   value={this.state.sex}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('sex', v);
+      //                   }}
+      //                   getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+      //                 >
+      //                   {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
+      //                     <Option key={t.value} value={t.value}>
+      //                       {t.label}
+      //                     </Option>
+      //                   ))}
+      //                 </Select>
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <RangePicker
+      //                   style={{ width: '90%' }}
+      //                   value={[this.state.startTime, this.state.endTime]}
+      //                   onChange={(moments) => {
+      //                     this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
+      //                   }}
+      //                   getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+      //                 />
+      //               </SearchFormValue>
+      //             </SearchFormRow>
+      //
+      //              eslint-disable-next-line react/jsx-no-undef
+      //             <SearchFormRow>
+      //               <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Input
+      //                   style={{ width: '90%' }}
+      //                   placeholder="籍贯"
+      //                   value={this.state.homeTown}
+      //                   onChange={(e) => {
+      //                     this.onInputChange('homeTown', e);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <InputNumber
+      //                   style={{ width: '90%' }}
+      //                   placeholder="身高"
+      //                   value={this.state.height}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('height', v);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //
+      //               <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <InputNumber
+      //                   style={{ width: '90%' }}
+      //                   placeholder="体重"
+      //                   value={this.state.width}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('width', v);
+      //                   }}
+      //                 />
+      //               </SearchFormValue>
+      //             </SearchFormRow>
+      //
+      //              eslint-disable-next-line react/jsx-no-undef
+      //             <SearchFormRow>
+      //               <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
+      //               <SearchFormValue>
+      //                 <Select
+      //                   style={{ width: '90%' }}
+      //                   value={this.state.deptCode}
+      //                   getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
+      //                   onChange={(v) => {
+      //                     this.onSelectChange('deptCode', v);
+      //                   }}
+      //                 >
+      //                   <Option value="">全部</Option>
+      //                   <Option value="0">产品部</Option>
+      //                   <Option value="1">开发部</Option>
+      //                   <Option value="2">工程部</Option>
+      //                 </Select>
+      //               </SearchFormValue>
+      //             </SearchFormRow>
+      //           </SearchForm>
+      //         );
+      //       }
+      //
+      //       getTotal() {
+      //         return this.state.dataSource.total;
+      //       }
+      //
+      //       getOrderFieldValue() {
+      //         return 'height';
+      //       }
+      //
+      //       renderSearchFooterItems() {
+      //         return null;
+      //       }
+      //
+      //       showLoading() {
+      //         return this.state.loading;
+      //       }
+      //
+      //       // eslint-disable-next-line no-unused-vars
+      //       onSubTableChange(pagination, filters, sorter) {}
+      //
+      //       fetchDataExecute(searchParams) {
+      //         return new Promise((resolve) => {
+      //           this.setState(
+      //             {
+      //               loading: true,
+      //             },
+      //             () => {
+      //               setTimeout(() => {
+      //                 this.request
+      //                   .get({
+      //                     mock: true,
+      //                     // eslint-disable-next-line global-require
+      //                     path: require('./mock.js').default.data,
+      //                   })
+      //                   .then((result) => {
+      //                     this.setState(
+      //                       {
+      //                         dataSource: {
+      //                           total: result.total,
+      //                           list: result.list,
+      //                         },
+      //                         loading: false,
+      //                       },
+      //                       () => {
+      //                         resolve();
+      //                       },
+      //                     );
+      //                   });
+      //               }, 2000);
+      //             },
+      //           );
+      //         });
+      //       }
+      //     }
+      //
+      //     export default TableImpl;
+      //             `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //     },
+      //     {
+      //       id: 'p8',
+      //       name: '标准的RowSelected',
+      //       cardProps: {
+      //         description: {
+      //           title: '标准的RowSelected',
+      //           info: '标准的RowSelected',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'rowSelectedNormal.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //
+      //     import { SearchTable } from '@baifendian/adhere';
+      //     import Table from './table';
+      //
+      //     const { Table: $SearchTable } = SearchTable;
+      //
+      //     /**
+      //      * RowSelectedContinuous
+      //      * @classdesc
+      //      */
+      //     class RowSelectedContinuous extends Table {
+      //         getRowSelectionMode() {
+      //             return $SearchTable.ROW_SELECTION_NORMAL_MODE;
+      //         }
+      //     }
+      //
+      //     export default RowSelectedContinuous;
+      //               `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //       ),
+      //     },
+      //     {
+      //       id: 'p9',
+      //       name: '可以跨页选择的RowSelected',
+      //       cardProps: {
+      //         description: {
+      //           title: '可以跨页选择的RowSelected',
+      //           info: '可以跨页选择的RowSelected',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'rowSelectedContinuous.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      //     import React from 'react';
+      //
+      //     import { SearchTable } from '@baifendian/adhere';
+      //     import Table from './table';
+      //
+      //     const { Table: $SearchTable } = SearchTable;
+      //
+      //     /**
+      //      * RowSelectedContinuous
+      //      * @classdesc
+      //      */
+      //     class RowSelectedContinuous extends Table {
+      //       getRowSelectionMode() {
+      //         return $SearchTable.ROW_SELECTION_CONTINUOUS_MODE;
+      //       }
+      //     }
+      //
+      //     export default RowSelectedContinuous;
+      //               `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <RowSelectedContinuous isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //       ),
+      //     },
+      //     {
+      //       id: 'p10',
+      //       name: '可以拖动的列',
+      //       cardProps: {
+      //         description: {
+      //           title: '可以拖动的列',
+      //           info: '可以拖动的列',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'columnResizeTable.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      // import React from 'react';
+      //
+      // import Table from './table';
+      //
+      // /**
+      //  * ColumnResizeTable
+      //  * @classdesc
+      //  */
+      // class ColumnResizeTable extends Table {
+      //   getColumns() {
+      //     return super.getColumns().map((column) => ({
+      //       ...column,
+      //       resizable: true,
+      //     }));
+      //   }
+      // }
+      //
+      // export default ColumnResizeTable;
+      //           `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <div style={{ display: 'flex', height: 700 }}>
+      //           <ColumnResizeTable
+      //             style={{ height: '100%' }}
+      //             isShowExpandSearch
+      //             defaultExpandSearchCollapse={false}
+      //             fixedHeaderAutoTable
+      //           />
+      //         </div>
+      //       ),
+      //     },
+      //     {
+      //       id: 'p11',
+      //       name: '列设置',
+      //       cardProps: {
+      //         description: {
+      //           title: '列设置',
+      //           info: '列设置',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'columnSettingTable.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      // import React from 'react';
+      //
+      // import Table from './table';
+      // import styles from './fixedTableSpaceBetweenTable.less';
+      //
+      // /**
+      //  * ColumnSettingTable
+      //  * @classdesc
+      //  */
+      // class ColumnSettingTable extends Table {
+      //   renderTableHeader() {
+      //     return (
+      //       <div className={styles.Header}>
+      //         <h3>查询表格</h3>
+      //         <div>{this.renderColumnSetting()}</div>
+      //       </div>
+      //     );
+      //   }
+      // }
+      //
+      // export default ColumnSettingTable;
+      //           `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //       ),
+      //     },
+      //     {
+      //       id: 'p12',
+      //       name: '表格密度设置',
+      //       cardProps: {
+      //         description: {
+      //           title: '表格密度设置',
+      //           info: '表格密度设置',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'tableDensitySetting.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      // import React from 'react';
+      //
+      // import Table from './table';
+      // import styles from './fixedTableSpaceBetweenTable.less';
+      //
+      // /**
+      //  * TableDensitySetting
+      //  * @classdesc
+      //  */
+      // class TableDensitySetting extends Table {
+      //   renderTableHeader() {
+      //     return (
+      //       <div className={styles.Header}>
+      //         <h3>查询表格</h3>
+      //         <div>{this.renderTableDensitySetting()}</div>
+      //       </div>
+      //     );
+      //   }
+      // }
+      //
+      // export default TableDensitySetting;
+      //           `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <TableDensitySetting isShowExpandSearch defaultExpandSearchCollapse={false} />
+      //       ),
+      //     },
+      //     {
+      //       id: 'p13',
+      //       name: '查询面板两端的渲染',
+      //       cardProps: {
+      //         description: {
+      //           title: '查询面板两端的渲染',
+      //           info: '查询面板两端的渲染',
+      //         },
+      //       },
+      //       config: [
+      //         {
+      //           title: 'renderSearchBetweenTable.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      // import { Button, Col, Row, Statistic } from 'antd';
+      // import React from 'react';
+      //
+      // import Table from './table';
+      //
+      // /**
+      //  * RenderSearchBetweenTable
+      //  * @classdesc
+      //  */
+      // class RenderSearchBetweenTable extends Table {
+      //   renderSearchFormBefore() {
+      //     return (
+      //       <Row gutter={16}>
+      //         <Col span={12}>
+      //           <Statistic title="Active Users" value={112893} />
+      //         </Col>
+      //         <Col span={12}>
+      //           <Statistic title="Account Balance (CNY)" value={112893} precision={2} />
+      //           <Button style={{ marginTop: 16 }} type="primary">
+      //             Recharge
+      //           </Button>
+      //         </Col>
+      //         <Col span={12}>
+      //           <Statistic title="Active Users" value={112893} loading />
+      //         </Col>
+      //       </Row>
+      //     );
+      //   }
+      //
+      //   renderSearchFormAfter() {
+      //     return (
+      //       <Row gutter={16}>
+      //         <Col span={12}>
+      //           <Statistic title="Active Users" value={112893} />
+      //         </Col>
+      //         <Col span={12}>
+      //           <Statistic title="Account Balance (CNY)" value={112893} precision={2} />
+      //           <Button style={{ marginTop: 16 }} type="primary">
+      //             Recharge
+      //           </Button>
+      //         </Col>
+      //         <Col span={12}>
+      //           <Statistic title="Active Users" value={112893} loading />
+      //         </Col>
+      //       </Row>
+      //     );
+      //   }
+      // }
+      //
+      // export default RenderSearchBetweenTable;
+      //           `,
+      //         },
+      //         {
+      //           title: 'index.jsx',
+      //           mode: 'code',
+      //           scope: { React },
+      //           codeText: `
+      // <div style={{ display: 'flex', height: 800 }}>
+      //   <RenderSearchBetweenTable
+      //     style={{ height: '100%' }}
+      //     isShowExpandSearch
+      //     defaultExpandSearchCollapse={false}
+      //     fixedHeaderAutoTable
+      //     pagination={pagination3}
+      //   />
+      // </div>
+      //           `,
+      //         },
+      //       ],
+      //       type: 'PlayGroundMulit',
+      //       renderChildren: () => (
+      //         <>
+      //           <div style={{ display: 'flex', height: 800 }}>
+      //             <RenderSearchBetweenTable
+      //               style={{ height: '100%' }}
+      //               isShowExpandSearch
+      //               defaultExpandSearchCollapse={false}
+      //               fixedHeaderAutoTable
+      //               pagination={pagination3}
+      //             />
+      //           </div>
+      //         </>
+      //       ),
+      //     },
+      //     {
+      //       id: `p14`,
+      //       name: `ProSearchStateTable`,
+      //       mode: 'code',
+      //       scope: { React },
+      //       cardProps: {
+      //         description: {
+      //           title: 'ProSearchStateTable',
+      //           info: 'ProSearchStateTable',
+      //         },
+      //       },
+      //       codeText: ``,
+      //       type: 'PlayGround',
+      //       renderChildren: () => (
+      //         <div style={{ display: 'flex', height: 700 }}>
+      //           <ProSearchStateTableImpl
+      //             style={{ height: '100%' }}
+      //             isShowExpandSearch
+      //             defaultExpandSearchCollapse={false}
+      //             fixedHeaderAutoTable
+      //             fixedTableSpaceBetween
+      //             pagination={pagination4}
+      //           />
+      //         </div>
+      //       ),
+      //     },
       {
-        id: `p1`,
-        name: `基本使用`,
+        id: `p15`,
+        name: '可编辑的单元格',
         mode: 'code',
         scope: { React },
         cardProps: {
           description: {
-            title: '基本使用',
-            info: '基本使用',
-          },
-        },
-        codeText: `
-      import React from 'react';
-
-      import Table from './table';
-
-      <Table isShowExpandSearch defaultExpandSearchCollapse={false} />
-          `,
-        type: 'PlayGround',
-        renderChildren: () => <Table isShowExpandSearch defaultExpandSearchCollapse={false} />,
-      },
-      {
-        id: `p2`,
-        name: `表格体可以滚动`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: '表格体可以滚动',
-            info: '表格体可以滚动',
-          },
-        },
-        codeText: `
-      import React from 'react';
-
-      import Table from './table';
-
-      <div style={{ display: 'flex', height: 400 }}>
-        <Table
-          style={{ height: '100%' }}
-          isShowExpandSearch
-          defaultExpandSearchCollapse={false}
-          autoFixed
-        />
-      </div>
-          `,
-        type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Switch
-              checkedChildren="分页"
-              checked={pagination1}
-              onChange={() => {
-                setPagination1(!pagination1);
-              }}
-            />
-
-            <Space />
-
-            <div style={{ display: 'flex', height: 400 }}>
-              <Table
-                style={{ height: '100%' }}
-                isShowExpandSearch
-                defaultExpandSearchCollapse={false}
-                autoFixed
-                pagination={pagination1}
-              />
-            </div>
-          </>
-        ),
-      },
-      {
-        id: `p3`,
-        name: `固定列头`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: '固定列头',
-            info: '固定列头',
-          },
-        },
-        codeText: `
-      import React from 'react';
-
-      import Table from './table';
-
-      <div style={{ display: 'flex', height: 700 }}>
-        <Table
-          style={{ height: '100%' }}
-          isShowExpandSearch
-          defaultExpandSearchCollapse={false}
-          fixedHeaderAutoTable
-        />
-      </div>
-          `,
-        type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Switch
-              checkedChildren="分页"
-              checked={pagination2}
-              onChange={() => {
-                setPagination2(!pagination2);
-              }}
-            />
-
-            <Space />
-
-            <div style={{ display: 'flex', height: 700 }}>
-              <Table
-                style={{ height: '100%' }}
-                isShowExpandSearch
-                defaultExpandSearchCollapse={false}
-                fixedHeaderAutoTable
-                pagination={pagination2}
-              />
-            </div>
-          </>
-        ),
-      },
-      {
-        id: `p4`,
-        name: `列表两端的渲染`,
-        cardProps: {
-          description: {
-            title: '列表两端的渲染',
-            info: '列表两端的渲染',
-          },
-        },
-        config: [
-          {
-            title: 'fixedTableSpaceBetweenTable.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-      import { Button } from 'antd';
-
-      import Table from './table';
-
-      import styles from './fixedTableSpaceBetweenTable.less';
-
-      /**
-       * FixedTableSpaceBetweenTable
-       * @classdesc
-       */
-      class FixedTableSpaceBetweenTable extends Table {
-        renderTableHeader() {
-          return (
-            <div className={styles.Header}>
-              <h3>查询表格</h3>
-              <div>
-                <Button type="primary">新建</Button>
-              </div>
-            </div>
-          );
-        }
-
-        renderTableFooter() {
-          return <div className={styles.Footer}>renderTableFooter</div>;
-        }
-      }
-
-      export default FixedTableSpaceBetweenTable;
-                `,
-          },
-          {
-            title: 'fixedTableSpaceBetweenTable.less',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      .Header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        background-color: #fff;
-      }
-
-      .Footer {
-        padding: 0 20px 20px 20px;
-        font-size: 16px;
-        text-align: center;
-        background-color: #fff;
-      }
-                `,
-          },
-          {
-            title: 'index.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-      import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
-
-      <div style={{ display: 'flex', height: 800 }}>
-        <FixedTableSpaceBetweenTable
-          style={{ height: '100%' }}
-          isShowExpandSearch
-          defaultExpandSearchCollapse={false}
-          fixedHeaderAutoTable
-        />
-      </div>
-                `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <>
-            <Switch
-              checkedChildren="分页"
-              checked={pagination3}
-              onChange={() => {
-                setPagination3(!pagination3);
-              }}
-            />
-
-            <Space />
-
-            <div style={{ display: 'flex', height: 800 }}>
-              <FixedTableSpaceBetweenTable
-                style={{ height: '100%' }}
-                isShowExpandSearch
-                defaultExpandSearchCollapse={false}
-                fixedHeaderAutoTable
-                pagination={pagination3}
-              />
-            </div>
-          </>
-        ),
-      },
-      {
-        id: `p5`,
-        name: `分页始终居底`,
-        cardProps: {
-          description: {
-            title: '分页始终居底',
-            info: '分页始终居底',
-          },
-        },
-        config: [
-          {
-            title: 'fewTable.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-
-      import Table from './table';
-      import { oneData } from './mock';
-
-      /**
-       * FewTable
-       * @classdesc
-       */
-      class FewTable extends Table {
-        fetchDataExecute(searchParams) {
-          return new Promise((resolve) => {
-            this.setState(
-              {
-                loading: true,
-              },
-              () => {
-                setTimeout(() => {
-                  this.request
-                    .get({
-                      mock: true,
-                      path: oneData.data,
-                    })
-                    .then((result) => {
-                      this.setState(
-                        {
-                          dataSource: {
-                            total: result.total,
-                            list: result.list,
-                          },
-                          loading: false,
-                        },
-                        () => {
-                          resolve();
-                        },
-                      );
-                    });
-                }, 2000);
-              },
-            );
-          });
-        }
-      }
-
-      export default FewTable;
-                `,
-          },
-          {
-            title: 'index.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-      import FewTable from './fewTable';
-
-      <div style={{ display: 'flex', height: 700 }}>
-        <FewTable
-          style={{ height: '100%' }}
-          isShowExpandSearch
-          defaultExpandSearchCollapse={false}
-          fixedHeaderAutoTable
-          fixedTableSpaceBetween
-        />
-      </div>
-                `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <>
-            <Switch
-              checkedChildren="分页"
-              checked={pagination4}
-              onChange={() => {
-                setPagination4(!pagination4);
-              }}
-            />
-
-            <Space />
-
-            <div style={{ display: 'flex', height: 700 }}>
-              <FewTable
-                style={{ height: '100%' }}
-                isShowExpandSearch
-                defaultExpandSearchCollapse={false}
-                fixedHeaderAutoTable
-                fixedTableSpaceBetween
-                pagination={pagination4}
-              />
-            </div>
-          </>
-        ),
-      },
-      {
-        id: `p6`,
-        name: `使用@ctsj/state的Table`,
-        cardProps: {
-          description: {
-            title: '使用@ctsj/state的Table',
-            info: '使用@ctsj/state的Table',
-          },
-        },
-        config: [
-          {
-            title: 'serviceRegister.js',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-
-      function serviceRegister() {
-        const requireComponent = require.context('./service', false, /.*\\.(js)$/);
-
-        const services = {};
-        requireComponent.keys().forEach((fileName) => {
-          const serviceKey = fileName.substring(2, fileName.length - 3);
-          services[serviceKey] = requireComponent(fileName);
-        });
-
-        ServiceRegister.initConfig(services);
-      }
-
-      serviceRegister();
-                `,
-          },
-          {
-            title: 'model/user.js',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-
-      export default () => Object.assign(ServiceRegister.model('user'), {});
-                `,
-          },
-          {
-            title: 'service/user.js',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import { Ajax } from '@baifendian/adhere';
-
-      const request = new Ajax('');
-
-      export const fetchList = (() => {
-        return {
-          call: () => {
-            return request.get({
-              path: require('../mock.js').default,
-              mock: true,
-              loading: {
-                show: false,
-              },
-            });
-          },
-          defaultResult: () => ({
-            total: 0,
-            list: [],
-          }),
-        };
-      })();
-
-      export default {
-        codeKey: 'code',
-        codeSuccessKey: 200,
-        dataKey: 'data',
-        messageKey: 'message',
-      };
-                `,
-          },
-          {
-            title: 'stateTable.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-      import moment from 'moment';
-      import { Input, InputNumber, Select, DatePicker } from 'antd';
-      import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-      import { createState } from '@ctsj/state/lib/react';
-      import { Resource, SearchTable, Dict } from '@baifendian/adhere';
-
-      import './serviceRegister';
-
-      const { Option } = Select;
-
-      const { RangePicker } = DatePicker;
-
-      const { Table, TableStateImplement } = SearchTable;
-
-      const { SearchForm } = Table;
-
-      const { SearchFormRow } = SearchForm;
-
-      const { SearchFormLabel, SearchFormValue } = SearchFormRow;
-
-      const serviceName = 'user';
-
-      /**
-       * StateTable
-       */
-      class StateTable extends TableStateImplement {
-        constructor(props) {
-          super(props);
-
-          const models = [];
-
-          const requireComponent = require.context('./model', false, /.*\\.(js)$/);
-
-          requireComponent.keys().forEach((fileName) => {
-            const model = requireComponent(fileName);
-            models.push(model.default());
-          });
-
-          this.unsubscribe = createState({
-            initialState: { ...this.state },
-            models,
-            mapState: (state) =>
-              Object.assign(
-                ServiceRegister.mapStateToProps({
-                  namespaces: [serviceName],
-                  state,
-                }),
-                {
-                  loading: state.loading,
-                },
-              ),
-            mapDispatch: (dispatch) =>
-              ServiceRegister.mapDispatchToProps({
-                namespaces: [serviceName],
-                dispatch,
-              }),
-            ref: this,
-            middleWares: [],
-            reducer: null,
-          });
-        }
-
-        componentWillUnmount() {
-          this.unsubscribe();
-        }
-
-        getServiceName() {
-          return serviceName;
-        }
-
-        getOrderFieldValue() {
-          return 'height';
-        }
-
-        getTotalKey() {
-          return 'total';
-        }
-
-        renderSearchForm() {
-          return (
-            <SearchForm>
-               eslint-disable-next-line react/jsx-no-undef
-              <SearchFormRow>
-                <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
-                <SearchFormValue>
-                  <Input
-                    style={{ width: '90%' }}
-                    placeholder="姓名"
-                    value={this.state.name}
-                    onChange={(e) => {
-                      this.onInputChange('name', e);
-                    }}
-                  />
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
-                <SearchFormValue>
-                  <Select
-                    style={{ width: '90%' }}
-                    value={this.state.sex}
-                    onChange={(v) => {
-                      this.onSelectChange('sex', v);
-                    }}
-                    getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-                  >
-                    {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
-                      <Option key={t.value} value={t.value}>
-                        {t.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
-                <SearchFormValue>
-                  <RangePicker
-                    style={{ width: '90%' }}
-                    value={[this.state.startTime, this.state.endTime]}
-                    onChange={(moments) => {
-                      this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
-                    }}
-                    getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-                  />
-                </SearchFormValue>
-              </SearchFormRow>
-
-               eslint-disable-next-line react/jsx-no-undef
-              <SearchFormRow>
-                <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
-                <SearchFormValue>
-                  <Input
-                    style={{ width: '90%' }}
-                    placeholder="籍贯"
-                    value={this.state.homeTown}
-                    onChange={(e) => {
-                      this.onInputChange('homeTown', e);
-                    }}
-                  />
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
-                <SearchFormValue>
-                  <InputNumber
-                    style={{ width: '90%' }}
-                    placeholder="身高"
-                    value={this.state.height}
-                    onChange={(v) => {
-                      this.onSelectChange('height', v);
-                    }}
-                  />
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
-                <SearchFormValue>
-                  <InputNumber
-                    style={{ width: '90%' }}
-                    placeholder="体重"
-                    value={this.state.width}
-                    onChange={(v) => {
-                      this.onSelectChange('width', v);
-                    }}
-                  />
-                </SearchFormValue>
-              </SearchFormRow>
-
-               eslint-disable-next-line react/jsx-no-undef
-              <SearchFormRow>
-                <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
-                <SearchFormValue>
-                  <Select
-                    style={{ width: '90%' }}
-                    value={this.state.deptCode}
-                    getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-                    onChange={(v) => {
-                      this.onSelectChange('deptCode', v);
-                    }}
-                  >
-                    <Option value="">全部</Option>
-                    <Option value="0">产品部</Option>
-                    <Option value="1">开发部</Option>
-                    <Option value="2">工程部</Option>
-                  </Select>
-                </SearchFormValue>
-              </SearchFormRow>
-            </SearchForm>
-          );
-        }
-
-        renderSearchFooterItems(defaultItems) {
-          return [...defaultItems];
-        }
-
-        getParams() {
-          return {
-            name: '',
-            sex: '',
-            startTime: null,
-            endTime: null,
-            deptCode: '',
-            homeTown: '',
-            width: '',
-            height: '',
-          };
-        }
-
-        getColumns() {
-          return [
-            {
-              title: '姓名',
-              dataIndex: 'name',
-              key: 'name',
-              align: 'center',
-            },
-            {
-              title: '性别',
-              dataIndex: 'sex',
-              key: 'sex',
-              align: 'center',
-              render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
-            },
-            {
-              title: '籍贯',
-              dataIndex: 'homeTown',
-              key: 'homeTown',
-              align: 'center',
-            },
-            {
-              title: '出生年月',
-              dataIndex: 'birthday',
-              key: 'birthday',
-              align: 'center',
-              sorter: true,
-              sortOrder: this.sortOrder('birthday'),
-              render: (val) =>
-                val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
-            },
-            {
-              title: '所在部门',
-              dataIndex: 'deptName',
-              key: 'deptName',
-              align: 'center',
-            },
-            {
-              title: '身高',
-              dataIndex: 'height',
-              key: 'height',
-              align: 'center',
-              sorter: true,
-              sortOrder: this.sortOrder('height'),
-            },
-            {
-              title: '体重',
-              dataIndex: 'width',
-              key: 'width',
-              align: 'center',
-              sorter: true,
-              sortOrder: this.sortOrder('width'),
-            },
-          ];
-        }
-
-        getFetchListPropName() {
-          return 'fetchList';
-        }
-
-        fetchDataExecute(searchParams) {
-          return super.fetchDataExecute(searchParams);
-        }
-
-        onSubTableChange(pagination, filters, sorter) {}
-      }
-
-      export default StateTable;
-                `,
-          },
-          {
-            title: 'index.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-      import StateTable from './stateTable';
-
-      <div style={{ display: 'flex', height: 700 }}>
-        <StateTable
-          style={{ height: '100%' }}
-          isShowExpandSearch
-          defaultExpandSearchCollapse={false}
-          fixedHeaderAutoTable
-          fixedTableSpaceBetween
-        />
-      </div>
-                `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <>
-            <Switch
-              checkedChildren="分页"
-              checked={pagination5}
-              onChange={() => {
-                setPagination5(!pagination5);
-              }}
-            />
-
-            <Space />
-
-            <div style={{ display: 'flex', height: 700 }}>
-              <StateTable
-                style={{ height: '100%' }}
-                isShowExpandSearch
-                defaultExpandSearchCollapse={false}
-                fixedHeaderAutoTable
-                fixedTableSpaceBetween
-                pagination={pagination5}
-              />
-            </div>
-          </>
-        ),
-      },
-      {
-        id: `p7`,
-        name: `实现TableImplement的table`,
-        cardProps: {
-          description: {
-            title: '实现TableImplement的table',
-            info: '实现TableImplement的table',
-          },
-        },
-        config: [
-          {
-            title: 'table.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-      import moment from 'moment';
-      import { Input, Select, DatePicker, InputNumber } from 'antd';
-
-      import { SearchTable, Resource, Ajax } from '@baifendian/adhere';
-
-      const { Table, TableImplement } = SearchTable;
-
-      const { SearchForm } = Table;
-
-      const { SearchFormRow } = SearchForm;
-
-      const { SearchFormLabel, SearchFormValue } = SearchFormRow;
-
-      const { Option } = Select;
-
-      const { RangePicker } = DatePicker;
-
-      /**
-       * Table
-       * @class TableImpl
-       * @classdesc TableImpl
-       */
-      class TableImpl extends TableImplement {
-        // eslint-disable-next-line no-useless-constructor
-        constructor(props) {
-          super(props);
-
-          this.request = new Ajax('');
-
-          Object.assign(this.state, {
-            loading: false,
-          });
-        }
-
-        getParams() {
-          return {
-            name: '',
-            sex: '',
-            startTime: null,
-            endTime: null,
-            deptCode: '',
-            homeTown: '',
-            width: '',
-            height: '',
-          };
-        }
-
-        getFetchDataParams() {
-          const {
-            searchParams: { startTime, endTime },
-          } = this.state;
-
-          return {
-            startTime: startTime
-              ? \`\${startTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 00:00:00\`
-              : null,
-            endTime: endTime
-              ? \`\${endTime.format(Resource.Dict.value.ResourceMomentFormat10.value())} 23:59:59\`
-              : null,
-          };
-        }
-
-        getData() {
-          return this.state.dataSource.list;
-        }
-
-        getColumns() {
-          return [
-            {
-              title: '姓名',
-              dataIndex: 'name',
-              key: 'name',
-              align: 'center',
-            },
-            {
-              title: '性别',
-              dataIndex: 'sex',
-              key: 'sex',
-              align: 'center',
-              render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
-            },
-            {
-              title: '籍贯',
-              dataIndex: 'homeTown',
-              key: 'homeTown',
-              align: 'center',
-            },
-            {
-              title: '出生年月',
-              dataIndex: 'birthday',
-              key: 'birthday',
-              align: 'center',
-              sorter: true,
-              sortOrder: this.sortOrder('birthday'),
-              render: (val) =>
-                val ? moment(val).format(Resource.Dict.value.ResourceMomentFormat10.value()) : '',
-            },
-            {
-              title: '所在部门',
-              dataIndex: 'deptName',
-              key: 'deptName',
-              align: 'center',
-            },
-            {
-              title: '身高',
-              dataIndex: 'height',
-              key: 'height',
-              align: 'center',
-              sorter: true,
-              sortOrder: this.sortOrder('height'),
-            },
-            {
-              title: '体重',
-              dataIndex: 'width',
-              key: 'width',
-              align: 'center',
-              sorter: true,
-              sortOrder: this.sortOrder('width'),
-            },
-          ];
-        }
-
-        renderSearchForm() {
-          return (
-            // eslint-disable-next-line react/jsx-no-undef
-            <SearchForm>
-               eslint-disable-next-line react/jsx-no-undef
-              <SearchFormRow>
-                <SearchFormLabel style={{ width: 120 }}>姓名：</SearchFormLabel>
-                <SearchFormValue>
-                  <Input
-                    style={{ width: '90%' }}
-                    placeholder="姓名"
-                    value={this.state.name}
-                    onChange={(e) => {
-                      this.onInputChange('name', e);
-                    }}
-                  />
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>性别：</SearchFormLabel>
-                <SearchFormValue>
-                  <Select
-                    style={{ width: '90%' }}
-                    value={this.state.sex}
-                    onChange={(v) => {
-                      this.onSelectChange('sex', v);
-                    }}
-                    getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-                  >
-                    {Resource.Dict.value.ResourceNormalSex.value.map((t) => (
-                      <Option key={t.value} value={t.value}>
-                        {t.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>出生年月：</SearchFormLabel>
-                <SearchFormValue>
-                  <RangePicker
-                    style={{ width: '90%' }}
-                    value={[this.state.startTime, this.state.endTime]}
-                    onChange={(moments) => {
-                      this.onDateTimeRangeChange(['startTime', 'endTime'], moments);
-                    }}
-                    getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-                  />
-                </SearchFormValue>
-              </SearchFormRow>
-
-               eslint-disable-next-line react/jsx-no-undef
-              <SearchFormRow>
-                <SearchFormLabel style={{ width: 120 }}>籍贯：</SearchFormLabel>
-                <SearchFormValue>
-                  <Input
-                    style={{ width: '90%' }}
-                    placeholder="籍贯"
-                    value={this.state.homeTown}
-                    onChange={(e) => {
-                      this.onInputChange('homeTown', e);
-                    }}
-                  />
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>身高：</SearchFormLabel>
-                <SearchFormValue>
-                  <InputNumber
-                    style={{ width: '90%' }}
-                    placeholder="身高"
-                    value={this.state.height}
-                    onChange={(v) => {
-                      this.onSelectChange('height', v);
-                    }}
-                  />
-                </SearchFormValue>
-
-                <SearchFormLabel style={{ width: 120 }}>体重：</SearchFormLabel>
-                <SearchFormValue>
-                  <InputNumber
-                    style={{ width: '90%' }}
-                    placeholder="体重"
-                    value={this.state.width}
-                    onChange={(v) => {
-                      this.onSelectChange('width', v);
-                    }}
-                  />
-                </SearchFormValue>
-              </SearchFormRow>
-
-               eslint-disable-next-line react/jsx-no-undef
-              <SearchFormRow>
-                <SearchFormLabel style={{ width: 120 }}>所在部门：</SearchFormLabel>
-                <SearchFormValue>
-                  <Select
-                    style={{ width: '90%' }}
-                    value={this.state.deptCode}
-                    getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
-                    onChange={(v) => {
-                      this.onSelectChange('deptCode', v);
-                    }}
-                  >
-                    <Option value="">全部</Option>
-                    <Option value="0">产品部</Option>
-                    <Option value="1">开发部</Option>
-                    <Option value="2">工程部</Option>
-                  </Select>
-                </SearchFormValue>
-              </SearchFormRow>
-            </SearchForm>
-          );
-        }
-
-        getTotal() {
-          return this.state.dataSource.total;
-        }
-
-        getOrderFieldValue() {
-          return 'height';
-        }
-
-        renderSearchFooterItems() {
-          return null;
-        }
-
-        showLoading() {
-          return this.state.loading;
-        }
-
-        // eslint-disable-next-line no-unused-vars
-        onSubTableChange(pagination, filters, sorter) {}
-
-        fetchDataExecute(searchParams) {
-          return new Promise((resolve) => {
-            this.setState(
-              {
-                loading: true,
-              },
-              () => {
-                setTimeout(() => {
-                  this.request
-                    .get({
-                      mock: true,
-                      // eslint-disable-next-line global-require
-                      path: require('./mock.js').default.data,
-                    })
-                    .then((result) => {
-                      this.setState(
-                        {
-                          dataSource: {
-                            total: result.total,
-                            list: result.list,
-                          },
-                          loading: false,
-                        },
-                        () => {
-                          resolve();
-                        },
-                      );
-                    });
-                }, 2000);
-              },
-            );
-          });
-        }
-      }
-
-      export default TableImpl;
-              `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-      },
-      {
-        id: 'p8',
-        name: '标准的RowSelected',
-        cardProps: {
-          description: {
-            title: '标准的RowSelected',
-            info: '标准的RowSelected',
-          },
-        },
-        config: [
-          {
-            title: 'rowSelectedNormal.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-
-      import { SearchTable } from '@baifendian/adhere';
-      import Table from './table';
-
-      const { Table: $SearchTable } = SearchTable;
-
-      /**
-       * RowSelectedContinuous
-       * @classdesc
-       */
-      class RowSelectedContinuous extends Table {
-          getRowSelectionMode() {
-              return $SearchTable.ROW_SELECTION_NORMAL_MODE;
-          }
-      }
-
-      export default RowSelectedContinuous;
-                `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />
-        ),
-      },
-      {
-        id: 'p9',
-        name: '可以跨页选择的RowSelected',
-        cardProps: {
-          description: {
-            title: '可以跨页选择的RowSelected',
-            info: '可以跨页选择的RowSelected',
-          },
-        },
-        config: [
-          {
-            title: 'rowSelectedContinuous.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-      import React from 'react';
-
-      import { SearchTable } from '@baifendian/adhere';
-      import Table from './table';
-
-      const { Table: $SearchTable } = SearchTable;
-
-      /**
-       * RowSelectedContinuous
-       * @classdesc
-       */
-      class RowSelectedContinuous extends Table {
-        getRowSelectionMode() {
-          return $SearchTable.ROW_SELECTION_CONTINUOUS_MODE;
-        }
-      }
-
-      export default RowSelectedContinuous;
-                `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <RowSelectedContinuous isShowExpandSearch defaultExpandSearchCollapse={false} />
-        ),
-      },
-      {
-        id: 'p10',
-        name: '可以拖动的列',
-        cardProps: {
-          description: {
-            title: '可以拖动的列',
-            info: '可以拖动的列',
-          },
-        },
-        config: [
-          {
-            title: 'columnResizeTable.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React from 'react';
-
-  import Table from './table';
-
-  /**
-   * ColumnResizeTable
-   * @classdesc
-   */
-  class ColumnResizeTable extends Table {
-    getColumns() {
-      return super.getColumns().map((column) => ({
-        ...column,
-        resizable: true,
-      }));
-    }
-  }
-
-  export default ColumnResizeTable;
-            `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <div style={{ display: 'flex', height: 700 }}>
-            <ColumnResizeTable
-              style={{ height: '100%' }}
-              isShowExpandSearch
-              defaultExpandSearchCollapse={false}
-              fixedHeaderAutoTable
-            />
-          </div>
-        ),
-      },
-      {
-        id: 'p11',
-        name: '列设置',
-        cardProps: {
-          description: {
-            title: '列设置',
-            info: '列设置',
-          },
-        },
-        config: [
-          {
-            title: 'columnSettingTable.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React from 'react';
-
-  import Table from './table';
-  import styles from './fixedTableSpaceBetweenTable.less';
-
-  /**
-   * ColumnSettingTable
-   * @classdesc
-   */
-  class ColumnSettingTable extends Table {
-    renderTableHeader() {
-      return (
-        <div className={styles.Header}>
-          <h3>查询表格</h3>
-          <div>{this.renderColumnSetting()}</div>
-        </div>
-      );
-    }
-  }
-
-  export default ColumnSettingTable;
-            `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
-        ),
-      },
-      {
-        id: 'p12',
-        name: '表格密度设置',
-        cardProps: {
-          description: {
-            title: '表格密度设置',
-            info: '表格密度设置',
-          },
-        },
-        config: [
-          {
-            title: 'tableDensitySetting.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React from 'react';
-
-  import Table from './table';
-  import styles from './fixedTableSpaceBetweenTable.less';
-
-  /**
-   * TableDensitySetting
-   * @classdesc
-   */
-  class TableDensitySetting extends Table {
-    renderTableHeader() {
-      return (
-        <div className={styles.Header}>
-          <h3>查询表格</h3>
-          <div>{this.renderTableDensitySetting()}</div>
-        </div>
-      );
-    }
-  }
-
-  export default TableDensitySetting;
-            `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <TableDensitySetting isShowExpandSearch defaultExpandSearchCollapse={false} />
-        ),
-      },
-      {
-        id: 'p13',
-        name: '查询面板两端的渲染',
-        cardProps: {
-          description: {
-            title: '查询面板两端的渲染',
-            info: '查询面板两端的渲染',
-          },
-        },
-        config: [
-          {
-            title: 'renderSearchBetweenTable.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import { Button, Col, Row, Statistic } from 'antd';
-  import React from 'react';
-
-  import Table from './table';
-
-  /**
-   * RenderSearchBetweenTable
-   * @classdesc
-   */
-  class RenderSearchBetweenTable extends Table {
-    renderSearchFormBefore() {
-      return (
-        <Row gutter={16}>
-          <Col span={12}>
-            <Statistic title="Active Users" value={112893} />
-          </Col>
-          <Col span={12}>
-            <Statistic title="Account Balance (CNY)" value={112893} precision={2} />
-            <Button style={{ marginTop: 16 }} type="primary">
-              Recharge
-            </Button>
-          </Col>
-          <Col span={12}>
-            <Statistic title="Active Users" value={112893} loading />
-          </Col>
-        </Row>
-      );
-    }
-
-    renderSearchFormAfter() {
-      return (
-        <Row gutter={16}>
-          <Col span={12}>
-            <Statistic title="Active Users" value={112893} />
-          </Col>
-          <Col span={12}>
-            <Statistic title="Account Balance (CNY)" value={112893} precision={2} />
-            <Button style={{ marginTop: 16 }} type="primary">
-              Recharge
-            </Button>
-          </Col>
-          <Col span={12}>
-            <Statistic title="Active Users" value={112893} loading />
-          </Col>
-        </Row>
-      );
-    }
-  }
-
-  export default RenderSearchBetweenTable;
-            `,
-          },
-          {
-            title: 'index.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  <div style={{ display: 'flex', height: 800 }}>
-    <RenderSearchBetweenTable
-      style={{ height: '100%' }}
-      isShowExpandSearch
-      defaultExpandSearchCollapse={false}
-      fixedHeaderAutoTable
-      pagination={pagination3}
-    />
-  </div>
-            `,
-          },
-        ],
-        type: 'PlayGroundMulit',
-        renderChildren: () => (
-          <>
-            <div style={{ display: 'flex', height: 800 }}>
-              <RenderSearchBetweenTable
-                style={{ height: '100%' }}
-                isShowExpandSearch
-                defaultExpandSearchCollapse={false}
-                fixedHeaderAutoTable
-                pagination={pagination3}
-              />
-            </div>
-          </>
-        ),
-      },
-      {
-        id: `p14`,
-        name: `ProSearchStateTable`,
-        mode: 'code',
-        scope: { React },
-        cardProps: {
-          description: {
-            title: 'ProSearchStateTable',
-            info: 'ProSearchStateTable',
+            title: '可编辑的单元格',
+            info: '可编辑的单元格',
           },
         },
         codeText: ``,
         type: 'PlayGround',
         renderChildren: () => (
           <div style={{ display: 'flex', height: 700 }}>
-            <ProSearchStateTableImpl
+            <EditorCellStateSearchTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination4}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `p16`,
+        name: '可编辑的行',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '可编辑的行',
+            info: '可编辑的行',
+          },
+        },
+        codeText: ``,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ display: 'flex', height: 700 }}>
+            <RowEditorStateSearchTable
               style={{ height: '100%' }}
               isShowExpandSearch
               defaultExpandSearchCollapse={false}

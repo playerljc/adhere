@@ -3,7 +3,7 @@ import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import { selectorPrefix } from '../../searchtable';
+import { selectorPrefix } from '../../SearchTable';
 import { TableDensity } from '../../types';
 
 const config = [

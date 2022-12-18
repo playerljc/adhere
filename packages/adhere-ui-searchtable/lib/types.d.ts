@@ -3,9 +3,11 @@ import { Rule } from 'antd/lib/form/index';
 import type { TableProps } from 'antd/lib/table/Table';
 import type { ColumnType } from 'antd/lib/table/interface';
 import { DataIndex } from 'rc-table/lib/interface';
-import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
+import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 import type SearchTable from './SearchTable';
+import type SearchTableImplement from './SearchTableImplement';
+import { SearchTableStateImplement } from './SearchTableStateImplement';
 export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom';
 /**
  * ColumnSearchConfig
@@ -30,7 +32,9 @@ export interface ColumnSearchConfig {
 }
 export interface ColumnParams {
     value: string;
-    record: any;
+    record: {
+        [prop: string]: any;
+    };
     dataIndex?: DataIndex;
     rowIndex: number;
 }
@@ -51,14 +55,22 @@ export interface FormItemGeneratorConfig {
     dataIndex?: DataIndex;
     rowIndex?: number;
 }
+export interface RowConfig {
+    $editable?: RowEditableConfig;
+}
 export interface EditableRowProps {
-    record: any;
+    record: {
+        [prop: string]: any;
+    };
     rowIndex: number;
     columns: any[];
     $context: SearchTable;
+    rowConfig: RowConfig;
 }
 export interface EditableCellProps {
-    record: any;
+    record: {
+        [prop: string]: any;
+    };
     column: ColumnTypeExt;
     rowIndex: number;
     columns: any[];
@@ -75,7 +87,9 @@ export interface ColumnEditableConfig {
     render?: (params: {
         form: FormInstance<any> | null;
         dataIndex: string | number | readonly (string | number)[] | undefined;
-        record: any;
+        record: {
+            [prop: string]: any;
+        };
         rowIndex: number;
         value: any;
         children?: ReactNode;
@@ -96,6 +110,12 @@ export interface ColumnEditableConfig {
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;
     useKeepEdit?: boolean;
+}
+/**
+ * RowEditableConfig
+ */
+export interface RowEditableConfig {
+    editable: boolean;
 }
 /**
  * ColumnTypeExt
@@ -164,11 +184,27 @@ export interface SearchTableImplementProps extends SearchTableProps {
     [props: string]: any;
     getTableWrapperInstance?: (ref?: RefObject<HTMLDivElement>) => void;
 }
+/**
+ * SearchTableStateImplementProps
+ */
+export interface SearchTableStateImplementProps extends SearchTableImplementProps {
+    $state: {
+        serviceNames: string[];
+        middleWares: any[];
+        reducer: any;
+        models: any[];
+        mapStateToProps?: (state: any) => any;
+        mapDispatchToProps?: (dispatch?: any) => any;
+    };
+}
 export interface SearchTableImplementState extends SearchTableState {
     [props: string]: any;
     selectedRowKeys?: string[];
     selectedRows?: any[];
     searchParams?: any;
+}
+export interface SearchEditorRowTableState extends SearchTableImplementState {
+    editorRowId: string;
 }
 export interface AdvancedSearchPanelGroupData {
     className: string;
@@ -226,6 +262,58 @@ export interface AdvancedSearchPanelProps {
     onSearch: Function;
     onReset: Function;
     onCollapse: Function;
+}
+export interface SearchTableImplementFactoryFunction<T, P> {
+    (params: {
+        serviceNames: string[];
+        mapStateToProps?: (state: any) => any;
+        mapDispatchToProps?: (dispatch?: any) => any;
+    }): (Component: typeof SearchTableImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
+}
+export interface SearchTableStateImplementFactoryFunction<T, P> {
+    (params: {
+        serviceNames: string[];
+        models: any[];
+        middleWares?: any[];
+        reducer?: any;
+        mapStateToProps?: (state: any) => any;
+        mapDispatchToProps?: (dispatch?: any) => any;
+    }): (Component: typeof SearchTableStateImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
+}
+export interface CellReducer {
+    (params: {
+        rowIndex: number;
+        column: ColumnTypeExt;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+    }): ColumnTypeExt;
+}
+export interface RowReducer {
+    (params: {
+        rowIndex: number;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+        rowConfig: RowConfig;
+    }): RowConfig;
+}
+export interface EditorRowControlProps {
+    record: {
+        [prop: string]: any;
+    };
+    onEditor: (id: string) => Promise<void>;
+    onSave: (values: {
+        [props: string]: any;
+    }) => Promise<void>;
+    editorRowId: string;
+    rowKey: string;
+    className?: string;
+    styles?: CSSProperties;
+    renderEditorRow?: () => ReactNode;
+    renderSave?: () => ReactNode;
 }
 /**
  * TableDensity

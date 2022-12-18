@@ -11,6 +11,7 @@ import type {
 import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
+import { TableComponents } from 'rc-table/lib/interface';
 import React, { ReactElement, RefObject, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -23,12 +24,14 @@ import ColumnResizable, {
   SearchTableResizableTitle,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
-import EditableCell from './Extension/EditableCell/EditableCell';
-import EditableRow from './Extension/EditableCell/EditableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import {
+  CellReducer,
   ColumnEditableConfig,
   ColumnTypeExt,
+  RowConfig,
+  RowEditableConfig,
+  RowReducer,
   SearchTableProps,
   SearchTableState,
   TableDensity,
@@ -60,22 +63,24 @@ abstract class SearchTable<
   protected tableWrapRef: RefObject<HTMLDivElement> = createRef();
 
   // 自定义表格部分
-  private components = {
+  protected components = {
     header: {
       cell: SearchTableResizableTitle,
     },
-    // body: {
-    //   row: EditableRow,
-    //   cell: EditableCell,
-    // },
     body: {},
   };
 
   // 列拖动对象
-  private columnResizable = new ColumnResizable();
+  protected columnResizable = new ColumnResizable();
 
   // 列属性监控对象
-  private columnObserver: any = null;
+  protected columnObserver: any = null;
+
+  // cellReducers
+  protected cellReducers: CellReducer[] = [];
+
+  // rowReducers
+  protected rowReducers: RowReducer[] = [];
 
   /**
    * isShowNumber
@@ -92,7 +97,8 @@ abstract class SearchTable<
   abstract getTableNumberColumnWidth(): number;
 
   /**
-   * getTableNumberColumnProps - 获取序号列的Props
+   * getTableNumberColumnProps
+   * @description 获取序号列的Props
    */
   abstract getTableNumberColumnProps(): object;
 
@@ -221,6 +227,28 @@ abstract class SearchTable<
     editorConfig: ColumnEditableConfig;
     record: any;
   }): void;
+
+  /**
+   * onEditorCell
+   * @description 行是否可以编辑
+   * @param params
+   */
+  abstract onEditorRow(params: {
+    columns: ColumnTypeExt[];
+    rowIndex: number;
+    record: any;
+  }): RowEditableConfig;
+
+  /**
+   * onComponents
+   * @description 设置表格的components
+   * @param columns
+   * @param components
+   */
+  abstract onComponents(
+    columns: ColumnTypeExt[],
+    components: TableComponents<any>,
+  ): TableComponents<any>;
 
   /**
    * clear
@@ -378,7 +406,8 @@ abstract class SearchTable<
   onSearchPanelCollapseAfter() {}
 
   /**
-   * onTableChange - 表格change
+   * onTableChange
+   * @description 表格change
    */
   onTableChange = (pagination, filters, sorter) => {
     this.setState(
@@ -399,7 +428,8 @@ abstract class SearchTable<
   };
 
   /**
-   * onClear - 清除操作
+   * onClear
+   * @description - 清除操作
    */
   onClear(): Promise<void> {
     return new Promise((resolve) => {
@@ -420,7 +450,8 @@ abstract class SearchTable<
   }
 
   /**
-   * sortOrder - table的column中加入
+   * sortOrder
+   * @description table的column中加入
    * sorter: true,
    * sortOrder: this.sortOrder('distance'),
    * @param columnName
@@ -435,6 +466,51 @@ abstract class SearchTable<
   }
 
   /**
+   * onCellReducers
+   * @description 所有onCell的处理
+   * @return ColumnTypeExt
+   */
+  onCellReducers(params: {
+    rowIndex: number;
+    column: ColumnTypeExt;
+    record: { [prop: string]: any };
+    columns: ColumnTypeExt[];
+  }): ColumnTypeExt {
+    const { rowIndex, column, record, columns } = params;
+
+    return this.cellReducers.reduce(
+      (params, reducer) => {
+        params.value = reducer.call(this, { rowIndex, record, columns, column: params.value });
+        return params;
+      },
+      { value: column },
+    ).value;
+  }
+
+  /**
+   * onRowReducers
+   * @description 所有row的处理
+   * @param params
+   */
+  onRowReducers(params: {
+    rowIndex: number;
+    record: { [prop: string]: any };
+    columns: ColumnTypeExt[];
+  }): RowConfig {
+    const { rowIndex, record, columns } = params;
+
+    // const reducers = [this.rowEditableReducer];
+
+    return this.rowReducers.reduce(
+      (params, reducer) => {
+        params.value = reducer.call(this, { rowIndex, record, columns, rowConfig: params.value });
+        return params;
+      },
+      { value: {} },
+    ).value;
+  }
+
+  /**
    * getLimit
    * @description limit参数
    */
@@ -443,7 +519,8 @@ abstract class SearchTable<
   }
 
   /**
-   * getPagination - 获取分页信息
+   * getPagination
+   * @description 获取分页信息
    */
   getPagination() {
     return {
@@ -492,7 +569,8 @@ abstract class SearchTable<
   }
 
   /**
-   * getTableColumns - 获取表格的列数据
+   * getTableColumns
+   * @description 获取表格的列数据
    * @return Array<any>
    */
   getTableColumns(): any[] {
@@ -523,22 +601,18 @@ abstract class SearchTable<
           onCell: (record, rowIndex) => {
             const _column = cloneDeep(column);
 
-            // 如果设置了$editable则调用onEditorCell方法对每个cell进行props注入
-            if ('$editable' in _column && _column.$editable?.editable && this.onEditorCell) {
-              this.onEditorCell({
-                rowIndex,
-                editorConfig: _column.$editable,
-                record: { ...record },
-              });
-            }
-
             return {
               // 行的索引
               rowIndex,
               // 行的数据
               record,
               // 列的配置
-              column: _column,
+              column: this.onCellReducers({
+                rowIndex,
+                column: _column,
+                record,
+                columns,
+              }),
               // 所有列的配置
               columns,
               // 上下文的对象
@@ -675,7 +749,8 @@ abstract class SearchTable<
   }
 
   /**
-   * renderSearchFooter - 渲染查询工具栏
+   * renderSearchFooter
+   * @description 渲染查询工具栏
    * @return ReactElement
    */
   renderSearchFooter(): ReactElement {
@@ -795,17 +870,6 @@ abstract class SearchTable<
       return 0;
     });
 
-    const existsEditor = columns.some(
-      (column) => '$editable' in column && column.$editable.editable,
-    );
-
-    if (existsEditor) {
-      this.components.body = {
-        row: EditableRow,
-        cell: EditableCell,
-      };
-    }
-
     // Table的antdProps配置
     const tableProps: TableProps<any> = {
       rowKey: this.getRowKey(),
@@ -814,14 +878,23 @@ abstract class SearchTable<
       onChange: this.onTableChange,
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
-      components: this.components,
+      components: this.onComponents(columns, this.components),
       size: tableDensity,
-      onRow: (record, rowIndex) => ({
-        record,
-        rowIndex,
-        columns,
-        $context: this,
-      }),
+      onRow: (record, rowIndex) => {
+        // 这块可能以后会有很多操作
+        // 行的所有操作都可以在这里处理
+        return {
+          record,
+          rowIndex,
+          columns,
+          $context: this,
+          rowConfig: this.onRowReducers({
+            rowIndex: Number(rowIndex),
+            record,
+            columns,
+          }),
+        };
+      },
       ...(antdTableProps || {}),
     };
 
@@ -844,7 +917,8 @@ abstract class SearchTable<
   }
 
   /**
-   * renderInner - 渲染SearchTable
+   * renderInner
+   * @description 渲染SearchTable
    * @return ReactElement | null
    */
   renderInner(): ReactElement | null {

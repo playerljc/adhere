@@ -72,4 +72,6 @@ export default [
   'Please enter the reply content',
   'Add to',
   'Advanced Search',
+  'Save',
+  'Edit Row',
 ];

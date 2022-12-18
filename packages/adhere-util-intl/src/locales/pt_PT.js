@@ -72,4 +72,6 @@ export default [
   'Por favor, insira o conteúdo da resposta',
   'Adicionar à',
   'Busca Avançada',
+  'preservação',
+  'Editar a Linha',
 ];

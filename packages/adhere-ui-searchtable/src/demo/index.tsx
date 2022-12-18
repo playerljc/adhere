@@ -7,7 +7,6 @@
 //
 // import DictConfig from './config/dict/dict.config';
 //
-// // import ProSearchStateTableImpl from './proStateSearchTable';
 // import '../index.less';
 // import './index.less';
 //
@@ -31,14 +30,7 @@
 //       {() => (
 //         <div style={{ display: 'flex', height: 700 }}>
 //           <Suspense fallback={<div>loading</div>}>
-//             <ProSearchStateTableImpl
-//               style={{ height: '100%' }}
-//               isShowExpandSearch
-//               defaultExpandSearchCollapse={false}
-//               fixedHeaderAutoTable
-//               fixedTableSpaceBetween
-//               pagination={true}
-//             />
+//             <ProSearchStateTableImpl pagination={true} />
 //           </Suspense>
 //         </div>
 //       )}

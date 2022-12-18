@@ -1,8 +1,10 @@
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
+import { TableComponents } from 'rc-table/lib/interface';
 import { ReactElement, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
-import { ColumnEditableConfig, SearchTableProps, SearchTableState, TableDensity } from './types';
+import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
+import { CellReducer, ColumnEditableConfig, ColumnTypeExt, RowConfig, RowEditableConfig, RowReducer, SearchTableProps, SearchTableState, TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
 /**
  * SearchTable
@@ -15,9 +17,16 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     static ROW_SELECTION_NORMAL_MODE: symbol;
     static ROW_SELECTION_CONTINUOUS_MODE: symbol;
     protected tableWrapRef: RefObject<HTMLDivElement>;
-    private components;
-    private columnResizable;
-    private columnObserver;
+    protected components: {
+        header: {
+            cell: typeof SearchTableResizableTitle;
+        };
+        body: {};
+    };
+    protected columnResizable: ColumnResizable;
+    protected columnObserver: any;
+    protected cellReducers: CellReducer[];
+    protected rowReducers: RowReducer[];
     /**
      * isShowNumber
      * @description 表格是否显示序号
@@ -31,7 +40,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getTableNumberColumnWidth(): number;
     /**
-     * getTableNumberColumnProps - 获取序号列的Props
+     * getTableNumberColumnProps
+     * @description 获取序号列的Props
      */
     abstract getTableNumberColumnProps(): object;
     /**
@@ -138,6 +148,23 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         record: any;
     }): void;
     /**
+     * onEditorCell
+     * @description 行是否可以编辑
+     * @param params
+     */
+    abstract onEditorRow(params: {
+        columns: ColumnTypeExt[];
+        rowIndex: number;
+        record: any;
+    }): RowEditableConfig;
+    /**
+     * onComponents
+     * @description 设置表格的components
+     * @param columns
+     * @param components
+     */
+    abstract onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any>;
+    /**
      * clear
      * @description  清除操作
      */
@@ -184,15 +211,18 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     onSearchPanelCollapseAfter(): void;
     /**
-     * onTableChange - 表格change
+     * onTableChange
+     * @description 表格change
      */
     onTableChange: (pagination: any, filters: any, sorter: any) => void;
     /**
-     * onClear - 清除操作
+     * onClear
+     * @description - 清除操作
      */
     onClear(): Promise<void>;
     /**
-     * sortOrder - table的column中加入
+     * sortOrder
+     * @description table的column中加入
      * sorter: true,
      * sortOrder: this.sortOrder('distance'),
      * @param columnName
@@ -200,12 +230,38 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     sortOrder(columnName: string): string;
     /**
+     * onCellReducers
+     * @description 所有onCell的处理
+     * @return ColumnTypeExt
+     */
+    onCellReducers(params: {
+        rowIndex: number;
+        column: ColumnTypeExt;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+    }): ColumnTypeExt;
+    /**
+     * onRowReducers
+     * @description 所有row的处理
+     * @param params
+     */
+    onRowReducers(params: {
+        rowIndex: number;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+    }): RowConfig;
+    /**
      * getLimit
      * @description limit参数
      */
     getLimit(): number;
     /**
-     * getPagination - 获取分页信息
+     * getPagination
+     * @description 获取分页信息
      */
     getPagination(): {
         onChange: (page: any, limit: any) => void;
@@ -222,7 +278,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getTableDensity(): TableDensity;
     /**
-     * getTableColumns - 获取表格的列数据
+     * getTableColumns
+     * @description 获取表格的列数据
      * @return Array<any>
      */
     getTableColumns(): any[];
@@ -249,7 +306,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderTableDensitySetting(): ReactElement;
     /**
-     * renderSearchFooter - 渲染查询工具栏
+     * renderSearchFooter
+     * @description 渲染查询工具栏
      * @return ReactElement
      */
     renderSearchFooter(): ReactElement;
@@ -260,7 +318,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderTable(): JSX.Element;
     /**
-     * renderInner - 渲染SearchTable
+     * renderInner
+     * @description 渲染SearchTable
      * @return ReactElement | null
      */
     renderInner(): ReactElement | null;

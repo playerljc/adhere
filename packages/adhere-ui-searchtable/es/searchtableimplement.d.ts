@@ -1,13 +1,15 @@
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
+import { TableComponents } from 'rc-table/lib/interface';
 import { ReactElement, RefObject } from 'react';
 import SearchTable from './SearchTable';
-import { ColumnEditableConfig, ISearchTableImplement, SearchTableImplementProps, SearchTableImplementState } from './types';
+import { ColumnEditableConfig, ColumnTypeExt, ISearchTableImplement, RowEditableConfig, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
+export declare const selectorPrefix = "adhere-ui-searchtableimplement";
 /**
  * SearchTableImplement
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
-declare class SearchTableImplement extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
+export declare class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState> extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
     innerWrapRef: RefObject<HTMLDivElement>;
     constructor(props: any);
     componentDidMount(): void;
@@ -210,14 +212,29 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
     onSearch(): Promise<void>;
     getColumns(): Array<ColumnType<object>>;
     onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object> | undefined): void;
+    renderSearchFormAfter(): ReactElement | null;
+    renderSearchFormBefore(): ReactElement | null;
+    renderTableFooter(): ReactElement | null;
+    renderTableHeader(): ReactElement | null;
+    onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any>;
     onEditorCell(params: {
         rowIndex: number;
         editorConfig: ColumnEditableConfig;
         record: any;
     }): void;
-    renderSearchFormAfter(): ReactElement | null;
-    renderSearchFormBefore(): ReactElement | null;
-    renderTableFooter(): ReactElement | null;
-    renderTableHeader(): ReactElement | null;
+    onEditorRow(params: {
+        columns: ColumnTypeExt[];
+        rowIndex: number;
+        record: any;
+    }): RowEditableConfig;
 }
-export default SearchTableImplement;
+/**
+ * SearchTableImplementFactory
+ * @description 创建SearchTableImplementFactory
+ * @param serviceNames
+ * @param mapStateToProps
+ * @param mapDispatchToProps
+ * @constructor
+ */
+declare const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>;
+export default SearchTableImplementFactory;
