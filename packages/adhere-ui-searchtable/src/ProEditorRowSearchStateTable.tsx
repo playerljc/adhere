@@ -7,8 +7,8 @@ import SearchEditorRowStateTable from './SearchEditorRowStateTable';
 export const SearchAndPaginParamsMemo: any = MemoManager.create();
 
 /**
- * ProSearchStateTable
- * @classdesc 高级查询表格
+ * ProEditorRowSearchStateTable
+ * @classdesc 可以进行行编辑的高级查询表格
  */
 class ProEditorRowSearchStateTable extends SearchEditorRowStateTable {}
 

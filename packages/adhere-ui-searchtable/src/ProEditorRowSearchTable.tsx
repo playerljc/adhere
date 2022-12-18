@@ -9,7 +9,7 @@ export const SearchAndPaginParamsMemo: any = MemoManager.create();
 
 /**
  * ProEditorRowSearchTable
- * @classdesc 高级查询表格
+ * @classdesc 可以进行行编辑的高级查询表格
  */
 class ProEditorRowSearchTable extends SearchEditorRowTable<
   SearchTableImplementProps,
