@@ -158,8 +158,8 @@ class SearchEditorTable<
 
       this.formRef?.current?.setFieldValue?.(
         'dataSource',
-        dataSource.map((_record) =>
-          columns.reduce(
+        (dataSource || []).map((_record) =>
+          (columns || []).reduce(
             (_r, { dataIndex, $editable }) => {
               if (dataIndex in _record && $editable && 'type' in $editable) {
                 _r[dataIndex] = this.valueToFormItemValue({
