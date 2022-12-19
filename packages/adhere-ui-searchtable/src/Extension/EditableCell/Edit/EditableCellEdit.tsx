@@ -1,5 +1,6 @@
 import { Form } from 'antd';
 import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import moment from 'moment';
 import React, { FC, ReactNode, useContext, useEffect } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
@@ -104,10 +105,62 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     onTriggerChange?.();
   }
 
+  /**
+   * updateEditorCellData
+   * @description 更新单元格的值
+   */
+  function updateEditorCellData() {
+    if (value instanceof moment) {
+      // @ts-ignore
+      context?.context?.updateEditorCellDateData({
+        record,
+        dataIndex,
+        value,
+      });
+
+      return;
+    }
+
+    // @ts-ignore
+    context?.context?.updateEditorCellDate({
+      record,
+      dataIndex,
+      value,
+    });
+  }
+
+  /**
+   * renderFormItem
+   */
   function renderFormItem() {
+    let formItemNodeProps = {
+      autoFocus: !useKeepEdit,
+      ...props.editableConfig.props,
+    };
+
+    if (useKeepEdit || !useTrigger) {
+      formItemNodeProps = {
+        ...formItemNodeProps,
+        onBlur: (e) => {
+          if (props.editableConfig.props.onBlur) {
+            props.editableConfig.props.onBlur(e, { form, dataIndex, rowIndex });
+          }
+
+          updateEditorCellData();
+        },
+        onChange: (e) => {
+          if (props.editableConfig.props.onChange) {
+            props.editableConfig.props.onChange(e, { form, dataIndex, rowIndex });
+          }
+
+          updateEditorCellData();
+        },
+      };
+    }
+
     const formItemNode = FormItemGenerator.render({
       type,
-      props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
+      props: formItemNodeProps,
       dictName: props.editableConfig.dictName,
       renderChildren: props.editableConfig.renderChildren,
       form,
