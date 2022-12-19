@@ -3,7 +3,6 @@
  */
 
 export default () => {
-  console.log('字典');
   const requireComponent = require.context('./dict', false, /.*\.(js)$/);
 
   requireComponent.keys().forEach((path) => {

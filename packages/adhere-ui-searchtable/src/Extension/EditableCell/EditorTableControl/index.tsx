@@ -52,8 +52,6 @@ const EditorTableControl: FC<EditorTableControlProps> = ({
   const renderDefaultEditorTable = useCallback(() => <a>{Intl.v('编辑表格')}</a>, []);
 
   const validateFieldsSuccess = useCallback((values) => {
-    console.log('values', values);
-
     if (onSave) {
       onSave(values.dataSource).then(() => updateEditorCellTableData(values.dataSource));
       return;

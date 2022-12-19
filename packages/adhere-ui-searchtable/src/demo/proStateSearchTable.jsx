@@ -120,7 +120,6 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           useKeepEdit: true,
           props: {
             onBlur: (e, { form, rowIndex, dataIndex }) => {
-              console.log(form, dataIndex, rowIndex);
               form.validateFields().then((values) => {
                 // 调用修改接口
                 // 修改当前数据

@@ -87,8 +87,6 @@ class SearchEditorStateTable extends SearchEditorCellStateTable<
         });
       });
 
-      console.log('updateDataSource', listData);
-
       this.setState(
         {
           [this.getServiceName()]: listData,
