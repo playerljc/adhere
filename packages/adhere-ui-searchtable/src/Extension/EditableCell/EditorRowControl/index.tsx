@@ -39,6 +39,10 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
   onEditor,
   onSave,
 }) => {
+  const context = useContext<{ context: SearchTable; form?: FormInstance } | null>(
+    SearchTableContext,
+  );
+
   const form = useContext<FormInstance | null>(EditableContext);
 
   const renderDefaultSave = useCallback(() => <a>{Intl.v('保存')}</a>, []);
@@ -46,8 +50,6 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
   const renderDefaultCancel = useCallback(() => <a>{Intl.v('取消')}</a>, []);
 
   const renderDefaultEditorRow = useCallback(() => <a>{Intl.v('编辑行')}</a>, []);
-
-  const context = useContext<SearchTable | null>(SearchTableContext);
 
   const validateFieldsSuccess = useCallback((values) => {
     if (onSave) {
@@ -69,17 +71,17 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
   }, []);
 
   const updateEditorCellRowData = (values) =>
-    (context as SearchEditorRowTable<any, any>)
+    (context?.context as SearchEditorRowTable<any, any>)
       ?.updateEditorCellRowData({ values, record })
       ?.then(() => reset());
 
   const reset = () =>
-    context?.setState({
+    context?.context?.setState({
       editorRowId: '',
     });
 
   const updateRowEdit = () =>
-    context?.setState({
+    context?.context?.setState({
       editorRowId: record[rowKey],
     });
 

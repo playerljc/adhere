@@ -74,4 +74,5 @@ export default [
   'Advanced Search',
   'Save',
   'Edit Row',
+  'Edit Table',
 ];

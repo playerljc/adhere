@@ -1,3 +1,4 @@
+import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
 import { TableComponents } from 'rc-table/lib/interface';
@@ -6,7 +7,18 @@ import Suspense from '@baifendian/adhere-ui-suspense';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
 import { CellReducer, ColumnEditableConfig, ColumnTypeExt, RowConfig, RowEditableConfig, RowReducer, SearchTableProps, SearchTableState, TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
-export declare const SearchTableContext: React.Context<SearchTable<SearchTableProps, SearchTableState> | null>;
+export declare const SearchTableContext: React.Context<{
+    context: SearchTable;
+    form?: FormInstance<any> | undefined;
+    formList?: {
+        fields: FormListFieldData[];
+        operation?: FormListOperation | undefined;
+        meta?: {
+            errors?: React.ReactNode[] | undefined;
+            warnings?: React.ReactNode[] | undefined;
+        } | undefined;
+    } | undefined;
+} | null>;
 /**
  * SearchTable
  * @class SearchTable
@@ -324,6 +336,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return ReactElement | null
      */
     renderInner(): ReactElement | null;
+    renderChildren(): JSX.Element;
     /**
      * render
      * @protected

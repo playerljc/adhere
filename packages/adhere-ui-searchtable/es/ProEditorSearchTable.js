@@ -1,0 +1,2 @@
+import{__extends}from"tslib";import{MemoManager}from"./Extension/SearchAndPaginParams";import ProTableFactory from"./ProTableFactory";import SearchEditorTable from"./SearchEditorTable";var SearchAndPaginParamsMemo=MemoManager.create(),ProEditorSearchTable=function(r){function a(){return null!==r&&r.apply(this,arguments)||this}return __extends(a,r),a}(SearchEditorTable);export default ProTableFactory(ProEditorSearchTable,SearchAndPaginParamsMemo);export{SearchAndPaginParamsMemo};
+//# sourceMappingURL=ProEditorSearchTable.js.map

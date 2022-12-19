@@ -1,21 +1,19 @@
 import { Form } from 'antd';
-import { FormInstance } from 'antd/es/form';
-import moment from 'moment';
-import React, { FC, useContext, useEffect } from 'react';
+import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import React, { FC, ReactNode, useContext, useEffect } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { selectorPrefix } from '../../../SearchTable';
+import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
 import { EditableCellEditProps } from '../../../types';
-import { EditableContext } from '../EditableRow';
 import FormItemGenerator from './FormItemGenerator';
 
 /**
- * EditableCellEdit
- * @description 可编辑单元格的编辑状态
+ * EditableTableCellEdit
+ * @description 表格可编辑单元格的编辑状态
  */
-const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
+const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
   const {
     useTrigger,
     useKeepEdit,
@@ -32,39 +30,23 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
 
   const { record, rowIndex, onTriggerChange } = props;
 
-  const form = useContext<FormInstance | null>(EditableContext);
+  const context = useContext<{
+    context: SearchTable;
+    form?: FormInstance;
+    formList?: {
+      fields: FormListFieldData[];
+      operation?: FormListOperation;
+      meta?: {
+        errors?: ReactNode[];
+        warnings?: ReactNode[];
+      };
+    };
+  } | null>(SearchTableContext);
 
-  const value = Form.useWatch(dataIndex as string, form as FormInstance);
+  const nameItemPath = [context?.formList?.fields[rowIndex]?.name as number, dataIndex as string];
+  const namePath = ['dataSource', ...nameItemPath];
 
-  /**
-   * valueToFormItemValueMap
-   * @description 值和表单控件值之间的转换，现在只涉及到时间控件
-   */
-  const valueToFormItemValueMap = new Map<string, () => any>([
-    [
-      'rangePicker',
-      () => {
-        let value = record?.[dataIndex as string];
-        return Array.isArray(value) && value.length === 2
-          ? [moment(value[0]), moment(value[1])]
-          : [moment(), moment()];
-      },
-    ],
-    [
-      'datePicker',
-      () => {
-        let value = record?.[dataIndex as string];
-        return moment(value);
-      },
-    ],
-    [
-      'timePicker',
-      () => {
-        let value = record?.[dataIndex as string];
-        return moment(value);
-      },
-    ],
-  ]);
+  const value = Form.useWatch(namePath, context?.form as FormInstance);
 
   /**
    * renderDefaultSaveTrigger
@@ -88,7 +70,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    */
   function onSaveTrigger() {
     // 对表单进行校验
-    form?.validateFields().then((values) => {
+    context?.form?.validateFields?.()?.then?.((values) => {
       if (onSave) {
         onSave({
           value,
@@ -122,23 +104,13 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     onTriggerChange?.();
   }
 
-  /**
-   * valueToFormItemValue
-   * @description 值和表单值的转换
-   */
-  function valueToFormItemValue() {
-    const item = valueToFormItemValueMap.get(type as string);
-
-    return item ? item?.() : record?.[dataIndex as string];
-  }
-
   function renderFormItem() {
     const formItemNode = FormItemGenerator.render({
       type,
       props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
       dictName: props.editableConfig.dictName,
       renderChildren: props.editableConfig.renderChildren,
-      form,
+      form: context?.form,
       dataIndex,
       rowIndex,
     });
@@ -149,14 +121,22 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
           record,
           dataIndex,
           rowIndex,
-          form,
+          form: context?.form as FormInstance,
           children: formItemNode,
         })
       : formItemNode;
   }
 
   useEffect(() => {
-    form?.setFieldValue(dataIndex as string, valueToFormItemValue());
+    context?.form?.setFieldValue(
+      namePath,
+      // @ts-ignore
+      context?.context?.valueToFormItemValue?.({
+        type,
+        record,
+        dataIndex: dataIndex as string,
+      }),
+    );
   }, [record?.[dataIndex as string]]);
 
   return (
@@ -164,7 +144,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       <div className={`${selectorPrefix}-editablecell-edit-inner`}>
         <Form.Item
           // initialValue={record[dataIndex as string]}
-          name={dataIndex as string}
+          name={nameItemPath}
           rules={rules}
           {...(formItemProps || {})}
         >
@@ -175,7 +155,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
                 record,
                 dataIndex,
                 rowIndex,
-                form,
+                form: context?.form as FormInstance,
               })}
         </Form.Item>
       </div>
@@ -219,4 +199,4 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
   );
 };
 
-export default EditableCellEdit;
+export default EditableTableCellEdit;

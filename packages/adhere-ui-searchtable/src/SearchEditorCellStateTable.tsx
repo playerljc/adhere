@@ -6,7 +6,12 @@ import React from 'react';
 import EditableCell from './Extension/EditableCell/EditableCell';
 import EditableRow from './Extension/EditableCell/EditableRow';
 import { SearchTableStateImplement } from './SearchTableStateImplement';
-import { ColumnTypeExt, SearchTableImplementState, SearchTableStateImplementProps } from './types';
+import {
+  ColumnTypeExt,
+  FormItemType,
+  SearchTableImplementState,
+  SearchTableStateImplementProps,
+} from './types';
 
 /**
  * SearchEditorCellStateTable
@@ -17,6 +22,39 @@ class SearchEditorCellStateTable<
   P extends SearchTableStateImplementProps,
   S extends SearchTableImplementState,
 > extends SearchTableStateImplement<SearchTableStateImplementProps, SearchTableImplementState> {
+  /**
+   * valueToFormItemValueMap
+   * @description 值和表单控件值之间的转换，现在只涉及到时间控件
+   */
+  valueToFormItemValueMap = new Map<
+    string,
+    (params: { record: { [prop: string]: any }; dataIndex: string }) => any
+  >([
+    [
+      'rangePicker',
+      ({ record, dataIndex }) => {
+        let value = record?.[dataIndex as string];
+        return Array.isArray(value) && value.length === 2
+          ? [moment(value[0]), moment(value[1])]
+          : [moment(), moment()];
+      },
+    ],
+    [
+      'datePicker',
+      ({ record, dataIndex }) => {
+        let value = record?.[dataIndex as string];
+        return moment(value);
+      },
+    ],
+    [
+      'timePicker',
+      ({ record, dataIndex }) => {
+        let value = record?.[dataIndex as string];
+        return moment(value);
+      },
+    ],
+  ]);
+
   constructor(props) {
     super(props);
 
@@ -68,6 +106,24 @@ class SearchEditorCellStateTable<
     }
 
     return column;
+  }
+
+  /**
+   * valueToFormItemValue
+   * @description 值和表单值的转换
+   */
+  valueToFormItemValue({
+    type,
+    record,
+    dataIndex,
+  }: {
+    type: FormItemType;
+    record: { [prop: string]: any };
+    dataIndex: string;
+  }) {
+    const item = this.valueToFormItemValueMap.get(type as string);
+
+    return item ? item?.({ record, dataIndex }) : record?.[dataIndex as string];
   }
 
   /**

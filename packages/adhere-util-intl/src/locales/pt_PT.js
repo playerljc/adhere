@@ -74,4 +74,5 @@ export default [
   'Busca Avançada',
   'preservação',
   'Editar a Linha',
+  'Editar a Tabela',
 ];

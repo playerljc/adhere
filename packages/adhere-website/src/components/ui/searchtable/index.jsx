@@ -23,6 +23,7 @@ import RowSelectedNormal from './rowSelectedNormal';
 import StateTable from './stateTable';
 import Table from './table';
 import TableDensitySetting from './tableDensitySetting';
+import TableEditorStateSearchTable from './tableEditorStateSearchTable';
 
 export default () => {
   const [pagination1, setPagination1] = useState(false);
@@ -1471,6 +1472,32 @@ export default () => {
         renderChildren: () => (
           <div style={{ display: 'flex', height: 700 }}>
             <RowEditorStateSearchTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination4}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `p17`,
+        name: '可编辑的表格',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '可编辑的表格',
+            info: '可编辑的表格',
+          },
+        },
+        codeText: ``,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ display: 'flex', height: 700 }}>
+            <TableEditorStateSearchTable
               style={{ height: '100%' }}
               isShowExpandSearch
               defaultExpandSearchCollapse={false}

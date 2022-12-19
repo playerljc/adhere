@@ -1,4 +1,5 @@
 import { Button, Table } from 'antd';
+import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType,
@@ -12,7 +13,7 @@ import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
 import { TableComponents } from 'rc-table/lib/interface';
-import React, { ReactElement, RefObject, createContext, createRef } from 'react';
+import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -41,7 +42,18 @@ export const selectorPrefix = 'adhere-ui-searchtable';
 
 const { Fixed, Auto } = FlexLayout;
 
-export const SearchTableContext = createContext<SearchTable | null>(null);
+export const SearchTableContext = createContext<{
+  context: SearchTable;
+  form?: FormInstance;
+  formList?: {
+    fields: FormListFieldData[];
+    operation?: FormListOperation;
+    meta?: {
+      errors?: ReactNode[];
+      warnings?: ReactNode[];
+    };
+  };
+} | null>(null);
 
 /**
  * SearchTable
@@ -887,6 +899,7 @@ abstract class SearchTable<
           record,
           rowIndex,
           columns,
+          rowKey: this.getRowKey(),
           rowConfig: this.onRowReducers({
             rowIndex: Number(rowIndex),
             record,
@@ -996,14 +1009,22 @@ abstract class SearchTable<
     );
   }
 
+  renderChildren() {
+    return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
+  }
+
   /**
    * render
    * @protected
    */
   render(): ReactElement {
     return (
-      <SearchTableContext.Provider value={this}>
-        <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>
+      <SearchTableContext.Provider
+        value={{
+          context: this,
+        }}
+      >
+        {this.renderChildren()}
       </SearchTableContext.Provider>
     );
   }

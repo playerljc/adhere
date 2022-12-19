@@ -7,7 +7,7 @@ import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactEl
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 import type SearchTableImplement from './SearchTableImplement';
 import { SearchTableStateImplement } from './SearchTableStateImplement';
-export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom';
+export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom' | string;
 /**
  * ColumnSearchConfig
  * @description 列的查询设置
@@ -64,6 +64,7 @@ export interface EditableRowProps {
     rowIndex: number;
     columns: any[];
     rowConfig: RowConfig;
+    rowKey: string;
 }
 export interface EditableCellProps {
     record: {
@@ -203,6 +204,9 @@ export interface SearchTableImplementState extends SearchTableState {
 export interface SearchEditorRowTableState extends SearchTableImplementState {
     editorRowId: string;
 }
+export interface SearchEditorTableState extends SearchTableImplementState {
+    isTableEditor: boolean;
+}
 export interface AdvancedSearchPanelGroupData {
     className: string;
     style: CSSProperties;
@@ -298,20 +302,32 @@ export interface RowReducer {
     }): RowConfig;
 }
 export interface EditorRowControlProps {
+    className?: string;
+    styles?: CSSProperties;
+    rowKey: string;
+    editorRowId: string;
     record: {
         [prop: string]: any;
     };
-    onEditor: (id: string) => Promise<void>;
-    onSave: (values: {
-        [props: string]: any;
-    }) => Promise<void>;
-    editorRowId: string;
-    rowKey: string;
-    className?: string;
-    styles?: CSSProperties;
     renderEditorRow?: () => ReactNode;
     renderSave?: () => ReactNode;
     renderCancel?: () => ReactNode;
+    onSave: (values: {
+        [props: string]: any;
+    }) => Promise<void>;
+    onEditor: (id: string) => Promise<void>;
+}
+export interface EditorTableControlProps {
+    className?: string;
+    styles?: CSSProperties;
+    rowKey: string;
+    renderEditorTable?: () => ReactNode;
+    renderSave?: () => ReactNode;
+    renderCancel?: () => ReactNode;
+    onEditor: () => Promise<void>;
+    onSave: (values: {
+        [prop: string]: any;
+    }[]) => Promise<void>;
 }
 /**
  * TableDensity

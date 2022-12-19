@@ -6,7 +6,12 @@ import React from 'react';
 import EditableCell from './Extension/EditableCell/EditableCell';
 import EditableRow from './Extension/EditableCell/EditableRow';
 import { SearchTableImplement } from './SearchTableImplement';
-import { ColumnTypeExt, SearchTableImplementProps, SearchTableImplementState } from './types';
+import {
+  ColumnTypeExt,
+  FormItemType,
+  SearchTableImplementProps,
+  SearchTableImplementState,
+} from './types';
 
 /**
  * SearchEditorCellTable
@@ -17,6 +22,39 @@ class SearchEditorCellTable<
   P extends SearchTableImplementProps,
   S extends SearchTableImplementState,
 > extends SearchTableImplement<SearchTableImplementProps, SearchTableImplementState> {
+  /**
+   * valueToFormItemValueMap
+   * @description 值和表单控件值之间的转换，现在只涉及到时间控件
+   */
+  valueToFormItemValueMap = new Map<
+    string,
+    (params: { record: { [prop: string]: any }; dataIndex: string }) => any
+  >([
+    [
+      'rangePicker',
+      ({ record, dataIndex }) => {
+        let value = record?.[dataIndex as string];
+        return Array.isArray(value) && value.length === 2
+          ? [moment(value[0]), moment(value[1])]
+          : [moment(), moment()];
+      },
+    ],
+    [
+      'datePicker',
+      ({ record, dataIndex }) => {
+        let value = record?.[dataIndex as string];
+        return moment(value);
+      },
+    ],
+    [
+      'timePicker',
+      ({ record, dataIndex }) => {
+        let value = record?.[dataIndex as string];
+        return moment(value);
+      },
+    ],
+  ]);
+
   constructor(props) {
     super(props);
 
@@ -41,6 +79,24 @@ class SearchEditorCellTable<
     }
 
     return components;
+  }
+
+  /**
+   * valueToFormItemValue
+   * @description 值和表单值的转换
+   */
+  valueToFormItemValue({
+    type,
+    record,
+    dataIndex,
+  }: {
+    type: FormItemType;
+    record: { [prop: string]: any };
+    dataIndex: string;
+  }) {
+    const item = this.valueToFormItemValueMap.get(type as string);
+
+    return item ? item?.({ record, dataIndex }) : record?.[dataIndex as string];
   }
 
   /**

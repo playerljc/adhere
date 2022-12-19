@@ -1,8 +1,9 @@
+import { FormInstance } from 'antd/es/form';
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 
 import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { ColumnEditableConfig, EditableCellProps } from '../../types';
-import EditableCellEdit from './Edit';
+import EditableCellEdit from './Edit/EditableCellEdit';
 import EditableCellView from './View';
 
 /**
@@ -45,12 +46,14 @@ const EditableCell: FC<EditableCellProps> = (props) => {
     editableConfig.defaultStatus as string,
   );
 
-  const context = useContext<SearchTable | null>(SearchTableContext);
+  const context = useContext<{ context: SearchTable; form?: FormInstance } | null>(
+    SearchTableContext,
+  );
 
   /**
    * 数据改变则切换成查看状态
    */
-  useEffect(() => setStatus('view'), [context?.getData()]);
+  useEffect(() => setStatus('view'), [context?.context?.getData()]);
 
   /**
    * 缺省状态改变切换到缺省状态

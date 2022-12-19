@@ -1,13 +1,23 @@
 import moment from 'moment';
 import { TableComponents } from 'rc-table/lib/interface';
 import { SearchTableStateImplement } from './SearchTableStateImplement';
-import { ColumnTypeExt, SearchTableImplementState, SearchTableStateImplementProps } from './types';
+import { ColumnTypeExt, FormItemType, SearchTableImplementState, SearchTableStateImplementProps } from './types';
 /**
  * SearchEditorCellStateTable
  * @class
  * @classdesc 可编辑单元格的表格
  */
 declare class SearchEditorCellStateTable<P extends SearchTableStateImplementProps, S extends SearchTableImplementState> extends SearchTableStateImplement<SearchTableStateImplementProps, SearchTableImplementState> {
+    /**
+     * valueToFormItemValueMap
+     * @description 值和表单控件值之间的转换，现在只涉及到时间控件
+     */
+    valueToFormItemValueMap: Map<string, (params: {
+        record: {
+            [prop: string]: any;
+        };
+        dataIndex: string;
+    }) => any>;
     constructor(props: any);
     /**
      * onComponents
@@ -28,6 +38,17 @@ declare class SearchEditorCellStateTable<P extends SearchTableStateImplementProp
         };
         columns: ColumnTypeExt[];
     }): ColumnTypeExt;
+    /**
+     * valueToFormItemValue
+     * @description 值和表单值的转换
+     */
+    valueToFormItemValue({ type, record, dataIndex, }: {
+        type: FormItemType;
+        record: {
+            [prop: string]: any;
+        };
+        dataIndex: string;
+    }): any;
     /**
      * updateEditorCellDate
      * @description 更新可编辑单元格的数据

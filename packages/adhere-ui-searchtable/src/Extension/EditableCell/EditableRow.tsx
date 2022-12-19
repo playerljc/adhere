@@ -19,6 +19,7 @@ const EditableRow: FC<EditableRowProps> = ({
   columns = [],
   rowIndex,
   rowConfig,
+  rowKey,
   ...restProps
 }) => {
   const [form] = Form.useForm();
