@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import AdapterScreen from './adapterscreen';\r\nexport default AdapterScreen;\r\n"],"names":["AdapterScreen"],"mappings":"OAAOA,mDACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import AdapterScreen from './adapterscreen';\r\nexport default AdapterScreen;\r\n"],"names":["AdapterScreen"],"mappings":"OAAOA,kBAAmB,iCACXA"}

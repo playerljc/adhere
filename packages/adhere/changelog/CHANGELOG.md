@@ -19,6 +19,8 @@
   - 加入DateUtil
   - 加入FormatUtil
   - 加入EncryptUtil
+* **adhere-util-adapterscreen**
+  - Safari浏览器适配
 
 # 1.0.21
 

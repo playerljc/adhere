@@ -1580,7 +1580,7 @@
     react-router "^5.3.4"
     react-router-dom "^5.3.4"
 
-"@ctsj/state@^2.0.21":
+"@ctsj/state@^2.0.21", "@ctsj/state@^2.0.23":
   version "2.0.23"
   resolved "https://registry.yarnpkg.com/@ctsj/state/-/state-2.0.23.tgz#8145493a4a10ccf0f47cafceb9d2ec5d878c91c9"
   integrity sha512-57WjwGyRDb8ULBIVRy5kbzmKZkIthtx23u7KdN1Zxsw7YhjJZMruHP+G/AyJ34+6+a6Vx8Nb4l/pSstKCbXKuw==

@@ -33,6 +33,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@baifendian/adhere-util-browsersniff": "^1.0.18",
+    "lodash.debounce": "^4.0.8"
+  },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.19",
