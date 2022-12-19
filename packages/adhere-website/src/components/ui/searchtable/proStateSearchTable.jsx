@@ -10,12 +10,11 @@ import {
   SearchTable,
   WarnPrompt,
 } from '@baifendian/adhere';
-import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-import { createState } from '@ctsj/state/lib/react';
 
 import './serviceRegister';
 
-const { ProSearchStateTable, OptionsWrap, DisabledOption } = SearchTable;
+const { ProSearchStateTable, OptionsWrap, SearchTableStateImplementFactory, DisabledOption } =
+  SearchTable;
 
 const serviceName = 'user';
 
@@ -25,47 +24,6 @@ const serviceName = 'user';
  * @classdesc ProSearchStateTableImpl
  */
 class ProSearchStateTableImpl extends ProSearchStateTable {
-  constructor(props) {
-    super(props);
-
-    const models = [];
-
-    const requireComponent = require.context('./model', false, /.*\.(js)$/);
-
-    requireComponent.keys().forEach((fileName) => {
-      const model = requireComponent(fileName);
-      models.push(model.default());
-    });
-
-    this.unsubscribe = createState({
-      initialState: { ...this.state },
-      models,
-      mapState: (state) =>
-        Object.assign(
-          ServiceRegister.mapStateToProps({
-            namespaces: [serviceName],
-            state,
-          }),
-          {
-            loading: state.loading,
-          },
-        ),
-      mapDispatch: (dispatch) =>
-        ServiceRegister.mapDispatchToProps({
-          namespaces: [serviceName],
-          dispatch,
-        }),
-      ref: this,
-      middleWares: [],
-      reducer: null,
-    });
-  }
-
-  componentWillUnmount() {
-    super.componentWillUnmount();
-    this.unsubscribe();
-  }
-
   getComponentId() {
     return 'ProSearchStateTableImpl';
   }
@@ -294,4 +252,24 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
 
 ProSearchStateTableImpl.propTypes = {};
 
-export default ProSearchStateTableImpl;
+function getModels() {
+  const models = [];
+
+  const requireComponent = require.context('./model', false, /.*\.(js)$/);
+
+  requireComponent.keys().forEach((fileName) => {
+    const model = requireComponent(fileName);
+    models.push(model.default());
+  });
+
+  return models;
+}
+
+const Wrap = SearchTableStateImplementFactory({
+  serviceNames: [serviceName],
+  middleWares: [],
+  reducer: null,
+  models: getModels(),
+})(ProSearchStateTableImpl);
+
+export default Wrap;
