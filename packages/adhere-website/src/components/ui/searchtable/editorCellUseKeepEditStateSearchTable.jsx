@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { DateDisplay, DelConfirm, Resource, SearchTable } from '@baifendian/adhere';
+import { DateDisplay, Resource, SearchTable } from '@baifendian/adhere';
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProEditorCellSearchStateTable, OptionsWrap } =
-  SearchTable;
+const { SearchTableStateImplementFactory, ProEditorCellSearchStateTable } = SearchTable;
 
 const serviceName = 'user';
 
@@ -87,6 +86,11 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
             },
           ],
           useKeepEdit: true,
+          props: {
+            onBlur: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
+            },
+          },
         },
         $resizable: true,
       },
@@ -113,6 +117,11 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
             },
           ],
           useKeepEdit: true,
+          props: {
+            onChange: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
+            },
+          },
         },
       },
       {
@@ -140,6 +149,11 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
             },
           ],
           useKeepEdit: true,
+          props: {
+            onChange: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
+            },
+          },
         },
       },
       {
@@ -164,6 +178,11 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
             },
           ],
           useKeepEdit: true,
+          props: {
+            onBlur: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
+            },
+          },
         },
       },
       {
@@ -188,6 +207,11 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
             },
           ],
           useKeepEdit: true,
+          props: {
+            onBlur: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
+            },
+          },
         },
       },
       {
@@ -210,6 +234,11 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
             },
           ],
           useKeepEdit: true,
+          props: {
+            onBlur: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
+            },
+          },
         },
       },
       {
@@ -235,45 +264,45 @@ class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTabl
           ],
           useKeepEdit: true,
           props: {
-            onBlur: () => {
-              console.log('111');
+            onBlur: (e, { updateEditorCellData }) => {
+              updateEditorCellData();
             },
           },
         },
       },
-      {
-        title: '操作',
-        dataIndex: this.getOptionsColumnDataIndex(),
-        key: this.getOptionsColumnDataIndex(),
-        width: 260,
-        render: (v, record) => (
-          <OptionsWrap style={{ justifyContent: 'center' }}>
-            {this.renderOptionColumn(
-              [
-                {
-                  key: 'view',
-                  value: <a>查看</a>,
-                },
-                {
-                  key: 'delete',
-                  value: (
-                    <DelConfirm
-                      success={() =>
-                        Promise.resolve().then(() => {
-                          this.fetchData();
-                        })
-                      }
-                    >
-                      <a>删除</a>
-                    </DelConfirm>
-                  ),
-                },
-              ],
-              { value: v, record },
-            )}
-          </OptionsWrap>
-        ),
-      },
+      // {
+      //   title: '操作',
+      //   dataIndex: this.getOptionsColumnDataIndex(),
+      //   key: this.getOptionsColumnDataIndex(),
+      //   width: 260,
+      //   render: (v, record) => (
+      //     <OptionsWrap style={{ justifyContent: 'center' }}>
+      //       {this.renderOptionColumn(
+      //         [
+      //           {
+      //             key: 'view',
+      //             value: <a>查看</a>,
+      //           },
+      //           {
+      //             key: 'delete',
+      //             value: (
+      //               <DelConfirm
+      //                 success={() =>
+      //                   Promise.resolve().then(() => {
+      //                     this.fetchData();
+      //                   })
+      //                 }
+      //               >
+      //                 <a>删除</a>
+      //               </DelConfirm>
+      //             ),
+      //           },
+      //         ],
+      //         { value: v, record },
+      //       )}
+      //     </OptionsWrap>
+      //   ),
+      // },
     ]);
   }
 }
