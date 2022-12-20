@@ -255,7 +255,7 @@ export default {
       return <TimePicker {...defaultProps} {...(props || {})} />;
     };
     const renderRangePicker = () => {
-      return <RangePicker {...(props || {})} />;
+      return <RangePicker {...defaultProps} {...(props || {})} />;
     };
 
     const renderSlider = () => {

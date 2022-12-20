@@ -9,6 +9,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
 import { EditableCellEditProps } from '../../../types';
 import { EditableContext } from '../EditableRow';
+import EventTypes from '../EventTypes';
 import FormItemGenerator from './FormItemGenerator';
 
 /**
@@ -112,17 +113,15 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
   function updateEditorCellData() {
     if (value instanceof moment) {
       // @ts-ignore
-      context?.context?.updateEditorCellDateData({
+      return context?.context?.updateEditorCellDateData({
         record,
         dataIndex,
         value,
       });
-
-      return;
     }
 
     // @ts-ignore
-    context?.context?.updateEditorCellDate({
+    return context?.context?.updateEditorCellDate({
       record,
       dataIndex,
       value,
@@ -136,27 +135,40 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
     let formItemNodeProps = {
       autoFocus: !useKeepEdit,
       ...props.editableConfig.props,
+      ...EventTypes.reduce<{ [prop: string]: Function }>((eventCombination, eventType) => {
+        eventCombination[eventType] = (e: any) => {
+          if (props.editableConfig.props[eventType]) {
+            props.editableConfig.props[eventType](e, {
+              form,
+              dataIndex,
+              rowIndex,
+              updateEditorCellData: () => updateEditorCellData(),
+            });
+          }
+        };
+        return eventCombination;
+      }, {}),
     };
 
-    if (useKeepEdit || !useTrigger) {
-      formItemNodeProps = {
-        ...formItemNodeProps,
-        onBlur: (e) => {
-          if (props.editableConfig.props.onBlur) {
-            props.editableConfig.props.onBlur(e, { form, dataIndex, rowIndex });
-          }
-
-          updateEditorCellData();
-        },
-        onChange: (e) => {
-          if (props.editableConfig.props.onChange) {
-            props.editableConfig.props.onChange(e, { form, dataIndex, rowIndex });
-          }
-
-          updateEditorCellData();
-        },
-      };
-    }
+    // if (useKeepEdit  || !useTrigger) {
+    //   formItemNodeProps = {
+    //     ...formItemNodeProps,
+    //     onBlur: (e) => {
+    //       if (props.editableConfig.props.onBlur) {
+    //         props.editableConfig.props.onBlur(e, { form, dataIndex, rowIndex });
+    //       }
+    //
+    //       updateEditorCellData();
+    //     },
+    //     onChange: (e) => {
+    //       if (props.editableConfig.props.onChange) {
+    //         props.editableConfig.props.onChange(e, { form, dataIndex, rowIndex });
+    //       }
+    //
+    //       updateEditorCellData();
+    //     },
+    //   };
+    // }
 
     const formItemNode = FormItemGenerator.render({
       type,

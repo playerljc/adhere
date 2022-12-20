@@ -1,5 +1,5 @@
-import { FormInstance } from 'antd/es/form';
-import { Rule } from 'antd/lib/form/index';
+import type { FormInstance } from 'antd/es/form';
+import type { Rule } from 'antd/lib/form/index';
 import type { TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType, // FilterValue,
@@ -8,7 +8,7 @@ import type {
   // TablePaginationConfig,
   // TableRowSelection,
 } from 'antd/lib/table/interface';
-import { DataIndex } from 'rc-table/lib/interface';
+import type { DataIndex } from 'rc-table/lib/interface';
 import type {
   CSSProperties,
   ForwardRefExoticComponent,
@@ -22,7 +22,7 @@ import type {
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 
 import type SearchTableImplement from './SearchTableImplement';
-import { SearchTableStateImplement } from './SearchTableStateImplement';
+import type { SearchTableStateImplement } from './SearchTableStateImplement';
 
 export type FormItemType =
   | 'input'
@@ -127,6 +127,75 @@ export interface EditableCellEditProps extends EditableCellProps {
   onTriggerChange?: () => void;
 }
 
+export interface EditableCellProps {
+  record: { [prop: string]: any };
+  column: ColumnTypeExt;
+  rowIndex: number;
+  columns: any[];
+}
+
+export interface EditableRowProps {
+  record: { [prop: string]: any };
+  rowIndex: number;
+  columns: any[];
+  rowConfig: RowConfig;
+  rowKey: string;
+}
+
+/**
+ * RowEditableConfig
+ */
+export interface RowEditableConfig {
+  // 行是否可以编辑
+  editable: boolean;
+}
+
+export interface RowConfig {
+  $editable?: RowEditableConfig;
+}
+
+export interface CellReducer {
+  (params: {
+    rowIndex: number;
+    column: ColumnTypeExt;
+    record: { [prop: string]: any };
+    columns: ColumnTypeExt[];
+  }): ColumnTypeExt;
+}
+
+export interface RowReducer {
+  (params: {
+    rowIndex: number;
+    record: { [prop: string]: any };
+    columns: ColumnTypeExt[];
+    rowConfig: RowConfig;
+  }): RowConfig;
+}
+
+export interface EditorRowControlProps {
+  className?: string;
+  styles?: CSSProperties;
+  rowKey: string;
+  editorRowId: string;
+  record: { [prop: string]: any };
+  renderEditorRow?: () => ReactNode;
+  renderSave?: () => ReactNode;
+  renderCancel?: () => ReactNode;
+  onSave: (values: { [props: string]: any }) => Promise<void>;
+  onEditor: (id: string) => Promise<void>;
+}
+
+export interface EditorTableControlProps {
+  className?: string;
+  styles?: CSSProperties;
+  rowKey: string;
+  renderEditorTable?: () => ReactNode;
+  renderSave?: () => ReactNode;
+  renderCancel?: () => ReactNode;
+  onEditor: () => Promise<void>;
+  onSave: (values: { [prop: string]: any }[]) => Promise<void>;
+}
+
 export interface FormItemGeneratorConfig {
   // 编辑控件的类型
   type?: FormItemType | string;
@@ -142,25 +211,6 @@ export interface FormItemGeneratorConfig {
   dataIndex?: DataIndex;
   // 列的索引值
   rowIndex?: number;
-}
-
-export interface RowConfig {
-  $editable?: RowEditableConfig;
-}
-
-export interface EditableRowProps {
-  record: { [prop: string]: any };
-  rowIndex: number;
-  columns: any[];
-  rowConfig: RowConfig;
-  rowKey: string;
-}
-
-export interface EditableCellProps {
-  record: { [prop: string]: any };
-  column: ColumnTypeExt;
-  rowIndex: number;
-  columns: any[];
 }
 
 /**
@@ -213,14 +263,6 @@ export interface ColumnEditableConfig {
   // 是否一直保持编辑状态，也就是说view和edit都显示的是控件，如果设置为true则相当于设置了useTrigger是false，useTrigger的设置将失效
   // 最好不使用这种模式
   useKeepEdit?: boolean;
-}
-
-/**
- * RowEditableConfig
- */
-export interface RowEditableConfig {
-  // 行是否可以编辑
-  editable: boolean;
 }
 
 /**
@@ -430,48 +472,6 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
   }): (
     Component: typeof SearchTableStateImplement,
   ) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
-}
-
-export interface CellReducer {
-  (params: {
-    rowIndex: number;
-    column: ColumnTypeExt;
-    record: { [prop: string]: any };
-    columns: ColumnTypeExt[];
-  }): ColumnTypeExt;
-}
-
-export interface RowReducer {
-  (params: {
-    rowIndex: number;
-    record: { [prop: string]: any };
-    columns: ColumnTypeExt[];
-    rowConfig: RowConfig;
-  }): RowConfig;
-}
-
-export interface EditorRowControlProps {
-  className?: string;
-  styles?: CSSProperties;
-  rowKey: string;
-  editorRowId: string;
-  record: { [prop: string]: any };
-  renderEditorRow?: () => ReactNode;
-  renderSave?: () => ReactNode;
-  renderCancel?: () => ReactNode;
-  onSave: (values: { [props: string]: any }) => Promise<void>;
-  onEditor: (id: string) => Promise<void>;
-}
-
-export interface EditorTableControlProps {
-  className?: string;
-  styles?: CSSProperties;
-  rowKey: string;
-  renderEditorTable?: () => ReactNode;
-  renderSave?: () => ReactNode;
-  renderCancel?: () => ReactNode;
-  onEditor: () => Promise<void>;
-  onSave: (values: { [prop: string]: any }[]) => Promise<void>;
 }
 
 /**

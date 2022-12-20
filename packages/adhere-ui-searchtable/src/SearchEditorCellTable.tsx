@@ -144,6 +144,11 @@ class SearchEditorCellTable<
     value: any;
   }): Promise<void> {
     return new Promise((resolve) => {
+      if (record[dataIndex] === value) {
+        resolve();
+        return;
+      }
+
       const listData = cloneDeep(this.props[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();
@@ -180,6 +185,11 @@ class SearchEditorCellTable<
     value: moment.Moment | null;
   }): Promise<void> {
     return new Promise((resolve) => {
+      if (record[dataIndex] === value?.valueOf()) {
+        resolve();
+        return;
+      }
+
       const listData = cloneDeep(this.props[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();

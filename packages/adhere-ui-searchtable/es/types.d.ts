@@ -1,12 +1,12 @@
-import { FormInstance } from 'antd/es/form';
-import { Rule } from 'antd/lib/form/index';
+import type { FormInstance } from 'antd/es/form';
+import type { Rule } from 'antd/lib/form/index';
 import type { TableProps } from 'antd/lib/table/Table';
 import type { ColumnType } from 'antd/lib/table/interface';
-import { DataIndex } from 'rc-table/lib/interface';
+import type { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 import type SearchTableImplement from './SearchTableImplement';
-import { SearchTableStateImplement } from './SearchTableStateImplement';
+import type { SearchTableStateImplement } from './SearchTableStateImplement';
 export declare type FormItemType = 'input' | 'textArea' | 'inputNumber' | 'inputNumberDecimal1' | 'inputNumberDecimal2' | 'inputNumberInteger' | 'select' | 'multiSelect' | 'checkAllMultiSelect' | 'autoCompleteSelect' | 'autoCompleteSelectMulti' | 'autoCompleteSelectCheckAllMulti' | 'radioHorizontal' | 'radioButton' | 'radioSelect' | 'radioCustom' | 'checkBoxHorizontal' | 'checkBoxCheckAllHorizontal' | 'checkboxSelect' | 'checkBoxCheckAllSelect' | 'checkBoxCustom' | 'checkBoxCheckAllCustom' | 'transferSelect' | 'tableSelect' | 'tableMultiSelect' | 'tablePagingSelect' | 'tablePagingMultiSelect' | 'listSelect' | 'listMultiSelect' | 'listPagingSelect' | 'listPagingMultiSelect' | 'treeSelect' | 'treeMultiSelect' | 'treeSelectLeaf' | 'treeMultiSelectLeaf' | 'cascaderSelect' | 'cascaderMultiSelect' | 'cascaderSelectLeaf' | 'cascaderMultiSelectLeaf' | 'datePicker' | 'timePicker' | 'rangePicker' | 'slider' | 'sliderRange' | 'rate' | 'switch' | 'custom' | string;
 /**
  * ColumnSearchConfig
@@ -45,17 +45,13 @@ export interface EditableCellEditProps extends EditableCellProps {
     editableConfig: ColumnEditableConfig;
     onTriggerChange?: () => void;
 }
-export interface FormItemGeneratorConfig {
-    type?: FormItemType | string;
-    props?: any;
-    dictName?: string;
-    renderChildren?: (params?: any) => ReactNode | null;
-    form?: FormInstance<any> | null;
-    dataIndex?: DataIndex;
-    rowIndex?: number;
-}
-export interface RowConfig {
-    $editable?: RowEditableConfig;
+export interface EditableCellProps {
+    record: {
+        [prop: string]: any;
+    };
+    column: ColumnTypeExt;
+    rowIndex: number;
+    columns: any[];
 }
 export interface EditableRowProps {
     record: {
@@ -66,13 +62,71 @@ export interface EditableRowProps {
     rowConfig: RowConfig;
     rowKey: string;
 }
-export interface EditableCellProps {
+/**
+ * RowEditableConfig
+ */
+export interface RowEditableConfig {
+    editable: boolean;
+}
+export interface RowConfig {
+    $editable?: RowEditableConfig;
+}
+export interface CellReducer {
+    (params: {
+        rowIndex: number;
+        column: ColumnTypeExt;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+    }): ColumnTypeExt;
+}
+export interface RowReducer {
+    (params: {
+        rowIndex: number;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+        rowConfig: RowConfig;
+    }): RowConfig;
+}
+export interface EditorRowControlProps {
+    className?: string;
+    styles?: CSSProperties;
+    rowKey: string;
+    editorRowId: string;
     record: {
         [prop: string]: any;
     };
-    column: ColumnTypeExt;
-    rowIndex: number;
-    columns: any[];
+    renderEditorRow?: () => ReactNode;
+    renderSave?: () => ReactNode;
+    renderCancel?: () => ReactNode;
+    onSave: (values: {
+        [props: string]: any;
+    }) => Promise<void>;
+    onEditor: (id: string) => Promise<void>;
+}
+export interface EditorTableControlProps {
+    className?: string;
+    styles?: CSSProperties;
+    rowKey: string;
+    renderEditorTable?: () => ReactNode;
+    renderSave?: () => ReactNode;
+    renderCancel?: () => ReactNode;
+    onEditor: () => Promise<void>;
+    onSave: (values: {
+        [prop: string]: any;
+    }[]) => Promise<void>;
+}
+export interface FormItemGeneratorConfig {
+    type?: FormItemType | string;
+    props?: any;
+    dictName?: string;
+    renderChildren?: (params?: any) => ReactNode | null;
+    form?: FormInstance<any> | null;
+    dataIndex?: DataIndex;
+    rowIndex?: number;
 }
 /**
  * ColumnEditableConfig
@@ -108,12 +162,6 @@ export interface ColumnEditableConfig {
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;
     useKeepEdit?: boolean;
-}
-/**
- * RowEditableConfig
- */
-export interface RowEditableConfig {
-    editable: boolean;
 }
 /**
  * ColumnTypeExt
@@ -280,54 +328,6 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
         mapStateToProps?: (state: any) => any;
         mapDispatchToProps?: (dispatch?: any) => any;
     }): (Component: typeof SearchTableStateImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
-}
-export interface CellReducer {
-    (params: {
-        rowIndex: number;
-        column: ColumnTypeExt;
-        record: {
-            [prop: string]: any;
-        };
-        columns: ColumnTypeExt[];
-    }): ColumnTypeExt;
-}
-export interface RowReducer {
-    (params: {
-        rowIndex: number;
-        record: {
-            [prop: string]: any;
-        };
-        columns: ColumnTypeExt[];
-        rowConfig: RowConfig;
-    }): RowConfig;
-}
-export interface EditorRowControlProps {
-    className?: string;
-    styles?: CSSProperties;
-    rowKey: string;
-    editorRowId: string;
-    record: {
-        [prop: string]: any;
-    };
-    renderEditorRow?: () => ReactNode;
-    renderSave?: () => ReactNode;
-    renderCancel?: () => ReactNode;
-    onSave: (values: {
-        [props: string]: any;
-    }) => Promise<void>;
-    onEditor: (id: string) => Promise<void>;
-}
-export interface EditorTableControlProps {
-    className?: string;
-    styles?: CSSProperties;
-    rowKey: string;
-    renderEditorTable?: () => ReactNode;
-    renderSave?: () => ReactNode;
-    renderCancel?: () => ReactNode;
-    onEditor: () => Promise<void>;
-    onSave: (values: {
-        [prop: string]: any;
-    }[]) => Promise<void>;
 }
 /**
  * TableDensity

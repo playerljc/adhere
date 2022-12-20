@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { DateDisplay, Resource, SearchTable } from '@baifendian/adhere';
+import { DateDisplay, DelConfirm, Resource, SearchTable } from '@baifendian/adhere';
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProEditorRowSearchStateTable, EditorRowControl } =
+const { SearchTableStateImplementFactory, ProEditorCellSearchStateTable, OptionsWrap } =
   SearchTable;
 
 const serviceName = 'user';
@@ -21,13 +21,13 @@ function getModels() {
 }
 
 /**
- * RowEditorStateSearchTable
- * @class RowEditorStateSearchTable
- * @classdesc RowEditorStateSearchTable
+ * EditorCellUseKeepEditStateSearchTable
+ * @class EditorCellUseKeepEditStateSearchTable
+ * @classdesc EditorCellUseKeepEditStateSearchTable
  */
-class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
+class EditorCellUseKeepEditStateSearchTable extends ProEditorCellSearchStateTable {
   getComponentId() {
-    return 'RowEditorStateSearchTable';
+    return 'EditorCellUseKeepEditStateSearchTable';
   }
 
   getServiceName() {
@@ -86,16 +86,9 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
               message: '请输入姓名',
             },
           ],
-          onSave: ({ value, record, dataIndex }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
         },
-        // $resizable: true,
+        $resizable: true,
       },
       {
         title: '性别',
@@ -119,14 +112,7 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
               message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
         },
       },
       {
@@ -153,14 +139,7 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
               message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDateData({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
         },
       },
       {
@@ -181,17 +160,10 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入身高',
             },
           ],
-          onSave: ({ record, dataIndex, value }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
         },
       },
       {
@@ -212,17 +184,10 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入体重',
             },
           ],
-          onSave: ({ record, dataIndex, value }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
         },
       },
       {
@@ -241,17 +206,10 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入籍贯',
             },
           ],
-          onSave: ({ record, dataIndex, value }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
         },
       },
       {
@@ -272,43 +230,61 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入居住地',
             },
           ],
-          onSave: ({ record, dataIndex, value }) =>
-            new Promise((resolve) => {
-              this.updateEditorCellDate({
-                record,
-                dataIndex,
-                value,
-              }).then(() => resolve());
-            }),
+          useKeepEdit: true,
+          props: {
+            onBlur: () => {
+              console.log('111');
+            },
+          },
         },
       },
       {
         title: '操作',
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
-        width: 100,
+        width: 260,
         render: (v, record) => (
-          <EditorRowControl
-            record={record}
-            rowKey={this.getRowKey()}
-            editorRowId={this.state.editorRowId}
-          />
+          <OptionsWrap style={{ justifyContent: 'center' }}>
+            {this.renderOptionColumn(
+              [
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'delete',
+                  value: (
+                    <DelConfirm
+                      success={() =>
+                        Promise.resolve().then(() => {
+                          this.fetchData();
+                        })
+                      }
+                    >
+                      <a>删除</a>
+                    </DelConfirm>
+                  ),
+                },
+              ],
+              { value: v, record },
+            )}
+          </OptionsWrap>
         ),
       },
     ]);
   }
 }
 
-RowEditorStateSearchTable.propTypes = {};
+EditorCellUseKeepEditStateSearchTable.propTypes = {};
 
 const Wrap = SearchTableStateImplementFactory({
   serviceNames: [serviceName],
   middleWares: [],
   reducer: null,
   models: getModels(),
-})(RowEditorStateSearchTable);
+})(EditorCellUseKeepEditStateSearchTable);
 
 export default Wrap;
