@@ -12,6 +12,7 @@ import PlayGroundPage, {
 
 import ColumnResizeTable from './columnResizeTable';
 import ColumnSettingTable from './columnSettingTable';
+import EditorCellRenderTriggerStateSearchTable from './editorCellRenderTriggerStateSearchTable';
 import EditorCellStateSearchTable from './editorCellStateSearchTable';
 import EditorCellUseKeepEditStateSearchTable from './editorCellUseKeepEditStateSearchTable';
 import FewTable from './fewTable';
@@ -2800,7 +2801,18 @@ export default () => {
         },
         codeText: ``,
         type: 'PlayGround',
-        renderChildren: () => null,
+        renderChildren: () => (
+          <div style={{ display: 'flex', height: 700 }}>
+            <EditorCellRenderTriggerStateSearchTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination4}
+            />
+          </div>
+        ),
       },
     ];
   }
