@@ -30,6 +30,11 @@
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0",
+    "antd": ">=4.22.2"
+  },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^1.0.21",
     "@baifendian/adhere-ui-flexlayout": "^1.0.21-fix.3",
