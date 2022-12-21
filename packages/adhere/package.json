@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
+    "@baifendian/adhere-ui-antdformitem": "^1.0.0",
     "@baifendian/adhere-ui-backtopanimation": "^1.0.21-fix.3",
     "@baifendian/adhere-ui-bmap": "^1.0.21-fix.3",
     "@baifendian/adhere-ui-cascadecompared": "^1.0.21-fix.1",
@@ -85,7 +86,6 @@
     "@baifendian/adhere-ui-tableheadsearch": "^1.0.21",
     "@baifendian/adhere-ui-tablelist": "^1.0.21-fix.3",
     "@baifendian/adhere-ui-writingboard": "^1.0.21-fix.1",
-    "@baifendian/adhere-ui-antdformitem": "^1.0.0",
     "@baifendian/adhere-util": "^1.0.21",
     "@baifendian/adhere-util-adapterscreen": "^1.0.18",
     "@baifendian/adhere-util-browsersniff": "^1.0.18",
@@ -130,9 +130,9 @@
     "typescript": "^3.8.2"
   },
   "peerDependencies": {
+    "antd": ">=4.22.2",
     "react": ">=16.9.0",
-    "react-dom": ">=16.9.0",
-    "antd": ">=4.22.2"
+    "react-dom": ">=16.9.0"
   },
   "publishConfig": {
     "access": "public"

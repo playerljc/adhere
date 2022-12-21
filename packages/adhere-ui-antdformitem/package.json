@@ -30,11 +30,6 @@
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0",
-    "antd": ">=4.22.2"
-  },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^1.0.21",
     "@baifendian/adhere-ui-flexlayout": "^1.0.21-fix.3",
@@ -45,15 +40,20 @@
     "@baifendian/adhere-util-watchmemoized": "^1.0.21",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "antd": "^4.22.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "antd": "^4.22.2"
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
     "@ctsj/build": "^4.0.19",
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
+  },
+  "peerDependencies": {
+    "antd": ">=4.22.2",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "publishConfig": {
     "access": "public"
