@@ -150,26 +150,6 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       }, {}),
     };
 
-    // if (useKeepEdit  || !useTrigger) {
-    //   formItemNodeProps = {
-    //     ...formItemNodeProps,
-    //     onBlur: (e) => {
-    //       if (props.editableConfig.props.onBlur) {
-    //         props.editableConfig.props.onBlur(e, { form, dataIndex, rowIndex });
-    //       }
-    //
-    //       updateEditorCellData();
-    //     },
-    //     onChange: (e) => {
-    //       if (props.editableConfig.props.onChange) {
-    //         props.editableConfig.props.onChange(e, { form, dataIndex, rowIndex });
-    //       }
-    //
-    //       updateEditorCellData();
-    //     },
-    //   };
-    // }
-
     const formItemNode = FormItemGenerator.render({
       type,
       props: formItemNodeProps,
@@ -187,6 +167,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
           dataIndex,
           rowIndex,
           form,
+          updateEditorCellData: () => updateEditorCellData(),
           children: formItemNode,
         })
       : formItemNode;
@@ -221,6 +202,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
                 dataIndex,
                 rowIndex,
                 form,
+                updateEditorCellData: () => updateEditorCellData(),
               })}
         </Form.Item>
       </div>

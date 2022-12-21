@@ -233,6 +233,8 @@ export interface ColumnEditableConfig {
     value: any;
     // 已经生成好的孩子节点
     children?: ReactNode;
+    // 更新单元格数据的方法
+    updateEditorCellData?: () => Promise<void>;
   }) => ReactNode;
   // 点击ToEdit句柄之前触发，resolve则将继续，reject则不能切换状态
   onBeforeToEdit?: (params: ColumnParams) => Promise<void>;

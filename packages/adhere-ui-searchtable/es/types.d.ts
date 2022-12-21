@@ -145,6 +145,7 @@ export interface ColumnEditableConfig {
         rowIndex: number;
         value: any;
         children?: ReactNode;
+        updateEditorCellData?: () => Promise<void>;
     }) => ReactNode;
     onBeforeToEdit?: (params: ColumnParams) => Promise<void>;
     onSave?: (params: ColumnParams & {
