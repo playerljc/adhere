@@ -8,7 +8,7 @@ declare type ConfigDuration = number | (() => void);
  * openErrorDialog
  * @param props
  */
-export declare const openErrorDialog: (props: ModalProps) => {
+export declare const openErrorDialog: (props?: ModalProps) => {
     destroy: () => void;
     update: (configUpdate: import("antd").ModalFuncProps | ((prevConfig: import("antd").ModalFuncProps) => import("antd").ModalFuncProps)) => void;
 };

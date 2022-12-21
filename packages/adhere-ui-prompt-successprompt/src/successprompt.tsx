@@ -13,13 +13,13 @@ type ConfigDuration = number | (() => void);
  * openSuccessDialog
  * @param props
  */
-export const openSuccessDialog = (props: ModalProps) =>
+export const openSuccessDialog = (props?: ModalProps) =>
   Modal.success({
     title: Intl.v('提示'),
     content: Intl.v('操作成功'),
     mask: false,
     maskClosable: true,
-    ...props,
+    ...(props || {}),
   });
 
 /**

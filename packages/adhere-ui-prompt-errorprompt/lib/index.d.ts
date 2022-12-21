@@ -1,5 +1,5 @@
 declare const _default: {
-    openErrorDialog: (props: import("antd").ModalProps) => {
+    openErrorDialog: (props?: import("antd").ModalProps | undefined) => {
         destroy: () => void;
         update: (configUpdate: import("antd").ModalFuncProps | ((prevConfig: import("antd").ModalFuncProps) => import("antd").ModalFuncProps)) => void;
     };

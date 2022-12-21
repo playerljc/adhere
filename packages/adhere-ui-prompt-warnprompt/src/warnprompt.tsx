@@ -13,12 +13,12 @@ type ConfigDuration = number | (() => void);
  * openErrorDialog
  * @param props
  */
-export const openWarnDialog = (props: ModalProps) =>
+export const openWarnDialog = (props?: ModalProps) =>
   Modal.warning({
     title: Intl.v('提示'),
     mask: false,
     maskClosable: true,
-    ...props,
+    ...(props || {}),
   });
 
 /**

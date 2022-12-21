@@ -8,7 +8,7 @@ declare type ConfigDuration = number | (() => void);
  * openSuccessDialog
  * @param props
  */
-export declare const openSuccessDialog: (props: ModalProps) => {
+export declare const openSuccessDialog: (props?: ModalProps) => {
     destroy: () => void;
     update: (configUpdate: import("antd").ModalFuncProps | ((prevConfig: import("antd").ModalFuncProps) => import("antd").ModalFuncProps)) => void;
 };
