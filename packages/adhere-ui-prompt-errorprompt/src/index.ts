@@ -1,3 +1,6 @@
-import ErrorPrompt from './errorprompt';
+import { openErrorDialog, openErrorMessage } from './errorprompt';
 
-export default ErrorPrompt;
+export default {
+  openErrorDialog,
+  openErrorMessage,
+};
