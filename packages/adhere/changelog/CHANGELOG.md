@@ -21,6 +21,12 @@
   - 加入EncryptUtil
 * **adhere-util-adapterscreen**
   - Safari浏览器适配
+* **adhere-ui-prompt-errorprompt**
+  - 分成dialog和message
+* **adhere-ui-prompt-successprompt**
+  - 分成dialog和message
+* **adhere-ui-prompt-warnprompt**
+  - 分成dialog和message
 
 # 1.0.21
 
