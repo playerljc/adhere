@@ -1,7 +1,4 @@
-import type { FormInstance } from 'antd/es/form';
-import React, { FC } from 'react';
-import { EditableRowProps } from '../../types';
-export declare const EditableContext: React.Context<FormInstance<any> | null>;
+import { TableRowComponentReducer } from '../../types';
 /**
  * EditableTableRow
  * @description 行编辑
@@ -10,5 +7,5 @@ export declare const EditableContext: React.Context<FormInstance<any> | null>;
  * rowIndex: number;
  * columns: any[];
  */
-declare const EditableTableRow: FC<EditableRowProps>;
+declare const EditableTableRow: TableRowComponentReducer;
 export default EditableTableRow;

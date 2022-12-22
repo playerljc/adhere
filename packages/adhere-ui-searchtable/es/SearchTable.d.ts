@@ -1,11 +1,10 @@
 import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
-import { TableComponents } from 'rc-table/lib/interface';
 import React, { ReactElement, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
-import { CellReducer, ColumnEditableConfig, ColumnTypeExt, RowConfig, RowEditableConfig, RowReducer, SearchTableProps, SearchTableState, TableDensity } from './types';
+import { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
 export declare const SearchTableContext: React.Context<{
     context: SearchTable;
@@ -34,12 +33,17 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         header: {
             cell: typeof SearchTableResizableTitle;
         };
-        body: {};
+        body: {
+            row: React.FC<import("./types").TableRowComponentProps>;
+            cell: React.FC<import("./types").TableCellComponentProps>;
+        };
     };
     protected columnResizable: ColumnResizable;
     protected columnObserver: any;
-    protected cellReducers: CellReducer[];
-    protected rowReducers: RowReducer[];
+    protected rowConfigReducers: RowConfigReducer[];
+    protected cellConfigReducers: CellConfigReducer[];
+    protected tableRowComponentReducers: string[];
+    protected tableCellComponentReducers: string[];
     /**
      * isShowNumber
      * @description 表格是否显示序号
@@ -92,31 +96,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getRowSelection(): TableRowSelection<object>;
     /**
-     * renderSearchBefore
-     * @description 渲染查询面板之前
-     */
-    abstract renderSearchFormBefore(): ReactElement | null;
-    /**
-     * renderSearchForm
-     * @description 渲染查询的UI
-     */
-    abstract renderSearchForm(): ReactElement | null;
-    /**
-     * renderSearchBefore
-     * @description 渲染查询面板之后
-     */
-    abstract renderSearchFormAfter(): ReactElement | null;
-    /**
-     * renderTableHeader
-     * @description 渲染表格的头
-     */
-    abstract renderTableHeader(): ReactElement | null;
-    /**
-     * renderTableFooter
-     * @description 渲染表格的脚
-     */
-    abstract renderTableFooter(): ReactElement | null;
-    /**
      * getTotal
      * @description 获取表格数据的总数
      */
@@ -142,6 +121,36 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getOrderFieldValue(): string;
     /**
+     * renderSearchBefore
+     * @description 渲染查询面板之前
+     */
+    abstract renderSearchFormBefore(): ReactElement | null;
+    /**
+     * renderSearchForm
+     * @description 渲染查询的UI
+     */
+    abstract renderSearchForm(): ReactElement | null;
+    /**
+     * renderSearchBefore
+     * @description 渲染查询面板之后
+     */
+    abstract renderSearchFormAfter(): ReactElement | null;
+    /**
+     * renderTableHeader
+     * @description 渲染表格的头
+     */
+    abstract renderTableHeader(): ReactElement | null;
+    /**
+     * renderTableFooter
+     * @description 渲染表格的脚
+     */
+    abstract renderTableFooter(): ReactElement | null;
+    /**
+     * renderSearchFooterItems
+     * @description 渲染SearchFooter的按钮组
+     */
+    abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
+    /**
      * onSubTableChange
      * @description 获取表格change句柄
      * @param pagination
@@ -151,47 +160,27 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object>): void;
     /**
-     * onEditorCell
-     * @description 每一个可编辑的单元格的props
-     * @param params
-     */
-    abstract onEditorCell(params: {
-        rowIndex: number;
-        editorConfig: ColumnEditableConfig;
-        record: any;
-    }): void;
-    /**
-     * onEditorCell
-     * @description 行是否可以编辑
-     * @param params
-     */
-    abstract onEditorRow(params: {
-        columns: ColumnTypeExt[];
-        rowIndex: number;
-        record: any;
-    }): RowEditableConfig;
-    /**
-     * onComponents
-     * @description 设置表格的components
-     * @param columns
-     * @param components
-     */
-    abstract onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any>;
-    /**
      * clear
      * @description  清除操作
      */
     abstract clear(): Promise<any>;
     /**
-     * renderSearchFooterItems
-     * @description 渲染SearchFooter的按钮组
-     */
-    abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
-    /**
      * onSearch
      * @description 进行查询
      */
     abstract onSearch(): Promise<void>;
+    /**
+     * onTableRowComponentReducers
+     * @description 对tableRowComponentReducers对象进行设置的hook
+     * @param columns
+     */
+    abstract onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+    /**
+     * onTableCellComponentReducers
+     * @description 对tableCellComponentReducers对象进行设置的hook
+     * @param columns
+     */
+    abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
     constructor(props: any);
     componentWillReceiveProps(nextProps: SearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
@@ -243,11 +232,11 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     sortOrder(columnName: string): string;
     /**
-     * onCellReducers
+     * onCellConfigReducers
      * @description 所有onCell的处理
      * @return ColumnTypeExt
      */
-    onCellReducers(params: {
+    onCellConfigReducers(params: {
         rowIndex: number;
         column: ColumnTypeExt;
         record: {
@@ -256,11 +245,11 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         columns: ColumnTypeExt[];
     }): ColumnTypeExt;
     /**
-     * onRowReducers
+     * onRowConfigReducers
      * @description 所有row的处理
      * @param params
      */
-    onRowReducers(params: {
+    onRowConfigReducers(params: {
         rowIndex: number;
         record: {
             [prop: string]: any;
@@ -296,6 +285,14 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @return Array<any>
      */
     getTableColumns(): any[];
+    /**
+     * getTableRowComponentReducers
+     */
+    getTableRowComponentReducers(): string[];
+    /**
+     * getTableCellComponentReducers
+     */
+    getTableCellComponentReducers(): string[];
     /**
      * renderTableNumberColumn
      * @description - 渲染序号列

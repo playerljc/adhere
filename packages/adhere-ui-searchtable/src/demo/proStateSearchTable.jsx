@@ -1,47 +1,13 @@
-import { Button } from 'antd';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { DeleteOutlined, UserAddOutlined } from '@ant-design/icons';
-import {
-  ConditionalRender,
-  DateDisplay,
-  DelConfirm,
-  Resource,
-  WarnPrompt,
-} from '@baifendian/adhere';
+import { DateDisplay, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../index';
 import './serviceRegister';
 
-const { ProEditorCellSearchStateTable, EditableContext, SearchTableStateImplementFactory } =
-  SearchTable;
+const { ProEditorCellSearchStateTable, SearchTableStateImplementFactory } = SearchTable;
 
 const serviceName = 'user';
-
-function RowEditorCell({ record, onEditor, onSave, editorRowId }) {
-  const form = useContext(EditableContext);
-
-  return (
-    <div>
-      <ConditionalRender
-        conditional={editorRowId !== record.id}
-        noMatch={() => (
-          <a
-            onClick={() => {
-              form.validateFields().then((values) => {
-                onSave(values);
-              });
-            }}
-          >
-            保存
-          </a>
-        )}
-      >
-        {() => <a onClick={() => onEditor(record.id)}>编辑行</a>}
-      </ConditionalRender>
-    </div>
-  );
-}
 
 /**
  * ProSearchStateTableImpl
@@ -49,15 +15,6 @@ function RowEditorCell({ record, onEditor, onSave, editorRowId }) {
  * @classdesc ProSearchStateTableImpl
  */
 class ProSearchStateTableImpl extends ProEditorCellSearchStateTable {
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.state = {
-  //     ...this.state,
-  //     editorRowId: '',
-  //   };
-  // }
-
   getComponentId() {
     return 'ProSearchStateTableImpl';
   }
@@ -352,148 +309,8 @@ class ProSearchStateTableImpl extends ProEditorCellSearchStateTable {
           // },
         },
       },
-      // {
-      //   title: '操作',
-      //   dataIndex: this.getOptionsColumnDataIndex(),
-      //   key: this.getOptionsColumnDataIndex(),
-      //   width: 200,
-      //   render: (v, record, rowIndex) => (
-      //     <RowEditorCell
-      //       value={v}
-      //       record={record}
-      //       rowIndex={rowIndex}
-      //       editorRowId={this.state.editorRowId}
-      //       onEditor={(id) => {
-      //         this.setState({
-      //           editorRowId: id,
-      //         });
-      //       }}
-      //       onSave={(values) => {
-      //         this.fetchData().then(() =>
-      //           this.setState({
-      //             editorRowId: '',
-      //           }),
-      //         );
-      //       }}
-      //     />
-      //   ),
-      //   /*(
-      //     <OptionsWrap style={{ justifyContent: 'center' }}>
-      //       {this.renderOptionColumn(
-      //         [
-      //           {
-      //             key: 'edit',
-      //             value: (
-      //               <ConditionalRender
-      //                 conditional={true}
-      //                 noMatch={() => <DisabledOption>编辑</DisabledOption>}
-      //               >
-      //                 {() => (
-      //                   <a
-      //                     onClick={() => {
-      //                       this.setState({
-      //                         editorRowId: rowIndex,
-      //                       });
-      //                     }}
-      //                   >
-      //                     编辑行
-      //                   </a>
-      //                 )}
-      //               </ConditionalRender>
-      //             ),
-      //           },
-      //           {
-      //             key: 'view',
-      //             value: <a>查看</a>,
-      //           },
-      //           {
-      //             key: 'delete',
-      //             value: (
-      //               <DelConfirm
-      //                 success={() =>
-      //                   Promise.resolve().then(() => {
-      //                     this.fetchData();
-      //                   })
-      //                 }
-      //               >
-      //                 <a>删除</a>
-      //               </DelConfirm>
-      //             ),
-      //           },
-      //         ],
-      //         { value: v, record },
-      //       )}
-      //     </OptionsWrap>
-      //   )*/
-      // },
     ]);
   }
-
-  // onEditorCell({ rowIndex, record, editorConfig }) {
-  //   if (record.id === this.state.editorRowId) {
-  //     if (editorConfig) {
-  //       editorConfig.defaultStatus = 'edit';
-  //     }
-  //   }
-  // }
-
-  // fetchData(...params) {
-  //   return super.fetchData(...params).then((res) => {
-  //     this.setState({
-  //       editorRowId: '',
-  //     });
-  //     return res;
-  //   });
-  // }
-
-  /**
-   * renderSearchFooterItems
-   * 渲染表格的工具栏
-   * @override
-   */
-  // renderSearchFooterItems(defaultItems) {
-  //   return super.renderSearchFooterItems([
-  //     {
-  //       key: 'add',
-  //       value: (
-  //         <Button key="add" icon={<UserAddOutlined />} type="primary" onClick={() => {}}>
-  //           新增
-  //         </Button>
-  //       ),
-  //     },
-  //     {
-  //       key: 'delete',
-  //       value: (
-  //         <Button
-  //           key="delete"
-  //           icon={<DeleteOutlined />}
-  //           type="primary"
-  //           onClick={() => {
-  //             const { selectedRowKeys } = this.state;
-  //
-  //             if (!selectedRowKeys.length) {
-  //               WarnPrompt('请选择要删除的数据');
-  //               return;
-  //             }
-  //
-  //             DelConfirm.open(() => {
-  //               return Promise.resolve().then(() => {
-  //                 this.setState({
-  //                   selectedRowKeys: [],
-  //                 });
-  //
-  //                 this.fetchData();
-  //               });
-  //             });
-  //           }}
-  //         >
-  //           删除
-  //         </Button>
-  //       ),
-  //     },
-  //     ...defaultItems,
-  //   ]);
-  // }
 }
 
 ProSearchStateTableImpl.propTypes = {};

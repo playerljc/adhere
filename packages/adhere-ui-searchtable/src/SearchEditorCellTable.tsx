@@ -1,16 +1,17 @@
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
-import { TableComponents } from 'rc-table/lib/interface';
 import React from 'react';
 
-import EditableCell from './Extension/EditableCell/EditableCell';
 import EditableRow from './Extension/EditableCell/EditableRow';
 import { SearchTableImplement } from './SearchTableImplement';
 import {
+  ColumnEditableConfig,
   ColumnTypeExt,
   FormItemType,
+  RowEditableConfig,
   SearchTableImplementProps,
   SearchTableImplementState,
+  TableRowComponentReducer,
 } from './types';
 
 /**
@@ -58,27 +59,31 @@ class SearchEditorCellTable<
   constructor(props) {
     super(props);
 
-    this.cellReducers = [...this.cellReducers, this.cellEditableReducer];
+    this.cellConfigReducers = [...this.cellConfigReducers, this.cellEditableReducer];
   }
 
-  /**
-   * onComponents
-   * @param columns
-   * @param components
-   */
-  onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any> {
+  onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
     const existsEditor = columns.some(
       (column) => '$editable' in column && column.$editable?.editable,
     );
 
     if (existsEditor) {
-      components.body = {
-        row: EditableRow,
-        cell: EditableCell,
-      };
+      return [...this.tableRowComponentReducers, 'useEditableRow'];
     }
 
-    return components;
+    return this.tableRowComponentReducers;
+  }
+
+  onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
+    const existsEditor = columns.some(
+      (column) => '$editable' in column && column.$editable?.editable,
+    );
+
+    if (existsEditor) {
+      return [...this.tableCellComponentReducers, 'useEditableCell'];
+    }
+
+    return this.tableCellComponentReducers;
   }
 
   /**
@@ -98,6 +103,18 @@ class SearchEditorCellTable<
 
     return item ? item?.({ record, dataIndex }) : record?.[dataIndex as string];
   }
+
+  onEditorRow(params: {
+    columns: ColumnTypeExt[];
+    rowIndex: number;
+    record: any;
+  }): RowEditableConfig {
+    return {
+      editable: false,
+    };
+  }
+
+  onEditorCell(params: { rowIndex: number; editorConfig: ColumnEditableConfig; record: any }) {}
 
   /**
    * cellEditableReducer

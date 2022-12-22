@@ -1,8 +1,8 @@
 import { Form } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import React, { FC, createContext } from 'react';
+import React, { createContext } from 'react';
 
-import { EditableRowProps } from '../../types';
+import { TableRowComponentReducer } from '../../types';
 
 export const EditableContext = createContext<FormInstance<any> | null>(null);
 
@@ -14,27 +14,28 @@ export const EditableContext = createContext<FormInstance<any> | null>(null);
  * rowIndex: number;
  * columns: any[];
  */
-const EditableRow: FC<EditableRowProps> = ({
-  record = {},
-  columns = [],
-  rowIndex,
-  rowConfig,
-  rowKey,
-  ...restProps
-}) => {
+const EditableRow: TableRowComponentReducer = (
+  { record = {}, columns = [], rowIndex, rowConfig, rowKey },
+  trREL,
+) => {
   const [form] = Form.useForm();
 
+  let res = trREL;
+
   if ((columns || []).some((column) => !!column?.$editable?.editable)) {
-    return (
+    res = React.cloneElement(trREL, trREL.props, [
       <Form form={form} component={false}>
         <EditableContext.Provider value={form}>
-          <tr {...(restProps || {})} />
+          {
+            // @ts-ignore
+            trREL?.props?.children
+          }
         </EditableContext.Provider>
-      </Form>
-    );
+      </Form>,
+    ]);
   }
 
-  return <tr {...(restProps || {})} />;
+  return () => res;
 };
 
 export default EditableRow;

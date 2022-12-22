@@ -1,8 +1,7 @@
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
-import { TableComponents } from 'rc-table/lib/interface';
 import { ReactElement, RefObject } from 'react';
 import SearchTable from './SearchTable';
-import { ColumnEditableConfig, ColumnTypeExt, ISearchTableImplement, RowEditableConfig, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
+import { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtableimplement";
 /**
  * SearchTableImplement
@@ -216,17 +215,8 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
     renderSearchFormBefore(): ReactElement | null;
     renderTableFooter(): ReactElement | null;
     renderTableHeader(): ReactElement | null;
-    onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any>;
-    onEditorCell(params: {
-        rowIndex: number;
-        editorConfig: ColumnEditableConfig;
-        record: any;
-    }): void;
-    onEditorRow(params: {
-        columns: ColumnTypeExt[];
-        rowIndex: number;
-        record: any;
-    }): RowEditableConfig;
+    onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+    onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
 }
 /**
  * SearchTableImplementFactory

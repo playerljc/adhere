@@ -1,7 +1,6 @@
 import moment from 'moment';
-import { TableComponents } from 'rc-table/lib/interface';
 import { SearchTableImplement } from './SearchTableImplement';
-import { ColumnTypeExt, FormItemType, SearchTableImplementProps, SearchTableImplementState } from './types';
+import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig, SearchTableImplementProps, SearchTableImplementState } from './types';
 /**
  * SearchEditorCellTable
  * @class
@@ -19,12 +18,8 @@ declare class SearchEditorCellTable<P extends SearchTableImplementProps, S exten
         dataIndex: string;
     }) => any>;
     constructor(props: any);
-    /**
-     * onComponents
-     * @param columns
-     * @param components
-     */
-    onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any>;
+    onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+    onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
     /**
      * valueToFormItemValue
      * @description 值和表单值的转换
@@ -36,6 +31,16 @@ declare class SearchEditorCellTable<P extends SearchTableImplementProps, S exten
         };
         dataIndex: string;
     }): any;
+    onEditorRow(params: {
+        columns: ColumnTypeExt[];
+        rowIndex: number;
+        record: any;
+    }): RowEditableConfig;
+    onEditorCell(params: {
+        rowIndex: number;
+        editorConfig: ColumnEditableConfig;
+        record: any;
+    }): void;
     /**
      * cellEditableReducer
      * @description 可编辑单元格的onCell处理

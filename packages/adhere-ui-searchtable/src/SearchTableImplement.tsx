@@ -14,15 +14,14 @@ import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
 import SearchTable, { defaultProps, propTypes } from './SearchTable';
 import {
-  ColumnEditableConfig,
   ColumnTypeExt,
   ISearchTableImplement,
-  RowEditableConfig,
   SearchTableImplementFactoryFunction,
   SearchTableImplementProps,
   SearchTableImplementState,
   SearchTableProps,
   SearchTableState,
+  TableRowComponentReducer,
 } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtableimplement';
@@ -511,20 +510,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return null;
   }
 
-  onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any> {
-    return components;
+  onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
+    return this.tableRowComponentReducers;
   }
 
-  onEditorCell(params: { rowIndex: number; editorConfig: ColumnEditableConfig; record: any }) {}
-
-  onEditorRow(params: {
-    columns: ColumnTypeExt[];
-    rowIndex: number;
-    record: any;
-  }): RowEditableConfig {
-    return {
-      editable: false,
-    };
+  onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
+    return this.tableCellComponentReducers;
   }
 }
 

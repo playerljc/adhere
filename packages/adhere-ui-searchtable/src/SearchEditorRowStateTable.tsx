@@ -28,7 +28,7 @@ class SearchEditorRowStateTable extends SearchEditorCellStateTable<
       editorRowId: '',
     };
 
-    this.rowReducers = [...this.rowReducers, this.rowEditableReducer];
+    this.rowConfigReducers = [...this.rowConfigReducers, this.rowEditableReducer];
   }
 
   /**

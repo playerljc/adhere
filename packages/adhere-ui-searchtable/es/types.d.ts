@@ -45,22 +45,32 @@ export interface EditableCellEditProps extends EditableCellProps {
     editableConfig: ColumnEditableConfig;
     onTriggerChange?: () => void;
 }
+export interface TableRowComponentProps {
+    record: {
+        [prop: string]: any;
+    };
+    rowIndex: number;
+    columns: any[];
+    rowKey: string;
+    rowConfig: RowConfig;
+    [p: string]: any;
+}
+export interface TableCellComponentProps {
+    record: {
+        [prop: string]: any;
+    };
+    column: ColumnTypeExt;
+    rowIndex: number;
+    columns: ColumnTypeExt[];
+    [p: string]: any;
+}
 export interface EditableCellProps {
     record: {
         [prop: string]: any;
     };
     column: ColumnTypeExt;
     rowIndex: number;
-    columns: any[];
-}
-export interface EditableRowProps {
-    record: {
-        [prop: string]: any;
-    };
-    rowIndex: number;
-    columns: any[];
-    rowConfig: RowConfig;
-    rowKey: string;
+    columns: ColumnTypeExt[];
 }
 /**
  * RowEditableConfig
@@ -71,7 +81,7 @@ export interface RowEditableConfig {
 export interface RowConfig {
     $editable?: RowEditableConfig;
 }
-export interface CellReducer {
+export interface CellConfigReducer {
     (params: {
         rowIndex: number;
         column: ColumnTypeExt;
@@ -81,7 +91,7 @@ export interface CellReducer {
         columns: ColumnTypeExt[];
     }): ColumnTypeExt;
 }
-export interface RowReducer {
+export interface RowConfigReducer {
     (params: {
         rowIndex: number;
         record: {
@@ -90,6 +100,27 @@ export interface RowReducer {
         columns: ColumnTypeExt[];
         rowConfig: RowConfig;
     }): RowConfig;
+}
+export interface TableRowComponentReducer {
+    (params: {
+        rowIndex: number;
+        record: {
+            [prop: string]: any;
+        };
+        columns: ColumnTypeExt[];
+        rowKey: string;
+        rowConfig: RowConfig;
+    }, trREL: ReactElement): () => ReactElement;
+}
+export interface TableCellComponentReducer {
+    (params: {
+        record: {
+            [prop: string]: any;
+        };
+        column: ColumnTypeExt;
+        rowIndex: number;
+        columns: ColumnTypeExt[];
+    }, tdREL: ReactElement): () => ReactElement;
 }
 export interface EditorRowControlProps {
     className?: string;

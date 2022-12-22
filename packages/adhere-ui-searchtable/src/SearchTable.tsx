@@ -12,7 +12,7 @@ import type {
 import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
-import { TableComponents } from 'rc-table/lib/interface';
+// import { TableComponents } from 'rc-table/lib/interface';
 import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -25,17 +25,18 @@ import ColumnResizable, {
   SearchTableResizableTitle,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
+import TableCell from './Extension/TableComponents/TableCell';
+import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import {
-  CellReducer,
-  ColumnEditableConfig,
+  CellConfigReducer,
   ColumnTypeExt,
   RowConfig,
-  RowEditableConfig,
-  RowReducer,
+  RowConfigReducer,
   SearchTableProps,
   SearchTableState,
   TableDensity,
+  TableRowComponentReducer,
 } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
@@ -81,7 +82,12 @@ abstract class SearchTable<
     header: {
       cell: SearchTableResizableTitle,
     },
-    body: {},
+    body: {
+      // 固定是这个组件
+      row: TableRow,
+      // 固定是这个组件
+      cell: TableCell,
+    },
   };
 
   // 列拖动对象
@@ -90,11 +96,21 @@ abstract class SearchTable<
   // 列属性监控对象
   protected columnObserver: any = null;
 
-  // cellReducers
-  protected cellReducers: CellReducer[] = [];
+  // rowConfigReducers
+  // 给TableRow传递props的reducer
+  protected rowConfigReducers: RowConfigReducer[] = [];
 
-  // rowReducers
-  protected rowReducers: RowReducer[] = [];
+  // cellConfigReducers
+  // 给TableCell传递props的reducer
+  protected cellConfigReducers: CellConfigReducer[] = [];
+
+  // tableRowComponentReducers
+  // 处理TableRow的reducer
+  protected tableRowComponentReducers: string[] = [];
+
+  // tableCellComponentReducers
+  // 处理TableCell的reducer
+  protected tableCellComponentReducers: string[] = [];
 
   /**
    * isShowNumber
@@ -157,36 +173,6 @@ abstract class SearchTable<
   abstract getRowSelection(): TableRowSelection<object>;
 
   /**
-   * renderSearchBefore
-   * @description 渲染查询面板之前
-   */
-  abstract renderSearchFormBefore(): ReactElement | null;
-
-  /**
-   * renderSearchForm
-   * @description 渲染查询的UI
-   */
-  abstract renderSearchForm(): ReactElement | null;
-
-  /**
-   * renderSearchBefore
-   * @description 渲染查询面板之后
-   */
-  abstract renderSearchFormAfter(): ReactElement | null;
-
-  /**
-   * renderTableHeader
-   * @description 渲染表格的头
-   */
-  abstract renderTableHeader(): ReactElement | null;
-
-  /**
-   * renderTableFooter
-   * @description 渲染表格的脚
-   */
-  abstract renderTableFooter(): ReactElement | null;
-
-  /**
    * getTotal
    * @description 获取表格数据的总数
    */
@@ -217,6 +203,42 @@ abstract class SearchTable<
   abstract getOrderFieldValue(): string;
 
   /**
+   * renderSearchBefore
+   * @description 渲染查询面板之前
+   */
+  abstract renderSearchFormBefore(): ReactElement | null;
+
+  /**
+   * renderSearchForm
+   * @description 渲染查询的UI
+   */
+  abstract renderSearchForm(): ReactElement | null;
+
+  /**
+   * renderSearchBefore
+   * @description 渲染查询面板之后
+   */
+  abstract renderSearchFormAfter(): ReactElement | null;
+
+  /**
+   * renderTableHeader
+   * @description 渲染表格的头
+   */
+  abstract renderTableHeader(): ReactElement | null;
+
+  /**
+   * renderTableFooter
+   * @description 渲染表格的脚
+   */
+  abstract renderTableFooter(): ReactElement | null;
+
+  /**
+   * renderSearchFooterItems
+   * @description 渲染SearchFooter的按钮组
+   */
+  abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
+
+  /**
    * onSubTableChange
    * @description 获取表格change句柄
    * @param pagination
@@ -232,55 +254,30 @@ abstract class SearchTable<
   ): void;
 
   /**
-   * onEditorCell
-   * @description 每一个可编辑的单元格的props
-   * @param params
-   */
-  abstract onEditorCell(params: {
-    rowIndex: number;
-    editorConfig: ColumnEditableConfig;
-    record: any;
-  }): void;
-
-  /**
-   * onEditorCell
-   * @description 行是否可以编辑
-   * @param params
-   */
-  abstract onEditorRow(params: {
-    columns: ColumnTypeExt[];
-    rowIndex: number;
-    record: any;
-  }): RowEditableConfig;
-
-  /**
-   * onComponents
-   * @description 设置表格的components
-   * @param columns
-   * @param components
-   */
-  abstract onComponents(
-    columns: ColumnTypeExt[],
-    components: TableComponents<any>,
-  ): TableComponents<any>;
-
-  /**
    * clear
    * @description  清除操作
    */
   abstract clear(): Promise<any>;
 
   /**
-   * renderSearchFooterItems
-   * @description 渲染SearchFooter的按钮组
-   */
-  abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
-
-  /**
    * onSearch
    * @description 进行查询
    */
   abstract onSearch(): Promise<void>;
+
+  /**
+   * onTableRowComponentReducers
+   * @description 对tableRowComponentReducers对象进行设置的hook
+   * @param columns
+   */
+  abstract onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+
+  /**
+   * onTableCellComponentReducers
+   * @description 对tableCellComponentReducers对象进行设置的hook
+   * @param columns
+   */
+  abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
 
   constructor(props) {
     super(props);
@@ -480,11 +477,11 @@ abstract class SearchTable<
   }
 
   /**
-   * onCellReducers
+   * onCellConfigReducers
    * @description 所有onCell的处理
    * @return ColumnTypeExt
    */
-  onCellReducers(params: {
+  onCellConfigReducers(params: {
     rowIndex: number;
     column: ColumnTypeExt;
     record: { [prop: string]: any };
@@ -492,7 +489,7 @@ abstract class SearchTable<
   }): ColumnTypeExt {
     const { rowIndex, column, record, columns } = params;
 
-    return this.cellReducers.reduce(
+    return this.cellConfigReducers.reduce(
       (params, reducer) => {
         params.value = reducer.call(this, { rowIndex, record, columns, column: params.value });
         return params;
@@ -502,11 +499,11 @@ abstract class SearchTable<
   }
 
   /**
-   * onRowReducers
+   * onRowConfigReducers
    * @description 所有row的处理
    * @param params
    */
-  onRowReducers(params: {
+  onRowConfigReducers(params: {
     rowIndex: number;
     record: { [prop: string]: any };
     columns: ColumnTypeExt[];
@@ -515,7 +512,7 @@ abstract class SearchTable<
 
     // const reducers = [this.rowEditableReducer];
 
-    return this.rowReducers.reduce(
+    return this.rowConfigReducers.reduce(
       (params, reducer) => {
         params.value = reducer.call(this, { rowIndex, record, columns, rowConfig: params.value });
         return params;
@@ -612,6 +609,7 @@ abstract class SearchTable<
         return {
           ...column,
           // 每个单元格都会调用
+          // 给TableCell传递的props参数
           onCell: (record, rowIndex) => {
             const _column = cloneDeep(column);
 
@@ -621,7 +619,7 @@ abstract class SearchTable<
               // 行的数据
               record,
               // 列的配置
-              column: this.onCellReducers({
+              column: this.onCellConfigReducers({
                 rowIndex,
                 column: _column,
                 record,
@@ -669,6 +667,20 @@ abstract class SearchTable<
     }
 
     return columns;
+  }
+
+  /**
+   * getTableRowComponentReducers
+   */
+  getTableRowComponentReducers() {
+    return this.tableRowComponentReducers;
+  }
+
+  /**
+   * getTableCellComponentReducers
+   */
+  getTableCellComponentReducers() {
+    return this.tableCellComponentReducers;
   }
 
   /**
@@ -890,8 +902,11 @@ abstract class SearchTable<
       onChange: this.onTableChange,
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
-      components: this.onComponents(columns, this.components),
       size: tableDensity,
+      // 组件
+      components: this.components, // this.onComponents(columns, this.components),
+      // onRow
+      // 给TableRow的props参数
       onRow: (record, rowIndex) => {
         // 这块可能以后会有很多操作
         // 行的所有操作都可以在这里处理
@@ -900,7 +915,7 @@ abstract class SearchTable<
           rowIndex,
           columns,
           rowKey: this.getRowKey(),
-          rowConfig: this.onRowReducers({
+          rowConfig: this.onRowConfigReducers({
             rowIndex: Number(rowIndex),
             record,
             columns,
@@ -924,6 +939,9 @@ abstract class SearchTable<
         tableProps.scroll = { y: scrollY };
       }
     }
+
+    this.tableRowComponentReducers = this.onTableRowComponentReducers(columns);
+    this.tableCellComponentReducers = this.onTableCellComponentReducers(columns);
 
     return <Table {...tableProps} />;
   }

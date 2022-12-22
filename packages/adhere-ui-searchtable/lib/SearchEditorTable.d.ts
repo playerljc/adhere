@@ -1,4 +1,3 @@
-import { TableComponents } from 'rc-table/lib/interface';
 import { ReactElement } from 'react';
 import SearchEditorCellTable from './SearchEditorCellTable';
 import { ColumnTypeExt, RowConfig, RowEditableConfig, SearchEditorTableState, SearchTableImplementProps } from './types';
@@ -10,12 +9,8 @@ import { ColumnTypeExt, RowConfig, RowEditableConfig, SearchEditorTableState, Se
 declare class SearchEditorTable<P extends SearchTableImplementProps, S extends SearchEditorTableState> extends SearchEditorCellTable<SearchTableImplementProps, SearchEditorTableState> {
     private formRef;
     constructor(props: any);
-    /**
-     * onComponents
-     * @param columns
-     * @param components
-     */
-    onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any>;
+    onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+    onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
     /**
      * updateEditorData
      * @description 更新可编辑的所有单元格

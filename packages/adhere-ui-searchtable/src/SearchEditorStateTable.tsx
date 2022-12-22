@@ -2,11 +2,8 @@ import { Form } from 'antd';
 import { FormInstance } from 'antd/es/form';
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
-import { TableComponents } from 'rc-table/lib/interface';
 import React, { ReactElement, createRef } from 'react';
 
-import EditableTableCell from './Extension/EditableCell/EditableTableCell';
-import EditableTableRow from './Extension/EditableCell/EditableTableRow';
 import SearchEditorCellStateTable from './SearchEditorCellStateTable';
 import { SearchTableContext, selectorPrefix } from './SearchTable';
 import {
@@ -36,27 +33,31 @@ class SearchEditorStateTable extends SearchEditorCellStateTable<
       isTableEditor: false,
     };
 
-    this.rowReducers = [...this.rowReducers, this.rowEditableReducer];
+    this.rowConfigReducers = [...this.rowConfigReducers, this.rowEditableReducer];
   }
 
-  /**
-   * onComponents
-   * @param columns
-   * @param components
-   */
-  onComponents(columns: ColumnTypeExt[], components: TableComponents<any>): TableComponents<any> {
+  onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
     const existsEditor = columns.some(
       (column) => '$editable' in column && column.$editable?.editable,
     );
 
     if (existsEditor) {
-      components.body = {
-        row: EditableTableRow,
-        cell: EditableTableCell,
-      };
+      return [...this.tableRowComponentReducers, 'useEditableTableRow'];
     }
 
-    return components;
+    return this.tableRowComponentReducers;
+  }
+
+  onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
+    const existsEditor = columns.some(
+      (column) => '$editable' in column && column.$editable?.editable,
+    );
+
+    if (existsEditor) {
+      return [...this.tableCellComponentReducers, 'useEditableTableCell'];
+    }
+
+    return this.tableCellComponentReducers;
   }
 
   /**
