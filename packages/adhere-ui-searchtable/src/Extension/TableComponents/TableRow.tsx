@@ -8,7 +8,7 @@ import useEditableTableRow from '../EditableCell/EditableTableRow';
 
 /**
  * TableRow
- * @description 行编辑
+ * @description 表格行组件
  */
 const TableRow: FC<TableRowComponentProps> = ({
   record = {},

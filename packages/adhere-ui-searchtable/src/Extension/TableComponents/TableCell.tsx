@@ -8,7 +8,7 @@ import useEditableTableCell from '../EditableCell/EditableTableCell';
 
 /**
  * TableCell
- * @description 单元格编辑
+ * @description 表格列组件
  */
 const TableCell: FC<TableCellComponentProps> = (props) => {
   const { record, column, rowIndex, columns, ...restProps } = props;
