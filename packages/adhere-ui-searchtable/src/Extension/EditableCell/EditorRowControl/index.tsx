@@ -116,7 +116,7 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
       >
         {/* 编辑行 */}
         {() => (
-          <div onClick={_onEditor}>
+          <div className={`${selectorPrefix}-editor-row-control-edit`} onClick={_onEditor}>
             <ConditionalRender conditional={!renderEditorRow} noMatch={() => renderEditorRow?.()}>
               {() => renderDefaultEditorRow()}
             </ConditionalRender>

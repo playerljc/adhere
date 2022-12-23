@@ -124,7 +124,7 @@ const EditorTableControl: FC<EditorTableControlProps> = ({
       >
         {/* 编辑表格 */}
         {() => (
-          <div onClick={_onEditor}>
+          <div className={`${selectorPrefix}-editor-table-control-edit`} onClick={_onEditor}>
             <ConditionalRender
               conditional={!renderEditorTable}
               noMatch={() => renderEditorTable?.()}
