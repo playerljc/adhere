@@ -4,15 +4,16 @@ import moment from 'moment';
 import SearchEditorCellStateTable from './SearchEditorCellStateTable';
 import SearchEditorFactory from './SearchEditorFactory';
 import { SearchEditorTableState, SearchTableStateImplementProps } from './types';
+
 /**
  * SearchEditorStateTable
  * @class
  * @classdesc 可编辑的表格(表格进行整体编辑)
  */
-class SearchEditorStateTable extends SearchEditorFactory(SearchEditorCellStateTable<
+class SearchEditorStateTable extends SearchEditorFactory<
   SearchTableStateImplementProps,
   SearchEditorTableState
->) {
+>(SearchEditorCellStateTable) {
   /**
    * updateEditorData
    * @description 更新可编辑的所有单元格

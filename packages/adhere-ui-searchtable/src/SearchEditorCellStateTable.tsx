@@ -12,8 +12,10 @@ import { SearchTableImplementState, SearchTableStateImplementProps } from './typ
  */
 class SearchEditorCellStateTable<
   P extends SearchTableStateImplementProps,
-  S extends SearchTableImplementState
-> extends SearchEditorCellFactory(SearchTableStateImplement<SearchTableStateImplementProps, SearchTableImplementState>) {
+  S extends SearchTableImplementState,
+> extends SearchEditorCellFactory<SearchTableStateImplementProps, SearchTableImplementState>(
+  SearchTableStateImplement,
+) {
   /**
    * updateEditorCellDate
    * @description 更新可编辑单元格的数据

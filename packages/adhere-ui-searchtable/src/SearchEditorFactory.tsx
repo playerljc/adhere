@@ -1,12 +1,12 @@
 import { Form } from 'antd';
 import { FormInstance } from 'antd/es/form';
-import React, { createRef, ReactElement } from 'react';
+import React, { ReactElement, createRef } from 'react';
 
 import { SearchTableContext, selectorPrefix } from './SearchTable';
 import { ColumnTypeExt, RowConfig, RowEditableConfig } from './types';
 
-export default (SuperClass) =>
-  class extends SuperClass {
+export default function <P, S>(SuperClass) {
+  return class extends SuperClass<P, S> {
     formRef = createRef<FormInstance<any> | null>();
 
     constructor(props) {
@@ -169,3 +169,4 @@ export default (SuperClass) =>
       );
     }
   };
+}

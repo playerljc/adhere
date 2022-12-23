@@ -1,8 +1,9 @@
 import moment from 'moment';
+
 import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from './types';
 
-export default (SuperClass) =>
-  class extends SuperClass {
+export default function <P, S>(SuperClass) {
+  return class extends SuperClass<P, S> {
     /**
      * valueToFormItemValueMap
      * @description 值和表单控件值之间的转换，现在只涉及到时间控件
@@ -123,3 +124,4 @@ export default (SuperClass) =>
       return item ? item?.({ record, dataIndex }) : record?.[dataIndex as string];
     }
   };
+}

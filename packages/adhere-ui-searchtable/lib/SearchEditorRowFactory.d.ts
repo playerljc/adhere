@@ -1,5 +1,5 @@
 import { ColumnTypeExt, RowConfig, RowEditableConfig } from './types';
-declare const _default: (SuperClass: any) => {
+export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;
         /**
@@ -40,4 +40,3 @@ declare const _default: (SuperClass: any) => {
     };
     [x: string]: any;
 };
-export default _default;

@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
+
 import SearchEditorCellStateTable from './SearchEditorCellStateTable';
 import SearchEditorRowFactory from './SearchEditorRowFactory';
 import { SearchEditorRowTableState, SearchTableStateImplementProps } from './types';
@@ -9,10 +10,10 @@ import { SearchEditorRowTableState, SearchTableStateImplementProps } from './typ
  * @class
  * @classdesc 行可编辑的表格
  */
-class SearchEditorRowStateTable extends SearchEditorRowFactory(SearchEditorCellStateTable<
+class SearchEditorRowStateTable extends SearchEditorRowFactory<
   SearchTableStateImplementProps,
   SearchEditorRowTableState
->) {
+>(SearchEditorCellStateTable) {
   /**
    * updateEditorCellRowData
    * @description 更新可编辑单元格一行的数据

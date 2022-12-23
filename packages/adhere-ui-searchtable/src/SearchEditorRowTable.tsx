@@ -12,8 +12,10 @@ import { SearchEditorRowTableState, SearchTableImplementProps } from './types';
  */
 class SearchEditorRowTable<
   P extends SearchTableImplementProps,
-  S extends SearchEditorRowTableState
-> extends SearchEditorRowFactory(SearchEditorCellTable<SearchTableImplementProps, SearchEditorRowTableState>) {
+  S extends SearchEditorRowTableState,
+> extends SearchEditorRowFactory<SearchTableImplementProps, SearchEditorRowTableState>(
+  SearchEditorCellTable,
+) {
   /**
    * updateEditorCellRowData
    * @description 更新可编辑单元格一行的数据

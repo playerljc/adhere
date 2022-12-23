@@ -1,7 +1,7 @@
 import { ColumnTypeExt, RowConfig, RowEditableConfig } from './types';
 
-export default (SuperClass) =>
-  class extends SuperClass {
+export default function <P, S>(SuperClass) {
+  return class extends SuperClass<P, S> {
     constructor(props) {
       super(props);
 
@@ -79,3 +79,4 @@ export default (SuperClass) =>
       });
     }
   };
+}
