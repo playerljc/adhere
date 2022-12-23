@@ -1,20 +1,20 @@
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
 
+import { SearchTableStateImplement } from '../SearchTableStateImplement';
+import { SearchTableImplementState, SearchTableStateImplementProps } from '../types';
 import SearchEditorCellFactory from './SearchEditorCellFactory';
-import { SearchTableImplement } from './SearchTableImplement';
-import { SearchTableImplementProps, SearchTableImplementState } from './types';
 
 /**
- * SearchEditorCellTable
+ * SearchEditorCellStateTable
  * @class
  * @classdesc 可编辑单元格的表格
  */
-class SearchEditorCellTable<
-  P extends SearchTableImplementProps,
+class SearchEditorCellStateTable<
+  P extends SearchTableStateImplementProps,
   S extends SearchTableImplementState,
-> extends SearchEditorCellFactory<SearchTableImplementProps, SearchTableImplementState>(
-  SearchTableImplement,
+> extends SearchEditorCellFactory<SearchTableStateImplementProps, SearchTableImplementState>(
+  SearchTableStateImplement,
 ) {
   /**
    * updateEditorCellDate
@@ -39,7 +39,7 @@ class SearchEditorCellTable<
         return;
       }
 
-      const listData = cloneDeep(this.props[this.getServiceName()]);
+      const listData = cloneDeep(this.state[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();
 
@@ -47,12 +47,12 @@ class SearchEditorCellTable<
       if (recordItem) {
         recordItem[dataIndex] = value;
 
-        this.props
-          .dispatch({
-            type: `${this.getServiceName()}/receive`,
+        this.setState(
+          {
             [this.getServiceName()]: listData,
-          })
-          .then(() => resolve());
+          },
+          () => resolve(),
+        );
       } else resolve();
     });
   }
@@ -80,7 +80,7 @@ class SearchEditorCellTable<
         return;
       }
 
-      const listData = cloneDeep(this.props[this.getServiceName()]);
+      const listData = cloneDeep(this.state[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();
 
@@ -88,15 +88,15 @@ class SearchEditorCellTable<
       if (recordItem) {
         recordItem[dataIndex] = value?.valueOf();
 
-        this.props
-          .dispatch({
-            type: `${this.getServiceName()}/receive`,
+        this.setState(
+          {
             [this.getServiceName()]: listData,
-          })
-          .then(() => resolve());
+          },
+          () => resolve(),
+        );
       } else resolve();
     });
   }
 }
 
-export default SearchEditorCellTable;
+export default SearchEditorCellStateTable;

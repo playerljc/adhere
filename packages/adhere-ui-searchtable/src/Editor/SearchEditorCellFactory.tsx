@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from './types';
+import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {

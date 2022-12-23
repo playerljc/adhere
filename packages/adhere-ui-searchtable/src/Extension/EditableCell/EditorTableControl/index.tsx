@@ -5,7 +5,7 @@ import React, { FC, ReactNode, useCallback, useContext } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
-import SearchEditorTable from '../../../SearchEditorTable';
+import SearchEditorTable from '../../../Editor/SearchEditorTable';
 import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
 import { EditorTableControlProps } from '../../../types';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { MemoManager } from './Extension/SearchAndPaginParams';
-import ProTableFactory from './ProTableFactory';
+import { MemoManager } from '../Extension/SearchAndPaginParams';
+import ProTableFactory from '../ProTableFactory';
 import SearchEditorRowTable from './SearchEditorRowTable';
 
 export const SearchAndPaginParamsMemo: any = MemoManager.create();

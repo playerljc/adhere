@@ -2,8 +2,8 @@ import { Form } from 'antd';
 import { FormInstance } from 'antd/es/form';
 import React, { ReactElement, createRef } from 'react';
 
-import { SearchTableContext, selectorPrefix } from './SearchTable';
-import { ColumnTypeExt, RowConfig, RowEditableConfig } from './types';
+import { SearchTableContext, selectorPrefix } from '../SearchTable';
+import { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {

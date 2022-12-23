@@ -1,19 +1,21 @@
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
 
-import SearchEditorCellStateTable from './SearchEditorCellStateTable';
+import { SearchEditorRowTableState, SearchTableImplementProps } from '../types';
+import SearchEditorCellTable from './SearchEditorCellTable';
 import SearchEditorRowFactory from './SearchEditorRowFactory';
-import { SearchEditorRowTableState, SearchTableStateImplementProps } from './types';
 
 /**
  * SearchEditorRowTable
  * @class
  * @classdesc 行可编辑的表格
  */
-class SearchEditorRowStateTable extends SearchEditorRowFactory<
-  SearchTableStateImplementProps,
-  SearchEditorRowTableState
->(SearchEditorCellStateTable) {
+class SearchEditorRowTable<
+  P extends SearchTableImplementProps,
+  S extends SearchEditorRowTableState,
+> extends SearchEditorRowFactory<SearchTableImplementProps, SearchEditorRowTableState>(
+  SearchEditorCellTable,
+) {
   /**
    * updateEditorCellRowData
    * @description 更新可编辑单元格一行的数据
@@ -29,7 +31,7 @@ class SearchEditorRowStateTable extends SearchEditorRowFactory<
     record: { [props: string]: any };
   }): Promise<void> {
     return new Promise((resolve) => {
-      const listData = cloneDeep(this.state[this.getServiceName()]);
+      const listData = cloneDeep(this.props[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();
       const keys = Object.keys(values);
@@ -46,14 +48,14 @@ class SearchEditorRowStateTable extends SearchEditorRowFactory<
         }
       });
 
-      this.setState(
-        {
+      this.props
+        .dispatch({
+          type: `${this.getServiceName()}/receive`,
           [this.getServiceName()]: listData,
-        },
-        () => resolve(),
-      );
+        })
+        .then(() => resolve());
     });
   }
 }
 
-export default SearchEditorRowStateTable;
+export default SearchEditorRowTable;
