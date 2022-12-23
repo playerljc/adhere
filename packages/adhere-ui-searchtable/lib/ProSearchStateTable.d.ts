@@ -1,5 +1,9 @@
 import React from 'react';
 export declare const SearchAndPaginParamsMemo: any;
+/**
+ * ProSearchStateTable
+ * @classdesc 高级查询表格
+ */
 declare const _default: {
     new (props: any): {
         [x: string]: any;

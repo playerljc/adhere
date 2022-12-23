@@ -10,6 +10,4 @@ export const SearchAndPaginParamsMemo: any = MemoManager.create();
  * ProEditorRowSearchStateTable
  * @classdesc 可以进行行编辑的高级查询表格
  */
-class ProEditorRowSearchStateTable extends SearchEditorRowStateTable {}
-
-export default ProTableFactory(ProEditorRowSearchStateTable, SearchAndPaginParamsMemo);
+export default ProTableFactory(SearchEditorRowStateTable, SearchAndPaginParamsMemo);

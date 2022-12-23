@@ -1,5 +1,9 @@
 import React from 'react';
 export declare const SearchAndPaginParamsMemo: any;
+/**
+ * ProEditorSearchTable
+ * @classdesc 可以进行编辑的高级查询表格
+ */
 declare const _default: {
     new (props: any): {
         [x: string]: any;
