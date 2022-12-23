@@ -2,7 +2,6 @@ import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
 import React from 'react';
 
-import EditableRow from './Extension/EditableCell/EditableRow';
 import { SearchTableImplement } from './SearchTableImplement';
 import {
   ColumnEditableConfig,
@@ -11,7 +10,6 @@ import {
   RowEditableConfig,
   SearchTableImplementProps,
   SearchTableImplementState,
-  TableRowComponentReducer,
 } from './types';
 
 /**

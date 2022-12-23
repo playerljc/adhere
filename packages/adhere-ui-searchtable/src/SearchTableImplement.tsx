@@ -7,7 +7,6 @@ import {
   TableRowSelection,
 } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
-import { TableComponents } from 'rc-table/lib/interface';
 import React, { ReactElement, RefObject, createRef, forwardRef } from 'react';
 
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -21,7 +20,6 @@ import {
   SearchTableImplementState,
   SearchTableProps,
   SearchTableState,
-  TableRowComponentReducer,
 } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtableimplement';

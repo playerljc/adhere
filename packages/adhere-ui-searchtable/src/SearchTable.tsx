@@ -12,7 +12,6 @@ import type {
 import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
-// import { TableComponents } from 'rc-table/lib/interface';
 import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -36,7 +35,6 @@ import {
   SearchTableProps,
   SearchTableState,
   TableDensity,
-  TableRowComponentReducer,
 } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
