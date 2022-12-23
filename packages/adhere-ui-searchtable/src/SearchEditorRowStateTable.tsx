@@ -1,36 +1,18 @@
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
-import React from 'react';
-
 import SearchEditorCellStateTable from './SearchEditorCellStateTable';
-import {
-  ColumnTypeExt,
-  RowConfig,
-  RowEditableConfig,
-  SearchEditorRowTableState,
-  SearchTableStateImplementProps,
-} from './types';
+import SearchEditorRowFactory from './SearchEditorRowFactory';
+import { SearchEditorRowTableState, SearchTableStateImplementProps } from './types';
 
 /**
  * SearchEditorRowTable
  * @class
  * @classdesc 行可编辑的表格
  */
-class SearchEditorRowStateTable extends SearchEditorCellStateTable<
+class SearchEditorRowStateTable extends SearchEditorRowFactory(SearchEditorCellStateTable<
   SearchTableStateImplementProps,
   SearchEditorRowTableState
-> {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ...this.state,
-      editorRowId: '',
-    };
-
-    this.rowConfigReducers = [...this.rowConfigReducers, this.rowEditableReducer];
-  }
-
+>) {
   /**
    * updateEditorCellRowData
    * @description 更新可编辑单元格一行的数据
@@ -69,72 +51,6 @@ class SearchEditorRowStateTable extends SearchEditorCellStateTable<
         },
         () => resolve(),
       );
-    });
-  }
-
-  /**
-   * rowEditableReducer
-   * @description 可编辑row的处理
-   * @param params
-   */
-  rowEditableReducer(params: {
-    rowIndex: number;
-    record: { [prop: string]: any };
-    columns: ColumnTypeExt[];
-    rowConfig: RowConfig;
-  }): RowConfig {
-    const { rowConfig, rowIndex, columns, record } = params;
-
-    if (this.onEditorRow) {
-      rowConfig.$editable = this.onEditorRow({
-        rowIndex,
-        record,
-        columns,
-      });
-    }
-
-    return rowConfig;
-  }
-
-  /**
-   * onEditorRow
-   * @param params
-   */
-  onEditorRow(params: {
-    columns: ColumnTypeExt[];
-    rowIndex: number;
-    record: any;
-  }): RowEditableConfig {
-    return {
-      editable: true,
-    };
-  }
-
-  /**
-   * onEditorCell
-   * @param record
-   * @param editorConfig
-   */
-  onEditorCell({ record, editorConfig }) {
-    if (editorConfig) {
-      editorConfig.useTrigger = false;
-
-      if (record[this.getRowKey()] === this.state.editorRowId) {
-        editorConfig.defaultStatus = 'edit';
-      }
-    }
-  }
-
-  /**
-   * fetchData
-   */
-  fetchData() {
-    return super.fetchData().then((res) => {
-      this.setState({
-        editorRowId: '',
-      });
-
-      return res;
     });
   }
 }

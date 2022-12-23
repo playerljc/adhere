@@ -1,15 +1,9 @@
 import cloneDeep from 'lodash.clonedeep';
 import moment from 'moment';
-import React from 'react';
 
 import SearchEditorCellTable from './SearchEditorCellTable';
-import {
-  ColumnTypeExt,
-  RowConfig,
-  RowEditableConfig,
-  SearchEditorRowTableState,
-  SearchTableImplementProps,
-} from './types';
+import SearchEditorRowFactory from './SearchEditorRowFactory';
+import { SearchEditorRowTableState, SearchTableImplementProps } from './types';
 
 /**
  * SearchEditorRowTable
@@ -18,19 +12,8 @@ import {
  */
 class SearchEditorRowTable<
   P extends SearchTableImplementProps,
-  S extends SearchEditorRowTableState,
-> extends SearchEditorCellTable<SearchTableImplementProps, SearchEditorRowTableState> {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ...this.state,
-      editorRowId: '',
-    };
-
-    this.rowConfigReducers = [...this.rowConfigReducers, this.rowEditableReducer];
-  }
-
+  S extends SearchEditorRowTableState
+> extends SearchEditorRowFactory(SearchEditorCellTable<SearchTableImplementProps, SearchEditorRowTableState>) {
   /**
    * updateEditorCellRowData
    * @description 更新可编辑单元格一行的数据
@@ -69,72 +52,6 @@ class SearchEditorRowTable<
           [this.getServiceName()]: listData,
         })
         .then(() => resolve());
-    });
-  }
-
-  /**
-   * rowEditableReducer
-   * @description 可编辑row的处理
-   * @param params
-   */
-  rowEditableReducer(params: {
-    rowIndex: number;
-    record: { [prop: string]: any };
-    columns: ColumnTypeExt[];
-    rowConfig: RowConfig;
-  }): RowConfig {
-    const { rowConfig, rowIndex, columns, record } = params;
-
-    if (this.onEditorRow) {
-      rowConfig.$editable = this.onEditorRow({
-        rowIndex,
-        record,
-        columns,
-      });
-    }
-
-    return rowConfig;
-  }
-
-  /**
-   * onEditorRow
-   * @param params
-   */
-  onEditorRow(params: {
-    columns: ColumnTypeExt[];
-    rowIndex: number;
-    record: any;
-  }): RowEditableConfig {
-    return {
-      editable: true,
-    };
-  }
-
-  /**
-   * onEditorCell
-   * @param record
-   * @param editorConfig
-   */
-  onEditorCell({ record, editorConfig }) {
-    if (editorConfig) {
-      editorConfig.useTrigger = false;
-
-      if (record[this.getRowKey()] === this.state.editorRowId) {
-        editorConfig.defaultStatus = 'edit';
-      }
-    }
-  }
-
-  /**
-   * fetchData
-   */
-  fetchData() {
-    return super.fetchData().then((res) => {
-      this.setState({
-        editorRowId: '',
-      });
-
-      return res;
     });
   }
 }

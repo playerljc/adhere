@@ -1,59 +1,50 @@
 import moment from 'moment';
-import { SearchTableImplement } from './SearchTableImplement';
-import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig, SearchTableImplementProps, SearchTableImplementState } from './types';
+import { SearchTableImplementProps, SearchTableImplementState } from './types';
+declare const SearchEditorCellTable_base: {
+    new (props: any): {
+        [x: string]: any;
+        valueToFormItemValueMap: Map<string, (params: {
+            record: {
+                [prop: string]: any;
+            };
+            dataIndex: string;
+        }) => any>;
+        onTableRowComponentReducers(columns: import("./types").ColumnTypeExt[]): string[];
+        onTableCellComponentReducers(columns: import("./types").ColumnTypeExt[]): string[];
+        onEditorRow(params: {
+            columns: import("./types").ColumnTypeExt[];
+            rowIndex: number;
+            record: any;
+        }): import("./types").RowEditableConfig;
+        onEditorCell(params: {
+            rowIndex: number;
+            editorConfig: import("./types").ColumnEditableConfig;
+            record: any;
+        }): void;
+        cellEditableReducer(params: {
+            rowIndex: number;
+            column: import("./types").ColumnTypeExt;
+            record: {
+                [prop: string]: any;
+            };
+            columns: import("./types").ColumnTypeExt[];
+        }): import("./types").ColumnTypeExt;
+        valueToFormItemValue({ type, record, dataIndex, }: {
+            type: string;
+            record: {
+                [prop: string]: any;
+            };
+            dataIndex: string;
+        }): any;
+    };
+    [x: string]: any;
+};
 /**
  * SearchEditorCellTable
  * @class
  * @classdesc 可编辑单元格的表格
  */
-declare class SearchEditorCellTable<P extends SearchTableImplementProps, S extends SearchTableImplementState> extends SearchTableImplement<SearchTableImplementProps, SearchTableImplementState> {
-    /**
-     * valueToFormItemValueMap
-     * @description 值和表单控件值之间的转换，现在只涉及到时间控件
-     */
-    valueToFormItemValueMap: Map<string, (params: {
-        record: {
-            [prop: string]: any;
-        };
-        dataIndex: string;
-    }) => any>;
-    constructor(props: any);
-    onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
-    onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
-    /**
-     * valueToFormItemValue
-     * @description 值和表单值的转换
-     */
-    valueToFormItemValue({ type, record, dataIndex, }: {
-        type: FormItemType;
-        record: {
-            [prop: string]: any;
-        };
-        dataIndex: string;
-    }): any;
-    onEditorRow(params: {
-        columns: ColumnTypeExt[];
-        rowIndex: number;
-        record: any;
-    }): RowEditableConfig;
-    onEditorCell(params: {
-        rowIndex: number;
-        editorConfig: ColumnEditableConfig;
-        record: any;
-    }): void;
-    /**
-     * cellEditableReducer
-     * @description 可编辑单元格的onCell处理
-     * @param params
-     */
-    cellEditableReducer(params: {
-        rowIndex: number;
-        column: ColumnTypeExt;
-        record: {
-            [prop: string]: any;
-        };
-        columns: ColumnTypeExt[];
-    }): ColumnTypeExt;
+declare class SearchEditorCellTable<P extends SearchTableImplementProps, S extends SearchTableImplementState> extends SearchEditorCellTable_base {
     /**
      * updateEditorCellDate
      * @description 更新可编辑单元格的数据

@@ -1,12 +1,34 @@
-import SearchEditorCellTable from './SearchEditorCellTable';
-import { ColumnTypeExt, RowConfig, RowEditableConfig, SearchEditorRowTableState, SearchTableImplementProps } from './types';
+import { SearchEditorRowTableState, SearchTableImplementProps } from './types';
+declare const SearchEditorRowTable_base: {
+    new (props: any): {
+        [x: string]: any;
+        rowEditableReducer(params: {
+            rowIndex: number;
+            record: {
+                [prop: string]: any;
+            };
+            columns: import("./types").ColumnTypeExt[];
+            rowConfig: import("./types").RowConfig;
+        }): import("./types").RowConfig;
+        onEditorRow(params: {
+            columns: import("./types").ColumnTypeExt[];
+            rowIndex: number;
+            record: any;
+        }): import("./types").RowEditableConfig;
+        onEditorCell({ record, editorConfig }: {
+            record: any;
+            editorConfig: any;
+        }): void;
+        fetchData(): any;
+    };
+    [x: string]: any;
+};
 /**
  * SearchEditorRowTable
  * @class
  * @classdesc 行可编辑的表格
  */
-declare class SearchEditorRowTable<P extends SearchTableImplementProps, S extends SearchEditorRowTableState> extends SearchEditorCellTable<SearchTableImplementProps, SearchEditorRowTableState> {
-    constructor(props: any);
+declare class SearchEditorRowTable<P extends SearchTableImplementProps, S extends SearchEditorRowTableState> extends SearchEditorRowTable_base {
     /**
      * updateEditorCellRowData
      * @description 更新可编辑单元格一行的数据
@@ -22,40 +44,5 @@ declare class SearchEditorRowTable<P extends SearchTableImplementProps, S extend
             [props: string]: any;
         };
     }): Promise<void>;
-    /**
-     * rowEditableReducer
-     * @description 可编辑row的处理
-     * @param params
-     */
-    rowEditableReducer(params: {
-        rowIndex: number;
-        record: {
-            [prop: string]: any;
-        };
-        columns: ColumnTypeExt[];
-        rowConfig: RowConfig;
-    }): RowConfig;
-    /**
-     * onEditorRow
-     * @param params
-     */
-    onEditorRow(params: {
-        columns: ColumnTypeExt[];
-        rowIndex: number;
-        record: any;
-    }): RowEditableConfig;
-    /**
-     * onEditorCell
-     * @param record
-     * @param editorConfig
-     */
-    onEditorCell({ record, editorConfig }: {
-        record: any;
-        editorConfig: any;
-    }): void;
-    /**
-     * fetchData
-     */
-    fetchData(): Promise<any>;
 }
 export default SearchEditorRowTable;

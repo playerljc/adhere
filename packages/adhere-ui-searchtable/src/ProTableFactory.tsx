@@ -32,8 +32,8 @@ const {
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
 
-export default (superClass, searchAndPaginParamsMemo) =>
-  class extends superClass {
+export default (SuperClass, searchAndPaginParamsMemo) =>
+  class extends SuperClass {
     constructor(props) {
       super(props);
 
@@ -1486,8 +1486,7 @@ export default (superClass, searchAndPaginParamsMemo) =>
           }
 
           this.hasAdvancedSearchPanel = true;
-          this.advancedSearchConfig.advancedSearch.collapse =
-            this.state.advancedSearchPanelCollapse;
+          this.advancedSearchConfig.advancedSearch.collapse = this.state.advancedSearchPanelCollapse;
 
           return (
             <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>

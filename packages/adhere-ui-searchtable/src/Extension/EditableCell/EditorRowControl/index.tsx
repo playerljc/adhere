@@ -6,8 +6,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
 import SearchEditorRowTable from '../../../SearchEditorRowTable';
-import { selectorPrefix } from '../../../SearchTable';
-import SearchTable, { SearchTableContext } from '../../../SearchTable';
+import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
 import { EditorRowControlProps } from '../../../types';
 import { EditableContext } from '../EditableRow';
 
@@ -71,6 +70,7 @@ const EditorRowControl: FC<EditorRowControlProps> = ({
   }, []);
 
   const updateEditorCellRowData = (values) =>
+    // @ts-ignore
     (context?.context as SearchEditorRowTable<any, any>)
       ?.updateEditorCellRowData({ values, record })
       ?.then(() => reset());

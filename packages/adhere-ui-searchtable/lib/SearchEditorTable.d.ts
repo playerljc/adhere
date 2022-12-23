@@ -1,16 +1,38 @@
-import { ReactElement } from 'react';
-import SearchEditorCellTable from './SearchEditorCellTable';
-import { ColumnTypeExt, RowConfig, RowEditableConfig, SearchEditorTableState, SearchTableImplementProps } from './types';
+import { SearchEditorTableState, SearchTableImplementProps } from './types';
+declare const SearchEditorTable_base: {
+    new (props: any): {
+        [x: string]: any;
+        formRef: import("react").RefObject<import("antd/es/form").FormInstance<any> | null>;
+        onTableRowComponentReducers(columns: import("./types").ColumnTypeExt[]): string[];
+        onTableCellComponentReducers(columns: import("./types").ColumnTypeExt[]): string[];
+        rowEditableReducer(params: {
+            rowIndex: number;
+            record: {
+                [prop: string]: any;
+            };
+            columns: import("./types").ColumnTypeExt[];
+            rowConfig: import("./types").RowConfig;
+        }): import("./types").RowConfig;
+        onEditorRow(params: {
+            columns: import("./types").ColumnTypeExt[];
+            rowIndex: number;
+            record: any;
+        }): import("./types").RowEditableConfig;
+        onEditorCell({ record, editorConfig }: {
+            record: any;
+            editorConfig: any;
+        }): void;
+        fetchData(): any;
+        render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
+    };
+    [x: string]: any;
+};
 /**
  * SearchEditorTable
  * @class
  * @classdesc 可编辑的表格(表格进行整体编辑)
  */
-declare class SearchEditorTable<P extends SearchTableImplementProps, S extends SearchEditorTableState> extends SearchEditorCellTable<SearchTableImplementProps, SearchEditorTableState> {
-    private formRef;
-    constructor(props: any);
-    onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
-    onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
+declare class SearchEditorTable<P extends SearchTableImplementProps, S extends SearchEditorTableState> extends SearchEditorTable_base {
     /**
      * updateEditorData
      * @description 更新可编辑的所有单元格
@@ -19,45 +41,5 @@ declare class SearchEditorTable<P extends SearchTableImplementProps, S extends S
     updateEditorData(changeData: {
         [props: string]: any;
     }[]): Promise<void>;
-    /**
-     * rowEditableReducer
-     * @description 可编辑row的处理
-     * @param params
-     */
-    rowEditableReducer(params: {
-        rowIndex: number;
-        record: {
-            [prop: string]: any;
-        };
-        columns: ColumnTypeExt[];
-        rowConfig: RowConfig;
-    }): RowConfig;
-    /**
-     * onEditorRow
-     * @param params
-     */
-    onEditorRow(params: {
-        columns: ColumnTypeExt[];
-        rowIndex: number;
-        record: any;
-    }): RowEditableConfig;
-    /**
-     * onEditorCell
-     * @param record
-     * @param editorConfig
-     */
-    onEditorCell({ record, editorConfig }: {
-        record: any;
-        editorConfig: any;
-    }): void;
-    /**
-     * fetchData
-     */
-    fetchData(): Promise<any>;
-    /**
-     * render
-     * @protected
-     */
-    render(): ReactElement;
 }
 export default SearchEditorTable;

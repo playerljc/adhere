@@ -1,5 +1,5 @@
 import React from 'react';
-declare const _default: (superClass: any, searchAndPaginParamsMemo: any) => {
+declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
         componentWillUnmount(): void;
