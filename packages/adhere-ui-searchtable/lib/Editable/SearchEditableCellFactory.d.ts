@@ -12,7 +12,15 @@ export default function <P, S>(SuperClass: any): {
             };
             dataIndex: string;
         }) => any>;
+        /**
+         * onTableRowComponentReducers
+         * @param columns
+         */
         onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+        /**
+         * onTableCellComponentReducers
+         * @param columns
+         */
         onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
         onEditorRow(params: {
             columns: ColumnTypeExt[];

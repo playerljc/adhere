@@ -78,8 +78,26 @@ export interface EditableCellProps {
 export interface RowEditableConfig {
     editable: boolean;
 }
+/**
+ * RowDragSortConfig
+ */
+export interface RowDragSortConfig {
+    dropOverDownwardClassName?: string;
+    dropOverUpwardClasName?: string;
+    type?: string;
+    dropConfig?: {
+        [prop: string]: any;
+    };
+    dragConfig?: {
+        [prop: string]: any;
+    };
+}
+/**
+ * RowConfig
+ */
 export interface RowConfig {
     $editable?: RowEditableConfig;
+    $rowDragSort?: RowDragSortConfig;
 }
 export interface CellConfigReducer {
     (params: {
@@ -112,6 +130,9 @@ export interface TableRowComponentReducer {
         rowConfig: RowConfig;
     }, trREL: ReactElement): () => ReactElement;
 }
+/**
+ * TableCellComponentReducer
+ */
 export interface TableCellComponentReducer {
     (params: {
         record: {
@@ -196,6 +217,11 @@ export interface ColumnEditableConfig {
     useKeepEdit?: boolean;
 }
 /**
+ * ColumnRowDragSortConfig
+ */
+export interface ColumnRowDragSortConfig {
+}
+/**
  * ColumnTypeExt
  * @description Column列的扩展设置
  */
@@ -205,6 +231,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
     $hide?: boolean;
     $search?: ColumnSearchConfig;
     $editable?: ColumnEditableConfig;
+    $rowDragSort?: ColumnRowDragSortConfig;
 }
 /**
  * SearchTableProps

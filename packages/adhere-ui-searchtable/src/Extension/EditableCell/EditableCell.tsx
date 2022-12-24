@@ -46,9 +46,14 @@ const EditableCell: TableCellComponentReducer = (props, tdREL) => {
     editableConfig.defaultStatus as string,
   );
 
-  const context = useContext<{ context: SearchTable; form?: FormInstance } | null>(
-    SearchTableContext,
-  );
+  const context = useContext<{
+    context: SearchTable;
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+      };
+    };
+  } | null>(SearchTableContext);
 
   /**
    * 数据改变则切换成查看状态

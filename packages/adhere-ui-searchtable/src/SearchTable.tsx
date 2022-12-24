@@ -43,13 +43,17 @@ const { Fixed, Auto } = FlexLayout;
 
 export const SearchTableContext = createContext<{
   context: SearchTable;
-  form?: FormInstance;
-  formList?: {
-    fields: FormListFieldData[];
-    operation?: FormListOperation;
-    meta?: {
-      errors?: ReactNode[];
-      warnings?: ReactNode[];
+  editable?: {
+    tableEditable?: {
+      form?: FormInstance;
+      formList?: {
+        fields: FormListFieldData[];
+        operation?: FormListOperation;
+        meta?: {
+          errors?: ReactNode[];
+          warnings?: ReactNode[];
+        };
+      };
     };
   };
 } | null>(null);

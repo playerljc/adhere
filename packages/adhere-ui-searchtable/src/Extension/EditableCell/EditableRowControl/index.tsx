@@ -1,6 +1,6 @@
-import { FormInstance } from 'antd/es/form';
+import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import classNames from 'classnames';
-import React, { FC, useCallback, useContext } from 'react';
+import React, { FC, ReactNode, useCallback, useContext } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
@@ -38,9 +38,22 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   onEditor,
   onSave,
 }) => {
-  const context = useContext<{ context: SearchTable; form?: FormInstance } | null>(
-    SearchTableContext,
-  );
+  const context = useContext<{
+    context: SearchTable;
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+        formList?: {
+          fields: FormListFieldData[];
+          operation?: FormListOperation;
+          meta?: {
+            errors?: ReactNode[];
+            warnings?: ReactNode[];
+          };
+        };
+      };
+    };
+  } | null>(SearchTableContext);
 
   const form = useContext<FormInstance | null>(EditableContext);
 

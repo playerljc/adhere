@@ -151,12 +151,16 @@ export default function <P, S>(SuperClass) {
                   value={{
                     // @ts-ignore
                     context: this,
-                    // @ts-ignore
-                    form: this.formRef?.current,
-                    formList: {
-                      fields,
-                      operation,
-                      meta,
+                    editable: {
+                      tableEditable: {
+                        // @ts-ignore
+                        form: this.formRef?.current,
+                        formList: {
+                          fields,
+                          operation,
+                          meta,
+                        },
+                      },
                     },
                   }}
                 >

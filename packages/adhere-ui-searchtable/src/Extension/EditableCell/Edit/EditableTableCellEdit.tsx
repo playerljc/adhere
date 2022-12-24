@@ -32,21 +32,28 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
 
   const context = useContext<{
     context: SearchTable;
-    form?: FormInstance;
-    formList?: {
-      fields: FormListFieldData[];
-      operation?: FormListOperation;
-      meta?: {
-        errors?: ReactNode[];
-        warnings?: ReactNode[];
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+        formList?: {
+          fields: FormListFieldData[];
+          operation?: FormListOperation;
+          meta?: {
+            errors?: ReactNode[];
+            warnings?: ReactNode[];
+          };
+        };
       };
     };
   } | null>(SearchTableContext);
 
-  const nameItemPath = [context?.formList?.fields[rowIndex]?.name as number, dataIndex as string];
+  const nameItemPath = [
+    context?.editable?.tableEditable?.formList?.fields[rowIndex]?.name as number,
+    dataIndex as string,
+  ];
   const namePath = ['dataSource', ...nameItemPath];
 
-  const value = Form.useWatch(namePath, context?.form as FormInstance);
+  const value = Form.useWatch(namePath, context?.editable?.tableEditable?.form as FormInstance);
 
   /**
    * renderDefaultSaveTrigger
@@ -70,7 +77,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
    */
   function onSaveTrigger() {
     // 对表单进行校验
-    context?.form?.validateFields?.()?.then?.((values) => {
+    context?.editable?.tableEditable?.form?.validateFields?.()?.then?.((values) => {
       if (onSave) {
         onSave({
           value,
@@ -110,7 +117,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
       props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
       dictName: props.editableConfig.dictName,
       renderChildren: props.editableConfig.renderChildren,
-      form: context?.form,
+      form: context?.editable?.tableEditable?.form,
       dataIndex,
       rowIndex,
     });
@@ -121,14 +128,14 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
           record,
           dataIndex,
           rowIndex,
-          form: context?.form as FormInstance,
+          form: context?.editable?.tableEditable?.form as FormInstance,
           children: formItemNode,
         })
       : formItemNode;
   }
 
   useEffect(() => {
-    context?.form?.setFieldValue(
+    context?.editable?.tableEditable?.form?.setFieldValue(
       namePath,
       // @ts-ignore
       context?.context?.valueToFormItemValue?.({
@@ -155,7 +162,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
                 record,
                 dataIndex,
                 rowIndex,
-                form: context?.form as FormInstance,
+                form: context?.editable?.tableEditable?.form as FormInstance,
               })}
         </Form.Item>
       </div>

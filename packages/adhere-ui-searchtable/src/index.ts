@@ -1,3 +1,7 @@
+import ProSearchRowDragSortStateTable from './DragSort/RowDragSort/ProSearchRowDragSortStateTable';
+import ProSearchRowDragSortTable from './DragSort/RowDragSort/ProSearchRowDragSortTable';
+import SearchRowDragSortStateTable from './DragSort/RowDragSort/SearchRowDragSortStateTable';
+import SearchRowDragSortTable from './DragSort/RowDragSort/SearchRowDragSortTable';
 import ProEditableCellSearchStateTable from './Editable/ProEditableCellSearchStateTable';
 import ProEditableCellSearchTable from './Editable/ProEditableCellSearchTable';
 import ProEditableRowSearchStateTable from './Editable/ProEditableRowSearchStateTable';
@@ -46,6 +50,10 @@ export default {
   ProEditableRowSearchTable,
   ProEditableSearchStateTable,
   ProEditableSearchTable,
+  ProSearchRowDragSortStateTable,
+  ProSearchRowDragSortTable,
+  SearchRowDragSortStateTable,
+  SearchRowDragSortTable,
   DisabledOption,
   LinkColumn,
   OptionsWrap,

@@ -8,13 +8,17 @@ import { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTa
 export declare const selectorPrefix = "adhere-ui-searchtable";
 export declare const SearchTableContext: React.Context<{
     context: SearchTable;
-    form?: FormInstance<any> | undefined;
-    formList?: {
-        fields: FormListFieldData[];
-        operation?: FormListOperation | undefined;
-        meta?: {
-            errors?: React.ReactNode[] | undefined;
-            warnings?: React.ReactNode[] | undefined;
+    editable?: {
+        tableEditable?: {
+            form?: FormInstance<any> | undefined;
+            formList?: {
+                fields: FormListFieldData[];
+                operation?: FormListOperation | undefined;
+                meta?: {
+                    errors?: React.ReactNode[] | undefined;
+                    warnings?: React.ReactNode[] | undefined;
+                } | undefined;
+            } | undefined;
         } | undefined;
     } | undefined;
 } | null>;

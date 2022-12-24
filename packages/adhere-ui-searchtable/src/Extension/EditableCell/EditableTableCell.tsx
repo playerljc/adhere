@@ -48,13 +48,17 @@ const EditableTableCell: TableCellComponentReducer = (props, tdREL) => {
 
   const context = useContext<{
     context: SearchTable;
-    form?: FormInstance;
-    formList?: {
-      fields: FormListFieldData[];
-      operation?: FormListOperation;
-      meta?: {
-        errors?: ReactNode[];
-        warnings?: ReactNode[];
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+        formList?: {
+          fields: FormListFieldData[];
+          operation?: FormListOperation;
+          meta?: {
+            errors?: ReactNode[];
+            warnings?: ReactNode[];
+          };
+        };
       };
     };
   } | null>(SearchTableContext);

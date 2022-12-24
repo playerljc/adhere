@@ -3,6 +3,7 @@ import React, { FC, ReactNode, useContext } from 'react';
 
 import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { TableCellComponentProps } from '../../types';
+import useRowDragSortCell from '../DragSort/RowDragSort/DragSortCell';
 import useEditableCell from '../EditableCell/EditableCell';
 import useEditableTableCell from '../EditableCell/EditableTableCell';
 
@@ -16,13 +17,17 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
   // 上下文
   const context = useContext<{
     context: SearchTable;
-    form?: FormInstance;
-    formList?: {
-      fields: FormListFieldData[];
-      operation?: FormListOperation;
-      meta?: {
-        errors?: ReactNode[];
-        warnings?: ReactNode[];
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+        formList?: {
+          fields: FormListFieldData[];
+          operation?: FormListOperation;
+          meta?: {
+            errors?: ReactNode[];
+            warnings?: ReactNode[];
+          };
+        };
       };
     };
   } | null>(SearchTableContext);
@@ -52,9 +57,17 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
     tdREL,
   );
 
+  const RowDragSortCell = useRowDragSortCell(
+    {
+      ...reducerArgv,
+    },
+    tdREL,
+  );
+
   const map = new Map<string, () => any>([
     ['useEditableCell', EditableCell],
     ['useEditableTableCell', EditableTableCell],
+    ['useRowDragSortCell', RowDragSortCell],
   ]);
 
   // 所有的reducer都去装饰tr，最终返回装饰后的tr

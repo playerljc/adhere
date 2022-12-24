@@ -20,20 +20,27 @@ const EditableTableRow: TableRowComponentReducer = (
 ) => {
   const context = useContext<{
     context: SearchTable;
-    form?: FormInstance;
-    formList?: {
-      fields: FormListFieldData[];
-      operation?: FormListOperation;
-      meta?: {
-        errors?: ReactNode[];
-        warnings?: ReactNode[];
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+        formList?: {
+          fields: FormListFieldData[];
+          operation?: FormListOperation;
+          meta?: {
+            errors?: ReactNode[];
+            warnings?: ReactNode[];
+          };
+        };
       };
     };
   } | null>(SearchTableContext);
 
   let res = trREL;
 
-  const nameItemPath = [context?.formList?.fields[rowIndex]?.name as number, rowKey];
+  const nameItemPath = [
+    context?.editable?.tableEditable?.formList?.fields[rowIndex]?.name as number,
+    rowKey,
+  ];
 
   if ((columns || []).some((column) => !!column?.$editable?.editable)) {
     res = React.cloneElement(

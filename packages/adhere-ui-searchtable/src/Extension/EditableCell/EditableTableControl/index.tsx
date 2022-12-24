@@ -33,13 +33,17 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
 }) => {
   const context = useContext<{
     context: SearchTable;
-    form?: FormInstance;
-    formList?: {
-      fields: FormListFieldData[];
-      operation?: FormListOperation;
-      meta?: {
-        errors?: ReactNode[];
-        warnings?: ReactNode[];
+    editable?: {
+      tableEditable?: {
+        form?: FormInstance;
+        formList?: {
+          fields: FormListFieldData[];
+          operation?: FormListOperation;
+          meta?: {
+            errors?: ReactNode[];
+            warnings?: ReactNode[];
+          };
+        };
       };
     };
   } | null>(SearchTableContext);
@@ -102,7 +106,9 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
             <div
               className={`${selectorPrefix}-editor-table-control-save-cancel-item`}
               onClick={() =>
-                context?.form?.validateFields()?.then?.((values) => validateFieldsSuccess(values))
+                context?.editable?.tableEditable?.form
+                  ?.validateFields()
+                  ?.then?.((values) => validateFieldsSuccess(values))
               }
             >
               <ConditionalRender conditional={!renderSave} noMatch={() => renderSave?.()}>

@@ -43,6 +43,10 @@ export default function <P, S>(SuperClass) {
       this.cellConfigReducers = [...this.cellConfigReducers, this.cellEditableReducer];
     }
 
+    /**
+     * onTableRowComponentReducers
+     * @param columns
+     */
     onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
       const existsEditable = columns.some(
         (column) => '$editable' in column && column.$editable?.editable,
@@ -55,6 +59,10 @@ export default function <P, S>(SuperClass) {
       return this.tableRowComponentReducers;
     }
 
+    /**
+     * onTableCellComponentReducers
+     * @param columns
+     */
     onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
       const existsEditor = columns.some(
         (column) => '$editable' in column && column.$editable?.editable,
