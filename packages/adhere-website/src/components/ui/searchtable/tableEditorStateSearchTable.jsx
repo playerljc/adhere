@@ -4,7 +4,7 @@ import { DateDisplay, Resource, SearchTable } from '@baifendian/adhere';
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProEditorSearchStateTable, EditorTableControl } =
+const { SearchTableStateImplementFactory, ProEditableSearchStateTable, EditableTableControl } =
   SearchTable;
 
 const serviceName = 'user';
@@ -21,13 +21,13 @@ function getModels() {
 }
 
 /**
- * TableEditorStateSearchTable
- * @class TableEditorStateSearchTable
- * @classdesc TableEditorStateSearchTable
+ * TableEditableStateSearchTable
+ * @class TableEditableStateSearchTable
+ * @classdesc TableEditableStateSearchTable
  */
-class TableEditorStateSearchTable extends ProEditorSearchStateTable {
+class TableEditableStateSearchTable extends ProEditableSearchStateTable {
   getComponentId() {
-    return 'TableEditorStateSearchTable';
+    return 'TableEditableStateSearchTable';
   }
 
   getServiceName() {
@@ -297,20 +297,20 @@ class TableEditorStateSearchTable extends ProEditorSearchStateTable {
     return super.renderSearchFooterItems([
       {
         key: 'editorTable',
-        value: <EditorTableControl />,
+        value: <EditableTableControl />,
       },
       ...defaultItems,
     ]);
   }
 }
 
-TableEditorStateSearchTable.propTypes = {};
+TableEditableStateSearchTable.propTypes = {};
 
 const Wrap = SearchTableStateImplementFactory({
   serviceNames: [serviceName],
   middleWares: [],
   reducer: null,
   models: getModels(),
-})(TableEditorStateSearchTable);
+})(TableEditableStateSearchTable);
 
 export default Wrap;

@@ -4,7 +4,7 @@ import { DateDisplay, Resource, SearchTable } from '@baifendian/adhere';
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProEditorRowSearchStateTable, EditorRowControl } =
+const { SearchTableStateImplementFactory, ProEditableRowSearchStateTable, EditableRowControl } =
   SearchTable;
 
 const serviceName = 'user';
@@ -21,13 +21,13 @@ function getModels() {
 }
 
 /**
- * RowEditorStateSearchTable
- * @class RowEditorStateSearchTable
- * @classdesc RowEditorStateSearchTable
+ * RowEditableStateSearchTable
+ * @class RowEditableStateSearchTable
+ * @classdesc RowEditableStateSearchTable
  */
-class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
+class RowEditableStateSearchTable extends ProEditableRowSearchStateTable {
   getComponentId() {
-    return 'RowEditorStateSearchTable';
+    return 'RowEditableStateSearchTable';
   }
 
   getServiceName() {
@@ -291,7 +291,7 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
         key: this.getOptionsColumnDataIndex(),
         width: 100,
         render: (v, record) => (
-          <EditorRowControl
+          <EditableRowControl
             record={record}
             rowKey={this.getRowKey()}
             editorRowId={this.state.editorRowId}
@@ -302,13 +302,13 @@ class RowEditorStateSearchTable extends ProEditorRowSearchStateTable {
   }
 }
 
-RowEditorStateSearchTable.propTypes = {};
+RowEditableStateSearchTable.propTypes = {};
 
 const Wrap = SearchTableStateImplementFactory({
   serviceNames: [serviceName],
   middleWares: [],
   reducer: null,
   models: getModels(),
-})(RowEditorStateSearchTable);
+})(RowEditableStateSearchTable);
 
 export default Wrap;

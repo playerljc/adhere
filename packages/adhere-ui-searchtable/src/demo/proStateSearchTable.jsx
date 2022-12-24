@@ -5,7 +5,7 @@ import { DateDisplay, Resource } from '@baifendian/adhere';
 import SearchTable from '../index';
 import './serviceRegister';
 
-const { ProEditorCellSearchStateTable, SearchTableStateImplementFactory } = SearchTable;
+const { ProEditableCellSearchStateTable, SearchTableStateImplementFactory } = SearchTable;
 
 const serviceName = 'user';
 
@@ -14,7 +14,7 @@ const serviceName = 'user';
  * @class ProSearchStateTableImpl
  * @classdesc ProSearchStateTableImpl
  */
-class ProSearchStateTableImpl extends ProEditorCellSearchStateTable {
+class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
   getComponentId() {
     return 'ProSearchStateTableImpl';
   }

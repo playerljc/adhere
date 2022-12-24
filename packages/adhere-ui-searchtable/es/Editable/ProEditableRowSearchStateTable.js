@@ -1,0 +1,2 @@
+import{MemoManager}from"../Extension/SearchAndPaginParams";import ProTableFactory from"../ProTableFactory";import SearchEditableRowStateTable from"./SearchEditableRowStateTable";var SearchAndPaginParamsMemo=MemoManager.create();export default ProTableFactory(SearchEditableRowStateTable,SearchAndPaginParamsMemo);export{SearchAndPaginParamsMemo};
+//# sourceMappingURL=ProEditableRowSearchStateTable.js.map

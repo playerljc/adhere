@@ -4,7 +4,7 @@ import { DateDisplay, DelConfirm, Resource, SearchTable } from '@baifendian/adhe
 
 import './serviceRegister';
 
-const { SearchTableStateImplementFactory, ProEditorCellSearchStateTable, OptionsWrap } =
+const { SearchTableStateImplementFactory, ProEditableCellSearchStateTable, OptionsWrap } =
   SearchTable;
 
 const serviceName = 'user';
@@ -21,13 +21,13 @@ function getModels() {
 }
 
 /**
- * EditorCellStateSearchTable
- * @class EditorCellStateSearchTable
- * @classdesc EditorCellStateSearchTable
+ * EditableCellStateSearchTable
+ * @class EditableCellStateSearchTable
+ * @classdesc EditableCellStateSearchTable
  */
-class EditorCellStateSearchTable extends ProEditorCellSearchStateTable {
+class EditableCellStateSearchTable extends ProEditableCellSearchStateTable {
   getComponentId() {
-    return 'EditorCellStateSearchTable';
+    return 'EditableCellStateSearchTable';
   }
 
   getServiceName() {
@@ -329,13 +329,13 @@ class EditorCellStateSearchTable extends ProEditorCellSearchStateTable {
   }
 }
 
-EditorCellStateSearchTable.propTypes = {};
+EditableCellStateSearchTable.propTypes = {};
 
 const Wrap = SearchTableStateImplementFactory({
   serviceNames: [serviceName],
   middleWares: [],
   reducer: null,
   models: getModels(),
-})(EditorCellStateSearchTable);
+})(EditableCellStateSearchTable);
 
 export default Wrap;
