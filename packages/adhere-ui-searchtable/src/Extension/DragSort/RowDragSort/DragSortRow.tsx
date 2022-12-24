@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useContext, useRef } from 'react';
+import React, { ReactElement, useContext, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
 import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
@@ -15,10 +15,13 @@ const type = 'DraggableBodyRow';
  * rowIndex: number;
  * columns: any[];
  */
-const DragSortRow: TableRowComponentReducer = (
-  { record = {}, columns = [], rowIndex, rowConfig, rowKey },
-  trREL,
-) => {
+const DragSortRow: TableRowComponentReducer = ({
+  record = {},
+  columns = [],
+  rowIndex,
+  rowConfig,
+  rowKey,
+}) => {
   const context = useContext<{
     context: SearchTable;
   } | null>(SearchTableContext);
@@ -66,6 +69,7 @@ const DragSortRow: TableRowComponentReducer = (
       rowConfig.$rowDragSort.dropConfig || {},
     );
   }
+
   if (rowConfig?.$rowDragSort?.dragConfig) {
     rowDragSortConfig.dragConfig = Object.assign(
       defaultRowDragSortConfig.dragConfig(),
@@ -75,24 +79,34 @@ const DragSortRow: TableRowComponentReducer = (
 
   const ref = useRef<HTMLTableRowElement>(null);
 
-  const [{ isOver, dropClassName }, drop] = useDrop<
-    { isOver: boolean; dropClassName: string },
-    any,
-    any
-  >(rowDragSortConfig.dropConfig as any);
+  return (trREL: ReactElement) => {
+    let res = trREL;
 
-  const [, drag] = useDrag(rowDragSortConfig.dragConfig as any);
+    console.log('DragSortRow');
 
-  drop(drag(ref));
+    try {
+      const [{ isOver, dropClassName }, drop] = useDrop<
+        { isOver: boolean; dropClassName: string },
+        any,
+        any
+      >(rowDragSortConfig.dropConfig as any);
 
-  let res = React.cloneElement(trREL, {
-    ...trREL.props,
-    ref,
-    style: { cursor: 'move', ...(trREL.props.style || {}) },
-    className: classNames(trREL.props.className, isOver ? dropClassName : ''),
-  });
+      const [, drag] = useDrag(rowDragSortConfig.dragConfig as any);
 
-  return () => res;
+      drop(drag(ref));
+
+      res = React.cloneElement(trREL, {
+        ...trREL.props,
+        ref,
+        style: { cursor: 'move', ...(trREL.props.style || {}) },
+        className: classNames(trREL.props.className, isOver ? dropClassName : ''),
+      });
+    } catch (e) {
+      console.log('e', e);
+    }
+
+    return res;
+  };
 };
 
 export default DragSortRow;

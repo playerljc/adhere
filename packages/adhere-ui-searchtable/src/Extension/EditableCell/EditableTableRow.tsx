@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import { FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { FormInstance } from 'antd/es/form';
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode, useContext } from 'react';
 
 import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { TableRowComponentReducer } from '../../types';
@@ -14,10 +14,7 @@ import { TableRowComponentReducer } from '../../types';
  * rowIndex: number;
  * columns: any[];
  */
-const EditableTableRow: TableRowComponentReducer = (
-  { record = {}, columns = [], rowIndex, rowKey, rowConfig },
-  trREL,
-) => {
+const EditableTableRow: TableRowComponentReducer = ({ columns = [], rowIndex, rowKey }) => {
   const context = useContext<{
     context: SearchTable;
     editable?: {
@@ -35,22 +32,24 @@ const EditableTableRow: TableRowComponentReducer = (
     };
   } | null>(SearchTableContext);
 
-  let res = trREL;
+  return (trREL: ReactElement) => {
+    let res = trREL;
 
-  const nameItemPath = [
-    context?.editable?.tableEditable?.formList?.fields[rowIndex]?.name as number,
-    rowKey,
-  ];
+    const nameItemPath = [
+      context?.editable?.tableEditable?.formList?.fields[rowIndex]?.name as number,
+      rowKey,
+    ];
 
-  if ((columns || []).some((column) => !!column?.$editable?.editable)) {
-    res = React.cloneElement(
-      trREL,
-      trREL.props,
-      [<Form.Item name={nameItemPath} hidden />, trREL.props.children].flat(),
-    );
-  }
+    if ((columns || []).some((column) => !!column?.$editable?.editable)) {
+      res = React.cloneElement(
+        trREL,
+        trREL.props,
+        [<Form.Item name={nameItemPath} hidden />, trREL.props.children].flat(),
+      );
+    }
 
-  return () => res;
+    return res;
+  };
 };
 
 export default EditableTableRow;

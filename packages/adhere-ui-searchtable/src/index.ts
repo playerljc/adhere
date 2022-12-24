@@ -1,5 +1,9 @@
+import ProSearchEditableCellRowDragSortStateTable from './DragSort/RowDragSort/ProSearchEditableCellRowDragSortStateTable';
+import ProSearchEditableCellRowDragSortTable from './DragSort/RowDragSort/ProSearchEditableCellRowDragSortTable';
 import ProSearchRowDragSortStateTable from './DragSort/RowDragSort/ProSearchRowDragSortStateTable';
 import ProSearchRowDragSortTable from './DragSort/RowDragSort/ProSearchRowDragSortTable';
+import SearchEditableCellRowDragSortStateTable from './DragSort/RowDragSort/SearchEditableCellRowDragSortStateTable';
+import SearchEditableCellRowDragSortTable from './DragSort/RowDragSort/SearchEditableCellRowDragSortTable';
 import SearchRowDragSortStateTable from './DragSort/RowDragSort/SearchRowDragSortStateTable';
 import SearchRowDragSortTable from './DragSort/RowDragSort/SearchRowDragSortTable';
 import ProEditableCellSearchStateTable from './Editable/ProEditableCellSearchStateTable';
@@ -54,6 +58,10 @@ export default {
   ProSearchRowDragSortTable,
   SearchRowDragSortStateTable,
   SearchRowDragSortTable,
+  ProSearchEditableCellRowDragSortStateTable,
+  ProSearchEditableCellRowDragSortTable,
+  SearchEditableCellRowDragSortStateTable,
+  SearchEditableCellRowDragSortTable,
   DisabledOption,
   LinkColumn,
   OptionsWrap,

@@ -9,8 +9,6 @@ const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory } = Sea
 
 const serviceName = 'user';
 
-console.log('ProSearchRowDragSortStateTable', ProSearchRowDragSortStateTable);
-
 /**
  * RowDragSort
  * @class RowDragSort

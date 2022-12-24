@@ -1,5 +1,5 @@
 import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { FC, ReactNode, useContext } from 'react';
+import React, { FC, ReactElement, ReactNode, useContext } from 'react';
 
 import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { TableRowComponentProps } from '../../types';
@@ -48,28 +48,19 @@ const TableRow: FC<TableRowComponentProps> = ({
     rowConfig,
   };
 
-  const EditableRow = useEditableRow(
-    {
-      ...reducerArgv,
-    },
-    trREL,
-  );
+  const EditableRow = useEditableRow({
+    ...reducerArgv,
+  });
 
-  const EditableTableRow = useEditableTableRow(
-    {
-      ...reducerArgv,
-    },
-    trREL,
-  );
+  const EditableTableRow = useEditableTableRow({
+    ...reducerArgv,
+  });
 
-  const RowDragSortRow = useRowDragSortRow(
-    {
-      ...reducerArgv,
-    },
-    trREL,
-  );
+  const RowDragSortRow = useRowDragSortRow({
+    ...reducerArgv,
+  });
 
-  const map = new Map<string, () => any>([
+  const map = new Map<string, (trREL: ReactElement) => any>([
     ['useEditableRow', EditableRow],
     ['useEditableTableRow', EditableTableRow],
     ['useRowDragSortRow', RowDragSortRow],
@@ -78,7 +69,7 @@ const TableRow: FC<TableRowComponentProps> = ({
   // 所有的reducer都去装饰tr，最终返回装饰后的tr
   return context?.context?.getTableRowComponentReducers()?.reduce?.(
     (pre, hookName) => {
-      pre.value = map.get(hookName)?.();
+      pre.value = map.get(hookName)?.(pre.value);
       return pre;
     },
     {

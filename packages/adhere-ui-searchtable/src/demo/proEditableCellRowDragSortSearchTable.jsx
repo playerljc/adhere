@@ -5,18 +5,19 @@ import { DateDisplay, Resource } from '@baifendian/adhere';
 import SearchTable from '../index';
 import './serviceRegister';
 
-const { ProEditableCellSearchStateTable, SearchTableStateImplementFactory } = SearchTable;
+const { ProSearchEditableCellRowDragSortStateTable, SearchTableStateImplementFactory } =
+  SearchTable;
 
 const serviceName = 'user';
 
 /**
- * ProSearchStateTableImpl
- * @class ProSearchStateTableImpl
- * @classdesc ProSearchStateTableImpl
+ * RowDragSort
+ * @class RowDragSort
+ * @classdesc RowDragSort
  */
-class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
+class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
   getComponentId() {
-    return 'ProSearchStateTableImpl';
+    return 'RowDragSort';
   }
 
   getServiceName() {
@@ -313,7 +314,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
   }
 }
 
-ProSearchStateTableImpl.propTypes = {};
+RowDragSort.propTypes = {};
 
 const models = [];
 const requireComponent = require.context('./model', false, /.*\.(js)$/);
@@ -327,6 +328,6 @@ const Wrap = SearchTableStateImplementFactory({
   middleWares: [],
   reducer: null,
   models,
-})(ProSearchStateTableImpl);
+})(RowDragSort);
 
 export default Wrap;

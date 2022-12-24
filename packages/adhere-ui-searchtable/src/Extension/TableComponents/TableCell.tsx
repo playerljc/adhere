@@ -1,5 +1,5 @@
 import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { FC, ReactNode, useContext } from 'react';
+import React, { FC, ReactElement, ReactNode, useContext } from 'react';
 
 import SearchTable, { SearchTableContext } from '../../SearchTable';
 import { TableCellComponentProps } from '../../types';
@@ -43,28 +43,19 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
     ...restProps,
   };
 
-  const EditableCell = useEditableCell(
-    {
-      ...reducerArgv,
-    },
-    tdREL,
-  );
+  const EditableCell = useEditableCell({
+    ...reducerArgv,
+  });
 
-  const EditableTableCell = useEditableTableCell(
-    {
-      ...reducerArgv,
-    },
-    tdREL,
-  );
+  const EditableTableCell = useEditableTableCell({
+    ...reducerArgv,
+  });
 
-  const RowDragSortCell = useRowDragSortCell(
-    {
-      ...reducerArgv,
-    },
-    tdREL,
-  );
+  const RowDragSortCell = useRowDragSortCell({
+    ...reducerArgv,
+  });
 
-  const map = new Map<string, () => any>([
+  const map = new Map<string, (tdREL: ReactElement) => any>([
     ['useEditableCell', EditableCell],
     ['useEditableTableCell', EditableTableCell],
     ['useRowDragSortCell', RowDragSortCell],
@@ -73,7 +64,7 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
   // 所有的reducer都去装饰tr，最终返回装饰后的tr
   return context?.context?.getTableCellComponentReducers()?.reduce?.(
     (pre, hookName) => {
-      pre.value = map.get(hookName)?.();
+      pre.value = map.get(hookName)?.(pre.value);
       return pre;
     },
     {

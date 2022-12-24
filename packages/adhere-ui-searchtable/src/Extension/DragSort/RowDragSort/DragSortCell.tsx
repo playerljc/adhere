@@ -6,9 +6,8 @@ import { TableCellComponentReducer } from '../../../types';
  * DragSortCell
  * @description 单元格编辑
  */
-const DragSortCell: TableCellComponentReducer = (props, tdREL) => {
+const DragSortCell: TableCellComponentReducer = (/*props*/) => {
   // const { column } = props;
-
   // /**
   //  * defaultConfig
   //  * @description 缺省的单元格配置
@@ -28,9 +27,7 @@ const DragSortCell: TableCellComponentReducer = (props, tdREL) => {
   //   context: SearchTable;
   // } | null>(SearchTableContext);
 
-  let res = tdREL;
-
-  return () => res;
+  return (tdREL) => tdREL;
 };
 
 export default DragSortCell;

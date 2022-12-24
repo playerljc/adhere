@@ -197,31 +197,25 @@ export interface RowConfigReducer {
 }
 
 export interface TableRowComponentReducer {
-  (
-    params: {
-      rowIndex: number;
-      record: { [prop: string]: any };
-      columns: ColumnTypeExt[];
-      rowKey: string;
-      rowConfig: RowConfig;
-    },
-    trREL: ReactElement,
-  ): () => ReactElement;
+  (params: {
+    rowIndex: number;
+    record: { [prop: string]: any };
+    columns: ColumnTypeExt[];
+    rowKey: string;
+    rowConfig: RowConfig;
+  }): (trREL: ReactElement) => ReactElement;
 }
 
 /**
  * TableCellComponentReducer
  */
 export interface TableCellComponentReducer {
-  (
-    params: {
-      record: { [prop: string]: any };
-      column: ColumnTypeExt;
-      rowIndex: number;
-      columns: ColumnTypeExt[];
-    },
-    tdREL: ReactElement,
-  ): () => ReactElement;
+  (params: {
+    record: { [prop: string]: any };
+    column: ColumnTypeExt;
+    rowIndex: number;
+    columns: ColumnTypeExt[];
+  }): (tdREL: ReactElement) => ReactElement;
 }
 
 export interface EditorRowControlProps {
