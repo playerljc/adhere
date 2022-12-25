@@ -17,6 +17,7 @@ import EditorCellStateSearchTable from './editorCellStateSearchTable';
 import EditorCellUseKeepEditStateSearchTable from './editorCellUseKeepEditStateSearchTable';
 import FewTable from './fewTable';
 import FixedTableSpaceBetweenTable from './fixedTableSpaceBetweenTable';
+import ProRowDragSortSearchTable from './proRowDragSortSearchTable';
 import ProSearchStateTableImpl from './proStateSearchTable';
 import RenderSearchBetweenTable from './renderSearchBetweenTable';
 import RowEditorStateSearchTable from './rowEditorStateSearchTable';
@@ -3455,6 +3456,32 @@ export default () => {
         renderChildren: () => (
           <div style={{ display: 'flex', height: 700 }}>
             <EditableCellRenderTriggerStateSearchTable
+              style={{ height: '100%' }}
+              isShowExpandSearch
+              defaultExpandSearchCollapse={false}
+              fixedHeaderAutoTable
+              fixedTableSpaceBetween
+              pagination={pagination4}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `p20`,
+        name: '拖拽排序',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '拖拽排序',
+            info: '拖拽排序',
+          },
+        },
+        codeText: ``,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ display: 'flex', height: 700 }}>
+            <ProRowDragSortSearchTable
               style={{ height: '100%' }}
               isShowExpandSearch
               defaultExpandSearchCollapse={false}
