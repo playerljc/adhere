@@ -27,9 +27,9 @@ const DragSortRow: TableRowComponentReducer = ({
   } | null>(SearchTableContext);
 
   const defaultRowDragSortConfig = {
+    type,
     dropOverDownwardClassName: `${selectorPrefix}-row-drag-sort-drop-over-downward`,
     dropOverUpwardClasName: `${selectorPrefix}-row-drag-sort-drop-over-upward`,
-    type,
     dropConfig: () => ({
       accept: rowDragSortConfig.type,
       collect: (monitor) => {

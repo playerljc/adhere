@@ -82,9 +82,9 @@ export interface RowEditableConfig {
  * RowDragSortConfig
  */
 export interface RowDragSortConfig {
+    type?: string;
     dropOverDownwardClassName?: string;
     dropOverUpwardClasName?: string;
-    type?: string;
     dropConfig?: {
         [prop: string]: any;
     };
