@@ -66,7 +66,9 @@ const EditableTableCell: TableCellComponentReducer = (props) => {
   /**
    * 数据改变则切换成查看状态
    */
-  useEffect(() => setStatus('view'), [context?.context?.getData()]);
+  useEffect(() => {
+    setStatus(editableConfig?.defaultStatus as string);
+  }, [context?.context?.getData()]);
 
   /**
    * 缺省状态改变切换到缺省状态

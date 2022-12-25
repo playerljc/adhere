@@ -98,31 +98,38 @@ export default function <P, S>(SuperClass) {
     }
 
     /**
+     * setFieldValues
+     */
+    setFieldValues() {
+      const dataSource = this.getData();
+      const columns = this.getTableColumns();
+
+      this.formRef?.current?.setFieldValue?.(
+        'dataSource',
+        (dataSource || []).map((_record) =>
+          (columns || []).reduce(
+            (_r, { dataIndex, $editable }) => {
+              if (dataIndex in _record && $editable && 'type' in $editable) {
+                _r[dataIndex] = this.valueToFormItemValue({
+                  type: $editable.type,
+                  record: _record,
+                  dataIndex,
+                });
+              }
+              return _r;
+            },
+            { [this.getRowKey()]: _record[this.getRowKey()] },
+          ),
+        ),
+      );
+    }
+
+    /**
      * fetchData
      */
     fetchData() {
       return super.fetchData().then((res) => {
-        const dataSource = this.getData();
-        const columns = this.getTableColumns();
-
-        this.formRef?.current?.setFieldValue?.(
-          'dataSource',
-          (dataSource || []).map((_record) =>
-            (columns || []).reduce(
-              (_r, { dataIndex, $editable }) => {
-                if (dataIndex in _record && $editable && 'type' in $editable) {
-                  _r[dataIndex] = this.valueToFormItemValue({
-                    type: $editable.type,
-                    record: _record,
-                    dataIndex,
-                  });
-                }
-                return _r;
-              },
-              { [this.getRowKey()]: _record[this.getRowKey()] },
-            ),
-          ),
-        );
+        this.setFieldValues();
 
         this.setState({
           isTableEditor: false,
@@ -146,27 +153,29 @@ export default function <P, S>(SuperClass) {
             component={false}
           >
             <Form.List name="dataSource">
-              {(fields, operation, meta) => (
-                <SearchTableContext.Provider
-                  value={{
-                    // @ts-ignore
-                    context: this,
-                    editable: {
-                      tableEditable: {
-                        // @ts-ignore
-                        form: this.formRef?.current,
-                        formList: {
-                          fields,
-                          operation,
-                          meta,
+              {(fields, operation, meta) => {
+                return (
+                  <SearchTableContext.Provider
+                    value={{
+                      // @ts-ignore
+                      context: this,
+                      editable: {
+                        tableEditable: {
+                          // @ts-ignore
+                          form: this.formRef?.current,
+                          formList: {
+                            fields,
+                            operation,
+                            meta,
+                          },
                         },
                       },
-                    },
-                  }}
-                >
-                  {this.renderChildren()}
-                </SearchTableContext.Provider>
-              )}
+                    }}
+                  >
+                    {this.renderChildren()}
+                  </SearchTableContext.Provider>
+                );
+              }}
             </Form.List>
           </Form>
         </div>

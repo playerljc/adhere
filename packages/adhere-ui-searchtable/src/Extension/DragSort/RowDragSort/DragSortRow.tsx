@@ -82,8 +82,6 @@ const DragSortRow: TableRowComponentReducer = ({
   return (trREL: ReactElement) => {
     let res = trREL;
 
-    console.log('DragSortRow');
-
     try {
       const [{ isOver, dropClassName }, drop] = useDrop<
         { isOver: boolean; dropClassName: string },

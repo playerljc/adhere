@@ -144,7 +144,19 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
         dataIndex: dataIndex as string,
       }),
     );
-  }, [record?.[dataIndex as string]]);
+  }, [context?.context?.getData()]);
+
+  // useEffect(() => {
+  //   context?.editable?.tableEditable?.form?.setFieldValue(
+  //     namePath,
+  //     // @ts-ignore
+  //     context?.context?.valueToFormItemValue?.({
+  //       type,
+  //       record,
+  //       dataIndex: dataIndex as string,
+  //     }),
+  //   );
+  // }, [record?.[dataIndex as string]]);
 
   return (
     <div className={`${selectorPrefix}-editablecell-edit`}>

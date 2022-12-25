@@ -9,12 +9,16 @@ import SearchTable from '../../SearchTable';
  * @param BaseClass
  * @param SuperClasses
  * @param RenderBaseClass
+ * @param Methods
+ * @param StaticMethods
  * @constructor
  */
 function RowDragSortMultiExtend<P, S>(
   BaseClass: Component<P, S>,
   SuperClasses: Function[],
-  RenderBaseClass: Function,
+  RenderBaseClass?: Function,
+  Methods?: () => { [prop: string]: Function },
+  StaticMethods?: () => { [prop: string]: Function },
 ): any {
   return MultiExtend(
     BaseClass,
@@ -27,31 +31,43 @@ function RowDragSortMultiExtend<P, S>(
         .map((superClassesObj) => superClassesObj.rowConfigReducers)
         .flat();
     },
-    () => ({
-      onTableRowComponentReducers: function (columns) {
-        const res = new Set(
-          SuperClasses.map((SuperClass) =>
-            SuperClass.prototype.onTableRowComponentReducers.call(this, columns),
-          ).flat(),
-        );
+    () => {
+      const defaultMethods = {
+        onTableRowComponentReducers: function (columns) {
+          const res = new Set(
+            SuperClasses.map((SuperClass) =>
+              SuperClass.prototype.onTableRowComponentReducers.call(this, columns),
+            ).flat(),
+          );
 
-        return [...Array.from(res)];
-      },
+          return [...Array.from(res)];
+        },
 
-      onTableCellComponentReducers: function (columns) {
-        const res = new Set(
-          SuperClasses.map((SuperClass) =>
-            SuperClass.prototype.onTableCellComponentReducers.call(this, columns),
-          ).flat(),
-        );
+        onTableCellComponentReducers: function (columns) {
+          const res = new Set(
+            SuperClasses.map((SuperClass) =>
+              SuperClass.prototype.onTableCellComponentReducers.call(this, columns),
+            ).flat(),
+          );
 
-        return [...Array.from(res)];
-      },
+          return [...Array.from(res)];
+        },
+      };
 
-      render: function () {
-        return RenderBaseClass.prototype.render.call(this);
-      },
-    }),
+      const res: { [prop: string]: Function } = {
+        ...defaultMethods,
+        ...(Methods || {}),
+      };
+
+      if (RenderBaseClass) {
+        res.render = function () {
+          return RenderBaseClass?.prototype?.render?.call?.(this);
+        };
+      }
+
+      return res;
+    },
+    () => StaticMethods || {},
   );
 }
 

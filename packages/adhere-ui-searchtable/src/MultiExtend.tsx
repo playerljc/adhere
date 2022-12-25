@@ -8,6 +8,7 @@ import React, { Component } from 'react';
  * @param SuperClasses 父类集合
  * @param ConstructorMethod 构造方法
  * @param Methods 原型方法
+ * @param StaticMethods
  * @constructor
  */
 function MultiExtendFactory<P, S>(
@@ -15,6 +16,7 @@ function MultiExtendFactory<P, S>(
   SuperClasses: Function[],
   ConstructorMethod: (superClassesObjs: any[]) => void,
   Methods: () => { [prop: string]: Function },
+  StaticMethods: () => { [prop: string]: Function },
 ): any {
   // @ts-ignore
   class Wrap extends BaseClass {
@@ -45,6 +47,12 @@ function MultiExtendFactory<P, S>(
       }
     }
   });
+
+  const staticMethods = StaticMethods();
+
+  for (const staticMethod in staticMethods) {
+    Wrap[staticMethod] = staticMethods[staticMethod];
+  }
 
   return Wrap;
 }
