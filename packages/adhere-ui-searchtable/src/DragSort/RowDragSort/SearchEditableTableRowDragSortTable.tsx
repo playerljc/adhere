@@ -4,7 +4,6 @@ import SearchEditableTable from '../../Editable/SearchEditableTable';
 import { SearchTableImplement } from '../../SearchTableImplement';
 import { SearchTableImplementProps, SearchTableImplementState } from '../../types';
 import RowDragSortMultiExtend from './RowDragSortMultiExtend';
-import SearchRowDragSortStateTable from './SearchRowDragSortStateTable';
 import SearchRowDragSortTable from './SearchRowDragSortTable';
 
 const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
@@ -16,6 +15,22 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
   [SearchEditableTable, SearchRowDragSortTable],
   null,
   {
+    onDragSortRow(params) {
+      // 如果是行编辑状态则不能拖拽和放置
+      // @ts-ignore
+      if (this.state.isTableEditor) {
+        return {
+          dragConfig: {
+            canDrag: () => false,
+          },
+          dropConfig: {
+            canDrop: () => false,
+          },
+        };
+      }
+
+      return SearchRowDragSortTable.prototype.onDragSortRow.call(this, params);
+    },
     render() {
       const searchRowDragSortTableREL = SearchRowDragSortTable.prototype.render.call(this);
       const searchEditableTableREL = SearchEditableTable.prototype.render.call(this);
@@ -28,7 +43,7 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
     },
     moveRow(...params) {
       // @ts-ignore
-      return SearchRowDragSortStateTable.prototype.moveRow.apply(this, params).then(() => {
+      return SearchRowDragSortTable.prototype.moveRow.apply(this, params).then(() => {
         // @ts-ignore
         this.setFieldValues();
       });

@@ -24,6 +24,21 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
     type,
     dropOverDownwardClassName: `${selectorPrefix}-row-drag-sort-drop-over-downward`,
     dropOverUpwardClasName: `${selectorPrefix}-row-drag-sort-drop-over-upward`,
+    /**
+     * dragConfig
+     * @description 拖
+     */
+    dragConfig: () => ({
+      type: rowDragSortConfig.type,
+      item: { index: rowIndex },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }),
+    /**
+     * dropConfig
+     * @description 方
+     */
     dropConfig: () => ({
       accept: rowDragSortConfig.type,
       collect: (monitor) => {
@@ -46,13 +61,6 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
         context?.context?.moveRow(item.index, rowIndex);
       },
     }),
-    dragConfig: () => ({
-      type: rowDragSortConfig.type,
-      item: { index: rowIndex },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
   };
 
   const rowDragSortConfig = { ...defaultRowDragSortConfig, ...(rowConfig?.$rowDragSort || {}) };
@@ -62,6 +70,8 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
       defaultRowDragSortConfig.dropConfig(),
       rowConfig.$rowDragSort.dropConfig || {},
     );
+  } else {
+    rowDragSortConfig.dropConfig = defaultRowDragSortConfig.dropConfig();
   }
 
   if (rowConfig?.$rowDragSort?.dragConfig) {
@@ -69,6 +79,8 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
       defaultRowDragSortConfig.dragConfig(),
       rowConfig.$rowDragSort.dragConfig || {},
     );
+  } else {
+    rowDragSortConfig.dragConfig = defaultRowDragSortConfig.dragConfig();
   }
 
   const ref = useRef<HTMLTableRowElement>(null);
@@ -86,10 +98,17 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
   return (trREL: ReactElement) => {
     let res = trREL;
 
+    const defaultStyle = {
+      cursor:
+        'canDrag' in rowDragSortConfig.dragConfig && !rowDragSortConfig.dragConfig.canDrag()
+          ? 'no-drop'
+          : 'move',
+    };
+
     res = React.cloneElement(trREL, {
       ...trREL.props,
       ref,
-      style: { cursor: 'move', ...(trREL.props.style || {}) },
+      style: { ...defaultStyle, ...(trREL.props.style || {}) },
       className: classNames(trREL.props.className, isOver ? dropClassName : ''),
     });
 

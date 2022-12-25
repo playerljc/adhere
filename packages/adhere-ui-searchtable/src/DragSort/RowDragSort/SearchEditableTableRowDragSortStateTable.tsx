@@ -15,6 +15,22 @@ const SearchEditableTableRowDragSortStateTable = RowDragSortMultiExtend<
   [SearchEditableStateTable, SearchRowDragSortStateTable],
   null,
   {
+    onDragSortRow(params) {
+      // 如果是行编辑状态则不能拖拽和放置
+      // @ts-ignore
+      if (this.state.isTableEditor) {
+        return {
+          dragConfig: {
+            canDrag: () => false,
+          },
+          dropConfig: {
+            canDrop: () => false,
+          },
+        };
+      }
+
+      return SearchRowDragSortStateTable.prototype.onDragSortRow.call(this, params);
+    },
     render() {
       const searchRowDragSortStateTableREL =
         SearchRowDragSortStateTable.prototype.render.call(this);

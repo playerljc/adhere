@@ -34,12 +34,7 @@ function MultiExtendFactory<P, S>(
     }
   }
 
-  const methods = Methods();
-
-  for (const method in methods) {
-    Wrap.prototype[method] = methods[method];
-  }
-
+  // 父类的方法
   SuperClasses.forEach((SuperClass) => {
     for (const p in SuperClass.prototype) {
       if (!(p in Wrap.prototype)) {
@@ -48,8 +43,14 @@ function MultiExtendFactory<P, S>(
     }
   });
 
-  const staticMethods = StaticMethods();
+  // 当前的方法
+  const methods = Methods();
+  for (const method in methods) {
+    Wrap.prototype[method] = methods[method];
+  }
 
+  // 静态的方法
+  const staticMethods = StaticMethods();
   for (const staticMethod in staticMethods) {
     Wrap[staticMethod] = staticMethods[staticMethod];
   }
