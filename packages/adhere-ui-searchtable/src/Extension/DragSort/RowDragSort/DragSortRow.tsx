@@ -15,13 +15,7 @@ const type = 'DraggableBodyRow';
  * rowIndex: number;
  * columns: any[];
  */
-const DragSortRow: TableRowComponentReducer = ({
-  record = {},
-  columns = [],
-  rowIndex,
-  rowConfig,
-  rowKey,
-}) => {
+const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
   const context = useContext<{
     context: SearchTable;
   } | null>(SearchTableContext);
