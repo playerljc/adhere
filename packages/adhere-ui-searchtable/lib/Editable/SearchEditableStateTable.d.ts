@@ -21,6 +21,7 @@ declare const SearchEditableStateTable_base: {
             record: any;
             editorConfig: any;
         }): void;
+        setFieldValues(): void;
         fetchData(): any;
         render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
     };

@@ -1,0 +1,2 @@
+import SearchEditableRowTable from"../../Editable/SearchEditableRowTable";import{SearchTableImplement}from"../../SearchTableImplement";import RowDragSortMultiExtend from"./RowDragSortMultiExtend";import SearchRowDragSortTable from"./SearchRowDragSortTable";var SearchEditableRowDragSortTable=RowDragSortMultiExtend(SearchTableImplement,[SearchEditableRowTable,SearchRowDragSortTable],SearchRowDragSortTable);export default SearchEditableRowDragSortTable;
+//# sourceMappingURL=SearchEditableRowDragSortTable.js.map

@@ -128,7 +128,7 @@ export interface TableRowComponentReducer {
         columns: ColumnTypeExt[];
         rowKey: string;
         rowConfig: RowConfig;
-    }, trREL: ReactElement): () => ReactElement;
+    }): (trREL: ReactElement) => ReactElement;
 }
 /**
  * TableCellComponentReducer
@@ -141,7 +141,7 @@ export interface TableCellComponentReducer {
         column: ColumnTypeExt;
         rowIndex: number;
         columns: ColumnTypeExt[];
-    }, tdREL: ReactElement): () => ReactElement;
+    }): (tdREL: ReactElement) => ReactElement;
 }
 export interface EditorRowControlProps {
     className?: string;

@@ -39,6 +39,10 @@ export default function <P, S>(SuperClass: any): {
             editorConfig: any;
         }): void;
         /**
+         * setFieldValues
+         */
+        setFieldValues(): void;
+        /**
          * fetchData
          */
         fetchData(): any;
