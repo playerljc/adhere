@@ -40,7 +40,7 @@ class StateTable extends TableStateImplement {
   }
 
   getTotalKey() {
-    return 'total';
+    return 'totalCount';
   }
 
   renderSearchForm() {

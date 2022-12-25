@@ -73,29 +73,25 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
 
   const ref = useRef<HTMLTableRowElement>(null);
 
+  const [, drag] = useDrag(rowDragSortConfig.dragConfig as any);
+
+  const [{ isOver, dropClassName }, drop] = useDrop<
+    { isOver: boolean; dropClassName: string },
+    any,
+    any
+  >(rowDragSortConfig.dropConfig as any);
+
+  drop(drag(ref));
+
   return (trREL: ReactElement) => {
     let res = trREL;
 
-    try {
-      const [{ isOver, dropClassName }, drop] = useDrop<
-        { isOver: boolean; dropClassName: string },
-        any,
-        any
-      >(rowDragSortConfig.dropConfig as any);
-
-      const [, drag] = useDrag(rowDragSortConfig.dragConfig as any);
-
-      drop(drag(ref));
-
-      res = React.cloneElement(trREL, {
-        ...trREL.props,
-        ref,
-        style: { cursor: 'move', ...(trREL.props.style || {}) },
-        className: classNames(trREL.props.className, isOver ? dropClassName : ''),
-      });
-    } catch (e) {
-      console.log('e', e);
-    }
+    res = React.cloneElement(trREL, {
+      ...trREL.props,
+      ref,
+      style: { cursor: 'move', ...(trREL.props.style || {}) },
+      className: classNames(trREL.props.className, isOver ? dropClassName : ''),
+    });
 
     return res;
   };

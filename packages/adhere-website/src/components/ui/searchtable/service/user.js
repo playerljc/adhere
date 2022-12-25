@@ -6,9 +6,19 @@ const data = require('../mock.js').default;
 
 export const fetchList = (() => {
   return {
-    call: () => {
+    call: ({ page, limit }) => {
+      const clone = JSON.parse(JSON.stringify(data));
+
+      const res = {
+        code: 200,
+        data: {
+          list: clone.data.list.slice((page - 1) * limit, page * limit),
+          totalCount: clone.data.total,
+        },
+      };
+
       return request.get({
-        path: JSON.parse(JSON.stringify(data)),
+        path: res,
         mock: true,
         loading: {
           show: false,
@@ -16,7 +26,7 @@ export const fetchList = (() => {
       });
     },
     defaultResult: () => ({
-      total: 0,
+      totalCount: 0,
       list: [],
     }),
   };

@@ -23,7 +23,6 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
-    debugger;
     // searchTable注册页面变化事件
     RouterListen.on(SearchAndPaginParams.RouterListen);
 
