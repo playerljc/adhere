@@ -942,7 +942,6 @@ abstract class SearchTable<
       }
     }
 
-    debugger;
     this.tableRowComponentReducers = this.onTableRowComponentReducers(columns);
     this.tableCellComponentReducers = this.onTableCellComponentReducers(columns);
 

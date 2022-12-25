@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { DateDisplay, DelConfirm, Resource } from '@baifendian/adhere';
+import { DateDisplay, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../index';
 import './serviceRegister';
 
 const {
-  ProSearchEditableCellRowDragSortStateTable,
-  OptionsWrap,
+  ProSearchEditableRowDragSortStateTable,
+  EditableRowControl,
   SearchTableStateImplementFactory,
 } = SearchTable;
 
@@ -18,7 +18,7 @@ const serviceName = 'user';
  * @class RowDragSort
  * @classdesc RowDragSort
  */
-class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
+class RowDragSort extends ProSearchEditableRowDragSortStateTable {
   getComponentId() {
     return 'RowDragSort';
   }
@@ -79,17 +79,16 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
               message: '请输入姓名',
             },
           ],
-          onSave: ({ value, record, dataIndex }) => {
-            return new Promise((resolve) => {
+          onSave: ({ value, record, dataIndex }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDate({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
-        $resizable: true,
+        // $resizable: true,
       },
       {
         title: '性别',
@@ -113,15 +112,14 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
               message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) => {
-            return new Promise((resolve) => {
+          onSave: ({ record, dataIndex, value }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDate({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
       },
       {
@@ -148,15 +146,14 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
               message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) => {
-            return new Promise((resolve) => {
+          onSave: ({ record, dataIndex, value }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDateData({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
       },
       {
@@ -177,18 +174,17 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
           rules: [
             {
               required: true,
-              message: '请输入身高',
+              message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) => {
-            return new Promise((resolve) => {
+          onSave: ({ record, dataIndex, value }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDate({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
       },
       {
@@ -209,18 +205,17 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
           rules: [
             {
               required: true,
-              message: '请输入体重',
+              message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) => {
-            return new Promise((resolve) => {
+          onSave: ({ record, dataIndex, value }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDate({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
       },
       {
@@ -239,18 +234,17 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
           rules: [
             {
               required: true,
-              message: '请输入籍贯',
+              message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) => {
-            return new Promise((resolve) => {
+          onSave: ({ record, dataIndex, value }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDate({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
       },
       {
@@ -271,51 +265,30 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
           rules: [
             {
               required: true,
-              message: '请输入居住地',
+              message: '请选择',
             },
           ],
-          onSave: ({ record, dataIndex, value }) => {
-            return new Promise((resolve) => {
+          onSave: ({ record, dataIndex, value }) =>
+            new Promise((resolve) => {
               this.updateEditorCellDate({
                 record,
                 dataIndex,
                 value,
               }).then(() => resolve());
-            });
-          },
+            }),
         },
       },
       {
         title: '操作',
         dataIndex: this.getOptionsColumnDataIndex(),
         key: this.getOptionsColumnDataIndex(),
-        width: 260,
+        width: 100,
         render: (v, record) => (
-          <OptionsWrap style={{ justifyContent: 'center' }}>
-            {this.renderOptionColumn(
-              [
-                {
-                  key: 'view',
-                  value: <a>查看</a>,
-                },
-                {
-                  key: 'delete',
-                  value: (
-                    <DelConfirm
-                      success={() =>
-                        Promise.resolve().then(() => {
-                          this.fetchData();
-                        })
-                      }
-                    >
-                      <a>删除</a>
-                    </DelConfirm>
-                  ),
-                },
-              ],
-              { value: v, record },
-            )}
-          </OptionsWrap>
+          <EditableRowControl
+            record={record}
+            rowKey={this.getRowKey()}
+            editorRowId={this.state.editorRowId}
+          />
         ),
       },
     ]);

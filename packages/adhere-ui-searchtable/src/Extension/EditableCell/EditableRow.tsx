@@ -19,7 +19,6 @@ const EditableRow: TableRowComponentReducer = ({ columns = [] }) => {
 
   return (trREL: ReactElement) => {
     let res = trREL;
-    console.log('EditableRow');
 
     if ((columns || []).some((column) => !!column?.$editable?.editable)) {
       res = React.cloneElement(trREL, trREL.props, [

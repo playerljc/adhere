@@ -1,9 +1,13 @@
 import ProSearchEditableCellRowDragSortStateTable from './DragSort/RowDragSort/ProSearchEditableCellRowDragSortStateTable';
 import ProSearchEditableCellRowDragSortTable from './DragSort/RowDragSort/ProSearchEditableCellRowDragSortTable';
+import ProSearchEditableRowDragSortStateTable from './DragSort/RowDragSort/ProSearchEditableRowDragSortStateTable';
+import ProSearchEditableRowDragSortTable from './DragSort/RowDragSort/ProSearchEditableRowDragSortTable';
 import ProSearchRowDragSortStateTable from './DragSort/RowDragSort/ProSearchRowDragSortStateTable';
 import ProSearchRowDragSortTable from './DragSort/RowDragSort/ProSearchRowDragSortTable';
 import SearchEditableCellRowDragSortStateTable from './DragSort/RowDragSort/SearchEditableCellRowDragSortStateTable';
 import SearchEditableCellRowDragSortTable from './DragSort/RowDragSort/SearchEditableCellRowDragSortTable';
+import SearchEditableRowDragSortStateTable from './DragSort/RowDragSort/SearchEditableRowDragSortStateTable';
+import SearchEditableRowDragSortTable from './DragSort/RowDragSort/SearchEditableRowDragSortTable';
 import SearchRowDragSortStateTable from './DragSort/RowDragSort/SearchRowDragSortStateTable';
 import SearchRowDragSortTable from './DragSort/RowDragSort/SearchRowDragSortTable';
 import ProEditableCellSearchStateTable from './Editable/ProEditableCellSearchStateTable';
@@ -46,6 +50,12 @@ export default {
   SearchEditableRowTable,
   SearchEditableStateTable,
   SearchEditableTable,
+  SearchRowDragSortStateTable,
+  SearchRowDragSortTable,
+  SearchEditableCellRowDragSortStateTable,
+  SearchEditableCellRowDragSortTable,
+  SearchEditableRowDragSortTable,
+  SearchEditableRowDragSortStateTable,
   ProSearchTable,
   ProSearchStateTable,
   ProEditableCellSearchStateTable,
@@ -56,12 +66,10 @@ export default {
   ProEditableSearchTable,
   ProSearchRowDragSortStateTable,
   ProSearchRowDragSortTable,
-  SearchRowDragSortStateTable,
-  SearchRowDragSortTable,
   ProSearchEditableCellRowDragSortStateTable,
   ProSearchEditableCellRowDragSortTable,
-  SearchEditableCellRowDragSortStateTable,
-  SearchEditableCellRowDragSortTable,
+  ProSearchEditableRowDragSortTable,
+  ProSearchEditableRowDragSortStateTable,
   DisabledOption,
   LinkColumn,
   OptionsWrap,

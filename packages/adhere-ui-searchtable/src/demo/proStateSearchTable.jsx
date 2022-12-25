@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { DateDisplay, Resource } from '@baifendian/adhere';
+import { DateDisplay, DelConfirm, Resource } from '@baifendian/adhere';
 
 import SearchTable from '../index';
 import './serviceRegister';
 
-const { ProEditableCellSearchStateTable, SearchTableStateImplementFactory } = SearchTable;
+const { ProEditableCellSearchStateTable, OptionsWrap, SearchTableStateImplementFactory } =
+  SearchTable;
 
 const serviceName = 'user';
 
@@ -72,30 +73,20 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入姓名',
             },
           ],
-          // useKeepEdit: true,
-          // props: {
-          //   onBlur: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
-          // props: {
-          //   onBlur: (e, { form, rowIndex, dataIndex }) => {
-          //     form.validateFields().then((values) => {
-          //       // 调用修改接口
-          //       // 修改当前数据
-          //     });
-          //   },
-          // },
-          onSave: (params) => {
+          onSave: ({ value, record, dataIndex }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
         },
+        $resizable: true,
       },
       {
         title: '性别',
@@ -119,18 +110,15 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
               message: '请选择',
             },
           ],
-          onSave: (params) => {
+          onSave: ({ record, dataIndex, value }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
-          // useKeepEdit: true,
-          // props: {
-          //   onChange: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
         },
       },
       {
@@ -157,18 +145,15 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
               message: '请选择',
             },
           ],
-          onSave: (params) => {
+          onSave: ({ record, dataIndex, value }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDateData({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
-          // useKeepEdit: true,
-          // props: {
-          //   onChange: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
         },
       },
       {
@@ -189,19 +174,16 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入身高',
             },
           ],
-          // useKeepEdit: true,
-          // props: {
-          //   onBlur: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
-          onSave: (params) => {
+          onSave: ({ record, dataIndex, value }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
         },
@@ -224,19 +206,16 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入体重',
             },
           ],
-          // useKeepEdit: true,
-          // props: {
-          //   onBlur: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
-          onSave: (params) => {
+          onSave: ({ record, dataIndex, value }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
         },
@@ -257,19 +236,16 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入籍贯',
             },
           ],
-          // useKeepEdit: true,
-          // props: {
-          //   onBlur: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
-          onSave: (params) => {
+          onSave: ({ record, dataIndex, value }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
         },
@@ -292,22 +268,52 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
           rules: [
             {
               required: true,
-              message: '请选择',
+              message: '请输入居住地',
             },
           ],
-          // useKeepEdit: true,
-          // props: {
-          //   onBlur: (e, { updateEditorCellData }) => {
-          //     updateEditorCellData();
-          //   },
-          // },
-          onSave: (params) => {
+          onSave: ({ record, dataIndex, value }) => {
             return new Promise((resolve) => {
-              this.fetchData();
-              resolve();
+              this.updateEditorCellDate({
+                record,
+                dataIndex,
+                value,
+              }).then(() => resolve());
             });
           },
         },
+      },
+      {
+        title: '操作',
+        dataIndex: this.getOptionsColumnDataIndex(),
+        key: this.getOptionsColumnDataIndex(),
+        width: 260,
+        render: (v, record) => (
+          <OptionsWrap style={{ justifyContent: 'center' }}>
+            {this.renderOptionColumn(
+              [
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'delete',
+                  value: (
+                    <DelConfirm
+                      success={() =>
+                        Promise.resolve().then(() => {
+                          this.fetchData();
+                        })
+                      }
+                    >
+                      <a>删除</a>
+                    </DelConfirm>
+                  ),
+                },
+              ],
+              { value: v, record },
+            )}
+          </OptionsWrap>
+        ),
       },
     ]);
   }

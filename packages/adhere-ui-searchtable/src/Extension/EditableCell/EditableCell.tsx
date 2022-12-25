@@ -46,6 +46,14 @@ const EditableCell: TableCellComponentReducer = (props) => {
     editableConfig.defaultStatus as string,
   );
 
+  console.log(
+    status,
+    editableConfig?.defaultStatus,
+    editableConfig.editable,
+    props?.column?.dataIndex as string,
+    props?.record?.[props?.column?.dataIndex as string],
+  );
+
   const context = useContext<{
     context: SearchTable;
     editable?: {
@@ -58,17 +66,30 @@ const EditableCell: TableCellComponentReducer = (props) => {
   /**
    * 数据改变则切换成查看状态
    */
-  useEffect(() => setStatus('view'), [context?.context?.getData()]);
+  useEffect(() => {
+    console.log('useEffect1', editableConfig?.defaultStatus);
+    setStatus(editableConfig?.defaultStatus as string);
+    // setStatus('view');
+  }, [context?.context?.getData()]);
 
   /**
    * 缺省状态改变切换到缺省状态
    */
   useEffect(() => {
+    console.log('useEffect2', editableConfig?.defaultStatus);
     setStatus(editableConfig?.defaultStatus as string);
   }, [editableConfig?.defaultStatus]);
 
   return (tdREL) => {
     let res = tdREL;
+
+    // console.log(
+    //   'editableConfig?.defaultStatus',
+    //   editableConfig.editable,
+    //   props?.column?.dataIndex as string,
+    //   props?.record?.[props?.column?.dataIndex as string],
+    //   editableConfig?.defaultStatus,
+    // );
 
     // 单元格不是可编辑的单元格
     if (!editableConfig.editable) {
@@ -104,6 +125,15 @@ const EditableCell: TableCellComponentReducer = (props) => {
         />,
       ]);
     }
+
+    // console.log(
+    //   status,
+    //   editableConfig?.defaultStatus,
+    //   editableConfig.editable,
+    //   props?.column?.dataIndex as string,
+    //   props?.record?.[props?.column?.dataIndex as string],
+    //   res,
+    // );
 
     return res;
   };

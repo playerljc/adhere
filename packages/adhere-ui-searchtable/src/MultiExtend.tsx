@@ -1,21 +1,29 @@
 import cloneDeep from 'lodash.clonedeep';
 import React, { Component } from 'react';
 
-function Factory<P, S>(
-  BaseClass: Component<P, S>,
-  SuperClasses: any[],
+/**
+ * MultiExtendFactory
+ * @description 实现多继承
+ * @param BaseClass 原始基类
+ * @param SuperClasses 父类集合
+ * @param ConstructorMethod 构造方法
+ * @param Methods 原型方法
+ * @constructor
+ */
+function MultiExtendFactory<P, S>(
+  BaseClass: Component<P, S, any>,
+  SuperClasses: Function[],
   ConstructorMethod: (superClassesObjs: any[]) => void,
   Methods: () => { [prop: string]: Function },
 ): any {
   // @ts-ignore
-  class Wrap extends BaseClass<P, S> {
+  class Wrap extends BaseClass {
     constructor(props) {
       super(props);
 
       const SuperClassesObjs: any[] = [];
 
       SuperClasses.forEach((SuperClass) => {
-        // @ts-ignore
         SuperClass.call(this, props);
         SuperClassesObjs.push(cloneDeep(this));
       });
@@ -41,4 +49,4 @@ function Factory<P, S>(
   return Wrap;
 }
 
-export default Factory;
+export default MultiExtendFactory;

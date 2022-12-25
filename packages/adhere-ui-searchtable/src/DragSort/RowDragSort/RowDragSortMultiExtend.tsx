@@ -3,7 +3,19 @@ import React, { Component } from 'react';
 import MultiExtend from '../../MultiExtend';
 import SearchTable from '../../SearchTable';
 
-function Factory<P, S>(BaseClass: Component<P, S>, SuperClasses: any[], RenderBaseClass: any): any {
+/**
+ * RowDragSortMultiExtend
+ * @description 多继承
+ * @param BaseClass
+ * @param SuperClasses
+ * @param RenderBaseClass
+ * @constructor
+ */
+function RowDragSortMultiExtend<P, S>(
+  BaseClass: Component<P, S>,
+  SuperClasses: Function[],
+  RenderBaseClass: Function,
+): any {
   return MultiExtend(
     BaseClass,
     SuperClasses,
@@ -43,4 +55,4 @@ function Factory<P, S>(BaseClass: Component<P, S>, SuperClasses: any[], RenderBa
   );
 }
 
-export default Factory;
+export default RowDragSortMultiExtend;
