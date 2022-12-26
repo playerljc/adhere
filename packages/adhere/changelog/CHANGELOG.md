@@ -27,6 +27,8 @@
   - 分成dialog和message
 * **adhere-ui-prompt-warnprompt**
   - 分成dialog和message
+* **adhere-util-resource**
+  - 加入resource资源目录
 
 # 1.0.21
 
