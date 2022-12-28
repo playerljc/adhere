@@ -29,6 +29,8 @@
   - 分成dialog和message
 * **adhere-util-resource**
   - 加入resource资源目录
+* **adhere-ui-reactquill-sandbox**
+  - 加入adhere-ui-reactquill-sandbox组件
 
 # 1.0.21
 

@@ -67,6 +67,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-ui-configprovider', 'ConfigProvider'],
   ['@baifendian/adhere-ui-antdformitem', 'AntdFormItem'],
+  ['@baifendian/adhere-ui-reactquill-sandbox', 'ReactQuillSandbox'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],

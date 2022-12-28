@@ -86,6 +86,7 @@
     "@baifendian/adhere-ui-tableheadsearch": "^1.0.21",
     "@baifendian/adhere-ui-tablelist": "^1.0.21-fix.3",
     "@baifendian/adhere-ui-writingboard": "^1.0.21-fix.1",
+    "@baifendian/adhere-ui-reactquill-sandbox": "^1.0.0",
     "@baifendian/adhere-util": "^1.0.21",
     "@baifendian/adhere-util-adapterscreen": "^1.0.18",
     "@baifendian/adhere-util-browsersniff": "^1.0.18",

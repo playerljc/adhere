@@ -1,3 +1,4 @@
+import AntdFormItem from '@baifendian/adhere-ui-antdformitem';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -46,7 +47,7 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
-import AntdFormItem from '@baifendian/adhere-ui-antdformitem';
+import ReactQuillSandbox from '@baifendian/adhere-ui-reactquill-sandbox';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -65,6 +66,7 @@ import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
+  AntdFormItem,
   BackTopAnimation,
   BMap,
   CascadeCompared,
@@ -113,7 +115,7 @@ export {
   TableHeadSearch,
   TableList,
   WritingBoard,
-  AntdFormItem,
+  ReactQuillSandbox,
   Util,
   AdapterScreen,
   Browsersniff,

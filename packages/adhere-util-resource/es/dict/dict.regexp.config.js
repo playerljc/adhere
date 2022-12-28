@@ -1,0 +1,2 @@
+import Dict from"@baifendian/adhere-util-dict";export default{initStatic:function(){Dict.handlers.ResourceRegexpRemoveSplitTokenizer=function(){return/\/*/gim},Dict.handlers.ResourceRegexpFirstChat=function(){return/( |^)[a-z]/g},Dict.handlers.ResourceRegexpMergeSplit=function(){return/\/{2,}/},Dict.handlers.ResourceRegexpNSTRN=function(){return/(\n[\s\t]*\r*\n)/g},Dict.handlers.ResourceRegexpSENRNT=function(){return/^[\n\r\n\t]*|[\n\r\n\t]*$/g}},initRemote:function(){}};
+//# sourceMappingURL=dict.regexp.config.js.map
