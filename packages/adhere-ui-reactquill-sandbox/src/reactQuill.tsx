@@ -14,7 +14,6 @@ import Quill, {
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-debugger;
 // Merged namespace hack to export types along with default object
 // See: https://github.com/Microsoft/TypeScript/issues/2719
 namespace ReactQuill {
@@ -178,7 +177,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   shouldComponentUpdate(nextProps: ReactQuillProps, nextState: ReactQuillState) {
-    debugger;
     this.validateProps(nextProps);
 
     // If the editor hasn't been instantiated yet, or the component has been
@@ -231,7 +229,6 @@ class ReactQuill extends React.Component<ReactQuillProps, ReactQuillState> {
   }
 
   componentDidUpdate(prevProps: ReactQuillProps, prevState: ReactQuillState) {
-    debugger;
     // If we're changing one of the `dirtyProps`, the entire Quill Editor needs
     // to be re-instantiated. Regenerating the editor will cause the whole tree,
     // including the container, to be cleaned up and re-rendered from scratch.
