@@ -39,7 +39,6 @@ export default () => {
       </Section>
 
       <CodeBoxSection
-        title="代码演示"
         config={[
           {
             id: `p1`,
@@ -52,7 +51,16 @@ export default () => {
                 info: '基本使用',
               },
             },
-            codeText: ``,
+            codeText: `
+  import { ReactQuillSandbox } from '@baifendian/adhere';
+
+  <div style={{ position: 'relative', height: 300 }}>
+    <ReactQuillSandbox
+      style={{ width: '100%', height: 300 - 43 }}
+      wrapStyle={{ width: '100%', height: '100%' }}
+    />
+  </div>
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div style={{ position: 'relative', height: 300 }}>
@@ -74,7 +82,48 @@ export default () => {
                 info: '动态设置props',
               },
             },
-            codeText: ``,
+            codeText: `
+  import React from 'react';
+  import { ReactQuillSandbox,Space } from '@baifendian/adhere';
+  import { Button } from 'antd';
+
+  <div style={{ position: 'relative' }}>
+    <Space.Group direction="vertical">
+      <div>
+        <Button
+          type="primary"
+          onClick={() => {
+            setModules({
+              toolbar: [
+                [{ font: [] }, { size: [] }],
+                [{ align: [] }, 'direction'],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ color: [] }, { background: [] }],
+                [{ script: 'super' }, { script: 'sub' }],
+                ['blockquote', 'code-block'],
+                [
+                  { list: 'ordered' },
+                  { list: 'bullet' },
+                  { indent: '-1' },
+                  { indent: '+1' },
+                ],
+                ['link', 'image', 'video'],
+                ['clean'],
+              ],
+            });
+          }}
+        >
+          设置models
+        </Button>
+      </div>
+      <ReactQuillSandbox
+        modules={modules}
+        style={{ width: '100%', height: 300 - 43 }}
+        wrapStyle={{ width: '100%', height: 300 }}
+      />
+    </Space.Group>
+  </div>
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div style={{ position: 'relative' }}>
@@ -126,7 +175,21 @@ export default () => {
                 info: '查看模式',
               },
             },
-            codeText: ``,
+            codeText: `
+  import { ReactQuillSandbox  } from '@baifendian/adhere';
+
+  <div style={{ position: 'relative', height: 300 }}>
+      <ReactQuillSandbox
+        theme="bubble"
+        readOnly
+        value={\`
+          ReactQuill 2 is here, baby! And it brings a full port to TypeScript and React 16+, a refactored build system, and a general tightening of the internal logic.
+          We worked hard to avoid introducing any behavioral changes. For the vast majority of the cases, no migration is necessary at all. However, support for long-deprecated props, the ReactQuill Mixin, and the Toolbar component have been removed. Be sure to read the migration guide.
+        \`}
+        wrapStyle={{ width: '100%', height: '100%' }}
+      />
+  </div>
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div style={{ position: 'relative', height: 300 }}>
@@ -153,7 +216,19 @@ export default () => {
                 info: '获取ref调用api',
               },
             },
-            codeText: ``,
+            codeText: `
+  import { ReactQuillSandbox } from '@baifendian/adhere';
+
+  <div style={{ position: 'relative', height: 300 }}>
+    <ReactQuillSandbox
+      ref={ref}
+      value={value}
+      onChange={setValue}
+      style={{ width: '100%', height: 300 - 43 }}
+      wrapStyle={{ width: '100%', height: '100%' }}
+    />
+  </div>
+            `,
             type: 'PlayGround',
             renderChildren: () => (
               <div style={{ position: 'relative', height: 300 }}>
@@ -168,6 +243,7 @@ export default () => {
             ),
           },
         ]}
+        title="代码演示"
       />
 
       <PropsSection
