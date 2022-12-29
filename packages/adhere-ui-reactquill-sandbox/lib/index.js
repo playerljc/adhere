@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},reactQuillSandbox_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js"),require("@webcomponents/webcomponentsjs/webcomponents-loader.js"),__importDefault(require("./reactQuillSandbox")));exports.default=reactQuillSandbox_1.default;
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},reactQuillSandbox_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./reactQuillSandbox")));exports.default=reactQuillSandbox_1.default;
 //# sourceMappingURL=index.js.map

@@ -3,7 +3,12 @@ import React, { useRef, useState } from 'react';
 
 import { ReactQuillSandbox, Space } from '@baifendian/adhere';
 
-import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+import PlayGroundPage, {
+  CodeBoxSection,
+  FunctionPropsSection,
+  PropsSection,
+  Section,
+} from '@/lib/PlaygroundPage';
 
 export default () => {
   const [modules, setModules] = useState({});
@@ -171,7 +176,124 @@ export default () => {
           {
             border: true,
             title: '属性',
-            data: [],
+            data: [
+              {
+                params: 'className',
+                desc: '附加的样式表',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '附加的样式',
+                type: 'React.CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'zIndex',
+                desc: '层级',
+                type: 'boolean',
+                defaultVal: '',
+              },
+              {
+                params: 'duration',
+                desc: '动画持续的事件',
+                type: 'number',
+                defaultVal: '300',
+              },
+              {
+                params: 'onScrollTop',
+                desc: '获取滚动的目标元素',
+                type: '() => HtmlElement',
+                defaultVal: '',
+              },
+              {
+                params: 'onTrigger',
+                desc: '点击事件',
+                type: '() => void',
+                defaultVal: '',
+              },
+              {
+                params: 'onScrollTop',
+                desc: '滚动',
+                type: '(value: number) => void',
+                defaultVal: '',
+              },
+            ],
+          },
+        ]}
+      />
+
+      <FunctionPropsSection
+        title="Api"
+        config={[
+          {
+            border: true,
+            title: '方法',
+            data: [
+              {
+                name: 'scrollToByIndex',
+                desc: '滚动到指定所引出',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'index',
+                    desc: '滚动到的索引',
+                    type: 'number',
+                    defaultVal: '',
+                    required: 'true',
+                  },
+                  {
+                    name: 'duration',
+                    desc: '滚动的时间',
+                    type: 'number',
+                    defaultVal: '600',
+                    required: '',
+                  },
+                ],
+                returnType: '',
+                returnDesc: '',
+              },
+              {
+                name: 'scrollToByHeaderEl',
+                desc: '滚动到指定el',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'headerEl',
+                    desc: '指定的el',
+                    type: 'HtmlElement',
+                    defaultVal: '',
+                    required: 'true',
+                  },
+                  {
+                    name: 'duration',
+                    desc: '滚动的时间',
+                    type: 'number',
+                    defaultVal: '300',
+                    required: '',
+                  },
+                ],
+                returnType: '',
+                returnDesc: '',
+              },
+              {
+                name: 'scrollToByColumn',
+                desc: '滚动到指定列',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'columnIndex',
+                    desc: '列的索引从1开始',
+                    type: 'number',
+                    defaultVal: '',
+                    required: 'true',
+                  },
+                ],
+                returnType: '',
+                returnDesc: '',
+              },
+            ],
           },
         ]}
       />
