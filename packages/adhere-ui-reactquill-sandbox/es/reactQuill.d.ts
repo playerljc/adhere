@@ -102,7 +102,7 @@ declare class ReactQuill extends React.Component<ReactQuillProps, ReactQuillStat
         getContents: (index?: number | undefined, length?: number | undefined) => DeltaStatic;
         getSelection: {
             (focus: true): RangeStatic;
-            (focus?: false | undefined): Range;
+            (focus?: false | undefined): import("react-quill").Range;
         };
         getBounds: (index: number, length?: number | undefined) => BoundsStatic;
     };

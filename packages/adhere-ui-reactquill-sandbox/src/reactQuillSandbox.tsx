@@ -1,3 +1,4 @@
+import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import Quill from 'quill';
 import React, {
@@ -5,17 +6,16 @@ import React, {
   ReactElement,
   forwardRef,
   memo,
-  useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useRef,
 } from 'react';
-import ReactDOM from 'react-dom';
+import ReactQuill from 'react-quill';
 
-// import ReactQuill from 'react-quill';
-import ReactQuill from './reactQuill';
-import { ReactQuillProps, ReactQuillSandboxHandler, ReactQuillSandboxProps } from './types';
-
-const selectorPrefix = 'adhere-ui-reactquillsandbox';
+import ReactDOMStr from './lib/react-dom.production.min';
+import ReactQuillStr from './lib/react-quill';
+import ReactStr from './lib/react.production.min';
+import { ReactQuillSandboxHandler, ReactQuillSandboxProps } from './types';
 
 /**
  * ReactQuill主题对应的样式
@@ -1930,162 +1930,10 @@ const THEME_MAP = new Map<string, string>([
   ],
 ]);
 
-/**
- * QuillSandbox
- */
-class QuillSandbox extends HTMLElement {
-  // 之前的props
-  private preReactQuillProps: ReactQuillProps = {};
-
-  // ReactQuill的props
-  private reactQuillProps: ReactQuillProps = {
-    theme: 'snow',
-  };
-
-  // ReactQuill的样式
-  private quillStyle: HTMLStyleElement | null = null;
-
-  // ReactQuill的引用
-  private ref: React.RefObject<ReactQuill> | null = null;
-
-  // 包裹编辑器的元素
-  private wrap: HTMLDivElement;
-
-  /**
-   * constructor
-   */
-  constructor() {
-    // Always call super first in constructor
-    super();
-
-    // Create a shadow root
-    const shadow = this.attachShadow({ mode: 'open' });
-
-    this.wrap = document.createElement('div');
-    this.wrap.className = `${selectorPrefix}-wrap`;
-
-    if (this.reactQuillProps.quillWrapClassName) {
-      this.wrap.className = classNames(
-        `${selectorPrefix}-wrap`,
-        this.reactQuillProps.quillWrapClassName,
-      );
-    }
-    if (this.reactQuillProps.quillStyle) {
-      this.wrap.style.cssText = this.wrap.style.cssText + this.reactQuillProps.quillStyle;
-    }
-
-    shadow.appendChild(this.wrap);
-  }
-
-  /**
-   * setProps
-   * @description 设置ReactQuill的props
-   * @param props
-   */
-  setProps(props: ReactQuillProps) {
-    this.reactQuillProps = props;
-    this.update();
-  }
-
-  /**
-   * update
-   * @description 更新或渲染ReactQuill到shadowRoot上
-   */
-  update() {
-    if (this.reactQuillProps.quillWrapClassName) {
-      this.wrap.className = classNames(
-        `${selectorPrefix}-wrap`,
-        this.reactQuillProps.quillWrapClassName,
-      );
-    }
-    if (this.reactQuillProps.quillStyle) {
-      this.wrap.style.cssText = this.reactQuillProps.quillStyle;
-    }
-
-    ReactDOM.render(<ReactQuill ref={this.ref} {...this.reactQuillProps} />, this.wrap, () => {
-      this.preReactQuillProps = this.reactQuillProps;
-    });
-
-    if (this.preReactQuillProps.theme !== this.reactQuillProps.theme) {
-      if (this.quillStyle) {
-        this.shadowRoot?.removeChild?.(this.quillStyle);
-      }
-
-      this.quillStyle = document.createElement('style');
-      // @ts-ignore
-      this.quillStyle.textContent = THEME_MAP.get(this.reactQuillProps.theme || 'snow');
-      this.shadowRoot?.appendChild?.(this.quillStyle);
-    }
-  }
-
-  /**
-   * connectedCallback
-   * 当 custom element 首次被插入文档 DOM 时，被调用。
-   */
-  connectedCallback() {
-    // 当前节点插入到DOM时候调用更新方法，这个是挂载
-    this.update();
-  }
-
-  /**
-   * quillFocus
-   */
-  quillFocus() {
-    this?.ref?.current?.focus();
-  }
-
-  /**
-   * quillBlur
-   */
-  quillBlur() {
-    this?.ref?.current?.blur();
-  }
-
-  /**
-   * getEditor
-   */
-  getEditor() {
-    return this?.ref!.current?.getEditor();
-  }
-
-  // /**
-  //  * disconnectedCallback
-  //  * 当 custom element 从文档 DOM 中删除时，被调用。
-  //  */
-  // disconnectedCallback() {
-  //   // console.log('disconnectedCallback');
-  // }
-  //
-  // /**
-  //  * adoptedCallback
-  //  * 当 custom element 被移动到新的文档时，被调用
-  //  */
-  // adoptedCallback() {
-  //   // console.log('adoptedCallback');
-  // }
-  //
-  // /**
-  //  * 需要注意的是，如果需要在元素属性变化后，触发attributeChangedCallback()回调函数，你必须监听这个属性。这可以通过定义observedAttributes() get 函数来实现，observedAttributes()函数体内包含一个 return 语句，返回一个数组，包含了需要监听的属性名称：
-  //  */
-  // // static get observedAttributes() {
-  // //   return ['w', 'l'];
-  // // }
-  //
-  // /**
-  //  * attributeChangedCallback
-  //  * 当 custom element 增加、删除、修改自身属性时，被调用。
-  //  */
-  // attributeChangedCallback() {
-  //   // console.log('attributeChangedCallback');
-  // }
-}
-
-customElements.define('quill-sandbox', QuillSandbox);
+const selectorPrefix = 'adhere-ui-reactquillsandbox';
 
 /**
  * ReactQuillSandbox
- * @param wrapStyle
- * @param wrapClassName
  * @param props
  * @param ref
  * @constructor
@@ -2093,29 +1941,109 @@ customElements.define('quill-sandbox', QuillSandbox);
 const ReactQuillSandbox: ForwardRefRenderFunction<
   ReactQuillSandboxHandler,
   ReactQuillSandboxProps
-> = ({ wrapStyle, wrapClassName, ...props }, ref): ReactElement => {
-  const quillSandboxRef = useRef<QuillSandbox>();
+> = (props, ref): ReactElement => {
+  const { wrapStyle, wrapClassName, quillStyle, ..._props } = props;
+  const frameRef = useRef<HTMLIFrameElement>(null);
+
+  const reactQuillRef = useRef<ReactQuill>();
+
+  function render(): Promise<{ window: Window; document: Document; wrap: HTMLDivElement }> {
+    return new Promise((resolve) => {
+      const document = frameRef?.current?.contentDocument as Document;
+      const window = frameRef?.current?.contentWindow as Window;
+
+      const wrap = document.getElementById('quillWrap') as HTMLDivElement;
+
+      // @ts-ignore
+      window.ReactDOM.render(<window.ReactQuill ref={reactQuillRef} {..._props} />, wrap, () =>
+        resolve({
+          document,
+          window,
+          wrap,
+        }),
+      );
+    });
+  }
 
   useImperativeHandle(ref, () => ({
     focus() {
-      quillSandboxRef.current?.quillFocus();
+      reactQuillRef.current?.focus();
     },
     blur() {
-      quillSandboxRef.current?.quillBlur();
+      reactQuillRef.current?.blur();
     },
     getEditor(): Quill {
-      return quillSandboxRef.current?.getEditor() as Quill;
+      return reactQuillRef.current?.getEditor() as Quill;
     },
   }));
 
-  useEffect(() => {
-    quillSandboxRef.current?.setProps(props);
-  }, Array.from(Object.values(props)));
+  useLayoutEffect(() => {
+    function onLoad() {
+      render().then(() => {});
+    }
+
+    frameRef?.current?.addEventListener('load', onLoad);
+
+    const reactUrl = URL.createObjectURL(new Blob([ReactStr], { type: 'text/javascript' }));
+    const reactDOMUrl = URL.createObjectURL(new Blob([ReactDOMStr], { type: 'text/javascript' }));
+    const reactQuillUrl = URL.createObjectURL(
+      new Blob([ReactQuillStr], { type: 'text/javascript' }),
+    );
+
+    const iframeUrl = URL.createObjectURL(
+      new Blob(
+        [
+          `
+        <!DOCTYPE html>
+        <head>
+          <meta charset="UTF-8" />
+          <title></title>
+          <style>
+            html,body {
+              width: 100%;
+              height: 100%;
+              margin: 0;      
+              padding: 0;
+            }
+            
+            ${THEME_MAP.get('snow') as string}
+          </style>
+          <script src="${reactUrl}"><\/script>
+          <script src="${reactDOMUrl}"><\/script>
+          <script src="${reactQuillUrl}"><\/script>
+        </head>
+        <html lang="en">
+        <body>
+          <div id="quillWrap" style="width: 100%;height: 100%;${quillStyle || ''}"></div>
+        </body>
+        </html>
+        `,
+        ],
+        {
+          type: 'text/html',
+        },
+      ),
+    );
+    frameRef!.current!.src = iframeUrl;
+
+    return () => {
+      frameRef?.current?.removeEventListener('load', onLoad);
+      URL.revokeObjectURL(iframeUrl);
+      URL.revokeObjectURL(reactUrl);
+      URL.revokeObjectURL(reactDOMUrl);
+      URL.revokeObjectURL(reactQuillUrl);
+    };
+  }, []);
+
+  useUpdateEffect(() => {
+    render().then(({ wrap }) => {
+      wrap.style.cssText = `width: 100%;height: 100%;${props.quillStyle || ''}`;
+    });
+  }, Array.from(Object.values(_props)));
 
   return (
     <div className={classNames(`${selectorPrefix}`, wrapClassName || '')} style={wrapStyle || {}}>
-      {/*@ts-ignore*/}
-      <quill-sandbox ref={quillSandboxRef} />
+      <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
     </div>
   );
 };

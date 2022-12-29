@@ -78,6 +78,7 @@ const {
   ConfigProvider,
   IframeIO,
   AntdFormItem,
+  ReactQuillSandbox,
 } = Components;
 
 export default () => [
@@ -409,6 +410,11 @@ export default () => [
                 path: '/adhere/component/ui/antdformitem',
                 name: 'AntdFormItem',
                 component: AntdFormItem,
+              },
+              {
+                path: '/adhere/component/ui/reactquillsandbox',
+                name: 'ReactQuillSandbox',
+                component: ReactQuillSandbox,
               },
             ],
           },

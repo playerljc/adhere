@@ -37,8 +37,6 @@ export interface ReactQuillProps {
   tabIndex?: number;
   theme?: string;
   value?: Value;
-  quillWrapClassName?: string;
-  quillStyle?: string;
 }
 
 /**
@@ -47,4 +45,5 @@ export interface ReactQuillProps {
 export interface ReactQuillSandboxProps extends ReactQuillProps {
   wrapClassName?: string;
   wrapStyle?: React.CSSProperties;
+  quillStyle?: string;
 }

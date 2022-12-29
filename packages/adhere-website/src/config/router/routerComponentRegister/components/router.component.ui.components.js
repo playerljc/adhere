@@ -143,3 +143,7 @@ export const ConfigProvider = lazy(() =>
 export const AntdFormItem = lazy(() =>
   import(/* webpackChunkName: "antdformitem" */ '@/components/ui/antdformitem'),
 );
+
+export const ReactQuillSandbox = lazy(() =>
+  import(/* webpackChunkName: "reactquillsandbox" */ '@/components/ui/reactquillsandbox'),
+);
