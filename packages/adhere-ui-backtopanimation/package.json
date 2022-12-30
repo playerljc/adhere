@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-backtopanimation",
-  "version": "1.0.21-fix.3",
+  "version": "1.0.22",
   "description": "动画的回到顶部",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,7 +31,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^1.0.21-fix.3",
+    "@baifendian/adhere-util-resource": "^1.0.22",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-watchmemoized",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "对值的监控和缓存",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,8 +31,8 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.21",
-    "@baifendian/adhere-util-emitter": "^1.0.20",
+    "@baifendian/adhere-util": "^1.0.22",
+    "@baifendian/adhere-util-emitter": "^1.0.22",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-resource",
-  "version": "1.0.21-fix.3",
+  "version": "1.0.22",
   "description": "常用的资源",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,9 +32,9 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.21",
+    "@baifendian/adhere-util": "^1.0.22",
     "@baifendian/adhere-util-dict": "^1.0.21",
-    "@baifendian/adhere-util-intl": "^1.0.21-fix.3",
+    "@baifendian/adhere-util-intl": "^1.0.22",
     "antd": "^4.22.2",
     "moment": "^2.29.1"
   },

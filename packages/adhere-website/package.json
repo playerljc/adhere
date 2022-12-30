@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-website",
-  "version": "1.0.21-fix.4",
+  "version": "1.0.22",
   "private": true,
   "description": "adhere的website",
   "homepage": "https://github.com/playerljc/adhere",
@@ -14,7 +14,6 @@
   "license": "ISC",
   "author": "playerljc",
   "scripts": {
-    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "buildapp": "cross-env environment=dev mode=production ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -24,6 +23,7 @@
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
-    "@baifendian/adhere": "^1.0.21-fix.4",
+    "@baifendian/adhere": "^1.0.22",
     "@ctsj/router": "^1.0.1",
     "@ctsj/state": "^2.0.21",
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
