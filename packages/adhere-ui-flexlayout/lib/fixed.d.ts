@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { FixedProps } from './types';
-declare const Fixed: FC<FixedProps>;
-export default Fixed;
+declare const _default: React.NamedExoticComponent<FixedProps>;
+export default _default;

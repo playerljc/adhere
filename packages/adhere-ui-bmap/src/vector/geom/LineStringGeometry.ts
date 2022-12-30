@@ -1,4 +1,3 @@
-// @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 
 import Util from '../../util';

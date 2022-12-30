@@ -1,3 +1,6 @@
-import SuccessPrompt from './successprompt';
+import { openSuccessDialog, openSuccessMessage } from './successprompt';
 
-export default SuccessPrompt;
+export default {
+  openSuccessMessage,
+  openSuccessDialog,
+};

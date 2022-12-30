@@ -1,6 +1,6 @@
 import Emitter from '@baifendian/adhere-util-emitter';
-import { IVectorSource, IFeature, IVectorLayer, GeoJSONNode } from './types';
 import Geometry from './geom/Geometry';
+import { GeoJSONNode, IFeature, IVectorLayer, IVectorSource } from './types';
 /**
  * VectorSource
  * @class VectorSource

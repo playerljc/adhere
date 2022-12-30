@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { BackTopAnimationProps } from './types';
-/**
- * BackTopAnimation
- * @param props
- * @constructor
- */
-declare const BackTopAnimation: FC<BackTopAnimationProps>;
-export default BackTopAnimation;
+declare const _default: React.NamedExoticComponent<BackTopAnimationProps>;
+export default _default;

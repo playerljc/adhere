@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { CollapseProps } from './types';
-declare const Collapse: FC<CollapseProps>;
-export default Collapse;
+declare const _default: React.NamedExoticComponent<CollapseProps>;
+export default _default;

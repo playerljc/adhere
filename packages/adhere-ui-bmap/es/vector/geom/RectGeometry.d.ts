@@ -1,4 +1,4 @@
-import { GeometryType, IRectGeometry, IRectGeometryData, IGeometryStyle, IPixel } from '../types';
+import { GeometryType, IGeometryStyle, IPixel, IRectGeometry, IRectGeometryData } from '../types';
 import Geometry from './Geometry';
 /**
  * RectGeometry

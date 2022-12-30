@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { FC, memo, useEffect, useLayoutEffect, useRef } from 'react';
 import Swiper from 'swiper';
 
 import { SwipeOutProps } from './types';
@@ -94,6 +94,7 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
         >
           {before?.()}
         </div>
+
         <div
           className={classNames(
             'swiper-slide',
@@ -104,6 +105,7 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
         >
           {children}
         </div>
+
         <div
           className={classNames('swiper-slide', `${selectorPrefix}-after`, afterClassName || '')}
           style={afterStyle || {}}
@@ -317,4 +319,4 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
 //   slideChangeTransitionEnd: PropTypes.func,
 // };
 
-export default SwipeOut;
+export default memo(SwipeOut);

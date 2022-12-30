@@ -1,5 +1,5 @@
-import { FC, ForwardRefExoticComponent, FunctionComponent, PropsWithoutRef, RefAttributes } from 'react';
-import type { ReactNode, CSSProperties } from 'react';
+import { FC, ForwardRefExoticComponent, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 /**
  * CardProps
  */
@@ -190,7 +190,7 @@ export interface TabPanelProps {
     index?: number | string;
     children?: any;
 }
-export interface SimpleTabsFunction<P> extends FunctionComponent<P> {
+export interface SimpleTabsFunction<P> extends NamedExoticComponent<P> {
     TabPanel: FC<TabPanelProps>;
 }
 export interface SimpleTabsProps {

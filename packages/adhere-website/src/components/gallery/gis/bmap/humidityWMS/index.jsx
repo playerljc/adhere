@@ -12,7 +12,7 @@ import styles from './index.less';
  * @constructor
  * @classdesc 湿度
  */
-function humidity() {
+function Humidity() {
   const ref = useRef();
 
   const map = useRef();
@@ -147,4 +147,4 @@ function humidity() {
   );
 }
 
-export default humidity;
+export default Humidity;

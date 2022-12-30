@@ -250,6 +250,17 @@
     "path": "/adhere/component/ui/configprovider"
   },
   {
+    "kw": ["Antd的FormItem进阶", "AntdFormItem"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/antdformitem"
+  },
+  {
+    "kw": ["对ReactQuill进行样式隔离的包装", "ReactQuillSandbox"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/reactquillsandbox"
+  },
+
+  {
     "kw": ["组件强制刷新", "ForceUpdate"],
     "group": "组件 - Util",
     "path": "/adhere/component/ui/forceupdate"

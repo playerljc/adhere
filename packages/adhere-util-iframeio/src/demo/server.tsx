@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import Iframe from '../index';
 
-//
+// @ts-ignore
 import styles from './server.less';
 
 type FileUpLoad = {
@@ -37,10 +37,10 @@ export default function () {
   const whiteList = [sourceOrigin];
 
   useEffect(() => {
-    //
+    // @ts-ignore
     router.current = new Iframe.Router();
 
-    //
+    // @ts-ignore
     router.current
       /**
        * /display
@@ -56,7 +56,7 @@ export default function () {
        * /getDoc
        */
       .controller('/getDoc', (ctx, next) => {
-        //
+        // @ts-ignore
         ctx.response.setBody(ref.current.outerHTML);
         ctx.response.setStatusCode(200);
         ctx.response.setStatusMessage('ok');
@@ -120,7 +120,7 @@ export default function () {
         next();
       });
 
-    //
+    // @ts-ignore
     server.current = new Iframe.Server(whiteList, window, sourceOrigin);
 
     // //
@@ -155,15 +155,15 @@ export default function () {
     //     }),
     // );
 
-    //
+    // @ts-ignore
     server.current.use(router.current.routers());
 
-    //
+    // @ts-ignore
     server.current.start();
   }, []);
 
   return (
-    //
+    // @ts-ignore
     <div className={styles.Wrap} ref={ref}>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Card title="将输入框值设置到iframe里">

@@ -1,4 +1,4 @@
-import { GeometryType, ITextGeometry, ITextStyle, ITextGeometryData, ICoordinate, IPixel } from '../types';
+import { GeometryType, ICoordinate, IPixel, ITextGeometry, ITextGeometryData, ITextStyle } from '../types';
 import Geometry from './Geometry';
 /**
  * TextGeometry

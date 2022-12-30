@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import 'lazysizes';
 import 'lazysizes/plugins/parent-fit/ls.parent-fit';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { ImageLazyProps } from './types';
 
@@ -17,4 +17,4 @@ const ImageLazy: FC<ImageLazyProps> = ({ className, imgArgs }) => (
   />
 );
 
-export default ImageLazy;
+export default memo(ImageLazy);

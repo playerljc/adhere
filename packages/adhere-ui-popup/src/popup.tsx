@@ -34,7 +34,6 @@ class Popup {
     this.id = v1();
     this.config = config;
 
-    this.onMaskElTransitionend = this.onMaskElTransitionend.bind(this);
     this.onInnerElTransitionend = this.onInnerElTransitionend.bind(this);
 
     this.render();
@@ -53,8 +52,6 @@ class Popup {
     maskEl.style.zIndex = String((zIndex || 11000) - 1500);
 
     (this.el as HTMLElement).appendChild(maskEl);
-
-    maskEl.addEventListener('transitionend', this.onMaskElTransitionend);
   }
 
   /**
@@ -211,21 +208,13 @@ class Popup {
       prePopup = null;
 
       (this.popupEl as HTMLElement).style.display = 'none';
+      maskEl.style.display = 'none';
 
       this.trigger('onAfterClose');
     } else {
       prePopup = this;
 
       this.trigger('onAfterShow');
-    }
-  }
-
-  /**
-   * onMaskElTransitionend
-   */
-  onMaskElTransitionend(): void {
-    if (!this.isShow) {
-      maskEl.style.display = 'none';
     }
   }
 }

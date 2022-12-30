@@ -1,5 +1,14 @@
 import { Empty } from 'antd';
-import React, { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -120,7 +129,7 @@ const ListStandard: FC<ListStandardProps> = (props) => {
    * onLoadMore
    * @param callback
    */
-  function onLoadMore(callback) {
+  const onLoadMore = useCallback((callback) => {
     if (status.current === ScrollLoad.EMPTY) {
       status.current = ScrollLoad.EMPTY;
       callback(ScrollLoad.EMPTY);
@@ -130,15 +139,43 @@ const ListStandard: FC<ListStandardProps> = (props) => {
     callbackHandler.current = callback;
 
     setTimeout(() => appendData(), 100);
-  }
+  }, []);
 
   /**
    * isEmpty
    * @return {boolean}
    */
-  function isEmpty() {
-    return paging.current.page === 1 && (data[dataKeys!.list] as Array<any>).length === 0;
-  }
+  const isEmpty = useCallback(
+    () => paging.current.page === 1 && (data[dataKeys!.list] as Array<any>).length === 0,
+    [data, dataKeys, paging.current.page],
+  );
+
+  const _CommentList = useMemo(
+    () => (
+      <CommentList
+        getScrollWrapContainer={getScrollWrapContainer}
+        isLoading={loading}
+        hasMore={(data[dataKeys!.list] as Array<any>).length <= data[dataKeys!.totalCount]}
+        onLoadMore={onLoadMore}
+        renderFirstLoading={renderFirstLoading}
+        {...(listProps || {})}
+      >
+        <ConditionalRender conditional={!isEmpty()} noMatch={() => renderEmpty()}>
+          {() => renderList?.(data)}
+        </ConditionalRender>
+      </CommentList>
+    ),
+    [
+      getScrollWrapContainer,
+      loading,
+      data,
+      dataKeys.totalCount,
+      dataKeys.list,
+      renderFirstLoading,
+      listProps,
+      renderEmpty,
+    ],
+  );
 
   useEffect(() => {
     loadData();
@@ -158,22 +195,11 @@ const ListStandard: FC<ListStandardProps> = (props) => {
       className={`${selectorPrefix}`}
       renderMain={
         <div className={`${selectorPrefix}-auto`} ref={mainRef}>
-          <CommentList
-            getScrollWrapContainer={getScrollWrapContainer}
-            isLoading={loading}
-            hasMore={(data[dataKeys!.list] as Array<any>).length <= data[dataKeys!.totalCount]}
-            onLoadMore={onLoadMore}
-            renderFirstLoading={renderFirstLoading}
-            {...(listProps || {})}
-          >
-            <ConditionalRender conditional={!isEmpty()} noMatch={() => renderEmpty()}>
-              {() => renderList?.(data)}
-            </ConditionalRender>
-          </CommentList>
+          {_CommentList}
         </div>
       }
     />
   );
 };
 
-export default ListStandard;
+export default memo(ListStandard);

@@ -6,6 +6,11 @@ import { ContextMenuContext } from './types';
  * ProviderContext
  */
 export const ProviderContext = React.createContext<ContextMenuContext>({
-  config: {},
+  config: {
+    x: 0,
+    y: 0,
+    width: 0,
+    maskClosable: true,
+  },
   el: null,
 });

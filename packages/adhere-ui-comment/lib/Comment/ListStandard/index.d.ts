@@ -1,11 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { ListStandardProps } from '../../types';
-/**
- * ListStandard
- * @param props
- * @return {JSX.Element}
- * @constructor
- * @classdesc 上拉下拽
- */
-declare const ListStandard: FC<ListStandardProps>;
-export default ListStandard;
+declare const _default: React.NamedExoticComponent<ListStandardProps>;
+export default _default;

@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-bmap",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "百度地图3.0的封装",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -11,29 +21,30 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "startapp": "cross-env environment=dev mode=development ctbuild startapp --define alias=@,evnVars=true,cssModules=true",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "postbuildpackage": "node script/removeUseStrict.js",
     "buildumd": "ctbuild buildumd --packagename AdhereBMap --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.22",
+    "@baifendian/adhere-ui-css": "^1.0.22",
+    "@baifendian/adhere-util": "^1.0.22",
+    "@baifendian/adhere-util-emitter": "^1.0.22",
+    "@baifendian/adhere-util-intl": "^1.0.22",
+    "@turf/turf": "^6.5.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "bmap-wind": "^1.1.1-alpha.2",
+    "classnames": "^2.3.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
@@ -42,18 +53,11 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
   },
-  "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
-    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-util": "^1.0.20",
-    "@baifendian/adhere-util-emitter": "^1.0.20",
-    "@baifendian/adhere-util-intl": "^1.0.20",
-    "@turf/turf": "^6.5.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "bmap-wind": "^1.1.1-alpha.2",
-    "classnames": "^2.3.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

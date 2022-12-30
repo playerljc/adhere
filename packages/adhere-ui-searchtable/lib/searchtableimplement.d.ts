@@ -1,13 +1,14 @@
-import { RefObject, ReactElement } from 'react';
 import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
-import { SearchTableImplementProps, SearchTableImplementState, ISearchTableImplement } from './types';
-import SearchTable from './searchtable';
+import { ReactElement, RefObject } from 'react';
+import SearchTable from './SearchTable';
+import { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
+export declare const selectorPrefix = "adhere-ui-searchtableimplement";
 /**
  * SearchTableImplement
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
-declare class SearchTableImplement extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
+export declare class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState> extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
     innerWrapRef: RefObject<HTMLDivElement>;
     constructor(props: any);
     componentDidMount(): void;
@@ -88,6 +89,10 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
      */
     getTableNumberColumnWidth(): number;
     /**
+     * getTableNumberColumnProps
+     */
+    getTableNumberColumnProps(): object;
+    /**
      * getRowKey
      * @override
      * @description - 数据的主键
@@ -137,6 +142,12 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
      */
     renderInner(): ReactElement | null;
     /**
+     * renderSearchFooterItems
+     * @description - 渲染表格的工具栏
+     * @override
+     */
+    renderSearchFooterItems(): Array<any>;
+    /**
      * getOrderFieldProp
      * @description - 获取排序字段
      * @override
@@ -167,12 +178,6 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
      * @override
      */
     clear(): Promise<void>;
-    /**
-     * renderSearchFooterItems
-     * @description - 渲染表格的工具栏
-     * @override
-     */
-    renderSearchFooterItems(): Array<any>;
     /**
      * showLoading
      * @description - 是否显示遮罩
@@ -210,5 +215,16 @@ declare class SearchTableImplement extends SearchTable<SearchTableImplementProps
     renderSearchFormBefore(): ReactElement | null;
     renderTableFooter(): ReactElement | null;
     renderTableHeader(): ReactElement | null;
+    onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
+    onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
 }
-export default SearchTableImplement;
+/**
+ * SearchTableImplementFactory
+ * @description 创建SearchTableImplementFactory
+ * @param serviceNames
+ * @param mapStateToProps
+ * @param mapDispatchToProps
+ * @constructor
+ */
+declare const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>;
+export default SearchTableImplementFactory;

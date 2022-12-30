@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -218,4 +218,4 @@ export const cardPropTypes = {
 
 // Card.propTypes = cardPropTypes;
 
-export default Card;
+export default memo(Card);

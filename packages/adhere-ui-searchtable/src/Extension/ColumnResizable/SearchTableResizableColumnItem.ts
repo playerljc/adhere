@@ -57,8 +57,26 @@ export default ({
     width,
     // 加入onHeaderCell
     onHeaderCell: () => {
+      const findLoop: any = (__columns) => {
+        let res;
+
+        for (let i = 0; i < __columns.length; i++) {
+          if (__columns[i].dataIndex === column.dataIndex) {
+            res = __columns[i];
+            break;
+          } else {
+            if (__columns[i].children && Array.isArray(__columns[i].children)) {
+              res = findLoop(__columns[i].children);
+              if (res) break;
+            }
+          }
+        }
+
+        return res;
+      };
+
       const _columns = context.getTableColumns();
-      const _column = _columns.find((_t) => _t.dataIndex === column.dataIndex);
+      const _column = findLoop(_columns);
       const { onHeaderCell, ..._others } = _column;
       return {
         width: _others.width,

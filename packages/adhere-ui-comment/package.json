@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-comment",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "评论",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -18,39 +28,19 @@
     "buildumd": "ctbuild buildumd --packagename AdhereComment --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "@babel/preset-react": "^7.14.5",
-    "@babel/runtime": "^7.7.4",
-    "@ctsj/buildv": "^5.0.4",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^3.8.2"
-  },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@baifendian/adhere-ui-backtopanimation": "^1.0.20",
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
-    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.20",
-    "@baifendian/adhere-ui-hooks": "^1.0.18",
-    "@baifendian/adhere-ui-scrollload": "^1.0.20",
-    "@baifendian/adhere-util": "^1.0.20",
-    "@baifendian/adhere-util-intl": "^1.0.20",
+    "@baifendian/adhere-ui-backtopanimation": "^1.0.22",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.22",
+    "@baifendian/adhere-ui-css": "^1.0.22",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.22",
+    "@baifendian/adhere-ui-hooks": "^1.0.22",
+    "@baifendian/adhere-ui-scrollload": "^1.0.22",
+    "@baifendian/adhere-util": "^1.0.22",
+    "@baifendian/adhere-util-intl": "^1.0.22",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
     "@types/emoji-mart": "^3.0.9",
@@ -61,5 +51,20 @@
     "emoji-mart": "^5.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
+    "@babel/runtime": "^7.7.4",
+    "@ctsj/buildv": "^5.0.4",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.8.2"
+  },
+  "peerDependencies": {
+    "antd": ">=4.22.2",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

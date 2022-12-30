@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-searchtable",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "一种查询表格的通用模式(如果 UI 没有明确给出查询表格的 UI，就可以用这个默认模式)",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -11,27 +21,50 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true",
     "buildpackage:cjs": "ctbuildv buildpackagets -c ctbuildv.package.ts.cjs.config.js -o lib",
     "buildpackage:es": "ctbuildv buildpackagets -c ctbuildv.package.ts.esm.config.js -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereSearchTable --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "@ant-design/icons": "^4.8.0",
+    "@baifendian/adhere-ui-antdformitem": "^1.0.22",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.22",
+    "@baifendian/adhere-ui-css": "^1.0.22",
+    "@baifendian/adhere-ui-flexlayout": "^1.0.22",
+    "@baifendian/adhere-ui-slidelayout": "^1.0.22",
+    "@baifendian/adhere-ui-space": "^1.0.22",
+    "@baifendian/adhere-ui-split": "^1.0.22",
+    "@baifendian/adhere-ui-suspense": "^1.0.22",
+    "@baifendian/adhere-ui-tablegridlayout": "^1.0.22",
+    "@baifendian/adhere-ui-tableheadsearch": "^1.0.22",
+    "@baifendian/adhere-util-intl": "^1.0.22",
+    "@baifendian/adhere-util-resource": "^1.0.22",
+    "@baifendian/adhere-util-validator": "^1.0.21",
+    "@ctsj/router": "^1.0.4",
+    "@ctsj/state": "^2.0.23",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "antd": "^4.22.2",
+    "array-move": "^4.0.0",
+    "classnames": "^2.2.6",
+    "immutability-helper": "^3.1.1",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.merge": "^4.6.2",
+    "moment": "^2.29.4",
+    "omit.js": "^2.0.2",
+    "qs": "^6.11.0",
+    "react": "^17.0.1",
+    "react-dnd": "^15.1.2",
+    "react-dnd-html5-backend": "^15.1.3",
+    "react-dom": "^17.0.1",
+    "react-resizable": "^3.0.4",
+    "react-sortable-hoc": "^2.0.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
@@ -40,22 +73,13 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
   },
-  "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.20",
-    "@baifendian/adhere-ui-css": "^1.0.18-fix.1",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.20",
-    "@baifendian/adhere-ui-suspense": "^1.0.20",
-    "@baifendian/adhere-util-intl": "^1.0.20",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "antd": "^4.9.4",
-    "array-move": "^4.0.0",
-    "classnames": "^2.2.6",
-    "omit.js": "^2.0.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-resizable": "^3.0.4",
-    "react-sortable-hoc": "^2.0.0"
+  "peerDependencies": {
+    "antd": ">=4.22.2",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

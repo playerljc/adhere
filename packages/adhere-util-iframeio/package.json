@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-util-iframeio",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "iframe的通信客户端和服务端",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -18,24 +28,11 @@
     "buildumd": "ctbuild buildumd --packagename AdhereEmitter --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.20",
+    "@baifendian/adhere-util": "^1.0.22",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -48,5 +45,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "typescript": "^3.8.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

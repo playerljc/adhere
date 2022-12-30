@@ -1,0 +1,2 @@
+"use strict";require("core-js/modules/es.object.define-property.js"),Object.defineProperty(exports,"__esModule",{value:!0});var tslib_1=require("tslib"),react_1=tslib_1.__importDefault(require("react")),router_1=require("@ctsj/router");exports.default=function(e){var r=e.className,t=e.style,o=e.record,s=e.rowIndex,a=e.dataIndex,u=e.to,e=e.children;return react_1.default.createElement(router_1.Link,{className:r||"",style:t||{},to:u},e?e({record:o,rowIndex:s,dataIndex:a}):o[a])};
+//# sourceMappingURL=index.js.map

@@ -1,4 +1,3 @@
-// @ts-ignore
 import Util from '@baifendian/adhere-util';
 
 import {

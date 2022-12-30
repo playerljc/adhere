@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
+  memo,
   useCallback,
   useContext,
   useImperativeHandle,
@@ -68,4 +69,4 @@ const Menu: ForwardRefRenderFunction<MenuRefHandle, MenuProps> = (props, ref) =>
   );
 };
 
-export default forwardRef<MenuRefHandle, MenuProps>(Menu);
+export default memo(forwardRef<MenuRefHandle, MenuProps>(Menu));

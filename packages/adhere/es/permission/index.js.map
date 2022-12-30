@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["permission/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-permission/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,+DACQA"}
+{"version":3,"file":"index.js","sources":["permission/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-permission/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,qDACHA"}

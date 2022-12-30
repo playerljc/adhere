@@ -46,7 +46,7 @@ function getMinZoom(target) {
  */
 function transformLonLat(point?: Array<number>) {
   return transform(
-    point,
+    <any>point,
     Resource.Dict.value.ResourceGisEpsg3857.value,
     Resource.Dict.value.ResourceGisEpsg4326.value,
   );
@@ -110,6 +110,7 @@ export default {
       if (fitZoom) {
         zoom = fitZoom;
       } else {
+        // @ts-ignore
         const mapExtentTransform = [].concat(fromLonLat(extent[0])).concat(fromLonLat(extent[1]));
         const resolution = map.getView().getResolutionForExtent(mapExtentTransform);
         zoom = map.getView().getZoomForResolution(resolution);
@@ -490,6 +491,7 @@ export default {
 
     point.setStyle(
       new Style({
+        // @ts-ignore
         image: new RegularShape({
           fill: new Fill(fillOpt),
           stroke: new Stroke(strokeOpt),
@@ -622,7 +624,9 @@ export default {
     const ring = new LinearRing(points);
     ring.rotate(Math.PI - ((angel - r / 2) / 180) * Math.PI, origin);
     const poy = new Polygon([points]);
+    // @ts-ignore
     const a = ring.A;
+    // @ts-ignore
     poy.A = a;
 
     return poy;
@@ -680,8 +684,8 @@ export default {
         stroke: new Stroke({
           width,
           color,
-          lineCap,
-          lineJoin,
+          lineCap: lineCap as CanvasLineCap,
+          lineJoin: lineJoin as CanvasLineJoin,
         }),
       }),
     );
@@ -723,7 +727,7 @@ export default {
 
     drawPolygonInteraction.on('drawend', (e) => {
       e.feature.setId(v4());
-      const geometry = e.feature.getGeometry();
+      const geometry = e.feature.getGeometry() as any;
       const lonlats = [];
       const coordinates = geometry.getCoordinates()[0].map((v) => {
         // @ts-ignore
@@ -762,7 +766,7 @@ export default {
     });
 
     drawCircleInteraction.on('drawend', (e) => {
-      const geometry = e.feature.getGeometry();
+      const geometry = e.feature.getGeometry() as any;
       // 半径
       const radius = geometry.getRadius();
       // 中心点
@@ -801,7 +805,7 @@ export default {
 
     drawBoxInteraction.on('drawend', (e) => {
       e.feature.setId(v4());
-      const geometry = e.feature.getGeometry();
+      const geometry = e.feature.getGeometry() as any;
       const coordinates = geometry.getCoordinates()[0].map((v) => {
         return v;
       });
@@ -836,7 +840,7 @@ export default {
 
     drawPolygonInteraction.on('drawend', (e) => {
       e.feature.setId(v4());
-      const geometry = e.feature.getGeometry();
+      const geometry = e.feature.getGeometry() as any;
       const lonlats = [];
       const coordinates = geometry.getCoordinates().map((v) => {
         // @ts-ignore

@@ -1,129 +1,55 @@
-import { IAntdTreeNode, IFlatTreeArrNode } from './types';
-declare const _default: {
-    /**
-     * treeToArray
-     * @description tree数据转换成Array
-     * @param treeData
-     * @param config
-     */
-    treeToArray(treeData: IAntdTreeNode[], config: {
+import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
+interface TreeUtilType {
+    treeToArray: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
-    }): any[];
-    /**
-     * arrayToAntdTree - array转换成Tree
-     * @param arr
-     * @param keyAttr - id的属性
-     * @param titleAttr - title的属性
-     * @param parentIdAttr - parentId的属性
-     * @param rootParentId - root的parentId值
-     */
-    arrayToAntdTree(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): {
-        rootParentId: string | number;
-        titleAttr: string;
-        children: any[];
-        keyAttr: string;
-        parentIdAttr: string;
-        title: any;
-        isLeaf: boolean;
-        key: any;
-        properties: {
-            rootParentId: string | number;
-            titleAttr: string;
-            keyAttr: string;
-            parentIdAttr: string;
-        };
+    }) => {
+        [props: string]: any;
+        children?: any[];
+        key?: string | number;
     }[];
-    /**
-     * arrayToAntdTreeSelect - array转换成TreeSelect
-     * @param arr
-     * @param keyAttr - id的属性
-     * @param titleAttr - title的属性
-     * @param parentIdAttr - parentId的属性
-     * @param rootParentId - root的parentId值
-     */
-    arrayToAntdTreeSelect(arr: any[], { keyAttr, titleAttr, rootParentId, parentIdAttr }: IFlatTreeArrNode): {
-        rootParentId: string | number;
-        titleAttr: string;
-        children: any[];
-        keyAttr: string;
-        parentIdAttr: string;
-        title: any;
-        value: any;
-        isLeaf: boolean;
-        key: any;
-        properties: {
-            rootParentId: string | number;
-            titleAttr: string;
-            keyAttr: string;
-            parentIdAttr: string;
-        };
-    }[];
-    /**
-     * getAncestor - 获取祖先
-     * @param data
-     * @param node
-     * @param config
-     */
-    getAncestor(data: any[], node: any, config: {
-        keyAttr: string;
-        parentIdAttr: string;
-        rootParentId: string | number;
-    }): any[];
-    /**
-     * getDescendants
-     * @description - 获取子孙
-     */
-    getDescendants(data: any[], node: any, config: {
-        keyAttr: string;
-        parentIdAttr: string;
-        rootParentId: string | number;
-    }): any[];
-    /**
-     * filterTree - 本地过滤tree
-     * @param data
-     * @param kw
-     * @param config
-     */
-    filterTree(data: any[], kw: string, config: {
+    arrayToAntdTree: (arr: {
+        [props: string]: any;
+        children?: any[];
+        isLeaf?: boolean;
+        properties?: any;
+    }[], config: IFlatTreeArrNode) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    arrayToAntdTreeSelect: (arr: any[], config: IFlatTreeArrNode) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    getAncestor: (data: any[], node: any, config: Omit<IFlatTreeArrNode, 'titleAttr'>) => any[];
+    getDescendants: (data: any[], node: any, config: Omit<IFlatTreeArrNode, 'titleAttr'>) => any[];
+    filterTreeByFlatData: (treeFlatNodes: any[], kw: string, config: IFlatTreeArrNode & {
         filterAttr: string;
+    }) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    filterTree: (treeNodes: (IAntdTreeNode | IAntdTreeSelectNode)[], kw: string, config: IFlatTreeArrNode & {
+        filterAttr: string;
+    }) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    findNodeByKey: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
-        parentIdAttr: string;
-        rootParentId: string | number;
-        titleAttr: string;
-    }): {
-        rootParentId: string | number;
-        titleAttr: string;
-        children: any[];
-        keyAttr: string;
-        parentIdAttr: string;
-        title: any;
-        isLeaf: boolean;
-        key: any;
-        properties: {
-            rootParentId: string | number;
-            titleAttr: string;
-            keyAttr: string;
-            parentIdAttr: string;
-        };
+    }) => IAntdTreeNode | IAntdTreeSelectNode | null;
+    transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => IAntdTreeNode | IAntdTreeSelectNode) => (IAntdTreeNode | IAntdTreeSelectNode)[];
+    getLeafNodesByIndex: (nodes: {
+        [props: string]: any;
+    }[], childrenAttr?: string, indexAttr?: string) => {
+        [props: string]: any;
     }[];
-    /**
-     * findNodeByKey
-     * @description - 根据keyAttr查找结点
-     * @param treeData
-     * @param val
-     * @param config
-     */
-    findNodeByKey(treeData: IAntdTreeNode[], val: any, config: {
-        keyAttr: string;
-    }): IAntdTreeNode | null;
-    /**
-     * transformTreeData
-     * @description - 转换一个treeData为antd的TreeData
-     * @param treeData
-     * @param onCallback
-     * @return IAntdTreeNode[]
-     */
-    transformTreeData(treeData: any[], onCallback: (node: any) => IAntdTreeNode): IAntdTreeNode[];
-};
-export default _default;
+    getLeafNodes: (nodes: {
+        [props: string]: any;
+    }[], childrenAttr?: string) => {
+        [props: string]: any;
+    }[];
+    getLeafNodeByFlatData: (arr: any[], config: IFlatTreeArrNode) => {
+        [props: string]: any;
+    }[];
+    getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string) => {
+        [props: string]: any;
+    }[];
+    getTreeLevel: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[]) => number;
+    getTreeLevelByIndex: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[], indexAttr?: string) => number;
+    getTreeLevelToFlat: (flatArr: any[], config: IFlatTreeArrNode) => number;
+    getTreeLevelByIndexToFlat: (flatArr: any[], config: IFlatTreeArrNode, indexAttr: string) => number;
+    completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: IFlatTreeArrNode) => (IFlatTreeArrNode & Omit<IAntdTreeNode | IAntdTreeSelectNode, 'value'>)[];
+    excludeAntdTreeNodes: (nodes: IAntdTreeNode[], excludeKeys: string[]) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    excludeAntdSelectTreeNodes: (nodes: IAntdTreeSelectNode[], excludeKeys: string[]) => (IFlatTreeArrNode & Omit<IAntdTreeSelectNode, 'value'>)[];
+}
+declare const TreeUtil: TreeUtilType;
+export default TreeUtil;

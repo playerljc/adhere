@@ -1,0 +1,17 @@
+{
+  "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "declarationDir": "./lib",
+    "outDir": "./lib",
+    "baseUrl": "./",
+    "module": "esnext",
+    "target": "ES6"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { PushProps } from './types';
-declare const Push: FC<PushProps>;
-export default Push;
+declare const _default: React.NamedExoticComponent<PushProps>;
+export default _default;

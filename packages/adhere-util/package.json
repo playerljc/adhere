@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-util",
-  "version": "1.0.20",
+  "version": "1.0.22",
   "description": "工具类",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -11,27 +21,22 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true",
+    "buildpackage:cjs": "ctbuild buildpackagets  -p tsconfig.cjs.json -o lib",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --packagename AdhereUtil --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
   "resolutions": {
     "graceful-fs": "4.2.2"
   },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "@baifendian/adhere-util-preferences": "^1.0.22",
+    "@baifendian/adhere-util-watchmemoized": "^1.0.22",
+    "crypto-js": "^4.1.1",
+    "vkbeautify": "^0.99.3",
+    "xml-objtree": "^0.24.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
@@ -39,9 +44,8 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^3.8.2"
   },
-  "dependencies": {
-    "@baifendian/adhere-util-preferences": "^1.0.18",
-    "@baifendian/adhere-util-watchmemoized": "^1.0.20"
+  "publishConfig": {
+    "access": "public"
   },
   "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
 }

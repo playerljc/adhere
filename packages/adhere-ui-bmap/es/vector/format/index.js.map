@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["vector/format/index.js"],"sourcesContent":["import GeoJSONFormat from './GeoJSONFormat';\r\nexport { GeoJSONFormat };\r\n"],"names":["GeoJSONFormat"],"mappings":"OAAOA,2CACEA"}
+{"version":3,"file":"index.js","sources":["vector/format/index.js"],"sourcesContent":["import GeoJSONFormat from './GeoJSONFormat';\r\nexport { GeoJSONFormat };\r\n"],"names":["GeoJSONFormat"],"mappings":"OAAOA,kBAAmB,yBACjBA,aAAe"}

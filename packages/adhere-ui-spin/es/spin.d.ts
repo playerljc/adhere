@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { SpinProps } from './types';
-declare const Spin: FC<SpinProps>;
-export default Spin;
+declare const _default: React.NamedExoticComponent<SpinProps>;
+export default _default;

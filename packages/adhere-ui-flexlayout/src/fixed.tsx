@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { FixedProps } from './types';
 
@@ -22,4 +22,4 @@ const Fixed: FC<FixedProps> = (props) => {
   );
 };
 
-export default Fixed;
+export default memo(Fixed);

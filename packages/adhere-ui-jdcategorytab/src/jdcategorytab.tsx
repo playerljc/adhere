@@ -3,6 +3,7 @@ import IScroll from 'iscroll/build/iscroll';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
+  memo,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -179,8 +180,9 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
 };
 
 // @ts-ignore
-const JdCategoryTabHOC: JdCategoryTabHOCFunction<JdCategoryTabRefHandle, JdCategoryTabProps> =
-  forwardRef<JdCategoryTabRefHandle, JdCategoryTabProps>(JdCategoryTab);
+const JdCategoryTabHOC: JdCategoryTabHOCFunction<JdCategoryTabRefHandle, JdCategoryTabProps> = memo(
+  forwardRef<JdCategoryTabRefHandle, JdCategoryTabProps>(JdCategoryTab),
+);
 JdCategoryTabHOC.Item = JdCategoryTabItem;
 
 export default JdCategoryTabHOC;

@@ -1,4 +1,4 @@
-import type { MenuData, Config } from './types';
+import type { Config, MenuData } from './types';
 declare const ContextMenu: {
     /**
      * config

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useContext, useLayoutEffect, useRef } from 'react';
+import React, { FC, memo, useContext, useLayoutEffect, useRef } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -441,4 +441,4 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
   );
 };
 
-export default SplitLayout;
+export default memo(SplitLayout);

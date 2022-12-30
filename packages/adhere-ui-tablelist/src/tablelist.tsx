@@ -25,7 +25,7 @@ const defaultRowKey = 'id';
  * @class Template
  * @classdesc Template
  */
-class TableList<RecordType extends object = any> extends React.Component<
+class TableList<RecordType extends object = any> extends React.PureComponent<
   TableListProps<RecordType>,
   any
 > {
@@ -138,6 +138,7 @@ class TableList<RecordType extends object = any> extends React.Component<
         nextProps.table.rowSelection &&
         nextProps.table.rowSelection.onChange
       ) {
+        // @ts-ignore
         nextProps.table.rowSelection.onChange(selectedRowKeys, cloneDeep(dataSource));
         return false;
       }

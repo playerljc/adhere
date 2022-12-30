@@ -137,5 +137,13 @@ export const Comment = lazy(() =>
 );
 
 export const ConfigProvider = lazy(() =>
-  import(/* webpackChunkName: "comment" */ '@/components/ui/configprovider'),
+  import(/* webpackChunkName: "configprovider" */ '@/components/ui/configprovider'),
+);
+
+export const AntdFormItem = lazy(() =>
+  import(/* webpackChunkName: "antdformitem" */ '@/components/ui/antdformitem'),
+);
+
+export const ReactQuillSandbox = lazy(() =>
+  import(/* webpackChunkName: "reactquillsandbox" */ '@/components/ui/reactquillsandbox'),
 );

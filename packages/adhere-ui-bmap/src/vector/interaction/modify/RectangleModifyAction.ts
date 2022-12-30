@@ -1,4 +1,3 @@
-// @ts-ignore
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
@@ -14,6 +13,9 @@ import ModifyAction from './ModifyAction';
  * @remark:
  */
 class RectangleModifyAction extends ModifyAction {
+  setCursor(): void {
+    throw new Error('Method not implemented.');
+  }
   private rectangleAnchorPoints: IPoint[] = [];
 
   private indexToModifyHandlerMapping: Map<number, Function> = new Map<number, Function>([
@@ -245,7 +247,7 @@ class RectangleModifyAction extends ModifyAction {
   /**
    * getSelectType
    */
-  protected getSelectType(): SelectType {
+  getSelectType(): SelectType {
     return SelectType.Rectangle;
   }
 

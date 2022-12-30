@@ -40,7 +40,7 @@
             flex-grow: 1;
             min-width: 0;
             padding: 10px 10px 10px 0;
-            font-size: 14px;
+            font-size: @adhere-base-font-size;
             opacity: 0;
             transition: opacity @adhere-ui-notification-transitionduration 0ms;
             .adhere-word-break();
@@ -61,7 +61,7 @@
               }
 
               > .adhere-ui-notification-standard-header-label {
-                font-size: 14px;
+                font-size: @adhere-base-font-size;
                 .adhere-text-inline-overflow();
               }
             }
@@ -90,7 +90,7 @@
                 width: @adhere-ui-notification-standard-header-icon-width;
                 margin: 10px;
                 overflow: hidden;
-                font-size: 14px;
+                font-size: @adhere-base-font-size;
                 .adhere-word-break();
               }
 
@@ -100,12 +100,12 @@
 
                 > .adhere-ui-notification-standard-content-row-title {
                   margin-bottom: 10px;
-                  font-size: 16px;
+                  font-size: @adhere-large-font-size;
                   .adhere-text-inline-overflow();
                 }
 
                 > .adhere-ui-notification-standard-content-row-text {
-                  font-size: 14px;
+                  font-size: @adhere-base-font-size;
                   line-height: 21px;
                   .adhere-word-break();
                 }

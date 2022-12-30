@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { MenuItemProps } from './types';
-declare const MenuItem: FC<MenuItemProps>;
-export default MenuItem;
+declare const _default: React.NamedExoticComponent<MenuItemProps>;
+export default _default;

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import type { JdCategoryTabItemProps } from './types';
 
@@ -15,4 +15,4 @@ const JdCategoryTabItem: FC<JdCategoryTabItemProps> = (props) => {
   );
 };
 
-export default JdCategoryTabItem;
+export default memo(JdCategoryTabItem);

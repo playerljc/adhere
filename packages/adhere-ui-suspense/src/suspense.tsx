@@ -21,7 +21,7 @@ abstract class Suspense<
     P extends SuspenseProps = SuspenseProps,
     S extends SuspenseState = SuspenseState,
   >
-  extends React.Component<P, S>
+  extends React.PureComponent<P, S>
   implements ISuspense
 {
   // 第一次

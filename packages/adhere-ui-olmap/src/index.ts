@@ -5,7 +5,6 @@ import OLMap from './olmap';
 import * as TitleLayer from './titlelayer';
 import Util from './util';
 
-// @ts-ignore
 export default {
   AnimationManager,
   GeoLayer,

@@ -86,7 +86,7 @@ class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> 
 
     const { activeKey } = this.state;
 
-    const item = config.find((c) => c.key === activeKey);
+    const item = config?.find((c) => c.key === activeKey);
 
     return Promise.resolve(item ? item.codeText : '');
   }

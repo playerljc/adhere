@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Intl } from '@baifendian/adhere';
+
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
@@ -275,6 +277,8 @@ export default () => {
           },
         ]}
       />
+
+      <div>11111111:{Intl.get('key1')}</div>
     </PlayGroundPage>
   );
 };

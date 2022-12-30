@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -243,4 +243,4 @@ const Table: FC<TableProps> = (props) => {
 //   rowKey: PropTypes.string,
 // };
 
-export default Table;
+export default memo(Table);

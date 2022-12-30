@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import Node from '../../Components/Node';
 import { NodeProps } from '../../types';
@@ -15,4 +15,4 @@ const CommentInfo: FC<NodeProps> = (props) => (
   </Node>
 );
 
-export default CommentInfo;
+export default memo(CommentInfo);

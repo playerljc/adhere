@@ -41,4 +41,4 @@ export const CodePanelPropTypes = {
 
 // CodePanel.propTypes = CodePanelPropTypes;
 
-export default memo<any>(CodePanel);
+export default memo<CodePanelProps>(CodePanel);

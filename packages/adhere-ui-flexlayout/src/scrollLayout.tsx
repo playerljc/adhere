@@ -1,5 +1,11 @@
 import classNames from 'classnames';
-import React, { ForwardRefRenderFunction, createContext, forwardRef, useContext } from 'react';
+import React, {
+  FC,
+  createContext,
+  forwardRef, // memo,
+  useContext,
+  useRef,
+} from 'react';
 
 import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 
@@ -24,15 +30,13 @@ export const useScrollLayout = () => {
 /**
  * ScrollLayout
  * @param props
- * @param wrapRef
  * @return {JSX.Element}
  * @constructor
  */
-const ScrollLayout: ForwardRefRenderFunction<HTMLDivElement, ScrollLayoutProps> = (
-  props,
-  wrapRef,
-) => {
+const ScrollLayout: FC<ScrollLayoutProps> = (props) => {
   const { children, className, style, scrollY } = props;
+
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   return (
     <ScrollLayoutContext.Provider
@@ -51,4 +55,4 @@ const ScrollLayout: ForwardRefRenderFunction<HTMLDivElement, ScrollLayoutProps> 
   );
 };
 
-export default forwardRef<HTMLDivElement, ScrollLayoutProps>(ScrollLayout);
+export default ScrollLayout;

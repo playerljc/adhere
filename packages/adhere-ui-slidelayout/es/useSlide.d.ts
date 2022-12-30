@@ -1,4 +1,4 @@
-import React, { RefObject, MutableRefObject } from 'react';
+import React, { MutableRefObject, RefObject } from 'react';
 import type { OverlayProps } from './types';
 declare const _default: (props: OverlayProps, el: RefObject<HTMLDivElement>, positionConfig: React.MutableRefObject<{
     init: {

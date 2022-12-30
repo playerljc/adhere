@@ -8,15 +8,15 @@ export interface ICircle {
 }
 export interface IAntdTreeNode {
     key: string;
+    title?: string;
     value: string;
-    title: string;
     isLeaf: boolean;
     children?: IAntdTreeNode[];
     properties?: any;
 }
 export interface IAntdTreeSelectNode {
     key: string;
-    label: string;
+    label?: string;
     value: string;
     isLeaf: boolean;
     children?: IAntdTreeNode[];

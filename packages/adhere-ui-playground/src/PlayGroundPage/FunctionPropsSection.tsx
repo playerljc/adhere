@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import Space from '@baifendian/adhere-ui-space';
 
@@ -35,4 +35,4 @@ const FunctionPropsSection: FC<FunctionPropsSectionProps> = (props) => {
 //   config: PropTypes.arrayOf(FunctionPropsPropTypes),
 // };
 
-export default FunctionPropsSection;
+export default memo(FunctionPropsSection);

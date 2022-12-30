@@ -1,5 +1,5 @@
+import { ICircleData, IInteractionLayer, IPoint, IStyle, SelectType } from '../types';
 import DrawAction from './DrawAction';
-import { IPoint, ICircleData, IStyle, SelectType, IInteractionLayer } from '../types';
 /**
  * CircleDrawAction
  * @class

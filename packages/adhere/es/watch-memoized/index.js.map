@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["watch-memoized/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-watchmemoized/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,oEACQA"}
+{"version":3,"file":"index.js","sources":["watch-memoized/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-watchmemoized/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}

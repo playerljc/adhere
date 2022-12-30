@@ -1,2 +1,2 @@
-"use strict";require("core-js/modules/es.object.define-property.js");var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _successprompt=_interopRequireDefault(require("./successprompt")),_default=_successprompt.default;exports.default=_default;
+"use strict";require("core-js/modules/es.object.define-property.js"),Object.defineProperty(exports,"__esModule",{value:!0});var successprompt_1=require("./successprompt");exports.default={openSuccessMessage:successprompt_1.openSuccessMessage,openSuccessDialog:successprompt_1.openSuccessDialog};
 //# sourceMappingURL=index.js.map

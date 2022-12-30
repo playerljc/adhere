@@ -1,11 +1,19 @@
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
-import React, { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+// import PropTypes from 'prop-types';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
+import Util from '@baifendian/adhere-util';
 import { ResizeObserver } from '@juggle/resize-observer';
 
-import { Mode, Point, WritingBoardProps } from './types';
+import { Mode, Point, WritingBoardHandle, WritingBoardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-writingboard';
 
@@ -15,7 +23,17 @@ const selectorPrefix = 'adhere-ui-writingboard';
  * @param ref
  * @constructor
  */
-function WritingBoard(props: WritingBoardProps, ref) {
+const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardProps> = (
+  props,
+  ref,
+) => {
+  const {
+    defaultMode = Mode.FREE,
+    defaultLineWidth = 2,
+    defaultStrokeStyle = '#000',
+    resizeTime = 300,
+  } = props;
+
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
@@ -23,9 +41,9 @@ function WritingBoard(props: WritingBoardProps, ref) {
 
   const startPoint = useRef<Point | null>(null);
   const prePoint = useRef<Point | null>(null);
-  const curShape = useRef<Mode>(props.defaultMode);
-  const lineWidth = useRef<number>(props.defaultLineWidth);
-  const strokeStyle = useRef<string>(props.defaultStrokeStyle);
+  const curShape = useRef<Mode>(defaultMode);
+  const lineWidth = useRef<number>(defaultLineWidth);
+  const strokeStyle = useRef<string>(defaultStrokeStyle);
   const stack = useRef<any>([]);
   const stackIndex = useRef<number>(0);
 
@@ -524,6 +542,66 @@ function WritingBoard(props: WritingBoardProps, ref) {
     stackIndex.current = 0;
   }
 
+  /**
+   * toDataURL
+   * @default canvas导出base64
+   * @param backgroundColor
+   * @param type
+   * @param quality
+   */
+  function toDataURL(backgroundColor?: string, type?: string, quality?: any) {
+    if (backgroundColor) {
+      const [R, G, B] = Util.colorToRgb(backgroundColor);
+
+      const fillsIndex: number[] = [];
+
+      // 先设置背景
+      let imageData = ctx?.current?.getImageData(
+        0,
+        0,
+        canvasRef?.current?.width!,
+        canvasRef?.current?.height!,
+      )!;
+
+      for (let i = 0; i < imageData?.data?.length; i += 4) {
+        // 当该像素是透明的，则设置成backgroundColor
+        if (imageData.data[i + 3] === 0) {
+          imageData.data[i] = R; // R
+          imageData.data[i + 1] = G; // G
+          imageData.data[i + 2] = B; // B
+          imageData.data[i + 3] = 255;
+
+          fillsIndex.push(i);
+          fillsIndex.push(i + 1);
+          fillsIndex.push(i + 2);
+          fillsIndex.push(i + 3);
+        }
+      }
+
+      ctx?.current?.putImageData(imageData, 0, 0);
+
+      // 生成base64字符串
+      const base64 = canvasRef?.current?.toDataURL(type || 'image/png', quality);
+
+      // 删除背景
+      imageData = ctx?.current?.getImageData(
+        0,
+        0,
+        canvasRef?.current?.width!,
+        canvasRef?.current?.height!,
+      )!;
+
+      fillsIndex.forEach((index) => {
+        imageData.data[index] = 0;
+      });
+      ctx?.current?.putImageData(imageData, 0, 0);
+
+      return base64;
+    }
+
+    return canvasRef?.current?.toDataURL(type || 'image/png', quality);
+  }
+
   useImperativeHandle(ref, () => ({
     setMode: (mode) => {
       curShape.current = mode;
@@ -542,8 +620,11 @@ function WritingBoard(props: WritingBoardProps, ref) {
     /**
      * toDataURL
      * @description 获取base64
+     * @param backgroundColor 背景色
+     * @param type 导出的图片类型
+     * @param quality 搭配出图片的质量
      */
-    toDataURL: () => canvasRef?.current?.toDataURL('image/png', 1.0),
+    toDataURL,
   }));
 
   useLayoutEffect(() => {
@@ -556,7 +637,7 @@ function WritingBoard(props: WritingBoardProps, ref) {
       ctx?.current?.clearRect(0, 0, canvasRef?.current?.width!, canvasRef?.current?.height!);
 
       drawStack();
-    }, props.resizeTime);
+    }, resizeTime);
 
     ro.current = new ResizeObserver(onResize);
 
@@ -592,27 +673,27 @@ function WritingBoard(props: WritingBoardProps, ref) {
       <canvas ref={canvasRef} />
     </div>
   );
-}
-
-const Wrap = forwardRef(WritingBoard);
-
-Wrap.defaultProps = {
-  className: '',
-  style: {},
-  defaultMode: Mode.FREE,
-  defaultStrokeStyle: '#000',
-  defaultLineWidth: 2,
-  resizeTime: 300,
 };
 
-Wrap.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  // @ts-ignore
-  defaultMode: PropTypes.string.isRequired,
-  defaultStrokeStyle: PropTypes.string.isRequired,
-  defaultLineWidth: PropTypes.number.isRequired,
-  resizeTime: PropTypes.number.isRequired,
-};
+const Wrap = memo(forwardRef(WritingBoard));
+
+// Wrap.defaultProps = {
+//   className: '',
+//   style: {},
+//   defaultMode: Mode.FREE,
+//   defaultStrokeStyle: '#000',
+//   defaultLineWidth: 2,
+//   resizeTime: 300,
+// };
+//
+// Wrap.propTypes = {
+//   className: PropTypes.string,
+//   style: PropTypes.object,
+//   // @ts-ignore
+//   defaultMode: PropTypes.string.isRequired,
+//   defaultStrokeStyle: PropTypes.string.isRequired,
+//   defaultLineWidth: PropTypes.number.isRequired,
+//   resizeTime: PropTypes.number.isRequired,
+// };
 
 export default Wrap;

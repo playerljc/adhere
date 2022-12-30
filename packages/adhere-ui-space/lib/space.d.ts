@@ -1,3 +1,3 @@
 import { SpaceFunction, SpaceProps } from './types';
-declare const Space: SpaceFunction<SpaceProps>;
-export default Space;
+declare const MemoWrap: SpaceFunction<SpaceProps>;
+export default MemoWrap;

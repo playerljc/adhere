@@ -1,4 +1,4 @@
-import type { FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes, CSSProperties } from 'react';
+import type { CSSProperties, FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 export interface RevolvingHOCFunction<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
     Item: FC<RevolvingItemProps>;
 }

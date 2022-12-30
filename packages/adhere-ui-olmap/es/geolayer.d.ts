@@ -4,7 +4,7 @@ import { Vector as VectorLayer } from 'ol/layer';
  * @class GeoLayer
  * @classdesc openlayers中的geojson的layer
  */
-declare class GeoLayer extends VectorLayer {
+declare class GeoLayer extends VectorLayer<any> {
     private vectorSource;
     /**
      * constructor

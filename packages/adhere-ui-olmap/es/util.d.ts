@@ -1,13 +1,13 @@
+import Feature from 'ol/Feature.js';
 import Map from 'ol/Map';
+import Overlay from 'ol/Overlay.js';
+import { LineString, Point } from 'ol/geom';
 import Circle from 'ol/geom/Circle';
 import Polygon from 'ol/geom/Polygon';
-import { LineString, Point } from 'ol/geom';
-import Feature from 'ol/Feature.js';
-import Overlay from 'ol/Overlay.js';
-import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
-import { Vector as VectorSource } from 'ol/source.js';
 import Draw from 'ol/interaction/Draw.js';
 import Modify from 'ol/interaction/Modify';
+import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { Vector as VectorSource } from 'ol/source.js';
 import GeoLayer from './geolayer';
 import WindLayer from './windlayer';
 declare const _default: {

@@ -38,10 +38,12 @@ function initIntlMap(zh_CN) {
 
 /**
  * getLocal
+ * @description 生成k,v的对象
  * @param prefix
  * @param data
  */
 export function getLocal(prefix: string = 'local', data: Array<string>): object {
+  // 先去重
   const result = [...Array.from(new Set(data))];
 
   const local = {};
@@ -86,11 +88,13 @@ export default {
       prefix = 'local',
       currentLocale = 'zh_CN',
       locales = {},
+      mainLanguage = 'zh_CN',
       ...other
     }: {
       prefix: string;
       currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
       locales: any;
+      mainLanguage: string;
     },
     reload: boolean = false,
   ): Promise<any> {
@@ -125,10 +129,26 @@ export default {
 
     // 整合用户的locales
     for (const p in masterLocales) {
-      mainLocales[p] = getLocal(
-        prefix,
-        Array.from(new Set([...masterLocales[p], ...(slaveLocales[p] || [])])),
-      );
+      // 每一种语言都需要处理成k,v对象
+      const all = [...masterLocales[p], ...(slaveLocales[p] || [])];
+
+      const stringItems: string[] = [];
+      const objEntrys: any = [];
+
+      all.forEach((item) => {
+        if (typeof item === 'string') stringItems.push(item);
+        else objEntrys.push(item);
+      });
+
+      mainLocales[p] = getLocal(prefix, Array.from(new Set(stringItems)));
+
+      objEntrys.forEach((entry) => {
+        const keys = Object.keys(entry);
+
+        keys.forEach((key) => {
+          mainLocales[p][key] = entry[key];
+        });
+      });
     }
 
     return intl
@@ -139,7 +159,7 @@ export default {
       })
       .then(() => {
         // @ts-ignore
-        initIntlMap(mainLocales.zh_CN);
+        initIntlMap(mainLocales[mainLanguage]);
         isInit = true;
       });
   },

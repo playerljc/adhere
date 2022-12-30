@@ -8,7 +8,7 @@ import Constent from './constent';
 // import intl from '@baifendian/adhere-util-intl';
 import GeoLayer from './geolayer';
 // import * as TitleLayer from './titlelayer';
-import { IOLMapProps } from './types';
+import { OLMapProps } from './types';
 import Util from './util';
 
 // import 'ol/ol.css';
@@ -33,13 +33,13 @@ const selectorPrefix = 'adhere-ui-olmap';
 //   },
 // };
 
-// @ts-ignore
 /**
  * OlMap
  * @class OlMap
  * @classdesc openlayers的地图组件
  */
-class OlMap extends React.Component<IOLMapProps, any> {
+// @ts-ignore
+class OlMap extends React.Component<OLMapProps, any> {
   private mainGeoLayer: GeoLayer | undefined;
   private el: React.RefObject<unknown>;
   private zoom: number | null;

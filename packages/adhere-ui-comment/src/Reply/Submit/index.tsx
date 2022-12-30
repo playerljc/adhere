@@ -1,5 +1,5 @@
 import { Button, Input, Popover } from 'antd';
-import React, { FC, useLayoutEffect, useRef, useState } from 'react';
+import React, { FC, memo, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
@@ -68,25 +68,40 @@ const Reply: FC<ReplyProps> = (props) => {
    * onEmojiSelect
    * @param native
    */
-  function onEmojiSelect({ native }) {
-    // 获取textarea的dom
-    const textareaEl = textAreaRef?.current?.querySelector('textarea') as HTMLTextAreaElement;
+  const onEmojiSelect = useCallback(
+    ({ native }) => {
+      // 获取textarea的dom
+      const textareaEl = textAreaRef?.current?.querySelector('textarea') as HTMLTextAreaElement;
 
-    // 光标开始索引
-    const { selectionStart } = textareaEl;
+      // 光标开始索引
+      const { selectionStart } = textareaEl;
 
-    // (0) 1 (1) 2 (2) 3 (3)
-    setValue(
-      `${value.substring(0, selectionStart)}${native}${value.substring(selectionStart)}`,
-      () => {
-        textareaEl.focus();
-        textareaEl.setSelectionRange(
-          selectionStart + native.length,
-          selectionStart + native.length,
-        );
-      },
-    );
-  }
+      // (0) 1 (1) 2 (2) 3 (3)
+      setValue(
+        `${value.substring(0, selectionStart)}${native}${value.substring(selectionStart)}`,
+        () => {
+          textareaEl.focus();
+          textareaEl.setSelectionRange(
+            selectionStart + native.length,
+            selectionStart + native.length,
+          );
+        },
+      );
+    },
+    [value],
+  );
+
+  const PopoverContent = useMemo(
+    () => (
+      <Picker
+        data={data}
+        i18n={LOCAL_MAP.get(local || 'zh')}
+        onEmojiSelect={onEmojiSelect}
+        {...(emojiPickerProps || {})}
+      />
+    ),
+    [data, local, emojiPickerProps],
+  );
 
   useLayoutEffect(() => {
     function onDocBodyClick(e) {
@@ -125,20 +140,13 @@ const Reply: FC<ReplyProps> = (props) => {
         />
       </div>
 
-      <div ref={emojiWrapRef} className={`${selectorPrefix}-emoji-wrap`} />
+      <div ref={emojiWrapRef} className={`${selectorPrefix}-toolbar-emoji-wrap`} />
 
       <div className={`${selectorPrefix}-toolbar`}>
         <Popover
           placement="bottomLeft"
           getPopupContainer={() => emojiWrapRef.current!}
-          content={
-            <Picker
-              data={data}
-              i18n={LOCAL_MAP.get(local || 'zh')}
-              onEmojiSelect={onEmojiSelect}
-              {...(emojiPickerProps || {})}
-            />
-          }
+          content={PopoverContent}
           visible={emojiIconWrapVisible}
         >
           <div
@@ -156,9 +164,7 @@ const Reply: FC<ReplyProps> = (props) => {
             type="primary"
             className={`${selectorPrefix}-toolbar-item`}
             disabled={!value}
-            onClick={() => {
-              onResult?.(value.trim());
-            }}
+            onClick={() => onResult?.(value.trim())}
           >
             {Intl.v('添加')}
           </Button>
@@ -172,4 +178,4 @@ const Reply: FC<ReplyProps> = (props) => {
   );
 };
 
-export default Reply;
+export default memo(Reply);

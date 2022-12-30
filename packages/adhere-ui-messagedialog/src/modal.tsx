@@ -1,5 +1,5 @@
 import { Button, Modal } from 'antd';
-import React, { FC, useMemo } from 'react';
+import React, { FC, memo, useCallback, useMemo } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -56,13 +56,15 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
     return footerNode;
   }, [footer, closeBtn]);
 
+  const onCancel = useCallback(() => close?.(), []);
+
   return (
     <Modal
       {...other}
       footer={footerNode}
       centered={centered}
       wrapClassName={selectorPrefix}
-      onCancel={() => close?.()}
+      onCancel={onCancel}
       visible
     >
       {children}
@@ -70,4 +72,4 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
   );
 };
 
-export default ModalDialog;
+export default memo(ModalDialog);

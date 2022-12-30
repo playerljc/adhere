@@ -1,9 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { ListProps } from '../../types';
-/**
- * CommentList
- * @constructor
- * @classdesc 评论列表
- */
-declare const CommentList: FC<ListProps>;
-export default CommentList;
+declare const _default: React.NamedExoticComponent<ListProps>;
+export default _default;

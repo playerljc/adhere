@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import React, { FC, memo, useContext, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Util from '@baifendian/adhere-util';
@@ -205,4 +205,4 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
 //   }),
 // };
 
-export default AnchorNavigation;
+export default memo(AnchorNavigation);

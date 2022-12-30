@@ -1,4 +1,3 @@
-// @ts-ignore
 import Emitter from '@baifendian/adhere-util-emitter';
 
 import GeoJSONFormat from './format/GeoJSONFormat';

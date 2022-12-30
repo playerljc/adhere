@@ -1,4 +1,4 @@
-import { IVectorLayer, IFeatureParams, IVectorSource, IFeature, IGeometry, IGeometryStyle, IPixel } from './types';
+import { IFeature, IFeatureParams, IGeometry, IGeometryStyle, IPixel, IVectorLayer, IVectorSource } from './types';
 /**
  * Feature
  * @class Feature

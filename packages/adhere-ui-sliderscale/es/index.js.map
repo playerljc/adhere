@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SliderScale from './sliderscale';\r\nexport default SliderScale;\r\n"],"names":["SliderScale"],"mappings":"OAAOA,+CACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SliderScale from './sliderscale';\r\nexport default SliderScale;\r\n"],"names":["SliderScale"],"mappings":"OAAOA,gBAAiB,+BACTA"}

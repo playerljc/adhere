@@ -1,4 +1,4 @@
-import type { AlertArgv, ConfirmArgv, PromptArgv, ModalArgv } from './types';
+import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 declare const MessageDialogFactory: {
     /**
      * Confirm

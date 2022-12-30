@@ -1,3 +1,6 @@
-import WarnPrompt from './warnprompt';
+import { openWarnDialog, openWarnMessage } from './warnprompt';
 
-export default WarnPrompt;
+export default {
+  openWarnMessage,
+  openWarnDialog,
+};

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { SpaceFunction, SpaceGroupProps, SpaceProps } from './types';
 
@@ -28,7 +28,7 @@ const SpaceGroup: FC<SpaceGroupProps> = (props) => {
   );
 };
 
-const Space: SpaceFunction<SpaceProps> = (props) => {
+const Space: FC<SpaceProps> = (props) => {
   const { className = '', style = {}, direction = 'horizontal', size = 20 } = props;
 
   function getStyle() {
@@ -53,6 +53,10 @@ const Space: SpaceFunction<SpaceProps> = (props) => {
     />
   );
 };
-Space.Group = SpaceGroup;
 
-export default Space;
+// @ts-ignore
+const MemoWrap: SpaceFunction<SpaceProps> = memo(Space);
+
+MemoWrap.Group = SpaceGroup;
+
+export default MemoWrap;

@@ -1,0 +1,2 @@
+import{MemoManager}from"../../Extension/SearchAndPaginParams";import ProTableFactory from"../../ProTableFactory";import SearchRowDragSortStateTable from"./SearchRowDragSortStateTable";var SearchAndPaginParamsMemo=MemoManager.create();export default ProTableFactory(SearchRowDragSortStateTable,SearchAndPaginParamsMemo);export{SearchAndPaginParamsMemo};
+//# sourceMappingURL=ProSearchRowDragSortStateTable.js.map

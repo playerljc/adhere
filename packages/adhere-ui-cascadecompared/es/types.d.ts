@@ -1,4 +1,4 @@
-import type { ReactElement, CSSProperties } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 export interface ColumnConfig {
     dataIndex: string;
     isFixed: boolean;

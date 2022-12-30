@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Resource, SearchTable, TableGridLayout } from '@baifendian/adhere';
-import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
-import { createState } from '@ctsj/state/lib/react';
 
 import './serviceRegister';
 
@@ -13,7 +11,7 @@ const { Option } = Select;
 
 const { RangePicker } = DatePicker;
 
-const { TableStateImplement } = SearchTable;
+const { TableStateImplement, SearchTableStateImplementFactory } = SearchTable;
 
 const { Label, Value } = TableGridLayout;
 
@@ -23,42 +21,6 @@ const serviceName = 'user';
  * StateTable
  */
 class StateTable extends TableStateImplement {
-  constructor(props) {
-    super(props);
-
-    const models = [];
-
-    const requireComponent = require.context('./model', false, /.*\.(js)$/);
-
-    requireComponent.keys().forEach((fileName) => {
-      const model = requireComponent(fileName);
-      models.push(model.default());
-    });
-
-    this.unsubscribe = createState({
-      initialState: { ...this.state },
-      models,
-      mapState: (state) =>
-        Object.assign(
-          ServiceRegister.mapStateToProps({
-            namespaces: [serviceName],
-            state,
-          }),
-          {
-            loading: state.loading,
-          },
-        ),
-      mapDispatch: (dispatch) =>
-        ServiceRegister.mapDispatchToProps({
-          namespaces: [serviceName],
-          dispatch,
-        }),
-      ref: this,
-      middleWares: [],
-      reducer: null,
-    });
-  }
-
   componentWillReceiveProps(nextProps) {
     super.componentWillReceiveProps(nextProps);
 
@@ -67,10 +29,6 @@ class StateTable extends TableStateImplement {
         scrollY: 0,
       });
     }
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   getServiceName() {
@@ -82,7 +40,7 @@ class StateTable extends TableStateImplement {
   }
 
   getTotalKey() {
-    return 'total';
+    return 'totalCount';
   }
 
   renderSearchForm() {
@@ -328,4 +286,24 @@ StateTable.propTypes = {
   pagination: PropTypes.bool,
 };
 
-export default StateTable;
+function getModels() {
+  const models = [];
+
+  const requireComponent = require.context('./model', false, /.*\.(js)$/);
+
+  requireComponent.keys().forEach((fileName) => {
+    const model = requireComponent(fileName);
+    models.push(model.default());
+  });
+
+  return models;
+}
+
+const Wrap = SearchTableStateImplementFactory({
+  serviceNames: [serviceName],
+  middleWares: [],
+  reducer: null,
+  models: getModels(),
+})(StateTable);
+
+export default Wrap;

@@ -1,3 +1,50 @@
+# 1.0.22
+
+***
+
+2022-11-22
+
+* **adhere-ui-historyback**
+  - 修改为返回的判断逻辑
+* **adhere-util**
+  - color加入新方法
+  - 加入对列表头分组的修改
+* **adhere-ui-writingboard**
+  - 加入导出图片设置背景色
+* **adhere-ui-antdformitem**
+  - 加入adhere-ui-antdformitem代码
+* **adhere-ui-searchtable**
+  - 加入ProSearchTable
+  - 加入editor功能
+* **adhere-util**
+  - 加入DateUtil
+  - 加入FormatUtil
+  - 加入EncryptUtil
+* **adhere-util-adapterscreen**
+  - Safari浏览器适配
+* **adhere-ui-prompt-errorprompt**
+  - 分成dialog和message
+* **adhere-ui-prompt-successprompt**
+  - 分成dialog和message
+* **adhere-ui-prompt-warnprompt**
+  - 分成dialog和message
+* **adhere-util-resource**
+  - 加入resource资源目录
+* **adhere-ui-reactquill-sandbox**
+  - 加入adhere-ui-reactquill-sandbox组件
+
+# 1.0.21
+
+***
+
+2022-09-27
+
+* **组件加入memo**
+* **adhere-util的tree加入若干方法**
+* **adhere-ui-popup的close方法修改**
+* **adhere-util-intl加入自定义k,v**
+* **已知问题的修改*
+
 # 1.0.20
 
 ***

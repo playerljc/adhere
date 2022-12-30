@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import APlayGround from './APlayGround';
 /**
  * PlayGround

@@ -1,4 +1,4 @@
-import { GeometryType, IPolygonGeometry, IGeometryStyle, ICoordinate, IPixel } from '../types';
+import { GeometryType, ICoordinate, IGeometryStyle, IPixel, IPolygonGeometry } from '../types';
 import Geometry from './Geometry';
 /**
  * PolygonGeometry

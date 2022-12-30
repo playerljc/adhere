@@ -2,20 +2,50 @@
 @import '~antd/es/pagination/style/index.less';
 @import '~antd/es/button/style/index.less';
 @import '~antd/es/checkbox/style/index.less';
+@import '~antd/es/input/style/index.less';
+@import '~antd/es/input-number/style/index.less';
+@import '~antd/es/rate/style/index.less';
+@import '~antd/es/slider/style/index.less';
+@import '~antd/es/switch/style/index.less';
+@import '~antd/es/form/style/index.less';
+
 @import '~@baifendian/adhere-ui-suspense/lib/index.less';
 @import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
+@import '~@baifendian/adhere-ui-slidelayout/lib/index.less';
+@import '~@baifendian/adhere-ui-space/lib/index';
+@import '~@baifendian/adhere-ui-split/lib/index';
+@import '~@baifendian/adhere-ui-tablegridlayout/lib/index';
+@import '~@baifendian/adhere-ui-antdformitem/lib/index';
 @import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
 @import '~@baifendian/adhere-ui-css/lib/vars';
 
 @import './Extension/ColumnSetting/setting';
 @import './Extension/TableDensitySetting/setting';
+@import './Extension/AdvancedSearchPanel/index';
+@import './Extension/DisabledOption/index';
+@import './Extension/OptionsWrap/index';
+@import './Extension/EditableCell/Edit/index';
+@import './Extension/EditableCell/View/index';
+@import "./Extension/EditableCell/EditableRowControl/index";
+@import "./Extension/DragSort/RowDragSort/index";
+@import './ProTable.less';
 
 @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color: #fff;
 @adhere-ui-searchtable-background-color: #f0f2f5;
 
+.adhere-ui-searchtableimplement-wrap {
+  width: 100%;
+  height: 100%;
+}
+
 .adhere-ui-searchtable-wrap {
   display: flex;
   width: 100%;
+
+  > .adhere-ui-searchtable-form {
+    display: flex;
+    width: 100%;
+  }
 
   > .adhere-ui-suspense {
     overflow: auto;
@@ -66,7 +96,7 @@
 
             .adhere-ui-searchtable-searchfooteritem-search-btn-icon {
               color: @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color;
-              font-size: 14px;
+              font-size: @adhere-base-font-size;
             }
 
             > .adhere-ui-searchtable-searchfooteritem-expand-search-up-btn {
@@ -79,7 +109,7 @@
 
               > i {
                 color: @adhere-primary-color;
-                font-size: 16px;
+                font-size: @adhere-large-font-size;
               }
             }
 
@@ -93,7 +123,7 @@
 
               > i {
                 color: @adhere-primary-color;
-                font-size: 16px;
+                font-size: @adhere-large-font-size;
               }
             }
           }

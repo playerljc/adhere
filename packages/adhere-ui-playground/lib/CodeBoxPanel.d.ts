@@ -1,3 +1,4 @@
 import React from 'react';
-declare const _default: React.MemoExoticComponent<any>;
+import { CodeBoxProps } from './types';
+declare const _default: React.NamedExoticComponent<CodeBoxProps>;
 export default _default;

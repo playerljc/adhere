@@ -59,7 +59,7 @@ class InteractionLayer extends BMap.CanvasLayer implements IInteractionLayer {
   // canvas上的所有数据
   protected canvasData: IActionData[] = [];
 
-  protected emitter: Emitter = new Emitter.Events();
+  protected emitter = new Emitter.Events();
 
   protected isLoad: boolean = false;
 

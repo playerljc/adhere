@@ -7,6 +7,7 @@ import ModifyAction from './ModifyAction';
  * @remark:
  */
 declare class RectangleModifyAction extends ModifyAction {
+    setCursor(): void;
     private rectangleAnchorPoints;
     private indexToModifyHandlerMapping;
     protected ResizeCursorMapping: Map<number, string>;
@@ -44,7 +45,7 @@ declare class RectangleModifyAction extends ModifyAction {
     /**
      * getSelectType
      */
-    protected getSelectType(): SelectType;
+    getSelectType(): SelectType;
     /**
      * getBox
      */

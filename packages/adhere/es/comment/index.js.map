@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["comment/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-comment/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,4DACQA"}
+{"version":3,"file":"index.js","sources":["comment/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-comment/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,kDACHA"}

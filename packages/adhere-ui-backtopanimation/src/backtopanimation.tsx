@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useLayoutEffect, useRef } from 'react';
+import React, { FC, memo, useLayoutEffect, useRef } from 'react';
 
 import Resource from '@baifendian/adhere-util-resource';
 
@@ -144,4 +144,4 @@ const BackTopAnimation: FC<BackTopAnimationProps> = (props): React.ReactElement 
   );
 };
 
-export default BackTopAnimation;
+export default memo(BackTopAnimation);

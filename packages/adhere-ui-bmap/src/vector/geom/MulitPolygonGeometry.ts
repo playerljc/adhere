@@ -1,4 +1,3 @@
-// @ts-ignore
 import * as turf from '@turf/turf';
 
 import {
@@ -28,7 +27,7 @@ class MulitPolygonGeometry extends Geometry implements IMulitPolygonGeometry {
 
   setCoordinates(coordinates: Array<ICoordinate[]>) {
     this.coordinates = coordinates;
-    this.getLayer().getEmitter().trigger(VectorActions.UPDATE);
+    this.getLayer()?.getEmitter().trigger(VectorActions.UPDATE);
   }
 
   getCoordinates(): Array<ICoordinate[]> {

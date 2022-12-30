@@ -1,3 +1,3 @@
 import { SimpleTabsFunction, SimpleTabsProps } from '../types';
-declare const SimpleTabs: SimpleTabsFunction<SimpleTabsProps>;
-export default SimpleTabs;
+declare const MemoWrap: SimpleTabsFunction<SimpleTabsProps>;
+export default MemoWrap;

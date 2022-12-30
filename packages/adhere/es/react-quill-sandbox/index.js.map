@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["react-quill-sandbox/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-reactquill-sandbox/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,6DACHA"}

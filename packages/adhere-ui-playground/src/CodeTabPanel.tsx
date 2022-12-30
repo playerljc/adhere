@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, memo, useEffect, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -21,6 +21,15 @@ const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
 
   const [active, setActive] = useState(props.active);
 
+  const SimpleTabsOnChange = useCallback(
+    (key) => {
+      setActive(key);
+
+      onChange && onChange(key as string);
+    },
+    [onChange, active],
+  );
+
   /**
    * useEffect props.active
    */
@@ -28,14 +37,7 @@ const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
 
   return (
     <div className={selectPrefix}>
-      <SimpleTabs
-        activeKey={active}
-        onChange={(key) => {
-          setActive(key);
-
-          onChange && onChange(key as string);
-        }}
-      >
+      <SimpleTabs activeKey={active} onChange={SimpleTabsOnChange}>
         {(config || []).map(({ key, title, ...codePanelConfig }) => (
           // @ts-ignore
           <TabPanel title={title} key={key} index={key}>
@@ -70,4 +72,4 @@ export const CodeTabPanelPropTypes = {
 
 // CodeTabPanel.propTypes = CodeTabPanelPropTypes;
 
-export default memo<any>(CodeTabPanel);
+export default memo<CodeTabPanelProps>(CodeTabPanel);

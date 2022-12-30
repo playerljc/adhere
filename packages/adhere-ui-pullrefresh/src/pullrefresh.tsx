@@ -3,6 +3,8 @@ import moment from 'moment';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
+  memo,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
@@ -67,8 +69,8 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
   /**
    * renderIcon
    */
-  function _renderIcon() {
-    return (
+  const _renderIcon = useCallback(
+    () => (
       <ConditionalRender
         conditional={!!renderIcon}
         noMatch={() => (
@@ -90,24 +92,26 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
           </div>
         )}
       </ConditionalRender>
-    );
-  }
+    ),
+    [renderIcon],
+  );
 
-  function _renderLabel() {
-    return (
+  const _renderLabel = useCallback(
+    () => (
       <p className={`${selectorPrefix}-trigger-label`}>
         <ConditionalRender conditional={isCan} noMatch={() => renderLabel?.()}>
           {() => renderCanLabel?.()}
         </ConditionalRender>
       </p>
-    );
-  }
+    ),
+    [isCan, renderLabel, renderCanLabel],
+  );
 
   /**
    * renderUpdateTime
    */
-  function renderUpdateTime() {
-    return (
+  const renderUpdateTime = useCallback(
+    () => (
       <ConditionalRender conditional={isShowUpdateTime}>
         {() => (
           <p className={`${selectorPrefix}-trigger-update`}>
@@ -118,11 +122,12 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
           </p>
         )}
       </ConditionalRender>
-    );
-  }
+    ),
+    [isShowUpdateTime, preUpdateTime, updateTimeFormat],
+  );
 
-  function _renderLoadingAnimation() {
-    return (
+  const _renderLoadingAnimation = useCallback(
+    () => (
       <ConditionalRender conditional={!!renderLoadingAnimation}>
         {() => (
           <ConditionalRender
@@ -135,7 +140,10 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
           >
             {() => (
               <div
-                className={classNames(`${selectorPrefix}-trigger-refresh`, renderLoadingAnimation)}
+                className={classNames(
+                  `${selectorPrefix}-trigger-refresh`,
+                  renderLoadingAnimation as string,
+                )}
                 ref={refreshElRef}
               >
                 <div></div>
@@ -148,8 +156,9 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
           </ConditionalRender>
         )}
       </ConditionalRender>
-    );
-  }
+    ),
+    [renderLoadingAnimation],
+  );
 
   /**
    * renderMask
@@ -506,4 +515,4 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
   );
 };
 
-export default forwardRef<PullRefreshRefHandle, PullRefreshProps>(PullRefresh);
+export default memo(forwardRef<PullRefreshRefHandle, PullRefreshProps>(PullRefresh));

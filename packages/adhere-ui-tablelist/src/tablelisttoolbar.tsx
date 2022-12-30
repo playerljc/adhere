@@ -91,6 +91,7 @@ export const ToolbarSetting = ({
 
   const SettingContent = ({ columns = [], selectedColumnKeys = [], onChange, onSortEnd }) => {
     return (
+      // @ts-ignore
       <SortableWrapper
         helperClass={`${selectorPrefix}-set-dragging`}
         value={selectedColumnKeys}
@@ -99,6 +100,7 @@ export const ToolbarSetting = ({
         distance={2}
       >
         {columns.map((item: any, index) => (
+          // @ts-ignore
           <SortableItem value={item.key} index={index} key={item.key}>
             {item.title}
           </SortableItem>

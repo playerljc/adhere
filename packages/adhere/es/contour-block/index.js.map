@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["contour-block/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-contourblock/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,iEACQA"}
+{"version":3,"file":"index.js","sources":["contour-block/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-contourblock/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}

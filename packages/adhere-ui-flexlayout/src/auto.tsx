@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 import { AutoProps } from './types';
 
@@ -23,4 +23,4 @@ const Auto: FC<AutoProps> = (props) => {
   );
 };
 
-export default Auto;
+export default memo(Auto);

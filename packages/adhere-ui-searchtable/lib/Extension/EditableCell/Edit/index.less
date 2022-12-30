@@ -1,0 +1,60 @@
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
+.adhere-ui-searchtable-editablecell-edit {
+  position: relative;
+  display: flex;
+
+  &:hover {
+    > .adhere-ui-searchtable-editablecell-edit-trigger {
+      > .adhere-ui-searchtable-editablecell-edit-trigger-inner {
+        display: flex;
+      }
+    }
+  }
+
+  > .adhere-ui-searchtable-editablecell-edit-inner {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
+
+    .ant-form-item {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  > .adhere-ui-searchtable-editablecell-edit-trigger {
+    flex-shrink: 0;
+    width: 20px;
+    color: @adhere-primary-color;
+    font-size: @adhere-base-font-size;
+
+    > .adhere-ui-searchtable-editablecell-edit-trigger-inner {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      > .adhere-ui-searchtable-editablecell-edit-trigger-save {
+        height: 14px;
+        font-weight: bold;
+        line-height: 14px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      > .adhere-ui-searchtable-editablecell-edit-trigger-cancel {
+        height: 14px;
+        font-weight: bold;
+        line-height: 14px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
-import SearchTableResizableTitle from './SearchTableResizableTitle';
 import SearchTableResizableObserver from './SearchTableResizableObserver';
+import SearchTableResizableTitle from './SearchTableResizableTitle';
 declare class ColumnResizable {
     columnsWidth: Map<string, {
         width: number;

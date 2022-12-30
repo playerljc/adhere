@@ -1,9 +1,9 @@
+import { SizeType } from 'antd/lib/config-provider/SizeContext';
+import { ListProps } from 'antd/lib/list';
+import { TableProps } from 'antd/lib/table';
+import { TooltipProps } from 'antd/lib/tooltip';
 import type { ReactElement } from 'react';
 import { ColumnItemProps } from '@baifendian/adhere-ui-formitemcreator/lib/types';
-import { SizeType } from 'antd/lib/config-provider/SizeContext';
-import { TableProps } from 'antd/lib/table';
-import { ListProps } from 'antd/lib/list';
-import { TooltipProps } from 'antd/lib/tooltip';
 /**
  * TableListProps
  * @interface TableListProps

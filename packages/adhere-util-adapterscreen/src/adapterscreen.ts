@@ -1,3 +1,7 @@
+import debounce from 'lodash.debounce';
+
+import BrowserSniff from '@baifendian/adhere-util-browsersniff';
+
 /**
  * detectZoom - 获取浏览器缩放的级别(1为基本单位)
  * @return number
@@ -9,15 +13,23 @@ function detectZoom() {
 
   const screen = window.screen;
 
-  const ua = navigator.userAgent.toLowerCase();
-
-  if (window.devicePixelRatio !== undefined) {
-    ratio = window.devicePixelRatio;
-  } else if (~ua.indexOf('msie')) {
-    if (screen.deviceXDPI && screen.logicalXDPI) {
-      ratio = screen.deviceXDPI / screen.logicalXDPI;
+  // 返回当前显示设备的物理像素分辨率与CSS 像素分辨率之比
+  if ('devicePixelRatio' in window) {
+    // Safari浏览器
+    if (BrowserSniff.isBrowserSafari()) {
+      ratio = window.outerWidth / window.innerWidth;
+    } else {
+      ratio = window.devicePixelRatio;
     }
-  } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+  }
+  // IE浏览器
+  else if (BrowserSniff.isBrowserIE()) {
+    if (screen['deviceXDPI'] && screen['logicalXDPI']) {
+      ratio = screen['deviceXDPI'] / screen['logicalXDPI'];
+    }
+  }
+  // 没有像素比且不是IE
+  else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
     ratio = window.outerWidth / window.innerWidth;
   }
 
@@ -29,10 +41,12 @@ function detectZoom() {
  * @param el
  */
 export default (el: HTMLElement = window.document.body) => {
-  function onResize() {
+  const onResize = debounce(resize, 1000);
+
+  function resize() {
     // 1.1 | 0.9
     // 2 | 0.5
-    const ratio = detectZoom();
+    const ratio = detectZoom() as number;
     el.style.transformOrigin = 'left top';
     el.style.transform = `scale(${1 / ratio})`;
 
@@ -45,7 +59,7 @@ export default (el: HTMLElement = window.document.body) => {
     }
   }
 
-  onResize();
+  resize();
 
   window.addEventListener('resize', onResize);
 

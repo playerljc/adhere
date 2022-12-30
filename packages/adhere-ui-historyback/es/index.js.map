@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import HistoryBack from './historyback';\r\nexport default HistoryBack;\r\n"],"names":["HistoryBack"],"mappings":"OAAOA,+CACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import HistoryBack from './historyback';\r\nexport default HistoryBack;\r\n"],"names":["HistoryBack"],"mappings":"OAAOA,gBAAiB,+BACTA"}

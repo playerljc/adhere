@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
+  memo,
+  useCallback,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
@@ -137,32 +139,36 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
     }
   }
 
-  function renderContent() {
-    return dataSource.map((record) => {
-      const indexConfig = indexes.find((index) => index.index === record.index);
+  const renderContent = useCallback(
+    () =>
+      dataSource.map((record) => {
+        const indexConfig = indexes.find((index) => index.index === record.index);
 
-      return (
-        <div key={record.index} className={`${selectorPrefix}-group`}>
-          <a className={`${selectorPrefix}-group-title`} data-name={record.index}>
-            {indexConfig?.renderTitle ? indexConfig.renderTitle(record) : indexConfig?.index}
-          </a>
-          <div className={`${selectorPrefix}-group-inner`}>
-            {indexConfig?.renderContent ? indexConfig?.renderContent(record) : null}
+        return (
+          <div key={record.index} className={`${selectorPrefix}-group`}>
+            <a className={`${selectorPrefix}-group-title`} data-name={record.index}>
+              {indexConfig?.renderTitle ? indexConfig.renderTitle(record) : indexConfig?.index}
+            </a>
+            <div className={`${selectorPrefix}-group-inner`}>
+              {indexConfig?.renderContent ? indexConfig?.renderContent(record) : null}
+            </div>
           </div>
-        </div>
-      );
-    });
-  }
+        );
+      }),
+    [dataSource, indexes],
+  );
 
-  function renderIndex() {
-    return indexes.map((index) => {
-      return (
-        <a key={index.index} className={`${selectorPrefix}-index-item`} data-name={index.index}>
-          {index.renderIndex ? index.renderIndex(index) : index.index}
-        </a>
-      );
-    });
-  }
+  const renderIndex = useCallback(
+    () =>
+      indexes.map((index) => {
+        return (
+          <a key={index.index} className={`${selectorPrefix}-index-item`} data-name={index.index}>
+            {index.renderIndex ? index.renderIndex(index) : index.index}
+          </a>
+        );
+      }),
+    [indexes],
+  );
 
   function createIndexPosition() {
     const indexItemEls = indexInnerEl.current?.querySelectorAll(
@@ -502,4 +508,4 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
   );
 };
 
-export default forwardRef<SurnamesRefHandle, SurnamesProps>(Surnames);
+export default memo(forwardRef<SurnamesRefHandle, SurnamesProps>(Surnames));

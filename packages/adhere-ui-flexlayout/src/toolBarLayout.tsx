@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -27,6 +27,40 @@ const ToolBarLayout: FC<ToolBarLayoutProps> = (props) => {
     ...otherProps
   } = props;
 
+  const _renderTop = useMemo(
+    () => (
+      <ConditionalRender conditional={!!(topToolBarItems || []).length}>
+        {() =>
+          topToolBarItems.map((t, index) => (
+            <div key={index} className={`${selectorPrefix}-toolbar-item`}>
+              {t}
+            </div>
+          ))
+        }
+      </ConditionalRender>
+    ),
+    [topToolBarItems],
+  );
+
+  const _renderBottom = useMemo(
+    () => (
+      <ConditionalRender conditional={!!(bottomToolBarItems || []).length}>
+        {() =>
+          bottomToolBarItems.map((t, index) => (
+            <div key={index} className={`${selectorPrefix}-toolbar-item`}>
+              {t}
+            </div>
+          ))
+        }
+      </ConditionalRender>
+    ),
+    [bottomToolBarItems],
+  );
+
+  const _topProps = useMemo(() => ({ fit: false, ...(topProps || {}) }), [topProps]);
+
+  const _bottomProps = useMemo(() => ({ fit: false, ...(bottomProps || {}) }), [bottomProps]);
+
   return (
     <VerticalFlexLayout
       className={classNames(selectorPrefix, className || '')}
@@ -42,34 +76,14 @@ const ToolBarLayout: FC<ToolBarLayoutProps> = (props) => {
         `${selectorPrefix}-main-auto-wrap`,
         mainAutoWrapClassName || '',
       )}
-      topProps={{ fit: false, ...(topProps || {}) }}
-      bottomProps={{ fit: false, ...(bottomProps || {}) }}
+      topProps={_topProps}
+      bottomProps={_bottomProps}
       {...otherProps}
-      renderTop={
-        <ConditionalRender conditional={!!(topToolBarItems || []).length}>
-          {() =>
-            topToolBarItems.map((t, index) => (
-              <div key={index} className={`${selectorPrefix}-toolbar-item`}>
-                {t}
-              </div>
-            ))
-          }
-        </ConditionalRender>
-      }
+      renderTop={_renderTop}
       renderMain={children}
-      renderBottom={
-        <ConditionalRender conditional={!!(bottomToolBarItems || []).length}>
-          {() =>
-            bottomToolBarItems.map((t, index) => (
-              <div key={index} className={`${selectorPrefix}-toolbar-item`}>
-                {t}
-              </div>
-            ))
-          }
-        </ConditionalRender>
-      }
+      renderBottom={_renderBottom}
     />
   );
 };
 
-export default ToolBarLayout;
+export default memo(ToolBarLayout);

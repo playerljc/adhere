@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["Extension/SearchAndPaginParams/index.js"],"sourcesContent":["import MemoManager from './memo';\nimport RouterListen from './routeListen';\nexport { RouterListen, MemoManager };"],"names":["MemoManager","RouterListen"],"mappings":"OAAOA,gBAAiB,gBACjBC,iBAAkB,uBAChBA,aAAcD,WAAa"}

@@ -181,7 +181,7 @@ class PolygonModifyAction extends ModifyAction {
   /**
    * getSelectType
    */
-  protected getSelectType(): SelectType {
+  getSelectType(): SelectType {
     return SelectType.Polygon;
   }
 
@@ -254,6 +254,8 @@ class PolygonModifyAction extends ModifyAction {
       );
     }
   }
+
+  setCursor(): void {}
 }
 
 export default PolygonModifyAction;

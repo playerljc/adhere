@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { FC, memo } from 'react';
 
 import Auto from './auto';
 import BackLayout from './backLayout';
@@ -13,7 +13,7 @@ import VerticalFlexLayout from './verticalFlexLayout';
 
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
-const FlexLayout: FlexLayoutFunction<FlexLayoutProps> = (props) => {
+const FlexLayout: FC<FlexLayoutProps> = (props) => {
   const { className = '', style = {}, direction = 'vertical', children } = props;
 
   return (
@@ -32,16 +32,19 @@ const FlexLayout: FlexLayoutFunction<FlexLayoutProps> = (props) => {
   );
 };
 
-FlexLayout.selectorPrefix = selectorPrefix;
-FlexLayout.Context = FlexContext;
-FlexLayout.Fixed = Fixed;
-FlexLayout.Auto = Auto;
-FlexLayout.HorizontalFlexLayout = HorizontalFlexLayout;
-FlexLayout.VerticalFlexLayout = VerticalFlexLayout;
-FlexLayout.ToolBarLayout = ToolBarLayout;
-FlexLayout.BackLayout = BackLayout;
-FlexLayout.ScrollLayout = ScrollLayout;
-FlexLayout.useScrollLayout = useScrollLayout;
-FlexLayout.ScrollLayoutContext = ScrollLayoutContext;
+//@ts-ignore
+const MemoWrap: FlexLayoutFunction<FlexLayoutProps> = memo(FlexLayout);
 
-export default FlexLayout;
+MemoWrap.selectorPrefix = selectorPrefix;
+MemoWrap.Context = FlexContext;
+MemoWrap.Fixed = Fixed;
+MemoWrap.Auto = Auto;
+MemoWrap.HorizontalFlexLayout = HorizontalFlexLayout;
+MemoWrap.VerticalFlexLayout = VerticalFlexLayout;
+MemoWrap.ToolBarLayout = ToolBarLayout;
+MemoWrap.BackLayout = BackLayout;
+MemoWrap.ScrollLayout = ScrollLayout;
+MemoWrap.useScrollLayout = useScrollLayout;
+MemoWrap.ScrollLayoutContext = ScrollLayoutContext;
+
+export default MemoWrap;

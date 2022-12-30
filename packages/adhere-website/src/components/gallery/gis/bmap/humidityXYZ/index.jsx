@@ -5,12 +5,12 @@ import PlaygroundMulit from '@/lib/PlaygroundMulit';
 import styles from './index.less';
 
 /**
- * humidity
+ * Humidity
  * @return {JSX.Element}
  * @constructor
  * @classdesc 湿度
  */
-function humidity() {
+function Humidity() {
   const ref = useRef();
 
   const map = useRef();
@@ -128,4 +128,4 @@ function humidity() {
   );
 }
 
-export default humidity;
+export default Humidity;

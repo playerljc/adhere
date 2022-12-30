@@ -1,5 +1,5 @@
+import { GeometryType, IGeometryStyle, IPixel, IStartGeometry, IStartGeometryData } from '../types';
 import Geometry from './Geometry';
-import { IStartGeometryData, IStartGeometry, GeometryType, IGeometryStyle, IPixel } from '../types';
 /**
  * StartGeometry
  * @class StartGeometry

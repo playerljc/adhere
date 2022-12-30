@@ -52,6 +52,7 @@ class SortableTable<RecordType extends object = any> extends React.Component<
       return x[key] === restProps['data-row-key'];
     });
     return (
+      // @ts-ignore
       <SortableItem
         index={index}
         {...(this.props.sortable &&
@@ -66,6 +67,7 @@ class SortableTable<RecordType extends object = any> extends React.Component<
    * 覆盖antdTable的tbody helperClass为拖拽项的类名
    */
   DraggableContainer = (containerProps) => (
+    // @ts-ignore
     <SortableWrapper
       helperClass={`${selectorPrefix}-row-dragging`}
       onSortEnd={this.onSortEnd}

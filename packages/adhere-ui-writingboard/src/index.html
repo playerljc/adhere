@@ -17,8 +17,30 @@
         padding: 0;
       }
     </style>
+    <script>
+      window.onload = function () {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillRect(0,0,100,100);
+
+        const src = canvas.toDataURL('image/png', 1.0);
+
+          const imageData = ctx.getImageData(0, 0, 300,300);
+
+          debugger
+        // ctx.clearRect(0,0, 100,100);
+
+        document.getElementById('image').src = src;
+      };
+    </script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <canvas id="canvas" width="300" height="300" style="border: 1px solid #ccc"></canvas>
+
+        <div>
+            <img style="width: 150px;" id="image"/>
+        </div>
+    </div>
   </body>
 </html>

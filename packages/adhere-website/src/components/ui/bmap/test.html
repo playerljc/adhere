@@ -35,7 +35,6 @@
 
   var bd = new BMapGL.Boundary();
   bd.get('唐山', function (rs) {
-    debugger;
     // console.log('外轮廓：', rs.boundaries[0]);
     // console.log('内镂空：', rs.boundaries[1]);
     var hole = new BMapGL.Polygon(rs.boundaries, {

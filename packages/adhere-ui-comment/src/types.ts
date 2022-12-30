@@ -22,7 +22,7 @@ export type Local =
 
 export interface CommentProps {
   getScrollWrapContainer?: () => HTMLElement;
-  fetchCommentData?: () => Promise<any>;
+  fetchCommentData?: (params?: any) => Promise<any>;
   commentDataKeys?: {
     current: string;
     totalPage: string;
@@ -31,14 +31,13 @@ export interface CommentProps {
   };
   commentLimit?: number;
   commentKeyProp?: string;
-  renderCommentActions?: () => ReactNode[] | null;
-  renderCommentAuthor?: () => ReactNode | null;
-  renderCommentAvatar?: () => ReactNode | null;
-  renderCommentContent?: () => ReactNode | null;
-  renderCommentDateTime?: () => ReactNode | null;
-  renderCommentLoading?: () => ReactNode | null;
-
-  fetchReplyData?: () => Promise<any>;
+  renderCommentActions?: (params?: any) => ReactNode[] | null;
+  renderCommentAuthor?: (params?: any) => ReactNode | null;
+  renderCommentAvatar?: (params?: any) => ReactNode | null;
+  renderCommentContent?: (params?: any) => ReactNode | null;
+  renderCommentDateTime?: (params?: any) => ReactNode | null;
+  renderCommentLoading?: (params?: any) => ReactNode | null;
+  fetchReplyData?: (params?: any) => Promise<any>;
   replyDataKeys?: {
     current: string;
     totalPage: string;
@@ -47,21 +46,18 @@ export interface CommentProps {
   };
   replyLimit?: number;
   replyKeyProp?: string;
-  renderReplyActions?: () => ReactNode[] | null;
-  renderReplyAuthor?: () => ReactNode | null;
-  renderReplyAvatar?: () => ReactNode | null;
-  renderReplyContent?: () => ReactNode | null;
-  renderReplyDateTime?: () => ReactNode | null;
-  renderReplyLoading?: () => ReactNode | null;
-
+  renderReplyActions?: (params?: any) => ReactNode[] | null;
+  renderReplyAuthor?: (params?: any) => ReactNode | null;
+  renderReplyAvatar?: (params?: any) => ReactNode | null;
+  renderReplyContent?: (params?: any) => ReactNode | null;
+  renderReplyDateTime?: (params?: any) => ReactNode | null;
+  renderReplyLoading?: (params?: any) => ReactNode | null;
   fetchReply?: (params?: any) => Promise<any>;
   listProps?: any;
   isMoreProp?: string;
-
   flexLayoutProps?: FlexLayoutProps;
   renderEmpty?: () => ReactElement | null;
   renderFirstLoading?: () => ReactNode;
-
   showReplyText?: string | Function;
   hideReplyText?: string | Function;
   loadMoreReplyText?: string | Function;
