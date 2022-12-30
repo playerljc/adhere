@@ -117,6 +117,36 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
               padding: 0;
             }
             
+            ::-webkit-scrollbar-thumb {
+              background-color: rgba(0, 0, 0, 0.1);
+              border-radius: 4px;
+            }
+            *::-webkit-scrollbar-track {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+            ::-webkit-scrollbar {
+              width: 10px;
+              height: 10px;
+            }
+            
+            .quill {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+              height: 100%;
+              padding: 0;
+              margin: 0; 
+            }
+            
+            .quill > .ql-toolbar {
+              flex-shrink: 0;
+            }
+            
+            .quill > .ql-container {
+              flex-grow: 1;
+              min-height: 0;  
+            }
+            
             ${THEME_MAP.get('snow') as string}
           </style>
           <script src="${reactUrl}"><\/script>
