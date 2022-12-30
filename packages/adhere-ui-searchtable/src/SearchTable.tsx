@@ -1,6 +1,6 @@
 import { Button, Table } from 'antd';
 import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import type { TableProps } from 'antd/lib/table/Table';
+import type { ColumnsType, TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType,
   FilterValue,
@@ -601,11 +601,31 @@ abstract class SearchTable<
       })
       // $resizable 设置
       .map((column: ColumnTypeExt, index) => {
-        if ('$resizable' in column && !!column?.$resizable) {
-          return this.columnResizable.searchTableResizableColumnItem(this, index, column);
-        }
+        const res = { value: column };
 
-        return column;
+        const loop = (_column) => {
+          let _res: ColumnsType = _column;
+
+          if ('$resizable' in _column && !!_column?.$resizable) {
+            _res = this.columnResizable.searchTableResizableColumnItem(this, index, _column);
+          }
+
+          // @ts-ignore
+          if (_res?.children && Array.isArray(_res.children)) {
+            // @ts-ignore
+            _res.children.forEach((_t, _index) => {
+              // @ts-ignore
+              _res.children[_index] = loop(_t);
+            });
+          }
+
+          return _res;
+        };
+
+        // @ts-ignore
+        res.value = loop(column);
+
+        return res.value;
       })
       .map((column: ColumnTypeExt, index) => {
         return {

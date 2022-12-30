@@ -260,32 +260,42 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @default params
      */
     getParams() {
-      const columns = this.getTableColumns();
+      const params = {};
 
-      return columns.reduce((params, column) => {
-        const { $search } = column;
-        const searchConfig = $search || {};
-        const dataIndex = searchConfig.dataIndex || column.dataIndex;
+      const loop = (columns) => {
+        columns.reduce((params, column) => {
+          const { $search, children } = column;
+          const searchConfig = $search || {};
+          const dataIndex = searchConfig.dataIndex || column.dataIndex;
 
-        if (
-          [this.getOptionsColumnDataIndex(), this.getLinkColumnDataIndex(), '_number'].includes(
-            dataIndex,
-          )
-        ) {
+          if (
+            [this.getOptionsColumnDataIndex(), this.getLinkColumnDataIndex(), '_number'].includes(
+              dataIndex,
+            )
+          ) {
+            return params;
+          }
+
+          if (searchConfig.type === 'rangePicker') {
+            if (searchConfig.startName) params[searchConfig.startName] = null;
+            if (searchConfig.endName) params[searchConfig.endName] = null;
+          } else if (['datePicker', 'timePicker'].includes(searchConfig.type)) {
+            params[dataIndex] = null;
+          } else {
+            params[dataIndex] = undefined;
+          }
+
+          if (children && Array.isArray(children)) {
+            loop(children);
+          }
+
           return params;
-        }
+        }, params);
+      };
 
-        if (searchConfig.type === 'rangePicker') {
-          if (searchConfig.startName) params[searchConfig.startName] = null;
-          if (searchConfig.endName) params[searchConfig.endName] = null;
-        } else if (['datePicker', 'timePicker'].includes(searchConfig.type)) {
-          params[dataIndex] = null;
-        } else {
-          params[dataIndex] = undefined;
-        }
+      loop(this.getTableColumns());
 
-        return params;
-      }, {});
+      return params;
     }
 
     /**
@@ -441,70 +451,80 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
               : 'center',
           }))
           // 处理search
-          .map((t) => {
-            const { $search, ...columnConfig } = t;
-            const searchConfig = this.assignSearchConfig($search, columnConfig);
-            const showColumnHeader = searchConfig.showColumnHeader;
+          .map((_t) => {
+            const loop = (t) => {
+              const { $search, ...columnConfig } = t;
+              const searchConfig = this.assignSearchConfig($search, columnConfig);
+              const showColumnHeader = searchConfig.showColumnHeader;
 
-            let column = {
-              ...t,
+              let column = {
+                ...t,
+              };
+
+              const dataIndex = searchConfig.dataIndex || t.dataIndex;
+
+              if (
+                !['_number', this.getOptionsColumnDataIndex()].includes(dataIndex) &&
+                showColumnHeader
+              ) {
+                column = {
+                  ...column,
+                  ...TableHeadSearch(({ confirm }) => {
+                    const type = searchConfig.type;
+
+                    return (
+                      <div className={`${_selectorPrefix}-headersearchwrap`}>
+                        <div className={`${_selectorPrefix}-headersearchwrap-main`}>
+                          {this.renderGridSearchFormGroupDataItem(type, {
+                            searchConfig,
+                            column,
+                            dataIndex,
+                          })}
+                        </div>
+
+                        <div className={`${_selectorPrefix}-headersearchwrap-footer`}>
+                          <Button
+                            size="small"
+                            onClick={() => {
+                              let state = {};
+
+                              if (type === 'rangePicker') {
+                                if (searchConfig.startName) state[searchConfig.startName] = null;
+                                if (searchConfig.endName) state[searchConfig.endName] = null;
+                              } else {
+                                state[dataIndex] = undefined;
+                              }
+
+                              this.setState(state, () => this.onSearch().then(() => confirm()));
+                            }}
+                          >
+                            {Intl.v('重置')}
+                          </Button>
+
+                          <Button
+                            size="small"
+                            type="primary"
+                            onClick={() => this.onSearch().then(() => confirm())}
+                          >
+                            {Intl.v('确定')}
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  }),
+                };
+              }
+
+              if (t.children && Array.isArray(t.children)) {
+                t.children.forEach((item, _index) => {
+                  t.children[_index] = loop(item);
+                });
+              }
+
+              return column;
             };
 
-            const dataIndex = searchConfig.dataIndex || t.dataIndex;
-
-            if (
-              !['_number', this.getOptionsColumnDataIndex()].includes(dataIndex) &&
-              showColumnHeader
-            ) {
-              column = {
-                ...column,
-                ...TableHeadSearch(({ confirm }) => {
-                  const type = searchConfig.type;
-
-                  return (
-                    <div className={`${_selectorPrefix}-headersearchwrap`}>
-                      <div className={`${_selectorPrefix}-headersearchwrap-main`}>
-                        {this.renderGridSearchFormGroupDataItem(type, {
-                          searchConfig,
-                          column,
-                          dataIndex,
-                        })}
-                      </div>
-
-                      <div className={`${_selectorPrefix}-headersearchwrap-footer`}>
-                        <Button
-                          size="small"
-                          onClick={() => {
-                            let state = {};
-
-                            if (type === 'rangePicker') {
-                              if (searchConfig.startName) state[searchConfig.startName] = null;
-                              if (searchConfig.endName) state[searchConfig.endName] = null;
-                            } else {
-                              state[dataIndex] = undefined;
-                            }
-
-                            this.setState(state, () => this.onSearch().then(() => confirm()));
-                          }}
-                        >
-                          {Intl.v('重置')}
-                        </Button>
-
-                        <Button
-                          size="small"
-                          type="primary"
-                          onClick={() => this.onSearch().then(() => confirm())}
-                        >
-                          {Intl.v('确定')}
-                        </Button>
-                      </div>
-                    </div>
-                  );
-                }),
-              };
-            }
-
-            return column;
+            return loop(_t);
           })
       );
     }
@@ -581,41 +601,54 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @return Array
      */
     getGridSearchFormGroupDataByColumnConfig() {
-      const columns = this.getColumns(super.getColumns());
+      let searchFormGroupData: {
+        key: number;
+        label: ReactNode;
+        value: ReactNode | null;
+      }[] = [];
 
-      return columns
-        .filter((t) => '$search' in t && !!t.$search.visible)
-        .map((t) => {
-          const { $search, ...column } = t;
+      const loop = (columns) => {
+        columns
+          .filter((t) => '$search' in t && !!t.$search.visible)
+          .forEach((t) => {
+            const { $search, ...column } = t;
 
-          const searchConfig = this.assignSearchConfig($search, column);
-          const type = searchConfig?.type || 'input';
-          const dataIndex = searchConfig.dataIndex || t.dataIndex;
-          const title = $search.title || t.title;
+            const searchConfig = this.assignSearchConfig($search, column);
+            const type = searchConfig?.type || 'input';
+            const dataIndex = searchConfig.dataIndex || t.dataIndex;
+            const title = $search.title || t.title;
 
-          return {
-            key: dataIndex,
-            label: <Label {...($search.labelAttrs || {})}>{title}：</Label>,
-            value: ConditionalRender.conditionalRender({
-              conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
-              /*Dict.value.SystemAuthoritySwitch.value
-                            ? Util.isAuthority(searchConfig.authority, this.authorized)
-                            : true*/ match: (
-                <Value {...($search.valueAttrs || {})}>
-                  {this.renderGridSearchFormGroupDataItem(type, {
-                    searchConfig,
-                    column,
-                    dataIndex,
-                  })}
-                </Value>
-              ),
-              noMatch: $search.renderNoAuthority ? (
-                <Value {...($search.valueAttrs || {})}>{$search?.renderNoAuthority?.()}</Value>
-              ) : null,
-            }),
-          };
-        })
-        .filter((t) => !!t.value);
+            searchFormGroupData.push({
+              key: dataIndex,
+              label: <Label {...($search.labelAttrs || {})}>{title}：</Label>,
+              value: ConditionalRender.conditionalRender({
+                conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
+                /*Dict.value.SystemAuthoritySwitch.value
+                                              ? Util.isAuthority(searchConfig.authority, this.authorized)
+                                              : true*/ match: (
+                  <Value {...($search.valueAttrs || {})}>
+                    {this.renderGridSearchFormGroupDataItem(type, {
+                      searchConfig,
+                      column,
+                      dataIndex,
+                    })}
+                  </Value>
+                ),
+                noMatch: $search.renderNoAuthority ? (
+                  <Value {...($search.valueAttrs || {})}>{$search?.renderNoAuthority?.()}</Value>
+                ) : null,
+              }),
+            });
+
+            if (t.children && Array.isArray(t.children)) {
+              loop(t.children);
+            }
+          });
+      };
+
+      loop(this.getColumns(super.getColumns()));
+
+      return searchFormGroupData.filter((t) => !!t.value);
     }
 
     /**
@@ -1486,7 +1519,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           }
 
           this.hasAdvancedSearchPanel = true;
-          this.advancedSearchConfig.advancedSearch.collapse = this.state.advancedSearchPanelCollapse;
+          this.advancedSearchConfig.advancedSearch.collapse =
+            this.state.advancedSearchPanelCollapse;
 
           return (
             <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>

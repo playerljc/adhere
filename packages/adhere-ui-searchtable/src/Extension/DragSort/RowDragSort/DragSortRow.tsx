@@ -85,15 +85,27 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
 
   const ref = useRef<HTMLTableRowElement>(null);
 
-  const [, drag] = useDrag(rowDragSortConfig.dragConfig as any);
+  let drag;
+  let isOver, dropClassName, drop;
 
-  const [{ isOver, dropClassName }, drop] = useDrop<
-    { isOver: boolean; dropClassName: string },
-    any,
-    any
-  >(rowDragSortConfig.dropConfig as any);
+  try {
+    const dragArr = useDrag(rowDragSortConfig.dragConfig as any);
+    drag = dragArr[1];
 
-  drop(drag(ref));
+    const dropArr /*[{ isOver, dropClassName }, drop]*/ = useDrop<
+      { isOver: boolean; dropClassName: string },
+      any,
+      any
+    >(rowDragSortConfig.dropConfig as any);
+
+    isOver = dropArr[0].isOver;
+    dropClassName = dropArr[0].dropClassName;
+    drop = dropArr[1];
+
+    drop(drag(ref));
+  } catch (e) {
+    console.log(e);
+  }
 
   return (trREL: ReactElement) => {
     let res = trREL;
