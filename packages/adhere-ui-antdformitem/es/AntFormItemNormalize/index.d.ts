@@ -11,6 +11,8 @@ export declare const Slider: (_props: any) => JSX.Element;
 export declare const Upload: (_props: any) => JSX.Element;
 export declare const Tooltip: (_props: any) => JSX.Element;
 export declare const Modal: (_props: any) => JSX.Element;
+export declare const Input: (_props: any) => JSX.Element;
+export declare const TextArea: (_props: any) => JSX.Element;
 /**
  * InputNumberDecimal1
  * @description 1位小数

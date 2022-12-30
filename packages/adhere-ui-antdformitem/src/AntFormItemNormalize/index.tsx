@@ -2,6 +2,7 @@ import {
   AutoComplete as AntAutoComplete,
   Cascader as AntCascader,
   DatePicker as AntDatePicker,
+  Input as AntInput,
   InputNumber as AntInputNumber,
   Mentions as AntMentions,
   Modal as AntModal,
@@ -111,6 +112,19 @@ export const Modal = createFactory(AntModal, {
   maskClosable: true,
   destroyOnClose: true,
   zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
+});
+
+export const Input = createFactory(AntInput, {
+  allowClear: true,
+  maxLength: 1000,
+  showCount: true,
+});
+
+export const TextArea = createFactory(AntInput.TextArea, {
+  allowClear: true,
+  maxLength: 1000,
+  showCount: true,
+  autoSize: true,
 });
 
 /**

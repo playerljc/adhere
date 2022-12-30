@@ -10,6 +10,7 @@
   - 加入导出图片设置背景色
 * **adhere-ui-antdformitem**
   - 加入adhere-ui-antdformitem代码
+  - 加入Input和TextArea组件
 * **adhere-ui-searchtable**
   - 加入ProSearchTable
   - 加入editor功能
