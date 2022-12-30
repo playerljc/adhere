@@ -50,6 +50,8 @@ function createFactory(Component, defaultProps) {
 
   Object.assign(fn, Component);
 
+  fn.defaultProps = defaultProps;
+
   return fn;
 }
 
