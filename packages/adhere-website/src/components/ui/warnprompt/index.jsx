@@ -31,7 +31,7 @@ export default () => {
   <Button
     type="primary"
     onClick={() => {
-      WarnPrompt('操作异常');
+      WarnPrompt.openWarnMessage('操作异常');
     }}
   >
     显示警告提示
@@ -42,7 +42,7 @@ export default () => {
           <Button
             type="primary"
             onClick={() => {
-              WarnPrompt('操作异常');
+              WarnPrompt.openWarnMessage('操作异常');
             }}
           >
             显示警告提示

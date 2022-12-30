@@ -31,7 +31,7 @@ export default () => {
   <Button
     type="primary"
     onClick={() => {
-      SuccessPrompt('操作成功');
+      SuccessPrompt.openSuccessMessage('操作成功');
     }}
   >
     显示成功提示
@@ -42,7 +42,7 @@ export default () => {
           <Button
             type="primary"
             onClick={() => {
-              SuccessPrompt('操作成功');
+              SuccessPrompt.openSuccessMessage('操作成功');
             }}
           >
             显示成功提示
