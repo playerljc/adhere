@@ -1947,6 +1947,9 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
 
   const reactQuillRef = useRef<ReactQuill>();
 
+  /**
+   * render
+   */
   function render(): Promise<{ window: Window; document: Document; wrap: HTMLDivElement }> {
     return new Promise((resolve) => {
       const document = frameRef?.current?.contentDocument as Document;
@@ -1965,6 +1968,9 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
     });
   }
 
+  /**
+   * useImperativeHandle
+   */
   useImperativeHandle(ref, () => ({
     focus() {
       reactQuillRef.current?.focus();
@@ -1975,8 +1981,15 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
     getEditor(): Quill {
       return reactQuillRef.current?.getEditor() as Quill;
     },
+    getQuill(): Quill {
+      // @ts-ignore
+      return (frameRef?.current?.contentWindow as Window)?.ReactQuill?.Quill;
+    },
   }));
 
+  /**
+   * useLayoutEffect
+   */
   useLayoutEffect(() => {
     function onLoad() {
       render().then(() => {});
@@ -2035,6 +2048,9 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
     };
   }, []);
 
+  /**
+   * useUpdateEffect
+   */
   useUpdateEffect(() => {
     render().then(({ wrap }) => {
       wrap.style.cssText = `width: 100%;height: 100%;${props.quillStyle || ''}`;
