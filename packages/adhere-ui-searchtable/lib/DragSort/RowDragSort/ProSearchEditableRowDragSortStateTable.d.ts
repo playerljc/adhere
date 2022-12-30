@@ -17,7 +17,7 @@ declare const _default: {
         hasOptionColumnFixed(): boolean;
         getPathName(): string;
         getSearch(): string;
-        getParams(): any;
+        getParams(): {};
         getDateState(state: any): {};
         getDataKey(): string;
         getTotalKey(): string;
@@ -32,13 +32,21 @@ declare const _default: {
             name: string;
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: any;
+            data: {
+                key: number;
+                label: React.ReactNode;
+                value: React.ReactNode;
+            }[];
         }[] | {
             rowCount?: undefined;
         } | {
             rowCount: number;
         })[];
-        getGridSearchFormGroupDataByColumnConfig(): any;
+        getGridSearchFormGroupDataByColumnConfig(): {
+            key: number;
+            label: React.ReactNode;
+            value: React.ReactNode;
+        }[];
         assignSearchConfig(searchConfig: any, column: any): any;
         renderSearchForm(): JSX.Element;
         renderSearchFooterItems(_defaultItems: any): any[];

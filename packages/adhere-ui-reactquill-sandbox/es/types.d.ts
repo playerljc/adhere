@@ -8,6 +8,7 @@ export interface ReactQuillSandboxHandler {
     focus: () => void;
     blur: () => void;
     getEditor: () => Quill;
+    getQuill: () => Quill;
 }
 /**
  * ReactQuillProps

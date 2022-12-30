@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
@@ -58,7 +58,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description 根据列设置返回查询参数
          * @default params
          */
-        getParams(): any;
+        getParams(): {};
         /**
          * getDateState
          * @description 获取时间查询字段，将默认值修改为null或moment对象
@@ -123,7 +123,11 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             name: string;
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: any;
+            data: {
+                key: number;
+                label: ReactNode;
+                value: ReactNode | null;
+            }[];
         }[] | {
             rowCount?: undefined;
         } | {
@@ -134,7 +138,11 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description 通过列设置获取gridSearchFormGroup的Data数据
          * @return Array
          */
-        getGridSearchFormGroupDataByColumnConfig(): any;
+        getGridSearchFormGroupDataByColumnConfig(): {
+            key: number;
+            label: ReactNode;
+            value: ReactNode | null;
+        }[];
         /**
          * assignSearchConfig
          * @description assign searchConfig
