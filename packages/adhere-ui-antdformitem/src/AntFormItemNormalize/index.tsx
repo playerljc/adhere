@@ -225,7 +225,7 @@ export const TextArea = createFactory(AntInput.TextArea, {
   allowClear: true,
   maxLength: 1000,
   showCount: true,
-  autoSize: true,
+  autoSize: false,
 });
 
 /**
