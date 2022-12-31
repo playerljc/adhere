@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-messagedialog",
-  "version": "1.0.22",
+  "version": "1.0.22-fix.1",
   "description": "对ant-design的<Model>进行封装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -34,7 +34,7 @@
     "@baifendian/adhere-ui-css": "^1.0.22",
     "@baifendian/adhere-ui-formitemcreator": "^1.0.22",
     "@baifendian/adhere-util-intl": "^1.0.22",
-    "@baifendian/adhere-util-resource": "^1.0.22",
+    "@baifendian/adhere-util-resource": "^1.0.22-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.22.2",

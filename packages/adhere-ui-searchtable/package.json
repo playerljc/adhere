@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-searchtable",
-  "version": "1.0.22-fix.0",
+  "version": "1.0.22-fix.1",
   "description": "一种查询表格的通用模式(如果 UI 没有明确给出查询表格的 UI，就可以用这个默认模式)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
-    "@baifendian/adhere-ui-antdformitem": "^1.0.22-fix.0",
+    "@baifendian/adhere-ui-antdformitem": "^1.0.22-fix.1",
     "@baifendian/adhere-ui-conditionalrender": "^1.0.22",
     "@baifendian/adhere-ui-css": "^1.0.22",
     "@baifendian/adhere-ui-flexlayout": "^1.0.22",
@@ -44,7 +44,7 @@
     "@baifendian/adhere-ui-tablegridlayout": "^1.0.22",
     "@baifendian/adhere-ui-tableheadsearch": "^1.0.22",
     "@baifendian/adhere-util-intl": "^1.0.22",
-    "@baifendian/adhere-util-resource": "^1.0.22",
+    "@baifendian/adhere-util-resource": "^1.0.22-fix.1",
     "@baifendian/adhere-util-validator": "^1.0.21",
     "@ctsj/router": "^1.0.4",
     "@ctsj/state": "^2.0.23",

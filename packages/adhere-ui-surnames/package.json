@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-surnames",
-  "version": "1.0.22",
+  "version": "1.0.22-fix.1",
   "description": "姓名面板",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-css": "^1.0.22",
-    "@baifendian/adhere-util": "^1.0.22",
+    "@baifendian/adhere-util": "^1.0.22-fix.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

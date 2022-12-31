@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-iframeio",
-  "version": "1.0.22",
+  "version": "1.0.22-fix.1",
   "description": "iframe的通信客户端和服务端",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.22",
+    "@baifendian/adhere-util": "^1.0.22-fix.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
