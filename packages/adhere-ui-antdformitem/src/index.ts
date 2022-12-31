@@ -1,8 +1,11 @@
-import * as AntFormItemNormalize from './AntFormItemNormalize';
+import AntFormItemNormalizeComponents, * as AntFormItemNormalizeDefault from './AntFormItemNormalize';
 import FormItemGeneratorToDict, * as FormItemGeneratorToDictComponents from './FormItemGeneratorToDict';
 
 export default {
-  AntFormItemNormalize,
+  AntFormItemNormalize: {
+    ...AntFormItemNormalizeDefault,
+    ...AntFormItemNormalizeComponents,
+  },
   FormItemGeneratorToDict,
   FormItemGeneratorToDictComponents,
 };
