@@ -213,6 +213,11 @@ declare const _default: {
     };
     isIframeEmbed(): boolean;
     addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
+    clickInRange(params: {
+        el: HTMLElement;
+        rootEl: HTMLElement;
+        bodyClickHandler?: Function | undefined;
+    }): Function;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

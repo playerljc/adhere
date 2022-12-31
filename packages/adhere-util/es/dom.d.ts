@@ -184,5 +184,16 @@ declare const _default: {
      * @param capture
      */
     addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
+    /**
+     * clickInRange
+     * @description 再点击区域内执行点击操作，超出的区域执行bodyClickHandler的操作
+     * @param params
+     * @return Function
+     */
+    clickInRange(params: {
+        el: HTMLElement;
+        rootEl: HTMLElement;
+        bodyClickHandler?: Function;
+    }): Function;
 };
 export default _default;
