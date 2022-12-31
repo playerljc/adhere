@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere",
-  "version": "1.0.22",
+  "version": "1.0.22-fix.0",
   "description": "adhere",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
-    "@baifendian/adhere-ui-antdformitem": "^1.0.22",
+    "@baifendian/adhere-ui-antdformitem": "^1.0.22-fix.0",
     "@baifendian/adhere-ui-backtopanimation": "^1.0.22",
     "@baifendian/adhere-ui-bmap": "^1.0.22",
     "@baifendian/adhere-ui-cascadecompared": "^1.0.22",
@@ -57,7 +57,7 @@
     "@baifendian/adhere-ui-historyback": "^1.0.22",
     "@baifendian/adhere-ui-hooks": "^1.0.22",
     "@baifendian/adhere-ui-imagelazy": "^1.0.22",
-    "@baifendian/adhere-ui-jdcategorytab": "^1.0.22",
+    "@baifendian/adhere-ui-jdcategorytab": "^1.0.22-fix.0",
     "@baifendian/adhere-ui-messagedialog": "^1.0.22",
     "@baifendian/adhere-ui-notification": "^1.0.22",
     "@baifendian/adhere-ui-olmap": "^1.0.22",
@@ -69,10 +69,10 @@
     "@baifendian/adhere-ui-prompt-successprompt": "^1.0.22",
     "@baifendian/adhere-ui-prompt-warnprompt": "^1.0.22",
     "@baifendian/adhere-ui-pullrefresh": "^1.0.22",
-    "@baifendian/adhere-ui-reactquill-sandbox": "^1.0.22",
+    "@baifendian/adhere-ui-reactquill-sandbox": "^1.0.22-fix.0",
     "@baifendian/adhere-ui-revolving": "^1.0.22",
     "@baifendian/adhere-ui-scrollload": "^1.0.22",
-    "@baifendian/adhere-ui-searchtable": "^1.0.22",
+    "@baifendian/adhere-ui-searchtable": "^1.0.22-fix.0",
     "@baifendian/adhere-ui-slidelayout": "^1.0.22",
     "@baifendian/adhere-ui-sliderscale": "^1.0.22",
     "@baifendian/adhere-ui-space": "^1.0.22",

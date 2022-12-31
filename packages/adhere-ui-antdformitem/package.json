@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-antdformitem",
-  "version": "1.0.22",
+  "version": "1.0.22-fix.0",
   "description": "Antd的FormItem进阶",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
