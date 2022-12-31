@@ -56,7 +56,7 @@ export default () => {
 
   <div style={{ position: 'relative', height: 300 }}>
     <ReactQuillSandbox
-      style={{ width: '100%', height: 300 - 43 }}
+      // style={{ width: '100%', height: 300 - 43 }}
       wrapStyle={{ width: '100%', height: '100%' }}
     />
   </div>
@@ -65,7 +65,7 @@ export default () => {
             renderChildren: () => (
               <div style={{ position: 'relative', height: 300 }}>
                 <ReactQuillSandbox
-                  style={{ width: '100%', height: 300 - 43 }}
+                  // style={{ width: '100%', height: 300 - 43 }}
                   wrapStyle={{ width: '100%', height: '100%' }}
                 />
               </div>
@@ -118,7 +118,7 @@ export default () => {
       </div>
       <ReactQuillSandbox
         modules={modules}
-        style={{ width: '100%', height: 300 - 43 }}
+        // style={{ width: '100%', height: 300 - 43 }}
         wrapStyle={{ width: '100%', height: 300 }}
       />
     </Space.Group>
@@ -157,7 +157,7 @@ export default () => {
                   </div>
                   <ReactQuillSandbox
                     modules={modules}
-                    style={{ width: '100%', height: 300 - 43 }}
+                    // style={{ width: '100%', height: 300 - 43 }}
                     wrapStyle={{ width: '100%', height: 300 }}
                   />
                 </Space.Group>
@@ -224,7 +224,7 @@ export default () => {
       ref={ref}
       value={value}
       onChange={setValue}
-      style={{ width: '100%', height: 300 - 43 }}
+      // style={{ width: '100%', height: 300 - 43 }}
       wrapStyle={{ width: '100%', height: '100%' }}
     />
   </div>
@@ -236,7 +236,7 @@ export default () => {
                   ref={ref}
                   value={value}
                   onChange={setValue}
-                  style={{ width: '100%', height: 300 - 43 }}
+                  // style={{ width: '100%', height: 300 - 43 }}
                   wrapStyle={{ width: '100%', height: '100%' }}
                   modules={{
                     toolbar: [

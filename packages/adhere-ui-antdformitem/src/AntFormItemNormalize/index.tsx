@@ -1,26 +1,132 @@
 import {
+  Affix,
+  Alert,
+  Anchor,
   AutoComplete as AntAutoComplete,
   Cascader as AntCascader,
   DatePicker as AntDatePicker,
+  Input as AntInput,
   InputNumber as AntInputNumber,
-  Mentions as AntMentions,
   Modal as AntModal,
   Select as AntSelect,
-  Slider as AntSlider,
   TimePicker as AntTimePicker,
-  Tooltip as AntTooltip,
   TreeSelect as AntTreeSelect,
   Upload as AntUpload,
+  Avatar,
+  BackTop,
+  Badge,
+  Breadcrumb,
+  Button,
+  Calendar,
+  Card,
+  Carousel,
+  Checkbox,
+  Col,
+  Collapse,
+  Comment,
+  ConfigProvider,
+  Descriptions,
+  Divider,
+  Drawer,
+  Dropdown,
+  Empty,
+  Form,
+  Grid,
+  Image,
+  Layout,
+  List,
+  Mentions,
+  Menu,
+  PageHeader,
+  Pagination,
+  Popconfirm,
+  Popover,
+  Progress,
+  Radio,
+  Rate,
+  Result,
+  Row,
+  Segmented,
+  Skeleton,
+  Slider,
+  Space,
+  Spin,
+  Statistic,
+  Steps,
+  Switch,
+  Table,
+  Tabs,
+  Tag,
+  Timeline,
+  Tooltip,
+  Transfer,
+  Tree,
+  Typography,
 } from 'antd';
 import React from 'react';
 
-// @ts-ignore
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Resource from '@baifendian/adhere-util-resource';
 
 const { RangePicker: AntRangePicker } = AntDatePicker;
 
 const { useScrollLayout } = FlexLayout;
+
+const AntdComponents = {
+  Alert,
+  Anchor,
+  Affix,
+  Avatar,
+  BackTop,
+  Badge,
+  Breadcrumb,
+  Button,
+  Calendar,
+  Card,
+  Carousel,
+  Checkbox,
+  Col,
+  Collapse,
+  Comment,
+  ConfigProvider,
+  Descriptions,
+  Divider,
+  Drawer,
+  Dropdown,
+  Empty,
+  Form,
+  Grid,
+  Image,
+  Layout,
+  List,
+  Menu,
+  PageHeader,
+  Pagination,
+  Popconfirm,
+  Popover,
+  Progress,
+  Radio,
+  Rate,
+  Result,
+  Row,
+  Segmented,
+  Skeleton,
+  Space,
+  Spin,
+  Statistic,
+  Steps,
+  Switch,
+  Table,
+  Tabs,
+  Tag,
+  Timeline,
+  Transfer,
+  Tree,
+  Typography,
+  Tooltip,
+  Mentions,
+  Slider,
+};
 
 /**
  * createFactory
@@ -48,6 +154,8 @@ function createFactory(Component, defaultProps) {
   }
 
   Object.assign(fn, Component);
+
+  fn.defaultProps = defaultProps;
 
   return fn;
 }
@@ -94,16 +202,10 @@ export const Cascader = createFactory(AntCascader, {
   allowClear: true,
 });
 
-export const Mentions = createFactory(AntMentions, {});
-
-export const Slider = createFactory(AntSlider, {});
-
 export const Upload = createFactory(AntUpload, {
   name: 'file',
   withCredentials: true,
 });
-
-export const Tooltip = createFactory(AntTooltip, {});
 
 export const Modal = createFactory(AntModal, {
   closable: true,
@@ -111,6 +213,19 @@ export const Modal = createFactory(AntModal, {
   maskClosable: true,
   destroyOnClose: true,
   zIndex: Resource.Dict.value.ResourceNormalMaxZIndex.value,
+});
+
+export const Input = createFactory(AntInput, {
+  allowClear: true,
+  maxLength: 1000,
+  showCount: true,
+});
+
+export const TextArea = createFactory(AntInput.TextArea, {
+  allowClear: true,
+  maxLength: 1000,
+  showCount: true,
+  autoSize: true,
 });
 
 /**
@@ -136,3 +251,10 @@ export const InputNumberDecimal2 = createFactory(AntInputNumber, {
 export const InputNumberInteger = createFactory(AntInputNumber, {
   precision: 0,
 });
+
+// 对剩余没有提供默认值的组件进行统一的操作
+export default Object.entries(AntdComponents).reduce((Components, [componentName, Component]) => {
+  Components[componentName] = createFactory(Component, {});
+
+  return Components;
+}, {});

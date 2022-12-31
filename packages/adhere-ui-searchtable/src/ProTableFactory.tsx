@@ -177,13 +177,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     /**
      * initSearchAndPaginParams
      * @description - 初始化组件的查询和分页参数
+     * @param queryReduce 查询参数的处理
      */
-    initSearchAndPaginParams() {
+    initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any) {
       const query = qs.parse(this.getSearch(), { ignoreQueryPrefix: true });
 
       const queryParams = {};
 
-      Object.keys(query).forEach((key) => (queryParams[key] = query[key]));
+      Object.keys(query).forEach((key) => {
+        queryParams[key] = queryReduce ? queryReduce(key, query[key]) : query[key];
+      });
 
       if (searchAndPaginParamsMemo.isEmpty()) {
         return {

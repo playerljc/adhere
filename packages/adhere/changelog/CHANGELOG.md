@@ -6,20 +6,21 @@
 
 * **adhere-ui-historyback**
   - 修改为返回的判断逻辑
-* **adhere-util**
-  - color加入新方法
-  - 加入对列表头分组的修改
 * **adhere-ui-writingboard**
   - 加入导出图片设置背景色
 * **adhere-ui-antdformitem**
   - 加入adhere-ui-antdformitem代码
+  - 加入Input和TextArea组件
+  - 加入所有Antd组件的默认操作
 * **adhere-ui-searchtable**
   - 加入ProSearchTable
   - 加入editor功能
+  - 加入对列表头分组的修改
 * **adhere-util**
   - 加入DateUtil
   - 加入FormatUtil
   - 加入EncryptUtil
+  - color加入新方法
 * **adhere-util-adapterscreen**
   - Safari浏览器适配
 * **adhere-ui-prompt-errorprompt**

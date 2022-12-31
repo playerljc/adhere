@@ -31,7 +31,7 @@ export default () => {
   <Button
     type="primary"
     onClick={() => {
-      ErrorPrompt('操作失败');
+      ErrorPrompt.openErrorMessage('操作失败');
     }}
   >
     显示警告提示
@@ -42,7 +42,7 @@ export default () => {
           <Button
             type="primary"
             onClick={() => {
-              ErrorPrompt('操作失败');
+              ErrorPrompt.openErrorMessage('操作失败');
             }}
           >
             显示警告提示

@@ -11,7 +11,7 @@ declare const _default: {
         onSubTableChange(pagination: any, filters: any, sorter: any): void;
         onSearchPanelCollapseBefore(): void;
         unMountSearchAndPaginParamsDeal(): void;
-        initSearchAndPaginParams(): any;
+        initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
         hasAdvancedSearch(): boolean;
         hasNumberColumnFixed(): boolean;
         hasOptionColumnFixed(): boolean;

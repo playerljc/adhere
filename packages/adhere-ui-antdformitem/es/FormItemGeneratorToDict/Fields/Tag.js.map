@@ -1,1 +1,1 @@
-{"version":3,"file":"Tag.js","sources":["FormItemGeneratorToDict/Fields/Tag.js"],"sourcesContent":["var FormItemComponents = {};\r\nexport default (function () { return FormItemComponents; });\r\n"],"names":["FormItemComponents"],"mappings":"AAAA,IAAIA,mBAAqB,kBACV,WAAe,OAAOA,kBAAqB"}
+{"version":3,"file":"Tag.js","sources":["FormItemGeneratorToDict/Fields/Tag.js"],"sourcesContent":["var FormItemComponents = {};\nexport default (function () {\n  return FormItemComponents;\n});"],"names":["FormItemComponents"],"mappings":"AAAA,IAAIA,mBAAqB,kBACV,WACb,OAAOA,kBACR"}

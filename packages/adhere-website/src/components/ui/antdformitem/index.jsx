@@ -8,6 +8,8 @@ import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
 
 const { Option } = AntdFormItem.AntFormItemNormalize.Select;
 
+AntdFormItem.AntFormItemNormalize.Input.defaultProps.maxLength = 2000;
+
 const { ScrollLayout } = FlexLayout;
 
 export default () => {
@@ -499,6 +501,32 @@ export default () => {
                   </dt>
                   <dd>
                     <AntdFormItem.AntFormItemNormalize.InputNumberInteger
+                      style={{
+                        width: 200,
+                      }}
+                    />
+                  </dd>
+                </dl>
+
+                <dl>
+                  <dt>
+                    <p>Input</p>
+                  </dt>
+                  <dd>
+                    <AntdFormItem.AntFormItemNormalize.Input
+                      style={{
+                        width: 200,
+                      }}
+                    />
+                  </dd>
+                </dl>
+
+                <dl>
+                  <dt>
+                    <p>TextArea</p>
+                  </dt>
+                  <dd>
+                    <AntdFormItem.AntFormItemNormalize.TextArea
                       style={{
                         width: 200,
                       }}
