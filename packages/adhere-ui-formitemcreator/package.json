@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-formitemcreator",
-  "version": "1.0.22",
+  "version": "1.0.22-fix.2",
   "description": "Form表单配置项",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^1.0.22",
+    "@baifendian/adhere-util-intl": "^1.0.22-fix.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.22.2",
