@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { ForwardRefRenderFunction, forwardRef, useImperativeHandle, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, { Root } from 'react-dom/client';
 
 import { ProviderContext } from './ContextMenuContext';
 import Menu from './Menu';
@@ -25,21 +25,30 @@ const ContextMenuComponent: ForwardRefRenderFunction<
   function onClick(e) {
     e.stopPropagation();
 
-    const flag = ReactDOM.unmountComponentAtNode(el);
-
-    if (flag) {
-      el?.parentElement?.removeChild(el);
+    const root = openHandlers.get(el);
+    if (root) {
+      root.unmount();
     }
+    // const flag = ReactDOM.unmountComponentAtNode(el);
+
+    // if (flag) {
+    //   el?.parentElement?.removeChild(el);
+    // }
   }
 
   function onContextMenu(e) {
     e.preventDefault();
 
-    const flag = ReactDOM.unmountComponentAtNode(el);
-
-    if (flag) {
-      el?.parentElement?.removeChild(el);
+    const root = openHandlers.get(el);
+    if (root) {
+      root.unmount();
     }
+
+    // const flag = ReactDOM.unmountComponentAtNode(el);
+
+    // if (flag) {
+    //   el?.parentElement?.removeChild(el);
+    // }
   }
 
   useImperativeHandle(ref, () => ({
@@ -69,6 +78,8 @@ const ContextMenuComponentHOC = forwardRef<
   ContextMenuComponentRefHandle,
   ContextMenuComponentProps
 >(ContextMenuComponent);
+
+const openHandlers = new WeakMap<HTMLElement, Root>();
 
 const ContextMenu = {
   /**
@@ -102,20 +113,38 @@ const ContextMenu = {
 
     document.body.appendChild(parentEl);
 
-    ReactDOM.render(
-      <ContextMenuComponentHOC data={data} config={config} el={parentEl} ref={contextMenuIns} />,
+    const root = ReactDOM.createRoot(
       parentEl,
-      () => contextMenuIns.current?.mount(),
+      // () => contextMenuIns.current?.mount(),
     );
+
+    root.render(
+      <ContextMenuComponentHOC
+        data={data}
+        config={config}
+        el={parentEl}
+        ref={(ins) => {
+          // @ts-ignore
+          contextMenuIns.current = ins;
+          contextMenuIns.current?.mount();
+        }}
+      />,
+    );
+
+    openHandlers.set(parentEl, root);
 
     return parentEl;
   },
   close(el) {
-    const flag = ReactDOM.unmountComponentAtNode(el);
-
-    if (flag) {
-      el.parentElement.removeChild(el);
+    const root = openHandlers.get(el);
+    if (root) {
+      root.unmount();
     }
+    // const flag = ReactDOM.unmountComponentAtNode(el);
+    //
+    // if (flag) {
+    //   el.parentElement.removeChild(el);
+    // }
   },
 };
 

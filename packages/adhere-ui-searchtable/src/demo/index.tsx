@@ -1,6 +1,6 @@
 import { ConfigProvider } from 'antd';
 import React, { Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import AdhereConfigProvider from '@baifendian/adhere-ui-configprovider';
 import Resource from '@baifendian/adhere-util-resource';
@@ -18,7 +18,7 @@ const ProSearchStateTableImpl = lazy(
   () => import(/* webpackChunkName: "conditionalrender" */ './proHeaderGroupStateSearchTable.jsx'),
 );
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
     <AdhereConfigProvider
       // @ts-ignore
@@ -36,5 +36,4 @@ ReactDOM.render(
       )}
     </AdhereConfigProvider>
   </ConfigProvider>,
-  document.getElementById('app'),
 );

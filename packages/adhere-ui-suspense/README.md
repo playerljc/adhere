@@ -2,8 +2,8 @@
 &ensp;&ensp;数据加载单元(如第一次是骷髅骨架，其他是 loading)，有数据加载的单元，第一次是骷髅骨架(或其他)mount，更新是 loading
 
 # ✨ 特性
-- 支持 react(17.x)
-- ant-design(4.x)
+- 支持 react(18.x)
+- ant-design(5.x)
 - 支持国际化
 - 支持修改主题
 - 支持动态引入(babel-plugin-import)

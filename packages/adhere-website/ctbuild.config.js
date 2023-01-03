@@ -67,10 +67,10 @@ module.exports = {
     // }
 
     // 加入markdown的解析
-    webpackConfig.module.rules.push({
-      test: /\.md$/,
-      use: 'raw-loader',
-    });
+    // webpackConfig.module.rules.push({
+    //   test: /\.md$/,
+    //   use: 'raw-loader',
+    // });
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 
@@ -110,16 +110,16 @@ module.exports = {
           },
           'adhere',
         ],
-        [
-          'import',
-          {
-            libraryName: 'antd',
-            libraryDirectory: 'es',
-            // styleLibraryDirectory: 'es',
-            style: true,
-          },
-          'ant',
-        ],
+        // [
+        //   'import',
+        //   {
+        //     libraryName: 'antd',
+        //     libraryDirectory: 'es',
+        //     // styleLibraryDirectory: 'es',
+        //     style: true,
+        //   },
+        //   'ant',
+        // ],
       );
     }
 

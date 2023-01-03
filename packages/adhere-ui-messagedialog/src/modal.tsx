@@ -65,7 +65,7 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
       centered={centered}
       wrapClassName={selectorPrefix}
       onCancel={onCancel}
-      visible
+      open
     >
       {children}
     </Modal>

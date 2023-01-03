@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import SlideLayout from '../index';
 
@@ -53,4 +53,4 @@ const Wrap = () => {
   );
 };
 
-ReactDOM.render(<Wrap />, document.getElementById('app'));
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(<Wrap />);

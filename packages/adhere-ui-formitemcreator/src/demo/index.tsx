@@ -1,8 +1,9 @@
 import { Button, Form, Select } from 'antd';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import FormItemCreator from '../index';
+
 import './index.less';
 
 const onFinish = (values) => {
@@ -18,7 +19,7 @@ const layout = {
   wrapperCol: { span: 12 },
 };
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('app')).render(
   <Form name="textDemo" onFinish={onFinish} onFinishFailed={onFinishFailed}>
     <FormItemCreator
       columns={[
@@ -35,7 +36,7 @@ ReactDOM.render(
           initialValue: ['篮球'],
           contentProps: {
             disabled: true,
-          }
+          },
         },
         {
           label: '这是一个autocomplete的select',
@@ -44,11 +45,11 @@ ReactDOM.render(
           contentProps: {
             autoComplete: true,
             options: [
-              { label: '标签1', value: '1'},
-              { label: '标签2', value: '2'}
-            ]
-          }
-        }
+              { label: '标签1', value: '1' },
+              { label: '标签2', value: '2' },
+            ],
+          },
+        },
       ]}
       layout={layout}
     />
@@ -58,5 +59,4 @@ ReactDOM.render(
       </Button>
     </Form.Item>
   </Form>,
-  document.getElementById('app'),
 );

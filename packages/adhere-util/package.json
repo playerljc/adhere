@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util",
-  "version": "1.0.22-fix.1",
+  "version": "2.0.0",
   "description": "工具类",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,21 +28,19 @@
     "buildumd": "ctbuild buildumd --packagename AdhereUtil --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "resolutions": {
-    "graceful-fs": "4.2.2"
-  },
+
   "dependencies": {
-    "@baifendian/adhere-util-preferences": "^1.0.22",
-    "@baifendian/adhere-util-watchmemoized": "^1.0.22-fix.1",
+    "@baifendian/adhere-util-preferences": "^2.0.0",
+    "@baifendian/adhere-util-watchmemoized": "^2.0.0",
     "crypto-js": "^4.1.1",
     "vkbeautify": "^0.99.3",
     "xml-objtree": "^0.24.2"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
+    "@babel/runtime": "^7.20.7",
+    "@ctsj/build": "^6.0.5",
     "npm-run-all": "^4.1.5",
-    "typescript": "^3.8.2"
+    "typescript": "^4.9.4"
   },
   "publishConfig": {
     "access": "public"

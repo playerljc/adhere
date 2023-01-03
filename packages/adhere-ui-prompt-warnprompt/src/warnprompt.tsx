@@ -31,4 +31,4 @@ export const openWarnMessage = (
   content?: JointContent,
   duration?: ConfigDuration,
   onClose?: ConfigOnClose,
-) => message.warn(content, duration, onClose);
+) => message.warning(content, duration, onClose);

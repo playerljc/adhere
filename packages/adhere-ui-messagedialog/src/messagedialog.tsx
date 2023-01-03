@@ -1,7 +1,7 @@
 import { Button, ConfigProvider, Form } from 'antd';
 import type { FormInstance } from 'antd/lib/form';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
@@ -33,6 +33,8 @@ function renderByIcon(icon, text) {
     </div>
   );
 }
+
+const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
 
 const MessageDialogFactory = {
   /**
@@ -238,20 +240,24 @@ const MessageDialogFactory = {
     const el = document.createElement('div');
 
     function close() {
-      const flag = ReactDOM.unmountComponentAtNode(el);
-      if (flag) {
-        el?.parentElement?.removeChild?.(el);
-      }
+      // const flag = ReactDOM.unmountComponentAtNode(el);
+      // if (flag) {
+      //   el?.parentElement?.removeChild?.(el);
+      // }
+      root.unmount();
     }
 
-    ReactDOM.render(
+    const root = ReactDOM.createRoot(el);
+
+    root.render(
       <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]}>
         <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
           {children}
         </ModalDialog>
       </ConfigProvider>,
-      el,
     );
+
+    MessageDialogHandlers.set(el, root);
 
     document.body.appendChild(el);
 
@@ -265,10 +271,14 @@ const MessageDialogFactory = {
    * @param el
    */
   close(el: HTMLElement) {
-    const flag = ReactDOM.unmountComponentAtNode(el);
-    if (flag) {
-      el?.parentElement?.removeChild?.(el);
+    const root = MessageDialogHandlers.get(el);
+    if (root) {
+      root.unmount();
     }
+    // const flag = ReactDOM.unmountComponentAtNode(el);
+    // if (flag) {
+    //   el?.parentElement?.removeChild?.(el);
+    // }
   },
 };
 

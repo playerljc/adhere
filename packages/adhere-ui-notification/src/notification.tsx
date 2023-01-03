@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { v1 } from 'uuid';
 
 import type { Config, ShowConfig, ShowStandardConfig } from './types';
@@ -154,7 +154,7 @@ class Notification {
       </>
     );
 
-    ReactDOM.render(<Component />, n);
+    ReactDOM.createRoot(n).render(<Component />);
 
     return this.build(id, n);
   }
@@ -206,8 +206,7 @@ class Notification {
       </>
     );
 
-    // @ts-ignore
-    ReactDOM.render(<Component />, n);
+    ReactDOM.createRoot(n).render(<Component />);
 
     return this.build(id, n);
   }

@@ -12,8 +12,8 @@
 
 # ✨ 特性
 - 支持国际化
-- react(17.x)
-- ant-design(4.x)
+- react(18.x)
+- ant-design(5.x)
 - 支持动态引入(babel-plugin-import)
 
 # 🖥 兼容环境

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import StickupLayout from '../index';
 
@@ -8,7 +8,7 @@ import './index.less';
 
 const { Item } = StickupLayout;
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <div style={{ height: 500, overflow: 'hidden' }} className="StickupLayout">
     <StickupLayout>
       <Item
@@ -330,5 +330,4 @@ ReactDOM.render(
       />
     </StickupLayout>
   </div>,
-  document.getElementById('app'),
 );

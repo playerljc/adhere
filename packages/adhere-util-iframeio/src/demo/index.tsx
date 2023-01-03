@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import { browserConfig } from '@ctsj/router';
 
@@ -8,7 +8,7 @@ import Server from './server';
 
 import 'antd/dist/antd.min.css';
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   browserConfig(
     [
       {
@@ -28,5 +28,4 @@ ReactDOM.render(
     ],
     () => {},
   ),
-  document.getElementById('app'),
 );
