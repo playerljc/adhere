@@ -41,7 +41,20 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       this.pathname = typeof window !== 'undefined' ? this.getPathName() : '';
 
       // 获取浏览器地址栏上默认的searchQuery和分页参数
-      const defaultSearchAndPaginParams = this.initSearchAndPaginParams();
+      let defaultSearchAndPaginParams = {
+        search: {},
+        page: 1,
+        limit: this.getLimit() || 10,
+      };
+
+      if (
+        !('openSearchParamsMemory' in this.props) ||
+        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
+      ) {
+        defaultSearchAndPaginParams = this.initSearchAndPaginParams();
+      }
+
+      // const defaultSearchAndPaginParams = this.initSearchAndPaginParams();
 
       // state create
       this.state = {
@@ -77,7 +90,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     componentWillUnmount() {
       super.componentWillUnmount && super.componentWillUnmount();
 
-      if (!('openSearchParamsMemory' in this.props)) {
+      if (
+        !('openSearchParamsMemory' in this.props) ||
+        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
+      ) {
         // 卸载的时候处理查询和分页参数的缓存
         this.unMountSearchAndPaginParamsDeal();
       }
