@@ -72,6 +72,10 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-unicorn": "^45.0.2",
+    "stylelint-config-standard": "^29.0.0",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-config-prettier": "^9.0.4",
+    "stylelint-declaration-block-no-ignored-properties": "^2.6.0",
     "fs-extra": "^11.1.0",
     "husky": "^8.0.3",
     "lerna": "^6.3.0",
@@ -80,6 +84,8 @@
     "rimraf": "^3.0.2",
     "stylelint": "^14.16.1",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
-    "eslint-plugin-unused-imports": "^2.0.0"
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "postcss": "^8.4.20",
+    "postcss-less": "^6.0.0"
   }
 }

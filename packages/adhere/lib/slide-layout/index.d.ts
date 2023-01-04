@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-ui-slidelayout";
+import Model from "@baifendian/adhere-ui-slidelayout/lib";

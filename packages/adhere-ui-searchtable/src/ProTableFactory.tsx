@@ -1,6 +1,6 @@
 import { Button, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import dayjs from 'dayjs';
 import merge from 'lodash/merge';
-import moment from 'moment';
 import omit from 'omit.js';
 import qs from 'qs';
 import React, { ReactNode } from 'react';
@@ -319,7 +319,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
     /**
      * getDateState
-     * @description 获取时间查询字段，将默认值修改为null或moment对象
+     * @description 获取时间查询字段，将默认值修改为null或dayjs对象
      * @param state
      * @return {{}}
      */
@@ -337,7 +337,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const dateObj = {};
 
       dateKeys.forEach((key) => {
-        dateObj[key] = state[key] === null || state[key] === 'null' ? null : moment(state[key]);
+        dateObj[key] = state[key] === null || state[key] === 'null' ? null : dayjs(state[key]);
       });
 
       return dateObj;
@@ -397,7 +397,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       });
 
       const dateKeys = Object.keys(searchParams).filter(
-        (key) => !(key in dateSearchParams) && searchParams[key] instanceof moment,
+        (key) => !(key in dateSearchParams) && searchParams[key] instanceof dayjs,
       );
 
       dateKeys.forEach((key) => {
@@ -1242,9 +1242,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return (
           <DatePicker
             value={this.state[dataIndex]}
-            onChange={(moment) => {
+            onChange={(dayjs) => {
               this.setState({
-                [dataIndex]: moment ? moment : null,
+                [dataIndex]: dayjs ? dayjs : null,
               });
             }}
             {...(searchConfig.props || {})}
@@ -1255,9 +1255,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return (
           <TimePicker
             value={this.state[dataIndex]}
-            onChange={(moment) => {
+            onChange={(dayjs) => {
               this.setState({
-                [dataIndex]: moment ? moment : null,
+                [dataIndex]: dayjs ? dayjs : null,
               });
             }}
             {...(searchConfig.props || {})}
@@ -1270,8 +1270,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return (
           <RangePicker
             value={[this.state[startName], this.state[endName]]}
-            onChange={(moments) => {
-              this.onDateTimeRangeChange([startName, endName], moments);
+            onChange={(dayjs) => {
+              this.onDateTimeRangeChange([startName, endName], dayjs);
             }}
             {...(searchConfig.props || {})}
           />

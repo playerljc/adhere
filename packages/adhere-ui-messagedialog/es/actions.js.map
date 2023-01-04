@@ -1,1 +1,1 @@
-{"version":3,"file":"actions.js","sources":["actions.js"],"sourcesContent":["export default {\n  close: 'close'\n};"],"names":["close"],"mappings":"cAAe,CACbA,MAAO,OACT"}
+{"version":3,"file":"actions.js","sources":["actions.js"],"sourcesContent":["export default {\r\n    close: 'close',\r\n};\r\n//# sourceMappingURL=actions.js.map"],"names":["close"],"mappings":"cAAe,CACXA,MAAO,OACX"}

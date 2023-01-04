@@ -226,32 +226,34 @@ class Notification {
     // @ts-ignore
     this.notificationContainer.appendChild(n);
 
-    // onCreate
-    self.trigger('onCreate', n);
-
-    n.style.height = 'auto';
-
-    let targetHeight = n.clientHeight;
-
-    // 会有最小高度的限制
-    if (self.config.style === 'material') {
-      if (targetHeight < 40) {
-        targetHeight = 40;
-      }
-    } else if (self.config.style === 'ios') {
-      if (targetHeight < 70) {
-        targetHeight = 70;
-      }
-    }
-
-    n.style.height = '0';
-
     setTimeout(() => {
-      n.style.height = `${targetHeight}px`;
+      // onCreate
+      self.trigger('onCreate', n);
 
-      n.querySelector('.info').style.opacity = '1';
+      n.style.height = 'auto';
 
-      self.trigger('onShow', n);
+      let targetHeight = n.clientHeight;
+
+      // 会有最小高度的限制
+      if (self.config.style === 'material') {
+        if (targetHeight < 40) {
+          targetHeight = 40;
+        }
+      } else if (self.config.style === 'ios') {
+        if (targetHeight < 70) {
+          targetHeight = 70;
+        }
+      }
+
+      n.style.height = '0';
+
+      setTimeout(() => {
+        n.style.height = `${targetHeight}px`;
+
+        n.querySelector('.info').style.opacity = '1';
+
+        self.trigger('onShow', n);
+      }, 100);
     }, 100);
 
     return id;

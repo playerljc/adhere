@@ -38,25 +38,25 @@ declare const _default: {
      * @param key
      * @param variables
      */
-    v(key: string, variables?: object | null | undefined): string;
+    v(key: string, variables?: object | null): string;
     /**
      * v - 以中文获取国际化后的html
      * @param key
      * @param options
      */
-    vHtml(key: string, options?: object | null | undefined): any;
+    vHtml(key: string, options?: object | null): any;
     /**
      * get
      * @param key
      * @param variables
      */
-    get(key: string, variables?: object | null | undefined): string;
+    get(key: string, variables?: object | null): string;
     /**
      * getHTML
      * @param key
      * @param options
      */
-    getHTML(key: string, options?: object | null | undefined): string;
+    getHTML(key: string, options?: object | null): string;
     /**
      * getInitOptions
      */
@@ -66,13 +66,13 @@ declare const _default: {
      * @param options
      * @param variables
      */
-    formatMessage(options: any, variables?: object | null | undefined): string;
+    formatMessage(options: any, variables?: object | null): string;
     /**
      * formatHTMLMessage
      * @param options
      * @param variables
      */
-    formatHTMLMessage(options: any, variables?: object | null | undefined): string;
+    formatHTMLMessage(options: any, variables?: object | null): string;
     /**
      * load - Load more locales after init
      * @param locales

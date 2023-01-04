@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-util-intl";
+import Model from "@baifendian/adhere-util-intl/lib";

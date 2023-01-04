@@ -282,11 +282,11 @@ export default () => {
                 onBeforeClose: () => Promise.resolve(),
                 onAfterClose: () => Popup.destroy(popup),
                 onDestroy: () => {},
-                children: <PopupInner ref={ref} />,
+                children: <PopupInner ref={ref} getPopup={() => popup} />,
                 zIndex: 9999,
               });
 
-              ref.current.setPopup(popup);
+              // ref.current.setPopup(popup);
 
               popup.show();
             }}
@@ -332,10 +332,10 @@ export default () => {
         },
         onDestroy: () => {},
         children: <PopupClosePreInner ref={ref} />,
-        zIndex: 9999,
+        zIndex: 9999
       });
 
-      ref.current.setPopup(popup);
+      // ref.current.setPopup(popup);
 
       popup.showClosePrePopup();
     }}
@@ -358,11 +358,11 @@ export default () => {
                 onBeforeClose: () => Promise.resolve(),
                 onAfterClose: () => Popup.destroy(popup),
                 onDestroy: () => {},
-                children: <PopupClosePreInner ref={ref} />,
+                children: <PopupClosePreInner ref={ref} getPopup={() => popup} />,
                 zIndex: 9999,
               });
 
-              ref.current.setPopup(popup);
+              // ref.current.setPopup(popup);
 
               popup.show();
             }}

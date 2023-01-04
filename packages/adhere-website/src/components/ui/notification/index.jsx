@@ -1,5 +1,5 @@
 import { Button, Tabs } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { Notification } from '@baifendian/adhere';
 
@@ -176,7 +176,7 @@ export default () => {
         renderChildren: () => (
           <Tabs tabPosition="left" activeKey={activeKey} onChange={onChange}>
             {config.map((t) => (
-              <TabPane tab={t.key} key={t.key}>
+              <TabPane tab={t.key} key={t.key} id={t.key}>
                 {activeKey === t.key ? (
                   <div className={styles.Tab}>
                     <div className={styles.Fixed}>
@@ -248,15 +248,20 @@ export default () => {
     ];
   }
 
-  useEffect(() => {
-    // eslint-disable-next-line no-use-before-define
-    const record = getRecord(activeKey);
-    const [style, type] = activeKey.split('-');
-    record.ins = Notification.build(record.ref.current, {
-      style,
-      type,
-    });
-  }, [activeKey]);
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      // eslint-disable-next-line no-use-before-define
+      const record = getRecord(activeKey);
+
+      if (!record || (record && !record.ref.current)) return;
+
+      const [style, type] = activeKey.split('-');
+      record.ins = Notification.build(record.ref.current, {
+        style,
+        type,
+      });
+    }, 1000);
+  }, [...config.map((t) => t.ref.current)]);
 
   function onChange(key) {
     setActiveKey(key);

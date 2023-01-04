@@ -41,7 +41,7 @@ export default function <P, S>(SuperClass: any): {
         /**
          * setFieldValues
          */
-        setFieldValues(): void;
+        setFieldValues(dataSource: any): void;
         /**
          * fetchData
          */

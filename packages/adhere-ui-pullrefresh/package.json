@@ -41,7 +41,7 @@
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
     "load-awesome": "^1.1.0",
-    "moment": "^2.29.1",
+    "dayjs": "^1.11.7",
     "omit.js": "^2.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

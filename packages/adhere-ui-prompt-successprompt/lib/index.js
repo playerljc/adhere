@@ -1,2 +1,2 @@
-"use strict";require("core-js/modules/es.object.define-property.js"),Object.defineProperty(exports,"__esModule",{value:!0});var successprompt_1=require("./successprompt");exports.default={openSuccessMessage:successprompt_1.openSuccessMessage,openSuccessDialog:successprompt_1.openSuccessDialog};
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var successprompt_1=require("./successprompt");exports.default={openSuccessMessage:successprompt_1.openSuccessMessage,openSuccessDialog:successprompt_1.openSuccessDialog};
 //# sourceMappingURL=index.js.map

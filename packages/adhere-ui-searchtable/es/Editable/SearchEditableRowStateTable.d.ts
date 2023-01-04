@@ -2,13 +2,7 @@ declare const SearchEditableRowStateTable_base: {
     new (props: any): {
         [x: string]: any;
         rowEditableReducer(params: {
-            rowIndex: number; /**
-             * updateEditableCellRowData
-             * @description 更新可编辑单元格一行的数据
-             * @param values 一行的数据
-             * @param record
-             * @return Promise<void>
-             */
+            rowIndex: number;
             record: {
                 [prop: string]: any;
             };

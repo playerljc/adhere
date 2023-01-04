@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { SearchTableImplementProps, SearchTableImplementState } from '../types';
 declare const SearchEditableCellTable_base: {
     new (props: any): {
@@ -73,7 +73,7 @@ declare class SearchEditableCellTable<P extends SearchTableImplementProps, S ext
             [props: string]: any;
         };
         dataIndex: string;
-        value: moment.Moment | null;
+        value: dayjs.Dayjs | null;
     }): Promise<void>;
 }
 export default SearchEditableCellTable;

@@ -2,20 +2,20 @@
  * 浏览器解析，浏览器、Node.js皆可
  * https://github.com/mumuy/browser
  */
-
-(function (root, factory) {
-  if (typeof define === 'function' && (define.amd || define.cmd)) {
-    // AMD&CMD
-    define(function () {
-      return factory(root);
-    });
-  } else if (typeof exports === 'object') {
-    // Node, CommonJS-like
-    module.exports = factory(root);
-  } else {
-    // Browser globals (root is window)
-    root.Browser = factory(root);
-  }
+export default (function (root, factory) {
+  // if (typeof define === 'function' && (define.amd || define.cmd)) {
+  //   // AMD&CMD
+  //   define(function () {
+  //     return factory(root);
+  //   });
+  // } else if (typeof exports === 'object') {
+  //   // Node, CommonJS-like
+  //   module.exports = factory(root);
+  // } else {
+  //   // Browser globals (root is window)
+  //   root.Browser = factory(root);
+  // }
+  return factory(root);
 })(typeof self !== 'undefined' ? self : this, function (root) {
   const _window = root || {};
   const _navigator = typeof root.navigator != 'undefined' ? root.navigator : {};

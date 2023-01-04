@@ -5,5 +5,5 @@ import type { MiddleWare } from '../../types';
  * @param middleWares
  * @constructor
  */
-declare function Compose(middleWares: MiddleWare[]): (ctx: any, next?: (() => Promise<void> | void) | undefined) => Promise<void>;
+declare function Compose(middleWares: MiddleWare[]): (ctx: any, next?: () => Promise<void> | void) => Promise<void>;
 export default Compose;

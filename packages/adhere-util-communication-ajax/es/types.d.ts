@@ -86,4 +86,4 @@ export interface ISendArg extends IConfig {
 export interface ISendPrepareArg extends ISendArg {
     method: Method;
 }
-export declare type Method = 'get' | 'post' | 'put' | 'path' | 'delete';
+export type Method = 'get' | 'post' | 'put' | 'path' | 'delete';

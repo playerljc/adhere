@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import SearchRowDragSortStateTable from './DragSort/RowDragSort/SearchRowDragSortStateTable';
 import SearchRowDragSortTable from './DragSort/RowDragSort/SearchRowDragSortTable';
 import SearchEditableCellStateTable from './Editable/SearchEditableCellStateTable';
@@ -16,10 +17,10 @@ declare const _default: {
         context: SearchTable<import("./types").SearchTableProps, import("./types").SearchTableState>;
         editable?: {
             tableEditable?: {
-                form?: import("antd/es/form").FormInstance<any> | undefined;
+                form?: import("antd").FormInstance<any> | undefined;
                 formList?: {
-                    fields: import("antd/es/form").FormListFieldData[];
-                    operation?: import("antd/es/form").FormListOperation | undefined;
+                    fields: import("antd").FormListFieldData[];
+                    operation?: import("antd").FormListOperation | undefined;
                     meta?: {
                         errors?: import("react").ReactNode[] | undefined;
                         warnings?: import("react").ReactNode[] | undefined;
@@ -977,7 +978,7 @@ declare const _default: {
         className?: string | undefined;
         style?: {} | undefined;
     }) => JSX.Element;
-    EditableContext: import("react").Context<import("antd/es/form").FormInstance<any> | null>;
+    EditableContext: import("react").Context<import("antd").FormInstance<any> | null>;
     EditableRowControl: import("react").FC<import("./types").EditorRowControlProps>;
     EditableTableControl: import("react").FC<import("./types").EditorTableControlProps>;
     SearchAndPaginParams: typeof SearchAndPaginParams;

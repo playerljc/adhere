@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(exports,"__esModule",{value:!0});var tablegridlayout_1=__importDefault(require("./tablegridlayout"));exports.default=tablegridlayout_1.default;
+import TableGridLayout from"./tablegridlayout";export default TableGridLayout;
 //# sourceMappingURL=index.js.map

@@ -30,6 +30,7 @@ import ErrorPrompt from '@baifendian/adhere-ui-prompt-errorprompt';
 import SuccessPrompt from '@baifendian/adhere-ui-prompt-successprompt';
 import WarnPrompt from '@baifendian/adhere-ui-prompt-warnprompt';
 import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
+import ReactQuillSandbox from '@baifendian/adhere-ui-reactquill-sandbox';
 import Revolving from '@baifendian/adhere-ui-revolving';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
@@ -47,7 +48,6 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import TableList from '@baifendian/adhere-ui-tablelist';
 import WritingBoard from '@baifendian/adhere-ui-writingboard';
-import ReactQuillSandbox from '@baifendian/adhere-ui-reactquill-sandbox';
 import Util from '@baifendian/adhere-util';
 import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 import Browsersniff from '@baifendian/adhere-util-browsersniff';
@@ -98,6 +98,7 @@ export {
   SuccessPrompt,
   WarnPrompt,
   PullRefresh,
+  ReactQuillSandbox,
   Revolving,
   ScrollLoad,
   SearchTable,
@@ -115,7 +116,6 @@ export {
   TableHeadSearch,
   TableList,
   WritingBoard,
-  ReactQuillSandbox,
   Util,
   AdapterScreen,
   Browsersniff,

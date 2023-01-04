@@ -1,5 +1,5 @@
+import dayjs from 'dayjs';
 import cloneDeep from 'lodash.clonedeep';
-import moment from 'moment';
 
 import { SearchTableStateImplement } from '../SearchTableStateImplement';
 import { SearchTableImplementState, SearchTableStateImplementProps } from '../types';
@@ -72,7 +72,7 @@ class SearchEditableCellStateTable<
   }: {
     record: { [props: string]: any };
     dataIndex: string;
-    value: moment.Moment | null;
+    value: dayjs.Dayjs | null;
   }): Promise<void> {
     return new Promise((resolve) => {
       if (record[dataIndex] === value?.valueOf()) {

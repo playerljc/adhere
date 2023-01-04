@@ -1,4 +1,4 @@
-declare type Dispatch<A> = (value: A, callback?: () => void) => void;
+type Dispatch<A> = (value: A, callback?: () => void) => void;
 declare function useSetState<T>(defaultValue: T): [T, Dispatch<T>];
 /**
  * useSetState

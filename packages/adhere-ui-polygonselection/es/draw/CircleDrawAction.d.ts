@@ -1,5 +1,5 @@
+import { ICircleData, IPoint, IStyle } from '../types';
 import DrawAction from './DrawAction';
-import { IPoint, ICircleData, IStyle } from '../types';
 /**
  * CircleDrawAction
  * @class

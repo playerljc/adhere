@@ -54,16 +54,16 @@ declare const _default: {
         children?: any[] | undefined;
         isLeaf?: boolean | undefined;
         properties?: any;
-    }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
-    arrayToAntdTreeSelect: (arr: any[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
-    getAncestor: (data: any[], node: any, config: Pick<import("./types").IFlatTreeArrNode, "keyAttr" | "parentIdAttr" | "rootParentId">) => any[];
-    getDescendants: (data: any[], node: any, config: Pick<import("./types").IFlatTreeArrNode, "keyAttr" | "parentIdAttr" | "rootParentId">) => any[];
+    }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    arrayToAntdTreeSelect: (arr: any[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    getAncestor: (data: any[], node: any, config: Omit<import("./types").IFlatTreeArrNode, "titleAttr">) => any[];
+    getDescendants: (data: any[], node: any, config: Omit<import("./types").IFlatTreeArrNode, "titleAttr">) => any[];
     filterTreeByFlatData: (treeFlatNodes: any[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
+    }) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     filterTree: (treeNodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], kw: string, config: import("./types").IFlatTreeArrNode & {
         filterAttr: string;
-    }) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
+    }) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     findNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null;
@@ -88,9 +88,9 @@ declare const _default: {
     getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr?: string | undefined) => number;
     getTreeLevelToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode) => number;
     getTreeLevelByIndexToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode, indexAttr: string) => number;
-    completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "key" | "isLeaf" | "children" | "properties">)[];
-    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeNode, "title" | "key" | "isLeaf" | "children" | "properties">)[];
-    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Pick<import("./types").IAntdTreeSelectNode, "label" | "key" | "isLeaf" | "children" | "properties">)[];
+    completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
+    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
     getLang(): string;
     setLang(lang?: string): void;
     getDatePickerFormat(): string;
@@ -211,7 +211,7 @@ declare const _default: {
         right: number;
         bottom: number;
     };
-    isIframeEmbed(): boolean;
+    isIframeEmbed(): boolean | null;
     addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
     clickInRange(params: {
         el: HTMLElement;
@@ -222,7 +222,9 @@ declare const _default: {
     color16Random(): string;
     colorToRgb(color: string): number[];
     rgbToColor(r: string | number, g: string | number, b: string | number): string;
-    isEmpty(value: any): boolean;
+    isEmpty(value: any): boolean; /**
+     * 函数节流
+     */
     isNumber(val: any): boolean;
     isBoolean(val: any): boolean;
     isString(val: any): boolean;

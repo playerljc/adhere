@@ -176,14 +176,14 @@ declare const _default: {
      * isIframeEmbed - 是否是iframe嵌入
      * @return {boolean}
      */
-    isIframeEmbed(): boolean;
+    isIframeEmbed(): boolean | null;
     /**
      * addClickListener - 支持PC和移动端的点击事件
      * @param el
      * @param handler
      * @param capture
      */
-    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean | undefined) => Function;
+    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean) => Function;
     /**
      * clickInRange
      * @description 再点击区域内执行点击操作，超出的区域执行bodyClickHandler的操作

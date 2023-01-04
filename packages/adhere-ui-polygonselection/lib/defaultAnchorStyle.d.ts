@@ -1,3 +1,6 @@
+/**
+ * 修改的时候控制点的样式
+ */
 declare const _default: {
     fillStyle: string;
     strokeStyle: string;
@@ -7,7 +10,4 @@ declare const _default: {
     lineDash: number[];
     lineDashOffset: number;
 };
-/**
- * 修改的时候控制点的样式
- */
 export default _default;

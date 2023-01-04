@@ -52,7 +52,7 @@ export default () => {
         const {close} = MessageDialog.Modal({
           config: {
             title: '权限所有设置',
-            width: 200,
+            width: 300,
             footer: [
               <Button
                 type="primary"
@@ -86,7 +86,7 @@ export default () => {
         const {close} = MessageDialog.Modal({
           config: {
             title: '权限当前设置',
-            width: 200,
+            width: 300,
             footer: [
               <Button
                 type="primary"
@@ -130,7 +130,7 @@ export default () => {
                   const { close } = MessageDialog.Modal({
                     config: {
                       title: '权限所有设置',
-                      width: 200,
+                      width: 300,
                       footer: [
                         <Button
                           type="primary"
@@ -164,7 +164,7 @@ export default () => {
                   const { close } = MessageDialog.Modal({
                     config: {
                       title: '权限当前设置',
-                      width: 200,
+                      width: 300,
                       footer: [
                         <Button
                           type="primary"

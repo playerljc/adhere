@@ -20,6 +20,7 @@ export interface FormItemCreatorFunction<P> extends NamedExoticComponent<P> {
     SLIDER: symbol;
     RATE: symbol;
     UPLOAD: symbol;
+    TAG: symbol;
     DEFINE: symbol;
 }
 /**
@@ -48,4 +49,11 @@ export interface ColumnItemProps extends FormItemProps {
 export interface FormItemLayoutProps {
     labelCol?: ColSize;
     wrapperCol?: ColSize;
+}
+export interface TagItemProps {
+    value?: Array<string>;
+    onChange?: Function;
+    disabled?: boolean;
+    longLimit?: number;
+    addTagInner?: string | ReactElement;
 }

@@ -1,4 +1,4 @@
-import { IPoint, IFreeData, IStyle } from '../types';
+import { IFreeData, IPoint, IStyle } from '../types';
 import DrawAction from './DrawAction';
 /**
  * FreeDrawAction

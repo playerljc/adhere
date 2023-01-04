@@ -1,4 +1,7 @@
 import { IPoint } from './types';
+/**
+ * 集合图形绘制
+ */
 declare const _default: {
     /**
      * drawStart - 绘制星
@@ -61,7 +64,4 @@ declare const _default: {
         radius: number;
     }, onDraw: (ctx: CanvasRenderingContext2D) => {}): void;
 };
-/**
- * 集合图形绘制
- */
 export default _default;

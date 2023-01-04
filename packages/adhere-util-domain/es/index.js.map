@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Domain from './domain';\r\nexport default Domain;\r\n"],"names":["Domain"],"mappings":"OAAOA,qCACQA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Domain from './domain';\r\nexport default Domain;\r\n"],"names":["Domain"],"mappings":"OAAOA,WAAY,0BACJA"}

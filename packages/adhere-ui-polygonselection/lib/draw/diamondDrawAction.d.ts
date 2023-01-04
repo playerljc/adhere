@@ -1,4 +1,4 @@
-import { IPoint, IDiamondData, IStyle } from '../types';
+import { IDiamondData, IPoint, IStyle } from '../types';
 import DrawAction from './DrawAction';
 /**
  * DiamondDrawAction

@@ -115,12 +115,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * onDateTimeRangeChange
    * @description - onDateTimeRangeChange
    * @param propertys
-   * @param moments
+   * @param dayjs
    */
-  onDateTimeRangeChange = (propertys: Array<string>, moments: Array<any>) => {
+  onDateTimeRangeChange = (propertys: Array<string>, dayjs: Array<any>) => {
     this.setState({
-      [propertys[0]]: moments && moments.length ? moments[0] : null,
-      [propertys[1]]: moments && moments.length ? moments[1] : null,
+      [propertys[0]]: dayjs && dayjs.length ? dayjs[0] : null,
+      [propertys[1]]: dayjs && dayjs.length ? dayjs[1] : null,
     });
   };
 

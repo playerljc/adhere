@@ -1,5 +1,5 @@
 import { Modal, message } from 'antd';
-import { ArgsProps, ConfigOnClose } from 'antd/lib/message';
+import { ArgsProps } from 'antd/lib/message';
 import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
 
@@ -7,7 +7,6 @@ import Intl from '@baifendian/adhere-util-intl';
 
 type ConfigContent = React.ReactNode;
 type JointContent = ConfigContent | ArgsProps;
-type ConfigDuration = number | (() => void);
 
 /**
  * openErrorDialog
@@ -25,10 +24,9 @@ export const openWarnDialog = (props?: ModalProps) =>
  * 警告的提示
  * @param content
  * @param duration
- * @param onClose
  */
 export const openWarnMessage = (
   content?: JointContent,
-  duration?: ConfigDuration,
-  onClose?: ConfigOnClose,
+  duration?: number | VoidFunction,
+  onClose?: VoidFunction,
 ) => message.warning(content, duration, onClose);

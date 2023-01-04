@@ -23,7 +23,7 @@ export declare const PlayGroundTabPropTypes: {
     active: import("prop-types").Requireable<string>;
     config: import("prop-types").Requireable<(import("prop-types").InferProps<{
         key: import("prop-types").Requireable<string>;
-        title: import("prop-types").Requireable<string | number | boolean | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
+        title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
         codeText: import("prop-types").Requireable<string>;
         theme: import("prop-types").Requireable<string>;
     }> | null | undefined)[]>;
@@ -38,12 +38,12 @@ export declare const PlayGroundTabPropTypes: {
         bodyStyle: import("prop-types").Requireable<object>;
         actionClassName: import("prop-types").Requireable<string>;
         actionStyle: import("prop-types").Requireable<object>;
-        title: import("prop-types").Requireable<string | number | boolean | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
+        title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
         extra: import("prop-types").Requireable<import("prop-types").ReactNodeLike>;
         actions: import("prop-types").Requireable<import("prop-types").ReactNodeLike[]>;
         description: import("prop-types").Requireable<import("prop-types").InferProps<{
-            title: import("prop-types").Requireable<string | number | boolean | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
-            info: import("prop-types").Requireable<string | number | boolean | import("prop-types").ReactElementLike | import("prop-types").ReactNodeArray>;
+            title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
+            info: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
         }>>;
     }>>;
     isActive: import("prop-types").Requireable<boolean>;
