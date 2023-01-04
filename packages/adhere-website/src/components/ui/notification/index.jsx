@@ -248,15 +248,20 @@ export default () => {
     ];
   }
 
-  useEffect(() => {
-    // eslint-disable-next-line no-use-before-define
-    const record = getRecord(activeKey);
-    const [style, type] = activeKey.split('-');
-    record.ins = Notification.build(record.ref.current, {
-      style,
-      type,
-    });
-  }, [activeKey]);
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      // eslint-disable-next-line no-use-before-define
+      const record = getRecord(activeKey);
+
+      if (!record || (record && !record.ref.current)) return;
+
+      const [style, type] = activeKey.split('-');
+      record.ins = Notification.build(record.ref.current, {
+        style,
+        type,
+      });
+    }, 1000);
+  }, [...config.map((t) => t.ref.current)]);
 
   function onChange(key) {
     setActiveKey(key);
