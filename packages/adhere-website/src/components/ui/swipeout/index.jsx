@@ -114,7 +114,7 @@ export default () => {
     </Radio.Group>
   </div>
 
-  <Space />
+  <Space direction="vertical" />
 
   <List
     itemLayout="horizontal"
@@ -190,7 +190,7 @@ export default () => {
               </Radio.Group>
             </div>
 
-            <Space />
+            <Space direction="vertical" />
 
             <List
               itemLayout="horizontal"

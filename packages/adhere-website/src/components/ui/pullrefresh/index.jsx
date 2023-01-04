@@ -153,7 +153,7 @@ export default () => {
       )}
     />
   </PullRefresh>
-  <Space />
+  <Space direction="vertical" />
 
   <Button
     type="primary"
@@ -192,7 +192,7 @@ export default () => {
                 )}
               />
             </PullRefresh>
-            <Space />
+            <Space direction="vertical" />
 
             <Button
               type="primary"

@@ -94,7 +94,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 400 }}>
               <Table
@@ -144,7 +144,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 700 }}>
               <Table
@@ -255,7 +255,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 800 }}>
               <FixedTableSpaceBetweenTable
@@ -362,7 +362,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 700 }}>
               <FewTable
@@ -766,7 +766,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 700 }}>
               <StateTable

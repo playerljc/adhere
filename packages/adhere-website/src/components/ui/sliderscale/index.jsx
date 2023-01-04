@@ -27,14 +27,14 @@ export default () => {
   import { SliderScale, Space } from '@baifendian/adhere';
 
   <SliderScale min={0} max={10} step={1} interval={5} />
-  <Space />
+  <Space direction="vertical" />
   <SliderScale min={0} max={60} step={1} interval={5} />
         `,
         type: 'PlayGround',
         renderChildren: () => (
           <>
             <SliderScale min={0} max={10} step={1} interval={5} />
-            <Space />
+            <Space direction="vertical" />
             <SliderScale min={0} max={60} step={1} interval={5} />
           </>
         ),
@@ -54,14 +54,14 @@ export default () => {
   import { SliderScale, Space } from '@baifendian/adhere';
 
   <SliderScale min={0} max={60} step={1} interval={10} />
-  <Space />
+  <Space direction="vertical" />
   <SliderScale min={0} max={60} step={1} interval={20} />
         `,
         type: 'PlayGround',
         renderChildren: () => (
           <>
             <SliderScale min={0} max={60} step={1} interval={10} />
-            <Space />
+            <Space direction="vertical" />
             <SliderScale min={0} max={60} step={1} interval={20} />
           </>
         ),
@@ -93,7 +93,7 @@ export default () => {
     }}
   />
 
-  <Space />
+  <Space direction="vertical" />
 
   <SliderScale
     min={0}
@@ -118,7 +118,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <SliderScale
               min={0}
