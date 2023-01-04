@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import React from 'react';
 
-import PlayGroundMulit from '@/lib/PlayGroundMulit';
+import PlayGroundMulit from '@/lib/PlaygroundMulit';
 import Playground from '@/lib/Playground';
 import ScrollFooterPanel from '@/lib/ScrollFooterPanel';
 
