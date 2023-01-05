@@ -197,7 +197,7 @@ export default () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (props.value) {
-        setSelectedRowKeys([props.value]);
+        setSelectedRowKeys(props.value);
         setSelectedRows(
           props.value.map((t) => dataSource.find((_item) => _item[props.rowKey || 'id'] === t)),
         );
