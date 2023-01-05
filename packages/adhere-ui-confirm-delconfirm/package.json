@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereDelConfirm --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-messagedialog": "^2.0.0",
     "@baifendian/adhere-util-intl": "^2.0.0",

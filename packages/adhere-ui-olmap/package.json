@@ -28,7 +28,6 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --packagename AdhereOLMap --define alias=@,evnVars=true"
   },
-
   "dependencies": {
     "@baifendian/adhere-util-resource": "^2.0.0",
     "@types/react": "^18.0.26",

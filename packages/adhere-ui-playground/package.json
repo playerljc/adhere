@@ -28,7 +28,6 @@
     "buildumd": "ctbuild buildumd --packagename AdherePlayground --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
     "@baifendian/adhere-ui-contextmenu": "^2.0.0",

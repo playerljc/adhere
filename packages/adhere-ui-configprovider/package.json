@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename ConfigProvider --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
     "@baifendian/adhere-ui-hooks": "^2.0.0",

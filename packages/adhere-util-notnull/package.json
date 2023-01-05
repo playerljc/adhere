@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereNotNull --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-util": "^2.0.0"
   },

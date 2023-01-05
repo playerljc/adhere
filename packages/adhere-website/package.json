@@ -45,13 +45,13 @@
     "component-playground": "^3.2.1",
     "copy-to-clipboard": "^3.3.3",
     "core-js": "^3.27.1",
+    "dayjs": "^1.11.7",
     "echarts": "^5.1.1",
     "echarts-for-react": "^3.0.2",
     "echarts-wordcloud": "^2.1.0",
     "faker": "^5.4.0",
     "font-awesome": "^4.7.0",
     "mark.js": "^8.11.1",
-    "dayjs": "^1.11.7",
     "nprogress": "^0.2.0",
     "ol": "^6.5.0",
     "rc-queue-anim": "^2.0.0",
@@ -63,10 +63,11 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.10",
     "@babel/runtime": "^7.20.7",
     "@ctsj/build": "^6.0.5",
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
     "@umijs/fabric": "^3.0.0",
     "babel-plugin-import": "^1.13.5",
     "cross-env": "^7.0.3",
@@ -78,12 +79,11 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-unicorn": "^45.0.2",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "raw-loader": "^4.0.2",
-    "stylelint": "^14.16.1",
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
-    "eslint-plugin-unused-imports": "^2.0.0"
+    "stylelint": "^14.16.1"
   }
 }

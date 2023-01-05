@@ -28,7 +28,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereEmitter --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-util": "^2.0.0",
     "uuid": "^9.0.0"

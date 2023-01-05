@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereScrollLoad --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-css": "^2.0.0",
     "@baifendian/adhere-util-intl": "^2.0.0",

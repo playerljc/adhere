@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereAntdFormItem --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
     "@baifendian/adhere-ui-flexlayout": "^2.0.0",

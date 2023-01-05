@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereContextMenu --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
     "@baifendian/adhere-ui-css": "^2.0.0",

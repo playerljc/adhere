@@ -27,7 +27,6 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --packagename AdhereGlobalIndicator --define alias=@,evnVars=true"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-css": "^2.0.0",
     "@baifendian/adhere-util-resource": "^2.0.0"

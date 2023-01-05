@@ -28,7 +28,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereDomain --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "events": "^3.3.0"
   },

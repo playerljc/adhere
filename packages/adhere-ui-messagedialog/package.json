@@ -27,7 +27,6 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereMessageDialog --define alias=@,evnVars=true"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-css": "^2.0.0",
     "@baifendian/adhere-ui-formitemcreator": "^2.0.0",
@@ -40,7 +39,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-
     "@babel/runtime": "^7.20.7",
     "@ctsj/buildv": "^5.0.4",
     "npm-run-all": "^4.1.5",

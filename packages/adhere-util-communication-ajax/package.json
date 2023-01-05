@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereAjax --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-globalindicator": "^2.0.0",
     "@baifendian/adhere-util": "^2.0.0",

@@ -28,7 +28,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereValidator --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "validator": "^13.6.0"
   },

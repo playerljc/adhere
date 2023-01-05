@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereForceUpdate --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-hooks": "^2.0.0",
     "@types/react": "^18.0.26",

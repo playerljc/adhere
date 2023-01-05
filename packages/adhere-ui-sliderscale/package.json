@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereSliderScale --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-ui-css": "^2.0.0",
     "@types/react": "^18.0.26",

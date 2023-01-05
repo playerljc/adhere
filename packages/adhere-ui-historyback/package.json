@@ -27,7 +27,6 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --packagename AdhereHistoryBack --define alias=@,evnVars=true"
   },
-
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
     "@ctsj/build": "^6.0.5",

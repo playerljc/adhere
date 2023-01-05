@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereIntl --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

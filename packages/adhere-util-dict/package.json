@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereDict --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
     "@ctsj/build": "^6.0.5",

@@ -50,10 +50,10 @@
     "antd": "^5.1.2",
     "array-move": "^4.0.0",
     "classnames": "^2.3.2",
+    "dayjs": "^1.11.7",
     "immutability-helper": "^3.1.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.2",
-    "dayjs": "^1.11.7",
     "omit.js": "^2.0.2",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
@@ -70,9 +70,9 @@
   },
   "peerDependencies": {
     "antd": ">=5.0.0 - <6.0.0",
+    "qs": "^6.10.3",
     "react": ">=18.0.0 - <19.0.0",
-    "react-dom": ">=18.0.0 - <19.0.0",
-    "qs": "^6.10.3"
+    "react-dom": ">=18.0.0 - <19.0.0"
   },
   "publishConfig": {
     "access": "public"

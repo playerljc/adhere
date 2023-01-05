@@ -28,7 +28,6 @@
     "buildumd": "ctbuild buildumd --packagename WritingBoard --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-util": "^2.0.0",
     "@juggle/resize-observer": "^3.3.1",

@@ -28,7 +28,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereUtil --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-util-preferences": "^2.0.0",
     "@baifendian/adhere-util-watchmemoized": "^2.0.0",

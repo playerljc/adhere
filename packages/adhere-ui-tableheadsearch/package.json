@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereTableHeadSearch --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
     "@types/react": "^18.0.26",

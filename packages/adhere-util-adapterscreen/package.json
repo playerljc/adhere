@@ -27,7 +27,6 @@
     "buildumd": "ctbuild buildumd --packagename AdhereAdapterScreen --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-
   "dependencies": {
     "@baifendian/adhere-util-browsersniff": "^2.0.0",
     "lodash.debounce": "^4.0.8"
