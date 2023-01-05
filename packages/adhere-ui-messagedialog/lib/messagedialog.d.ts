@@ -1,6 +1,12 @@
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 declare const MessageDialogFactory: {
     /**
+     * setAntdConfigProviderProps
+     * @description 设置ConfigProvider的props
+     * @param params
+     */
+    setAntdConfigProviderProps(params: any): void;
+    /**
      * Confirm
      * @param title {String | ReactNode}
      * @param text {String | ReactNode}
