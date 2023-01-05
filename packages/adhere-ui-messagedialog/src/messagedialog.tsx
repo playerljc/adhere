@@ -1,4 +1,5 @@
 import { Button, ConfigProvider, Form } from 'antd';
+import { ConfigProviderProps } from 'antd/lib/config-provider';
 import type { FormInstance } from 'antd/lib/form';
 import React from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
@@ -13,6 +14,8 @@ import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 const DEFAULT_LOCAL = 'zh_CN';
 
 const LOCAL = Resource.Dict.value.LocalsAntd.value;
+
+let antdConfigProviderProps: ConfigProviderProps = {};
 
 const PromptLayout = {
   labelCol: { span: 6 },
@@ -37,6 +40,14 @@ function renderByIcon(icon, text) {
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
 
 const MessageDialogFactory = {
+  /**
+   * setAntdConfigProviderProps
+   * @description 设置ConfigProvider的props
+   * @param params
+   */
+  setAntdConfigProviderProps(params) {
+    antdConfigProviderProps = params;
+  },
   /**
    * Confirm
    * @param title {String | ReactNode}
@@ -240,17 +251,13 @@ const MessageDialogFactory = {
     const el = document.createElement('div');
 
     function close() {
-      // const flag = ReactDOM.unmountComponentAtNode(el);
-      // if (flag) {
-      //   el?.parentElement?.removeChild?.(el);
-      // }
       root.unmount();
     }
 
     const root = ReactDOM.createRoot(el);
 
     root.render(
-      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]}>
+      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps || {})}>
         <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
           {children}
         </ModalDialog>
