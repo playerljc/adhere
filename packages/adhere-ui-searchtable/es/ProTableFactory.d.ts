@@ -62,7 +62,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         getParams(): {};
         /**
          * getDateState
-         * @description 获取时间查询字段，将默认值修改为null或moment对象
+         * @description 获取时间查询字段，将默认值修改为null或dayjs对象
          * @param state
          * @return {{}}
          */

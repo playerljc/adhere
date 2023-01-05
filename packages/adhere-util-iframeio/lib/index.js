@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(exports,"__esModule",{value:!0});var fetch_1=__importDefault(require("./fetch")),server_1=__importDefault(require("./server")),router_1=__importDefault(require("./server/router")),compose_1=__importDefault(require("./server/compose"));exports.default={Fetch:fetch_1.default,Server:server_1.default,Router:router_1.default,Compose:compose_1.default};
+import Fetch from"./fetch";import Server from"./server";import Compose from"./server/compose";import Router from"./server/router";export default{Fetch:Fetch,Server:Server,Router:Router,Compose:Compose};
 //# sourceMappingURL=index.js.map

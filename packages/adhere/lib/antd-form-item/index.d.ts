@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-ui-antdformitem";
+import Model from "@baifendian/adhere-ui-antdformitem/lib";

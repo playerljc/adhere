@@ -1,3 +1,6 @@
+/**
+ * 移动的元素样式
+ */
 declare const _default: {
     strokeStyle: string;
     lineWidth: number;
@@ -5,7 +8,4 @@ declare const _default: {
     lineDashOffset: number;
     globalAlpha: number;
 };
-/**
- * 移动的元素样式
- */
 export default _default;

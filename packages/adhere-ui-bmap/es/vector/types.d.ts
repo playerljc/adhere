@@ -526,8 +526,8 @@ export interface IGeoJSONFeatureCollection {
     features: IGeoJSONFeature[];
     bbox?: number[];
 }
-export declare type Geometry = IGeoJSONPoint | IGeoJSONMulitPoint | IGeoJSONLineString | IGeoJSONMultiLineString | IGeoJSONPolygon | IGeoJSONMultiPolygon | IGeoJSONGeometryCollection;
-export declare type GeoJSONNode = Geometry | IGeoJSONFeature | IGeoJSONFeatureCollection;
+export type Geometry = IGeoJSONPoint | IGeoJSONMulitPoint | IGeoJSONLineString | IGeoJSONMultiLineString | IGeoJSONPolygon | IGeoJSONMultiPolygon | IGeoJSONGeometryCollection;
+export type GeoJSONNode = Geometry | IGeoJSONFeature | IGeoJSONFeatureCollection;
 export declare enum GeoJSONType {
     Point = "Point",
     MultiPoint = "MultiPoint",

@@ -1,2 +1,2 @@
-declare function _exports(userAgent: any): void;
-export = _exports;
+declare function _default(userAgent: any): void;
+export default _default;

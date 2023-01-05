@@ -1,5 +1,5 @@
 import { Modal, message } from 'antd';
-import { ArgsProps, ConfigOnClose } from 'antd/lib/message';
+import { ArgsProps } from 'antd/lib/message';
 import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
 
@@ -7,7 +7,6 @@ import Intl from '@baifendian/adhere-util-intl';
 
 type ConfigContent = React.ReactNode;
 type JointContent = ConfigContent | ArgsProps;
-type ConfigDuration = number | (() => void);
 
 /**
  * openErrorDialog
@@ -30,6 +29,6 @@ export const openErrorDialog = (props?: ModalProps) =>
  */
 export const openErrorMessage = (
   content?: JointContent,
-  duration?: ConfigDuration,
-  onClose?: ConfigOnClose,
+  duration?: number | VoidFunction,
+  onClose?: VoidFunction,
 ) => message.error(content ? content : Intl.v('系统异常'), duration, onClose);

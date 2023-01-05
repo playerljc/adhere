@@ -1,7 +1,7 @@
 // import { Tooltip } from 'antd';
 // import faker from 'faker';
 // import React, { useRef } from 'react';
-// import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom/client';
 //
 // import { DislikeOutlined, LikeFilled } from '@ant-design/icons';
 // import AdhereConfigProvider from '@baifendian/adhere-ui-configprovider';
@@ -202,7 +202,7 @@
 //   );
 // }
 //
-// ReactDOM.render(
+// ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
 //   <AdhereConfigProvider
 //     intl={{
 //       lang: 'zh_CN',
@@ -211,5 +211,4 @@
 //   >
 //     {() => <Wrap />}
 //   </AdhereConfigProvider>,
-//   document.getElementById('app'),
 // );

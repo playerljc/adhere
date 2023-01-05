@@ -8,16 +8,16 @@ declare const _default: (props: OverlayProps, el: RefObject<HTMLDivElement>, pos
         right?: () => void;
     };
     show: {
-        top?: ((time?: string | number | undefined) => void) | undefined;
-        left?: ((time?: string | number | undefined) => void) | undefined;
-        bottom?: ((time?: string | number | undefined) => void) | undefined;
-        right?: ((time?: string | number | undefined) => void) | undefined;
+        top?: ((time?: number | string) => void) | undefined;
+        left?: ((time?: number | string) => void) | undefined;
+        bottom?: ((time?: number | string) => void) | undefined;
+        right?: ((time?: number | string) => void) | undefined;
     };
     close: {
-        top?: ((time?: string | number | undefined) => void) | undefined;
-        left?: ((time?: string | number | undefined) => void) | undefined;
-        bottom?: ((time?: string | number | undefined) => void) | undefined;
-        right?: ((time?: string | number | undefined) => void) | undefined;
+        top?: ((time?: number | string) => void) | undefined;
+        left?: ((time?: number | string) => void) | undefined;
+        bottom?: ((time?: number | string) => void) | undefined;
+        right?: ((time?: number | string) => void) | undefined;
     };
 }>) => {
     getDuration: (_time: undefined | null | string | number) => string | number;

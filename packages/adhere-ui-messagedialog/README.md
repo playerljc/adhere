@@ -7,8 +7,8 @@
 - 不与变量进行绑定，开箱即用的功能
 
 # ✨ 特性
-- 支持 react(17.x)
-- ant-design(4.x)
+- 支持 react(18.x)
+- ant-design(5.x)
 - 支持国际化
 - 支持修改主题
 - 支持动态引入(babel-plugin-import)

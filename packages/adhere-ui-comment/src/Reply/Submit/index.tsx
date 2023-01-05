@@ -147,7 +147,7 @@ const Reply: FC<ReplyProps> = (props) => {
           placement="bottomLeft"
           getPopupContainer={() => emojiWrapRef.current!}
           content={PopoverContent}
-          visible={emojiIconWrapVisible}
+          open={emojiIconWrapVisible}
         >
           <div
             onClick={(e) => {

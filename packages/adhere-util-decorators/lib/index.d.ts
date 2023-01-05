@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import ReactAop from './ReactAop';
 import ReactAutoTryCatch from './ReactAutoTryCatch';
 declare const _default: {

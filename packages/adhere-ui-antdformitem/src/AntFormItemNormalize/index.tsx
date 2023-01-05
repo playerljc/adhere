@@ -23,13 +23,13 @@ import {
   Checkbox,
   Col,
   Collapse,
-  Comment,
   ConfigProvider,
   Descriptions,
   Divider,
   Drawer,
   Dropdown,
   Empty,
+  FloatButton,
   Form,
   Grid,
   Image,
@@ -37,11 +37,11 @@ import {
   List,
   Mentions,
   Menu,
-  PageHeader,
   Pagination,
   Popconfirm,
   Popover,
   Progress,
+  QRCode,
   Radio,
   Rate,
   Result,
@@ -59,9 +59,11 @@ import {
   Tag,
   Timeline,
   Tooltip,
+  Tour,
   Transfer,
   Tree,
   Typography,
+  Watermark,
 } from 'antd';
 import React from 'react';
 
@@ -100,7 +102,6 @@ const AntdComponents = {
   Layout,
   List,
   Menu,
-  PageHeader,
   Pagination,
   Popconfirm,
   Popover,
@@ -118,6 +119,7 @@ const AntdComponents = {
   Switch,
   Table,
   Tabs,
+  Tour,
   Tag,
   Timeline,
   Transfer,
@@ -126,6 +128,9 @@ const AntdComponents = {
   Tooltip,
   Mentions,
   Slider,
+  FloatButton,
+  QRCode,
+  Watermark,
 };
 
 /**
@@ -225,7 +230,7 @@ export const TextArea = createFactory(AntInput.TextArea, {
   allowClear: true,
   maxLength: 1000,
   showCount: true,
-  autoSize: true,
+  autoSize: false,
 });
 
 /**

@@ -6,8 +6,8 @@
  * @LastEditTime: 2021-05-21 10:41:27
  */
 import { Tooltip } from 'antd';
+import dayjs from 'dayjs';
 import { difference, isEmpty, union } from 'lodash';
-import moment from 'moment';
 import React from 'react';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
@@ -165,10 +165,10 @@ class Util {
           result = item.render(text, record, index);
         } else if (item.valueType === 'date') {
           // 日期类型默认显示
-          result = text ? moment(text).format('L') : '-';
+          result = text ? dayjs(text).format('L') : '-';
         } else if (item.valueType === 'datetime') {
           // 带时间的日期类型默认显示
-          result = text ? moment(text).format('LLL') : '-';
+          result = text ? dayjs(text).format('LLL') : '-';
         } else if (item.valueType === 'map' && item.map) {
           // 根据数组匹配进行显示
           const current =

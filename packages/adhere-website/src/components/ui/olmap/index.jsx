@@ -5,6 +5,7 @@ import { Vector as VectorSource } from 'ol/source';
 import React, { useRef } from 'react';
 
 import { OLMap, Resource, Space } from '@baifendian/adhere';
+import XinBei from '@baifendian/adhere-util-resource/resource/gis/geoJson/China/320000/320400.json';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -98,7 +99,7 @@ export default () => {
               text: '新北区',
             },
           },
-          geoJSONData: Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value,
+          geoJSONData: XinBei.features[2],
         });
       }}
     >
@@ -131,7 +132,7 @@ export default () => {
                       text: '新北区',
                     },
                   },
-                  geoJSONData: Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value,
+                  geoJSONData: XinBei.features[2],
                 });
               }}
             >
@@ -742,7 +743,7 @@ export default () => {
         const lines = [];
 
         const ps =
-          Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value.features[0].geometry
+          XinBei.features[2].geometry
             .coordinates[0][0];
 
         const lineCount = 100;
@@ -801,9 +802,7 @@ export default () => {
 
                 const lineData = new Map();
                 const lines = [];
-                const ps =
-                  Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value.features[0].geometry
-                    .coordinates[0][0];
+                const ps = XinBei.features[2].geometry.coordinates[0][0];
 
                 const lineCount = 100;
 

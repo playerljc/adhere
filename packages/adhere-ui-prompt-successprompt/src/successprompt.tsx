@@ -1,5 +1,5 @@
 import { Modal, message } from 'antd';
-import { ArgsProps, ConfigOnClose } from 'antd/lib/message';
+import { ArgsProps } from 'antd/lib/message';
 import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
 
@@ -7,7 +7,6 @@ import Intl from '@baifendian/adhere-util-intl';
 
 type ConfigContent = React.ReactNode;
 type JointContent = ConfigContent | ArgsProps;
-type ConfigDuration = number | (() => void);
 
 /**
  * openSuccessDialog
@@ -30,6 +29,6 @@ export const openSuccessDialog = (props?: ModalProps) =>
  */
 export const openSuccessMessage = (
   content?: JointContent,
-  duration?: ConfigDuration,
-  onClose?: ConfigOnClose,
+  duration?: number | VoidFunction,
+  onClose?: VoidFunction,
 ) => message.success(content ? content : Intl.v('操作成功'), duration, onClose);

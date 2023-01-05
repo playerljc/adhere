@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-comment",
-  "version": "1.0.22",
+  "version": "2.0.0",
   "description": "评论",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -22,47 +22,43 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true",
-    "buildpackage:cjs": "ctbuildv buildpackagets -c ctbuildv.package.ts.cjs.config.js -o lib",
-    "buildpackage:es": "ctbuildv buildpackagets -c ctbuildv.package.ts.esm.config.js -o es",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --packagename AdhereComment --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "resolutions": {
-    "graceful-fs": "4.2.2"
-  },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
-    "@baifendian/adhere-ui-backtopanimation": "^1.0.22",
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.22",
-    "@baifendian/adhere-ui-css": "^1.0.22",
-    "@baifendian/adhere-ui-flexlayout": "^1.0.22",
-    "@baifendian/adhere-ui-hooks": "^1.0.22",
-    "@baifendian/adhere-ui-scrollload": "^1.0.22",
-    "@baifendian/adhere-util": "^1.0.22",
-    "@baifendian/adhere-util-intl": "^1.0.22",
+    "@ant-design/icons": "^4.8.0",
+    "@baifendian/adhere-ui-backtopanimation": "^2.0.0",
+    "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
+    "@baifendian/adhere-ui-css": "^2.0.0",
+    "@baifendian/adhere-ui-flexlayout": "^2.0.0",
+    "@baifendian/adhere-ui-hooks": "^2.0.0",
+    "@baifendian/adhere-ui-scrollload": "^2.0.0",
+    "@baifendian/adhere-util": "^2.0.0",
+    "@baifendian/adhere-util-intl": "^2.0.0",
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
     "@types/emoji-mart": "^3.0.9",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "antd": "^4.22.2",
-    "classnames": "^2.2.6",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "antd": "^5.1.2",
+    "classnames": "^2.3.2",
     "emoji-mart": "^5.2.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.14.5",
-    "@babel/runtime": "^7.7.4",
+    "@babel/runtime": "^7.20.7",
     "@ctsj/buildv": "^5.0.4",
     "npm-run-all": "^4.1.5",
-    "typescript": "^3.8.2"
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
-    "antd": ">=4.22.2",
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "antd": ">=5.0.0 - <6.0.0",
+    "react": ">=18.0.0 - <19.0.0",
+    "react-dom": ">=18.0.0 - <19.0.0"
   },
   "publishConfig": {
     "access": "public"

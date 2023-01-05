@@ -100,8 +100,8 @@ export default function <P, S>(SuperClass) {
     /**
      * setFieldValues
      */
-    setFieldValues() {
-      const dataSource = this.getData();
+    setFieldValues(dataSource) {
+      // const dataSource = this.getData();
       const columns = this.getTableColumns();
 
       this.formRef?.current?.setFieldValue?.(
@@ -129,7 +129,7 @@ export default function <P, S>(SuperClass) {
      */
     fetchData() {
       return super.fetchData().then((res) => {
-        this.setFieldValues();
+        this.setFieldValues(res.data[this.getDataKey()]);
 
         this.setState({
           isTableEditor: false,

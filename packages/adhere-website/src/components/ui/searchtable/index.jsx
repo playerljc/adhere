@@ -94,7 +94,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 400 }}>
               <Table
@@ -144,7 +144,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 700 }}>
               <Table
@@ -180,10 +180,10 @@ export default () => {
 
                 import styles from './fixedTableSpaceBetweenTable.less';
 
-                /**
+                /!**
                  * FixedTableSpaceBetweenTable
                  * @classdesc
-                 */
+                 *!/
                 class FixedTableSpaceBetweenTable extends Table {
                   renderTableHeader() {
                     return (
@@ -255,7 +255,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 800 }}>
               <FixedTableSpaceBetweenTable
@@ -289,10 +289,10 @@ export default () => {
                 import Table from './table';
                 import { oneData } from './mock';
 
-                /**
+                /!**
                  * FewTable
                  * @classdesc
-                 */
+                 *!/
                 class FewTable extends Table {
                   fetchDataExecute(searchParams) {
                     return new Promise((resolve) => {
@@ -362,7 +362,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 700 }}>
               <FewTable
@@ -482,9 +482,9 @@ export default () => {
 
                 const serviceName = 'user';
 
-                /**
+                /!**
                  * StateTable
-                 */
+                 *!/
                 class StateTable extends TableStateImplement {
                   constructor(props) {
                     super(props);
@@ -766,7 +766,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ display: 'flex', height: 700 }}>
               <StateTable
@@ -814,11 +814,11 @@ export default () => {
 
                 const { RangePicker } = DatePicker;
 
-                /**
+                /!**
                  * Table
                  * @class TableImpl
                  * @classdesc TableImpl
-                 */
+                 *!/
                 class TableImpl extends TableImplement {
                   // eslint-disable-next-line no-useless-constructor
                   constructor(props) {
@@ -1112,10 +1112,10 @@ export default () => {
 
                 const { Table: $SearchTable } = SearchTable;
 
-                /**
+                /!**
                  * RowSelectedContinuous
                  * @classdesc
-                 */
+                 *!/
                 class RowSelectedContinuous extends Table {
                     getRowSelectionMode() {
                         return $SearchTable.ROW_SELECTION_NORMAL_MODE;
@@ -1153,10 +1153,10 @@ export default () => {
 
                 const { Table: $SearchTable } = SearchTable;
 
-                /**
+                /!**
                  * RowSelectedContinuous
                  * @classdesc
-                 */
+                 *!/
                 class RowSelectedContinuous extends Table {
                   getRowSelectionMode() {
                     return $SearchTable.ROW_SELECTION_CONTINUOUS_MODE;
@@ -1191,10 +1191,10 @@ export default () => {
 
             import Table from './table';
 
-            /**
+            /!**
              * ColumnResizeTable
              * @classdesc
-             */
+             *!/
             class ColumnResizeTable extends Table {
               getColumns() {
                 return super.getColumns().map((column) => ({
@@ -1240,10 +1240,10 @@ export default () => {
             import Table from './table';
             import styles from './fixedTableSpaceBetweenTable.less';
 
-            /**
+            /!**
              * ColumnSettingTable
              * @classdesc
-             */
+             *!/
             class ColumnSettingTable extends Table {
               renderTableHeader() {
                 return (
@@ -1284,10 +1284,10 @@ export default () => {
             import Table from './table';
             import styles from './fixedTableSpaceBetweenTable.less';
 
-            /**
+            /!**
              * TableDensitySetting
              * @classdesc
-             */
+             *!/
             class TableDensitySetting extends Table {
               renderTableHeader() {
                 return (
@@ -1328,10 +1328,10 @@ export default () => {
 
             import Table from './table';
 
-            /**
+            /!**
              * RenderSearchBetweenTable
              * @classdesc
-             */
+             *!/
             class RenderSearchBetweenTable extends Table {
               renderSearchFormBefore() {
                 return (
@@ -1439,11 +1439,11 @@ export default () => {
 
       const serviceName = 'user';
 
-      /**
+      /!**
        * ProSearchStateTableImpl
        * @class ProSearchStateTableImpl
        * @classdesc ProSearchStateTableImpl
-       */
+       *!/
       class ProSearchStateTableImpl extends ProSearchStateTable {
         getComponentId() {
           return 'ProSearchStateTableImpl';
@@ -1461,29 +1461,29 @@ export default () => {
           return 'height';
         }
 
-        /**
+        /!**
          * getDataKey
          * @description - 获取数据的key
          * @protected
-         */
+         *!/
         getDataKey() {
           return 'list';
         }
 
-        /**
+        /!**
          * getTotalKey
          * @description - 获取total的key
          * @protected
-         */
+         *!/
         getTotalKey() {
           return 'totalCount';
         }
 
-        /**
+        /!**
          * Table的列
          * @override
          * @return {*[]}
-         */
+         *!/
         getColumns() {
           return super.getColumns([
             {
@@ -1621,11 +1621,11 @@ export default () => {
           ]);
         }
 
-        /**
+        /!**
          * renderSearchFooterItems
          * 渲染表格的工具栏
          * @override
-         */
+         *!/
         renderSearchFooterItems(defaultItems) {
           return super.renderSearchFooterItems([
             {
@@ -1743,11 +1743,11 @@ export default () => {
         return models;
       }
 
-      /**
+      /!**
        * EditableCellStateSearchTable
        * @class EditableCellStateSearchTable
        * @classdesc EditableCellStateSearchTable
-       */
+       *!/
       class EditableCellStateSearchTable extends ProEditableCellSearchStateTable {
         getComponentId() {
           return 'EditableCellStateSearchTable';
@@ -1765,29 +1765,29 @@ export default () => {
           return 'height';
         }
 
-        /**
+        /!**
          * getDataKey
          * @description - 获取数据的key
          * @protected
-         */
+         *!/
         getDataKey() {
           return 'list';
         }
 
-        /**
+        /!**
          * getTotalKey
          * @description - 获取total的key
          * @protected
-         */
+         *!/
         getTotalKey() {
           return 'totalCount';
         }
 
-        /**
+        /!**
          * Table的列
          * @override
          * @return {*[]}
-         */
+         *!/
         getColumns() {
           return super.getColumns([
             {
@@ -2111,11 +2111,11 @@ export default () => {
         return models;
       }
 
-      /**
+      /!**
        * RowEditableStateSearchTable
        * @class RowEditableStateSearchTable
        * @classdesc RowEditableStateSearchTable
-       */
+       *!/
       class RowEditableStateSearchTable extends ProEditableRowSearchStateTable {
         getComponentId() {
           return 'RowEditableStateSearchTable';
@@ -2133,29 +2133,29 @@ export default () => {
           return 'height';
         }
 
-        /**
+        /!**
          * getDataKey
          * @description - 获取数据的key
          * @protected
-         */
+         *!/
         getDataKey() {
           return 'list';
         }
 
-        /**
+        /!**
          * getTotalKey
          * @description - 获取total的key
          * @protected
-         */
+         *!/
         getTotalKey() {
           return 'totalCount';
         }
 
-        /**
+        /!**
          * Table的列
          * @override
          * @return {*[]}
-         */
+         *!/
         getColumns() {
           return super.getColumns([
             {
@@ -2452,11 +2452,11 @@ export default () => {
         return models;
       }
 
-      /**
+      /!**
        * TableEditableStateSearchTable
        * @class TableEditableStateSearchTable
        * @classdesc TableEditableStateSearchTable
-       */
+       *!/
       class TableEditableStateSearchTable extends ProEditableSearchStateTable {
         getComponentId() {
           return 'TableEditableStateSearchTable';
@@ -2474,29 +2474,29 @@ export default () => {
           return 'height';
         }
 
-        /**
+        /!**
          * getDataKey
          * @description - 获取数据的key
          * @protected
-         */
+         *!/
         getDataKey() {
           return 'list';
         }
 
-        /**
+        /!**
          * getTotalKey
          * @description - 获取total的key
          * @protected
-         */
+         *!/
         getTotalKey() {
           return 'totalCount';
         }
 
-        /**
+        /!**
          * Table的列
          * @override
          * @return {*[]}
-         */
+         *!/
         getColumns() {
           return super.getColumns([
             {
@@ -2720,11 +2720,11 @@ export default () => {
           ]);
         }
 
-        /**
+        /!**
          * renderSearchFooterItems
          * 渲染表格的工具栏
          * @override
-         */
+         *!/
         renderSearchFooterItems(defaultItems) {
           return super.renderSearchFooterItems([
             {
@@ -2794,11 +2794,11 @@ export default () => {
         return models;
       }
 
-      /**
+      /!**
        * EditableCellUseKeepEditStateSearchTable
        * @class EditableCellUseKeepEditStateSearchTable
        * @classdesc EditableCellUseKeepEditStateSearchTable
-       */
+       *!/
       class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchStateTable {
         getComponentId() {
           return 'EditableCellUseKeepEditStateSearchTable';
@@ -2816,29 +2816,29 @@ export default () => {
           return 'height';
         }
 
-        /**
+        /!**
          * getDataKey
          * @description - 获取数据的key
          * @protected
-         */
+         *!/
         getDataKey() {
           return 'list';
         }
 
-        /**
+        /!**
          * getTotalKey
          * @description - 获取total的key
          * @protected
-         */
+         *!/
         getTotalKey() {
           return 'totalCount';
         }
 
-        /**
+        /!**
          * Table的列
          * @override
          * @return {*[]}
-         */
+         *!/
         getColumns() {
           return super.getColumns([
             {
@@ -3142,11 +3142,11 @@ export default () => {
         return models;
       }
 
-      /**
+      /!**
        * EditableCellRenderTriggerStateSearchTable
        * @class EditableCellRenderTriggerStateSearchTable
        * @classdesc EditableCellRenderTriggerStateSearchTable
-       */
+       *!/
       class EditableCellRenderTriggerStateSearchTable extends ProEditableCellSearchStateTable {
         getComponentId() {
           return 'EditableCellRenderTriggerStateSearchTable';
@@ -3164,29 +3164,29 @@ export default () => {
           return 'height';
         }
 
-        /**
+        /!**
          * getDataKey
          * @description - 获取数据的key
          * @protected
-         */
+         *!/
         getDataKey() {
           return 'list';
         }
 
-        /**
+        /!**
          * getTotalKey
          * @description - 获取total的key
          * @protected
-         */
+         *!/
         getTotalKey() {
           return 'totalCount';
         }
 
-        /**
+        /!**
          * Table的列
          * @override
          * @return {*[]}
-         */
+         *!/
         getColumns() {
           return super.getColumns([
             {

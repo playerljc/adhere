@@ -1,6 +1,6 @@
-import type { ContextOptions } from './types';
 import type Request from './Request';
 import type Response from './Response';
+import type { ContextOptions } from './types';
 /**
  * Context
  * @class Context

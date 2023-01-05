@@ -1,6 +1,6 @@
 import { Button, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import dayjs from 'dayjs';
 import merge from 'lodash/merge';
-import moment from 'moment';
 import omit from 'omit.js';
 import qs from 'qs';
 import React, { ReactNode } from 'react';
@@ -41,7 +41,20 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       this.pathname = typeof window !== 'undefined' ? this.getPathName() : '';
 
       // 获取浏览器地址栏上默认的searchQuery和分页参数
-      const defaultSearchAndPaginParams = this.initSearchAndPaginParams();
+      let defaultSearchAndPaginParams = {
+        search: {},
+        page: 1,
+        limit: this.getLimit() || 10,
+      };
+
+      if (
+        !('openSearchParamsMemory' in this.props) ||
+        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
+      ) {
+        defaultSearchAndPaginParams = this.initSearchAndPaginParams();
+      }
+
+      // const defaultSearchAndPaginParams = this.initSearchAndPaginParams();
 
       // state create
       this.state = {
@@ -77,7 +90,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     componentWillUnmount() {
       super.componentWillUnmount && super.componentWillUnmount();
 
-      if (!('openSearchParamsMemory' in this.props)) {
+      if (
+        !('openSearchParamsMemory' in this.props) ||
+        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
+      ) {
         // 卸载的时候处理查询和分页参数的缓存
         this.unMountSearchAndPaginParamsDeal();
       }
@@ -303,7 +319,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
     /**
      * getDateState
-     * @description 获取时间查询字段，将默认值修改为null或moment对象
+     * @description 获取时间查询字段，将默认值修改为null或dayjs对象
      * @param state
      * @return {{}}
      */
@@ -321,7 +337,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const dateObj = {};
 
       dateKeys.forEach((key) => {
-        dateObj[key] = state[key] === null || state[key] === 'null' ? null : moment(state[key]);
+        dateObj[key] = state[key] === null || state[key] === 'null' ? null : dayjs(state[key]);
       });
 
       return dateObj;
@@ -381,7 +397,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       });
 
       const dateKeys = Object.keys(searchParams).filter(
-        (key) => !(key in dateSearchParams) && searchParams[key] instanceof moment,
+        (key) => !(key in dateSearchParams) && searchParams[key] instanceof dayjs,
       );
 
       dateKeys.forEach((key) => {
@@ -1226,9 +1242,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return (
           <DatePicker
             value={this.state[dataIndex]}
-            onChange={(moment) => {
+            onChange={(dayjs) => {
               this.setState({
-                [dataIndex]: moment ? moment : null,
+                [dataIndex]: dayjs ? dayjs : null,
               });
             }}
             {...(searchConfig.props || {})}
@@ -1239,9 +1255,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return (
           <TimePicker
             value={this.state[dataIndex]}
-            onChange={(moment) => {
+            onChange={(dayjs) => {
               this.setState({
-                [dataIndex]: moment ? moment : null,
+                [dataIndex]: dayjs ? dayjs : null,
               });
             }}
             {...(searchConfig.props || {})}
@@ -1254,8 +1270,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return (
           <RangePicker
             value={[this.state[startName], this.state[endName]]}
-            onChange={(moments) => {
-              this.onDateTimeRangeChange([startName, endName], moments);
+            onChange={(dayjs) => {
+              this.onDateTimeRangeChange([startName, endName], dayjs);
             }}
             {...(searchConfig.props || {})}
           />

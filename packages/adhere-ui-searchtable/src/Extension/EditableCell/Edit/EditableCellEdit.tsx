@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, { FC, ReactNode, useContext, useEffect } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
@@ -115,7 +115,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    * @description 更新单元格的值
    */
   function updateEditorCellData() {
-    if (value instanceof moment) {
+    if (value instanceof dayjs) {
       // @ts-ignore
       return context?.context?.updateEditorCellDateData({
         record,

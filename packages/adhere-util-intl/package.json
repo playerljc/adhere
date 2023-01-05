@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-intl",
-  "version": "1.0.22",
+  "version": "2.0.0",
   "description": "基于 react-intl-universal 的国际化组件",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -27,23 +27,20 @@
     "buildumd": "ctbuild buildumd --packagename AdhereIntl --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "resolutions": {
-    "graceful-fs": "4.2.2"
-  },
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-intl-universal": "^2.4.3"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
+    "@babel/runtime": "^7.20.7",
+    "@ctsj/build": "^6.0.5",
     "npm-run-all": "^4.1.5",
-    "typescript": "^3.8.2"
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "react": ">=18.0.0 - <19.0.0",
+    "react-dom": ">=18.0.0 - <19.0.0"
   },
   "publishConfig": {
     "access": "public"

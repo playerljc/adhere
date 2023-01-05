@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-ui-tablegridlayout";
+import Model from "@baifendian/adhere-ui-tablegridlayout/lib";

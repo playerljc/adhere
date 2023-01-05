@@ -7,7 +7,7 @@ import './serviceRegister';
 
 const {
   ProSearchEditableTableRowDragSortStateTable,
-  // ProEditableSearchStateTable,
+  ProEditableSearchStateTable,
   EditableTableControl,
   SearchTableStateImplementFactory,
 } = SearchTable;
@@ -19,7 +19,7 @@ const serviceName = 'user';
  * @class RowDragSort
  * @classdesc RowDragSort
  */
-class RowDragSort extends ProSearchEditableTableRowDragSortStateTable {
+class RowDragSort extends ProEditableSearchStateTable {
   getComponentId() {
     return 'RowDragSort';
   }

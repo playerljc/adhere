@@ -1,6 +1,6 @@
 import Browser from './browser';
 
-let browserIns = null;
+let browserIns;
 
 type browser = {
   browser: string;
@@ -25,6 +25,8 @@ type browser = {
 export default {
   getInstance(): browser {
     if (!browserIns) {
+      console.log('Browser', Browser);
+
       browserIns = new Browser();
     }
 

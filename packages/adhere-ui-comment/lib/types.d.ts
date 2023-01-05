@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import type { FlexLayoutProps } from '@baifendian/adhere-ui-flexlayout/es/types';
 import type { ScrollLoadProps } from '@baifendian/adhere-ui-scrollload/es/types';
-export declare type Local = 'ar' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'it' | 'ja' | 'nl' | 'pl' | 'pt' | 'ru' | 'uk' | 'zh' | string;
+export type Local = 'ar' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'it' | 'ja' | 'nl' | 'pl' | 'pt' | 'ru' | 'uk' | 'zh' | string;
 export interface CommentProps {
     getScrollWrapContainer?: () => HTMLElement;
     fetchCommentData?: (params?: any) => Promise<any>;

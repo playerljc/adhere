@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import ReactQuillSandbox from '../index';
 
@@ -58,4 +58,4 @@ function Example() {
   );
 }
 
-ReactDOM.render(<Example />, document.getElementById('app'));
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(<Example />);

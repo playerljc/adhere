@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-util-adapterscreen";
+import Model from "@baifendian/adhere-util-adapterscreen/lib";

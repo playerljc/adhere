@@ -18,6 +18,7 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
 
   // 不使用句柄则返回原始组件
   if (!useTrigger) {
+    // @ts-ignore
     return <>{restProps?.children}</>;
   }
 
@@ -57,7 +58,10 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
             : '',
         )}
       >
-        {restProps?.children}
+        {
+          // @ts-ignore
+          restProps?.children
+        }
       </div>
       <div className={`${selectorPrefix}-editablecell-view-trigger`}>
         <div className={`${selectorPrefix}-editablecell-view-trigger-inner`} onClick={onTrigger}>

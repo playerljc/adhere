@@ -1,6 +1,6 @@
 import { Avatar, List } from 'antd';
 import React, { useRef } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import AdhereConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -44,7 +44,7 @@ function Wrap() {
   );
 }
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(
   <AdhereConfigProvider
     intl={{
       lang: 'zh_CN',
@@ -53,5 +53,4 @@ ReactDOM.render(
   >
     {() => <Wrap />}
   </AdhereConfigProvider>,
-  document.getElementById('app'),
 );

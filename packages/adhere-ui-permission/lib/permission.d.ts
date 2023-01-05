@@ -1,6 +1,5 @@
-/// <reference types="react" />
 import PropTypes from 'prop-types';
-import { PermissionProps, PermissionFunction } from './types';
+import { PermissionFunction, PermissionProps } from './types';
 /**
  * setPermission - 设置拥有的所有权限
  * @param {Array<String>} permission
@@ -36,7 +35,7 @@ export declare const Permission: {
     };
     propTypes: {
         allPermission: PropTypes.Requireable<any[]>;
-        permissions: PropTypes.Requireable<string | any[]>;
+        permissions: PropTypes.Requireable<NonNullable<string | any[] | null | undefined>>;
         noMatch: PropTypes.Requireable<PropTypes.ReactNodeLike>;
         children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
     };

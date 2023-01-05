@@ -10,6 +10,7 @@ declare class Popup {
     private isShow;
     private el;
     private popupEl;
+    private popupHandlers;
     /**
      * constructor
      * @param config {Object} - config

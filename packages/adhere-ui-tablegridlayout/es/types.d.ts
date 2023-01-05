@@ -77,7 +77,7 @@ export interface TableGridLayoutProps {
  * GroupDetail
  * @description 组的渲染细节
  */
-export declare type GroupRenderDetail = {
+export type GroupRenderDetail = {
     startIndex: number;
     endIndex: number;
 }[];

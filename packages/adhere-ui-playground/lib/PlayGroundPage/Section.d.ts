@@ -8,7 +8,7 @@ export declare const SectionDefaultProps: {
 export declare const SectionPropTypes: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;
-    title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+    title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
     extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
 };
 declare const _default: React.NamedExoticComponent<SectionProps>;

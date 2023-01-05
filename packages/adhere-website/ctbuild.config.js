@@ -20,7 +20,7 @@ module.exports = {
     //   'moment':'moment',
     // };
 
-    webpackConfig.devtool = 'cheap-module-eval-source-map';
+    // webpackConfig.devtool = 'cheap-module-eval-source-map';
 
     // webpackConfig.resolve.alias['@baifendian/adhere/lib/search-table'] = path.join(
     //   __dirname,
@@ -67,10 +67,10 @@ module.exports = {
     // }
 
     // 加入markdown的解析
-    webpackConfig.module.rules.push({
-      test: /\.md$/,
-      use: 'raw-loader',
-    });
+    // webpackConfig.module.rules.push({
+    //   test: /\.md$/,
+    //   use: 'raw-loader',
+    // });
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 
@@ -110,16 +110,16 @@ module.exports = {
           },
           'adhere',
         ],
-        [
-          'import',
-          {
-            libraryName: 'antd',
-            libraryDirectory: 'es',
-            // styleLibraryDirectory: 'es',
-            style: true,
-          },
-          'ant',
-        ],
+        // [
+        //   'import',
+        //   {
+        //     libraryName: 'antd',
+        //     libraryDirectory: 'es',
+        //     // styleLibraryDirectory: 'es',
+        //     style: true,
+        //   },
+        //   'ant',
+        // ],
       );
     }
 
@@ -184,7 +184,7 @@ module.exports = {
             enforce: true,
           },
           static: {
-            test: /[\\/]node_modules[\\/](lodash|_lodash|js-md5|_js-md5|classnames|_classnames|uuid|_uuid|qs|_qs|moment|axios|_axios|_cookie_js|_moment|swiper|_swiper)/,
+            test: /[\\/]node_modules[\\/](lodash|_lodash|js-md5|_js-md5|classnames|_classnames|uuid|_uuid|qs|_qs|dayjs|axios|_axios|_cookie_js|_dayjs|swiper|_swiper)/,
             priority: 1,
             enforce: true,
           },

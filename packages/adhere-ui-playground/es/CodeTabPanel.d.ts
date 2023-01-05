@@ -9,7 +9,7 @@ export declare const CodeTabPanelPropTypes: {
     active: PropTypes.Requireable<string>;
     config: PropTypes.Requireable<(PropTypes.InferProps<{
         key: PropTypes.Requireable<string>;
-        title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+        title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
         codeText: PropTypes.Requireable<string>;
         theme: PropTypes.Requireable<string>;
     }> | null | undefined)[]>;

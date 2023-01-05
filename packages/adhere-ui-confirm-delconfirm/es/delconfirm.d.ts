@@ -1,4 +1,4 @@
-import { DelConfirmProps, DelConfirmFunction } from './types';
+import { DelConfirmFunction, DelConfirmProps } from './types';
 /**
  * DelConform
  * @param props

@@ -1,9 +1,8 @@
-import { ArgsProps, ConfigOnClose } from 'antd/lib/message';
+import { ArgsProps } from 'antd/lib/message';
 import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
-declare type ConfigContent = React.ReactNode;
-declare type JointContent = ConfigContent | ArgsProps;
-declare type ConfigDuration = number | (() => void);
+type ConfigContent = React.ReactNode;
+type JointContent = ConfigContent | ArgsProps;
 /**
  * openErrorDialog
  * @param props
@@ -16,7 +15,6 @@ export declare const openWarnDialog: (props?: ModalProps) => {
  * 警告的提示
  * @param content
  * @param duration
- * @param onClose
  */
-export declare const openWarnMessage: (content?: JointContent, duration?: ConfigDuration, onClose?: ConfigOnClose) => import("antd/lib/message").MessageType;
+export declare const openWarnMessage: (content?: JointContent, duration?: number | VoidFunction, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;
 export {};

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
@@ -45,7 +45,7 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
   } = props;
 
   const [isCan, setCan] = useSetState(false);
-  const [preUpdateTime, setPreUpdateTime] = useSetState(moment().valueOf());
+  const [preUpdateTime, setPreUpdateTime] = useSetState(dayjs().valueOf());
 
   const elRef = useRef<HTMLDivElement>(null);
   const scrollElRef = useRef<HTMLDivElement>(null);
@@ -117,7 +117,7 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
           <p className={`${selectorPrefix}-trigger-update`}>
             {Intl.v('更新时间')}：
             <span className={`${selectorPrefix}-trigger-update-label`}>
-              {moment(preUpdateTime).format(updateTimeFormat)}
+              {dayjs(preUpdateTime).format(updateTimeFormat)}
             </span>
           </p>
         )}
@@ -265,7 +265,7 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
 
       scrollEl.current?.removeEventListener('transitionend', onTransitionEnd);
 
-      setPreUpdateTime(moment().valueOf());
+      setPreUpdateTime(dayjs().valueOf());
     }
 
     (maskEl.current as HTMLElement).style.display = 'block';
@@ -307,7 +307,7 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
    */
   function resetUpdateTime(updateTime: number): Promise<void> {
     return new Promise((resolve) =>
-      setPreUpdateTime(updateTime || moment().valueOf(), () => resolve()),
+      setPreUpdateTime(updateTime || dayjs().valueOf(), () => resolve()),
     );
   }
 
@@ -470,7 +470,7 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
   }));
 
   useEffect(() => {
-    setPreUpdateTime(props.updateTime || moment().valueOf());
+    setPreUpdateTime(props.updateTime || dayjs().valueOf());
   }, [props.updateTime]);
 
   useEffect(() => {

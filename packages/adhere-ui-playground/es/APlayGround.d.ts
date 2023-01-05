@@ -63,12 +63,12 @@ export declare const APlayGroundPropTypes: {
         bodyStyle: PropTypes.Requireable<object>;
         actionClassName: PropTypes.Requireable<string>;
         actionStyle: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+        title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
         extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
         actions: PropTypes.Requireable<PropTypes.ReactNodeLike[]>;
         description: PropTypes.Requireable<PropTypes.InferProps<{
-            title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
-            info: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
+            info: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
         }>>;
     }>>;
     isActive: PropTypes.Requireable<boolean>;

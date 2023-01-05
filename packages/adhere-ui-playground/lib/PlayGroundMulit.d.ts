@@ -43,28 +43,28 @@ export declare const PlayGroundMulitPropTypes: {
         bodyStyle: PropTypes.Requireable<object>;
         actionClassName: PropTypes.Requireable<string>;
         actionStyle: PropTypes.Requireable<object>;
-        title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+        title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
         extra: PropTypes.Requireable<PropTypes.ReactNodeLike>;
         actions: PropTypes.Requireable<PropTypes.ReactNodeLike[]>;
         description: PropTypes.Requireable<PropTypes.InferProps<{
-            title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
-            info: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
+            info: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
         }>>;
     }>>;
     isActive: PropTypes.Requireable<boolean>;
     expand: PropTypes.Requireable<boolean>;
-    config: PropTypes.Requireable<(PropTypes.InferProps<{
+    config: PropTypes.Requireable<(NonNullable<PropTypes.InferProps<{
         codeText: PropTypes.Requireable<string>;
         theme: PropTypes.Requireable<string>;
     }> | PropTypes.InferProps<{
         active: PropTypes.Requireable<string>;
         config: PropTypes.Requireable<(PropTypes.InferProps<{
             key: PropTypes.Requireable<string>;
-            title: PropTypes.Requireable<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+            title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
             codeText: PropTypes.Requireable<string>;
             theme: PropTypes.Requireable<string>;
         }> | null | undefined)[]>;
         onChange: PropTypes.Requireable<(...args: any[]) => any>;
-    }> | null | undefined)[]>;
+    }> | null | undefined> | null | undefined)[]>;
 };
 export default PlayGroundMulit;

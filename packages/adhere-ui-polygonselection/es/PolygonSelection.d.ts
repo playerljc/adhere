@@ -1,5 +1,5 @@
 import Emitter from '@baifendian/adhere-util-emitter';
-import { IAction, IActionData, IPolygonSelection, IStyle, SelectType, IListeners } from './types';
+import { IAction, IActionData, IListeners, IPolygonSelection, IStyle, SelectType } from './types';
 /**
  * PolygonSelection
  * @class

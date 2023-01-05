@@ -1,10 +1,10 @@
-// import moment from 'moment';
+// import dayjs from 'dayjs';
 // import zhCN from 'antd/es/locale/zh_CN';
 // import enUS from 'antd/es/locale/en_US';
 // import ptPT from 'antd/lib/locale/pt_PT';
-import 'moment/locale/en-ca';
-import 'moment/locale/pt';
-import 'moment/locale/zh-cn';
+import 'dayjs/locale/en-ca';
+import 'dayjs/locale/pt';
+import 'dayjs/locale/zh-cn';
 
 import { Dict } from '@baifendian/adhere';
 
@@ -27,16 +27,16 @@ export default {
     //   en_US: enUS,
     // });
     //
-    // // moment国际化
+    // // dayjs国际化
     // Dict.handlers.SystemMomentLocals = () => ({
     //   zh_CN: () => {
-    //     moment.locale('zh-cn');
+    //     dayjs.locale('zh-cn');
     //   },
     //   en_US: () => {
-    //     moment.locale('en-ca');
+    //     dayjs.locale('en-ca');
     //   },
     //   pt_PT: () => {
-    //     moment.locale('pt');
+    //     dayjs.locale('pt');
     //   },
     // });
   },

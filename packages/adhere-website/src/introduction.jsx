@@ -1,8 +1,8 @@
 import { Typography } from 'antd';
 import React from 'react';
 
-import PlayGroundMulit from '@/lib/PlayGroundMulit';
 import Playground from '@/lib/Playground';
+import PlayGroundMulit from '@/lib/PlaygroundMulit';
 import ScrollFooterPanel from '@/lib/ScrollFooterPanel';
 
 import styles from './introduction.less';
@@ -24,8 +24,8 @@ class Introduction extends React.Component {
             <Title level={2}>兼容</Title>
             <Paragraph>
               <ul>
-                <li>- 支持 react(17.x)</li>
-                <li>- 支持 ant-design(4.x)</li>
+                <li>- 支持 react(18.x)</li>
+                <li>- 支持 ant-design(5.x)</li>
                 <li>- 支持国际化</li>
                 <li>- 支持修改主题</li>
                 <li>- 支持动态引入(babel-plugin-import)</li>
@@ -55,10 +55,9 @@ class Introduction extends React.Component {
             <Title level={2}>按需加载</Title>
             <Paragraph>
               需要在webpack构建中加入如下配置,如果进行了按需加载，则就不需要单独引入
-              <code>@baifendian/adhere/lib/index.less</code>和<code>antd/dist/antd.less</code>
+              <code>@baifendian/adhere/lib/index.less</code>
               <br />
               如果没有进行按需加载则需要单独引入<code>@baifendian/adhere/lib/index.less</code>和
-              <code>antd/dist/antd.less</code>
               <p style={{ color: 'red' }}>
                 注：如果对antd进行了按需加载在应该在webpack的babel-loader的include中加入adhere路径
                 <code>include.push(/@baifendian[\\/]adhere/)</code>
@@ -77,14 +76,6 @@ class Introduction extends React.Component {
       style: true,
     },
     'adhere',
-  ],
-  [
-    'import',
-    {
-      libraryName: 'antd',
-      style: true,
-    },
-    'ant',
   ],
               `}
             />
@@ -108,12 +99,12 @@ class Introduction extends React.Component {
                 {
                   title: '模板HTML文件',
                   codeText: `
-  <link href="https://cdn.jsdelivr.net/npm/antd@4.14.0/dist/antd.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/antd@5.1.2/dist/reset.css" rel="stylesheet">
   <link rel="stylesheet" href="/assets/umd/adhere.min.css">
-  <script src="https://momentjs.com/downloads/moment-with-locales.min.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.1/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/antd@4.14.0/dist/antd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/antd@5.1.2/dist/antd.min.js"></script>
   <script src="/assets/umd/adhere.bundle.js"></script>
                 `,
                 },
@@ -125,7 +116,7 @@ class Introduction extends React.Component {
     'antd': 'antd',
     'react': 'React',
     'react-dom':"ReactDOM",
-    'moment':'moment',
+    'dayjs':'dayjs',
   };
                 `,
                 },

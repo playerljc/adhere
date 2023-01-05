@@ -1,3 +1,4 @@
+/// <reference types="react" />
 declare const SearchRowDragSortStateTable_base: {
     new (props: any): {
         [x: string]: any;

@@ -43,9 +43,9 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * onDateTimeRangeChange
      * @description - onDateTimeRangeChange
      * @param propertys
-     * @param moments
+     * @param dayjs
      */
-    onDateTimeRangeChange: (propertys: Array<string>, moments: Array<any>) => void;
+    onDateTimeRangeChange: (propertys: Array<string>, dayjs: Array<any>) => void;
     /**
      * getParams
      * @override

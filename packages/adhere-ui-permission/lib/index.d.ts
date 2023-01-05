@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { PermissionFun } from './permission';
 declare const _default: {
     Permission: {
@@ -11,7 +10,7 @@ declare const _default: {
         };
         propTypes: {
             allPermission: import("prop-types").Requireable<any[]>;
-            permissions: import("prop-types").Requireable<string | any[]>;
+            permissions: import("prop-types").Requireable<NonNullable<string | any[] | null | undefined>>;
             noMatch: import("prop-types").Requireable<import("prop-types").ReactNodeLike>;
             children: import("prop-types").Requireable<import("prop-types").ReactNodeLike>;
         };

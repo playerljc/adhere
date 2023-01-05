@@ -58,6 +58,6 @@ export interface ToolbarProps {
 /**
  * 工具栏-选中全部
  */
-export declare type ToolbarSelectAllProps = TooltipProps & {
+export type ToolbarSelectAllProps = TooltipProps & {
     total?: boolean;
 };

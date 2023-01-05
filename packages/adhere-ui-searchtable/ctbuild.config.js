@@ -6,7 +6,5 @@ module.exports = {
       // 判断入口文件是.js,.jsx,.tsx
       index: path.join(__dirname, 'src', 'demo', 'index.tsx'),
     };
-
-    webpackConfig.devtool = 'cheap-module-eval-source-map';
   },
 };

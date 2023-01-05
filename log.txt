@@ -22,3 +22,22 @@
 .umd
  .Popup不好用
  .Notification不好用
+
+
+
+升级步骤
+ .README中关于react和antd版本的修改
+ .packages中的version需要修改为2.x
+ .依赖的修改和升级
+ .react语法修改
+  .ReactDOM
+ .@ctsj/build升级，构建文件修改
+
+ .antd语法升级
+  babel-plugin-import去掉
+  index.less中antd引用的样式去掉
+  根据文档上逐条修改
+  很多
+
+
+

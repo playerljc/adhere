@@ -36,7 +36,7 @@ export default {
   createElement(htmlStr: string): HTMLElement {
     const el = document.createElement('div');
     el.innerHTML = htmlStr;
-    return <HTMLElement>el.firstElementChild;
+    return el.firstElementChild as HTMLElement;
   },
   /**
    * getTopDom - 已target为开始向上查找元素
@@ -485,5 +485,35 @@ export default {
       };
     };
   })(),
+  /**
+   * clickInRange
+   * @description 再点击区域内执行点击操作，超出的区域执行bodyClickHandler的操作
+   * @param params
+   * @return Function
+   */
+  clickInRange(params: {
+    el: HTMLElement;
+    rootEl: HTMLElement;
+    bodyClickHandler?: Function;
+  }): Function {
+    function onRootClick(e) {
+      e.stopPropagation();
+    }
+
+    function onBodyClickHandler() {
+      if (params.bodyClickHandler) {
+        params.bodyClickHandler();
+      }
+    }
+
+    params.rootEl.addEventListener('click', onRootClick);
+
+    document.body.addEventListener('click', onBodyClickHandler);
+
+    return () => {
+      params.rootEl.removeEventListener('click', onRootClick);
+      document.body.removeEventListener('click', onBodyClickHandler);
+    };
+  },
   /**--------------------------dom-end-------------------------**/
 };

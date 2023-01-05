@@ -1,19 +1,19 @@
 import type Context from './Context';
 import Request from './Request';
 import Response from './Response';
-export declare type stateCode = 0 | 200 | 404 | 500;
-export declare type ContextOptions = {
+export type stateCode = 0 | 200 | 404 | 500;
+export type ContextOptions = {
     request: Request;
     response: Response;
 };
-export declare type MiddleWare = (ctx: Context, next?: () => Promise<void> | void) => Promise<void> | void;
-export declare type SendOptions = {
+export type MiddleWare = (ctx: Context, next?: () => Promise<void> | void) => Promise<void> | void;
+export type SendOptions = {
     data: any;
     headers: {
         [prop: string]: string;
     };
 };
-export declare type RequestOptions = {
+export type RequestOptions = {
     pathname: string;
     headers?: {
         [prop: string]: string;
@@ -22,7 +22,7 @@ export declare type RequestOptions = {
     stateMessage?: string;
     body?: any;
 };
-export declare type ResponseOptions = {
+export type ResponseOptions = {
     requestId: string;
     headers: {
         [prop: string]: string;

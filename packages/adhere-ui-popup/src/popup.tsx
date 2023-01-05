@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, { Root } from 'react-dom/client';
 import { v1 } from 'uuid';
 
 import { IConfig } from './types';
@@ -23,6 +23,8 @@ class Popup {
   private isShow: boolean = false;
   private el: HTMLElement | null = null;
   private popupEl: HTMLDivElement | null = null;
+
+  private popupHandlers = new WeakMap<HTMLElement, Root>();
 
   /**
    * constructor
@@ -68,10 +70,18 @@ class Popup {
 
     this.popupEl.style.zIndex = String(zIndex || 11000);
 
-    ReactDOM.render(children, this.popupEl, () => {
-      (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
-      this.trigger('onCreate');
-    });
+    const root = ReactDOM.createRoot(this.popupEl);
+
+    root.render(
+      React.cloneElement(children, {
+        ref: () => {
+          (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+          this.trigger('onCreate');
+        },
+      }),
+    );
+
+    this.popupHandlers.set(this.popupEl, root);
   }
 
   /**
@@ -174,10 +184,18 @@ class Popup {
    * destroy - 销毁一个popup
    */
   destroy(): boolean {
-    if (ReactDOM.unmountComponentAtNode(this.popupEl!)) {
-      (this.popupEl as HTMLElement).parentNode?.removeChild(this.popupEl!);
+    if (this.popupEl) {
+      const root = this.popupHandlers.get(this.popupEl);
+      if (root) {
+        root.unmount();
+      }
       this.popupEl = null;
     }
+
+    // if (ReactDOM.unmountComponentAtNode(this.popupEl!)) {
+    //   (this.popupEl as HTMLElement).parentNode?.removeChild(this.popupEl!);
+    //   this.popupEl = null;
+    // }
 
     this.trigger('onDestroy');
 

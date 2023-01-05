@@ -1,6 +1,6 @@
 import { Avatar, Button, List, Space, Table, Tag } from 'antd';
 import React, { useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import { Space as BSpace, ConditionalRender, Spin } from '@baifendian/adhere';
 
@@ -248,4 +248,4 @@ const Wrap2 = () => {
   );
 };
 
-ReactDOM.render(<Wrap2 />, document.getElementById('app'));
+ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(<Wrap2 />);

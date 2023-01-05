@@ -1,4 +1,4 @@
-import { IPoint, ITriangleData, IStyle } from '../types';
+import { IPoint, IStyle, ITriangleData } from '../types';
 import DrawAction from './DrawAction';
 /**
  * TriangleDrawAction
