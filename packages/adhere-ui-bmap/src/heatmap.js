@@ -1134,7 +1134,6 @@ function create() {
 
         var img = this.shadowCtx.getImageData(x, y, width, height);
         var imgData = img.data;
-        console.log('imgData', imgData);
         var len = imgData.length;
         var palette = this._palette;
 
@@ -1166,8 +1165,6 @@ function create() {
           imgData[i - 1] = palette[offset + 2];
           imgData[i] = useGradientOpacity ? palette[offset + 3] : finalAlpha;
         }
-
-        // console.log('imgData1', imgData);
 
         // img.data = imgData;
 
