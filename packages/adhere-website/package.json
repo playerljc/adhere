@@ -34,14 +34,13 @@
     ],
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
-
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@baifendian/adhere": "^2.0.0",
     "@ctsj/router": "^1.0.4",
     "@ctsj/state": "^2.0.23",
     "antd": "^5.1.2",
-    "bmap-wind": "^1.1.2",
+    "bmap-wind": "1.1.1-alpha.2",
     "classnames": "^2.3.2",
     "component-playground": "^3.2.1",
     "copy-to-clipboard": "^3.3.3",

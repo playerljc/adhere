@@ -731,7 +731,7 @@ export default () => {
     </Button>
   </Space.Group>
 
-  <Space />
+  <Space direction="vertical" />
 
   <div style={{ height: 500, overflow: 'hidden' }}>
     <StickupLayout ref={ref1}>
@@ -1091,7 +1091,7 @@ export default () => {
               </Button>
             </Space.Group>
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ height: 500, overflow: 'hidden' }}>
               <StickupLayout ref={ref1}>

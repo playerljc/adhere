@@ -311,7 +311,7 @@ export default () => {
     </Space.Group>
   </div>
 
-  <Space />
+  <Space direction="vertical" />
 
   <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }} ref={ref}>
     <Revolving.Item>Slide 1</Revolving.Item>
@@ -349,7 +349,7 @@ export default () => {
               </Space.Group>
             </div>
 
-            <Space />
+            <Space direction="vertical" />
 
             <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }} ref={ref}>
               <Revolving.Item>Slide 1</Revolving.Item>

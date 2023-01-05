@@ -276,7 +276,7 @@ export default () => {
     </Button>
   </Space.Group>
 
-  <Space />
+  <Space direction="vertical" />
 
   <div style={{ width: 300 }}>
     <Surnames
@@ -308,7 +308,7 @@ export default () => {
               </Button>
             </Space.Group>
 
-            <Space />
+            <Space direction="vertical" />
 
             <div style={{ width: 300 }}>
               <Surnames

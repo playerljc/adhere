@@ -31,7 +31,6 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "mergegenchangelog": "node script/changelog.js"
   },
-
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@baifendian/adhere-ui-antdformitem": "^2.0.0",

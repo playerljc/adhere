@@ -172,7 +172,7 @@ export default () => {
     <div>
       <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
 
-      <Space />
+      <Space direction="vertical" />
 
       <input
         type="file"
@@ -222,7 +222,7 @@ export default () => {
         }}
       />
 
-      <Space />
+      <Space direction="vertical" />
 
       <Progress percent={percent} />
     </div>
@@ -234,7 +234,7 @@ export default () => {
             <div>
               <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
 
-              <Space />
+              <Space direction="vertical" />
 
               <input
                 type="file"
@@ -284,7 +284,7 @@ export default () => {
                 }}
               />
 
-              <Space />
+              <Space direction="vertical" />
 
               <Progress percent={percent} />
             </div>

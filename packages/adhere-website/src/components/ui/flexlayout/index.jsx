@@ -77,7 +77,7 @@ export default (props) => {
     </Fixed>
   </FlexLayout>
 
-  <Space />
+  <Space direction="vertical" />
 
   <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed>
@@ -136,7 +136,7 @@ export default (props) => {
     </Fixed>
   </FlexLayout>
 
-  <Space />
+  <Space direction="vertical" />
 
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed
@@ -215,7 +215,7 @@ export default (props) => {
               </Fixed>
             </FlexLayout>
 
-            <Space />
+            <Space direction="vertical" />
 
             <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
               <Fixed>
@@ -274,7 +274,7 @@ export default (props) => {
               </Fixed>
             </FlexLayout>
 
-            <Space />
+            <Space direction="vertical" />
 
             <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
               <Fixed
@@ -349,7 +349,7 @@ export default (props) => {
     <Fixed>fixed4</Fixed>
   </FlexLayout>
 
-  <Space />
+  <Space direction="vertical" />
 
   <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed>fixed1</Fixed>
@@ -372,7 +372,7 @@ export default (props) => {
               <Fixed>fixed4</Fixed>
             </FlexLayout>
 
-            <Space />
+            <Space direction="vertical" />
 
             <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
               <Fixed>fixed1</Fixed>
@@ -415,7 +415,7 @@ export default (props) => {
     </Auto>
   </FlexLayout>
 
-  <Space />
+  <Space direction="vertical" />
 
   <FlexLayout
     direction="horizontal"
@@ -446,7 +446,7 @@ export default (props) => {
               </Auto>
             </FlexLayout>
 
-            <Space />
+            <Space direction="vertical" />
 
             <FlexLayout
               direction="horizontal"

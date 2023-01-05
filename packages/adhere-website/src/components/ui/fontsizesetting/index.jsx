@@ -35,7 +35,7 @@ export default () => {
     }}
   />
 
-  <Space />
+  <Space direction="vertical" />
 
   <p style={{ fontSize }}>我是一个粉刷匠</p>
       `,
@@ -51,7 +51,7 @@ export default () => {
               }}
             />
 
-            <Space />
+            <Space direction="vertical" />
 
             <p style={{ fontSize }}>我是一个粉刷匠</p>
           </>

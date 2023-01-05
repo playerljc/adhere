@@ -328,7 +328,7 @@ export default () => {
     插入
   </Button>
 
-  <Space />
+  <Space direction="vertical" />
 
   <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
     <CascadeCompared ref={ref1} indicator={getIndicator()} master={data1} />
@@ -405,7 +405,7 @@ export default () => {
                   插入
                 </Button>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
                   <CascadeCompared ref={ref1} indicator={getIndicator()} master={data1} />
@@ -458,7 +458,7 @@ export default () => {
     </Button>
   </Space.Group>
 
-  <Space />
+  <Space direction="vertical" />
 
   <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
     <CascadeCompared ref={ref2} indicator={getIndicator()} master={getMaster()} />
@@ -494,7 +494,7 @@ export default () => {
                   </Button>
                 </Space.Group>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
                   <CascadeCompared ref={ref2} indicator={getIndicator()} master={getMaster()} />
@@ -539,7 +539,7 @@ export default () => {
     </Button>
   </Space.Group>
 
-  <Space />
+  <Space direction="vertical" />
 
   <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
     <CascadeCompared ref={ref3} indicator={getIndicator()} master={getMaster()} />
@@ -567,7 +567,7 @@ export default () => {
                   </Button>
                 </Space.Group>
 
-                <Space />
+                <Space direction="vertical" />
 
                 <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
                   <CascadeCompared ref={ref3} indicator={getIndicator()} master={getMaster()} />
