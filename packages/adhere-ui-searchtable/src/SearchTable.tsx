@@ -426,7 +426,7 @@ abstract class SearchTable<
     this.setState(
       {
         [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
-        [this.getOrderProp()]: sorter.order || this.getOrderPropValue(),
+        [this.getOrderProp()]: sorter.order /*|| this.getOrderPropValue()*/,
       },
       () => {
         const { order } = sorter;
