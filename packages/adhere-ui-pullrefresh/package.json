@@ -45,8 +45,8 @@
     "load-awesome": "^1.1.0",
     "moment": "^2.29.1",
     "omit.js": "^2.0.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.4",
