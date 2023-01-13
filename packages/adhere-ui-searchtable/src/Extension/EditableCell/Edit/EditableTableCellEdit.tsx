@@ -76,9 +76,9 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
    * @description 点击了保存句柄
    */
   function onSaveTrigger() {
-    // 对表单进行校验
-    context?.editable?.tableEditable?.form?.validateFields?.()?.then?.((values) => {
-      if (onSave) {
+    if (onSave) {
+      // 对表单进行校验
+      context?.editable?.tableEditable?.form?.validateFields?.()?.then?.((values) => {
         onSave({
           value,
           values,
@@ -86,11 +86,12 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
           dataIndex,
           rowIndex,
         })?.then(() => onTriggerChange?.());
-        return;
-      }
 
-      onTriggerChange?.();
-    });
+        return;
+      });
+    }
+
+    onTriggerChange?.();
   }
 
   /**

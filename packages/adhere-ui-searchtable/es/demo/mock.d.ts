@@ -1,8 +1,8 @@
 export namespace oneData {
-    const code: number;
-    namespace data {
-        const total: number;
-        const list: {
+    export const code: number;
+    export namespace data {
+        export const total: number;
+        export const list: {
             id: any;
             name: any;
             sex: string;
@@ -36,4 +36,4 @@ declare namespace _default {
     export { data_1 as data };
 }
 export default _default;
-declare const data_2: any[];
+declare let data_2: any[];

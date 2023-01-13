@@ -25,7 +25,7 @@ declare const SearchEditableTable_base: {
         }): void;
         setFieldValues(dataSource: any): void;
         fetchData(): any;
-        render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
+        render(): import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)>;
     };
     [x: string]: any;
 };

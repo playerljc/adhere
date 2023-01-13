@@ -1,9 +1,5 @@
 import React from 'react';
 export declare const SearchAndPaginParamsMemo: any;
-/**
- * ProSearchEditableRowDragSortTable
- * @classdesc 可以进行编辑单元格且进行行拖拽排序的高级表格
- */
 declare const _default: {
     new (props: any): {
         [x: string]: any;
@@ -61,4 +57,8 @@ declare const _default: {
     };
     [x: string]: any;
 };
+/**
+ * ProSearchEditableRowDragSortTable
+ * @classdesc 可以进行编辑单元格且进行行拖拽排序的高级表格
+ */
 export default _default;
