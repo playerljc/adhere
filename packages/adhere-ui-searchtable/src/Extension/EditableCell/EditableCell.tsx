@@ -82,7 +82,11 @@ const EditableCell: TableCellComponentReducer = (props) => {
         <EditableCellEdit
           {...props}
           editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
+          onTriggerChange={() => {
+            // @ts-ignore
+            context?.context?.setActiveValue?.('');
+            setStatus('view');
+          }}
         />,
       ]);
     }
@@ -92,7 +96,12 @@ const EditableCell: TableCellComponentReducer = (props) => {
         <EditableCellView
           {...props}
           editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('edit')}
+          onTriggerChange={() => {
+            context?.context
+              // @ts-ignore
+              ?.setActiveValue?.(props.record[props.column.dataIndex as string]);
+            setStatus('edit');
+          }}
         />,
       ]);
     }
@@ -102,7 +111,11 @@ const EditableCell: TableCellComponentReducer = (props) => {
         <EditableCellEdit
           {...props}
           editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
+          onTriggerChange={() => {
+            // @ts-ignore
+            context?.context?.setActiveValue?.('');
+            setStatus('view');
+          }}
         />,
       ]);
     }

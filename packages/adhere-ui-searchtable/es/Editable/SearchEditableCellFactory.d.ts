@@ -56,6 +56,15 @@ export default function <P, S>(SuperClass: any): {
             };
             dataIndex: string;
         }): any;
+        /**
+         * setActiveValue
+         * @param activeValue
+         */
+        setActiveValue(activeValue: any): Promise<void>;
+        /**
+         * getActiveValue
+         */
+        getActiveValue(): any;
     };
     [x: string]: any;
 };
