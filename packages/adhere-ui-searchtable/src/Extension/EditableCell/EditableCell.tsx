@@ -74,6 +74,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
 
     // 单元格不是可编辑的单元格
     if (!editableConfig.editable) {
+      // @ts-ignore
       res = tdREL;
     }
     // 始终保持编辑状态
@@ -82,7 +83,11 @@ const EditableCell: TableCellComponentReducer = (props) => {
         <EditableCellEdit
           {...props}
           editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
+          onTriggerChange={() => {
+            // @ts-ignore
+            context?.context?.setActiveValue?.('');
+            setStatus('view');
+          }}
         />,
       ]);
     }
@@ -92,7 +97,12 @@ const EditableCell: TableCellComponentReducer = (props) => {
         <EditableCellView
           {...props}
           editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('edit')}
+          onTriggerChange={() => {
+            context?.context
+              // @ts-ignore
+              ?.setActiveValue?.(props.record[props.column.dataIndex as string]);
+            setStatus('edit');
+          }}
         />,
       ]);
     }
@@ -102,7 +112,11 @@ const EditableCell: TableCellComponentReducer = (props) => {
         <EditableCellEdit
           {...props}
           editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
+          onTriggerChange={() => {
+            // @ts-ignore
+            context?.context?.setActiveValue?.('');
+            setStatus('view');
+          }}
         />,
       ]);
     }

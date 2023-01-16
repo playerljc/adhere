@@ -7,9 +7,15 @@ import './serviceRegister';
 
 const {
   ProSearchEditableCellRowDragSortStateTable,
+  // ProEditableCellSearchStateTable,
   OptionsWrap,
   SearchTableStateImplementFactory,
 } = SearchTable;
+
+console.log(
+  'ProSearchEditableCellRowDragSortStateTable',
+  ProSearchEditableCellRowDragSortStateTable,
+);
 
 const serviceName = 'user';
 

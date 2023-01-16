@@ -15,7 +15,10 @@ DictConfig();
 
 const ProSearchStateTableImpl = lazy(
   // @ts-ignore
-  () => import(/* webpackChunkName: "conditionalrender" */ './proHeaderGroupStateSearchTable.jsx'),
+  () =>
+    import(
+      /* webpackChunkName: "conditionalrender" */ './proEditableCellRowDragSortSearchTable.jsx'
+    ),
 );
 
 ReactDOM.render(

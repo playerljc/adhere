@@ -36,6 +36,8 @@ declare const SearchEditableCellStateTable_base: {
             };
             dataIndex: string;
         }): any;
+        setActiveValue(activeValue: any): Promise<void>;
+        getActiveValue(): any;
     };
     [x: string]: any;
 };
