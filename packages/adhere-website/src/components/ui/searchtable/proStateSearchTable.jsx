@@ -89,22 +89,6 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         },
       },
       {
-        title: '出生年月',
-        dataIndex: 'birthday',
-        key: 'birthday',
-        align: 'center',
-        width: 200,
-        sorter: true,
-        sortOrder: this.sortOrder('birthday'),
-        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
-        $search: {
-          type: 'rangePicker',
-          visible: true,
-          startName: 'birthDayStart',
-          endName: 'birthDayEnd',
-        },
-      },
-      {
         title: '身高',
         dataIndex: 'height',
         key: 'height',
@@ -148,9 +132,25 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'input',
           visible: true,
-          valueAttrs: {
-            colSpan: 5,
-          },
+          // valueAttrs: {
+          //   colSpan: 5,
+          // },
+        },
+      },
+      {
+        title: '出生年月',
+        dataIndex: 'birthday',
+        key: 'birthday',
+        align: 'center',
+        width: 200,
+        sorter: true,
+        sortOrder: this.sortOrder('birthday'),
+        render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        $search: {
+          type: 'rangePicker',
+          visible: true,
+          startName: 'birthDayStart',
+          endName: 'birthDayEnd',
         },
       },
       {
