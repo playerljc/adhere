@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import MessageDialog from './messagedialog';\r\nexport default MessageDialog;\r\n//# sourceMappingURL=index.js.map"],"names":["MessageDialog"],"mappings":"OAAOA,kBAAmB,iCACXA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import MessageDialog from './messagedialog';\r\nexport default MessageDialog;\r\n"],"names":["MessageDialog"],"mappings":"OAAOA,kBAAmB,iCACXA"}

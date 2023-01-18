@@ -53,6 +53,7 @@ function Example() {
           设置formats
         </button>
       </div>
+      {/*@ts-ignore*/}
       <ReactQuillSandbox theme={theme} modules={modules} formats={formats} />
     </>
   );

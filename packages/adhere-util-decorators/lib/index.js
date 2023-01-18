@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var tslib_1=require("tslib"),ReactAop_1=tslib_1.__importDefault(require("./ReactAop")),ReactAutoTryCatch_1=tslib_1.__importDefault(require("./ReactAutoTryCatch")),ReactErrorBoundaries_1=tslib_1.__importDefault(require("./ReactErrorBoundaries"));exports.default={ReactErrorBoundaries:ReactErrorBoundaries_1.default,ReactAop:ReactAop_1.default,ReactAutoTryCatch:ReactAutoTryCatch_1.default};
+import ReactAop from"./ReactAop";import ReactAutoTryCatch from"./ReactAutoTryCatch";import ReactErrorBoundaries from"./ReactErrorBoundaries";export default{ReactErrorBoundaries:ReactErrorBoundaries,ReactAop:ReactAop,ReactAutoTryCatch:ReactAutoTryCatch};
 //# sourceMappingURL=index.js.map

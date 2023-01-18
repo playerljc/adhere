@@ -1408,11 +1408,11 @@ var BMapLib = (window.BMapLib = BMapLib || {});
     map.getPanes().mapPane.appendChild(el);
     this.conf.valueField = this.conf.valueField || 'count';
 
-    if (typeof module !== 'undefined' && module.exports) {
-      this.heatmap = module.exports.create(this.conf);
-    } else {
-      this.heatmap = h337.create(this.conf);
-    }
+    // if (typeof module !== 'undefined' && module.exports) {
+    //   this.heatmap = module.exports.create(this.conf);
+    // } else {
+    this.heatmap = h337.create(this.conf);
+    // }
 
     var that = this;
     map.addEventListener('resize', function (e) {

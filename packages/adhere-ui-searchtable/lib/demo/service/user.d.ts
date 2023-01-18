@@ -1,14 +1,14 @@
 export namespace fetchList {
-    export function call(): Promise<unknown>;
-    export function defaultResult(): {
+    function call(): Promise<unknown>;
+    function defaultResult(): {
         total: number;
         list: never[];
     };
 }
 declare namespace _default {
-    export const codeKey: string;
-    export const codeSuccessKey: number;
-    export const dataKey: string;
-    export const messageKey: string;
+    const codeKey: string;
+    const codeSuccessKey: number;
+    const dataKey: string;
+    const messageKey: string;
 }
 export default _default;

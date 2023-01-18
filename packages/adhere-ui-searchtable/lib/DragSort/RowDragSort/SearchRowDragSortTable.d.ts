@@ -34,7 +34,7 @@ declare const SearchRowDragSortTable_base: {
             };
             columns: import("../../types").ColumnTypeExt[];
         }): import("../../types").ColumnRowDragSortConfig;
-        render(): import("react").ReactElement<any, string | ((props: any) => import("react").ReactElement<any, any> | null) | (new (props: any) => import("react").Component<any, any, any>)>;
+        render(): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>;
     };
     [x: string]: any;
 };

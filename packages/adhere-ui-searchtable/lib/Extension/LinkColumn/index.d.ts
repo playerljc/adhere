@@ -1,12 +1,3 @@
-declare const _default: ({ className, style, record, rowIndex, dataIndex, to, children }: {
-    className: any;
-    style: any;
-    record: any;
-    rowIndex: any;
-    dataIndex: any;
-    to: any;
-    children: any;
-}) => JSX.Element;
 /**
  * LinkColumn
  * @param className
@@ -18,4 +9,13 @@ declare const _default: ({ className, style, record, rowIndex, dataIndex, to, ch
  * @param children
  * @returns {JSX.Element}
  */
+declare const _default: ({ className, style, record, rowIndex, dataIndex, to, children }: {
+    className: any;
+    style: any;
+    record: any;
+    rowIndex: any;
+    dataIndex: any;
+    to: any;
+    children: any;
+}) => JSX.Element;
 export default _default;

@@ -98,6 +98,7 @@ class PlayGroundMulit extends APlayGround<PlayGroundMulitProps, PlayGroundMulitS
           maskClosable: true,
           handler: (id, attribute) => {
             resolve(
+              // @ts-ignore
               this.configMap
                 .get(attribute.config.type || 'CodePanel')
                 ?.getCodeText(attribute.config),

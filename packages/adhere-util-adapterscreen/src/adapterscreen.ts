@@ -29,7 +29,9 @@ function detectZoom() {
     }
   }
   // 没有像素比且不是IE
+  // @ts-ignore
   else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+    // @ts-ignore
     ratio = window.outerWidth / window.innerWidth;
   }
 

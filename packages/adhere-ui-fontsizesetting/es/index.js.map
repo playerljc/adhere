@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FontSizeSetting from './fontsizesetting';\r\nexport default FontSizeSetting;\r\n//# sourceMappingURL=index.js.map"],"names":["FontSizeSetting"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FontSizeSetting from './fontsizesetting';\r\nexport default FontSizeSetting;\r\n"],"names":["FontSizeSetting"],"mappings":"OAAOA,oBAAqB,mCACbA"}

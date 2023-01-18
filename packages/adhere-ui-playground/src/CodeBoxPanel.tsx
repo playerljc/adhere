@@ -111,6 +111,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
     // activeAnchor
 
     const children = (
+      // @ts-ignore
       <PlayGround
         {...playGroundProps}
         isActive={activeAnchor === playGroundProps.id}

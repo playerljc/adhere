@@ -176,6 +176,7 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
        */
       setp =
         innerEl.current!.scrollHeight /
+        // @ts-ignore
         (duration / updateInterval() + (duration % updateInterval() !== 0 ? 1 : 0));
 
     /** *

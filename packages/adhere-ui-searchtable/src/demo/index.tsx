@@ -40,3 +40,5 @@
 //     </AdhereConfigProvider>
 //   </ConfigProvider>,
 // );
+
+export default {};

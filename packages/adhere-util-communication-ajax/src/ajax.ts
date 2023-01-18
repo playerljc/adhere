@@ -187,7 +187,7 @@ function warnInfo(title, message) {
   }
 
   warnInfoHandler = setTimeout(() => {
-    notification.warn({
+    notification.warning({
       message: title,
       description: message,
     });

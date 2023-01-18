@@ -1,5 +1,9 @@
 import React from 'react';
 export declare const SearchAndPaginParamsMemo: any;
+/**
+ * ProEditableSearchTable
+ * @classdesc 可以进行编辑的高级查询表格
+ */
 declare const _default: {
     new (props: any): {
         [x: string]: any;
@@ -57,8 +61,4 @@ declare const _default: {
     };
     [x: string]: any;
 };
-/**
- * ProEditableSearchTable
- * @classdesc 可以进行编辑的高级查询表格
- */
 export default _default;

@@ -1,5 +1,5 @@
 {
-  "extends": "../../node_modules/@ctsj/buildv/buildpackagetsconfig-base",
+  "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
   "compilerOptions": {
     "outDir": "./lib",
     "baseUrl": "./",

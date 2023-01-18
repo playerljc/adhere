@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var DragSortCell=function(){return function(e){return e}};exports.default=DragSortCell;
+var DragSortCell=function(){return function(r){return r}};export default DragSortCell;
 //# sourceMappingURL=DragSortCell.js.map

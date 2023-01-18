@@ -147,6 +147,7 @@ abstract class APlayGround<
    * @return {*}
    */
   render() {
+    // @ts-ignore
     const { children, cardProps, isActive, id } = this.props;
 
     const idProps = {
