@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var tslib_1=require("tslib"),react_1=tslib_1.__importDefault(require("react")),router_1=require("@ctsj/router");exports.default=function(e){var r=e.className,t=e.style,a=e.record,o=e.rowIndex,s=e.dataIndex,l=e.to,e=e.children;return react_1.default.createElement(router_1.Link,{className:r||"",style:t||{},to:l},e?e({record:a,rowIndex:o,dataIndex:s}):a[s])};
+import React from"react";import{Link}from"@ctsj/router";export default function(e){var r=e.className,t=e.style,a=e.record,o=e.rowIndex,c=e.dataIndex,n=e.to,e=e.children;return React.createElement(Link,{className:r||"",style:t||{},to:n},e?e({record:a,rowIndex:o,dataIndex:c}):a[c])}
 //# sourceMappingURL=index.js.map

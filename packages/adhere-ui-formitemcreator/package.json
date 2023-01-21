@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-formitemcreator",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Form表单配置项",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
-    "@ctsj/buildv": "^5.0.4",
+    "@ctsj/build": "^6.0.5",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.9.4"
   },

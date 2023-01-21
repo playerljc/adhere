@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Comment from './Comment';\r\nexport default Comment;\r\n//# sourceMappingURL=index.js.map"],"names":["Comment"],"mappings":"OAAOA,YAAa,2BACLA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Comment from './Comment';\r\nexport default Comment;\r\n"],"names":["Comment"],"mappings":"OAAOA,YAAa,2BACLA"}

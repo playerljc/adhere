@@ -168,18 +168,21 @@ function createFactory(Component, defaultProps) {
 export const Select = createFactory(AntSelect, {
   showSearch: true,
   allowClear: true,
+  placement: 'bottomLeft',
   filterOption: (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
 });
 
 export const MultipleSelect = createFactory(AntSelect, {
   allowClear: true,
   mode: 'multiple',
+  placement: 'bottomLeft',
   filterOption: (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
 });
 
 export const TreeSelect = createFactory(AntTreeSelect, {
   showSearch: true,
   allowClear: true,
+  placement: 'bottomLeft',
 });
 
 export const AutoComplete = createFactory(AntAutoComplete, {
@@ -189,14 +192,17 @@ export const AutoComplete = createFactory(AntAutoComplete, {
 
 export const DatePicker = createFactory(AntDatePicker, {
   allowClear: true,
+  placement: 'bottomLeft',
 });
 
 export const RangePicker = createFactory(AntRangePicker, {
   allowClear: true,
+  placement: 'bottomLeft',
 });
 
 export const TimePicker = createFactory(AntTimePicker, {
   allowClear: true,
+  placement: 'bottomLeft',
 });
 
 export const Cascader = createFactory(AntCascader, {
@@ -205,6 +211,7 @@ export const Cascader = createFactory(AntCascader, {
       path.some((option) => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1),
   },
   allowClear: true,
+  placement: 'bottomLeft',
 });
 
 export const Upload = createFactory(AntUpload, {

@@ -5,6 +5,7 @@ import FlexLayout from '../index';
 
 const { Fixed, Auto } = FlexLayout;
 
+// @ts-ignore
 ReactDOM.createRoot(document.getElementById('app')).render(
   <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed>

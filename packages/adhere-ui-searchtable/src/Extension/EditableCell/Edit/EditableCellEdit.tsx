@@ -76,8 +76,8 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    */
   function onSaveTrigger() {
     // 对表单进行校验
-    form?.validateFields().then((values) => {
-      if (onSave) {
+    if (onSave) {
+      form?.validateFields().then((values) => {
         onSave({
           value,
           values,
@@ -85,11 +85,12 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
           dataIndex,
           rowIndex,
         })?.then(() => onTriggerChange?.());
-        return;
-      }
+      });
 
-      onTriggerChange?.();
-    });
+      return;
+    }
+
+    onTriggerChange?.();
   }
 
   /**

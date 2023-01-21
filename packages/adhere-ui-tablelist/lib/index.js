@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var tslib_1=require("tslib"),tablelist_1=tslib_1.__importDefault(require("./tablelist"));exports.default=tablelist_1.default;
+import TableList from"./tablelist";export default TableList;
 //# sourceMappingURL=index.js.map

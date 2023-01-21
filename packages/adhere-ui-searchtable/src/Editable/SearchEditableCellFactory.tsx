@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import React from 'react';
 
 import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
 
@@ -39,6 +40,11 @@ export default function <P, S>(SuperClass) {
 
     constructor(props) {
       super(props);
+
+      this.state = {
+        ...this.state,
+        activeValue: '',
+      };
 
       this.cellConfigReducers = [...this.cellConfigReducers, this.cellEditableReducer];
     }
@@ -130,6 +136,28 @@ export default function <P, S>(SuperClass) {
       const item = this.valueToFormItemValueMap.get(type as string);
 
       return item ? item?.({ record, dataIndex }) : record?.[dataIndex as string];
+    }
+
+    /**
+     * setActiveValue
+     * @param activeValue
+     */
+    setActiveValue(activeValue) {
+      return new Promise<void>((resolve) => {
+        this.setState(
+          {
+            activeValue,
+          },
+          () => resolve(),
+        );
+      });
+    }
+
+    /**
+     * getActiveValue
+     */
+    getActiveValue() {
+      return this.state.activeValue;
     }
   };
 }

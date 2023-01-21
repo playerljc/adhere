@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-communication-ajax",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Ajax通信",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-globalindicator": "^2.0.0",
+    "@baifendian/adhere-ui-globalindicator": "^2.0.1",
     "@baifendian/adhere-util": "^2.0.0",
     "@baifendian/adhere-util-intl": "^2.0.0",
     "@types/react": "^18.0.26",

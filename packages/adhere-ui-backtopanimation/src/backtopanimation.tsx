@@ -55,6 +55,7 @@ const BackTopAnimation: FC<BackTopAnimationProps> = (props): React.ReactElement 
       // 一次滚动的步进
       const step =
         container.scrollHeight /
+        // @ts-ignore
         (duration / getUpdateInterval() + (duration % getUpdateInterval() !== 0 ? 1 : 0));
 
       /**

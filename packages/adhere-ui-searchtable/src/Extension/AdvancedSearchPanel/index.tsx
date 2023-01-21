@@ -109,38 +109,36 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
         }
         renderMain={
           <div className={`${_selectorPrefix}-main`}>
-            <div className={`${_selectorPrefix}-main-inner`}>
-              <div className={`${_selectorPrefix}-scroll`}>
-                <ScrollLayout scrollY>
-                  {renderGridSearchFormGroup(
-                    // @ts-ignore
-                    showStrategy === 'all' ? groupData : remainingGroupData,
-                    tableGridLayoutConfig,
-                  )}
-                </ScrollLayout>
+            <div className={`${_selectorPrefix}-scroll`}>
+              <ScrollLayout scrollY>
+                {renderGridSearchFormGroup(
+                  // @ts-ignore
+                  showStrategy === 'all' ? groupData : remainingGroupData,
+                  tableGridLayoutConfig,
+                )}
+              </ScrollLayout>
+            </div>
+
+            <footer className={`${_selectorPrefix}-footer`}>
+              <div className={`${_selectorPrefix}-item`}>
+                <Button
+                  type="primary"
+                  icon={<SearchOutlined />}
+                  onClick={() => onSearch().then(() => setCollapse(false))}
+                >
+                  {Intl.v('确定')}
+                </Button>
               </div>
 
-              <footer className={`${_selectorPrefix}-footer`}>
-                <div className={`${_selectorPrefix}-item`}>
-                  <Button
-                    type="primary"
-                    icon={<SearchOutlined />}
-                    onClick={() => onSearch().then(() => setCollapse(false))}
-                  >
-                    {Intl.v('确定')}
-                  </Button>
-                </div>
-
-                <div className={`${_selectorPrefix}-item`}>
-                  <Button
-                    icon={<ReloadOutlined />}
-                    onClick={() => onReset().then(() => setCollapse(false))}
-                  >
-                    {Intl.v('重置')}
-                  </Button>
-                </div>
-              </footer>
-            </div>
+              <div className={`${_selectorPrefix}-item`}>
+                <Button
+                  icon={<ReloadOutlined />}
+                  onClick={() => onReset().then(() => setCollapse(false))}
+                >
+                  {Intl.v('重置')}
+                </Button>
+              </div>
+            </footer>
           </div>
         }
       />

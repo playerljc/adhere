@@ -1,2 +1,2 @@
-import '../index.less';
-import './index.less';
+declare const _default: {};
+export default _default;

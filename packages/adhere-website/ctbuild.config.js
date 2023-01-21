@@ -20,7 +20,7 @@ module.exports = {
     //   'moment':'moment',
     // };
 
-    // webpackConfig.devtool = 'cheap-module-eval-source-map';
+    webpackConfig.devtool = 'cheap-module-eval-source-map';
 
     // webpackConfig.resolve.alias['@baifendian/adhere/lib/search-table'] = path.join(
     //   __dirname,
@@ -67,10 +67,10 @@ module.exports = {
     // }
 
     // 加入markdown的解析
-    // webpackConfig.module.rules.push({
-    //   test: /\.md$/,
-    //   use: 'raw-loader',
-    // });
+    webpackConfig.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 

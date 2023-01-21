@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var tslib_1=require("tslib"),messagedialog_1=tslib_1.__importDefault(require("./messagedialog"));exports.default=messagedialog_1.default;
+import MessageDialog from"./messagedialog";export default MessageDialog;
 //# sourceMappingURL=index.js.map
