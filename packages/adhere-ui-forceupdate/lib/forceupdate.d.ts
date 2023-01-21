@@ -1,4 +1,4 @@
 import React from 'react';
-import { ForceUpdateRefHandle, ForceUpdateProps } from './types';
+import { ForceUpdateProps, ForceUpdateRefHandle } from './types';
 declare const _default: React.ForwardRefExoticComponent<ForceUpdateProps & React.RefAttributes<ForceUpdateRefHandle>>;
 export default _default;

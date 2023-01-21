@@ -1,6 +1,5 @@
-/// <reference types="react" />
 import PropTypes from 'prop-types';
-import { PermissionProps, PermissionFunction } from './types';
+import { PermissionFunction, PermissionProps } from './types';
 /**
  * setPermission - 设置拥有的所有权限
  * @param {Array<String>} permission

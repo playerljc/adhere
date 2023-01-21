@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["suspense/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-suspense/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,mDACHA"}
+{"version":3,"file":"index.js","sources":["suspense/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-suspense/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,mDACHA"}

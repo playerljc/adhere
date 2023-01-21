@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["slider-scale/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-sliderscale/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}
+{"version":3,"file":"index.js","sources":["slider-scale/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-sliderscale/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["stickup-layout/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-stickuplayout/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}
+{"version":3,"file":"index.js","sources":["stickup-layout/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-stickuplayout/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}

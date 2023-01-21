@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
 import PropTypes from 'prop-types';
-import type { TableGridLayoutProps, DataItem, RenderDetail } from './types';
+import { ReactElement } from 'react';
+import type { DataItem, RenderDetail, TableGridLayoutProps } from './types';
 /**
  * TableGridLayout
  * @param data
@@ -41,8 +41,8 @@ declare namespace TableGridLayout {
             columnCount: PropTypes.Validator<number>;
             data: PropTypes.Validator<(PropTypes.InferProps<{
                 key: PropTypes.Validator<string>;
-                label: PropTypes.Validator<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
-                value: PropTypes.Validator<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+                label: PropTypes.Validator<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
+                value: PropTypes.Validator<string | number | boolean | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>;
             }> | null | undefined)[]>;
         }> | null | undefined)[]>;
     };

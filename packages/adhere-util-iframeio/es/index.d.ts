@@ -1,7 +1,7 @@
 import Fetch from './fetch';
 import Server from './server';
-import Router from './server/router';
 import Compose from './server/compose';
+import Router from './server/router';
 declare const _default: {
     Fetch: typeof Fetch;
     Server: typeof Server;

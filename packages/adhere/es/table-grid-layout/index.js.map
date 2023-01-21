@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["table-grid-layout/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-tablegridlayout/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}
+{"version":3,"file":"index.js","sources":["table-grid-layout/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-tablegridlayout/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}

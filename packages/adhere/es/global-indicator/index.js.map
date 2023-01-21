@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["global-indicator/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-globalindicator/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}
+{"version":3,"file":"index.js","sources":["global-indicator/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-globalindicator/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}

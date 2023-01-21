@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["preferences/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-preferences/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}
+{"version":3,"file":"index.js","sources":["preferences/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-preferences/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}

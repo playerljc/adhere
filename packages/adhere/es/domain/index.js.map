@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["domain/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-domain/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,mDACHA"}
+{"version":3,"file":"index.js","sources":["domain/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-domain/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,mDACHA"}

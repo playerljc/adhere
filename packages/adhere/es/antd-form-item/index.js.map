@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["antd-form-item/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-antdformitem/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}
+{"version":3,"file":"index.js","sources":["antd-form-item/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-antdformitem/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}

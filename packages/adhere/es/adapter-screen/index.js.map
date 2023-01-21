@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["adapter-screen/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-adapterscreen/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}
+{"version":3,"file":"index.js","sources":["adapter-screen/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-adapterscreen/es';\nexport default Model;"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}

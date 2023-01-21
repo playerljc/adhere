@@ -222,7 +222,9 @@ declare const _default: {
     color16Random(): string;
     colorToRgb(color: string): number[];
     rgbToColor(r: string | number, g: string | number, b: string | number): string;
-    isEmpty(value: any): boolean;
+    isEmpty(value: any): boolean; /**
+     * 函数节流
+     */
     isNumber(val: any): boolean;
     isBoolean(val: any): boolean;
     isString(val: any): boolean;

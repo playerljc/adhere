@@ -22,9 +22,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuildpackage:cjs": "node script/build.js module=lib",
-    "buildpackage:cjs": "ctbuild buildpackagets",
+    "buildpackage:cjs": "ctbuildv buildpackagets -c ctbuildv.package.ts.cjs.config.js -o lib",
     "prebuildpackage:es": "node script/build.js module=es",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
+    "buildpackage:es": "ctbuildv buildpackagets -c ctbuildv.package.ts.esm.config.js -o es",
     "buildpackage": "npm-run-all --serial buildpackage:cjs buildpackage:es",
     "buildumd": "node script/buildumd.js",
     "buildumd:core": "ctbuild buildumd --packagename adhere --define alias=@,evnVars=true",
@@ -121,14 +121,15 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
     "@babel/plugin-transform-modules-commonjs": "^7.12.1",
     "@babel/runtime": "^7.7.4",
-    "@ctsj/build": "^4.0.19",
+    "@ctsj/buildv": "^5.0.4",
     "babel-plugin-import": "^1.13.3",
     "cheerio": "^1.0.0-rc.10",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
-    "typescript": "^3.8.2"
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
     "antd": ">=4.22.2 - <5.0.0",
