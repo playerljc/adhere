@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-comment",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "评论",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -30,10 +30,10 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
-    "@baifendian/adhere-ui-backtopanimation": "^2.0.0",
+    "@baifendian/adhere-ui-backtopanimation": "^2.0.1",
     "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
     "@baifendian/adhere-ui-css": "^2.0.0",
-    "@baifendian/adhere-ui-flexlayout": "^2.0.0",
+    "@baifendian/adhere-ui-flexlayout": "^2.0.1",
     "@baifendian/adhere-ui-hooks": "^2.0.0",
     "@baifendian/adhere-ui-scrollload": "^2.0.0",
     "@baifendian/adhere-util": "^2.0.0",

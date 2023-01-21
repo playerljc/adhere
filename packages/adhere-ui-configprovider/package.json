@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-configprovider",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "全局配置",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,7 +31,7 @@
     "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
     "@baifendian/adhere-ui-hooks": "^2.0.0",
     "@baifendian/adhere-util-intl": "^2.0.0",
-    "@baifendian/adhere-util-resource": "^2.0.0",
+    "@baifendian/adhere-util-resource": "^2.0.1",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",
