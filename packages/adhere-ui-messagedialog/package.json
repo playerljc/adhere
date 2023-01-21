@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-messagedialog",
-  "version": "2.0.1",
+  "version": "2.0.0-fix.0",
   "description": "对ant-design的<Model>进行封装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
