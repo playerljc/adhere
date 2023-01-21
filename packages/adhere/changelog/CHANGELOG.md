@@ -1,3 +1,16 @@
+# 1.0.23
+
+***
+
+2023-01-21
+
+* **公共**
+  - 已知问题修改
+* **adhere-ui-antdformitem**
+  - BUG修改
+* **adhere-ui-searchtable**
+  - BUG修改
+
 # 1.0.22
 
 ***
