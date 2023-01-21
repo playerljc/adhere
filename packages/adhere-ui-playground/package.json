@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-playground",
-  "version": "1.0.22-fix.2",
+  "version": "1.0.23",
   "description": "一个代码展示的组件",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,12 +32,12 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.22-fix.2",
-    "@baifendian/adhere-ui-contextmenu": "^1.0.22-fix.2",
-    "@baifendian/adhere-ui-css": "^1.0.22",
-    "@baifendian/adhere-ui-space": "^1.0.22-fix.2",
-    "@baifendian/adhere-util": "^1.0.22-fix.1",
-    "@baifendian/adhere-util-intl": "^1.0.22-fix.2",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.23",
+    "@baifendian/adhere-ui-contextmenu": "^1.0.23",
+    "@baifendian/adhere-ui-css": "^1.0.23",
+    "@baifendian/adhere-ui-space": "^1.0.23",
+    "@baifendian/adhere-util": "^1.0.23",
+    "@baifendian/adhere-util-intl": "^1.0.23",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

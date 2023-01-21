@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-warnprompt",
-  "version": "1.0.22-fix.2",
+  "version": "1.0.23",
   "description": "警告的提示(就是为了全局统一)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {

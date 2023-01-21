@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-spin",
-  "version": "1.0.22-fix.2",
+  "version": "1.0.23",
   "description": "无侵入的loading",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,8 +31,8 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^1.0.22",
-    "@baifendian/adhere-util-resource": "^1.0.22-fix.2",
+    "@baifendian/adhere-ui-css": "^1.0.23",
+    "@baifendian/adhere-util-resource": "^1.0.23",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.2",

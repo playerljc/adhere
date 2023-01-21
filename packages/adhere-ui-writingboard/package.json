@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-writingboard",
-  "version": "1.0.22-fix.2",
+  "version": "1.0.23",
   "description": "写字板",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^1.0.22-fix.1",
+    "@baifendian/adhere-util": "^1.0.23",
     "@juggle/resize-observer": "^3.3.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",

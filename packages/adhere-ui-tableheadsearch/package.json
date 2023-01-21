@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tableheadsearch",
-  "version": "1.0.22-fix.2",
+  "version": "1.0.23",
   "description": "基于antd-design的Table的列头筛选",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {

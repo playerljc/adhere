@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-permission",
-  "version": "1.0.22-fix.2",
+  "version": "1.0.23",
   "description": "权限的组件",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,7 +31,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.22-fix.2",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.23",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "react": "^17.0.2",
