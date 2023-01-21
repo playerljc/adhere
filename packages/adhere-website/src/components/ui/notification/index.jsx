@@ -1,5 +1,5 @@
 import { Button, Tabs } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 import { Notification } from '@baifendian/adhere';
 
@@ -38,7 +38,7 @@ export default () => {
           },
         },
         codeText: `
-  import React, { useState, useEffect } from 'react';
+  import React, { useState, useLayoutEffect } from 'react';
   import { Button, Tabs } from 'antd';
   import { Notification, Space } from '@baifendian/adhere';
 
@@ -56,7 +56,7 @@ export default () => {
   export default () => {
     const [activeKey, setActiveKey] = useState('ios-top');
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       // eslint-disable-next-line no-use-before-define
       const record = getRecord(activeKey);
       const [style, type] = activeKey.split('-');
