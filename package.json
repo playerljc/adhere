@@ -13,6 +13,7 @@
     "changed": "lerna changed",
     "list": "lerna list",
     "publish": "lerna publish",
+    "publish-form-package":"lerna publish from-package",
     "publish:next": "lerna publish --dist-tag next",
     "publish:beta": "lerna publish --dist-tag beta",
     "publish:alpha": "lerna publish --dist-tag alpha",
