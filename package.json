@@ -33,7 +33,8 @@
     "list": "lerna list",
     "prettier": "prettier -c --write \"**/*\"",
     "prettier-json": "prettier -c --write \"**/*.json\"",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "publish-form-package":"lerna publish from-package"
   },
   "husky": {
     "hooks": {
