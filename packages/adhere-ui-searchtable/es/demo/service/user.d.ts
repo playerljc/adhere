@@ -1,5 +1,5 @@
 export namespace fetchList {
-    function call(): Promise<unknown>;
+    function call(): any;
     function defaultResult(): {
         total: number;
         list: never[];

@@ -126,7 +126,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 查询面板Collapse之前
      */
     onSearchPanelCollapseBefore() {
-      if (this.hasAdvancedSearchPanel && this.state.expand) {
+      if (this.hasAdvancedSearch() && this.hasAdvancedSearchPanel && this.state.expand) {
         this.setState({
           advancedSearchPanelCollapse: false,
         });
@@ -732,7 +732,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     renderSearchFooterItems(_defaultItems) {
       const defaultItems = [...(_defaultItems || [])];
 
-      if (this.hasAdvancedSearchPanel && this.state.expand) {
+      if (this.hasAdvancedSearch() && this.hasAdvancedSearchPanel && this.state.expand) {
         const SearchButtonComponent = (
           <ConditionalRender
             conditional={!this.advancedSearchConfig.renderSearchButton}
