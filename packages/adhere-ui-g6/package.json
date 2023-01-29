@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-g6",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "antv的g6",
   "main": "lib/index.js",
   "module": "es/index.js",

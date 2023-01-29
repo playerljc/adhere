@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-notnull",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "一个永远都不为空的操作",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.0.0"
+    "@baifendian/adhere-util": "^2.0.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.7",

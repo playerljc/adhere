@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-split",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "无侵入性的竖线和横线分割",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^2.0.0",
+    "@baifendian/adhere-ui-css": "^2.0.2",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",

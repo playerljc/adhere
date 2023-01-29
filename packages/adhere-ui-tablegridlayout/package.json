@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tablegridlayout",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "表格布局",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,8 +28,8 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.0.0",
-    "@baifendian/adhere-ui-css": "^2.0.0",
+    "@baifendian/adhere-ui-conditionalrender": "^2.0.2",
+    "@baifendian/adhere-ui-css": "^2.0.2",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",

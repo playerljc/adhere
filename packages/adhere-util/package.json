@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "工具类",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,8 +29,8 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util-preferences": "^2.0.0",
-    "@baifendian/adhere-util-watchmemoized": "^2.0.0",
+    "@baifendian/adhere-util-preferences": "^2.0.2",
+    "@baifendian/adhere-util-watchmemoized": "^2.0.2",
     "crypto-js": "^4.1.1",
     "vkbeautify": "^0.99.3",
     "xml-objtree": "^0.24.2"
