@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-contextmenu",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "上下文菜单，可以移动后显示子菜单那种",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,8 +31,8 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^1.0.23",
-    "@baifendian/adhere-ui-css": "^1.0.23",
+    "@baifendian/adhere-ui-conditionalrender": "^1.0.24",
+    "@baifendian/adhere-ui-css": "^1.0.24",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "classnames": "^2.2.6",

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-successprompt",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "成功的提示(就是为了全局统一)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,7 +31,7 @@
     "graceful-fs": "4.2.2"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^1.0.23",
+    "@baifendian/adhere-util-intl": "^1.0.24",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.22.2",
