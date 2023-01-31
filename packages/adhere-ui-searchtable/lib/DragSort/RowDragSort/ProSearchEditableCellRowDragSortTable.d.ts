@@ -34,6 +34,7 @@ declare const _default: {
             colgroup: (string | undefined)[];
             data: {
                 key: number;
+                sort?: number | undefined;
                 label: React.ReactNode;
                 value: React.ReactNode;
             }[];
@@ -44,6 +45,7 @@ declare const _default: {
         })[];
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
+            sort?: number | undefined;
             label: React.ReactNode;
             value: React.ReactNode;
         }[];

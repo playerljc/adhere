@@ -126,6 +126,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             colgroup: (string | undefined)[];
             data: {
                 key: number;
+                sort?: number | undefined;
                 label: ReactNode;
                 value: ReactNode | null;
             }[];
@@ -141,6 +142,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
+            sort?: number | undefined;
             label: ReactNode;
             value: ReactNode | null;
         }[];

@@ -86,6 +86,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
           type: 'select',
           visible: true,
           dictName: 'SystemTestSexSelect',
+          sort: 1,
         },
       },
       {
