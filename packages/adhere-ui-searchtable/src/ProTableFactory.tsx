@@ -622,6 +622,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     getGridSearchFormGroupDataByColumnConfig() {
       let searchFormGroupData: {
         key: number;
+        sort?: number;
         label: ReactNode;
         value: ReactNode | null;
       }[] = [];
@@ -639,6 +640,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
             searchFormGroupData.push({
               key: dataIndex,
+              sort: $search.sort,
               label: <Label {...($search.labelAttrs || {})}>{title}：</Label>,
               value: ConditionalRender.conditionalRender({
                 conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
@@ -667,7 +669,22 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       loop(this.getColumns(super.getColumns()));
 
-      return searchFormGroupData.filter((t) => !!t.value);
+      const config = searchFormGroupData.filter((t) => !!t.value);
+
+      // 以下是包含sort字段的处理
+      const containSort = config.filter(
+        (t) => 'sort' in t && t.sort !== null && t.sort !== undefined,
+      );
+      const noContainSort = config.filter(
+        (t) =>
+          !('sort' in t) || t.sort === null || t.sort === undefined || typeof t.sort !== 'number',
+      );
+
+      containSort.forEach((item) => {
+        noContainSort.splice((item.sort as number) - 1, 0, item);
+      });
+
+      return noContainSort;
     }
 
     /**

@@ -77,6 +77,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -87,6 +88,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -134,6 +136,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -144,6 +147,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -191,6 +195,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -201,6 +206,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -248,6 +254,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -258,6 +265,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -305,6 +313,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -315,6 +324,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -362,6 +372,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -372,6 +383,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -419,6 +431,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -429,6 +442,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -476,6 +490,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -486,6 +501,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -533,6 +549,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -543,6 +560,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -590,6 +608,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -600,6 +619,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -647,6 +667,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -657,6 +678,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -704,6 +726,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -714,6 +737,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -761,6 +785,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -771,6 +796,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -818,6 +844,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -828,6 +855,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -875,6 +903,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -885,6 +914,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
@@ -932,6 +962,7 @@ declare const _default: {
                 colgroup: (string | undefined)[];
                 data: {
                     key: number;
+                    sort?: number | undefined;
                     label: import("react").ReactNode;
                     value: import("react").ReactNode;
                 }[];
@@ -942,6 +973,7 @@ declare const _default: {
             })[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
+                sort?: number | undefined;
                 label: import("react").ReactNode;
                 value: import("react").ReactNode;
             }[];
