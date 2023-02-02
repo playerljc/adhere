@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 
+import { CascaderMulitFormItemProps } from '../../types';
 import CascaderFormItem from '../CascaderFormItem';
 
 /**
@@ -8,8 +9,9 @@ import CascaderFormItem from '../CascaderFormItem';
  * @return {JSX.Element}
  * @constructor
  */
-function CascaderMulitFormItem(props) {
+const CascaderMulitFormItem: FC<CascaderMulitFormItemProps> = (props) => {
+  // @ts-ignore
   return <CascaderFormItem {...props} multiple maxTagCount="responsive" />;
-}
+};
 
 export default CascaderMulitFormItem;

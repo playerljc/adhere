@@ -1,9 +1,12 @@
-import { Radio, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
+import RadioButtonFormItem from '../RadioButtonFormItem';
+import RadioCustomFormItem from '../RadioCustomFormItem';
+import RadioHorizontalFormItem from '../RadioHorizontalFormItem';
 import RadioSelectFormItem from '../RadioSelectFormItem';
+import RadioVerticalFormItem from '../RadioVerticalFormItem';
 
 const FormItemComponents = {};
 
@@ -22,82 +25,6 @@ export default () => {
     dictName.endsWith('DynamicRadio'),
   );
 
-  // RadioVerticalFormItem
-  FormItemComponents[`RadioVerticalFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Radio.Group
-        {...props}
-        onChange={(e) => {
-          props.onChange(e.target.value);
-        }}
-      >
-        <Space direction="vertical">
-          {dataSource.map((t) => (
-            <Radio key={t.value} value={t.value} disabled={t.disabled}>
-              {t.label}
-            </Radio>
-          ))}
-        </Space>
-      </Radio.Group>
-    );
-  };
-
-  // RadioHorizontalFormItem
-  FormItemComponents[`RadioHorizontalFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Radio.Group
-        options={dataSource}
-        {...props}
-        onChange={(e) => {
-          props.onChange(e.target.value);
-        }}
-      />
-    );
-  };
-
-  // RadioButtonFormItem
-  FormItemComponents[`RadioButtonFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Radio.Group
-        options={dataSource}
-        optionType="button"
-        {...props}
-        onChange={(e) => {
-          props.onChange(e.target.value);
-        }}
-      />
-    );
-  };
-
-  // RadioSelectFormItem
-  FormItemComponents[`RadioSelectFormItem`] = ({ dataSource, ...props }) => {
-    // @ts-ignore
-    return <RadioSelectFormItem dataSource={dataSource} {...props} />;
-  };
-
-  // RadioCustomFormItem
-  FormItemComponents[`RadioCustomFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Radio.Group
-        {...props}
-        onChange={(e) => {
-          props.onChange(e.target.value);
-        }}
-      >
-        {props.children(
-          dataSource.map((t) => ({
-            data: t,
-            item: (
-              <Radio key={t.value} value={t.value} disabled={t.disabled}>
-                {t.label}
-              </Radio>
-            ),
-          })),
-        )}
-      </Radio.Group>
-    );
-  };
-
   // 静态的Radio
   radioDictNames.forEach((dictName) => {
     // RadioVerticalFormItem
@@ -113,8 +40,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`RadioVerticalFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <RadioVerticalFormItem {...props} dataSource={dataSource} />;
     };
 
     // RadioHorizontalFormItem
@@ -130,8 +56,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`RadioHorizontalFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <RadioHorizontalFormItem {...props} dataSource={dataSource} />;
     };
 
     // RadioButtonFormItem
@@ -147,8 +72,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`RadioButtonFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <RadioButtonFormItem {...props} dataSource={dataSource} />;
     };
 
     // RadioSelectFormItem
@@ -164,8 +88,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`RadioSelectFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <RadioSelectFormItem {...props} dataSource={dataSource} />;
     };
 
     // RadioCustomFormItem
@@ -181,8 +104,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`RadioCustomFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <RadioCustomFormItem {...props} dataSource={dataSource} />;
     };
   });
 
@@ -190,13 +112,11 @@ export default () => {
   radioDynamicDictNames.forEach((dictName) => {
     // RadioVerticalFormItem
     FormItemComponents[`${dictName}VerticalFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -206,7 +126,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -216,19 +135,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`RadioVerticalFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <RadioVerticalFormItem {...props} dataSource={data} />;
     };
 
     // RadioHorizontalFormItem
     FormItemComponents[`${dictName}HorizontalFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -238,7 +154,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -248,19 +163,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`RadioHorizontalFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <RadioHorizontalFormItem {...props} dataSource={data} />;
     };
 
     // RadioButtonFormItem
     FormItemComponents[`${dictName}ButtonFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -270,7 +182,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -280,19 +191,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`RadioButtonFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <RadioButtonFormItem {...props} dataSource={data} />;
     };
 
     // RadioSelectFormItem
     FormItemComponents[`${dictName}SelectFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -302,7 +210,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -312,19 +219,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`RadioSelectFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <RadioSelectFormItem {...props} dataSource={data} />;
     };
 
     // RadioCustomFormItem
     FormItemComponents[`${dictName}CustomFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -334,7 +238,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -344,8 +247,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`RadioCustomFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <RadioCustomFormItem {...props} dataSource={data} />;
     };
   });
 

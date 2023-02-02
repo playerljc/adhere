@@ -1,8 +1,8 @@
-import { Checkbox, Divider } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
+import { Checkbox, Divider } from '../../AntFormItemNormalize';
 import { CheckAllFormItemProps } from '../../types';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 
@@ -46,10 +46,10 @@ const CheckAllMulitSelectFormItem: FC<CheckAllFormItemProps> = (props) => {
 
   useEffect(() => {
     setChecked(
-      JSON.stringify(JSON.parse(JSON.stringify(props.selectProps.value || [])).sort()) ===
+      JSON.stringify(JSON.parse(JSON.stringify(props?.selectProps?.value || [])).sort()) ===
         JSON.stringify((props.dataSource || []).map((t) => t.value).sort()),
     );
-  }, [props.selectProps.value, props.dataSource]);
+  }, [props?.selectProps?.value, props.dataSource]);
 
   return (
     <MulitSelectFormItem

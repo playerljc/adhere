@@ -1,6 +1,6 @@
-import { Radio, Space } from 'antd';
 import React, { FC, useState } from 'react';
 
+import { Radio, Space } from '../../AntFormItemNormalize';
 import { RadioSelectFormItemProps } from '../../types';
 import SelectFormItem from '../SelectFormItem';
 
@@ -11,7 +11,7 @@ import SelectFormItem from '../SelectFormItem';
  * @constructor
  */
 const RadioSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
 
   /**
    * renderDropdownRender
@@ -27,7 +27,7 @@ const RadioSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         style={{ padding: 10 }}
         {...props}
         onChange={(e) => {
-          props.onChange(e.target.value);
+          props?.onChange?.(e.target.value);
         }}
       >
         <Space direction="vertical">
@@ -46,9 +46,8 @@ const RadioSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,
-        // @ts-ignore
         onChange: (values) => {
-          props.onChange(values);
+          props?.onChange?.(values);
         },
         filterOption: (inputValue) => {
           setInputValue(inputValue);

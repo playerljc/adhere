@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { TreeSelect } from '../../AntFormItemNormalize';
+import { TreeSelectFormItemProps } from '../../types';
 
 /**
  * TreeSelectFormItem
@@ -8,8 +9,8 @@ import { TreeSelect } from '../../AntFormItemNormalize';
  * @return {JSX.Element}
  * @constructor
  */
-function TreeSelectFormItem(props) {
+const TreeSelectFormItem: FC<TreeSelectFormItemProps> = (props) => {
   return <TreeSelect showSearch allowClear treeNodeFilterProp="title" {...props} />;
-}
+};
 
 export default TreeSelectFormItem;

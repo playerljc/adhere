@@ -1,11 +1,15 @@
-import { Checkbox, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
-import Intl from '@baifendian/adhere-util-intl';
 
+import CheckBoxCheckAllCustomFormItem from '../CheckBoxCheckAllCustomFormItem';
+import CheckBoxCheckAllHorizontalFormItem from '../CheckBoxCheckAllHorizontalFormItem';
 import CheckBoxCheckAllSelectFormItem from '../CheckBoxCheckAllSelectFormItem';
+import CheckBoxCheckAllVerticalFormItem from '../CheckBoxCheckAllVerticalFormItem';
+import CheckBoxCustomFormItem from '../CheckBoxCustomFormItem';
+import CheckBoxHorizontalFormItem from '../CheckBoxHorizontalFormItem';
 import CheckBoxSelectFormItem from '../CheckBoxSelectFormItem';
+import CheckBoxVerticalFormItem from '../CheckBoxVerticalFormItem';
 
 const FormItemComponents = {};
 
@@ -24,179 +28,6 @@ export default () => {
     dictName.endsWith('DynamicCheckBox'),
   );
 
-  // CheckBoxVerticalFormItem
-  FormItemComponents[`CheckBoxVerticalFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Checkbox.Group
-        {...props}
-        onChange={(values) => {
-          props.onChange(values);
-        }}
-      >
-        <Space direction="vertical">
-          {dataSource.map((t) => (
-            <Checkbox key={t.value} value={t.value} disabled={t.disabled}>
-              {t.label}
-            </Checkbox>
-          ))}
-        </Space>
-      </Checkbox.Group>
-    );
-  };
-
-  // CheckBoxHorizontalFormItem
-  FormItemComponents[`CheckBoxHorizontalFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Checkbox.Group
-        options={dataSource}
-        {...props}
-        onChange={(values) => {
-          props.onChange(values);
-        }}
-      />
-    );
-  };
-
-  // CheckBoxCheckAllVerticalFormItem
-  FormItemComponents[`CheckBoxCheckAllVerticalFormItem`] = ({ dataSource, ...props }) => {
-    const Children = FormItemComponents[`CheckBoxVerticalFormItem`];
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [checkAll, setCheckAll] = useState((props.value || []).length === dataSource.length);
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      setCheckAll((props.value || []).length === dataSource.length);
-    }, [props.value, dataSource]);
-
-    return (
-      <div>
-        <div style={{ marginBottom: 10 }}>
-          <Checkbox
-            checked={checkAll}
-            onChange={(e) => {
-              if (e.target.checked) {
-                props.onChange(dataSource.map((t) => t.value));
-              } else {
-                props.onChange([]);
-              }
-            }}
-          >
-            {Intl.v('全选')}
-          </Checkbox>
-        </div>
-        <div>
-          <Children {...props} dataSource={dataSource} />
-        </div>
-      </div>
-    );
-  };
-
-  // CheckBoxCheckAllHorizontalFormItem
-  FormItemComponents[`CheckBoxCheckAllHorizontalFormItem`] = ({ dataSource, ...props }) => {
-    const Children = FormItemComponents[`CheckBoxHorizontalFormItem`];
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [checkAll, setCheckAll] = useState((props.value || []).length === dataSource.length);
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      setCheckAll((props.value || []).length === dataSource.length);
-    }, [props.value, dataSource]);
-
-    return (
-      <div>
-        <div style={{ marginBottom: 10 }}>
-          <Checkbox
-            checked={checkAll}
-            onChange={(e) => {
-              if (e.target.checked) {
-                props.onChange(dataSource.map((t) => t.value));
-              } else {
-                props.onChange([]);
-              }
-            }}
-          >
-            {Intl.v('全选')}
-          </Checkbox>
-        </div>
-        <div>
-          <Children {...props} dataSource={dataSource} />
-        </div>
-      </div>
-    );
-  };
-
-  // CheckBoxSelectFormItem
-  FormItemComponents[`CheckBoxSelectFormItem`] = ({ dataSource, ...props }) => {
-    // @ts-ignore
-    return <CheckBoxSelectFormItem dataSource={dataSource} {...props} />;
-  };
-
-  // CheckBoxCheckAllSelectFormItem
-  FormItemComponents[`CheckBoxCheckAllSelectFormItem`] = ({ dataSource, ...props }) => {
-    // @ts-ignore
-    return <CheckBoxCheckAllSelectFormItem dataSource={dataSource} {...props} />;
-  };
-
-  // CheckBoxCustomFormItem
-  FormItemComponents[`CheckBoxCustomFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Checkbox.Group
-        {...props}
-        onChange={(values) => {
-          props.onChange(values);
-        }}
-      >
-        {props.children(
-          dataSource.map((t) => ({
-            data: t,
-            item: (
-              <Checkbox key={t.value} value={t.value} disabled={t.disabled}>
-                {t.label}
-              </Checkbox>
-            ),
-          })),
-        )}
-      </Checkbox.Group>
-    );
-  };
-
-  // CheckBoxCheckAllCustomFormItem
-  FormItemComponents[`CheckBoxCheckAllCustomFormItem`] = ({ dataSource, ...props }) => {
-    const Children = FormItemComponents[`CheckBoxCustomFormItem`];
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [checkAll, setCheckAll] = useState((props.value || []).length === dataSource.length);
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      setCheckAll((props.value || []).length === dataSource.length);
-    }, [props.value, dataSource]);
-
-    return (
-      <div>
-        <div style={{ marginBottom: 10 }}>
-          <Checkbox
-            checked={checkAll}
-            onChange={(e) => {
-              if (e.target.checked) {
-                props.onChange(dataSource.map((t) => t.value));
-              } else {
-                props.onChange([]);
-              }
-            }}
-          >
-            {Intl.v('全选')}
-          </Checkbox>
-        </div>
-        <div>
-          <Children {...props} dataSource={dataSource} />
-        </div>
-      </div>
-    );
-  };
-
   // 静态的CheckBox
   checkBoxDictNames.forEach((dictName) => {
     // CheckBoxVerticalFormItem
@@ -212,8 +43,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxVerticalFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxVerticalFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxHorizontalFormItem
@@ -229,8 +59,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxHorizontalFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxHorizontalFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxCheckAllVerticalFormItem
@@ -246,8 +75,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxCheckAllVerticalFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxCheckAllVerticalFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxCheckAllHorizontalFormItem
@@ -263,8 +91,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxCheckAllHorizontalFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxCheckAllHorizontalFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxSelectFormItem
@@ -280,8 +107,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxSelectFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxSelectFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxCheckAllSelectFormItem
@@ -297,8 +123,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxCheckAllSelectFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxCheckAllSelectFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxCustomFormItem
@@ -314,8 +139,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxCustomFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxCustomFormItem {...props} dataSource={dataSource} />;
     };
 
     // CheckBoxCheckAllCustomFormItem
@@ -331,8 +155,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CheckBoxCheckAllCustomFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CheckBoxCheckAllCustomFormItem {...props} dataSource={dataSource} />;
     };
   });
 
@@ -340,13 +163,11 @@ export default () => {
   checkBoxDynamicDictNames.forEach((dictName) => {
     // CheckBoxDynamicVerticalFormItem
     FormItemComponents[`${dictName}VerticalFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -356,7 +177,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -366,19 +186,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxVerticalFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxVerticalFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxDynamicHorizontalFormItem
     FormItemComponents[`${dictName}HorizontalFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -388,7 +205,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -398,19 +214,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxHorizontalFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxHorizontalFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxDynamicCheckAllVerticalFormItem
     FormItemComponents[`${dictName}CheckAllVerticalFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -420,7 +233,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -430,19 +242,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxCheckAllVerticalFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxCheckAllVerticalFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxDynamicCheckAllHorizontalFormItem
     FormItemComponents[`${dictName}CheckAllHorizontalFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -452,7 +261,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -462,19 +270,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxCheckAllHorizontalFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxCheckAllHorizontalFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxDynamicSelectFormItem
     FormItemComponents[`${dictName}SelectFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -484,7 +289,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -494,19 +298,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxSelectFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxSelectFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxDynamicCheckAllSelectFormItem
     FormItemComponents[`${dictName}CheckAllSelectFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -516,7 +317,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -526,19 +326,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxCheckAllSelectFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxCheckAllSelectFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxCustomFormItem
     FormItemComponents[`${dictName}CustomFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -548,7 +345,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -558,19 +354,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxCustomFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxCustomFormItem {...props} dataSource={data} />;
     };
 
     // CheckBoxCheckAllCustomFormItem
     FormItemComponents[`${dictName}CheckAllCustomFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -580,7 +373,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -590,8 +382,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CheckBoxCheckAllCustomFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CheckBoxCheckAllCustomFormItem {...props} dataSource={data} />;
     };
   });
 

@@ -1,6 +1,6 @@
-import { Transfer } from 'antd';
 import React, { FC, useState } from 'react';
 
+import { Transfer } from '../../AntFormItemNormalize';
 import { RadioSelectFormItemProps } from '../../types';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 
@@ -11,7 +11,7 @@ import MulitSelectFormItem from '../MulitSelectFormItem';
  * @constructor
  */
 const TransferSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
@@ -38,7 +38,7 @@ const TransferSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         // @ts-ignore
         render={(item) => item.title}
         onChange={(targetKeys, direction, moveKeys) => {
-          props.onChange(targetKeys);
+          props?.onChange?.(targetKeys);
         }}
         onSelectChange={(sourceSelectedKeys, targetSelectedKeys) => {
           setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
@@ -54,7 +54,7 @@ const TransferSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         dropdownRender: renderDropdownRender,
         // @ts-ignore
         onChange: (values) => {
-          props.onChange(values);
+          props?.onChange?.(values);
         },
         filterOption: (inputValue) => {
           setInputValue(inputValue);
