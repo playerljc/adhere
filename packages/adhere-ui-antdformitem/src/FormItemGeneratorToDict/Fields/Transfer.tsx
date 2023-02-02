@@ -1,8 +1,8 @@
-import { Transfer } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
+import TransferFormItem from '../TransferFormItem';
 import TransferSelectFormItem from '../TransferSelectFormItem';
 
 const FormItemComponents = {};
@@ -22,30 +22,6 @@ export default () => {
     dictName.endsWith('DynamicTransfer'),
   );
 
-  // transferFormItem
-  FormItemComponents[`TransferFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Transfer
-        dataSource={dataSource.map((t) => ({
-          ...t,
-          key: t.value,
-          title: t.label,
-          description: t.label,
-        }))}
-        // @ts-ignore
-        render={(item) => item.title}
-        targetKeys={props.value}
-        {...props}
-      />
-    );
-  };
-
-  // transferSelectFormItem
-  FormItemComponents[`TransferSelectFormItem`] = ({ dataSource, ...props }) => {
-    // @ts-ignore
-    return <TransferSelectFormItem {...props} dataSource={dataSource} />;
-  };
-
   // 静态的Transfer
   transferDictNames.forEach((dictName) => {
     // transferFormItem
@@ -61,8 +37,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TransferFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TransferFormItem {...props} dataSource={dataSource} />;
     };
 
     // transferSelectFormItem
@@ -78,8 +53,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TransferSelectFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TransferSelectFormItem {...props} dataSource={dataSource} />;
     };
   });
 
@@ -87,13 +61,11 @@ export default () => {
   transferDynamicDictNames.forEach((dictName) => {
     // transferFormItem
     FormItemComponents[`${dictName}FormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -103,7 +75,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -113,19 +84,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TransferFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TransferFormItem {...props} dataSource={data} />;
     };
 
     // transferSelectFormItem
     FormItemComponents[`${dictName}SelectFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -135,7 +103,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -145,8 +112,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TransferSelectFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TransferSelectFormItem {...props} dataSource={data} />;
     };
   });
 

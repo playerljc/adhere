@@ -1,67 +1,76 @@
 import * as FormItemGeneratorToDictComponents from './FormItemGeneratorToDict';
 declare const _default: {
     AntFormItemNormalize: {
-        Select: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        MultipleSelect: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        TreeSelect: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        AutoComplete: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        DatePicker: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        RangePicker: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        TimePicker: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        Cascader: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        Upload: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        Modal: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        Input: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        TextArea: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        InputNumberDecimal1: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        InputNumberDecimal2: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        InputNumberInteger: {
-            (_props: any): JSX.Element;
-            defaultProps: any;
-        };
-        default: {};
+        Select: any;
+        MultipleSelect: any;
+        TreeSelect: any;
+        AutoComplete: any;
+        DatePicker: any;
+        RangePicker: any;
+        TimePicker: any;
+        Cascader: any;
+        Upload: any;
+        Modal: any;
+        Input: any;
+        TextArea: any;
+        InputNumberDecimal1: any;
+        InputNumberDecimal2: any;
+        InputNumberInteger: any;
+        Affix: any;
+        Alert: any;
+        Anchor: any;
+        Avatar: any;
+        BackTop: any;
+        Badge: any;
+        Breadcrumb: any;
+        Button: any;
+        Calendar: any;
+        Card: any;
+        Carousel: any;
+        Checkbox: any;
+        Col: any;
+        Collapse: any;
+        ConfigProvider: any;
+        Descriptions: any;
+        Divider: any;
+        Drawer: any;
+        Dropdown: any;
+        Empty: any;
+        FloatButton: any;
+        Form: any;
+        Grid: any;
+        Image: any;
+        Layout: any;
+        List: any;
+        Mentions: any;
+        Menu: any;
+        Pagination: any;
+        Popconfirm: any;
+        Popover: any;
+        Progress: any;
+        QRCode: any;
+        Radio: any;
+        Rate: any;
+        Result: any;
+        Row: any;
+        Segmented: any;
+        Skeleton: any;
+        Slider: any;
+        Space: any;
+        Spin: any;
+        Statistic: any;
+        Steps: any;
+        Switch: any;
+        Table: any;
+        Tabs: any;
+        Tag: any;
+        Timeline: any;
+        Tooltip: any;
+        Tour: any;
+        Transfer: any;
+        Tree: any;
+        Typography: any;
+        Watermark: any;
     };
     FormItemGeneratorToDict: {};
     FormItemGeneratorToDictComponents: typeof FormItemGeneratorToDictComponents;

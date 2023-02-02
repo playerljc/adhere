@@ -1,6 +1,6 @@
-import { Checkbox, Space } from 'antd';
 import React, { FC, useState } from 'react';
 
+import { Checkbox, Space } from '../../AntFormItemNormalize';
 import { RadioSelectFormItemProps } from '../../types';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 
@@ -27,7 +27,7 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         style={{ padding: 10 }}
         {...props}
         onChange={(values) => {
-          props.onChange(values);
+          props?.onChange?.(values);
         }}
       >
         <Space direction="vertical">
@@ -46,9 +46,8 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,
-        // @ts-ignore
         onChange: (values) => {
-          props.onChange(values);
+          props?.onChange?.(values);
         },
         filterOption: (inputValue) => {
           setInputValue(inputValue);

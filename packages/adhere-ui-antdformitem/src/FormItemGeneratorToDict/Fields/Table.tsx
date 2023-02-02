@@ -14,13 +14,16 @@
    Select单选
    MulitSelect多选
 ***/
-import { Table } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
+import { Table } from '../../AntFormItemNormalize';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
+import TableFormItem from '../TableFormItem';
+import TableMulitSelectFormItem from '../TableMulitSelectFormItem';
+import TableSelectFormItem from '../TableSelectFormItem';
 
 const FormItemComponents = {};
 
@@ -43,197 +46,6 @@ export default () => {
   const tablePaginationDictNames = Object.keys(Dict.handlers).filter((dictName) =>
     dictName.endsWith('TablePagination'),
   );
-
-  /**
-   * TableFormItem
-   * @param dataSource
-   * @param props {
-   *   cascadeParams
-   *   rowKey
-   * }
-   * @return {JSX.Element}
-   */
-  FormItemComponents[`TableFormItem`] = ({ dataSource, ...props }) => {
-    return (
-      <Table dataSource={dataSource} pagination={false} rowKey={props.rowKey || 'id'} {...props} />
-    );
-  };
-
-  /**
-   * SelectFormItem
-   * @param dataSource
-   * @param props {
-   *   cascadeParams
-   *   rowKey
-   *   labelKey
-   * }
-   * @return {JSX.Element}
-   */
-  FormItemComponents[`TableSelectFormItem`] = ({ dataSource, ...props }) => {
-    const Component = FormItemComponents[`TableFormItem`];
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [inputValue, setInputValue] = useState('');
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedRowKeys, setSelectedRowKeys] = useState(props.value ? [props.value] : []);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedRows, setSelectedRows] = useState(
-      props.value ? dataSource.find((t) => t[props.rowKey || 'id'] === props.value) : [],
-    );
-
-    /**
-     * renderDropdownRender
-     * @return {JSX.Element}
-     */
-    function renderDropdownRender() {
-      const data = inputValue
-        ? dataSource.filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
-        : dataSource;
-
-      return (
-        <Component
-          rowSelection={{
-            type: 'radio',
-            selectedRowKeys,
-            selectedRows,
-            onChange: (selectedRowKeys, selectedRows) => {
-              setSelectedRowKeys(selectedRowKeys);
-              setSelectedRows(selectedRows);
-              props.onChange(selectedRowKeys.length ? selectedRowKeys[0] : '');
-            },
-          }}
-          {...props}
-          dataSource={data}
-        />
-      );
-    }
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      if (props.value) {
-        setSelectedRowKeys([props.value]);
-        setSelectedRows([dataSource.find((t) => t[props.rowKey || 'id'] === props.value)]);
-      } else {
-        setSelectedRowKeys([]);
-        setSelectedRows([]);
-      }
-    }, [props.value]);
-
-    return (
-      <SelectFormItem
-        selectProps={{
-          value: props.value,
-          dropdownRender: renderDropdownRender,
-          onChange: (value) => {
-            props.onChange(value);
-          },
-          filterOption: (inputValue) => {
-            setInputValue(inputValue);
-            return false;
-          },
-          onBlur: () => {
-            setInputValue('');
-          },
-          onClear: () => {
-            setInputValue('');
-          },
-          ...(props.selectProps || {}),
-        }}
-        dataSource={dataSource.map((t) => ({
-          label: t[props.labelKey || 'name'],
-          value: t[props.rowKey || 'id'],
-        }))}
-      />
-    );
-  };
-
-  /**
-   * MulitSelectFormItem
-   * @param dataSource
-   * @param props {
-   *   cascadeParams
-   *   labelKey
-   *   rowKey
-   * }
-   * @return {JSX.Element}
-   */
-  FormItemComponents[`TableMulitSelectFormItem`] = ({ dataSource, ...props }) => {
-    const Component = FormItemComponents[`TableFormItem`];
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [inputValue, setInputValue] = useState('');
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedRowKeys, setSelectedRowKeys] = useState(props.value ? props.value : []);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [selectedRows, setSelectedRows] = useState(
-      props.value
-        ? props.value.map((t) => dataSource.find((_item) => _item[props.rowKey || 'id'] === t))
-        : [],
-    );
-
-    function renderDropdownRender() {
-      const data = inputValue
-        ? dataSource.filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
-        : dataSource;
-
-      return (
-        <Component
-          rowSelection={{
-            type: 'checkbox',
-            selectedRowKeys,
-            selectedRows,
-            onChange: (selectedRowKeys, selectedRows) => {
-              setSelectedRowKeys(selectedRowKeys);
-              setSelectedRows(selectedRows);
-              props.onChange(selectedRowKeys.length ? selectedRowKeys : []);
-            },
-          }}
-          {...props}
-          dataSource={data}
-        />
-      );
-    }
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      if (props.value) {
-        setSelectedRowKeys(props.value);
-        setSelectedRows(
-          props.value.map((t) => dataSource.find((_item) => _item[props.rowKey || 'id'] === t)),
-        );
-      } else {
-        setSelectedRowKeys([]);
-        setSelectedRows([]);
-      }
-    }, [props.value]);
-
-    return (
-      <MulitSelectFormItem
-        selectProps={{
-          value: props.value,
-          dropdownRender: renderDropdownRender,
-          onChange: (values) => {
-            props.onChange(values);
-          },
-          filterOption: (inputValue) => {
-            setInputValue(inputValue);
-            return false;
-          },
-          onBlur: () => {
-            setInputValue('');
-          },
-          onClear: () => {
-            setInputValue('');
-          },
-          ...(props.selectProps || {}),
-        }}
-        dataSource={dataSource.map((t) => ({
-          label: t[props.labelKey || 'name'],
-          value: t[props.rowKey || 'id'],
-        }))}
-      />
-    );
-  };
 
   // 静态的Table
   tableDictNames.forEach((dictName) => {
@@ -258,8 +70,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TableFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TableFormItem {...props} dataSource={dataSource} />;
     };
 
     /**
@@ -284,8 +95,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TableSelectFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TableSelectFormItem {...props} dataSource={dataSource} />;
     };
 
     /**
@@ -310,8 +120,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TableMulitSelectFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TableMulitSelectFormItem {...props} dataSource={dataSource} />;
     };
   });
 
@@ -327,13 +136,11 @@ export default () => {
      * @return {JSX.Element}
      */
     FormItemComponents[`${dictName}FormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -343,7 +150,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -353,8 +159,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TableFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TableFormItem {...props} dataSource={data} />;
     };
 
     /**
@@ -368,13 +173,11 @@ export default () => {
      * @return {JSX.Element}
      */
     FormItemComponents[`${dictName}SelectFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -384,7 +187,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -394,8 +196,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TableSelectFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TableSelectFormItem {...props} dataSource={data} />;
     };
 
     /**
@@ -409,13 +210,11 @@ export default () => {
      * @return {JSX.Element}
      */
     FormItemComponents[`${dictName}MulitSelectFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -425,7 +224,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -435,8 +233,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TableMulitSelectFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TableMulitSelectFormItem {...props} dataSource={data} />;
     };
   });
 
@@ -454,13 +251,10 @@ export default () => {
      * @return {JSX.Element}
      */
     FormItemComponents[`${dictName}FormItem`] = (props) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [loading, setLoading] = useState(false);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [pagin, setPagin] = useState({
         current: 1,
         pageSize: 10,
@@ -519,7 +313,6 @@ export default () => {
           });
       }
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         loadData();
       }, [pagin.current, pagin.pageSize]);
@@ -543,26 +336,20 @@ export default () => {
      * }
      */
     FormItemComponents[`${dictName}SelectFormItem`] = (props) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [inputValue, setInputValue] = useState('');
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [loading, setLoading] = useState(false);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [pagin, setPagin] = useState({
         current: 1,
         pageSize: 10,
         total: 0,
       });
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [selectedRowKeys, setSelectedRowKeys] = useState(props.value ? [props.value] : []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [selectedRows, setSelectedRows] = useState(
         props.value ? data.find((t) => t[props.rowKey || 'id'] === props.value) : [],
       );
@@ -648,12 +435,10 @@ export default () => {
         );
       }
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         loadData();
       }, [pagin.current, pagin.pageSize]);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         if (props.value) {
           setSelectedRowKeys([props.value]);
@@ -700,26 +485,20 @@ export default () => {
      * }
      */
     FormItemComponents[`${dictName}MulitSelectFormItem`] = (props) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [inputValue, setInputValue] = useState('');
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [loading, setLoading] = useState(false);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const data = useRef(new Map());
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [pagin, setPagin] = useState({
         current: 1,
         pageSize: 10,
         total: 0,
       });
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [selectedRowKeys, setSelectedRowKeys] = useState(props.value ? props.value : []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [selectedRows, setSelectedRows] = useState(
         props.value
           ? props.value.map((t) =>
@@ -847,7 +626,6 @@ export default () => {
         );
       }
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         loadData();
       }, [pagin.current, pagin.pageSize]);

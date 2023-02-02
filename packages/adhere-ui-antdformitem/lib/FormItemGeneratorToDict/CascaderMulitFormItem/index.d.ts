@@ -1,8 +1,10 @@
+import { FC } from 'react';
+import { CascaderMulitFormItemProps } from '../../types';
 /**
  * CascaderMulitFormItem
  * @param props
  * @return {JSX.Element}
  * @constructor
  */
-declare function CascaderMulitFormItem(props: any): JSX.Element;
+declare const CascaderMulitFormItem: FC<CascaderMulitFormItemProps>;
 export default CascaderMulitFormItem;

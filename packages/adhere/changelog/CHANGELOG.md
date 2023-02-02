@@ -7,6 +7,8 @@
 * **adhere-ui-searchtable**
   - $search支持排序
   - 查询面板样式修改
+* **adhere-ui-antdformitem**
+  - 组件的抽取
 
 # 2.0.2
 

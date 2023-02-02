@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
 import TreeMulitSelectFormItem from '../TreeMulitSelectFormItem';
 import TreeSelectFormItem from '../TreeSelectFormItem';
+import TreeSelectLeafFormItem from '../TreeSelectLeafFormItem';
+import TreeSelectLeafMulitFormItem from '../TreeSelectLeafMulitFormItem';
 
 const FormItemComponents = {};
 
@@ -27,61 +29,9 @@ export default () => {
     return <TreeSelectFormItem {...props} treeData={dataSource} /*selectMode="any" */ />;
   };
 
-  // treeSelectLeafFormItem
-  FormItemComponents[`TreeSelectLeafFormItem`] = ({ dataSource, ...props }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const targetDataSource = useMemo(() => {
-      function loop(nodes) {
-        (nodes || []).forEach((node) => {
-          if ('leaf' in node && node.leaf) {
-            node.disabled = false;
-          } else {
-            node.disabled = true;
-          }
-
-          loop(node.children);
-        });
-      }
-
-      const source = JSON.parse(JSON.stringify(dataSource));
-
-      loop(source);
-
-      return source;
-    }, [dataSource]);
-
-    return <TreeSelectFormItem {...props} treeData={targetDataSource} /*selectMode="leaf"*/ />;
-  };
-
   // MulitSelectFormItem
   FormItemComponents[`TreeSelectMulitFormItem`] = ({ dataSource, ...props }) => {
     return <TreeMulitSelectFormItem {...props} treeData={dataSource} /*selectMode="any"*/ />;
-  };
-
-  // MulitSelectLeafFormItem
-  FormItemComponents[`TreeSelectLeafMulitFormItem`] = ({ dataSource, ...props }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const targetDataSource = useMemo(() => {
-      function loop(nodes) {
-        (nodes || []).forEach((node) => {
-          if ('leaf' in node && node.leaf) {
-            node.disabled = false;
-          } else {
-            node.disabled = true;
-          }
-
-          loop(node.children);
-        });
-      }
-
-      const source = JSON.parse(JSON.stringify(dataSource));
-
-      loop(source);
-
-      return source;
-    }, [dataSource]);
-
-    return <TreeMulitSelectFormItem {...props} treeData={targetDataSource} /*selectMode="leaf"*/ />;
   };
 
   // 静态的TreeSelect
@@ -116,8 +66,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TreeSelectLeafFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TreeSelectLeafFormItem {...props} dataSource={dataSource} />;
     };
 
     // MulitSelectFormItem
@@ -150,8 +99,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`TreeSelectLeafMulitFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <TreeSelectLeafMulitFormItem {...props} dataSource={dataSource} />;
     };
   });
 
@@ -159,13 +107,11 @@ export default () => {
   treeSelectDynamicDictNames.forEach((selectDictName) => {
     // treeSelectFormItem
     FormItemComponents[`${selectDictName}FormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -175,7 +121,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -191,13 +136,11 @@ export default () => {
 
     // treeSelectLeafFormItem
     FormItemComponents[`${selectDictName}LeafFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -207,7 +150,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -217,19 +159,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TreeSelectLeafFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TreeSelectLeafFormItem {...props} dataSource={data} />;
     };
 
     // MulitSelectFormItem
     FormItemComponents[`${selectDictName}MulitFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -239,7 +178,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -255,13 +193,11 @@ export default () => {
 
     // MulitSelectFormItem
     FormItemComponents[`${selectDictName}LeafMulitFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -271,7 +207,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -281,8 +216,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`TreeSelectLeafMulitFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <TreeSelectLeafMulitFormItem {...props} dataSource={data} />;
     };
   });
 

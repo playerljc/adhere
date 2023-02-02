@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Cascader } from '../../AntFormItemNormalize';
+import { CascaderFormItemProps } from '../../types';
 
 /**
  * CascaderFormItem
@@ -8,8 +9,8 @@ import { Cascader } from '../../AntFormItemNormalize';
  * @return {JSX.Element}
  * @constructor
  */
-function CascaderFormItem(props) {
+const CascaderFormItem: FC<CascaderFormItemProps> = (props) => {
   return <Cascader {...props} />;
-}
+};
 
 export default CascaderFormItem;

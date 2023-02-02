@@ -1,8 +1,8 @@
-import { Checkbox, Space } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
+import { Checkbox, Space } from '../../AntFormItemNormalize';
 import { RadioSelectFormItemProps } from '../../types';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 
@@ -34,10 +34,10 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
             checked={checkAll}
             onChange={(e) => {
               if (e.target.checked) {
-                props.onChange(props.dataSource.map((t) => t.value));
+                props?.onChange?.(props.dataSource.map((t) => t.value));
                 setCheckAll(true);
               } else {
-                props.onChange([]);
+                props?.onChange?.([]);
                 setCheckAll(false);
               }
             }}
@@ -51,7 +51,7 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
             style={{ padding: 10 }}
             {...props}
             onChange={(values) => {
-              props.onChange(values);
+              props?.onChange?.(values);
               setCheckAll(values.length === (props.dataSource || []).length);
             }}
           >
@@ -79,7 +79,7 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         dropdownRender: renderDropdownRender,
         // @ts-ignore
         onChange: (values) => {
-          props.onChange(values);
+          props?.onChange?.(values);
           setCheckAll(values.length === (props.dataSource || []).length);
         },
         filterOption: (inputValue) => {

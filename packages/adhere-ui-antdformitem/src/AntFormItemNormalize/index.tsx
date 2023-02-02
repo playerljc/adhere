@@ -1,69 +1,70 @@
+// 导入了antd中所有的组件
 import {
-  Affix,
-  Alert,
-  Anchor,
+  Affix as AntAffix,
+  Alert as AntAlert,
+  Anchor as AntAnchor,
   AutoComplete as AntAutoComplete,
+  Avatar as AntAvatar,
+  BackTop as AntBackTop,
+  Badge as AntBadge,
+  Breadcrumb as AntBreadcrumb,
+  Button as AntButton,
+  Calendar as AntCalendar,
+  Card as AntCard,
+  Carousel as AntCarousel,
   Cascader as AntCascader,
+  Checkbox as AntCheckbox,
+  Col as AntCol,
+  Collapse as AntCollapse,
+  ConfigProvider as AntConfigProvider,
   DatePicker as AntDatePicker,
+  Descriptions as AntDescriptions,
+  Divider as AntDivider,
+  Drawer as AntDrawer,
+  Dropdown as AntDropdown,
+  Empty as AntEmpty,
+  FloatButton as AntFloatButton,
+  Form as AntForm,
+  Grid as AntGrid,
+  Image as AntImage,
   Input as AntInput,
   InputNumber as AntInputNumber,
+  Layout as AntLayout,
+  List as AntList,
+  Mentions as AntMentions,
+  Menu as AntMenu,
   Modal as AntModal,
+  Pagination as AntPagination,
+  Popconfirm as AntPopconfirm,
+  Popover as AntPopover,
+  Progress as AntProgress,
+  QRCode as AntQRCode,
+  Radio as AntRadio,
+  Rate as AntRate,
+  Result as AntResult,
+  Row as AntRow,
+  Segmented as AntSegmented,
   Select as AntSelect,
+  Skeleton as AntSkeleton,
+  Slider as AntSlider,
+  Space as AntSpace,
+  Spin as AntSpin,
+  Statistic as AntStatistic,
+  Steps as AntSteps,
+  Switch as AntSwitch,
+  Table as AntTable,
+  Tabs as AntTabs,
+  Tag as AntTag,
   TimePicker as AntTimePicker,
+  Timeline as AntTimeline,
+  Tooltip as AntTooltip,
+  Tour as AntTour,
+  Transfer as AntTransfer,
+  Tree as AntTree,
   TreeSelect as AntTreeSelect,
+  Typography as AntTypography,
   Upload as AntUpload,
-  Avatar,
-  BackTop,
-  Badge,
-  Breadcrumb,
-  Button,
-  Calendar,
-  Card,
-  Carousel,
-  Checkbox,
-  Col,
-  Collapse,
-  ConfigProvider,
-  Descriptions,
-  Divider,
-  Drawer,
-  Dropdown,
-  Empty,
-  FloatButton,
-  Form,
-  Grid,
-  Image,
-  Layout,
-  List,
-  Mentions,
-  Menu,
-  Pagination,
-  Popconfirm,
-  Popover,
-  Progress,
-  QRCode,
-  Radio,
-  Rate,
-  Result,
-  Row,
-  Segmented,
-  Skeleton,
-  Slider,
-  Space,
-  Spin,
-  Statistic,
-  Steps,
-  Switch,
-  Table,
-  Tabs,
-  Tag,
-  Timeline,
-  Tooltip,
-  Tour,
-  Transfer,
-  Tree,
-  Typography,
-  Watermark,
+  Watermark as AntWatermark,
 } from 'antd';
 import React from 'react';
 
@@ -74,65 +75,6 @@ const { RangePicker: AntRangePicker } = AntDatePicker;
 
 const { useScrollLayout } = FlexLayout;
 
-const AntdComponents = {
-  Alert,
-  Anchor,
-  Affix,
-  Avatar,
-  BackTop,
-  Badge,
-  Breadcrumb,
-  Button,
-  Calendar,
-  Card,
-  Carousel,
-  Checkbox,
-  Col,
-  Collapse,
-  Comment,
-  ConfigProvider,
-  Descriptions,
-  Divider,
-  Drawer,
-  Dropdown,
-  Empty,
-  Form,
-  Grid,
-  Image,
-  Layout,
-  List,
-  Menu,
-  Pagination,
-  Popconfirm,
-  Popover,
-  Progress,
-  Radio,
-  Rate,
-  Result,
-  Row,
-  Segmented,
-  Skeleton,
-  Space,
-  Spin,
-  Statistic,
-  Steps,
-  Switch,
-  Table,
-  Tabs,
-  Tour,
-  Tag,
-  Timeline,
-  Transfer,
-  Tree,
-  Typography,
-  Tooltip,
-  Mentions,
-  Slider,
-  FloatButton,
-  QRCode,
-  Watermark,
-};
-
 /**
  * createFactory
  * @description - 创建一个组件的包装
@@ -140,7 +82,7 @@ const AntdComponents = {
  * @param defaultProps
  * @return {function(*)}
  */
-function createFactory(Component, defaultProps) {
+function createFactory(Component, defaultProps): any {
   function fn(_props) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { getEl } = useScrollLayout();
@@ -264,9 +206,58 @@ export const InputNumberInteger = createFactory(AntInputNumber, {
   precision: 0,
 });
 
-// 对剩余没有提供默认值的组件进行统一的操作
-export default Object.entries(AntdComponents).reduce((Components, [componentName, Component]) => {
-  Components[componentName] = createFactory(Component, {});
-
-  return Components;
-}, {});
+export const Affix = createFactory(AntAffix, {});
+export const Alert = createFactory(AntAlert, {});
+export const Anchor = createFactory(AntAnchor, {});
+export const Avatar = createFactory(AntAvatar, {});
+export const BackTop = createFactory(AntBackTop, {});
+export const Badge = createFactory(AntBadge, {});
+export const Breadcrumb = createFactory(AntBreadcrumb, {});
+export const Button = createFactory(AntButton, {});
+export const Calendar = createFactory(AntCalendar, {});
+export const Card = createFactory(AntCard, {});
+export const Carousel = createFactory(AntCarousel, {});
+export const Checkbox = createFactory(AntCheckbox, {});
+export const Col = createFactory(AntCol, {});
+export const Collapse = createFactory(AntCollapse, {});
+export const ConfigProvider = createFactory(AntConfigProvider, {});
+export const Descriptions = createFactory(AntDescriptions, {});
+export const Divider = createFactory(AntDivider, {});
+export const Drawer = createFactory(AntDrawer, {});
+export const Dropdown = createFactory(AntDropdown, {});
+export const Empty = createFactory(AntEmpty, {});
+export const FloatButton = createFactory(AntFloatButton, {});
+export const Form = createFactory(AntForm, {});
+export const Grid = createFactory(AntGrid, {});
+export const Image = createFactory(AntImage, {});
+export const Layout = createFactory(AntLayout, {});
+export const List = createFactory(AntList, {});
+export const Mentions = createFactory(AntMentions, {});
+export const Menu = createFactory(AntMenu, {});
+export const Pagination = createFactory(AntPagination, {});
+export const Popconfirm = createFactory(AntPopconfirm, {});
+export const Popover = createFactory(AntPopover, {});
+export const Progress = createFactory(AntProgress, {});
+export const QRCode = createFactory(AntQRCode, {});
+export const Radio = createFactory(AntRadio, {});
+export const Rate = createFactory(AntRate, {});
+export const Result = createFactory(AntResult, {});
+export const Row = createFactory(AntRow, {});
+export const Segmented = createFactory(AntSegmented, {});
+export const Skeleton = createFactory(AntSkeleton, {});
+export const Slider = createFactory(AntSlider, {});
+export const Space = createFactory(AntSpace, {});
+export const Spin = createFactory(AntSpin, {});
+export const Statistic = createFactory(AntStatistic, {});
+export const Steps = createFactory(AntSteps, {});
+export const Switch = createFactory(AntSwitch, {});
+export const Table = createFactory(AntTable, {});
+export const Tabs = createFactory(AntTabs, {});
+export const Tag = createFactory(AntTag, {});
+export const Timeline = createFactory(AntTimeline, {});
+export const Tooltip = createFactory(AntTooltip, {});
+export const Tour = createFactory(AntTour, {});
+export const Transfer = createFactory(AntTransfer, {});
+export const Tree = createFactory(AntTree, {});
+export const Typography = createFactory(AntTypography, {});
+export const Watermark = createFactory(AntWatermark, {});

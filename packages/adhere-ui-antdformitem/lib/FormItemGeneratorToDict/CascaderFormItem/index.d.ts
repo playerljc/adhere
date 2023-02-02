@@ -1,8 +1,10 @@
+import { FC } from 'react';
+import { CascaderFormItemProps } from '../../types';
 /**
  * CascaderFormItem
  * @param props
  * @return {JSX.Element}
  * @constructor
  */
-declare function CascaderFormItem(props: any): JSX.Element;
+declare const CascaderFormItem: FC<CascaderFormItemProps>;
 export default CascaderFormItem;

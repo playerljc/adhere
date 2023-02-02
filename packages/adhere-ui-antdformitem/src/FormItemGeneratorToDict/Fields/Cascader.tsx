@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
 import CascaderFormItem from '../CascaderFormItem';
+import CascaderLeafFormItem from '../CascaderLeafFormItem';
+import CascaderLeafMulitFormItem from '../CascaderLeafMulitFormItem';
 import CascaderMulitFormItem from '../CascaderMulitFormItem';
 
 const FormItemComponents = {};
@@ -17,68 +19,6 @@ export default () => {
   const cascaderDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
     dictName.endsWith('DynamicCascader'),
   );
-
-  // CascaderFormItem
-  FormItemComponents[`CascaderFormItem`] = ({ dataSource, ...props }) => {
-    return <CascaderFormItem {...props} options={dataSource} />;
-  };
-
-  // CascaderFormLeafItem
-  FormItemComponents[`CascaderLeafFormItem`] = ({ dataSource, ...props }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const targetDataSource = useMemo(() => {
-      function loop(nodes) {
-        (nodes || []).forEach((node) => {
-          if ('leaf' in node && node.leaf) {
-            node.disabled = false;
-          } else {
-            node.disabled = true;
-          }
-
-          loop(node.children);
-        });
-      }
-
-      const source = JSON.parse(JSON.stringify(dataSource));
-
-      loop(source);
-
-      return source;
-    }, [dataSource]);
-
-    return <CascaderFormItem {...props} options={targetDataSource} />;
-  };
-
-  // CascaderMulitFormItem
-  FormItemComponents[`CascaderMulitFormItem`] = ({ dataSource, ...props }) => {
-    return <CascaderMulitFormItem {...props} options={dataSource} />;
-  };
-
-  // CascaderLeafMulitFormItem
-  FormItemComponents[`CascaderLeafMulitFormItem`] = ({ dataSource, ...props }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const targetDataSource = useMemo(() => {
-      function loop(nodes) {
-        (nodes || []).forEach((node) => {
-          if ('leaf' in node && node.leaf) {
-            node.disabled = false;
-          } else {
-            node.disabled = true;
-          }
-
-          loop(node.children);
-        });
-      }
-
-      const source = JSON.parse(JSON.stringify(dataSource));
-
-      loop(source);
-
-      return source;
-    }, [dataSource]);
-
-    return <CascaderMulitFormItem {...props} options={targetDataSource} />;
-  };
 
   // 静态的Cascader
   cascaderDictNames.forEach((selectDictName) => {
@@ -95,8 +35,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CascaderFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CascaderFormItem {...props} options={dataSource} />;
     };
 
     // CascaderLeafFormItem
@@ -112,8 +51,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CascaderLeafFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CascaderLeafFormItem {...props} dataSource={dataSource} />;
     };
 
     // CascaderMulitFormItem
@@ -129,8 +67,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CascaderMulitFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CascaderMulitFormItem {...props} options={dataSource} />;
     };
 
     // CascaderLeafMulitFormItem
@@ -146,8 +83,7 @@ export default () => {
         dataSource = handler;
       }
 
-      const Component = FormItemComponents[`CascaderLeafMulitFormItem`];
-      return <Component {...props} dataSource={dataSource} />;
+      return <CascaderLeafMulitFormItem {...props} dataSource={dataSource} />;
     };
   });
 
@@ -155,13 +91,11 @@ export default () => {
   cascaderDynamicDictNames.forEach((selectDictName) => {
     // treeSelectFormItem
     FormItemComponents[`${selectDictName}FormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -171,7 +105,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -181,19 +114,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CascaderFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CascaderFormItem {...props} options={data} />;
     };
 
     // treeSelectLeafFormItem
     FormItemComponents[`${selectDictName}LeafFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -203,7 +133,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -213,19 +142,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CascaderLeafFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CascaderLeafFormItem {...props} dataSource={data} />;
     };
 
     // MulitSelectFormItem
     FormItemComponents[`${selectDictName}MulitFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -235,7 +161,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -245,19 +170,16 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CascaderMulitFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CascaderMulitFormItem {...props} options={data} />;
     };
 
     // MulitSelectFormItem
     FormItemComponents[`${selectDictName}LeafMulitFormItem`] = ({ cascadeParams, ...props }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[selectDictName].value;
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是Promise直接返回
         if (handler.then) {
@@ -267,7 +189,6 @@ export default () => {
         }
       }, []);
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
@@ -277,8 +198,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      const Component = FormItemComponents[`CascaderLeafMulitFormItem`];
-      return <Component {...props} dataSource={data} />;
+      return <CascaderLeafMulitFormItem {...props} dataSource={data} />;
     };
   });
 
