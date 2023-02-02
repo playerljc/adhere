@@ -112,6 +112,7 @@ export const Select = createFactory(AntSelect, {
 });
 
 export const MultipleSelect = createFactory(AntSelect, {
+  showSearch: true,
   allowClear: true,
   mode: 'multiple',
   placement: 'bottomLeft',
