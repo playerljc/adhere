@@ -121,6 +121,7 @@ export const MultipleSelect = createFactory(AntSelect, {
 export const TreeSelect = createFactory(AntTreeSelect, {
   showSearch: true,
   allowClear: true,
+  treeNodeFilterProp: 'title',
   placement: 'bottomLeft',
 });
 
