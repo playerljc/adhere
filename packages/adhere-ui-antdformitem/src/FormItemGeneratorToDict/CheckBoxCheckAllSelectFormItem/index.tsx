@@ -23,7 +23,7 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
    */
   function renderDropdownRender() {
     const data = inputValue
-      ? props.dataSource.filter((t) => t.label.startsWith(inputValue))
+      ? props.dataSource.filter((t) => t.label.indexOf(inputValue) !== -1)
       : props.dataSource;
 
     return (
@@ -82,10 +82,10 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
           props?.onChange?.(values);
           setCheckAll(values.length === (props.dataSource || []).length);
         },
-        filterOption: (inputValue) => {
-          setInputValue(inputValue);
+        filterOption: () => {
           return false;
         },
+        onSearch: (inputValue) => setInputValue(inputValue),
         onBlur: () => {
           setInputValue('');
         },

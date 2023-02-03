@@ -21,7 +21,7 @@ const TransferSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
    */
   function renderDropdownRender() {
     const data = inputValue
-      ? props.dataSource.filter((t) => t.label.startsWith(inputValue))
+      ? props.dataSource.filter((t) => t.label.indexOf(inputValue) !== -1)
       : props.dataSource;
 
     return (
@@ -56,10 +56,10 @@ const TransferSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         onChange: (values) => {
           props?.onChange?.(values);
         },
-        filterOption: (inputValue) => {
-          setInputValue(inputValue);
+        filterOption: () => {
           return false;
         },
+        onSearch: (inputValue) => setInputValue(inputValue),
         onBlur: () => {
           setInputValue('');
         },

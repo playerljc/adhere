@@ -26,7 +26,7 @@ const TableSelectFormItem: FC<TableSelectFormItemProps> = ({ dataSource, ...prop
    */
   function renderDropdownRender() {
     const data = inputValue
-      ? dataSource.filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
+      ? dataSource.filter((t) => t[props.labelKey || 'name'].indexOf(inputValue) !== -1)
       : dataSource;
 
     return (
@@ -66,10 +66,10 @@ const TableSelectFormItem: FC<TableSelectFormItemProps> = ({ dataSource, ...prop
         onChange: (value) => {
           props?.onChange?.(value);
         },
-        filterOption: (inputValue) => {
-          setInputValue(inputValue);
+        filterOption: () => {
           return false;
         },
+        onSearch: (inputValue) => setInputValue(inputValue),
         onBlur: () => {
           setInputValue('');
         },

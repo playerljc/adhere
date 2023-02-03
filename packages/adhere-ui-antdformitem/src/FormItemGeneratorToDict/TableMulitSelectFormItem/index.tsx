@@ -23,7 +23,7 @@ const TableMulitSelectFormItem: FC<TableMulitSelectFormItemProps> = ({ dataSourc
 
   function renderDropdownRender() {
     const data = inputValue
-      ? dataSource.filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
+      ? dataSource.filter((t) => t[props.labelKey || 'name'].indexOf(inputValue) !== -1)
       : dataSource;
 
     return (
@@ -65,10 +65,10 @@ const TableMulitSelectFormItem: FC<TableMulitSelectFormItemProps> = ({ dataSourc
         onChange: (values) => {
           props?.onChange?.(values);
         },
-        filterOption: (inputValue) => {
-          setInputValue(inputValue);
+        filterOption: () => {
           return false;
         },
+        onSearch: (inputValue) => setInputValue(inputValue),
         onBlur: () => {
           setInputValue('');
         },

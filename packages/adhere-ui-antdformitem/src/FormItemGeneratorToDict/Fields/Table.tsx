@@ -411,7 +411,7 @@ export default () => {
        */
       function renderDropdownRender() {
         const dataSource = inputValue
-          ? data.filter((t) => (t[props.labelKey || 'name'] as string).startsWith(inputValue))
+          ? data.filter((t) => (t[props.labelKey || 'name'] as string).indexOf(inputValue) !== -1)
           : data;
 
         return (
@@ -457,10 +457,10 @@ export default () => {
             onChange: (value) => {
               props.onChange(value);
             },
-            filterOption: (inputValue) => {
-              setInputValue(inputValue);
+            filterOption: () => {
               return false;
             },
+            onSearch: (inputValue) => setInputValue(inputValue),
             onBlur: () => {
               setInputValue('');
             },
@@ -601,7 +601,7 @@ export default () => {
        */
       function renderDropdownRender() {
         const dataSource = inputValue
-          ? getDataSource().filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
+          ? getDataSource().filter((t) => t[props.labelKey || 'name'].indexOf(inputValue) !== -1)
           : getDataSource();
 
         return (
@@ -655,8 +655,8 @@ export default () => {
             onBlur: () => {
               setInputValue('');
             },
-            filterOption: (inputValue) => {
-              setInputValue(inputValue);
+            onSearch: (inputValue) => setInputValue(inputValue),
+            filterOption: () => {
               return false;
             },
             ...(props.selectProps || {}),
