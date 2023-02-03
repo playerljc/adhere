@@ -414,7 +414,7 @@ export default () => {
        */
       function renderDropdownRender() {
         const dataSource = inputValue
-          ? data.filter((t) => (t[props.labelKey || 'name'] as string).startsWith(inputValue))
+          ? data.filter((t) => (t[props.labelKey || 'name'] as string).indexOf(inputValue) !== -1)
           : data;
 
         return (
@@ -611,7 +611,7 @@ export default () => {
        */
       function renderDropdownRender() {
         const dataSource = inputValue
-          ? getDataSource().filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
+          ? getDataSource().filter((t) => t[props.labelKey || 'name'].indexOf(inputValue) !== -1)
           : getDataSource();
 
         return (

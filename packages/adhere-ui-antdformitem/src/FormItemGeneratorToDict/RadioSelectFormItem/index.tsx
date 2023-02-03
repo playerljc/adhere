@@ -19,7 +19,7 @@ const RadioSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
    */
   function renderDropdownRender() {
     const data = inputValue
-      ? props.dataSource.filter((t) => t.label.startsWith(inputValue))
+      ? props.dataSource.filter((t) => t.label.indexOf(inputValue) !== -1)
       : props.dataSource;
 
     return (

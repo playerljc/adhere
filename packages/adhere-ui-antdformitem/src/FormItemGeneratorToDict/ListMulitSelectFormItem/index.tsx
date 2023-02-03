@@ -56,7 +56,7 @@ const ListMulitSelectFormItem: FC<ListMulitSelectFormItemProps> = ({ dataSource,
 
   function renderDropdownRender() {
     const data = inputValue
-      ? dataSource.filter((t) => t[props.labelKey || 'name'].startsWith(inputValue))
+      ? dataSource.filter((t) => t[props.labelKey || 'name'].indexOf(inputValue) !== -1)
       : dataSource;
 
     return (

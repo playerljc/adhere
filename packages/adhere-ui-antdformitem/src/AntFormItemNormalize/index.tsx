@@ -79,7 +79,7 @@ const { useScrollLayout } = FlexLayout;
  * @param defaultProps
  * @return {function(*)}
  */
-function createFactory(Component, defaultProps) {
+function createFactory(Component, defaultProps): any {
   function fn(_props) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { getEl } = useScrollLayout();
