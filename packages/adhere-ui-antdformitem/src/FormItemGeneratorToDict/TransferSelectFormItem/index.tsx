@@ -56,10 +56,10 @@ const TransferSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         onChange: (values) => {
           props?.onChange?.(values);
         },
-        filterOption: (inputValue) => {
-          setInputValue(inputValue);
+        filterOption: () => {
           return false;
         },
+        onSearch: (inputValue) => setInputValue(inputValue),
         onBlur: () => {
           setInputValue('');
         },

@@ -82,10 +82,10 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
           props?.onChange?.(values);
           setCheckAll(values.length === (props.dataSource || []).length);
         },
-        filterOption: (inputValue) => {
-          setInputValue(inputValue);
+        filterOption: () => {
           return false;
         },
+        onSearch: (inputValue) => setInputValue(inputValue),
         onBlur: () => {
           setInputValue('');
         },

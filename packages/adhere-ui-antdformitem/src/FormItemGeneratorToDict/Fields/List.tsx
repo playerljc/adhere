@@ -472,10 +472,10 @@ export default () => {
             onChange: (value) => {
               props.onChange(value);
             },
-            filterOption: (inputValue) => {
-              setInputValue(inputValue);
+            filterOption: () => {
               return false;
             },
+            onSearch: (inputValue) => setInputValue(inputValue),
             onBlur: () => {
               setInputValue('');
             },
@@ -676,10 +676,10 @@ export default () => {
             onBlur: () => {
               setInputValue('');
             },
-            filterOption: (inputValue) => {
-              setInputValue(inputValue);
+            filterOption: () => {
               return false;
             },
+            onSearch: (inputValue) => setInputValue(inputValue),
             ...(props.selectProps || {}),
           }}
           dataSource={getDataSource().map((t) => ({
