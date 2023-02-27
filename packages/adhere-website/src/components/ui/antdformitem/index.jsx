@@ -533,6 +533,23 @@ export default () => {
                     />
                   </dd>
                 </dl>
+
+                <dl>
+                  <dt>
+                    <p>SubmitButton</p>
+                  </dt>
+                  <dd>
+                    <AntdFormItem.AntFormItemNormalize.SubmitButton
+                      style={{
+                        width: 200,
+                      }}
+                      type="primary"
+                      onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
+                    >
+                      提交
+                    </AntdFormItem.AntFormItemNormalize.SubmitButton>
+                  </dd>
+                </dl>
               </Space.Group>
             ),
           },
@@ -2913,6 +2930,55 @@ export default () => {
                   if (Array.isArray(v)) {
                     setListVals(v);
                   }
+                }}
+              />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - AutoComplete"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    const [autoCompleteValue, setAutoCompleteValue] = useState({
+      inputValue: '',
+      selectValue: '',
+    });
+
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteFormItem
+        style={{ width: 200 }}
+        value={autoCompleteValue}
+        onChange={(v) => {
+          setAutoCompleteValue(v);
+        }}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteFormItem
+                style={{ width: 200 }}
+                value={autoCompleteValue}
+                onChange={(v) => {
+                  setAutoCompleteValue(v);
                 }}
               />
             ),
