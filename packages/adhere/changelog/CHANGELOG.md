@@ -6,7 +6,8 @@
 
 * **adhere-ui-antdformitem**
   - 加入AutoCompleteFormItem
-  - 加入加入SubmitButton
+  - 加入加入SubmitButton **adhere-util-resource**
+  - 去掉request.context的Api
 
 # 2.0.3
 
