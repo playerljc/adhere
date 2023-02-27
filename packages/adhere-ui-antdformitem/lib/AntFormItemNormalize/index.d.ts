@@ -25,6 +25,11 @@ export declare const InputNumberDecimal2: any;
  * @description 整数
  */
 export declare const InputNumberInteger: any;
+/**
+ * SubmitButton
+ * @description 提交按钮
+ */
+export declare const SubmitButton: any;
 export declare const Affix: any;
 export declare const Alert: any;
 export declare const Anchor: any;

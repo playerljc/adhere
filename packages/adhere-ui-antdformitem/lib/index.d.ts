@@ -16,6 +16,7 @@ declare const _default: {
         InputNumberDecimal1: any;
         InputNumberDecimal2: any;
         InputNumberInteger: any;
+        SubmitButton: any;
         Affix: any;
         Alert: any;
         Anchor: any;

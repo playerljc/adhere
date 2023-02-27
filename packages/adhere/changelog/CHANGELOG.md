@@ -6,6 +6,7 @@
 
 * **adhere-ui-antdformitem**
   - 加入AutoCompleteFormItem
+  - 加入加入SubmitButton
 
 # 2.0.3
 

@@ -537,6 +537,23 @@ export default () => {
                     />
                   </dd>
                 </dl>
+
+                <dl>
+                  <dt>
+                    <p>SubmitButton</p>
+                  </dt>
+                  <dd>
+                    <AntdFormItem.AntFormItemNormalize.SubmitButton
+                      style={{
+                        width: 200,
+                      }}
+                      type="primary"
+                      onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
+                    >
+                      提交
+                    </AntdFormItem.AntFormItemNormalize.SubmitButton>
+                  </dd>
+                </dl>
               </Space.Group>
             ),
           },
