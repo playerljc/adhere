@@ -62,8 +62,9 @@ import {
   TreeSelect as AntTreeSelect,
   Typography as AntTypography,
   Upload as AntUpload,
+  ButtonProps,
 } from 'antd';
-import React from 'react';
+import React, { FC, useState } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Resource from '@baifendian/adhere-util-resource';
@@ -204,6 +205,43 @@ export const InputNumberDecimal2 = createFactory(AntInputNumber, {
 export const InputNumberInteger = createFactory(AntInputNumber, {
   precision: 0,
 });
+
+/**
+ * SubmitButton
+ * @description 提交按钮
+ */
+export const SubmitButton = createFactory(
+  (function () {
+    const Component: FC<ButtonProps> = (props) => {
+      const [loading, setLoading] = useState<boolean>(false);
+
+      return (
+        <Button
+          loading={loading}
+          {...props}
+          onClick={(e) => {
+            if (!props.onClick) return;
+
+            if (loading) return;
+
+            setLoading(true);
+
+            props
+              .onClick(e)
+              // @ts-ignore
+              ?.then?.(() => setLoading(false))
+              ?.catch?.(() => setLoading(false));
+          }}
+        >
+          {props.children}
+        </Button>
+      );
+    };
+
+    return Component;
+  })(),
+  {},
+);
 
 export const Affix = createFactory(AntAffix, {});
 export const Alert = createFactory(AntAlert, {});

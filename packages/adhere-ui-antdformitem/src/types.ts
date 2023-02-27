@@ -1,4 +1,5 @@
 import {
+  AutoCompleteProps,
   CascaderProps,
   ListProps,
   RadioGroupProps,
@@ -139,3 +140,8 @@ export interface TreeSelectLeafFormItemProps extends TreeSelectFormItemProps {
 export interface TreeSelectMulitFormItemProps extends TreeSelectLeafFormItemProps {}
 
 export interface TreeSelectLeafMulitFormItemProps extends TreeSelectMulitFormItemProps {}
+
+// @ts-ignore
+export interface AutoCompleteFormItemProps extends FormItemProps, AutoCompleteProps {
+  dataSource: LabelValue[];
+}

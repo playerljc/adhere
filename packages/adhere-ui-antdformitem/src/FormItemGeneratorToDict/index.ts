@@ -1,3 +1,4 @@
+import AutoCompleteFormItem from './AutoCompleteFormItem';
 import CascaderFormItem from './CascaderFormItem';
 import CascaderLeafFormItem from './CascaderLeafFormItem';
 import CascaderLeafMulitFormItem from './CascaderLeafMulitFormItem';
@@ -11,6 +12,7 @@ import CheckBoxCustomFormItem from './CheckBoxCustomFormItem';
 import CheckBoxHorizontalFormItem from './CheckBoxHorizontalFormItem';
 import CheckBoxSelectFormItem from './CheckBoxSelectFormItem';
 import CheckBoxVerticalFormItem from './CheckBoxVerticalFormItem';
+import AutoComplete from './Fields/AutoComplete';
 import Cascader from './Fields/Cascader';
 import CheckBox from './Fields/CheckBox';
 import List from './Fields/List';
@@ -42,6 +44,7 @@ import TreeSelectLeafMulitFormItem from './TreeSelectLeafMulitFormItem';
 import TreeSelectMulitFormItem from './TreeSelectMulitFormItem';
 
 const FormItemComponents = {
+  ...AutoComplete(),
   ...Cascader(),
   ...CheckBox(),
   ...List(),
@@ -113,6 +116,7 @@ export {
   RadioButtonFormItem,
   RadioSelectFormItem,
   CheckAllMulitSelectFormItem,
+  AutoCompleteFormItem,
 };
 
 export default FormItemComponents;

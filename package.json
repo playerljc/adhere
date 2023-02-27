@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "private": true,
   "description": "一个基于React的通用组件库，这个是在平时做的项目中沉淀出来的公共组件，包括UI、功能和其他",
   "bugs": {

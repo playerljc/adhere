@@ -1,3 +1,15 @@
+# 1.0.26
+
+***
+
+2023-02-27
+
+* **adhere-ui-antdformitem**
+  - 加入AutoCompleteFormItem
+  - 加入加入SubmitButton
+* **adhere-util-resource**
+  - 去掉request.context的Api
+
 # 1.0.25
 
 ***
