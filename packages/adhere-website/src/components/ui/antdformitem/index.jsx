@@ -17,6 +17,10 @@ export default () => {
   const [val, setVal] = useState();
   const [vals, setVals] = useState([]);
   const [listVals, setListVals] = useState([]);
+  const [autoCompleteValue, setAutoCompleteValue] = useState({
+    inputValue: '',
+    selectValue: '',
+  });
 
   const listRenderItem = (item) => (
     <List.Item>
