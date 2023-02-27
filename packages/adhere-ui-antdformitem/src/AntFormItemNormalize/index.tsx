@@ -97,6 +97,8 @@ function createFactory(Component, defaultProps): any {
 
     const { children, ...reset } = props;
 
+    console.log('reset', Component, reset);
+
     return <Component {...reset}>{children}</Component>;
   }
 

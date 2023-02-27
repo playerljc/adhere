@@ -1,4 +1,4 @@
-import { CascaderProps, ListProps, RadioGroupProps, SelectProps, TableProps, TransferProps, TreeSelectProps } from 'antd';
+import { AutoCompleteProps, CascaderProps, ListProps, RadioGroupProps, SelectProps, TableProps, TransferProps, TreeSelectProps } from 'antd';
 import { CheckboxGroupProps } from 'antd/es/checkbox';
 import { ReactNode } from 'react';
 interface LabelValue {
@@ -102,5 +102,8 @@ export interface TreeSelectLeafFormItemProps extends TreeSelectFormItemProps {
 export interface TreeSelectMulitFormItemProps extends TreeSelectLeafFormItemProps {
 }
 export interface TreeSelectLeafMulitFormItemProps extends TreeSelectMulitFormItemProps {
+}
+export interface AutoCompleteFormItemProps extends FormItemProps, AutoCompleteProps {
+    dataSource: LabelValue[];
 }
 export {};

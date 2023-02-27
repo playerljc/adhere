@@ -1,3 +1,4 @@
+import AutoCompleteFormItem from './AutoCompleteFormItem';
 import CascaderFormItem from './CascaderFormItem';
 import CascaderLeafFormItem from './CascaderLeafFormItem';
 import CascaderLeafMulitFormItem from './CascaderLeafMulitFormItem';
@@ -38,5 +39,5 @@ declare const validatorNormal: (message: any) => {
 declare const validatorMulti: (message: any) => {
     validator(_: any, value: any): Promise<void>;
 };
-export { validatorMulti, validatorNormal, TableSelectFormItem, TableMulitSelectFormItem, CheckBoxHorizontalFormItem, RadioVerticalFormItem, MulitSelectFormItem, TreeSelectLeafMulitFormItem, ListMulitSelectFormItem, TreeSelectLeafFormItem, CascaderMulitFormItem, CheckBoxCheckAllCustomFormItem, TreeSelectMulitFormItem, CascaderLeafFormItem, ListFormItem, CascaderFormItem, SelectFormItem, CascaderLeafMulitFormItem, CheckBoxCheckAllVerticalFormItem, ListSelectFormItem, CheckBoxCheckAllHorizontalFormItem, TreeMulitSelectFormItem, TransferSelectFormItem, TreeSelectFormItem, RadioCustomFormItem, RadioHorizontalFormItem, TableFormItem, CheckBoxCustomFormItem, TransferFormItem, CheckBoxVerticalFormItem, CheckBoxCheckAllSelectFormItem, CheckBoxSelectFormItem, RadioButtonFormItem, RadioSelectFormItem, CheckAllMulitSelectFormItem, };
+export { validatorMulti, validatorNormal, TableSelectFormItem, TableMulitSelectFormItem, CheckBoxHorizontalFormItem, RadioVerticalFormItem, MulitSelectFormItem, TreeSelectLeafMulitFormItem, ListMulitSelectFormItem, TreeSelectLeafFormItem, CascaderMulitFormItem, CheckBoxCheckAllCustomFormItem, TreeSelectMulitFormItem, CascaderLeafFormItem, ListFormItem, CascaderFormItem, SelectFormItem, CascaderLeafMulitFormItem, CheckBoxCheckAllVerticalFormItem, ListSelectFormItem, CheckBoxCheckAllHorizontalFormItem, TreeMulitSelectFormItem, TransferSelectFormItem, TreeSelectFormItem, RadioCustomFormItem, RadioHorizontalFormItem, TableFormItem, CheckBoxCustomFormItem, TransferFormItem, CheckBoxVerticalFormItem, CheckBoxCheckAllSelectFormItem, CheckBoxSelectFormItem, RadioButtonFormItem, RadioSelectFormItem, CheckAllMulitSelectFormItem, AutoCompleteFormItem, };
 export default FormItemComponents;

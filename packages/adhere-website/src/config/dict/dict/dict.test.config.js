@@ -371,6 +371,34 @@ export default {
         value: '0',
       },
     ];
+
+    // AutoComplete
+    Dict.handlers.SystemTestAutoComplete = () => [
+      {
+        label: 'java',
+        value: 1,
+      },
+      {
+        label: 'javaScript',
+        value: 2,
+      },
+      {
+        label: 'html',
+        value: 3,
+      },
+      {
+        label: 'css',
+        value: 4,
+      },
+      {
+        label: 'spring',
+        value: 5,
+      },
+      {
+        label: 'react',
+        value: 6,
+      },
+    ];
   },
   initRemote() {},
 };

@@ -400,7 +400,6 @@ export default () => {
       }, [debounceTimeout, props.value]);
 
       return (
-        // @ts-ignore
         <CheckAllMulitSelectFormItem
           selectProps={{
             notFoundContent: fetching ? <Spin size="small" /> : null,

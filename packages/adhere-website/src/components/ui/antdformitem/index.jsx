@@ -17,6 +17,10 @@ export default () => {
   const [val, setVal] = useState();
   const [vals, setVals] = useState([]);
   const [listVals, setListVals] = useState([]);
+  const [autoCompleteValue, setAutoCompleteValue] = useState({
+    inputValue: '',
+    selectValue: '',
+  });
 
   const listRenderItem = (item) => (
     <List.Item>
@@ -2913,6 +2917,55 @@ export default () => {
                   if (Array.isArray(v)) {
                     setListVals(v);
                   }
+                }}
+              />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - AutoComplete"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    const [autoCompleteValue, setAutoCompleteValue] = useState({
+      inputValue: '',
+      selectValue: '',
+    });
+
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteFormItem
+        style={{ width: 200 }}
+        value={autoCompleteValue}
+        onChange={(v) => {
+          setAutoCompleteValue(v);
+        }}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteFormItem
+                style={{ width: 200 }}
+                value={autoCompleteValue}
+                onChange={(v) => {
+                  setAutoCompleteValue(v);
                 }}
               />
             ),
