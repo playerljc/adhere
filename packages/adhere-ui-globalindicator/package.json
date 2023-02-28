@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-globalindicator",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "description": "全局无侵入的遮罩",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-css": "^2.0.2",
-    "@baifendian/adhere-util-resource": "^2.0.2"
+    "@baifendian/adhere-util-resource": "^2.0.4"
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
