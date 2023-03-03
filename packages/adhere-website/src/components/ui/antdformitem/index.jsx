@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { AntdFormItem, FlexLayout, Space } from '@baifendian/adhere';
 
-import PlayGroundPage, { CodeBoxSection, Section } from '@/lib/PlaygroundPage';
+import PlayGroundPage, { CodeBoxSection, Section, PropsSection } from '@/lib/PlaygroundPage';
 
 const { Option } = AntdFormItem.AntFormItemNormalize.Select;
 
@@ -2990,16 +2990,349 @@ export default () => {
         ]}
       />
 
-      {/*<PropsSection
-        title="Props"
+      <PropsSection
+        title="AntdFormItem.AntFormItemNormalize"
         config={[
           {
             border: true,
-            title: '属性',
-            data: [],
+            title: 'Select（单选）、MultipleSelect（多选）',
+            data: [
+              {
+                params: 'showSearch',
+                desc: '配置是否可搜索',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft'
+              },
+              {
+                params: 'filterOption',
+                desc: '是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false',
+                type: 'boolean | function(inputValue, option)',
+                defaultVal: '(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0'
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/select-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'TreeSelect',
+            data: [
+              {
+                params: 'showSearch',
+                desc: '配置是否可搜索',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft'
+              },
+              {
+                params: 'treeNodeFilterProp',
+                desc: '输入项过滤对应的 treeNode 属性',
+                type: 'string',
+                defaultVal: 'title'
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/tree-select-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'AutoComplete',
+            data: [
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'filterOption',
+                desc: '是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false',
+                type: 'boolean | function(inputValue, option)',
+                defaultVal: '(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0'
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/auto-complete-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'DatePicker、RangePicker、TimePicker',
+            data: [
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft'
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/date-picker-cn#api、https://ant.design/components/time-picker-cn',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Cascader',
+            data: [
+              {
+                params: 'showSearch',
+                desc: '配置是否可搜索',
+                type: 'boolean',
+                defaultVal: `{
+                  filter: (inputValue, path) =>
+                    path.some((option) => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1),
+                },`
+              },
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft'
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/cascader-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Upload',
+            data: [
+              {
+                params: 'name',
+                desc: '发到后台的文件参数名',
+                type: 'string',
+                defaultVal: 'file'
+              },
+              {
+                params: 'withCredentials',
+                desc: '上传请求时是否携带 cookie',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/upload-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Modal',
+            data: [
+              {
+                params: 'closable',
+                desc: '是否显示右上角的关闭按钮',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'centered',
+                desc: '垂直居中展示 Modal',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'maskClosable',
+                desc: '点击蒙层是否允许关闭',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'destroyOnClose',
+                desc: '关闭时销毁 Modal 里的子元素',
+                type: 'boolean',
+                defaultVal: 'true'
+              },
+              {
+                params: 'zIndex',
+                desc: '设置 Modal 的 z-index',
+                type: 'number',
+                defaultVal: 'Resource.Dict.value.ResourceNormalMaxZIndex.value'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/modal-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Input、TextArea',
+            data: [
+              {
+                params: 'allowClear',
+                desc: '可以点击清除图标删除内容',
+                type: 'boolean | { clearIcon: ReactNode }',
+                defaultVal: 'true'
+              },
+              {
+                params: 'maxLength',
+                desc: '最大长度',
+                type: 'number',
+                defaultVal: '1000'
+              },
+              {
+                params: 'showCount',
+                desc: '是否展示字数',
+                type: 'boolean | { formatter: (info: { value: string, count: number, maxLength?: number }) => ReactNode }',
+                defaultVal: 'true'
+              },
+              {
+                params: 'autoSize（适用于TextArea）',
+                desc: '自适应内容高度，可设置为 true | false 或对象：{ minRows: 2, maxRows: 6 }',
+                type: 'boolean | object',
+                defaultVal: 'false'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/input-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'InputNumberDecimal1（1位小数）、InputNumberDecimal2（2位小数）、InputNumberInteger（整数）',
+            data: [
+              {
+                params: 'precision',
+                desc: '数值精度，配置 formatter 时会以 formatter 为准',
+                type: 'number',
+                defaultVal: 'InputNumberDecimal1 = 1、 InputNumberDecimal2 = 2、 InputNumberInteger = 0'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/input-number-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'SubmitButton（默认点击显示loading,通过onClick事件返回promise来取消loading）',
+            data: [
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/button-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ]
           },
         ]}
-      />*/}
+      />
+      <PropsSection
+        title="AntdFormItem.FormItemGeneratorToDict"
+        config={[
+          {
+            border: true,
+            title: 'SystemTestRadioHorizontalFormItem',
+            data: [
+              {
+                params: 'name',
+                desc: '发到后台的文件参数名',
+                type: 'string',
+                defaultVal: 'file'
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/upload-cn#api',
+                type: '-',
+                defaultVal: '-'
+              },
+            ],
+          },
+        ]}
+      />
     </PlayGroundPage>
   );
 };
