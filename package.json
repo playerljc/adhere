@@ -23,6 +23,7 @@
     "changelog": "lerna version --conventional-commits",
     "clean": "lerna clean",
     "generatorchangelog": "lerna run generatorchangelog",
+    "init:husky": "npx husky add .husky/pre-commit \"npm run lint-staged\"",
     "link": "lerna link",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -32,6 +33,7 @@
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"packages/**/src/**/*.less\" --syntax less",
     "list": "lerna list",
+    "prepare": "husky install",
     "prettier": "prettier -c --write \"**/*\"",
     "prettier-json": "prettier -c --write \"**/*.json\"",
     "publish": "lerna publish",
@@ -40,11 +42,6 @@
     "publish:beta": "lerna publish --dist-tag beta",
     "publish:next": "lerna publish --dist-tag next",
     "release": "lerna version --conventional-commits --create-release github"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -137,11 +134,11 @@
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
-    "@umijs/fabric": "^2.8.0",
-    "core-js": "^3.19.1",
+    "@umijs/fabric": "^2.14.1",
+    "core-js": "^3.29.0",
     "cz-conventional-changelog": "^3.3.0",
     "cz-conventional-changelog-zh": "^0.0.2",
-    "eslint": "^7.32.0",
+    "eslint": "^8.35.0",
     "eslint-plugin-comments": "^1.0.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.24.2",
@@ -151,11 +148,14 @@
     "eslint-plugin-unicorn": "^36.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "fs-extra": "^9.0.1",
-    "husky": "^4.2.5",
-    "lerna": "^6.3.0",
-    "lint-staged": "^10.2.0",
-    "prettier": "^2.4.1",
+    "husky": "^8.0.3",
+    "lerna": "^6.5.1",
+    "lint-staged": "^13.1.2",
+    "prettier": "^2.8.4",
     "rimraf": "^3.0.2",
-    "stylelint": "^13.13.1"
+    "stylelint": "^15.2.0"
+  },
+  "engines": {
+    "node": ">=12.0.0"
   }
 }
