@@ -13,7 +13,7 @@
     "changed": "lerna changed",
     "list": "lerna list",
     "publish": "lerna publish",
-    "publish-form-package":"lerna publish from-package",
+    "publish-form-package": "lerna publish from-package",
     "publish:next": "lerna publish --dist-tag next",
     "publish:beta": "lerna publish --dist-tag beta",
     "publish:alpha": "lerna publish --dist-tag alpha",
@@ -22,6 +22,7 @@
     "buildpackages": "lerna run buildpackage",
     "buildumd": "node scripts/buildumd.js",
     "generatorchangelog": "lerna run generatorchangelog",
+    "init:husky": "npx husky add .husky/pre-commit \"npm run lint-staged\"",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
@@ -29,13 +30,9 @@
     "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./packages/**/src",
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"packages/**/src/**/*.less\" --syntax less",
+    "prepare": "husky install",
     "prettier": "prettier -c --write \"**/*\"",
     "prettier-json": "prettier -c --write \"**/*.json\""
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged"
-    }
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -99,7 +96,7 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog-zh",
-      "defaultType":"[新增功能]",
+      "defaultType": "[新增功能]",
       "types": {
         "feat": {
           "description": "一个新功能",
@@ -163,5 +160,8 @@
         }
       }
     }
+  },
+  "engines": {
+    "node": ">=12.0.0"
   }
 }
