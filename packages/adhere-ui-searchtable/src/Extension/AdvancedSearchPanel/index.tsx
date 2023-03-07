@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
-import React, { FC, useEffect, useState } from 'react';
+import type { FC } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import {
@@ -18,7 +19,7 @@ import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../SearchTable';
-import { AdvancedSearchPanelProps } from '../../types';
+import type { AdvancedSearchPanelProps } from '../../types';
 
 const { VerticalFlexLayout, ScrollLayout } = FlexLayout;
 const { renderGridSearchFormGroup } = TableGridLayout;

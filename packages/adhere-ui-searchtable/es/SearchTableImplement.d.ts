@@ -1,7 +1,7 @@
-import { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
-import { ReactElement, RefObject } from 'react';
+import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
+import type { ReactElement, RefObject } from 'react';
 import SearchTable from './SearchTable';
-import { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
+import type { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtableimplement";
 /**
  * SearchTableImplement
@@ -45,7 +45,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @param propertys
      * @param dayjs
      */
-    onDateTimeRangeChange: (propertys: Array<string>, dayjs: Array<any>) => void;
+    onDateTimeRangeChange: (propertys: string[], dayjs: any[]) => void;
     /**
      * getParams
      * @override
@@ -76,12 +76,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @override
      * @description - 表格序号列的生成规则
      */
-    getNumberGeneratorRule(): Symbol;
+    getNumberGeneratorRule(): symbol;
     /**
      * getNumberGeneratorRule
      * @description 获取符号列的生成规则
      */
-    getRowSelectionMode(): Symbol;
+    getRowSelectionMode(): symbol;
     /**
      * getTableNumberColumnWidth
      * @override
@@ -116,7 +116,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @override
      * @return {Array}
      */
-    getData(): Array<object>;
+    getData(): object[];
     /**
      * getTotal
      * @description - Table数据的总条数
@@ -146,7 +146,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @description - 渲染表格的工具栏
      * @override
      */
-    renderSearchFooterItems(): Array<any>;
+    renderSearchFooterItems(): any[];
     /**
      * getOrderFieldProp
      * @description - 获取排序字段
@@ -209,7 +209,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @override
      */
     onSearch(): Promise<void>;
-    getColumns(): Array<ColumnType<object>>;
+    getColumns(): ColumnType<object>[];
     onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object> | undefined): void;
     renderSearchFormAfter(): ReactElement | null;
     renderSearchFormBefore(): ReactElement | null;

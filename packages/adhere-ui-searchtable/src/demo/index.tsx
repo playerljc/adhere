@@ -15,10 +15,7 @@
 //
 // const ProSearchStateTableImpl = lazy(
 //   // @ts-ignore
-//   () =>
-//     import(
-//       /* webpackChunkName: "conditionalrender" */ './proEditableTableRowDragSortSearchTable.jsx'
-//     ),
+//   () => import(/* webpackChunkName: "conditionalrender" */ './proStateSearchTable.jsx'),
 // );
 //
 // ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(

@@ -1,8 +1,10 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { ReactElement, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { ReactElement, ReactNode } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import type { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
 import EditableTableCellEdit from './Edit/EditableTableCellEdit';
 import EditableCellView from './View';
 

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import type { Component } from 'react';
+import React from 'react';
 
 import MultiExtend from '../../MultiExtend';
-import SearchTable from '../../SearchTable';
+import type SearchTable from '../../SearchTable';
 
 /**
  * RowDragSortMultiExtend

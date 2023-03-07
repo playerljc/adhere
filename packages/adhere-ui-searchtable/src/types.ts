@@ -1,5 +1,6 @@
 import type { FormInstance } from 'antd/es/form';
 import type { Rule } from 'antd/lib/form/index';
+// @ts-ignore
 import type { TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType, // FilterValue,
@@ -379,7 +380,7 @@ export interface SearchTableState extends SuspenseState {
   limit?: number;
   expand?: boolean;
   scrollY?: number;
-  columnSetting?: Array<ColumnType<any> & { sort: number; display: boolean }>;
+  columnSetting?: (ColumnType<any> & { sort: number; display: boolean })[];
   tableDensity?: TableDensity;
 }
 
@@ -387,12 +388,12 @@ export interface ISearchTableImplement {
   /**
    * showLoading - 是否显示遮罩
    */
-  showLoading(): boolean;
+  showLoading: () => boolean;
 
   /**
    * fetchData - 加载数据
    */
-  fetchData(): void;
+  fetchData: () => void;
 }
 
 /**

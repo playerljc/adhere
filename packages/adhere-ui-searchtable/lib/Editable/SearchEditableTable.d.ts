@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { SearchEditorTableState, SearchTableImplementProps } from '../types';
+import type { SearchEditorTableState, SearchTableImplementProps } from '../types';
 declare const SearchEditableTable_base: {
     new (props: any): {
         [x: string]: any;

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import cloneDeep from 'lodash.clonedeep';
 
-import { SearchEditorRowTableState, SearchTableImplementProps } from '../types';
+import type { SearchEditorRowTableState, SearchTableImplementProps } from '../types';
 import SearchEditableCellTable from './SearchEditableCellTable';
 import SearchEditableRowFactory from './SearchEditableRowFactory';
 
@@ -51,7 +51,8 @@ class SearchEditableRowTable<
       this.props
         .dispatch({
           type: `${this.getServiceName()}/receive`,
-          [this.getServiceName()]: listData,
+          // [this.getServiceName()]: listData,
+          ...listData,
         })
         .then(() => resolve());
     });

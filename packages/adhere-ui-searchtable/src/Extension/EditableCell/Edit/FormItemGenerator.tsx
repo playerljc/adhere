@@ -1,9 +1,10 @@
 import { Input, InputNumber, Rate, Slider, Switch } from 'antd';
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 
 import AntdFormItem from '@baifendian/adhere-ui-antdformitem';
 
-import { FormItemGeneratorConfig } from '../../../types';
+import type { FormItemGeneratorConfig } from '../../../types';
 
 const {
   FormItemGeneratorToDict,

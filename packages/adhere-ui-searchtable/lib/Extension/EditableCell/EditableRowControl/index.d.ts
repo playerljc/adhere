@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { EditorRowControlProps } from '../../../types';
+import type { FC } from 'react';
+import type { EditorRowControlProps } from '../../../types';
 /**
  * EditableRowControl
  * @description 编辑行的控制器

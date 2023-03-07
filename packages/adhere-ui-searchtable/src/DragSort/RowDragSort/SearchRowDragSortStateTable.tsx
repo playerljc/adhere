@@ -2,7 +2,7 @@ import { arrayMoveImmutable } from 'array-move';
 import cloneDeep from 'lodash.clonedeep';
 
 import { SearchTableStateImplement } from '../../SearchTableStateImplement';
-import { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
+import type { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
 import SearchRowDragSortFactory from './SearchRowDragSortFactory';
 
 /**

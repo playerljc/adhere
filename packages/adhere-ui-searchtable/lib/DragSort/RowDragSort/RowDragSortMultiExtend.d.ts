@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import type { Component } from 'react';
 /**
  * RowDragSortMultiExtend
  * @description 多继承

@@ -1,8 +1,14 @@
-import React, { ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { ColumnRowDragSortConfig, ColumnTypeExt, RowConfig, RowDragSortConfig } from '../../types';
+import type {
+  ColumnRowDragSortConfig,
+  ColumnTypeExt,
+  RowConfig,
+  RowDragSortConfig,
+} from '../../types';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {

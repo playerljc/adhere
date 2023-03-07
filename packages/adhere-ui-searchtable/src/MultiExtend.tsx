@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash.clonedeep';
-import React, { Component } from 'react';
+import type { Component } from 'react';
+import React from 'react';
 
 /**
  * MultiExtendFactory

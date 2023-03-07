@@ -1,4 +1,4 @@
-import {
+import type {
   ColumnType,
   FilterValue,
   SorterResult,
@@ -7,12 +7,13 @@ import {
   TableRowSelection,
 } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
-import React, { ReactElement, RefObject, createRef, forwardRef } from 'react';
+import type { ReactElement, RefObject } from 'react';
+import React, { createRef, forwardRef } from 'react';
 
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 
 import SearchTable, { defaultProps, propTypes } from './SearchTable';
-import {
+import type {
   ColumnTypeExt,
   ISearchTableImplement,
   SearchTableImplementFactoryFunction,
@@ -29,6 +30,7 @@ export const selectorPrefix = 'adhere-ui-searchtableimplement';
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState>
   extends SearchTable<SearchTableImplementProps, SearchTableImplementState>
   implements ISearchTableImplement
@@ -117,7 +119,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param propertys
    * @param dayjs
    */
-  onDateTimeRangeChange = (propertys: Array<string>, dayjs: Array<any>) => {
+  onDateTimeRangeChange = (propertys: string[], dayjs: any[]) => {
     this.setState({
       [propertys[0]]: dayjs && dayjs.length ? dayjs[0] : null,
       [propertys[1]]: dayjs && dayjs.length ? dayjs[1] : null,
@@ -168,7 +170,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @override
    * @description - 表格序号列的生成规则
    */
-  getNumberGeneratorRule(): Symbol {
+  getNumberGeneratorRule(): symbol {
     return SearchTable.NUMBER_GENERATOR_RULE_CONTINUITY;
   }
 
@@ -176,7 +178,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getNumberGeneratorRule
    * @description 获取符号列的生成规则
    */
-  getRowSelectionMode(): Symbol {
+  getRowSelectionMode(): symbol {
     return SearchTable.ROW_SELECTION_NORMAL_MODE;
   }
 
@@ -229,7 +231,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @override
    * @return {Array}
    */
-  getData(): Array<object> {
+  getData(): object[] {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
   }
 
@@ -248,7 +250,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description - 获取表格行选择对象
    */
   getRowSelection(): TableRowSelection<object> {
-    const filter = (selected: boolean, records: Array<any>): void => {
+    const filter = (selected: boolean, records: any[]): void => {
       const rowKey = this.getRowKey();
 
       if (selected) {
@@ -278,7 +280,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
     return {
       selectedRowKeys: this.state.selectedRowKeys,
-      onChange: (selectedRowKeys: Array<any>, selectedRows: Array<any>) => {
+      onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
         if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
 
         // 如果是缺省模式(不能跨页选取)
@@ -329,7 +331,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description - 渲染表格的工具栏
    * @override
    */
-  renderSearchFooterItems(): Array<any> {
+  renderSearchFooterItems(): any[] {
     return [];
   }
 
@@ -481,14 +483,18 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     });
   }
 
-  getColumns(): Array<ColumnType<object>> {
+  getColumns(): ColumnType<object>[] {
     return [];
   }
 
   onSubTableChange(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     pagination: TablePaginationConfig,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     filters: Record<string, FilterValue | null>,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sorter: SorterResult<object> | SorterResult<object>[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
 
@@ -508,10 +514,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return null;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableRowComponentReducers;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableCellComponentReducers;
   }

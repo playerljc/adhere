@@ -1,13 +1,15 @@
 import { Form } from 'antd';
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import dayjs from 'dayjs';
-import React, { FC, ReactNode, useContext, useEffect } from 'react';
+import type { FC, ReactNode } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { EditableCellEditProps } from '../../../types';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { EditableCellEditProps } from '../../../types';
 import { EditableContext } from '../EditableRow';
 import EventTypes from '../EventTypes';
 import FormItemGenerator from './FormItemGenerator';
@@ -137,10 +139,10 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    * renderFormItem
    */
   function renderFormItem() {
-    let formItemNodeProps = {
+    const formItemNodeProps = {
       autoFocus: !useKeepEdit,
       ...props.editableConfig.props,
-      ...EventTypes.reduce<{ [prop: string]: Function }>((eventCombination, eventType) => {
+      ...EventTypes.reduce<Record<string, Function>>((eventCombination, eventType) => {
         eventCombination[eventType] = (e: any) => {
           if (props.editableConfig.props[eventType]) {
             props.editableConfig.props[eventType](e, {

@@ -1,8 +1,9 @@
-import { FormInstance } from 'antd/es/form';
+import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import type { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
 import EditableCellEdit from './Edit/EditableCellEdit';
 import EditableCellView from './View';
 
@@ -70,6 +71,8 @@ const EditableCell: TableCellComponentReducer = (props) => {
   }, [editableConfig?.defaultStatus]);
 
   return (tdREL) => {
+    console.log('status', status);
+
     let res = tdREL;
 
     // 单元格不是可编辑的单元格
@@ -84,7 +87,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
           editableConfig={editableConfig}
           onTriggerChange={() => {
             // @ts-ignore
-            context?.context?.setActiveValue?.('');
+            // context?.context?.setActiveValue?.('');
             setStatus('view');
           }}
         />,
@@ -97,9 +100,11 @@ const EditableCell: TableCellComponentReducer = (props) => {
           {...props}
           editableConfig={editableConfig}
           onTriggerChange={() => {
-            context?.context
-              // @ts-ignore
-              ?.setActiveValue?.(props.record[props.column.dataIndex as string]);
+            console.log('onTriggerChange');
+
+            // context?.context
+            //   // @ts-ignore
+            //   ?.setActiveValue?.(props.record[props.column.dataIndex as string]);
             setStatus('edit');
           }}
         />,
@@ -113,7 +118,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
           editableConfig={editableConfig}
           onTriggerChange={() => {
             // @ts-ignore
-            context?.context?.setActiveValue?.('');
+            // context?.context?.setActiveValue?.('');
             setStatus('view');
           }}
         />,

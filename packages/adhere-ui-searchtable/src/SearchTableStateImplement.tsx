@@ -19,7 +19,9 @@ export const selectorPrefix = 'adhere-ui-searchstatetableimplement';
  * @classdesc - SearchTable的state实现
  */
 export class SearchTableStateImplement<
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   P extends SearchTableStateImplementProps,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   S extends SearchTableImplementState,
 > extends SearchTableImplement<SearchTableStateImplementProps, SearchTableImplementState> {
   private unsubscribe: Function;

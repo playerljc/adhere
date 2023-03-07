@@ -1,6 +1,7 @@
-import { FormInstance } from 'antd/es/form';
-import React, { ReactElement } from 'react';
-import { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
+import type { FormInstance } from 'antd/es/form';
+import type { ReactElement } from 'react';
+import React from 'react';
+import type { ColumnTypeExt, RowConfig, RowEditableConfig } from '../types';
 export default function <P, S>(SuperClass: any): {
     new (props: any): {
         [x: string]: any;

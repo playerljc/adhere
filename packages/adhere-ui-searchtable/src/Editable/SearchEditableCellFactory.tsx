@@ -1,7 +1,12 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-import { ColumnEditableConfig, ColumnTypeExt, FormItemType, RowEditableConfig } from '../types';
+import type {
+  ColumnEditableConfig,
+  ColumnTypeExt,
+  FormItemType,
+  RowEditableConfig,
+} from '../types';
 
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {

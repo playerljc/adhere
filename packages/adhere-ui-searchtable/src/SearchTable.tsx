@@ -1,5 +1,6 @@
 import { Button, Table } from 'antd';
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+// @ts-ignore
 import type { ColumnsType, TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType,
@@ -12,7 +13,8 @@ import type {
 import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
-import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
+import type { ReactElement, ReactNode, RefObject } from 'react';
+import React, { createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -27,15 +29,15 @@ import ColumnSetting from './Extension/ColumnSetting';
 import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
-import {
+import type {
   CellConfigReducer,
   ColumnTypeExt,
   RowConfig,
   RowConfigReducer,
   SearchTableProps,
   SearchTableState,
-  TableDensity,
 } from './types';
+import { TableDensity } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
 
@@ -138,13 +140,13 @@ abstract class SearchTable<
    * getNumberGeneratorRule
    * @description 获取符号列的生成规则
    */
-  abstract getNumberGeneratorRule(): Symbol;
+  abstract getNumberGeneratorRule(): symbol;
 
   /**
    * getRowSelectionMode
    * @description 获取全选的生模式
    */
-  abstract getRowSelectionMode(): Symbol;
+  abstract getRowSelectionMode(): symbol;
 
   /**
    * getRowKey
@@ -158,14 +160,14 @@ abstract class SearchTable<
    * @description 获取表格数据
    * @return Array<Object>
    */
-  abstract getData(): Array<object>;
+  abstract getData(): object[];
 
   /**
    * getColumns
    * @description 获取表格列的信息
    * @return Array<object>
    */
-  abstract getColumns(): Array<ColumnType<object>>;
+  abstract getColumns(): ColumnType<object>[];
 
   /**
    *
@@ -238,7 +240,7 @@ abstract class SearchTable<
    * renderSearchFooterItems
    * @description 渲染SearchFooter的按钮组
    */
-  abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
+  abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactElement[] | null;
 
   /**
    * onSubTableChange
@@ -312,6 +314,7 @@ abstract class SearchTable<
     this.columnSettingEffect(nextProps);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot?: any) {
     if (!this.tableWrapRef.current) return;
 
@@ -367,6 +370,7 @@ abstract class SearchTable<
    * @param props
    * @protected
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   columnSettingEffect(props: SearchTableProps) {
     const preColumnSetting = this.state.columnSetting || [];
     const columnSetting = this.getTableColumns().map((column, index) => ({
@@ -393,6 +397,7 @@ abstract class SearchTable<
 
       this.setState({
         columnSetting: columnSetting?.map((t) => {
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           const item = preColumnSetting?.find((item) => item[rowKey] === t[rowKey]);
 
           return {
@@ -486,12 +491,13 @@ abstract class SearchTable<
   onCellConfigReducers(params: {
     rowIndex: number;
     column: ColumnTypeExt;
-    record: { [prop: string]: any };
+    record: Record<string, any>;
     columns: ColumnTypeExt[];
   }): ColumnTypeExt {
     const { rowIndex, column, record, columns } = params;
 
     return this.cellConfigReducers.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       (params, reducer) => {
         params.value = reducer.call(this, { rowIndex, record, columns, column: params.value });
         return params;
@@ -507,7 +513,7 @@ abstract class SearchTable<
    */
   onRowConfigReducers(params: {
     rowIndex: number;
-    record: { [prop: string]: any };
+    record: Record<string, any>;
     columns: ColumnTypeExt[];
   }): RowConfig {
     const { rowIndex, record, columns } = params;
@@ -515,6 +521,7 @@ abstract class SearchTable<
     // const reducers = [this.rowEditableReducer];
 
     return this.rowConfigReducers.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       (params, reducer) => {
         params.value = reducer.call(this, { rowIndex, record, columns, rowConfig: params.value });
         return params;
@@ -627,7 +634,7 @@ abstract class SearchTable<
 
         return res.value;
       })
-      .map((column: ColumnTypeExt, index) => {
+      .map((column: ColumnTypeExt) => {
         return {
           ...column,
           // 每个单元格都会调用
@@ -714,6 +721,7 @@ abstract class SearchTable<
    */
   renderTableNumberColumn(
     number: string = '',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     params: { value: any; record: object; index: number },
   ) {
     return <span>{number}</span>;
@@ -724,7 +732,7 @@ abstract class SearchTable<
    * @description 创建列设置组件
    */
   renderColumnSetting(): ReactElement {
-    const columns = [...(this.state.columnSetting as Array<any>)];
+    const columns = [...(this.state.columnSetting as any[])];
 
     columns.sort((c1, c2) => {
       if (c1.sort > c2.sort) return 1;
@@ -842,6 +850,7 @@ abstract class SearchTable<
               key="expand"
               className={`${selectorPrefix}-searchfooteritem-expand-search-up-btn`}
               onClick={() => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
 
                 this.setState(
@@ -862,6 +871,7 @@ abstract class SearchTable<
               key="hide"
               className={`${selectorPrefix}-searchfooteritem-expand-search-down-btn`}
               onClick={() => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
 
                 this.setState(

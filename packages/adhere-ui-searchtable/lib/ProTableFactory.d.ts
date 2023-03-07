@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
@@ -183,7 +183,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             searchConfig: any;
             column: any;
             dataIndex: any;
-        }): React.ReactNode;
+        }): ReactNode;
         /**
          * renderGridSearchFormGroup
          * @param group - TableGridLayout的分组数据

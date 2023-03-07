@@ -1,9 +1,11 @@
 import classNames from 'classnames';
-import React, { ReactElement, useContext, useRef } from 'react';
+import type { ReactElement } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { TableRowComponentReducer } from '../../../types';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { TableRowComponentReducer } from '../../../types';
 
 const type = 'DraggableBodyRow';
 

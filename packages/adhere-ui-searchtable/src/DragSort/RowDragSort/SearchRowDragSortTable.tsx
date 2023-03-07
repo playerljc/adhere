@@ -2,7 +2,7 @@ import { arrayMoveImmutable } from 'array-move';
 import cloneDeep from 'lodash.clonedeep';
 
 import { SearchTableImplement } from '../../SearchTableImplement';
-import { SearchTableImplementProps, SearchTableImplementState } from '../../types';
+import type { SearchTableImplementProps, SearchTableImplementState } from '../../types';
 import SearchRowDragSortFactory from './SearchRowDragSortFactory';
 
 /**
@@ -21,7 +21,7 @@ class SearchRowDragSortTable extends SearchRowDragSortFactory<
    */
   moveRow(dragIndex: number, hoverIndex: number): Promise<void> {
     return new Promise((resolve) => {
-      const listData = cloneDeep(this.state[this.getServiceName()]);
+      const listData = cloneDeep(this.props[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       listData[this.getFetchListPropName()][this.getDataKey()] = arrayMoveImmutable(
         dataSource,
@@ -32,7 +32,7 @@ class SearchRowDragSortTable extends SearchRowDragSortFactory<
       this.props
         .dispatch({
           type: `${this.getServiceName()}/receive`,
-          [this.getServiceName()]: listData,
+          ...listData,
         })
         .then(() => resolve());
     });

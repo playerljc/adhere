@@ -1,4 +1,4 @@
-import { TableRowComponentReducer } from '../../../types';
+import type { TableRowComponentReducer } from '../../../types';
 /**
  * DragSortRow
  * @description 行编辑

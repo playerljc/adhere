@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { EditorTableControlProps } from '../../../types';
+import type { FC } from 'react';
+import type { EditorTableControlProps } from '../../../types';
 /**
  * EditableTableControl
  * @description 编辑表格的控制器

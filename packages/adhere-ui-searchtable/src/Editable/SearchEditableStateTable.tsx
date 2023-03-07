@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import cloneDeep from 'lodash.clonedeep';
 
-import { SearchEditorTableState, SearchTableStateImplementProps } from '../types';
+import type { SearchEditorTableState, SearchTableStateImplementProps } from '../types';
 import SearchEditableCellStateTable from './SearchEditableCellStateTable';
 import SearchEditableFactory from './SearchEditableFactory';
 

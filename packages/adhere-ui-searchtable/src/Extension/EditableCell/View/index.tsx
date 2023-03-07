@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 
 import { EditOutlined } from '@ant-design/icons';
 

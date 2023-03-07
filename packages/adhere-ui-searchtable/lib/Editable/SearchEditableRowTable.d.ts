@@ -1,4 +1,4 @@
-import { SearchEditorRowTableState, SearchTableImplementProps } from '../types';
+import type { SearchEditorRowTableState, SearchTableImplementProps } from '../types';
 declare const SearchEditableRowTable_base: {
     new (props: any): {
         [x: string]: any;

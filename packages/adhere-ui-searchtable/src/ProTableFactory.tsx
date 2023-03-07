@@ -3,7 +3,8 @@ import dayjs from 'dayjs';
 import merge from 'lodash/merge';
 import omit from 'omit.js';
 import qs from 'qs';
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 
 import { FilterOutlined } from '@ant-design/icons';
 import AntdFormItem from '@baifendian/adhere-ui-antdformitem';
@@ -16,7 +17,7 @@ import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 import { selectorPrefix } from './SearchTable';
-import { AdvancedSearchPanelGroupData } from './types';
+import type { AdvancedSearchPanelGroupData } from './types';
 
 const {
   FormItemGeneratorToDict,
@@ -505,7 +506,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                           <Button
                             size="small"
                             onClick={() => {
-                              let state = {};
+                              const state = {};
 
                               if (type === 'rangePicker') {
                                 if (searchConfig.startName) state[searchConfig.startName] = null;
@@ -620,7 +621,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @return Array
      */
     getGridSearchFormGroupDataByColumnConfig() {
-      let searchFormGroupData: {
+      const searchFormGroupData: {
         key: number;
         sort?: number;
         label: ReactNode;
@@ -1489,7 +1490,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       );
 
       // 标准的查询面板
-      let StandardSearchPanel = renderGridSearchFormGroup(group, defaultProps);
+      const StandardSearchPanel = renderGridSearchFormGroup(group, defaultProps);
 
       if (
         (this.advancedSearchConfig && this.advancedSearchConfig.rowCount !== 'auto') ||
@@ -1505,10 +1506,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
         if (rowCount > this.advancedSearchConfig.rowCount) {
           // 显示的组数据
-          let gData: AdvancedSearchPanelGroupData[] = [];
+          const gData: AdvancedSearchPanelGroupData[] = [];
 
           // 剩余的组数据
-          let remainingGData: AdvancedSearchPanelGroupData[] = [];
+          const remainingGData: AdvancedSearchPanelGroupData[] = [];
 
           // 需要的行数
           let needRowCount = this.advancedSearchConfig.rowCount;

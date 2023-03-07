@@ -1,10 +1,12 @@
 import { Form } from 'antd';
-import { FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { FormInstance } from 'antd/es/form';
-import React, { ReactElement, ReactNode, useContext } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import React, { useContext } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { TableRowComponentReducer } from '../../types';
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import type { TableRowComponentReducer } from '../../types';
 
 /**
  * EditableTableRow

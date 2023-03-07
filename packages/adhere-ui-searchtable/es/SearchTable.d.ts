@@ -1,10 +1,12 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
-import React, { ReactElement, RefObject } from 'react';
+import type { ReactElement, ReactNode, RefObject } from 'react';
+import React from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
-import { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState, TableDensity } from './types';
+import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState } from './types';
+import { TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
 export declare const SearchTableContext: React.Context<{
     context: SearchTable;
@@ -15,8 +17,8 @@ export declare const SearchTableContext: React.Context<{
                 fields: FormListFieldData[];
                 operation?: FormListOperation | undefined;
                 meta?: {
-                    errors?: React.ReactNode[] | undefined;
-                    warnings?: React.ReactNode[] | undefined;
+                    errors?: ReactNode[] | undefined;
+                    warnings?: ReactNode[] | undefined;
                 } | undefined;
             } | undefined;
         } | undefined;
@@ -69,12 +71,12 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * getNumberGeneratorRule
      * @description 获取符号列的生成规则
      */
-    abstract getNumberGeneratorRule(): Symbol;
+    abstract getNumberGeneratorRule(): symbol;
     /**
      * getRowSelectionMode
      * @description 获取全选的生模式
      */
-    abstract getRowSelectionMode(): Symbol;
+    abstract getRowSelectionMode(): symbol;
     /**
      * getRowKey
      * @description 获取表格的主键属性
@@ -86,13 +88,13 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @description 获取表格数据
      * @return Array<Object>
      */
-    abstract getData(): Array<object>;
+    abstract getData(): object[];
     /**
      * getColumns
      * @description 获取表格列的信息
      * @return Array<object>
      */
-    abstract getColumns(): Array<ColumnType<object>>;
+    abstract getColumns(): ColumnType<object>[];
     /**
      *
      * getRowSelection
@@ -153,7 +155,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * renderSearchFooterItems
      * @description 渲染SearchFooter的按钮组
      */
-    abstract renderSearchFooterItems(defaultItems: Array<ReactElement>): Array<ReactElement> | null;
+    abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactElement[] | null;
     /**
      * onSubTableChange
      * @description 获取表格change句柄
@@ -243,9 +245,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     onCellConfigReducers(params: {
         rowIndex: number;
         column: ColumnTypeExt;
-        record: {
-            [prop: string]: any;
-        };
+        record: Record<string, any>;
         columns: ColumnTypeExt[];
     }): ColumnTypeExt;
     /**
@@ -255,9 +255,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     onRowConfigReducers(params: {
         rowIndex: number;
-        record: {
-            [prop: string]: any;
-        };
+        record: Record<string, any>;
         columns: ColumnTypeExt[];
     }): RowConfig;
     /**

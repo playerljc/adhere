@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchEditableStateTable from '../../Editable/SearchEditableStateTable';
 import { SearchTableStateImplement } from '../../SearchTableStateImplement';
-import { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
+import type { SearchTableImplementState, SearchTableStateImplementProps } from '../../types';
 import RowDragSortMultiExtend from './RowDragSortMultiExtend';
 import SearchRowDragSortStateTable from './SearchRowDragSortStateTable';
 

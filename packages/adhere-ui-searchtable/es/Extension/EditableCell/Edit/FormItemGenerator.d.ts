@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormItemGeneratorConfig } from '../../../types';
+import type { ReactNode } from 'react';
+import type { FormItemGeneratorConfig } from '../../../types';
 declare const _default: {
     /**
      * render
@@ -12,6 +12,6 @@ declare const _default: {
      * @param dataIndex
      * @param rowIndex
      */
-    render({ type, renderChildren, props, dictName, form, dataIndex, rowIndex, }: FormItemGeneratorConfig): React.ReactNode;
+    render({ type, renderChildren, props, dictName, form, dataIndex, rowIndex, }: FormItemGeneratorConfig): ReactNode;
 };
 export default _default;

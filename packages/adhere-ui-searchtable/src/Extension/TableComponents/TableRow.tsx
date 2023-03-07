@@ -1,8 +1,10 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { FC, ReactElement, ReactNode, useContext } from 'react';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FC, ReactElement, ReactNode } from 'react';
+import React, { useContext } from 'react';
 
-import SearchTable, { SearchTableContext } from '../../SearchTable';
-import { TableRowComponentProps } from '../../types';
+import type SearchTable from '../../SearchTable';
+import { SearchTableContext } from '../../SearchTable';
+import type { TableRowComponentProps } from '../../types';
 import useRowDragSortRow from '../DragSort/RowDragSort/DragSortRow';
 import useEditableRow from '../EditableCell/EditableRow';
 import useEditableTableRow from '../EditableCell/EditableTableRow';

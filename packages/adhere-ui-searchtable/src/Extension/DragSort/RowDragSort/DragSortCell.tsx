@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TableCellComponentReducer } from '../../../types';
+import type { TableCellComponentReducer } from '../../../types';
 
 /**
  * DragSortCell

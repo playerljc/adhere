@@ -1,13 +1,15 @@
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import classNames from 'classnames';
-import React, { FC, ReactNode, useCallback, useContext } from 'react';
+import type { FC, ReactNode } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Intl from '@baifendian/adhere-util-intl';
 
-import SearchEditableTable from '../../../Editable/SearchEditableTable';
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { EditorTableControlProps } from '../../../types';
+import type SearchEditableTable from '../../../Editable/SearchEditableTable';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { EditorTableControlProps } from '../../../types';
 
 /**
  * EditableTableControl

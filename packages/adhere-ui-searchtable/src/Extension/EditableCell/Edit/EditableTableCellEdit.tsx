@@ -1,12 +1,14 @@
 import { Form } from 'antd';
-import { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import React, { FC, ReactNode, useContext, useEffect } from 'react';
+import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
+import type { FC, ReactNode } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import SearchTable, { SearchTableContext, selectorPrefix } from '../../../SearchTable';
-import { EditableCellEditProps } from '../../../types';
+import type SearchTable from '../../../SearchTable';
+import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import type { EditableCellEditProps } from '../../../types';
 import FormItemGenerator from './FormItemGenerator';
 
 /**

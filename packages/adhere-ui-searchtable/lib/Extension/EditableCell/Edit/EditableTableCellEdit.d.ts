@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { EditableCellEditProps } from '../../../types';
+import type { FC } from 'react';
+import type { EditableCellEditProps } from '../../../types';
 /**
  * EditableTableCellEdit
  * @description 表格可编辑单元格的编辑状态

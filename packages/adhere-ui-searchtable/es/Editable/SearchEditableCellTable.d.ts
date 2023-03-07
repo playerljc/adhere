@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import { SearchTableImplementProps, SearchTableImplementState } from '../types';
+import type dayjs from 'dayjs';
+import type { SearchTableImplementProps, SearchTableImplementState } from '../types';
 declare const SearchEditableCellTable_base: {
     new (props: any): {
         [x: string]: any;
