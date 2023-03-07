@@ -41,6 +41,8 @@ declare const _default: {
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
+    parse(path?: string | undefined, config?: import("./types").IUrlConfig): object | null;
+    stringify(record: object, config?: import("./types").IUrlConfig): string;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;

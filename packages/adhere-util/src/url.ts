@@ -1,8 +1,7 @@
-import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-
+// import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 import { IUrlConfig } from './types';
 
-const { memoized } = WatchMemoized;
+// const { memoized } = WatchMemoized;
 
 const defaultConfig: IUrlConfig = {
   ignoreInvalid: true,
@@ -80,10 +79,10 @@ const methods = {
   },
 };
 
-const memoizedMethods = {};
+// const memoizedMethods = {};
+//
+// for (const p in methods) {
+//   memoizedMethods[p] = memoized.createMemoFun(methods[p]);
+// }
 
-for (const p in methods) {
-  memoizedMethods[p] = memoized.createMemoFun(methods[p]);
-}
-
-export default memoizedMethods;
+export default methods;
