@@ -1,3 +1,15 @@
+# 2.0.5
+
+***
+
+2023-03-06
+
+* **adhere-ui-searchtable**
+  - 全局状态管理下BUG的修改
+  - 点击两次触发编辑的BUG
+* **adhere-util**
+  - 去掉adhere-util-watchmemoized的依赖
+
 # 2.0.4
 
 ***
