@@ -1,5 +1,6 @@
 import {
   AutoCompleteProps,
+  BreadcrumbProps,
   CascaderProps,
   DropdownProps,
   ListProps,
@@ -173,3 +174,6 @@ export interface TagCheckAllFormItemProps extends FormItemProps, TagFormItemProp
 export interface MenuFormItemProps extends MenuProps, FormItemProps {}
 
 export interface DropdownFormItemProps extends DropdownProps, FormItemProps {}
+
+// @ts-ignore
+export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps {}

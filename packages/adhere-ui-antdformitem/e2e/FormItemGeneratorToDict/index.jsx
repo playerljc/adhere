@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Space } from '@baifendian/adhere';
 
+import Breadcrumb from './breadcrumb';
 import Dropdown from './dropdown';
 import Menu from './menu';
 import Tag from './tag';
@@ -12,6 +13,7 @@ export default () => {
       <Tag />
       <Menu />
       <Dropdown />
+      <Breadcrumb />
     </Space.Group>
   );
 };

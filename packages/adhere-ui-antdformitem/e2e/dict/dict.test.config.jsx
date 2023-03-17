@@ -571,6 +571,22 @@ export default {
         label: 'a danger item',
       },
     ];
+
+    // Breadcrumb
+    Dict.handlers.SystemTestBreadcrumb = () => [
+      {
+        title: 'Home',
+      },
+      {
+        title: <a href="">Application Center</a>,
+      },
+      {
+        title: <a href="">Application List</a>,
+      },
+      {
+        title: 'An Application',
+      },
+    ];
   },
   initRemote() {},
 };
