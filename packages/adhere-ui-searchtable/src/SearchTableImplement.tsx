@@ -440,6 +440,37 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * sync
+   * @description 同步
+   * @return Promise<any>
+   */
+  sync(): Promise<any> {
+    return new Promise((resolve) => {
+      const page = this.state.page as number;
+
+      if (page === 1) {
+        resolve(this.fetchData());
+        return;
+      }
+
+      const res = this.fetchData().then(() => {
+        const data = this.getData();
+
+        if (data.length) {
+          resolve(res);
+        } else {
+          this.setState(
+            {
+              page: page - 1,
+            },
+            () => resolve(this.fetchData()),
+          );
+        }
+      });
+    });
+  }
+
+  /**
    * fetchDataExecute
    * @description - 真正的执行获取列表数据的接口
    * @param searchParams

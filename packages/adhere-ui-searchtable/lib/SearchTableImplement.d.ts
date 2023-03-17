@@ -197,6 +197,12 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     fetchData(): Promise<any>;
     /**
+     * sync
+     * @description 同步
+     * @return Promise<any>
+     */
+    sync(): Promise<any>;
+    /**
      * fetchDataExecute
      * @description - 真正的执行获取列表数据的接口
      * @param searchParams
