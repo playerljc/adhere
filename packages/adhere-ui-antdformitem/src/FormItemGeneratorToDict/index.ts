@@ -12,9 +12,11 @@ import CheckBoxCustomFormItem from './CheckBoxCustomFormItem';
 import CheckBoxHorizontalFormItem from './CheckBoxHorizontalFormItem';
 import CheckBoxSelectFormItem from './CheckBoxSelectFormItem';
 import CheckBoxVerticalFormItem from './CheckBoxVerticalFormItem';
+import DropdownFormItem from './DropdownFormItem';
 import AutoComplete from './Fields/AutoComplete';
 import Cascader from './Fields/Cascader';
 import CheckBox from './Fields/CheckBox';
+import Dropdown from './Fields/Dropdown';
 import List from './Fields/List';
 import Menu from './Fields/Menu';
 import Radio from './Fields/Radio';
@@ -64,6 +66,7 @@ const FormItemComponents = {
   ...TreeSelect(),
   ...Tag(),
   ...Menu(),
+  ...Dropdown(),
 };
 
 const validatorNormal = (message) => ({
@@ -92,6 +95,7 @@ const validatorMulti = (message) => ({
 
 export {
   AutoCompleteFormItem,
+  DropdownFormItem,
   validatorMulti,
   validatorNormal,
   TableFormItem,
