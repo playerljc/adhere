@@ -5,6 +5,7 @@ import {
   RadioGroupProps,
   SelectProps,
   TableProps,
+  TagProps,
   TransferProps,
   TreeSelectProps,
 } from 'antd';
@@ -97,6 +98,10 @@ export interface RadioSelectFormItemProps extends FormItemProps, SelectFormItemP
   dataSource: RadioLabelValue[];
 }
 
+export interface TagSelectFormItemProps extends FormItemProps, SelectFormItemProps {
+  dataSource: RadioLabelValue[];
+}
+
 export interface RadioVerticalFormItemProps extends RadioGroupProps {
   dataSource: LabelValue[];
 }
@@ -145,3 +150,19 @@ export interface TreeSelectLeafMulitFormItemProps extends TreeSelectMulitFormIte
 export interface AutoCompleteFormItemProps extends FormItemProps, AutoCompleteProps {
   dataSource: LabelValue[];
 }
+
+export interface TagFormItemProps extends FormItemProps {
+  dataSource: LabelValue[];
+  renderItem?: (params: {
+    record?: LabelValue;
+    index?: number;
+    value?: any;
+    onChange?: (value?: any) => void;
+  }) => {
+    component?: any;
+    props: TagProps;
+    children: ReactNode;
+  };
+}
+
+export interface TagCheckAllFormItemProps extends FormItemProps, TagFormItemProps {}

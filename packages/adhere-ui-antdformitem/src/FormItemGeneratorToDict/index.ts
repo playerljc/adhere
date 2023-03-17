@@ -35,6 +35,13 @@ import SelectFormItem from './SelectFormItem';
 import TableFormItem from './TableFormItem';
 import TableMulitSelectFormItem from './TableMulitSelectFormItem';
 import TableSelectFormItem from './TableSelectFormItem';
+import TagCheckAllHorizontalFormItem from './TagCheckAllHorizontalFormItem';
+import TagCheckAllSelectFormItem from './TagCheckAllSelectFormItem';
+import TagCheckAllVerticalFormItem from './TagCheckAllVerticalFormItem';
+import TagHorizontalFormItem from './TagHorizontalFormItem';
+import TagMultiSelectFormItem from './TagMultiSelectFormItem';
+import TagSelectFormItem from './TagSelectFormItem';
+import TagVerticalFormItem from './TagVerticalFormItem';
 import TransferFormItem from './TransferFormItem';
 import TransferSelectFormItem from './TransferSelectFormItem';
 import TreeMulitSelectFormItem from './TreeMulitSelectFormItem';
@@ -81,42 +88,49 @@ const validatorMulti = (message) => ({
 });
 
 export {
+  AutoCompleteFormItem,
   validatorMulti,
   validatorNormal,
+  TableFormItem,
   TableSelectFormItem,
   TableMulitSelectFormItem,
-  CheckBoxHorizontalFormItem,
-  RadioVerticalFormItem,
-  MulitSelectFormItem,
   TreeSelectLeafMulitFormItem,
-  ListMulitSelectFormItem,
   TreeSelectLeafFormItem,
-  CascaderMulitFormItem,
-  CheckBoxCheckAllCustomFormItem,
   TreeSelectMulitFormItem,
-  CascaderLeafFormItem,
-  ListFormItem,
-  CascaderFormItem,
-  SelectFormItem,
-  CascaderLeafMulitFormItem,
-  CheckBoxCheckAllVerticalFormItem,
-  ListSelectFormItem,
-  CheckBoxCheckAllHorizontalFormItem,
-  TreeMulitSelectFormItem,
-  TransferSelectFormItem,
   TreeSelectFormItem,
-  RadioCustomFormItem,
-  RadioHorizontalFormItem,
-  TableFormItem,
-  CheckBoxCustomFormItem,
-  TransferFormItem,
+  TreeMulitSelectFormItem,
+  TagCheckAllHorizontalFormItem,
+  TagCheckAllSelectFormItem,
+  TagCheckAllVerticalFormItem,
+  TagHorizontalFormItem,
+  TagSelectFormItem,
+  TagMultiSelectFormItem,
+  TagVerticalFormItem,
+  CheckBoxHorizontalFormItem,
+  CheckBoxCheckAllCustomFormItem,
+  CheckBoxCheckAllVerticalFormItem,
+  CheckBoxCheckAllHorizontalFormItem,
   CheckBoxVerticalFormItem,
   CheckBoxCheckAllSelectFormItem,
+  CheckBoxCustomFormItem,
   CheckBoxSelectFormItem,
+  RadioVerticalFormItem,
+  RadioCustomFormItem,
+  RadioHorizontalFormItem,
   RadioButtonFormItem,
   RadioSelectFormItem,
+  ListMulitSelectFormItem,
+  ListSelectFormItem,
+  ListFormItem,
+  CascaderFormItem,
+  CascaderMulitFormItem,
+  CascaderLeafFormItem,
+  CascaderLeafMulitFormItem,
   CheckAllMulitSelectFormItem,
-  AutoCompleteFormItem,
+  SelectFormItem,
+  MulitSelectFormItem,
+  TransferFormItem,
+  TransferSelectFormItem,
 };
 
 export default FormItemComponents;
