@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 
-import FlexLayout from '../index';
+import FlexLayout from '../src/index';
+
+import '../src/index.less';
 
 const { Fixed, Auto } = FlexLayout;
 
-// @ts-ignore
-ReactDOM.createRoot(document.getElementById('app')).render(
+export default () => (
   <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
     <Fixed>
       <div
@@ -31,5 +31,5 @@ ReactDOM.createRoot(document.getElementById('app')).render(
         Bottom
       </div>
     </Fixed>
-  </FlexLayout>,
+  </FlexLayout>
 );
