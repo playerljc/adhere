@@ -16,6 +16,7 @@ import AutoComplete from './Fields/AutoComplete';
 import Cascader from './Fields/Cascader';
 import CheckBox from './Fields/CheckBox';
 import List from './Fields/List';
+import Menu from './Fields/Menu';
 import Radio from './Fields/Radio';
 import Select from './Fields/Select';
 import Table from './Fields/Table';
@@ -25,6 +26,7 @@ import TreeSelect from './Fields/TreeSelect';
 import ListFormItem from './ListFormItem';
 import ListMulitSelectFormItem from './ListMulitSelectFormItem';
 import ListSelectFormItem from './ListSelectFormItem';
+import MenuFormItem from './MenuFormItem';
 import MulitSelectFormItem from './MulitSelectFormItem';
 import RadioButtonFormItem from './RadioButtonFormItem';
 import RadioCustomFormItem from './RadioCustomFormItem';
@@ -61,6 +63,7 @@ const FormItemComponents = {
   ...Transfer(),
   ...TreeSelect(),
   ...Tag(),
+  ...Menu(),
 };
 
 const validatorNormal = (message) => ({
@@ -129,6 +132,7 @@ export {
   CheckAllMulitSelectFormItem,
   SelectFormItem,
   MulitSelectFormItem,
+  MenuFormItem,
   TransferFormItem,
   TransferSelectFormItem,
 };

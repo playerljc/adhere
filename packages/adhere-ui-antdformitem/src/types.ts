@@ -2,6 +2,7 @@ import {
   AutoCompleteProps,
   CascaderProps,
   ListProps,
+  MenuProps,
   RadioGroupProps,
   SelectProps,
   TableProps,
@@ -166,3 +167,6 @@ export interface TagFormItemProps extends FormItemProps {
 }
 
 export interface TagCheckAllFormItemProps extends FormItemProps, TagFormItemProps {}
+
+// @ts-ignore
+export interface MenuFormItemProps extends MenuProps, FormItemProps {}
