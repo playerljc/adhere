@@ -21,7 +21,6 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startapp:dev": "ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "buildpackage:cjs": "ctbuild buildpackagets",
     "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
