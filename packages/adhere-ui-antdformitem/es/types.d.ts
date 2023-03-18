@@ -38,13 +38,13 @@ export interface CheckBoxCheckAllVerticalFormItemProps extends CheckboxGroupProp
 export interface CheckBoxCheckAllHorizontalFormItemProps extends CheckboxGroupProps {
     dataSource: LabelValue[];
 }
-export interface CheckBoxCustomFormItemProps extends CheckboxGroupProps {
+export type CheckBoxCustomFormItemProps = CheckboxGroupProps & {
     dataSource: LabelValue[];
     children?: (params: {
         data: LabelValue;
         item: ReactNode;
     }[]) => ReactNode;
-}
+};
 export interface CheckBoxCheckAllCustomFormItemProps extends CheckBoxCustomFormItemProps {
 }
 export type CascaderFormItemProps = {
@@ -83,22 +83,22 @@ export interface RadioHorizontalFormItemProps extends RadioVerticalFormItemProps
 }
 export interface RadioButtonFormItemProps extends RadioVerticalFormItemProps {
 }
-export interface RadioCustomFormItemProps extends RadioVerticalFormItemProps {
+export type RadioCustomFormItemProps = RadioVerticalFormItemProps & {
     children?: (params: {
         data: LabelValue;
         item: ReactNode;
     }[]) => ReactNode;
-}
+};
 export interface TableFormItemProps extends TableProps<any> {
     firstLoading?: ReactElement;
     renderEmpty?: Function;
 }
-export interface TableSelectFormItemProps extends FormItemProps, TableFormItemProps {
+export type TableSelectFormItemProps = FormItemProps & TableFormItemProps & {
     selectProps?: SelectFormItemProps;
     labelKey?: string;
     dataSource: LabelValue[];
     rowKey?: string;
-}
+};
 export interface TableMulitSelectFormItemProps extends TableSelectFormItemProps {
 }
 export interface TransferFormItemProps extends TransferProps<any> {
@@ -114,9 +114,9 @@ export interface TreeSelectMulitFormItemProps extends TreeSelectLeafFormItemProp
 }
 export interface TreeSelectLeafMulitFormItemProps extends TreeSelectMulitFormItemProps {
 }
-export interface AutoCompleteFormItemProps extends FormItemProps, AutoCompleteProps {
+export type AutoCompleteFormItemProps = FormItemProps & AutoCompleteProps & {
     dataSource: LabelValue[];
-}
+};
 export interface TagFormItemProps extends FormItemProps {
     dataSource: LabelValue[];
     renderItem?: (params: {
@@ -132,18 +132,14 @@ export interface TagFormItemProps extends FormItemProps {
 }
 export interface TagCheckAllFormItemProps extends FormItemProps, TagFormItemProps {
 }
-export interface MenuFormItemProps extends MenuProps, FormItemProps {
-}
+export type MenuFormItemProps = MenuProps & FormItemProps;
 export interface DropdownFormItemProps extends DropdownProps, FormItemProps {
 }
-export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps {
-}
-export interface SegmentedFormItemProps extends FormItemProps, SegmentedProps {
+export type BreadcrumbFormItemProps = FormItemProps & BreadcrumbProps;
+export interface SegmentedFormItemProps extends SegmentedProps {
 }
 export interface TimelineFormItemProps extends SyncFormItemProps, TimelineProps {
 }
-export interface StepsFormItemProps extends SyncFormItemProps, StepsProps {
-}
-export interface MentionsFormItemProps extends FormItemProps, MentionProps {
-}
+export type StepsFormItemProps = SyncFormItemProps & StepsProps;
+export type MentionsFormItemProps = FormItemProps & MentionProps;
 export {};

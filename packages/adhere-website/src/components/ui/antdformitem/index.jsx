@@ -1,7 +1,7 @@
 import { Space as AntdSpace, Avatar, Button, Checkbox, List } from 'antd';
 import React, { useState } from 'react';
 
-import { UploadOutlined } from '@ant-design/icons';
+import { DownOutlined, UploadOutlined } from '@ant-design/icons';
 import { AntdFormItem, FlexLayout, Space } from '@baifendian/adhere';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
@@ -21,6 +21,12 @@ export default () => {
     inputValue: '',
     selectValue: '',
   });
+  const [current, setCurrent] = useState('mail');
+
+  const onClick = (e) => {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
 
   const listRenderItem = (item) => (
     <List.Item>
@@ -2990,6 +2996,795 @@ export default () => {
         ]}
       />
 
+      {/**/}
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Breadcrumb"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestBreadcrumbFormItem />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestBreadcrumbFormItem />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Dropdown"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+  import { DownOutlined } from '@ant-design/icons';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestDropdownFormItem>
+        <a onClick={(e) => e.preventDefault()}>
+          Hover me
+          <DownOutlined />
+        </a>
+      </AntdFormItem.FormItemGeneratorToDict.SystemTestDropdownFormItem>
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestDropdownFormItem>
+                <a onClick={(e) => e.preventDefault()}>
+                  Hover me
+                  <DownOutlined />
+                </a>
+              </AntdFormItem.FormItemGeneratorToDict.SystemTestDropdownFormItem>
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Mentions"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestMentionsFormItem />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestMentionsFormItem />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Menu"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestMenuFormItem />
+    )
+  }
+            `,
+            renderChildren: () => <AntdFormItem.FormItemGeneratorToDict.SystemTestMenuFormItem />,
+          },
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestMenuFormItem />
+    )
+  }
+            `,
+            renderChildren: () => <AntdFormItem.FormItemGeneratorToDict.SystemTestMenuFormItem />,
+          },
+          {
+            id: 'p2',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    const [current, setCurrent] = useState(1);
+
+    const onClick = () => {};
+
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestJSX1MenuFormItem
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestJSX1MenuFormItem
+                onClick={onClick}
+                selectedKeys={[current]}
+                mode="horizontal"
+              />
+            ),
+          },
+          {
+            id: 'p3',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestJSX2MenuFormItem
+        onClick={() => {}}
+        style={{
+          width: 256,
+        }}
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestJSX2MenuFormItem
+                onClick={() => {}}
+                style={{
+                  width: 256,
+                }}
+                defaultSelectedKeys={['1']}
+                defaultOpenKeys={['sub1']}
+                mode="inline"
+              />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Segmented"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestObjArraySegmentedFormItem />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestObjArraySegmentedFormItem />
+            ),
+          },
+          {
+            id: 'p2',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestSegmentedFormItem />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestSegmentedFormItem />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Steps"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestOneStepsFormItem value={1} />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestOneStepsFormItem value={1} />
+            ),
+          },
+          {
+            id: 'p2',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestOneStepsFormItem
+        direction="vertical"
+        size="small"
+        value={1}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestOneStepsFormItem
+                direction="vertical"
+                size="small"
+                value={1}
+              />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Tag"
+        config={[
+          {
+            id: 'p1',
+            name: 'Tag横向',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag横向',
+                info: 'Tag横向`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem, Space } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <Space.Group direction="vertical">
+        <AntdFormItem.FormItemGeneratorToDict.SystemTestTagHorizontalFormItem
+          value={vals}
+          onChange={(v) => setVals(v)}
+        />
+        <AntdFormItem.FormItemGeneratorToDict.SystemTestTagHorizontalFormItem
+          renderItem={({ index }) => {
+            const colorMap = new Map([
+              [0, 'magenta'],
+              [1, 'red'],
+              [2, 'volcano'],
+            ]);
+
+            return {
+              props: {
+                color: colorMap.get(index),
+              },
+            };
+          }}
+          value={vals}
+          onChange={(v) => setVals(v)}
+        />
+      </Space.Group>
+    )
+  }
+            `,
+            renderChildren: () => (
+              <Space.Group direction="vertical">
+                <AntdFormItem.FormItemGeneratorToDict.SystemTestTagHorizontalFormItem
+                  value={vals}
+                  onChange={(v) => setVals(v)}
+                />
+                <AntdFormItem.FormItemGeneratorToDict.SystemTestTagHorizontalFormItem
+                  renderItem={({ index }) => {
+                    const colorMap = new Map([
+                      [0, 'magenta'],
+                      [1, 'red'],
+                      [2, 'volcano'],
+                    ]);
+
+                    return {
+                      props: {
+                        color: colorMap.get(index),
+                      },
+                    };
+                  }}
+                  value={vals}
+                  onChange={(v) => setVals(v)}
+                />
+              </Space.Group>
+            ),
+          },
+          {
+            id: 'p2',
+            name: 'Tag纵向',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag纵向',
+                info: 'Tag纵向`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem, Space } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <Space.Group direction="vertical">
+        <AntdFormItem.FormItemGeneratorToDict.SystemTestTagVerticalFormItem
+          value={vals}
+          onChange={(v) => setVals(v)}
+        />
+
+        <AntdFormItem.FormItemGeneratorToDict.SystemTestTagVerticalFormItem
+          renderItem={({ index }) => {
+            const colorMap = new Map([
+              [0, 'magenta'],
+              [1, 'red'],
+              [2, 'volcano'],
+            ]);
+
+            return {
+              props: {
+                color: colorMap.get(index),
+              },
+            };
+          }}
+          value={vals}
+          onChange={(v) => setVals(v)}
+        />
+      </Space.Group>
+    )
+  }
+            `,
+            renderChildren: () => (
+              <Space.Group direction="vertical">
+                <AntdFormItem.FormItemGeneratorToDict.SystemTestTagVerticalFormItem
+                  value={vals}
+                  onChange={(v) => setVals(v)}
+                />
+
+                <AntdFormItem.FormItemGeneratorToDict.SystemTestTagVerticalFormItem
+                  renderItem={({ index }) => {
+                    const colorMap = new Map([
+                      [0, 'magenta'],
+                      [1, 'red'],
+                      [2, 'volcano'],
+                    ]);
+
+                    return {
+                      props: {
+                        color: colorMap.get(index),
+                      },
+                    };
+                  }}
+                  value={vals}
+                  onChange={(v) => setVals(v)}
+                />
+              </Space.Group>
+            ),
+          },
+          {
+            id: 'p3',
+            name: 'Tag纵向全选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag纵向全选',
+                info: 'Tag纵向全选`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestTagCheckAllVerticalFormItem
+        value={vals}
+        onChange={(v) => setVals(v)}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestTagCheckAllVerticalFormItem
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p4',
+            name: 'Tag横向全选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag横向全选',
+                info: 'Tag横向全选`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestTagCheckAllHorizontalFormItem
+        value={vals}
+        onChange={(v) => setVals(v)}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestTagCheckAllHorizontalFormItem
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p5',
+            name: 'Tag的Select',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag的Select',
+                info: 'Tag的Select`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestTagSelectFormItem
+        selectProps={{
+          style: {
+            width: 200,
+          },
+        }}
+        value={val}
+        onChange={(v) => setVal(v)}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestTagSelectFormItem
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            ),
+          },
+          {
+            id: 'p6',
+            name: 'Tag的Select多选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag的Select多选',
+                info: 'Tag的Select多选`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestTagMultiSelectFormItem
+        selectProps={{
+          style: {
+            width: 200,
+          },
+        }}
+        value={vals}
+        onChange={(v) => setVals(v)}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestTagMultiSelectFormItem
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p7',
+            name: 'Tag的CheckAllSelect',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Tag的CheckAllSelect',
+                info: 'Tag的CheckAllSelect`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestTagCheckAllSelectFormItem
+        selectProps={{
+          style: {
+            width: 200,
+          },
+        }}
+        value={vals}
+        onChange={(v) => setVals(v)}
+      />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestTagCheckAllSelectFormItem
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormItemGeneratorToDict - Timeline"
+        config={[
+          {
+            id: 'p1',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestOneTimelineFormItem />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestOneTimelineFormItem />
+            ),
+          },
+          {
+            id: 'p2',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestTwoTimelineFormItem mode="alternate" />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestTwoTimelineFormItem mode="alternate" />
+            ),
+          },
+          {
+            id: 'p3',
+            name: '基本使用',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '基本使用',
+                info: '基本使用`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    return (
+      <AntdFormItem.FormItemGeneratorToDict.SystemTestThreeTimelineFormItem mode="right" />
+    )
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestThreeTimelineFormItem mode="right" />
+            ),
+          },
+        ]}
+      />
+      {/**/}
+
       <PropsSection
         title="AntdFormItem.AntFormItemNormalize"
         config={[
@@ -3314,6 +4109,7 @@ export default () => {
           },
         ]}
       />
+
       <PropsSection
         title="AntdFormItem.FormItemGeneratorToDict"
         config={[

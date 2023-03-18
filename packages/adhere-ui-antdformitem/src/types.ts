@@ -66,8 +66,7 @@ export interface CheckBoxCheckAllHorizontalFormItemProps extends CheckboxGroupPr
   dataSource: LabelValue[];
 }
 
-// @ts-ignore
-export interface CheckBoxCustomFormItemProps extends CheckboxGroupProps {
+export type CheckBoxCustomFormItemProps = CheckboxGroupProps & {
   dataSource: LabelValue[];
   children?: (
     params: {
@@ -75,7 +74,7 @@ export interface CheckBoxCustomFormItemProps extends CheckboxGroupProps {
       item: ReactNode;
     }[],
   ) => ReactNode;
-}
+};
 
 export interface CheckBoxCheckAllCustomFormItemProps extends CheckBoxCustomFormItemProps {}
 
@@ -124,28 +123,27 @@ export interface RadioHorizontalFormItemProps extends RadioVerticalFormItemProps
 
 export interface RadioButtonFormItemProps extends RadioVerticalFormItemProps {}
 
-// @ts-ignore
-export interface RadioCustomFormItemProps extends RadioVerticalFormItemProps {
+export type RadioCustomFormItemProps = RadioVerticalFormItemProps & {
   children?: (
     params: {
       data: LabelValue;
       item: ReactNode;
     }[],
   ) => ReactNode;
-}
+};
 
 export interface TableFormItemProps extends TableProps<any> {
   firstLoading?: ReactElement;
   renderEmpty?: Function;
 }
 
-// @ts-ignore
-export interface TableSelectFormItemProps extends FormItemProps, TableFormItemProps {
-  selectProps?: SelectFormItemProps;
-  labelKey?: string;
-  dataSource: LabelValue[];
-  rowKey?: string;
-}
+export type TableSelectFormItemProps = FormItemProps &
+  TableFormItemProps & {
+    selectProps?: SelectFormItemProps;
+    labelKey?: string;
+    dataSource: LabelValue[];
+    rowKey?: string;
+  };
 
 export interface TableMulitSelectFormItemProps extends TableSelectFormItemProps {}
 
@@ -163,10 +161,10 @@ export interface TreeSelectMulitFormItemProps extends TreeSelectLeafFormItemProp
 
 export interface TreeSelectLeafMulitFormItemProps extends TreeSelectMulitFormItemProps {}
 
-// @ts-ignore
-export interface AutoCompleteFormItemProps extends FormItemProps, AutoCompleteProps {
-  dataSource: LabelValue[];
-}
+export type AutoCompleteFormItemProps = FormItemProps &
+  AutoCompleteProps & {
+    dataSource: LabelValue[];
+  };
 
 export interface TagFormItemProps extends FormItemProps {
   dataSource: LabelValue[];
@@ -184,21 +182,16 @@ export interface TagFormItemProps extends FormItemProps {
 
 export interface TagCheckAllFormItemProps extends FormItemProps, TagFormItemProps {}
 
-// @ts-ignore
-export interface MenuFormItemProps extends MenuProps, FormItemProps {}
+export type MenuFormItemProps = MenuProps & FormItemProps;
 
 export interface DropdownFormItemProps extends DropdownProps, FormItemProps {}
 
-// @ts-ignore
-export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps {}
+export type BreadcrumbFormItemProps = FormItemProps & BreadcrumbProps;
 
-// @ts-ignore
-export interface SegmentedFormItemProps extends FormItemProps, SegmentedProps {}
+export interface SegmentedFormItemProps extends SegmentedProps {}
 
 export interface TimelineFormItemProps extends SyncFormItemProps, TimelineProps {}
 
-// @ts-ignore
-export interface StepsFormItemProps extends SyncFormItemProps, StepsProps {}
+export type StepsFormItemProps = SyncFormItemProps & StepsProps;
 
-// @ts-ignore
-export interface MentionsFormItemProps extends FormItemProps, MentionProps {}
+export type MentionsFormItemProps = FormItemProps & MentionProps;
