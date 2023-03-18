@@ -12,6 +12,7 @@ declare class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState
     };
     isLoading: boolean;
     componentWillReceiveProps(nextProps: any): void;
+    isDataDirty(data: any, nextData: any): any;
     reset(): Promise<void>;
     showLoading(): boolean;
     renderInner(): React.ReactElement | null;

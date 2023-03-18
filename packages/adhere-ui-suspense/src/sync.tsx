@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Util from '@baifendian/adhere-util';
 
 import Suspense from './suspense';
 import { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
@@ -22,7 +23,7 @@ class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implem
   componentWillReceiveProps(nextProps) {
     const { data } = this.props;
 
-    if (this.isLoading && JSON.stringify(nextProps.data || []) !== JSON.stringify(data || [])) {
+    if (this.isLoading && this.isDataDirty(data, nextProps.data)) {
       this.setState(
         {
           loading: false,
@@ -32,6 +33,22 @@ class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implem
         },
       );
     }
+  }
+
+  isDataDirty(data, nextData) {
+    if (typeof data !== typeof nextData) return true;
+
+    if (Util.isObject(data) && Util.isObject(nextData)) {
+      return !Object.is(data, nextData);
+    }
+
+    if (Util.isArray(data) && Util.isArray(nextData)) {
+      if (data.length !== nextData.length) return true;
+
+      return data.some((t1, index) => !Object.is(t1, nextData[index]));
+    }
+
+    return false;
   }
 
   reset(): Promise<void> {
@@ -77,7 +94,6 @@ SuspenseSync.defaultProps = {};
 
 SuspenseSync.propTypes = {
   firstLoading: PropTypes.node,
-  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   isEmpty: PropTypes.func.isRequired,
   renderEmpty: PropTypes.func,
 };
