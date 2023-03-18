@@ -4,6 +4,7 @@ import React from 'react';
 
 import {
   AppstoreOutlined,
+  ClockCircleOutlined,
   MailOutlined,
   SettingOutlined,
   SmileOutlined,
@@ -597,7 +598,6 @@ export default {
 
     // Segmented
     Dict.handlers.SystemTestSegmented = () => ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
-
     Dict.handlers.SystemTestObjArraySegmented = () => [
       {
         label: (
@@ -625,6 +625,100 @@ export default {
           </div>
         ),
         value: 'user3',
+      },
+    ];
+
+    // Timeline
+    Dict.handlers.SystemTestOneTimeline = () => [
+      {
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        children: 'Solve initial network problems 2015-09-01',
+      },
+      {
+        children: 'Technical testing 2015-09-01',
+      },
+      {
+        children: 'Network problems being solved 2015-09-01',
+      },
+    ];
+    Dict.handlers.SystemTestTwoTimeline = () => [
+      {
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        children: 'Solve initial network problems 2015-09-01',
+        color: 'green',
+      },
+      {
+        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+        children: `Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.`,
+      },
+      {
+        color: 'red',
+        children: 'Network problems being solved 2015-09-01',
+      },
+      {
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+        children: 'Technical testing 2015-09-01',
+      },
+    ];
+    Dict.handlers.SystemTestThreeTimeline = () => [
+      {
+        color: 'green',
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        color: 'green',
+        children: 'Create a services site 2015-09-01',
+      },
+      {
+        color: 'red',
+        children: (
+          <>
+            <p>Solve initial network problems 1</p>
+            <p>Solve initial network problems 2</p>
+            <p>Solve initial network problems 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        children: (
+          <>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        color: 'gray',
+        children: (
+          <>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        color: 'gray',
+        children: (
+          <>
+            <p>Technical testing 1</p>
+            <p>Technical testing 2</p>
+            <p>Technical testing 3 2015-09-01</p>
+          </>
+        ),
+      },
+      {
+        color: '#00CCFF',
+        dot: <SmileOutlined />,
+        children: <p>Custom color testing</p>,
       },
     ];
   },

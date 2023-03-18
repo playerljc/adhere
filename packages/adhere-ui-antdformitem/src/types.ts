@@ -10,6 +10,7 @@ import {
   SelectProps,
   TableProps,
   TagProps,
+  TimelineProps,
   TransferProps,
   TreeSelectProps,
 } from 'antd';
@@ -181,3 +182,5 @@ export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps 
 
 // @ts-ignore
 export interface SegmentedFormItemProps extends FormItemProps, SegmentedProps {}
+
+export interface TimelineFormItemProps extends FormItemProps, TimelineProps {}

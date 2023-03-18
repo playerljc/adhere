@@ -26,6 +26,7 @@ import Segmented from './Fields/Segmented';
 import Select from './Fields/Select';
 import Table from './Fields/Table';
 import Tag from './Fields/Tag';
+import Timeline from './Fields/Timeline';
 import Transfer from './Fields/Transfer';
 import TreeSelect from './Fields/TreeSelect';
 import ListFormItem from './ListFormItem';
@@ -50,6 +51,7 @@ import TagHorizontalFormItem from './TagHorizontalFormItem';
 import TagMultiSelectFormItem from './TagMultiSelectFormItem';
 import TagSelectFormItem from './TagSelectFormItem';
 import TagVerticalFormItem from './TagVerticalFormItem';
+import TimelineFormItem from './TimelineFormItem';
 import TransferFormItem from './TransferFormItem';
 import TransferSelectFormItem from './TransferSelectFormItem';
 import TreeMulitSelectFormItem from './TreeMulitSelectFormItem';
@@ -73,6 +75,7 @@ const FormItemComponents = {
   ...Dropdown(),
   ...Breadcrumb(),
   ...Segmented(),
+  ...Timeline(),
 };
 
 const validatorNormal = (message) => ({
@@ -147,6 +150,7 @@ export {
   MenuFormItem,
   TransferFormItem,
   TransferSelectFormItem,
+  TimelineFormItem,
 };
 
 export default FormItemComponents;
