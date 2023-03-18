@@ -4,6 +4,7 @@ import {
   CascaderProps,
   DropdownProps,
   ListProps,
+  MentionProps,
   MenuProps,
   RadioGroupProps,
   SegmentedProps,
@@ -188,3 +189,6 @@ export interface TimelineFormItemProps extends FormItemProps, TimelineProps {}
 
 // @ts-ignore
 export interface StepsFormItemProps extends FormItemProps, StepsProps {}
+
+// @ts-ignore
+export interface MentionsFormItemProps extends FormItemProps, MentionProps {}

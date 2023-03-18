@@ -20,6 +20,7 @@ import Cascader from './Fields/Cascader';
 import CheckBox from './Fields/CheckBox';
 import Dropdown from './Fields/Dropdown';
 import List from './Fields/List';
+import Mentions from './Fields/Mentions';
 import Menu from './Fields/Menu';
 import Radio from './Fields/Radio';
 import Segmented from './Fields/Segmented';
@@ -33,6 +34,7 @@ import TreeSelect from './Fields/TreeSelect';
 import ListFormItem from './ListFormItem';
 import ListMulitSelectFormItem from './ListMulitSelectFormItem';
 import ListSelectFormItem from './ListSelectFormItem';
+import MentionsFormItem from './MentionsFormItem';
 import MenuFormItem from './MenuFormItem';
 import MulitSelectFormItem from './MulitSelectFormItem';
 import RadioButtonFormItem from './RadioButtonFormItem';
@@ -79,6 +81,7 @@ const FormItemComponents = {
   ...Segmented(),
   ...Timeline(),
   ...Steps(),
+  ...Mentions(),
 };
 
 const validatorNormal = (message) => ({
@@ -108,53 +111,52 @@ const validatorMulti = (message) => ({
 export {
   AutoCompleteFormItem,
   BreadcrumbFormItem,
+  CascaderFormItem,
+  CascaderLeafFormItem,
+  CascaderLeafMulitFormItem,
+  CascaderMulitFormItem,
+  CheckAllMulitSelectFormItem,
+  CheckBoxCheckAllCustomFormItem,
+  CheckBoxCheckAllHorizontalFormItem,
+  CheckBoxCheckAllSelectFormItem,
+  CheckBoxCheckAllVerticalFormItem,
+  CheckBoxCustomFormItem,
+  CheckBoxHorizontalFormItem,
+  CheckBoxSelectFormItem,
+  CheckBoxVerticalFormItem,
   DropdownFormItem,
-  validatorMulti,
-  validatorNormal,
+  ListFormItem,
+  ListMulitSelectFormItem,
+  ListSelectFormItem,
+  MentionsFormItem,
+  MenuFormItem,
+  MulitSelectFormItem,
+  RadioButtonFormItem,
+  RadioCustomFormItem,
+  RadioHorizontalFormItem,
+  RadioSelectFormItem,
+  RadioVerticalFormItem,
+  SegmentedFormItem,
+  SelectFormItem,
+  StepsFormItem,
   TableFormItem,
-  TableSelectFormItem,
   TableMulitSelectFormItem,
-  TreeSelectLeafMulitFormItem,
-  TreeSelectLeafFormItem,
-  TreeSelectMulitFormItem,
-  TreeSelectFormItem,
-  TreeMulitSelectFormItem,
+  TableSelectFormItem,
   TagCheckAllHorizontalFormItem,
   TagCheckAllSelectFormItem,
   TagCheckAllVerticalFormItem,
   TagHorizontalFormItem,
-  TagSelectFormItem,
   TagMultiSelectFormItem,
+  TagSelectFormItem,
   TagVerticalFormItem,
-  CheckBoxHorizontalFormItem,
-  CheckBoxCheckAllCustomFormItem,
-  CheckBoxCheckAllVerticalFormItem,
-  CheckBoxCheckAllHorizontalFormItem,
-  CheckBoxVerticalFormItem,
-  CheckBoxCheckAllSelectFormItem,
-  CheckBoxCustomFormItem,
-  CheckBoxSelectFormItem,
-  RadioVerticalFormItem,
-  RadioCustomFormItem,
-  RadioHorizontalFormItem,
-  RadioButtonFormItem,
-  RadioSelectFormItem,
-  SegmentedFormItem,
-  ListMulitSelectFormItem,
-  ListSelectFormItem,
-  ListFormItem,
-  CascaderFormItem,
-  CascaderMulitFormItem,
-  CascaderLeafFormItem,
-  CascaderLeafMulitFormItem,
-  CheckAllMulitSelectFormItem,
-  SelectFormItem,
-  MulitSelectFormItem,
-  MenuFormItem,
+  TimelineFormItem,
   TransferFormItem,
   TransferSelectFormItem,
-  TimelineFormItem,
-  StepsFormItem,
+  TreeMulitSelectFormItem,
+  TreeSelectFormItem,
+  TreeSelectLeafFormItem,
+  TreeSelectLeafMulitFormItem,
+  TreeSelectMulitFormItem,
 };
 
 export default FormItemComponents;

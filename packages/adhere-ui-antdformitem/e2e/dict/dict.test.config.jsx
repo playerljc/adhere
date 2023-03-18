@@ -754,6 +754,22 @@ export default {
         description: 'This is a description.',
       },
     ];
+
+    // Mentions
+    Dict.handlers.SystemTestMentions = () => [
+      {
+        value: 'afc163',
+        label: 'afc163',
+      },
+      {
+        value: 'zombieJ',
+        label: 'zombieJ',
+      },
+      {
+        value: 'yesmeck',
+        label: 'yesmeck',
+      },
+    ];
   },
 
   initRemote() {},

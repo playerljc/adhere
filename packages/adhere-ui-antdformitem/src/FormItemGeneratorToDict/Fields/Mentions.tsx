@@ -2,28 +2,28 @@ import React, { useEffect, useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
-import BreadcrumbFormItem from '../BreadcrumbFormItem';
+import MentionsFormItem from '../MentionsFormItem';
 
 const FormItemComponents = {};
 
 /**
- * Breadcrumb
- * @description 初始化Breadcrumb
+ * Mentions
+ * @description 初始化Mentions
  */
 export default () => {
-  // 名称以Breadcrumb结尾的字典
-  const breadcrumbDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-    dictName.endsWith('Breadcrumb'),
+  // 名称以Mentions结尾的字典
+  const mentionsDictNames = Object.keys(Dict.handlers).filter((dictName) =>
+    dictName.endsWith('Mentions'),
   );
 
-  // 名称以DynamicBreadcrumb结尾的字典
-  const breadcrumbDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-    dictName.endsWith('DynamicBreadcrumb'),
+  // 名称以DynamicMentions结尾的字典
+  const mentionsDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
+    dictName.endsWith('DynamicMentions'),
   );
 
-  // 静态的Breadcrumb
-  breadcrumbDictNames.forEach((dictName) => {
-    // breadcrumbFormItem
+  // 静态的Mentions
+  mentionsDictNames.forEach((dictName) => {
+    // mentionsFormItem
     FormItemComponents[`${dictName}FormItem`] = ({ cascadeParams, ...props }) => {
       const handler = Dict.value[dictName].value;
 
@@ -36,14 +36,13 @@ export default () => {
         dataSource = handler;
       }
 
-      // @ts-ignore
-      return <BreadcrumbFormItem {...props} items={dataSource} />;
+      return <MentionsFormItem {...props} options={dataSource} />;
     };
   });
 
-  // 动态的breadcrumbFormItem
-  breadcrumbDynamicDictNames.forEach((dictName) => {
-    // breadcrumbFormItem
+  // 动态的mentionsFormItem
+  mentionsDynamicDictNames.forEach((dictName) => {
+    // mentionsFormItem
     FormItemComponents[`${dictName}FormItem`] = ({ cascadeParams, ...props }) => {
       const [data, setData] = useState([]);
 
@@ -68,8 +67,7 @@ export default () => {
         }
       }, [cascadeParams]);
 
-      // @ts-ignore
-      return <BreadcrumbFormItem {...props} items={data} />;
+      return <MentionsFormItem {...props} options={data} />;
     };
   });
 
