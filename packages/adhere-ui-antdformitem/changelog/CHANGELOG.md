@@ -1,3 +1,18 @@
+# 1.0.4
+
+***
+
+2023-03-18
+
+* 加入Tag生成器
+* 加入Menu生成器
+* 加入Dropdown生成器
+* 加入Breadcrumb生成器
+* 加入Segmented生成器
+* 加入Timeline生成器
+* 加入Mentions生成器
+* 加入Steps生成器
+
 # 1.0.3
 
 ***
