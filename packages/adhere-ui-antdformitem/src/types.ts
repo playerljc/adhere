@@ -8,6 +8,7 @@ import {
   RadioGroupProps,
   SegmentedProps,
   SelectProps,
+  StepsProps,
   TableProps,
   TagProps,
   TimelineProps,
@@ -184,3 +185,6 @@ export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps 
 export interface SegmentedFormItemProps extends FormItemProps, SegmentedProps {}
 
 export interface TimelineFormItemProps extends FormItemProps, TimelineProps {}
+
+// @ts-ignore
+export interface StepsFormItemProps extends FormItemProps, StepsProps {}

@@ -721,6 +721,40 @@ export default {
         children: <p>Custom color testing</p>,
       },
     ];
+
+    // Steps
+    Dict.handlers.SystemTestOneSteps = () => [
+      {
+        title: 'Finished',
+        description: 'This is a description.',
+      },
+      {
+        title: 'In Progress',
+        description: 'This is a description.',
+        subTitle: 'Left 00:00:08',
+      },
+      {
+        title: 'Waiting',
+        description: 'This is a description.',
+      },
+    ];
+
+    Dict.handlers.SystemTestTwoSteps = () => [
+      {
+        title: 'Finished',
+        description: 'This is a description.',
+      },
+      {
+        title: 'In Progress',
+        description: 'This is a description.',
+        subTitle: 'Left 00:00:08',
+      },
+      {
+        title: 'Waiting',
+        description: 'This is a description.',
+      },
+    ];
   },
+
   initRemote() {},
 };

@@ -24,6 +24,7 @@ import Menu from './Fields/Menu';
 import Radio from './Fields/Radio';
 import Segmented from './Fields/Segmented';
 import Select from './Fields/Select';
+import Steps from './Fields/Steps';
 import Table from './Fields/Table';
 import Tag from './Fields/Tag';
 import Timeline from './Fields/Timeline';
@@ -41,6 +42,7 @@ import RadioSelectFormItem from './RadioSelectFormItem';
 import RadioVerticalFormItem from './RadioVerticalFormItem';
 import SegmentedFormItem from './SegmentedFormItem';
 import SelectFormItem from './SelectFormItem';
+import StepsFormItem from './StepsFormItem';
 import TableFormItem from './TableFormItem';
 import TableMulitSelectFormItem from './TableMulitSelectFormItem';
 import TableSelectFormItem from './TableSelectFormItem';
@@ -76,6 +78,7 @@ const FormItemComponents = {
   ...Breadcrumb(),
   ...Segmented(),
   ...Timeline(),
+  ...Steps(),
 };
 
 const validatorNormal = (message) => ({
@@ -151,6 +154,7 @@ export {
   TransferFormItem,
   TransferSelectFormItem,
   TimelineFormItem,
+  StepsFormItem,
 };
 
 export default FormItemComponents;
