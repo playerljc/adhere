@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Space } from '@baifendian/adhere';
 
-import Breadcrumb from './breadcrumb';
-import Dropdown from './dropdown';
-import Menu from './menu';
-import Tag from './tag';
-
 export default () => {
+  const items = useMemo(() => {
+    const requireComponent = require.context('./items', true, /.*\.(jsx)$/);
+
+    return requireComponent.keys().map((path) => {
+      const Com = requireComponent(path).default;
+
+      return {
+        Item: Com,
+        key: path,
+      };
+    });
+  }, []);
+
   return (
     <Space.Group direction="vertical">
-      <Tag />
-      <Menu />
-      <Dropdown />
-      <Breadcrumb />
+      {items.map(({ Item, key }) => (
+        <Item key={key} />
+      ))}
     </Space.Group>
   );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Space } from '@baifendian/adhere';
 
-import AntdFormItem from '../../../src/index';
+import AntdFormItem from '../../../../src/index';
 
 export default () => {
   return (

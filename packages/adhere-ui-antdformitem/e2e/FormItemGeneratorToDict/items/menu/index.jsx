@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Space } from '@baifendian/adhere';
 
-import AntdFormItem from '../../../src/index';
+import AntdFormItem from '../../../../src/index';
 
 export default () => {
   const [current, setCurrent] = useState('mail');

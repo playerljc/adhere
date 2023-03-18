@@ -6,6 +6,7 @@ import {
   ListProps,
   MenuProps,
   RadioGroupProps,
+  SegmentedProps,
   SelectProps,
   TableProps,
   TagProps,
@@ -177,3 +178,6 @@ export interface DropdownFormItemProps extends DropdownProps, FormItemProps {}
 
 // @ts-ignore
 export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps {}
+
+// @ts-ignore
+export interface SegmentedFormItemProps extends FormItemProps, SegmentedProps {}

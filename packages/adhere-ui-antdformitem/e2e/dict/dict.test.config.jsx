@@ -1,7 +1,14 @@
+import { Avatar } from 'antd';
 import faker from 'faker';
 import React from 'react';
 
-import { AppstoreOutlined, MailOutlined, SettingOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  MailOutlined,
+  SettingOutlined,
+  SmileOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { Dict } from '@baifendian/adhere';
 
 export default {
@@ -585,6 +592,39 @@ export default {
       },
       {
         title: 'An Application',
+      },
+    ];
+
+    // Segmented
+    Dict.handlers.SystemTestSegmented = () => ['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly'];
+
+    Dict.handlers.SystemTestObjArraySegmented = () => [
+      {
+        label: (
+          <div style={{ padding: 4 }}>
+            <Avatar src="https://joesch.moe/api/v1/random" />
+            <div>User 1</div>
+          </div>
+        ),
+        value: 'user1',
+      },
+      {
+        label: (
+          <div style={{ padding: 4 }}>
+            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+            <div>User 2</div>
+          </div>
+        ),
+        value: 'user2',
+      },
+      {
+        label: (
+          <div style={{ padding: 4 }}>
+            <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+            <div>User 3</div>
+          </div>
+        ),
+        value: 'user3',
       },
     ];
   },

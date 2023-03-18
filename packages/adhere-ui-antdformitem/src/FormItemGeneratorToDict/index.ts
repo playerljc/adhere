@@ -1,4 +1,5 @@
 import AutoCompleteFormItem from './AutoCompleteFormItem';
+import BreadcrumbFormItem from './BreadcrumbFormItem';
 import CascaderFormItem from './CascaderFormItem';
 import CascaderLeafFormItem from './CascaderLeafFormItem';
 import CascaderLeafMulitFormItem from './CascaderLeafMulitFormItem';
@@ -14,12 +15,14 @@ import CheckBoxSelectFormItem from './CheckBoxSelectFormItem';
 import CheckBoxVerticalFormItem from './CheckBoxVerticalFormItem';
 import DropdownFormItem from './DropdownFormItem';
 import AutoComplete from './Fields/AutoComplete';
+import Breadcrumb from './Fields/Breadcrumb';
 import Cascader from './Fields/Cascader';
 import CheckBox from './Fields/CheckBox';
 import Dropdown from './Fields/Dropdown';
 import List from './Fields/List';
 import Menu from './Fields/Menu';
 import Radio from './Fields/Radio';
+import Segmented from './Fields/Segmented';
 import Select from './Fields/Select';
 import Table from './Fields/Table';
 import Tag from './Fields/Tag';
@@ -35,6 +38,7 @@ import RadioCustomFormItem from './RadioCustomFormItem';
 import RadioHorizontalFormItem from './RadioHorizontalFormItem';
 import RadioSelectFormItem from './RadioSelectFormItem';
 import RadioVerticalFormItem from './RadioVerticalFormItem';
+import SegmentedFormItem from './SegmentedFormItem';
 import SelectFormItem from './SelectFormItem';
 import TableFormItem from './TableFormItem';
 import TableMulitSelectFormItem from './TableMulitSelectFormItem';
@@ -67,6 +71,8 @@ const FormItemComponents = {
   ...Tag(),
   ...Menu(),
   ...Dropdown(),
+  ...Breadcrumb(),
+  ...Segmented(),
 };
 
 const validatorNormal = (message) => ({
@@ -95,6 +101,7 @@ const validatorMulti = (message) => ({
 
 export {
   AutoCompleteFormItem,
+  BreadcrumbFormItem,
   DropdownFormItem,
   validatorMulti,
   validatorNormal,
@@ -126,6 +133,7 @@ export {
   RadioHorizontalFormItem,
   RadioButtonFormItem,
   RadioSelectFormItem,
+  SegmentedFormItem,
   ListMulitSelectFormItem,
   ListSelectFormItem,
   ListFormItem,
