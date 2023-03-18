@@ -29,6 +29,7 @@
     "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-suspense": "^2.0.2",
     "@baifendian/adhere-ui-conditionalrender": "^2.0.2",
     "@baifendian/adhere-ui-flexlayout": "^2.0.2",
     "@baifendian/adhere-ui-hooks": "^2.0.2",

@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,o=1,n=arguments.length;o<n;o++)for(var e in t=arguments[o])Object.prototype.hasOwnProperty.call(t,e)&&(r[e]=t[e]);return r}).apply(this,arguments)};import React from"react";import{Dropdown}from"../../AntFormItemNormalize";var DropdownFormItem=function(r){return React.createElement(Dropdown,__assign({},r||{}))};export default DropdownFormItem;
+//# sourceMappingURL=index.js.map

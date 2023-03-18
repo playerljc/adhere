@@ -1,7 +1,9 @@
 import { FC } from 'react';
-import { ListFormItemProps } from '../../types';
+import type { ListFormItemProps } from '../../types';
 /**
  * ListFormItem
+ * @param firstLoading
+ * @param renderEmpty
  * @param dataSource
  * @param props
  * @constructor

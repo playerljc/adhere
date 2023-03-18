@@ -17,9 +17,9 @@ import {
   TreeSelectProps,
 } from 'antd';
 import { CheckboxGroupProps } from 'antd/es/checkbox';
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
-interface LabelValue {
+export interface LabelValue {
   label: string;
   value: string | number;
   disabled?: boolean;
@@ -32,6 +32,11 @@ interface RadioLabelValue extends LabelValue {
 interface FormItemProps {
   value?: any;
   onChange?: (value?: any) => void;
+}
+
+interface SyncFormItemProps extends FormItemProps {
+  firstLoading?: ReactElement;
+  renderEmpty?: Function;
 }
 
 export interface SelectFormItemProps {
@@ -92,6 +97,8 @@ export type CascaderLeafMulitFormItemProps = {
 
 export interface ListFormItemProps extends ListProps<any> {
   dataSource: LabelValue[];
+  firstLoading?: ReactElement;
+  renderEmpty?: Function;
 }
 
 export interface ListSelectFormItemProps extends FormItemProps, ListFormItemProps {
@@ -127,7 +134,10 @@ export interface RadioCustomFormItemProps extends RadioVerticalFormItemProps {
   ) => ReactNode;
 }
 
-export interface TableFormItemProps extends TableProps<any> {}
+export interface TableFormItemProps extends TableProps<any> {
+  firstLoading?: ReactElement;
+  renderEmpty?: Function;
+}
 
 // @ts-ignore
 export interface TableSelectFormItemProps extends FormItemProps, TableFormItemProps {
@@ -185,10 +195,10 @@ export interface BreadcrumbFormItemProps extends FormItemProps, BreadcrumbProps 
 // @ts-ignore
 export interface SegmentedFormItemProps extends FormItemProps, SegmentedProps {}
 
-export interface TimelineFormItemProps extends FormItemProps, TimelineProps {}
+export interface TimelineFormItemProps extends SyncFormItemProps, TimelineProps {}
 
 // @ts-ignore
-export interface StepsFormItemProps extends FormItemProps, StepsProps {}
+export interface StepsFormItemProps extends SyncFormItemProps, StepsProps {}
 
 // @ts-ignore
 export interface MentionsFormItemProps extends FormItemProps, MentionProps {}

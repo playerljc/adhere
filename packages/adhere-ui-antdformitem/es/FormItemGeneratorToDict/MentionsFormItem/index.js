@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var n,r=1,e=arguments.length;r<e;r++)for(var o in n=arguments[r])Object.prototype.hasOwnProperty.call(n,o)&&(t[o]=n[o]);return t}).apply(this,arguments)};import React from"react";import{Mentions}from"../../AntFormItemNormalize";var MentionsFormItem=function(t){return React.createElement(Mentions,__assign({},t||{}))};export default MentionsFormItem;
+//# sourceMappingURL=index.js.map
