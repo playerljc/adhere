@@ -15,8 +15,8 @@ let config: IConfig = defaultConfig;
 
 /**
  * diffParams
- * @param preArgArray - {Array}
- * @param curArgArray - {Array}
+ * @param {Array} preArgArray
+ * @param {Array} curArgArray
  * @return {boolean}
  */
 function diffParams(preArgArray: any[], curArgArray: any[]): boolean {
@@ -37,8 +37,8 @@ function diffParams(preArgArray: any[], curArgArray: any[]): boolean {
 
 /**
  * CreateFunProxy
- * @param fun - {Function}
- * @param property - {String}
+ * @param {Function} fun
+ * @param {String} property
  * @return {Proxy}
  */
 function CreateFunProxy(fun: Function, property: string) {
@@ -101,6 +101,9 @@ function initValue(p, params) {
 }
 
 const Dict: DictObj = {
+  /**
+   * handler - 字典的定义对象
+   */
   handlers: new Proxy(handlerTarget, {
     set(target: Object, property, value, receiver) {
       const result = Reflect.set(target, property, value, receiver);
@@ -110,6 +113,9 @@ const Dict: DictObj = {
       return result;
     },
   }),
+  /**
+   * value - 字典的使用对象
+   */
   value: new Proxy(target, {
     get(target: Object, property: string, receiver) {
       // 如果p属性没在t中
@@ -126,6 +132,17 @@ const Dict: DictObj = {
       return Reflect.get(target, property, receiver);
     },
   }),
+  /**
+   * init - 字典的初始化
+   * @param {
+   *   {
+   *    initStatic: () => void;
+   *    initRemote: () => void;
+   *   }[]
+   * } dictArray 字典定义的集合
+   * @param {IConfig} _config 字典的配置
+   * @return {void}
+   */
   init: (dictArray = [], _config: IConfig = defaultConfig) => {
     config = _config;
 
@@ -136,6 +153,9 @@ const Dict: DictObj = {
       }
     });
   },
+  /**
+   * React - 字典对应的React组件
+   */
   React: DictReactComponent,
 };
 

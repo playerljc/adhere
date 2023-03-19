@@ -27,6 +27,10 @@ export interface DictComponentProps {
   renderEmpty?: Function;
 }
 
+export interface DictFunctionComponentProps extends DictComponentProps {
+  args?: any[];
+}
+
 export interface DictComponentHandler {
   reset: () => Promise<any>;
 }

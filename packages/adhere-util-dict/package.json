@@ -29,7 +29,9 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-util": "^2.0.5",
     "@baifendian/adhere-ui-suspense": "^2.0.2",
+    "ahooks": "^3.7.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

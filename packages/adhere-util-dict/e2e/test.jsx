@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { Space } from '@baifendian/adhere';
+
 import Dict from '../src';
 
 export default () => (
-  <div>
+  <Space.Group direction="vertical">
     <Dict.React.SystemTestRadio>
       {(value) => (
         <ul>
@@ -14,8 +16,6 @@ export default () => (
       )}
     </Dict.React.SystemTestRadio>
 
-    <div style={{ margin: 20 }}></div>
-
     <Dict.React.SystemTestDynamicRadio>
       {(value) => (
         <ul>
@@ -25,5 +25,15 @@ export default () => (
         </ul>
       )}
     </Dict.React.SystemTestDynamicRadio>
-  </div>
+
+    <Dict.React.SystemGetInfo args={['666']}>
+      {(value) => (
+        <ul>
+          {value?.map((t) => (
+            <li key={t.value}>{t.label}</li>
+          ))}
+        </ul>
+      )}
+    </Dict.React.SystemGetInfo>
+  </Space.Group>
 );
