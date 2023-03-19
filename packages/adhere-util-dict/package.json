@@ -25,7 +25,13 @@
     "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "buildumd": "ctbuild buildumd --packagename AdhereDict --define alias=@,evnVars=true",
+    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
+  },
+  "dependencies": {
+    "@baifendian/adhere-ui-suspense": "^2.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.20.7",

@@ -1,11 +1,14 @@
-import { IConfig, InitFunc } from './types';
+import DictReactComponent, { set } from './react';
+import type { DictObj, IConfig } from './types';
 
 const target = {};
+
+const handlerTarget = {};
 
 const funParams = new Map();
 
 const defaultConfig: IConfig = {
-  isFunMemo: true,
+  isUseMemo: true,
 };
 
 let config: IConfig = defaultConfig;
@@ -16,7 +19,7 @@ let config: IConfig = defaultConfig;
  * @param curArgArray - {Array}
  * @return {boolean}
  */
-function diffParams(preArgArray: Array<any>, curArgArray: Array<any>): boolean {
+function diffParams(preArgArray: any[], curArgArray: any[]): boolean {
   if (preArgArray.length !== curArgArray.length) return false;
 
   let flag = false;
@@ -76,7 +79,7 @@ function CreateFunProxy(fun: Function, property: string) {
  * @param params
  */
 function initValue(p, params) {
-  const handler = ins.handlers[p];
+  const handler = Dict.handlers[p];
 
   // 返回值 - 一般都不是函数
   let value = handler(params);
@@ -84,11 +87,11 @@ function initValue(p, params) {
   // 如果value是函数则默认是缓存的
   if (value instanceof Function) {
     // 函数单独的缓存开关
-    if (!!value.isFunMemo) {
+    if (!!handler.isUseMemo) {
       value = CreateFunProxy(value, p);
     } else {
       // 总体的缓存开关
-      if (config.isFunMemo) {
+      if (config.isUseMemo) {
         value = CreateFunProxy(value, p);
       }
     }
@@ -97,38 +100,43 @@ function initValue(p, params) {
   return value;
 }
 
-const ins: {
-  handlers: object;
-  value: any;
-  init: InitFunc;
-} = {
-  handlers: {},
+const Dict: DictObj = {
+  handlers: new Proxy(handlerTarget, {
+    set(target: Object, property, value, receiver) {
+      const result = Reflect.set(target, property, value, receiver);
+
+      set(property);
+
+      return result;
+    },
+  }),
   value: new Proxy(target, {
-    get(t: Object, p: string, receiver) {
+    get(target: Object, property: string, receiver) {
       // 如果p属性没在t中
-      if (!(p in t)) {
-        receiver[p] = {
-          value: initValue(p, null),
+      if (!(property in target)) {
+        receiver[property] = {
+          value: initValue(property, null),
           refresh(params) {
-            receiver[p].value = initValue(p, params);
+            receiver[property].value = initValue(property, params);
             return this;
           },
         };
       }
 
-      return Reflect.get(target, p, receiver);
+      return Reflect.get(target, property, receiver);
     },
   }),
-  init: (dictArr = [], c: IConfig = defaultConfig) => {
-    config = c;
+  init: (dictArray = [], _config: IConfig = defaultConfig) => {
+    config = _config;
 
-    (dictArr || []).forEach((dict) => {
+    (dictArray || []).forEach((dict) => {
       if (dict) {
-        dict.initStatic();
-        dict.initRemote();
+        dict?.initStatic?.();
+        dict?.initRemote?.();
       }
     });
   },
+  React: DictReactComponent,
 };
 
-export default ins;
+export default Dict;
