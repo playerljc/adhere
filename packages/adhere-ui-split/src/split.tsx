@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo } from 'react';
+import React, { FC, Fragment, memo } from 'react';
 
 import { SplitFunction, SplitGroupProps, SplitProps } from './types';
 
@@ -14,10 +14,10 @@ const SplitGroup: FC<SplitGroupProps> = (props) => {
         ? children.map((component, index) => {
             if (index !== 0) {
               return (
-                <>
-                  <Split {...others} key={index} />
+                <Fragment key={index}>
+                  <Split {...others} />
                   {component}
-                </>
+                </Fragment>
               );
             }
 
