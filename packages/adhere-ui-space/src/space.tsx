@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo } from 'react';
+import React, { FC, Fragment, memo } from 'react';
 
 import { SpaceFunction, SpaceGroupProps, SpaceProps } from './types';
 
@@ -14,10 +14,10 @@ const SpaceGroup: FC<SpaceGroupProps> = (props) => {
         ? children.map((component, index) => {
             if (index !== 0) {
               return (
-                <>
-                  <Space {...others} key={index} />
+                <Fragment key={index}>
+                  <Space {...others} />
                   {component}
-                </>
+                </Fragment>
               );
             }
 
