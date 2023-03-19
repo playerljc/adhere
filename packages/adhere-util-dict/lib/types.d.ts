@@ -23,6 +23,7 @@ export interface DictComponentProps {
 }
 export interface DictFunctionComponentProps extends DictComponentProps {
     args?: any[];
+    isUseMemo?: boolean;
 }
 export interface DictComponentHandler {
     reset: () => Promise<any>;

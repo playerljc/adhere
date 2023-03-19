@@ -87,12 +87,16 @@ function initValue(p, params) {
   // 如果value是函数则默认是缓存的
   if (value instanceof Function) {
     // 函数单独的缓存开关
-    if (!!handler.isUseMemo) {
-      value = CreateFunProxy(value, p);
+    if ('isUseMemo' in handler) {
+      if (handler.isUseMemo) {
+        value = CreateFunProxy(value, p);
+      }
     } else {
       // 总体的缓存开关
-      if (config.isUseMemo) {
-        value = CreateFunProxy(value, p);
+      if ('isUseMemo' in config) {
+        if (config.isUseMemo) {
+          value = CreateFunProxy(value, p);
+        }
       }
     }
   }

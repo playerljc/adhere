@@ -25,7 +25,7 @@ export function set(key) {
   // isFunction
   if (Util.isFunction(value)) {
     DictReactComponents[key] = forwardRef<DictComponentHandler, DictFunctionComponentProps>(
-      ({ children, firstLoading, isEmpty, renderEmpty, args }, ref) => {
+      ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo }, ref) => {
         const [data, setData] = useState();
 
         const props: any = {};
@@ -34,6 +34,8 @@ export function set(key) {
         if (isEmpty) props.isEmpty = isEmpty;
 
         const fetchData = () => {
+          Dict.handlers[key].isUseMemo = isUseMemo || false;
+
           const result = Dict.value[key].value(...(args || []));
 
           if (result.then) {
