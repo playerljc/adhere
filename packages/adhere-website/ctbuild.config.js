@@ -2,15 +2,29 @@ const path = require('path');
 
 const modifyVars = require('./themes/default/vars');
 
+function isDev(mode) {
+  return mode === 'development';
+}
+
+function isProd(mode) {
+  return mode === 'production';
+}
+
+function chunkNameJs(arg) {
+  const name = arg.chunk.name ? '[name]' : 'system';
+  return isProd() ? `${name}.[chunkhash].bundle.js` : `${name}.[contenthash].bundle.js`;
+}
+
+function chunkNameCSS(arg) {
+  const name = arg.chunk.name ? '[name]' : 'system';
+  return isProd() ? `${name}.[chunkhash].css` : `${name}.[contenthash].css`;
+}
+
 module.exports = {
   getTheme() {
     return modifyVars;
   },
-  getConfig({ webpackConfig }) {
-    // cssModules处理中添加
-    // if (webpackConfig.mode === 'development') {
-    // eslint-disable-next-line no-param-reassign
-
+  getConfig({ webpackConfig, plugins }) {
     // TODO:umd  umd时候需要打开
     // webpackConfig.externals = {
     //   '@baifendian/adhere': "adhere",
@@ -20,35 +34,17 @@ module.exports = {
     //   'moment':'moment',
     // };
 
-    webpackConfig.devtool = 'cheap-module-eval-source-map';
+    webpackConfig.output.filename = chunkNameJs;
 
-    // webpackConfig.resolve.alias['@baifendian/adhere/lib/search-table'] = path.join(
-    //   __dirname,
-    //   '../',
-    //   'adhere-ui-searchtable',
-    //   'src',
-    // );
+    webpackConfig.output.chunkFilename = webpackConfig.output.filename;
 
-    // eslint-disable-next-line no-param-reassign
-    // TODO:umd umd的时候需要注释掉
-    // webpackConfig.resolve.alias.ol = path.join(
-    //   __dirname,
-    //   '../../node_modules/@baifendian/adhere-ui-olmap/node_modules/ol',
-    // );
-
-    // eslint-disable-next-line no-param-reassign
-    // webpackConfig.resolve.alias.swiper = path.join(
-    //   __dirname,
-    //   '../../node_modules/@baifendian/adhere-ui-revolving/node_modules/swiper',
-    // );
-
-    // webpackConfig.resolve.alias['algebra.js'] = path.join(
-    //   __dirname,
-    //   'node_modules/@baifendian/adhere/node_modules/@baifendian/adhere-ui-olmap/node_modules/algebra.js',
-    // );
-
-    // 第三方库的引用是从文件当前目录开始搜索
-    // webpackConfig.resolve.modules.unshift(path.join(__dirname, '../../node_modules'));
+    // 这块只有需要主题切换的时候才能用到
+    const MiniCssExtractPluginIndex = isProd(webpackConfig.mode) ? 3 : 2;
+    webpackConfig.plugins[MiniCssExtractPluginIndex] = new plugins.MiniCssExtractPlugin({
+      filename: chunkNameCSS,
+      chunkFilename: chunkNameCSS,
+      ignoreOrder: true,
+    });
 
     // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].exclude = [
@@ -62,19 +58,9 @@ module.exports = {
       /packages[\\/]adhere[\\/]es[\\/].*[\\/]style[\\/]index\.less/,
       /packages[\\/]adhere[\\/]es[\\/].*\.less/,
       /packages[\\/]adhere-.{1,}[\\/]es[\\/].*\.less/,
-      // /packages[\\/]adhere-ui-searchtable[\\/]src[\\/]style[\\/]index.less/,
     );
-    // }
-
-    // 加入markdown的解析
-    webpackConfig.module.rules.push({
-      test: /\.md$/,
-      use: 'raw-loader',
-    });
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
-
-    // webpackConfig.module.rules[0].include = [path.join(__dirname, 'src')];
 
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
@@ -98,45 +84,24 @@ module.exports = {
     });
 
     if (babelLoaderConfig) {
-      babelLoaderConfig.options.plugins.push(
-        [
-          'import',
-          {
-            libraryName: '@baifendian/adhere',
-            libraryDirectory: 'es',
-            transformToDefaultImport: true,
-            style: true,
-            // styleLibraryDirectory: 'es'
-          },
-          'adhere',
-        ],
-        // [
-        //   'import',
-        //   {
-        //     libraryName: 'antd',
-        //     libraryDirectory: 'es',
-        //     // styleLibraryDirectory: 'es',
-        //     style: true,
-        //   },
-        //   'ant',
-        // ],
-      );
+      babelLoaderConfig.options.plugins.push([
+        'import',
+        {
+          libraryName: '@baifendian/adhere',
+          libraryDirectory: 'es',
+          transformToDefaultImport: true,
+          style: true,
+          // styleLibraryDirectory: 'es'
+        },
+        'adhere',
+      ]);
     }
 
     if (webpackConfig.mode === 'production') {
+      webpackConfig.optimization.concatenateModules = false;
       webpackConfig.optimization.splitChunks = {
-        // chunks: 'all',
-        // minSize: 30000,
-        // maxSize: 0,
-        // minChunks: 1,
-        // maxAsyncRequests: 5,
-        // maxInitialRequests: 3,
-        // automaticNameDelimiter: '~',
-        // automaticNameMaxLength: 30,
-        // name: true,
         chunks: 'all',
         minSize: 20000,
-        // maxSize: 0,
         minChunks: 1,
         maxAsyncRequests: 30,
         maxInitialRequests: 30,
