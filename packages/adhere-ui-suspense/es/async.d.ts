@@ -12,7 +12,7 @@ declare class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncSt
     };
     showLoading(): boolean;
     renderInner(): React.ReactElement | null;
-    reset(): Promise<void>;
-    fetchData(): Promise<void>;
+    reset(): Promise<any>;
+    fetchData(): Promise<any>;
 }
 export default SuspenseAsync;

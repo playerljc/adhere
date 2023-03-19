@@ -34,8 +34,8 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
     );
   }
 
-  reset(): Promise<void> {
-    return new Promise<void>((resolve) => {
+  reset(): Promise<any> {
+    return new Promise<any>((resolve) => {
       // 第一次
       this.isFirst = true;
 
@@ -43,19 +43,19 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
       this.isFirstLoading = false;
 
       this.fetchData()
-        .then(() => resolve())
-        .catch(() => resolve());
+        .then((res) => resolve(res))
+        .catch(() => resolve(null));
     });
   }
 
-  fetchData(): Promise<void> {
-    return new Promise<void>((resolve) => {
+  fetchData(): Promise<any> {
+    return new Promise<any>((resolve) => {
       if (!this.props.fetchData) {
         this.setState({
           loading: false,
         });
 
-        resolve();
+        resolve(null);
         return;
       }
 
@@ -65,12 +65,12 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
 
       return this?.props
         ?.fetchData?.()
-        ?.then(() => {
+        ?.then((res) => {
           this.setState(
             {
               loading: false,
             },
-            () => resolve(),
+            () => resolve(res),
           );
         })
         ?.catch(() => {
@@ -78,7 +78,7 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
             {
               loading: false,
             },
-            () => resolve(),
+            () => resolve(null),
           );
         });
     });
