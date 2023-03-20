@@ -26,7 +26,35 @@ export default () => {
           },
         },
         codeText: `
+  import React from 'react';
+  import { Dict } from '@baifendian/adhere';
 
+  // 第一个字典
+  const Test1Dict = {
+    initStatic() {
+      Dict.handlers.Test1Dict = () => [
+        {
+          value: 1,
+          label: '通过',
+        },
+        {
+          value: 2,
+          label: '不通过',
+        },
+        {
+          value: 3,
+          label: '退回',
+        },
+      ];
+    },
+    initRemote() {},
+  };
+
+  // 初始化
+  Dict.init([Test1Dict], {});
+
+  // 使用字典
+  return <div>{JSON.stringify(Dict.value.Test1Dict.value)}</div>;
       `,
         type: 'PlayGround',
         renderChildren: () => {
@@ -70,14 +98,55 @@ export default () => {
           },
         },
         codeText: `
+  import React,{ useState, useEffect } from 'react';
+  import { Dict } from '@baifendian/adhere';
 
+  function Test() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+      Dict.value.Test2Dict.value.then((res) => setData(res));
+    }, []);
+
+    return <div>{JSON.stringify(data)}</div>;
+  }
+
+  // 第一个字典
+  const Test2Dict = {
+    initStatic() {},
+    initRemote() {
+      Dict.handlers.Test2Dict = () =>
+        Promise.resolve([
+          {
+            value: 1,
+            label: '通过',
+          },
+          {
+            value: 2,
+            label: '不通过',
+          },
+          {
+            value: 3,
+            label: '退回',
+          },
+        ]);
+    },
+  };
+
+  // 初始化
+  Dict.init([Test2Dict], {});
+
+  // 使用字典
+  return <Test />;
       `,
         type: 'PlayGround',
         renderChildren: () => {
           function Test() {
             const [data, setData] = useState([]);
 
-            useEffect(() => Dict.value.Test2Dict.value.then((res) => setData(res)), []);
+            useEffect(() => {
+              Dict.value.Test2Dict.value.then((res) => setData(res));
+            }, []);
 
             return <div>{JSON.stringify(data)}</div>;
           }
@@ -123,7 +192,32 @@ export default () => {
           },
         },
         codeText: `
+  import React from 'react';
+  import { Dict } from '@baifendian/adhere';
 
+  const Test3Dict = {
+    initStatic() {
+      Dict.handlers.Test3SumDict = () => (a, b) => a + b;
+    },
+    initRemote() {},
+  };
+
+  // 初始化
+  Dict.init([Test3Dict], {});
+
+  // 使用字典
+  return (
+    <>
+      <p>
+        <span>第一次计算a + b：</span>
+        {Dict.value.Test3SumDict.value(1, 2)}
+      </p>
+      <p>
+        <span>缓存值：</span>
+        {Dict.value.Test3SumDict.value(1, 2)}
+      </p>
+    </>
+  );
       `,
         type: 'PlayGround',
         renderChildren: () => {
@@ -164,7 +258,34 @@ export default () => {
           },
         },
         codeText: `
+  import React from 'react';
+  import { Dict } from '@baifendian/adhere';
 
+  const Test4Dict = {
+    initStatic() {
+      Dict.handlers.Test4SumDict = () => (a, b) => a + b;
+      // 不使用缓存
+      Dict.handlers.Test4SumDict.isUseMemo = false;
+    },
+    initRemote() {},
+  };
+
+  // 初始化
+  Dict.init([Test4Dict], {});
+
+  // 使用字典
+  return (
+    <>
+      <p>
+        <span>第一次计算a + b：</span>
+        {Dict.value.Test4SumDict.value(1, 2)}
+      </p>
+      <p>
+        <span>第二次计算a + b：</span>
+        {Dict.value.Test4SumDict.value(1, 2)}
+      </p>
+    </>
+  );
       `,
         type: 'PlayGround',
         renderChildren: () => {
@@ -207,7 +328,41 @@ export default () => {
           },
         },
         codeText: `
+  import React,{ useState } from 'react';
+  import { Dict } from '@baifendian/adhere';
 
+  function Test() {
+    const [count, setCount] = useState(0);
+
+    return (
+      <div>
+        <p>{JSON.stringify(Dict.value.Test5Dict.value)}</p>
+        <div>
+          <button
+            onClick={() => {
+              Dict.value.Test5Dict.refresh();
+              setCount(Date.now());
+            }}
+          >
+            刷新
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const Test5Dict = {
+    initStatic() {},
+    initRemote() {
+      Dict.handlers.Test5Dict = () => [v1(), v1(), v1()];
+    },
+  };
+
+  // 初始化
+  Dict.init([Test5Dict], {});
+
+  // 使用字典
+  return <Test />;
       `,
         type: 'PlayGround',
         renderChildren: () => {
@@ -257,7 +412,86 @@ export default () => {
           },
         },
         codeText: `
+  import React,{ useLayoutEffect, useState } from 'react';
+  import { Select } from 'antd';
+  import { Dict, Space } from '@baifendian/adhere';
 
+  const { Option } = Select;
+
+  function Test() {
+    const [p, setP] = useState();
+    const [c, setC] = useState();
+    const [a, setA] = useState();
+
+    const [pArr, setpArr] = useState([]);
+    const [cArr, setcArr] = useState([]);
+    const [aArr, setaArr] = useState([]);
+
+    useLayoutEffect(() => {
+      Dict.value.Test6PDict.value.then((res) => setpArr(res));
+    }, []);
+
+    useLayoutEffect(() => {
+      setC('');
+      setA('');
+      Dict.value.Test6CDict.value(p).then((res) => {
+        setcArr(res);
+      });
+    }, [p]);
+
+    useLayoutEffect(() => {
+      setA('');
+      Dict.value.Test6ADict.value(p, c).then((res) => {
+        {
+          setaArr(res);
+        }
+      });
+    }, [c]);
+
+    return (
+      <div>
+        <Space.Group direction="horizontal">
+          <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
+            {pArr.map((t) => (
+              <Option key={t.code}>{t.value}</Option>
+            ))}
+          </Select>
+
+          <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
+            {cArr.map((t) => (
+              <Option key={t.code}>{t.value}</Option>
+            ))}
+          </Select>
+
+          <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
+            {aArr.map((t) => (
+              <Option key={t.code}>{t.value}</Option>
+            ))}
+          </Select>
+        </Space.Group>
+      </div>
+    );
+  }
+
+  const Test6Dict = {
+    initStatic() {},
+    initRemote() {
+      Dict.handlers.Test6PDict = () => Promise.resolve(pca);
+      Dict.handlers.Test6CDict = () => (pid) =>
+        Promise.resolve(pca.find((t) => t.code === pid)?.children || []);
+      Dict.handlers.Test6ADict = () => (pid, cid) =>
+        Promise.resolve(
+          pca.find((t) => t.code === pid)?.children?.find((t) => t.code === cid)
+            ?.children || [],
+        );
+    },
+  };
+
+  // 初始化
+  Dict.init([Test6Dict], {});
+
+  // 使用字典
+  return <Test />;
       `,
         type: 'PlayGround',
         renderChildren: () => {
@@ -349,7 +583,88 @@ export default () => {
           },
         },
         codeText: `
+  import React,{ useLayoutEffect, useState } from 'react';
+  import { Dict, Space } from '@baifendian/adhere';
+  import { Select } from 'antd';
 
+  const { Option } = Select;
+
+  function Test() {
+    const [p, setP] = useState();
+    const [c, setC] = useState();
+    const [a, setA] = useState();
+
+    useLayoutEffect(() => {
+      setC('');
+      setA('');
+    }, [p]);
+
+    useLayoutEffect(() => {
+      setA('');
+    }, [c]);
+
+    return (
+      <div>
+        <Space.Group direction="horizontal">
+          <div>
+            <Dict.React.Test7PDict>
+              {(pArr) => (
+                <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
+                  {pArr?.map?.((t) => (
+                    <Option key={t.code}>{t.value}</Option>
+                  ))}
+                </Select>
+              )}
+            </Dict.React.Test7PDict>
+          </div>
+
+          <div>
+            <Dict.React.Test7CDict args={[p]}>
+              {(cArr) => (
+                <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
+                  {cArr?.map?.((t) => (
+                    <Option key={t.code}>{t.value}</Option>
+                  ))}
+                </Select>
+              )}
+            </Dict.React.Test7CDict>
+          </div>
+
+          <div>
+            <Dict.React.Test7ADict args={[p, c]}>
+              {(aArr) => (
+                <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
+                  {aArr?.map?.((t) => (
+                    <Option key={t.code}>{t.value}</Option>
+                  ))}
+                </Select>
+              )}
+            </Dict.React.Test7ADict>
+          </div>
+        </Space.Group>
+      </div>
+    );
+  }
+
+  const Test7Dict = {
+    initStatic() {},
+    initRemote() {
+      Dict.handlers.Test7PDict = () => Promise.resolve(pca);
+      Dict.handlers.Test7CDict = () => (pid) =>
+        Promise.resolve(pca.find((t) => t.code === pid)?.children || []);
+      Dict.handlers.Test7ADict = () => (pid, cid) =>
+        Promise.resolve(
+          pca.find((t) => t.code === pid)?.children?.find((t) => t.code === cid)
+            ?.children || [],
+        );
+    },
+  };
+
+  // 初始化
+  Dict.init([Test7Dict], {});
+
+  // 使用字典
+  return <Test />;
       `,
         type: 'PlayGround',
         renderChildren: () => {
@@ -357,6 +672,15 @@ export default () => {
             const [p, setP] = useState();
             const [c, setC] = useState();
             const [a, setA] = useState();
+
+            useLayoutEffect(() => {
+              setC('');
+              setA('');
+            }, [p]);
+
+            useLayoutEffect(() => {
+              setA('');
+            }, [c]);
 
             return (
               <div>
