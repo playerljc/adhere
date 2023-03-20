@@ -361,35 +361,41 @@ export default () => {
             return (
               <div>
                 <Space.Group direction="horizontal">
-                  <Dict.React.Test7PDict>
-                    {(pArr) => (
-                      <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
-                        {pArr.map((t) => (
-                          <Option key={t.code}>{t.value}</Option>
-                        ))}
-                      </Select>
-                    )}
-                  </Dict.React.Test7PDict>
+                  <div>
+                    <Dict.React.Test7PDict>
+                      {(pArr) => (
+                        <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
+                          {pArr?.map?.((t) => (
+                            <Option key={t.code}>{t.value}</Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Dict.React.Test7PDict>
+                  </div>
 
-                  <Dict.React.Test7CDict args={[p]}>
-                    {(cArr) => (
-                      <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
-                        {cArr.map((t) => (
-                          <Option key={t.code}>{t.value}</Option>
-                        ))}
-                      </Select>
-                    )}
-                  </Dict.React.Test7CDict>
+                  <div>
+                    <Dict.React.Test7CDict args={[p]}>
+                      {(cArr) => (
+                        <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
+                          {cArr?.map?.((t) => (
+                            <Option key={t.code}>{t.value}</Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Dict.React.Test7CDict>
+                  </div>
 
-                  <Dict.React.Test7ADict args={[p, c]}>
-                    {(aArr) => (
-                      <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
-                        {aArr.map((t) => (
-                          <Option key={t.code}>{t.value}</Option>
-                        ))}
-                      </Select>
-                    )}
-                  </Dict.React.Test7ADict>
+                  <div>
+                    <Dict.React.Test7ADict args={[p, c]}>
+                      {(aArr) => (
+                        <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
+                          {aArr?.map?.((t) => (
+                            <Option key={t.code}>{t.value}</Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Dict.React.Test7ADict>
+                  </div>
                 </Space.Group>
               </div>
             );
