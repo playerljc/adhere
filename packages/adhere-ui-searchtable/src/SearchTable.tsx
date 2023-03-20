@@ -1056,8 +1056,8 @@ abstract class SearchTable<
           </div>
         </Auto>
 
-        <ConditionalRender conditional={!!this.renderTableFooter}>
-          {() => <Fixed>{this.renderTableFooter()}</Fixed>}
+        <ConditionalRender conditional={!!this.renderTableFooter && !!this.renderTableFooter?.()}>
+          {() => <Fixed>{this.renderTableFooter?.()}</Fixed>}
         </ConditionalRender>
       </FlexLayout>
     );
