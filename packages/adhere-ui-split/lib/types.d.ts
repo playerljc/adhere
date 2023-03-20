@@ -13,6 +13,8 @@ export interface SplitProps {
     className?: string;
     direction?: 'vertical' | 'horizontal';
     size?: string | number;
+    isUseMedia?: boolean;
+    rootValue?: number;
 }
 /**
  * SplitGroupProps
