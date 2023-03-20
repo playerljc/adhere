@@ -1,4 +1,4 @@
-import { useUpdateEffect } from 'ahooks';
+import { useUpdateLayoutEffect } from 'ahooks';
 import React, { forwardRef, useState } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
@@ -49,7 +49,9 @@ export function set(key) {
           }
         };
 
-        useUpdateEffect(() => fetchData(), args || []);
+        useUpdateLayoutEffect(() => {
+          fetchData();
+        }, args || []);
 
         return (
           <Suspense.ASync
