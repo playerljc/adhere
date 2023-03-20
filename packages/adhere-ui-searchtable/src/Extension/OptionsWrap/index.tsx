@@ -21,12 +21,13 @@ export default ({ children, className = '', style = {} }) => {
   if (children.length <= 1) {
     result = children;
   } else {
-    const cloneChildren = children.map((elm) =>
-      React.cloneElement(elm, { ...elm.props }, elm.props.children),
-    );
+    // const cloneChildren = children.map((elm) =>
+    //   React.cloneElement(elm, { ...elm.props }, elm.props.children),
+    // );
+    const cloneChildren = React.Children.toArray(children);
 
     const filter = cloneChildren.filter((t) => {
-      if ('props' in t && 'conditional' in t.props) {
+      if (typeof t === 'object' && 'props' in t && 'conditional' in t.props) {
         if (t.props.conditional) return true;
 
         if ('noMatch' in t.props) {
