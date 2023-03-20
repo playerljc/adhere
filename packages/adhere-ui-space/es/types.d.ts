@@ -12,6 +12,8 @@ export interface SpaceProps {
     style?: CSSProperties;
     direction?: 'vertical' | 'horizontal';
     size?: string | number;
+    isUseMedia?: boolean;
+    rootValue?: number;
 }
 /**
  * SpaceGroupProps
