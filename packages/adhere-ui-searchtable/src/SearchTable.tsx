@@ -1015,8 +1015,10 @@ abstract class SearchTable<
           fit={fitSearch}
         >
           <FlexLayout direction="vertical">
-            <ConditionalRender conditional={!!this.renderSearchFormBefore}>
-              {() => <Fixed>{this.renderSearchFormBefore()}</Fixed>}
+            <ConditionalRender
+              conditional={!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()}
+            >
+              {() => <Fixed>{this.renderSearchFormBefore?.()}</Fixed>}
             </ConditionalRender>
 
             <Fixed>
@@ -1027,14 +1029,16 @@ abstract class SearchTable<
 
             <Fixed>{this.renderSearchFooter()}</Fixed>
 
-            <ConditionalRender conditional={!!this.renderSearchFormAfter}>
-              {() => <Fixed>{this.renderSearchFormAfter()}</Fixed>}
+            <ConditionalRender
+              conditional={!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.()}
+            >
+              {() => <Fixed>{this.renderSearchFormAfter?.()}</Fixed>}
             </ConditionalRender>
           </FlexLayout>
         </Fixed>
 
-        <ConditionalRender conditional={!!this.renderTableHeader}>
-          {() => <Fixed>{this.renderTableHeader()}</Fixed>}
+        <ConditionalRender conditional={!!this.renderTableHeader && !!this.renderTableHeader?.()}>
+          {() => <Fixed>{this.renderTableHeader?.()}</Fixed>}
         </ConditionalRender>
 
         <Auto
