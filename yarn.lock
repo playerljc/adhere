@@ -2039,10 +2039,10 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.6.0.tgz#53fa5fe9c34faee89469e48f91d51a3766108bc8"
   integrity sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==
 
-"@ctsj/build@^6.0.8":
-  version "6.0.8"
-  resolved "https://registry.yarnpkg.com/@ctsj/build/-/build-6.0.8.tgz#836a53e91a383d19fdb161e15689e71c73f5b007"
-  integrity sha512-0vmBiH0iSW1pnqU4PP2T4UTUJW9EZiSZllSPu40O6kaXK6Tw2u1xhC7lR7/aTmbwT3ds2XwEnFVZAfWKB9zqYA==
+"@ctsj/build@^6.0.9":
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/@ctsj/build/-/build-6.0.9.tgz#af06208dbf173298e7ff9fa67c923dc3461b7094"
+  integrity sha512-pnWjQ+ct5HFrEOk/NaLPMHQEAt4jI9O8pKWEvrdqedy5t+8v08w0Qp1AZm8Q+MYiaE6xrON74Y9i/F8xD3N3lQ==
   dependencies:
     "@babel/cli" "^7.21.0"
     "@babel/core" "^7.21.0"
