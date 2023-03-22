@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-permission",
-  "version": "2.0.2",
+  "version": "2.0.6",
   "description": "权限的组件",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.0.2",
+    "@baifendian/adhere-ui-conditionalrender": "^2.0.6",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",

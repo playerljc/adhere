@@ -1,7 +1,17 @@
 {
   "name": "@baifendian/adhere-ui-g6",
-  "version": "2.0.2",
+  "version": "2.0.6",
   "description": "antv的g6",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -16,25 +26,6 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/playerljc/adhere"
-  },
-  "author": "playerljc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/playerljc/adhere/issues"
-  },
-  "homepage": "https://github.com/playerljc/adhere",
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "@babel/runtime": "^7.20.7",
-    "@ctsj/build": "^6.0.10",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^4.9.4"
-  },
   "dependencies": {
     "@antv/g6": "^4.2.5",
     "@types/react": "^18.0.26",
@@ -43,5 +34,14 @@
     "omit.js": "^2.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.20.7",
+    "@ctsj/build": "^6.0.10",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.9.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
