@@ -81,7 +81,9 @@ export default (
     }
   }
 
-  useEffect(() => setCollapse(props.collapse as boolean), [props.collapse]);
+  useEffect(() => {
+    setCollapse(props.collapse as boolean);
+  }, [props.collapse]);
 
   useLayoutEffect(() => {
     if (mask) {

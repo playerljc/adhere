@@ -1,2 +1,2 @@
-import React from"react";import{SearchOutlined}from"@ant-design/icons";export default function(e,t){return void 0===t&&(t=React.createElement(SearchOutlined,null)),{filterIcon:function(){return t},filterDropdown:function(t){return e(t)}}}
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},react_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("react"))),icons_1=require("@ant-design/icons");exports.default=function(t,e){return void 0===e&&(e=react_1.default.createElement(icons_1.SearchOutlined,null)),{filterIcon:function(){return e},filterDropdown:function(e){return t(e)}}};
 //# sourceMappingURL=tableheadsearch.js.map

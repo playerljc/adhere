@@ -78,8 +78,12 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
   }
 
   useLayoutEffect(() => createSwiper(), []);
-  useEffect(() => slide(), [beforeShow, afterShow, duration]);
-  useEffect(() => swiper.current && swiper.current.changeDirection(direction), [direction]);
+  useEffect(() => {
+    slide();
+  }, [beforeShow, afterShow, duration]);
+  useEffect(() => {
+    swiper.current && swiper.current.changeDirection(direction);
+  }, [direction]);
 
   return (
     <div

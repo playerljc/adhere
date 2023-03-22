@@ -3,7 +3,8 @@
   "compilerOptions": {
     "declarationDir": "./lib",
     "outDir": "./lib",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "module": "CommonJS"
   },
   "exclude": ["node_modules", "src/demo"],
   "include": ["src/**/*"]

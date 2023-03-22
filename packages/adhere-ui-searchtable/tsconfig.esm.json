@@ -2,10 +2,8 @@
   "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
   "compilerOptions": {
     "outDir": "./es",
-    "baseUrl": "./",
-    "jsx": "react",
-    "module": "esnext",
-    "allowJs": true
+    "declarationDir": "./es",
+    "baseUrl": "./"
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

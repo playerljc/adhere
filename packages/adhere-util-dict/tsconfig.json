@@ -4,7 +4,7 @@
     "declarationDir": "./lib",
     "outDir": "./lib",
     "baseUrl": "./",
-    "lib": ["dom", "dom.iterable", "esnext", "es6", "es2015.proxy"]
+    "module": "CommonJS"
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

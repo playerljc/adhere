@@ -22,7 +22,9 @@ const StepsFormItem: FC<StepsFormItemProps> = ({ firstLoading, renderEmpty, ...p
     setData(props.items || []);
   }, [props.items]);
 
-  useEffect(() => setCurrent(props.value), [props.value]);
+  useEffect(() => {
+    setCurrent(props.value);
+  }, [props.value]);
 
   return (
     <Suspense.Sync

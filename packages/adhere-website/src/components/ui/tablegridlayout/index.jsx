@@ -16,7 +16,7 @@ export default () => {
   const [density, setDensity] = useState('default');
   const [layout, setLayout] = useState('horizontal');
 
-  const formRef = useRef();
+  const [form] = Form.useForm();
 
   // console.log(
   //   'getRenderDetail',
@@ -1384,15 +1384,20 @@ export default () => {
                   <Button
                     type="primary"
                     onClick={() => {
-                      formRef.current.validateFields().then((values) => {
-                        alert(JSON.stringify(values));
-                      });
+                      form
+                        .validateFields()
+                        .then((values) => {
+                          alert(JSON.stringify(values));
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
                     }}
                   >
                     提交
                   </Button>
                 </div>
-                <Form ref={formRef}>
+                <Form form={form}>
                   <TableGridLayout
                     innerStyle={{ padding: '0 0 20px 0' }}
                     // bordered

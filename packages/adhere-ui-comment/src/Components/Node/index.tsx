@@ -312,7 +312,9 @@ const Node: FC<NodeProps> = (props) => {
     });
   }
 
-  useEffect(() => setData(props.data), [props?.data]);
+  useEffect(() => {
+    setData(props.data);
+  }, [props?.data]);
 
   return (
     <FlexLayout

@@ -2,9 +2,9 @@
   "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
   "compilerOptions": {
     "outDir": "./lib",
+    "declarationDir": "./lib",
     "baseUrl": "./",
-    "jsx": "react",
-    "allowJs": true
+    "module": "CommonJS"
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*"]

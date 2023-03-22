@@ -33,7 +33,9 @@ const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
   /**
    * useEffect props.active
    */
-  useEffect(() => setActive(props.active), [props.active]);
+  useEffect(() => {
+    setActive(props.active);
+  }, [props.active]);
 
   return (
     <div className={selectPrefix}>

@@ -82,7 +82,7 @@ export default {
       map.centerAndZoom(viewport.center, viewport.zoom);
 
       setTimeout(() => {
-        resolve();
+        resolve(null);
       }, 200);
     });
   },

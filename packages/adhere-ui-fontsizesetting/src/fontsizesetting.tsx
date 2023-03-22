@@ -24,7 +24,9 @@ const FontSizeSetting: FC<FontSizeSettingProps> = (props) => {
     [value],
   );
 
-  useEffect(() => setValue(props.value), [props.value]);
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
 
   return (
     <div className={classNames(selectorPrefix, className || '')} style={style || {}} ref={el}>

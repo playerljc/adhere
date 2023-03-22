@@ -57,7 +57,9 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
   /**
    * useEffect props.expandAll
    */
-  useEffect(() => setExpandAll(props.expandAll), [props.expandAll]);
+  useEffect(() => {
+    setExpandAll(props.expandAll);
+  }, [props.expandAll]);
 
   /**
    * useEffect expandAll

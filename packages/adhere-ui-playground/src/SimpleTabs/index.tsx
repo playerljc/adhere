@@ -33,7 +33,9 @@ const SimpleTabs: FC<SimpleTabsProps> = (props) => {
     );
   }
 
-  useEffect(() => setActiveKey(props.activeKey), [props.activeKey]);
+  useEffect(() => {
+    setActiveKey(props.activeKey);
+  }, [props.activeKey]);
 
   return (
     <TabContext.Provider

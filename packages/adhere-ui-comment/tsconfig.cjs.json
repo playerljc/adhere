@@ -3,9 +3,9 @@
   "compilerOptions": {
     "outDir": "./lib",
     "baseUrl": "./",
-    "jsx": "react",
-    "resolveJsonModule": true,
-    "downlevelIteration": true
+    "declarationDir": "./lib",
+    "downlevelIteration": true,
+    "module": "CommonJS"
   },
   "exclude": ["node_modules", "src/demo"],
   "include": ["src/**/*"]

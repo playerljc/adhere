@@ -67,11 +67,11 @@ module.exports = {
     const { use } = webpackConfig.module.rules[0];
 
     // 在使用babel-plugin-import的时候让adhere也执行
-    webpackConfig.module.rules[0].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
-    delete webpackConfig.module.rules[0].exclude;
-
-    webpackConfig.module.rules[1].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
-    delete webpackConfig.module.rules[1].exclude;
+    // webpackConfig.module.rules[0].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    // delete webpackConfig.module.rules[0].exclude;
+    //
+    // webpackConfig.module.rules[1].include = [path.join(__dirname, 'src'), /packages[\\/]adhere-/];
+    // delete webpackConfig.module.rules[1].exclude;
 
     const babelLoaderConfig = use.find((loaderConfig) => {
       if (typeof loaderConfig === 'string') return false;

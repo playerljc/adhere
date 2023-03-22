@@ -133,7 +133,9 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
     });
   }
 
-  useEffect(() => setActiveKey(props.activeKey), [props.activeKey]);
+  useEffect(() => {
+    setActiveKey(props.activeKey);
+  }, [props.activeKey]);
 
   useEffect(() => {
     if (!scroll.current) {

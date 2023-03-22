@@ -1,2 +1,2 @@
-export default function(o,i){void 0===i&&(i="/"),1<window.history.length?window.history.back():o.replace(i||"/")}
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(e,t){void 0===t&&(t="/"),1<window.history.length?window.history.back():e.replace(t||"/")};
 //# sourceMappingURL=historyback.js.map

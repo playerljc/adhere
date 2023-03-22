@@ -88,7 +88,9 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
     isRunning,
   }));
 
-  useEffect(() => initial(), [speed, delay, direction, loop, stopOnLastSlide, listeners]);
+  useEffect(() => {
+    initial();
+  }, [speed, delay, direction, loop, stopOnLastSlide, listeners]);
 
   return (
     <div

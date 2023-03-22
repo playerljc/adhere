@@ -118,7 +118,7 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
      * onWrapScroll
      */
     function onWrapScroll() {
-      if (!scrollEl) return;
+      if (!scrollEl || !anchorRef.current) return;
 
       const scrollTop = (scrollEl as HTMLElement).scrollTop;
 
@@ -129,11 +129,14 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
       }
 
       if (scrollTop === 0) {
-        (anchorRef.current as HTMLElement).classList.remove(`${selectPrefix}-affix`);
+        (anchorRef.current as HTMLElement)?.classList?.remove?.(`${selectPrefix}-affix`);
         // (anchorRef.current as HTMLElement).style.top = '0';
       } else {
-        (anchorRef.current as HTMLElement).classList.add(`${selectPrefix}-affix`);
-        (anchorRef.current as HTMLElement).style.top = `${anchorPosition.top}px`;
+        (anchorRef.current as HTMLElement)?.classList?.add?.(`${selectPrefix}-affix`);
+
+        if ((anchorRef.current as HTMLElement).style) {
+          (anchorRef.current as HTMLElement).style.top = `${anchorPosition.top}px`;
+        }
       }
     }
 
@@ -151,7 +154,9 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
    * useEffect
    * @description activeAnchor change
    */
-  useEffect(() => setActiveAnchor(props.activeAnchor || ''), [props.activeAnchor]);
+  useEffect(() => {
+    setActiveAnchor(props.activeAnchor || '');
+  }, [props.activeAnchor]);
 
   /**
    * render jsx

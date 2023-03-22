@@ -27,7 +27,9 @@ const Collapse: FC<CollapseProps> = (props) => {
     setCollapse(!collapse);
   }
 
-  useEffect(() => setCollapse(props.defaultCollapse || false), [props.defaultCollapse]);
+  useEffect(() => {
+    setCollapse(props.defaultCollapse || false);
+  }, [props.defaultCollapse]);
 
   return (
     <div
