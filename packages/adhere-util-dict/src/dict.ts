@@ -112,7 +112,7 @@ const Dict: DictObj = {
     set(target: Object, property, value, receiver) {
       const result = Reflect.set(target, property, value, receiver);
 
-      set(property);
+      set(property, value());
 
       return result;
     },

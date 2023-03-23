@@ -37,5 +37,5 @@ export interface DictComponentHandler {
 }
 
 export interface DictReactComponentObj {
-  [prop: string]: any;
+  [prop: string | symbol]: any;
 }

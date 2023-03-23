@@ -29,5 +29,5 @@ export interface DictComponentHandler {
     reset: () => Promise<any>;
 }
 export interface DictReactComponentObj {
-    [prop: string]: any;
+    [prop: string | symbol]: any;
 }

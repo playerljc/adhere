@@ -21,9 +21,9 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.module.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.ejs.json -o lib",
+    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereSpace --define alias=@,evnVars=true",
     "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"

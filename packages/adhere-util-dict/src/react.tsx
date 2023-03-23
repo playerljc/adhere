@@ -15,12 +15,11 @@ import type {
 /**
  * set - 设置字典对应的组件
  * @param {string} key - 字典名称
+ * @param {any} value - 字典的值
  * @return {void}
  */
-export function set(key) {
+export function set(key: string | symbol, value: any) {
   if (DictReactComponents[key]) return;
-
-  const value = Dict.value[key].value;
 
   // isFunction
   if (Util.isFunction(value)) {

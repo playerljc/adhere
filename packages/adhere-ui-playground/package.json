@@ -23,8 +23,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "startapp": "ctbuild startapp --define alias=@,evnVars=true,static=assets",
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
-    "buildpackage:es": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
-    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:es",
+    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdherePlayground --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
