@@ -12,7 +12,14 @@ module.exports = {
 
     webpackConfig.entry.index = path.join(__dirname, '../e2e', 'index.jsx');
 
-    webpackConfig.module.rules[0].include = [path.join(__dirname, '../e2e')];
+    webpackConfig.module.rules[0].include = [
+      path.join(__dirname, '../e2e'),
+      path.join(__dirname, '../src'),
+    ];
+    webpackConfig.module.rules[1].include = [
+      path.join(__dirname, '../e2e'),
+      path.join(__dirname, '../src'),
+    ];
 
     webpackConfig.module.rules[3].include.push(path.join(__dirname, '../e2e'));
 

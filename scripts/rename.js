@@ -3,8 +3,6 @@ const path = require('path');
 
 const context = path.join(__dirname, '../', 'packages');
 
-console.log(context);
-
 const names = fs
   .readdirSync(context)
   .filter((name) => !['adhere', 'adhere-ui-g6', 'adhere-website'].includes(name));
