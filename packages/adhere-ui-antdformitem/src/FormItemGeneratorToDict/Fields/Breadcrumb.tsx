@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Dict from '@baifendian/adhere-util-dict';
 
 import BreadcrumbFormItem from '../BreadcrumbFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -66,7 +67,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       // @ts-ignore
       return <BreadcrumbFormItem {...props} items={data} />;

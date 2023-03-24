@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Dict from '@baifendian/adhere-util-dict';
 
 import MentionsFormItem from '../MentionsFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -65,7 +66,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <MentionsFormItem {...props} options={data} />;
     };

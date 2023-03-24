@@ -7,6 +7,7 @@ import RadioCustomFormItem from '../RadioCustomFormItem';
 import RadioHorizontalFormItem from '../RadioHorizontalFormItem';
 import RadioSelectFormItem from '../RadioSelectFormItem';
 import RadioVerticalFormItem from '../RadioVerticalFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -133,7 +134,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <RadioVerticalFormItem {...props} dataSource={data} />;
     };
@@ -161,7 +162,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <RadioHorizontalFormItem {...props} dataSource={data} />;
     };
@@ -189,7 +190,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <RadioButtonFormItem {...props} dataSource={data} />;
     };
@@ -217,7 +218,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <RadioSelectFormItem {...props} dataSource={data} />;
     };
@@ -245,7 +246,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <RadioCustomFormItem {...props} dataSource={data} />;
     };

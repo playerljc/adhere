@@ -9,6 +9,7 @@ import { Spin } from '../../AntFormItemNormalize';
 import CheckAllMulitSelectFormItem from '../CheckAllMulitSelectFormItem';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -158,7 +159,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       const Component = FormItemComponents[`SelectFormItem`];
       return <Component {...props} dataSource={data} />;
@@ -187,7 +188,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       const Component = FormItemComponents[`SelectMulitFormItem`];
       return <Component {...props} dataSource={data} />;
@@ -219,7 +220,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       const Component = FormItemComponents[`SelectCheckAllMulitFormItem`];
       return <Component {...props} dataSource={data} />;

@@ -9,6 +9,7 @@ import ListMulitSelectFormItem from '../ListMulitSelectFormItem';
 import ListSelectFormItem from '../ListSelectFormItem';
 import MulitSelectFormItem from '../MulitSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
+import { deepDep } from '../util';
 
 const selectorPrefix = 'adhere-ui-antdformitem';
 
@@ -138,7 +139,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <ListFormItem {...props} dataSource={data} />;
     };
@@ -175,7 +176,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <ListSelectFormItem {...props} dataSource={data} />;
     };
@@ -212,7 +213,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <ListMulitSelectFormItem {...props} dataSource={data} />;
     };

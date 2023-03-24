@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Dict from '@baifendian/adhere-util-dict';
 
 import AutoCompleteFormItem from '../AutoCompleteFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -61,7 +62,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <AutoCompleteFormItem {...props} dataSource={data} />;
     };

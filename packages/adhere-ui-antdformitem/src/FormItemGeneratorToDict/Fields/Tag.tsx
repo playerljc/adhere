@@ -9,6 +9,7 @@ import TagHorizontalFormItem from '../TagHorizontalFormItem';
 import TagMultiSelectFormItem from '../TagMultiSelectFormItem';
 import TagSelectFormItem from '../TagSelectFormItem';
 import TagVerticalFormItem from '../TagVerticalFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -161,7 +162,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TagVerticalFormItem {...props} dataSource={data} />;
     };
@@ -189,7 +190,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TagHorizontalFormItem {...props} dataSource={data} />;
     };
@@ -217,7 +218,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TagCheckAllVerticalFormItem {...props} dataSource={data} />;
     };
@@ -245,7 +246,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TagCheckAllHorizontalFormItem {...props} dataSource={data} />;
     };
@@ -273,7 +274,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TagSelectFormItem {...props} dataSource={data} />;
     };
@@ -301,7 +302,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TagCheckAllSelectFormItem {...props} dataSource={data} />;
     };

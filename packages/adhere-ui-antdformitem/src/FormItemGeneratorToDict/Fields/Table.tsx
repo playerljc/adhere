@@ -24,6 +24,7 @@ import SelectFormItem from '../SelectFormItem';
 import TableFormItem from '../TableFormItem';
 import TableMulitSelectFormItem from '../TableMulitSelectFormItem';
 import TableSelectFormItem from '../TableSelectFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -157,7 +158,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TableFormItem {...props} dataSource={data} />;
     };
@@ -194,7 +195,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TableSelectFormItem {...props} dataSource={data} />;
     };
@@ -231,7 +232,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TableMulitSelectFormItem {...props} dataSource={data} />;
     };

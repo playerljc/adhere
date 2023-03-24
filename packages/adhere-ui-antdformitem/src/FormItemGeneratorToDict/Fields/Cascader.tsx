@@ -6,6 +6,7 @@ import CascaderFormItem from '../CascaderFormItem';
 import CascaderLeafFormItem from '../CascaderLeafFormItem';
 import CascaderLeafMulitFormItem from '../CascaderLeafMulitFormItem';
 import CascaderMulitFormItem from '../CascaderMulitFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -112,7 +113,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CascaderFormItem {...props} options={data} />;
     };
@@ -140,7 +141,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CascaderLeafFormItem {...props} dataSource={data} />;
     };
@@ -168,7 +169,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CascaderMulitFormItem {...props} options={data} />;
     };
@@ -196,7 +197,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CascaderLeafMulitFormItem {...props} dataSource={data} />;
     };

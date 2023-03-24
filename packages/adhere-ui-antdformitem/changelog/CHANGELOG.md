@@ -1,3 +1,11 @@
+# 1.0.5
+
+***
+
+2023-03-24
+
+* FormItemGeneratorToDict的cascadeParams参数判断是否变化逻辑修改
+
 # 1.0.4
 
 ***

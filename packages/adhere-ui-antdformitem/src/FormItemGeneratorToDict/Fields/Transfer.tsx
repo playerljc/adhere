@@ -4,6 +4,7 @@ import Dict from '@baifendian/adhere-util-dict';
 
 import TransferFormItem from '../TransferFormItem';
 import TransferSelectFormItem from '../TransferSelectFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -82,7 +83,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TransferFormItem {...props} dataSource={data} />;
     };
@@ -110,7 +111,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TransferSelectFormItem {...props} dataSource={data} />;
     };

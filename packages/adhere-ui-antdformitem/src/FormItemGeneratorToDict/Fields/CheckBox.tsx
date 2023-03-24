@@ -10,6 +10,7 @@ import CheckBoxCustomFormItem from '../CheckBoxCustomFormItem';
 import CheckBoxHorizontalFormItem from '../CheckBoxHorizontalFormItem';
 import CheckBoxSelectFormItem from '../CheckBoxSelectFormItem';
 import CheckBoxVerticalFormItem from '../CheckBoxVerticalFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -184,7 +185,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxVerticalFormItem {...props} dataSource={data} />;
     };
@@ -212,7 +213,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxHorizontalFormItem {...props} dataSource={data} />;
     };
@@ -240,7 +241,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxCheckAllVerticalFormItem {...props} dataSource={data} />;
     };
@@ -268,7 +269,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxCheckAllHorizontalFormItem {...props} dataSource={data} />;
     };
@@ -296,7 +297,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxSelectFormItem {...props} dataSource={data} />;
     };
@@ -324,7 +325,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxCheckAllSelectFormItem {...props} dataSource={data} />;
     };
@@ -352,7 +353,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxCustomFormItem {...props} dataSource={data} />;
     };
@@ -380,7 +381,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <CheckBoxCheckAllCustomFormItem {...props} dataSource={data} />;
     };

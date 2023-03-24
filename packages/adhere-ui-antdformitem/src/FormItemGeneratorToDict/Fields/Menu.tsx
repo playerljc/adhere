@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Dict from '@baifendian/adhere-util-dict';
 
 import MenuFormItem from '../MenuFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -63,7 +64,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <MenuFormItem {...props} items={data} />;
     };

@@ -6,6 +6,7 @@ import TreeMulitSelectFormItem from '../TreeMulitSelectFormItem';
 import TreeSelectFormItem from '../TreeSelectFormItem';
 import TreeSelectLeafFormItem from '../TreeSelectLeafFormItem';
 import TreeSelectLeafMulitFormItem from '../TreeSelectLeafMulitFormItem';
+import { deepDep } from '../util';
 
 const FormItemComponents = {};
 
@@ -128,7 +129,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       const Component = FormItemComponents[`TreeSelectFormItem`];
       return <Component {...props} dataSource={data} />;
@@ -157,7 +158,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TreeSelectLeafFormItem {...props} dataSource={data} />;
     };
@@ -185,7 +186,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       const Component = FormItemComponents[`TreeSelectMulitFormItem`];
       return <Component {...props} dataSource={data} />;
@@ -214,7 +215,7 @@ export default () => {
             setData(res);
           });
         }
-      }, [cascadeParams]);
+      }, [deepDep(cascadeParams)]);
 
       return <TreeSelectLeafMulitFormItem {...props} dataSource={data} />;
     };
