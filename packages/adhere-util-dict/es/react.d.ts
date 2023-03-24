@@ -2,10 +2,9 @@ import type { DictReactComponentObj } from './types';
 /**
  * set - 设置字典对应的组件
  * @param {string} key - 字典名称
- * @param {any} value - 字典的值
  * @return {void}
  */
-export declare function set(key: string | symbol, value: any): void;
+export declare function set(key: string | symbol): void;
 /**
  * Components - 字典对用的React组件
  * 调用init后会自动填充
