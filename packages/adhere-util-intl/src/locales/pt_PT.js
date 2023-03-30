@@ -75,4 +75,6 @@ export default [
   'preservação',
   'Editar a Linha',
   'Editar a Tabela',
+  '{count} item seleccionado',
+  'Deseleccionar',
 ];

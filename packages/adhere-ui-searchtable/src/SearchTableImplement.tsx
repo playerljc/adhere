@@ -88,7 +88,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return fetchListPropName;
   }
 
-  // ------------ 不需要重写(override)的方法 start ------------------
   /**
    * onSelectChange
    * @description - onSelectChange
@@ -125,8 +124,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       [propertys[1]]: dayjs && dayjs.length ? dayjs[1] : null,
     });
   };
-
-  // ------------ 不需要重写(override)的方法 end ------------------
 
   /**
    * getParams
@@ -537,11 +534,11 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return null;
   }
 
-  renderTableFooter(): ReactElement | null {
+  renderSearchFooter(): ReactElement | null {
     return null;
   }
 
-  renderTableHeader(): ReactElement | null {
+  renderSearchHeader(): ReactElement | null {
     return null;
   }
 

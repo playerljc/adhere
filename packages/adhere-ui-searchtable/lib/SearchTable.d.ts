@@ -1,10 +1,10 @@
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
+import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig } from 'antd/es/table/interface';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React from 'react';
-import Suspense from '@baifendian/adhere-ui-suspense';
 import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnResizable';
+import Search from './Search';
 import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState } from './types';
 import { TableDensity } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtable";
@@ -29,7 +29,7 @@ export declare const SearchTableContext: React.Context<{
  * @class SearchTable
  * @classdesc SearchTable
  */
-declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps, S extends SearchTableState = SearchTableState> extends Suspense<P, S> {
+declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps, S extends SearchTableState = SearchTableState> extends Search<P, S> {
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static ROW_SELECTION_NORMAL_MODE: symbol;
@@ -96,17 +96,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getColumns(): ColumnType<object>[];
     /**
-     *
-     * getRowSelection
-     * @description 获取表格行选择对象
-     */
-    abstract getRowSelection(): TableRowSelection<object>;
-    /**
-     * getTotal
-     * @description 获取表格数据的总数
-     */
-    abstract getTotal(): number;
-    /**
      * getOrderFieldProp
      * @description 获取表格的排序字段
      */
@@ -127,36 +116,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract getOrderFieldValue(): string;
     /**
-     * renderSearchBefore
-     * @description 渲染查询面板之前
-     */
-    abstract renderSearchFormBefore(): ReactElement | null;
-    /**
-     * renderSearchForm
-     * @description 渲染查询的UI
-     */
-    abstract renderSearchForm(): ReactElement | null;
-    /**
-     * renderSearchBefore
-     * @description 渲染查询面板之后
-     */
-    abstract renderSearchFormAfter(): ReactElement | null;
-    /**
-     * renderTableHeader
-     * @description 渲染表格的头
-     */
-    abstract renderTableHeader(): ReactElement | null;
-    /**
-     * renderTableFooter
-     * @description 渲染表格的脚
-     */
-    abstract renderTableFooter(): ReactElement | null;
-    /**
-     * renderSearchFooterItems
-     * @description 渲染SearchFooter的按钮组
-     */
-    abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactElement[] | null;
-    /**
      * onSubTableChange
      * @description 获取表格change句柄
      * @param pagination
@@ -165,16 +124,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param extra
      */
     abstract onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object>): void;
-    /**
-     * clear
-     * @description  清除操作
-     */
-    abstract clear(): Promise<any>;
-    /**
-     * onSearch
-     * @description 进行查询
-     */
-    abstract onSearch(): Promise<void>;
     /**
      * onTableRowComponentReducers
      * @description 对tableRowComponentReducers对象进行设置的hook
@@ -224,11 +173,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     onTableChange: (pagination: any, filters: any, sorter: any) => void;
     /**
-     * onClear
-     * @description - 清除操作
-     */
-    onClear(): Promise<void>;
-    /**
      * sortOrder
      * @description table的column中加入
      * sorter: true,
@@ -258,24 +202,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         record: Record<string, any>;
         columns: ColumnTypeExt[];
     }): RowConfig;
-    /**
-     * getLimit
-     * @description limit参数
-     */
-    getLimit(): number;
-    /**
-     * getPagination
-     * @description 获取分页信息
-     */
-    getPagination(): {
-        onChange: (page: any, limit: any) => void;
-        onShowSizeChange: (page: any, limit: any) => void;
-        showTotal: (total: any) => string;
-        total: number;
-        current: S["page"] | undefined;
-        pageSize: S["limit"] | undefined;
-        showQuickJumper: boolean;
-    };
     /**
      * getTableDensity
      * @description 表格密度
@@ -318,17 +244,17 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderTableDensitySetting(): ReactElement;
     /**
-     * renderSearchFooter
+     * renderSearchToolBar
      * @description 渲染查询工具栏
      * @return ReactElement
      */
-    renderSearchFooter(): ReactElement;
+    renderSearchToolBar(): ReactElement;
     /**
      * renderTable
      * @description - 认选表格体
      * @protected
      */
-    renderTable(): JSX.Element;
+    renderBody(): JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
@@ -343,38 +269,37 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     render(): ReactElement;
 }
 export declare const defaultProps: {
-    className: string;
-    style: {};
-    tableClassName: string;
-    tableStyle: {};
-    searchClassName: string;
-    searchStyle: {};
-    isFirst: boolean;
-    isFirstLoading: null;
+    className: PropTypes.Requireable<string>;
+    style: PropTypes.Requireable<object>;
+    searchClassName: PropTypes.Requireable<string>; /**
+     * searchTableResizableEffectLayout
+     * @protected
+     */
+    searchStyle: PropTypes.Requireable<object>;
+    reset: PropTypes.Requireable<boolean>;
+    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+    isShowExpandSearch: PropTypes.Requireable<boolean>;
+    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
+    fitSearch: PropTypes.Requireable<boolean>;
+    fitBody: PropTypes.Requireable<boolean>;
+    autoFixed: PropTypes.Requireable<boolean>;
     antdTableProps: {};
-    isShowExpandSearch: boolean;
-    defaultExpandSearchCollapse: boolean;
-    fitSearch: boolean;
-    fitTable: boolean;
-    autoFixed: boolean;
     fixedHeaderAutoTable: boolean;
     fixedTableSpaceBetween: boolean;
 };
 export declare const propTypes: {
-    className: PropTypes.Requireable<string>;
-    style: PropTypes.Requireable<object>;
-    tableClassName: PropTypes.Requireable<string>;
-    tableStyle: PropTypes.Requireable<object>;
-    searchClassName: PropTypes.Requireable<string>;
-    searchStyle: PropTypes.Requireable<object>;
-    reset: PropTypes.Requireable<boolean>;
-    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+    className: string;
+    style: {};
+    searchClassName: string;
+    searchStyle: {};
+    isFirst: boolean;
+    isFirstLoading: null;
+    isShowExpandSearch: boolean;
+    defaultExpandSearchCollapse: boolean;
+    fitSearch: boolean;
+    fitBody: boolean;
+    autoFixed: boolean;
     antdTableProps: PropTypes.Requireable<object>;
-    isShowExpandSearch: PropTypes.Requireable<boolean>;
-    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
-    fitSearch: PropTypes.Requireable<boolean>;
-    fitTable: PropTypes.Requireable<boolean>;
-    autoFixed: PropTypes.Requireable<boolean>;
     fixedHeaderAutoTable: PropTypes.Requireable<boolean>;
     fixedTableSpaceBetween: PropTypes.Requireable<boolean>;
 };

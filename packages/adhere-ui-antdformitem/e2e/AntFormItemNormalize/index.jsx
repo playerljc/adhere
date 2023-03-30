@@ -2,7 +2,8 @@ import { Button } from 'antd';
 import React, { useState } from 'react';
 
 import { UploadOutlined } from '@ant-design/icons';
-import { FlexLayout, Space } from '@baifendian/adhere';
+import FlexLayout from '@baifendian/adhere-ui-flexlayout';
+import Space from '@baifendian/adhere-ui-space';
 
 import AntdFormItem from '../../src/index';
 

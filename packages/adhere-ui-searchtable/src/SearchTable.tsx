@@ -1,15 +1,15 @@
 import { Button, Table } from 'antd';
+import { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
-// @ts-ignore
-import type { ColumnsType, TableProps } from 'antd/lib/table/Table';
+import type { TableProps } from 'antd/es/table/InternalTable';
 import type {
   ColumnType,
+  ColumnsType,
   FilterValue,
   SorterResult,
   TableCurrentDataSource,
   TablePaginationConfig,
-  TableRowSelection,
-} from 'antd/lib/table/interface';
+} from 'antd/es/table/interface';
 import classNames from 'classnames';
 import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
@@ -17,8 +17,6 @@ import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-import FlexLayout from '@baifendian/adhere-ui-flexlayout';
-import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
 
 import ColumnResizable, {
@@ -29,6 +27,7 @@ import ColumnSetting from './Extension/ColumnSetting';
 import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
+import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
 import type {
   CellConfigReducer,
   ColumnTypeExt,
@@ -40,8 +39,6 @@ import type {
 import { TableDensity } from './types';
 
 export const selectorPrefix = 'adhere-ui-searchtable';
-
-const { Fixed, Auto } = FlexLayout;
 
 export const SearchTableContext = createContext<{
   context: SearchTable;
@@ -68,7 +65,7 @@ export const SearchTableContext = createContext<{
 abstract class SearchTable<
   P extends SearchTableProps = SearchTableProps,
   S extends SearchTableState = SearchTableState,
-> extends Suspense<P, S> {
+> extends Search<P, S> {
   // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 序号生成的规则 - 连续模式
@@ -170,19 +167,6 @@ abstract class SearchTable<
   abstract getColumns(): ColumnType<object>[];
 
   /**
-   *
-   * getRowSelection
-   * @description 获取表格行选择对象
-   */
-  abstract getRowSelection(): TableRowSelection<object>;
-
-  /**
-   * getTotal
-   * @description 获取表格数据的总数
-   */
-  abstract getTotal(): number;
-
-  /**
    * getOrderFieldProp
    * @description 获取表格的排序字段
    */
@@ -207,42 +191,6 @@ abstract class SearchTable<
   abstract getOrderFieldValue(): string;
 
   /**
-   * renderSearchBefore
-   * @description 渲染查询面板之前
-   */
-  abstract renderSearchFormBefore(): ReactElement | null;
-
-  /**
-   * renderSearchForm
-   * @description 渲染查询的UI
-   */
-  abstract renderSearchForm(): ReactElement | null;
-
-  /**
-   * renderSearchBefore
-   * @description 渲染查询面板之后
-   */
-  abstract renderSearchFormAfter(): ReactElement | null;
-
-  /**
-   * renderTableHeader
-   * @description 渲染表格的头
-   */
-  abstract renderTableHeader(): ReactElement | null;
-
-  /**
-   * renderTableFooter
-   * @description 渲染表格的脚
-   */
-  abstract renderTableFooter(): ReactElement | null;
-
-  /**
-   * renderSearchFooterItems
-   * @description 渲染SearchFooter的按钮组
-   */
-  abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactElement[] | null;
-
-  /**
    * onSubTableChange
    * @description 获取表格change句柄
    * @param pagination
@@ -256,18 +204,6 @@ abstract class SearchTable<
     sorter: SorterResult<object> | SorterResult<object>[],
     extra?: TableCurrentDataSource<object>,
   ): void;
-
-  /**
-   * clear
-   * @description  清除操作
-   */
-  abstract clear(): Promise<any>;
-
-  /**
-   * onSearch
-   * @description 进行查询
-   */
-  abstract onSearch(): Promise<void>;
 
   /**
    * onTableRowComponentReducers
@@ -446,28 +382,6 @@ abstract class SearchTable<
   };
 
   /**
-   * onClear
-   * @description - 清除操作
-   */
-  onClear(): Promise<void> {
-    return new Promise((resolve) => {
-      this.setState(
-        {
-          page: 1,
-          limit: this.getLimit(),
-        },
-        () => {
-          this.clear().then(() => {
-            this.fetchData();
-
-            resolve();
-          });
-        },
-      );
-    });
-  }
-
-  /**
    * sortOrder
    * @description table的column中加入
    * sorter: true,
@@ -528,56 +442,6 @@ abstract class SearchTable<
       },
       { value: {} },
     ).value;
-  }
-
-  /**
-   * getLimit
-   * @description limit参数
-   */
-  getLimit(): number {
-    return 10;
-  }
-
-  /**
-   * getPagination
-   * @description 获取分页信息
-   */
-  getPagination() {
-    return {
-      onChange: (page, limit) => {
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            this.fetchData();
-          },
-        );
-      },
-      onShowSizeChange: (page, limit) => {
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            this.fetchData();
-          },
-        );
-      },
-      showTotal: (total /* [page, pageSize] */) => {
-        return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
-          page: this.state.page,
-          pageSize: this.state.limit,
-          total,
-        });
-      },
-      total: this.getTotal(),
-      current: this.state.page,
-      pageSize: this.state.limit,
-      showQuickJumper: true,
-    };
   }
 
   /**
@@ -803,11 +667,11 @@ abstract class SearchTable<
   }
 
   /**
-   * renderSearchFooter
+   * renderSearchToolBar
    * @description 渲染查询工具栏
    * @return ReactElement
    */
-  renderSearchFooter(): ReactElement {
+  renderSearchToolBar(): ReactElement {
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
@@ -908,7 +772,7 @@ abstract class SearchTable<
    * @description - 认选表格体
    * @protected
    */
-  renderTable() {
+  renderBody() {
     const { antdTableProps, fixedHeaderAutoTable } = this.props;
 
     const { columnSetting = [], tableDensity } = this.state;
@@ -934,11 +798,12 @@ abstract class SearchTable<
       onChange: this.onTableChange,
       pagination: this.getPagination(),
       rowSelection: this.getRowSelection(),
-      size: tableDensity,
+      size: tableDensity as SizeType,
       // 组件
       components: this.components, // this.onComponents(columns, this.components),
       // onRow
       // 给TableRow的props参数
+      // @ts-ignore
       onRow: (record, rowIndex) => {
         // 这块可能以后会有很多操作
         // 行的所有操作都可以在这里处理
@@ -984,82 +849,11 @@ abstract class SearchTable<
    * @return ReactElement | null
    */
   renderInner(): ReactElement | null {
-    const {
-      className,
-      style,
-      tableClassName,
-      tableStyle,
-      searchClassName,
-      searchStyle,
-      fitSearch,
-      fitTable,
-      autoFixed,
-      fixedTableSpaceBetween,
-    } = this.props;
+    const { fixedTableSpaceBetween } = this.props;
 
-    const { expand = false } = this.state;
-
-    return (
-      <FlexLayout
-        direction="vertical"
-        className={classNames(
-          selectorPrefix,
-          fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
-          className || '',
-        )}
-        style={{ ...(style || {}) }}
-      >
-        <Fixed
-          className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName || '')}
-          style={{ ...(searchStyle || {}) }}
-          fit={fitSearch}
-        >
-          <FlexLayout direction="vertical">
-            <ConditionalRender
-              conditional={!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()}
-            >
-              {() => <Fixed>{this.renderSearchFormBefore?.()}</Fixed>}
-            </ConditionalRender>
-
-            <Fixed>
-              <ConditionalRender conditional={expand} noMatch={() => null}>
-                {() => this.renderSearchForm()}
-              </ConditionalRender>
-            </Fixed>
-
-            <Fixed>{this.renderSearchFooter()}</Fixed>
-
-            <ConditionalRender
-              conditional={!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.()}
-            >
-              {() => <Fixed>{this.renderSearchFormAfter?.()}</Fixed>}
-            </ConditionalRender>
-          </FlexLayout>
-        </Fixed>
-
-        <ConditionalRender conditional={!!this.renderTableHeader && !!this.renderTableHeader?.()}>
-          {() => <Fixed>{this.renderTableHeader?.()}</Fixed>}
-        </ConditionalRender>
-
-        <Auto
-          className={classNames(
-            `${selectorPrefix}-autowrapper`,
-            tableClassName || '',
-            autoFixed ? 'autofixed' : '',
-          )}
-          style={{ ...(tableStyle || {}) }}
-          fit={fitTable}
-          autoFixed={autoFixed}
-        >
-          <div ref={this.tableWrapRef} className={`${selectorPrefix}-tablewrapper`}>
-            {this.renderTable()}
-          </div>
-        </Auto>
-
-        <ConditionalRender conditional={!!this.renderTableFooter && !!this.renderTableFooter?.()}>
-          {() => <Fixed>{this.renderTableFooter?.()}</Fixed>}
-        </ConditionalRender>
-      </FlexLayout>
+    return super.renderInner(
+      this.tableWrapRef,
+      fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
     );
   }
 
@@ -1085,51 +879,20 @@ abstract class SearchTable<
 }
 
 export const defaultProps = {
-  className: '',
-  style: {},
-  tableClassName: '',
-  tableStyle: {},
-  searchClassName: '',
-  searchStyle: {},
-  // 第一次
-  isFirst: true,
-  // 第一次加载
-  isFirstLoading: null,
   antdTableProps: {},
-  isShowExpandSearch: true,
-  defaultExpandSearchCollapse: true,
-  fitSearch: true,
-  fitTable: true,
-  autoFixed: true,
   fixedHeaderAutoTable: false,
   fixedTableSpaceBetween: false,
+  ...searchPropTypes,
 };
 
 export const propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  tableClassName: PropTypes.string,
-  tableStyle: PropTypes.object,
-  searchClassName: PropTypes.string,
-  searchStyle: PropTypes.object,
-  reset: PropTypes.bool,
-  firstLoading: PropTypes.node,
   // antdTable的Props
   antdTableProps: PropTypes.object,
-  // 是否有展开和收缩的功能
-  isShowExpandSearch: PropTypes.bool,
-  // 展开和收缩的默认状态
-  defaultExpandSearchCollapse: PropTypes.bool,
-  // 撑开search
-  fitSearch: PropTypes.bool,
-  // 撑开表格
-  fitTable: PropTypes.bool,
-  // 是否是查询固定，表格自适应
-  autoFixed: PropTypes.bool,
   // 锁定列头，表格滚动
   fixedHeaderAutoTable: PropTypes.bool,
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: PropTypes.bool,
+  ...searchDefaultProps,
 };
 
 SearchTable.defaultProps = defaultProps;

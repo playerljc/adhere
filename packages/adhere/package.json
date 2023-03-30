@@ -22,7 +22,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuildpackage:cjs": "node script/build.js module=lib",
-    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.ejs.json -o lib",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "prebuildpackage:esm": "node script/build.js module=es",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --serial buildpackage:cjs buildpackage:esm",
@@ -70,6 +70,7 @@
     "@baifendian/adhere-ui-revolving": "^2.0.7",
     "@baifendian/adhere-ui-scrollload": "^2.0.7",
     "@baifendian/adhere-ui-searchtable": "^2.0.8",
+    "@baifendian/adhere-ui-searchlist": "^2.0.8",
     "@baifendian/adhere-ui-slidelayout": "^2.0.7",
     "@baifendian/adhere-ui-sliderscale": "^2.0.7",
     "@baifendian/adhere-ui-space": "^2.0.7",

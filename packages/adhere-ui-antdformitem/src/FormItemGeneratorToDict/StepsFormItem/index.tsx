@@ -1,7 +1,7 @@
 import { StepProps } from 'antd/es/steps';
 import React, { FC, useEffect, useState } from 'react';
 
-import { Suspense } from '@baifendian/adhere';
+import Suspense from '@baifendian/adhere-ui-suspense';
 
 import { Steps } from '../../AntFormItemNormalize';
 import { StepsFormItemProps } from '../../types';

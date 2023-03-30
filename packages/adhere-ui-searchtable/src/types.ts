@@ -1,7 +1,6 @@
 import type { FormInstance } from 'antd/es/form';
+import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
-// @ts-ignore
-import type { TableProps } from 'antd/lib/table/Table';
 import type {
   ColumnType, // FilterValue,
   // SorterResult,
@@ -339,19 +338,14 @@ export interface ColumnTypeExt extends ColumnType<any> {
 }
 
 /**
- * SearchTableProps
- * @interface SearchTableProps
+ * SearchProps
  */
-export interface SearchTableProps extends SuspenseProps {
+export interface SearchProps extends SuspenseProps {
   className?: string;
   style?: CSSProperties;
-  tableClassName: string;
-  tableStyle: CSSProperties;
   searchClassName: string;
   searchStyle: CSSProperties;
   firstLoading: ReactElement;
-  // antdTable的Props
-  antdTableProps: TableProps<any>;
   // 是否有展开和收缩的功能
   isShowExpandSearch: boolean;
   // 展开和收缩的默认状态
@@ -359,26 +353,42 @@ export interface SearchTableProps extends SuspenseProps {
   // 撑开search
   fitSearch: boolean;
   // 撑开表格
-  fitTable: boolean;
+  fitBody: boolean;
   // 是否是查询固定，表格自适应
   autoFixed: boolean;
+  bodyClassName: string;
+  bodyStyle: CSSProperties;
+}
+
+/**
+ * SearchState
+ */
+export interface SearchState extends SuspenseState {
+  expand?: boolean;
+  prePage?: number | undefined;
+  page?: number;
+  limit?: number;
+}
+
+/**
+ * SearchTableProps
+ * @interface SearchTableProps
+ */
+export interface SearchTableProps extends SearchProps {
+  // antdTable的Props
+  antdTableProps: TableProps<any>;
   // 锁定列头，表格滚动
   fixedHeaderAutoTable: boolean;
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: boolean;
-  // 是否显示列设置
-  showColumnSetting: boolean;
 }
 
 /**
  * SearchTableState
  * @interface SearchTableState
  */
-export interface SearchTableState extends SuspenseState {
+export interface SearchTableState extends SearchState {
   [props: string]: any;
-  page?: number;
-  limit?: number;
-  expand?: boolean;
   scrollY?: number;
   columnSetting?: (ColumnType<any> & { sort: number; display: boolean })[];
   tableDensity?: TableDensity;

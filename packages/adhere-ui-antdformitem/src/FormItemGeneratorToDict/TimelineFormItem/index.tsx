@@ -1,7 +1,7 @@
 import type { TimelineItemProps } from 'antd/lib/timeline/TimelineItem';
 import React, { FC, useEffect, useState } from 'react';
 
-import { Suspense } from '@baifendian/adhere';
+import Suspense from '@baifendian/adhere-ui-suspense';
 
 import { Timeline } from '../../AntFormItemNormalize';
 import { TimelineFormItemProps } from '../../types';

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import APlayGround from './APlayGround';
 import { PlayGroundTabProps, PlayGroundTabState } from './types';
 /**

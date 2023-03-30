@@ -1,6 +1,6 @@
 import type { FormInstance } from 'antd/es/form';
+import type { TableProps } from 'antd/es/table/InternalTable';
 import type { Rule } from 'antd/lib/form/index';
-import type { TableProps } from 'antd/lib/table/Table';
 import type { ColumnType } from 'antd/lib/table/interface';
 import type { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
@@ -234,36 +234,46 @@ export interface ColumnTypeExt extends ColumnType<any> {
     $rowDragSort?: ColumnRowDragSortConfig;
 }
 /**
- * SearchTableProps
- * @interface SearchTableProps
+ * SearchProps
  */
-export interface SearchTableProps extends SuspenseProps {
+export interface SearchProps extends SuspenseProps {
     className?: string;
     style?: CSSProperties;
-    tableClassName: string;
-    tableStyle: CSSProperties;
     searchClassName: string;
     searchStyle: CSSProperties;
     firstLoading: ReactElement;
-    antdTableProps: TableProps<any>;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;
     fitSearch: boolean;
-    fitTable: boolean;
+    fitBody: boolean;
     autoFixed: boolean;
+    bodyClassName: string;
+    bodyStyle: CSSProperties;
+}
+/**
+ * SearchState
+ */
+export interface SearchState extends SuspenseState {
+    expand?: boolean;
+    prePage?: number | undefined;
+    page?: number;
+    limit?: number;
+}
+/**
+ * SearchTableProps
+ * @interface SearchTableProps
+ */
+export interface SearchTableProps extends SearchProps {
+    antdTableProps: TableProps<any>;
     fixedHeaderAutoTable: boolean;
     fixedTableSpaceBetween: boolean;
-    showColumnSetting: boolean;
 }
 /**
  * SearchTableState
  * @interface SearchTableState
  */
-export interface SearchTableState extends SuspenseState {
+export interface SearchTableState extends SearchState {
     [props: string]: any;
-    page?: number;
-    limit?: number;
-    expand?: boolean;
     scrollY?: number;
     columnSetting?: (ColumnType<any> & {
         sort: number;

@@ -34,6 +34,7 @@ import ReactQuillSandbox from '@baifendian/adhere-ui-reactquill-sandbox';
 import Revolving from '@baifendian/adhere-ui-revolving';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
+import SearchList from '@baifendian/adhere-ui-searchlist';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import SliderScale from '@baifendian/adhere-ui-sliderscale';
 import Space from '@baifendian/adhere-ui-space';
@@ -102,6 +103,7 @@ export {
   Revolving,
   ScrollLoad,
   SearchTable,
+  SearchList,
   SlideLayout,
   SliderScale,
   Space,

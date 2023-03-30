@@ -75,4 +75,6 @@ export default [
   'Save',
   'Edit Row',
   'Edit Table',
+  '{count} items selected',
+  'deselect',
 ];

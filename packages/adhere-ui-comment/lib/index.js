@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},Comment_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./Comment")));exports.default=Comment_1.default;
+import Comment from"./Comment";export default Comment;
 //# sourceMappingURL=index.js.map

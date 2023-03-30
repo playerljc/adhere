@@ -48,6 +48,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-contextmenu', 'ContextMenu'],
   ['@baifendian/adhere-ui-fontsizesetting', 'FontSizeSetting'],
   ['@baifendian/adhere-ui-searchtable', 'SearchTable'],
+  ['@baifendian/adhere-ui-searchlist', 'SearchList'],
   // ['@baifendian/adhere-ui-g6', 'G6'],
   ['@baifendian/adhere-ui-formitemcreator', 'FormItemCreator'],
   ['@baifendian/adhere-ui-tablelist', 'TableList'],

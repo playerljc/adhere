@@ -1,3 +1,4 @@
+/// <reference types="react" />
 /**
  * OptionsWrap
  * @description - 表格操作列的父组件，自动加入分割线

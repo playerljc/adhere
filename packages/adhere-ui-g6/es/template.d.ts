@@ -8,6 +8,7 @@ import { ITemplateProps } from './types';
 declare class Template extends React.Component<ITemplateProps> {
     static defaultProps: any;
     static propTypes: any;
+    el: HTMLDivElement | null | undefined;
     componentDidMount(): void;
     componentWillReceiveProps(nextProps: Readonly<ITemplateProps>, nextContext: any): void;
     render(): JSX.Element;

@@ -1,0 +1,2 @@
+import SearchTable from"@baifendian/adhere-ui-searchtable";import ProListFactory from"./ProListFactory";import{SearchListImplement}from"./SearchListImplement";var MemoManager=SearchTable.SearchAndPaginParams.MemoManager,SearchAndPaginParamsMemo=MemoManager.create();export default ProListFactory(SearchListImplement,SearchAndPaginParamsMemo);export{SearchAndPaginParamsMemo};
+//# sourceMappingURL=ProSearchList.js.map

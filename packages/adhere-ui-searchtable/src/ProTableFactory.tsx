@@ -416,7 +416,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @return {*}
      */
     getColumns(columns) {
-      return (columns || super.getColumns()).map((t) => ({
+      return (columns || super.getColumns?.() || []).map((t) => ({
         // ellipsis: 'ellipsis' in t ? t.ellipsis : true,
         ...t,
       }));
@@ -647,7 +647,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
                 /*Dict.value.SystemAuthoritySwitch.value
                                               ? Util.isAuthority(searchConfig.authority, this.authorized)
-                                              : true*/ match: (
+                                              : true*/
+                match: (
                   <Value {...($search.valueAttrs || {})}>
                     {this.renderGridSearchFormGroupDataItem(type, {
                       searchConfig,
@@ -668,9 +669,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           });
       };
 
-      loop(this.getColumns(super.getColumns()));
+      loop(this?.getColumns?.(super.getColumns?.() || []) || []);
 
-      const config = searchFormGroupData.filter((t) => !!t.value);
+      const config = searchFormGroupData?.filter?.((t) => !!t.value) || [];
 
       // 以下是包含sort字段的处理
       const containSort = config.filter(
@@ -804,9 +805,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     renderSearchFooterItemsImpl(defaultItems) {
       return [
         ...defaultItems,
-        <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableDensitySetting()}</div>,
-        <div className={`${_selectorPrefix}-headeritem`}>{this.renderColumnSetting()}</div>,
-      ];
+        this.renderTableDensitySetting && !!this.renderTableDensitySetting?.() && (
+          <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableDensitySetting()}</div>
+        ),
+        this.renderColumnSetting && !!this.renderColumnSetting?.() && (
+          <div className={`${_selectorPrefix}-headeritem`}>{this.renderColumnSetting()}</div>
+        ),
+      ].filter((t) => !!t);
     }
 
     /**

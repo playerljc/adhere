@@ -219,8 +219,8 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
     onSubTableChange(pagination: TablePaginationConfig, filters: Record<string, FilterValue | null>, sorter: SorterResult<object> | SorterResult<object>[], extra?: TableCurrentDataSource<object> | undefined): void;
     renderSearchFormAfter(): ReactElement | null;
     renderSearchFormBefore(): ReactElement | null;
-    renderTableFooter(): ReactElement | null;
-    renderTableHeader(): ReactElement | null;
+    renderSearchFooter(): ReactElement | null;
+    renderSearchHeader(): ReactElement | null;
     onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
     onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
 }

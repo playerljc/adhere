@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { Suspense } from '@baifendian/adhere';
+import Suspense from '@baifendian/adhere-ui-suspense';
 
 import { List } from '../../AntFormItemNormalize';
 import type { LabelValue, ListFormItemProps } from '../../types';

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 /**
  * 表格列头筛选
  * @param render

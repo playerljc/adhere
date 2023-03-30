@@ -1,7 +1,7 @@
 import { TableProps as RcTableProps } from 'rc-table/lib/Table';
 import React, { FC, useEffect, useState } from 'react';
 
-import { Suspense } from '@baifendian/adhere';
+import Suspense from '@baifendian/adhere-ui-suspense';
 
 import { Table } from '../../AntFormItemNormalize';
 import { TableFormItemProps } from '../../types';

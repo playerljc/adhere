@@ -33,8 +33,11 @@ import EditableTableControl from './Extension/EditableCell/EditableTableControl'
 import LinkColumn from './Extension/LinkColumn';
 import OptionsWrap from './Extension/OptionsWrap';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
+import TableDensitySetting from './Extension/TableDensitySetting';
 import ProSearchStateTable from './ProSearchStateTable';
 import ProSearchTable from './ProSearchTable';
+import ProTableFactory from './ProTableFactory';
+import Search from './Search';
 import SearchTable, { SearchTableContext } from './SearchTable';
 import SearchTableImplementFactory, { SearchTableImplement } from './SearchTableImplement';
 import SearchTableStateImplementFactory, {
@@ -42,8 +45,10 @@ import SearchTableStateImplementFactory, {
 } from './SearchTableStateImplement';
 
 export default {
+  Search,
   Table: SearchTable,
   SearchTableContext,
+  TableDensitySetting,
   TableImplement: SearchTableImplement,
   TableStateImplement: SearchTableStateImplement,
   SearchTableImplementFactory,
@@ -78,6 +83,7 @@ export default {
   ProSearchEditableRowDragSortStateTable,
   ProSearchEditableTableRowDragSortTable,
   ProSearchEditableTableRowDragSortStateTable,
+  ProTableFactory,
   DisabledOption,
   LinkColumn,
   OptionsWrap,

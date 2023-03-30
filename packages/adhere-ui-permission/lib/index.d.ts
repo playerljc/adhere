@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { PermissionFun } from './permission';
 declare const _default: {
     Permission: {
