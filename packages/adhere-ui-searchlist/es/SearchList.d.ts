@@ -1,6 +1,6 @@
+import { ListSize } from 'antd/es/list';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
-import { TableDensity } from '@baifendian/adhere-ui-searchtable/es/types';
 import type { Metas, SearchListProps, SearchListState } from './types';
 declare const Search: typeof import("@baifendian/adhere-ui-searchtable/lib/Search").default;
 export declare const selectorPrefix = "adhere-ui-searchtable";
@@ -17,30 +17,31 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     /**
      * isShowNumber
      * @description 列表是否显示序号
-     * @return boolean
+     * @return {boolean}
      */
     abstract isShowNumber(): boolean;
     /**
      * getNumberGeneratorRule
      * @description 获取符号列的生成规则
+     * @return {symbol}
      */
     abstract getNumberGeneratorRule(): symbol;
     /**
      * getRowKey
      * @description 获取列表的主键属性
-     * @return string
+     * @return {string}
      */
     abstract getRowKey(): string;
     /**
      * getData
      * @description 获取列表数据
-     * @return Array<Object>
+     * @return {object[]}
      */
     abstract getData(): object[];
     /**
      * getMetas
      * @description 列表项配置
-     * @return Metas
+     * @return {Metas<any>}
      */
     abstract getMetas(): Metas<any>;
     /**
@@ -73,37 +74,42 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
     /**
      * getTableDensity
      * @description 表格密度
+     * @return {ListSize}
      */
-    getTableDensity(): TableDensity;
+    getListDensity(): ListSize;
     /**
      * renderTableDensitySetting
      * @description 表格密度设置
+     * @return {ReactElement}
      */
     renderTableDensitySetting(): ReactElement;
     /**
      * renderSearchToolBar
      * @description 渲染查询工具栏
-     * @return ReactElement
+     * @return {ReactElement}
      */
     renderSearchToolBar(): ReactElement;
     /**
      * renderBody
+     * @return {ReactNode}
      */
     renderBody(): JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
-     * @return ReactElement | null
+     * @return {ReactElement | null}
      */
     renderInner(): ReactElement | null;
     /**
      * renderChildren
      * @description renderChildren
+     * @return {ReactNode}
      */
     renderChildren(): JSX.Element;
     /**
      * render
      * @protected
+     * @return {ReactElement}
      */
     render(): ReactElement;
 }

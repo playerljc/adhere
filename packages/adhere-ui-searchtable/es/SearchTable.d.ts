@@ -53,34 +53,37 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * isShowNumber
      * @description 表格是否显示序号
-     * @return boolean
+     * @return {boolean}
      */
     abstract isShowNumber(): boolean;
     /**
      * getTableNumberColumnWidth
      * @description 表格序号列的宽度
-     * @return number
+     * @return {number}
      */
     abstract getTableNumberColumnWidth(): number;
     /**
      * getTableNumberColumnProps
      * @description 获取序号列的Props
+     * @return {object}
      */
     abstract getTableNumberColumnProps(): object;
     /**
      * getNumberGeneratorRule
      * @description 获取符号列的生成规则
+     * @return {symbol}
      */
     abstract getNumberGeneratorRule(): symbol;
     /**
      * getRowSelectionMode
      * @description 获取全选的生模式
+     * @return {symbol}
      */
     abstract getRowSelectionMode(): symbol;
     /**
      * getRowKey
      * @description 获取表格的主键属性
-     * @return string
+     * @return {string}
      */
     abstract getRowKey(): string;
     /**
@@ -98,21 +101,25 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * getOrderFieldProp
      * @description 获取表格的排序字段
+     * @return {string}
      */
     abstract getOrderFieldProp(): string;
     /**
      * getOrderProp
      * @description 获取表格的排序属性
+     * @return {string}
      */
     abstract getOrderProp(): string;
     /**
      * getOrderPropValue
      * @description 获取默认排序方式
+     * @return {'descend' | 'ascend'}
      */
     abstract getOrderPropValue(): 'descend' | 'ascend';
     /**
      * getOrderFieldValue
      * @description 获取默认排序字段的值
+     * @return {string}
      */
     abstract getOrderFieldValue(): string;
     /**
@@ -127,13 +134,15 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * onTableRowComponentReducers
      * @description 对tableRowComponentReducers对象进行设置的hook
-     * @param columns
+     * @param {ColumnTypeExt[]} columns
+     * @return {string[]}
      */
     abstract onTableRowComponentReducers(columns: ColumnTypeExt[]): string[];
     /**
      * onTableCellComponentReducers
      * @description 对tableCellComponentReducers对象进行设置的hook
-     * @param columns
+     * @param {ColumnTypeExt[]} columns
+     * @return {string[]}
      */
     abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
     constructor(props: any);
@@ -147,11 +156,13 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * fixedHeaderAutoTableEffectLayout
      * @protected
+     * @param {SearchTableProps} prevProps
+     * @param {SearchTableState} prevState
      */
     fixedHeaderAutoTableEffectLayout(prevProps: any, prevState: any): void;
     /**
      * columnSettingEffect
-     * @param props
+     * @param {SearchTableProps} props
      * @protected
      */
     columnSettingEffect(props: SearchTableProps): void;
@@ -170,20 +181,27 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * onTableChange
      * @description 表格change
+     * @param {any} pagination
+     * @param {any} filters
+     * @param {any} sorter
      */
     onTableChange: (pagination: any, filters: any, sorter: any) => void;
     /**
      * sortOrder
      * @description table的column中加入
-     * sorter: true,
-     * sortOrder: this.sortOrder('distance'),
-     * @param columnName
-     * @return {*}
+     * @param {string} columnName
+     * @return {string}
      */
     sortOrder(columnName: string): string;
     /**
      * onCellConfigReducers
      * @description 所有onCell的处理
+     * @param {
+     *     rowIndex: number;
+     *     column: ColumnTypeExt;
+     *     record: Record<string, any>;
+     *     columns: ColumnTypeExt[];
+     * } params
      * @return ColumnTypeExt
      */
     onCellConfigReducers(params: {
@@ -195,7 +213,12 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * onRowConfigReducers
      * @description 所有row的处理
-     * @param params
+     * @param {
+     *     rowIndex: number;
+     *     record: Record<string, any>;
+     *     columns: ColumnTypeExt[];
+     * } params
+     * @return {RowConfig}
      */
     onRowConfigReducers(params: {
         rowIndex: number;
@@ -205,6 +228,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * getTableDensity
      * @description 表格密度
+     * @return {TableDensity}
      */
     getTableDensity(): TableDensity;
     /**
@@ -215,18 +239,20 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     getTableColumns(): any[];
     /**
      * getTableRowComponentReducers
+     * @return {string[]}
      */
     getTableRowComponentReducers(): string[];
     /**
      * getTableCellComponentReducers
+     * @return {string[]}
      */
     getTableCellComponentReducers(): string[];
     /**
      * renderTableNumberColumn
      * @description - 渲染序号列
-     * @param number
-     * @param params
-     * @protected
+     * @param {string} number
+     * @param {{ value: any; record: object; index: number }} params
+     * @return {ReactNode}
      */
     renderTableNumberColumn(number: string | undefined, params: {
         value: any;
@@ -236,45 +262,48 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * renderColumnSetting
      * @description 创建列设置组件
+     * @return {ReactElement}
      */
     renderColumnSetting(): ReactElement;
     /**
      * renderTableDensitySetting
      * @description 表格密度设置
+     * @return {ReactElement}
      */
     renderTableDensitySetting(): ReactElement;
     /**
      * renderSearchToolBar
      * @description 渲染查询工具栏
-     * @return ReactElement
+     * @return {ReactElement}
      */
     renderSearchToolBar(): ReactElement;
     /**
      * renderTable
      * @description - 认选表格体
-     * @protected
+     * @return {ReactElement}
      */
     renderBody(): JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
-     * @return ReactElement | null
+     * @return {ReactElement | null}
      */
     renderInner(): ReactElement | null;
+    /**
+     * renderChildren
+     * @return {ReactElement}
+     */
     renderChildren(): JSX.Element;
     /**
      * render
-     * @protected
+     * @return {ReactElement}
      */
     render(): ReactElement;
 }
 export declare const defaultProps: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;
-    searchClassName: PropTypes.Requireable<string>; /**
-     * searchTableResizableEffectLayout
-     * @protected
-     */
+    searchClassName: PropTypes.Requireable<string>;
     searchStyle: PropTypes.Requireable<object>;
     reset: PropTypes.Requireable<boolean>;
     firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;

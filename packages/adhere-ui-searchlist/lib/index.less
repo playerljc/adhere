@@ -1,5 +1,8 @@
 @import '~@baifendian/adhere-ui-searchtable/es/index.less';
 @import '~@baifendian/adhere-ui-css/lib/vars';
+@import '~@baifendian/adhere-ui-css/lib/mixin';
+
+@import './Extension/ListDensitySetting/setting';
 
 .adhere-ui-searchtableimplement-list-meta-title-wrap {
   display: flex;
@@ -58,9 +61,17 @@
 
 .adhere-ui-searchtableimplement-list-item {
   width: 100%;
+}
 
-  &.adhere-ui-searchtableimplement-list-item-active {
-    background-color: rgba(@adhere-primary-color, 0.3);
+.adhere-ui-searchtableimplement-list-selection {
+  background-color: rgba(@adhere-primary-color, 0.3);
+}
+
+.adhere-ui-searchtableimplement-list-item-content {
+  &.horizontal {
+    max-width: 50%;
+    overflow: hidden;
+    .adhere-word-break();
   }
 }
 
@@ -79,7 +90,7 @@
 
 .adhere-ui-searchtableimplement-list-number-wrap {
   flex-shrink: 0;
-  margin-left: 20px;
+  margin: 0 20px;
 
   .adhere-ui-searchtableimplement-list-number {
     color: rgba(@adhere-black-color, 0.6);

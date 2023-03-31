@@ -13,52 +13,56 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * getFetchListPropName
      * @override
      * @description - 获取调用列表接口的函数名
+     * @return {string}
      */
     getFetchListPropName(): string;
     /**
      * getFetchListPropNameToFirstUpper
      * @override
      * @description - 获取调用列表接口的函数名首字母大写
-     * @return string
+     * @return {string}
      */
     getFetchListPropNameToFirstUpper(): string;
     /**
      * onSelectChange
      * @description - onSelectChange
-     * @param property
-     * @param v
+     * @param {string} property
+     * @param {string} v
      */
     onSelectChange: (property: string, v: string) => void;
     /**
      * onInputChange
      * @description - onInputChange
-     * @param property
-     * @param e
+     * @param {string} property
+     * @param {any} e
      */
     onInputChange: (property: string, e: any) => void;
     /**
      * onDateTimeRangeChange
      * @description - onDateTimeRangeChange
-     * @param propertys
-     * @param dayjs
+     * @param {string[]} propertys
+     * @param {any[]} dayjs
      */
     onDateTimeRangeChange: (propertys: string[], dayjs: any[]) => void;
     /**
      * getParams
      * @override
      * @description - 获取查询参数对象
+     * @return {object}
      */
     getParams(): object;
     /**
      * getServiceName
      * @override
      * @description - 获取接口服务的model名称
+     * @return {string}
      */
     getServiceName(): string;
     /**
      * getFetchDataParams
      * @override
      * @description - 获取调用数据接口的参数
+     * @return {object}
      */
     getFetchDataParams(): object;
     /**
@@ -72,61 +76,70 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * getNumberGeneratorRule
      * @override
      * @description - 表格序号列的生成规则
+     * @return {symbol}
      */
     getNumberGeneratorRule(): symbol;
     /**
      * getRowKey
      * @override
      * @description - 数据的主键
+     * @return {string}
      */
     getRowKey(): string;
     /**
      * getDataKey
      * @description - 获取数据的key
      * @protected
+     * @return {string}
      */
     getDataKey(): string;
     /**
      * getTotalKey
      * @description - 获取total的key
      * @protected
+     * @return {string}
      */
     getTotalKey(): string;
     /**
      * getData
      * @description - Table的数据(Table的dataSource字段)
      * @override
-     * @return {Array}
+     * @return {object[]}
      */
     getData(): object[];
     /**
      * getTotal
      * @description - Table数据的总条数
      * @override
+     * @return {number}
      */
     getTotal(): number;
     /**
      * getRowSelection
      * @override
      * @description - 获取表格行选择对象
+     * @return {TableRowSelection<object>}
      */
     getRowSelection(): TableRowSelection<object>;
     /**
      * renderSearchForm
      * @override
      * @description - 渲染Table查询的表单
+     * @return {ReactNode}
      */
-    renderSearchForm(): ReactElement | null;
+    renderSearchForm(): ReactNode;
     /**
      * renderInner
      * @override
      * @description - 渲染主体
+     * @return {ReactElement | null}
      */
     renderInner(): ReactElement | null;
     /**
      * renderSearchFooterItems
      * @description - 渲染表格的工具栏
      * @override
+     * @return {any[]}
      */
     renderSearchFooterItems(): any[];
     /**
@@ -241,6 +254,11 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @param rowIndex
      */
     getListProps(record: any, rowIndex: any): ListItemProps;
+    /**
+     * getSelectionClassName
+     * @param {string} id
+     */
+    getSelectionClassName(id: any): string;
     /**
      * renderHorizontalNormal
      * @description 横向 默认的渲染

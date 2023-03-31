@@ -83,6 +83,9 @@ export const FontSizeSetting = lazy(() =>
 export const SearchTable = lazy(() =>
   import(/* webpackChunkName: "searchtable" */ '@/components/ui/searchtable'),
 );
+export const SearchList = lazy(() =>
+  import(/* webpackChunkName: "searchlist" */ '@/components/ui/searchlist'),
+);
 export const FormItemCreator = lazy(() =>
   import(/* webpackChunkName: "formitemcreator" */ '@/components/ui/formitemcreator'),
 );

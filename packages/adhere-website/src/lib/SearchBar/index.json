@@ -150,6 +150,11 @@
     "path": "/adhere/component/ui/searchtable"
   },
   {
+    "kw": ["一种查询列表的通用模式", "SearchList"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/searchlist"
+  },
+  {
     "kw": ["抽屉布局", "SlideLayout"],
     "group": "组件 - UI",
     "path": "/adhere/component/ui/slidelayout"

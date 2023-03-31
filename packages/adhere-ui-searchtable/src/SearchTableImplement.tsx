@@ -7,7 +7,7 @@ import type {
   TableRowSelection,
 } from 'antd/lib/table/interface';
 import PropTypes from 'prop-types';
-import type { ReactElement, RefObject } from 'react';
+import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -67,6 +67,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getFetchListPropName
    * @override
    * @description - 获取调用列表接口的函数名
+   * @return {string}
    */
   getFetchListPropName(): string {
     return '';
@@ -76,7 +77,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getFetchListPropNameToFirstUpper
    * @override
    * @description - 获取调用列表接口的函数名首字母大写
-   * @return string
+   * @return {string}
    */
   getFetchListPropNameToFirstUpper(): string {
     const fetchListPropName = this.getFetchListPropName();
@@ -91,8 +92,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * onSelectChange
    * @description - onSelectChange
-   * @param property
-   * @param v
+   * @param {string} property
+   * @param {string} v
    */
   onSelectChange = (property: string, v: string): void => {
     this.setState({
@@ -103,8 +104,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * onInputChange
    * @description - onInputChange
-   * @param property
-   * @param e
+   * @param {string} property
+   * @param {any} e
    */
   onInputChange = (property: string, e): void => {
     this.setState({
@@ -115,8 +116,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * onDateTimeRangeChange
    * @description - onDateTimeRangeChange
-   * @param propertys
-   * @param dayjs
+   * @param {string[]} propertys
+   * @param {any[]} dayjs
    */
   onDateTimeRangeChange = (propertys: string[], dayjs: any[]) => {
     this.setState({
@@ -129,6 +130,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getParams
    * @override
    * @description - 获取查询参数对象
+   * @return {any}
    */
   getParams(): object {
     return {};
@@ -138,6 +140,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getServiceName
    * @override
    * @description - 获取接口服务的model名称
+   * @return {string}
    */
   getServiceName(): string {
     return '';
@@ -147,6 +150,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getFetchDataParams
    * @override
    * @description - 获取调用数据接口的参数
+   * @return {object}
    */
   getFetchDataParams(): object {
     return {};
@@ -166,6 +170,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getNumberGeneratorRule
    * @override
    * @description - 表格序号列的生成规则
+   * @return {symbol}
    */
   getNumberGeneratorRule(): symbol {
     return SearchTable.NUMBER_GENERATOR_RULE_CONTINUITY;
@@ -174,6 +179,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * getNumberGeneratorRule
    * @description 获取符号列的生成规则
+   * @return {symbol}
    */
   getRowSelectionMode(): symbol {
     return SearchTable.ROW_SELECTION_NORMAL_MODE;
@@ -183,6 +189,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getTableNumberColumnWidth
    * @override
    * @description - 表格序号列的宽度
+   * @return {number}
    */
   getTableNumberColumnWidth(): number {
     return 80;
@@ -190,6 +197,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
   /**
    * getTableNumberColumnProps
+   * @return {object}
    */
   getTableNumberColumnProps(): object {
     return {};
@@ -199,6 +207,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getRowKey
    * @override
    * @description - 数据的主键
+   * @return {string}
    */
   getRowKey(): string {
     return 'id';
@@ -208,6 +217,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getDataKey
    * @description - 获取数据的key
    * @protected
+   * @return {string}
    */
   getDataKey(): string {
     return 'list';
@@ -217,6 +227,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getTotalKey
    * @description - 获取total的key
    * @protected
+   * @return {string}
    */
   getTotalKey(): string {
     return 'totalCount';
@@ -226,7 +237,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getData
    * @description - Table的数据(Table的dataSource字段)
    * @override
-   * @return {Array}
+   * @return {object[]}
    */
   getData(): object[] {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
@@ -236,6 +247,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getTotal
    * @description - Table数据的总条数
    * @override
+   * @return {number}
    */
   getTotal(): number {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
@@ -245,6 +257,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getRowSelection
    * @override
    * @description - 获取表格行选择对象
+   * @return {TableRowSelection<object>}
    */
   getRowSelection(): TableRowSelection<object> {
     const filter = (selected: boolean, records: any[]): void => {
@@ -304,8 +317,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * renderSearchForm
    * @override
    * @description - 渲染Table查询的表单
+   * @return {ReactNode}
    */
-  renderSearchForm(): ReactElement | null {
+  renderSearchForm(): ReactNode {
     return null;
   }
 
@@ -313,6 +327,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * renderInner
    * @override
    * @description - 渲染主体
+   * @return {ReactElement | null}
    */
   renderInner(): ReactElement | null {
     const innerJSX = super.renderInner();
@@ -327,6 +342,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * renderSearchFooterItems
    * @description - 渲染表格的工具栏
    * @override
+   * @return {any[]}
    */
   renderSearchFooterItems(): any[] {
     return [];
@@ -336,6 +352,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getOrderFieldProp
    * @description - 获取排序字段
    * @override
+   * @return {string}
    */
   getOrderFieldProp(): string {
     return 'orderField';
@@ -346,6 +363,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description - 获取默认排序字段的值
    * @override
    * @protected
+   * @return {string}
    */
   getOrderFieldValue(): string {
     return '';
@@ -354,6 +372,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * getOrderProp
    * @description - 获取排序方式
+   * @return {string}
    */
   getOrderProp(): string {
     return 'order';
@@ -364,6 +383,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @override
    * @description - 获取默认排序方式
    * @protected
+   * @return {'descend' | 'ascend'}
    */
   getOrderPropValue(): 'descend' | 'ascend' {
     return 'descend';
@@ -373,6 +393,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * clear
    * @description - 清空查询条件
    * @override
+   * @return {Promise<void>}
    */
   clear(): Promise<void> {
     return new Promise<void>((resolve) => {
@@ -399,6 +420,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * showLoading
    * @description - 是否显示遮罩
    * @override
+   * @return {boolean}
    */
   showLoading(): boolean {
     return this.props.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
@@ -408,6 +430,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * getSearchParams
    * @description - 获取查询参数
    * @protected
+   * @return {any}
    */
   getSearchParams(): any {
     const { page, limit, searchParams } = this.state;
@@ -431,6 +454,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * fetchData
    * @description - 加载数据
    * @override
+   * @return {Promise<any>}
    */
   fetchData(): Promise<any> {
     return this.fetchDataExecute(this.getSearchParams());
@@ -470,8 +494,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   /**
    * fetchDataExecute
    * @description - 真正的执行获取列表数据的接口
-   * @param searchParams
+   * @param {object} searchParams
    * @protected
+   * @return {Promise<any>}
    */
   fetchDataExecute(searchParams: object): Promise<any> {
     return this.props[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
@@ -483,6 +508,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * onSearch
    * @description - 点击查询
    * @override
+   * @return {Promise<void>}
    */
   onSearch(): Promise<void> {
     const keys = Object.keys(this.getParams());
@@ -511,10 +537,21 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     });
   }
 
+  /**
+   * getColumns
+   * @return {ColumnType<object>[]}
+   */
   getColumns(): ColumnType<object>[] {
     return [];
   }
 
+  /**
+   * onSubTableChange
+   * @param {TablePaginationConfig} pagination
+   * @param {Record<string, FilterValue | null>} filters
+   * @param {SorterResult<object> | SorterResult<object>[]} sorter
+   * @param {TableCurrentDataSource<object> | undefined} extra
+   */
   onSubTableChange(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     pagination: TablePaginationConfig,
@@ -526,28 +563,54 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
 
-  renderSearchFormAfter(): ReactElement | null {
+  /**
+   * renderSearchFormAfter
+   * @return {ReactNode}
+   */
+  renderSearchFormAfter(): ReactNode {
     return null;
   }
 
-  renderSearchFormBefore(): ReactElement | null {
+  /**
+   * renderSearchFormBefore
+   * @return {ReactNode}
+   */
+  renderSearchFormBefore(): ReactNode {
     return null;
   }
 
-  renderSearchFooter(): ReactElement | null {
+  /**
+   * renderSearchFooter
+   * @return {ReactNode}
+   */
+  renderSearchFooter(): ReactNode {
     return null;
   }
 
-  renderSearchHeader(): ReactElement | null {
+  /**
+   * renderSearchHeader
+   * @return {ReactNode}
+   */
+  renderSearchHeader(): ReactNode {
     return null;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /**
+   * onTableRowComponentReducers
+   * @param {ColumnTypeExt[]} columns
+   * @return {string[]}
+   */
   onTableRowComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableRowComponentReducers;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /**
+   * onTableCellComponentReducers
+   * @param {ColumnTypeExt[]} columns
+   * @return {string[]}
+   */
   onTableCellComponentReducers(columns: ColumnTypeExt[]): string[] {
     return this.tableCellComponentReducers;
   }
@@ -565,9 +628,11 @@ SearchTableImplement.propTypes = {
 /**
  * SearchTableImplementFactory
  * @description 创建SearchTableImplementFactory
- * @param serviceNames
- * @param mapStateToProps
- * @param mapDispatchToProps
+ * @param {
+ *     serviceNames:string[];
+ *     mapStateToProps: (props?: any) => any,
+ *     mapDispatchToProps: (props?: any) => any,
+ * } params
  * @constructor
  */
 const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any> = ({

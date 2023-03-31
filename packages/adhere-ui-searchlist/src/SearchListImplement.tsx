@@ -89,6 +89,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getFetchListPropName
    * @override
    * @description - 获取调用列表接口的函数名
+   * @return {string}
    */
   getFetchListPropName(): string {
     return '';
@@ -98,7 +99,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getFetchListPropNameToFirstUpper
    * @override
    * @description - 获取调用列表接口的函数名首字母大写
-   * @return string
+   * @return {string}
    */
   getFetchListPropNameToFirstUpper(): string {
     const fetchListPropName = this.getFetchListPropName();
@@ -113,8 +114,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   /**
    * onSelectChange
    * @description - onSelectChange
-   * @param property
-   * @param v
+   * @param {string} property
+   * @param {string} v
    */
   onSelectChange = (property: string, v: string): void => {
     this.setState({
@@ -125,8 +126,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   /**
    * onInputChange
    * @description - onInputChange
-   * @param property
-   * @param e
+   * @param {string} property
+   * @param {any} e
    */
   onInputChange = (property: string, e): void => {
     this.setState({
@@ -137,8 +138,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   /**
    * onDateTimeRangeChange
    * @description - onDateTimeRangeChange
-   * @param propertys
-   * @param dayjs
+   * @param {string[]} propertys
+   * @param {any[]} dayjs
    */
   onDateTimeRangeChange = (propertys: string[], dayjs: any[]) => {
     this.setState({
@@ -151,6 +152,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getParams
    * @override
    * @description - 获取查询参数对象
+   * @return {object}
    */
   getParams(): object {
     return {};
@@ -160,6 +162,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getServiceName
    * @override
    * @description - 获取接口服务的model名称
+   * @return {string}
    */
   getServiceName(): string {
     return '';
@@ -169,6 +172,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getFetchDataParams
    * @override
    * @description - 获取调用数据接口的参数
+   * @return {object}
    */
   getFetchDataParams(): object {
     return {};
@@ -188,6 +192,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getNumberGeneratorRule
    * @override
    * @description - 表格序号列的生成规则
+   * @return {symbol}
    */
   getNumberGeneratorRule(): symbol {
     return SearchList.NUMBER_GENERATOR_RULE_CONTINUITY;
@@ -197,6 +202,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getRowKey
    * @override
    * @description - 数据的主键
+   * @return {string}
    */
   getRowKey(): string {
     return 'id';
@@ -206,6 +212,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getDataKey
    * @description - 获取数据的key
    * @protected
+   * @return {string}
    */
   getDataKey(): string {
     return 'list';
@@ -215,6 +222,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getTotalKey
    * @description - 获取total的key
    * @protected
+   * @return {string}
    */
   getTotalKey(): string {
     return 'totalCount';
@@ -224,7 +232,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getData
    * @description - Table的数据(Table的dataSource字段)
    * @override
-   * @return {Array}
+   * @return {object[]}
    */
   getData(): object[] {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
@@ -234,6 +242,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getTotal
    * @description - Table数据的总条数
    * @override
+   * @return {number}
    */
   getTotal(): number {
     return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
@@ -243,6 +252,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * getRowSelection
    * @override
    * @description - 获取表格行选择对象
+   * @return {TableRowSelection<object>}
    */
   getRowSelection(): TableRowSelection<object> {
     const filter = (selected: boolean, records: any[]): void => {
@@ -288,8 +298,9 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * renderSearchForm
    * @override
    * @description - 渲染Table查询的表单
+   * @return {ReactNode}
    */
-  renderSearchForm(): ReactElement | null {
+  renderSearchForm(): ReactNode {
     return null;
   }
 
@@ -297,6 +308,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * renderInner
    * @override
    * @description - 渲染主体
+   * @return {ReactElement | null}
    */
   renderInner(): ReactElement | null {
     const innerJSX = super.renderInner();
@@ -311,6 +323,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * renderSearchFooterItems
    * @description - 渲染表格的工具栏
    * @override
+   * @return {any[]}
    */
   renderSearchFooterItems(): any[] {
     return [];
@@ -587,6 +600,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       ...(this.getMetas() || {}),
     };
 
+    const direction = !('itemLayout' in this.props.antdListProps)
+      ? 'horizontal'
+      : this.props.antdListProps.itemLayout;
+
     const avatar =
       metas?.avatar?.render?.(record?.[metas.avatar.dataIndex], record, rowIndex) ||
       (metas.avatar && record?.[metas.avatar.dataIndex] && (
@@ -629,7 +646,11 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     return (
       <>
         <List.Item.Meta {...metaProps} />
-        {content ? content : null}
+        {content ? (
+          <div className={classNames(`${selectorPrefix}-list-item-content`, direction)}>
+            {content}
+          </div>
+        ) : null}
       </>
     );
   }
@@ -713,6 +734,19 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   }
 
   /**
+   * getSelectionClassName
+   * @param {string} id
+   */
+  getSelectionClassName(id) {
+    const rowSelection = this.getRowSelection();
+
+    return classNames({
+      [`${selectorPrefix}-list-selection`]:
+        !!rowSelection && this.state.selectedRowKeys?.includes?.(id),
+    });
+  }
+
+  /**
    * renderHorizontalNormal
    * @description 横向 默认的渲染
    * @param {any} record
@@ -720,9 +754,14 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @return {ReactNode}
    */
   renderHorizontalNormal({ record, rowIndex }): ReactNode {
-    const className = classNames({
-      [`${selectorPrefix}-list-item`]: true,
-    });
+    const id = record[this.getRowKey()];
+
+    const className = classNames(
+      {
+        [`${selectorPrefix}-list-item`]: true,
+      },
+      this.getSelectionClassName(id),
+    );
 
     const rowSelection = this.getRowSelection();
 
@@ -755,10 +794,15 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @return {ReactNode}
    */
   renderVerticalNormal({ record, rowIndex }): ReactNode {
-    const className = classNames({
-      [`${selectorPrefix}-list-item-vertical`]: true,
-      split: !('split' in this.props.antdListProps) || !!this.props.antdListProps.split,
-    });
+    const id = record[this.getRowKey()];
+
+    const className = classNames(
+      {
+        [`${selectorPrefix}-list-item-vertical`]: true,
+        split: !('split' in this.props.antdListProps) || !!this.props.antdListProps.split,
+      },
+      this.getSelectionClassName(id),
+    );
 
     const rowSelection = this.getRowSelection();
 
@@ -867,8 +911,10 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       );
     }
 
+    const id = record[this.getRowKey()];
+
     return (
-      <Card {...cardProps}>
+      <Card {...cardProps} className={this.getSelectionClassName(id)}>
         <Card.Meta {...metaProps} />
 
         {content && <p>{content}</p>}
@@ -901,11 +947,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @return {ReactNode}
    */
   renderVerticalGrid({ record, rowIndex, grid }): ReactNode {
-    return (
-      <List.Item key={record[this.getRowKey()]}>
-        {this.renderCard({ record, rowIndex, grid })}
-      </List.Item>
-    );
+    return this.renderHorizontalGrid({ record, rowIndex, grid });
   }
 
   /**
@@ -920,16 +962,19 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       ? 'horizontal'
       : this.props.antdListProps.itemLayout;
 
-    const className = classNames({
-      [`${selectorPrefix}-list-item-${direction}`]: true,
-      split: !('split' in this.props.antdListProps) || !!this.props.antdListProps.split,
-    });
+    const id = record[this.getRowKey()];
+
+    const className = classNames(
+      {
+        [`${selectorPrefix}-list-item-${direction}`]: true,
+        split: !('split' in this.props.antdListProps) || !!this.props.antdListProps.split,
+      },
+      this.getSelectionClassName(id),
+    );
 
     const rowSelection = this.getRowSelection();
 
     const { expandedRowKeys, onExpandedRowsChange } = this.getExpandable() as ListExpandable;
-
-    const id = record[this.getRowKey()];
 
     // 是否已经折叠(合上了)
     const collapse = !expandedRowKeys.includes(id);

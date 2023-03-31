@@ -78,16 +78,16 @@ class ProSearchStateListImpl extends ProSearchStateList {
     ];
   }
 
-  getExpandable() {
-    return {
-      expandedRowKeys: this.state.expandedRowKeys,
-      onExpandedRowsChange: (_expandedRowKeys) => {
-        this.setState({
-          expandedRowKeys: _expandedRowKeys,
-        });
-      },
-    };
-  }
+  // getExpandable() {
+  //   return {
+  //     expandedRowKeys: this.state.expandedRowKeys,
+  //     onExpandedRowsChange: (_expandedRowKeys) => {
+  //       this.setState({
+  //         expandedRowKeys: _expandedRowKeys,
+  //       });
+  //     },
+  //   };
+  // }
 
   getMetas() {
     return {

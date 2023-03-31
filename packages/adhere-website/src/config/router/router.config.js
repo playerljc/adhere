@@ -38,6 +38,7 @@ const {
   ContextMenu,
   FontSizeSetting,
   SearchTable,
+  SearchList,
   FormItemCreator,
   TableList,
   Popup,
@@ -315,6 +316,11 @@ export default () => [
                 path: '/adhere/component/ui/searchtable',
                 name: 'SearchTable',
                 component: SearchTable,
+              },
+              {
+                path: '/adhere/component/ui/searchlist',
+                name: 'SearchList',
+                component: SearchList,
               },
               {
                 path: '/adhere/component/ui/formitemcreator',

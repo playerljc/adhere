@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => (
-        <div style={{ display: 'flex', height: 700 }}>
+        <div style={{ display: 'flex', width: 700, height: 700 }}>
           <Suspense fallback={<div>loading</div>}>
             <List />
           </Suspense>

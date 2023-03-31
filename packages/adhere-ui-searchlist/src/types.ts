@@ -1,9 +1,9 @@
 import type { ListProps } from 'antd';
+import { ListSize } from 'antd/es/list';
 import { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes, RefObject } from 'react';
 import { ReactNode } from 'react';
 
 import { SearchProps, SearchState } from '@baifendian/adhere-ui-searchtable/es/types';
-import { TableDensity } from '@baifendian/adhere-ui-searchtable/es/types';
 
 import SearchListImplement from './SearchListImplement';
 import SearchListStateImplement from './SearchListStateImplement';
@@ -21,7 +21,7 @@ export interface SearchListProps extends SearchProps {
 export interface SearchListState extends SearchState {
   selectedRowKeys?: string[];
   selectedRows?: any[];
-  tableDensity?: TableDensity;
+  listDensity?: ListSize;
 }
 
 /**

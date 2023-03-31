@@ -13,24 +13,28 @@ export declare class SearchTableStateImplement<P extends SearchTableStateImpleme
     /**
      * getData
      * @description 获取列表的数据
+     * @return {object[]}
      */
     getData(): object[];
     /**
      * getTotal
      * @description 获取列表总的数据树
+     * @return {number}
      */
     getTotal(): number;
     /**
      * showLoading
      * @description loading
+     * @return {boolean}
      */
     showLoading(): boolean;
     /**
      * fetchDataExecute
      * @description 调用列表数据接口
-     * @param searchParams
+     * @param {any} searchParams
+     * @return {Promise<any>}
      */
-    fetchDataExecute(searchParams?: object): Promise<any>;
+    fetchDataExecute(searchParams?: any): Promise<any>;
 }
 /**
  * SearchTableStateImplementFactory

@@ -1,17 +1,17 @@
 import { Button, List } from 'antd';
-import { SizeType } from 'antd/es/config-provider/SizeContext';
+import { ListSize } from 'antd/es/list';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createContext, createRef } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import SearchTable from '@baifendian/adhere-ui-searchtable';
-import { TableDensity } from '@baifendian/adhere-ui-searchtable/es/types';
 import Intl from '@baifendian/adhere-util-intl';
 
+import ListDensitySetting from './Extension/ListDensitySetting';
 import type { Metas, SearchListProps, SearchListState } from './types';
 
-const { Search, TableDensitySetting } = SearchTable;
+const { Search } = SearchTable;
 
 export const selectorPrefix = 'adhere-ui-searchtable';
 
@@ -36,34 +36,35 @@ abstract class SearchList<
   /**
    * isShowNumber
    * @description 列表是否显示序号
-   * @return boolean
+   * @return {boolean}
    */
   abstract isShowNumber(): boolean;
 
   /**
    * getNumberGeneratorRule
    * @description 获取符号列的生成规则
+   * @return {symbol}
    */
   abstract getNumberGeneratorRule(): symbol;
 
   /**
    * getRowKey
    * @description 获取列表的主键属性
-   * @return string
+   * @return {string}
    */
   abstract getRowKey(): string;
 
   /**
    * getData
    * @description 获取列表数据
-   * @return Array<Object>
+   * @return {object[]}
    */
   abstract getData(): object[];
 
   /**
    * getMetas
    * @description 列表项配置
-   * @return Metas
+   * @return {Metas<any>}
    */
   abstract getMetas(): Metas<any>;
 
@@ -96,7 +97,7 @@ abstract class SearchList<
 
     Object.assign(this.state, {
       // 表格密度设置
-      tableDensity: this.getTableDensity(),
+      listDensity: this.getListDensity(),
     });
 
     this.onClear = this.onClear.bind(this);
@@ -119,27 +120,29 @@ abstract class SearchList<
   /**
    * getTableDensity
    * @description 表格密度
+   * @return {ListSize}
    */
-  getTableDensity() {
-    return TableDensity.DEFAULT;
+  getListDensity(): ListSize {
+    return 'default';
   }
 
   /**
    * renderTableDensitySetting
    * @description 表格密度设置
+   * @return {ReactElement}
    */
   renderTableDensitySetting(): ReactElement {
     return (
-      <TableDensitySetting
-        density={this.state.tableDensity}
+      <ListDensitySetting
+        density={this.state.listDensity}
         onChange={(density) => {
           this.setState({
-            tableDensity: density,
+            listDensity: density,
           });
         }}
         onReset={() => {
           this.setState({
-            tableDensity: this.getTableDensity(),
+            listDensity: this.getListDensity(),
           });
         }}
       />
@@ -149,7 +152,7 @@ abstract class SearchList<
   /**
    * renderSearchToolBar
    * @description 渲染查询工具栏
-   * @return ReactElement
+   * @return {ReactElement}
    */
   renderSearchToolBar(): ReactElement {
     const { isShowExpandSearch } = this.props;
@@ -249,11 +252,12 @@ abstract class SearchList<
 
   /**
    * renderBody
+   * @return {ReactNode}
    */
   renderBody() {
     const { antdListProps } = this.props;
 
-    const { tableDensity } = this.state;
+    const { listDensity } = this.state;
 
     const listProps = {
       rowKey: this.getRowKey(),
@@ -261,7 +265,7 @@ abstract class SearchList<
       pagination: this.getPagination(),
       renderItem: (record, rowIndex) => this.renderItem(record, rowIndex),
       header: this.renderListHeader(),
-      size: tableDensity as SizeType,
+      size: listDensity,
       ...(antdListProps || {}),
     };
 
@@ -271,7 +275,7 @@ abstract class SearchList<
   /**
    * renderInner
    * @description 渲染SearchTable
-   * @return ReactElement | null
+   * @return {ReactElement | null}
    */
   renderInner(): ReactElement | null {
     return super.renderInner(this.listWrapRef, '');
@@ -280,6 +284,7 @@ abstract class SearchList<
   /**
    * renderChildren
    * @description renderChildren
+   * @return {ReactNode}
    */
   renderChildren() {
     return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
@@ -288,6 +293,7 @@ abstract class SearchList<
   /**
    * render
    * @protected
+   * @return {ReactElement}
    */
   render(): ReactElement {
     return (
