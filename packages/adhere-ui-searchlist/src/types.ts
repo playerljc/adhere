@@ -1,5 +1,4 @@
 import type { ListProps } from 'antd';
-import { Key, RowSelectMethod } from 'antd/es/table/interface';
 import { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes, RefObject } from 'react';
 import { ReactNode } from 'react';
 
@@ -110,4 +109,12 @@ export interface Metas<T> {
       };
   content?: MetaItem<T>;
   extra?: MetaItem<T>;
+}
+
+/**
+ * ListExpandable
+ */
+export interface ListExpandable {
+  expandedRowKeys: string[];
+  onExpandedRowsChange: (expandedRowKeys: string[]) => void;
 }

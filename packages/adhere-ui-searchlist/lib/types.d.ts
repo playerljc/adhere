@@ -90,3 +90,10 @@ export interface Metas<T> {
     content?: MetaItem<T>;
     extra?: MetaItem<T>;
 }
+/**
+ * ListExpandable
+ */
+export interface ListExpandable {
+    expandedRowKeys: string[];
+    onExpandedRowsChange: (expandedRowKeys: string[]) => void;
+}

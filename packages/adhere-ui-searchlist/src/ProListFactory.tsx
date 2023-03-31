@@ -39,8 +39,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       loop(this.getColumns());
 
-      debugger;
-
       return params;
     }
 

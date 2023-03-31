@@ -13,6 +13,15 @@ const serviceName = 'user';
  * @classdesc ProSearchStateListImpl
  */
 class ProSearchStateListImpl extends ProSearchStateList {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.state,
+      expandedRowKeys: [],
+    };
+  }
+
   getComponentId() {
     return 'ProSearchStateListImpl';
   }
@@ -69,36 +78,48 @@ class ProSearchStateListImpl extends ProSearchStateList {
     ];
   }
 
+  getExpandable() {
+    return {
+      expandedRowKeys: this.state.expandedRowKeys,
+      onExpandedRowsChange: (_expandedRowKeys) => {
+        this.setState({
+          expandedRowKeys: _expandedRowKeys,
+        });
+      },
+    };
+  }
+
   getMetas() {
     return {
-      title: {
-        dataIndex: 'title',
-        render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-      },
-      subTitle: {
-        dataIndex: 'subTitle',
-        render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-      },
-      description: {
-        dataIndex: 'description',
-        render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-      },
-      avatar: {
-        dataIndex: 'avatar',
-        render: (val) => <img src={val} alt="" />,
-      },
-      content: {
-        dataIndex: 'content',
-        render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-      },
+      // title: {
+      //   dataIndex: 'title',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      // subTitle: {
+      //   dataIndex: 'subTitle',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      // description: {
+      //   dataIndex: 'description',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      // avatar: {
+      //   dataIndex: 'avatar',
+      //   render: (val) => <img src={val} alt="" />,
+      // },
+      // content: {
+      //   dataIndex: 'content',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
       actions: {
         dataIndex: 'actions',
+        // cardActionProps: 'extra',
         render: () => [<a>1</a>, <a>2</a>, <a>3</a>],
       },
-      extra: {
-        dataIndex: 'extra',
-        render: () => <div>extra</div>,
-      },
+      // extra: {
+      //   dataIndex: 'extra',
+      //   render: () => <div>extra</div>,
+      // },
     };
   }
 }
@@ -122,10 +143,15 @@ const Wrap = SearchListStateImplementFactory({
 export default (props) => (
   <Wrap
     bodyStyle={{ padding: '20px 30px' }}
-    antdListProps={{
-      // itemLayout: 'vertical',
-      grid: { gutter: 16, column: 4 },
-    }}
+    antdListProps={
+      {
+        // itemLayout: 'vertical',
+        // grid: { gutter: 16, column: 4 },
+        // renderItem: () => {
+        //   return <div>Custom</div>;
+        // },
+      }
+    }
     {...props}
   />
 );

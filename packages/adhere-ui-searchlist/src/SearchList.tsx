@@ -74,7 +74,7 @@ abstract class SearchList<
    * @param {number} rowIndex 列表行索引
    * @return {void}
    */
-  abstract renderItem(record: any, rowIndex: number): void;
+  abstract renderItem(record: any, rowIndex: number): ReactNode;
 
   /**
    * renderListHeader
@@ -255,21 +255,15 @@ abstract class SearchList<
 
     const { tableDensity } = this.state;
 
-    const rowSelection = this.getRowSelection();
-
     const listProps = {
       rowKey: this.getRowKey(),
       dataSource: this.getData(),
       pagination: this.getPagination(),
+      renderItem: (record, rowIndex) => this.renderItem(record, rowIndex),
+      header: this.renderListHeader(),
       size: tableDensity as SizeType,
-      renderItem: this.renderItem,
       ...(antdListProps || {}),
     };
-
-    if (rowSelection && !!this.state.selectedRowKeys?.length) {
-      // 如果是选取模式则header上显示选取信息
-      listProps.header = this.renderListHeader();
-    }
 
     return <List {...listProps} />;
   }

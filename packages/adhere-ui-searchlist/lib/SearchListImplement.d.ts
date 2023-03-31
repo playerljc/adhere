@@ -1,8 +1,9 @@
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { ListItemProps } from 'antd/es/list';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { ReactElement, ReactNode, RefObject } from 'react';
 import SearchList from './SearchList';
-import type { ISearchListImplement, SearchListImplementFactoryFunction, SearchListImplementProps, SearchListImplementState, SearchListProps, SearchListState } from './types';
+import type { ISearchListImplement, ListExpandable, SearchListImplementFactoryFunction, SearchListImplementProps, SearchListImplementState, SearchListProps, SearchListState } from './types';
 export declare const selectorPrefix = "adhere-ui-searchtableimplement";
 export declare class SearchListImplement<P extends SearchListProps, S extends SearchListState> extends SearchList<SearchListImplementProps, SearchListImplementState> implements ISearchListImplement {
     innerWrapRef: RefObject<HTMLDivElement>;
@@ -192,11 +193,17 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
     /**
      * renderItemSelection
      * @description 渲染selection
-     * @param {ReactNode} Item
      * @param {object} record
      * @return {ReactNode}
      */
-    renderItemSelection(Item: ReactNode, record: any): ReactNode;
+    renderItemSelection(record: any): ReactNode;
+    /**
+     * renderSmallNormalItem
+     * @description 渲染Small的NormalItem
+     * @param record
+     * @param rowIndex
+     */
+    renderSmallNormalItem(record: any, rowIndex: number): ReactNode;
     /**
      * renderNormalItem
      * @description 渲染列表的行(标准模式)
@@ -206,16 +213,130 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      */
     renderNormalItem(record: any, rowIndex: number): ReactNode;
     /**
-     * renderNumberColumn
+     * renderNumberColumnInner
      * @description - 渲染序号列
      * @param {string | number} number
      * @param {record: any; index: number} params
      * @return {ReactNode}
      */
-    renderNumberColumn(number: string | number, params: {
+    renderNumberColumnInner(number: string | number, params: {
         record: any;
         index: number;
     }): JSX.Element;
+    /**
+     * renderNumberColumn
+     * @description 渲染序号列
+     * @param {any} record
+     * @param {number} rowIndex
+     * @return {ReactNode}
+     */
+    renderNumberColumn(record: any, rowIndex: any): ReactNode;
+    /**
+     * getExpandable
+     */
+    getExpandable(): ListExpandable | null | undefined;
+    /**
+     * getListProps
+     * @param record
+     * @param rowIndex
+     */
+    getListProps(record: any, rowIndex: any): ListItemProps;
+    /**
+     * renderHorizontalNormal
+     * @description 横向 默认的渲染
+     * @param {any} record
+     * @param {number} rowIndex
+     * @return {ReactNode}
+     */
+    renderHorizontalNormal({ record, rowIndex }: {
+        record: any;
+        rowIndex: any;
+    }): ReactNode;
+    /**
+     * renderVerticalNormal
+     * @description 纵向 默认的渲染
+     * @param {any} record
+     * @param {number} rowIndex
+     * @return {ReactNode}
+     */
+    renderVerticalNormal({ record, rowIndex }: {
+        record: any;
+        rowIndex: any;
+    }): ReactNode;
+    /**
+     * renderCard
+     * @description 使用Card渲染item
+     * @param {any} record
+     * @param {number} rowIndex
+     * @param {any} grid
+     * @return {ReactNode}
+     */
+    renderCard({ record, rowIndex, grid }: {
+        record: any;
+        rowIndex: any;
+        grid: any;
+    }): ReactNode;
+    /**
+     * renderHorizontalGrid
+     * @description 横向 Card渲染item
+     * @param {any} record
+     * @param {number} rowIndex
+     * @param {} grid
+     * @return {ReactNode}
+     */
+    renderHorizontalGrid({ record, rowIndex, grid }: {
+        record: any;
+        rowIndex: any;
+        grid: any;
+    }): ReactNode;
+    /**
+     * renderVerticalGrid
+     * @description 横向 Card渲染item
+     * @param {any} record
+     * @param {number} rowIndex
+     * @param {} grid
+     * @return {ReactNode}
+     */
+    renderVerticalGrid({ record, rowIndex, grid }: {
+        record: any;
+        rowIndex: any;
+        grid: any;
+    }): ReactNode;
+    /**
+     * renderExpandable
+     * @param record
+     * @param rowIndex
+     * @param collapseChildren
+     * @param children
+     */
+    renderExpandable({ record, rowIndex, collapseChildren, children }: {
+        record: any;
+        rowIndex: any;
+        collapseChildren: any;
+        children: any;
+    }): JSX.Element;
+    /**
+     * renderHorizontalExpandable
+     * @description 横向 可展开渲染item
+     * @param {any} record
+     * @param {number} rowIndex
+     * @return {ReactNode}
+     */
+    renderHorizontalExpandable({ record, rowIndex }: {
+        record: any;
+        rowIndex: any;
+    }): ReactNode;
+    /**
+     * renderVerticalExpandable
+     * @description 纵向 可展开渲染item
+     * @param {any} record
+     * @param {number} rowIndex
+     * @return {ReactNode}
+     */
+    renderVerticalExpandable({ record, rowIndex }: {
+        record: any;
+        rowIndex: any;
+    }): ReactNode;
     /**
      * renderItem
      * @description 渲染列表的item
@@ -224,8 +345,14 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      */
     renderItem(record: any, rowIndex: number): ReactNode;
     /**
+     * renderSelectionListHeader
+     * @description 渲染SelectionListHeader
+     * @return {ReactNode}
+     */
+    renderSelectionListHeader(): ReactNode;
+    /**
      * renderListHeader
-     * @description
+     * @description 选人列表的header
      * @return {ReactNode}
      */
     renderListHeader(): ReactNode;

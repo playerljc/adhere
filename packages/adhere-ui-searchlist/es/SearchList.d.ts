@@ -50,7 +50,7 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      * @param {number} rowIndex 列表行索引
      * @return {void}
      */
-    abstract renderItem(record: any, rowIndex: number): void;
+    abstract renderItem(record: any, rowIndex: number): ReactNode;
     /**
      * renderListHeader
      * @description 渲染列表头部
