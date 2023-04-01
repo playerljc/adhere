@@ -914,7 +914,7 @@ export const defaultProps = {
   antdTableProps: {},
   fixedHeaderAutoTable: false,
   fixedTableSpaceBetween: false,
-  ...searchPropTypes,
+  ...searchDefaultProps,
 };
 
 export const propTypes = {
@@ -924,7 +924,7 @@ export const propTypes = {
   fixedHeaderAutoTable: PropTypes.bool,
   // 两端固定(表格的头始终在上方，分页始终在下方)
   fixedTableSpaceBetween: PropTypes.bool,
-  ...searchDefaultProps,
+  ...searchPropTypes,
 };
 
 SearchTable.defaultProps = defaultProps;

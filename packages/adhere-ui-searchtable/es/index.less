@@ -15,12 +15,13 @@
 @import './Extension/OptionsWrap/index';
 @import './Extension/EditableCell/Edit/index';
 @import './Extension/EditableCell/View/index';
-@import "./Extension/EditableCell/EditableRowControl/index";
-@import "./Extension/DragSort/RowDragSort/index";
+@import './Extension/EditableCell/EditableRowControl/index';
+@import './Extension/DragSort/RowDragSort/index';
 @import './ProTable.less';
 
 @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color: #fff;
 @adhere-ui-searchtable-background-color: #f0f2f5;
+@adhere-ui-searchtable-split: 20px;
 
 .adhere-ui-searchtableimplement-wrap {
   width: 100%;
@@ -41,8 +42,48 @@
 
     .adhere-ui-searchtable {
       position: relative;
-      padding: 24px;
-      background-color: @adhere-ui-searchtable-background-color;
+      height: 100%;
+      //padding: 24px;
+      //background-color: @adhere-ui-searchtable-background-color;
+
+      &.fixedtablespacebetween {
+        > .adhere-ui-searchtable-autowrapper {
+          > .adhere-ui-searchtable-tablewrapper {
+            .ant-table-wrapper {
+              height: 100%;
+
+              > .ant-spin-nested-loading {
+                > .ant-spin-container {
+                  display: flex;
+                  flex-direction: column;
+
+                  > .ant-table {
+                    flex-grow: 1;
+                    min-height: 0;
+
+                    > .ant-table-container {
+                      display: flex;
+                      flex-direction: column;
+                      height: 100%;
+
+                      > .ant-table-header {
+                        flex-shrink: 0;
+                      }
+
+                      > .ant-table-body {
+                        flex-grow: 1;
+                        min-height: 0;
+                        max-height: initial !important;
+                        overflow-y: auto !important;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
 
       .adhere-ui-searchtable-tablewrapper {
         > .ant-table-wrapper {
@@ -60,16 +101,28 @@
         }
       }
 
+      > div {
+        &:not(:last-child) {
+          margin-bottom: @adhere-ui-searchtable-split;
+        }
+      }
+
       > .adhere-ui-searchtable-searchwrapper {
-        margin-bottom: 16px;
-        padding: 24px 24px 1px 24px;
-        background: #fff;
+        //margin-bottom: 16px;
+        //padding: 24px 24px 1px 24px;
+        //background: #fff;
+
+        > div {
+          &:not(:last-child) {
+            margin-bottom: @adhere-ui-searchtable-split;
+          }
+        }
 
         .adhere-ui-searchtable-searchfooterwrapper {
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          margin-bottom: 20px;
+          //margin-bottom: 20px;
 
           > .adhere-ui-searchtable-searchfooteritem {
             display: flex;
@@ -121,7 +174,7 @@
 
       > .adhere-ui-searchtable-autowrapper {
         position: relative;
-        background: #fff;
+        //background: #fff;
         border-radius: 2px;
 
         &.autofixed {
@@ -133,45 +186,6 @@
 
           > .ant-table-wrapper {
             height: 100%;
-          }
-        }
-      }
-
-      &.fixedtablespacebetween {
-        > .adhere-ui-searchtable-autowrapper {
-          > .adhere-ui-searchtable-tablewrapper {
-            .ant-table-wrapper {
-              height: 100%;
-
-              > .ant-spin-nested-loading {
-                > .ant-spin-container {
-                  display: flex;
-                  flex-direction: column;
-
-                  > .ant-table {
-                    flex-grow: 1;
-                    min-height: 0;
-
-                    > .ant-table-container {
-                      display: flex;
-                      flex-direction: column;
-                      height: 100%;
-
-                      > .ant-table-header {
-                        flex-shrink: 0;
-                      }
-
-                      > .ant-table-body {
-                        flex-grow: 1;
-                        min-height: 0;
-                        max-height: initial !important;
-                        overflow-y: auto !important;
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }

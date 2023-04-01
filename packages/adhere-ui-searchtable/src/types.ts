@@ -351,7 +351,7 @@ export interface SearchProps extends SuspenseProps {
   // 展开和收缩的默认状态
   defaultExpandSearchCollapse: boolean;
   // 撑开search
-  fitSearch: boolean;
+  // fitSearch: boolean;
   // 撑开表格
   fitBody: boolean;
   // 是否是查询固定，表格自适应

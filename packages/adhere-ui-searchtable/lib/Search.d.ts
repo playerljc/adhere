@@ -139,7 +139,6 @@ export declare const defaultProps: {
     isFirstLoading: null;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;
-    fitSearch: boolean;
     fitBody: boolean;
     autoFixed: boolean;
 };
@@ -152,7 +151,6 @@ export declare const propTypes: {
     firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
     isShowExpandSearch: PropTypes.Requireable<boolean>;
     defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
-    fitSearch: PropTypes.Requireable<boolean>;
     fitBody: PropTypes.Requireable<boolean>;
     autoFixed: PropTypes.Requireable<boolean>;
 };

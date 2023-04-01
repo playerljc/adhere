@@ -301,22 +301,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     render(): ReactElement;
 }
 export declare const defaultProps: {
-    className: PropTypes.Requireable<string>;
-    style: PropTypes.Requireable<object>;
-    searchClassName: PropTypes.Requireable<string>;
-    searchStyle: PropTypes.Requireable<object>;
-    reset: PropTypes.Requireable<boolean>;
-    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-    isShowExpandSearch: PropTypes.Requireable<boolean>;
-    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
-    fitSearch: PropTypes.Requireable<boolean>;
-    fitBody: PropTypes.Requireable<boolean>;
-    autoFixed: PropTypes.Requireable<boolean>;
-    antdTableProps: {};
-    fixedHeaderAutoTable: boolean;
-    fixedTableSpaceBetween: boolean;
-};
-export declare const propTypes: {
     className: string;
     style: {};
     searchClassName: string;
@@ -325,9 +309,23 @@ export declare const propTypes: {
     isFirstLoading: null;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;
-    fitSearch: boolean;
     fitBody: boolean;
     autoFixed: boolean;
+    antdTableProps: {};
+    fixedHeaderAutoTable: boolean;
+    fixedTableSpaceBetween: boolean;
+};
+export declare const propTypes: {
+    className: PropTypes.Requireable<string>;
+    style: PropTypes.Requireable<object>;
+    searchClassName: PropTypes.Requireable<string>;
+    searchStyle: PropTypes.Requireable<object>;
+    reset: PropTypes.Requireable<boolean>;
+    firstLoading: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+    isShowExpandSearch: PropTypes.Requireable<boolean>;
+    defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
+    fitBody: PropTypes.Requireable<boolean>;
+    autoFixed: PropTypes.Requireable<boolean>;
     antdTableProps: PropTypes.Requireable<object>;
     fixedHeaderAutoTable: PropTypes.Requireable<boolean>;
     fixedTableSpaceBetween: PropTypes.Requireable<boolean>;

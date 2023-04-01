@@ -210,7 +210,7 @@ abstract class Search<
       bodyStyle,
       searchClassName,
       searchStyle,
-      fitSearch,
+      // fitSearch,
       fitBody,
       autoFixed,
     } = this.props;
@@ -226,38 +226,52 @@ abstract class Search<
         <Fixed
           className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName || '')}
           style={{ ...(searchStyle || {}) }}
-          fit={fitSearch}
+          // fit={fitSearch}
         >
-          <FlexLayout direction="vertical">
-            {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
-              <Fixed>{this.renderSearchFormBefore?.()}</Fixed>
-            )}
+          {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
+            <Fixed className={`${selectorPrefix}-search-form-before`}>
+              {this.renderSearchFormBefore?.()}
+            </Fixed>
+          )}
 
-            {!!this.renderSearchForm && !!this.renderSearchForm?.() && (
-              <Fixed>{expand && this.renderSearchForm()}</Fixed>
-            )}
+          {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
+            <Fixed
+              className={classNames({
+                [`${selectorPrefix}-search-form`]: true,
+                [`${selectorPrefix}-search-form-expand`]: expand,
+              })}
+            >
+              {this.renderSearchForm()}
+            </Fixed>
+          )}
 
-            {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
-              <Fixed>{this.renderSearchToolBar()}</Fixed>
-            )}
+          {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
+            <Fixed
+              className={classNames({
+                [`${selectorPrefix}-search-tool-bar`]: true,
+                [`${selectorPrefix}-search-form-expand`]: expand,
+              })}
+            >
+              {this.renderSearchToolBar()}
+            </Fixed>
+          )}
 
-            {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
-              <Fixed>{this.renderSearchFormAfter?.()}</Fixed>
-            )}
-          </FlexLayout>
+          {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
+            <Fixed className={`${selectorPrefix}-search-form-after`}>
+              {this.renderSearchFormAfter?.()}
+            </Fixed>
+          )}
         </Fixed>
 
         {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
-          <Fixed>{this.renderSearchHeader?.()}</Fixed>
+          <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
         )}
 
         <Auto
-          className={classNames(
-            `${selectorPrefix}-autowrapper`,
-            bodyClassName || '',
-            autoFixed ? 'autofixed' : '',
-          )}
           style={{ ...(bodyStyle || {}) }}
+          className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName || '', {
+            ['autofixed']: autoFixed,
+          })}
           fit={fitBody}
           autoFixed={autoFixed}
         >
@@ -267,7 +281,7 @@ abstract class Search<
         </Auto>
 
         {!!this.renderSearchFooter && !!this.renderSearchFooter?.() && (
-          <Fixed>{this.renderSearchFooter?.()}</Fixed>
+          <Fixed className={`${selectorPrefix}-search-footer`}>{this.renderSearchFooter?.()}</Fixed>
         )}
       </FlexLayout>
     );
@@ -285,7 +299,7 @@ export const defaultProps = {
   isFirstLoading: null,
   isShowExpandSearch: true,
   defaultExpandSearchCollapse: true,
-  fitSearch: true,
+  // fitSearch: true,
   fitBody: true,
   autoFixed: true,
 };
@@ -302,7 +316,7 @@ export const propTypes = {
   // 展开和收缩的默认状态
   defaultExpandSearchCollapse: PropTypes.bool,
   // 撑开search
-  fitSearch: PropTypes.bool,
+  // fitSearch: PropTypes.bool,
   // 撑开表格
   fitBody: PropTypes.bool,
   // 是否是查询固定，表格自适应

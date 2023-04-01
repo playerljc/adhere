@@ -244,7 +244,6 @@ export interface SearchProps extends SuspenseProps {
     firstLoading: ReactElement;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;
-    fitSearch: boolean;
     fitBody: boolean;
     autoFixed: boolean;
     bodyClassName: string;
