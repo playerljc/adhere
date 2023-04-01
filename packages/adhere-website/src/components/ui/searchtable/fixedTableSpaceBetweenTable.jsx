@@ -10,7 +10,7 @@ import styles from './fixedTableSpaceBetweenTable.less';
  * @classdesc
  */
 class FixedTableSpaceBetweenTable extends Table {
-  renderTableHeader() {
+  renderSearchHeader() {
     return (
       <div className={styles.Header}>
         <h3>查询表格</h3>
@@ -21,7 +21,7 @@ class FixedTableSpaceBetweenTable extends Table {
     );
   }
 
-  renderTableFooter() {
+  renderSearchFooter() {
     return <div className={styles.Footer}>renderTableFooter</div>;
   }
 }
