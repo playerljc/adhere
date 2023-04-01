@@ -1,11 +1,24 @@
+# 2.1.0
+
+***
+
+2023-04-01
+
+* **adhere-util-dist**
+  - set方法bug修改
+
 # 2.0.8
 
 ***
 
 2023-03-24
 
-* **adhere-util-dist**
-  - set方法bug修改
+* **adhere-ui-searchlist**
+  - 加入adhere-ui-searchlist组件
+* **adhere-ui-searchtable**
+  - 分离出Search接口
+* **adhere-ui-intl**
+  - 加入新词条
 
 # 2.0.7
 
