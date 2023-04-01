@@ -1904,7 +1904,7 @@
   resolved "https://registry.yarnpkg.com/@mapbox/jsonlint-lines-primitives/-/jsonlint-lines-primitives-2.0.2.tgz#ce56e539f83552b58d10d672ea4d6fc9adc7b234"
   integrity sha512-rY0o9A5ECsTQRVhv7tL/OyDpGAoUB4tTvLiW1DSzQGq4bvTPhNw1VpSNjDJc5GFZ2XuyOtSWSVN05qOtcD71qQ==
 
-"@mapbox/mapbox-gl-style-spec@^13.23.1":
+"@mapbox/mapbox-gl-style-spec@^13.20.1", "@mapbox/mapbox-gl-style-spec@^13.23.1":
   version "13.28.0"
   resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-style-spec/-/mapbox-gl-style-spec-13.28.0.tgz#2ec226320a0f77856046e000df9b419303a56458"
   integrity sha512-B8xM7Fp1nh5kejfIl4SWeY0gtIeewbuRencqO3cJDrCHZpaPg7uY+V8abuR+esMeuOjRl5cLhVTP40v+1ywxbg==
@@ -12594,6 +12594,15 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==
 
+ol-mapbox-style@^6.1.1:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/ol-mapbox-style/-/ol-mapbox-style-6.9.0.tgz#b9587e390d8cc2037481ecdea53f0a6b9ba1d46c"
+  integrity sha512-Isxk+IPB6pCBD2Pubz9cpQcZjEeuPhxyk/QsLZjb2+KwvyGaIFltdlxnxx/QXJ7rOxUiLvS/XhsOyiK0c7prEw==
+  dependencies:
+    "@mapbox/mapbox-gl-style-spec" "^13.20.1"
+    mapbox-to-css-font "^2.4.1"
+    webfont-matcher "^1.1.0"
+
 ol-mapbox-style@^8.0.5:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/ol-mapbox-style/-/ol-mapbox-style-8.2.1.tgz#0f0c252b6495853a137d7e4dd3f915fab664b356"
@@ -12602,12 +12611,21 @@ ol-mapbox-style@^8.0.5:
     "@mapbox/mapbox-gl-style-spec" "^13.23.1"
     mapbox-to-css-font "^2.4.1"
 
-ol-wind@^1.1.1-alpha.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/ol-wind/-/ol-wind-1.1.2.tgz#e6296904a241f5ebde0e7852dadefaa37e37f38c"
-  integrity sha512-SXj088bFl8XTbpm7fIKPuA9CI3iVFuwtyu4XmGDjSL2CTWy/oLMWLRAsF/12oSD5dPNh01rlAMR/wxQKWZLdPA==
+ol-wind@1.1.1-alpha.2:
+  version "1.1.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/ol-wind/-/ol-wind-1.1.1-alpha.2.tgz#cf7b089ad17a0328e58ebb74f238e07c30d3fe7e"
+  integrity sha512-H29hFul+5Uv25bZZd9khaj2vbzZlSd9o5ZYV6jynNrsWcVymkGWhQhMi1fXZCy6sxFhjcU7U+8/5Xs0Fb10+tA==
   dependencies:
-    wind-core "1.1.2"
+    wind-core "^1.1.1-alpha.2"
+
+ol@6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-6.5.0.tgz#d9cd59081ac34dc4caf0509c3f667748a8207a21"
+  integrity sha512-a5ebahrjF5yCPFle1rc0aHzKp/9A4LlUnjh+S3I+x4EgcvcddDhpOX3WDOs0Pg9/wEElrikHSGEvbeej2Hh4Ug==
+  dependencies:
+    ol-mapbox-style "^6.1.1"
+    pbf "3.2.1"
+    rbush "^3.0.1"
 
 ol@^6.5.0:
   version "6.15.1"
@@ -17300,6 +17318,11 @@ web-worker@^1.2.0:
   resolved "https://registry.yarnpkg.com/web-worker/-/web-worker-1.2.0.tgz#5d85a04a7fbc1e7db58f66595d7a3ac7c9c180da"
   integrity sha512-PgF341avzqyx60neE9DD+XS26MMNMoUQRz9NOZwW32nPQrF6p77f1htcnjBSEV8BGMKZ16choqUG4hyI0Hx7mA==
 
+webfont-matcher@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/webfont-matcher/-/webfont-matcher-1.1.0.tgz#98ce95097b29e31fbe733053e10e571642d1c6c7"
+  integrity sha512-ov8lMvF9wi4PD7fK2Axn9PQEpO9cYI0fIoGqErwd+wi8xacFFDmX114D5Q2Lw0Wlgmb+Qw/dKI2KTtimrJf85g==
+
 webidl-conversions@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
@@ -17528,7 +17551,7 @@ wildcard@^2.0.0:
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.0.tgz#a77d20e5200c6faaac979e4b3aadc7b3dd7f8fec"
   integrity sha512-JcKqAHLPxcdb9KM49dufGXn2x3ssnfjbcaQdLlfZsL9rH9wgDQjUtDxbo8NE0F6SFvydeu1VhZe7hZuHsB2/pw==
 
-wind-core@1.1.2, wind-core@^1.1.1-alpha.2:
+wind-core@^1.1.1-alpha.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/wind-core/-/wind-core-1.1.2.tgz#0fae12e2bc1a48a8faa6af2fd08e1522f97c8da0"
   integrity sha512-ZLcTrE7J01WGxsSgGMhXNnA+yXBTt5TU2B9dUjXu5eXfNA+dByr28OBtFxDgXG+B9Q9c/6dFYed7VtvG0ZPncw==
