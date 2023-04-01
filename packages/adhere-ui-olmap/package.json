@@ -34,8 +34,8 @@
     "@types/react-dom": "^18.0.10",
     "@types/uuid": "^8.3.0",
     "algebra.js": "^0.2.6",
-    "ol": "^6.5.0",
-    "ol-wind": "^1.1.1-alpha.2",
+    "ol": "6.5.0",
+    "ol-wind": "1.1.1-alpha.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "uuid": "^9.0.0"
