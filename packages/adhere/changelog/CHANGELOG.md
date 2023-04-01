@@ -1,4 +1,4 @@
-# 2.1.0
+# 2.1.1
 
 ***
 
@@ -6,6 +6,16 @@
 
 * **adhere-ui-searchlist**
   - 加入adhere-ui-searchlist组件
+
+# 2.1.0
+
+***
+
+2023-04-01
+
+* **adhere-ui-searchlist**
+  - Search布局修改
+  - Search布局样式调整
 * **adhere-ui-searchtable**
   - 分离出Search接口
 * **adhere-ui-intl**
