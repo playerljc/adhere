@@ -4,15 +4,6 @@
 
 2023-04-01
 
-* **adhere-util-dist**
-  - set方法bug修改
-
-# 2.0.8
-
-***
-
-2023-03-24
-
 * **adhere-ui-searchlist**
   - 加入adhere-ui-searchlist组件
 * **adhere-ui-searchtable**
