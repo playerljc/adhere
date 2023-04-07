@@ -23,8 +23,8 @@ export default function () {
   const [iframeReady, setIframeReady] = useState(false);
   const iframeRef = useRef();
 
-  const sourceOrigin = 'http://localhost:8080';
-  const targetOrigin = 'http://localhost:8080';
+  const sourceOrigin = window.location.origin;
+  const targetOrigin = window.location.origin;
 
   const fetch = useRef(new Iframe.Fetch(window, sourceOrigin));
 
@@ -46,7 +46,7 @@ export default function () {
   function onGetDoc() {
     fetch.current
       // @ts-ignore
-      .get(iframeRef?.current?.contentWindow, targetOrigin, '/getDoc', {
+      .get(iframeRef?.current?.contentWindow, targetOrigin, '/task/getDoc', {
         data: value,
       })
       .then((res) => {
