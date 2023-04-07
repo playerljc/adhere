@@ -223,45 +223,50 @@ abstract class Search<
         className={classNames(selectorPrefix, className || '')}
         style={{ ...(style || {}) }}
       >
-        <Fixed
-          className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName || '')}
-          style={{ ...(searchStyle || {}) }}
-          // fit={fitSearch}
-        >
-          {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
-            <Fixed className={`${selectorPrefix}-search-form-before`}>
-              {this.renderSearchFormBefore?.()}
-            </Fixed>
-          )}
+        {((!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()) ||
+          (!!this.renderSearchForm && !!this.renderSearchForm?.()) ||
+          (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
+          (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
+          <Fixed
+            className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName || '')}
+            style={{ ...(searchStyle || {}) }}
+            // fit={fitSearch}
+          >
+            {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
+              <Fixed className={`${selectorPrefix}-search-form-before`}>
+                {this.renderSearchFormBefore?.()}
+              </Fixed>
+            )}
 
-          {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
-            <Fixed
-              className={classNames({
-                [`${selectorPrefix}-search-form`]: true,
-                [`${selectorPrefix}-search-form-expand`]: expand,
-              })}
-            >
-              {this.renderSearchForm()}
-            </Fixed>
-          )}
+            {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
+              <Fixed
+                className={classNames({
+                  [`${selectorPrefix}-search-form`]: true,
+                  [`${selectorPrefix}-search-form-expand`]: expand,
+                })}
+              >
+                {this.renderSearchForm()}
+              </Fixed>
+            )}
 
-          {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
-            <Fixed
-              className={classNames({
-                [`${selectorPrefix}-search-tool-bar`]: true,
-                [`${selectorPrefix}-search-form-expand`]: expand,
-              })}
-            >
-              {this.renderSearchToolBar()}
-            </Fixed>
-          )}
+            {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
+              <Fixed
+                className={classNames({
+                  [`${selectorPrefix}-search-tool-bar`]: true,
+                  [`${selectorPrefix}-search-form-expand`]: expand,
+                })}
+              >
+                {this.renderSearchToolBar()}
+              </Fixed>
+            )}
 
-          {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
-            <Fixed className={`${selectorPrefix}-search-form-after`}>
-              {this.renderSearchFormAfter?.()}
-            </Fixed>
-          )}
-        </Fixed>
+            {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
+              <Fixed className={`${selectorPrefix}-search-form-after`}>
+                {this.renderSearchFormAfter?.()}
+              </Fixed>
+            )}
+          </Fixed>
+        )}
 
         {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
           <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
