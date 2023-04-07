@@ -41,7 +41,6 @@ export default function () {
   useEffect(() => {
     // @ts-ignore
     router.current = new Iframe.Router();
-
     // @ts-ignore
     router.current
       /**
@@ -162,6 +161,11 @@ export default function () {
 
     // @ts-ignore
     server.current.start();
+
+    return () => {
+      // @ts-ignore
+      server?.current?.close?.();
+    };
   }, []);
 
   return (
