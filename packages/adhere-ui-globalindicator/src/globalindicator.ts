@@ -4,13 +4,15 @@ const selectorPrefix: string = 'adhere-ui-globalindicator';
 
 const MAX_ZINDEX = Resource.Dict.value.ResourceNormalMaxZIndex.value;
 
+const handlers = new Set<HTMLElement>();
+
 export default {
   /**
-   * show
+   * show - 显示一个遮罩
+   * @param {HTMLElement} parent
+   * @param {string} text
+   * @param {number} zIndex
    * @return {HTMLElement}
-   * @param parent
-   * @param text
-   * @param zIndex
    */
   show(parent: HTMLElement = document.body, text: string = '', zIndex: number = MAX_ZINDEX) {
     const el: HTMLElement = document.createElement('div');
@@ -29,15 +31,34 @@ export default {
 
     parent.appendChild(indicatorDom);
 
+    handlers.add(indicatorDom);
+
     return indicatorDom;
   },
   /**
-   * hide
-   * @param indicatorDom
+   * hide - 取消一个遮罩
+   * @param {HTMLElement} indicatorDom
    */
   hide(indicatorDom: HTMLElement) {
     if (indicatorDom) {
-      indicatorDom?.parentElement?.removeChild?.(indicatorDom);
+      try {
+        indicatorDom?.parentElement?.removeChild?.(indicatorDom);
+        handlers.delete(indicatorDom);
+      } catch (e) {}
     }
+  },
+  /**
+   * hideAll - 隐藏所有遮罩
+   */
+  hideAll() {
+    const values = Array.from(handlers.values());
+
+    values.forEach((el) => {
+      try {
+        el?.parentElement?.removeChild?.(el);
+      } catch (e) {}
+    });
+
+    handlers.clear();
   },
 };

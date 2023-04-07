@@ -1,16 +1,20 @@
 declare const _default: {
     /**
-     * show
+     * show - 显示一个遮罩
+     * @param {HTMLElement} parent
+     * @param {string} text
+     * @param {number} zIndex
      * @return {HTMLElement}
-     * @param parent
-     * @param text
-     * @param zIndex
      */
     show(parent?: HTMLElement, text?: string, zIndex?: number): HTMLElement;
     /**
-     * hide
-     * @param indicatorDom
+     * hide - 取消一个遮罩
+     * @param {HTMLElement} indicatorDom
      */
     hide(indicatorDom: HTMLElement): void;
+    /**
+     * hideAll - 隐藏所有遮罩
+     */
+    hideAll(): void;
 };
 export default _default;
