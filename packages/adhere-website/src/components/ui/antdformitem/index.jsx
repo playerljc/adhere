@@ -984,6 +984,242 @@ export default () => {
       />
 
       <CodeBoxSection
+        title="FormItemGeneratorToDict - Select"
+        config={[
+          {
+            id: 'p1',
+            name: 'Select单选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Select单选',
+                info: 'Select单选`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { AntdFormItem } from '@baifendian/adhere';
+
+  export default () => {
+    const [val, setVal] = useState([]);
+
+    return <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectFormItem
+      selectProps={{
+        style: {
+          width: 200,
+        },
+      }}
+      value={val}
+      onChange={(v) => setVal(v)}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectFormItem
+                style={{ width: 200 }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            ),
+          },
+          {
+            id: 'p2',
+            name: 'Select多选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Select多选',
+                info: 'Select多选`',
+              },
+            },
+            codeText: `
+          import React, { useState } from 'react';
+          import { AntdFormItem } from '@baifendian/adhere';
+
+          export default () => {
+            const [vals, setVals] = useState([]);
+
+            return <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectMulitFormItem
+              selectProps={{
+                style: {
+                  width: 200,
+                },
+              }}
+              value={vals}
+              onChange={(v) => setVals(v)}
+            />
+          }
+                    `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectMulitFormItem
+                style={{ width: 300 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p3',
+            name: 'Select全选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Select全选',
+                info: 'Select全选`',
+              },
+            },
+            codeText: `
+          import React, { useState } from 'react';
+          import { AntdFormItem } from '@baifendian/adhere';
+
+          export default () => {
+            const [vals, setVals] = useState([]);
+
+            return <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectCheckAllMulitFormItem
+              selectProps={{
+                style: {
+                  width: 200,
+                },
+              }}
+              value={vals}
+              onChange={(v) => setVals(v)}
+            />
+          }
+                    `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectCheckAllMulitFormItem
+                style={{ width: 300 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p4',
+            name: 'AutoComplete的单选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'AutoComplete的单选',
+                info: 'AutoComplete的单选`',
+              },
+            },
+            codeText: `
+          import React, { useState } from 'react';
+          import { AntdFormItem } from '@baifendian/adhere';
+
+          export default () => {
+            const [val, setVal] = useState([]);
+
+            return <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectFormItem
+              selectProps={{
+                style: {
+                  width: 200,
+                },
+              }}
+              value={val}
+              onChange={(v) => setVal(v)}
+            />
+          }
+                    `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoSelectCompleteFormItem
+                style={{ width: 200 }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            ),
+          },
+          {
+            id: 'p5',
+            name: 'AutoComplete的多选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'AutoComplete的多选',
+                info: 'AutoComplete的多选`',
+              },
+            },
+            codeText: `
+          import React, { useState } from 'react';
+          import { AntdFormItem } from '@baifendian/adhere';
+
+          export default () => {
+            const [vals, setVals] = useState([]);
+
+            return <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectMulitFormItem
+              selectProps={{
+                style: {
+                  width: 200,
+                },
+              }}
+              value={vals}
+              onChange={(v) => setVals(v)}
+            />
+          }
+                    `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoSelectCompleteMulitFormItem
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => {
+                  setVals(v);
+                }}
+              />
+            ),
+          },
+          {
+            id: 'p6',
+            name: 'AutoComplete的全选',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'AutoComplete的全选',
+                info: 'AutoComplete的全选`',
+              },
+            },
+            codeText: `
+          import React, { useState } from 'react';
+          import { AntdFormItem } from '@baifendian/adhere';
+
+          export default () => {
+            const [vals, setVals] = useState([]);
+
+            return <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectCheckAllMulitFormItem
+              selectProps={{
+                style: {
+                  width: 200,
+                },
+              }}
+              value={vals}
+              onChange={(v) => setVals(v)}
+            />
+          }
+                    `,
+            renderChildren: () => (
+              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoSelectCompleteCheckAllMulitFormItem
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
         title="FormItemGeneratorToDict - Radio(字典中以Radio或DynamicRadio结尾)"
         config={[
           {
@@ -1458,240 +1694,6 @@ export default () => {
                   </AntdSpace>
                 )}
               </AntdFormItem.FormItemGeneratorToDict.SystemTestCheckBoxCustomFormItem>
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Select"
-        config={[
-          {
-            id: 'p1',
-            name: 'Select单选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Select单选',
-                info: 'Select单选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState([]);
-
-    return <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p2',
-            name: 'Select多选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Select多选',
-                info: 'Select多选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectMulitFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectMulitFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p3',
-            name: 'Select全选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Select全选',
-                info: 'Select全选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectCheckAllMulitFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <AntdFormItem.FormItemGeneratorToDict.SystemTestSelectCheckAllMulitFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p4',
-            name: 'AutoComplete的单选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'AutoComplete的单选',
-                info: 'AutoComplete的单选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState([]);
-
-    return <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: 'AutoComplete的多选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'AutoComplete的多选',
-                info: 'AutoComplete的多选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectMulitFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectMulitFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p6',
-            name: 'AutoComplete的全选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'AutoComplete的全选',
-                info: 'AutoComplete的全选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectCheckAllMulitFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <AntdFormItem.FormItemGeneratorToDict.SystemTestAutoCompleteSelectCheckAllMulitFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
             ),
           },
         ]}
@@ -2996,7 +2998,6 @@ export default () => {
         ]}
       />
 
-      {/**/}
       <CodeBoxSection
         title="FormItemGeneratorToDict - Breadcrumb"
         config={[
@@ -3783,7 +3784,6 @@ export default () => {
           },
         ]}
       />
-      {/**/}
 
       <PropsSection
         title="AntdFormItem.AntFormItemNormalize"

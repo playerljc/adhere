@@ -29,8 +29,7 @@ export default {
         label: '退回',
       },
     ];
-
-    Dict.handlers.SystemTestDynamicRadio = () =>
+    Dict.handlers.SystemTestRadioDynamic = () =>
       Promise.resolve([
         {
           value: 1,
@@ -61,8 +60,7 @@ export default {
         label: '退回',
       },
     ];
-
-    Dict.handlers.SystemTestDynamicCheckBox = () =>
+    Dict.handlers.SystemTestCheckBoxDynamic = () =>
       Promise.resolve([
         {
           value: 1,
@@ -93,7 +91,7 @@ export default {
         label: '退回',
       },
     ];
-    Dict.handlers.SystemTestDynamicSelect = () =>
+    Dict.handlers.SystemTestSelectDynamic = () =>
       Promise.resolve([
         {
           value: 1,
@@ -110,7 +108,7 @@ export default {
       ]);
 
     // AutoComplete
-    Dict.handlers.SystemTestAutoCompleteSelect = () => (kw) => {
+    Dict.handlers.SystemTestAutoSelectComplete = () => (kw) => {
       const data = [
         {
           label: 'java',
@@ -181,7 +179,7 @@ export default {
         label: '退回',
       },
     ];
-    Dict.handlers.SystemTestDynamicTransfer = () =>
+    Dict.handlers.SystemTestTransferDynamic = () =>
       Promise.resolve([
         {
           value: 1,
@@ -211,7 +209,6 @@ export default {
         hometown: faker.address.city(),
         address: faker.address.streetAddress(),
       }));
-
     Dict.handlers.SystemTestTablePagination = () => (paging) => {
       const { current, pageSize } = paging;
 
@@ -281,8 +278,7 @@ export default {
         ],
       },
     ];
-
-    Dict.handlers.SystemTestDynamicCascader = () =>
+    Dict.handlers.SystemTestCascaderDynamic = () =>
       Promise.resolve([
         {
           value: 'zhejiang',
@@ -332,7 +328,6 @@ export default {
         hometown: faker.address.city(),
         address: faker.address.streetAddress(),
       }));
-
     Dict.handlers.SystemTestListPagination = () => (paging) => {
       const { current, pageSize } = paging;
 
