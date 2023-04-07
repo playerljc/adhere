@@ -7,6 +7,7 @@ import Encrypt from './encrypt';
 import Format from './format';
 import Geometry from './geometry';
 import Math from './math';
+import Size from './size';
 import SystemManager from './systemmanager';
 import Tree from './tree';
 import Url from './url';
@@ -27,4 +28,5 @@ export default {
   ...Date,
   ...Encrypt,
   ...Format,
+  ...Size,
 };

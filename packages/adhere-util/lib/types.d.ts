@@ -40,3 +40,15 @@ export interface IUrlConfig {
     isEncode: boolean;
     isDecode: boolean;
 }
+/**
+ * PrettyBytesOptions
+ */
+export interface PrettyBytesOptions {
+    signed?: boolean;
+    bits?: boolean;
+    binary?: boolean;
+    locale?: boolean | string;
+    minimumFractionDigits?: number;
+    maximumFractionDigits?: number;
+    space?: boolean;
+}

@@ -52,3 +52,16 @@ export interface IUrlConfig {
   // 是否decode
   isDecode: boolean;
 }
+
+/**
+ * PrettyBytesOptions
+ */
+export interface PrettyBytesOptions {
+  signed?: boolean;
+  bits?: boolean;
+  binary?: boolean;
+  locale?: boolean | string;
+  minimumFractionDigits?: number;
+  maximumFractionDigits?: number;
+  space?: boolean;
+}

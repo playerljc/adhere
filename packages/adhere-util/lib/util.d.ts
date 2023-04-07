@@ -1,4 +1,5 @@
 declare const _default: {
+    prettyBytes(number: any, options?: import("./types").PrettyBytesOptions | undefined): string;
     prettierJSON(_jsonStr?: string): string;
     compressJSON(_jsonStr?: string): string;
     prettierXML(_xmlStr?: string): any;
@@ -224,9 +225,7 @@ declare const _default: {
     color16Random(): string;
     colorToRgb(color: string): number[];
     rgbToColor(r: string | number, g: string | number, b: string | number): string;
-    isEmpty(value: any): boolean; /**
-     * 函数节流
-     */
+    isEmpty(value: any): boolean;
     isNumber(val: any): boolean;
     isBoolean(val: any): boolean;
     isString(val: any): boolean;
