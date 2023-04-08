@@ -25,20 +25,26 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
     const defaultStyle = style || {};
 
     let rowGapOrigin;
+    let columnGapOrigin;
 
     if (Array.isArray(gutter)) {
       if (gutter.length === 1) {
         rowGapOrigin = gutter[0];
+        columnGapOrigin = gutter[0];
       } else if (gutter.length === 2) {
-        rowGapOrigin = gutter[1];
+        rowGapOrigin = gutter[0];
+        columnGapOrigin = gutter[1];
       }
     } else {
       rowGapOrigin = gutter;
+      columnGapOrigin = gutter;
     }
 
     return {
       ...{
         rowGap: `${rowGapOrigin}px`,
+        marginLeft: `-${columnGapOrigin / 2}px`,
+        marginRight: `-${columnGapOrigin / 2}px`,
       },
       ...defaultStyle,
     };

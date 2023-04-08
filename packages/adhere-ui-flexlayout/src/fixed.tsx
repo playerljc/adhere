@@ -23,7 +23,7 @@ const Fixed: FC<FixedProps> = (props) => {
         [`${selectorPrefix}-col-${props.span}`]:
           'span' in props && typeof props.span === 'number' && props.span >= 0 && props.span <= 24,
       }),
-    [className, fit],
+    [className, props.span, fit],
   );
 
   const styleList = useMemo(() => {
@@ -35,7 +35,7 @@ const Fixed: FC<FixedProps> = (props) => {
       if (gutter.length === 1) {
         columnGapOrigin = gutter[0];
       } else if (gutter.length === 2) {
-        columnGapOrigin = gutter[0];
+        columnGapOrigin = gutter[1];
       }
     } else {
       columnGapOrigin = gutter;
