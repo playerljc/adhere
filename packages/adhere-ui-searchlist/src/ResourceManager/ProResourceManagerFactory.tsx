@@ -31,6 +31,42 @@ export default function <P, S>(SuperClass) {
       };
     }
 
+    getParams() {
+      const view = this?.ref?.current;
+
+      return {
+        ...(view?.getParams?.() || {}),
+      };
+    }
+
+    getColumns(columns) {
+      return columns ?? [];
+    }
+
+    renderSearchFooterItemsImpl(defaultItems) {
+      const superItems = super.renderSearchFooterItemsImpl(defaultItems);
+
+      return [
+        <div className={`${selectorPrefix}-headeritem`}>
+          <Radio.Group
+            optionType="button"
+            buttonStyle="solid"
+            value={this.state.viewType}
+            onChange={(e) => this.setState({ viewType: e.target.value })}
+          >
+            <Radio value="info">
+              <CreditCardOutlined className={`${selectorPrefix}-resource-type-change-btn`} />
+            </Radio>
+
+            <Radio value="thumbnail">
+              <InsertRowAboveOutlined className={`${selectorPrefix}-resource-type-change-btn`} />
+            </Radio>
+          </Radio.Group>
+        </div>,
+        ...(superItems || []),
+      ];
+    }
+
     /**
      * getViewParams
      * @override
@@ -43,18 +79,6 @@ export default function <P, S>(SuperClass) {
         modifyTimeStart: undefined,
         modifyTimeEnd: undefined,
       };
-    }
-
-    getParams() {
-      const view = this?.ref?.current;
-
-      return {
-        ...(view?.getParams?.() || {}),
-      };
-    }
-
-    getColumns(columns) {
-      return columns ?? [];
     }
 
     /**
@@ -133,30 +157,6 @@ export default function <P, S>(SuperClass) {
           },
           render: (value) => <DateDisplay18 value={value} />,
         },
-      ];
-    }
-
-    renderSearchFooterItemsImpl(defaultItems) {
-      const superItems = super.renderSearchFooterItemsImpl(defaultItems);
-
-      return [
-        <div className={`${selectorPrefix}-headeritem`}>
-          <Radio.Group
-            optionType="button"
-            buttonStyle="solid"
-            value={this.state.viewType}
-            onChange={(e) => this.setState({ viewType: e.target.value })}
-          >
-            <Radio value="info">
-              <CreditCardOutlined className={`${selectorPrefix}-resource-type-change-btn`} />
-            </Radio>
-
-            <Radio value="thumbnail">
-              <InsertRowAboveOutlined className={`${selectorPrefix}-resource-type-change-btn`} />
-            </Radio>
-          </Radio.Group>
-        </div>,
-        ...(superItems || []),
       ];
     }
 
