@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -47,7 +48,12 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
     () => (
       <ConditionalRender conditional={!!renderTop}>
         {() => (
-          <Fixed className={topClassName || ''} style={topStyle || {}} fit {...(topProps || {})}>
+          <Fixed
+            className={classNames(topClassName)}
+            style={topStyle || {}}
+            fit
+            {...(topProps || {})}
+          >
             {renderTop}
           </Fixed>
         )}
@@ -61,7 +67,7 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
       <ConditionalRender conditional={!!renderMain}>
         {() => (
           <Auto
-            className={mainAutoWrapClassName || ''}
+            className={classNames(mainAutoWrapClassName)}
             style={mainAutoStyle || {}}
             fit
             autoFixed
@@ -69,13 +75,13 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
           >
             <FlexLayout
               direction="horizontal"
-              className={mainWrapClassName || ''}
+              className={classNames(mainWrapClassName)}
               style={mainWrapStyle || {}}
             >
               <ConditionalRender conditional={!!renderLeft}>
                 {() => (
                   <Fixed
-                    className={leftClassName || ''}
+                    className={classNames(leftClassName)}
                     style={leftStyle || {}}
                     fit
                     {...(leftProps || {})}
@@ -88,7 +94,7 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
               <Auto
                 autoFixed
                 fit
-                className={mainClassName || ''}
+                className={classNames(mainClassName)}
                 style={mainStyle || {}}
                 {...(mainProps || {})}
               >
@@ -98,7 +104,7 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
               <ConditionalRender conditional={!!renderRight}>
                 {() => (
                   <Fixed
-                    className={rightClassName || ''}
+                    className={classNames(rightClassName)}
                     style={rightStyle || {}}
                     fit
                     {...(rightProps || {})}
@@ -138,7 +144,7 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
       <ConditionalRender conditional={!!renderBottom}>
         {() => (
           <Fixed
-            className={bottomClassName || ''}
+            className={classNames(bottomClassName)}
             style={bottomStyle || {}}
             fit
             {...(bottomProps || {})}
@@ -152,7 +158,7 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
   );
 
   return (
-    <FlexLayout className={className || ''} style={style || {}} direction="vertical">
+    <FlexLayout className={classNames(className)} style={style || {}} direction="vertical">
       {_renderTop}
       {_renderMain}
       {_renderBottom}

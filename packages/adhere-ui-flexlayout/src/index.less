@@ -1,6 +1,12 @@
 @import './toolBarLayout.less';
 @import './scrollLayout.less';
 
+/**
+  文字在多行上overflow，行数可控
+ */
+.span(@span: 1) {
+}
+
 .adhere-ui-flexlayout {
   display: flex;
 
@@ -13,7 +19,7 @@
   }
 
   &.adhere-ui-flexlayout-horizontal {
-    flex-direction: row;
+    flex-flow: row wrap;
 
     .adhere-ui-flexlayout-auto-autoFixed {
       min-width: 0;
@@ -21,6 +27,16 @@
   }
 
   .adhere-ui-flexlayout-fixed {
+    .span(@n, @i: 0) when (@i =< @n) {
+      &.adhere-ui-flexlayout-fixed-col-@{i} {
+        flex-basis: (@i * 100% / @n);
+        max-width: (@i * 100% / @n);
+      }
+      .span(@n, (@i + 1));
+    }
+
+    .span(24);
+
     flex-shrink: 0;
 
     &.adhere-ui-flexlayout-fixed-fit {

@@ -64,14 +64,12 @@ const ToolBarLayout: FC<ToolBarLayoutProps> = (props) => {
   return (
     <VerticalFlexLayout
       className={classNames(selectorPrefix, className || '')}
-      topClassName={classNames(
-        (topToolBarItems || []).length ? `${selectorPrefix}-top` : null,
-        topClassName || '',
-      )}
-      bottomClassName={classNames(
-        (bottomToolBarItems || []).length ? `${selectorPrefix}-bottom` : null,
-        bottomClassName || '',
-      )}
+      topClassName={classNames(topClassName, {
+        [`${selectorPrefix}-top`]: (topToolBarItems || []).length,
+      })}
+      bottomClassName={classNames(bottomClassName, {
+        [`${selectorPrefix}-bottom`]: (bottomToolBarItems || []).length,
+      })}
       mainAutoWrapClassName={classNames(
         `${selectorPrefix}-main-auto-wrap`,
         mainAutoWrapClassName || '',

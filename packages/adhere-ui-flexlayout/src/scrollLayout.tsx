@@ -46,7 +46,7 @@ const ScrollLayout: FC<ScrollLayoutProps> = (props) => {
     >
       <div
         ref={wrapRef}
-        className={classNames(selectorPrefix, className || '')}
+        className={classNames(selectorPrefix, className)}
         style={{ overflowY: scrollY ? 'auto' : 'hidden', ...(style || {}) }}
       >
         {children}

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 
 import Auto from './auto';
 import BackLayout from './backLayout';
@@ -14,18 +14,44 @@ import VerticalFlexLayout from './verticalFlexLayout';
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
 const FlexLayout: FC<FlexLayoutProps> = (props) => {
-  const { className = '', style = {}, direction = 'vertical', children } = props;
+  const { className = '', style = {}, direction = 'vertical', gutter = 0, children } = props;
+
+  const classList = useMemo(
+    () => classNames(selectorPrefix, className, `${selectorPrefix}-${direction}`),
+    [className, direction],
+  );
+
+  const styleList = useMemo(() => {
+    const defaultStyle = style || {};
+
+    let rowGapOrigin;
+
+    if (Array.isArray(gutter)) {
+      if (gutter.length === 1) {
+        rowGapOrigin = gutter[0];
+      } else if (gutter.length === 2) {
+        rowGapOrigin = gutter[1];
+      }
+    } else {
+      rowGapOrigin = gutter;
+    }
+
+    return {
+      ...{
+        rowGap: `${rowGapOrigin}px`,
+      },
+      ...defaultStyle,
+    };
+  }, [style, gutter]);
 
   return (
     <FlexContext.Provider
       value={{
+        gutter,
         direction,
       }}
     >
-      <div
-        className={classNames(selectorPrefix, `${selectorPrefix}-${direction}`, className || '')}
-        style={style || {}}
-      >
+      <div className={classList} style={styleList}>
         {children}
       </div>
     </FlexContext.Provider>

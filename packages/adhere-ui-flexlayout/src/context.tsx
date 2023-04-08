@@ -8,4 +8,5 @@ import type { ContextType } from './types';
  */
 export const FlexContext = React.createContext<ContextType>({
   direction: 'vertical',
+  gutter: 0,
 });

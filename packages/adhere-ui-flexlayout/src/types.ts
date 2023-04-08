@@ -3,6 +3,7 @@ import type { CSSProperties, Context, ReactElement } from 'react';
 
 export interface ContextType {
   direction: 'vertical' | 'horizontal';
+  gutter?: number | number[];
 }
 
 export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
@@ -24,6 +25,7 @@ export interface FlexLayoutProps {
   style?: CSSProperties;
   direction?: 'vertical' | 'horizontal';
   children?: any;
+  gutter?: number | number[];
 }
 
 export interface FixedProps {
@@ -31,6 +33,7 @@ export interface FixedProps {
   style?: CSSProperties;
   fit?: boolean;
   children?: any;
+  span?: number;
 }
 
 export interface AutoProps {
