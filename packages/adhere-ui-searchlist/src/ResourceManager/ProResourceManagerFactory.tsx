@@ -31,6 +31,10 @@ export default function <P, S>(SuperClass) {
       };
     }
 
+    /**
+     * getViewParams
+     * @override
+     */
     getViewParams() {
       return {
         name: null,
@@ -53,6 +57,10 @@ export default function <P, S>(SuperClass) {
       return columns ?? [];
     }
 
+    /**
+     * getTableViewColumns
+     * @override
+     */
     getTableViewColumns() {
       return [
         {
@@ -152,6 +160,10 @@ export default function <P, S>(SuperClass) {
       ];
     }
 
+    /**
+     * renderGridViewCard
+     * @override
+     */
     renderGridViewCard({ record }): ReactNode {
       const rowSelection = this.getRowSelection();
       const id = record[this.getRowKey()];

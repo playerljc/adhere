@@ -36,6 +36,10 @@ export default function <P, S>(SuperClass) {
       return context?.fetchData?.();
     }
 
+    /**
+     * getParams
+     * @transmit
+     */
     getParams() {
       const { context } = this.props;
 
@@ -48,6 +52,10 @@ export default function <P, S>(SuperClass) {
       return context?.getData?.();
     }
 
+    /**
+     * getServiceName
+     * @transmit
+     */
     getServiceName(): string {
       const { context } = this.props;
 
@@ -66,6 +74,10 @@ export default function <P, S>(SuperClass) {
       return context?.getTotalKey?.();
     }
 
+    /**
+     * getColumns
+     * @transmit
+     */
     getColumns() {
       const { context } = this.props;
 
