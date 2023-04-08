@@ -1,0 +1,22 @@
+.col {
+  height: 55px;
+
+  &:nth-child(odd) {
+    > .inner {
+      background-color: @adhere-primary-color;
+    }
+  }
+
+  &:nth-child(even) {
+    > .inner {
+      background-color: rgba(@adhere-primary-color, 0.3);
+    }
+  }
+
+  > .inner {
+    height: 100%;
+    color: #fff;
+    line-height: 55px;
+    text-align: center;
+  }
+}
