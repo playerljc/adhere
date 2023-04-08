@@ -1,0 +1,2 @@
+import SearchTable from"@baifendian/adhere-ui-searchtable";import ProListFactory from"../ProListFactory";import ProResourceManagerFactory from"./ProResourceManagerFactory";import ResourceStateManager from"./ResourceStateManager";var MemoManager=SearchTable.SearchAndPaginParams.MemoManager,SearchAndPaginParamsMemo=MemoManager.create();export default ProResourceManagerFactory(ProListFactory(ResourceStateManager,SearchAndPaginParamsMemo));export{SearchAndPaginParamsMemo};
+//# sourceMappingURL=ProResourceStateManager.js.map

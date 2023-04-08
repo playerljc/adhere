@@ -20,11 +20,10 @@ declare namespace _default {
         export { total_1 as total };
         const list_1: {
             id: any;
-            avatar: string;
-            subTitle: any;
-            title: any;
-            description: string;
-            content: string;
+            name: any;
+            type: string;
+            size: any;
+            modifyTime: number;
         }[];
         export { list_1 as list };
     }

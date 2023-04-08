@@ -27,10 +27,16 @@ export interface SearchListImplementProps extends SearchListProps {
     [props: string]: any;
     getListWrapperInstance?: (ref?: RefObject<HTMLDivElement>) => void;
 }
+/**
+ * SearchListImplementState
+ */
 export interface SearchListImplementState extends SearchListState {
     [props: string]: any;
     searchParams?: any;
 }
+/**
+ * ISearchListImplement
+ */
 export interface ISearchListImplement {
     /**
      * showLoading - 是否显示遮罩
@@ -41,6 +47,9 @@ export interface ISearchListImplement {
      */
     fetchData: () => void;
 }
+/**
+ * SearchListImplementFactoryFunction
+ */
 export interface SearchListImplementFactoryFunction<T, P> {
     (params: {
         serviceNames: string[];
@@ -48,6 +57,9 @@ export interface SearchListImplementFactoryFunction<T, P> {
         mapDispatchToProps?: (dispatch?: any) => any;
     }): (Component: typeof SearchListImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
+/**
+ * SearchListStateImplementFactoryFunction
+ */
 export interface SearchListStateImplementFactoryFunction<T, P> {
     (params: {
         serviceNames: string[];
@@ -71,6 +83,9 @@ export interface SearchListStateImplementProps extends SearchListImplementProps 
         mapDispatchToProps?: (dispatch?: any) => any;
     };
 }
+/**
+ * MetaItem
+ */
 export type MetaItem<T> = {
     dataIndex: string;
     render?: (text: ReactNode, record: T, index: number) => ReactNode | ReactNode[];
@@ -97,3 +112,21 @@ export interface ListExpandable {
     expandedRowKeys: string[];
     onExpandedRowsChange: (expandedRowKeys: string[]) => void;
 }
+/**
+ * ResourceManagerProps
+ */
+export interface ResourceManagerProps extends SearchListImplementProps {
+}
+/**
+ * ResourceManagerState
+ */
+export interface ResourceManagerState extends SearchListImplementState {
+}
+/**
+ * ResourceType - 资源类型
+ */
+export type ResourceType = 'file' | 'directory';
+/**
+ * FileType - 文件类型
+ */
+export type FileType = 'doc' | 'video' | 'audio' | 'image' | 'compress' | 'other';

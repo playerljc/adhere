@@ -1,6 +1,10 @@
 import React from 'react';
 
+import SearchTable from '@baifendian/adhere-ui-searchtable';
+
 import ViewFactory from './ViewFactory';
+
+const { TableDensitySetting } = SearchTable;
 
 /**
  * TableViewFactory
@@ -17,6 +21,28 @@ export default function <P, S>(SuperClass) {
      */
     getOrderFieldValue(): string {
       return 'resourceType';
+    }
+
+    renderTableDensitySetting({ density, onChange, onReset }) {
+      return (
+        <TableDensitySetting
+          density={density}
+          onChange={(_density) => {
+            this.setState({
+              tableDensity: _density,
+            });
+            onChange(_density);
+          }}
+          onReset={() => {
+            const defaultDensity = this.getTableDensity();
+
+            this.setState({
+              tableDensity: defaultDensity,
+            });
+            onReset(defaultDensity);
+          }}
+        />
+      );
     }
   };
 }

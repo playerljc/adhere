@@ -140,9 +140,9 @@ abstract class SearchList<
             listDensity: density,
           });
         }}
-        onReset={() => {
+        onReset={(density) => {
           this.setState({
-            listDensity: this.getListDensity(),
+            listDensity: density,
           });
         }}
       />

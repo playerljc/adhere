@@ -12,6 +12,7 @@ import CustomRenderDataList from './customRenderDataList';
 import CustomRenderItemList from './customRenderItemList';
 import ExpandableList from './expandableList';
 import NormalList from './normalList';
+import ResourceManager from './resourceManager';
 import SelectionList from './selectionList';
 import VerticalNormalList from './verticalNormalList';
 
@@ -959,6 +960,22 @@ export default () => {
                     `,
         type: 'PlayGround',
         renderChildren: () => <CustomRenderItemList />,
+      },
+      {
+        id: `p8`,
+        name: `ResourceManager(文件管理器)`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '文件管理器',
+            info: '文件管理器',
+          },
+        },
+        codeText: `
+                    `,
+        type: 'PlayGround',
+        renderChildren: () => <ResourceManager />,
       },
     ];
   }

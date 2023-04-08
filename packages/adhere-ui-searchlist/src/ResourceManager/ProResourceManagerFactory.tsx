@@ -67,6 +67,24 @@ export default function <P, S>(SuperClass) {
       ];
     }
 
+    renderTableDensitySetting() {
+      const view = this?.ref?.current;
+
+      return view?.renderTableDensitySetting?.({
+        density: this.state.listDensity,
+        onChange: (density) => {
+          this.setState({
+            listDensity: density,
+          });
+        },
+        onReset: (density) => {
+          this.setState({
+            listDensity: density,
+          });
+        },
+      });
+    }
+
     /**
      * getViewParams
      * @override

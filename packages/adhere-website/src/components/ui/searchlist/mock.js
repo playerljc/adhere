@@ -39,7 +39,7 @@ export default {
   code: 200,
   data: {
     total: data.length,
-    list: data.map(() => ({
+    list: data.map((val, index) => ({
       id: faker.random.uuid(),
       avatar: 'https://randomuser.me/api/portraits/men/66.jpg',
       subTitle: faker.company.companyName(),
@@ -48,6 +48,11 @@ export default {
         'Ant Design, a design language for background applications, is refined by Ant UED Team.',
       content:
         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+
+      name: faker.company.companyName(),
+      type: ['directory', 'doc', 'video', 'audio', 'image', 'compress', 'other'][index % 7],
+      size: faker.random.number(),
+      modifyTime: Date.now(),
 
       // id: faker.random.uuid(),
       // name: faker.internet.userName(),
