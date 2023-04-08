@@ -1,9 +1,17 @@
-import { Radio } from 'antd';
-import React, { createRef } from 'react';
+import { Radio, Space } from 'antd';
+import classNames from 'classnames';
+import React, { ReactNode, createRef } from 'react';
 
 import { CreditCardOutlined, InsertRowAboveOutlined } from '@ant-design/icons';
+import ContourBlock from '@baifendian/adhere-ui-contourblock';
+import DateDisplay from '@baifendian/adhere-ui-datedisplay';
+import Util from '@baifendian/adhere-util';
+import Dict from '@baifendian/adhere-util-dict';
+import Intl from '@baifendian/adhere-util-intl';
 
 export const selectorPrefix = 'adhere-ui-searchtable-protable';
+// @ts-ignore
+const { DateDisplay18 } = DateDisplay;
 
 /**
  * ProResourceManagerFactory
@@ -23,6 +31,16 @@ export default function <P, S>(SuperClass) {
       };
     }
 
+    getViewParams() {
+      return {
+        name: null,
+        resourceType: null,
+        size: null,
+        modifyTimeStart: undefined,
+        modifyTimeEnd: undefined,
+      };
+    }
+
     getParams() {
       const view = this?.ref?.current;
 
@@ -33,6 +51,81 @@ export default function <P, S>(SuperClass) {
 
     getColumns(columns) {
       return columns ?? [];
+    }
+
+    getTableViewColumns() {
+      return [
+        {
+          title: Intl.v('文件名称'),
+          dataIndex: 'name',
+          key: 'name',
+          sorter: true,
+          sortOrder: this?.sortOrder?.('name'),
+          $search: {
+            type: 'input',
+            visible: true,
+          },
+          render: (value, record) => (
+            <Space size={25}>
+              <span className={`${selectorPrefix}-resource-table-file-column-icon`}>
+                {Dict.value.AdhereSearchListResourceManagerIconMap.value.get(
+                  record.type || 'other',
+                )}
+              </span>
+              <span className={`${selectorPrefix}-resource-table-file-column-name`}>{value}</span>
+            </Space>
+          ),
+        },
+        {
+          title: Intl.v('类型'),
+          dataIndex: 'resourceType',
+          key: 'resourceType',
+          align: 'center',
+          width: 150,
+          sorter: true,
+          sortOrder: this?.sortOrder?.('resourceType'),
+          $search: {
+            type: 'select',
+            visible: true,
+            dictName: 'AdhereSearchListResourceManagerLabelValueSelect',
+          },
+          render: (value) => (
+            <span>
+              {Dict.value.AdhereSearchListResourceManagerLabelValueMap.value.get(value || 'other')}
+            </span>
+          ),
+        },
+        {
+          title: Intl.v('文件大小'),
+          dataIndex: 'size',
+          key: 'size',
+          align: 'center',
+          width: 200,
+          sorter: true,
+          sortOrder: this?.sortOrder?.('size'),
+          $search: {
+            type: 'inputNumberDecimal2',
+            visible: true,
+          },
+          render: (value) => (value ? <span>{Util.prettyBytes(value)}</span> : '-'),
+        },
+        {
+          title: Intl.v('修改时间'),
+          dataIndex: 'modifyTime',
+          key: 'modifyTime',
+          align: 'center',
+          width: 300,
+          sorter: true,
+          sortOrder: this?.sortOrder?.('modifyTime'),
+          $search: {
+            type: 'rangePicker',
+            visible: true,
+            startName: 'modifyTimeStart',
+            endName: 'modifyTimeEnd',
+          },
+          render: (value) => <DateDisplay18 value={value} />,
+        },
+      ];
     }
 
     renderSearchFooterItemsImpl(defaultItems) {
@@ -57,6 +150,36 @@ export default function <P, S>(SuperClass) {
         </div>,
         ...(superItems || []),
       ];
+    }
+
+    renderGridViewCard({ record }): ReactNode {
+      const rowSelection = this.getRowSelection();
+      const id = record[this.getRowKey()];
+
+      const className = classNames(
+        {
+          [`${selectorPrefix}-grid-view-item`]: true,
+        },
+        this.getSelectionClassName(id),
+      );
+
+      return (
+        <ContourBlock>
+          <div className={className}>
+            {!!rowSelection && (
+              <div className={`${selectorPrefix}-grid-view-item-selection`}>
+                {this.renderItemSelection(record)}
+              </div>
+            )}
+            <div className={`${selectorPrefix}-grid-view-item-icon`}>
+              {Dict.value.AdhereSearchListResourceManagerIconMap.value.get(record.type || 'other')}
+            </div>
+            <div className={`${selectorPrefix}-grid-view-item-name`} title={record.name}>
+              {record.name}
+            </div>
+          </div>
+        </ContourBlock>
+      );
     }
   };
 }

@@ -43,11 +43,15 @@ class ProSearchStateListImpl extends ProResourceStateManager {
     return 'totalCount';
   }
 
-  // getRowSelection() {
-  //   return null;
+  // getViewParams() {
+  //   return {
+  //     title: null,
+  //     subTitle: null,
+  //     content: null,
+  //   };
   // }
-
-  // getColumns() {
+  //
+  // getTableViewColumns() {
   //   return [
   //     {
   //       dataIndex: 'title',
@@ -77,6 +81,14 @@ class ProSearchStateListImpl extends ProResourceStateManager {
   //       },
   //     },
   //   ];
+  // }
+  //
+  // renderGridViewCard({ record }) {
+  //   return <div>111111111111</div>;
+  // }
+
+  // getRowSelection() {
+  //   return null;
   // }
 
   // getExpandable() {
