@@ -3,7 +3,8 @@ import React from 'react';
 import SearchList from '../index';
 import './serviceRegister';
 
-const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
+const { /*ProSearchStateList*/ ProResourceStateManager, SearchListStateImplementFactory } =
+  SearchList;
 
 const serviceName = 'user';
 
@@ -12,7 +13,7 @@ const serviceName = 'user';
  * @class ProSearchStateListImpl
  * @classdesc ProSearchStateListImpl
  */
-class ProSearchStateListImpl extends ProSearchStateList {
+class ProSearchStateListImpl extends ProResourceStateManager {
   constructor(props) {
     super(props);
 
@@ -46,37 +47,37 @@ class ProSearchStateListImpl extends ProSearchStateList {
   //   return null;
   // }
 
-  getColumns() {
-    return [
-      {
-        dataIndex: 'title',
-        key: 'title',
-        title: '标题',
-        $search: {
-          visible: true,
-          type: 'input',
-        },
-      },
-      {
-        dataIndex: 'subTitle',
-        key: 'subTitle',
-        title: '副标题',
-        $search: {
-          visible: true,
-          type: 'input',
-        },
-      },
-      {
-        dataIndex: 'content',
-        key: 'subTitle',
-        title: '副标题',
-        $search: {
-          visible: true,
-          type: 'textArea',
-        },
-      },
-    ];
-  }
+  // getColumns() {
+  //   return [
+  //     {
+  //       dataIndex: 'title',
+  //       key: 'title',
+  //       title: '标题',
+  //       $search: {
+  //         visible: true,
+  //         type: 'input',
+  //       },
+  //     },
+  //     {
+  //       dataIndex: 'subTitle',
+  //       key: 'subTitle',
+  //       title: '副标题',
+  //       $search: {
+  //         visible: true,
+  //         type: 'input',
+  //       },
+  //     },
+  //     {
+  //       dataIndex: 'content',
+  //       key: 'subTitle',
+  //       title: '副标题',
+  //       $search: {
+  //         visible: true,
+  //         type: 'textArea',
+  //       },
+  //     },
+  //   ];
+  // }
 
   // getExpandable() {
   //   return {
@@ -142,7 +143,6 @@ const Wrap = SearchListStateImplementFactory({
 
 export default (props) => (
   <Wrap
-    bodyStyle={{ padding: '20px 30px' }}
     antdListProps={
       {
         // itemLayout: 'vertical',

@@ -1,0 +1,56 @@
+@import '~@baifendian/adhere-ui-contourblock/es/index';
+@import '~@baifendian/adhere-ui-css/lib/mixin';
+@import '~@baifendian/adhere-ui-css/lib/vars';
+
+.adhere-ui-searchtable-protable-resource-type-change-btn {
+  font-size: 16px;
+}
+
+.adhere-ui-searchtable-protable-resource-table-file-column-icon {
+  > svg {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.adhere-ui-searchtable-protable-resource-table-file-column-name {
+  font-size: 16px;
+}
+
+.adhere-ui-searchtable-protable-grid-view-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 35px;
+  border-radius: 8px;
+  &:hover {
+    background-color: rgba(@adhere-primary-color, 0.2);
+  }
+
+  &.adhere-ui-searchtableimplement-list-selection {
+    border: 1px solid @adhere-primary-color;
+  }
+
+  > .adhere-ui-searchtable-protable-grid-view-item-selection {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
+  > .adhere-ui-searchtable-protable-grid-view-item-icon {
+    flex-grow: 1;
+    min-height: 0;
+
+    > svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  > .adhere-ui-searchtable-protable-grid-view-item-name {
+    flex-shrink: 0;
+    margin-top: 10px;
+    text-align: center !important;
+    .adhere-text-overflow-multi(2);
+  }
+}

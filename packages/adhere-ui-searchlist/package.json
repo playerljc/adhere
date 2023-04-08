@@ -32,8 +32,12 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@baifendian/adhere-ui-conditionalrender": "^2.1.0",
+    "@baifendian/adhere-ui-contourblock": "^2.1.0",
     "@baifendian/adhere-ui-css": "^2.1.0",
+    "@baifendian/adhere-ui-datedisplay": "^2.1.0",
     "@baifendian/adhere-ui-searchtable": "^2.1.1",
+    "@baifendian/adhere-util": "^2.1.0",
+    "@baifendian/adhere-util-dict": "^2.1.0",
     "@baifendian/adhere-util-intl": "^2.1.0",
     "@ctsj/state": "^2.0.23",
     "@types/react": "^18.0.26",

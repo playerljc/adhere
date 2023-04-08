@@ -33,11 +33,17 @@ export interface SearchListImplementProps extends SearchListProps {
   getListWrapperInstance?: (ref?: RefObject<HTMLDivElement>) => void;
 }
 
+/**
+ * SearchListImplementState
+ */
 export interface SearchListImplementState extends SearchListState {
   [props: string]: any;
   searchParams?: any;
 }
 
+/**
+ * ISearchListImplement
+ */
 export interface ISearchListImplement {
   /**
    * showLoading - 是否显示遮罩
@@ -50,6 +56,9 @@ export interface ISearchListImplement {
   fetchData: () => void;
 }
 
+/**
+ * SearchListImplementFactoryFunction
+ */
 export interface SearchListImplementFactoryFunction<T, P> {
   (params: {
     serviceNames: string[];
@@ -60,6 +69,9 @@ export interface SearchListImplementFactoryFunction<T, P> {
   ) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
 
+/**
+ * SearchListStateImplementFactoryFunction
+ */
 export interface SearchListStateImplementFactoryFunction<T, P> {
   (params: {
     serviceNames: string[];
@@ -87,6 +99,9 @@ export interface SearchListStateImplementProps extends SearchListImplementProps 
   };
 }
 
+/**
+ * MetaItem
+ */
 export type MetaItem<T> = {
   // 数据在数据项中对应的路径，支持通过数组查询嵌套路径
   dataIndex: string;
@@ -118,3 +133,23 @@ export interface ListExpandable {
   expandedRowKeys: string[];
   onExpandedRowsChange: (expandedRowKeys: string[]) => void;
 }
+
+/**
+ * ResourceManagerProps
+ */
+export interface ResourceManagerProps extends SearchListImplementProps {}
+
+/**
+ * ResourceManagerState
+ */
+export interface ResourceManagerState extends SearchListImplementState {}
+
+/**
+ * ResourceType - 资源类型
+ */
+export type ResourceType = 'file' | 'directory';
+
+/**
+ * FileType - 文件类型
+ */
+export type FileType = 'doc' | 'video' | 'audio' | 'image' | 'compress' | 'other';

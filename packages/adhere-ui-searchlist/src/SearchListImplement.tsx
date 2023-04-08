@@ -336,6 +336,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   clear(): Promise<void> {
     return new Promise<void>((resolve) => {
+      debugger;
       this.setState(
         {
           ...this.getParams(),
