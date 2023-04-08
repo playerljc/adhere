@@ -973,6 +973,73 @@ export default () => {
           },
         },
         codeText: `
+  import React from 'react';
+
+  import { SearchList } from '@baifendian/adhere';
+
+  import './serviceRegister';
+
+  const { ProResourceStateManager, SearchListStateImplementFactory } = SearchList;
+
+  const serviceName = 'user';
+
+  /**
+   * ProSearchStateListImpl
+   * @class ProSearchStateListImpl
+   * @classdesc ProSearchStateListImpl
+   */
+  class ProSearchStateListImpl extends ProResourceStateManager {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        ...this.state,
+        expandedRowKeys: [],
+      };
+    }
+
+    getComponentId() {
+      return 'ProSearchStateListImpl';
+    }
+
+    getServiceName() {
+      return serviceName;
+    }
+
+    getFetchListPropName() {
+      return 'fetchList';
+    }
+
+    getDataKey() {
+      return 'list';
+    }
+
+    getTotalKey() {
+      return 'totalCount';
+    }
+  }
+
+  ProSearchStateListImpl.propTypes = {};
+
+  const models = [];
+  const requireComponent = require.context('./model', false, /.*\\.(js)$/);
+  requireComponent.keys().forEach((fileName) => {
+    const model = requireComponent(fileName);
+    models.push(model.default());
+  });
+
+  const Wrap = SearchListStateImplementFactory({
+    serviceNames: [serviceName],
+    middleWares: [],
+    reducer: null,
+    models,
+  })(ProSearchStateListImpl);
+
+  export default (props) => (
+    <Wrap
+      {...props}
+    />
+  );
                     `,
         type: 'PlayGround',
         renderChildren: () => <ResourceManager />,

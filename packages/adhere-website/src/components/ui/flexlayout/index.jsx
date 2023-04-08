@@ -1,9 +1,11 @@
-import { Button, Select } from 'antd';
-import React from 'react';
+import { Button, Select, Slider } from 'antd';
+import React, { useState } from 'react';
 
 import { FlexLayout, Space } from '@baifendian/adhere';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+
+import style from './index.less';
 
 const {
   Fixed,
@@ -35,6 +37,26 @@ function FormItemWrap() {
 }
 
 export default (props) => {
+  const [gutterKey, setGutterKey] = useState(1);
+  const [vgutterKey, setVgutterKey] = useState(1);
+  const [colCountKey, setColCountKey] = useState(2);
+
+  const gutters = {};
+  const vgutters = {};
+  const colCounts = {};
+
+  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
+    gutters[i] = value;
+  });
+  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
+    vgutters[i] = value;
+  });
+  [2, 3, 4, 6, 8, 12].forEach((value, i) => {
+    colCounts[i] = value;
+  });
+
+  console.log('colCounts[colCountKey]', colCounts[colCountKey]);
+
   function boxPanelConfig() {
     return [
       {
@@ -814,6 +836,218 @@ export default (props) => {
               </Space.Group>
             </ScrollLayout>
           </div>
+        ),
+      },
+      {
+        id: 'p10',
+        name: `栅格`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGround',
+        codeText: `
+  import React from 'react';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    Fixed
+  } = FlexLayout;
+
+  export default () => (
+    <FlexLayout direction="horizontal" gutter={[20, 0]}>
+      <Fixed span={24} className={style.col}>
+        col
+      </Fixed>
+
+      <Fixed span={12} className={style.col}>
+        col-12
+      </Fixed>
+      <Fixed span={12} className={style.col}>
+        col-12
+      </Fixed>
+
+      <Fixed span={8} className={style.col}>
+        col-8
+      </Fixed>
+      <Fixed span={8} className={style.col}>
+        col-8
+      </Fixed>
+      <Fixed span={8} className={style.col}>
+        col-8
+      </Fixed>
+
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+    </FlexLayout>
+  )
+        `,
+        cardProps: {
+          description: {
+            title: '栅格',
+            info: '栅格',
+          },
+        },
+        renderChildren: () => (
+          <FlexLayout direction="horizontal" gutter={[20, 0]}>
+            <Fixed span={24} className={style.col}>
+              <div className={style.inner}>col</div>
+            </Fixed>
+
+            <Fixed span={12} className={style.col}>
+              <div className={style.inner}>col-12</div>
+            </Fixed>
+            <Fixed span={12} className={style.col}>
+              <div className={style.inner}>col-12</div>
+            </Fixed>
+
+            <Fixed span={8} className={style.col}>
+              <div className={style.inner}>col-8</div>
+            </Fixed>
+            <Fixed span={8} className={style.col}>
+              <div className={style.inner}>col-8</div>
+            </Fixed>
+            <Fixed span={8} className={style.col}>
+              <div className={style.inner}>col-8</div>
+            </Fixed>
+
+            <Fixed span={6} className={style.col}>
+              <div className={style.inner}>col-6</div>
+            </Fixed>
+            <Fixed span={6} className={style.col}>
+              <div className={style.inner}>col-6</div>
+            </Fixed>
+            <Fixed span={6} className={style.col}>
+              <div className={style.inner}>col-6</div>
+            </Fixed>
+            <Fixed span={6} className={style.col}>
+              <div className={style.inner}>col-6</div>
+            </Fixed>
+          </FlexLayout>
+        ),
+      },
+      {
+        id: 'p11',
+        name: `栅格配置器`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGround',
+        codeText: `
+  import React from 'react';
+  import { FlexLayout } from '@baifendian/adhere';
+
+  const {
+    Fixed
+  } = FlexLayout;
+
+  export default () => (
+    <FlexLayout direction="horizontal" gutter={[20, 0]}>
+      <Fixed span={24} className={style.col}>
+        col
+      </Fixed>
+
+      <Fixed span={12} className={style.col}>
+        col-12
+      </Fixed>
+      <Fixed span={12} className={style.col}>
+        col-12
+      </Fixed>
+
+      <Fixed span={8} className={style.col}>
+        col-8
+      </Fixed>
+      <Fixed span={8} className={style.col}>
+        col-8
+      </Fixed>
+      <Fixed span={8} className={style.col}>
+        col-8
+      </Fixed>
+
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+      <Fixed span={6} className={style.col}>
+        col-6
+      </Fixed>
+    </FlexLayout>
+  )
+        `,
+        cardProps: {
+          description: {
+            title: '栅格配置器',
+            info: '栅格配置器',
+          },
+        },
+        renderChildren: () => (
+          <Space.Group direction="vertical" size={20}>
+            <p>Horizontal Gutter (px):</p>
+            <div>
+              <Slider
+                min={0}
+                max={Object.keys(gutters).length - 1}
+                value={gutterKey}
+                onChange={setGutterKey}
+                marks={gutters}
+                step={null}
+                tooltip={{ formatter: (value) => gutters[value] }}
+              />
+            </div>
+
+            <p>Vertical Gutter (px):</p>
+            <div>
+              <Slider
+                min={0}
+                max={Object.keys(vgutters).length - 1}
+                value={vgutterKey}
+                onChange={setVgutterKey}
+                marks={vgutters}
+                step={null}
+                tooltip={{ formatter: (value) => vgutters[value] }}
+              />
+            </div>
+
+            <p>Column Count:</p>
+            <div>
+              <Slider
+                min={0}
+                max={Object.keys(colCounts).length - 1}
+                value={colCountKey}
+                onChange={setColCountKey}
+                marks={colCounts}
+                step={null}
+                tooltip={{ formatter: (value) => colCounts[value] }}
+              />
+            </div>
+
+            <div>
+              <FlexLayout
+                gutter={[vgutters[vgutterKey], gutters[gutterKey]]}
+                direction="horizontal"
+              >
+                {Array.from({ length: 3 }).map(() => {
+                  return Array.from({ length: colCounts[colCountKey] }).map(() => (
+                    <Fixed span={24 / colCounts[colCountKey]} className={style.col}>
+                      <div className={style.inner}>{`col-${24 / colCounts[colCountKey]}`}</div>
+                    </Fixed>
+                  ));
+                })}
+              </FlexLayout>
+            </div>
+          </Space.Group>
         ),
       },
     ];
