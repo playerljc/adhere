@@ -1,2 +1,0 @@
-declare const SearchEditableTableRowDragSortTable: any;
-export default SearchEditableTableRowDragSortTable;

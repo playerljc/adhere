@@ -21,8 +21,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
-    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
+    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereFontSizeSetting --define alias=@,evnVars=true"
@@ -41,6 +41,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.20.7",
     "@ctsj/build": "^6.1.0",
+    "babel-plugin-import": "^1.13.6",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.9.4"
   },

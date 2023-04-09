@@ -1,2 +1,0 @@
-declare const SearchEditableCellRowDragSortStateTable: any;
-export default SearchEditableCellRowDragSortStateTable;

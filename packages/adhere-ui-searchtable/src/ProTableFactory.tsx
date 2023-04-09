@@ -7,8 +7,16 @@ import type { ReactNode } from 'react';
 import React from 'react';
 
 import { FilterOutlined } from '@ant-design/icons';
-import AntdFormItem from '@baifendian/adhere-ui-antdformitem';
+import {
+  DatePicker,
+  InputNumberDecimal1,
+  InputNumberDecimal2,
+  InputNumberInteger,
+  RangePicker,
+  TimePicker,
+} from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
 import Intl from '@baifendian/adhere-util-intl';
@@ -19,17 +27,8 @@ import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData } from './types';
 
-const {
-  FormItemGeneratorToDict,
-  AntFormItemNormalize: {
-    DatePicker,
-    InputNumberDecimal1,
-    InputNumberDecimal2,
-    InputNumberInteger,
-    RangePicker,
-    TimePicker,
-  },
-} = AntdFormItem;
+const { FormItemGeneratorToDict } = FieldGeneratorToDict;
+
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
 

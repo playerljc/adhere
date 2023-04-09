@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Ajax from './ajax';\r\nexport default Ajax;\r\n"],"names":["Ajax"],"mappings":"OAAOA,SAAU,wBACFA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Ajax from './ajax';\nexport default Ajax;"],"names":["Ajax"],"mappings":"OAAOA,SAAU,wBACFA"}

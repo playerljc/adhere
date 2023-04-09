@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableList from './tablelist';\r\nexport default TableList;\r\n"],"names":["TableList"],"mappings":"OAAOA,cAAe,6BACPA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableList from './tablelist';\nexport default TableList;"],"names":["TableList"],"mappings":"OAAOA,cAAe,6BACPA"}
