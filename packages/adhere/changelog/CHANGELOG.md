@@ -1,3 +1,29 @@
+# 2.2.1
+
+***
+
+2023-04-09
+
+* **adhere-ui-anthoc**
+  - 加入adhere-ui-anthoc组件
+* **adhere-ui-fieldgeneratortodict**
+  - 加入adhere-ui-fieldgeneratortodict组件
+* **adhere-ui-searchtable**
+  - Search布局的修改
+* **adhere-util**
+  - 加入和size相关的方法
+* **adhere-util-intl**
+  - 加入searchlist组件的词条
+* **adhere-ui-globalindicator**
+  - 加入hideAll方法，细节的调整
+* **adhere-ui-searchlist**
+  - 加入ResourceManager
+  - 细节的调整
+* **adhere-ui-flexlayout**
+  - 加入栅格系统
+* **~~adhere-ui-antdformitem~~**
+  - ~~删除此组件，拆解成anthoc和fieldgeneratortodict两个组件~~
+
 # 2.1.1
 
 ***
