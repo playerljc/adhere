@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["grid/index.js"],"sourcesContent":["import _Grid from \"antd/es/grid\";\nimport { createFactory } from '../util';\nexport default createFactory(_Grid, {});"],"names":["_Grid","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}

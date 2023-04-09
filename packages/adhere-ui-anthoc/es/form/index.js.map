@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["form/index.js"],"sourcesContent":["import _Form from \"antd/es/form\";\nimport { createFactory } from '../util';\nexport default createFactory(_Form, {});"],"names":["_Form","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["col/index.js"],"sourcesContent":["import _Col from \"antd/es/col\";\nimport { createFactory } from '../util';\nexport default createFactory(_Col, {});"],"names":["_Col","createFactory"],"mappings":"OAAOA,SAAU,qBACRC,aAA8B,KAAT,yBACfA,cAAcD,KAAM,EAAE"}

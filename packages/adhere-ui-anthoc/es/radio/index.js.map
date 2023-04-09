@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["radio/index.js"],"sourcesContent":["import _Radio from \"antd/es/radio\";\nimport { createFactory } from '../util';\nexport default createFactory(_Radio, {});"],"names":["_Radio","createFactory"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}

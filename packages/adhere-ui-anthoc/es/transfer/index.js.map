@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["transfer/index.js"],"sourcesContent":["import _Transfer from \"antd/es/transfer\";\nimport { createFactory } from '../util';\nexport default createFactory(_Transfer, {});"],"names":["_Transfer","createFactory"],"mappings":"OAAOA,cAAe,0BACbC,aAA8B,KAAT,yBACfA,cAAcD,UAAW,EAAE"}

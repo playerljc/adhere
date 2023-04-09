@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["mentions/index.js"],"sourcesContent":["import _Mentions from \"antd/es/mentions\";\nimport { createFactory } from '../util';\nexport default createFactory(_Mentions, {});"],"names":["_Mentions","createFactory"],"mappings":"OAAOA,cAAe,0BACbC,aAA8B,KAAT,yBACfA,cAAcD,UAAW,EAAE"}

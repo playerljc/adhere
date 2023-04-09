@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tag/index.js"],"sourcesContent":["import _Tag from \"antd/es/tag\";\nimport { createFactory } from '../util';\nexport default createFactory(_Tag, {});"],"names":["_Tag","createFactory"],"mappings":"OAAOA,SAAU,qBACRC,aAA8B,KAAT,yBACfA,cAAcD,KAAM,EAAE"}

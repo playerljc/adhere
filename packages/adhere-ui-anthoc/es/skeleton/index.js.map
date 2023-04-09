@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["skeleton/index.js"],"sourcesContent":["import _Skeleton from \"antd/es/skeleton\";\nimport { createFactory } from '../util';\nexport default createFactory(_Skeleton, {});"],"names":["_Skeleton","createFactory"],"mappings":"OAAOA,cAAe,0BACbC,aAA8B,KAAT,yBACfA,cAAcD,UAAW,EAAE"}

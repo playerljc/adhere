@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tooltip/index.js"],"sourcesContent":["import _Tooltip from \"antd/es/tooltip\";\nimport { createFactory } from '../util';\nexport default createFactory(_Tooltip, {});"],"names":["_Tooltip","createFactory"],"mappings":"OAAOA,aAAc,yBACZC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}

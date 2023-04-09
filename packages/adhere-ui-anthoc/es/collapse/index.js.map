@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["collapse/index.js"],"sourcesContent":["import _Collapse from \"antd/es/collapse\";\nimport { createFactory } from '../util';\nexport default createFactory(_Collapse, {});"],"names":["_Collapse","createFactory"],"mappings":"OAAOA,cAAe,0BACbC,aAA8B,KAAT,yBACfA,cAAcD,UAAW,EAAE"}

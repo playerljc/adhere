@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["empty/index.js"],"sourcesContent":["import _Empty from \"antd/es/empty\";\nimport { createFactory } from '../util';\nexport default createFactory(_Empty, {});"],"names":["_Empty","createFactory"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}

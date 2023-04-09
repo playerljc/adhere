@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["statistic/index.js"],"sourcesContent":["import _Statistic from \"antd/es/statistic\";\nimport { createFactory } from '../util';\nexport default createFactory(_Statistic, {});"],"names":["_Statistic","createFactory"],"mappings":"OAAOA,eAAgB,2BACdC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}

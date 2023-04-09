@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["affix/index.js"],"sourcesContent":["import _Affix from \"antd/es/affix\";\nimport { createFactory } from '../util';\nexport default createFactory(_Affix, {});"],"names":["_Affix","createFactory"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}

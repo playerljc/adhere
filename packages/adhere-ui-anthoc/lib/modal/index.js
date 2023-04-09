@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},antd_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("antd")),adhere_util_resource_1=__importDefault(require("@baifendian/adhere-util-resource")),util_1=require("../util");exports.default=(0,util_1.createFactory)(antd_1.Modal,{closable:!0,centered:!0,maskClosable:!0,destroyOnClose:!0,zIndex:adhere_util_resource_1.default.Dict.value.ResourceNormalMaxZIndex.value});
+//# sourceMappingURL=index.js.map

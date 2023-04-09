@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["tour/index.js"],"sourcesContent":["import _Tour from \"antd/es/tour\";\nimport { createFactory } from '../util';\nexport default createFactory(_Tour, {});"],"names":["_Tour","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
