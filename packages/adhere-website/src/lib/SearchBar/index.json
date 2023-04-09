@@ -255,9 +255,14 @@
     "path": "/adhere/component/ui/configprovider"
   },
   {
-    "kw": ["Antd的FormItem进阶", "AntdFormItem"],
+    "kw": ["Antd组件的hoc", "AntHOC"],
     "group": "组件 - UI",
-    "path": "/adhere/component/ui/antdformitem"
+    "path": "/adhere/component/ui/anthoc"
+  },
+  {
+    "kw": ["字典生成器", "FieldGeneratorToDict"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/fieldgeneratortodict"
   },
   {
     "kw": ["对ReactQuill进行样式隔离的包装", "ReactQuillSandbox"],

@@ -95,6 +95,16 @@ module.exports = {
         },
         'adhere',
       ]);
+
+      babelLoaderConfig.options.plugins.push([
+        'import',
+        {
+          libraryName: '@baifendian/adhere-ui-anthoc',
+          libraryDirectory: 'es',
+          style: false,
+        },
+        'adhere-ui-anthoc',
+      ]);
     }
 
     if (webpackConfig.mode === 'production') {

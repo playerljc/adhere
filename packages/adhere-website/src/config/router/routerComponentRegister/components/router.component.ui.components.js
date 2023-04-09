@@ -143,8 +143,10 @@ export const ConfigProvider = lazy(() =>
   import(/* webpackChunkName: "configprovider" */ '@/components/ui/configprovider'),
 );
 
-export const AntdFormItem = lazy(() =>
-  import(/* webpackChunkName: "antdformitem" */ '@/components/ui/antdformitem'),
+export const AntHOC = lazy(() => import(/* webpackChunkName: "anthoc" */ '@/components/ui/anthoc'));
+
+export const FieldGeneratorToDict = lazy(() =>
+  import(/* webpackChunkName: "fieldgeneratortodict" */ '@/components/ui/fieldgeneratortodict'),
 );
 
 export const ReactQuillSandbox = lazy(() =>

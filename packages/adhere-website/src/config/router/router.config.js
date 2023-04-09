@@ -54,6 +54,8 @@ const {
   Decorators,
   Dict,
   Emitter,
+  FieldGeneratorToDict,
+  AntHOC,
   Preferences,
   Intl,
   NotNull,
@@ -412,10 +414,20 @@ export default () => [
                 name: 'ConfigProvider',
                 component: ConfigProvider,
               },
+              // {
+              //   path: '/adhere/component/ui/antdformitem',
+              //   name: 'AntdFormItem',
+              //   component: AntdFormItem,
+              // },
               {
-                path: '/adhere/component/ui/antdformitem',
-                name: 'AntdFormItem',
-                component: AntdFormItem,
+                path: '/adhere/component/ui/anthoc',
+                name: 'AntHOC',
+                component: AntHOC,
+              },
+              {
+                path: '/adhere/component/ui/fieldgeneratortodict',
+                name: 'FieldGeneratorToDict',
+                component: FieldGeneratorToDict,
               },
               {
                 path: '/adhere/component/ui/reactquillsandbox',
