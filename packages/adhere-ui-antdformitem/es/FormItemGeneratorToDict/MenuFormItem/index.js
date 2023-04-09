@@ -1,2 +1,0 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var r,e=1,n=arguments.length;e<n;e++)for(var a in r=arguments[e])Object.prototype.hasOwnProperty.call(r,a)&&(t[a]=r[a]);return t}).apply(this,arguments)};import React from"react";import{Menu}from"../../AntFormItemNormalize";var MenuFormItem=function(t){return React.createElement(Menu,__assign({},t||{}))};export default MenuFormItem;
-//# sourceMappingURL=index.js.map

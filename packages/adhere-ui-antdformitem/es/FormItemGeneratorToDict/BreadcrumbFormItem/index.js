@@ -1,2 +1,0 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,e=1,a=arguments.length;e<a;e++)for(var n in t=arguments[e])Object.prototype.hasOwnProperty.call(t,n)&&(r[n]=t[n]);return r}).apply(this,arguments)};import React from"react";import{Breadcrumb}from"../../AntFormItemNormalize";var BreadcrumbFormItem=function(r){return React.createElement(Breadcrumb,__assign({},r||{}))};export default BreadcrumbFormItem;
-//# sourceMappingURL=index.js.map

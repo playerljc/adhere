@@ -1,1 +1,0 @@
-{"version":3,"file":"util.js","sources":["FormItemGeneratorToDict/util.js"],"sourcesContent":["/**\r\n * deepDep - deepDep\r\n * @param {any} dep\r\n */\r\nexport var deepDep = function (dep) { return JSON.stringify(dep); };\r\n"],"names":["deepDep","dep","JSON","stringify"],"mappings":"AAIO,IAAIA,QAAU,SAAUC,GAAO,OAAOC,KAAKC,UAAUF,CAAG,CAAG,SAAvDD,OAAwD"}
