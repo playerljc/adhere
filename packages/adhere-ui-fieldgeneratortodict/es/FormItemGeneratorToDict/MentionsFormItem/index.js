@@ -1,0 +1,2 @@
+import _Mentions from"@baifendian/adhere-ui-anthoc/es/mentions";var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var n,e=1,r=arguments.length;e<r;e++)for(var i in n=arguments[e])Object.prototype.hasOwnProperty.call(n,i)&&(t[i]=n[i]);return t}).apply(this,arguments)};import React from"react";var MentionsFormItem=function(t){return React.createElement(_Mentions,__assign({},t||{}))};export default MentionsFormItem;
+//# sourceMappingURL=index.js.map

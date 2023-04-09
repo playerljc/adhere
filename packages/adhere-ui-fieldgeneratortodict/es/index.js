@@ -1,0 +1,2 @@
+import FormItemGeneratorToDict,*as FormItemGeneratorToDictComponents from"./FormItemGeneratorToDict";export default{FormItemGeneratorToDict:FormItemGeneratorToDict,FormItemGeneratorToDictComponents:FormItemGeneratorToDictComponents};
+//# sourceMappingURL=index.js.map

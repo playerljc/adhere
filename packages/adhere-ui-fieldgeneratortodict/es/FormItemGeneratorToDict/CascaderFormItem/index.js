@@ -1,0 +1,2 @@
+import _Cascader from"@baifendian/adhere-ui-anthoc/es/cascader";var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(a){for(var r,e=1,t=arguments.length;e<t;e++)for(var n in r=arguments[e])Object.prototype.hasOwnProperty.call(r,n)&&(a[n]=r[n]);return a}).apply(this,arguments)};import React from"react";var CascaderFormItem=function(a){return React.createElement(_Cascader,__assign({},a))};export default CascaderFormItem;
+//# sourceMappingURL=index.js.map

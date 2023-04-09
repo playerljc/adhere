@@ -1,0 +1,2 @@
+import WatchMemoized from"@baifendian/adhere-util-watchmemoized";var memoized=WatchMemoized.memoized,map=new Map;function setItem(e,t,m){map.set("".concat(e).concat(t),m)}function getItem(e){var t=e.itemName,m=e.functionName,e=e.dictName;return null==(t=memoized.createMemoFun(map.get("".concat(t).concat(m))))?void 0:t(e)}export default function(e){return getItem({itemName:e.itemName,functionName:e.functionName,dictName:e.dictName})}export{setItem,getItem};
+//# sourceMappingURL=ItemFactory.js.map
