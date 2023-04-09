@@ -1,4 +1,3 @@
-import AntdFormItem from '@baifendian/adhere-ui-antdformitem';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -10,6 +9,7 @@ import ImportantConfirm from '@baifendian/adhere-ui-confirm-importantconfirm';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
+import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
 import ForceUpdate from '@baifendian/adhere-ui-forceupdate';
@@ -33,8 +33,8 @@ import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
 import ReactQuillSandbox from '@baifendian/adhere-ui-reactquill-sandbox';
 import Revolving from '@baifendian/adhere-ui-revolving';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
-import SearchTable from '@baifendian/adhere-ui-searchtable';
 import SearchList from '@baifendian/adhere-ui-searchlist';
+import SearchTable from '@baifendian/adhere-ui-searchtable';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import SliderScale from '@baifendian/adhere-ui-sliderscale';
 import Space from '@baifendian/adhere-ui-space';
@@ -67,7 +67,6 @@ import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
-  AntdFormItem,
   BackTopAnimation,
   BMap,
   CascadeCompared,
@@ -79,6 +78,7 @@ export {
   ContextMenu,
   ContourBlock,
   DateDisplay,
+  FieldGeneratorToDict,
   FlexLayout,
   FontSizeSetting,
   ForceUpdate,
@@ -102,8 +102,8 @@ export {
   ReactQuillSandbox,
   Revolving,
   ScrollLoad,
-  SearchTable,
   SearchList,
+  SearchTable,
   SlideLayout,
   SliderScale,
   Space,

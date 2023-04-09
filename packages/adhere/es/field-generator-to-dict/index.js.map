@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["field-generator-to-dict/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-fieldgeneratortodict/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,+DACHA"}

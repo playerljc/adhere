@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
-    "@baifendian/adhere-ui-antdformitem": "^2.1.0",
     "@baifendian/adhere-ui-backtopanimation": "^2.1.0",
     "@baifendian/adhere-ui-bmap": "^2.1.0",
     "@baifendian/adhere-ui-cascadecompared": "^2.1.0",
@@ -46,6 +45,7 @@
     "@baifendian/adhere-ui-contourblock": "^2.1.0",
     "@baifendian/adhere-ui-css": "^2.1.0",
     "@baifendian/adhere-ui-datedisplay": "^2.1.0",
+    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.1.0",
     "@baifendian/adhere-ui-flexlayout": "^2.1.0",
     "@baifendian/adhere-ui-fontsizesetting": "^2.1.0",
     "@baifendian/adhere-ui-forceupdate": "^2.1.0",
