@@ -13,6 +13,10 @@ import SearchListStateImplement from './SearchListStateImplement';
  */
 export interface SearchListProps extends SearchProps {
   antdListProps: ListProps<any>;
+  // 锁定选择头，列表体滚动
+  fixedSelectionHeaderAutoList: boolean;
+  // 两端固定(列表主体始终在上方，分页始终在下方)
+  fixedListSpaceBetween: boolean;
 }
 
 /**

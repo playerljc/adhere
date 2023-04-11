@@ -278,7 +278,14 @@ abstract class SearchList<
    * @return {ReactElement | null}
    */
   renderInner(): ReactElement | null {
-    return super.renderInner(this.listWrapRef, '');
+    const { fixedListSpaceBetween = true } = this.props;
+
+    return super.renderInner(
+      this.listWrapRef,
+      classNames({
+        ['fixedlistspacebetween']: fixedListSpaceBetween,
+      }),
+    );
   }
 
   /**
@@ -309,11 +316,19 @@ abstract class SearchList<
 }
 
 export const defaultProps = {
-  listTableProps: {},
+  antdListProps: {},
+  // 锁定选择猎头，列表滚动
+  fixedSelectionHeaderAutoList: true,
+  // 两端固定(表格的头始终在上方，分页始终在下方)
+  fixedListSpaceBetween: true,
 };
 
 export const propTypes = {
-  listTableProps: PropTypes.object,
+  antdListProps: PropTypes.object,
+  // 锁定选择猎头，列表滚动
+  fixedSelectionHeaderAutoList: PropTypes.bool,
+  // 两端固定(表格的头始终在上方，分页始终在下方)
+  fixedListSpaceBetween: PropTypes.bool,
 };
 
 SearchList.defaultProps = defaultProps;
