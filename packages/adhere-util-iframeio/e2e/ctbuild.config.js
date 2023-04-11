@@ -24,5 +24,9 @@ module.exports = {
     webpackConfig.module.rules[3].include.push(path.join(__dirname, '../e2e'));
 
     webpackConfig.resolve.alias['@'] = path.join(__dirname, '../e2e');
+
+    if (webpackConfig.mode === 'development') {
+      webpackConfig.devServer.host = '0.0.0.0';
+    }
   },
 };

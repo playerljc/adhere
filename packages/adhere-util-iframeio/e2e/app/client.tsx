@@ -26,6 +26,10 @@ export default function () {
   const sourceOrigin = window.location.origin;
   const targetOrigin = window.location.origin;
 
+  // const sourceOrigin = window.location.origin;
+  // const targetOrigin = 'http://10.9.7.194:8000'; //window.location.origin;
+  // const targetOrigin = 'http://10.9.2.202:8000'; //window.location.origin;
+
   const fetch = useRef(new Iframe.Fetch(window, sourceOrigin));
 
   /**
@@ -173,6 +177,22 @@ export default function () {
       {iframeReady && (
         <div className={styles.Inner}>
           <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+            <div
+              onClick={() => {
+                fetch.current
+                  // @ts-ignore
+                  .get(iframeRef?.current?.contentWindow, targetOrigin, '/document/approval', {
+                    data: '123',
+                  })
+                  .then((res) => {
+                    debugger;
+                    console.log('getBody', res.getBody());
+                  });
+              }}
+            >
+              Test
+            </div>
+
             <Card title="将输入框值设置到iframe里">
               <Input.Group compact>
                 <Input
@@ -234,6 +254,15 @@ export default function () {
           src="/server"
           onLoad={onIframeLoad}
         />
+
+        {/*<iframe
+          name="server"
+          // @ts-ignore
+          ref={iframeRef}
+          className={styles.Iframe}
+          src={`${targetOrigin}/documentMaking/approval?isiframe=true&id=235`}
+          onLoad={onIframeLoad}
+        />*/}
       </div>
     </div>
   );

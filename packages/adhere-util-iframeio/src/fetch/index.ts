@@ -48,31 +48,35 @@ class Fetch {
       });
 
       const onMessage = (evt) => {
-        const response = new Response(evt.data);
-        response.setRequestId(evt.data.requestId);
+        try {
+          const response = new Response(JSON.parse(evt.data));
+          // response.setRequestId(evt.data.requestId);
 
-        if (
-          evt.origin !== targetOrigin ||
-          evt.source !== targetWindow ||
-          request.getRequestId() !== response.getRequestId()
-        ) {
-          return;
+          if (
+            evt.origin !== targetOrigin ||
+            evt.source !== targetWindow ||
+            request.getRequestId() !== response.getRequestId()
+          ) {
+            return;
+          }
+
+          this.source.removeEventListener('message', onMessage);
+
+          if (response.getStatusCode() === 500) {
+            reject(response);
+            return;
+          }
+
+          resolve(response);
+        } catch (e) {
+          console.warn(e);
         }
-
-        this.source.removeEventListener('message', onMessage);
-
-        if (response.getStatusCode() === 500) {
-          reject(response);
-          return;
-        }
-
-        resolve(response);
       };
 
       this.source.addEventListener('message', onMessage);
 
       // @ts-ignore
-      targetWindow.postMessage(request, targetOrigin);
+      targetWindow.postMessage(JSON.stringify(request), targetOrigin);
     });
   }
 
