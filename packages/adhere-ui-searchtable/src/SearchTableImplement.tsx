@@ -417,6 +417,24 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
+   * clearAll
+   * @description - 清空所有条件 包括分页和查询条件
+   * @override
+   * @return {Promise<void>}
+   */
+  clearAll(): Promise<void> {
+    return new Promise((resolve) => {
+      this.setState(
+        {
+          page: 1,
+          limit: this.getLimit(),
+        },
+        () => this.clear().then(() => resolve()),
+      );
+    });
+  }
+
+  /**
    * showLoading
    * @description - 是否显示遮罩
    * @override

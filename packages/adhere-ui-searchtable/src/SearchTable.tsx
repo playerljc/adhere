@@ -881,7 +881,9 @@ abstract class SearchTable<
 
     return super.renderInner(
       this.tableWrapRef,
-      fixedTableSpaceBetween ? 'fixedtablespacebetween' : '',
+      classNames({
+        ['fixedtablespacebetween']: fixedTableSpaceBetween,
+      }),
     );
   }
 

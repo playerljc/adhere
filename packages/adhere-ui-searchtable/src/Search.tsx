@@ -87,10 +87,17 @@ abstract class Search<
 
   /**
    * clear
-   * @description  清除操作
+   * @description 清除查询操作
    * @return {Promise<any>}
    */
-  abstract clear(): Promise<any>;
+  abstract clear(): Promise<void>;
+
+  /**
+   * clearAll
+   * @description 清除所有条件 包括分页数据和查询条件
+   * @return {Promise<any>}
+   */
+  abstract clearAll(): Promise<void>;
 
   /**
    * getTotal
@@ -179,21 +186,23 @@ abstract class Search<
    * @return {Promise<void>}
    */
   onClear(): Promise<void> {
-    return new Promise((resolve) => {
-      this.setState(
-        {
-          page: 1,
-          limit: this.getLimit(),
-        },
-        () => {
-          this.clear().then(() => {
-            this.fetchData();
+    return this.clearAll().then(() => this.fetchData());
 
-            resolve();
-          });
-        },
-      );
-    });
+    // return new Promise((resolve) => {
+    //   this.setState(
+    //     {
+    //       page: 1,
+    //       limit: this.getLimit(),
+    //     },
+    //     () => {
+    //       this.clear().then(() => {
+    //         this.fetchData();
+    //
+    //         resolve();
+    //       });
+    //     },
+    //   );
+    // });
   }
 
   /**
@@ -211,8 +220,8 @@ abstract class Search<
       searchClassName,
       searchStyle,
       // fitSearch,
-      fitBody,
-      autoFixed,
+      fitBody = true,
+      autoFixed = true,
     } = this.props;
 
     const { expand = false } = this.state;
@@ -220,7 +229,7 @@ abstract class Search<
     return (
       <FlexLayout
         direction="vertical"
-        className={classNames(selectorPrefix, className || '')}
+        className={classNames(selectorPrefix, className)}
         style={{ ...(style || {}) }}
       >
         {((!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()) ||
@@ -228,7 +237,7 @@ abstract class Search<
           (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
-            className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName || '')}
+            className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
             style={{ ...(searchStyle || {}) }}
             // fit={fitSearch}
           >
@@ -274,7 +283,7 @@ abstract class Search<
 
         <Auto
           style={{ ...(bodyStyle || {}) }}
-          className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName || '', {
+          className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
           })}
           fit={fitBody}
