@@ -42,6 +42,8 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
     leftProps = {},
     mainProps = {},
     mainAutoWrapProps = {},
+    children,
+    ...attrs
   } = props;
 
   const _renderTop = useMemo(
@@ -158,7 +160,12 @@ const VerticalFlexLayout: FC<VerticalFlexLayoutProps> = (props) => {
   );
 
   return (
-    <FlexLayout className={classNames(className)} style={style || {}} direction="vertical">
+    <FlexLayout
+      {...attrs}
+      className={classNames(className)}
+      style={style || {}}
+      direction="vertical"
+    >
       {_renderTop}
       {_renderMain}
       {_renderBottom}

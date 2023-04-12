@@ -42,6 +42,8 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
     leftProps = {},
     mainProps = {},
     mainAutoWrapProps = {},
+    children,
+    ...attrs
   } = props;
 
   const _renderLeft = useMemo(
@@ -153,7 +155,12 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
   );
 
   return (
-    <FlexLayout className={classNames(className)} style={style || {}} direction="horizontal">
+    <FlexLayout
+      {...attrs}
+      className={classNames(className)}
+      style={style || {}}
+      direction="horizontal"
+    >
       {_renderLeft}
       {_renderMain}
       {_renderRight}

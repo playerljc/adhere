@@ -9,10 +9,10 @@ const selectorPrefix = 'adhere-ui-contourblock';
  * @constructor
  */
 const ContourBlock: FC<ContourBlockProps> = (props) => {
-  const { className, style, children } = props;
+  const { className, style, children, ...attrs } = props;
 
   return (
-    <div className={className || ''} style={style || {}}>
+    <div {...attrs} className={className || ''} style={style || {}}>
       <div className={`${selectorPrefix}`}>
         <div className={`${selectorPrefix}-inner`}>{children}</div>
       </div>

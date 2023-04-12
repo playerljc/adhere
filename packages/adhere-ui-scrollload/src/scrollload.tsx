@@ -38,6 +38,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     renderError,
     errorClassName = '',
     errorStyle = {},
+    ...attrs
   } = props;
 
   const lock = useRef(false); // 锁
@@ -118,7 +119,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     if (renderLoading) {
       return (
         <div
-          className={classNames(`${selectorPrefix}-load`, loadClassName || '')}
+          className={classNames(`${selectorPrefix}-load`, loadClassName)}
           style={loadStyle || {}}
           ref={loadEl}
         >
@@ -129,7 +130,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
 
     return (
       <div
-        className={classNames(`${selectorPrefix}-load`, 'standard', loadClassName || '')}
+        className={classNames(`${selectorPrefix}-load`, 'standard', loadClassName)}
         style={loadStyle || {}}
         ref={loadEl}
       >
@@ -142,7 +143,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     if (renderEmpty) {
       return (
         <div
-          className={classNames(`${selectorPrefix}-empty`, emptyClassName || '')}
+          className={classNames(`${selectorPrefix}-empty`, emptyClassName)}
           style={emptyStyle || {}}
           ref={emptyEl}
         >
@@ -153,7 +154,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
 
     return (
       <div
-        className={classNames(`${selectorPrefix}-empty`, emptyClassName || '')}
+        className={classNames(`${selectorPrefix}-empty`, emptyClassName)}
         style={emptyStyle || {}}
         ref={emptyEl}
       >
@@ -166,7 +167,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     if (renderError) {
       return (
         <div
-          className={classNames(`${selectorPrefix}-error`, errorClassName || '')}
+          className={classNames(`${selectorPrefix}-error`, errorClassName)}
           style={errorStyle || {}}
           ref={errorEl}
         >
@@ -177,7 +178,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
 
     return (
       <div
-        className={classNames(`${selectorPrefix}-error`, errorClassName || '')}
+        className={classNames(`${selectorPrefix}-error`, errorClassName)}
         style={errorStyle || {}}
         ref={errorEl}
       >
@@ -198,7 +199,8 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
 
   return (
     <div
-      className={classNames(selectorPrefix, className || '')}
+      {...attrs}
+      className={classNames(selectorPrefix, className)}
       style={{
         ...(style || {}),
         overflowY: _getScrollContainer() === el.current ? 'auto' : 'initial',

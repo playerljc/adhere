@@ -12,7 +12,7 @@ const selectorPrefix = 'adhere-ui-flexlayout-fixed';
  * @constructor
  */
 const Fixed: FC<FixedProps> = (props) => {
-  const { className, children, style, fit } = props;
+  const { className, children, style, fit, span, ...attrs } = props;
 
   const { gutter = 0 } = useContext<ContextType>(FlexContext);
 
@@ -51,7 +51,7 @@ const Fixed: FC<FixedProps> = (props) => {
   }, [style, gutter]);
 
   return (
-    <div className={classList} style={styleList}>
+    <div className={classList} style={styleList} {...attrs}>
       {children}
     </div>
   );

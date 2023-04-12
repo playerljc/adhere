@@ -1,5 +1,5 @@
 # 简介
-&ensp;&ensp;Antd的FormItem进阶
+&ensp;&ensp;Antd组件的hoc
 
 # ✨ 特性
 - 支持 react(18.x)
@@ -12,12 +12,12 @@
 
 # 📦 安装
 ```javascript
-npm install @baifendian/adhere-ui-antdformitem --save
+npm install @baifendian/adhere-ui-anthoc --save
 ``` 
 
 ```javascript
-yarn add @baifendian/adhere-ui-antdformitem
+yarn add @baifendian/adhere-ui-anthoc
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/antdformitem](http://49.232.163.126:8083/adhere/ui/antdformitem)
+[http://49.232.163.126:8083/adhere/ui/anthoc](http://49.232.163.126:8083/adhere/ui/anthoc)

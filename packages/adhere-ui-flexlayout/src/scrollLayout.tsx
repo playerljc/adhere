@@ -34,7 +34,7 @@ export const useScrollLayout = () => {
  * @constructor
  */
 const ScrollLayout: FC<ScrollLayoutProps> = (props) => {
-  const { children, className, style, scrollY } = props;
+  const { children, className, style, scrollY, ...attrs } = props;
 
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -46,6 +46,7 @@ const ScrollLayout: FC<ScrollLayoutProps> = (props) => {
     >
       <div
         ref={wrapRef}
+        {...attrs}
         className={classNames(selectorPrefix, className)}
         style={{ overflowY: scrollY ? 'auto' : 'hidden', ...(style || {}) }}
       >

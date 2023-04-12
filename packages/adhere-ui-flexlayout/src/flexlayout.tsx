@@ -14,7 +14,14 @@ import VerticalFlexLayout from './verticalFlexLayout';
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
 const FlexLayout: FC<FlexLayoutProps> = (props) => {
-  const { className = '', style = {}, direction = 'vertical', gutter = 0, children } = props;
+  const {
+    className = '',
+    style = {},
+    direction = 'vertical',
+    gutter = 0,
+    children,
+    ...attrs
+  } = props;
 
   const classList = useMemo(
     () => classNames(selectorPrefix, className, `${selectorPrefix}-${direction}`),
@@ -57,7 +64,7 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
         direction,
       }}
     >
-      <div className={classList} style={styleList}>
+      <div className={classList} style={styleList} {...attrs}>
         {children}
       </div>
     </FlexContext.Provider>

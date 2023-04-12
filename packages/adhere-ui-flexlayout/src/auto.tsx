@@ -6,7 +6,7 @@ import { AutoProps } from './types';
 const selectorPrefix = 'adhere-ui-flexlayout-auto';
 
 const Auto: FC<AutoProps> = (props) => {
-  const { children, className = '', style = {}, autoFixed = true, fit = true } = props;
+  const { children, className = '', style = {}, autoFixed = true, fit = true, ...attrs } = props;
 
   const classList = useMemo(
     () =>
@@ -20,7 +20,7 @@ const Auto: FC<AutoProps> = (props) => {
   const styleList = useMemo(() => style || {}, [style]);
 
   return (
-    <div className={classList} style={styleList}>
+    <div className={classList} style={styleList} {...attrs}>
       {children}
     </div>
   );
