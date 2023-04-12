@@ -390,12 +390,12 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
-   * clear
+   * clearSearch
    * @description - 清空查询条件
    * @override
    * @return {Promise<void>}
    */
-  clear(): Promise<void> {
+  clearSearch(): Promise<void> {
     return new Promise<void>((resolve) => {
       this.setState(
         {
@@ -417,19 +417,20 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   /**
-   * clearAll
-   * @description - 清空所有条件 包括分页和查询条件
-   * @override
-   * @return {Promise<void>}
+   * clearPaging
+   * @description 清除分页信息
+   * @return {Promise<any>}
    */
-  clearAll(): Promise<void> {
+  clearPaging(): Promise<void> {
     return new Promise((resolve) => {
       this.setState(
         {
           page: 1,
           limit: this.getLimit(),
         },
-        () => this.clear().then(() => resolve()),
+        () => {
+          resolve();
+        },
       );
     });
   }

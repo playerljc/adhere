@@ -90,14 +90,14 @@ abstract class Search<
    * @description 清除查询操作
    * @return {Promise<any>}
    */
-  abstract clear(): Promise<void>;
+  abstract clearSearch(): Promise<void>;
 
   /**
-   * clearAll
-   * @description 清除所有条件 包括分页数据和查询条件
+   * clearPaging
+   * @description 清除分页信息
    * @return {Promise<any>}
    */
-  abstract clearAll(): Promise<void>;
+  abstract clearPaging(): Promise<void>;
 
   /**
    * getTotal
@@ -181,28 +181,21 @@ abstract class Search<
   }
 
   /**
+   * clearAll
+   * @description 清除所有条件 包括分页数据和查询条件
+   * @return {Promise<[void, void]>}
+   */
+  clearAll(): Promise<[void, void]> {
+    return Promise.all([this.clearSearch(), this.clearPaging()]);
+  }
+
+  /**
    * onClear
    * @description - 清除操作
    * @return {Promise<void>}
    */
   onClear(): Promise<void> {
     return this.clearAll().then(() => this.fetchData());
-
-    // return new Promise((resolve) => {
-    //   this.setState(
-    //     {
-    //       page: 1,
-    //       limit: this.getLimit(),
-    //     },
-    //     () => {
-    //       this.clear().then(() => {
-    //         this.fetchData();
-    //
-    //         resolve();
-    //       });
-    //     },
-    //   );
-    // });
   }
 
   /**
@@ -237,18 +230,20 @@ abstract class Search<
           (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
+            {...this.props}
             className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
             style={{ ...(searchStyle || {}) }}
             // fit={fitSearch}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
-              <Fixed className={`${selectorPrefix}-search-form-before`}>
+              <Fixed {...this.props} className={`${selectorPrefix}-search-form-before`}>
                 {this.renderSearchFormBefore?.()}
               </Fixed>
             )}
 
             {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
               <Fixed
+                {...this.props}
                 className={classNames({
                   [`${selectorPrefix}-search-form`]: true,
                   [`${selectorPrefix}-search-form-expand`]: expand,
@@ -260,8 +255,8 @@ abstract class Search<
 
             {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
               <Fixed
-                className={classNames({
-                  [`${selectorPrefix}-search-tool-bar`]: true,
+                {...this.props}
+                className={classNames(`${selectorPrefix}-search-tool-bar`, {
                   [`${selectorPrefix}-search-form-expand`]: expand,
                 })}
               >
@@ -270,7 +265,7 @@ abstract class Search<
             )}
 
             {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
-              <Fixed className={`${selectorPrefix}-search-form-after`}>
+              <Fixed {...this.props} className={`${selectorPrefix}-search-form-after`}>
                 {this.renderSearchFormAfter?.()}
               </Fixed>
             )}
@@ -278,10 +273,13 @@ abstract class Search<
         )}
 
         {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
-          <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
+          <Fixed {...this.props} className={`${selectorPrefix}-search-header`}>
+            {this.renderSearchHeader?.()}
+          </Fixed>
         )}
 
         <Auto
+          {...this.props}
           style={{ ...(bodyStyle || {}) }}
           className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
@@ -295,7 +293,9 @@ abstract class Search<
         </Auto>
 
         {!!this.renderSearchFooter && !!this.renderSearchFooter?.() && (
-          <Fixed className={`${selectorPrefix}-search-footer`}>{this.renderSearchFooter?.()}</Fixed>
+          <Fixed {...this.props} className={`${selectorPrefix}-search-footer`}>
+            {this.renderSearchFooter?.()}
+          </Fixed>
         )}
       </FlexLayout>
     );
