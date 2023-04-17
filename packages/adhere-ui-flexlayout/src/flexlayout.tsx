@@ -13,6 +13,11 @@ import VerticalFlexLayout from './verticalFlexLayout';
 
 export const selectorPrefix = 'adhere-ui-flexlayout';
 
+/**
+ * FlexLayout
+ * @param {FlexLayoutProps} props
+ * @constructor
+ */
 const FlexLayout: FC<FlexLayoutProps> = (props) => {
   const {
     className = '',
@@ -28,7 +33,7 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
     [className, direction],
   );
 
-  const styleList = useMemo(() => {
+  const gridStyle = useMemo(() => {
     const defaultStyle = style || {};
 
     let rowGapOrigin;
@@ -47,12 +52,22 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
       columnGapOrigin = gutter;
     }
 
+    const columnGapOriginPixel = `${columnGapOrigin / 2}px`;
+
+    const map = new Map([
+      [
+        'horizontal',
+        () => ({
+          rowGap: `${rowGapOrigin}px`,
+          marginLeft: `-${columnGapOriginPixel}px`,
+          marginRight: `-${columnGapOriginPixel}px`,
+        }),
+      ],
+      ['vertical', () => ({})],
+    ]);
+
     return {
-      ...{
-        rowGap: `${rowGapOrigin}px`,
-        marginLeft: `-${columnGapOrigin / 2}px`,
-        marginRight: `-${columnGapOrigin / 2}px`,
-      },
+      ...(map.get(direction)?.() || {}),
       ...defaultStyle,
     };
   }, [style, gutter]);
@@ -62,9 +77,10 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
       value={{
         gutter,
         direction,
+        children,
       }}
     >
-      <div className={classList} style={styleList} {...attrs}>
+      <div className={classList} style={gridStyle} {...attrs}>
         {children}
       </div>
     </FlexContext.Provider>

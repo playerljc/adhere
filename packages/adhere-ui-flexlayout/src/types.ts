@@ -1,9 +1,10 @@
-import { FC, NamedExoticComponent } from 'react';
+import { FC, NamedExoticComponent, ReactNode } from 'react';
 import type { CSSProperties, Context, ReactElement } from 'react';
 
 export interface ContextType {
   direction: 'vertical' | 'horizontal';
   gutter?: number | number[];
+  children?: ReactNode[];
 }
 
 export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
@@ -163,4 +164,12 @@ export interface ScrollLayoutProps {
 
 export interface ScrollLayoutContextType {
   getEl: () => HTMLElement | null;
+}
+
+export interface useGridStyleHookProps {
+  style?: CSSProperties;
+  gutter?: number | number[];
+  children?: any;
+  span?: number | null;
+  direction: 'vertical' | 'horizontal';
 }
