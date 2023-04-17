@@ -6,6 +6,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import type SearchTable from '../../../SearchTable';
 import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
 import type { TableRowComponentReducer } from '../../../types';
+import { isSameLevel } from '../../../util';
 
 const type = 'DraggableBodyRow';
 
@@ -17,7 +18,7 @@ const type = 'DraggableBodyRow';
  * rowIndex: number;
  * columns: any[];
  */
-const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
+const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) => {
   const context = useContext<{
     context: SearchTable;
   } | null>(SearchTableContext);
@@ -32,7 +33,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
      */
     dragConfig: () => ({
       type: rowDragSortConfig.type,
-      item: { index: rowIndex },
+      item: { index: rowIndex, record },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -58,9 +59,23 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig }) => {
               : rowDragSortConfig.dropOverUpwardClasName,
         };
       },
-      drop: (item: { index: number }) => {
+      drop: (item: { index: number; record: any }) => {
         // @ts-ignore
-        context?.context?.moveRow(item.index, rowIndex);
+        const dataSource = context?.context?.getData();
+        const rowKey = context?.context?.getRowKey() as string;
+
+        // 判断如果不是同一层级则不能拖放成功
+        if (
+          isSameLevel({
+            dataSource,
+            rowKey,
+            sourceId: record[rowKey],
+            targetId: item.record[rowKey],
+          })
+        ) {
+          // @ts-ignore
+          context?.context?.moveRow(item.record, record);
+        }
       },
     }),
   };

@@ -21,6 +21,15 @@ abstract class Search<
   P extends SearchProps = SearchProps,
   S extends SearchState = SearchState,
 > extends Suspense<P, S> {
+  static defaultProps: any;
+  static propTypes: any;
+  props: any;
+  state: any;
+
+  protected constructor(props) {
+    super(props);
+  }
+
   /**
    * renderSearchBefore
    * @description 渲染查询面板之前
@@ -136,23 +145,27 @@ abstract class Search<
   getPagination() {
     return {
       onChange: (page, limit) => {
+        // @ts-ignore
         this.setState(
           {
             page,
             limit,
           },
           () => {
+            // @ts-ignore
             this.fetchData();
           },
         );
       },
       onShowSizeChange: (page, limit) => {
+        // @ts-ignore
         this.setState(
           {
             page,
             limit,
           },
           () => {
+            // @ts-ignore
             this.fetchData();
           },
         );
@@ -195,6 +208,7 @@ abstract class Search<
    * @return {Promise<void>}
    */
   onClear(): Promise<void> {
+    // @ts-ignore
     return this.clearAll().then(() => this.fetchData());
   }
 

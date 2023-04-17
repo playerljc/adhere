@@ -7,6 +7,7 @@ import './serviceRegister';
 
 const {
   ProSearchEditableRowDragSortStateTable,
+  ProEditableRowSearchStateTable,
   EditableRowControl,
   SearchTableStateImplementFactory,
 } = SearchTable;

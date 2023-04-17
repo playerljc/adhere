@@ -53,6 +53,9 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
     context?.editable?.tableEditable?.formList?.fields[rowIndex]?.name as number,
     dataIndex as string,
   ];
+
+  console.log('record', rowIndex, nameItemPath, record.name);
+
   const namePath = ['dataSource', ...nameItemPath];
 
   const value = Form.useWatch(namePath, context?.editable?.tableEditable?.form as FormInstance);
@@ -125,7 +128,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
       rowIndex,
     });
 
-    return render
+    return formItemNode; /*render
       ? render({
           value: record?.[dataIndex as string],
           record,
@@ -134,7 +137,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
           form: context?.editable?.tableEditable?.form as FormInstance,
           children: formItemNode,
         })
-      : formItemNode;
+      : formItemNode;*/
   }
 
   useEffect(() => {

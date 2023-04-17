@@ -44,7 +44,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       let defaultSearchAndPaginParams = {
         search: {},
         page: 1,
-        limit: this.getLimit() || 10,
+        limit: this.getLimit(),
       };
 
       if (

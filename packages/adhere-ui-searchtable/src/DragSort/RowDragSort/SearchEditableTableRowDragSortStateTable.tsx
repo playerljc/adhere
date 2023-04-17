@@ -46,8 +46,19 @@ const SearchEditableTableRowDragSortStateTable = RowDragSortMultiExtend<
       // @ts-ignore
       return SearchRowDragSortStateTable.prototype.moveRow.apply(this, params).then(() => {
         // @ts-ignore
-        this.setFieldValues();
+        this.setFieldValues(this.getData());
       });
+    },
+    onExpandedRowsChange(expandedRows) {
+      return SearchEditableStateTable.prototype.onExpandedRowsChange
+        .call(this, expandedRows)
+        .then(() => {
+          // @ts-ignore
+          if (this.state.isTableEditor) {
+            // @ts-ignore
+            this.setFieldValues(this.getData());
+          }
+        });
     },
     fetchData() {
       return SearchEditableStateTable.prototype.fetchData.call(this);

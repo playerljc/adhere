@@ -40,7 +40,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   constructor(props) {
     super(props);
 
-    Object.assign(this.state, {
+    Object.assign(this.state!, {
       ...this.getParams(),
       [this.getOrderFieldProp()]: this.getOrderFieldValue(),
       [this.getOrderProp()]: this.getOrderPropValue() || 'descend',
@@ -54,9 +54,10 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   }
 
   componentDidMount() {
-    super.componentDidMount();
+    // @ts-ignore
+    super.componentDidMount?.();
 
-    const { getTableWrapperInstance } = this.props;
+    const { getTableWrapperInstance } = this.props!;
 
     if (getTableWrapperInstance) {
       getTableWrapperInstance(this.innerWrapRef);
@@ -96,6 +97,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {string} v
    */
   onSelectChange = (property: string, v: string): void => {
+    // @ts-ignore
     this.setState({
       [property]: v,
     });
@@ -108,6 +110,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {any} e
    */
   onInputChange = (property: string, e): void => {
+    // @ts-ignore
     this.setState({
       [property]: e.target.value.trim(),
     });
@@ -120,6 +123,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {any[]} dayjs
    */
   onDateTimeRangeChange = (propertys: string[], dayjs: any[]) => {
+    // @ts-ignore
     this.setState({
       [propertys[0]]: dayjs && dayjs.length ? dayjs[0] : null,
       [propertys[1]]: dayjs && dayjs.length ? dayjs[1] : null,
@@ -240,7 +244,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {object[]}
    */
   getData(): object[] {
-    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
+    return this.props?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getDataKey()];
   }
 
   /**
@@ -250,7 +254,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {number}
    */
   getTotal(): number {
-    return this.props[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
+    return this.props?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getTotalKey()];
   }
 
   /**
@@ -265,23 +269,23 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
 
       if (selected) {
         // add
-
+        // @ts-ignore
         this.setState({
           selectedRowKeys: [
-            ...(this.state.selectedRowKeys || []),
+            ...(this.state?.selectedRowKeys || []),
             ...records.map((r) => r[rowKey]),
           ],
-          selectedRows: [...(this.state.selectedRows || []), ...records],
+          selectedRows: [...(this.state?.selectedRows || []), ...records],
         });
       } else {
         // remove
-
+        // @ts-ignore
         this.setState({
-          selectedRows: (this.state.selectedRows || []).filter(
+          selectedRows: (this.state?.selectedRows || []).filter(
             (row) => !records.find((r) => r[rowKey] === row[rowKey]),
           ),
 
-          selectedRowKeys: (this.state.selectedRowKeys || []).filter(
+          selectedRowKeys: (this.state?.selectedRowKeys || []).filter(
             (key) => !records.find((r) => r[rowKey] === key),
           ),
         });
@@ -289,12 +293,13 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     };
 
     return {
-      selectedRowKeys: this.state.selectedRowKeys,
+      selectedRowKeys: this.state?.selectedRowKeys,
       onChange: (selectedRowKeys: any[], selectedRows: any[]) => {
         if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_CONTINUOUS_MODE) return;
 
         // 如果是缺省模式(不能跨页选取)
 
+        // @ts-ignore
         this.setState({
           selectedRowKeys,
           selectedRows,
@@ -397,6 +402,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    */
   clearSearch(): Promise<void> {
     return new Promise<void>((resolve) => {
+      // @ts-ignore
       this.setState(
         {
           ...this.getParams(),
@@ -423,6 +429,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    */
   clearPaging(): Promise<void> {
     return new Promise((resolve) => {
+      // @ts-ignore
       this.setState(
         {
           page: 1,
@@ -442,7 +449,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {boolean}
    */
   showLoading(): boolean {
-    return this.props.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
+    return this.props?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
   /**
@@ -452,9 +459,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {any}
    */
   getSearchParams(): any {
-    const { page, limit, searchParams } = this.state;
+    const { page, limit, searchParams } = this.state!;
 
-    const order = this.state[this.getOrderProp()];
+    const order = this.state?.[this.getOrderProp()];
 
     return {
       ...{
@@ -463,7 +470,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         ...searchParams,
         [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
 
-        [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
+        [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
       },
     };
@@ -486,7 +493,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    */
   sync(): Promise<any> {
     return new Promise((resolve) => {
-      const page = this.state.page as number;
+      const page = this.state?.page as number;
 
       if (page === 1) {
         resolve(this.fetchData());
@@ -499,6 +506,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         if (data.length) {
           resolve(res);
         } else {
+          // @ts-ignore
           this.setState(
             {
               page: page - 1,
@@ -518,7 +526,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {Promise<any>}
    */
   fetchDataExecute(searchParams: object): Promise<any> {
-    return this.props[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
+    return this.props?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
   }
@@ -533,18 +541,19 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
-      params[key] = this.state[key];
+      params[key] = this.state?.[key];
     });
 
     return new Promise<void>((resolve) => {
+      // @ts-ignore
       this.setState(
         {
           searchParams: {
             ...params,
 
-            [this.getOrderFieldProp()]: this.state[this.getOrderFieldProp()],
+            [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
 
-            [this.getOrderProp()]: this.state[this.getOrderProp()],
+            [this.getOrderProp()]: this.state?.[this.getOrderProp()],
           },
         },
         () => {

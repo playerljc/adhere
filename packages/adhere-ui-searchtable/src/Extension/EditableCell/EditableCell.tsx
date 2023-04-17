@@ -71,8 +71,6 @@ const EditableCell: TableCellComponentReducer = (props) => {
   }, [editableConfig?.defaultStatus]);
 
   return (tdREL) => {
-    console.log('status', status);
-
     let res = tdREL;
 
     // 单元格不是可编辑的单元格
@@ -100,8 +98,6 @@ const EditableCell: TableCellComponentReducer = (props) => {
           {...props}
           editableConfig={editableConfig}
           onTriggerChange={() => {
-            console.log('onTriggerChange');
-
             // context?.context
             //   // @ts-ignore
             //   ?.setActiveValue?.(props.record[props.column.dataIndex as string]);

@@ -62,6 +62,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         dataIndex: 'name',
         key: 'name',
         width: 150,
+        align: 'left',
         render: (val) => <div style={{ color: 'red' }}>{val}</div>,
         $search: {
           type: 'input',
@@ -92,7 +93,6 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         title: '性别',
         dataIndex: 'sex',
         key: 'sex',
-        align: 'center',
         width: 150,
         render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         $search: {

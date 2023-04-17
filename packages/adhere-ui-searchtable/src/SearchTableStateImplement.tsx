@@ -19,9 +19,7 @@ export const selectorPrefix = 'adhere-ui-searchstatetableimplement';
  * @classdesc - SearchTable的state实现
  */
 export class SearchTableStateImplement<
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   P extends SearchTableStateImplementProps,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   S extends SearchTableImplementState,
 > extends SearchTableImplement<SearchTableStateImplementProps, SearchTableImplementState> {
   private unsubscribe: Function;
@@ -59,6 +57,7 @@ export class SearchTableStateImplement<
   }
 
   componentWillUnmount() {
+    // @ts-ignore
     super.componentWillUnmount?.();
 
     this.unsubscribe();
@@ -70,7 +69,7 @@ export class SearchTableStateImplement<
    * @return {object[]}
    */
   getData(): object[] {
-    return this.state[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
+    return this.state?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getDataKey()];
   }
 
   /**
@@ -79,7 +78,7 @@ export class SearchTableStateImplement<
    * @return {number}
    */
   getTotal(): number {
-    return this.state[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
+    return this.state?.[this.getServiceName()]?.[this.getFetchListPropName()]?.[this.getTotalKey()];
   }
 
   /**
@@ -88,7 +87,7 @@ export class SearchTableStateImplement<
    * @return {boolean}
    */
   showLoading(): boolean {
-    return this.state.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
+    return this.state?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
   /**
@@ -98,7 +97,7 @@ export class SearchTableStateImplement<
    * @return {Promise<any>}
    */
   fetchDataExecute(searchParams?: any): Promise<any> {
-    return this.state[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
+    return this.state?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
   }

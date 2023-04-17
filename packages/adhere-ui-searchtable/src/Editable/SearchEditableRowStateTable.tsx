@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import cloneDeep from 'lodash.clonedeep';
 
 import type { SearchEditorRowTableState, SearchTableStateImplementProps } from '../types';
+import { findRecord } from '../util';
 import SearchEditableCellStateTable from './SearchEditableCellStateTable';
 import SearchEditableRowFactory from './SearchEditableRowFactory';
 
@@ -40,7 +41,7 @@ class SearchEditableRowStateTable extends SearchEditableRowFactory<
           value = value.valueOf();
         }
 
-        const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+        const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
         if (recordItem) {
           recordItem[dataIndex] = value;
         }

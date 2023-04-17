@@ -81,16 +81,22 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
       ?.updateEditorData(changeData)
       ?.then(() => reset());
 
-  const updateTableEdit = () =>
+  const updateTableEdit = () => {
+    // @ts-ignore
+    context?.context?.setFieldValues?.(context?.context?.getData());
+
+    // @ts-ignore
     context?.context?.setState({
       isTableEditor: true,
     });
+  };
 
   /**
    * reset
    * @description 取消
    */
   const reset = () =>
+    // @ts-ignore
     context?.context?.setState({
       isTableEditor: false,
     });
@@ -108,9 +114,9 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
             <div
               className={`${selectorPrefix}-editor-table-control-save-cancel-item`}
               onClick={() =>
-                context?.editable?.tableEditable?.form
-                  ?.validateFields()
-                  ?.then?.((values) => validateFieldsSuccess(values))
+                context?.editable?.tableEditable?.form?.validateFields()?.then?.((values) => {
+                  return validateFieldsSuccess(values);
+                })
               }
             >
               <ConditionalRender conditional={!renderSave} noMatch={() => renderSave?.()}>

@@ -91,11 +91,13 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
       ?.then(() => reset());
 
   const reset = () =>
+    // @ts-ignore
     context?.context?.setState({
       editorRowId: '',
     });
 
   const updateRowEdit = () =>
+    // @ts-ignore
     context?.context?.setState({
       editorRowId: record[rowKey],
     });

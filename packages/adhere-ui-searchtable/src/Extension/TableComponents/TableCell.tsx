@@ -1,6 +1,6 @@
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { FC, ReactElement, ReactNode } from 'react';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import type SearchTable from '../../SearchTable';
 import { SearchTableContext } from '../../SearchTable';
@@ -34,8 +34,22 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
     };
   } | null>(SearchTableContext);
 
+  const styleList = useMemo(() => {
+    if (column && 'align' in column) {
+      return {
+        ...(restProps.style || {}),
+        textAlign: column.align,
+      };
+    }
+    return restProps?.style || {};
+  }, [restProps]);
+
   // 默认的row组件是一个td
-  const tdREL = <td {...(restProps || {})}>{restProps?.children}</td>;
+  const tdREL = (
+    <td {...(restProps || {})} style={styleList}>
+      {restProps?.children}
+    </td>
+  );
 
   const reducerArgv = {
     record,

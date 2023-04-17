@@ -45,7 +45,7 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
       // @ts-ignore
       return SearchRowDragSortTable.prototype.moveRow.apply(this, params).then(() => {
         // @ts-ignore
-        this.setFieldValues();
+        this.setFieldValues(this.getData());
       });
     },
     fetchData() {

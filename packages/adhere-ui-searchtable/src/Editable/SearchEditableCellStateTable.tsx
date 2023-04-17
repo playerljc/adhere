@@ -3,6 +3,7 @@ import cloneDeep from 'lodash.clonedeep';
 
 import { SearchTableStateImplement } from '../SearchTableStateImplement';
 import type { SearchTableImplementState, SearchTableStateImplementProps } from '../types';
+import { findRecord } from '../util';
 import SearchEditableCellFactory from './SearchEditableCellFactory';
 
 /**
@@ -42,8 +43,7 @@ class SearchEditableCellStateTable<
       const listData = cloneDeep(this.state[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
       const rowKey = this.getRowKey();
-
-      const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+      const recordItem = findRecord(dataSource, rowKey, record[rowKey]);
       if (recordItem) {
         recordItem[dataIndex] = value;
 
@@ -74,28 +74,30 @@ class SearchEditableCellStateTable<
     dataIndex: string;
     value: dayjs.Dayjs | null;
   }): Promise<void> {
-    return new Promise((resolve) => {
-      if (record[dataIndex] === value?.valueOf()) {
-        resolve();
-        return;
-      }
+    return this.updateEditorCellDate({ record, dataIndex, value: value?.valueOf() });
 
-      const listData = cloneDeep(this.state[this.getServiceName()]);
-      const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
-      const rowKey = this.getRowKey();
-
-      const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
-      if (recordItem) {
-        recordItem[dataIndex] = value?.valueOf();
-
-        this.setState(
-          {
-            [this.getServiceName()]: listData,
-          },
-          () => resolve(),
-        );
-      } else resolve();
-    });
+    // return new Promise((resolve) => {
+    //   if (record[dataIndex] === value?.valueOf()) {
+    //     resolve();
+    //     return;
+    //   }
+    //
+    //   const listData = cloneDeep(this.state[this.getServiceName()]);
+    //   const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
+    //   const rowKey = this.getRowKey();
+    //
+    //   const recordItem = dataSource.find((t) => t[rowKey] === record[rowKey]);
+    //   if (recordItem) {
+    //     recordItem[dataIndex] = value?.valueOf();
+    //
+    //     this.setState(
+    //       {
+    //         [this.getServiceName()]: listData,
+    //       },
+    //       () => resolve(),
+    //     );
+    //   } else resolve();
+    // });
   }
 }
 

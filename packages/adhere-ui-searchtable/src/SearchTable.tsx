@@ -236,6 +236,7 @@ abstract class SearchTable<
       page: 1,
       limit: this.getLimit(),
       expand: props.defaultExpandSearchCollapse,
+      expandedRowKeys: props.antdTableProps?.expandable?.expandedRowKeys || [],
       scrollY: 0,
     };
 
@@ -251,10 +252,22 @@ abstract class SearchTable<
     });
 
     this.onClear = this.onClear.bind(this);
+    this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps: SearchTableProps) {
+    // @ts-ignore
     super.componentWillReceiveProps(nextProps);
+
+    if (
+      JSON.stringify(this.state.expandedRowKeys) !==
+      JSON.stringify(nextProps.antdTableProps?.expandable?.expandedRowKeys || [])
+    ) {
+      // @ts-ignore
+      this.setState({
+        expandedRowKeys: nextProps.antdTableProps?.expandable?.expandedRowKeys,
+      });
+    }
 
     this.columnSettingEffect(nextProps);
   }
@@ -302,7 +315,7 @@ abstract class SearchTable<
 
         const tablePaginationHeight =
           (tableWrapRef.querySelector('.ant-table-pagination') as HTMLElement)?.offsetHeight || 0;
-
+        // @ts-ignore
         this.setState({
           scrollY:
             tableWrapRef.clientHeight -
@@ -328,6 +341,7 @@ abstract class SearchTable<
 
     // 长度不相等
     if (preColumnSetting?.length !== columnSetting.length) {
+      // @ts-ignore
       this.setState({
         columnSetting,
       });
@@ -342,6 +356,7 @@ abstract class SearchTable<
     if (preColumnSettingRowKeys?.toString() !== columnSettingRowKeys.toString()) {
       const rowKey = this.getRowKey() || 'id';
 
+      // @ts-ignore
       this.setState({
         columnSetting: columnSetting?.map((t) => {
           // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -378,6 +393,7 @@ abstract class SearchTable<
    * @param {any} sorter
    */
   onTableChange = (pagination, filters, sorter) => {
+    // @ts-ignore
     this.setState(
       {
         [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
@@ -387,7 +403,7 @@ abstract class SearchTable<
         const { order } = sorter;
 
         if (!order) return;
-
+        // @ts-ignore
         this.fetchData();
 
         this.onSubTableChange(pagination, filters, sorter);
@@ -468,6 +484,28 @@ abstract class SearchTable<
   }
 
   /**
+   * onExpandedRowsChange
+   * @param {any[]} expandedRowKeys
+   */
+  onExpandedRowsChange(expandedRowKeys) {
+    return new Promise<void>((resolve) => {
+      // @ts-ignore
+      this.setState(
+        {
+          expandedRowKeys,
+        },
+        () => {
+          resolve();
+        },
+      );
+
+      if ((this.props.antdTableProps || {})?.expandable?.onExpandedRowsChange) {
+        this.props.antdTableProps?.expandable?.onExpandedRowsChange?.(expandedRowKeys);
+      }
+    });
+  }
+
+  /**
    * getTableDensity
    * @description 表格密度
    * @return {TableDensity}
@@ -483,7 +521,6 @@ abstract class SearchTable<
    */
   getTableColumns(): any[] {
     const isShowNumber = this.isShowNumber();
-    const getTableNumberColumnWidth = this.getTableNumberColumnWidth();
 
     // 对权限进行过滤
     const columns = this.getColumns()
@@ -550,40 +587,50 @@ abstract class SearchTable<
       });
 
     if (isShowNumber) {
-      const numberGeneratorRule =
-        this.getNumberGeneratorRule() ?? SearchTable.NUMBER_GENERATOR_RULE_ALONE;
-
-      const { page = 0, limit = 10 } = this.state;
-
-      return [
-        {
-          ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() || {} : {}),
-          ...{
-            title: Intl.v('序号'),
-            dataIndex: '_number',
-            key: '_number',
-            align: 'center',
-            width: getTableNumberColumnWidth ?? 80,
-            render: (v, r, index) => (
-              <ConditionalRender
-                conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
-                noMatch={() =>
-                  this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
-                    value: v,
-                    record: r,
-                    index,
-                  })
-                }
-              >
-                {() => this.renderTableNumberColumn(index + 1, { value: v, record: r, index })}
-              </ConditionalRender>
-            ),
-          },
-        },
-      ].concat(columns as any[]);
+      return [this.getTableColumnConfig(), ...(columns || [])];
     }
 
     return columns;
+  }
+
+  /**
+   * getTableColumnConfig
+   * @description 获取表格序号列的设置
+   * @return {any}
+   */
+  getTableColumnConfig() {
+    const getTableNumberColumnWidth = this.getTableNumberColumnWidth();
+
+    const numberGeneratorRule =
+      this.getNumberGeneratorRule() ?? SearchTable.NUMBER_GENERATOR_RULE_ALONE;
+
+    const { page = 1, limit = this.getLimit() } = this.state;
+
+    return {
+      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() || {} : {}),
+      ...{
+        title: Intl.v('序号'),
+        dataIndex: '_number',
+        key: '_number',
+        align: 'center',
+        width: getTableNumberColumnWidth,
+        render: (v, r, index) => (
+          <ConditionalRender
+            // 单独生成
+            conditional={numberGeneratorRule === SearchTable.NUMBER_GENERATOR_RULE_ALONE}
+            noMatch={() =>
+              this.renderTableNumberColumn((page - 1) * limit + (index + 1), {
+                value: v,
+                record: r,
+                index,
+              })
+            }
+          >
+            {() => this.renderTableNumberColumn(index + 1, { value: v, record: r, index })}
+          </ConditionalRender>
+        ),
+      },
+    };
   }
 
   /**
@@ -635,6 +682,7 @@ abstract class SearchTable<
       <ColumnSetting
         columns={columns}
         onShowColumns={(checked) => {
+          // @ts-ignore
           this.setState(({ columnSetting }) => ({
             columnSetting: (columnSetting || [])?.map((column) => ({
               ...column,
@@ -643,6 +691,7 @@ abstract class SearchTable<
           }));
         }}
         onReset={() => {
+          // @ts-ignore
           this.setState(() => ({
             columnSetting: this.getTableColumns().map((column, index) => ({
               ...column,
@@ -652,6 +701,7 @@ abstract class SearchTable<
           }));
         }}
         onDisplayColumn={(column, checked) => {
+          // @ts-ignore
           this.setState(({ columnSetting }) => ({
             columnSetting: (columnSetting || [])?.map((_column) => ({
               ..._column,
@@ -660,6 +710,7 @@ abstract class SearchTable<
           }));
         }}
         onSortEnd={(map) => {
+          // @ts-ignore
           this.setState(({ columnSetting }) => ({
             columnSetting: (columnSetting || [])?.map((column) => ({
               ...column,
@@ -681,11 +732,13 @@ abstract class SearchTable<
       <TableDensitySetting
         density={this.state.tableDensity}
         onChange={(density) => {
+          // @ts-ignore
           this.setState({
             tableDensity: density,
           });
         }}
         onReset={() => {
+          // @ts-ignore
           this.setState({
             tableDensity: this.getTableDensity(),
           });
@@ -716,6 +769,7 @@ abstract class SearchTable<
           />
         }
         onClick={() => {
+          // @ts-ignore
           this.setState(
             {
               page: 1,
@@ -744,7 +798,7 @@ abstract class SearchTable<
               onClick={() => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-
+                // @ts-ignore
                 this.setState(
                   {
                     expand: true,
@@ -765,7 +819,7 @@ abstract class SearchTable<
               onClick={() => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-
+                // @ts-ignore
                 this.setState(
                   {
                     expand: false,
@@ -848,6 +902,10 @@ abstract class SearchTable<
         };
       },
       ...(antdTableProps || {}),
+      expandable: {
+        ...(antdTableProps || {}).expandable,
+        onExpandedRowsChange: this.onExpandedRowsChange,
+      },
     };
 
     // 是否支持锁定列头，表格体滚动
@@ -892,6 +950,7 @@ abstract class SearchTable<
    * @return {ReactElement}
    */
   renderChildren() {
+    // @ts-ignore
     return <div className={`${selectorPrefix}-wrap`}>{super.render()}</div>;
   }
 
