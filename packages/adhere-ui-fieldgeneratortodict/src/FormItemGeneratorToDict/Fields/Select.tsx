@@ -72,8 +72,6 @@ const SelectCheckAllMulitFormItemWrap = ({ dataSource, onCheckAllChange, ...prop
 // CheckAllMulitSelectFormItem
 // SelectFormItem
 setItem('Select', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  console.log('Dict', dictName, Dict.value);
-
   const handler = Dict.value[dictName].value;
 
   let dataSource;
@@ -236,8 +234,6 @@ setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300
       memoized.createMemoFun((value) => {
         fetchRef.current += 1;
         const fetchId = fetchRef.current;
-
-        debugger;
 
         if (!value || (Array.isArray(value) && !value.length)) {
           setOptions((_opts) =>

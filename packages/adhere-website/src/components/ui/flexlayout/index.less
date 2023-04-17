@@ -1,6 +1,6 @@
-.col {
-  height: 55px;
-
+.col,
+.vcol,
+.vcolAuto {
   &:nth-child(odd) {
     > .inner {
       background-color: @adhere-primary-color;
@@ -19,4 +19,8 @@
     line-height: 55px;
     text-align: center;
   }
+}
+
+.col {
+  height: 55px;
 }

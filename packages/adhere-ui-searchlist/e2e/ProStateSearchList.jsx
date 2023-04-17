@@ -1,10 +1,10 @@
-import { Avatar, List } from 'antd';
 import React from 'react';
 
 import SearchList from '../src/index';
 import './serviceRegister';
 
-const { ProSearchStateList, SearchListStateImplementFactor } = SearchList;
+const { /*ProSearchStateList*/ ProResourceStateManager, SearchListStateImplementFactory } =
+  SearchList;
 
 const serviceName = 'user';
 
@@ -13,7 +13,16 @@ const serviceName = 'user';
  * @class ProSearchStateListImpl
  * @classdesc ProSearchStateListImpl
  */
-class ProSearchStateListImpl extends ProSearchStateList {
+class ProSearchStateListImpl extends ProResourceStateManager {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...this.state,
+      expandedRowKeys: [],
+    };
+  }
+
   getComponentId() {
     return 'ProSearchStateListImpl';
   }
@@ -34,17 +43,97 @@ class ProSearchStateListImpl extends ProSearchStateList {
     return 'totalCount';
   }
 
-  renderItem(item) {
-    return (
-      <List.Item key={item.id}>
-        <List.Item.Meta
-          avatar={<Avatar src={item.picture.large} />}
-          title={<a href="https://ant.design">{item.name.last}</a>}
-          description={item.email}
-        />
-        <div>Content</div>
-      </List.Item>
-    );
+  // getViewParams() {
+  //   return {
+  //     title: null,
+  //     subTitle: null,
+  //     content: null,
+  //   };
+  // }
+  //
+  // getTableViewColumns() {
+  //   return [
+  //     {
+  //       dataIndex: 'title',
+  //       key: 'title',
+  //       title: '标题',
+  //       $search: {
+  //         visible: true,
+  //         type: 'input',
+  //       },
+  //     },
+  //     {
+  //       dataIndex: 'subTitle',
+  //       key: 'subTitle',
+  //       title: '副标题',
+  //       $search: {
+  //         visible: true,
+  //         type: 'input',
+  //       },
+  //     },
+  //     {
+  //       dataIndex: 'content',
+  //       key: 'subTitle',
+  //       title: '副标题',
+  //       $search: {
+  //         visible: true,
+  //         type: 'textArea',
+  //       },
+  //     },
+  //   ];
+  // }
+  //
+  // renderGridViewCard({ record }) {
+  //   return <div>111111111111</div>;
+  // }
+
+  // getRowSelection() {
+  //   return null;
+  // }
+
+  // getExpandable() {
+  //   return {
+  //     expandedRowKeys: this.state.expandedRowKeys,
+  //     onExpandedRowsChange: (_expandedRowKeys) => {
+  //       this.setState({
+  //         expandedRowKeys: _expandedRowKeys,
+  //       });
+  //     },
+  //   };
+  // }
+
+  getMetas() {
+    return {
+      // title: {
+      //   dataIndex: 'title',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      // subTitle: {
+      //   dataIndex: 'subTitle',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      // description: {
+      //   dataIndex: 'description',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      // avatar: {
+      //   dataIndex: 'avatar',
+      //   render: (val) => <img src={val} alt="" />,
+      // },
+      // content: {
+      //   dataIndex: 'content',
+      //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+      // },
+      actions: {
+        dataIndex: 'actions',
+        // cardActionProps: 'extra',
+        render: () => [<a>1</a>, <a>2</a>, <a>3</a>],
+      },
+      // extra: {
+      //   dataIndex: 'extra',
+      //   render: () => <div>extra</div>,
+      // },
+    };
   }
 }
 
@@ -57,11 +146,24 @@ requireComponent.keys().forEach((fileName) => {
   models.push(model.default());
 });
 
-const Wrap = SearchListStateImplementFactor({
+const Wrap = SearchListStateImplementFactory({
   serviceNames: [serviceName],
   middleWares: [],
   reducer: null,
   models,
 })(ProSearchStateListImpl);
 
-export default Wrap;
+export default (props) => (
+  <Wrap
+    antdListProps={
+      {
+        // itemLayout: 'vertical',
+        // grid: { gutter: 16, column: 4 },
+        // renderItem: () => {
+        //   return <div>Custom</div>;
+        // },
+      }
+    }
+    {...props}
+  />
+);

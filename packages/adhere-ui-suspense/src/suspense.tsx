@@ -52,6 +52,10 @@ abstract class Suspense<
    */
   abstract showLoading(): boolean;
 
+  constructor(props) {
+    super(props);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.reset) {
       // 第一次

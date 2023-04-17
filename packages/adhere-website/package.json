@@ -40,7 +40,7 @@
     "@baifendian/adhere-ui-anthoc": "^2.3.0",
     "@ctsj/router": "^1.0.4",
     "@ctsj/state": "^2.0.23",
-    "antd": "^5.3.1",
+    "antd": "^5.4.2",
     "bmap-wind": "1.1.1-alpha.2",
     "classnames": "^2.3.2",
     "component-playground": "^3.2.1",
@@ -64,7 +64,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.20.7",
+    "@babel/runtime": "^7.21.0",
     "@ctsj/build": "^6.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/react": "^18.0.26",

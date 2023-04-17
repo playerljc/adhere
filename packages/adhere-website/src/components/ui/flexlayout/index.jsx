@@ -934,6 +934,35 @@ export default (props) => {
       },
       {
         id: 'p11',
+        name: `纵向栅格`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGround',
+        cardProps: {
+          description: {
+            title: '纵向栅格',
+            info: '至少要有一个Auto的组件',
+          },
+        },
+        renderChildren: () => (
+          <FlexLayout direction="vertical" gutter={[20, 0]} style={{ height: 500 }}>
+            <Fixed span={6} className={style.vcol}>
+              <div className={style.inner}>col-v-6</div>
+            </Fixed>
+            <Fixed span={6} className={style.vcol}>
+              <div className={style.inner}>col-v-6</div>
+            </Fixed>
+            <Fixed span={6} className={style.vcol}>
+              <div className={style.inner}>col-v-6</div>
+            </Fixed>
+            <Auto className={style.vcolAuto}>
+              <div className={style.inner}>col-v-auto</div>
+            </Auto>
+          </FlexLayout>
+        ),
+      },
+      {
+        id: 'p12',
         name: `栅格配置器`,
         mode: 'code',
         scope: { React },

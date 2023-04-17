@@ -31,6 +31,9 @@ abstract class SearchList<
   // 序号生成的规则 - 连续模式
   static NUMBER_GENERATOR_RULE_CONTINUITY = Symbol();
 
+  static defaultProps: any;
+  static propTypes: any;
+
   protected listWrapRef: RefObject<HTMLDivElement> = createRef();
 
   /**

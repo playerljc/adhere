@@ -6,11 +6,6 @@ import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/ad
 
 import DictConfig from './config/dict/dict.config';
 
-import 'antd/dist/reset.css';
-import 'font-awesome/css/font-awesome.min.css';
-
-import '@baifendian/adhere/lib/css.less';
-
 import '../src/index.less';
 
 // 配置字典
@@ -33,7 +28,12 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => (
-        <div style={{ display: 'flex', height: 700 }}>
+        /*<div style={{ display: 'flex', width: 700, height: 700 }}>
+          <Suspense fallback={<div>loading</div>}>
+            <List />
+          </Suspense>
+        </div>*/
+        <div style={{ display: 'flex' }}>
           <Suspense fallback={<div>loading</div>}>
             <List />
           </Suspense>

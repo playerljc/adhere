@@ -62,6 +62,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   constructor(props) {
     super(props);
 
+    // @ts-ignore
     Object.assign(this.state, {
       ...this.getParams(),
       // 查询参数
