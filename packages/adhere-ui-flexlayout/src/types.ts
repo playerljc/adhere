@@ -166,8 +166,7 @@ export interface ScrollLayoutContextType {
   getEl: () => HTMLElement | null;
 }
 
-export interface useGridStyleHookProps {
-  style?: CSSProperties;
+export interface getGridStyleParams {
   gutter?: number | number[];
   children?: any;
   span?: number | null;

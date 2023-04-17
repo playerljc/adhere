@@ -37,22 +37,42 @@ function FormItemWrap() {
 }
 
 export default (props) => {
-  const [gutterKey, setGutterKey] = useState(1);
-  const [vgutterKey, setVgutterKey] = useState(1);
-  const [colCountKey, setColCountKey] = useState(2);
+  const [hGutterKey, setHGutterKey] = useState(1);
+  const [hVgutterKey, setHVgutterKey] = useState(1);
+  const [hColCountKey, setHColCountKey] = useState(2);
 
-  const gutters = {};
-  const vgutters = {};
-  const colCounts = {};
+  const hGutters = {};
+  const hVgutters = {};
+  const hColCounts = {};
 
   [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    gutters[i] = value;
+    hGutters[i] = value;
   });
   [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    vgutters[i] = value;
+    hVgutters[i] = value;
   });
   [2, 3, 4, 6, 8, 12].forEach((value, i) => {
-    colCounts[i] = value;
+    hColCounts[i] = value;
+  });
+
+  // --------------------------------------------------------------------------------------------
+
+  const [vGutterKey, setVGutterKey] = useState(1);
+  const [vVgutterKey, setVVgutterKey] = useState(1);
+  const [vColCountKey, setVColCountKey] = useState(2);
+
+  const vGutters = {};
+  const vVgutters = {};
+  const vColCounts = {};
+
+  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
+    vGutters[i] = value;
+  });
+  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
+    vVgutters[i] = value;
+  });
+  [2, 3, 4, 6, 8, 12].forEach((value, i) => {
+    vColCounts[i] = value;
   });
 
   function boxPanelConfig() {
@@ -938,27 +958,154 @@ export default (props) => {
         mode: 'code',
         scope: { React },
         type: 'PlayGround',
+        codeText: `
+ import { Slider } from 'antd';
+ import React, { useState } from 'react';
+
+ import { FlexLayout, Space } from '@baifendian/adhere';
+
+ const {
+  Fixed,
+ } = FlexLayout;
+
+ export default () => {
+  const [vGutterKey, setVGutterKey] = useState(1);
+  const [vVgutterKey, setVVgutterKey] = useState(1);
+  const [vColCountKey, setVColCountKey] = useState(2);
+
+  const vGutters = {};
+  const vVgutters = {};
+  const vColCounts = {};
+
+  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
+    vGutters[i] = value;
+  });
+  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
+    vVgutters[i] = value;
+  });
+  [2, 3, 4, 6, 8, 12].forEach((value, i) => {
+    vColCounts[i] = value;
+  });
+
+  return (
+    <Space.Group direction="vertical" size={20}>
+      <p>Horizontal Gutter (px):</p>
+      <div>
+        <Slider
+          min={0}
+          max={Object.keys(vGutters).length - 1}
+          value={vGutterKey}
+          onChange={setVGutterKey}
+          marks={vGutters}
+          step={null}
+          tooltip={{ formatter: (value) => vGutters[value] }}
+        />
+      </div>
+
+      <p>Vertical Gutter (px):</p>
+      <div>
+        <Slider
+          min={0}
+          max={Object.keys(vVgutters).length - 1}
+          value={vVgutterKey}
+          onChange={setVVgutterKey}
+          marks={vVgutters}
+          step={null}
+          tooltip={{ formatter: (value) => vVgutters[value] }}
+        />
+      </div>
+
+      <p>Column Count:</p>
+      <div>
+        <Slider
+          min={0}
+          max={Object.keys(vColCounts).length - 1}
+          value={vColCountKey}
+          onChange={setVColCountKey}
+          marks={vColCounts}
+          step={null}
+          tooltip={{ formatter: (value) => vColCounts[value] }}
+        />
+      </div>
+
+      <div style={{ height: 600 }}>
+        <FlexLayout
+          style={{ height: '100%' }}
+          gutter={[vVgutters[vVgutterKey], vGutters[vGutterKey]]}
+          direction="vertical"
+        >
+          {Array.from({ length: vColCounts[vColCountKey] }).map(() => (
+            <Fixed className={style.vcol} span={24 / vColCounts[vColCountKey]}>
+              <div className={style.inner}>{\`col-${24 / vColCounts[vColCountKey]}\`}</div>
+            </Fixed>
+          ))}
+        </FlexLayout>
+      </div>
+    </Space.Group>
+  )
+ }
+        `,
         cardProps: {
           description: {
-            title: '纵向栅格',
-            info: '至少要有一个Auto的组件',
+            title: '',
+            info: '纵向栅格',
           },
         },
         renderChildren: () => (
-          <FlexLayout direction="vertical" gutter={[20, 0]} style={{ height: 500 }}>
-            <Fixed span={6} className={style.vcol}>
-              <div className={style.inner}>col-v-6</div>
-            </Fixed>
-            <Fixed span={6} className={style.vcol}>
-              <div className={style.inner}>col-v-6</div>
-            </Fixed>
-            <Fixed span={6} className={style.vcol}>
-              <div className={style.inner}>col-v-6</div>
-            </Fixed>
-            <Auto className={style.vcolAuto}>
-              <div className={style.inner}>col-v-auto</div>
-            </Auto>
-          </FlexLayout>
+          <Space.Group direction="vertical" size={20}>
+            <p>Horizontal Gutter (px):</p>
+            <div>
+              <Slider
+                min={0}
+                max={Object.keys(vGutters).length - 1}
+                value={vGutterKey}
+                onChange={setVGutterKey}
+                marks={vGutters}
+                step={null}
+                tooltip={{ formatter: (value) => vGutters[value] }}
+              />
+            </div>
+
+            <p>Vertical Gutter (px):</p>
+            <div>
+              <Slider
+                min={0}
+                max={Object.keys(vVgutters).length - 1}
+                value={vVgutterKey}
+                onChange={setVVgutterKey}
+                marks={vVgutters}
+                step={null}
+                tooltip={{ formatter: (value) => vVgutters[value] }}
+              />
+            </div>
+
+            <p>Column Count:</p>
+            <div>
+              <Slider
+                min={0}
+                max={Object.keys(vColCounts).length - 1}
+                value={vColCountKey}
+                onChange={setVColCountKey}
+                marks={vColCounts}
+                step={null}
+                tooltip={{ formatter: (value) => vColCounts[value] }}
+              />
+            </div>
+
+            <div style={{ height: 600 }}>
+              <FlexLayout
+                style={{ height: '100%' }}
+                gutter={[vVgutters[vVgutterKey], vGutters[vGutterKey]]}
+                direction="vertical"
+              >
+                {Array.from({ length: vColCounts[vColCountKey] }).map(() => (
+                  <Fixed className={style.vcol} span={24 / vColCounts[vColCountKey]}>
+                    <div className={style.inner}>{`col-${24 / vColCounts[vColCountKey]}`}</div>
+                  </Fixed>
+                ))}
+              </FlexLayout>
+            </div>
+          </Space.Group>
         ),
       },
       {
@@ -1045,7 +1192,7 @@ export default (props) => {
             {Array.from({ length: 3 }).map(() => {
               return Array.from({ length: colCounts[colCountKey] }).map(() => (
                 <Fixed span={24 / colCounts[colCountKey]} className={style.col}>
-                  <div className={style.inner}>{\`col-${24 / colCounts[colCountKey]}\`}</div>
+                  <div className={style.inner}>{\`col-${24 / hColCounts[hColCountKey]}\`}</div>
                 </Fixed>
               ));
             })}
@@ -1067,12 +1214,12 @@ export default (props) => {
             <div>
               <Slider
                 min={0}
-                max={Object.keys(gutters).length - 1}
-                value={gutterKey}
-                onChange={setGutterKey}
-                marks={gutters}
+                max={Object.keys(hGutters).length - 1}
+                value={hGutterKey}
+                onChange={setHGutterKey}
+                marks={hGutters}
                 step={null}
-                tooltip={{ formatter: (value) => gutters[value] }}
+                tooltip={{ formatter: (value) => hGutters[value] }}
               />
             </div>
 
@@ -1080,12 +1227,12 @@ export default (props) => {
             <div>
               <Slider
                 min={0}
-                max={Object.keys(vgutters).length - 1}
-                value={vgutterKey}
-                onChange={setVgutterKey}
-                marks={vgutters}
+                max={Object.keys(hVgutters).length - 1}
+                value={hVgutterKey}
+                onChange={setHVgutterKey}
+                marks={hVgutters}
                 step={null}
-                tooltip={{ formatter: (value) => vgutters[value] }}
+                tooltip={{ formatter: (value) => hVgutters[value] }}
               />
             </div>
 
@@ -1093,24 +1240,24 @@ export default (props) => {
             <div>
               <Slider
                 min={0}
-                max={Object.keys(colCounts).length - 1}
-                value={colCountKey}
-                onChange={setColCountKey}
-                marks={colCounts}
+                max={Object.keys(hColCounts).length - 1}
+                value={hColCountKey}
+                onChange={setHColCountKey}
+                marks={hColCounts}
                 step={null}
-                tooltip={{ formatter: (value) => colCounts[value] }}
+                tooltip={{ formatter: (value) => hColCounts[value] }}
               />
             </div>
 
             <div>
               <FlexLayout
-                gutter={[vgutters[vgutterKey], gutters[gutterKey]]}
+                gutter={[hVgutters[hVgutterKey], hGutters[hGutterKey]]}
                 direction="horizontal"
               >
                 {Array.from({ length: 3 }).map(() => {
-                  return Array.from({ length: colCounts[colCountKey] }).map(() => (
-                    <Fixed span={24 / colCounts[colCountKey]} className={style.col}>
-                      <div className={style.inner}>{`col-${24 / colCounts[colCountKey]}`}</div>
+                  return Array.from({ length: hColCounts[hColCountKey] }).map(() => (
+                    <Fixed span={24 / hColCounts[hColCountKey]} className={style.col}>
+                      <div className={style.inner}>{`col-${24 / hColCounts[hColCountKey]}`}</div>
                     </Fixed>
                   ));
                 })}

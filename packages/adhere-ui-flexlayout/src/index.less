@@ -10,7 +10,7 @@
   &.adhere-ui-flexlayout-horizontal {
     flex-flow: row wrap;
 
-    .adhere-ui-flexlayout-fixed {
+    > .adhere-ui-flexlayout-fixed {
       // 横向的栅格系统设置
       .span(@n, @i: 0) when (@i =< @n) {
         &.adhere-ui-flexlayout-fixed-col-@{i} {
@@ -19,11 +19,10 @@
         }
         .span(@n, (@i + 1));
       }
-
       .span(@adhere-ui-flexlayout-grid-count);
     }
 
-    .adhere-ui-flexlayout-auto-autoFixed {
+    > .adhere-ui-flexlayout-auto-autoFixed {
       min-width: 0;
     }
   }
@@ -32,26 +31,40 @@
   &.adhere-ui-flexlayout-vertical {
     flex-direction: column;
 
-    // 纵向的栅格系统设置
-    .adhere-ui-flexlayout-fixed,
-    .adhere-ui-flexlayout-auto {
-      box-sizing: content-box;
+    > .adhere-ui-flexlayout-fixed {
+      &.adhere-ui-flexlayout-fixed-gap {
+        box-sizing: content-box !important;
 
-      &:first-child {
-        padding-top: 0 !important;
-      }
+        &:first-child {
+          padding-top: 0 !important;
+        }
 
-      &:last-child {
-        padding-bottom: 0 !important;
+        &:last-child {
+          padding-bottom: 0 !important;
+        }
       }
     }
 
-    .adhere-ui-flexlayout-auto-autoFixed {
+    > .adhere-ui-flexlayout-auto {
+      &.adhere-ui-flexlayout-auto-gap {
+        box-sizing: content-box !important;
+
+        &:first-child {
+          padding-top: 0 !important;
+        }
+
+        &:last-child {
+          padding-bottom: 0 !important;
+        }
+      }
+    }
+
+    > .adhere-ui-flexlayout-auto-autoFixed {
       min-height: 0;
     }
   }
 
-  .adhere-ui-flexlayout-fixed {
+  > .adhere-ui-flexlayout-fixed {
     flex-shrink: 0;
 
     &.adhere-ui-flexlayout-fixed-fit {
@@ -67,7 +80,7 @@
     }
   }
 
-  .adhere-ui-flexlayout-auto {
+  > .adhere-ui-flexlayout-auto {
     flex-grow: 1;
 
     &.adhere-ui-flexlayout-auto-fit {
@@ -80,6 +93,9 @@
       > * {
         width: 100%;
       }
+    }
+
+    &.adhere-ui-flexlayout-auto-gap {
     }
   }
 }

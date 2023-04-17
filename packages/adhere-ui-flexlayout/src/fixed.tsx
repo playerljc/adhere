@@ -2,8 +2,9 @@ import classNames from 'classnames';
 import React, { FC, memo, useContext, useMemo } from 'react';
 
 import { FlexContext } from './context';
-import { useGridStyleHook } from './hooks';
+import { useGap, useGrid } from './hooks';
 import { ContextType, FixedProps } from './types';
+import { getGridStyle } from './util';
 
 const selectorPrefix = 'adhere-ui-flexlayout-fixed';
 
@@ -19,23 +20,35 @@ const Fixed: FC<FixedProps> = (props) => {
 
   const { gutter = 0, direction, children: contextChildren } = useContext<ContextType>(FlexContext);
 
+  const isUseGrid = useGrid(props);
+
+  const isUseGap = useGap(gutter);
+
   const classList = useMemo(
     () =>
       classNames(selectorPrefix, className, {
         [`${selectorPrefix}-fit`]: fit,
-        [`${selectorPrefix}-col-${props.span}`]:
-          'span' in props &&
-          typeof props.span === 'number' &&
-          props.span >= 0 &&
-          props.span <= gridCount,
+        [`${selectorPrefix}-col-${props.span}`]: isUseGrid,
+        [`${selectorPrefix}-gap`]: isUseGap,
       }),
     [className, props.span, fit],
   );
 
-  const gridStyle = useGridStyleHook({ style, gutter, span, children: contextChildren, direction });
+  const styleList = useMemo(() => {
+    const defaultStyle = style || {};
+
+    const gridStyle = isUseGrid
+      ? getGridStyle({ gutter, span, children: contextChildren, direction })
+      : {};
+
+    return {
+      ...defaultStyle,
+      ...gridStyle,
+    };
+  }, [style, gutter]);
 
   return (
-    <div className={classList} style={gridStyle} {...attrs}>
+    <div className={classList} style={styleList} {...attrs}>
       {children}
     </div>
   );

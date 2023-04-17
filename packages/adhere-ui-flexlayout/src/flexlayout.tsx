@@ -19,23 +19,17 @@ export const selectorPrefix = 'adhere-ui-flexlayout';
  * @constructor
  */
 const FlexLayout: FC<FlexLayoutProps> = (props) => {
-  const {
-    className = '',
-    style = {},
-    direction = 'vertical',
-    gutter = 0,
-    children,
-    ...attrs
-  } = props;
+  const { className = '', style = {}, direction = 'vertical', gutter, children, ...attrs } = props;
 
-  const classList = useMemo(
-    () => classNames(selectorPrefix, className, `${selectorPrefix}-${direction}`),
-    [className, direction],
-  );
+  /**
+   * getVerticalGridStyle
+   */
+  const getVerticalGridStyle = () => ({});
 
-  const gridStyle = useMemo(() => {
-    const defaultStyle = style || {};
-
+  /**
+   * getHorizontalGridStyle
+   */
+  const getHorizontalGridStyle = () => {
     let rowGapOrigin;
     let columnGapOrigin;
 
@@ -54,21 +48,41 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
 
     const columnGapOriginPixel = `${columnGapOrigin / 2}px`;
 
+    return {
+      rowGap: `${rowGapOrigin}px`,
+      marginLeft: `-${columnGapOriginPixel}`,
+      marginRight: `-${columnGapOriginPixel}`,
+    };
+  };
+
+  /**
+   * getGridStyle
+   */
+  const getGridStyle = () => {
     const map = new Map([
-      [
-        'horizontal',
-        () => ({
-          rowGap: `${rowGapOrigin}px`,
-          marginLeft: `-${columnGapOriginPixel}px`,
-          marginRight: `-${columnGapOriginPixel}px`,
-        }),
-      ],
-      ['vertical', () => ({})],
+      ['horizontal', getHorizontalGridStyle],
+      ['vertical', getVerticalGridStyle],
     ]);
 
+    return map.get(direction)?.();
+  };
+
+  // class
+  const classList = useMemo(
+    () => classNames(selectorPrefix, className, `${selectorPrefix}-${direction}`),
+    [className, direction],
+  );
+
+  // style
+  const styleList = useMemo(() => {
+    const defaultStyle = style || {};
+
+    // 栅格的style
+    const gridStyle = 'gutter' in props ? getGridStyle() : {};
+
     return {
-      ...(map.get(direction)?.() || {}),
       ...defaultStyle,
+      ...gridStyle,
     };
   }, [style, gutter]);
 
@@ -80,7 +94,7 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
         children,
       }}
     >
-      <div className={classList} style={gridStyle} {...attrs}>
+      <div className={classList} style={styleList} {...attrs}>
         {children}
       </div>
     </FlexContext.Provider>

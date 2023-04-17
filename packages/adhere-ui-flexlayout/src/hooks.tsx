@@ -1,75 +1,50 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { gridCount } from './fixed';
-import { useGridStyleHookProps } from './types';
+import { FixedProps } from './types';
 
 /**
- * useGridStyleHook
- * @description 栅格系统的样式
- * @param {React.CSSProperties} style 样式
- * @param {number | number[]} gutter gird的间隙
- * @param {'vertical' | 'horizontal'} direction 方向
- * @param {number} span 栅格的值
- * @param {React.ReactNode[]} children 孩子
+ * useGrid
+ * @description 是否使用了栅格系统
+ * @param {FixedProps} props
+ * @return {boolean}
  */
-export const useGridStyleHook = ({
-  style = {},
-  gutter = 0,
-  span,
-  children = [],
-  direction = 'vertical',
-}: useGridStyleHookProps) => {
-  return useMemo(() => {
-    const defaultStyle = style || {};
+export const useGrid = (props: FixedProps) =>
+  useMemo(
+    () =>
+      'span' in props &&
+      typeof props.span === 'number' &&
+      props.span >= 0 &&
+      props.span <= gridCount,
+    [props.span],
+  );
 
-    let gapOrigin;
+/**
+ * useGap
+ * @param {number | number[]} gutter
+ * @return {boolean}
+ */
+export const useGap = (gutter) =>
+  useMemo(() => {
+    if (
+      gutter === undefined ||
+      gutter === null ||
+      gutter === '' ||
+      gutter === 0 ||
+      typeof gutter === 'function' ||
+      (typeof gutter === 'object' && !Array.isArray(gutter))
+    )
+      return false;
 
     if (Array.isArray(gutter)) {
-      if (gutter.length === 1) {
-        gapOrigin = gutter[0];
-      } else if (gutter.length === 2) {
-        gapOrigin = gutter[1];
+      if (gutter.length === 0) return false;
+
+      if (gutter.length >= 1 && gutter.length <= 2) {
+        return !gutter.some(
+          (g) => g === undefined || g === null || g === '' || g === 0 || typeof g !== 'number',
+        );
       }
-    } else {
-      gapOrigin = gutter;
     }
 
-    const gapPixel = `${gapOrigin / 2}px`;
-
-    const map = new Map([
-      [
-        // 横向
-        'horizontal',
-        () => ({
-          paddingLeft: gapPixel,
-          paddingRight: gapPixel,
-        }),
-      ],
-      [
-        // 纵向
-        'vertical',
-        () => {
-          const verticalStyle: any = {};
-
-          // 栅格设置
-          if (span) {
-            const gapHeight = (children.length - 1) * gapOrigin;
-            // (100% - 所有栅格间隙的高度) * (span / 24)
-            verticalStyle.height = `calc( (100% - ${gapHeight}px) * (${span}/${gridCount}) )`;
-          }
-
-          // 设置paddingTop和paddingBottom
-          verticalStyle.paddingTop = gapPixel;
-          verticalStyle.paddingBottom = gapPixel;
-
-          return verticalStyle;
-        },
-      ],
-    ]);
-
-    return {
-      ...(map.get(direction)?.() || {}),
-      ...defaultStyle,
-    };
-  }, [style, gutter]);
-};
+    return true;
+  }, [gutter]);

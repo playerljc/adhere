@@ -2,8 +2,9 @@ import classNames from 'classnames';
 import React, { FC, memo, useContext, useMemo } from 'react';
 
 import { FlexContext } from './context';
-import { useGridStyleHook } from './hooks';
+import { useGap, useGrid } from './hooks';
 import { AutoProps, ContextType } from './types';
+import { getGridStyle } from './util';
 
 const selectorPrefix = 'adhere-ui-flexlayout-auto';
 
@@ -17,25 +18,35 @@ const Auto: FC<AutoProps> = (props) => {
 
   const { gutter = 0, direction, children: contextChildren } = useContext<ContextType>(FlexContext);
 
+  const isUseGrid = useGrid(props);
+
+  const isUseGap = useGap(gutter);
+
   const classList = useMemo(
     () =>
       classNames(selectorPrefix, className, {
         [`${selectorPrefix}-autoFixed`]: autoFixed,
         [`${selectorPrefix}-fit`]: fit,
+        [`${selectorPrefix}-gap`]: isUseGap,
       }),
     [className, autoFixed, fit],
   );
 
-  const gridStyle = useGridStyleHook({
-    style,
-    gutter,
-    children: contextChildren,
-    span: null,
-    direction,
-  });
+  const styleList = useMemo(() => {
+    const defaultStyle = style || {};
+
+    const gridStyle = isUseGrid
+      ? getGridStyle({ gutter, span: null, children: contextChildren, direction })
+      : {};
+
+    return {
+      ...defaultStyle,
+      ...gridStyle,
+    };
+  }, [style, gutter]);
 
   return (
-    <div className={classList} style={gridStyle} {...attrs}>
+    <div className={classList} style={styleList} {...attrs}>
       {children}
     </div>
   );
