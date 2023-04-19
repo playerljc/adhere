@@ -1,5 +1,6 @@
 import React from 'react';
 
+import SearchEditableRowStateTable from '../../Editable/SearchEditableRowStateTable';
 import SearchEditableRowTable from '../../Editable/SearchEditableRowTable';
 import { SearchTableImplement } from '../../SearchTableImplement';
 import type { SearchTableImplementProps, SearchTableImplementState } from '../../types';
@@ -30,6 +31,9 @@ const SearchEditableRowDragSortTable = RowDragSortMultiExtend<
       }
 
       return SearchRowDragSortTable.prototype.onDragSortRow.call(this, params);
+    },
+    fetchData() {
+      return SearchEditableRowTable.prototype.fetchData.call(this);
     },
   },
 );

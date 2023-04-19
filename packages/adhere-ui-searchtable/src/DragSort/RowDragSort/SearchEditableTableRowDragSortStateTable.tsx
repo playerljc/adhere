@@ -49,6 +49,10 @@ const SearchEditableTableRowDragSortStateTable = RowDragSortMultiExtend<
         this.setFieldValues(this.getData());
       });
     },
+    /**
+     * onExpandedRowsChange
+     * @param expandedRows
+     */
     onExpandedRowsChange(expandedRows) {
       return SearchEditableStateTable.prototype.onExpandedRowsChange
         .call(this, expandedRows)

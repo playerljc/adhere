@@ -31,6 +31,21 @@ const SearchEditableTableRowDragSortTable = RowDragSortMultiExtend<
 
       return SearchRowDragSortTable.prototype.onDragSortRow.call(this, params);
     },
+    /**
+     * onExpandedRowsChange
+     * @param expandedRows
+     */
+    onExpandedRowsChange(expandedRows) {
+      return SearchRowDragSortTable.prototype.onExpandedRowsChange
+        .call(this, expandedRows)
+        .then(() => {
+          // @ts-ignore
+          if (this.state.isTableEditor) {
+            // @ts-ignore
+            this.setFieldValues(this.getData());
+          }
+        });
+    },
     render() {
       const searchRowDragSortTableREL = SearchRowDragSortTable.prototype.render.call(this);
       const searchEditableTableREL = SearchEditableTable.prototype.render.call(this);

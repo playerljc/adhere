@@ -904,6 +904,7 @@ abstract class SearchTable<
       ...(antdTableProps || {}),
       expandable: {
         ...(antdTableProps || {}).expandable,
+        expandedRowKeys: this.state.expandedRowKeys,
         onExpandedRowsChange: this.onExpandedRowsChange,
       },
     };

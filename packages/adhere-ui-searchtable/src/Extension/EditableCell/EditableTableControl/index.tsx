@@ -58,11 +58,10 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
 
   const validateFieldsSuccess = useCallback((values) => {
     if (onSave) {
-      onSave(values.dataSource).then(() => updateEditorCellTableData(values.dataSource));
-      return;
+      return onSave(values.dataSource).then(() => updateEditorCellTableData(values.dataSource));
     }
 
-    updateEditorCellTableData(values.dataSource);
+    return updateEditorCellTableData(values.dataSource);
   }, []);
 
   const _onEditor = useCallback(() => {

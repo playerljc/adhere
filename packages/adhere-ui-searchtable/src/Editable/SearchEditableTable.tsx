@@ -11,12 +11,10 @@ import SearchEditableFactory from './SearchEditableFactory';
  * @class
  * @classdesc 可编辑的表格(表格进行整体编辑)
  */
-class SearchEditableTable<
-  P extends SearchTableImplementProps,
-  S extends SearchEditorTableState,
-> extends SearchEditableFactory<SearchTableImplementProps, SearchEditorTableState>(
-  SearchEditableCellTable,
-) {
+class SearchEditableTable extends SearchEditableFactory<
+  SearchTableImplementProps,
+  SearchEditorTableState
+>(SearchEditableCellTable) {
   /**
    * updateEditorData
    * @description 更新可编辑的所有单元格

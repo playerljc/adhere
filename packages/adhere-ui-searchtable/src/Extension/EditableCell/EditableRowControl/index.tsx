@@ -67,11 +67,10 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
 
   const validateFieldsSuccess = useCallback((values) => {
     if (onSave) {
-      onSave(values).then(() => updateEditorCellRowData(values));
-      return;
+      return onSave(values).then(() => updateEditorCellRowData(values));
     }
 
-    updateEditorCellRowData(values);
+    return updateEditorCellRowData(values);
   }, []);
 
   const _onEditor = useCallback(() => {

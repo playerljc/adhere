@@ -27,4 +27,5 @@ export default {
   codeSuccessKey: 200,
   dataKey: 'data',
   messageKey: 'message',
+  name: 'user',
 };

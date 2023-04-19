@@ -414,6 +414,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           },
           selectedRowKeys: [],
           selectedRows: [],
+          expandedRowKeys: [],
         },
         () => {
           resolve();

@@ -138,11 +138,12 @@ export default function <P, S>(SuperClass) {
       const { expandedRowKeys } = this.state;
       const rowKey = this.getRowKey();
 
-      debugger;
       if (!!expandedRowKeys.length) {
         const displayEls = this.tableWrapRef?.current?.querySelectorAll?.(
           '.ant-table-wrapper tr[data-row-key]',
         );
+
+        console.log('displayEls', displayEls);
 
         fields = Array.from<HTMLElement>(displayEls).map((el) => {
           const id = el.dataset['rowKey'];
@@ -152,8 +153,6 @@ export default function <P, S>(SuperClass) {
       } else {
         fields = dataSource.map((_record) => createFields(_record));
       }
-
-      console.log('this.tableWrapRef', fields);
 
       this.formRef?.current?.setFieldValue?.('dataSource', fields);
     }
