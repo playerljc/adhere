@@ -75,8 +75,12 @@ class Fetch {
 
       this.source.addEventListener('message', onMessage);
 
-      // @ts-ignore
-      targetWindow.postMessage(JSON.stringify(request), targetOrigin);
+      try {
+        // @ts-ignore
+        targetWindow.postMessage(JSON.stringify(request), targetOrigin);
+      } catch (e) {
+        console.error(e);
+      }
     });
   }
 

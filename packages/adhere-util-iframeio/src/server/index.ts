@@ -108,8 +108,12 @@ class Server {
 
     this.middleWareQueueReduce(context).then(() => {
       // 返回响应
-      // @ts-ignore
-      evt?.source?.postMessage?.(JSON.stringify(context.response), evt.origin);
+      try {
+        // @ts-ignore
+        evt?.source?.postMessage?.(JSON.stringify(context.response), evt.origin);
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 
