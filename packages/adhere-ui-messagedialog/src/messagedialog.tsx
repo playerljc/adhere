@@ -6,21 +6,12 @@ import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
-import Resource from '@baifendian/adhere-util-resource';
 
+import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './constent';
 import ModalDialog, { selectorPrefix } from './modal';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 
-const DEFAULT_LOCAL = 'zh_CN';
-
-const LOCAL = Resource.Dict.value.LocalsAntd.value;
-
 let antdConfigProviderProps: ConfigProviderProps = {};
-
-const PromptLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
 
 /**
  * renderByIcon
@@ -60,8 +51,8 @@ const MessageDialogFactory = {
   Confirm({
     title,
     text = null,
-    width = 300,
-    zIndex = 1000,
+    width = DEFAULT_WIDTH,
+    zIndex = DEFAULT_ZINDEX,
     local,
     icon = null,
     onSuccess,
@@ -70,7 +61,7 @@ const MessageDialogFactory = {
       config: {
         title,
         centered: true,
-        width: width || 300,
+        width: width || DEFAULT_WIDTH,
         closable: false,
         zIndex,
         footer: [
@@ -103,12 +94,19 @@ const MessageDialogFactory = {
    * @param zIndex
    * @param icon - {React.ReactElement | null}
    */
-  Alert({ title, text = null, width = 300, zIndex = 1000, local, icon }: AlertArgv) {
+  Alert({
+    title,
+    text = null,
+    width = DEFAULT_WIDTH,
+    zIndex = DEFAULT_ZINDEX,
+    local,
+    icon,
+  }: AlertArgv) {
     this.Modal({
       config: {
         title,
         centered: true,
-        width: width || 300,
+        width: width || DEFAULT_WIDTH,
         closable: false,
         zIndex,
       },
@@ -130,9 +128,9 @@ const MessageDialogFactory = {
   Prompt({
     title,
     config,
-    layout = PromptLayout,
-    width = 300,
-    zIndex = 1000,
+    layout = PROMPT_LAYOUT,
+    width = DEFAULT_WIDTH,
+    zIndex = DEFAULT_ZINDEX,
     local,
     onSuccess,
   }: PromptArgv) {
@@ -142,7 +140,7 @@ const MessageDialogFactory = {
       config: {
         title,
         centered: true,
-        width: width || 300,
+        width: width || DEFAULT_WIDTH,
         closable: false,
         zIndex,
         footer: [
@@ -178,7 +176,7 @@ const MessageDialogFactory = {
                 name: 'value',
               },
             ]}
-            layout={layout || PromptLayout}
+            layout={layout || PROMPT_LAYOUT}
           />
         </Form>
       ),
