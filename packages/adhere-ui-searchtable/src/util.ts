@@ -117,3 +117,32 @@ export function isSameLevel({ dataSource, rowKey = 'id', sourceId, targetId }) {
 
   return brother.some((t) => t[rowKey] === targetId);
 }
+
+/**
+ * createTreeDataChildren
+ * @description 创建TreeData的children
+ * @param {ReactElement} tdREL 单元格
+ * @param {ReactNode} subChildren
+ * @return {ReactNode[]}
+ */
+export const createTreeDataChildren = (tdREL, subChildren) => [
+  tdREL.props.children[0],
+  subChildren,
+];
+
+/**
+ * createChildren
+ * @description 创建children
+ * @param {ReactElement} tdREL 单元格
+ * @param {ReactNode} subChildren
+ * @return {ReactNode[]}
+ */
+export const createChildren = (tdREL, subChildren) => {
+  // @ts-ignore
+  if ((tdREL?.props?.className || '').split(/\s+/gim).includes('ant-table-cell-with-append')) {
+    // 如果是treeData数据
+    return createTreeDataChildren(tdREL, subChildren);
+  }
+
+  return [subChildren];
+};

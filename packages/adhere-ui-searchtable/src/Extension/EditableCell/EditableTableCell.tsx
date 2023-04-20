@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import type SearchTable from '../../SearchTable';
 import { SearchTableContext } from '../../SearchTable';
 import type { ColumnEditableConfig, TableCellComponentReducer } from '../../types';
+import { createChildren } from '../../util';
 import EditableTableCellEdit from './Edit/EditableTableCellEdit';
 import EditableCellView from './View';
 
@@ -89,35 +90,47 @@ const EditableTableCell: TableCellComponentReducer = (props) => {
 
     // 始终保持编辑状态
     else if (editableConfig.useKeepEdit) {
-      res = React.cloneElement(tdREL, tdREL.props, [
-        <EditableTableCellEdit
-          {...props}
-          editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
-        />,
-      ]);
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
+        createChildren(
+          tdREL,
+          <EditableTableCellEdit
+            {...props}
+            editableConfig={editableConfig}
+            onTriggerChange={() => setStatus('view')}
+          />,
+        ),
+      );
     }
 
     // 查看状态
     else if (status === 'view') {
-      res = React.cloneElement(tdREL, tdREL.props, [
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
         <EditableCellView
           {...props}
           editableConfig={editableConfig}
           onTriggerChange={() => setStatus('edit')}
         />,
-      ]);
+      );
     }
 
     // 编辑状态
     else if (status === 'edit') {
-      res = React.cloneElement(tdREL, tdREL.props, [
-        <EditableTableCellEdit
-          {...props}
-          editableConfig={editableConfig}
-          onTriggerChange={() => setStatus('view')}
-        />,
-      ]);
+      res = React.cloneElement(
+        tdREL,
+        tdREL.props,
+        createChildren(
+          tdREL,
+          <EditableTableCellEdit
+            {...props}
+            editableConfig={editableConfig}
+            onTriggerChange={() => setStatus('view')}
+          />,
+        ),
+      );
     }
 
     return res;

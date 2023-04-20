@@ -483,6 +483,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
               const dataIndex = searchConfig.dataIndex || t.dataIndex;
 
               if (
+                dataIndex &&
                 !['_number', this.getOptionsColumnDataIndex()].includes(dataIndex) &&
                 showColumnHeader
               ) {

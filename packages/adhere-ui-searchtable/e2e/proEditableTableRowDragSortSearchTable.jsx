@@ -316,6 +316,7 @@
 //
 // export default Wrap;
 // ------------------------------------------------------------------
+import { Table } from 'antd';
 import React from 'react';
 
 import { DateDisplay, Resource } from '@baifendian/adhere';
@@ -335,6 +336,10 @@ const List = SearchTableImplementFactory({
   serviceNames: [serviceName],
 })(
   class extends ProSearchEditableTableRowDragSortTable {
+    isShowNumber() {
+      return false;
+    }
+
     getComponentId() {
       return 'RowDragSort';
     }
@@ -376,11 +381,14 @@ const List = SearchTableImplementFactory({
      */
     getColumns() {
       return super.getColumns([
+        // Table.EXPAND_COLUMN,
+        // {},
         {
           title: '姓名',
           dataIndex: 'name',
           key: 'name',
-          width: 150,
+          width: 250,
+          align: 'left',
           render: (val) => <div style={{ color: 'red' }}>{val}</div>,
           $search: {
             type: 'input',

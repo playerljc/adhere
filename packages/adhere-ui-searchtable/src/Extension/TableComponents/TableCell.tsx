@@ -12,6 +12,7 @@ import useEditableTableCell from '../EditableCell/EditableTableCell';
 /**
  * TableCell
  * @description 表格列组件
+ * @param {TableCellComponentProps} props
  */
 const TableCell: FC<TableCellComponentProps> = (props) => {
   const { record, column, rowIndex, columns, ...restProps } = props;
@@ -45,6 +46,7 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
   }, [restProps]);
 
   // 默认的row组件是一个td
+  // ant-table-cell-with-append 这个是treeData的样式
   const tdREL = (
     <td {...(restProps || {})} style={styleList}>
       {restProps?.children}
