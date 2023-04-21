@@ -81,7 +81,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
     >
       {() => (
         <Provider store={store}>
-          <div style={{ display: 'flex', height: 700 }}>
+          <div style={{ display: 'flex', width: 1000, height: 700 }}>
             <Suspense fallback={<div>loading</div>}>
               <ProSearchStateTableImpl pagination={true} />
             </Suspense>

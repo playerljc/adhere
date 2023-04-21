@@ -24,46 +24,47 @@ import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspens
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
 
+// 控件的类型
 export type FormItemType =
+  // | 'select'
+  // | 'multiSelect'
+  // | 'checkAllMultiSelect'
+  // | 'autoCompleteSelect'
+  // | 'autoCompleteSelectMulti'
+  // | 'autoCompleteSelectCheckAllMulti'
+  // | 'radioHorizontal'
+  // | 'radioButton'
+  // | 'radioSelect'
+  // | 'radioCustom'
+  // | 'checkBoxHorizontal'
+  // | 'checkBoxCheckAllHorizontal'
+  // | 'checkboxSelect'
+  // | 'checkBoxCheckAllSelect'
+  // | 'checkBoxCustom'
+  // | 'checkBoxCheckAllCustom'
+  // | 'transferSelect'
+  // | 'tableSelect'
+  // | 'tableMultiSelect'
+  // | 'tablePagingSelect'
+  // | 'tablePagingMultiSelect'
+  // | 'listSelect'
+  // | 'listMultiSelect'
+  // | 'listPagingSelect'
+  // | 'listPagingMultiSelect'
+  // | 'treeSelect'
+  // | 'treeMultiSelect'
+  // | 'treeSelectLeaf'
+  // | 'treeMultiSelectLeaf'
+  // | 'cascaderSelect'
+  // | 'cascaderMultiSelect'
+  // | 'cascaderSelectLeaf'
+  // | 'cascaderMultiSelectLeaf'
   | 'input'
   | 'textArea'
   | 'inputNumber'
   | 'inputNumberDecimal1'
   | 'inputNumberDecimal2'
   | 'inputNumberInteger'
-  | 'select'
-  | 'multiSelect'
-  | 'checkAllMultiSelect'
-  | 'autoCompleteSelect'
-  | 'autoCompleteSelectMulti'
-  | 'autoCompleteSelectCheckAllMulti'
-  | 'radioHorizontal'
-  | 'radioButton'
-  | 'radioSelect'
-  | 'radioCustom'
-  | 'checkBoxHorizontal'
-  | 'checkBoxCheckAllHorizontal'
-  | 'checkboxSelect'
-  | 'checkBoxCheckAllSelect'
-  | 'checkBoxCustom'
-  | 'checkBoxCheckAllCustom'
-  | 'transferSelect'
-  | 'tableSelect'
-  | 'tableMultiSelect'
-  | 'tablePagingSelect'
-  | 'tablePagingMultiSelect'
-  | 'listSelect'
-  | 'listMultiSelect'
-  | 'listPagingSelect'
-  | 'listPagingMultiSelect'
-  | 'treeSelect'
-  | 'treeMultiSelect'
-  | 'treeSelectLeaf'
-  | 'treeMultiSelectLeaf'
-  | 'cascaderSelect'
-  | 'cascaderMultiSelect'
-  | 'cascaderSelectLeaf'
-  | 'cascaderMultiSelectLeaf'
   | 'datePicker'
   | 'timePicker'
   | 'rangePicker'
@@ -71,6 +72,9 @@ export type FormItemType =
   | 'sliderRange'
   | 'rate'
   | 'switch'
+  // 字典类型
+  | 'dict'
+  // 自定义类型
   | 'custom'
   | string;
 
@@ -79,7 +83,8 @@ export type FormItemType =
  * @description 列的查询设置
  */
 export interface ColumnSearchConfig {
-  type: FormItemType;
+  // 编辑控件的类型
+  type: FormItemType | string;
   // 是否显示
   visible?: boolean;
   // 是否显示在列头上

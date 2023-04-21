@@ -389,6 +389,7 @@ const List = SearchTableImplementFactory({
           key: 'name',
           width: 250,
           align: 'left',
+          fixed: 'left',
           render: (val) => <div style={{ color: 'red' }}>{val}</div>,
           $search: {
             type: 'input',
@@ -422,13 +423,13 @@ const List = SearchTableImplementFactory({
           width: 150,
           render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
           $search: {
-            type: 'select',
+            type: 'dict',
             visible: true,
             dictName: 'SystemTestSexSelect',
           },
           $editable: {
             editable: true,
-            type: 'select',
+            type: 'dict',
             dictName: 'SystemTestSexSelect',
             rules: [
               {
