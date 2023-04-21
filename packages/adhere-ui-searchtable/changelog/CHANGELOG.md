@@ -6,6 +6,7 @@
 
 * column中设置align的bug修改
 * 支持tree展示的相关设置
+* 查询和Editor中表单控件渲染逻辑修改
 
 # 1.0.20
 
