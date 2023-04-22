@@ -1,3 +1,11 @@
+# 1.0.12
+
+***
+
+2023-04-22
+
+* HorizontalFlexLayout样式修改,加入flex-wrap: nowrap;
+
 # 1.0.11
 
 ***
