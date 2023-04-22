@@ -143,8 +143,6 @@ export default function <P, S>(SuperClass) {
           '.ant-table-wrapper tr[data-row-key]',
         );
 
-        console.log('displayEls', displayEls);
-
         fields = Array.from<HTMLElement>(displayEls).map((el) => {
           const id = el.dataset['rowKey'];
           const _record = findRecord(dataSource, rowKey, id);
@@ -187,8 +185,6 @@ export default function <P, S>(SuperClass) {
           >
             <Form.List name="dataSource">
               {(fields, operation, meta) => {
-                console.log('fields', fields);
-
                 return (
                   <SearchTableContext.Provider
                     value={{

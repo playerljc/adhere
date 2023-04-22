@@ -185,7 +185,6 @@ export default function () {
                     data: '123',
                   })
                   .then((res) => {
-                    debugger;
                     console.log('getBody', res.getBody());
                   });
               }}

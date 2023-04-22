@@ -81,6 +81,5 @@ const AdhereSearchListDict = {
 
 AdhereSearchListDict.initStatic();
 AdhereSearchListDict.initRemote();
-console.log('Dict Init');
 
 export default AdhereSearchListDict;

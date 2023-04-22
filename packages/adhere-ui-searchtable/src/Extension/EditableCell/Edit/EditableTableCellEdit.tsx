@@ -54,8 +54,6 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
     dataIndex as string,
   ];
 
-  console.log('record', rowIndex, nameItemPath, record.name);
-
   const namePath = ['dataSource', ...nameItemPath];
 
   const value = Form.useWatch(namePath, context?.editable?.tableEditable?.form as FormInstance);

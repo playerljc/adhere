@@ -21,9 +21,6 @@ class SearchRowDragSortTable extends SearchRowDragSortFactory<
    * @return Promise<void>
    */
   moveRow(dragRecord: any, hoverRecord: any): Promise<void> {
-    console.log('dragRecord', dragRecord);
-    console.log('hoverRecord', hoverRecord);
-
     return new Promise((resolve) => {
       const listData = cloneDeep(this.props[this.getServiceName()]);
       const dataSource = listData[this.getFetchListPropName()][this.getDataKey()] || [];
