@@ -6,6 +6,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Auto from './auto';
 import Fixed from './fixed';
 import FlexLayout from './flexlayout';
+import { selectorPrefix } from './flexlayout';
 import type { HorizontalFlexLayoutProps } from './types';
 
 /**
@@ -157,7 +158,7 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
   return (
     <FlexLayout
       {...attrs}
-      className={classNames(className)}
+      className={classNames(`${selectorPrefix}-horizontal-flexLayout`, className)}
       style={style || {}}
       direction="horizontal"
     >
