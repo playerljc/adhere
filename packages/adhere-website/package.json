@@ -39,7 +39,7 @@
     "@baifendian/adhere": "^2.3.0",
     "@baifendian/adhere-ui-anthoc": "^2.3.0",
     "@ctsj/router": "^1.0.4",
-    "@ctsj/state": "^2.0.23",
+    "@ctsj/state": "^2.0.24",
     "antd": "^5.4.2",
     "bmap-wind": "1.1.1-alpha.2",
     "classnames": "^2.3.2",

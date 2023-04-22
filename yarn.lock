@@ -1562,10 +1562,10 @@
     react-router "^5.3.4"
     react-router-dom "^5.3.4"
 
-"@ctsj/state@^2.0.23":
-  version "2.0.23"
-  resolved "https://registry.yarnpkg.com/@ctsj/state/-/state-2.0.23.tgz#8145493a4a10ccf0f47cafceb9d2ec5d878c91c9"
-  integrity sha512-57WjwGyRDb8ULBIVRy5kbzmKZkIthtx23u7KdN1Zxsw7YhjJZMruHP+G/AyJ34+6+a6Vx8Nb4l/pSstKCbXKuw==
+"@ctsj/state@^2.0.24":
+  version "2.0.24"
+  resolved "https://registry.yarnpkg.com/@ctsj/state/-/state-2.0.24.tgz#9ce71cc879c5545099bed873ebc29bf1f8e168cc"
+  integrity sha512-v32nmXlHE61UkxbPx4sTxlUACI/5EBJSsMM/A3Qy8LtVfURh/z7g1in/4H4Ywll+x9n7QrEoe+utgfatEDfgTA==
 
 "@discoveryjs/json-ext@0.5.7", "@discoveryjs/json-ext@^0.5.0":
   version "0.5.7"
