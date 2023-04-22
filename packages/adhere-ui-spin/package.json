@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-spin",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "description": "无侵入的loading",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-css": "^2.4.0",
-    "@baifendian/adhere-util-resource": "^2.4.0",
+    "@baifendian/adhere-util-resource": "^2.4.2",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",
