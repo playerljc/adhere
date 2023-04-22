@@ -31,10 +31,10 @@
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
-"@ant-design/cssinjs@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.7.1.tgz#5a1bce3f18efc7d3d58d30a57966305c4a89704b"
-  integrity sha512-7pwBx1ozVXDKLXKrORRCetIxIvDxZLVSzj8hTuD/SYGXDPkMzT0PxvJIyBPixAJ/eqejFARP0hrgk4XREOgGbA==
+"@ant-design/cssinjs@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@ant-design/cssinjs/-/cssinjs-1.9.1.tgz#cc2e602afab14c795af20fd22b3f9d5ccf304d8a"
+  integrity sha512-CZt1vCMs/sY7RoacYuIkZwQmb8Bhp99ReNNE9Y8lnUzik8fmCdKAQA7ecvVOFwmNFdcBHga7ye/XIRrsbkiqWw==
   dependencies:
     "@babel/runtime" "^7.11.1"
     "@emotion/hash" "^0.8.0"
@@ -4626,13 +4626,13 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   resolved "https://registry.yarnpkg.com/ansi-wrap/-/ansi-wrap-0.1.0.tgz#a82250ddb0015e9a27ca82e82ea603bbfa45efaf"
   integrity sha512-ZyznvL8k/FZeQHr2T6LzcJ/+vBApDnMNZvfVFy3At0knswWd6rJ3/0Hhmpu8oqa6C92npmozs890sX9Dl6q+Qw==
 
-antd@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-5.4.2.tgz#3923b96da76fc7276992e9fc0286ebb3a638e016"
-  integrity sha512-OxXZ7joFf6Um4zeXm07tyJ9WV6eMwUw1KUmewfM/BDceUFVtJVf7YbBTBfX3JTl+jOuSpMSb4naFhOCgVwtyFw==
+antd@^5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-5.4.4.tgz#d775d09fb2d7beb1334b83e7771bc0116ab8ff16"
+  integrity sha512-+IJdra4lhqnsGHyOCyaoZkv3MMheHVORBKC57GzRYMld8Rbtymstosx5vSw7ARuY96REkg+enkJQR9qgxSysxA==
   dependencies:
     "@ant-design/colors" "^7.0.0"
-    "@ant-design/cssinjs" "^1.7.1"
+    "@ant-design/cssinjs" "^1.9.1"
     "@ant-design/icons" "^5.0.0"
     "@ant-design/react-slick" "~1.0.0"
     "@babel/runtime" "^7.18.3"
@@ -4656,7 +4656,7 @@ antd@^5.4.2:
     rc-input-number "~7.4.0"
     rc-mentions "~2.2.0"
     rc-menu "~9.8.3"
-    rc-motion "^2.6.1"
+    rc-motion "^2.7.3"
     rc-notification "~5.0.0"
     rc-pagination "~3.3.1"
     rc-picker "~3.6.1"
@@ -4674,7 +4674,6 @@ antd@^5.4.2:
     rc-tooltip "~6.0.0"
     rc-tree "~5.7.0"
     rc-tree-select "~5.8.0"
-    rc-trigger "^5.3.4"
     rc-upload "~4.3.0"
     rc-util "^5.27.0"
     scroll-into-view-if-needed "^3.0.3"
@@ -14118,6 +14117,15 @@ rc-motion@^2.0.0, rc-motion@^2.0.1, rc-motion@^2.3.0, rc-motion@^2.3.4, rc-motio
     classnames "^2.2.1"
     rc-util "^5.21.0"
 
+rc-motion@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/rc-motion/-/rc-motion-2.7.3.tgz#126155bb3e687174fb3b92fddade2835c963b04d"
+  integrity sha512-2xUvo8yGHdOHeQbdI8BtBsCIrWKchEmFEIskf0nmHtJsou+meLd/JE+vnvSX2JxcBrJtXY2LuBpxAOxrbY/wMQ==
+  dependencies:
+    "@babel/runtime" "^7.11.1"
+    classnames "^2.2.1"
+    rc-util "^5.21.0"
+
 rc-notification@~5.0.0:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/rc-notification/-/rc-notification-5.0.3.tgz#2566d4a6b2334c171bad0cb9a8b80cb1a24b29e6"
@@ -14308,7 +14316,7 @@ rc-tree@~5.7.0:
     rc-util "^5.16.1"
     rc-virtual-list "^3.4.8"
 
-rc-trigger@^5.1.2, rc-trigger@^5.3.1, rc-trigger@^5.3.4:
+rc-trigger@^5.1.2, rc-trigger@^5.3.1:
   version "5.3.4"
   resolved "https://registry.yarnpkg.com/rc-trigger/-/rc-trigger-5.3.4.tgz#6b4b26e32825677c837d1eb4d7085035eecf9a61"
   integrity sha512-mQv+vas0TwKcjAO2izNPkqR4j86OemLRmvL2nOzdP9OWNWA1ivoTt5hzFqYNW9zACwmTezRiN8bttrC7cZzYSw==
