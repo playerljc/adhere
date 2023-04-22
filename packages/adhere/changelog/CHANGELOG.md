@@ -6,7 +6,8 @@
 
 * **adhere-ui-searchtable**
   - column中设置align的bug修改
-  - 支持tree展示的相关设置
+  - 支持tree展示的相关设置
+  - 查询和Editor中表单控件渲染逻辑修改
 * **adhere-ui-flexlayout**
   - 纵向栅格支持
   - 栅格系统优化
