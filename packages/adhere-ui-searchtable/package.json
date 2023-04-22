@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-searchtable",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "一种查询表格的通用模式(如果 UI 没有明确给出查询表格的 UI，就可以用这个默认模式)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,11 +31,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
-    "@baifendian/adhere-ui-anthoc": "^2.4.0",
+    "@baifendian/adhere-ui-anthoc": "^2.4.1",
     "@baifendian/adhere-ui-conditionalrender": "^2.4.0",
     "@baifendian/adhere-ui-css": "^2.4.0",
-    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.4.0",
-    "@baifendian/adhere-ui-flexlayout": "^2.4.0",
+    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.4.1",
+    "@baifendian/adhere-ui-flexlayout": "^2.4.1",
     "@baifendian/adhere-ui-slidelayout": "^2.4.0",
     "@baifendian/adhere-ui-space": "^2.4.0",
     "@baifendian/adhere-ui-split": "^2.4.0",
