@@ -38,7 +38,7 @@ const methods = {
       const t = strs[i].split('=');
 
       const key = config.isDecode ? window.decodeURIComponent(t[0]).trim() : t[0].trim();
-      const value = config.isDecode ? window.decodeURIComponent(t[0]).trim() : t[1].trim();
+      const value = config.isDecode ? window.decodeURIComponent(t[1]).trim() : t[1].trim();
 
       if (!config.ignoreInvalid) {
         obj[key] = value;

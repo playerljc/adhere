@@ -39,6 +39,9 @@ declare const _default: {
     symmetricDecryptToRabbit(_value?: string, _pwd?: string): any;
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
+    /**
+     * 函数节流
+     */
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
