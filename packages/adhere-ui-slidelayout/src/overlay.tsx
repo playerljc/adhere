@@ -1,13 +1,27 @@
 import classNames from 'classnames';
-import React, { FC, memo, useRef } from 'react';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
 import { slider } from './slidelayout';
-import { OverlayProps } from './types';
+import { OverlayProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slidelayout-overlay';
 
-const Overlay: FC<OverlayProps> = (props) => {
+/**
+ * Overlay
+ * @param props
+ * @param ref
+ * @constructor
+ */
+const Overlay: ForwardRefRenderFunction<SlideLayoutHandle, OverlayProps> = (props, ref) => {
   const {
     className = '',
     style = {},
@@ -137,6 +151,30 @@ const Overlay: FC<OverlayProps> = (props) => {
 
   const { getDuration, maskEl } = useSlide(props, el, positionConfig);
 
+  useEffect(() => {
+    const onTransitionend = () => {
+      if (!props.collapse) {
+        el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+      }
+    };
+
+    el?.current?.addEventListener?.('transitionend', onTransitionend);
+
+    return () => {
+      el?.current?.removeEventListener?.('transitionend', onTransitionend);
+    };
+  });
+
+  useEffect(() => {
+    if (props.collapse) {
+      el?.current?.classList?.remove?.(`${selectorPrefix}-hide`);
+    }
+  }, [props.collapse]);
+
+  useImperativeHandle(ref, () => ({
+    getEl: () => el.current,
+  }));
+
   return (
     <div
       className={classNames(selectorPrefix, direction, className || '')}
@@ -148,4 +186,4 @@ const Overlay: FC<OverlayProps> = (props) => {
   );
 };
 
-export default memo(Overlay);
+export default memo(forwardRef<SlideLayoutHandle, OverlayProps>(Overlay));

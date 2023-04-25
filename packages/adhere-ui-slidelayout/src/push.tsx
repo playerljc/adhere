@@ -1,13 +1,26 @@
 import classNames from 'classnames';
-import React, { FC, memo, useRef } from 'react';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import { slider } from './slidelayout';
-import { PushProps } from './types';
+import { PushProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slidelayout-push';
 
-const Push: FC<PushProps> = (props) => {
+/**
+ * Push
+ * @param props
+ * @param ref
+ * @constructor
+ */
+const Push: ForwardRefRenderFunction<SlideLayoutHandle, PushProps> = (props, ref) => {
   const {
     masterClassName = '',
     masterStyle = {},
@@ -115,6 +128,30 @@ const Push: FC<PushProps> = (props) => {
   });
 
   const { getDuration, maskEl } = useSlide(props, el, positionConfig);
+
+  useEffect(() => {
+    const onTransitionend = () => {
+      if (!props.collapse) {
+        el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+      }
+    };
+
+    pMasterEl?.current?.addEventListener?.('transitionend', onTransitionend);
+
+    return () => {
+      pMasterEl?.current?.removeEventListener?.('transitionend', onTransitionend);
+    };
+  });
+
+  useEffect(() => {
+    if (props.collapse) {
+      el?.current?.classList?.remove?.(`${selectorPrefix}-hide`);
+    }
+  }, [props.collapse]);
+
+  useImperativeHandle(ref, () => ({
+    getEl: () => pMasterEl.current,
+  }));
 
   return (
     <div
@@ -331,4 +368,4 @@ const Push: FC<PushProps> = (props) => {
 //   master: PropTypes.node,
 // };
 
-export default memo(Push);
+export default memo(forwardRef<SlideLayoutHandle, PushProps>(Push));

@@ -36,7 +36,7 @@ export default () => {
         </Button>
       </div>
       <div style={horizontalCSS}>
-        <SlideLayout.Revolving
+        {/*<SlideLayout.Revolving
           onAfterClose={() => {
             setCollapse1(false);
           }}
@@ -45,7 +45,24 @@ export default () => {
           master={<div>Master</div>}
         >
           left
-        </SlideLayout.Revolving>
+        </SlideLayout.Revolving>*/}
+        {/*<SlideLayout.Overlay
+          onAfterClose={() => {
+            setCollapse1(false);
+          }}
+          collapse={collapse1}
+        >
+          left
+        </SlideLayout.Overlay>*/}
+
+        <SlideLayout.Push
+          onAfterClose={() => {
+            setCollapse1(false);
+          }}
+          collapse={collapse1}
+          slide={<div>left</div>}
+          master={<div>Master</div>}
+        />
       </div>
     </>
   );

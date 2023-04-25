@@ -1,13 +1,26 @@
 import classNames from 'classnames';
-import React, { FC, memo, useRef } from 'react';
+import React, {
+  ForwardRefRenderFunction,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import { slider } from './slidelayout';
-import { RevealProps } from './types';
+import { RevealProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
 const selectorPrefix = 'adhere-ui-slidelayout-reveal';
 
-const Reveal: FC<RevealProps> = (props) => {
+/**
+ * Reveal
+ * @param props
+ * @param ref
+ * @constructor
+ */
+const Reveal: ForwardRefRenderFunction<SlideLayoutHandle, RevealProps> = (props, ref) => {
   const {
     masterClassName = '',
     masterStyle = {},
@@ -118,6 +131,30 @@ const Reveal: FC<RevealProps> = (props) => {
   });
 
   const { getDuration, maskEl } = useSlide(props, el, positionConfig);
+
+  useEffect(() => {
+    const onTransitionend = () => {
+      if (!props.collapse) {
+        el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+      }
+    };
+
+    rMasterEl?.current?.addEventListener?.('transitionend', onTransitionend);
+
+    return () => {
+      rMasterEl?.current?.removeEventListener?.('transitionend', onTransitionend);
+    };
+  });
+
+  useEffect(() => {
+    if (props.collapse) {
+      el?.current?.classList?.remove?.(`${selectorPrefix}-hide`);
+    }
+  }, [props.collapse]);
+
+  useImperativeHandle(ref, () => ({
+    getEl: () => el.current,
+  }));
 
   return (
     <>
@@ -349,4 +386,4 @@ const Reveal: FC<RevealProps> = (props) => {
 //   master: PropTypes.node,
 // };
 
-export default memo(Reveal);
+export default memo(forwardRef<SlideLayoutHandle, RevealProps>(Reveal));
