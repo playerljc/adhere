@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-iframeio",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "iframe的通信客户端和服务端",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
