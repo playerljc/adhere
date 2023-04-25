@@ -1,3 +1,14 @@
+# 2.4.3
+
+***
+
+2023-04-25
+
+* **adhere-ui-searchtable**
+  - 修改高级搜索的样式
+* **adhere-ui-slidelayout**
+  - 加入收起后hide操作
+
 # 2.4.2
 
 ***
