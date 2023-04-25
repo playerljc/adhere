@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import {
@@ -53,12 +53,15 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
 
   const [collapse, setCollapse] = useState(overlayProps.collapse);
 
+  const overlayRef = useRef();
+
   useEffect(() => {
     setCollapse(overlayProps.collapse);
   }, [overlayProps.collapse]);
 
   return ReactDOM.createPortal(
     <Overlay
+      ref={overlayRef}
       {...(overlayProps as any)}
       className={classNames(`${_selectorPrefix}`, overlayProps.className || '')}
       collapse={collapse}
@@ -111,7 +114,7 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
         renderMain={
           <div className={`${_selectorPrefix}-main`}>
             <div className={`${_selectorPrefix}-scroll`}>
-              <ScrollLayout scrollY>
+              <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-innner`}>
                 {renderGridSearchFormGroup(
                   // @ts-ignore
                   showStrategy === 'all' ? groupData : remainingGroupData,
