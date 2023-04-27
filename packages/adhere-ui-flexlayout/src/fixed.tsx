@@ -47,10 +47,8 @@ const Fixed: FC<FixedProps> = (props) => {
     };
   }, [style, gutter]);
 
-  console.log('styleList', isUseGap, gutter);
-
   return (
-    <div className={classList} style={styleList} {...attrs}>
+    <div {...attrs} className={classList} style={styleList}>
       {children}
     </div>
   );

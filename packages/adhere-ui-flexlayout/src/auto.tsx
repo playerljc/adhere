@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { FC, memo, useContext, useMemo } from 'react';
 
 import { FlexContext } from './context';
-import { useGap, useGrid } from './hooks';
+import { useGap } from './hooks';
 import { AutoProps, ContextType } from './types';
 import { getGridStyle } from './util';
 
@@ -44,7 +44,7 @@ const Auto: FC<AutoProps> = (props) => {
   }, [style, gutter]);
 
   return (
-    <div className={classList} style={styleList} {...attrs}>
+    <div {...attrs} className={classList} style={styleList}>
       {children}
     </div>
   );

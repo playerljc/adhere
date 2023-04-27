@@ -95,7 +95,7 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
         children,
       }}
     >
-      <div className={classList} style={styleList} {...attrs}>
+      <div {...attrs} className={classList} style={styleList}>
         {children}
       </div>
     </FlexContext.Provider>
