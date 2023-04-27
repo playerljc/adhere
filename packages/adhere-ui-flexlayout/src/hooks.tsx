@@ -41,7 +41,7 @@ export const useGap = (gutter) =>
 
       if (gutter.length >= 1 && gutter.length <= 2) {
         return !gutter.some(
-          (g) => g === undefined || g === null || g === '' || g === 0 || typeof g !== 'number',
+          (g) => g === undefined || g === null || g === '' || typeof g !== 'number',
         );
       }
     }

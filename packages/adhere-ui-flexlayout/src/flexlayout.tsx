@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { FC, memo, useMemo } from 'react';
 
+import * as TRBLC from './TRBLC';
 import Auto from './auto';
 import BackLayout from './backLayout';
 import { FlexContext } from './context';
@@ -115,5 +116,6 @@ MemoWrap.BackLayout = BackLayout;
 MemoWrap.ScrollLayout = ScrollLayout;
 MemoWrap.useScrollLayout = useScrollLayout;
 MemoWrap.ScrollLayoutContext = ScrollLayoutContext;
+MemoWrap.TRBLC = TRBLC;
 
 export default MemoWrap;

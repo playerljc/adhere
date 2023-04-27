@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom/client';
 
 import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
 
-import Test from './test';
+import Trblc from './trblc';
 
+// import Test from './test';
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -24,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => {
-        return <Test />;
+        return <Trblc />;
       }}
     </AdhereConfigProvider>
   </ConfigProvider>,

@@ -18,8 +18,6 @@ const Auto: FC<AutoProps> = (props) => {
 
   const { gutter = 0, direction, children: contextChildren } = useContext<ContextType>(FlexContext);
 
-  const isUseGrid = useGrid(props);
-
   const isUseGap = useGap(gutter);
 
   const classList = useMemo(
@@ -35,7 +33,7 @@ const Auto: FC<AutoProps> = (props) => {
   const styleList = useMemo(() => {
     const defaultStyle = style || {};
 
-    const gridStyle = isUseGrid
+    const gridStyle = isUseGap
       ? getGridStyle({ gutter, span: null, children: contextChildren, direction })
       : {};
 

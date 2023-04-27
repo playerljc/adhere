@@ -37,7 +37,7 @@ const Fixed: FC<FixedProps> = (props) => {
   const styleList = useMemo(() => {
     const defaultStyle = style || {};
 
-    const gridStyle = isUseGrid
+    const gridStyle = isUseGap
       ? getGridStyle({ gutter, span, children: contextChildren, direction })
       : {};
 
@@ -46,6 +46,8 @@ const Fixed: FC<FixedProps> = (props) => {
       ...gridStyle,
     };
   }, [style, gutter]);
+
+  console.log('styleList', isUseGap, gutter);
 
   return (
     <div className={classList} style={styleList} {...attrs}>

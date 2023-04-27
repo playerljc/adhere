@@ -19,6 +19,26 @@ export interface FlexLayoutFunction<P> extends NamedExoticComponent<P> {
   useScrollLayout: () => ScrollLayoutContextType;
   ScrollLayoutContext: Context<ScrollLayoutContextType>;
   selectorPrefix: string;
+  TRBLC: {
+    CBLayout: FC<TBLRCLayoutProps>;
+    CBRLayout: FC<TBLRCLayoutProps>;
+    CRBLayout: FC<TBLRCLayoutProps>;
+    CRLayout: FC<TBLRCLayoutProps>;
+    LBCLayout: FC<TBLRCLayoutProps>;
+    LCBLayout: FC<TBLRCLayoutProps>;
+    LCLayout: FC<TBLRCLayoutProps>;
+    LCRBLayout: FC<TBLRCLayoutProps>;
+    LRTCBLayout: FC<TBLRCLayoutProps>;
+    LTCBLayout: FC<TBLRCLayoutProps>;
+    LTCLayout: FC<TBLRCLayoutProps>;
+    TBLCRLayout: FC<TBLRCLayoutProps>;
+    TCBRLayout: FC<TBLRCLayoutProps>;
+    TCLayout: FC<TBLRCLayoutProps>;
+    TCRLayout: FC<TBLRCLayoutProps>;
+    TLCLayout: FC<TBLRCLayoutProps>;
+    TLRCLayout: FC<TBLRCLayoutProps>;
+    TRCLayout: FC<TBLRCLayoutProps>;
+  };
 }
 
 export interface FlexLayoutProps {
@@ -171,4 +191,23 @@ export interface getGridStyleParams {
   children?: any;
   span?: number | null;
   direction: 'vertical' | 'horizontal';
+}
+
+export interface TBLRProps extends FixedProps {
+  render: () => ReactNode;
+}
+
+export interface CenterProps extends AutoProps {
+  render: () => ReactNode;
+}
+
+export interface TBLRCLayoutProps extends FlexLayoutProps {
+  tProps?: TBLRProps;
+  bProps?: TBLRProps;
+  lProps?: TBLRProps;
+  rProps?: TBLRProps;
+  cProps?: CenterProps;
+
+  autoWrapProps?: AutoProps;
+  autoInnerProps?: FlexLayoutProps;
 }
