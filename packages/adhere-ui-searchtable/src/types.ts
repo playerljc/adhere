@@ -363,6 +363,7 @@ export interface SearchProps extends SuspenseProps {
   autoFixed: boolean;
   bodyClassName: string;
   bodyStyle: CSSProperties;
+  title: string;
 }
 
 /**

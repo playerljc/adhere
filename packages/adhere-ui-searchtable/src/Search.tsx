@@ -244,20 +244,18 @@ abstract class Search<
           (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
-            {...this.props}
             className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
             style={{ ...(searchStyle || {}) }}
             // fit={fitSearch}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
-              <Fixed {...this.props} className={`${selectorPrefix}-search-form-before`}>
+              <Fixed className={`${selectorPrefix}-search-form-before`}>
                 {this.renderSearchFormBefore?.()}
               </Fixed>
             )}
 
             {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
               <Fixed
-                {...this.props}
                 className={classNames({
                   [`${selectorPrefix}-search-form`]: true,
                   [`${selectorPrefix}-search-form-expand`]: expand,
@@ -269,7 +267,7 @@ abstract class Search<
 
             {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
               <Fixed
-                {...this.props}
+                data-title={this.props.title}
                 className={classNames(`${selectorPrefix}-search-tool-bar`, {
                   [`${selectorPrefix}-search-form-expand`]: expand,
                 })}
@@ -279,7 +277,7 @@ abstract class Search<
             )}
 
             {!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.() && (
-              <Fixed {...this.props} className={`${selectorPrefix}-search-form-after`}>
+              <Fixed className={`${selectorPrefix}-search-form-after`}>
                 {this.renderSearchFormAfter?.()}
               </Fixed>
             )}
@@ -287,13 +285,10 @@ abstract class Search<
         )}
 
         {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
-          <Fixed {...this.props} className={`${selectorPrefix}-search-header`}>
-            {this.renderSearchHeader?.()}
-          </Fixed>
+          <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
         )}
 
         <Auto
-          {...this.props}
           style={{ ...(bodyStyle || {}) }}
           className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
@@ -307,9 +302,7 @@ abstract class Search<
         </Auto>
 
         {!!this.renderSearchFooter && !!this.renderSearchFooter?.() && (
-          <Fixed {...this.props} className={`${selectorPrefix}-search-footer`}>
-            {this.renderSearchFooter?.()}
-          </Fixed>
+          <Fixed className={`${selectorPrefix}-search-footer`}>{this.renderSearchFooter?.()}</Fixed>
         )}
       </FlexLayout>
     );
@@ -349,6 +342,8 @@ export const propTypes = {
   fitBody: PropTypes.bool,
   // 是否是查询固定，表格自适应
   autoFixed: PropTypes.bool,
+  // 列表标题
+  title: PropTypes.string,
 };
 
 Search.defaultProps = defaultProps;
