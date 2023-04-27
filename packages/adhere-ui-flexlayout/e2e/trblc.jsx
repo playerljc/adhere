@@ -54,7 +54,7 @@ export default () => {
         }}
       />*/}
 
-      {/*<FlexLayout.TRBLC.TRCLayout
+      <FlexLayout.TRBLC.TRCLayout
         style={{ height: '100%' }}
         gutter={20}
         autoInnerProps={{ gutter: [0, 20] }}
@@ -71,7 +71,7 @@ export default () => {
         cProps={{
           render: () => <Card>center</Card>,
         }}
-      />*/}
+      />
 
       {/*<FlexLayout.TRBLC.TLRCLayout
         style={{ height: '100%' }}
@@ -338,7 +338,7 @@ export default () => {
         }}
       />*/}
 
-      <FlexLayout.TRBLC.LRTCBLayout
+      {/*<FlexLayout.TRBLC.LRTCBLayout
         style={{ height: '100%' }}
         gutter={50}
         autoInnerProps={{ gutter: [0, 30] }}
@@ -365,7 +365,7 @@ export default () => {
         cProps={{
           render: () => <Card>Center</Card>,
         }}
-      />
+      />*/}
     </div>
   );
 };
