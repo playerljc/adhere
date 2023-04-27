@@ -149,6 +149,12 @@ const Push: ForwardRefRenderFunction<SlideLayoutHandle, PushProps> = (props, ref
     }
   }, [props.collapse]);
 
+  useEffect(() => {
+    if (!props.collapse) {
+      el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+    }
+  }, []);
+
   useImperativeHandle(ref, () => ({
     getEl: () => pMasterEl.current,
   }));

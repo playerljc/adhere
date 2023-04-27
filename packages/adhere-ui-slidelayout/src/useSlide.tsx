@@ -96,6 +96,17 @@ export default (
     }
 
     initial();
+
+    return () => {
+      if (maskEl.current) {
+        try {
+          maskEl.current?.parentElement?.removeChild(maskEl?.current);
+        } catch (e) {}
+
+        // @ts-ignore
+        maskEl.current = null;
+      }
+    };
   }, []);
 
   useLayoutEffect(() => {

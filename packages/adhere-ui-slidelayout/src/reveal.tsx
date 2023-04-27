@@ -152,6 +152,12 @@ const Reveal: ForwardRefRenderFunction<SlideLayoutHandle, RevealProps> = (props,
     }
   }, [props.collapse]);
 
+  useEffect(() => {
+    if (!props.collapse) {
+      el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+    }
+  }, []);
+
   useImperativeHandle(ref, () => ({
     getEl: () => el.current,
   }));

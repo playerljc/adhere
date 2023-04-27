@@ -171,6 +171,12 @@ const Overlay: ForwardRefRenderFunction<SlideLayoutHandle, OverlayProps> = (prop
     }
   }, [props.collapse]);
 
+  useEffect(() => {
+    if (!props.collapse) {
+      el?.current?.classList?.add?.(`${selectorPrefix}-hide`);
+    }
+  }, []);
+
   useImperativeHandle(ref, () => ({
     getEl: () => el.current,
   }));

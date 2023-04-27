@@ -14,7 +14,7 @@ const horizontalCSS = {
 };
 
 export default () => {
-  const [collapse1, setCollapse1] = useState(true);
+  const [collapse1, setCollapse1] = useState(false);
 
   return (
     <>
@@ -35,6 +35,7 @@ export default () => {
           关闭
         </Button>
       </div>
+
       <div style={horizontalCSS}>
         {/*<SlideLayout.Revolving
           onAfterClose={() => {
@@ -46,6 +47,7 @@ export default () => {
         >
           left
         </SlideLayout.Revolving>*/}
+
         {/*<SlideLayout.Overlay
           onAfterClose={() => {
             setCollapse1(false);
@@ -55,14 +57,14 @@ export default () => {
           left
         </SlideLayout.Overlay>*/}
 
-        <SlideLayout.Push
+        {/*<SlideLayout.Push
           onAfterClose={() => {
             setCollapse1(false);
           }}
           collapse={collapse1}
           slide={<div>left</div>}
           master={<div>Master</div>}
-        />
+        />*/}
       </div>
     </>
   );
