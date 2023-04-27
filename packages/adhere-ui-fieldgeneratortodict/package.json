@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-fieldgeneratortodict",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "字典生成器",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,7 +29,7 @@
     "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-anthoc": "^2.5.1",
+    "@baifendian/adhere-ui-anthoc": "^2.5.2",
     "@baifendian/adhere-ui-conditionalrender": "^2.4.0",
     "@baifendian/adhere-ui-hooks": "^2.4.0",
     "@baifendian/adhere-ui-suspense": "^2.4.3",
