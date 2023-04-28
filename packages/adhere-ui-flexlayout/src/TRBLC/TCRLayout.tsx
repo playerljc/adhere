@@ -38,7 +38,11 @@ const TCRLayout: FC<TBLRCLayoutProps> = ({
       className={classNames(`${selectorPrefix}-tcr-layout`, props?.className)}
       direction="horizontal"
     >
-      <Auto {...(autoWrapProps || {})} fit={false}>
+      <Auto
+        {...(autoWrapProps || {})}
+        fit={false}
+        className={`${selectorPrefix}-trblc-layout-auto`}
+      >
         <FlexLayout
           {...(autoInnerProps || {})}
           className={classNames(

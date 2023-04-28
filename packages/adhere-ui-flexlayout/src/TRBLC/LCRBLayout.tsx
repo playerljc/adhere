@@ -40,7 +40,11 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
       className={classNames(`${selectorPrefix}-lcrb-layout`, props?.className)}
       direction="vertical"
     >
-      <Auto {...(autoWrapProps || {})} fit={false}>
+      <Auto
+        {...(autoWrapProps || {})}
+        fit={false}
+        className={`${selectorPrefix}-trblc-layout-auto`}
+      >
         <FlexLayout
           {...(autoInnerProps || {})}
           className={classNames(

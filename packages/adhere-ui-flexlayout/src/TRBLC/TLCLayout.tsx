@@ -40,7 +40,11 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
     >
       <Fixed {...(TProps || {})}>{tProps?.render?.()}</Fixed>
 
-      <Auto {...(autoWrapProps || {})} fit={false}>
+      <Auto
+        {...(autoWrapProps || {})}
+        fit={false}
+        className={`${selectorPrefix}-trblc-layout-auto`}
+      >
         <FlexLayout
           {...(autoInnerProps || {})}
           className={classNames(
