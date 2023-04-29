@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import Auto from '../auto';
 import Fixed from '../fixed';
@@ -9,6 +9,8 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
  * LRTCBLayout
+ * @param wrapClassName
+ * @param wrapStyle
  * @param tProps
  * @param lProps
  * @param rProps
@@ -20,13 +22,15 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @constructor
  */
 const LRTCBLayout: FC<TBLRCLayoutProps> = ({
+  wrapClassName,
+  wrapStyle,
+  autoWrapProps,
+  autoInnerProps,
   tProps,
   lProps,
   rProps,
   cProps,
   bProps,
-  autoWrapProps,
-  autoInnerProps,
   ...props
 }) => {
   // @ts-ignore
@@ -40,34 +44,69 @@ const LRTCBLayout: FC<TBLRCLayoutProps> = ({
   // @ts-ignore
   const CProps = omit<CenterProps, string>(cProps, ['render']);
 
-  return (
-    <FlexLayout
-      {...(props || {})}
-      className={classNames(`${selectorPrefix}-lrtcb-layout`, props?.className)}
-      direction="horizontal"
-    >
-      <Fixed {...(LProps || {})}>{lProps?.render?.()}</Fixed>
+  const classList = useMemo(
+    () =>
+      classNames(
+        `${selectorPrefix}-trblc`,
+        {
+          [`${selectorPrefix}-trblc-no-autofix`]:
+            cProps && 'autoFixed' in cProps && !cProps.autoFixed,
+        },
+        wrapClassName,
+      ),
+    [cProps],
+  );
 
-      <Auto
-        {...(autoWrapProps || {})}
-        fit={false}
-        className={`${selectorPrefix}-trblc-layout-auto`}
+  const autoWrapClassList = useMemo(
+    () =>
+      classNames(
+        `${selectorPrefix}-trblc-auto`,
+        {
+          [`${selectorPrefix}-trblc-auto-no-autofix`]:
+            autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
+        },
+        autoWrapProps?.className,
+      ),
+    [autoWrapProps],
+  );
+
+  const autoInnerClassList = useMemo(
+    () =>
+      classNames(
+        `${selectorPrefix}-trblc-auto-inner`,
+        {
+          [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
+            autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
+        },
+        autoInnerProps?.className,
+      ),
+    [autoInnerProps],
+  );
+
+  return (
+    <div className={classList} style={wrapStyle || {}}>
+      <FlexLayout
+        {...(props || {})}
+        className={classNames(`${selectorPrefix}-lrtcb-layout`, props?.className)}
+        direction="horizontal"
       >
-        <FlexLayout
-          {...(autoInnerProps || {})}
-          className={classNames(
-            `${selectorPrefix}-trblc-layout-auto-inner`,
-            autoWrapProps?.className,
-          )}
-          direction="vertical"
-        >
-          <Fixed {...(TProps || {})}>{tProps?.render?.()}</Fixed>
-          <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
-          <Fixed {...(BProps || {})}>{bProps?.render?.()}</Fixed>
-        </FlexLayout>
-      </Auto>
-      <Fixed {...(RProps || {})}>{rProps?.render?.()}</Fixed>
-    </FlexLayout>
+        <Fixed {...(LProps || {})}>{lProps?.render?.()}</Fixed>
+
+        <Auto {...(autoWrapProps || {})} fit={false} className={autoWrapClassList}>
+          <FlexLayout
+            {...(autoInnerProps || {})}
+            className={autoInnerClassList}
+            direction="vertical"
+          >
+            <Fixed {...(TProps || {})}>{tProps?.render?.()}</Fixed>
+            <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
+            <Fixed {...(BProps || {})}>{bProps?.render?.()}</Fixed>
+          </FlexLayout>
+        </Auto>
+
+        <Fixed {...(RProps || {})}>{rProps?.render?.()}</Fixed>
+      </FlexLayout>
+    </div>
   );
 };
 

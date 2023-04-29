@@ -3,11 +3,33 @@
 
 @adhere-ui-flexlayout-grid-count: 24;
 
+.adhere-ui-flexlayout-trblc {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &.adhere-ui-flexlayout-trblc-no-autofix {
+    overflow: auto;
+  }
+
+  > .adhere-ui-flexlayout {
+    height: 100%;
+
+    &.adhere-ui-flexlayout-horizontal {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
 .adhere-ui-flexlayout {
   display: flex;
 
-  &.adhere-ui-flexlayout-trblc-layout-auto-inner {
+  &.adhere-ui-flexlayout-trblc-auto-inner {
     height: 100%;
+
+    &.adhere-ui-flexlayout-trblc-auto-inner-no-autofix {
+      overflow: auto;
+    }
   }
 
   // 横向
@@ -91,8 +113,12 @@
   > .adhere-ui-flexlayout-auto {
     flex-grow: 1;
 
-    &.adhere-ui-flexlayout-trblc-layout-auto {
+    &.adhere-ui-flexlayout-trblc-auto {
       overflow: hidden;
+
+      &.adhere-ui-flexlayout-trblc-auto-no-autofix {
+        overflow: inherit;
+      }
     }
 
     &.adhere-ui-flexlayout-auto-fit {
@@ -105,9 +131,6 @@
       > * {
         width: 100%;
       }
-    }
-
-    &.adhere-ui-flexlayout-auto-gap {
     }
   }
 }

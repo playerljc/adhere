@@ -202,12 +202,13 @@ export interface CenterProps extends AutoProps {
 }
 
 export interface TBLRCLayoutProps extends FlexLayoutProps {
+  wrapClassName?: string;
+  wrapStyle?: CSSProperties;
   tProps?: TBLRProps;
   bProps?: TBLRProps;
   lProps?: TBLRProps;
   rProps?: TBLRProps;
   cProps?: CenterProps;
-
   autoWrapProps?: AutoProps;
   autoInnerProps?: FlexLayoutProps;
 }
