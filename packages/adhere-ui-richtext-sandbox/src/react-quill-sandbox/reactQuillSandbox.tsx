@@ -292,10 +292,8 @@ const ReactQuillSandboxHOC = memo(
 ReactQuillSandboxHOC.AntdFormRequireValidator = (editor, tip) => ({
   validator: (rule, value, callback) => {
     if (editor?.()?.getLength?.() > 1) {
-      console.log('ok');
       callback();
     } else {
-      console.log('error');
       callback(tip);
     }
   },
