@@ -149,6 +149,6 @@ export const FieldGeneratorToDict = lazy(() =>
   import(/* webpackChunkName: "fieldgeneratortodict" */ '@/components/ui/fieldgeneratortodict'),
 );
 
-export const ReactQuillSandbox = lazy(() =>
-  import(/* webpackChunkName: "reactquillsandbox" */ '@/components/ui/reactquillsandbox'),
+export const RichTextSandBox = lazy(() =>
+  import(/* webpackChunkName: "richtextsandbox" */ '@/components/ui/richtextsandbox'),
 );

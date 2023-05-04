@@ -1,3 +1,14 @@
+# 2.5.5
+
+***
+
+2023-05-04
+
+* **adhere-ui-richtext-sandbox**
+  - 重构，变为可以对任何富文本进行sandbox
+  - 分离react-quill编辑器
+  - 分离wang-editor编辑器
+
 # 2.5.4
 
 ***

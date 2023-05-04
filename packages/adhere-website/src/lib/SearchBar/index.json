@@ -265,9 +265,9 @@
     "path": "/adhere/component/ui/fieldgeneratortodict"
   },
   {
-    "kw": ["对ReactQuill进行样式隔离的包装", "ReactQuillSandbox"],
+    "kw": ["对富文本进行样式隔离的包装", "RichTextSandBox"],
     "group": "组件 - UI",
-    "path": "/adhere/component/ui/reactquillsandbox"
+    "path": "/adhere/component/ui/richtextsandbox"
   },
 
   {

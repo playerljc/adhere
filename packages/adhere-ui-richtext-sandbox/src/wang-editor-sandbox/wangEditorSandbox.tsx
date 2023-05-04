@@ -1,0 +1,342 @@
+import WangEditorCssStr from './lib/wang-editor-css';
+
+import { useUpdateEffect } from 'ahooks';
+import classNames from 'classnames';
+import React, {
+  ForwardRefRenderFunction,
+  ReactElement,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from 'react';
+
+import type { IDomEditor } from '@wangeditor/editor';
+
+import ReactDOMStr from '../common-lib/react-dom.production.min';
+import ReactStr from '../common-lib/react.production.min';
+import WangEditorStr from './lib/wang-editor-5.1.23';
+import WangEditorReactStr from './lib/wang-editor-react-1.0.6';
+import {
+  EditorProps,
+  ToolBarProps,
+  WangEditorSandboxHandler,
+  WangEditorSandboxProps,
+} from './types';
+
+const selectorPrefix = 'adhere-ui-richtext-wangeditor-sandbox';
+
+const editorId = 'wangEditorWrap';
+
+const WangEditorSandbox: ForwardRefRenderFunction<
+  WangEditorSandboxHandler,
+  WangEditorSandboxProps
+> = (props, ref): ReactElement => {
+  const { wrapStyle, wrapClassName, wangEditorStyle, toolBarProps, editorProps } = props;
+
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  const frameRef = useRef<HTMLIFrameElement>(null);
+
+  const isMount = useRef<boolean>(false);
+
+  const value = useRef<string>(props.value as string);
+
+  const editor = useRef<IDomEditor | null>(null);
+
+  const defaultToolBarConfig = useMemo<ToolBarProps>(
+    () => ({
+      defaultConfig: {},
+      mode: 'default',
+    }),
+    [],
+  );
+
+  const defaultEditorProps = useMemo<EditorProps>(
+    () => ({
+      defaultConfig: {},
+      mode: 'default',
+    }),
+    [],
+  );
+
+  /**
+   * renderWangEditor
+   * @description 渲染富文本
+   */
+  function renderWangEditor() {
+    return new Promise<{ window: Window; document: Document; wrap: HTMLDivElement }>((resolve) => {
+      const document = frameRef?.current?.contentDocument as Document;
+      const window = frameRef?.current?.contentWindow as Window;
+
+      const wrap = document.getElementById(editorId) as HTMLDivElement;
+
+      // console.log('render props.toolBarProps', {
+      //   ...defaultToolBarConfig,
+      //   ...props.toolBarProps,
+      // });
+
+      const {
+        // @ts-ignore
+        WangEditorForReact: { Editor, Toolbar },
+        // @ts-ignore
+        ReactDOM,
+      } = window;
+
+      ReactDOM.render(
+        <>
+          <Toolbar
+            editor={editor.current}
+            {...defaultToolBarConfig}
+            {...(props.toolBarProps || {})}
+          />
+          <Editor
+            ref={ref}
+            {...defaultEditorProps}
+            {...(props.editorProps || {})}
+            onCreated={(_editor) => {
+              editor.current = _editor;
+              render().then(() => {
+                if (editorProps?.onCreated) {
+                  editorProps.onCreated(_editor);
+                }
+              });
+            }}
+            value={value.current}
+            onChange={(_editor) => {
+              if (props.onChange) {
+                props.onChange(_editor.getHtml());
+              }
+            }}
+          />
+        </>,
+        wrap,
+        () => {
+          isMount.current = true;
+
+          resolve({
+            document,
+            window,
+            wrap,
+          });
+        },
+      );
+    });
+  }
+
+  /**
+   * renderHTML
+   * @description 渲染HTML
+   */
+  function renderHTML() {
+    const document = frameRef?.current?.contentDocument as Document;
+    const wrap = document.getElementById(editorId) as HTMLDivElement;
+    wrap.innerHTML = props.value as string;
+
+    if (wrapRef.current) {
+      wrapRef.current.style.height = `${document.documentElement.offsetHeight}px`;
+    }
+  }
+
+  /**
+   * render
+   * @description 渲染内容
+   */
+  function render(): Promise<{ window: Window; document: Document; wrap: HTMLDivElement } | void> {
+    return new Promise<void>((resolve) => {
+      // 只读模式
+      if ('readOnly' in props && props.readOnly) {
+        renderHTML();
+        resolve();
+        return;
+      }
+
+      return renderWangEditor();
+    });
+  }
+
+  /**
+   * useImperativeHandle
+   * @description 向外暴漏的方法
+   */
+  useImperativeHandle(ref, () => ({
+    /**
+     * getEditor
+     * @description 获取编辑器对象
+     * @return {IDomEditor | null}
+     */
+    getEditor(): IDomEditor | null {
+      return editor.current;
+    },
+    /**
+     * getWangEditor
+     * @description 获取wangEditor对象
+     * @return {}
+     */
+    getWangEditor() {
+      // @ts-ignore
+      return frameRef?.current?.contentWindow?.wangEditor;
+    },
+  }));
+
+  /**
+   * useLayoutEffect
+   * @description initEditor
+   */
+  useLayoutEffect(() => {
+    function onLoad() {
+      return render();
+    }
+
+    frameRef?.current?.addEventListener('load', onLoad);
+
+    const reactUrl = URL.createObjectURL(new Blob([ReactStr], { type: 'text/javascript' }));
+    const reactDOMUrl = URL.createObjectURL(new Blob([ReactDOMStr], { type: 'text/javascript' }));
+    const wangEditorUrl = URL.createObjectURL(
+      new Blob([WangEditorStr], { type: 'text/javascript' }),
+    );
+    const wangEditorReactUrl = URL.createObjectURL(
+      new Blob([WangEditorReactStr], { type: 'text/javascript' }),
+    );
+
+    const iframeUrl = URL.createObjectURL(
+      new Blob(
+        [
+          `
+        <!DOCTYPE html>
+        <head>
+          <meta charset="UTF-8" />
+          <title></title>
+          <style>
+            html, body {
+              margin: 0;
+              padding: 0;
+            }
+
+            html.editor {
+              width: 100%;
+              height: 100%;
+            }
+
+            html.editor > body {
+              width: 100%;
+              height: 100%;
+            }
+
+            html.editor > body > #${editorId} {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+              height: 100%;
+            }
+            
+            html > body > #${editorId} > [data-w-e-toolbar=true] {
+              flex-shrink: 0;
+            }
+            
+            html > body > #${editorId} > [data-w-e-textarea=true] {
+              flex-grow: 1;
+              min-height: 0;
+            }
+
+            ::-webkit-scrollbar-thumb {
+              background-color: rgba(0, 0, 0, 0.1);
+              border-radius: 4px;
+            }
+            *::-webkit-scrollbar-track {
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+            ::-webkit-scrollbar {
+              width: 10px;
+              height: 10px;
+            }
+
+            ${WangEditorCssStr}
+          </style>
+          <script src="${reactUrl}"><\/script>
+          <script src="${reactDOMUrl}"><\/script>
+          <script src="${wangEditorUrl}"><\/script>
+          <script src="${wangEditorReactUrl}"><\/script>
+        </head>
+        <html lang="en" class="${classNames({
+          editor: !('readOnly' in props) || !props.readOnly,
+        })}">
+        <body>
+          <div id="${editorId}" style="${wangEditorStyle || ''}"></div>
+        </body>
+        </html>
+        `,
+        ],
+        {
+          type: 'text/html',
+        },
+      ),
+    );
+    frameRef!.current!.src = iframeUrl;
+
+    return () => {
+      frameRef?.current?.removeEventListener('load', onLoad);
+      URL.revokeObjectURL(iframeUrl);
+      URL.revokeObjectURL(reactUrl);
+      URL.revokeObjectURL(reactDOMUrl);
+      URL.revokeObjectURL(wangEditorUrl);
+      URL.revokeObjectURL(wangEditorReactUrl);
+    };
+  }, []);
+
+  /**
+   * 及时销毁 editor
+   */
+  useEffect(() => {
+    return () => {
+      if (editor.current === null) return;
+
+      editor.current.destroy();
+
+      editor.current = null;
+
+      render();
+    };
+  }, [editor]);
+
+  /**
+   * useUpdateEffect
+   * @description value
+   */
+  useUpdateEffect(() => {
+    value.current = props.value as string;
+
+    if (isMount.current) {
+      render().then(() => {});
+    }
+  }, [props.value]);
+
+  /**
+   * useUpdateEffect
+   * @description toolBarProps, editorProps
+   */
+  useUpdateEffect(() => {
+    // console.log('toolBarProps change', toolBarProps);
+
+    if (isMount.current) {
+      render().then(() => {});
+    }
+  }, [toolBarProps, editorProps]);
+
+  return (
+    <div
+      ref={wrapRef}
+      className={classNames(`${selectorPrefix}`, wrapClassName || '')}
+      style={wrapStyle || {}}
+    >
+      <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
+    </div>
+  );
+};
+
+export default memo(
+  forwardRef<WangEditorSandboxHandler, WangEditorSandboxProps>(WangEditorSandbox),
+);

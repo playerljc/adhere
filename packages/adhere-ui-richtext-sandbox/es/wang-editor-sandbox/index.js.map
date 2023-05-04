@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["wang-editor-sandbox/index.js"],"sourcesContent":["import WangEditorSandbox from './wangEditorSandbox';\r\nexport default WangEditorSandbox;\r\n"],"names":["WangEditorSandbox"],"mappings":"OAAOA,sBAAuB,qCACfA"}

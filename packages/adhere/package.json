@@ -66,7 +66,6 @@
     "@baifendian/adhere-ui-prompt-successprompt": "^2.4.3",
     "@baifendian/adhere-ui-prompt-warnprompt": "^2.4.3",
     "@baifendian/adhere-ui-pullrefresh": "^2.4.3",
-    "@baifendian/adhere-ui-reactquill-sandbox": "^2.4.0",
     "@baifendian/adhere-ui-revolving": "^2.4.0",
     "@baifendian/adhere-ui-scrollload": "^2.4.0",
     "@baifendian/adhere-ui-searchlist": "^2.5.4",

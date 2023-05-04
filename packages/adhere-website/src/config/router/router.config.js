@@ -80,8 +80,7 @@ const {
   Comment,
   ConfigProvider,
   IframeIO,
-  AntdFormItem,
-  ReactQuillSandbox,
+  RichTextSandBox,
 } = Components;
 
 export default () => [
@@ -430,9 +429,9 @@ export default () => [
                 component: FieldGeneratorToDict,
               },
               {
-                path: '/adhere/component/ui/reactquillsandbox',
-                name: 'ReactQuillSandbox',
-                component: ReactQuillSandbox,
+                path: '/adhere/component/ui/richtextsandbox',
+                name: 'RichTextSandBox',
+                component: RichTextSandBox,
               },
             ],
           },

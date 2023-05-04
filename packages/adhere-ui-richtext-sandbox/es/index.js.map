@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ReactQuillSandbox from './react-quill-sandbox';\r\nimport WangEditorSandbox from './wang-editor-sandbox';\r\nexport { ReactQuillSandbox, WangEditorSandbox };\r\n"],"names":["ReactQuillSandbox","WangEditorSandbox"],"mappings":"OAAOA,sBAAuB,+BACvBC,sBAAuB,+BACrBD,kBAAmBC,iBAAmB"}

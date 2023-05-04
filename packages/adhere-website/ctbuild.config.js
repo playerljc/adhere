@@ -1,5 +1,3 @@
-const path = require('path');
-
 const modifyVars = require('./themes/default/vars');
 
 function isDev(mode) {
@@ -104,6 +102,16 @@ module.exports = {
           style: false,
         },
         'adhere-ui-anthoc',
+      ]);
+
+      babelLoaderConfig.options.plugins.push([
+        'import',
+        {
+          libraryName: '@baifendian/adhere-ui-richtext-sandbox',
+          libraryDirectory: 'es',
+          style: true,
+        },
+        'adhere-ui-richtext-sandbox',
       ]);
     }
 

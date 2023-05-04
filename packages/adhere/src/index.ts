@@ -30,7 +30,6 @@ import ErrorPrompt from '@baifendian/adhere-ui-prompt-errorprompt';
 import SuccessPrompt from '@baifendian/adhere-ui-prompt-successprompt';
 import WarnPrompt from '@baifendian/adhere-ui-prompt-warnprompt';
 import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
-import ReactQuillSandbox from '@baifendian/adhere-ui-reactquill-sandbox';
 import Revolving from '@baifendian/adhere-ui-revolving';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import SearchList from '@baifendian/adhere-ui-searchlist';
@@ -99,7 +98,6 @@ export {
   SuccessPrompt,
   WarnPrompt,
   PullRefresh,
-  ReactQuillSandbox,
   Revolving,
   ScrollLoad,
   SearchList,
