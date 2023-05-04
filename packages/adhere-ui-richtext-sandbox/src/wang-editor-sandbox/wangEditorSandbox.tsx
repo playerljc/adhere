@@ -337,6 +337,19 @@ const WangEditorSandbox: ForwardRefRenderFunction<
   );
 };
 
-export default memo(
+const WangEditorSandboxHOC = memo(
   forwardRef<WangEditorSandboxHandler, WangEditorSandboxProps>(WangEditorSandbox),
 );
+
+// @ts-ignore
+WangEditorSandboxHOC.AntdFormRequireValidator = (editor, tip) => ({
+  validator: (rule, value, callback) => {
+    if (editor?.()?.isEmpty?.()) {
+      callback(tip);
+    } else {
+      callback();
+    }
+  },
+});
+
+export default WangEditorSandboxHOC;

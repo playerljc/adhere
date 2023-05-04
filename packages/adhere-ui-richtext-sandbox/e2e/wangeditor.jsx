@@ -37,11 +37,11 @@ export default () => {
   });
 
   useEffect(() => {
-    form.setFieldsValue({
-      article: `
-        <h3>Controlled mode caveats</h3><p>In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;and&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>.</p><p>Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>&nbsp;differs from current state.</p><p>If you frequently need to manipulate the DOM or use the&nbsp;<a href="https://quilljs.com/docs/api/" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">Quill API</a>s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using&nbsp;<code style="background-color: rgb(247, 247, 247);">defaultValue</code>, but won't try to reset it after that. The&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;callback will still work as expected.</p><p>Read more about uncontrolled components in the&nbsp;<a href="https://facebook.github.io/react/docs/uncontrolled-components.html#default-values" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">React docs</a>.</p><p><br></p>
-      `,
-    });
+    // form.setFieldsValue({
+    //   article: `
+    //     <h3>Controlled mode caveats</h3><p>In controlled mode, components are supposed to prevent local stateful changes, and instead only have them happen through&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;and&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>.</p><p>Because Quill handles its own changes, and does not allow preventing edits, ReactQuill has to settle for a hybrid between controlled and uncontrolled mode. It can't prevent the change, but will still override the content whenever&nbsp;<code style="background-color: rgb(247, 247, 247);">value</code>&nbsp;differs from current state.</p><p>If you frequently need to manipulate the DOM or use the&nbsp;<a href="https://quilljs.com/docs/api/" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">Quill API</a>s imperatively, you might consider switching to fully uncontrolled mode. ReactQuill will initialize the editor using&nbsp;<code style="background-color: rgb(247, 247, 247);">defaultValue</code>, but won't try to reset it after that. The&nbsp;<code style="background-color: rgb(247, 247, 247);">onChange</code>&nbsp;callback will still work as expected.</p><p>Read more about uncontrolled components in the&nbsp;<a href="https://facebook.github.io/react/docs/uncontrolled-components.html#default-values" target="_blank" style="color: rgb(203, 56, 55); background-color: transparent;">React docs</a>.</p><p><br></p>
+    //   `,
+    // });
   }, []);
 
   console.log('toolBarProps', toolBarProps);
@@ -74,7 +74,13 @@ export default () => {
         </button>
         <button
           onClick={() => {
-            console.log(form.getFieldValue('article'));
+            // console.log(form.getFieldValue('article'));
+            form
+              .validateFields()
+              .then((values) => {
+                console.log(values);
+              })
+              .catch(() => {});
           }}
         >
           表单获取
@@ -123,7 +129,7 @@ export default () => {
         </button>
       </div>
 
-      <WangEditorSandbox
+      {/*<WangEditorSandbox
         ref={ref}
         wrapStyle={{
           height: 500,
@@ -134,9 +140,9 @@ export default () => {
           setValue(v);
         }}
         // readOnly
-      />
+      />*/}
 
-      {/*<Form name="userForm" form={form}>
+      <Form name="userForm" form={form}>
         <Form.Item
           name="article"
           rules={[
@@ -144,16 +150,21 @@ export default () => {
               required: true,
               message: '请输入文章',
             },
+            WangEditorSandbox.AntdFormRequireValidator(
+              () => ref.current?.getEditor?.(),
+              '请输入文章',
+            ),
           ]}
         >
           <WangEditorSandbox
+            ref={ref}
             onChange={() => {}}
             wrapStyle={{
               height: 500,
             }}
           />
         </Form.Item>
-      </Form>*/}
+      </Form>
     </div>
   );
 };

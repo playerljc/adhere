@@ -71,9 +71,10 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
         <window.ReactQuill
           ref={reactQuillRef}
           {..._props}
-          value={value.current}
+          value={value.current || ''}
           onChange={(params) => {
             if (!isMount.current) return;
+            // console.log('onChange', params);
 
             if (props.onChange) {
               // @ts-ignore
@@ -283,6 +284,21 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
   );
 };
 
-export default memo(
+const ReactQuillSandboxHOC = memo(
   forwardRef<ReactQuillSandboxHandler, ReactQuillSandboxProps>(ReactQuillSandbox),
 );
+
+// @ts-ignore
+ReactQuillSandboxHOC.AntdFormRequireValidator = (editor, tip) => ({
+  validator: (rule, value, callback) => {
+    if (editor?.()?.getLength?.() > 1) {
+      console.log('ok');
+      callback();
+    } else {
+      console.log('error');
+      callback(tip);
+    }
+  },
+});
+
+export default ReactQuillSandboxHOC;

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
 
-import ReactQuill from './reactquill';
+// import ReactQuill from './reactquill';
 import WangEditor from './wangeditor';
 
 import 'antd/dist/reset.css';
