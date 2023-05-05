@@ -1341,12 +1341,22 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderDict = ({ searchConfig, column, dataIndex }) => {
         const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
 
+        // popUp控件的缺省popps
+        const popUpDefaultProps = {
+          dropdownStyle: {
+            zIndex: 1051,
+          },
+          popupStyle: {
+            zIndex: 1051,
+          },
+        };
+
         if (searchConfig.dictName.indexOf('CustomFormItem') !== -1) {
           return (
             <Component
               value={this.state[dataIndex]}
               onChange={(e) => this.onSelectChange(dataIndex, e)}
-              {...(searchConfig.props || { zIndex: 1051 })}
+              {...Object.assign(popUpDefaultProps, searchConfig.props || {})}
             >
               {(data) => searchConfig?.renderChildren?.(data)}
             </Component>
@@ -1357,7 +1367,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Component
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...Object.assign(popUpDefaultProps, searchConfig.props || {})}
           />
         );
       };
