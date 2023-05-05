@@ -1,3 +1,12 @@
+# 2.5.7
+
+***
+
+2023-05-05
+
+* **adhere-ui-searchtable**
+  - 高级搜索控件加入popUpDefaultProps
+
 # 2.5.6
 
 ***
