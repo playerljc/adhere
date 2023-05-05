@@ -1,3 +1,15 @@
+# 2.5.6
+
+***
+
+2023-05-05
+
+* **adhere-ui-richtext-sandbox**
+  - WangEditor的BUG修改
+  - WangEditor加入国际化
+* **adhere-ui-configprovider**
+  - 加入国际化的Context
+
 # 2.5.5
 
 ***
