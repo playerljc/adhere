@@ -64,4 +64,12 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   );
 };
 
-export default memo(ConfigProvider);
+/**
+ * ConfigProviderHOC
+ */
+const ConfigProviderHOC = memo(ConfigProvider);
+
+// @ts-ignore
+ConfigProviderHOC.Context = Context;
+
+export default ConfigProviderHOC;
