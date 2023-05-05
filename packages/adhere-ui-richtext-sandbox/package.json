@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-richtext-sandbox",
-  "version": "2.5.5",
+  "version": "2.5.6",
   "description": "对富文本进行样式隔离的包装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
