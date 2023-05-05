@@ -35,4 +35,5 @@ export interface WangEditorSandboxProps {
     editorProps?: EditorProps;
     readOnly?: boolean;
     lang?: 'zh_CN' | 'en_US';
+    bordered?: boolean;
 }

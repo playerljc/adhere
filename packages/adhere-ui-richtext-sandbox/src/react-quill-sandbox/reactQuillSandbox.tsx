@@ -63,6 +63,8 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
       const document = frameRef?.current?.contentDocument as Document;
       const window = frameRef?.current?.contentWindow as Window;
 
+      if (!document || !window) return;
+
       const wrap = document.getElementById(editorId) as HTMLDivElement;
 
       // @ts-ignore
@@ -102,6 +104,9 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
    */
   function renderHTML() {
     const document = frameRef?.current?.contentDocument as Document;
+
+    if (!document) return;
+
     const wrap = document.getElementById(editorId) as HTMLDivElement;
     wrap.innerHTML = props.value as string;
 

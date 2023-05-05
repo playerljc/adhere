@@ -25,7 +25,11 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => {
-        return <WangEditor />;
+        return (
+          <div style={{ padding: 30 }}>
+            <WangEditor />
+          </div>
+        );
       }}
     </AdhereConfigProvider>
   </ConfigProvider>,

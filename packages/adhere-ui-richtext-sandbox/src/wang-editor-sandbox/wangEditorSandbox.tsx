@@ -50,6 +50,8 @@ const WangEditorSandbox: ForwardRefRenderFunction<
 
   const editor = useRef<IDomEditor | null>(null);
 
+  const isTriggerChange = useRef(false);
+
   // @ts-ignore
   const configProvider = useContext<ConfigProviderContext>(ConfigProvider.Context);
 
@@ -91,7 +93,47 @@ const WangEditorSandbox: ForwardRefRenderFunction<
       const document = frameRef?.current?.contentDocument as Document;
       const window = frameRef?.current?.contentWindow as Window;
 
+      if (!document || !window) {
+        return;
+      }
+
       const wrap = document.getElementById(editorId) as HTMLDivElement;
+
+      // ----------------------------------------- start
+      const styleSheet: CSSStyleSheet = document.styleSheets[0];
+      const editorWrapRule: CSSStyleRule = styleSheet.cssRules[3] as CSSStyleRule;
+      const headerRule: CSSStyleRule = styleSheet.cssRules[4] as CSSStyleRule;
+
+      const editorWrapRuleCssText = `
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+      `;
+
+      const headerRulesText = `
+        flex-shrink: 0;
+      `;
+
+      // 有边框
+      if (!('bordered' in props) || props.bordered) {
+        editorWrapRule.style.cssText = `
+          ${editorWrapRuleCssText}
+          border: 1px solid #ccc;
+        `;
+        headerRule.style.cssText = `
+          ${headerRulesText}
+          border-bottom: 1px solid #ccc;
+        `;
+      }
+      // 没边框
+      else {
+        editorWrapRule.style.cssText = editorWrapRuleCssText;
+        headerRule.style.cssText = headerRulesText;
+      }
+      // ----------------------------------------- end
 
       // console.log('render props.toolBarProps', {
       //   ...defaultToolBarConfig,
@@ -130,6 +172,11 @@ const WangEditorSandbox: ForwardRefRenderFunction<
             }}
             value={value.current}
             onChange={(_editor) => {
+              if (!isTriggerChange.current) {
+                isTriggerChange.current = true;
+                return;
+              }
+
               if (props.onChange) {
                 props.onChange(_editor.getHtml());
               }
@@ -156,6 +203,9 @@ const WangEditorSandbox: ForwardRefRenderFunction<
    */
   function renderHTML() {
     const document = frameRef?.current?.contentDocument as Document;
+
+    if (!document) return;
+
     const wrap = document.getElementById(editorId) as HTMLDivElement;
     wrap.innerHTML = props.value as string;
 
@@ -250,14 +300,11 @@ const WangEditorSandbox: ForwardRefRenderFunction<
             }
 
             html.editor > body > #${editorId} {
-              display: flex;
-              flex-direction: column;
-              width: 100%;
-              height: 100%;
+              
             }
             
             html > body > #${editorId} > [data-w-e-toolbar=true] {
-              flex-shrink: 0;
+              
             }
             
             html > body > #${editorId} > [data-w-e-textarea=true] {
