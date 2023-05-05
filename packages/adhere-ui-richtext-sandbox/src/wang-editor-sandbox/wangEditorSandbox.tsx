@@ -7,6 +7,7 @@ import React, {
   ReactElement,
   forwardRef,
   memo,
+  useContext,
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
@@ -14,6 +15,8 @@ import React, {
   useRef,
 } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import type { ConfigProviderContext } from '@baifendian/adhere-ui-configprovider/es/types';
 import type { IDomEditor } from '@wangeditor/editor';
 
 import ReactDOMStr from '../common-lib/react-dom.production.min';
@@ -47,6 +50,22 @@ const WangEditorSandbox: ForwardRefRenderFunction<
 
   const editor = useRef<IDomEditor | null>(null);
 
+  // @ts-ignore
+  const configProvider = useContext<ConfigProviderContext>(ConfigProvider.Context);
+
+  /**
+   * langMap
+   * @description 国际化的映射
+   */
+  const langMap = useMemo<Map<string, string>>(
+    () =>
+      new Map<string, string>([
+        ['zh_CN', 'zh-CN'],
+        ['en_US', 'en'],
+      ]),
+    [],
+  );
+
   const defaultToolBarConfig = useMemo<ToolBarProps>(
     () => ({
       defaultConfig: {},
@@ -78,6 +97,10 @@ const WangEditorSandbox: ForwardRefRenderFunction<
       //   ...defaultToolBarConfig,
       //   ...props.toolBarProps,
       // });
+
+      // @ts-ignore
+      const { i18nChangeLanguage } = window?.wangEditor;
+      i18nChangeLanguage(langMap.get(props.lang || configProvider.intl?.lang || 'zh_CN'));
 
       const {
         // @ts-ignore
