@@ -47,7 +47,19 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
 
   return (
     <ConditionalRender conditional={isIntlInit}>
-      {() => <Context.Provider value={{}}>{children()}</Context.Provider>}
+      {() => (
+        <Context.Provider
+          value={{
+            intl: {
+              lang,
+              prefix,
+              locales: locales || {},
+            },
+          }}
+        >
+          {children()}
+        </Context.Provider>
+      )}
     </ConditionalRender>
   );
 };
