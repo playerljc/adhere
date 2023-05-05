@@ -8,6 +8,8 @@
   - 重构，变为可以对任何富文本进行sandbox
   - 分离react-quill编辑器
   - 分离wang-editor编辑器
+* **adhere-ui-configprovider**
+  - 加入国际化的Context
 
 # 2.5.4
 
