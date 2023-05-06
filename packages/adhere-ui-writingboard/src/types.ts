@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import type {} from '@baifendian/adhere-ui-flexlayout/es/types';
 
 export interface WritingBoardHandle {
   setMode: (mode: Mode) => void;
@@ -50,4 +51,12 @@ export enum Mode {
   FREE = 'free',
   // 橡皮
   RUBBER = 'rubber',
+}
+
+export interface SignatureHandle {}
+
+export interface SignatureProps {
+  WrapProps?:,
+  ToolProps?:,
+  AreaProps?:
 }

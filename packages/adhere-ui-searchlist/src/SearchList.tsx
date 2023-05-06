@@ -94,15 +94,18 @@ abstract class SearchList<
     this.state = {
       prePage: 1,
       page: 1,
+      // @ts-ignore
       limit: this.getLimit(),
       expand: props.defaultExpandSearchCollapse,
     };
 
+    // @ts-ignore
     Object.assign(this.state, {
       // 表格密度设置
       listDensity: this.getListDensity(),
     });
 
+    // @ts-ignore
     this.onClear = this.onClear.bind(this);
   }
 
@@ -137,13 +140,16 @@ abstract class SearchList<
   renderTableDensitySetting(): ReactElement {
     return (
       <ListDensitySetting
+        // @ts-ignore
         density={this.state.listDensity}
         onChange={(density) => {
+          // @ts-ignore
           this.setState({
             listDensity: density,
           });
         }}
         onReset={(density) => {
+          // @ts-ignore
           this.setState({
             listDensity: density,
           });
@@ -158,6 +164,7 @@ abstract class SearchList<
    * @return {ReactElement}
    */
   renderSearchToolBar(): ReactElement {
+    // @ts-ignore
     const { isShowExpandSearch } = this.props;
 
     const defaultItems = [
@@ -174,11 +181,13 @@ abstract class SearchList<
           />
         }
         onClick={() => {
+          // @ts-ignore
           this.setState(
             {
               page: 1,
             },
             () => {
+              // @ts-ignore
               this.onSearch();
             },
           );
@@ -186,7 +195,12 @@ abstract class SearchList<
       >
         {Intl.v('查询')}
       </Button>,
-      <Button className={`${selectorPrefix}-searchfooteritem`} key="reset" onClick={this.onClear}>
+      <Button
+        className={`${selectorPrefix}-searchfooteritem`}
+        key="reset"
+        // @ts-ignore
+        onClick={this.onClear}
+      >
         {Intl.v('重置')}
       </Button>,
     ];
@@ -194,7 +208,10 @@ abstract class SearchList<
     if (isShowExpandSearch) {
       defaultItems.push(
         <ConditionalRender
-          conditional={this.state.expand as boolean}
+          conditional={
+            // @ts-ignore
+            this.state.expand as boolean
+          }
           noMatch={() => (
             <a
               key="expand"
@@ -203,6 +220,7 @@ abstract class SearchList<
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
 
+                // @ts-ignore
                 this.setState(
                   {
                     expand: true,
@@ -224,6 +242,7 @@ abstract class SearchList<
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
 
+                // @ts-ignore
                 this.setState(
                   {
                     expand: false,
@@ -240,6 +259,7 @@ abstract class SearchList<
       );
     }
 
+    // @ts-ignore
     const items = this.renderSearchFooterItems(defaultItems) || [...defaultItems];
 
     return (
@@ -258,13 +278,16 @@ abstract class SearchList<
    * @return {ReactNode}
    */
   renderBody() {
+    // @ts-ignore
     const { antdListProps } = this.props;
 
+    // @ts-ignore
     const { listDensity } = this.state;
 
     const listProps = {
       rowKey: this.getRowKey(),
       dataSource: this.getData(),
+      // @ts-ignore
       pagination: this.getPagination(),
       renderItem: (record, rowIndex) => this.renderItem(record, rowIndex),
       header: this.renderListHeader(),
@@ -281,6 +304,7 @@ abstract class SearchList<
    * @return {ReactElement | null}
    */
   renderInner(): ReactElement | null {
+    // @ts-ignore
     const { fixedListSpaceBetween = true } = this.props;
 
     return super.renderInner(

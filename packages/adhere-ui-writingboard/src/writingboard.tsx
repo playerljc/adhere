@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 // import PropTypes from 'prop-types';
 import React, {
   ForwardRefRenderFunction,

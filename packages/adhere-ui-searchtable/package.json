@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startapp:dev": "cross-env mode=development ctbuild startapp --define alias=@,evnVars=true",
+    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
+    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
     "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",

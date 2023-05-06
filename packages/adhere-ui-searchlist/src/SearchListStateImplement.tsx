@@ -33,6 +33,7 @@ export class SearchListStateImplement<
       props.$state;
 
     this.unsubscribe = createState({
+      // @ts-ignore
       initialState: { ...this.state },
       models,
       mapState: (state) => ({
@@ -59,6 +60,7 @@ export class SearchListStateImplement<
   }
 
   componentWillUnmount() {
+    // @ts-ignore
     super.componentWillUnmount?.();
 
     this.unsubscribe();
@@ -69,6 +71,7 @@ export class SearchListStateImplement<
    * @description 获取列表的数据
    */
   getData(): object[] {
+    // @ts-ignore
     return this.state[this.getServiceName()][this.getFetchListPropName()][this.getDataKey()];
   }
 
@@ -77,6 +80,7 @@ export class SearchListStateImplement<
    * @description 获取列表总的数据树
    */
   getTotal(): number {
+    // @ts-ignore
     return this.state[this.getServiceName()][this.getFetchListPropName()][this.getTotalKey()];
   }
 
@@ -85,6 +89,7 @@ export class SearchListStateImplement<
    * @description loading
    */
   showLoading(): boolean {
+    // @ts-ignore
     return this.state.loading[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 
@@ -94,6 +99,7 @@ export class SearchListStateImplement<
    * @param searchParams
    */
   fetchDataExecute(searchParams?: object): Promise<any> {
+    // @ts-ignore
     return this.state[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );

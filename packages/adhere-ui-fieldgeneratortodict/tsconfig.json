@@ -1,8 +1,6 @@
 {
   "extends": "../../node_modules/@ctsj/build/buildpackagetsconfig-base",
   "compilerOptions": {
-    "declarationDir": "./lib",
-    "outDir": "./lib",
     "baseUrl": "./",
     "module": "ESNext"
   },
