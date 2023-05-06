@@ -22,7 +22,7 @@ export interface WritingBoardProps {
   // 线条宽度
   defaultLineWidth: number;
   // 防抖的事件
-  resizeTime: number;
+  resizeTime?: number;
 }
 
 /**
