@@ -1,22 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-import CircleDrawAction from './draw/circleDrawAction';
-import DiamondDrawAction from './draw/diamondDrawAction';
-import FreeDrawAction from './draw/freeDrawAction';
-import PolygonDrawAction from './draw/polygonDrawAction';
-import RectangleDrawAction from './draw/rectangleDrawAction';
-import StartDrawAction from './draw/startDrawAction';
-import TriangleDrawAction from './draw/triangleDrawAction';
-import PolygonSelection from './index.ts';
-import CircleModifyAtion from './modify/circleModifyAction';
-import DiamondModifyAction from './modify/diamondModifyAction';
-import PolygonModifyAction from './modify/polygonModifyAction';
-import RectangleModifyAction from './modify/rectangleModifyAction';
-import StartModifyAction from './modify/startModifyAction';
-import TriangleModifyAction from './modify/triangleModifyAction';
-import { ActionEvents, PolygonSelectionActions, SelectType } from './types';
+import CircleDrawAction from '../src/draw/CircleDrawAction';
+import DiamondDrawAction from '../src/draw/DiamondDrawAction';
+import FreeDrawAction from '../src/draw/FreeDrawAction';
+import PolygonDrawAction from '../src/draw/PolygonDrawAction';
+import RectangleDrawAction from '../src/draw/RectangleDrawAction';
+import StartDrawAction from '../src/draw/StartDrawAction';
+import TriangleDrawAction from '../src/draw/TriangleDrawAction';
+import PolygonSelection from '../src/index.ts';
+import CircleModifyAction from '../src/modify/CircleModifyAction';
+import DiamondModifyAction from '../src/modify/DiamondModifyAction';
+import PolygonModifyAction from '../src/modify/PolygonModifyAction';
+import RectangleModifyAction from '../src/modify/RectangleModifyAction';
+import StartModifyAction from '../src/modify/StartModifyAction';
+import TriangleModifyAction from '../src/modify/TriangleModifyAction';
+import { ActionEvents, PolygonSelectionActions, SelectType } from '../src/types';
 
+import '../src/index.less';
 import './index.less';
 
 /**
@@ -38,7 +38,7 @@ class DrawingBoard extends React.Component {
     // @ts-ignore
     const typeActionMap = new Map([
       [SelectType.Polygon, PolygonModifyAction],
-      [SelectType.Circle, CircleModifyAtion],
+      [SelectType.Circle, CircleModifyAction],
       [SelectType.Rectangle, RectangleModifyAction],
       [SelectType.Triangle, TriangleModifyAction],
       [SelectType.Diamond, DiamondModifyAction],
@@ -628,4 +628,4 @@ class DrawingBoard extends React.Component {
   }
 }
 
-ReactDOM.render(<DrawingBoard />, document.getElementById('app'));
+export default DrawingBoard;
