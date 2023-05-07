@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import WritingBoard from '../src/index';
 
@@ -10,11 +10,19 @@ import './index.less';
 export default () => {
   const [value, setValue] = useState('');
 
+  const ref = useRef();
+
   return (
     <div>
-      <p>签名</p>
+      <p
+        onClick={() => {
+          console.log(ref.current.isEmpty());
+        }}
+      >
+        签名
+      </p>
       <div style={{ width: 200, height: 300, border: '1px solid #ccc' }}>
-        <WritingBoard.Signature value={value} onChange={(v) => setValue(v)} />
+        <WritingBoard.Signature ref={ref} value={value} onChange={(v) => setValue(v)} />
       </div>
     </div>
   );

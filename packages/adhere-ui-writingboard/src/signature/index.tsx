@@ -41,6 +41,16 @@ const Signature: ForwardRefRenderFunction<SignatureHandle, SignatureProps> = (
                   onClick={() => {
                     if (!coreRef.current) return;
 
+                    const isEmpty = coreRef.current.isEmpty();
+                    if (isEmpty) {
+                      if (onChange) {
+                        onChange('');
+                        dialog.close();
+                      }
+
+                      return;
+                    }
+
                     const base64 = coreRef.current.save();
 
                     if (onChange) {
@@ -69,11 +79,7 @@ const Signature: ForwardRefRenderFunction<SignatureHandle, SignatureProps> = (
 
   useImperativeHandle(ref, () => ({
     isEmpty: () => {
-      if (coreRef?.current) {
-        return coreRef?.current.isEmpty();
-      }
-
-      return true;
+      return !value;
     },
   }));
 

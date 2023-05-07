@@ -93,7 +93,7 @@ export interface SignatureCoreProps {
  * SignatureHandle
  */
 export interface SignatureHandle {
-  isEmpty: (value?: string) => boolean;
+  isEmpty: () => boolean;
 }
 
 /**
