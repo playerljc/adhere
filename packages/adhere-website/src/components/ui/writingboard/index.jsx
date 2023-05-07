@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { WritingBoard } from '@baifendian/adhere';
+import { SignatureCoreHandle } from '@baifendian/adhere-ui-writingboard/src/types';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -538,11 +539,11 @@ export default () => {
       />
 
       <FunctionPropsSection
-        title="Signature"
+        title="SignatureCore"
         config={[
           {
             border: true,
-            title: 'Signature',
+            title: 'SignatureCore',
             data: [
               {
                 name: 'save',
@@ -580,11 +581,11 @@ export default () => {
       />
 
       <FunctionPropsSection
-        title="SignatureCore"
+        title="Signature"
         config={[
           {
             border: true,
-            title: 'SignatureCore',
+            title: 'Signature',
             data: [
               {
                 name: 'isEmpty',
