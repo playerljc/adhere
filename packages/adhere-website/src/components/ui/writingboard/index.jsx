@@ -503,6 +503,14 @@ export default () => {
                 returnDesc: '',
               },
               {
+                name: 'isEmpty',
+                desc: '判断是否为空',
+                modifier: 'public',
+                params: [],
+                returnType: 'boolean',
+                returnDesc: '',
+              },
+              {
                 name: 'toDataURL',
                 desc: '获取画布数据',
                 modifier: 'public',
@@ -574,6 +582,14 @@ export default () => {
                 returnType: '',
                 returnDesc: '',
               },
+              {
+                name: 'isEmpty',
+                desc: '判断是否为空',
+                modifier: 'public',
+                params: [],
+                returnType: 'boolean',
+                returnDesc: '',
+              },
             ],
           },
         ]}
@@ -590,15 +606,7 @@ export default () => {
                 name: 'isEmpty',
                 desc: '判断是否为空',
                 modifier: 'public',
-                params: [
-                  {
-                    name: 'value',
-                    desc: '',
-                    type: 'string',
-                    defaultVal: '',
-                    required: '',
-                  },
-                ],
+                params: [],
                 returnType: 'boolean',
                 returnDesc: '',
               },
