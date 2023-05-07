@@ -15,6 +15,7 @@ export interface WritingBoardHandle {
   setStrokeStyle: (style: string) => void;
   setLineWidth: (width: number) => void;
   clear: () => void;
+  isEmpty: () => boolean;
   toDataURL: (backgroundColor?: string, type?: string, quality?: any) => string | undefined;
 }
 
@@ -74,6 +75,7 @@ export type SignatureCoreAreaProps = Partial<CenterProps>;
  */
 export interface SignatureCoreHandle {
   save: (backgroundColor?: string, type?: string, quality?: any) => string | undefined;
+  isEmpty: () => boolean;
 }
 
 /**

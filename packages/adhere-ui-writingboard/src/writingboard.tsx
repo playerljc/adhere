@@ -602,6 +602,24 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
     return canvasRef?.current?.toDataURL(type || 'image/png', quality);
   }
 
+  /**
+   * isEmpty
+   * @return {boolean}
+   */
+  function isEmpty() {
+    // 先设置背景
+    let imageData = ctx?.current?.getImageData(
+      0,
+      0,
+      canvasRef?.current?.width!,
+      canvasRef?.current?.height!,
+    )!;
+
+    if (!imageData.data.length) return true;
+
+    return !imageData.data.some((v) => v !== imageData.data[0]);
+  }
+
   useImperativeHandle(ref, () => ({
     /**
      * setMode
@@ -637,6 +655,10 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
      * @param quality 搭配出图片的质量
      */
     toDataURL,
+    /**
+     * isEmpty
+     */
+    isEmpty,
   }));
 
   useLayoutEffect(() => {

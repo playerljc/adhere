@@ -159,6 +159,13 @@ const Signature: ForwardRefRenderFunction<SignatureCoreHandle, SignatureCoreProp
         quality ?? 1.0,
       );
     },
+    isEmpty: () => {
+      if (writingBoardRef?.current) {
+        return writingBoardRef?.current?.isEmpty?.();
+      }
+
+      return true;
+    },
   }));
 
   useUpdateEffect(() => {
