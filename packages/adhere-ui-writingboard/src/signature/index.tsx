@@ -1,190 +1,94 @@
-import { useUpdateEffect } from 'ahooks';
-import { Button, Card, InputNumber, Space } from 'antd';
+import { Button } from 'antd';
+import classNames from 'classnames';
+import React, { forwardRef, memo, useCallback, useImperativeHandle, useRef } from 'react';
 import type { ForwardRefRenderFunction } from 'react';
-import React, {
-  forwardRef,
-  memo,
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { CompactPicker } from 'react-color';
 
-import FlexLayout from '@baifendian/adhere-ui-flexlayout';
+import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
 
-import WritingBoard from '../index';
-import type {
-  SignatureAreaProps,
-  SignatureHandle,
-  SignatureProps,
-  SignatureToolProps,
-  SignatureWrapProps,
-  WritingBoardHandle,
-} from '../types';
-import { Mode } from '../types';
+import type { SignatureCoreHandle, SignatureHandle, SignatureProps } from '../types';
+import SignatureCore from './SignatureCore';
 
 const selectorPrefix = 'adhere-ui-signature';
 
+const emptyStr =
+  'data:image/png;base64,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';
+
 /**
  * Signature
- * @description 签名
- * @param {SignatureProps} props
+ * @param props
  * @param ref
  * @constructor
  */
 const Signature: ForwardRefRenderFunction<SignatureHandle, SignatureProps> = (
-  { wrapProps, toolProps, areaProps, defaultWidth, defaultColor },
+  { className, style, value, onChange, modalProps, coreProps },
   ref,
 ) => {
-  const [mode, setMode] = useState<Mode>(Mode.FREE);
-  const [color, setColor] = useState(defaultColor ?? '#000');
-  const [width, setWidth] = useState(defaultWidth ?? 2);
+  const coreRef = useRef<SignatureCoreHandle>(null);
 
-  const writingBoardRef = useRef<WritingBoardHandle>(null);
-
-  const defaultProps = useMemo<SignatureWrapProps>(
-    () => ({
-      gutter: 20,
-      wrapClassName: `${selectorPrefix}-wrap`,
-    }),
-    [],
-  );
-
-  const defaultLProps = useMemo<SignatureToolProps>(
-    () => ({
-      fit: true,
-    }),
-    [],
-  );
-
-  const defaultCProps = useMemo<SignatureAreaProps>(
-    () => ({
-      autoFixed: true,
-    }),
-    [],
-  );
-
-  const renderTool = useCallback<() => React.ReactNode>(() => {
-    // 线条宽度
-    // 颜色
-    // 橡皮
-    // 预览
-    // 清除
+  const renderMask = useCallback(() => {
     return (
-      <Card>
-        <Space direction="vertical" size={20}>
-          <InputNumber
-            style={{ width: '100%' }}
-            value={width}
-            precision={0}
-            max={10}
-            min={1}
-            onChange={(v) => {
-              setWidth(v as number);
-              if (writingBoardRef.current) {
-                writingBoardRef.current.setLineWidth(v as number);
-              }
-            }}
-          />
+      <div
+        className={classNames(`${selectorPrefix}-mask`)}
+        onClick={() => {
+          const dialog = MessageDialog.Modal({
+            config: {
+              title: Intl.v('编辑签名'),
+              width: '60%',
+              maskClosable: false,
+              footer: [
+                <Button
+                  key="submit"
+                  type="primary"
+                  title={Intl.v('保存')}
+                  onClick={() => {
+                    if (!coreRef.current) return;
 
-          <CompactPicker
-            color={color}
-            onChangeComplete={(c) => {
-              setColor(c.hex);
+                    const base64 = coreRef.current.save();
 
-              if (writingBoardRef.current) {
-                writingBoardRef.current.setStrokeStyle(c.hex);
-              }
-            }}
-          />
-
-          <Button
-            size="large"
-            block
-            type="primary"
-            onClick={() => {
-              if (writingBoardRef.current) {
-                const v = mode === Mode.FREE ? Mode.RUBBER : Mode.FREE;
-                setMode(v);
-                writingBoardRef.current.setMode(v);
-              }
-            }}
-          >
-            {mode === Mode.FREE ? Intl.v('橡皮') : Intl.v('绘制')}
-          </Button>
-
-          <Button
-            size="large"
-            block
-            type="primary"
-            onClick={() => {
-              if (writingBoardRef.current) {
-                writingBoardRef.current.clear();
-              }
-            }}
-          >
-            {Intl.v('清除')}
-          </Button>
-        </Space>
-      </Card>
+                    if (onChange) {
+                      onChange(base64);
+                      dialog.close();
+                    }
+                  }}
+                >
+                  {Intl.v('保存')}
+                </Button>,
+              ],
+              ...(modalProps || {}),
+            },
+            children: <SignatureCore ref={coreRef} {...coreProps} />,
+          });
+        }}
+      >
+        {Intl.v('编辑签名')}
+      </div>
     );
-  }, [mode, width, color, toolProps]);
+  }, [coreProps, value, onChange]);
 
-  const renderArea = useCallback<() => React.ReactNode>(() => {
-    return (
-      <Card>
-        <WritingBoard
-          ref={writingBoardRef}
-          defaultMode={mode}
-          defaultLineWidth={width}
-          defaultStrokeStyle={color}
-        />
-      </Card>
-    );
-  }, [areaProps]);
+  const renderInner = useCallback(() => {
+    return value ? <img src={value} alt="" /> : null;
+  }, [value]);
 
   useImperativeHandle(ref, () => ({
-    /**
-     * Save
-     */
-    save: (backgroundColor?: string, type?: string, quality?: any) => {
-      if (!writingBoardRef.current) return;
+    isEmpty: (value) => {
+      if (!value) return true;
 
-      return writingBoardRef.current.toDataURL(
-        backgroundColor ?? '#fff',
-        type ?? 'image/png',
-        quality ?? 1.0,
-      );
+      return value === emptyStr;
     },
   }));
 
-  useUpdateEffect(() => {
-    setWidth(defaultWidth as number);
-  }, [defaultWidth]);
-
-  useUpdateEffect(() => {
-    setColor(defaultColor as string);
-  }, [defaultColor]);
-
   return (
-    <FlexLayout.TRBLC.LCLayout
-      {...defaultProps}
-      {...wrapProps}
-      lProps={{
-        ...defaultLProps,
-        ...toolProps,
-        render: renderTool,
-      }}
-      cProps={{
-        ...defaultCProps,
-        ...areaProps,
-        render: renderArea,
-      }}
-    />
+    <div className={classNames(selectorPrefix, className)} style={style || {}}>
+      {renderMask()}
+      {renderInner()}
+    </div>
   );
 };
 
-export default memo(forwardRef<SignatureHandle, SignatureProps>(Signature));
+const SignatureHOC = memo(forwardRef<SignatureHandle, SignatureProps>(Signature));
+
+// @ts-ignore
+SignatureHOC.SignatureCore = SignatureCore;
+
+export default SignatureHOC;
