@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { WritingBoard } from '@baifendian/adhere';
-import { SignatureCoreHandle } from '@baifendian/adhere-ui-writingboard/src/types';
 
 import PlayGroundPage, {
   CodeBoxSection,
