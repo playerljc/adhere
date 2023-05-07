@@ -1,12 +1,20 @@
 import type { CSSProperties } from 'react';
-import type {} from '@baifendian/adhere-ui-flexlayout/es/types';
 
+import type {
+  CenterProps,
+  TBLRCLayoutProps,
+  TBLRProps,
+} from '@baifendian/adhere-ui-flexlayout/es/types';
+
+/**
+ * WritingBoardHandle
+ */
 export interface WritingBoardHandle {
   setMode: (mode: Mode) => void;
   setStrokeStyle: (style: string) => void;
   setLineWidth: (width: number) => void;
   clear: () => void;
-  toDataURL: () => string | undefined;
+  toDataURL: (backgroundColor?: string, type?: string, quality?: any) => string | undefined;
 }
 
 /**
@@ -53,10 +61,27 @@ export enum Mode {
   RUBBER = 'rubber',
 }
 
-export interface SignatureHandle {}
+export type SignatureWrapProps = Pick<
+  TBLRCLayoutProps,
+  Exclude<'lProps' | 'cProps', keyof TBLRCLayoutProps>
+>;
+export type SignatureToolProps = Partial<TBLRProps>;
+export type SignatureAreaProps = Partial<CenterProps>;
 
+/**
+ * SignatureHandle
+ */
+export interface SignatureHandle {
+  save: (backgroundColor?: string, type?: string, quality?: any) => string | undefined;
+}
+
+/**
+ * SignatureProps
+ */
 export interface SignatureProps {
-  WrapProps?:,
-  ToolProps?:,
-  AreaProps?:
+  defaultWidth?: number;
+  defaultColor?: string;
+  wrapProps?: SignatureWrapProps;
+  toolProps?: SignatureToolProps;
+  areaProps?: SignatureAreaProps;
 }

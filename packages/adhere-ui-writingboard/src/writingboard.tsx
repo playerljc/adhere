@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-// import PropTypes from 'prop-types';
 import React, {
   ForwardRefRenderFunction,
   forwardRef,
@@ -13,6 +12,7 @@ import React, {
 import Util from '@baifendian/adhere-util';
 import { ResizeObserver } from '@juggle/resize-observer';
 
+import Signature from './signature';
 import { Mode, Point, WritingBoardHandle, WritingBoardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-writingboard';
@@ -603,12 +603,24 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
   }
 
   useImperativeHandle(ref, () => ({
+    /**
+     * setMode
+     * @param mode
+     */
     setMode: (mode) => {
       curShape.current = mode;
     },
+    /**
+     * setStrokeStyle
+     * @param style
+     */
     setStrokeStyle: (style) => {
       strokeStyle.current = style;
     },
+    /**
+     * setLineWidth
+     * @param width
+     */
     setLineWidth: (width) => {
       lineWidth.current = width;
     },
@@ -675,25 +687,9 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
   );
 };
 
-const Wrap = memo(forwardRef(WritingBoard));
+const SignatureHOC = memo(forwardRef(WritingBoard));
 
-// Wrap.defaultProps = {
-//   className: '',
-//   style: {},
-//   defaultMode: Mode.FREE,
-//   defaultStrokeStyle: '#000',
-//   defaultLineWidth: 2,
-//   resizeTime: 300,
-// };
-//
-// Wrap.propTypes = {
-//   className: PropTypes.string,
-//   style: PropTypes.object,
-//   // @ts-ignore
-//   defaultMode: PropTypes.string.isRequired,
-//   defaultStrokeStyle: PropTypes.string.isRequired,
-//   defaultLineWidth: PropTypes.number.isRequired,
-//   resizeTime: PropTypes.number.isRequired,
-// };
+// @ts-ignore
+SignatureHOC.Signature = Signature;
 
-export default Wrap;
+export default SignatureHOC;
