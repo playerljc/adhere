@@ -87,4 +87,10 @@ export default [
   'Imagem',
   'Compressão',
   'Outros',
+  'largura',
+  'cor',
+  'apagador',
+  'visualização',
+  'claro',
+  'empate',
 ];

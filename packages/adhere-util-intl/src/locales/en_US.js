@@ -87,4 +87,10 @@ export default [
   'Image',
   'Compression',
   'Other',
+  'width',
+  'color',
+  'eraser',
+  'preview',
+  'clear',
+  'draw',
 ];
