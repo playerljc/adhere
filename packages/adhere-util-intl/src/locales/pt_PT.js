@@ -93,4 +93,5 @@ export default [
   'visualização',
   'claro',
   'empate',
+  'editar assinatura',
 ];

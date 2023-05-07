@@ -93,4 +93,5 @@ export default [
   'preview',
   'clear',
   'draw',
+  'edit signature',
 ];
