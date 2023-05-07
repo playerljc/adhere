@@ -1,3 +1,42 @@
-.adhere-ui-signature-wrap {
-  background-color: transparent;
+@import './SignatureCore';
+
+.adhere-ui-signature {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  &:hover {
+    > .adhere-ui-signature-mask {
+      transform: scale(1);
+    }
+  }
+
+  > .adhere-ui-signature-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    transform: scale(0);
+    transform-origin: center;
+    transition: transform ease-out 0.2s;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  > img {
+    width: 100%;
+  }
 }
