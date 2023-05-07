@@ -709,7 +709,7 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
   );
 };
 
-const SignatureHOC = memo(forwardRef(WritingBoard));
+const SignatureHOC = memo(forwardRef<WritingBoardHandle, WritingBoardProps>(WritingBoard));
 
 // @ts-ignore
 SignatureHOC.Signature = Signature;
