@@ -1,3 +1,12 @@
+# 2.6.0
+
+***
+
+2023-05-08
+
+* **adhere-ui-writingboard**
+  - 加入signature组件
+
 # 2.5.7
 
 ***
