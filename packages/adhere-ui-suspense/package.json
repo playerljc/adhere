@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-suspense",
-  "version": "2.4.3",
+  "version": "2.6.0",
   "description": "数据加载单元(如第一次是骷髅骨架，其他是 loading)，有数据加载的单元，第一次是骷髅骨架(或其他)mount，更新是 loading",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -21,17 +21,17 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
-    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
+    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
     "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
+    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereSuspense --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.4.0",
-    "@baifendian/adhere-util": "^2.4.2",
+    "@baifendian/adhere-ui-conditionalrender": "^2.6.0",
+    "@baifendian/adhere-util": "^2.6.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "antd": "^5.4.5",

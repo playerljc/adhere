@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-polygonselection",
-  "version": "2.4.2",
+  "version": "2.6.0",
   "description": "多边形选区",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,8 +29,8 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.4.2",
-    "@baifendian/adhere-util-emitter": "^2.4.0",
+    "@baifendian/adhere-util": "^2.6.0",
+    "@baifendian/adhere-util-emitter": "^2.6.0",
     "@turf/turf": "^6.5.0"
   },
   "devDependencies": {
