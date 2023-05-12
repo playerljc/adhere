@@ -97,7 +97,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
    * drawMoveGeometry
    * @description 绘制移动当中的几何图形
    */
-  abstract drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): void;
+  abstract drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): IActionData | null;
 
   /**
    * getSelectType
@@ -144,6 +144,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     ctx.strokeStyle = defaultAnchorStyle.strokeStyle;
     ctx.fillStyle = defaultAnchorStyle.fillStyle;
     ctx.lineWidth = defaultAnchorStyle.lineWidth;
+    ctx.globalAlpha = defaultAnchorStyle.globalAlpha;
   }
 
   /**
@@ -232,6 +233,12 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     });
 
     this.drawModify(targetPoint);
+
+    this.trigger(ActionEvents.Modifying, {
+      selectType: SelectType.Rectangle,
+      actionType: ActionType.Draw,
+      data: this.data,
+    });
   }
 
   /**
@@ -385,7 +392,15 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
       this.isMoved = true;
       // TODO: 移动移动的图形
       context.clearAssistDraw();
-      this.drawMoveGeometry(this.moveStartPoint, targetPoint);
+
+      const moveData = this.drawMoveGeometry(this.moveStartPoint, targetPoint);
+
+      this.trigger(ActionEvents.Moving, {
+        selectType: this.getSelectType(),
+        actionType: ActionType.Move,
+        data: moveData,
+      });
+
       return;
     }
 
@@ -441,6 +456,12 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     this.isMoved = false;
     this.moveStartPoint = null;
     e.stopPropagation();
+
+    this.trigger(ActionEvents.MoveEnd, {
+      selectType: this.getSelectType(),
+      actionType: ActionType.Move,
+      data: this.data,
+    });
   }
 
   /**
@@ -451,16 +472,16 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
-    const assistCanvasEl = context.getAssistCanvasEl();
+    const assistCanvasEl = context?.getAssistCanvasEl?.();
 
     if (!canvasEl || !assistCanvasEl) return;
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.ModifyBeforeStart, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
     });
@@ -476,7 +497,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.ModifyStart, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
     });
@@ -518,10 +539,10 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
 
     this.startPoint = null;
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.ModifyEnd, {
       selectType: this.getSelectType(),
       actionType: ActionType.Modify,
-      data: targetPoint,
+      data: this.data,
     });
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';

@@ -3,7 +3,7 @@ import * as turf from '@turf/turf';
 
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import TriangleDrawAction from '../draw/TriangleDrawAction';
-import { IPoint, ITriangleData, SelectType } from '../types';
+import { IPoint, IStyle, ITriangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
@@ -120,18 +120,23 @@ class TriangleModifyAction extends ModifyAction {
         2 * Math.PI,
       );
 
+      ctx.closePath();
       ctx.stroke();
       ctx.fill();
     }
 
     // 矩形绘制
     ctx.beginPath();
+
     this.setAnchorLineStyle();
+
     ctx.moveTo(leftTopPoint.x, leftTopPoint.y);
     ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y);
     ctx.lineTo(leftTopPoint.x + width, leftTopPoint.y + height);
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y + height);
     ctx.lineTo(leftTopPoint.x, leftTopPoint.y);
+
+    ctx.closePath();
     ctx.stroke();
   }
 
@@ -716,10 +721,10 @@ class TriangleModifyAction extends ModifyAction {
   }
 
   // @ts-ignore
-  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
-    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): ITriangleData | null {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return null;
 
-    const srcData = { ...(this.data.data as ITriangleData) };
+    const srcData = JSON.parse(JSON.stringify(this.data.data as ITriangleData));
     srcData.data = {
       ...srcData.data,
       points: srcData.data.points.map((point) => ({ ...point })),
@@ -734,16 +739,20 @@ class TriangleModifyAction extends ModifyAction {
         point.y += offsetY;
       });
 
-      if (srcData.style) {
-        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
-        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
-        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
-        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
-        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
-      }
+      const style: IStyle = { ...defaultMoveGemStyle, ...(srcData.style || {}) } as IStyle;
+      srcData.style.lineWidth = style.lineWidth;
+      srcData.style.lineJoin = style.lineJoin;
+      srcData.style.lineCap = style.lineCap;
+      srcData.lineDash = style.lineDash;
+      srcData.style.lineDashOffset = style.lineDashOffset;
+      srcData.style.strokeStyle = style.strokeStyle;
+      srcData.style.fillStyle = style.fillStyle;
+      srcData.style.globalAlpha = style.globalAlpha || 1;
 
       TriangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
+
+    return srcData;
   }
 
   destroy() {

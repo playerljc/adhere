@@ -133,6 +133,14 @@ declare class PolygonSelection extends Emitter.Events implements IPolygonSelecti
      */
     clearAssistDraw(): void;
     /**
+     * clearHistoryData
+     */
+    clearHistoryData(): void;
+    /**
+     * clearCanvasAll
+     */
+    clearCanvasAll(): void;
+    /**
      * setFrontCanvas
      * @description 置顶
      * @param canvasEl

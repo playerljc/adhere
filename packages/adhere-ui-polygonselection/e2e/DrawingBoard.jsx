@@ -98,7 +98,6 @@ class DrawingBoard extends React.Component {
     });
 
     this.polygonSelection.on(PolygonSelectionActions.CanvasClickEmpty, () => {
-      console.log('clickEmpty');
       this.polygonSelection.clearDraw();
       this.polygonSelection.clearAssistDraw();
       this.polygonSelection.drawHistoryData();
@@ -116,6 +115,7 @@ class DrawingBoard extends React.Component {
                   const action = new PolygonDrawAction();
                   action.on(ActionEvents.End, (data) => {
                     // action.start();
+                    console.log('end');
                   });
                   this.polygonSelection.changeAction(action);
                   action.start();
@@ -132,7 +132,11 @@ class DrawingBoard extends React.Component {
                     // action.start();
                   });
                   this.polygonSelection.changeAction(action);
-                  action.start();
+                  action.start({
+                    fillStyle: 'red',
+                    lineWidth: 10,
+                    strokeStyle: 'yellow',
+                  });
                 }}
               >
                 圆形绘制
@@ -337,9 +341,9 @@ class DrawingBoard extends React.Component {
                         { x: 360.34375, y: 181 },
                       ],
                       style: {
-                        fillStyle: 'red',
+                        fillStyle: '#ccc',
                         strokeStyle: '#000',
-                        lineWidth: 2,
+                        lineWidth: 10,
                         lineCap: 'round',
                         lineJoin: 'round',
                         lineDash: [],
@@ -622,6 +626,7 @@ class DrawingBoard extends React.Component {
             </li>
           </ul>
         </div>
+
         <div className="auto" style={{ position: 'relative' }} ref={this.ref}></div>
       </div>
     );

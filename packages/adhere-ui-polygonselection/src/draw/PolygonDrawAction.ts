@@ -58,6 +58,8 @@ class PolygonDrawAction extends DrawAction {
    * @param e
    */
   private onCanvasClick(e): void {
+    e.stopPropagation();
+
     if (!this.context) return;
 
     const canvasEl = this.context.getCanvasEl();
@@ -79,7 +81,7 @@ class PolygonDrawAction extends DrawAction {
       this.pointStack.push(this.startPoint);
 
       // 触发开始事件
-      this.trigger(ActionEvents.Start, {
+      this.trigger(ActionEvents.DrawStart, {
         selectType: SelectType.Polygon,
         actionType: ActionType.Draw,
       });
@@ -177,6 +179,15 @@ class PolygonDrawAction extends DrawAction {
 
     ctx?.beginPath();
 
+    ctx.lineWidth = this.style.lineWidth;
+    ctx.lineJoin = this.style.lineJoin;
+    ctx.lineCap = this.style.lineCap;
+    this.style.lineDash && ctx.setLineDash(this.style.lineDash);
+    ctx.lineDashOffset = this.style.lineDashOffset;
+    ctx.strokeStyle = this.style.strokeStyle;
+    ctx.fillStyle = this.style.fillStyle;
+    ctx.globalAlpha = this.style.globalAlpha;
+
     for (let i = 0; i < pointStack.length; i++) {
       const point = pointStack[i];
 
@@ -187,10 +198,8 @@ class PolygonDrawAction extends DrawAction {
       }
     }
 
-    ctx?.closePath();
-
-    ctx.fillStyle = this.style.fillStyle;
-
+    ctx.closePath();
+    ctx.stroke();
     ctx.fill();
   }
 
@@ -211,19 +220,16 @@ class PolygonDrawAction extends DrawAction {
     ctx.beginPath();
 
     ctx.moveTo(sP.x, sP.y);
-
     ctx.lineTo(eP.x, eP.y);
 
-    ctx.lineWidth = style.lineWidth;
-
+    ctx.strokeStyle = style.strokeStyle;
+    style.lineDash && ctx.setLineDash(style.lineDash);
+    ctx.lineWidth = style.lineWidth / 2;
     ctx.lineCap = style.lineCap;
-
     ctx.lineJoin = style.lineJoin;
-
     ctx.lineDashOffset = style.lineDashOffset;
 
-    ctx.setLineDash(style.lineDash);
-
+    ctx.closePath();
     ctx.stroke();
   }
 
@@ -236,24 +242,7 @@ class PolygonDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: IPolygonData) {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
-
-    this.drawHistoryPath(ctx, data.data as IPoint[]);
-
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
+    this.drawHistoryPath(ctx, data /*data.data as IPoint[]*/);
   }
 
   /**
@@ -261,10 +250,22 @@ class PolygonDrawAction extends DrawAction {
    * @param ctx
    * @param data
    */
-  static drawHistoryPath(ctx: CanvasRenderingContext2D, data: IPoint[] = []): void {
+  static drawHistoryPath(ctx: CanvasRenderingContext2D, data /*data: IPoint[] = []*/): void {
     ctx.beginPath();
 
-    (data || []).forEach((point: IPoint, index: number) => {
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
+    }
+
+    (data?.data || []).forEach((point: IPoint, index: number) => {
       if (index === 0) {
         ctx.moveTo(point.x, point.y);
       } else {
@@ -273,6 +274,8 @@ class PolygonDrawAction extends DrawAction {
     });
 
     ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -295,13 +298,13 @@ class PolygonDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Polygon,
       actionType: ActionType.Draw,
     });
 
     // 注册事件
-    canvasEl?.addEventListener('click', this.onCanvasClick);
+    canvasEl?.addEventListener('mouseup', this.onCanvasClick);
 
     // 修改状态
     this.status = ActionStatus.Running;
@@ -326,7 +329,7 @@ class PolygonDrawAction extends DrawAction {
       return;
     }
 
-    canvasEl?.removeEventListener('click', this.onCanvasClick);
+    canvasEl?.removeEventListener('mouseup', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
     canvasEl?.removeEventListener('dblclick', this.onCanvasDbClick);
 
@@ -353,7 +356,7 @@ class PolygonDrawAction extends DrawAction {
 
     context.addHistoryData(data);
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Polygon,
       actionType: ActionType.Draw,
       data,
@@ -386,7 +389,7 @@ class PolygonDrawAction extends DrawAction {
       context.drawHistoryData();
     }
 
-    canvasEl?.removeEventListener('click', this.onCanvasClick);
+    canvasEl?.removeEventListener('mouseup', this.onCanvasClick);
     canvasEl?.removeEventListener('mousemove', this.onCanvasMousemove);
     canvasEl?.removeEventListener('dblclick', this.onCanvasDbClick);
 

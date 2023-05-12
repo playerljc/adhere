@@ -58,7 +58,7 @@ declare abstract class ModifyAction extends Emitter.Events implements IModifyAct
      * drawMoveGeometry
      * @description 绘制移动当中的几何图形
      */
-    abstract drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): void;
+    abstract drawMoveGeometry(startPoint: IPoint, targetPoint: IPoint): IActionData | null;
     /**
      * getSelectType
      */

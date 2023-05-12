@@ -99,6 +99,18 @@ class StartDrawAction extends DrawAction {
 
     ctx.beginPath();
 
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
+    }
+
     const startCount = 5;
     const spend = 360 / startCount;
     const min = 90 - spend;
@@ -109,10 +121,11 @@ class StartDrawAction extends DrawAction {
         ctx.lineWidth = style.lineWidth;
         ctx.lineJoin = style.lineJoin;
         ctx.lineCap = style.lineCap;
-        ctx.setLineDash(style.lineDash);
+        style.lineDash && ctx.setLineDash(style.lineDash);
         ctx.lineDashOffset = style.lineDashOffset;
         ctx.strokeStyle = style.strokeStyle;
         ctx.fillStyle = style.fillStyle;
+        ctx.globalAlpha = style.globalAlpha;
       }
 
       ctx.lineTo(
@@ -125,6 +138,7 @@ class StartDrawAction extends DrawAction {
       );
     }
 
+    ctx.closePath();
     ctx.stroke();
     ctx.fill();
   }
@@ -202,6 +216,21 @@ class StartDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    this.trigger(ActionEvents.Drawing, {
+      selectType: SelectType.Start,
+      actionType: ActionType.Draw,
+      data: {
+        id: BaseUtil.uuid(),
+        type: SelectType.Start,
+        data: {
+          center: this.centerPoint,
+          outRadius: this.outRadius,
+          innerRadius: this.innerRadius,
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -223,34 +252,18 @@ class StartDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: IStartData) {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
-
     this.drawHistoryPath(
       ctx,
-      data.data as {
-        // 圆的中心点
-        center: IPoint;
-        // 外半径
-        outRadius: number;
-        // 内半径(外半径的一半)
-        innerRadius: number;
-      },
+      data,
+      // data.data as {
+      //   // 圆的中心点
+      //   center: IPoint;
+      //   // 外半径
+      //   outRadius: number;
+      //   // 内半径(外半径的一半)
+      //   innerRadius: number;
+      // },
     );
-
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
   }
 
   /**
@@ -260,22 +273,24 @@ class StartDrawAction extends DrawAction {
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: {
-      // 圆的中心点
-      center: IPoint;
-      // 外半径
-      outRadius: number;
-      // 内半径(外半径的一半)
-      innerRadius: number;
-    },
+    data,
+    // data: {
+    //   // 圆的中心点
+    //   center: IPoint;
+    //   // 外半径
+    //   outRadius: number;
+    //   // 内半径(外半径的一半)
+    //   innerRadius: number;
+    // },
   ): void {
     if (!data) return;
 
     StartDrawAction.drawStart({
       ctx,
-      data: {
-        data,
-      },
+      data,
+      // data: {
+      //   data,
+      // },
     });
   }
 
@@ -288,7 +303,7 @@ class StartDrawAction extends DrawAction {
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -297,7 +312,7 @@ class StartDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Start,
       actionType: ActionType.Draw,
     });
@@ -309,7 +324,7 @@ class StartDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.DrawStart, {
       selectType: SelectType.Start,
       actionType: ActionType.Draw,
     });
@@ -362,7 +377,7 @@ class StartDrawAction extends DrawAction {
 
     this.isMove = false;
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Start,
       actionType: ActionType.Draw,
       data,

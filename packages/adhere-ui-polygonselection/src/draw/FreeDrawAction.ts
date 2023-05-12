@@ -70,10 +70,11 @@ class FreeDrawAction extends DrawAction {
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
+    style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineDashOffset = style.lineDashOffset;
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
+    ctx.globalAlpha = style.globalAlpha;
 
     this.points.forEach((point: IPoint, index: number) => {
       if (index === 0) {
@@ -125,6 +126,19 @@ class FreeDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    this.trigger(ActionEvents.Drawing, {
+      selectType: SelectType.Free,
+      actionType: ActionType.Draw,
+      data: {
+        id: BaseUtil.uuid(),
+        type: SelectType.Free,
+        data: {
+          points: JSON.parse(JSON.stringify(this.points)),
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -146,24 +160,7 @@ class FreeDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: IFreeData) {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
-
-    this.drawHistoryPath(ctx, data.data as { points: IPoint[] });
-
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
+    this.drawHistoryPath(ctx, data /*data.data as { points: IPoint[] }*/);
   }
 
   /**
@@ -173,13 +170,28 @@ class FreeDrawAction extends DrawAction {
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: {
-      points: IPoint[];
-    },
+    data,
+    // data: {
+    //   points: IPoint[];
+    // },
   ): void {
     ctx.beginPath();
 
-    const { points = [] } = data;
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
+    }
+
+    const {
+      data: { points = [] },
+    } = data;
 
     (points || []).forEach((point: IPoint, index: number) => {
       if (index === 0) {
@@ -190,6 +202,8 @@ class FreeDrawAction extends DrawAction {
     });
 
     ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -201,7 +215,7 @@ class FreeDrawAction extends DrawAction {
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -210,7 +224,7 @@ class FreeDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
@@ -222,7 +236,7 @@ class FreeDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.DrawStart, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
     });
@@ -271,7 +285,7 @@ class FreeDrawAction extends DrawAction {
 
     this.isMove = false;
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Free,
       actionType: ActionType.Draw,
       data,

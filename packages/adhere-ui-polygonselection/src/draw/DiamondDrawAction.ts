@@ -108,16 +108,19 @@ class DiamondDrawAction extends DrawAction {
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
+    style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineDashOffset = style.lineDashOffset;
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
+    ctx.globalAlpha = style.globalAlpha;
 
     // 顺时针方向绘制
     ctx.moveTo(this.leftTopPoint.x, this.leftTopPoint.y + heightHalf);
     ctx.lineTo(this.leftTopPoint.x + widthHalf, this.leftTopPoint.y);
     ctx.lineTo(this.leftTopPoint.x + this.width, this.leftTopPoint.y + heightHalf);
     ctx.lineTo(this.leftTopPoint.x + widthHalf, this.leftTopPoint.y + this.height);
+
+    ctx.closePath();
 
     ctx.stroke();
     ctx.fill();
@@ -155,6 +158,21 @@ class DiamondDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    this.trigger(ActionEvents.Drawing, {
+      selectType: SelectType.Diamond,
+      actionType: ActionType.Draw,
+      data: {
+        id: BaseUtil.uuid(),
+        type: SelectType.Diamond,
+        data: {
+          leftTopPoint: this.leftTopPoint as IPoint,
+          width: this.width,
+          height: this.height,
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -176,27 +194,11 @@ class DiamondDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: IDiamondData) {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
-
     this.drawHistoryPath(
       ctx,
-      data.data as { leftTopPoint: IPoint | null; width: number; height: number },
+      data,
+      // data.data as { leftTopPoint: IPoint | null; width: number; height: number },
     );
-
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
   }
 
   /**
@@ -206,24 +208,40 @@ class DiamondDrawAction extends DrawAction {
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: {
+    data /*: {
       leftTopPoint: IPoint | null;
       width: number;
       height: number;
-    },
+    }*/,
   ): void {
+    if (!data || !data.data.leftTopPoint) return;
+
     ctx.beginPath();
 
-    if (!data || !data.leftTopPoint) return;
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
+    }
 
-    const widthHalf = data.width / 2;
-    const heightHalf = data.height / 2;
+    const widthHalf = data.data.width / 2;
+    const heightHalf = data.data.height / 2;
 
     // 顺时针方向绘制
-    ctx.moveTo(data.leftTopPoint.x, data.leftTopPoint.y + heightHalf);
-    ctx.lineTo(data.leftTopPoint.x + widthHalf, data.leftTopPoint.y);
-    ctx.lineTo(data.leftTopPoint.x + data.width, data.leftTopPoint.y + heightHalf);
-    ctx.lineTo(data.leftTopPoint.x + widthHalf, data.leftTopPoint.y + data.height);
+    ctx.moveTo(data.data.leftTopPoint.x, data.data.leftTopPoint.y + heightHalf);
+    ctx.lineTo(data.data.leftTopPoint.x + widthHalf, data.data.leftTopPoint.y);
+    ctx.lineTo(data.data.leftTopPoint.x + data.data.width, data.data.leftTopPoint.y + heightHalf);
+    ctx.lineTo(data.data.leftTopPoint.x + widthHalf, data.data.leftTopPoint.y + data.data.height);
+
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -235,7 +253,7 @@ class DiamondDrawAction extends DrawAction {
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -244,7 +262,7 @@ class DiamondDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
     });
@@ -256,7 +274,7 @@ class DiamondDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.DrawStart, {
       selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
     });
@@ -311,7 +329,7 @@ class DiamondDrawAction extends DrawAction {
 
     this.isMove = false;
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Diamond,
       actionType: ActionType.Draw,
       data,

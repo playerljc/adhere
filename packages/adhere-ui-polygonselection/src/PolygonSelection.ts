@@ -285,25 +285,9 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
 
       if (!ctx || !data) return;
 
-      if (data.style) {
-        // 设置上下文属性
-        ctx.lineWidth = data.style.lineWidth;
-        ctx.lineJoin = data.style.lineJoin;
-        ctx.lineCap = data.style.lineCap;
-        ctx.setLineDash(data.style.lineDash);
-        ctx.lineDashOffset = data.style.lineDashOffset;
-        ctx.strokeStyle = data.style.strokeStyle;
-        ctx.fillStyle = data.style.fillStyle;
-      }
-
       // 绘制指定类型的路径
       // @ts-ignore
-      this.typeActionMap.get(data.type)?.drawHistoryPath(ctx, data.data);
-
-      // 描边
-      ctx.stroke();
-      // 填充
-      ctx.fill();
+      this.typeActionMap.get(data.type)?.drawHistoryPath(ctx, data);
     });
   }
 
@@ -403,6 +387,22 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
     if (!assistCtx) return;
 
     assistCtx.clearRect(0, 0, this.getWidth(), this.getHeight());
+  }
+
+  /**
+   * clearHistoryData
+   */
+  clearHistoryData(): void {
+    this.canvasData = [];
+  }
+
+  /**
+   * clearCanvasAll
+   */
+  clearCanvasAll(): void {
+    this.clearDraw();
+    this.clearAssistDraw();
+    this.clearHistoryData();
   }
 
   /**

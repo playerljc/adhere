@@ -9,5 +9,6 @@ declare const _default: {
     lineJoin: string;
     lineDash: number[];
     lineDashOffset: number;
+    globalAlpha: number;
 };
 export default _default;

@@ -16,9 +16,34 @@ export enum ActionStatus {
  * Action的事件
  */
 export enum ActionEvents {
-  BeforeStart = 'BeforeStart',
-  Start = 'Start',
-  End = 'End',
+  // 绘制开始前
+  DrawBeforeStart = 'DrawBeforeStart',
+  // 绘制开始
+  DrawStart = 'DrawStart',
+  // 绘制中
+  Drawing = 'Drawing',
+  // 绘制结束
+  DrawEnd = 'DrawEnd',
+
+  // 移动开始前
+  MoveBeforeStart = 'MoveBeforeStart',
+  // 移动开始
+  MoveStart = 'MoveStart',
+  // 移动中
+  Moving = 'Moving',
+  // 移动结束
+  MoveEnd = 'MoveEnd',
+
+  // 修改开始前
+  ModifyBeforeStart = 'ModifyBeforeStart',
+  // 修改开始
+  ModifyStart = 'ModifyStart',
+  // 修改中
+  Modifying = 'Modifying',
+  // 修改结束
+  ModifyEnd = 'ModifyEnd',
+
+  // 销毁
   Destroy = 'Destroy',
 }
 
@@ -44,6 +69,7 @@ export interface IAction {
 export interface IListeners {
   [propName: string]: () => void;
 }
+
 /**
  * IActionData - Action的数据
  */
@@ -141,6 +167,9 @@ export interface IModifyAction extends IAction {
   start: () => void;
 }
 
+/**
+ * IDrawMoveGeometry
+ */
 interface IDrawMoveGeometry {
   /**
    * drawMoveGeometry
@@ -227,6 +256,8 @@ export interface IPolygonSelection {
   destroy: () => void;
   clearDraw: () => void;
   clearAssistDraw: () => void;
+  clearHistoryData: () => void;
+  clearCanvasAll: () => void;
 }
 
 /**

@@ -3,7 +3,7 @@ import * as turf from '@turf/turf';
 
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import PolygonDrawAction from '../draw/PolygonDrawAction';
-import { IPoint, IPolygonData, SelectType } from '../types';
+import { IPoint, IPolygonData, IStyle, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
@@ -48,8 +48,8 @@ class PolygonModifyAction extends ModifyAction {
         2 * Math.PI,
       );
 
+      ctx.closePath();
       ctx.stroke();
-
       ctx.fill();
     }
   }
@@ -207,10 +207,10 @@ class PolygonModifyAction extends ModifyAction {
    * @param targetPoint
    */
   // @ts-ignore
-  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
-    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IPolygonData | null {
+    if (!this.context || !this.data || !startPoint || !targetPoint) return null;
 
-    const srcData = { ...(this.data.data as IPolygonData) };
+    const srcData = JSON.parse(JSON.stringify(this.data.data as IPolygonData));
     srcData.data = srcData.data.map((point) => ({ ...point }));
 
     const offsetX = targetPoint.x - startPoint.x;
@@ -222,16 +222,20 @@ class PolygonModifyAction extends ModifyAction {
         point.y += offsetY;
       });
 
-      if (srcData.style) {
-        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
-        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
-        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
-        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
-        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
-      }
+      const style: IStyle = { ...defaultMoveGemStyle, ...(srcData.style || {}) } as IStyle;
+      srcData.style.lineWidth = style.lineWidth;
+      srcData.style.lineJoin = style.lineJoin;
+      srcData.style.lineCap = style.lineCap;
+      srcData.lineDash = style.lineDash;
+      srcData.style.lineDashOffset = style.lineDashOffset;
+      srcData.style.strokeStyle = style.strokeStyle;
+      srcData.style.fillStyle = style.fillStyle;
+      srcData.style.globalAlpha = style.globalAlpha || 1;
 
       PolygonDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
+
+    return srcData;
   }
 }
 

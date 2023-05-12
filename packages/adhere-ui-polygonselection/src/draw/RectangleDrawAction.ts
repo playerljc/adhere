@@ -100,13 +100,15 @@ class RectangleDrawAction extends DrawAction {
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
+    style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineDashOffset = style.lineDashOffset;
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
+    ctx.globalAlpha = style.globalAlpha;
 
     ctx.rect(this.leftTopPoint?.x || 0, this.leftTopPoint?.y || 0, this.width, this.height);
 
+    ctx.closePath();
     ctx.stroke();
     ctx.fill();
   }
@@ -143,6 +145,21 @@ class RectangleDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    this.trigger(ActionEvents.Drawing, {
+      selectType: SelectType.Rectangle,
+      actionType: ActionType.Draw,
+      data: {
+        id: BaseUtil.uuid(),
+        type: SelectType.Rectangle,
+        data: {
+          leftTopPoint: this.leftTopPoint as IPoint,
+          width: this.width,
+          height: this.height,
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -151,6 +168,7 @@ class RectangleDrawAction extends DrawAction {
    */
   private onCanvasMouseUp(e) {
     if (!this.isMove) return;
+
     this.end(e);
     e.stopPropagation();
   }
@@ -164,27 +182,13 @@ class RectangleDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: IRectangleData) {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
 
     this.drawHistoryPath(
       ctx,
-      data.data as { leftTopPoint: IPoint | null; width: number; height: number },
+      data,
+      // data.data as { leftTopPoint: IPoint | null; width: number; height: number },
     );
 
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
   }
 
   /**
@@ -194,15 +198,32 @@ class RectangleDrawAction extends DrawAction {
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: {
-      leftTopPoint: IPoint | null;
-      width: number;
-      height: number;
-    },
+    data
+    // data: {
+    //   leftTopPoint: IPoint | null;
+    //   width: number;
+    //   height: number;
+    // },
   ): void {
     ctx.beginPath();
 
-    ctx.rect(data?.leftTopPoint?.x || 0, data?.leftTopPoint?.y || 0, data?.width, data?.height);
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
+    }
+
+    ctx.rect(data?.data?.leftTopPoint?.x || 0, data?.data?.leftTopPoint?.y || 0, <number>data?.data?.width, <number>data?.data?.height);
+
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -214,7 +235,7 @@ class RectangleDrawAction extends DrawAction {
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -223,7 +244,7 @@ class RectangleDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
@@ -235,7 +256,7 @@ class RectangleDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.DrawStart, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
     });
@@ -290,7 +311,16 @@ class RectangleDrawAction extends DrawAction {
 
     this.isMove = false;
 
-    this.trigger(ActionEvents.End, {
+    // 1.绘制中
+    // 2.绘制完成
+
+    // 3.修改中
+    // 4.修改完成
+
+    // 5.移动中
+    // 6.移动完成
+
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Rectangle,
       actionType: ActionType.Draw,
       data,

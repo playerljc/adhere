@@ -40,6 +40,7 @@ declare const _default: {
         lineJoin: string;
         lineDash: number[];
         lineDashOffset: number;
+        globalAlpha: number;
     };
     DefaultMoveGemStyle: {
         strokeStyle: string;

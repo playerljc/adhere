@@ -3,7 +3,7 @@ import * as turf from '@turf/turf';
 
 import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import StartDrawAction from '../draw/StartDrawAction';
-import { IPoint, IStartData, SelectType } from '../types';
+import { IPoint, IStartData, IStyle, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
@@ -74,13 +74,17 @@ class StartModifyAction extends ModifyAction {
         2 * Math.PI,
       );
 
+      ctx.closePath();
       ctx.stroke();
       ctx.fill();
     }
 
     ctx.beginPath();
+
     this.setAnchorLineStyle();
+
     ctx.ellipse(center.x, center.y, outRadius, outRadius, (45 * Math.PI) / 180, 0, 2 * Math.PI);
+
     ctx.closePath();
     ctx.stroke();
   }
@@ -216,6 +220,7 @@ class StartModifyAction extends ModifyAction {
 
     context.clearDraw();
 
+    debugger;
     context.drawHistoryData();
 
     this.drawAnchors();
@@ -293,10 +298,12 @@ class StartModifyAction extends ModifyAction {
    * @param targetPoint
    */
   // @ts-ignore
-  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): void {
-    if (!this.context || !this.data || !startPoint || !targetPoint) return;
+  drawMoveGeometry(startPoint?: IPoint, targetPoint?: IPoint): IStartData | null {
+    console.trace('drawMoveGeometry');
 
-    const srcData = { ...(this.data.data as IStartData) };
+    if (!this.context || !this.data || !startPoint || !targetPoint) return null;
+
+    const srcData = JSON.parse(JSON.stringify(this.data.data as IStartData));
     srcData.data = {
       ...srcData.data,
       center: {
@@ -311,16 +318,20 @@ class StartModifyAction extends ModifyAction {
       srcData.data.center.x += offsetX;
       srcData.data.center.y += offsetY;
 
-      if (srcData.style) {
-        srcData.style.globalAlpha = defaultMoveGemStyle.globalAlpha;
-        srcData.style.strokeStyle = defaultMoveGemStyle.strokeStyle;
-        srcData.style.lineWidth = defaultMoveGemStyle.lineWidth;
-        srcData.style.lineDash = defaultMoveGemStyle.lineDash;
-        srcData.style.lineDashOffset = defaultMoveGemStyle.lineDashOffset;
-      }
+      const style: IStyle = { ...defaultMoveGemStyle, ...(srcData.style || {}) } as IStyle;
+      srcData.style.lineWidth = style.lineWidth;
+      srcData.style.lineJoin = style.lineJoin;
+      srcData.style.lineCap = style.lineCap;
+      srcData.lineDash = style.lineDash;
+      srcData.style.lineDashOffset = style.lineDashOffset;
+      srcData.style.strokeStyle = style.strokeStyle;
+      srcData.style.fillStyle = style.fillStyle;
+      srcData.style.globalAlpha = style.globalAlpha || 1;
 
       StartDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }
+
+    return srcData;
   }
 }
 

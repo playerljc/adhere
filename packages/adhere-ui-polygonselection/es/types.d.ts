@@ -11,9 +11,18 @@ export declare enum ActionStatus {
  * Action的事件
  */
 export declare enum ActionEvents {
-    BeforeStart = "BeforeStart",
-    Start = "Start",
-    End = "End",
+    DrawBeforeStart = "DrawBeforeStart",
+    DrawStart = "DrawStart",
+    Drawing = "Drawing",
+    DrawEnd = "DrawEnd",
+    MoveBeforeStart = "MoveBeforeStart",
+    MoveStart = "MoveStart",
+    Moving = "Moving",
+    MoveEnd = "MoveEnd",
+    ModifyBeforeStart = "ModifyBeforeStart",
+    ModifyStart = "ModifyStart",
+    Modifying = "Modifying",
+    ModifyEnd = "ModifyEnd",
     Destroy = "Destroy"
 }
 /**
@@ -115,6 +124,9 @@ export interface IStartData extends IActionData {
 export interface IModifyAction extends IAction {
     start: () => void;
 }
+/**
+ * IDrawMoveGeometry
+ */
 interface IDrawMoveGeometry {
     /**
      * drawMoveGeometry
@@ -194,6 +206,8 @@ export interface IPolygonSelection {
     destroy: () => void;
     clearDraw: () => void;
     clearAssistDraw: () => void;
+    clearHistoryData: () => void;
+    clearCanvasAll: () => void;
 }
 /**
  * IPoint

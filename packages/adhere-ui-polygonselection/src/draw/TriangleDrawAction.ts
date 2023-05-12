@@ -83,10 +83,11 @@ class TriangleDrawAction extends DrawAction {
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
-    ctx.setLineDash(style.lineDash);
+    style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineDashOffset = style.lineDashOffset;
     ctx.strokeStyle = style.strokeStyle;
     ctx.fillStyle = style.fillStyle;
+    ctx.globalAlpha = style.globalAlpha;
 
     this.points = Util.triangle({ startPoint, targetPoint });
     ctx.moveTo(this.points[0].x, this.points[0].y);
@@ -94,7 +95,6 @@ class TriangleDrawAction extends DrawAction {
     ctx.lineTo(this.points[2].x, this.points[2].y);
 
     ctx.closePath();
-
     ctx.stroke();
     ctx.fill();
   }
@@ -131,6 +131,19 @@ class TriangleDrawAction extends DrawAction {
     this.isMove = true;
 
     this.draw(e);
+
+    this.trigger(ActionEvents.Drawing, {
+      selectType: SelectType.Triangle,
+      actionType: ActionType.Draw,
+      data: {
+        id: BaseUtil.uuid(),
+        type: SelectType.Triangle,
+        data: {
+          points: JSON.parse(JSON.stringify(this.points)),
+        },
+        style: this.style,
+      },
+    });
   }
 
   /**
@@ -152,29 +165,13 @@ class TriangleDrawAction extends DrawAction {
   static draw(ctx: CanvasRenderingContext2D, data: ITriangleData) {
     if (!ctx || !data) return;
 
-    if (data.style) {
-      // 设置上下文属性
-      ctx.lineWidth = data.style.lineWidth;
-      ctx.lineJoin = data.style.lineJoin;
-      ctx.lineCap = data.style.lineCap;
-      ctx.setLineDash(data.style.lineDash);
-      ctx.lineDashOffset = data.style.lineDashOffset;
-      ctx.strokeStyle = data.style.strokeStyle;
-      ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
-    }
-
     this.drawHistoryPath(
       ctx,
-      data.data as {
-        points: IPoint[];
-      },
+      data,
+      // data.data as {
+      //   points: IPoint[];
+      // },
     );
-
-    // 描边
-    ctx.stroke();
-    // 填充
-    ctx.fill();
   }
 
   /**
@@ -184,15 +181,32 @@ class TriangleDrawAction extends DrawAction {
    */
   static drawHistoryPath(
     ctx: CanvasRenderingContext2D,
-    data: {
-      points: IPoint[];
-    },
+    data,
+    // data: {
+    //   points: IPoint[];
+    // },
   ): void {
     ctx.beginPath();
 
-    ctx.moveTo(data.points[0].x, data.points[0].y);
-    ctx.lineTo(data.points[1].x, data.points[1].y);
-    ctx.lineTo(data.points[2].x, data.points[2].y);
+    if (data.style) {
+      // 设置上下文属性
+      ctx.lineWidth = data.style.lineWidth;
+      ctx.lineJoin = data.style.lineJoin;
+      ctx.lineCap = data.style.lineCap;
+      data.style.lineDash && ctx.setLineDash(data.style.lineDash);
+      ctx.lineDashOffset = data.style.lineDashOffset;
+      ctx.strokeStyle = data.style.strokeStyle;
+      ctx.fillStyle = data.style.fillStyle;
+      ctx.globalAlpha = data.style.globalAlpha || 1;
+    }
+
+    ctx.moveTo(data.data.points[0].x, data.data.points[0].y);
+    ctx.lineTo(data.data.points[1].x, data.data.points[1].y);
+    ctx.lineTo(data.data.points[2].x, data.data.points[2].y);
+
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
   }
 
   /**
@@ -204,7 +218,7 @@ class TriangleDrawAction extends DrawAction {
 
     const { context } = this;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -213,7 +227,7 @@ class TriangleDrawAction extends DrawAction {
     style && (this.style = style);
 
     // 触发开始之前事件
-    this.trigger(ActionEvents.BeforeStart, {
+    this.trigger(ActionEvents.DrawBeforeStart, {
       selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
     });
@@ -225,7 +239,7 @@ class TriangleDrawAction extends DrawAction {
     this.status = ActionStatus.Running;
 
     // 触发开始事件
-    this.trigger(ActionEvents.Start, {
+    this.trigger(ActionEvents.DrawStart, {
       selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
     });
@@ -274,7 +288,7 @@ class TriangleDrawAction extends DrawAction {
 
     this.isMove = false;
 
-    this.trigger(ActionEvents.End, {
+    this.trigger(ActionEvents.DrawEnd, {
       selectType: SelectType.Triangle,
       actionType: ActionType.Draw,
       data,
