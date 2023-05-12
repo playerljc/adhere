@@ -94,4 +94,12 @@ export default [
   'clear',
   'draw',
   'edit signature',
+  'edit',
+  'rectangular clipping',
+  'circular clipping',
+  'pentagram clipping',
+  'triangle clipping',
+  'diamond clipping',
+  'polygon clipping',
+  'open',
 ];

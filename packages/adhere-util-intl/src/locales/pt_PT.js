@@ -94,4 +94,12 @@ export default [
   'claro',
   'empate',
   'editar assinatura',
+  'editar',
+  'Recorte retangular',
+  'Recorte circular',
+  'Recorte de pentagrama',
+  'Recorte de triângulo',
+  'Recorte de diamantes',
+  'Recorte de polígonos',
+  'Abrir',
 ];
