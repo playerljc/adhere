@@ -1,3 +1,14 @@
+# 2.6.1
+
+***
+
+2023-05-12
+
+* **adhere-ui-searchtable**
+  - 修复页面查询条件缓存
+* **adhere-ui-polygonselection**
+  - BUG修改
+
 # 2.6.0
 
 ***
