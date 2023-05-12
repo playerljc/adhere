@@ -1,5 +1,5 @@
-declare const _default: ({ location, action }: {
-    location: any;
-    action: any;
-}) => void;
-export default _default;
+declare const Listener: {
+    (e: any, _history: any): void;
+    getCode(): (() => void) | undefined;
+};
+export default Listener;

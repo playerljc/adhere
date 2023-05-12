@@ -20,38 +20,56 @@ function clearSearAndPaginParamsByPathname(pathname) {
   }
 }
 
-export default ({ location, action }) => {
-  const { pathname } = location;
+const codeStack: Array<() => void> = [];
 
-  const findIndex = historyStack.lastIndexOf(pathname);
+const Listener = (e, _history) => {
+  const { location, action } = e;
 
-  // 没找到
-  if (findIndex === -1) {
-    // 清除查询条件
-    clearSearAndPaginParamsByPathname(pathname);
-    historyStack.push(pathname);
-  }
-  // 找到了
-  else {
-    const pathArr = historyStack.slice(findIndex + 1);
+  const code = () => {
+    const { pathname } = location;
 
-    // 1 2 1
-    // 之间只有一个页面的路径
-    if (pathArr.length === 1) {
-      // pathArr[0] /system/task/list/view
-      // pathname   /system/task/list/ 当前
+    const findIndex = historyStack.lastIndexOf(pathname);
 
-      if (!pathArr[0].startsWith(pathname)) {
+    // 没找到
+    if (findIndex === -1) {
+      // 清除查询条件
+      clearSearAndPaginParamsByPathname(pathname);
+      historyStack.push(pathname);
+    }
+    // 找到了
+    else {
+      const pathArr = historyStack.slice(findIndex + 1);
+
+      // 1 2 1
+      // 之间只有一个页面的路径
+      if (pathArr.length === 1) {
+        // pathArr[0] /system/task/list/view
+        // pathname   /system/task/list/ 当前
+
+        if (!pathArr[0].startsWith(pathname)) {
+          // 清除查询条件
+          clearSearAndPaginParamsByPathname(pathname);
+        }
+      } else {
         // 清除查询条件
         clearSearAndPaginParamsByPathname(pathname);
       }
-    } else {
-      // 清除查询条件
-      clearSearAndPaginParamsByPathname(pathname);
-    }
 
-    // 都需要清空路径
-    historyStack = historyStack.slice(0, findIndex);
-    historyStack.push(pathname);
+      // 都需要清空路径
+      historyStack = historyStack.slice(0, findIndex);
+      historyStack.push(pathname);
+    }
+  };
+
+  if (_history.action === 'PUSH') {
+    code();
+  }
+
+  if (_history.action === 'POP') {
+    codeStack.push(code);
   }
 };
+
+Listener.getCode = () => codeStack.pop();
+
+export default Listener;

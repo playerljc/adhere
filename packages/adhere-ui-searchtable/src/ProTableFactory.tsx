@@ -1,6 +1,6 @@
 import { Button, Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import dayjs from 'dayjs';
-import merge from 'lodash/merge';
+import merge from 'lodash.merge';
 import omit from 'omit.js';
 import qs from 'qs';
 import type { ReactNode } from 'react';
@@ -24,6 +24,7 @@ import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
+import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData } from './types';
 
@@ -85,6 +86,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       // 高级搜索设置
       this.advancedSearchConfig = null;
+
+      // 调用路由监听的方法
+      const code = RouteListen.getCode();
+      !!code && code();
     }
 
     componentWillUnmount() {
