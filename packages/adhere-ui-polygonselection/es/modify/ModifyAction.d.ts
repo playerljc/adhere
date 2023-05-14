@@ -1,5 +1,5 @@
 import Emitter from '@baifendian/adhere-util-emitter';
-import { IActionData, IModifyAction, IMoveAction, IPoint, IPolygonSelection, SelectType } from '../types';
+import { IActionData, IModifyAction, IMoveAction, IPoint, IPolygonSelection, IStyle, SelectType } from '../types';
 /**
  * ModifyAction
  * @class ModifyAction
@@ -19,6 +19,15 @@ declare abstract class ModifyAction extends Emitter.Events implements IModifyAct
     moveStartPoint: IPoint | null;
     canMove: boolean;
     isMoved: boolean;
+    style: IStyle;
+    anchorStyle: IStyle;
+    moveGemStyle: IStyle;
+    getAnchorStyle(): IStyle;
+    getStyle(): IStyle;
+    getMoveGemStyle(): IStyle;
+    setAnchorStyle(style: Partial<IStyle> | undefined): void;
+    setStyle(style: Partial<IStyle> | undefined): void;
+    setMoveGemStyle(style: Partial<IStyle> | undefined): void;
     /**
      * drawModify
      * @param targetPoint

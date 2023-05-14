@@ -196,11 +196,11 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
 
     if (!el ?? !canvasEl ?? !assistCanvasEl) return;
 
-    canvasEl.width = el.offsetWidth ?? 0;
-    canvasEl.height = el.offsetHeight ?? 0;
+    canvasEl.width = el?.offsetWidth ?? 0;
+    canvasEl.height = el?.offsetHeight ?? 0;
 
-    assistCanvasEl.width = el.offsetWidth ?? 0;
-    assistCanvasEl.height = el.offsetHeight ?? 0;
+    assistCanvasEl.width = el?.offsetWidth ?? 0;
+    assistCanvasEl.height = el?.offsetHeight ?? 0;
 
     this.clearDraw();
     this.clearAssistDraw();

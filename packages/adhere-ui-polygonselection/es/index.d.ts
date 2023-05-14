@@ -36,27 +36,31 @@ declare const _default: {
         fillStyle: string;
         strokeStyle: string;
         lineWidth: number;
-        lineCap: string;
-        lineJoin: string;
+        lineCap: CanvasLineCap;
+        lineJoin: CanvasLineJoin;
         lineDash: number[];
         lineDashOffset: number;
         globalAlpha: number;
     };
     DefaultMoveGemStyle: {
+        fillStyle: string;
         strokeStyle: string;
         lineWidth: number;
         lineDash: number[];
         lineDashOffset: number;
+        lineCap: CanvasLineCap;
+        lineJoin: CanvasLineJoin;
         globalAlpha: number;
     };
     DefaultStyle: {
         fillStyle: string;
         strokeStyle: string;
         lineWidth: number;
-        lineCap: string;
-        lineJoin: string;
+        lineCap: CanvasLineCap;
+        lineJoin: CanvasLineJoin;
         lineDash: never[];
         lineDashOffset: number;
+        globalAlpha: number;
     };
     Util: {
         getRectLeftTopPoint({ startPoint, targetPoint }: {

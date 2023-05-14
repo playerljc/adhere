@@ -5,9 +5,10 @@ declare const _default: {
     fillStyle: string;
     strokeStyle: string;
     lineWidth: number;
-    lineCap: string;
-    lineJoin: string;
+    lineCap: CanvasLineCap;
+    lineJoin: CanvasLineJoin;
     lineDash: never[];
     lineDashOffset: number;
+    globalAlpha: number;
 };
 export default _default;

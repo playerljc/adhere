@@ -4,9 +4,8 @@ import type { CSSProperties, ReactNode } from 'react';
 import type {
   CenterProps,
   TBLRCLayoutProps,
-  TBLRProps,
+  TBLRProps
 } from '@baifendian/adhere-ui-flexlayout/es/types';
-import type Events from '@baifendian/adhere-util-emitter/es/events';
 
 /**
  * Action的状态
@@ -60,7 +59,7 @@ export enum ActionEvents {
 /**
  * IAction - 一个Action对象
  */
-export interface IAction extends Events {
+export interface IAction {
   // 绘制样式
   style: IStyle;
   // 修改的时候控制点的样式
@@ -84,6 +83,8 @@ export interface IAction extends Events {
   destroy: () => void;
   // 设置上下文对象
   setContext: (context: IPolygonSelection) => void;
+
+  on(type: string | symbol, handler: Function, makStackSize?: number); 
 }
 
 /**

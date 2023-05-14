@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import Emitter from '@baifendian/adhere-util-emitter';
 import { IAction, IActionData, IListeners, IPolygonSelection, IStyle, SelectType } from './types';
 /**
@@ -6,6 +7,7 @@ import { IAction, IActionData, IListeners, IPolygonSelection, IStyle, SelectType
  * @classdesc - PolygonSelection
  */
 declare class PolygonSelection extends Emitter.Events implements IPolygonSelection {
+    static Cropping: import("react").MemoExoticComponent<import("react").ForwardRefExoticComponent<import("./types").CroppingProps & import("react").RefAttributes<import("./types").CroppingHandle>>>;
     protected el: HTMLElement | null;
     protected listeners: IListeners | null | undefined;
     protected curAction: IAction | null;

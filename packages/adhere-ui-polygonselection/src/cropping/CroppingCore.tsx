@@ -40,7 +40,16 @@ import type {
   IStyle,
 } from '../types';
 import { ActionEvents, IActionData, PolygonSelectionActions, SelectType } from '../types';
-import { drawCircle, drawDiamond, drawPolygon, drawRectangle, sort } from './util';
+import {
+  drawCircle,
+  drawDiamond,
+  drawPolygon,
+  drawRectangle,
+  drawStart,
+  drawTriangle,
+  getClipDataUrl,
+  sort,
+} from './util';
 
 const selectorPrefix = 'adhere-ui-cropping-core';
 
