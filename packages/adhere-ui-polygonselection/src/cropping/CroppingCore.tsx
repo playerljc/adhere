@@ -1,7 +1,7 @@
 import { useUpdateLayoutEffect } from 'ahooks';
 import { Button, Card, Space } from 'antd';
 import classNames from 'classnames';
-import type { ForwardRefRenderFunction } from 'react';
+import type { ForwardRefRenderFunction, ReactNode } from 'react';
 import React, {
   forwardRef,
   memo,
@@ -40,15 +40,7 @@ import type {
   IStyle,
 } from '../types';
 import { ActionEvents, IActionData, PolygonSelectionActions, SelectType } from '../types';
-import {
-  drawCircle,
-  drawDiamond,
-  drawPolygon,
-  drawRectangle,
-  drawStart,
-  drawTriangle,
-  getClipDataUrl,
-} from './util';
+import { drawCircle, drawDiamond, drawPolygon, drawRectangle, sort } from './util';
 
 const selectorPrefix = 'adhere-ui-cropping-core';
 
@@ -59,7 +51,7 @@ const selectorPrefix = 'adhere-ui-cropping-core';
  * @constructor
  */
 const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCoreProps> = (
-  { className, style: wrapStyle, wrapProps, toolProps, areaProps, minHeight = 200 },
+  { className, style: wrapStyle, wrapProps, toolProps, areaProps, minHeight = 200, toolBarConfig },
   ref,
 ) => {
   const [type, setType] = useState<SelectType | null>(null);
@@ -85,6 +77,85 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   const inputFileFieldRef = useRef<HTMLInputElement | null>(null);
 
   const data = useRef<IActionData | null>(null);
+
+  const layoutMap = new Map<string, () => ReactNode>([
+    [
+      'left',
+      () => (
+        <FlexLayout.TRBLC.LCLayout
+          {...defaultProps}
+          {...wrapProps}
+          lProps={{
+            ...defaultToolbarProps,
+            ...toolProps,
+            render: renderTool,
+          }}
+          cProps={{
+            ...defaultCProps,
+            ...areaProps,
+            render: renderArea,
+          }}
+        />
+      ),
+    ],
+    [
+      'right',
+      () => (
+        <FlexLayout.TRBLC.CRLayout
+          {...defaultProps}
+          {...wrapProps}
+          rProps={{
+            ...defaultToolbarProps,
+            ...toolProps,
+            render: renderTool,
+          }}
+          cProps={{
+            ...defaultCProps,
+            ...areaProps,
+            render: renderArea,
+          }}
+        />
+      ),
+    ],
+    [
+      'top',
+      () => (
+        <FlexLayout.TRBLC.TCLayout
+          {...defaultProps}
+          {...wrapProps}
+          tProps={{
+            ...defaultToolbarProps,
+            ...toolProps,
+            render: renderTool,
+          }}
+          cProps={{
+            ...defaultCProps,
+            ...areaProps,
+            render: renderArea,
+          }}
+        />
+      ),
+    ],
+    [
+      'bottom',
+      () => (
+        <FlexLayout.TRBLC.CBLayout
+          {...defaultProps}
+          {...wrapProps}
+          bProps={{
+            ...defaultToolbarProps,
+            ...toolProps,
+            render: renderTool,
+          }}
+          cProps={{
+            ...defaultCProps,
+            ...areaProps,
+            render: renderArea,
+          }}
+        />
+      ),
+    ],
+  ]);
 
   // ActionType
   const typeActionMap = useMemo(
@@ -134,9 +205,9 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   );
 
   /**
-   * defaultLProps
+   * defaultToolbarProps
    */
-  const defaultLProps = useMemo<CroppingCoreToolProps>(
+  const defaultToolbarProps = useMemo<CroppingCoreToolProps>(
     () => ({
       fit: true,
     }),
@@ -207,70 +278,143 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
      * renderCroppingTools
      * @returns
      */
-    const renderCroppingTools = () => (
-      <>
-        <Button
-          block
-          size="large"
-          type={getType(SelectType.Rectangle)}
-          onClick={onClickHOC(SelectType.Rectangle, RectangleDrawAction)}
-        >
-          {Intl.v('矩形剪裁')}
-        </Button>
+    const renderCroppingTools = () => {
+      const tools = [
+        {
+          key: 'rectangle',
+          value:
+            (!toolBarConfig ||
+              !('rectangle' in toolBarConfig) ||
+              !('hide' in toolBarConfig.rectangle!) ||
+              !toolBarConfig?.rectangle?.hide) &&
+            (toolBarConfig?.rectangle?.render?.(
+              onClickHOC(SelectType.Rectangle, RectangleDrawAction),
+            ) || (
+              <Button
+                key="rectangle"
+                block
+                size="large"
+                type={getType(SelectType.Rectangle)}
+                onClick={onClickHOC(SelectType.Rectangle, RectangleDrawAction)}
+              >
+                {Intl.v('矩形剪裁')}
+              </Button>
+            )),
+        },
+        {
+          key: 'circle',
+          value:
+            (!toolBarConfig ||
+              !('circle' in toolBarConfig) ||
+              !('hide' in toolBarConfig.circle!) ||
+              !toolBarConfig?.circle?.hide) &&
+            (toolBarConfig?.circle?.render?.(onClickHOC(SelectType.Circle, CircleDrawAction)) || (
+              <Button
+                key="circle"
+                block
+                size="large"
+                type={getType(SelectType.Circle)}
+                onClick={onClickHOC(SelectType.Circle, CircleDrawAction)}
+              >
+                {Intl.v('圆形剪裁')}
+              </Button>
+            )),
+        },
+        {
+          key: 'start',
+          value:
+            (!toolBarConfig ||
+              !('start' in toolBarConfig) ||
+              !('hide' in toolBarConfig.start!) ||
+              !toolBarConfig?.start?.hide) &&
+            (toolBarConfig?.start?.render?.(onClickHOC(SelectType.Start, StartDrawAction)) || (
+              <Button
+                key="start"
+                block
+                size="large"
+                type={getType(SelectType.Start)}
+                onClick={onClickHOC(SelectType.Start, StartDrawAction)}
+              >
+                {Intl.v('五角星剪裁')}
+              </Button>
+            )),
+        },
+        {
+          key: 'triangle',
+          value:
+            (!toolBarConfig ||
+              !('triangle' in toolBarConfig) ||
+              !('hide' in toolBarConfig.triangle!) ||
+              !toolBarConfig?.triangle?.hide) &&
+            (toolBarConfig?.triangle?.render?.(
+              onClickHOC(SelectType.Triangle, TriangleDrawAction),
+            ) || (
+              <Button
+                key="triangle"
+                block
+                size="large"
+                type={getType(SelectType.Triangle)}
+                onClick={onClickHOC(SelectType.Triangle, TriangleDrawAction)}
+              >
+                {Intl.v('三角形剪裁')}
+              </Button>
+            )),
+        },
+        {
+          key: 'diamond',
+          value:
+            (!toolBarConfig ||
+              !('diamond' in toolBarConfig) ||
+              !('hide' in toolBarConfig.diamond!) ||
+              !toolBarConfig?.diamond?.hide) &&
+            (toolBarConfig?.diamond?.render?.(
+              onClickHOC(SelectType.Diamond, DiamondDrawAction),
+            ) || (
+              <Button
+                key="diamond"
+                block
+                size="large"
+                type={getType(SelectType.Diamond)}
+                onClick={onClickHOC(SelectType.Diamond, DiamondDrawAction)}
+              >
+                {Intl.v('菱形剪裁')}
+              </Button>
+            )),
+        },
+        {
+          key: 'polygon',
+          value:
+            (!toolBarConfig ||
+              !('polygon' in toolBarConfig) ||
+              !('hide' in toolBarConfig.polygon!) ||
+              !toolBarConfig?.polygon?.hide) &&
+            (toolBarConfig?.polygon?.render?.(
+              onClickHOC(SelectType.Polygon, PolygonDrawAction),
+            ) || (
+              <Button
+                key="polygon"
+                block
+                size="large"
+                type={getType(SelectType.Polygon)}
+                onClick={onClickHOC(SelectType.Polygon, PolygonDrawAction)}
+              >
+                {Intl.v('多边形剪裁')}
+              </Button>
+            )),
+        },
+      ];
 
-        <Button
-          block
-          size="large"
-          type={getType(SelectType.Circle)}
-          onClick={onClickHOC(SelectType.Circle, CircleDrawAction)}
-        >
-          {Intl.v('圆形剪裁')}
-        </Button>
+      return tools.filter((t) => !!t.value);
+    };
 
-        <Button
-          block
-          size="large"
-          type={getType(SelectType.Start)}
-          onClick={onClickHOC(SelectType.Start, StartDrawAction)}
-        >
-          {Intl.v('五角星剪裁')}
-        </Button>
-
-        <Button
-          block
-          size="large"
-          type={getType(SelectType.Triangle)}
-          onClick={onClickHOC(SelectType.Triangle, TriangleDrawAction)}
-        >
-          {Intl.v('三角形剪裁')}
-        </Button>
-
-        <Button
-          block
-          size="large"
-          type={getType(SelectType.Diamond)}
-          onClick={onClickHOC(SelectType.Diamond, DiamondDrawAction)}
-        >
-          {Intl.v('菱形剪裁')}
-        </Button>
-
-        <Button
-          block
-          size="large"
-          type={getType(SelectType.Polygon)}
-          onClick={onClickHOC(SelectType.Polygon, PolygonDrawAction)}
-        >
-          {Intl.v('多边形剪裁')}
-        </Button>
-      </>
-    );
-
-    return (
-      <Card>
-        <Space direction="vertical" size={20}>
-          <input type="file" ref={inputFileFieldRef} accept="" style={{ display: 'none' }} />
-
+    let toolsArr: Array<any> = [
+      {
+        key: 'open',
+        value: toolBarConfig?.open?.render?.(() => {
+          inputFileFieldRef.current?.click();
+        }) || (
           <Button
+            key="open"
             block
             size="large"
             type="primary"
@@ -280,12 +424,39 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
           >
             {Intl.v('打开')}
           </Button>
+        ),
+      },
+      base64 ? renderCroppingTools() : [{ key: '', value: null }],
+    ]
+      .flat()
+      .filter((t) => !!t.value);
 
-          {base64 && renderCroppingTools()}
+    toolsArr = sort(
+      toolsArr.map((t) => {
+        if ('sort' in (toolBarConfig?.[t.key] ?? {})) {
+          return {
+            ...t,
+            sort: toolBarConfig?.[t.key].sort,
+          };
+        }
+
+        return t;
+      }),
+    ).map((t) => t.value);
+
+    const direction = ['left', 'right'].includes(toolBarConfig?.direction ?? 'left')
+      ? 'vertical'
+      : 'horizontal';
+
+    return (
+      <Card>
+        <Space direction={direction} size={20}>
+          <input type="file" ref={inputFileFieldRef} accept="" style={{ display: 'none' }} />
+          {toolsArr}
         </Space>
       </Card>
     );
-  }, [type, toolProps, base64]);
+  }, [type, toolProps, base64, toolBarConfig]);
 
   /**
    * renderArea
@@ -568,26 +739,15 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
     });
   };
 
+  const children = layoutMap.get(toolBarConfig?.direction || 'left')?.();
+
   return (
     <div
       ref={wrapRef}
       className={`${classNames(selectorPrefix, className || '')}`}
       style={wrapStyle || {}}
     >
-      <FlexLayout.TRBLC.LCLayout
-        {...defaultProps}
-        {...wrapProps}
-        lProps={{
-          ...defaultLProps,
-          ...toolProps,
-          render: renderTool,
-        }}
-        cProps={{
-          ...defaultCProps,
-          ...areaProps,
-          render: renderArea,
-        }}
-      />
+      {children}
     </div>
   );
 };

@@ -360,6 +360,43 @@ export interface CroppingCoreProps {
   toolProps?: CroppingCoreToolProps;
   areaProps?: CroppingCoreAreaProps;
   minHeight?: number;
+  toolBarConfig?: {
+    direction?: string | 'left' | 'right' | 'top' | 'bottom';
+    open?: {
+      render?: (handle?: Function) => ReactNode;
+      sort?: number;
+    };
+    rectangle?: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    circle?: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    start: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    triangle: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    diamond: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+    polygon: {
+      render?: (handle?: Function) => ReactNode;
+      hide?: boolean;
+      sort?: number;
+    };
+  };
 }
 
 export interface CroppingCoreHandle {

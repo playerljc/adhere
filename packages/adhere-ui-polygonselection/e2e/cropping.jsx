@@ -20,6 +20,18 @@ export default () => {
           ref={ref}
           value={value}
           onChange={(v) => setValue(v)}
+          coreProps={{
+            toolBarConfig: {
+              direction: 'bottom',
+              open: {
+                render: (handle) => <div onClick={handle}>open</div>,
+                sort: 2,
+              },
+              rectangle: {
+                hide: true,
+              }
+            },
+          }}
         />
       </div>
     </div>

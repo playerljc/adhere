@@ -11,7 +11,7 @@ import {
   OutCircleData,
   Points,
   RectangleData,
-  SelectType,
+  SelectType
 } from '../types';
 
 /**
@@ -274,4 +274,29 @@ export function getClipDataUrl({
 
   // canvas to dataUrl
   return canvas.toDataURL('image/png', 1);
+}
+
+/**
+ * sort
+ * @param {Array<{ [key: string]: any; sort?: number }>} arr 
+ * @returns {Array<any>}
+ */
+export function sort(arr: Array<{ [key: string]: any; sort?: number }>): Array<any> {
+  const result = Array.from({ length: arr.length }).fill(null);
+
+  const sortArr: Array<{ [key: string]: any; sort?: number }> = [];
+
+  arr.forEach((t, index) => {
+    if ('sort' in t) {
+      sortArr.push(t);
+    } else {
+      result[index] = t;
+    }
+  });
+
+  sortArr.forEach((t) => {
+    result.splice(t.sort as number, 0, t);
+  });
+
+  return result.filter(t => !!t);
 }
