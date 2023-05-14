@@ -2,6 +2,8 @@ import MathUtil from '@baifendian/adhere-util';
 import Emitter from '@baifendian/adhere-util-emitter';
 
 import defaultAnchorStyle from '../defaultAnchorStyle';
+import defaultMoveGemStyle from '../defaultMoveGemStyle';
+import defaultStyle from '../defaultStyle';
 import {
   ActionEvents,
   ActionStatus,
@@ -11,6 +13,7 @@ import {
   IMoveAction,
   IPoint,
   IPolygonSelection,
+  IStyle,
   SelectType,
 } from '../types';
 
@@ -52,6 +55,39 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
   canMove: boolean = false;
   // 是都已经移动
   isMoved: boolean = false;
+
+  // 样式对象
+  style: IStyle = { ...defaultStyle };
+
+  // 修改样式对象
+  anchorStyle: IStyle = { ...defaultAnchorStyle };
+
+  // 移动样式对象
+  moveGemStyle: IStyle = { ...defaultMoveGemStyle };
+
+  getAnchorStyle(): IStyle {
+    return { ...this.anchorStyle };
+  }
+
+  getStyle(): IStyle {
+    return { ...this.style };
+  }
+
+  getMoveGemStyle(): IStyle {
+    return { ...this.moveGemStyle };
+  }
+
+  setAnchorStyle(style: Partial<IStyle> | undefined): void {
+    this.anchorStyle = { ...defaultAnchorStyle, ...(style || {}) };
+  }
+
+  setStyle(style: Partial<IStyle> | undefined): void {
+    this.style = { ...defaultStyle, ...(style || {}) };
+  }
+
+  setMoveGemStyle(style: Partial<IStyle> | undefined): void {
+    this.moveGemStyle = { ...defaultMoveGemStyle, ...(style || {}) };
+  }
 
   /**
    * drawModify
@@ -141,10 +177,10 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     if (!ctx) return;
 
     // anchor上下文
-    ctx.strokeStyle = defaultAnchorStyle.strokeStyle;
-    ctx.fillStyle = defaultAnchorStyle.fillStyle;
-    ctx.lineWidth = defaultAnchorStyle.lineWidth;
-    ctx.globalAlpha = defaultAnchorStyle.globalAlpha;
+    ctx.strokeStyle = this.anchorStyle.strokeStyle;
+    ctx.fillStyle = this.anchorStyle.fillStyle;
+    ctx.lineWidth = this.anchorStyle.lineWidth;
+    ctx.globalAlpha = this.anchorStyle.globalAlpha;
   }
 
   /**
@@ -158,10 +194,10 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     if (!ctx) return;
 
     // anchor上下文
-    ctx.strokeStyle = defaultAnchorStyle.strokeStyle;
-    ctx.lineWidth = defaultAnchorStyle.lineWidth;
-    ctx.setLineDash(defaultAnchorStyle.lineDash);
-    ctx.lineDashOffset = defaultAnchorStyle.lineDashOffset;
+    ctx.strokeStyle = this.anchorStyle.strokeStyle;
+    ctx.lineWidth = this.anchorStyle.lineWidth;
+    ctx.setLineDash(this.anchorStyle.lineDash);
+    ctx.lineDashOffset = this.anchorStyle.lineDashOffset;
   }
 
   /**
@@ -234,11 +270,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
 
     this.drawModify(targetPoint);
 
-    this.trigger(ActionEvents.Modifying, {
-      selectType: SelectType.Rectangle,
-      actionType: ActionType.Draw,
-      data: this.data,
-    });
+    this.trigger(ActionEvents.Modifying, this.data);
   }
 
   /**
@@ -457,11 +489,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
     this.moveStartPoint = null;
     e.stopPropagation();
 
-    this.trigger(ActionEvents.MoveEnd, {
-      selectType: this.getSelectType(),
-      actionType: ActionType.Move,
-      data: this.data,
-    });
+    this.trigger(ActionEvents.MoveEnd, this.data);
   }
 
   /**
@@ -539,11 +567,7 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
 
     this.startPoint = null;
 
-    this.trigger(ActionEvents.ModifyEnd, {
-      selectType: this.getSelectType(),
-      actionType: ActionType.Modify,
-      data: this.data,
-    });
+    this.trigger(ActionEvents.ModifyEnd, this.data);
 
     canvasEl.style.cursor = assistCanvasEl.style.cursor = 'default';
   }

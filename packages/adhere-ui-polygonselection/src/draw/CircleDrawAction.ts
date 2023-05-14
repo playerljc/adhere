@@ -7,7 +7,7 @@ import {
   ICircleData,
   IPoint,
   IStyle,
-  SelectType,
+  SelectType
 } from '../types';
 import DrawAction from './DrawAction';
 
@@ -57,7 +57,7 @@ class CircleDrawAction extends DrawAction {
 
     if (!context || !ctx || !centerPoint) return;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl();
 
     if (!canvasEl) return;
 
@@ -68,16 +68,15 @@ class CircleDrawAction extends DrawAction {
 
     if (!targetPoint) return;
 
-    context.clearDraw();
+    context?.clearDraw();
 
-    context.drawHistoryData();
+    context?.drawHistoryData();
 
     ctx.beginPath();
 
     this.radius = BaseUtil.getDistanceByBetweenPoint({ p1: centerPoint, p2: targetPoint });
 
     ctx.lineWidth = style.lineWidth;
-
     ctx.lineJoin = style.lineJoin;
     ctx.lineCap = style.lineCap;
     style.lineDash && ctx.setLineDash(style.lineDash);
@@ -199,7 +198,7 @@ class CircleDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
     }
 
     ctx.ellipse(

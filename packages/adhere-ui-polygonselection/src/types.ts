@@ -1,3 +1,13 @@
+import type { ModalProps } from 'antd/lib/modal/Modal';
+import type { CSSProperties } from 'react';
+
+import type {
+  CenterProps,
+  TBLRCLayoutProps,
+  TBLRProps
+} from '@baifendian/adhere-ui-flexlayout/es/types';
+import type Events from '@baifendian/adhere-util-emitter/es/events';
+
 /**
  * Action的状态
  */
@@ -50,7 +60,20 @@ export enum ActionEvents {
 /**
  * IAction - 一个Action对象
  */
-export interface IAction {
+export interface IAction extends Events {
+  // 绘制样式
+  style: IStyle;
+  // 修改的时候控制点的样式
+  anchorStyle: IStyle;
+  // 移动的元素样式
+  moveGemStyle: IStyle;
+  
+  setStyle: (style?: Partial<IStyle>) => void;
+  getStyle: () => IStyle;
+  setAnchorStyle: (style?: Partial<IStyle>) => void;
+  getAnchorStyle: () => IStyle;
+  setMoveGemStyle: (style?: Partial<IStyle>) => void;
+  getMoveGemStyle: () => IStyle;
   // 获取状态
   getStatus: () => number;
   // 开始
@@ -167,9 +190,6 @@ export interface IModifyAction extends IAction {
   start: () => void;
 }
 
-/**
- * IDrawMoveGeometry
- */
 interface IDrawMoveGeometry {
   /**
    * drawMoveGeometry
@@ -235,6 +255,7 @@ export enum PolygonSelectionActions {
  */
 export interface IPolygonSelection {
   trigger: (type: string, params?: any | null | undefined) => void;
+  on(type: string | symbol, handler: Function, makStackSize?: number): void;
   getWidth: () => number;
   getHeight: () => number;
   getCtx: () => CanvasRenderingContext2D | null;
@@ -305,4 +326,35 @@ export enum ActionType {
   Draw = 'Draw',
   Modify = 'Modify',
   Move = 'Move',
+}
+
+export interface CroppingProps {
+  className?: string;
+  style?: CSSProperties;
+  modalProps?: ModalProps;
+  coreProps?: CroppingCoreProps;
+  value?: string;
+  onChange?: (base64?: string) => void;
+}
+
+export interface CroppingHandle {}
+
+export type CroppingCoreWrapProps = Pick<
+  TBLRCLayoutProps,
+  Exclude<'lProps' | 'cProps', keyof TBLRCLayoutProps>
+>;
+export type CroppingCoreToolProps = Partial<TBLRProps>;
+export type CroppingCoreAreaProps = Partial<CenterProps>;
+
+export interface CroppingCoreProps {
+  className?: string;
+  style?: CSSProperties;
+  wrapProps?: CroppingCoreWrapProps;
+  toolProps?: CroppingCoreToolProps;
+  areaProps?: CroppingCoreAreaProps;
+  minHeight?: number;
+}
+
+export interface CroppingCoreHandle {
+  save?: () => string;
 }

@@ -80,7 +80,7 @@ class DiamondDrawAction extends DrawAction {
 
     if (!context || !ctx) return;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl();
 
     if (!canvasEl) return;
 
@@ -89,9 +89,9 @@ class DiamondDrawAction extends DrawAction {
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    context.clearDraw();
+    context?.clearDraw();
 
-    context.drawHistoryData();
+    context?.drawHistoryData();
 
     ctx.beginPath();
 
@@ -227,7 +227,7 @@ class DiamondDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
     }
 
     const widthHalf = data.data.width / 2;

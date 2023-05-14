@@ -1,9 +1,8 @@
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import StartDrawAction from '../draw/StartDrawAction';
-import { IPoint, IStartData, IStyle, SelectType } from '../types';
+import { IPoint, IStartData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
@@ -318,7 +317,7 @@ class StartModifyAction extends ModifyAction {
       srcData.data.center.x += offsetX;
       srcData.data.center.y += offsetY;
 
-      const style: IStyle = { ...defaultMoveGemStyle, ...(srcData.style || {}) } as IStyle;
+      const style = { ...this.moveGemStyle, ...(srcData.style || {}) };
       srcData.style.lineWidth = style.lineWidth;
       srcData.style.lineJoin = style.lineJoin;
       srcData.style.lineCap = style.lineCap;
@@ -326,7 +325,7 @@ class StartModifyAction extends ModifyAction {
       srcData.style.lineDashOffset = style.lineDashOffset;
       srcData.style.strokeStyle = style.strokeStyle;
       srcData.style.fillStyle = style.fillStyle;
-      srcData.style.globalAlpha = style.globalAlpha || 1;
+      srcData.style.globalAlpha = style.globalAlpha ?? 1;
 
       StartDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

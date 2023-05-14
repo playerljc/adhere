@@ -108,7 +108,7 @@ class StartDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
     }
 
     const startCount = 5;
@@ -341,7 +341,7 @@ class StartDrawAction extends DrawAction {
       return;
     }
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl || !this.centerPoint || !this.outRadius || !this.innerRadius) {
       super.end(e);

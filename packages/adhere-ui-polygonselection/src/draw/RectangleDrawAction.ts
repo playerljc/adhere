@@ -8,7 +8,7 @@ import {
   IPoint,
   IRectangleData,
   IStyle,
-  SelectType,
+  SelectType
 } from '../types';
 import Util from '../util';
 import DrawAction from './DrawAction';
@@ -76,9 +76,9 @@ class RectangleDrawAction extends DrawAction {
 
     const ctx = context?.getCtx();
 
-    if (!context || !ctx) return;
+    if (!context ||  !ctx) return;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl?.();
 
     if (!canvasEl) return;
 
@@ -87,15 +87,15 @@ class RectangleDrawAction extends DrawAction {
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    context.clearDraw();
+    context?.clearDraw?.();
 
-    context.drawHistoryData();
+    context?.drawHistoryData?.();
 
     ctx.beginPath();
 
     this.leftTopPoint = Util.getRectLeftTopPoint({ startPoint, targetPoint });
-    this.width = Math.abs(targetPoint.x - (startPoint?.x || 0));
-    this.height = Math.abs(targetPoint.y - (startPoint?.y || 0));
+    this.width = Math.abs(targetPoint.x - (startPoint?.x ||  0));
+    this.height = Math.abs(targetPoint.y - (startPoint?.y ||  0));
 
     ctx.lineWidth = style.lineWidth;
     ctx.lineJoin = style.lineJoin;
@@ -106,7 +106,7 @@ class RectangleDrawAction extends DrawAction {
     ctx.fillStyle = style.fillStyle;
     ctx.globalAlpha = style.globalAlpha;
 
-    ctx.rect(this.leftTopPoint?.x || 0, this.leftTopPoint?.y || 0, this.width, this.height);
+    ctx.rect(this.leftTopPoint?.x ||  0, this.leftTopPoint?.y ||  0, this.width, this.height);
 
     ctx.closePath();
     ctx.stroke();
@@ -180,7 +180,7 @@ class RectangleDrawAction extends DrawAction {
    * @param data
    */
   static draw(ctx: CanvasRenderingContext2D, data: IRectangleData) {
-    if (!ctx || !data) return;
+    if (!ctx ||  !data) return;
 
 
     this.drawHistoryPath(
@@ -216,7 +216,7 @@ class RectangleDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
     }
 
     ctx.rect(data?.data?.leftTopPoint?.x || 0, data?.data?.leftTopPoint?.y || 0, <number>data?.data?.width, <number>data?.data?.height);
@@ -231,7 +231,7 @@ class RectangleDrawAction extends DrawAction {
    * @param style
    */
   start(style: IStyle): void {
-    if (!this.context || [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
+    if (!this.context ||  [ActionStatus.Running, ActionStatus.Destroy].includes(this.status)) return;
 
     const { context } = this;
 

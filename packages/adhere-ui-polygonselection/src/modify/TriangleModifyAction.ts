@@ -1,9 +1,8 @@
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import TriangleDrawAction from '../draw/TriangleDrawAction';
-import { IPoint, IStyle, ITriangleData, SelectType } from '../types';
+import { IPoint, ITriangleData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
@@ -739,7 +738,7 @@ class TriangleModifyAction extends ModifyAction {
         point.y += offsetY;
       });
 
-      const style: IStyle = { ...defaultMoveGemStyle, ...(srcData.style || {}) } as IStyle;
+      const style = { ...this.moveGemStyle, ...(srcData.style || {}) };
       srcData.style.lineWidth = style.lineWidth;
       srcData.style.lineJoin = style.lineJoin;
       srcData.style.lineCap = style.lineCap;
@@ -747,7 +746,7 @@ class TriangleModifyAction extends ModifyAction {
       srcData.style.lineDashOffset = style.lineDashOffset;
       srcData.style.strokeStyle = style.strokeStyle;
       srcData.style.fillStyle = style.fillStyle;
-      srcData.style.globalAlpha = style.globalAlpha || 1;
+      srcData.style.globalAlpha = style.globalAlpha ?? 1;
 
       TriangleDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

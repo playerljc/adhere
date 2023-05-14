@@ -2,13 +2,14 @@
  * 几何图形默认的样式
  */
 export default {
-  fillStyle: 'rgb(91,155,213,1)',
+  fillStyle: '#eee',
   // 描边颜色
-  strokeStyle: 'rgba(0,0,0,.8)',
+  strokeStyle: '#ccc',
   // 描边大小
-  lineWidth: 1,
-  lineCap: 'round',
-  lineJoin: 'round',
+  lineWidth: 2,
+  lineCap: 'round' as CanvasLineCap,
+  lineJoin: 'round' as CanvasLineJoin,
   lineDash: [],
   lineDashOffset: -1,
+  globalAlpha: 1,
 };

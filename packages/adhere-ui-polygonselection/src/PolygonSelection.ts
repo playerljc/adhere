@@ -1,6 +1,7 @@
 import MathUtil from '@baifendian/adhere-util';
 import Emitter from '@baifendian/adhere-util-emitter';
 
+import Cropping from './cropping';
 import CircleDrawAction from './draw/CircleDrawAction';
 import DiamondDrawAction from './draw/DiamondDrawAction';
 import FreeDrawAction from './draw/FreeDrawAction';
@@ -27,6 +28,8 @@ const selectorPrefix = 'adhere-ui-polygonselection';
  * @classdesc - PolygonSelection
  */
 class PolygonSelection extends Emitter.Events implements IPolygonSelection {
+  static Cropping = Cropping;
+
   // 父元素
   protected el: HTMLElement | null = null;
 
@@ -119,7 +122,7 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
       // 查看point命中了HistoryData中的哪一项
       const historyData = this.getHistoryData();
 
-      // if (!historyData || !historyData.length) {
+      // if (!historyData ||  !historyData.length) {
       //   this.trigger(PolygonSelectionActions.CanvasClickEmpty);
       //   return;
       // }
@@ -191,13 +194,13 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
   protected adapterCanvas() {
     const { canvasEl, assistCanvasEl, el } = this;
 
-    if (!el || !canvasEl || !assistCanvasEl) return;
+    if (!el ?? !canvasEl ?? !assistCanvasEl) return;
 
-    canvasEl.width = el.offsetWidth || 0;
-    canvasEl.height = el.offsetHeight || 0;
+    canvasEl.width = el.offsetWidth ?? 0;
+    canvasEl.height = el.offsetHeight ?? 0;
 
-    assistCanvasEl.width = el.offsetWidth || 0;
-    assistCanvasEl.height = el.offsetHeight || 0;
+    assistCanvasEl.width = el.offsetWidth ?? 0;
+    assistCanvasEl.height = el.offsetHeight ?? 0;
 
     this.clearDraw();
     this.clearAssistDraw();
@@ -243,7 +246,7 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
    * @return number
    */
   getWidth(): number {
-    return this?.el?.offsetWidth || 0;
+    return this?.el?.offsetWidth ?? 0;
   }
 
   /**
@@ -251,7 +254,7 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
    * @return number
    */
   getHeight(): number {
-    return this?.el?.offsetHeight || 0;
+    return this?.el?.offsetHeight ?? 0;
   }
 
   /**
@@ -434,6 +437,12 @@ class PolygonSelection extends Emitter.Events implements IPolygonSelection {
 
     if (this.curAction) {
       this.curAction.destroy();
+    }
+
+    this.clearAll();
+
+    if (this.el) {
+      this.el.innerHTML = '';
     }
   }
 }

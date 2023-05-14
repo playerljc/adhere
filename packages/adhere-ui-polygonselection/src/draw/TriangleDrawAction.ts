@@ -65,7 +65,7 @@ class TriangleDrawAction extends DrawAction {
 
     if (!context || !ctx) return;
 
-    const canvasEl = context.getCanvasEl();
+    const canvasEl = context?.getCanvasEl();
 
     if (!canvasEl) return;
 
@@ -74,9 +74,9 @@ class TriangleDrawAction extends DrawAction {
       rect: canvasEl?.getBoundingClientRect(),
     });
 
-    context.clearDraw();
+    context?.clearDraw();
 
-    context.drawHistoryData();
+    context?.drawHistoryData();
 
     ctx.beginPath();
 
@@ -197,7 +197,7 @@ class TriangleDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
     }
 
     ctx.moveTo(data.data.points[0].x, data.data.points[0].y);

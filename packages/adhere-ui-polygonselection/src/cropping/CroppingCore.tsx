@@ -1,0 +1,577 @@
+import { useUpdateLayoutEffect } from 'ahooks';
+import { Button, Card, Space } from 'antd';
+import classNames from 'classnames';
+import type { ForwardRefRenderFunction } from 'react';
+import React, {
+  forwardRef,
+  memo,
+  useCallback,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
+import FlexLayout from '@baifendian/adhere-ui-flexlayout';
+import Intl from '@baifendian/adhere-util-intl';
+
+import CircleDrawAction from '../draw/CircleDrawAction';
+import DiamondDrawAction from '../draw/DiamondDrawAction';
+import PolygonDrawAction from '../draw/PolygonDrawAction';
+import RectangleDrawAction from '../draw/RectangleDrawAction';
+import StartDrawAction from '../draw/StartDrawAction';
+import TriangleDrawAction from '../draw/TriangleDrawAction';
+import PolygonSelection from '../index';
+import CircleModifyAction from '../modify/CircleModifyAction';
+import DiamondModifyAction from '../modify/DiamondModifyAction';
+import PolygonModifyAction from '../modify/PolygonModifyAction';
+import RectangleModifyAction from '../modify/RectangleModifyAction';
+import StartModifyAction from '../modify/StartModifyAction';
+import TriangleModifyAction from '../modify/TriangleModifyAction';
+import type {
+  CroppingCoreAreaProps,
+  CroppingCoreHandle,
+  CroppingCoreProps,
+  CroppingCoreToolProps,
+  CroppingCoreWrapProps,
+  IAction,
+  IPolygonSelection,
+  IStyle,
+} from '../types';
+import { ActionEvents, PolygonSelectionActions, SelectType } from '../types';
+import {
+  drawCircle,
+  drawDiamond,
+  drawPolygon,
+  drawRectangle,
+  drawStart,
+  drawTriangle,
+} from './util';
+
+const selectorPrefix = 'adhere-ui-cropping-core';
+
+/**
+ * CroppingCore
+ * @param props
+ * @param ref
+ * @constructor
+ */
+const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCoreProps> = (
+  { className, style: wrapStyle, wrapProps, toolProps, areaProps, minHeight = 200 },
+  ref,
+) => {
+  const [type, setType] = useState<SelectType | null>(null);
+
+  const [base64, setBase64] = useState<string>('');
+
+  const base64Ref = useRef<HTMLImageElement | null>(null);
+
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  const clipRef = useRef<HTMLDivElement | null>(null);
+
+  const clipCanvasEL = useRef<HTMLCanvasElement | null>(null);
+
+  const clipCanvasCtx = useRef<CanvasRenderingContext2D>();
+
+  const geometryRef = useRef<HTMLDivElement | null>(null);
+
+  const polygonSelection = useRef<IPolygonSelection>();
+
+  const curAction = useRef<IAction | null>(null);
+
+  const inputFileFieldRef = useRef<HTMLInputElement | null>(null);
+
+  // ActionType
+  const typeActionMap = useMemo(
+    () =>
+      new Map<SelectType, any>([
+        [SelectType.Polygon, PolygonModifyAction],
+        [SelectType.Circle, CircleModifyAction],
+        [SelectType.Rectangle, RectangleModifyAction],
+        [SelectType.Triangle, TriangleModifyAction],
+        [SelectType.Diamond, DiamondModifyAction],
+        [SelectType.Start, StartModifyAction],
+      ]),
+    [],
+  );
+
+  const style: IStyle = useMemo(
+    () => ({
+      fillStyle: 'transparent',
+      // 描边颜色
+      strokeStyle: '#fff',
+      // 描边大小
+      lineWidth: 1,
+      lineCap: 'round',
+      lineJoin: 'round',
+      lineDash: [
+        /*5, 4, 3*/
+      ],
+      lineDashOffset: -1,
+      globalAlpha: 1,
+    }),
+    [],
+  );
+
+  const anchorStyle = {
+    fillStyle: '#fff',
+  };
+
+  /**
+   * defaultProps
+   */
+  const defaultProps = useMemo<CroppingCoreWrapProps>(
+    () => ({
+      gutter: 20,
+      wrapClassName: `${selectorPrefix}-inner`,
+    }),
+    [],
+  );
+
+  /**
+   * defaultLProps
+   */
+  const defaultLProps = useMemo<CroppingCoreToolProps>(
+    () => ({
+      fit: true,
+    }),
+    [],
+  );
+
+  /**
+   * defaultCProps
+   */
+  const defaultCProps = useMemo<CroppingCoreAreaProps>(
+    () => ({
+      autoFixed: true,
+    }),
+    [],
+  );
+
+  /**
+   * renderTool
+   */
+  const renderTool = useCallback(() => {
+    const getType = (_type) => {
+      return _type === type ? 'primary' : 'default';
+    };
+
+    const onBeforeClick = (_type) => {
+      if (_type !== type) {
+        clearClip();
+        polygonSelection?.current?.clearCanvasAll?.();
+        setType(_type);
+      }
+
+      return _type !== type ? Promise.resolve() : Promise.reject();
+    };
+
+    const onClickHOC = (type: SelectType, ActionClass) => () => {
+      onBeforeClick(type).then(() => {
+        curAction.current = new ActionClass();
+
+        curAction.current.setAnchorStyle({ ...anchorStyle });
+        curAction.current.setMoveGemStyle({ ...anchorStyle });
+
+        curAction?.current?.on?.(ActionEvents.DrawBeforeStart, (e) => {
+          console.log('绘制开始前', JSON.stringify(e));
+          clip(e);
+        });
+        curAction?.current?.on?.(ActionEvents.DrawStart, (e) => {
+          console.log('绘制开始', JSON.stringify(e));
+          clip(e);
+        });
+        curAction?.current?.on?.(ActionEvents.Drawing, (e) => {
+          console.log('绘制中', JSON.stringify(e));
+          clip(e);
+        });
+        curAction?.current?.on?.(ActionEvents.DrawEnd, (e) => {
+          // curAction.current.start(data?.style);
+          console.log('绘制完成', JSON.stringify(e));
+          clip(e);
+        });
+        polygonSelection?.current?.changeAction?.(curAction.current as IAction);
+        curAction?.current?.start?.(style);
+      });
+    };
+
+    /**
+     * renderCroppingTools
+     * @returns
+     */
+    const renderCroppingTools = () => (
+      <>
+        <Button
+          block
+          size="large"
+          type={getType(SelectType.Rectangle)}
+          onClick={onClickHOC(SelectType.Rectangle, RectangleDrawAction)}
+        >
+          {Intl.v('矩形剪裁')}
+        </Button>
+
+        <Button
+          block
+          size="large"
+          type={getType(SelectType.Circle)}
+          onClick={onClickHOC(SelectType.Circle, CircleDrawAction)}
+        >
+          {Intl.v('圆形剪裁')}
+        </Button>
+
+        <Button
+          block
+          size="large"
+          type={getType(SelectType.Start)}
+          onClick={onClickHOC(SelectType.Start, StartDrawAction)}
+        >
+          {Intl.v('五角星剪裁')}
+        </Button>
+
+        <Button
+          block
+          size="large"
+          type={getType(SelectType.Triangle)}
+          onClick={onClickHOC(SelectType.Triangle, TriangleDrawAction)}
+        >
+          {Intl.v('三角形剪裁')}
+        </Button>
+
+        <Button
+          block
+          size="large"
+          type={getType(SelectType.Diamond)}
+          onClick={onClickHOC(SelectType.Diamond, DiamondDrawAction)}
+        >
+          {Intl.v('菱形剪裁')}
+        </Button>
+
+        <Button
+          block
+          size="large"
+          type={getType(SelectType.Polygon)}
+          onClick={onClickHOC(SelectType.Polygon, PolygonDrawAction)}
+        >
+          {Intl.v('多边形剪裁')}
+        </Button>
+      </>
+    );
+
+    return (
+      <Card>
+        <Space direction="vertical" size={20}>
+          <input type="file" ref={inputFileFieldRef} accept="" style={{ display: 'none' }} />
+
+          <Button
+            block
+            size="large"
+            type="primary"
+            onClick={() => {
+              inputFileFieldRef.current?.click();
+            }}
+          >
+            {Intl.v('打开')}
+          </Button>
+
+          {base64 && renderCroppingTools()}
+        </Space>
+      </Card>
+    );
+  }, [type, toolProps, base64]);
+
+  /**
+   * renderArea
+   */
+  const renderArea = useCallback(
+    () => (
+      <Card>
+        <div className={`${selectorPrefix}-background`} style={{ minHeight: minHeight || 200 }}>
+          {base64 && (
+            <div className={`${selectorPrefix}-background-inner`}>
+              <img ref={base64Ref} src={base64} alt="" />
+              <div className={`${selectorPrefix}-background-mask`}></div>
+            </div>
+          )}
+        </div>
+        <div className={`${selectorPrefix}-geometry`} ref={geometryRef}></div>
+        <div className={`${selectorPrefix}-clip`} ref={clipRef}></div>
+      </Card>
+    ),
+    [base64, areaProps],
+  );
+
+  const image = useCallback(() => {
+    const img = new Image();
+
+    img.src = base64;
+
+    return img;
+  }, [base64]);
+
+  /**
+   * useUpdateLayoutEffect
+   */
+  useUpdateLayoutEffect(() => {
+    setType(null);
+
+    if (base64Ref.current) {
+      base64Ref.current.onload = () => {
+        if (polygonSelection.current) {
+          destroyClip();
+          destroySelection();
+        }
+
+        createClip();
+        createSelection();
+      };
+    }
+  }, [base64]);
+
+  /**
+   * useLayoutEffect
+   */
+  useLayoutEffect(() => {
+    const onChange = (e) => {
+      const file = e.target.files[0];
+
+      const read = new FileReader();
+
+      read.onload = (e) => {
+        setBase64(e.target?.result as string);
+      };
+
+      read.readAsDataURL(file);
+    };
+
+    inputFileFieldRef.current?.addEventListener('change', onChange);
+
+    return () => {
+      inputFileFieldRef.current?.removeEventListener('change', onChange);
+    };
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    save: () => {
+      console.log(clipCanvasEL.current?.toDataURL('image/png', 1));
+      return clipCanvasEL.current?.toDataURL('image/png', 1);
+    },
+  }));
+
+  /**
+   * clip
+   * @param e
+   * @returns
+   */
+  const clip = (e) => {
+    if (!e.data) return;
+
+    clipCanvasCtx.current?.restore?.();
+    clipCanvasCtx.current?.save?.();
+    clipCanvasCtx.current?.clearRect(
+      0,
+      0,
+      clipCanvasEL.current?.width as number,
+      clipCanvasEL.current?.height as number,
+    );
+
+    const drawMap = new Map<SelectType, (ctx: CanvasRenderingContext2D, data: any) => void>([
+      [SelectType.Circle, drawCircle],
+      [SelectType.Rectangle, drawRectangle],
+      [SelectType.Diamond, drawDiamond],
+      [SelectType.Start, drawStart],
+      [SelectType.Triangle, drawTriangle],
+      [SelectType.Polygon, drawPolygon],
+    ]);
+
+    drawMap.get(e.selectType)?.(clipCanvasCtx.current!, e.data);
+
+    clipCanvasCtx?.current?.clip();
+
+    clipCanvasCtx?.current?.drawImage(
+      image(),
+      0,
+      0,
+      clipCanvasEL.current?.width as number,
+      clipCanvasEL.current?.height as number,
+    );
+  };
+
+  /**
+   * clearClip
+   */
+  const clearClip = () => {
+    clipCanvasCtx.current?.restore();
+    clipCanvasCtx.current?.clearRect?.(
+      0,
+      0,
+      clipCanvasEL.current?.width as number,
+      clipCanvasEL.current?.height as number,
+    );
+  };
+
+  /**
+   * destroyClip
+   * @returns
+   */
+  const destroyClip = () => {
+    if (!clipRef.current) return;
+
+    clipRef.current.innerHTML = '';
+  };
+
+  /**
+   * createClip
+   */
+  const createClip = () => {
+    clipCanvasEL.current = document.createElement('canvas');
+
+    clipCanvasEL.current.width = base64Ref.current?.offsetWidth as number;
+    clipCanvasEL.current.height = base64Ref.current?.offsetHeight as number;
+
+    clipCanvasCtx.current = clipCanvasEL.current?.getContext?.('2d') as CanvasRenderingContext2D;
+
+    clipRef.current?.appendChild?.(clipCanvasEL.current);
+  };
+
+  /**
+   * destroySelection
+   */
+  const destroySelection = () => {
+    polygonSelection?.current?.destroy?.();
+  };
+
+  /**
+   * createSelection
+   * @returns
+   */
+  const createSelection = () => {
+    if (!geometryRef.current) return;
+
+    geometryRef.current.style.width = `${base64Ref?.current?.offsetWidth}px`;
+    geometryRef.current.style.height = `${base64Ref?.current?.offsetHeight}px`;
+    polygonSelection.current = new PolygonSelection.PolygonSelection(geometryRef.current);
+
+    /**
+     * CanvasClickGeometry
+     */
+    polygonSelection.current.on(PolygonSelectionActions.CanvasClickGeometry, (data) => {
+      // 多边形数据据
+      // const d = {
+      //   selectType: 'Polygon',
+      //   actionType: 'Draw',
+      //   data: {
+      //     id: 'fd4ef30f-8add-4cc1-8f36-d861e77b5354',
+      //     type: 'Polygon',
+      //     data: [
+      //       { x: 148.34375, y: 33 },
+      //       { x: 120.34375, y: 198 },
+      //       { x: 360.34375, y: 181 },
+      //     ],
+      //     style: {
+      //       fillStyle: 'red',
+      //       strokeStyle: '#000',
+      //       lineWidth: 2,
+      //       lineCap: 'round',
+      //       lineJoin: 'round',
+      //       lineDash: [],
+      //       lineDashOffset: -1,
+      //     },
+      //   },
+      // };
+      //
+      // polygonSelection.current.clearDraw();
+      // polygonSelection.current.addHistoryData(d.data);
+      // polygonSelection.current.drawHistoryData();
+      //
+      // const action = new PolygonModifyAction(d);
+      // action.on(ActionEvents.End, () => {
+      //   action.start();
+      // });
+      // polygonSelection.current.changeAction(action);
+      // action.start();
+
+      // console.log('click');
+
+      const Component = typeActionMap.get(data.type);
+
+      const action = new Component({
+        selectType: data.type,
+        actionType: 'Draw',
+        data,
+      });
+
+      action.setAnchorStyle({ ...anchorStyle });
+      action.setMoveGemStyle({ ...anchorStyle });
+
+      action.on(ActionEvents.ModifyBeforeStart, (e) => {
+        console.log('修改开始前', JSON.stringify(e));
+        clip(e);
+      });
+      action.on(ActionEvents.ModifyStart, (e) => {
+        console.log('修改开始', JSON.stringify(e));
+        clip(e);
+      });
+      action.on(ActionEvents.Modifying, (e) => {
+        console.log('修改中', JSON.stringify(e));
+        clip(e);
+      });
+      action.on(ActionEvents.ModifyEnd, (e) => {
+        console.log('修改完成', JSON.stringify(e));
+        clip(e);
+        action.start();
+      });
+
+      action.on(ActionEvents.Moving, (e) => {
+        console.log('移动中', JSON.stringify(e));
+        clip(e);
+      });
+      action.on(ActionEvents.MoveEnd, (e) => {
+        console.log('移动完成', JSON.stringify(e));
+        clip(e);
+      });
+
+      polygonSelection?.current?.changeAction(action);
+
+      action.start();
+    });
+
+    /**
+     * CanvasClickEmpty
+     */
+    polygonSelection.current.on(PolygonSelectionActions.CanvasClickEmpty, () => {
+      // console.log('clickEmpty');
+      polygonSelection?.current?.clearDraw();
+      polygonSelection?.current?.clearAssistDraw();
+      polygonSelection?.current?.drawHistoryData();
+    });
+  };
+
+  return (
+    <div
+      ref={wrapRef}
+      className={`${classNames(selectorPrefix, className || '')}`}
+      style={wrapStyle || {}}
+    >
+      <FlexLayout.TRBLC.LCLayout
+        {...defaultProps}
+        {...wrapProps}
+        lProps={{
+          ...defaultLProps,
+          ...toolProps,
+          render: renderTool,
+        }}
+        cProps={{
+          ...defaultCProps,
+          ...areaProps,
+          render: renderArea,
+        }}
+      />
+    </div>
+  );
+};
+
+const CroppingCoreHOC = memo(forwardRef<CroppingCoreHandle, CroppingCoreProps>(CroppingCore));
+
+export default CroppingCoreHOC;

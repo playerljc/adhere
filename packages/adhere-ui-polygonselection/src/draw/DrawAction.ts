@@ -1,6 +1,8 @@
 import Emitter from '@baifendian/adhere-util-emitter';
 
-import DefaultStyle from '../defaultStyle';
+import defaultAnchorStyle from '../defaultAnchorStyle';
+import defaultMoveGemStyle from '../defaultMoveGemStyle';
+import defaultStyle from '../defaultStyle';
 import { ActionStatus, IAction, IPolygonSelection, IStyle } from '../types';
 
 /**
@@ -12,14 +14,41 @@ abstract class DrawAction extends Emitter.Events implements IAction {
   // 上下文对象
   protected context: IPolygonSelection | null = null;
 
-  // 样式对象
-  // @ts-ignore
-  protected style: IStyle = {
-    ...DefaultStyle,
-  };
-
   // 当前状态
   protected status: number = ActionStatus.UnStart;
+
+  // 样式对象
+  style: IStyle = { ...defaultStyle };
+
+  // 修改样式对象
+  anchorStyle: IStyle = { ...defaultAnchorStyle };
+
+  // 移动样式对象
+  moveGemStyle: IStyle = { ...defaultMoveGemStyle };
+
+  getAnchorStyle(): IStyle {
+    return { ...this.anchorStyle };
+  }
+
+  getStyle(): IStyle {
+    return { ...this.style };
+  }
+
+  getMoveGemStyle(): IStyle {
+    return { ...this.moveGemStyle };
+  }
+
+  setAnchorStyle(style: Partial<IStyle> | undefined): void {
+    this.anchorStyle = { ...defaultAnchorStyle, ...(style || {}) };
+  }
+
+  setStyle(style: Partial<IStyle> | undefined): void {
+    this.style = { ...defaultStyle, ...(style || {}) };
+  }
+
+  setMoveGemStyle(style: Partial<IStyle> | undefined): void {
+    this.moveGemStyle = { ...defaultMoveGemStyle, ...(style || {}) };
+  }
 
   /**
    * destroy
@@ -47,9 +76,9 @@ abstract class DrawAction extends Emitter.Events implements IAction {
 
     const { context } = this;
 
-    const canvasEl = context?.getCanvasEl?.();
+    const canvasEl = context?.getCanvasEl();
 
-    const assistCanvasEl = context?.getAssistCanvasEl?.();
+    const assistCanvasEl = context?.getAssistCanvasEl();
 
     if (!canvasEl || !assistCanvasEl) return;
 
@@ -65,7 +94,7 @@ abstract class DrawAction extends Emitter.Events implements IAction {
 
     const { context } = this;
 
-    const canvasEl = context?.getCanvasEl?.();
+    const canvasEl = context.getCanvasEl();
 
     if (!canvasEl) return;
 

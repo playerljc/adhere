@@ -1,9 +1,8 @@
 import MathUtil from '@baifendian/adhere-util';
 import * as turf from '@turf/turf';
 
-import defaultMoveGemStyle from '../defaultMoveGemStyle';
 import PolygonDrawAction from '../draw/PolygonDrawAction';
-import { IPoint, IPolygonData, IStyle, SelectType } from '../types';
+import { IPoint, IPolygonData, SelectType } from '../types';
 import ModifyAction from './ModifyAction';
 
 /**
@@ -222,7 +221,7 @@ class PolygonModifyAction extends ModifyAction {
         point.y += offsetY;
       });
 
-      const style: IStyle = { ...defaultMoveGemStyle, ...(srcData.style || {}) } as IStyle;
+      const style = { ...this.moveGemStyle, ...(srcData.style || {}) };
       srcData.style.lineWidth = style.lineWidth;
       srcData.style.lineJoin = style.lineJoin;
       srcData.style.lineCap = style.lineCap;
@@ -230,7 +229,7 @@ class PolygonModifyAction extends ModifyAction {
       srcData.style.lineDashOffset = style.lineDashOffset;
       srcData.style.strokeStyle = style.strokeStyle;
       srcData.style.fillStyle = style.fillStyle;
-      srcData.style.globalAlpha = style.globalAlpha || 1;
+      srcData.style.globalAlpha = style.globalAlpha ?? 1;
 
       PolygonDrawAction.draw(this.context.getAssistCtx() as CanvasRenderingContext2D, srcData);
     }

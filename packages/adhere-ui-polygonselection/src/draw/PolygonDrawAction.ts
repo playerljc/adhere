@@ -222,12 +222,15 @@ class PolygonDrawAction extends DrawAction {
     ctx.moveTo(sP.x, sP.y);
     ctx.lineTo(eP.x, eP.y);
 
+    console.log(style.lineDash);
+
     ctx.strokeStyle = style.strokeStyle;
     style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineWidth = style.lineWidth / 2;
     ctx.lineCap = style.lineCap;
     ctx.lineJoin = style.lineJoin;
     ctx.lineDashOffset = style.lineDashOffset;
+    ctx.globalAlpha = 1;
 
     ctx.closePath();
     ctx.stroke();
@@ -262,7 +265,7 @@ class PolygonDrawAction extends DrawAction {
       ctx.lineDashOffset = data.style.lineDashOffset;
       ctx.strokeStyle = data.style.strokeStyle;
       ctx.fillStyle = data.style.fillStyle;
-      ctx.globalAlpha = data.style.globalAlpha || 1;
+      ctx.globalAlpha = data.style.globalAlpha ?? 1;
     }
 
     (data?.data || []).forEach((point: IPoint, index: number) => {

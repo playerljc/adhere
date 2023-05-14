@@ -6,6 +6,7 @@ import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/ad
 
 import DrawingBoard from './DrawingBoard';
 
+// import Cropping from './cropping';
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
 
