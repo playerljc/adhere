@@ -39,7 +39,7 @@
     "@baifendian/adhere": "^2.6.1",
     "@baifendian/adhere-ui-anthoc": "^2.6.1",
     "@baifendian/adhere-ui-richtext-sandbox": "^2.6.1",
-    "@ctsj/router": "^1.0.4",
+    "@ctsj/router": "^1.0.5",
     "@ctsj/state": "^2.0.24",
     "antd": "^5.4.5",
     "bmap-wind": "1.1.1-alpha.2",

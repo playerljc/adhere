@@ -3,12 +3,14 @@ import React from 'react';
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
+  PropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
 
+import Cropping from './cropping';
 import ImageSelect from './imageselect';
 
-const jsCodeSrc = `
+const baseJsCodeSrc = `
 import React, { useEffect, useRef } from 'react';
 import { Button, Table, message } from 'antd';
 import {
@@ -378,7 +380,7 @@ export default () => {
 
 `;
 
-const cssCodeSrc = `
+const baseCssCodeSrc = `
 .Wrap {
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -417,16 +419,59 @@ const cssCodeSrc = `
 
 `;
 
+const croppingJsCodeSrc = `
+import React, { useRef, useState } from 'react';
+
+import { PolygonSelection as PolygonSelectionModule } from '@baifendian/adhere';
+
+import styles from './cropping.less';
+
+const { PolygonSelection } = PolygonSelectionModule;
+
+export default () => {
+  const [value, setValue] = useState('');
+
+  const ref = useRef();
+
+  return (
+    <div>
+      <p>图像裁剪</p>
+      <div className={styles.Wrap}>
+        <PolygonSelection.Cropping
+          ref={ref}
+          value={value}
+          onChange={(v) => setValue(v)}
+          maskClassName={styles.MaskWrap}
+        />
+      </div>
+    </div>
+  );
+};
+`;
+
+const croppingCssCodeSrc = `
+.Wrap {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}
+
+.MaskWrap {
+  border-radius: 50%;
+}
+`;
+
 export default () => {
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
-        name: `图片截取`,
+        name: `基本使用`,
         cardProps: {
           description: {
-            title: '图片截取',
-            info: '图片截取',
+            title: '基本使用',
+            info: '基本使用',
           },
         },
         config: [
@@ -434,17 +479,43 @@ export default () => {
             title: 'imageselect.jsx',
             mode: 'code',
             scope: { React },
-            codeText: jsCodeSrc,
+            codeText: baseJsCodeSrc,
           },
           {
             title: 'imageselect.less',
             mode: 'code',
             scope: { React },
-            codeText: cssCodeSrc,
+            codeText: baseCssCodeSrc,
           },
         ],
         type: 'PlayGroundMulit',
         renderChildren: () => <ImageSelect />,
+      },
+      {
+        id: 'p2',
+        name: '图片裁剪',
+        cardProps: {
+          description: {
+            title: '图片裁剪',
+            info: '图片裁剪',
+          },
+        },
+        config: [
+          {
+            title: 'cropping.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: croppingJsCodeSrc,
+          },
+          {
+            title: 'cropping.less',
+            mode: 'code',
+            scope: { React },
+            codeText: croppingCssCodeSrc,
+          },
+        ],
+        type: 'PlayGroundMulit',
+        renderChildren: () => <Cropping />,
       },
     ];
   }
@@ -461,10 +532,163 @@ export default () => {
           <li>- 五角星区域</li>
           <li>- 三角形区域</li>
           <li>- 自由绘制区域</li>
+          <li>- 图片裁剪</li>
         </ul>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+      <PropsSection
+        title="Props"
+        config={[
+          {
+            border: true,
+            title: 'Cropping',
+            data: [
+              {
+                params: 'className',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'maskClassName',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'maskStyle',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'mask',
+                desc: '',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'modalProps',
+                desc: '',
+                type: 'ModalProps',
+                defaultVal: '',
+              },
+              {
+                params: 'coreProps',
+                desc: '',
+                type: 'CroppingCoreProps',
+                defaultVal: '',
+              },
+              {
+                params: 'value',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'onChange',
+                desc: '',
+                type: '(base64?: string) => void',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'CroppingCore',
+            data: [
+              {
+                params: 'className',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'wrapProps',
+                desc: '',
+                type: 'CroppingCoreWrapProps',
+                defaultVal: '',
+              },
+              {
+                params: 'toolProps',
+                desc: '',
+                type: 'CroppingCoreToolProps',
+                defaultVal: '',
+              },
+              {
+                params: 'areaProps',
+                desc: '',
+                type: 'CroppingCoreAreaProps',
+                defaultVal: '',
+              },
+              {
+                params: 'minHeight',
+                desc: '',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'toolBarConfig',
+                desc: '',
+                type: `
+                  {
+                    direction?: string | 'left' | 'right' | 'top' | 'bottom';
+                    open?: {
+                      render?: (handle?: Function) => ReactNode;
+                      sort?: number;
+                    };
+                    rectangle?: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    circle?: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    start: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    triangle: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    diamond: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                    polygon: {
+                      render?: (handle?: Function) => ReactNode;
+                      hide?: boolean;
+                      sort?: number;
+                    };
+                  }
+                `,
+                defaultVal: '',
+              },
+            ],
+          },
+        ]}
+      />
 
       <FunctionPropsSection
         title="Api"
