@@ -182,20 +182,20 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
         curAction.current.setMoveGemStyle({ ...anchorStyle });
 
         curAction?.current?.on?.(ActionEvents.DrawBeforeStart, (e) => {
-          console.log('绘制开始前', JSON.stringify(e));
+          // console.log('绘制开始前', JSON.stringify(e));
           clip(e);
         });
         curAction?.current?.on?.(ActionEvents.DrawStart, (e) => {
-          console.log('绘制开始', JSON.stringify(e));
+          // console.log('绘制开始', JSON.stringify(e));
           clip(e);
         });
         curAction?.current?.on?.(ActionEvents.Drawing, (e) => {
-          console.log('绘制中', JSON.stringify(e));
+          // console.log('绘制中', JSON.stringify(e));
           clip(e);
         });
         curAction?.current?.on?.(ActionEvents.DrawEnd, (e) => {
           // curAction.current.start(data?.style);
-          console.log('绘制完成', JSON.stringify(e));
+          // console.log('绘制完成', JSON.stringify(e));
           clip(e);
         });
         polygonSelection?.current?.changeAction?.(curAction.current as IAction);
@@ -526,29 +526,29 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
       action.setMoveGemStyle({ ...anchorStyle });
 
       action.on(ActionEvents.ModifyBeforeStart, (e) => {
-        console.log('修改开始前', JSON.stringify(e));
+        // console.log('修改开始前', JSON.stringify(e));
         clip(e);
       });
       action.on(ActionEvents.ModifyStart, (e) => {
-        console.log('修改开始', JSON.stringify(e));
+        // console.log('修改开始', JSON.stringify(e));
         clip(e);
       });
       action.on(ActionEvents.Modifying, (e) => {
-        console.log('修改中', JSON.stringify(e));
+        // console.log('修改中', JSON.stringify(e));
         clip(e);
       });
       action.on(ActionEvents.ModifyEnd, (e) => {
-        console.log('修改完成', JSON.stringify(e));
+        // console.log('修改完成', JSON.stringify(e));
         clip(e);
         action.start();
       });
 
       action.on(ActionEvents.Moving, (e) => {
-        console.log('移动中', JSON.stringify(e));
+        // console.log('移动中', JSON.stringify(e));
         clip(e);
       });
       action.on(ActionEvents.MoveEnd, (e) => {
-        console.log('移动完成', JSON.stringify(e));
+        // console.log('移动完成', JSON.stringify(e));
         clip(e);
       });
 

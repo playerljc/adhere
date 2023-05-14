@@ -222,8 +222,6 @@ class PolygonDrawAction extends DrawAction {
     ctx.moveTo(sP.x, sP.y);
     ctx.lineTo(eP.x, eP.y);
 
-    console.log(style.lineDash);
-
     ctx.strokeStyle = style.strokeStyle;
     style.lineDash && ctx.setLineDash(style.lineDash);
     ctx.lineWidth = style.lineWidth / 2;
