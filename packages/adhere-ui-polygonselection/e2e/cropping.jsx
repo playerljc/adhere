@@ -15,7 +15,7 @@ export default () => {
   return (
     <div>
       <p onClick={() => {}}>图像裁剪</p>
-      <div style={{ width: 200, height: 300, border: '1px solid #ccc' }}>
+      <div style={{ width: 100, height: 100, border: '1px solid #ccc', borderRadius: '50%' }}>
         <PolygonSelection.default.PolygonSelection.Cropping
           ref={ref}
           value={value}

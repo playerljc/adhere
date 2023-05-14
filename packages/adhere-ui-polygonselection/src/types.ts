@@ -1,10 +1,10 @@
 import type { ModalProps } from 'antd/lib/modal/Modal';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import type {
   CenterProps,
   TBLRCLayoutProps,
-  TBLRProps
+  TBLRProps,
 } from '@baifendian/adhere-ui-flexlayout/es/types';
 import type Events from '@baifendian/adhere-util-emitter/es/events';
 
@@ -112,7 +112,7 @@ export type RectangleData = {
 export type CircleData = {
   center: IPoint;
   radius: number;
-}
+};
 
 export type OutCircleData = {
   // 圆的中心点
@@ -121,11 +121,11 @@ export type OutCircleData = {
   outRadius: number;
   // 内半径(外半径的一半)
   innerRadius: number;
-}
+};
 
 export type Points = {
   points: IPoint[];
-}
+};
 
 /**
  * IPolygonData - Polygon的数据
@@ -335,6 +335,9 @@ export enum ActionType {
 export interface CroppingProps {
   className?: string;
   style?: CSSProperties;
+  maskClassName?: string;
+  maskStyle?: CSSProperties;
+  mask?: ReactNode;
   modalProps?: ModalProps;
   coreProps?: CroppingCoreProps;
   value?: string;

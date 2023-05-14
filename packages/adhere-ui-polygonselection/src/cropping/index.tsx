@@ -18,7 +18,7 @@ const selectorPrefix = 'adhere-ui-polygonselection-cropping';
  * @constructor
  */
 const Cropping: ForwardRefRenderFunction<CroppingHandle, CroppingProps> = (
-  { className, style, value, onChange, modalProps, coreProps },
+  { className, style, maskClassName, maskStyle, mask, value, onChange, modalProps, coreProps },
   ref,
 ) => {
   const coreRef = useRef<CroppingCoreHandle | null>(null);
@@ -26,7 +26,8 @@ const Cropping: ForwardRefRenderFunction<CroppingHandle, CroppingProps> = (
   const renderMask = useCallback(
     () => (
       <div
-        className={`${selectorPrefix}-mask`}
+        className={`${classNames(`${selectorPrefix}-mask`, maskClassName || '')}`}
+        style={maskStyle || {}}
         onClick={() => {
           const dialog = MessageDialog.Modal({
             config: {
@@ -58,10 +59,10 @@ const Cropping: ForwardRefRenderFunction<CroppingHandle, CroppingProps> = (
           });
         }}
       >
-        {Intl.v('编辑')}
+        {mask || Intl.v('编辑')}
       </div>
     ),
-    [value, onChange],
+    [maskClassName, maskStyle, mask, value, onChange],
   );
 
   const renderInner = useCallback(() => {
