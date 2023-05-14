@@ -67,7 +67,7 @@ export interface IAction extends Events {
   anchorStyle: IStyle;
   // 移动的元素样式
   moveGemStyle: IStyle;
-  
+
   setStyle: (style?: Partial<IStyle>) => void;
   getStyle: () => IStyle;
   setAnchorStyle: (style?: Partial<IStyle>) => void;
@@ -103,6 +103,30 @@ export interface IActionData {
   style?: IStyle;
 }
 
+export type RectangleData = {
+  leftTopPoint: IPoint;
+  width: number;
+  height: number;
+};
+
+export type CircleData = {
+  center: IPoint;
+  radius: number;
+}
+
+export type OutCircleData = {
+  // 圆的中心点
+  center: IPoint;
+  // 外半径
+  outRadius: number;
+  // 内半径(外半径的一半)
+  innerRadius: number;
+}
+
+export type Points = {
+  points: IPoint[];
+}
+
 /**
  * IPolygonData - Polygon的数据
  */
@@ -116,10 +140,7 @@ export interface IPolygonData extends IActionData {
  */
 export interface ICircleData extends IActionData {
   type: SelectType.Circle;
-  data: {
-    center: IPoint;
-    radius: number;
-  };
+  data: CircleData;
 }
 
 /**
@@ -127,11 +148,7 @@ export interface ICircleData extends IActionData {
  */
 export interface IRectangleData extends IActionData {
   type: SelectType.Rectangle;
-  data: {
-    leftTopPoint: IPoint;
-    width: number;
-    height: number;
-  };
+  data: RectangleData;
 }
 
 /**
@@ -139,9 +156,7 @@ export interface IRectangleData extends IActionData {
  */
 export interface ITriangleData extends IActionData {
   type: SelectType.Triangle;
-  data: {
-    points: IPoint[];
-  };
+  data: Points;
 }
 
 /**
@@ -150,11 +165,7 @@ export interface ITriangleData extends IActionData {
 export interface IDiamondData extends IActionData {
   type: SelectType.Diamond;
   // 矩形的数据
-  data: {
-    leftTopPoint: IPoint;
-    width: number;
-    height: number;
-  };
+  data: RectangleData;
 }
 
 /**
@@ -172,14 +183,7 @@ export interface IFreeData extends IActionData {
  */
 export interface IStartData extends IActionData {
   type?: SelectType.Start;
-  data: {
-    // 圆的中心点
-    center: IPoint;
-    // 外半径
-    outRadius: number;
-    // 内半径(外半径的一半)
-    innerRadius: number;
-  };
+  data: OutCircleData;
 }
 
 /**

@@ -39,7 +39,7 @@ import type {
   IPolygonSelection,
   IStyle,
 } from '../types';
-import { ActionEvents, PolygonSelectionActions, SelectType } from '../types';
+import { ActionEvents, IActionData, PolygonSelectionActions, SelectType } from '../types';
 import {
   drawCircle,
   drawDiamond,
@@ -47,6 +47,7 @@ import {
   drawRectangle,
   drawStart,
   drawTriangle,
+  getClipDataUrl,
 } from './util';
 
 const selectorPrefix = 'adhere-ui-cropping-core';
@@ -82,6 +83,8 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   const curAction = useRef<IAction | null>(null);
 
   const inputFileFieldRef = useRef<HTMLInputElement | null>(null);
+
+  const data = useRef<IActionData | null>(null);
 
   // ActionType
   const typeActionMap = useMemo(
@@ -162,6 +165,7 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
       if (_type !== type) {
         clearClip();
         polygonSelection?.current?.clearCanvasAll?.();
+        data.current = null;
         setType(_type);
       }
 
@@ -171,6 +175,8 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
     const onClickHOC = (type: SelectType, ActionClass) => () => {
       onBeforeClick(type).then(() => {
         curAction.current = new ActionClass();
+
+        if (!curAction.current) return;
 
         curAction.current.setAnchorStyle({ ...anchorStyle });
         curAction.current.setMoveGemStyle({ ...anchorStyle });
@@ -319,6 +325,7 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
     if (base64Ref.current) {
       base64Ref.current.onload = () => {
         if (polygonSelection.current) {
+          data.current = null;
           destroyClip();
           destroySelection();
         }
@@ -353,19 +360,32 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   }, []);
 
   useImperativeHandle(ref, () => ({
-    save: () => {
-      console.log(clipCanvasEL.current?.toDataURL('image/png', 1));
-      return clipCanvasEL.current?.toDataURL('image/png', 1);
+    /**
+     * save
+     * @return {string}
+     */
+    save: (): string => {
+      // 通过data获取外接矩形数据
+      // 创建一个canvas，绘制base64
+      // getImageData(矩形数据)
+      if (!data.current || !data.current.data || !base64) return '';
+
+      return getClipDataUrl({
+        data: data.current,
+        clipCtx: clipCanvasCtx.current as CanvasRenderingContext2D,
+      });
     },
   }));
 
   /**
    * clip
-   * @param e
-   * @returns
+   * @param {IActionData} e
+   * @return void
    */
   const clip = (e) => {
     if (!e.data) return;
+
+    data.current = e;
 
     clipCanvasCtx.current?.restore?.();
     clipCanvasCtx.current?.save?.();

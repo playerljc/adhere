@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom/client';
 
 import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
 
-import DrawingBoard from './DrawingBoard';
+// import DrawingBoard from './DrawingBoard';
 
-// import Cropping from './cropping';
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
+import Cropping from './cropping';
 
 import '@baifendian/adhere/lib/css.less';
 
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => {
-        return <DrawingBoard />;
+        return <Cropping />;
       }}
     </AdhereConfigProvider>
   </ConfigProvider>,

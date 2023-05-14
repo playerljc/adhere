@@ -1,4 +1,6 @@
 import {
+  CircleData,
+  IActionData,
   ICircleData,
   IDiamondData,
   IPoint,
@@ -6,6 +8,10 @@ import {
   IRectangleData,
   IStartData,
   ITriangleData,
+  OutCircleData,
+  Points,
+  RectangleData,
+  SelectType,
 } from '../types';
 
 /**
@@ -30,6 +36,22 @@ export function drawCircle(ctx: CanvasRenderingContext2D, data: ICircleData) {
 }
 
 /**
+ * getCircleRectangle
+ * @param {ICircleData} circleData
+ * @return {RectangleData}
+ */
+export function getCircleRectangle(circleData: CircleData): RectangleData {
+  return getSelfRectangle({
+    leftTopPoint: {
+      x: circleData.center.x - circleData.radius,
+      y: circleData.center.y - circleData.radius,
+    },
+    width: circleData.radius * 2,
+    height: circleData.radius * 2,
+  });
+}
+
+/**
  * drawRectangle
  * @param {CanvasRenderingContext2D} ctx
  * @param {IRectangleData} data
@@ -45,6 +67,15 @@ export function drawRectangle(ctx: CanvasRenderingContext2D, data: IRectangleDat
   );
 
   ctx?.closePath();
+}
+
+/**
+ * getSelfRectangle
+ * @param {IRectangleData} rectangleData
+ * @return {RectangleData}
+ */
+export function getSelfRectangle(rectangleData: RectangleData): RectangleData {
+  return { ...rectangleData };
 }
 
 /**
@@ -65,6 +96,17 @@ export function drawDiamond(ctx: CanvasRenderingContext2D, data: IDiamondData) {
   ctx.lineTo(data.data.leftTopPoint.x + widthHalf, data.data.leftTopPoint.y + data.data.height);
 
   ctx?.closePath();
+}
+
+/**
+ * getDiamondRectangle
+ * @param {IDiamondData} diamondData
+ * @return {RectangleData}
+ */
+export function getDiamondRectangle(diamondData: RectangleData): RectangleData {
+  return {
+    ...diamondData,
+  };
 }
 
 /**
@@ -95,6 +137,18 @@ export function drawStart(ctx: CanvasRenderingContext2D, data: IStartData) {
 }
 
 /**
+ * getStartRectangle
+ * @param {IStartData} startData
+ * @return {RectangleData}
+ */
+export function getStartRectangle(startData: OutCircleData): RectangleData {
+  return getCircleRectangle({
+    center: startData.center,
+    radius: startData.outRadius,
+  });
+}
+
+/**
  * drawTriangle
  * @param {CanvasRenderingContext2D} ctx
  * @param {ITriangleData} data
@@ -107,6 +161,22 @@ export function drawTriangle(ctx: CanvasRenderingContext2D, data: ITriangleData)
   ctx.lineTo(data.data.points[2].x, data.data.points[2].y);
 
   ctx?.closePath();
+}
+
+/**
+ * getTriangleRectangle
+ * @param {ITriangleData} triangleData
+ * @return {RectangleData}
+ */
+export function getTriangleRectangle(triangleData: Points): RectangleData {
+  return getSelfRectangle({
+    leftTopPoint: {
+      x: triangleData.points[0].x,
+      y: triangleData.points[1].y,
+    },
+    width: triangleData.points[2].x - triangleData.points[0].x,
+    height: triangleData.points[2].y - triangleData.points[1].y,
+  });
 }
 
 /**
@@ -126,4 +196,82 @@ export function drawPolygon(ctx: CanvasRenderingContext2D, data: IPolygonData) {
   });
 
   ctx?.closePath();
+}
+
+/**
+ * getPolygonRectangle
+ * @param {IPolygonData} polygonData
+ * @return {RectangleData}
+ */
+export function getPolygonRectangle(polygonData: IPoint[]): RectangleData {
+  const arrX = polygonData.map(({ x }) => x);
+  const arrY = polygonData.map(({ y }) => y);
+
+  const getMinMaxX = () => ({
+    minX: Math.min(...arrX),
+    maxX: Math.max(...arrX),
+  });
+
+  const getMinMaxY = () => ({
+    minY: Math.min(...arrY),
+    maxY: Math.max(...arrY),
+  });
+
+  const { minX, maxX } = getMinMaxX();
+  const { minY, maxY } = getMinMaxY();
+
+  return {
+    leftTopPoint: {
+      x: minX,
+      y: minY,
+    },
+    width: maxX - minX,
+    height: maxY - minY,
+  };
+}
+
+/**
+ * getClipDataUrl
+ * @param {IActionData} data
+ * @param {CanvasRenderingContext2D} clipCtx
+ * @return {string}
+ */
+export function getClipDataUrl({
+  data,
+  clipCtx,
+}: {
+  data: IActionData;
+  clipCtx: CanvasRenderingContext2D;
+}): string {
+  const map = new Map<SelectType, (data: any) => RectangleData>([
+    [SelectType.Circle, getCircleRectangle],
+    [SelectType.Rectangle, getSelfRectangle],
+    [SelectType.Diamond, getDiamondRectangle],
+    [SelectType.Start, getStartRectangle],
+    [SelectType.Triangle, getTriangleRectangle],
+    [SelectType.Polygon, getPolygonRectangle],
+  ]);
+
+  // 根据类型获取矩形数据
+  const rectangleData: RectangleData = map.get(data.data.type as SelectType)?.(
+    data.data.data,
+  ) as RectangleData;
+
+  // clipImageData = getImageData
+  const clipImageData = clipCtx.getImageData(
+    rectangleData.leftTopPoint.x,
+    rectangleData.leftTopPoint.y,
+    rectangleData.width,
+    rectangleData.height,
+  );
+
+  // put clipImageData to canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = rectangleData.width;
+  canvas.height = rectangleData.height;
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+  ctx.putImageData(clipImageData, 0, 0);
+
+  // canvas to dataUrl
+  return canvas.toDataURL('image/png', 1);
 }
