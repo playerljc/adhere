@@ -1,3 +1,12 @@
+# 2.7.0
+
+***
+
+2023-05-15
+
+* **adhere-ui-polygonselection**
+  - 加入图片剪裁组件(Cropping)
+
 # 2.6.1
 
 ***
