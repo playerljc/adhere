@@ -460,7 +460,7 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
     return (
       <Card>
         <Space direction={direction} size={20}>
-          <input type="file" ref={inputFileFieldRef} accept="" style={{ display: 'none' }} />
+          <input type="file" ref={inputFileFieldRef} accept="image/*" style={{ display: 'none' }} />
           {toolsArr}
         </Space>
       </Card>
