@@ -32,19 +32,19 @@ const AutoCompleteFormItem: FC<AutoCompleteFormItemProps> = (props) => {
   };
 
   const value = useMemo(() => {
-    if (props.value.inputValue) return props.value.inputValue;
+    if (props?.value?.inputValue) return props?.value?.inputValue;
 
-    if (props.value.selectValue)
+    if (props?.value?.selectValue)
       // @ts-ignore
-      return props?.dataSource?.find((t) => t.value === props.value.selectValue)?.label;
-  }, [props.value, props.value.inputValue, props.value.selectValue]);
+      return props?.dataSource?.find((t) => t.value === props?.value?.selectValue)?.label;
+  }, [props?.value, props?.value?.inputValue, props?.value?.selectValue]);
 
   const options = useMemo(() => {
-    if (!props.value.inputValue) return props.dataSource || [];
+    if (!props?.value?.inputValue) return props?.dataSource || [];
 
     // @ts-ignore
-    return props?.dataSource?.filter?.((t) => t.label.includes(props.value.inputValue)) || [];
-  }, [props.value, props.value.inputValue, props.value.selectValue]);
+    return props?.dataSource?.filter?.((t) => t.label.includes(props?.value?.inputValue)) || [];
+  }, [props?.value, props?.value?.inputValue, props?.value?.selectValue]);
 
   return (
     <AutoComplete
