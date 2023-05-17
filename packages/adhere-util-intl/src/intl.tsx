@@ -45,7 +45,9 @@ function initIntlMap(zh_CN) {
  */
 export function getLocal(prefix: string = 'local', data: Array<string>): object {
   // 先去重
-  const result = [...Array.from(new Set(data))];
+  // const result = [...Array.from(new Set(data))];
+
+  const result = [...data];
 
   const local = {};
 
@@ -142,7 +144,8 @@ export default {
         else objEntrys.push(item);
       });
 
-      mainLocales[p] = getLocal(prefix, Array.from(new Set(stringItems)));
+      // mainLocales[p] = getLocal(prefix, Array.from(new Set(stringItems)));
+      mainLocales[p] = getLocal(prefix, stringItems);
 
       objEntrys.forEach((entry) => {
         const keys = Object.keys(entry);
