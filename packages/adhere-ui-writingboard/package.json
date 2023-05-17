@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-writingboard",
-  "version": "2.6.1",
+  "version": "2.7.2",
   "description": "写字板",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-flexlayout": "^2.6.1",
-    "@baifendian/adhere-ui-messagedialog": "^2.6.1",
+    "@baifendian/adhere-ui-messagedialog": "^2.7.2",
     "@baifendian/adhere-util": "^2.6.0",
     "@baifendian/adhere-util-intl": "^2.6.1",
     "@juggle/resize-observer": "^3.3.1",

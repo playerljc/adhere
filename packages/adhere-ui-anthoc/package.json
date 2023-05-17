@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-anthoc",
-  "version": "2.6.1",
+  "version": "2.7.2",
   "description": "Antd组件的hoc",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-flexlayout": "^2.6.1",
-    "@baifendian/adhere-util-resource": "^2.6.1",
+    "@baifendian/adhere-util-resource": "^2.7.2",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "antd": "^5.4.5",
