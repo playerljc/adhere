@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere",
-  "version": "2.7.4",
+  "version": "2.7.5",
   "description": "adhere",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -38,7 +38,7 @@
     "@baifendian/adhere-ui-cascadecompared": "^2.6.0",
     "@baifendian/adhere-ui-comment": "^2.7.4",
     "@baifendian/adhere-ui-conditionalrender": "^2.6.0",
-    "@baifendian/adhere-ui-configprovider": "^2.7.4",
+    "@baifendian/adhere-ui-configprovider": "^2.7.5",
     "@baifendian/adhere-ui-confirm-delconfirm": "^2.7.4",
     "@baifendian/adhere-ui-confirm-importantconfirm": "^2.7.4",
     "@baifendian/adhere-ui-contextmenu": "^2.6.0",
@@ -54,7 +54,7 @@
     "@baifendian/adhere-ui-historyback": "^2.6.0",
     "@baifendian/adhere-ui-hooks": "^2.6.0",
     "@baifendian/adhere-ui-imagelazy": "^2.6.0",
-    "@baifendian/adhere-ui-jdcategorytab": "^2.7.4",
+    "@baifendian/adhere-ui-jdcategorytab": "^2.7.5",
     "@baifendian/adhere-ui-messagedialog": "^2.7.4",
     "@baifendian/adhere-ui-notification": "^2.6.0",
     "@baifendian/adhere-ui-olmap": "^2.7.4",
