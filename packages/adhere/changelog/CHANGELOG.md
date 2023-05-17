@@ -1,3 +1,12 @@
+# 2.7.5
+
+***
+
+2023-05-17
+
+* **adhere-ui-configprovider**
+  - 加入onIntlInit事件
+
 # 2.7.4
 
 ***
