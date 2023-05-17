@@ -19,6 +19,7 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   const {
     intl: { lang, locales, prefix, mainLanguage },
     children,
+    onIntlInit,
   } = props;
 
   const [isIntlInit, setIntlInit] = useState(false);
@@ -39,6 +40,7 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
 
       if (!isIntlInit) {
         setIntlInit(true);
+        if (onIntlInit) onIntlInit();
       } else {
         forceUpdate();
       }

@@ -15,6 +15,7 @@ export interface ConfigProviderProps {
         mainLanguage: string;
     };
     children: any;
+    onIntlInit: () => void;
 }
 /**
  * ConfigProviderProps
