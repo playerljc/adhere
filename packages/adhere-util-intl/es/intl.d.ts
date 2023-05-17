@@ -23,7 +23,7 @@ declare const _default: {
      */
     init({ prefix, currentLocale, locales, mainLanguage, ...other }: {
         prefix: string;
-        currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
+        currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG';
         locales: any;
         mainLanguage: string;
     }, reload?: boolean): Promise<any>;

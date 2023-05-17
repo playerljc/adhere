@@ -1,5 +1,6 @@
 import intl from 'react-intl-universal';
 
+import ar_EG from './locales/ar_EG';
 import en_US from './locales/en_US';
 import pt_PT from './locales/pt_PT';
 import zh_CN from './locales/zh_CN';
@@ -92,7 +93,7 @@ export default {
       ...other
     }: {
       prefix: string;
-      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT';
+      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG';
       locales: any;
       mainLanguage: string;
     },
@@ -109,6 +110,7 @@ export default {
       en_US,
       zh_CN,
       pt_PT,
+      ar_EG,
     };
 
     const finallyLocalesKeys = Object.keys(finallyLocales);
