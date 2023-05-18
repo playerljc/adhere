@@ -1,3 +1,12 @@
+# 2.7.6
+
+***
+
+2023-05-19
+
+* **adhere-ui-searchtable**
+  - 修复TableGridLayout在Firefox下样式显示异常的错误
+
 # 2.7.5
 
 ***
