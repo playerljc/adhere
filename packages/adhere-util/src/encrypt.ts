@@ -50,12 +50,12 @@ function symmetricDecrypt(_type: string, _pwd: string, _value: string) {
 
 const EncryptUtil = {
   /**
-   * base46Encode
+   * base64Encode
    * @description base64编码
    * @param str
    * @return 编码后的base64
    */
-  base46Encode(str: string) {
+  base64Encode(str: string) {
     return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse((str || '').trim()));
   },
   /**

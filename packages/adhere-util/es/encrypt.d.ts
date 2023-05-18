@@ -1,11 +1,11 @@
 declare const EncryptUtil: {
     /**
-     * base46Encode
+     * base64Encode
      * @description base64编码
      * @param str
      * @return 编码后的base64
      */
-    base46Encode(str: string): any;
+    base64Encode(str: string): any;
     /**
      * base64Decode
      * @description base64解码

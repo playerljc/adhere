@@ -12,7 +12,7 @@ declare const _default: {
     compressSQL(_sqlStr?: string): any;
     jsonToXML(_jsonStr?: string): any;
     xmlToJSON(_xmlStr?: string, prettier?: boolean): string;
-    base46Encode(str: string): any;
+    base64Encode(str: string): any;
     base64Decode(_base64Str: string): string;
     chineseToUTF8(_chineseStr?: string): string;
     UTF8ToChinese(_utf8Str: string): string;

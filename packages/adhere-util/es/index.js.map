@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Util from './util';\r\nexport default Util;\r\n"],"names":["Util"],"mappings":"OAAOA,SAAU,wBACFA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Util from './util';\nexport default Util;\n"],"names":["Util"],"mappings":"OAAOA,SAAU,wBACFA"}
