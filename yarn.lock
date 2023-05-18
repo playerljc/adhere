@@ -1837,6 +1837,16 @@
     react-router "^5.3.4"
     react-router-dom "^5.3.4"
 
+"@ctsj/router@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@ctsj/router/-/router-1.0.5.tgz#02e532f3a1f2499f626778e888d04644bf480e15"
+  integrity sha512-m+htus8mf6KkaxuvsC634NiZIWVjq+sAkv192co63IQ7jqFR5PUBETYZTmBAt1IFCaTvKkqBvLe0kbljogyrKw==
+  dependencies:
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-router "^5.3.4"
+    react-router-dom "^5.3.4"
+
 "@ctsj/state@^2.0.24":
   version "2.0.24"
   resolved "https://registry.yarnpkg.com/@ctsj/state/-/state-2.0.24.tgz#9ce71cc879c5545099bed873ebc29bf1f8e168cc"
@@ -17788,7 +17798,7 @@ validate-npm-package-name@^5.0.0:
   dependencies:
     builtins "^5.0.0"
 
-validator@^13.6.0:
+validator@^13.9.0:
   version "13.9.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-13.9.0.tgz#33e7b85b604f3bbce9bb1a05d5c3e22e1c2ff855"
   integrity sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==
