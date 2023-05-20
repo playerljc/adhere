@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.21.0",
-    "@ctsj/build": "^6.2.0",
+    "@ctsj/build": "^6.3.0",
     "@ctsj/router": "^1.0.4",
     "antd": "^5.4.5",
     "file-saver": "^2.0.5",
