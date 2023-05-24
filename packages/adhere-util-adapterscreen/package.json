@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-adapterscreen",
-  "version": "2.6.0",
+  "version": "2.7.7",
   "description": "对屏幕的缩放进行适配的操作",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util-browsersniff": "^2.6.0",
+    "@baifendian/adhere-util-browsersniff": "^2.7.7",
     "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
