@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImageLazy from './imagelazy';\r\nexport default ImageLazy;\r\n"],"names":["ImageLazy"],"mappings":"OAAOA,cAAe,6BACPA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImageLazy from './imagelazy';\nexport default ImageLazy;\n"],"names":["ImageLazy"],"mappings":"OAAOA,cAAe,6BACPA"}
