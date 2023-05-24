@@ -1,3 +1,16 @@
+# 2.7.7
+
+***
+
+2023-05-24
+
+* **adhere-ui-flexlayout**
+  - auto样式错误修复
+* **adhere-ui-imagelazy**
+  - 丰富props属性
+* **adhere-util-dict**
+  - 修复react组件update的BUG
+
 # 2.7.6
 
 ***
