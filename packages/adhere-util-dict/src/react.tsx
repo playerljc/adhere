@@ -1,5 +1,5 @@
 import { useUpdateLayoutEffect } from 'ahooks';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Util from '@baifendian/adhere-util';
@@ -12,51 +12,71 @@ import type {
   DictReactComponentObj,
 } from './types';
 
+const ComponentCache = new Map<string, any>();
+
 const ComponentMap = new Map<string, (key: string | symbol) => any>([
   [
     'Function',
-    (key) =>
-      forwardRef<DictComponentHandler, DictFunctionComponentProps>(
-        ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo }, ref) => {
-          const [data, setData] = useState();
+    (key) => {
+      if (!ComponentCache.has(`Function_${key}`)) {
+        ComponentCache.set(
+          `Function_${key}`,
+          forwardRef<DictComponentHandler, DictFunctionComponentProps>(
+            ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo }, ref) => {
+              const [data, setData] = useState();
 
-          const props: any = {};
-          if (firstLoading) props.firstLoading = firstLoading;
-          if (renderEmpty) props.renderEmpty = renderEmpty;
-          if (isEmpty) props.isEmpty = isEmpty;
+              const asyncRef = useRef<Suspense.ASync>();
 
-          const fetchData = () => {
-            Dict.handlers[key].isUseMemo = isUseMemo || false;
+              // const props: any = {};
+              // if (firstLoading) props.firstLoading = firstLoading;
+              // if (renderEmpty) props.renderEmpty = renderEmpty;
+              // if (isEmpty) props.isEmpty = isEmpty;
+              const props = useMemo(() => {
+                const _props: any = {};
+                if (firstLoading) _props.firstLoading = firstLoading;
+                if (renderEmpty) _props.renderEmpty = renderEmpty;
+                if (isEmpty) _props.isEmpty = isEmpty;
 
-            const result = Dict.value[key].value(...(args || []));
+                return _props;
+              }, [firstLoading, renderEmpty, isEmpty]);
 
-            if (result.then) {
-              return result.then((res) => {
-                setData(res);
-                return res;
-              });
-            } else {
-              setData(result);
-              return Promise.resolve(result);
-            }
-          };
+              const fetchData = () => {
+                Dict.handlers[key].isUseMemo = isUseMemo || false;
 
-          useUpdateLayoutEffect(() => {
-            fetchData();
-          }, args || []);
+                const result = Dict.value[key].value(...(args || []));
 
-          return (
-            <Suspense.ASync
-              ref={ref}
-              fetchData={fetchData}
-              {...props}
-              isEmpty={() => data === null || data === undefined || isEmpty?.(data)}
-            >
-              {children?.(data)}
-            </Suspense.ASync>
-          );
-        },
-      ),
+                if (result.then) {
+                  return result.then((res) => {
+                    setData(res);
+                    return res;
+                  });
+                } else {
+                  setData(result);
+                  return Promise.resolve(result);
+                }
+              };
+
+              useUpdateLayoutEffect(() => {
+                asyncRef?.current?.fetchData?.();
+              }, args || []);
+
+              return (
+                <Suspense.ASync
+                  ref={asyncRef}
+                  fetchData={fetchData}
+                  {...props}
+                  isEmpty={() => data === null || data === undefined || isEmpty?.(data)}
+                >
+                  {children?.(data)}
+                </Suspense.ASync>
+              );
+            },
+          ),
+        );
+      }
+
+      return ComponentCache.get(`Function_${key}`);
+    },
   ],
   [
     'NotPromise',
@@ -66,34 +86,46 @@ const ComponentMap = new Map<string, (key: string | symbol) => any>([
   ],
   [
     'Promise',
-    (key) =>
-      forwardRef<DictComponentHandler, DictComponentProps>(
-        ({ children, firstLoading, isEmpty, renderEmpty }, ref) => {
-          const [data, setData] = useState();
+    (key) => {
+      if (!ComponentCache.has(`Promise_${key}`)) {
+        ComponentCache.set(
+          `Promise_${key}`,
+          forwardRef<DictComponentHandler, DictComponentProps>(
+            ({ children, firstLoading, isEmpty, renderEmpty }, ref) => {
+              const [data, setData] = useState();
 
-          const props: any = {};
-          if (firstLoading) props.firstLoading = firstLoading;
-          if (renderEmpty) props.renderEmpty = renderEmpty;
-          if (isEmpty) props.isEmpty = isEmpty;
+              const props = useMemo(() => {
+                const _props: any = {};
+                if (firstLoading) _props.firstLoading = firstLoading;
+                if (renderEmpty) _props.renderEmpty = renderEmpty;
+                if (isEmpty) _props.isEmpty = isEmpty;
 
-          const fetchData = () =>
-            Dict.value[key].value.then((res) => {
-              setData(res);
-              return res;
-            });
+                return _props;
+              }, [firstLoading, renderEmpty, isEmpty]);
 
-          return (
-            <Suspense.ASync
-              ref={ref}
-              fetchData={fetchData}
-              {...props}
-              isEmpty={() => data === null || data === undefined || isEmpty?.(data)}
-            >
-              {children?.(data)}
-            </Suspense.ASync>
-          );
-        },
-      ),
+              const fetchData = () =>
+                Dict.value[key].value.then((res) => {
+                  setData(res);
+                  return res;
+                });
+
+              return (
+                <Suspense.ASync
+                  ref={ref}
+                  fetchData={fetchData}
+                  {...props}
+                  isEmpty={() => data === null || data === undefined || isEmpty?.(data)}
+                >
+                  {children?.(data)}
+                </Suspense.ASync>
+              );
+            },
+          ),
+        );
+      }
+
+      return ComponentCache.get(`Promise_${key}`);
+    },
   ],
 ]);
 
