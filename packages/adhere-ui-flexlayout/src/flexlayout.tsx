@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
 
 import * as TRBLC from './TRBLC';
 import Auto from './auto';
@@ -17,9 +17,10 @@ export const selectorPrefix = 'adhere-ui-flexlayout';
 /**
  * FlexLayout
  * @param {FlexLayoutProps} props
+ * @param ref
  * @constructor
  */
-const FlexLayout: FC<FlexLayoutProps> = (props) => {
+const FlexLayout: ForwardRefRenderFunction<any, FlexLayoutProps> = (props, ref) => {
   const { className = '', style = {}, direction = 'vertical', gutter, children, ...attrs } = props;
 
   /**
@@ -95,7 +96,7 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
         children,
       }}
     >
-      <div {...attrs} className={classList} style={styleList}>
+      <div ref={ref} {...attrs} className={classList} style={styleList}>
         {children}
       </div>
     </FlexContext.Provider>
@@ -103,7 +104,9 @@ const FlexLayout: FC<FlexLayoutProps> = (props) => {
 };
 
 //@ts-ignore
-const MemoWrap: FlexLayoutFunction<FlexLayoutProps> = memo(FlexLayout);
+const MemoWrap: FlexLayoutFunction<FlexLayoutProps> = memo(
+  forwardRef<any, FlexLayoutProps>(FlexLayout),
+);
 
 MemoWrap.selectorPrefix = selectorPrefix;
 MemoWrap.Context = FlexContext;

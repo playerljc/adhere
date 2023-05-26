@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useContext, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useContext, useMemo } from 'react';
 
 import { FlexContext } from './context';
 import { useGap, useGrid } from './hooks';
@@ -13,9 +13,10 @@ export const gridCount = 24;
 /**
  * Fixed
  * @param {FixedProps} props
+ * @param ref
  * @constructor
  */
-const Fixed: FC<FixedProps> = (props) => {
+const Fixed: ForwardRefRenderFunction<any, FixedProps> = (props, ref) => {
   const { className, children, style, fit, span, ...attrs } = props;
 
   const { gutter = 0, direction, children: contextChildren } = useContext<ContextType>(FlexContext);
@@ -26,7 +27,7 @@ const Fixed: FC<FixedProps> = (props) => {
 
   const classList = useMemo(
     () =>
-      classNames(selectorPrefix, className, {
+      classNames(selectorPrefix, className ?? '', {
         [`${selectorPrefix}-fit`]: fit,
         [`${selectorPrefix}-col-${props.span}`]: isUseGrid,
         [`${selectorPrefix}-gap`]: isUseGap,
@@ -48,10 +49,10 @@ const Fixed: FC<FixedProps> = (props) => {
   }, [style, gutter]);
 
   return (
-    <div {...attrs} className={classList} style={styleList}>
+    <div ref={ref} {...attrs} className={classList} style={styleList}>
       {children}
     </div>
   );
 };
 
-export default memo(Fixed);
+export default memo(forwardRef<any, FixedProps>(Fixed));

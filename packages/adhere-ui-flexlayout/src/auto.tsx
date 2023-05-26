@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useContext, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useContext, useMemo } from 'react';
 
 import { FlexContext } from './context';
 import { useGap } from './hooks';
@@ -11,9 +11,10 @@ const selectorPrefix = 'adhere-ui-flexlayout-auto';
 /**
  * Auto
  * @param {AutoProps} props
+ * @param ref
  * @constructor
  */
-const Auto: FC<AutoProps> = (props) => {
+const Auto: ForwardRefRenderFunction<any, AutoProps> = (props, ref) => {
   const { children, className = '', style = {}, autoFixed = true, fit = true, ...attrs } = props;
 
   const { gutter = 0, direction, children: contextChildren } = useContext<ContextType>(FlexContext);
@@ -44,10 +45,10 @@ const Auto: FC<AutoProps> = (props) => {
   }, [style, gutter]);
 
   return (
-    <div {...attrs} className={classList} style={styleList}>
+    <div ref={ref} {...attrs} className={classList} style={styleList}>
       {children}
     </div>
   );
 };
 
-export default memo(Auto);
+export default memo(forwardRef<any, AutoProps>(Auto));
