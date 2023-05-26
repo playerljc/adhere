@@ -87,12 +87,13 @@ export default () => {
         renderChildren: () => (
           <a
             onClick={() => {
-              ImportantConfirm.open(() => {
-                return new Promise((resolve) => {
-                  alert('点击了确认');
+              ImportantConfirm.open({
+                success: () =>
+                  new Promise((resolve) => {
+                    alert('点击了确认');
 
-                  resolve();
-                });
+                    resolve();
+                  }),
               });
             }}
           >
