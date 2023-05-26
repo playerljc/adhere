@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import DelConform from './delconfirm';\r\nexport default DelConform;\r\n"],"names":["DelConform"],"mappings":"OAAOA,eAAgB,8BACRA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import DelConform from './delconfirm';\nexport default DelConform;\n"],"names":["DelConform"],"mappings":"OAAOA,eAAgB,8BACRA"}

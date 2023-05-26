@@ -1,10 +1,10 @@
-import React, { MouseEvent } from 'react';
+import React, { FC, MouseEvent } from 'react';
 
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 
-import { DelConfirmFunction, DelConfirmProps, OpenFunction } from './types';
+import { DelConfirmProps, OpenFunction } from './types';
 
 const selectorPrefix = 'adhere-ui-delconfirm';
 
@@ -13,7 +13,7 @@ const selectorPrefix = 'adhere-ui-delconfirm';
  * @param props
  * @constructor
  */
-const DelConform: DelConfirmFunction<DelConfirmProps> = (props) => {
+const DelConform: FC<DelConfirmProps> = (props) => {
   const { className, style, children } = props;
 
   function onClick(e: MouseEvent<HTMLDivElement>) {
@@ -21,6 +21,7 @@ const DelConform: DelConfirmFunction<DelConfirmProps> = (props) => {
 
     const { children, ...params } = props;
 
+    // @ts-ignore
     DelConform.open({ ...params });
   }
 
@@ -31,7 +32,8 @@ const DelConform: DelConfirmFunction<DelConfirmProps> = (props) => {
   );
 };
 
-DelConform.open = function ({ success, ...params }: OpenFunction) {
+// @ts-ignore
+DelConform.open = ({ success, ...params }: OpenFunction) => {
   MessageDialog.Confirm({
     ...params,
     title: params.title || Intl.v('提示'),

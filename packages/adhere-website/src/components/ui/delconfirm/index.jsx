@@ -85,12 +85,13 @@ export default () => {
         renderChildren: () => (
           <a
             onClick={() => {
-              DelConfirm.open(() => {
-                return new Promise((resolve) => {
-                  alert('点击了确认');
+              DelConfirm.open({
+                success: () =>
+                  new Promise((resolve) => {
+                    alert('点击了确认');
 
-                  resolve();
-                });
+                    resolve();
+                  }),
               });
             }}
           >
