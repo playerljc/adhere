@@ -8,6 +8,7 @@ import Space from '@baifendian/adhere-ui-space';
 import {
   AutoComplete,
   Cascader,
+  ColorPicker,
   DatePicker,
   Input,
   InputNumberDecimal1,
@@ -355,6 +356,15 @@ export default () => {
             >
               提交
             </SubmitButton>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>
+            <p>ColorPicker</p>
+          </dt>
+          <dd>
+            <ColorPicker />
           </dd>
         </dl>
       </Space.Group>
