@@ -14,6 +14,7 @@ import Cascader from './cascader';
 import Checkbox from './checkbox';
 import Col from './col';
 import Collapse from './collapse';
+import ColorPicker from './color-picker';
 import ConfigProvider from './config-provider';
 import DatePicker from './date-picker';
 import Descriptions from './descriptions';
@@ -87,6 +88,7 @@ export {
   Checkbox,
   Col,
   Collapse,
+  ColorPicker,
   ConfigProvider,
   DatePicker,
   Descriptions,

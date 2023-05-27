@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["color-picker/index.js"],"sourcesContent":["import _ColorPicker from \"antd/es/color-picker\";\nimport { createFactory } from '../util';\nexport default createFactory(_ColorPicker, {});"],"names":["_ColorPicker","createFactory"],"mappings":"OAAOA,iBAAkB,8BAChBC,aAA8B,KAAT,yBACfA,cAAcD,aAAc,EAAE"}
