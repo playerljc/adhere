@@ -107,6 +107,29 @@ abstract class SearchList<
 
     // @ts-ignore
     this.onClear = this.onClear.bind(this);
+    this.onBodyKeyup = this.onBodyKeyup.bind(this);
+  }
+
+  componentDidMount() {
+    super.componentDidMount?.();
+
+    document.body.addEventListener('keyup', this.onBodyKeyup);
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount?.();
+
+    document.body.removeEventListener('keyup', this.onBodyKeyup);
+  }
+
+  /**
+   * onBodyKeyup
+   */
+  onBodyKeyup(e) {
+    if (e.keyCode === 13) {
+      // 回车键的键码是13
+      this.search();
+    }
   }
 
   /**
@@ -122,6 +145,23 @@ abstract class SearchList<
    * @protected
    */
   onSearchPanelCollapseAfter() {}
+
+  /**
+   * search
+   */
+  search() {
+    return new Promise<void>((resolve) => {
+      // @ts-ignore
+      this.setState(
+        {
+          page: 1,
+        },
+        () => {
+          this.onSearch().then(() => resolve());
+        },
+      );
+    });
+  }
 
   /**
    * getTableDensity
@@ -181,16 +221,7 @@ abstract class SearchList<
           />
         }
         onClick={() => {
-          // @ts-ignore
-          this.setState(
-            {
-              page: 1,
-            },
-            () => {
-              // @ts-ignore
-              this.onSearch();
-            },
-          );
+          this.search();
         }}
       >
         {Intl.v('查询')}

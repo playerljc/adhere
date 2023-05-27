@@ -2,7 +2,7 @@ import { ListSize } from 'antd/es/list';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import type { Metas, SearchListProps, SearchListState } from './types';
-declare const Search: any;
+declare const Search: typeof import("@baifendian/adhere-ui-searchtable/lib/Search").default;
 export declare const selectorPrefix = "adhere-ui-searchtable";
 export declare const SearchListContext: React.Context<{
     context: SearchList;
@@ -61,6 +61,12 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     abstract renderListHeader(): ReactNode;
     constructor(props: any);
+    componentDidMount(): void;
+    componentWillUnmount(): void;
+    /**
+     * onBodyKeyup
+     */
+    onBodyKeyup(e: any): void;
     /**
      * onSearchPanelCollapse
      * @description 查询面板展开之前
@@ -73,6 +79,10 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      * @protected
      */
     onSearchPanelCollapseAfter(): void;
+    /**
+     * search
+     */
+    search(): Promise<void>;
     /**
      * getTableDensity
      * @description 表格密度
