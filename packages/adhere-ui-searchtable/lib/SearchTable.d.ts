@@ -146,6 +146,8 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     abstract onTableCellComponentReducers(columns: ColumnTypeExt[]): string[];
     constructor(props: any);
+    componentDidMount(): void;
+    componentWillUnmount(): void;
     componentWillReceiveProps(nextProps: SearchTableProps): void;
     componentDidUpdate(prevProps: any, prevState: any, snapshot?: any): void;
     /**
@@ -166,6 +168,10 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @protected
      */
     columnSettingEffect(props: SearchTableProps): void;
+    /**
+     * onBodyKeyup
+     */
+    onBodyKeyup(e: any): void;
     /**
      * onSearchPanelCollapse
      * @description 查询面板展开之前
@@ -230,6 +236,10 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any[]} expandedRowKeys
      */
     onExpandedRowsChange(expandedRowKeys: any): Promise<void>;
+    /**
+     * search
+     */
+    search(): Promise<void>;
     /**
      * getTableDensity
      * @description 表格密度

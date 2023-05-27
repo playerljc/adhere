@@ -253,6 +253,19 @@ abstract class SearchTable<
 
     this.onClear = this.onClear.bind(this);
     this.onExpandedRowsChange = this.onExpandedRowsChange.bind(this);
+    this.onBodyKeyup = this.onBodyKeyup.bind(this);
+  }
+
+  componentDidMount() {
+    super.componentDidMount?.();
+
+    document.body.addEventListener('keyup', this.onBodyKeyup);
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount?.();
+
+    document.body.removeEventListener('keyup', this.onBodyKeyup);
   }
 
   componentWillReceiveProps(nextProps: SearchTableProps) {
@@ -368,6 +381,16 @@ abstract class SearchTable<
           };
         }),
       });
+    }
+  }
+
+  /**
+   * onBodyKeyup
+   */
+  onBodyKeyup(e) {
+    if (e.keyCode === 13) {
+      // 回车键的键码是13
+      this.search();
     }
   }
 
@@ -502,6 +525,23 @@ abstract class SearchTable<
       if ((this.props.antdTableProps || {})?.expandable?.onExpandedRowsChange) {
         this.props.antdTableProps?.expandable?.onExpandedRowsChange?.(expandedRowKeys);
       }
+    });
+  }
+
+  /**
+   * search
+   */
+  search() {
+    return new Promise<void>((resolve) => {
+      // @ts-ignore
+      this.setState(
+        {
+          page: 1,
+        },
+        () => {
+          this.onSearch().then(() => resolve());
+        },
+      );
     });
   }
 
@@ -768,17 +808,7 @@ abstract class SearchTable<
             )}
           />
         }
-        onClick={() => {
-          // @ts-ignore
-          this.setState(
-            {
-              page: 1,
-            },
-            () => {
-              this.onSearch();
-            },
-          );
-        }}
+        onClick={() => this.search()}
       >
         {Intl.v('查询')}
       </Button>,

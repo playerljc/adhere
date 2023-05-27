@@ -1,24 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"
-    />
-    <title></title>
-    <style>
-      html,
-      body,
-      #app {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
+<html>
+<head>
+  <title>Button 键盘事件示例</title>
+  <script>
+    function handleKeyDown(event) {
+      if (event.keyCode === 13) { // 回车键的键码是13
+        alert('回车键被按下！');
       }
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
+    }
+  </script>
+</head>
+<body>
+<button onkeydown="handleKeyDown(event)">按下回车键</button>
+</body>
 </html>
+
