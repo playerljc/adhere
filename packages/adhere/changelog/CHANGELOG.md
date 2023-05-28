@@ -1,3 +1,22 @@
+# 2.7.8
+
+***
+
+2023-05-28
+
+* **adhere-ui-flexlayout**
+  - Label和Value加入ref获取Root的EL元素
+* **adhere-ui-adthoc**
+  - 加入color-picker
+* **adhere-ui-searchlist**
+  - 加入回车搜索
+* **adhere-ui-searchtable**
+  - 加入回车搜索
+* **adhere-util-dict**
+  - 修复react字典组件
+* **adhere-ui-suspense**
+  - ts类型修复
+
 # 2.7.7
 
 ***
