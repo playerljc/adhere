@@ -96,6 +96,7 @@ SuspenseSync.propTypes = {
   firstLoading: PropTypes.node,
   isEmpty: PropTypes.func.isRequired,
   renderEmpty: PropTypes.func,
+  data: PropTypes.object,
 };
 
 export default SuspenseSync;

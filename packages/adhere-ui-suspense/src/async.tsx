@@ -37,6 +37,8 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
   reset(): Promise<any> {
     return new Promise<any>((resolve) => {
       // 第一次
+      // console.log('async reset');
+
       this.isFirst = true;
 
       // 第一次加载
@@ -50,6 +52,10 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
 
   fetchData(): Promise<any> {
     return new Promise<any>((resolve) => {
+      // console.log('suspense fetchData loading', this.showLoading());
+      // console.log('suspense fetchData isFirst', this.isFirst);
+      // console.log('suspense fetchData isFirstLoading', this.isFirstLoading);
+
       if (!this.props.fetchData) {
         this.setState({
           loading: false,
@@ -59,28 +65,31 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
         return;
       }
 
-      this.setState({
-        loading: true,
-      });
-
-      return this?.props
-        ?.fetchData?.()
-        ?.then((res) => {
-          this.setState(
-            {
-              loading: false,
-            },
-            () => resolve(res),
-          );
-        })
-        ?.catch(() => {
-          this.setState(
-            {
-              loading: false,
-            },
-            () => resolve(null),
-          );
-        });
+      this.setState(
+        {
+          loading: true,
+        },
+        () => {
+          this?.props
+            ?.fetchData?.()
+            ?.then((res) => {
+              this.setState(
+                {
+                  loading: false,
+                },
+                () => resolve(res),
+              );
+            })
+            ?.catch(() => {
+              this.setState(
+                {
+                  loading: false,
+                },
+                () => resolve(null),
+              );
+            });
+        },
+      );
     });
   }
 }

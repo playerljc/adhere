@@ -58,6 +58,8 @@ abstract class Suspense<
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.reset) {
+      // console.log('suspense componentWillReceiveProps', nextProps.reset);
+
       // 第一次
       this.isFirst = true;
 
@@ -69,6 +71,7 @@ abstract class Suspense<
   }
 
   componentDidMount() {
+    // console.log('suspense mount');
     this?.fetchData?.();
   }
 
@@ -94,6 +97,7 @@ abstract class Suspense<
     const { firstLoading } = this.props;
 
     if (firstLoading !== undefined && firstLoading !== null) {
+      // console.log('renderFirstLoading');
       return firstLoading;
     }
 
@@ -127,6 +131,10 @@ abstract class Suspense<
       this.isFirst = false;
       this.isFirstLoading = false;
     }
+
+    // console.log('suspense loading', loading);
+    // console.log('suspense isFirst', this.isFirst);
+    // console.log('suspense isFirstLoading', this.isFirstLoading);
 
     if (this.isFirst) {
       return this.renderFirstLoading();
