@@ -15,13 +15,15 @@ export interface InitFunc {
 export interface IConfig {
     isUseMemo: boolean;
 }
-export interface DictComponentProps {
+export interface DictNoPromiseComponentProps {
     children?: (params?: any) => ReactNode;
-    firstLoading?: ReactElement;
     isEmpty?: (params?: any) => boolean;
     renderEmpty?: Function;
 }
-export interface DictFunctionComponentProps extends DictComponentProps {
+export interface DictPromiseComponentProps extends DictNoPromiseComponentProps {
+    firstLoading?: ReactElement;
+}
+export interface DictFunctionComponentProps extends DictPromiseComponentProps {
     args?: any[];
     isUseMemo?: boolean;
 }
