@@ -1,4 +1,4 @@
-import { useMount, useUpdateLayoutEffect } from 'ahooks';
+import { useUpdateLayoutEffect } from 'ahooks';
 import React, {
   FC,
   ForwardRefRenderFunction,
@@ -48,9 +48,9 @@ const FunctionComponent: (
       return _props;
     }, [firstLoading, renderEmpty, isEmpty]);
 
-    useMount(() => {
-      // console.log('Function Mount');
-    });
+    // useMount(() => {
+    // console.log('Function Mount');
+    // });
 
     useUpdateLayoutEffect(() => {
       // console.log('Function Update', args);
@@ -58,6 +58,7 @@ const FunctionComponent: (
     }, args || []);
 
     useImperativeHandle(ref, () => ({
+      reload: () => asyncRef?.current?.fetchData?.(),
       reset: () => asyncRef.current.reset(),
     }));
 
