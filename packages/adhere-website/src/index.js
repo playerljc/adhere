@@ -2,10 +2,12 @@ import { ConfigProvider } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource, Util } from '@baifendian/adhere';
+import { ConfigProvider as AdhereConfigProvider, Dict, Resource, Util } from '@baifendian/adhere';
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
+
+import SelfUtil from './util';
 
 import 'nprogress/nprogress.css';
 
@@ -24,7 +26,7 @@ let theme = {
 function render() {
   root.render(
     <ConfigProvider
-      // direction={direction}
+      direction={direction}
       theme={{
         token: {
           colorPrimary: theme.primaryColor,
@@ -36,11 +38,10 @@ function render() {
       <AdhereConfigProvider
         intl={{
           lang,
-          locales: {
-            en_US: require('./locales/en_US').default,
-            zh_CN: require('./locales/zh_CN').default,
-            pt_PT: require('./locales/pt_PT').default,
-          },
+          locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
+            pre[cur.code] = cur.module;
+            return pre;
+          }, {}),
         }}
         theme={theme}
         onIntlInit={() => {
@@ -72,6 +73,10 @@ function render() {
 
 // 配置字典
 DictConfig();
+
+SelfUtil.initDirection();
+
+const direction = SelfUtil.getDirection();
 
 // 获取当前语言
 const lang = Util.getLang();
