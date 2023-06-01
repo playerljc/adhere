@@ -6,14 +6,19 @@
  */
 
 const commonVars = {
-  // block背景色
-  '@common-block-background-color': '#fff',
-  // menu
-  '@common-menu-background-color': '#071b28',
-  '@common-menu-split-color': '#13927D',
-
-  // 对adhere的全局变量进行重写
-  '@adhere-primary-color': '#1890ff',
+  '--common-block-background-color': '#fff',
+  // antd颜色
+  '--common-primary-color': '#1677ff',
+  '--common-color-primary-bg': '#e6f4ff',
+  '--common-color-primary-bg-hover': '#bae0ff',
+  '--common-color-primary-border:': '#91caff',
+  '--common-color-primary-border-hover': '#69b1ff',
+  '--common-color-primary-hover': '#4096ff',
+  '--common-color-primary': '#1677ff',
+  '--common-color-primary-active': '#0958d9',
+  '--common-color-primary-text-hover': '#4096ff',
+  '--common-color-primary-text': '#1677ff',
+  '--common-color-primary-text-active': '#0958d9',
 };
 
 module.exports = commonVars;

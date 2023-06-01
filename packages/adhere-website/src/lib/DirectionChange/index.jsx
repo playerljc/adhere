@@ -4,7 +4,6 @@ import React from 'react';
 
 import ltr from '@/images/ltr.svg';
 import rtl from '@/images/rtl.svg';
-import { getPathName, getSearch } from '@/lib/Router/path';
 import Util from '@/util';
 
 import styles from './index.less';
@@ -14,8 +13,8 @@ import styles from './index.less';
  * @param {string} _direction 方向
  */
 export const changeDirection = (_direction) => {
-  const search = getSearch();
-  const pathname = getPathName();
+  const search = window.location.search;
+  const pathname = window.location.pathname;
   const protocol = window.location.protocol;
   const host = window.location.host;
 

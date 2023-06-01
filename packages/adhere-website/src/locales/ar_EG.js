@@ -1,9 +1,9 @@
 export default [
-  'Name',
-  'Gender',
-  'Birthdate',
-  'Address',
+  'اسم',
+  'جنس',
+  'تاريخ الميلاد',
+  'عنوان',
   {
-    key1: '我是谁',
+    key1: 'من أنا',
   },
 ];

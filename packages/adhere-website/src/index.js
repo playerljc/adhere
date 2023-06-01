@@ -6,6 +6,7 @@ import { ConfigProvider as AdhereConfigProvider, Dict, Resource, Util } from '@b
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
+import { getThemeValue, setTheme } from '@/lib/Theme/Util';
 
 import SelfUtil from './util';
 
@@ -16,21 +17,28 @@ import '@baifendian/adhere/lib/css.less';
 // import '@baifendian/adhere/lib/index.less';
 import './index.less';
 
-let theme = {
-  primaryColor: '#1890ff',
-};
-
 /**
  * render
  */
-function render() {
+export function render() {
+  const themeValue = getThemeValue();
+
   root.render(
     <ConfigProvider
       direction={direction}
       theme={{
         token: {
-          colorPrimary: theme.primaryColor,
-          colorLink: theme.primaryColor,
+          colorPrimary: themeValue['common-primary-color'],
+          colorLink: themeValue['common-primary-color'],
+          colorPrimaryBg: themeValue['common-color-primary-bg'],
+          colorPrimaryBgHover: themeValue['common-color-primary-bg-hover'],
+          colorPrimaryBorder: themeValue['common-color-primary-border'],
+          colorPrimaryBorderHover: themeValue['common-color-primary-border-hover'],
+          colorPrimaryHover: themeValue['common-color-primary-hover'],
+          colorPrimaryActive: themeValue['common-color-primary-active'],
+          colorPrimaryTextHover: themeValue['common-color-primary-text-hover'],
+          colorPrimaryText: themeValue['common-color-primary-text'],
+          colorPrimaryTextActive: themeValue['common-color-primary-text-active'],
         },
       }}
       locale={Resource.Dict.value.LocalsAntd.value[lang]}
@@ -43,7 +51,9 @@ function render() {
             return pre;
           }, {}),
         }}
-        theme={theme}
+        theme={{
+          primaryColor: themeValue['common-primary-color'],
+        }}
         onIntlInit={() => {
           Router().then((routerConfig) => {
             RouterConfig = routerConfig;
@@ -51,21 +61,7 @@ function render() {
           });
         }}
       >
-        {() => (
-          <div>
-            <button
-              onClick={() => {
-                theme = {
-                  primaryColor: 'red',
-                };
-                render();
-              }}
-            >
-              changeAdhereTheme
-            </button>
-            {RouterConfig}
-          </div>
-        )}
+        {() => RouterConfig}
       </AdhereConfigProvider>
     </ConfigProvider>,
   );
@@ -73,6 +69,8 @@ function render() {
 
 // 配置字典
 DictConfig();
+
+setTheme('default');
 
 SelfUtil.initDirection();
 
