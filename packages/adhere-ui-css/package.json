@@ -12,7 +12,8 @@
   },
   "license": "ISC",
   "author": "playerljc",
-  "main": "lib/index.less",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "lib",
     "es",
@@ -25,6 +26,9 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "postbuildpackage": "node ./scripts/postbuildpackage.js",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
+  },
+  "dependencies": {
+    "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.21.0",
