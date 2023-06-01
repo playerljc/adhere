@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["decorators/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-decorators/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}
+{"version":3,"file":"index.js","sources":["decorators/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-decorators/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}

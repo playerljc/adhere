@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["react-util/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-reactutil/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}
+{"version":3,"file":"index.js","sources":["react-util/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-reactutil/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,uDACHA"}

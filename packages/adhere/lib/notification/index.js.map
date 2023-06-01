@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["notification/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-notification/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}
+{"version":3,"file":"index.js","sources":["notification/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-notification/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}

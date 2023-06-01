@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["image-lazy/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-imagelazy/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,qDACHA"}
+{"version":3,"file":"index.js","sources":["image-lazy/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-imagelazy/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,qDACHA"}

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["conditional-render/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-conditionalrender/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,6DACHA"}
+{"version":3,"file":"index.js","sources":["conditional-render/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-conditionalrender/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,6DACHA"}

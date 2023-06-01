@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["scroll-load/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-scrollload/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}
+{"version":3,"file":"index.js","sources":["scroll-load/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-scrollload/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}
