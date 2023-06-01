@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import StickupLayout from './stickuplayout';\r\nexport default StickupLayout;\r\n"],"names":["StickupLayout"],"mappings":"OAAOA,kBAAmB,iCACXA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import StickupLayout from './stickuplayout';\nexport default StickupLayout;\n"],"names":["StickupLayout"],"mappings":"OAAOA,kBAAmB,iCACXA"}
