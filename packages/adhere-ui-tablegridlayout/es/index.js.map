@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableGridLayout from './tablegridlayout';\r\nexport default TableGridLayout;\r\n"],"names":["TableGridLayout"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import TableGridLayout from './tablegridlayout';\nexport default TableGridLayout;\n"],"names":["TableGridLayout"],"mappings":"OAAOA,oBAAqB,mCACbA"}

@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars.less';
+//@import '~@baifendian/adhere-ui-css/lib/vars.less';
 
 .adhere-ui-globalindicator {
   position: absolute;
@@ -13,7 +13,7 @@
   background-color: rgba(255, 255, 255, 0.5);
 
   > .adhere-ui-globalindicator-text {
-    color: @adhere-primary-color;
+    color: var(--adhere-primary-color);
   }
 
   > .adhere-ui-globalindicator-dot {
@@ -28,7 +28,7 @@
       display: block;
       width: 9px;
       height: 9px;
-      background-color: @adhere-primary-color;
+      background-color: var(--adhere-primary-color);
       border-radius: 100%;
       transform: scale(0.75);
       transform-origin: 50% 50%;

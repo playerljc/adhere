@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 @adhere-ui-sliderscale-range-slider-runnable-track-color: #f2f2f2;
 
@@ -14,7 +14,7 @@
     padding: 0;
     border: 0;
     outline: none;
-    -webkit-appearance: none;
+    appearance: none;
 
     /* 滑块 */
 
@@ -22,10 +22,10 @@
       width: 0;
       height: 0;
       margin-top: -10px;
-      border-top: 18px solid rgba(@adhere-black-color, 0.5);
+      border-top: 18px solid rgba(var(--adhere-black-color-rgb), 0.5);
       border-right: 10px solid transparent;
       border-left: 10px solid transparent;
-      -webkit-appearance: none;
+      appearance: none;
     }
 
     /* 滚道 */
@@ -67,14 +67,14 @@
 
       &::after {
         right: 0;
-        border-left: 1px solid rgba(@adhere-black-color, 0.5);
+        border-left: 1px solid rgba(var(--adhere-black-color-rgb), 0.5);
       }
 
       &:first-child {
         &::before {
           left: 0;
           height: 300%;
-          border-left: 1px solid rgba(@adhere-black-color, 0.5);
+          border-left: 1px solid rgba(var(--adhere-black-color-rgb), 0.5);
         }
 
         > .adhere-ui-sliderscale-scale-item-value {
@@ -91,8 +91,8 @@
         bottom: -15px;
         width: 12px;
         margin-right: -6px;
-        color: rgba(@adhere-black-color, 0.5);
-        font-size: @adhere-small-font-size;
+        color: rgba(var(--adhere-black-color-rgb), 0.5);
+        font-size: var(--adhere-small-font-size);
         text-align: center;
       }
     }

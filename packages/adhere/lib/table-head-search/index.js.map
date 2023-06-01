@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["table-head-search/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-tableheadsearch/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,2DACHA"}
+{"version":3,"file":"index.js","sources":["table-head-search/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-tableheadsearch/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,2DACHA"}

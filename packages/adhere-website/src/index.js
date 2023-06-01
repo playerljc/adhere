@@ -11,17 +11,28 @@ import 'nprogress/nprogress.css';
 
 import '@baifendian/adhere/lib/css.less';
 
+// import '@baifendian/adhere/lib/index.less';
 import './index.less';
 
-// 配置字典
-DictConfig();
+let theme = {
+  primaryColor: '#1890ff',
+};
 
-// 获取当前语言
-const lang = Util.getLang();
-
-Router().then((routerConfig) => {
-  ReactDOM.createRoot(document.getElementById('app')).render(
-    <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
+/**
+ * render
+ */
+function render() {
+  root.render(
+    <ConfigProvider
+      // direction={direction}
+      theme={{
+        token: {
+          colorPrimary: theme.primaryColor,
+          colorLink: theme.primaryColor,
+        },
+      }}
+      locale={Resource.Dict.value.LocalsAntd.value[lang]}
+    >
       <AdhereConfigProvider
         intl={{
           lang,
@@ -31,9 +42,42 @@ Router().then((routerConfig) => {
             pt_PT: require('./locales/pt_PT').default,
           },
         }}
+        theme={theme}
+        onIntlInit={() => {
+          Router().then((routerConfig) => {
+            RouterConfig = routerConfig;
+            render();
+          });
+        }}
       >
-        {() => routerConfig}
+        {() => (
+          <div>
+            <button
+              onClick={() => {
+                theme = {
+                  primaryColor: 'red',
+                };
+                render();
+              }}
+            >
+              changeAdhereTheme
+            </button>
+            {RouterConfig}
+          </div>
+        )}
       </AdhereConfigProvider>
     </ConfigProvider>,
   );
-});
+}
+
+// 配置字典
+DictConfig();
+
+// 获取当前语言
+const lang = Util.getLang();
+
+let RouterConfig;
+
+const root = ReactDOM.createRoot(document.getElementById('app'));
+
+render();

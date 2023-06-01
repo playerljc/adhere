@@ -1,5 +1,5 @@
 @import '~@baifendian/adhere-ui-stickuplayout/lib/index.less';
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-cascadecompared {
   display: flex;
@@ -10,7 +10,7 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: 1px solid var(--adhere-border-color);
 
     > .adhere-ui-cascadecompared-autoWrap {
       > .adhere-ui-cascadecompared-item {
@@ -23,7 +23,7 @@
       height: 100%;
       > .adhere-ui-cascadecompared-cell {
         height: 100%;
-        border-right: 1px solid @adhere-border-color;
+        border-right: 1px solid var(--adhere-border-color);
       }
     }
   }
@@ -57,7 +57,7 @@
       /* 项下的单元格 */
       > .adhere-ui-cascadecompared-cell {
         width: 100%;
-        border-right: 1px solid @adhere-border-color;
+        border-right: 1px solid var(--adhere-border-color);
       }
     }
   }
@@ -70,7 +70,7 @@
 
     .adhere-ui-cascadecompared-item {
       > .adhere-ui-cascadecompared-cell {
-        border-right: 1px solid @adhere-border-color;
+        border-right: 1px solid var(--adhere-border-color);
       }
     }
 
@@ -86,7 +86,7 @@
     /* 不是最后一行才有 */
     &:not(:last-child) {
       > .adhere-ui-cascadecompared-cell {
-        border-bottom: 1px solid @adhere-border-color;
+        border-bottom: 1px solid var(--adhere-border-color);
       }
     }
 
@@ -103,7 +103,7 @@
     .adhere-ui-cascadecompared-item {
       > .adhere-ui-cascadecompared-cell {
         height: 100%;
-        font-size: @adhere-large-font-size;
+        font-size: var(--adhere-large-font-size);
         white-space: inherit;
         text-align: center;
         word-wrap: break-word;

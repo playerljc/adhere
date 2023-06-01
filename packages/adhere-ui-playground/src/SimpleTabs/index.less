@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-playground-simple-tabs {
   display: flex;
@@ -10,10 +10,10 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    margin: 0 0 30px 0;
+    margin: 0 0 30px;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: 1px solid var(--adhere-border-color);
 
     > li {
       position: relative;
@@ -25,7 +25,7 @@
       }
 
       &.active {
-        color: @adhere-primary-color;
+        color: var(--adhere-primary-color);
         transition: all 0.2s;
 
         &::before {
@@ -34,7 +34,7 @@
           bottom: 0;
           left: 0;
           height: 2px;
-          background-color: @adhere-primary-color;
+          background-color: var(--adhere-primary-color);
           content: '';
         }
       }

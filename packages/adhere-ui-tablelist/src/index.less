@@ -1,5 +1,5 @@
-@import '~@baifendian/adhere-ui-formitemcreator/lib/index.less';
-@import '~@baifendian/adhere-ui-css/lib/vars';
+@import url('~@baifendian/adhere-ui-formitemcreator/lib/index.less');
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 // tablelist-search
 @adhere-ui-tablelist-search-padding: 10px;
@@ -50,6 +50,7 @@
         .ant-form-btngroup {
           display: flex;
           align-items: center;
+
           .ant-btn {
             margin: 0 5px;
           }
@@ -80,7 +81,7 @@
 
         &.adhere-ui-tablelist-toolbar-left-total {
           em {
-            color: @adhere-primary-color;
+            color: var(--adhere-primary-color);
             font-weight: bold;
             font-style: normal;
           }
@@ -104,7 +105,7 @@
 
       > .anticon {
         padding: 0 10px;
-        font-size: @adhere-large-font-size;
+        font-size: var(--adhere-large-font-size);
       }
     }
   }
@@ -151,7 +152,7 @@
 
 .adhere-ui-tablelist-row-dragging {
   background: #fafafa;
-  border: 1px solid rgba(@adhere-black-color, 0.1);
+  border: 1px solid rgba(var(--adhere-black-color-rgb), 0.1);
 
   td {
     padding: 16px;
@@ -163,7 +164,7 @@
 }
 
 .adhere-ui-tablelist-set-dragging {
-  z-index: @adhere-common-max-zindex;
+  z-index: var(--adhere-common-max-zindex);
 
   .drag-visible {
     visibility: visible;

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["config-provider/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-configprovider/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}
+{"version":3,"file":"index.js","sources":["config-provider/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-configprovider/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,0DACHA"}

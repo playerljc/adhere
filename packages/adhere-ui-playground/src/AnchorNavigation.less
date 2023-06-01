@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-playground-anchor-navigation {
   position: relative;
@@ -17,7 +17,7 @@
     > .adhere-ui-playground-anchor-navigation-anchor {
       margin: 0;
       padding: 0;
-      font-size: @adhere-small-font-size;
+      font-size: var(--adhere-small-font-size);
       list-style: none;
       border-left: 1px solid #f0f0f0;
 
@@ -42,14 +42,14 @@
           cursor: pointer;
 
           > a {
-            color: @adhere-primary-color;
+            color: var(--adhere-primary-color);
           }
         }
 
         &.adhere-ui-playground-anchor-navigation-active {
           > a {
-            color: @adhere-primary-color;
-            border-left: 1px solid @adhere-primary-color;
+            color: var(--adhere-primary-color);
+            border-left: 1px solid var(--adhere-primary-color);
             text-decoration: none;
           }
         }
@@ -60,7 +60,7 @@
           margin-left: -1px;
           padding-left: 16px;
           overflow: hidden;
-          color: @adhere-black-color;
+          color: var(--adhere-black-color);
           white-space: nowrap;
           text-overflow: ellipsis;
           border-left: 1px solid transparent;

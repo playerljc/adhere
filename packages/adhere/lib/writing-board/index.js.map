@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["writing-board/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-writingboard/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}
+{"version":3,"file":"index.js","sources":["writing-board/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-writingboard/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,wDACHA"}

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["ajax/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-communication-ajax/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,gEACHA"}
+{"version":3,"file":"index.js","sources":["ajax/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-communication-ajax/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,gEACHA"}

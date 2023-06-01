@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["jd-category-tab/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-jdcategorytab/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,yDACHA"}
+{"version":3,"file":"index.js","sources":["jd-category-tab/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-jdcategorytab/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,yDACHA"}

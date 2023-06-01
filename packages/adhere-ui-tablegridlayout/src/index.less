@@ -1,5 +1,5 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-css/lib/mixin';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
+@import url('~@baifendian/adhere-ui-css/lib/mixin');
 
 @adhere-ui-tablegridlayout-table-row-label-color: #888;
 @adhere-ui-tablegridlayout-table-row-label-require-color: red;
@@ -13,17 +13,17 @@
 
 .adhere-ui-tablegridlayout-inner-wrap {
   &.adhere-ui-tablegridlayout-border {
-    border-top: 1px solid @adhere-border-color;
-    border-right: 1px solid @adhere-border-color;
-    border-left: 1px solid @adhere-border-color;
+    border-top: 1px solid var(--adhere-border-color);
+    border-right: 1px solid var(--adhere-border-color);
+    border-left: 1px solid var(--adhere-border-color);
 
     .adhere-ui-tablegridlayout-table {
       tr {
         > td {
-          border-bottom: 1px solid @adhere-border-color;
+          border-bottom: 1px solid var(--adhere-border-color);
 
           &:not(:last-child) {
-            border-right: 1px solid @adhere-border-color;
+            border-right: 1px solid var(--adhere-border-color);
           }
 
           &.adhere-ui-tablegridlayout-table-noborder {
@@ -74,6 +74,7 @@
           &.ant-form-item-has-error {
             > .ant-form-item-control {
               position: relative;
+
               > .ant-form-item-explain {
                 &.ant-form-item-explain-connected {
                   position: absolute;
@@ -174,7 +175,7 @@
             &:not(:last-child) {
               > .adhere-ui-tablegridlayout-table-row-value {
                 .adm-list-item.adm-form-item {
-                  border-bottom: 1px solid @adhere-border-color;
+                  border-bottom: 1px solid var(--adhere-border-color);
                 }
               }
             }

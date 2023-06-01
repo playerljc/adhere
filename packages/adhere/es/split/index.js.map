@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["split/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-split/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,gDACHA"}
+{"version":3,"file":"index.js","sources":["split/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-split/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,gDACHA"}

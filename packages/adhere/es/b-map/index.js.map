@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["b-map/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-bmap/es';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,+CACHA"}
+{"version":3,"file":"index.js","sources":["b-map/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-bmap/es';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,+CACHA"}

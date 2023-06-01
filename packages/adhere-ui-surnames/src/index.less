@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 @adhere-ui-surnames-index-item-active-color: #0bc2b4;
 @adhere-ui-surnames-group-title-color: #9c9c9c;
@@ -37,7 +37,7 @@
 
       &::after {
         right: -9px;
-        border-color: transparent transparent transparent @adhere-primary-color;
+        border-color: transparent transparent transparent var(--adhere-primary-color);
         border-width: 18px 0 18px 18px;
       }
     }
@@ -57,7 +57,7 @@
 
       &::after {
         left: -9px;
-        border-color: transparent @adhere-primary-color transparent transparent;
+        border-color: transparent var(--adhere-primary-color) transparent transparent;
         border-width: 18px 18px 18px 0;
       }
     }
@@ -107,8 +107,8 @@
 
       &::after {
         top: -9px;
-        border-color: transparent transparent @adhere-primary-color transparent;
-        border-width: 0 18px 18px 18px;
+        border-color: transparent transparent var(--adhere-primary-color) transparent;
+        border-width: 0 18px 18px;
       }
     }
 
@@ -127,8 +127,8 @@
 
       &::after {
         bottom: -9px;
-        border-color: @adhere-primary-color transparent transparent transparent;
-        border-width: 18px 18px 0 18px;
+        border-color: var(--adhere-primary-color) transparent transparent transparent;
+        border-width: 18px 18px 0;
       }
     }
 
@@ -149,12 +149,13 @@
     height: 44px;
     color: #fff;
     font-weight: bold;
-    font-size: @adhere-base-font-size;
+    font-size: var(--adhere-base-font-size);
     line-height: 44px;
     text-align: center;
-    background-color: @adhere-primary-color;
+    background-color: var(--adhere-primary-color);
     border-radius: 50%;
     transform: translate3d(0, 0, 0);
+
     &::after {
       position: absolute;
       width: 0;
@@ -176,17 +177,15 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      -moz-user-select: none;
-      -khtml-user-select: none;
       user-select: none;
 
       > .adhere-ui-surnames-index-item {
         box-sizing: border-box;
         width: 100%;
         padding: 2px;
-        color: @adhere-primary-color;
+        color: var(--adhere-primary-color);
         font-weight: bold;
-        font-size: @adhere-base-font-size;
+        font-size: var(--adhere-base-font-size);
         text-align: center;
 
         &:active {

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import GlobalIndicator from './globalindicator';\r\nexport default GlobalIndicator;\r\n"],"names":["GlobalIndicator"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import GlobalIndicator from './globalindicator';\nexport default GlobalIndicator;\n"],"names":["GlobalIndicator"],"mappings":"OAAOA,oBAAqB,mCACbA"}

@@ -34,7 +34,6 @@
     "@ant-design/icons": "^4.8.0",
     "@baifendian/adhere-ui-anthoc": "^2.7.9",
     "@baifendian/adhere-ui-conditionalrender": "^2.7.7",
-    "@baifendian/adhere-ui-css": "^2.7.7",
     "@baifendian/adhere-ui-fieldgeneratortodict": "^2.7.9",
     "@baifendian/adhere-ui-flexlayout": "^2.7.8",
     "@baifendian/adhere-ui-slidelayout": "^2.7.7",

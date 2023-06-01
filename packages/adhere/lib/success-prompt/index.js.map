@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["success-prompt/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-prompt-successprompt/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,gEACHA"}
+{"version":3,"file":"index.js","sources":["success-prompt/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-prompt-successprompt/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,gEACHA"}

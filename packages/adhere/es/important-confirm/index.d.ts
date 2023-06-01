@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-ui-confirm-importantconfirm/es";
+import Model from '@baifendian/adhere-ui-confirm-importantconfirm/es';

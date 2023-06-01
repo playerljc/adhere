@@ -7,4 +7,4 @@ export default OlWindLayer;
 declare class OlWindLayer extends WindLayer {
     constructor(data: any, config: any);
 }
-import { WindLayer } from "ol-wind";
+import { WindLayer } from 'ol-wind';

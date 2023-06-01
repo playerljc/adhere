@@ -27,4 +27,4 @@ declare class Wrap {
         children: any;
     });
 }
-import React from "react";
+import React from 'react';

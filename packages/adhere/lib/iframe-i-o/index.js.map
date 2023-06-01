@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["iframe-i-o/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-iframeio/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}
+{"version":3,"file":"index.js","sources":["iframe-i-o/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-util-iframeio/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}

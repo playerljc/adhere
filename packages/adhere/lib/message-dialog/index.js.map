@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["message-dialog/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-messagedialog/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,yDACHA"}
+{"version":3,"file":"index.js","sources":["message-dialog/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-messagedialog/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,yDACHA"}

@@ -17,7 +17,8 @@ const SortableItem = SortableElement((props) => <tr {...props} />);
 const SortableWrapper = SortableContainer((props) => <tbody {...props} />);
 
 class SortableTable<RecordType extends object = any> extends React.Component<
-  TSortTableProps<RecordType>
+  TSortTableProps<RecordType>,
+  any
 > {
   state = {
     dataSource: this.props.dataSource || [],
@@ -48,7 +49,9 @@ class SortableTable<RecordType extends object = any> extends React.Component<
     const { dataSource } = this.state;
     const { rowKey = 'id' } = this.props;
     const index = dataSource.findIndex((x) => {
+      // @ts-ignore
       const key = rowKey && typeof rowKey === 'function' ? rowKey(x) : rowKey;
+      // @ts-ignore
       return x[key] === restProps['data-row-key'];
     });
     return (

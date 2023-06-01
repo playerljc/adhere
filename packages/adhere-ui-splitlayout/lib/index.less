@@ -1,5 +1,5 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-flexlayout/lib/index';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
+@import url('~@baifendian/adhere-ui-flexlayout/lib/index');
 
 .adhere-ui-splitlayout {
   position: relative;
@@ -17,7 +17,7 @@
 
     &::before {
       display: flex;
-      background-color: @adhere-border-color;
+      background-color: var(--adhere-border-color);
       content: '';
     }
   }
@@ -56,11 +56,7 @@
 }
 
 .adhere-ui-splitlayout-noSelect {
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -khtml-user-select: none; /* Konqueror */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently not supported by any browser */
+  user-select: none; /* Chrome/Safari/Opera */
   -webkit-touch-callout: none; /* iOS Safari */
 }
 

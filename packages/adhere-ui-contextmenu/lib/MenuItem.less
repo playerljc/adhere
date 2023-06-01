@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars.less';
+//@import '~@baifendian/adhere-ui-css/lib/vars.less';
 
 @adhere-ui-contextmenu-menuitem-more-color: #ccc;
 
@@ -19,21 +19,21 @@
     }
 
     > .adhere-ui-contextmenu-menuitem-icon {
-      color: @adhere-border-color;
+      color: var(--adhere-border-color);
     }
 
     > .adhere-ui-contextmenu-menuitem-name {
-      color: @adhere-border-color;
+      color: var(--adhere-border-color);
     }
 
     > .adhere-ui-contextmenu-menuitem-more {
-      color: @adhere-border-color;
+      color: var(--adhere-border-color);
     }
   }
 
   &:hover {
-    background-color: rgba(@adhere-primary-color, 0.5);
-    border-color: rgba(@adhere-primary-color, 0.4);
+    background-color: rgba(var(--adhere-primary-color-rgb), 0.5);
+    border-color: rgba(var(--adhere-primary-color-rgb), 0.4);
 
     > .adhere-ui-contextmenu-submenu {
       display: block !important;
@@ -54,7 +54,7 @@
     flex-grow: 1;
     min-width: 0;
     overflow: hidden;
-    color: rgba(@adhere-black-color, 0.85);
+    color: rgba(var(--adhere-black-color-rgb), 0.85);
     white-space: nowrap;
     text-overflow: ellipsis;
   }
@@ -63,7 +63,7 @@
     flex-shrink: 0;
     margin-right: 5px;
     color: @adhere-ui-contextmenu-menuitem-more-color;
-    font-size: @adhere-small-font-size;
+    font-size: var(--adhere-small-font-size);
   }
 
   > .adhere-ui-contextmenu-submenu {
@@ -76,5 +76,5 @@
 .adhere-ui-contextmenu-menuitem-separation() {
   height: 1px;
   margin: 5px 0;
-  background-color: @adhere-border-color;
+  background-color: var(--adhere-border-color);
 }

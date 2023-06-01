@@ -1,2 +1,2 @@
 export default Model;
-import Model from "@baifendian/adhere-util-reactutil/lib";
+import Model from '@baifendian/adhere-util-reactutil/lib';

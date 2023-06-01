@@ -169,7 +169,7 @@ for (const packageName in dependencies) {
 
       result.forEach((fileName) => {
         const stat = fs.statSync(path.join(cssPackagePath, fileName));
-        if (stat.isFile()) {
+        if (stat.isFile() && fileName !== 'index.js') {
           const content = fs.readFileSync(path.join(cssPackagePath, fileName));
           fs.writeFileSync(path.join(contextPath, fileName), content);
         }

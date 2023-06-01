@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["search-list/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-searchlist/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}
+{"version":3,"file":"index.js","sources":["search-list/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-searchlist/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}

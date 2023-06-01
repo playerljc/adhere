@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-space/lib';\r\nexport default Model;\r\n"],"names":["Model"],"mappings":"OAAOA,UAAW,iDACHA"}
+{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-space/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,iDACHA"}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TSortTableProps } from './types';
-declare class SortableTable<RecordType extends object = any> extends React.Component<TSortTableProps<RecordType>> {
+declare class SortableTable<RecordType extends object = any> extends React.Component<TSortTableProps<RecordType>, any> {
     state: {
         dataSource: readonly RecordType[];
         isSort: boolean;

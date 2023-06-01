@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars.less';
+//@import '~@baifendian/adhere-ui-css/lib/vars.less';
 @import './load-awesome.less';
 
 @adhere-ui-pullrefresh-trigger-label-color: #999;
@@ -66,18 +66,18 @@
 
       > .adhere-ui-pullrefresh-trigger-label {
         color: @adhere-ui-pullrefresh-trigger-label-color;
-        font-size: @adhere-large-font-size;
+        font-size: var(--adhere-large-font-size);
       }
 
       > .adhere-ui-pullrefresh-trigger-update {
         color: @adhere-ui-pullrefresh-trigger-update-color;
-        font-size: @adhere-base-font-size;
+        font-size: var(--adhere-large-font-size);
       }
     }
 
     > .adhere-ui-pullrefresh-trigger-refresh {
       display: none;
-      color: @adhere-primary-color;
+      color: var(--adhere-primary-color);
 
       &.la-ball-circus {
         display: none;
