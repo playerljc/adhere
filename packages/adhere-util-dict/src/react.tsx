@@ -34,13 +34,13 @@ const FunctionComponent: (
   key: string,
 ) => ForwardRefRenderFunction<DictComponentHandler, DictFunctionComponentProps> =
   (key: string) =>
-  ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo }, ref) => {
+  ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo, ...others }, ref) => {
     const [data, setData] = useState();
 
     const asyncRef = useRef<Suspense.ASync>();
 
     const props = useMemo(() => {
-      const _props: any = {};
+      const _props: any = { ...others };
       if (firstLoading) _props.firstLoading = firstLoading;
       if (renderEmpty) _props.renderEmpty = renderEmpty;
       if (isEmpty) _props.isEmpty = isEmpty;
@@ -48,12 +48,7 @@ const FunctionComponent: (
       return _props;
     }, [firstLoading, renderEmpty, isEmpty]);
 
-    // useMount(() => {
-    // console.log('Function Mount');
-    // });
-
     useUpdateLayoutEffect(() => {
-      // console.log('Function Update', args);
       asyncRef?.current?.fetchData?.();
     }, args || []);
 
@@ -99,11 +94,11 @@ const PromiseComponent: (
   key: string,
 ) => ForwardRefRenderFunction<DictComponentHandler, DictPromiseComponentProps> =
   (key: string) =>
-  ({ children, firstLoading, isEmpty, renderEmpty }, ref) => {
+  ({ children, firstLoading, isEmpty, renderEmpty, ...others }, ref) => {
     const [data, setData] = useState();
 
     const props = useMemo(() => {
-      const _props: any = {};
+      const _props: any = { ...others };
       if (firstLoading) _props.firstLoading = firstLoading;
       if (renderEmpty) _props.renderEmpty = renderEmpty;
       if (isEmpty) _props.isEmpty = isEmpty;
