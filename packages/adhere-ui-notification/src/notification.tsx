@@ -85,7 +85,7 @@ class Notification {
     const self = this;
 
     this.notificationContainer?.addEventListener('click', (e: MouseEvent) => {
-      if ((e.target as HTMLElement).classList.contains('closeBtn')) {
+      if ((e.target as HTMLElement).classList.contains('close-btn')) {
         self.closeNotification.call(
           self,
           ((e.target as HTMLElement).parentNode as HTMLElement).dataset.id as string,
@@ -150,7 +150,7 @@ class Notification {
     const Component = () => (
       <>
         <div className="info">{children}</div>
-        {closed ? <span className="closeBtn" /> : null}
+        {closed ? <span className="close-btn" /> : null}
       </>
     );
 
@@ -202,7 +202,7 @@ class Notification {
             <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime || ''}</div>
           </div>
         </div>
-        {closed ? <span className="closeBtn" /> : null}
+        {closed ? <span className="close-btn" /> : null}
       </>
     );
 

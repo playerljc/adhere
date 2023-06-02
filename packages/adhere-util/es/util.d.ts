@@ -259,5 +259,7 @@ declare const _default: {
     getPropertyVisitPathStr(target: any, key: any): string;
     convertBase64UrlToBlob(data: string): Blob | null;
     omitObject(obj: object): object;
+    capitalized(str: string): string;
+    lowercaseInitial(str: string): string;
 };
 export default _default;

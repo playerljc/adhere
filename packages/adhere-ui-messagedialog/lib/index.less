@@ -1,24 +1,25 @@
-@import '~@baifendian/adhere-ui-formitemcreator/lib/index';
+@import url('~@baifendian/adhere-ui-formitemcreator/lib/index');
 
 .adhere-ui-messagedialog {
   .ant-modal {
     > .ant-modal-content {
       > .ant-modal-header {
         padding: 10px 16px;
-        font-size: var(--adhere-base-font-size);
+        font-size: var(--adhere-font-size-base);
       }
 
       > .ant-modal-body {
         display: flex;
         justify-content: center;
         padding: 16px 20px;
-        font-size: var(--adhere-base-font-size);
+        font-size: var(--adhere-font-size-base);
       }
 
       > .ant-modal-footer {
         padding: 14px 20px 50px;
         text-align: center;
         border-top: 0;
+
         button + button {
           margin-left: 20px;
         }
@@ -26,17 +27,17 @@
     }
   }
 
-  &-renderByIcon {
+  &-render-icon {
     display: flex;
     align-items: center;
     width: 100%;
 
-    .adhere-ui-messagedialog-renderByIcon-fixed {
+    .adhere-ui-messagedialog-render-icon-fixed {
       flex-shrink: 0;
       margin-right: 20px;
     }
 
-    .adhere-ui-messagedialog-renderByIcon-auto {
+    .adhere-ui-messagedialog-render-icon-auto {
       flex-grow: 1;
       min-width: 0;
     }

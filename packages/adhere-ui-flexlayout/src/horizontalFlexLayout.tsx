@@ -158,7 +158,7 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
   return (
     <FlexLayout
       {...attrs}
-      className={classNames(`${selectorPrefix}-horizontal-flexLayout`, className)}
+      className={classNames(`${selectorPrefix}-horizontal-flex-layout`, className)}
       style={style || {}}
       direction="horizontal"
     >

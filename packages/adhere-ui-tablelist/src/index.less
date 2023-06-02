@@ -1,5 +1,4 @@
 @import url('~@baifendian/adhere-ui-formitemcreator/lib/index.less');
-//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 // tablelist-search
 @adhere-ui-tablelist-search-padding: 10px;
@@ -29,7 +28,6 @@
     display: flex;
     align-items: center;
     padding: @adhere-ui-tablelist-search-padding;
-    //background: @adhere-ui-tablelist-search-bg;
     border: @adhere-ui-tablelist-search-border;
     border-radius: @adhere-ui-tablelist-search-border-radius;
     box-shadow: @adhere-ui-tablelist-search-boxshadow;
@@ -81,7 +79,7 @@
 
         &.adhere-ui-tablelist-toolbar-left-total {
           em {
-            color: var(--adhere-primary-color);
+            color: var(--adhere-color-primary);
             font-weight: bold;
             font-style: normal;
           }
@@ -105,7 +103,7 @@
 
       > .anticon {
         padding: 0 10px;
-        font-size: var(--adhere-large-font-size);
+        font-size: var(--adhere-font-size-lg);
       }
     }
   }
@@ -113,7 +111,6 @@
   .adhere-ui-tablelist-content {
     margin: @adhere-ui-tablelist-content-margin;
     padding: @adhere-ui-tablelist-content-padding;
-    //background: @adhere-ui-tablelist-content-bg;
     border: @adhere-ui-tablelist-content-border;
     border-radius: @adhere-ui-tablelist-content-border-radius;
     box-shadow: @adhere-ui-tablelist-content-boxshadow;
@@ -152,7 +149,7 @@
 
 .adhere-ui-tablelist-row-dragging {
   background: #fafafa;
-  border: 1px solid rgba(var(--adhere-black-color-rgb), 0.1);
+  border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
   td {
     padding: 16px;
@@ -164,7 +161,7 @@
 }
 
 .adhere-ui-tablelist-set-dragging {
-  z-index: var(--adhere-common-max-zindex);
+  z-index: var(--adhere-z-index-max-base);
 
   .drag-visible {
     visibility: visible;

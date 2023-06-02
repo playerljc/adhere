@@ -31,7 +31,7 @@
   padding: 0 15px;
 
   &:hover {
-    background-color: rgba(36, 128, 255, 0.3);
+    background-color: rgb(36 128 255 / 30%);
   }
 
   > .Fixed {
@@ -39,7 +39,7 @@
     min-width: 0;
     margin: 0;
     padding: 0;
-    color: #b0b0b0;
+    color: var(--adhere-color-text-tertiary);
     list-style: none;
 
     > li {
@@ -48,7 +48,7 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
     }
   }
 
@@ -63,7 +63,7 @@
     > li {
       margin: 15px 0;
       overflow: hidden;
-      color: #0a001f;
+      color: var(--adhere-color-text);
       white-space: nowrap;
       text-overflow: ellipsis;
     }

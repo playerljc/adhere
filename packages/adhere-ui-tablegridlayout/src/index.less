@@ -1,9 +1,6 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars';
 @import url('~@baifendian/adhere-ui-css/lib/mixin');
 
-@adhere-ui-tablegridlayout-table-row-label-color: #888;
 @adhere-ui-tablegridlayout-table-row-label-require-color: red;
-@adhere-ui-tablegridlayout-table-row-value-color: #222;
 @adhere-ui-tablegridlayout-table-row-odd-color: #fff;
 @adhere-ui-tablegridlayout-table-row-even-color: #fafafa;
 
@@ -13,17 +10,17 @@
 
 .adhere-ui-tablegridlayout-inner-wrap {
   &.adhere-ui-tablegridlayout-border {
-    border-top: 1px solid var(--adhere-border-color);
-    border-right: 1px solid var(--adhere-border-color);
-    border-left: 1px solid var(--adhere-border-color);
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
     .adhere-ui-tablegridlayout-table {
       tr {
         > td {
-          border-bottom: 1px solid var(--adhere-border-color);
+          border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
           &:not(:last-child) {
-            border-right: 1px solid var(--adhere-border-color);
+            border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
           }
 
           &.adhere-ui-tablegridlayout-table-noborder {
@@ -42,7 +39,7 @@
     .adhere-ui-tablegridlayout-table-row {
       > .adhere-ui-tablegridlayout-table-row-label {
         padding-right: 10px;
-        color: @adhere-ui-tablegridlayout-table-row-label-color;
+        color: var(--adhere-color-text-secondary);
         white-space: nowrap;
         text-align: right;
         word-break: keep-all;
@@ -58,7 +55,7 @@
       }
 
       > .adhere-ui-tablegridlayout-table-row-value {
-        color: @adhere-ui-tablegridlayout-table-row-value-color;
+        color: var(--adhere-color-text-tertiary);
         white-space: normal;
         .adhere-word-break();
 
@@ -175,7 +172,7 @@
             &:not(:last-child) {
               > .adhere-ui-tablegridlayout-table-row-value {
                 .adm-list-item.adm-form-item {
-                  border-bottom: 1px solid var(--adhere-border-color);
+                  border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
                 }
               }
             }

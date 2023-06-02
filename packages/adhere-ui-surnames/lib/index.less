@@ -1,7 +1,3 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars';
-
-@adhere-ui-surnames-index-item-active-color: #0bc2b4;
-@adhere-ui-surnames-group-title-color: #9c9c9c;
 @adhere-ui-surnames-group-title-background-color: rgb(247, 247, 247);
 
 .adhere-ui-surnames {
@@ -37,7 +33,7 @@
 
       &::after {
         right: -9px;
-        border-color: transparent transparent transparent var(--adhere-primary-color);
+        border-color: transparent transparent transparent var(--adhere-color-primary);
         border-width: 18px 0 18px 18px;
       }
     }
@@ -57,7 +53,7 @@
 
       &::after {
         left: -9px;
-        border-color: transparent var(--adhere-primary-color) transparent transparent;
+        border-color: transparent var(--adhere-color-primary) transparent transparent;
         border-width: 18px 18px 18px 0;
       }
     }
@@ -107,7 +103,7 @@
 
       &::after {
         top: -9px;
-        border-color: transparent transparent var(--adhere-primary-color) transparent;
+        border-color: transparent transparent var(--adhere-color-primary) transparent;
         border-width: 0 18px 18px;
       }
     }
@@ -127,7 +123,7 @@
 
       &::after {
         bottom: -9px;
-        border-color: var(--adhere-primary-color) transparent transparent transparent;
+        border-color: var(--adhere-color-primary) transparent transparent transparent;
         border-width: 18px 18px 0;
       }
     }
@@ -149,10 +145,10 @@
     height: 44px;
     color: #fff;
     font-weight: bold;
-    font-size: var(--adhere-base-font-size);
+    font-size: var(--adhere-font-size-base);
     line-height: 44px;
     text-align: center;
-    background-color: var(--adhere-primary-color);
+    background-color: var(--adhere-color-primary);
     border-radius: 50%;
     transform: translate3d(0, 0, 0);
 
@@ -183,13 +179,13 @@
         box-sizing: border-box;
         width: 100%;
         padding: 2px;
-        color: var(--adhere-primary-color);
+        color: var(--adhere-color-primary);
         font-weight: bold;
-        font-size: var(--adhere-base-font-size);
+        font-size: var(--adhere-font-size-base);
         text-align: center;
 
         &:active {
-          background-color: @adhere-ui-surnames-index-item-active-color;
+          background-color: var(--adhere-color-primary);
           border-radius: 50%;
         }
       }
@@ -207,7 +203,7 @@
       > .adhere-ui-surnames-group-title {
         display: block;
         height: 1.5rem;
-        color: @adhere-ui-surnames-group-title-color;
+        color: var(--adhere-color-text-secondary);
         line-height: 1.5rem;
         text-indent: 1rem;
         background: @adhere-ui-surnames-group-title-background-color;

@@ -17,29 +17,18 @@ import '@baifendian/adhere/lib/css.less';
 // import '@baifendian/adhere/lib/index.less';
 import './index.less';
 
-/**
- * render
- */
-export function render() {
+function Root() {
   const themeValue = getThemeValue();
 
-  root.render(
+  return (
     <ConfigProvider
       direction={direction}
       theme={{
         token: {
-          colorPrimary: themeValue['common-primary-color'],
-          colorLink: themeValue['common-primary-color'],
-          colorPrimaryBg: themeValue['common-color-primary-bg'],
-          colorPrimaryBgHover: themeValue['common-color-primary-bg-hover'],
-          colorPrimaryBorder: themeValue['common-color-primary-border'],
-          colorPrimaryBorderHover: themeValue['common-color-primary-border-hover'],
-          colorPrimaryHover: themeValue['common-color-primary-hover'],
-          colorPrimaryActive: themeValue['common-color-primary-active'],
-          colorPrimaryTextHover: themeValue['common-color-primary-text-hover'],
-          colorPrimaryText: themeValue['common-color-primary-text'],
-          colorPrimaryTextActive: themeValue['common-color-primary-text-active'],
+          colorPrimary: themeValue.token['common-primary-color'],
+          colorLink: themeValue.token['common-primary-color'],
         },
+        algorithm: themeValue.algorithm,
       }}
       locale={Resource.Dict.value.LocalsAntd.value[lang]}
     >
@@ -52,7 +41,15 @@ export function render() {
           }, {}),
         }}
         theme={{
-          primaryColor: themeValue['common-primary-color'],
+          colorPrimary: themeValue.token['common-primary-color'],
+          colorTextBase: themeValue.mapToken.colorTextBase,
+          colorBgBase: themeValue.mapToken.colorBgBase,
+          colorBorderBase: themeValue.mapToken.colorBorder,
+          colorSplitBase: themeValue.mapToken.colorSplit,
+          fontSizeBase: `${themeValue.mapToken.fontSize}px`,
+          borderRadiusBase: `${themeValue.mapToken.borderRadius}px`,
+          lineWidth: `${themeValue.mapToken.lineWidth}px`,
+          lintType: themeValue.mapToken.lineType,
         }}
         onIntlInit={() => {
           Router().then((routerConfig) => {
@@ -63,8 +60,15 @@ export function render() {
       >
         {() => RouterConfig}
       </AdhereConfigProvider>
-    </ConfigProvider>,
+    </ConfigProvider>
   );
+}
+
+/**
+ * render
+ */
+export function render() {
+  root.render(<Root />);
 }
 
 // 配置字典

@@ -1,5 +1,3 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars';
-
 .adhere-ui {
   &-slidelayout {
     &-overlay,
@@ -9,7 +7,7 @@
     &-push-master,
     &-push-slave {
       position: absolute;
-      //background-color: #fff;
+      background-color: var(--adhere-color-bg-base);
     }
 
     &-overlay,
@@ -34,19 +32,19 @@
       overflow-scrolling: touch;
 
       &.left {
-        border-right: 1px solid var(--adhere-border-color);
+        border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
       }
 
       &.right {
-        border-left: 1px solid var(--adhere-border-color);
+        border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
       }
 
       &.top {
-        border-bottom: 1px solid var(--adhere-border-color);
+        border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
       }
 
       &.bottom {
-        border-top: 1px solid var(--adhere-border-color);
+        border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
       }
     }
 

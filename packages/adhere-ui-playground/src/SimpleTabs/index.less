@@ -13,7 +13,7 @@
     margin: 0 0 30px;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid var(--adhere-border-color);
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
     > li {
       position: relative;
@@ -25,7 +25,7 @@
       }
 
       &.active {
-        color: var(--adhere-primary-color);
+        color: var(--adhere-color-primary);
         transition: all 0.2s;
 
         &::before {
@@ -34,7 +34,7 @@
           bottom: 0;
           left: 0;
           height: 2px;
-          background-color: var(--adhere-primary-color);
+          background-color: var(--adhere-color-primary);
           content: '';
         }
       }

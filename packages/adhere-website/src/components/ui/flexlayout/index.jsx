@@ -2651,7 +2651,7 @@ export default (props) => {
 
       <p>TRBLC布局</p>
       <div>
-        <img src={TRBLCIcon} alt="TRBLC布局" />
+        <img src={TRBLCIcon} style={{ width: '100%' }} alt="TRBLC布局" />
       </div>
 
       <CodeBoxSection title="TRBLC布局-代码演示" columnCount={1} config={TRBLCBoxPanelConfig()} />

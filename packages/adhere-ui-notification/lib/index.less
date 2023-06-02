@@ -1,5 +1,5 @@
 //@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-css/lib/mixin';
+@import url('~@baifendian/adhere-ui-css/lib/mixin');
 
 @adhere-ui-notification-transitionduration: 600ms;
 @adhere-ui-notification-standard-header-icon-width: 50px;
@@ -40,7 +40,7 @@
             flex-grow: 1;
             min-width: 0;
             padding: 10px 10px 10px 0;
-            font-size: var(--adhere-base-font-size);
+            font-size: var(--adhere-font-size-base);
             opacity: 0;
             transition: opacity @adhere-ui-notification-transitionduration 0ms;
             .adhere-word-break();
@@ -61,7 +61,7 @@
               }
 
               > .adhere-ui-notification-standard-header-label {
-                font-size: var(--adhere-base-font-size);
+                font-size: var(--adhere-font-size-base);
                 .adhere-text-inline-overflow();
               }
             }
@@ -90,7 +90,7 @@
                 width: @adhere-ui-notification-standard-header-icon-width;
                 margin: 10px;
                 overflow: hidden;
-                font-size: var(--adhere-base-font-size);
+                font-size: var(--adhere-font-size-base);
                 .adhere-word-break();
               }
 
@@ -100,12 +100,12 @@
 
                 > .adhere-ui-notification-standard-content-row-title {
                   margin-bottom: 10px;
-                  font-size: var(--adhere-large-font-size);
+                  font-size: var(--adhere-font-size-lg);
                   .adhere-text-inline-overflow();
                 }
 
                 > .adhere-ui-notification-standard-content-row-text {
-                  font-size: var(--adhere-base-font-size);
+                  font-size: var(--adhere-font-size-base);
                   line-height: 21px;
                   .adhere-word-break();
                 }
@@ -113,7 +113,7 @@
             }
           }
 
-          > .closeBtn {
+          > .close-btn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -130,24 +130,26 @@
     &-ios {
       > ul {
         background-color: transparent;
+
         > li {
           margin: 10px;
-          background-color: rgba(255, 255, 255, 0.7);
+          background-color: rgb(255 255 255 / 70%);
           border-radius: 5px;
-          box-shadow: rgba(var(--adhere-black-color-rgb), 0.7) 0 5px 25px -10px;
+          box-shadow: var(--adhere-color-border-base) 0 5px 25px -10px;
 
           > .info {
-            color: var(--adhere-black-color);
+            color: var(--adhere-color-text);
+
             > .adhere-ui-notification-standard-content {
               > .adhere-ui-notification-standard-content-row {
                 > .adhere-ui-notification-standard-content-row-title {
-                  color: var(--adhere-black-color);
+                  color: var(--adhere-color-text);
                 }
               }
             }
           }
 
-          > .closeBtn {
+          > .close-btn {
             width: @adhere-ui-notification-ios-closebtn-width;
             height: @adhere-ui-notification-ios-closebtn-height;
             margin-top: 10px;
@@ -163,14 +165,14 @@
         background-color: @adhere-ui-notification-material-ul-backgroundcolor;
 
         > li {
-          border-bottom: 1px solid var(--adhere-border-color);
-          border-radius: 5px;
+          border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+          border-radius: var(--adhere-border-radius-base);
 
           > .info {
             color: #fff;
 
             > .adhere-ui-notification-standard-header {
-              border-bottom: 1px solid var(--adhere-border-color);
+              border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
             }
 
             > .adhere-ui-notification-standard-content {
@@ -190,7 +192,7 @@
             }
           }
 
-          > .closeBtn {
+          > .close-btn {
             width: @adhere-ui-notification-material-closebtn-width;
             height: @adhere-ui-notification-material-closebtn-height;
             background: url('./images/materialcha.png') no-repeat;

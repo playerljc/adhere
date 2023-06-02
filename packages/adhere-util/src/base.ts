@@ -372,5 +372,21 @@ export default {
 
     return res;
   },
+  /**
+   * capitalized
+   * @description 首字母大写
+   * @param str
+   */
+  capitalized(str: string) {
+    return `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
+  },
+  /**
+   * lowercaseInitial
+   * @description 首字母小写
+   * @param str
+   */
+  lowercaseInitial(str: string) {
+    return `${str.charAt(0).toLowerCase()}${str.substring(1)}`;
+  },
   /**----------------------------基本end---------------------------**/
 };

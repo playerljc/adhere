@@ -9,7 +9,7 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px 20px;
-    border-bottom: 1px solid var(--adhere-border-color);
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 
   > .adhere-ui-searchlist-list-density-setting-body {
@@ -23,7 +23,7 @@
         text-align: center;
 
         &.active {
-          background-color: rgba(var(--adhere-primary-color-rgb), 0.3);
+          background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
         }
 
         &:hover {

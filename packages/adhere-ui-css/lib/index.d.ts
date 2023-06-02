@@ -1,24 +1,9 @@
-export declare function setAdherePrimaryColor(color: any): void;
-export declare function setAdhereNormalColor(color: any): void;
-export declare function setAdhereBlackColor(color: any): void;
-export declare function setAdhereBaseFontSize(color: any): void;
-export declare function setAdhereSmallFontSize(color: any): void;
-export declare function setAdhereCommonMaxZIndex(color: any): void;
-export declare function getAdherePrimaryColor(): string;
-export declare function getAdhereNormalColor(): string;
-export declare function getAdhereBlackColor(): string;
-export declare function getAdhereBaseFontSize(): string;
-export declare function getAdhereSmallFontSize(): string;
-export declare function getAdhereCommonMaxZIndex(): string;
-export declare function getAdhereDisabledColor(): string;
-export declare function getAdhereBorderColor(): string;
-export declare function getAdhereLargeFontSize(): string;
-export declare const init: (theme?: {
-    primaryColor?: string;
-    normalColor?: string;
-    backColor?: string;
-    baseColor?: string;
-    baseFontSize?: string;
-    smallFontSize?: string;
-    commonMaxZIndex?: string;
-}) => void;
+/**
+ * theme
+ * {
+ *   colorPrimary
+ * }
+ * @param theme
+ */
+declare const _default: (theme: any) => void;
+export default _default;

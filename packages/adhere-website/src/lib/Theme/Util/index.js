@@ -1,3 +1,4 @@
+import { theme } from 'antd';
 import tinyColor from 'tinycolor2';
 
 import { Util } from '@baifendian/adhere';
@@ -5,9 +6,25 @@ import { Util } from '@baifendian/adhere';
 import DarkTheme from './dark/vars';
 import DefaultTheme from './default/vars';
 
+const { darkAlgorithm, defaultAlgorithm, defaultSeed } = theme;
+
 const themes = new Map([
-  ['default', DefaultTheme],
-  ['dark', DarkTheme],
+  [
+    'default',
+    {
+      algorithm: theme.defaultAlgorithm,
+      token: DefaultTheme,
+      mapToken: defaultAlgorithm(defaultSeed),
+    },
+  ],
+  [
+    'dark',
+    {
+      algorithm: theme.darkAlgorithm,
+      token: DarkTheme,
+      mapToken: darkAlgorithm(defaultSeed),
+    },
+  ],
 ]);
 
 // 当前变量
@@ -61,7 +78,7 @@ keys.forEach((varName) => {
  */
 const init = (theme) => {
   // 主题的变量
-  const vars = themes.get(theme) ?? themes.get('default');
+  const vars = (themes.get(theme) ?? themes.get('default')).token;
 
   Object.keys(vars).forEach((_key) => {
     const varName = Util.toCamelCase(_key, true);

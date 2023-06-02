@@ -13,8 +13,8 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  color: var(--adhere-black-color);
-  font-size: var(--adhere-base-font-size);
+  color: var(--adhere-color-text);
+  font-size: var(--adhere-font-size-base);
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
@@ -24,6 +24,7 @@
   .adhere-ui-playground-message-notice {
     padding: 8px;
     text-align: center;
+
     &adhere-ui-playground-message-move-up-leave {
       animation-name: MessageMoveOut;
       animation-duration: 0.3s;
@@ -40,12 +41,13 @@
       > .adhere-ui-playground-message-success {
         margin: 0;
         padding: 0;
+
         > .anticon {
           position: relative;
           top: 1px;
           margin-right: 8px;
           color: @adhere-ui-playground-message-success-color;
-          font-size: var(--adhere-large-font-size);
+          font-size: var(--adhere-font-size-lg);
         }
       }
     }

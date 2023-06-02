@@ -36,15 +36,15 @@
 
         &:not(:last-child) {
           > a {
-            border-bottom: 1px solid var(--adhere-border-color);
+            border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
           }
         }
 
         &.active {
           > a {
             color: @adhere-ui-jdcategorytab-menu-item-active-color;
-            background: #fff;
-            border-right: 1px solid #fff;
+            //background: #fff;
+            border-right: var(--adhere-line-width) var(--adhere-line-type) #fff;
           }
         }
 
@@ -53,7 +53,7 @@
           box-sizing: border-box;
           width: 100%;
           height: 3rem;
-          font-size: var(--adhere-base-font-size);
+          font-size: var(--adhere-font-size-base);
           line-height: 3rem;
           white-space: nowrap;
           text-align: center;
@@ -61,7 +61,7 @@
           word-wrap: break-word;
           word-break: break-all;
           background: @adhere-ui-jdcategorytab-menu-item-background-color;
-          border-right: 1px solid var(--adhere-border-color);
+          border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
         }
       }
     }

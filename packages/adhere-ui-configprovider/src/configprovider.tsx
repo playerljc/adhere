@@ -1,4 +1,4 @@
-import { init } from '@baifendian/adhere-ui-css';
+import init from '@baifendian/adhere-ui-css';
 
 import { useUpdateEffect } from 'ahooks';
 import React, { FC, createContext, memo, useEffect, useState } from 'react';

@@ -69,7 +69,7 @@ const TLRCLayout: FC<TBLRCLayoutProps> = ({
   const autoInnerClassList = useMemo(
     () =>
       classNames(
-        `${selectorPrefix}-horizontal-flexLayout`,
+        `${selectorPrefix}-horizontal-flex-layout`,
         `${selectorPrefix}-trblc-auto-inner`,
         {
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:

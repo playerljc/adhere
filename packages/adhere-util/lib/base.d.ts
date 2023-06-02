@@ -156,5 +156,17 @@ declare const _default: {
      * @return object
      */
     omitObject(obj: object): object;
+    /**
+     * capitalized
+     * @description 首字母大写
+     * @param str
+     */
+    capitalized(str: string): string;
+    /**
+     * lowercaseInitial
+     * @description 首字母小写
+     * @param str
+     */
+    lowercaseInitial(str: string): string;
 };
 export default _default;

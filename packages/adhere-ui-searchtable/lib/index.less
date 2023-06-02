@@ -1,23 +1,22 @@
-@import '~@baifendian/adhere-ui-suspense/lib/index.less';
-@import '~@baifendian/adhere-ui-flexlayout/lib/index.less';
-@import '~@baifendian/adhere-ui-slidelayout/lib/index.less';
-@import '~@baifendian/adhere-ui-space/lib/index';
-@import '~@baifendian/adhere-ui-split/lib/index';
-@import '~@baifendian/adhere-ui-tablegridlayout/lib/index';
-@import '~@baifendian/adhere-ui-fieldgeneratortodict/lib/index';
-@import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
-//@import '~@baifendian/adhere-ui-css/lib/vars';
+@import url('~@baifendian/adhere-ui-suspense/lib/index.less');
+@import url('~@baifendian/adhere-ui-flexlayout/lib/index.less');
+@import url('~@baifendian/adhere-ui-slidelayout/lib/index.less');
+@import url('~@baifendian/adhere-ui-space/lib/index');
+@import url('~@baifendian/adhere-ui-split/lib/index');
+@import url('~@baifendian/adhere-ui-tablegridlayout/lib/index');
+@import url('~@baifendian/adhere-ui-fieldgeneratortodict/lib/index');
+@import url('~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less');
 
-@import './Extension/ColumnSetting/setting';
-@import './Extension/TableDensitySetting/setting';
-@import './Extension/AdvancedSearchPanel/index';
-@import './Extension/DisabledOption/index';
-@import './Extension/OptionsWrap/index';
-@import './Extension/EditableCell/Edit/index';
-@import './Extension/EditableCell/View/index';
-@import './Extension/EditableCell/EditableRowControl/index';
-@import './Extension/DragSort/RowDragSort/index';
-@import './ProTable.less';
+@import url('./Extension/ColumnSetting/setting');
+@import url('./Extension/TableDensitySetting/setting');
+@import url('./Extension/AdvancedSearchPanel/index');
+@import url('./Extension/DisabledOption/index');
+@import url('./Extension/OptionsWrap/index');
+@import url('./Extension/EditableCell/Edit/index');
+@import url('./Extension/EditableCell/View/index');
+@import url('./Extension/EditableCell/EditableRowControl/index');
+@import url('./Extension/DragSort/RowDragSort/index');
+@import url('./ProTable.less');
 
 @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color: #fff;
 @adhere-ui-searchtable-background-color: #f0f2f5;
@@ -43,8 +42,6 @@
     .adhere-ui-searchtable {
       position: relative;
       height: 100%;
-      //padding: 24px;
-      //background-color: @adhere-ui-searchtable-background-color;
 
       &.fixedtablespacebetween {
         > .adhere-ui-searchtable-autowrapper {
@@ -127,10 +124,6 @@
       }
 
       > .adhere-ui-searchtable-searchwrapper {
-        //margin-bottom: 16px;
-        //padding: 24px 24px 1px 24px;
-        //background: #fff;
-
         > div {
           &:not(:last-child) {
             margin-bottom: @adhere-ui-searchtable-split;
@@ -141,7 +134,6 @@
           display: flex;
           align-items: center;
           justify-content: flex-end;
-          //margin-bottom: 20px;
 
           > .adhere-ui-searchtable-searchfooteritem {
             display: flex;
@@ -157,7 +149,7 @@
 
             .adhere-ui-searchtable-searchfooteritem-search-btn-icon {
               color: @adhere-ui-searchtable-searchfooteritem-search-btn-icon-color;
-              font-size: var(--adhere-base-font-size);
+              font-size: var(adhere-font-size-base);
             }
 
             > .adhere-ui-searchtable-searchfooteritem-expand-search-up-btn {
@@ -169,8 +161,8 @@
               }
 
               > i {
-                color: var(--adhere-primary-color);
-                font-size: var(--adhere-large-font-size);
+                color: var(--adhere-color-primary);
+                font-size: var(--adhere-font-size-lg);
               }
             }
 
@@ -183,8 +175,8 @@
               }
 
               > i {
-                color: var(--adhere-primary-color);
-                font-size: var(--adhere-large-font-size);
+                color: var(--adhere-color-primary);
+                font-size: var(--adhere-font-size-lg);
               }
             }
           }
@@ -193,7 +185,6 @@
 
       > .adhere-ui-searchtable-autowrapper {
         position: relative;
-        //background: #fff;
         border-radius: 2px;
 
         &.autofixed {
