@@ -1,15 +1,15 @@
-@import '~@baifendian/adhere-ui-css/es/vars.less';
+//@import '~@baifendian/adhere-ui-css/es/vars.less';
 
 @adhere-ui-searchlist-list-density-setting-body-li-hover-color: #ccc;
 
 .adhere-ui-searchlist-list-density-setting {
-  background-color: #fff;
+  //background-color: #fff;
 
   > .adhere-ui-searchlist-list-density-setting-header {
     display: flex;
     justify-content: flex-end;
     padding: 10px 20px;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 
   > .adhere-ui-searchlist-list-density-setting-body {
@@ -23,7 +23,7 @@
         text-align: center;
 
         &.active {
-          background-color: rgba(@adhere-primary-color, 0.3);
+          background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
         }
 
         &:hover {

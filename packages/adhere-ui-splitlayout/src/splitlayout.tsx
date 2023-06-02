@@ -113,8 +113,8 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
   /**
    * getResizeClass
    */
-  function getResizeClass(): 'rowResize' | 'colResize' {
-    return direction === 'vertical' ? 'rowResize' : 'colResize';
+  function getResizeClass(): 'row-resize' | 'col-resize' {
+    return direction === 'vertical' ? 'row-resize' : 'col-resize';
   }
 
   /**
@@ -401,7 +401,7 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
 
       containerEl.current = el.current?.parentElement as HTMLElement;
 
-      containerEl.current.classList.add(`${selectorPrefix}-noSelect`);
+      containerEl.current.classList.add(`${selectorPrefix}-no-select`);
 
       initEvents();
     }

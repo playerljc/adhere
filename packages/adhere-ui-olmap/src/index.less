@@ -1,5 +1,5 @@
-@import "~@baifendian/adhere-ui-css/lib/vars";
-@import '~ol/ol.css';
+//@import "~@baifendian/adhere-ui-css/lib/vars";
+@import url('~ol/ol.css');
 
 .adhere-ui-olmap {
   position: relative;
@@ -41,10 +41,10 @@
     bottom: 3em;
     left: auto;
     padding: 0 5px;
-    color: #eee;
-    font-size: @adhere-small-font-size;
-    background: rgba(0, 60, 136, 0.3);
-    border: 1px solid #eee;
-    border-radius: 4px;
+    color: var(--adhere-color-border-base);
+    font-size: var(--adhere-font-size-sm);
+    background: rgb(0 60 136 / 30%);
+    border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+    border-radius: var(--adhere-border-radius-base);
   }
 }

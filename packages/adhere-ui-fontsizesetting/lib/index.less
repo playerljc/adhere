@@ -1,7 +1,5 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less';
-
-@adhere-ui-fontsizesetting-separated-background-color: #ccc;
+//@import '~@baifendian/adhere-ui-css/lib/vars';
+@import url('~@baifendian/adhere-ui-css/lib/iconfont/iconfont.less');
 
 .adhere-ui-fontsizesetting {
   position: relative;
@@ -25,15 +23,15 @@
         position: relative;
         width: 2px;
         height: 100%;
-        background: @adhere-ui-fontsizesetting-separated-background-color;
+        background: var(--adhere-color-split-base);
 
         > span {
           position: absolute;
           top: -20px;
           left: -4px;
           width: 2em;
-          color: @adhere-primary-color;
-          font-size: @adhere-small-font-size;
+          color: var(--adhere-color-primary);
+          font-size: var(--adhere-font-size-sm);
         }
 
         &:last-child {
@@ -54,8 +52,8 @@
     position: absolute;
     top: 50%;
     margin-top: -17px;
-    color: @adhere-primary-color;
-    font-size: @adhere-base-font-size;
+    color: var(--adhere-color-primary);
+    font-size: var(--adhere-font-size-base);
     font-family: iconfont;
     content: '';
   }

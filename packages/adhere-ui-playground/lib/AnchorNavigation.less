@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-playground-anchor-navigation {
   position: relative;
@@ -17,15 +17,15 @@
     > .adhere-ui-playground-anchor-navigation-anchor {
       margin: 0;
       padding: 0;
-      font-size: @adhere-small-font-size;
+      font-size: var(--adhere-font-size-sm);
       list-style: none;
-      border-left: 1px solid #f0f0f0;
+      border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
       &.adhere-ui-playground-anchor-navigation-affix {
         position: fixed;
         z-index: 9999;
         padding: 16px 0;
-        background-color: #fff;
+        //background-color: #fff;
       }
 
       > li {
@@ -42,14 +42,14 @@
           cursor: pointer;
 
           > a {
-            color: @adhere-primary-color;
+            color: var(--adhere-color-primary);
           }
         }
 
         &.adhere-ui-playground-anchor-navigation-active {
           > a {
-            color: @adhere-primary-color;
-            border-left: 1px solid @adhere-primary-color;
+            color: var(--adhere-color-primary);
+            border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-primary);
             text-decoration: none;
           }
         }
@@ -60,10 +60,10 @@
           margin-left: -1px;
           padding-left: 16px;
           overflow: hidden;
-          color: @adhere-black-color;
+          color: var(--adhere-color-text);
           white-space: nowrap;
           text-overflow: ellipsis;
-          border-left: 1px solid transparent;
+          border-left: var(--adhere-line-width) var(--adhere-line-type) transparent;
           transition: all 0.3s ease;
           text-decoration: none;
         }

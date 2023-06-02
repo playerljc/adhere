@@ -24,7 +24,7 @@ const Auto: ForwardRefRenderFunction<any, AutoProps> = (props, ref) => {
   const classList = useMemo(
     () =>
       classNames(selectorPrefix, className, {
-        [`${selectorPrefix}-autoFixed`]: autoFixed,
+        [`${selectorPrefix}-auto-fixed`]: autoFixed,
         [`${selectorPrefix}-fit`]: fit,
         [`${selectorPrefix}-gap`]: isUseGap,
       }),

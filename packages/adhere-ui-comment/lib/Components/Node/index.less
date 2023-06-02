@@ -1,7 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-
-@adhere-ui-comment-color: #030303;
-@adhere-ui-comment-color-second: #606060;
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-comment-node {
   .adhere-ui-comment-node-avatar-wrap {
@@ -27,19 +24,19 @@
 
     .adhere-ui-comment-node-title-row-author {
       margin-right: 10px;
-      color: @adhere-ui-comment-color;
+      color: var(--adhere-color-text);
       font-weight: 500;
     }
 
     .adhere-ui-comment-node-title-row-date-time {
-      color: @adhere-ui-comment-color-second;
-      font-size: @adhere-small-font-size;
+      color: var(--adhere-color-text-secondary);
+      font-size: var(--adhere-font-size-sm);
     }
   }
 
   .adhere-ui-comment-node-content-wrap {
     margin: 10px 0;
-    color: @adhere-ui-comment-color;
+    color: var(--adhere-color-text);
     font-weight: 400;
     .adhere-word-break();
   }
@@ -52,7 +49,7 @@
     list-style: none;
 
     > .adhere-ui-comment-node-actions-action {
-      color: @adhere-ui-comment-color-second;
+      color: var(--adhere-color-text-secondary);
       font-weight: 400;
 
       &:hover {

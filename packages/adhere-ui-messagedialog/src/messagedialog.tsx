@@ -21,9 +21,9 @@ let antdConfigProviderProps: ConfigProviderProps = {};
  */
 function renderByIcon(icon, text) {
   return (
-    <div className={`${selectorPrefix}-renderByIcon`}>
-      <div className={`${selectorPrefix}-renderByIcon-fixed`}>{icon}</div>
-      <div className={`${selectorPrefix}-renderByIcon-auto`}>{text}</div>
+    <div className={`${selectorPrefix}-render-icon`}>
+      <div className={`${selectorPrefix}-render-icon-fixed`}>{icon}</div>
+      <div className={`${selectorPrefix}-render-icon-auto`}>{text}</div>
     </div>
   );
 }

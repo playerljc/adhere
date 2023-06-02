@@ -1,5 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-css/lib/mixin';
+@import url('~@baifendian/adhere-ui-css/lib/mixin');
 
 .adhere-ui-searchtable-editablecell-view {
   position: relative;
@@ -27,8 +26,8 @@
   > .adhere-ui-searchtable-editablecell-view-trigger {
     flex-shrink: 0;
     width: 20px;
-    color: @adhere-primary-color;
-    font-size: @adhere-base-font-size + 2;
+    color: var(--adhere-color-primary);
+    font-size: var(--adhere-font-size-lg);
 
     > .adhere-ui-searchtable-editablecell-view-trigger-inner {
       display: none;
@@ -36,6 +35,7 @@
       justify-content: center;
       width: 100%;
       height: 100%;
+
       &:hover {
         cursor: pointer;
       }

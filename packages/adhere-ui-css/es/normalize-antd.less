@@ -1,5 +1,3 @@
-@import './vars';
-
 /**
   这里是对antd样式的normalize
  */
@@ -10,6 +8,7 @@
   width: 100%;
   //min-height: 100%;
   height: 100%;
+
   > .ant-spin-container {
     width: 100%;
     height: 100%;
@@ -18,17 +17,17 @@
 
 // .ant-select-dropdown
 .ant-select-dropdown {
-  z-index: @adhere-common-max-zindex + 1;
+  z-index: calc(var(--adhere-z-index-max-base) + 1);
 }
 
 // .ant-notification
 .ant-notification {
-  z-index: @adhere-common-max-zindex + 2;
+  z-index: calc(var(--adhere-z-index-max-base) + 2);
 }
 
 // .ant-message
 .ant-message {
-  z-index: @adhere-common-max-zindex + 2;
+  z-index: calc(var(--adhere-z-index-max-base) + 2);
 }
 
 // .ant-card
@@ -53,7 +52,7 @@
 }
 
 .ant-picker-dropdown {
-  z-index: @adhere-common-max-zindex + 2;
+  z-index: calc(var(--adhere-z-index-max-base) + 2);
 }
 
 .ant-tabs-content {

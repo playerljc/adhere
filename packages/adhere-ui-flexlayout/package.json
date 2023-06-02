@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-flexlayout",
-  "version": "2.7.8",
+  "version": "2.8.0",
   "description": "实现flex布局的组件",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.7.7",
-    "@baifendian/adhere-ui-css": "^2.7.7",
     "@baifendian/adhere-ui-historyback": "^2.7.7",
     "@baifendian/adhere-util-intl": "^2.7.7",
     "@types/react": "^18.0.26",

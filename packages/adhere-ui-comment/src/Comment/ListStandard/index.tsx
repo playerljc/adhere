@@ -155,6 +155,7 @@ const ListStandard: FC<ListStandardProps> = (props) => {
       <CommentList
         getScrollWrapContainer={getScrollWrapContainer}
         isLoading={loading}
+        // @ts-ignore
         hasMore={(data[dataKeys!.list] as Array<any>).length <= data[dataKeys!.totalCount]}
         onLoadMore={onLoadMore}
         renderFirstLoading={renderFirstLoading}
@@ -184,6 +185,7 @@ const ListStandard: FC<ListStandardProps> = (props) => {
   useLayoutEffect(() => {
     if (callbackHandler.current) {
       status.current =
+        // @ts-ignore
         paging.current.page < data[dataKeys!.totalPage] ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
       callbackHandler?.current(status.current);
     }

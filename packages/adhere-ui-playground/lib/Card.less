@@ -1,12 +1,8 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-
-@adhere-ui-playground-card-description-title-color: #777;
-@adhere-ui-playground-card-action-item-color: #00000073;
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-playground-card {
   position: relative;
-  background: #fff;
-  border: 1px solid @adhere-border-color;
+  border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   border-radius: 2px;
 
   > .adhere-ui-playground-card-header {
@@ -15,11 +11,11 @@
     min-height: 48px;
     margin-bottom: -1px;
     padding: 0 24px;
-    color: @adhere-black-color;
+    color: var(--adhere-color-text);
     font-weight: 500;
-    font-size: @adhere-large-font-size;
+    font-size: var(--adhere-font-size-lg);
     background: 0 0;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
     border-radius: 2px 2px 0 0;
 
     > .adhere-ui-playground-card-header-title {
@@ -35,9 +31,9 @@
       float: right;
       margin-left: auto;
       padding: 16px 0;
-      color: @adhere-black-color;
+      color: var(--adhere-color-text);
       font-weight: 400;
-      font-size: @adhere-base-font-size;
+      font-size: var(--adhere-font-size-base);
     }
   }
 
@@ -48,7 +44,7 @@
   > .adhere-ui-playground-card-description {
     position: relative;
     padding: 18px 24px 12px;
-    border-top: 1px solid @adhere-border-color;
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
     > .adhere-ui-playground-card-description-title {
       position: absolute;
@@ -57,10 +53,10 @@
       margin-left: 16px;
       padding: 1px 8px;
       overflow: hidden;
-      color: @adhere-ui-playground-card-description-title-color;
+      color: var(--adhere-color-text-tertiary);
       white-space: nowrap;
       text-overflow: ellipsis;
-      background: #fff;
+      background-color: var(--adhere-color-bg-base);
       border-radius: 2px 2px 0 0;
       transition: background-color 0.4s;
     }
@@ -73,16 +69,16 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    background: #fff;
-    border-top: 1px solid @adhere-border-color;
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
     > .adhere-ui-playground-card-action-item {
       margin: 12px 0;
-      color: @adhere-ui-playground-card-action-item-color;
+      color: var(--adhere-color-text);
       text-align: center;
 
       &:not(:last-child) {
-        border-right: 1px solid @adhere-border-color;
+        border-right: var(--adhere-line-width) var(--adhere-line-type)
+          var(--adhere-color-border-base);
       }
     }
   }

@@ -1,5 +1,5 @@
-@import './toolBarLayout.less';
-@import './scrollLayout.less';
+@import url('./toolBarLayout.less');
+@import url('./scrollLayout.less');
 
 @adhere-ui-flexlayout-grid-count: 24;
 
@@ -36,7 +36,7 @@
   &.adhere-ui-flexlayout-horizontal {
     flex-flow: row wrap;
 
-    &.adhere-ui-flexlayout-horizontal-flexLayout {
+    &.adhere-ui-flexlayout-horizontal-flex-layout {
       flex-wrap: nowrap;
     }
 
@@ -52,7 +52,7 @@
       .span(@adhere-ui-flexlayout-grid-count);
     }
 
-    > .adhere-ui-flexlayout-auto-autoFixed {
+    > .adhere-ui-flexlayout-auto-auto-fixed {
       min-width: 0;
     }
   }
@@ -89,7 +89,7 @@
       }
     }
 
-    > .adhere-ui-flexlayout-auto-autoFixed {
+    > .adhere-ui-flexlayout-auto-auto-fixed {
       min-height: 0;
     }
   }

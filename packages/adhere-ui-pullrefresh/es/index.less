@@ -1,8 +1,5 @@
-@import '~@baifendian/adhere-ui-css/lib/vars.less';
-@import './load-awesome.less';
-
-@adhere-ui-pullrefresh-trigger-label-color: #999;
-@adhere-ui-pullrefresh-trigger-update-color: #ccc;
+//@import '~@baifendian/adhere-ui-css/lib/vars.less';
+@import url('./load-awesome.less');
 
 .adhere-ui-pullrefresh {
   position: relative;
@@ -65,19 +62,19 @@
       }
 
       > .adhere-ui-pullrefresh-trigger-label {
-        color: @adhere-ui-pullrefresh-trigger-label-color;
-        font-size: @adhere-large-font-size;
+        color: var(--adhere-color-text-secondary);
+        font-size: var(--adhere-font-size-lg);
       }
 
       > .adhere-ui-pullrefresh-trigger-update {
-        color: @adhere-ui-pullrefresh-trigger-update-color;
-        font-size: @adhere-base-font-size;
+        color: var(--adhere-color-text-tertiary);
+        font-size: var(--adhere-font-size-lg);
       }
     }
 
     > .adhere-ui-pullrefresh-trigger-refresh {
       display: none;
-      color: @adhere-primary-color;
+      color: var(--adhere-color-primary);
 
       &.la-ball-circus {
         display: none;

@@ -1,9 +1,7 @@
-@import '~@baifendian/adhere-ui-searchtable/es/index.less';
-@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-css/lib/mixin';
-
-@import './Extension/ListDensitySetting/setting';
-@import './ResourceManager/index';
+@import url('~@baifendian/adhere-ui-searchtable/es/index.less');
+@import url('~@baifendian/adhere-ui-css/lib/mixin');
+@import url('./Extension/ListDensitySetting/setting');
+@import url('./ResourceManager/index');
 
 .adhere-ui-searchtable-wrap {
   > .adhere-ui-suspense {
@@ -83,7 +81,7 @@
   padding: 12px 0;
 
   &.split {
-    border-block-end: 1px solid rgba(5, 5, 5, 0.06);
+    border-block-end: var(--adhere-line-width) var(--adhere-line-type) rgb(5 5 5 / 6%);
   }
 
   .adhere-ui-searchtableimplement-list-item-vertical-body,
@@ -106,7 +104,7 @@
 }
 
 .adhere-ui-searchtableimplement-list-selection {
-  background-color: rgba(@adhere-primary-color, 0.3);
+  background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
 }
 
 .adhere-ui-searchtableimplement-list-item-content {
@@ -117,7 +115,7 @@
   }
 }
 
-.adhere-ui-searchtableimplement-list-rowSelection-checkbox-wrap {
+.adhere-ui-searchtableimplement-list-row-selection-checkbox-wrap {
   flex-shrink: 0;
   margin: 0 20px;
 }
@@ -135,25 +133,22 @@
   margin: 0 20px;
 
   .adhere-ui-searchtableimplement-list-number {
-    color: rgba(@adhere-black-color, 0.6);
+    color: var(--adhere-color-text-secondary);
     font-weight: bold;
     font-size: 16px;
   }
 }
 
-.adhere-ui-searchtableimplement-list-rowSelection-header {
+.adhere-ui-searchtableimplement-list-row-selection-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
   padding: 12px 24px;
   background-color: rgb(61 62 64 / 2%);
-  border-radius: 6px;
+  border-radius: var(--adhere-border-radius-base);
 
-  > .adhere-ui-searchtableimplement-list-rowSelection-header-info {
-  }
-
-  > .adhere-ui-searchtableimplement-list-rowSelection-header-cancel {
-    color: @adhere-primary-color;
+  > .adhere-ui-searchtableimplement-list-row-selection-header-cancel {
+    color: var(--adhere-color-primary);
   }
 }
 

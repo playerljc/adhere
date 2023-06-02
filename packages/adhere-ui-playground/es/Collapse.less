@@ -2,7 +2,6 @@
 @adhere-ui-playground-collapse-padding: 20px;
 @adhere-ui-playground-collapse-header-collapse-icon-size: 16px;
 @adhere-ui-playground-collapse-header-collapse-icon-url: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjM2OTAxOTUxNjkzIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQzODUiIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNMzI2LjU1MzYgODUyLjU4MjRjMTEwLjM4NzItMTEyLjAyNTYgMjE5LjM0MDgtMjIzLjMzNDQgMzI5LjMxODQtMzMzLjYxOTIgMTMuODI0LTEzLjkyNjQgMTYuMDc2OC0yMC44ODk2IDAuODE5Mi0zNS45NDI0LTEwNS40NzItMTA0LjI0MzItMjA5LjYxMjgtMjA5LjcxNTItMzE0LjY3NTItMzE0LjE2MzItMTEuMjY0LTExLjI2NC0xNC43NDU2LTE3LjYxMjgtMC44MTkyLTI5LjU5MzYgMTkuNTU4NC0xNi43OTM2IDM3LjA2ODgtMzYuMDQ0OCA1NC43ODQtNTQuNzg0IDcuMzcyOC03Ljc4MjQgMTEuNzc2LTEwLjAzNTIgMjAuODg5Ni0wLjkyMTZDNTUxLjkzNiAyMTkuNDQzMiA2ODcuNDExMiAzNTQuODE2IDgyMy4wOTEyIDQ4OS45ODRjOC4xOTIgOC4xOTIgOC43MDQgMTIuNjk3NiAwLjIwNDggMjEuMTk2OEExNDk1MjguNzgwOCAxNDk1MjguNzgwOCAwIDAgMCA0MTkuODQgOTEzLjcxNTJjLTguNjAxNiA4LjYwMTYtMTMuNTE2OCAxMC40NDQ4LTIzLjM0NzIgMS4xMjY0LTIzLjU1Mi0yMi40MjU2LTQ4LjUzNzYtNDMuNDE3Ni02OS45MzkyLTYyLjI1OTJ6IiBwLWlkPSI0Mzg2Ij48L3BhdGg+PC9zdmc+';
-@adhere-ui-playground-collapse-border-color: #f0f0f0;
 
 .adhere-ui-playground-collapse {
   width: 100%;
@@ -39,7 +38,7 @@
     }
 
     &.adhere-ui-playground-collapse-header-border {
-      border: 1px solid @adhere-ui-playground-collapse-border-color;
+      border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
       border-top-left-radius: @adhere-ui-playground-collapse-border-radius;
       border-top-right-radius: @adhere-ui-playground-collapse-border-radius;
     }
@@ -70,7 +69,7 @@
     padding: @adhere-ui-playground-collapse-padding;
 
     &.adhere-ui-playground-collapse-body-border {
-      border: 1px solid @adhere-ui-playground-collapse-border-color;
+      border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
       border-radius: @adhere-ui-playground-collapse-border-radius;
 
       &.adhere-ui-playground-collapse-body-exists-header {

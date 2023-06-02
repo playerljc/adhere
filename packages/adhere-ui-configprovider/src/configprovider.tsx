@@ -1,3 +1,6 @@
+import init from '@baifendian/adhere-ui-css';
+
+import { useUpdateEffect } from 'ahooks';
 import React, { FC, createContext, memo, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -18,6 +21,7 @@ const { useForceUpdate } = Hooks;
 const ConfigProvider: FC<ConfigProviderProps> = (props) => {
   const {
     intl: { lang, locales, prefix, mainLanguage },
+    theme,
     children,
     onIntlInit,
   } = props;
@@ -46,6 +50,14 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
       }
     });
   }, [lang, locales, prefix]);
+
+  useEffect(() => {
+    init(theme);
+  }, []);
+
+  useUpdateEffect(() => {
+    init(theme);
+  }, [theme]);
 
   return (
     <ConditionalRender conditional={isIntlInit}>

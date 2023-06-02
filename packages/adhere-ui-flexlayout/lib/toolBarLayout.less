@@ -1,7 +1,7 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-flexlayout-toolbarlayout {
-  background-color: #fff;
+  //background-color: #fff;
 
   .adhere-ui-flexlayout-toolbarlayout-main-auto-wrap {
     padding: 20px;
@@ -22,10 +22,10 @@
   }
 
   .adhere-ui-flexlayout-toolbarlayout-top {
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 
   .adhere-ui-flexlayout-toolbarlayout-bottom {
-    border-top: 1px solid @adhere-border-color;
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
   }
 }

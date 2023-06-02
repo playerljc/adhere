@@ -1,9 +1,9 @@
-@import '~@baifendian/adhere-ui-contourblock/es/index';
-@import '~@baifendian/adhere-ui-css/lib/mixin';
-@import '~@baifendian/adhere-ui-css/lib/vars';
+@import url('~@baifendian/adhere-ui-contourblock/es/index');
+@import url('~@baifendian/adhere-ui-css/lib/mixin');
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 .adhere-ui-searchtable-protable-resource-type-change-btn {
-  font-size: 16px;
+  font-size: var(--adhere-font-size-lg);
 }
 
 .adhere-ui-searchtable-protable-resource-table-file-column-icon {
@@ -14,7 +14,7 @@
 }
 
 .adhere-ui-searchtable-protable-resource-table-file-column-name {
-  font-size: 16px;
+  font-size: var(--adhere-font-size-lg);
 }
 
 .adhere-ui-searchtable-protable-grid-view-item {
@@ -23,12 +23,13 @@
   flex-direction: column;
   padding: 35px;
   border-radius: 8px;
+
   &:hover {
-    background-color: rgba(@adhere-primary-color, 0.2);
+    background-color: rgba(var(--adhere-color-primary-rgb), 0.2);
   }
 
   &.adhere-ui-searchtableimplement-list-selection {
-    border: 1px solid @adhere-primary-color;
+    border: 1px solid var(--adhere-color-primary);
   }
 
   > .adhere-ui-searchtable-protable-grid-view-item-selection {

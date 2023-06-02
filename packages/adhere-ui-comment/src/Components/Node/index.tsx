@@ -262,6 +262,7 @@ const Node: FC<NodeProps> = (props) => {
   ]);
 
   const hasMore = useCallback(
+    // @ts-ignore
     () => (listData[dataKeys.list] as []).length <= listData[dataKeys.totalCount],
     [listData, dataKeys.list, dataKeys.totalCount],
   );

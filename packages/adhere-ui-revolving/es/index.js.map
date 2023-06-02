@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Revolving from './revolving';\r\nexport default Revolving;\r\n"],"names":["Revolving"],"mappings":"OAAOA,cAAe,6BACPA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Revolving from './revolving';\nexport default Revolving;\n"],"names":["Revolving"],"mappings":"OAAOA,cAAe,6BACPA"}

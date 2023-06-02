@@ -8,7 +8,7 @@ import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/li
 
 import { CascadeComparedHandle, CascadeComparedProps, ColumnConfig, IMasterItem } from './types';
 
-const selectorPrefix = 'adhere-ui-cascadecompared';
+const selectorPrefix = 'adhere-ui-cascade-compared';
 
 const defaultCellWidth = 120;
 
@@ -93,7 +93,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
    * initScroll
    */
   function initScroll() {
-    const wrapEls = el.current!.querySelectorAll(`.${selectorPrefix}-autoWrap`);
+    const wrapEls = el.current!.querySelectorAll(`.${selectorPrefix}-auto-wrap`);
 
     for (let i = 0; i < scrolls.current.length; i++) {
       scrolls.current[i].destroy();
@@ -176,7 +176,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
         style={{ ...indicatorStyle }}
       >
         <div
-          className={classNames(`${selectorPrefix}-fixedWrap`, indicatorFixedWrapClassName || '')}
+          className={classNames(`${selectorPrefix}-fixed-wrap`, indicatorFixedWrapClassName || '')}
           style={{
             ...(indicatorFixedWrapStyle || {}),
             width: fixedColumnConfig?.width || defaultCellWidth,
@@ -194,7 +194,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
           </div>
         </div>
         <div
-          className={classNames(`${selectorPrefix}-autoWrap`, indicatorAutoWrapClassName || '')}
+          className={classNames(`${selectorPrefix}-auto-wrap`, indicatorAutoWrapClassName || '')}
           style={{ ...(indicatorAutoWrapStyle || {}) }}
         >
           <div className={`${selectorPrefix}-item`}>
@@ -245,7 +245,7 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
     return (
       <>
         <div
-          className={classNames(`${selectorPrefix}-fixedWrap`, fixedWrapClassName || '')}
+          className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName || '')}
           style={{ ...(fixedWrapStyle || {}), width: fixedColumnConfig?.width || defaultCellWidth }}
         >
           {dataSource.map((record, rowIndex) => (
@@ -263,11 +263,11 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
         </div>
 
         <div
-          className={classNames(`${selectorPrefix}-autoWrap`, autoWrapClassName || '')}
+          className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName || '')}
           style={{ ...(autoWrapStyle || {}) }}
         >
           <div
-            className={classNames(`${selectorPrefix}-autoInner`, autoInnerClassName || '')}
+            className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName || '')}
             style={{ ...autoInnerStyle }}
           >
             {dataSource.map((record, rowIndex) => (

@@ -1,5 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
-@import '~@baifendian/adhere-ui-flexlayout/lib/index';
+@import url('~@baifendian/adhere-ui-flexlayout/lib/index');
 
 .adhere-ui-splitlayout {
   position: relative;
@@ -17,7 +16,7 @@
 
     &::before {
       display: flex;
-      background-color: @adhere-border-color;
+      background-color: var(--adhere-color-border-base);
       content: '';
     }
   }
@@ -55,19 +54,15 @@
   //}
 }
 
-.adhere-ui-splitlayout-noSelect {
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -khtml-user-select: none; /* Konqueror */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently not supported by any browser */
+.adhere-ui-splitlayout-no-select {
+  user-select: none; /* Chrome/Safari/Opera */
   -webkit-touch-callout: none; /* iOS Safari */
 }
 
-.adhere-ui-splitlayout-colResize {
+.adhere-ui-splitlayout-col-resize {
   cursor: col-resize;
 }
 
-.adhere-ui-splitlayout-rowResize {
+.adhere-ui-splitlayout-row-resize {
   cursor: row-resize;
 }

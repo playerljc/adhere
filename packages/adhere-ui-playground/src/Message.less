@@ -1,4 +1,4 @@
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
 @adhere-ui-playground-message-notice-content-box-shadow: 0 3px 6px -4px #0000001f,
   0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
@@ -13,8 +13,8 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  color: @adhere-black-color;
-  font-size: @adhere-base-font-size;
+  color: var(--adhere-color-text);
+  font-size: var(--adhere-font-size-base);
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
@@ -24,6 +24,7 @@
   .adhere-ui-playground-message-notice {
     padding: 8px;
     text-align: center;
+
     &adhere-ui-playground-message-move-up-leave {
       animation-name: MessageMoveOut;
       animation-duration: 0.3s;
@@ -32,7 +33,7 @@
     > .adhere-ui-playground-message-notice-content {
       display: inline-block;
       padding: 10px 16px;
-      background: #fff;
+      //background: #fff;
       border-radius: 2px;
       box-shadow: @adhere-ui-playground-message-notice-content-box-shadow;
       pointer-events: all;
@@ -40,12 +41,13 @@
       > .adhere-ui-playground-message-success {
         margin: 0;
         padding: 0;
+
         > .anticon {
           position: relative;
           top: 1px;
           margin-right: 8px;
           color: @adhere-ui-playground-message-success-color;
-          font-size: @adhere-large-font-size;
+          font-size: var(--adhere-font-size-lg);
         }
       }
     }
@@ -58,6 +60,7 @@
     padding: 8px;
     opacity: 1;
   }
+
   100% {
     max-height: 0;
     padding: 0;

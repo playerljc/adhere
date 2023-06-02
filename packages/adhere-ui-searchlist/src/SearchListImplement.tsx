@@ -578,7 +578,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
     const checked = this.state.selectedRowKeys?.includes(record[this.getRowKey()]);
 
     return (
-      <div className={`${selectorPrefix}-list-rowSelection-checkbox`}>
+      <div className={`${selectorPrefix}-list-row-selection-checkbox`}>
         <Checkbox
           checked={checked}
           onChange={(e) => {
@@ -828,7 +828,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
           </div>
         )}
         {!!rowSelection && (
-          <div className={`${selectorPrefix}-list-rowSelection-checkbox-wrap`}>
+          <div className={`${selectorPrefix}-list-row-selection-checkbox-wrap`}>
             {this.renderItemSelection(record)}
           </div>
         )}
@@ -866,7 +866,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
           </div>
         )}
         {!!rowSelection && (
-          <div className={`${selectorPrefix}-list-rowSelection-checkbox-wrap`}>
+          <div className={`${selectorPrefix}-list-row-selection-checkbox-wrap`}>
             {this.renderItemSelection(record)}
           </div>
         )}
@@ -1043,7 +1043,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
         )}
 
         {!!rowSelection && (
-          <div className={`${selectorPrefix}-list-rowSelection-checkbox-wrap`}>
+          <div className={`${selectorPrefix}-list-row-selection-checkbox-wrap`}>
             {this.renderItemSelection(record)}
           </div>
         )}
@@ -1191,14 +1191,14 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    */
   renderSelectionListHeader(): ReactNode {
     return (
-      <div className={`${selectorPrefix}-list-rowSelection-header`}>
-        <div className={`${selectorPrefix}-list-rowSelection-header-info`}>
+      <div className={`${selectorPrefix}-list-row-selection-header`}>
+        <div className={`${selectorPrefix}-list-row-selection-header-info`}>
           {Intl.v('已选择{count}项', {
             // @ts-ignore
             count: this.state.selectedRowKeys?.length,
           })}
         </div>
-        <div className={`${selectorPrefix}-list-rowSelection-header-cancel`}>
+        <div className={`${selectorPrefix}-list-row-selection-header-cancel`}>
           <a
             onClick={() => {
               this.unSelectedAll();

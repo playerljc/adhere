@@ -1,41 +1,43 @@
 @import '~@baifendian/adhere-ui-stickuplayout/lib/index.less';
-@import '~@baifendian/adhere-ui-css/lib/vars';
+//@import '~@baifendian/adhere-ui-css/lib/vars';
 
-.adhere-ui-cascadecompared {
+.adhere-ui-cascade-compared {
   display: flex;
   flex-direction: column;
   height: 100%;
 
-  > .adhere-ui-cascadecompared-indicator {
+  > .adhere-ui-cascade-compared-indicator {
     position: relative;
     display: flex;
     flex-shrink: 0;
-    border-bottom: 1px solid @adhere-border-color;
+    border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
-    > .adhere-ui-cascadecompared-autoWrap {
-      > .adhere-ui-cascadecompared-item {
+    > .adhere-ui-cascade-compared-auto-wrap {
+      > .adhere-ui-cascade-compared-item {
         display: inline-block;
       }
     }
 
     /* 头的行和单元格 */
-    .adhere-ui-cascadecompared-item {
+    .adhere-ui-cascade-compared-item {
       height: 100%;
-      > .adhere-ui-cascadecompared-cell {
+
+      > .adhere-ui-cascade-compared-cell {
         height: 100%;
-        border-right: 1px solid @adhere-border-color;
+        border-right: var(--adhere-line-width) var(--adhere-line-type)
+          var(--adhere-color-border-base);
       }
     }
   }
 
-  > .adhere-ui-cascadecompared-master {
+  > .adhere-ui-cascade-compared-master {
     position: relative;
     display: flex;
     flex-grow: 1;
     width: 100%;
     min-height: 0;
 
-    > .adhere-ui-cascadecompared-master-inner {
+    > .adhere-ui-cascade-compared-master-inner {
       overflow: hidden;
 
       > .adhere-ui-stickuplayout-inner {
@@ -48,49 +50,52 @@
     }
   }
 
-  .adhere-ui-cascadecompared-fixedWrap {
+  .adhere-ui-cascade-compared-fixed-wrap {
     flex-shrink: 0;
 
-    > .adhere-ui-cascadecompared-item {
+    > .adhere-ui-cascade-compared-item {
       width: 100%;
 
       /* 项下的单元格 */
-      > .adhere-ui-cascadecompared-cell {
+      > .adhere-ui-cascade-compared-cell {
         width: 100%;
-        border-right: 1px solid @adhere-border-color;
+        border-right: var(--adhere-line-width) var(--adhere-line-type)
+          var(--adhere-color-border-base);
       }
     }
   }
 
-  .adhere-ui-cascadecompared-autoWrap {
+  .adhere-ui-cascade-compared-auto-wrap {
     flex-grow: 1;
     min-width: 0;
     overflow: hidden;
     font-size: 0;
 
-    .adhere-ui-cascadecompared-item {
-      > .adhere-ui-cascadecompared-cell {
-        border-right: 1px solid @adhere-border-color;
+    .adhere-ui-cascade-compared-item {
+      > .adhere-ui-cascade-compared-cell {
+        border-right: var(--adhere-line-width) var(--adhere-line-type)
+          var(--adhere-color-border-base);
       }
     }
 
-    > .adhere-ui-cascadecompared-autoInner {
+    > .adhere-ui-cascade-compared-auto-inner {
       display: inline-block;
     }
   }
 
-  .adhere-ui-cascadecompared-item {
+  .adhere-ui-cascade-compared-item {
     font-size: 0;
     white-space: nowrap;
 
     /* 不是最后一行才有 */
     &:not(:last-child) {
-      > .adhere-ui-cascadecompared-cell {
-        border-bottom: 1px solid @adhere-border-color;
+      > .adhere-ui-cascade-compared-cell {
+        border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+          var(--adhere-color-border-base);
       }
     }
 
-    > .adhere-ui-cascadecompared-cell {
+    > .adhere-ui-cascade-compared-cell {
       display: inline-block;
       box-sizing: border-box;
       overflow: auto;
@@ -98,18 +103,18 @@
   }
 
   /* 值和项下的单元格 */
-  .adhere-ui-cascadecompared-fixedWrap,
-  .adhere-ui-cascadecompared-autoWrap {
-    .adhere-ui-cascadecompared-item {
-      > .adhere-ui-cascadecompared-cell {
+  .adhere-ui-cascade-compared-fixed-wrap,
+  .adhere-ui-cascade-compared-auto-wrap {
+    .adhere-ui-cascade-compared-item {
+      > .adhere-ui-cascade-compared-cell {
         height: 100%;
-        font-size: @adhere-large-font-size;
+        font-size: var(--adhere-font-size-xl);
         white-space: inherit;
         text-align: center;
         word-wrap: break-word;
         word-break: break-all;
 
-        .adhere-ui-cascadecompared-cellInner {
+        .adhere-ui-cascade-compared-cell-inner {
           display: flex;
           flex-direction: column;
           align-items: center;
