@@ -437,12 +437,15 @@ class BasicLayout extends React.Component {
             defaultOpenKeys: openKeys,
           })}
         </div>
+
         <div className={styles.Auto}>
           {this.renderBreadcrumb({
             defaultSelectedKeys: selectedKeys,
             defaultOpenKeys: openKeys,
           })}
+
           <div className={styles.Auto}>{this.props.children}</div>
+
           <div className={styles.FooterWrap}>
             <Footer />
           </div>

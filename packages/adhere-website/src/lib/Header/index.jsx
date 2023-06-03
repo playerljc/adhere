@@ -65,9 +65,14 @@ export default withRouter((props) => {
   return (
     <div className={styles.Wrap}>
       <div className={styles.Fixed}>
-        <a href={`${window.location.origin}`}>
+        <div
+          className={styles.Title}
+          onClick={() => {
+            window.location.href = window.location.origin;
+          }}
+        >
           <h1 style={{ margin: 0 }}>adhere({`v${packageJSON.version}`})</h1>
-        </a>
+        </div>
       </div>
 
       <div className={styles.Auto}>
