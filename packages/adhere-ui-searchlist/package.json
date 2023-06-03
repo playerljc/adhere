@@ -35,6 +35,7 @@
     "@ant-design/icons": "^4.6.2",
     "@baifendian/adhere-ui-conditionalrender": "^2.7.7",
     "@baifendian/adhere-ui-contourblock": "^2.7.7",
+    "@baifendian/adhere-ui-css": "^2.8.0",
     "@baifendian/adhere-ui-datedisplay": "^2.8.0",
     "@baifendian/adhere-ui-searchtable": "^2.8.0",
     "@baifendian/adhere-util": "^2.8.0",
