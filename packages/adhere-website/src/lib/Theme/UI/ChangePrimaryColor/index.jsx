@@ -1,6 +1,7 @@
-import { ColorPicker } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
+
+import { ColorPicker } from '@baifendian/adhere-ui-anthoc';
 
 import { render } from '@/index';
 
