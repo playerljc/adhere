@@ -104,8 +104,6 @@ const init = (theme) => {
   const token = (themes.get(theme) ?? themes.get('default')).token;
   const mapToken = (themes.get(theme) ?? themes.get('default')).mapToken;
 
-  console.log(exportObj);
-
   Object.keys(token).forEach((_key) => {
     const varName = Util.toCamelCase(_key, true);
 
