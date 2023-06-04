@@ -28,10 +28,11 @@ export default ({ className, style }) => {
   return (
     <div className={classNames(styles.Wrap, className)} style={style ?? {}}>
       <Select
+        allowClear={false}
+        value={defaultLang}
         onChange={(t) => {
           changeLang(t);
         }}
-        value={defaultLang}
       >
         {Array.from(Object.values(Dict.value.SystemLang.value)).map((t) => (
           <Option key={t.code} value={t.code}>

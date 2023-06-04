@@ -6,6 +6,7 @@ import { withRouter } from '@ctsj/router';
 
 import LangChange from '@/lib/LangChange';
 import SearchBar from '@/lib/SearchBar';
+import ChangePrimaryColor from '@/lib/Theme/UI/ChangePrimaryColor';
 import ChangeTheme from '@/lib/Theme/UI/ChangeTheme';
 
 import packageJSON from '../../../../../package.json';
@@ -94,6 +95,9 @@ export default withRouter((props) => {
 
       <div className={styles.Fixed}>
         <Space.Group direction="horizontal">
+          {/*主颜色切换*/}
+          <ChangePrimaryColor />
+
           {/*主题切换*/}
           <ChangeTheme
             selectProps={{

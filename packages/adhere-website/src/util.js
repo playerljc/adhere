@@ -3,6 +3,10 @@ import qs from 'qs';
 import { Dict, Preferences, Util } from '@baifendian/adhere';
 
 export default {
+  /**
+   * initDirection
+   * @description 初始化方向
+   */
   initDirection() {
     const search = window.location.search;
     const query = qs.parse(search, { ignoreQueryPrefix: true });
@@ -15,6 +19,11 @@ export default {
     document.body.removeAttribute('dir');
     document.body.setAttribute('dir', direction);
   },
+  /**
+   * getDirection
+   * @description 获取方向
+   * @return {string}
+   */
   getDirection() {
     const lang = this.getLang();
 
@@ -22,7 +31,8 @@ export default {
   },
   /**
    * getLang
-   * @return {String}
+   * @description 获取语言
+   * @return {string}
    */
   getLang(defaultLang) {
     let language = Util.getCookie('lang') || Preferences.getStringByLocal('language');
@@ -37,7 +47,8 @@ export default {
   },
   /**
    * setLang
-   * @param lang
+   * @description 设置语言
+   * @param {string} lang
    */
   setLang(lang) {
     Preferences.putStringByLocal('language', lang ?? Dict.value.SystemDefaultLang.value);

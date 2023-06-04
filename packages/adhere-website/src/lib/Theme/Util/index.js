@@ -38,38 +38,41 @@ let currentTheme = 'default';
 
 const keys = Object.keys(DefaultTheme);
 
-/* 全局的css Vars*/
-keys.forEach((varName) => {
-  const varCamelCaseName = Util.toCamelCase(varName);
-  const varUpperCamelCaseName = Util.toCamelCase(varName, true);
+(function () {
+  /* 全局的css Vars*/
+  keys.forEach((varName) => {
+    const varCamelCaseName = Util.toCamelCase(varName);
+    const varUpperCamelCaseName = Util.toCamelCase(varName, true);
 
-  // 定义驼峰变量
-  Object.defineProperty(cssVars, varCamelCaseName, {
-    set(value) {
-      // --------------定义css变量 -------------
-      document.documentElement.style.setProperty(`--${varName}`, value);
+    // 定义驼峰变量
+    Object.defineProperty(cssVars, varCamelCaseName, {
+      set(value) {
+        // --------------定义css变量 -------------
+        document.documentElement.style.setProperty(`--${varName}`, value);
 
-      // 是颜色需要在定义一个-rgb的变量
-      const color = tinyColor(value);
-      if (color.isValid()) {
-        const rgb = color.toRgb();
+        // 是颜色需要在定义一个-rgb的变量
+        const color = tinyColor(value);
+        if (color.isValid()) {
+          const rgb = color.toRgb();
 
-        document.documentElement.style.setProperty(
-          `--${varName}-rgb`,
-          `${[rgb.r, rgb.g, rgb.b].join(',')}`,
-        );
-      }
-    },
+          document.documentElement.style.setProperty(
+            `--${varName}-rgb`,
+            `${[rgb.r, rgb.g, rgb.b].join(',')}`,
+          );
+        }
+      },
+    });
+
+    // 定义导出变量
+    exportObj[`set${varUpperCamelCaseName}`] = (value) => {
+      cssVars[varCamelCaseName] = value;
+    };
+
+    // 定义导出变量
+    exportObj[`get${varUpperCamelCaseName}`] = () =>
+      document.documentElement.style.getPropertyValue(`--${varName}`);
   });
-
-  // 定义导出变量
-  exportObj[`set${varUpperCamelCaseName}`] = (value) => {
-    cssVars[varCamelCaseName] = value;
-  };
-
-  // 定义导出变量
-  exportObj[`get${varUpperCamelCaseName}`] = () => cssVars[varCamelCaseName];
-});
+})();
 
 /**
  * init
@@ -100,15 +103,26 @@ export function setTheme(theme) {
 /**
  * getTheme
  * @description 获取主题
+ * @return {string}
  */
 export function getThemeKey() {
   return currentTheme;
 }
 
+/**
+ * getThemeValue
+ * @description 获取主题对用的变量值
+ * @return {object}
+ */
 export function getThemeValue() {
   return themes.get(currentTheme);
 }
 
+/**
+ * getThemeKeys
+ * @description 获取主题keys
+ * @return {string []}
+ */
 export function getThemeKeys() {
   return Array.from(themes.keys());
 }
