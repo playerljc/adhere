@@ -35,7 +35,7 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
       {
         prefix: prefix || 'local',
         currentLocale: lang,
-        locales: locales || {},
+        locales: locales ?? {},
         mainLanguage: mainLanguage || 'zh_CN',
       },
       Intl.isInit(),
@@ -67,7 +67,7 @@ const ConfigProvider: FC<ConfigProviderProps> = (props) => {
             intl: {
               lang,
               prefix,
-              locales: locales || {},
+              locales: locales ?? {},
             },
           }}
         >

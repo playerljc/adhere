@@ -109,7 +109,7 @@ const ListSelectFormItem: FC<ListSelectFormItemProps> = ({ dataSource, ...props 
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={dataSource.map((t) => ({
         label: t[props.labelKey || 'name'],

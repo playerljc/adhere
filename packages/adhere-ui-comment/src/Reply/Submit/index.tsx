@@ -97,7 +97,7 @@ const Reply: FC<ReplyProps> = (props) => {
         data={data}
         i18n={LOCAL_MAP.get(local || 'zh')}
         onEmojiSelect={onEmojiSelect}
-        {...(emojiPickerProps || {})}
+        {...(emojiPickerProps ?? {})}
       />
     ),
     [data, local, emojiPickerProps],

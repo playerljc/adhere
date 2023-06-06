@@ -435,8 +435,8 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
   return (
     <div
       ref={el}
-      className={classNames(selectorPrefix, `${selectorPrefix}-${direction}`, className || '')}
-      style={style || {}}
+      className={classNames(selectorPrefix, `${selectorPrefix}-${direction}`, className ?? '')}
+      style={style ?? {}}
     />
   );
 };

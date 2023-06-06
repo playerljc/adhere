@@ -35,7 +35,7 @@ export default function <P, S>(SuperClass) {
       const view = this?.ref?.current;
 
       return {
-        ...(view?.getParams?.() || {}),
+        ...(view?.getParams?.() ?? {}),
       };
     }
 

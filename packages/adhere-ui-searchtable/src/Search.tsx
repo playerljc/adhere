@@ -131,7 +131,7 @@ abstract class Search<
    */
   static getDerivedStateFromProps(props: SearchProps, state: SearchState) {
     return {
-      ...(state || {}),
+      ...(state ?? {}),
       // TODO: 处理prePage
       prePage: state?.page,
     };
@@ -237,7 +237,7 @@ abstract class Search<
       <FlexLayout
         direction="vertical"
         className={classNames(selectorPrefix, className)}
-        style={{ ...(style || {}) }}
+        style={{ ...(style ?? {}) }}
       >
         {((!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()) ||
           (!!this.renderSearchForm && !!this.renderSearchForm?.()) ||
@@ -245,7 +245,7 @@ abstract class Search<
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
             className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
-            style={{ ...(searchStyle || {}) }}
+            style={{ ...(searchStyle ?? {}) }}
             // fit={fitSearch}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
@@ -289,7 +289,7 @@ abstract class Search<
         )}
 
         <Auto
-          style={{ ...(bodyStyle || {}) }}
+          style={{ ...(bodyStyle ?? {}) }}
           className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
           })}

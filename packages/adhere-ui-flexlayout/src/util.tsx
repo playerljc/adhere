@@ -83,5 +83,5 @@ export const getGridStyle = ({
     ],
   ]);
 
-  return map.get(direction)?.() || {};
+  return map.get(direction)?.() ?? {};
 };

@@ -119,7 +119,7 @@ const ListMulitSelectFormItem: FC<ListMulitSelectFormItemProps> = ({ dataSource,
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={dataSource.map((t) => ({
         label: t[props.labelKey || 'name'],

@@ -167,7 +167,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
 
     const targetStyle: ILineStringGeometryStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
       arrow: {
         draw: false,
         direction: 'end',
@@ -315,7 +315,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     // 旋转斜率的角度
     ctx.rotate(radian);
 
-    const targetTextStyle = { ...TextStyle, ...(textStyle || {}) };
+    const targetTextStyle = { ...TextStyle, ...(textStyle ?? {}) };
     ctx.font = targetTextStyle.font;
     ctx.textAlign = targetTextStyle.textAlign;
     ctx.textBaseline = targetTextStyle.textBaseline;
@@ -323,7 +323,7 @@ class LineStringGeometry extends Geometry implements ILineStringGeometry {
     ctx.strokeStyle = targetTextStyle.strokeStyle;
     ctx.fillStyle = targetTextStyle.fillStyle;
 
-    const targetStyle: IGeometryStyle = { ...GeometryStyle, ...(style || {}) };
+    const targetStyle: IGeometryStyle = { ...GeometryStyle, ...(style ?? {}) };
     ctx.lineWidth = targetStyle.lineWidth;
     ctx.lineJoin = targetStyle.lineJoin;
     ctx.lineCap = targetStyle.lineCap;

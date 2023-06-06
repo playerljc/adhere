@@ -323,7 +323,7 @@ abstract class SearchList<
       renderItem: (record, rowIndex) => this.renderItem(record, rowIndex),
       header: this.renderListHeader(),
       size: listDensity,
-      ...(antdListProps || {}),
+      ...(antdListProps ?? {}),
     };
 
     return <List {...listProps} />;

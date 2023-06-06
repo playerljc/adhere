@@ -17,7 +17,7 @@ export const openWarnDialog = (props?: ModalProps) =>
     title: Intl.v('提示'),
     mask: false,
     maskClosable: true,
-    ...(props || {}),
+    ...(props ?? {}),
   });
 
 /**

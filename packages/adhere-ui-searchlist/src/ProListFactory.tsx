@@ -17,7 +17,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const loop = (columns) => {
         columns.reduce((params, column) => {
           const { $search, children } = column;
-          const searchConfig = $search || {};
+          const searchConfig = $search ?? {};
           const dataIndex = searchConfig.dataIndex || column.dataIndex;
 
           if (searchConfig.type === 'rangePicker') {

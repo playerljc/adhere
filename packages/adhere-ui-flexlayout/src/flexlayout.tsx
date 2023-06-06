@@ -77,7 +77,7 @@ const FlexLayout: ForwardRefRenderFunction<any, FlexLayoutProps> = (props, ref) 
 
   // style
   const styleList = useMemo(() => {
-    const defaultStyle = style || {};
+    const defaultStyle = style ?? {};
 
     // 栅格的style
     const gridStyle = 'gutter' in props ? getGridStyle() : {};

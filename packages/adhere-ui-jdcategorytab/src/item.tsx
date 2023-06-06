@@ -9,7 +9,7 @@ const JdCategoryTabItem: FC<JdCategoryTabItemProps> = (props) => {
   const { children, className = '', style = {} } = props;
 
   return (
-    <li className={classNames(`${selectorPrefix}-tab-item`, className || '')} style={style || {}}>
+    <li className={classNames(`${selectorPrefix}-tab-item`, className ?? '')} style={style ?? {}}>
       {children}
     </li>
   );

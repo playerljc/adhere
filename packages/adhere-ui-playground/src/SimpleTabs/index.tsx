@@ -40,7 +40,7 @@ const SimpleTabs: FC<SimpleTabsProps> = (props) => {
   return (
     <TabContext.Provider
       value={{
-        activeKey: activeKey || '',
+        activeKey: activeKey ?? '',
       }}
     >
       <div className={`${selectorPrefix} ${className}`}>

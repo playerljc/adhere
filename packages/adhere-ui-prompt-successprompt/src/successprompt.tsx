@@ -18,7 +18,7 @@ export const openSuccessDialog = (props?: ModalProps) =>
     content: Intl.v('操作成功'),
     mask: false,
     maskClosable: true,
-    ...(props || {}),
+    ...(props ?? {}),
   });
 
 /**

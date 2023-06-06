@@ -10,7 +10,7 @@ import { BreadcrumbFormItemProps } from '../../types';
  * @constructor
  */
 const BreadcrumbFormItem: FC<BreadcrumbFormItemProps> = (props) => {
-  return <Breadcrumb {...(props || {})} />;
+  return <Breadcrumb {...(props ?? {})} />;
 };
 
 export default BreadcrumbFormItem;

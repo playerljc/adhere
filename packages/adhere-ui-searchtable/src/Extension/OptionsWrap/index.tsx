@@ -55,7 +55,7 @@ export default ({ children, className = '', style = {} }) => {
   }
 
   return (
-    <div className={classNames(_selectorPrefix, className)} style={style || {}}>
+    <div className={classNames(_selectorPrefix, className)} style={style ?? {}}>
       {result}
     </div>
   );

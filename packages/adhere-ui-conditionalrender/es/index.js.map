@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ConditionalRender from './conditionalrender';\r\nexport default ConditionalRender;\r\n"],"names":["ConditionalRender"],"mappings":"OAAOA,sBAAuB,qCACfA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ConditionalRender from './conditionalrender';\nexport default ConditionalRender;\n"],"names":["ConditionalRender"],"mappings":"OAAOA,sBAAuB,qCACfA"}

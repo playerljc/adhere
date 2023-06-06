@@ -104,7 +104,7 @@ const EditableRowControl: FC<EditorRowControlProps> = ({
   return (
     <div
       className={classNames(`${selectorPrefix}-editor-row-control`, className)}
-      style={styles || {}}
+      style={styles ?? {}}
     >
       <ConditionalRender
         conditional={editorRowId !== record[rowKey]}

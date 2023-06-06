@@ -44,14 +44,14 @@ const LCLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-lc-layout`, props?.className)}
         direction="horizontal"
       >
-        <Fixed {...(LProps || {})}>{lProps?.render?.()}</Fixed>
-        <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
+        <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+        <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
       </FlexLayout>
     </div>
   );

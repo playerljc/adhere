@@ -159,7 +159,7 @@ abstract class APlayGround<
         {...idProps}
         className={classNames(selectPrefix, isActive ? `${selectPrefix}-active` : '')}
       >
-        <Card actions={this.renderAction()} {...(cardProps || {})}>
+        <Card actions={this.renderAction()} {...(cardProps ?? {})}>
           {children}
         </Card>
         {this.renderCodeView()}

@@ -116,16 +116,16 @@ export default {
     };
 
     const finallyLocalesKeys = Object.keys(finallyLocales);
-    const localesKeys = Object.keys(locales || {});
+    const localesKeys = Object.keys(locales ?? {});
 
     let masterLocales;
     let slaveLocales;
 
     if (finallyLocalesKeys.length > localesKeys.length) {
       masterLocales = finallyLocales;
-      slaveLocales = locales || {};
+      slaveLocales = locales ?? {};
     } else if (finallyLocalesKeys.length <= localesKeys.length) {
-      masterLocales = locales || {};
+      masterLocales = locales ?? {};
       slaveLocales = finallyLocales;
     }
 

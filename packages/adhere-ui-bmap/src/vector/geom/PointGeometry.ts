@@ -646,7 +646,7 @@ class PointGeometry extends Geometry implements IPointGeometry {
       ...GeometryStyle,
       radius: 5,
       pointType: 'circle',
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     // @ts-ignore

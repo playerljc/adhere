@@ -172,21 +172,21 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
 
     return (
       <div
-        className={classNames(`${selectorPrefix}-indicator`, indicatorClassName || '')}
+        className={classNames(`${selectorPrefix}-indicator`, indicatorClassName ?? '')}
         style={{ ...indicatorStyle }}
       >
         <div
-          className={classNames(`${selectorPrefix}-fixed-wrap`, indicatorFixedWrapClassName || '')}
+          className={classNames(`${selectorPrefix}-fixed-wrap`, indicatorFixedWrapClassName ?? '')}
           style={{
-            ...(indicatorFixedWrapStyle || {}),
+            ...(indicatorFixedWrapStyle ?? {}),
             width: fixedColumnConfig?.width || defaultCellWidth,
           }}
         >
           <div className={`${selectorPrefix}-item`}>
             <div
-              className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className || '')}
+              className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className ?? '')}
               style={{
-                ...(fixedColumnConfig?.style || {}),
+                ...(fixedColumnConfig?.style ?? {}),
               }}
             >
               {renderCell(fixedColumnConfig, dataSource, -1, -1, -1)}
@@ -194,8 +194,8 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
           </div>
         </div>
         <div
-          className={classNames(`${selectorPrefix}-auto-wrap`, indicatorAutoWrapClassName || '')}
-          style={{ ...(indicatorAutoWrapStyle || {}) }}
+          className={classNames(`${selectorPrefix}-auto-wrap`, indicatorAutoWrapClassName ?? '')}
+          style={{ ...(indicatorAutoWrapStyle ?? {}) }}
         >
           <div className={`${selectorPrefix}-item`}>
             {columns
@@ -203,8 +203,8 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
               .map((column, columnIndex) => (
                 <div
                   key={column.dataIndex}
-                  className={classNames(`${selectorPrefix}-cell`, column.className || '')}
-                  style={{ ...(column.style || {}), width: column?.width || defaultCellWidth }}
+                  className={classNames(`${selectorPrefix}-cell`, column.className ?? '')}
+                  style={{ ...(column.style ?? {}), width: column?.width || defaultCellWidth }}
                 >
                   {renderCell(column, dataSource, -1, -1, columnIndex)}
                 </div>
@@ -245,15 +245,15 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
     return (
       <>
         <div
-          className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName || '')}
-          style={{ ...(fixedWrapStyle || {}), width: fixedColumnConfig?.width || defaultCellWidth }}
+          className={classNames(`${selectorPrefix}-fixed-wrap`, fixedWrapClassName ?? '')}
+          style={{ ...(fixedWrapStyle ?? {}), width: fixedColumnConfig?.width || defaultCellWidth }}
         >
           {dataSource.map((record, rowIndex) => (
             <div key={rowIndex} className={`${selectorPrefix}-item`}>
               <div
-                className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className || '')}
+                className={classNames(`${selectorPrefix}-cell`, fixedColumnConfig?.className ?? '')}
                 style={{
-                  ...(fixedColumnConfig?.style || {}),
+                  ...(fixedColumnConfig?.style ?? {}),
                 }}
               >
                 {renderCell(fixedColumnConfig, record, groupIndex, rowIndex, -1)}
@@ -263,11 +263,11 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
         </div>
 
         <div
-          className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName || '')}
-          style={{ ...(autoWrapStyle || {}) }}
+          className={classNames(`${selectorPrefix}-auto-wrap`, autoWrapClassName ?? '')}
+          style={{ ...(autoWrapStyle ?? {}) }}
         >
           <div
-            className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName || '')}
+            className={classNames(`${selectorPrefix}-auto-inner`, autoInnerClassName ?? '')}
             style={{ ...autoInnerStyle }}
           >
             {dataSource.map((record, rowIndex) => (
@@ -277,9 +277,9 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
                   .map((column, columnIndex) => (
                     <div
                       key={column.dataIndex}
-                      className={classNames(`${selectorPrefix}-cell`, column.className || '')}
+                      className={classNames(`${selectorPrefix}-cell`, column.className ?? '')}
                       style={{
-                        ...(column.style || {}),
+                        ...(column.style ?? {}),
                         width: column?.width || defaultCellWidth,
                       }}
                     >
@@ -305,8 +305,8 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
     return (
       <StickupLayoutItem
         key={groupIndex}
-        className={classNames(className || '')}
-        style={{ ...(style || {}) }}
+        className={classNames(className ?? '')}
+        style={{ ...(style ?? {}) }}
         title={title}
         content={renderMasterGroupContent(config, groupIndex)}
       />
@@ -319,19 +319,19 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
   function renderMaster(): ReactElement {
     const stickupLayoutProps = {
       ref: stickup,
-      className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName || ''),
-      style: masterInnerStyle || {},
-      fixedClassName: classNames(masterStickFixedClassName || ''),
-      fixedStyle: masterStickFixedStyle || {},
-      innerClassName: classNames(masterStickInnerClassName || ''),
-      innerStyle: masterStickInnerStyle || {},
+      className: classNames(`${selectorPrefix}-master-inner`, masterInnerClassName ?? ''),
+      style: masterInnerStyle ?? {},
+      fixedClassName: classNames(masterStickFixedClassName ?? ''),
+      fixedStyle: masterStickFixedStyle ?? {},
+      innerClassName: classNames(masterStickInnerClassName ?? ''),
+      innerStyle: masterStickInnerStyle ?? {},
       onChange: onStickChange,
     };
 
     return (
       <div
-        className={classNames(`${selectorPrefix}-master`, masterClassName || '')}
-        style={{ ...(masterStyle || {}) }}
+        className={classNames(`${selectorPrefix}-master`, masterClassName ?? '')}
+        style={{ ...(masterStyle ?? {}) }}
       >
         <StickupLayout {...stickupLayoutProps}>
           {master.map((config, index) => renderMasterGroup(config, index))}
@@ -387,8 +387,8 @@ const CascadeCompared: ForwardRefRenderFunction<CascadeComparedHandle, CascadeCo
 
   return (
     <div
-      className={classNames(selectorPrefix, className || '')}
-      style={{ ...(style || {}) }}
+      className={classNames(selectorPrefix, className ?? '')}
+      style={{ ...(style ?? {}) }}
       ref={el}
     >
       {renderIndicator()}

@@ -469,7 +469,7 @@ setItem('TablePagination', 'SelectFormItem', (dictName) => (props) => {
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={data.map((t) => ({
         label: t[props.labelKey || 'name'],
@@ -655,7 +655,7 @@ setItem('TablePagination', 'MulitSelectFormItem', (dictName) => (props) => {
         filterOption: () => {
           return false;
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={getDataSource().map((t) => ({
         label: t[props.labelKey || 'name'],

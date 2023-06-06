@@ -51,7 +51,7 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
     () => (
       <ConditionalRender conditional={!!renderLeft}>
         {() => (
-          <Fixed className={leftClassName || ''} style={leftStyle || {}} fit {...(leftProps || {})}>
+          <Fixed className={leftClassName ?? ''} style={leftStyle ?? {}} fit {...(leftProps ?? {})}>
             {renderLeft}
           </Fixed>
         )}
@@ -66,23 +66,23 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
         {() => (
           <Auto
             className={classNames(mainAutoWrapClassName)}
-            style={mainAutoStyle || {}}
+            style={mainAutoStyle ?? {}}
             fit
             autoFixed
-            {...(mainAutoWrapProps || {})}
+            {...(mainAutoWrapProps ?? {})}
           >
             <FlexLayout
               direction="vertical"
               className={classNames(mainWrapClassName)}
-              style={mainWrapStyle || {}}
+              style={mainWrapStyle ?? {}}
             >
               <ConditionalRender conditional={!!renderTop}>
                 {() => (
                   <Fixed
                     className={classNames(topClassName)}
-                    style={topStyle || {}}
+                    style={topStyle ?? {}}
                     fit
-                    {...(topProps || {})}
+                    {...(topProps ?? {})}
                   >
                     {renderTop}
                   </Fixed>
@@ -93,8 +93,8 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
                 autoFixed
                 fit
                 className={classNames(mainClassName)}
-                style={mainStyle || {}}
-                {...(mainProps || {})}
+                style={mainStyle ?? {}}
+                {...(mainProps ?? {})}
               >
                 {renderMain}
               </Auto>
@@ -103,9 +103,9 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
                 {() => (
                   <Fixed
                     className={classNames(bottomClassName)}
-                    style={bottomStyle || {}}
+                    style={bottomStyle ?? {}}
                     fit
-                    {...(bottomProps || {})}
+                    {...(bottomProps ?? {})}
                   >
                     {renderBottom}
                   </Fixed>
@@ -143,9 +143,9 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
         {() => (
           <Fixed
             className={classNames(rightClassName)}
-            style={rightStyle || {}}
+            style={rightStyle ?? {}}
             fit
-            {...(rightProps || {})}
+            {...(rightProps ?? {})}
           >
             {renderRight}
           </Fixed>
@@ -159,7 +159,7 @@ const HorizontalFlexLayout: FC<HorizontalFlexLayoutProps> = (props) => {
     <FlexLayout
       {...attrs}
       className={classNames(`${selectorPrefix}-horizontal-flex-layout`, className)}
-      style={style || {}}
+      style={style ?? {}}
       direction="horizontal"
     >
       {_renderLeft}

@@ -97,7 +97,7 @@ const CommentList: FC<ListProps> = (props) => {
           <div className={`${selectorPrefix}-normal-wrap`}>
             <ScrollLoad
               {...defaultScrollLoadProps}
-              {...(scrollLoadProps || {})}
+              {...(scrollLoadProps ?? {})}
               distance={scrollLoadProps?.distance || 50}
             >
               {children}
@@ -133,7 +133,7 @@ const CommentList: FC<ListProps> = (props) => {
   }
 
   return (
-    <div className={classnames(selectorPrefix, className || '')} style={style || {}} ref={wrapRef}>
+    <div className={classnames(selectorPrefix, className ?? '')} style={style ?? {}} ref={wrapRef}>
       {renderDispatch()}
     </div>
   );

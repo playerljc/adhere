@@ -183,8 +183,8 @@ const Overlay: ForwardRefRenderFunction<SlideLayoutHandle, OverlayProps> = (prop
 
   return (
     <div
-      className={classNames(selectorPrefix, direction, className || '')}
-      style={{ ...(style || {}), zIndex }}
+      className={classNames(selectorPrefix, direction, className ?? '')}
+      style={{ ...(style ?? {}), zIndex }}
       ref={el}
     >
       {children}

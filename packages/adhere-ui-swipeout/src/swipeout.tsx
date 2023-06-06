@@ -87,14 +87,14 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
 
   return (
     <div
-      className={classNames(selectorPrefix, 'swiper-container', className || '')}
-      style={style || {}}
+      className={classNames(selectorPrefix, 'swiper-container', className ?? '')}
+      style={style ?? {}}
       ref={ref}
     >
       <div className="swiper-wrapper">
         <div
-          className={classNames('swiper-slide', `${selectorPrefix}-before`, beforeClassName || '')}
-          style={beforeStyle || {}}
+          className={classNames('swiper-slide', `${selectorPrefix}-before`, beforeClassName ?? '')}
+          style={beforeStyle ?? {}}
         >
           {before?.()}
         </div>
@@ -103,16 +103,16 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
           className={classNames(
             'swiper-slide',
             `${selectorPrefix}-content`,
-            contentClassName || '',
+            contentClassName ?? '',
           )}
-          style={contentStyle || {}}
+          style={contentStyle ?? {}}
         >
           {children}
         </div>
 
         <div
-          className={classNames('swiper-slide', `${selectorPrefix}-after`, afterClassName || '')}
-          style={afterStyle || {}}
+          className={classNames('swiper-slide', `${selectorPrefix}-after`, afterClassName ?? '')}
+          style={afterStyle ?? {}}
         >
           {after?.()}
         </div>

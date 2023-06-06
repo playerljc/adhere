@@ -138,8 +138,8 @@ const BackTopAnimation: FC<BackTopAnimationProps> = (props): React.ReactElement 
   return (
     <div
       ref={elRef}
-      className={classNames(selectorPrefix, className || '')}
-      style={{ zIndex, ...(style || {}) }}
+      className={classNames(selectorPrefix, className ?? '')}
+      style={{ zIndex, ...(style ?? {}) }}
       onClick={onTrigger}
     />
   );

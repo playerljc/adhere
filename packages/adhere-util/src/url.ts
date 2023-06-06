@@ -59,7 +59,7 @@ const methods = {
    * @return string
    */
   stringify(record: object, config: IUrlConfig = { ...defaultConfig }): string {
-    const keys = Object.keys(record || {});
+    const keys = Object.keys(record ?? {});
 
     const getStr: string[] = [];
 

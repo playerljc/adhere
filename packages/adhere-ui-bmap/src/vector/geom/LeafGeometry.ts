@@ -92,7 +92,7 @@ class LeafGeometry extends Geometry implements ILeafGeometry {
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.beginPath();

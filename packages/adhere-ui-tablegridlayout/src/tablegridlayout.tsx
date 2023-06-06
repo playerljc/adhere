@@ -119,7 +119,7 @@ const renderHorizontal: RenderHorizontal = (params) => {
           className: classNames(
             `${selectorPrefix}-table-row-label`,
             'require',
-            label.props.className || '',
+            label.props.className ?? '',
           ),
         },
         label.props.children,
@@ -237,7 +237,7 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
           className: classNames(
             `${selectorPrefix}-table-row-label`,
             'require',
-            label.props.className || '',
+            label.props.className ?? '',
           ),
         },
         label.props.children,
@@ -301,9 +301,9 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
         `${selectorPrefix}-table`,
         densityClass.get(_density || 'default'),
         _parity ? 'parity' : '',
-        className || '',
+        className ?? '',
       )}
-      style={{ width: _width ? _width : '100%', ...(style || {}) }}
+      style={{ width: _width ? _width : '100%', ...(style ?? {}) }}
     >
       <colgroup>{colgroupJSX}</colgroup>
       <ConditionalRender
@@ -327,7 +327,7 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
  */
 function TableGridLayout({ data, className, style, ...props }: TableGridLayoutProps): ReactElement {
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
       {TableGridLayout.renderGridSearchFormGroup(data, props)}
     </div>
   );
@@ -343,7 +343,7 @@ TableGridLayout.Label = (props) => {
   const { className, ..._props } = props;
 
   return (
-    <td className={classNames(`${selectorPrefix}-table-row-label`, className || '')} {..._props}>
+    <td className={classNames(`${selectorPrefix}-table-row-label`, className ?? '')} {..._props}>
       {props.children}
     </td>
   );
@@ -359,7 +359,7 @@ TableGridLayout.Value = (props) => {
   const { className, ..._props } = props;
 
   return (
-    <td className={classNames(`${selectorPrefix}-table-row-value`, className || '')} {..._props}>
+    <td className={classNames(`${selectorPrefix}-table-row-value`, className ?? '')} {..._props}>
       {props.children}
     </td>
   );
@@ -383,16 +383,16 @@ TableGridLayout.renderGridSearchFormGroup = (
     innerClassName,
     innerStyle,
     ...renderGridSearchFormProps
-  } = props || {};
+  } = props ?? {};
 
   return (
     <div
       className={classNames(
         bordered ? `${selectorPrefix}-border` : null,
         `${selectorPrefix}-inner-wrap`,
-        innerClassName || '',
+        innerClassName ?? '',
       )}
-      style={innerStyle || {}}
+      style={innerStyle ?? {}}
     >
       {(data || []).map((g, index) => (
         <ConditionalRender
@@ -437,7 +437,7 @@ TableGridLayout.getRenderDetail = (
     innerClassName,
     innerStyle,
     ...renderGridSearchFormProps
-  } = props || {};
+  } = props ?? {};
 
   const result: RenderDetail = { rowCount: 0, layout: props.layout, detail: [] };
 

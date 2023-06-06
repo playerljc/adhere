@@ -92,7 +92,7 @@ class RegularPolygonGeometry extends Geometry implements IRegularPolygonGeometry
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.beginPath();

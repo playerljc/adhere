@@ -75,7 +75,7 @@ const TableMulitSelectFormItem: FC<TableMulitSelectFormItemProps> = ({ dataSourc
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={dataSource.map((t) => ({
         label: t[props.labelKey || 'name'],

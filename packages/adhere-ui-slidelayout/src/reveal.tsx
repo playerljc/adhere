@@ -165,15 +165,15 @@ const Reveal: ForwardRefRenderFunction<SlideLayoutHandle, RevealProps> = (props,
   return (
     <>
       <div
-        className={classNames(`${selectorPrefix}`, direction, slaveClassName || '')}
-        style={{ ...(slaveStyle || {}), zIndex }}
+        className={classNames(`${selectorPrefix}`, direction, slaveClassName ?? '')}
+        style={{ ...(slaveStyle ?? {}), zIndex }}
         ref={el}
       >
         {slide}
       </div>
       <div
-        className={classNames(`${selectorPrefix}-master`, masterClassName || '')}
-        style={{ ...(masterStyle || {}), zIndex: (zIndex as number) + 1 }}
+        className={classNames(`${selectorPrefix}-master`, masterClassName ?? '')}
+        style={{ ...(masterStyle ?? {}), zIndex: (zIndex as number) + 1 }}
         ref={rMasterEl}
       >
         {master}

@@ -40,7 +40,7 @@ const TableRow: FC<TableRowComponentProps> = ({
   } | null>(SearchTableContext);
 
   // 默认的row组件是一个tr
-  const trREL = <tr {...(restProps || {})} />;
+  const trREL = <tr {...(restProps ?? {})} />;
 
   const reducerArgv = {
     rowIndex,

@@ -307,16 +307,16 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
   }, []);
 
   return (
-    <div className={classNames(selectorPrefix, className)} style={style || {}} ref={el}>
+    <div className={classNames(selectorPrefix, className)} style={style ?? {}} ref={el}>
       <div
         className={classNames(`${selectorPrefix}-fixed`, fixedClassName)}
-        style={fixedStyle || {}}
+        style={fixedStyle ?? {}}
         ref={fixedEl}
       />
 
       <div
         className={classNames(`${selectorPrefix}-inner`, innerClassName)}
-        style={innerStyle || {}}
+        style={innerStyle ?? {}}
         ref={innerEl}
       >
         {children}

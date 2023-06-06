@@ -753,8 +753,8 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   return (
     <div
       ref={wrapRef}
-      className={`${classNames(selectorPrefix, className || '')}`}
-      style={wrapStyle || {}}
+      className={`${classNames(selectorPrefix, className ?? '')}`}
+      style={wrapStyle ?? {}}
     >
       {children}
     </div>

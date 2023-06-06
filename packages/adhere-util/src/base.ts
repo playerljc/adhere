@@ -353,7 +353,7 @@ export default {
    */
   omitObject(obj: object): object {
     // eslint-disable-next-line no-param-reassign
-    obj = obj || {};
+    obj = obj ?? {};
 
     const res = {};
 

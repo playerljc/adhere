@@ -15,7 +15,7 @@ const { Option } = Select;
  */
 const SelectFormItem: FC<SelectFormItemProps> = ({ selectProps, dataSource }) => {
   return (
-    <Select {...(selectProps || {})}>
+    <Select {...(selectProps ?? {})}>
       {(dataSource || []).map((item) => (
         <Option key={item.value} value={item.value}>
           {item.label}

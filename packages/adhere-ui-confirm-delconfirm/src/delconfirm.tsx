@@ -26,7 +26,7 @@ const DelConform: FC<DelConfirmProps> = (props) => {
   }
 
   return (
-    <div className={`${selectorPrefix} ${className || ''}`} style={style || {}} onClick={onClick}>
+    <div className={`${selectorPrefix} ${className ?? ''}`} style={style ?? {}} onClick={onClick}>
       {children}
     </div>
   );

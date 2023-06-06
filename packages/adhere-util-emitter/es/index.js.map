@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Emitter from './emitter';\r\nexport default Emitter;\r\n"],"names":["Emitter"],"mappings":"OAAOA,YAAa,2BACLA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Emitter from './emitter';\nexport default Emitter;\n"],"names":["Emitter"],"mappings":"OAAOA,YAAa,2BACLA"}

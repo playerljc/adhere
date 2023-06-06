@@ -522,7 +522,7 @@ abstract class SearchTable<
         },
       );
 
-      if ((this.props.antdTableProps || {})?.expandable?.onExpandedRowsChange) {
+      if ((this.props.antdTableProps ?? {})?.expandable?.onExpandedRowsChange) {
         this.props.antdTableProps?.expandable?.onExpandedRowsChange?.(expandedRowKeys);
       }
     });
@@ -647,7 +647,7 @@ abstract class SearchTable<
     const { page = 1, limit = this.getLimit() } = this.state;
 
     return {
-      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() || {} : {}),
+      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() ?? {} : {}),
       ...{
         title: Intl.v('序号'),
         dataIndex: '_number',
@@ -931,9 +931,9 @@ abstract class SearchTable<
           }),
         };
       },
-      ...(antdTableProps || {}),
+      ...(antdTableProps ?? {}),
       expandable: {
-        ...(antdTableProps || {}).expandable,
+        ...(antdTableProps ?? {}).expandable,
         expandedRowKeys: this.state.expandedRowKeys,
         onExpandedRowsChange: this.onExpandedRowsChange,
       },

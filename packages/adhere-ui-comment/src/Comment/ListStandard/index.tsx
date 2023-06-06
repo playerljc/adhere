@@ -159,7 +159,7 @@ const ListStandard: FC<ListStandardProps> = (props) => {
         hasMore={(data[dataKeys!.list] as Array<any>).length <= data[dataKeys!.totalCount]}
         onLoadMore={onLoadMore}
         renderFirstLoading={renderFirstLoading}
-        {...(listProps || {})}
+        {...(listProps ?? {})}
       >
         <ConditionalRender conditional={!isEmpty()} noMatch={() => renderEmpty()}>
           {() => renderList?.(data)}
@@ -193,7 +193,7 @@ const ListStandard: FC<ListStandardProps> = (props) => {
 
   return (
     <VerticalFlexLayout
-      {...(flexLayoutProps || {})}
+      {...(flexLayoutProps ?? {})}
       className={`${selectorPrefix}`}
       renderMain={
         <div className={`${selectorPrefix}-auto`} ref={mainRef}>

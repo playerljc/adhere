@@ -57,7 +57,7 @@ function RowDragSortMultiExtend<P, S>(
 
       const res: { [prop: string]: Function } = {
         ...defaultMethods,
-        ...(Methods || {}),
+        ...(Methods ?? {}),
       };
 
       if (RenderBaseClass) {
@@ -68,7 +68,7 @@ function RowDragSortMultiExtend<P, S>(
 
       return res;
     },
-    () => StaticMethods || {},
+    () => StaticMethods ?? {},
   );
 }
 

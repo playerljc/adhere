@@ -574,7 +574,7 @@ class RectangleModifyAction extends ModifyAction {
       srcData.data.leftTopPoint.x += offsetX;
       srcData.data.leftTopPoint.y += offsetY;
 
-      const style = { ...this.moveGemStyle, ...(srcData.style || {}) };
+      const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
       srcData.style.lineWidth = style.lineWidth;
       srcData.style.lineJoin = style.lineJoin;
       srcData.style.lineCap = style.lineCap;

@@ -58,8 +58,8 @@ const Menu: ForwardRefRenderFunction<MenuRefHandle, MenuProps> = (props, ref) =>
 
   return (
     <ul
-      className={classNames(selectorPrefix, className || '')}
-      style={{ ...(style || {}), ...getStyle() }}
+      className={classNames(selectorPrefix, className ?? '')}
+      style={{ ...(style ?? {}), ...getStyle() }}
       ref={el}
     >
       {(data || []).map((item) => (

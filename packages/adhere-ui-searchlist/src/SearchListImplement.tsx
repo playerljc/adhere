@@ -598,7 +598,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   renderSmallNormalItem(record: any, rowIndex: number): ReactNode {
     const metas: Metas<any> = {
       ...defaultMetas,
-      ...(this.getMetas() || {}),
+      ...(this.getMetas() ?? {}),
     };
 
     const avatar =
@@ -644,7 +644,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   renderNormalItem(record: any, rowIndex: number): ReactNode {
     const metas: Metas<any> = {
       ...defaultMetas,
-      ...(this.getMetas() || {}),
+      ...(this.getMetas() ?? {}),
     };
 
     // @ts-ignore
@@ -762,7 +762,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
 
     const metas: Metas<any> = {
       ...defaultMetas,
-      ...(this.getMetas() || {}),
+      ...(this.getMetas() ?? {}),
     };
 
     const extra =
@@ -894,7 +894,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   renderCard({ record, rowIndex, grid }): ReactNode {
     const metas: Metas<any> = {
       ...defaultMetas,
-      ...(this.getMetas() || {}),
+      ...(this.getMetas() ?? {}),
     };
 
     const rowSelection = this.getRowSelection();

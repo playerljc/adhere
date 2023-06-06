@@ -36,7 +36,7 @@ const Fixed: ForwardRefRenderFunction<any, FixedProps> = (props, ref) => {
   );
 
   const styleList = useMemo(() => {
-    const defaultStyle = style || {};
+    const defaultStyle = style ?? {};
 
     const gridStyle = isUseGap
       ? getGridStyle({ gutter, span, children: contextChildren, direction })

@@ -10,7 +10,7 @@ import { MenuFormItemProps } from '../../types';
  * @constructor
  */
 const MenuFormItem: FC<MenuFormItemProps> = (props) => {
-  return <Menu {...(props || {})} />;
+  return <Menu {...(props ?? {})} />;
 };
 
 export default MenuFormItem;

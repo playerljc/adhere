@@ -144,7 +144,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      */
     unMountSearchAndPaginParamsDeal() {
       // 查询条件
-      const searchParams = this.state.searchParams || {};
+      const searchParams = this.state.searchParams ?? {};
 
       const pathname = this.pathname;
 
@@ -289,7 +289,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const loop = (columns) => {
         columns.reduce((params, column) => {
           const { $search, children } = column;
-          const searchConfig = $search || {};
+          const searchConfig = $search ?? {};
           const dataIndex = searchConfig.dataIndex || column.dataIndex;
 
           if (
@@ -647,14 +647,14 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             searchFormGroupData.push({
               key: dataIndex,
               sort: $search.sort,
-              label: <Label {...($search.labelAttrs || {})}>{title}：</Label>,
+              label: <Label {...($search.labelAttrs ?? {})}>{title}：</Label>,
               value: ConditionalRender.conditionalRender({
                 conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
                 /*Dict.value.SystemAuthoritySwitch.value
                                               ? Util.isAuthority(searchConfig.authority, this.authorized)
                                               : true*/
                 match: (
-                  <Value {...($search.valueAttrs || {})}>
+                  <Value {...($search.valueAttrs ?? {})}>
                     {this.renderGridSearchFormGroupDataItem(type, {
                       searchConfig,
                       column,
@@ -663,7 +663,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                   </Value>
                 ),
                 noMatch: $search.renderNoAuthority ? (
-                  <Value {...($search.valueAttrs || {})}>{$search?.renderNoAuthority?.()}</Value>
+                  <Value {...($search.valueAttrs ?? {})}>{$search?.renderNoAuthority?.()}</Value>
                 ) : null,
               }),
             });
@@ -734,7 +734,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       return {
         ...defaultSearchConfig,
-        ...(searchConfig || {}),
+        ...(searchConfig ?? {}),
       };
     }
 
@@ -903,7 +903,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -914,7 +914,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -925,7 +925,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -936,7 +936,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     >
       //       {(data) => searchConfig?.renderChildren?.(data)}
       //     </Component>
@@ -950,7 +950,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -962,7 +962,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -995,7 +995,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     >
       //       {(dataSource) => searchConfig?.renderChildren?.(dataSource)}
       //     </Component>
@@ -1008,7 +1008,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     >
       //       {(dataSource) => searchConfig?.renderChildren?.(dataSource)}
       //     </Component>
@@ -1081,7 +1081,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1092,7 +1092,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1104,7 +1104,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1116,7 +1116,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1128,7 +1128,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1139,7 +1139,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1150,7 +1150,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1161,7 +1161,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1173,7 +1173,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1184,7 +1184,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1195,7 +1195,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1206,7 +1206,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     <Component
       //       value={this.state[dataIndex]}
       //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || {})}
+      //       {...(searchConfig.props ?? {})}
       //     />
       //   );
       // };
@@ -1215,7 +1215,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Input
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1224,7 +1224,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Input.TextArea
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1233,7 +1233,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumber
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1242,7 +1242,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberDecimal1
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1251,7 +1251,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberDecimal2
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1260,7 +1260,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberInteger
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1273,7 +1273,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 [dataIndex]: dayjs ? dayjs : null,
               });
             }}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1286,7 +1286,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 [dataIndex]: dayjs ? dayjs : null,
               });
             }}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1299,7 +1299,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             onChange={(dayjs) => {
               this.onDateTimeRangeChange([startName, endName], dayjs);
             }}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1308,7 +1308,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Slider
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1318,7 +1318,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             range
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1327,7 +1327,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Rate
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1336,7 +1336,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Switch
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props || {})}
+            {...(searchConfig.props ?? {})}
           />
         );
       };
@@ -1361,7 +1361,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             <Component
               value={this.state[dataIndex]}
               onChange={(e) => this.onSelectChange(dataIndex, e)}
-              {...Object.assign(popUpDefaultProps, searchConfig.props || {})}
+              {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
             >
               {(data) => searchConfig?.renderChildren?.(data)}
             </Component>
@@ -1372,7 +1372,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Component
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...Object.assign(popUpDefaultProps, searchConfig.props || {})}
+            {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
           />
         );
       };
@@ -1448,7 +1448,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           layout: 'horizontal',
           density: 'middle',
         },
-        props || {},
+        props ?? {},
       );
 
       // 如果用户实现了onAfterClose这个方法
@@ -1512,7 +1512,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             getPopupContainer: () => document.body,
           },
         },
-        advancedSearchConfig || {},
+        advancedSearchConfig ?? {},
       );
 
       // 标准的查询面板

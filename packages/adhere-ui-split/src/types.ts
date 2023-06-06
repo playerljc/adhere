@@ -1,4 +1,4 @@
-import { FC, FunctionComponent, NamedExoticComponent } from 'react';
+import { CSSProperties, FC, NamedExoticComponent } from 'react';
 
 /**
  * SplitFunction
@@ -13,6 +13,7 @@ export interface SplitFunction<P> extends NamedExoticComponent<P> {
  */
 export interface SplitProps {
   className?: string;
+  style?: CSSProperties;
   direction?: 'vertical' | 'horizontal';
   size?: string | number;
   isUseMedia?: boolean;

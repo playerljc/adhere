@@ -15,7 +15,7 @@ const Section: FC<SectionProps> = (props) => {
   const { title, extra, className = '', style = {}, children } = props;
 
   return (
-    <div className={classNames(selectPrefix, className || '')} style={style || {}}>
+    <div className={classNames(selectPrefix, className ?? '')} style={style ?? {}}>
       <div className={`${selectPrefix}-header`}>
         <div className={`${selectPrefix}-header-title`}>{title}</div>
         <div className={`${selectPrefix}-header-extra`}>{extra}</div>
