@@ -113,12 +113,12 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     getPagination(): {
         onChange: (page: any, limit: any) => void;
-        onShowSizeChange: (page: any, limit: any) => void;
         showTotal: (total: any) => string;
         total: number;
         current: any;
         pageSize: any;
         showQuickJumper: boolean;
+        showSizeChanger: boolean;
     };
     /**
      * getLimit

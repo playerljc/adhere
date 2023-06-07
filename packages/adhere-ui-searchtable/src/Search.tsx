@@ -157,19 +157,19 @@ abstract class Search<
           },
         );
       },
-      onShowSizeChange: (page, limit) => {
-        // @ts-ignore
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            // @ts-ignore
-            this.fetchData();
-          },
-        );
-      },
+      // onShowSizeChange: (page, limit) => {
+      //   // @ts-ignore
+      //   this.setState(
+      //     {
+      //       page,
+      //       limit,
+      //     },
+      //     () => {
+      //       // @ts-ignore
+      //       this.fetchData();
+      //     },
+      //   );
+      // },
       showTotal: (total /* [page, pageSize] */) => {
         return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
           page: this.state.page,
@@ -181,6 +181,7 @@ abstract class Search<
       current: this.state.page,
       pageSize: this.state.limit,
       showQuickJumper: true,
+      showSizeChanger: true,
     };
   }
 
