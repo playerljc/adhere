@@ -1,3 +1,14 @@
+# 2.9.1
+
+***
+
+2023-06-07
+
+* **adhere-ui-datedisplay**
+  - 加入toString方法
+* **adhere-ui-ellipsis**
+  - 修复样式错误
+
 # 2.9.0
 
 ***

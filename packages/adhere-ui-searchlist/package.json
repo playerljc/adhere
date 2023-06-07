@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-searchlist",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "description": "一种查询列表的通用模式(如果 UI 没有明确给出查询列表的 UI，就可以用这个默认模式)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -36,7 +36,7 @@
     "@baifendian/adhere-ui-conditionalrender": "^2.9.0",
     "@baifendian/adhere-ui-contourblock": "^2.9.0",
     "@baifendian/adhere-ui-css": "^2.9.0",
-    "@baifendian/adhere-ui-datedisplay": "^2.9.0",
+    "@baifendian/adhere-ui-datedisplay": "^2.9.1",
     "@baifendian/adhere-ui-searchtable": "^2.9.0",
     "@baifendian/adhere-util": "^2.9.0",
     "@baifendian/adhere-util-dict": "^2.9.0",
