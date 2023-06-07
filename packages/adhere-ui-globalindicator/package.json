@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-globalindicator",
-  "version": "2.8.1",
+  "version": "2.9.0",
   "description": "全局无侵入的遮罩",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "buildumd": "ctbuild buildumd --packagename AdhereGlobalIndicator --define alias=@,evnVars=true"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^2.8.0"
+    "@baifendian/adhere-util-resource": "^2.9.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.21.0",
