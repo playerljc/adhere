@@ -1,3 +1,16 @@
+# 2.9.0
+
+***
+
+2023-06-07
+
+* **adhere-ui-datedisplay**
+  - 加入全局设置locale,自定义本地化格式
+* **adhere-ui-imagelazy**
+  - 加入图片加载错误的处理
+* **adhere-ui-ellipsis**
+  - 加入adhere-ui-ellipsis组件
+
 # 2.8.1
 
 ***
