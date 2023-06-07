@@ -10,7 +10,7 @@ import { SegmentedFormItemProps } from '../../types';
  * @constructor
  */
 const SegmentedFormItem: FC<SegmentedFormItemProps> = (props) => {
-  return <Segmented {...(props || {})} />;
+  return <Segmented {...(props ?? {})} />;
 };
 
 export default SegmentedFormItem;

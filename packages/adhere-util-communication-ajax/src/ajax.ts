@@ -90,7 +90,7 @@ class Ajax {
 
     this.systemManagerBaseURL = systemManagerBaseURL || '';
 
-    this.config = config || {};
+    this.config = config ?? {};
   }
 
   /**

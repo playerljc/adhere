@@ -1,8 +1,21 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/ar';
 import 'dayjs/locale/en';
 import 'dayjs/locale/pt';
-import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/zh';
 declare const Components: {
     dayjs: typeof dayjs;
+    /**
+     * setGlobalLocal
+     * @description 全局设置国际化
+     * @param {string} _local 国际化
+     */
+    setGlobalLocal: (_local: any) => void;
+    /**
+     * setCustomLocaleFormats
+     * @description 设置自定义本地化显示
+     * @param {object} formats
+     */
+    setCustomLocaleFormats: (formats: any) => any;
 };
 export default Components;

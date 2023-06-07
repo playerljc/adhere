@@ -45,7 +45,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) 
     dropConfig: () => ({
       accept: rowDragSortConfig.type,
       collect: (monitor) => {
-        const { index: dragIndex } = monitor.getItem() || {};
+        const { index: dragIndex } = monitor.getItem() ?? {};
 
         if (dragIndex === rowIndex) {
           return {};
@@ -80,12 +80,12 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) 
     }),
   };
 
-  const rowDragSortConfig = { ...defaultRowDragSortConfig, ...(rowConfig?.$rowDragSort || {}) };
+  const rowDragSortConfig = { ...defaultRowDragSortConfig, ...(rowConfig?.$rowDragSort ?? {}) };
 
   if (rowConfig?.$rowDragSort?.dropConfig) {
     rowDragSortConfig.dropConfig = Object.assign(
       defaultRowDragSortConfig.dropConfig(),
-      rowConfig.$rowDragSort.dropConfig || {},
+      rowConfig.$rowDragSort.dropConfig ?? {},
     );
   } else {
     rowDragSortConfig.dropConfig = defaultRowDragSortConfig.dropConfig();
@@ -94,7 +94,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) 
   if (rowConfig?.$rowDragSort?.dragConfig) {
     rowDragSortConfig.dragConfig = Object.assign(
       defaultRowDragSortConfig.dragConfig(),
-      rowConfig.$rowDragSort.dragConfig || {},
+      rowConfig.$rowDragSort.dragConfig ?? {},
     );
   } else {
     rowDragSortConfig.dragConfig = defaultRowDragSortConfig.dragConfig();
@@ -137,7 +137,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) 
     res = React.cloneElement(trREL, {
       ...trREL.props,
       ref,
-      style: { ...defaultStyle, ...(trREL.props.style || {}) },
+      style: { ...defaultStyle, ...(trREL.props.style ?? {}) },
       className: classNames(trREL.props.className, isOver ? dropClassName : ''),
     });
 

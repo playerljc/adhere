@@ -84,8 +84,8 @@ const MenuItem: FC<MenuItemProps> = (props) => {
     >
       {() => (
         <li
-          className={classNames(selectorPrefix, disabled ? 'disabled' : '', className || '')}
-          style={style || {}}
+          className={classNames(selectorPrefix, disabled ? 'disabled' : '', className ?? '')}
+          style={style ?? {}}
           onClick={onClick}
         >
           {renderIcon()}

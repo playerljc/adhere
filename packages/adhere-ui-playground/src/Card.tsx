@@ -26,12 +26,12 @@ const Card: FC<CardProps> = (props) => {
   } = props;
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
       <ConditionalRender conditional={!!title || !!extra}>
         {() => (
           <div
-            className={classNames(`${selectorPrefix}-header`, headerClassName || '')}
-            style={headerStyle || {}}
+            className={classNames(`${selectorPrefix}-header`, headerClassName ?? '')}
+            style={headerStyle ?? {}}
           >
             <ConditionalRender conditional={!!title}>
               {() => <div className={`${selectorPrefix}-header-title`}>{title}</div>}
@@ -47,8 +47,8 @@ const Card: FC<CardProps> = (props) => {
       <ConditionalRender conditional={!!children}>
         {() => (
           <div
-            className={classNames(`${selectorPrefix}-body`, bodyClassName || '')}
-            style={bodyStyle || {}}
+            className={classNames(`${selectorPrefix}-body`, bodyClassName ?? '')}
+            style={bodyStyle ?? {}}
           >
             {children}
           </div>
@@ -78,8 +78,8 @@ const Card: FC<CardProps> = (props) => {
       <ConditionalRender conditional={!!actions}>
         {() => (
           <ul
-            className={classNames(`${selectorPrefix}-action`, actionClassName || '')}
-            style={actionStyle || {}}
+            className={classNames(`${selectorPrefix}-action`, actionClassName ?? '')}
+            style={actionStyle ?? {}}
           >
             {(actions || []).map((action, index) => (
               <li key={`${index + 1}`} className={`${selectorPrefix}-action-item`}>

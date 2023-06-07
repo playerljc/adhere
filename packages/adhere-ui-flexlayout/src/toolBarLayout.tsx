@@ -57,13 +57,13 @@ const ToolBarLayout: FC<ToolBarLayoutProps> = (props) => {
     [bottomToolBarItems],
   );
 
-  const _topProps = useMemo(() => ({ fit: false, ...(topProps || {}) }), [topProps]);
+  const _topProps = useMemo(() => ({ fit: false, ...(topProps ?? {}) }), [topProps]);
 
-  const _bottomProps = useMemo(() => ({ fit: false, ...(bottomProps || {}) }), [bottomProps]);
+  const _bottomProps = useMemo(() => ({ fit: false, ...(bottomProps ?? {}) }), [bottomProps]);
 
   return (
     <VerticalFlexLayout
-      className={classNames(selectorPrefix, className || '')}
+      className={classNames(selectorPrefix, className ?? '')}
       topClassName={classNames(topClassName, {
         [`${selectorPrefix}-top`]: (topToolBarItems || []).length,
       })}
@@ -72,7 +72,7 @@ const ToolBarLayout: FC<ToolBarLayoutProps> = (props) => {
       })}
       mainAutoWrapClassName={classNames(
         `${selectorPrefix}-main-auto-wrap`,
-        mainAutoWrapClassName || '',
+        mainAutoWrapClassName ?? '',
       )}
       topProps={_topProps}
       bottomProps={_bottomProps}

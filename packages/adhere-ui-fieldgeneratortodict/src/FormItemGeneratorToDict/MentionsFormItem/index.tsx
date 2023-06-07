@@ -10,7 +10,7 @@ import { MentionsFormItemProps } from '../../types';
  * @constructor
  */
 const MentionsFormItem: FC<MentionsFormItemProps> = (props) => {
-  return <Mentions {...(props || {})} />;
+  return <Mentions {...(props ?? {})} />;
 };
 
 export default MentionsFormItem;

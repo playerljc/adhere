@@ -189,17 +189,17 @@ class Notification {
             <div className={`${selectorPrefix}-standard-header-icon`}>
               {headerIcon ? <img src={headerIcon} alt="" /> : null}
             </div>
-            <div className={`${selectorPrefix}-standard-header-label`}>{headerLabel || ''}</div>
+            <div className={`${selectorPrefix}-standard-header-label`}>{headerLabel ?? ''}</div>
           </div>
           <div className={`${selectorPrefix}-standard-content`}>
             <div className={`${selectorPrefix}-standard-content-media-l`}>
               {icon ? <img src={icon} alt="" /> : null}
             </div>
             <div className={`${selectorPrefix}-standard-content-row`}>
-              <div className={`${selectorPrefix}-standard-content-row-title`}>{title || ''}</div>
-              <div className={`${selectorPrefix}-standard-content-row-text`}>{text || ''}</div>
+              <div className={`${selectorPrefix}-standard-content-row-title`}>{title ?? ''}</div>
+              <div className={`${selectorPrefix}-standard-content-row-text`}>{text ?? ''}</div>
             </div>
-            <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime || ''}</div>
+            <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime ?? ''}</div>
           </div>
         </div>
         {closed ? <span className="close-btn" /> : null}

@@ -8,8 +8,12 @@ import DefaultTheme from './default/vars';
 
 const { darkAlgorithm, defaultAlgorithm, defaultSeed } = theme;
 
+/**
+ * themes
+ */
 const themes = new Map([
   [
+    // 缺省主题
     'default',
     {
       algorithm: theme.defaultAlgorithm,
@@ -18,6 +22,7 @@ const themes = new Map([
     },
   ],
   [
+    // 暗黑主题
     'dark',
     {
       algorithm: theme.darkAlgorithm,
@@ -36,12 +41,16 @@ const exportObj = {};
 // 当前主题
 let currentTheme = 'default';
 
-const keys = Object.keys(DefaultTheme);
-
-/* 全局的css Vars*/
-keys.forEach((varName) => {
+/**
+ * setCssVariable
+ * @description 设置css变量
+ * @param {string} varName
+ */
+const setCssVariable = (varName) => {
   const varCamelCaseName = Util.toCamelCase(varName);
   const varUpperCamelCaseName = Util.toCamelCase(varName, true);
+
+  if (varCamelCaseName in cssVars) return;
 
   // 定义驼峰变量
   Object.defineProperty(cssVars, varCamelCaseName, {
@@ -68,8 +77,22 @@ keys.forEach((varName) => {
   };
 
   // 定义导出变量
-  exportObj[`get${varUpperCamelCaseName}`] = () => cssVars[varCamelCaseName];
-});
+  exportObj[`get${varUpperCamelCaseName}`] = () =>
+    document.documentElement.style.getPropertyValue(`--${varName}`);
+};
+
+(function () {
+  const hostKeys = Object.keys(DefaultTheme);
+  const antdKeys = Object.keys(themes.get('default').mapToken);
+
+  /* 全局的css Vars*/
+  [
+    ...hostKeys,
+    ...antdKeys.map((_key) => Util.pascalCaseToKebabCase(`antd${Util.capitalized(_key)}`)),
+  ].forEach((varName) => {
+    setCssVariable(varName);
+  });
+})();
 
 /**
  * init
@@ -78,12 +101,20 @@ keys.forEach((varName) => {
  */
 const init = (theme) => {
   // 主题的变量
-  const vars = (themes.get(theme) ?? themes.get('default')).token;
+  const token = (themes.get(theme) ?? themes.get('default')).token;
+  const mapToken = (themes.get(theme) ?? themes.get('default')).mapToken;
 
-  Object.keys(vars).forEach((_key) => {
+  Object.keys(token).forEach((_key) => {
     const varName = Util.toCamelCase(_key, true);
 
-    exportObj[`set${varName}`](vars[_key]);
+    exportObj[`set${varName}`](token[_key]);
+  });
+
+  Object.keys(mapToken).forEach((_key) => {
+    // colorPrimary
+    const varName = Util.capitalized(Util.toCamelCase(_key, true));
+
+    exportObj[`setAntd${varName}`](mapToken[_key]);
   });
 };
 
@@ -100,15 +131,26 @@ export function setTheme(theme) {
 /**
  * getTheme
  * @description 获取主题
+ * @return {string}
  */
 export function getThemeKey() {
   return currentTheme;
 }
 
+/**
+ * getThemeValue
+ * @description 获取主题对用的变量值
+ * @return {object}
+ */
 export function getThemeValue() {
   return themes.get(currentTheme);
 }
 
+/**
+ * getThemeKeys
+ * @description 获取主题keys
+ * @return {string []}
+ */
 export function getThemeKeys() {
   return Array.from(themes.keys());
 }

@@ -124,7 +124,7 @@ class RectGeometry extends Geometry implements IRectGeometry {
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.beginPath();

@@ -108,7 +108,7 @@ class PolygonGeometry extends Geometry implements IPolygonGeometry {
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.beginPath();

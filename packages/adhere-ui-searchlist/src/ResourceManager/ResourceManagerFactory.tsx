@@ -82,7 +82,7 @@ export default function <P, S>(SuperClass) {
       const viewSearchParams = view?.getSearchParams();
 
       return {
-        ...(viewSearchParams || {}),
+        ...(viewSearchParams ?? {}),
         ...searchParams,
       };
     }

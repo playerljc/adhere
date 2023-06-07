@@ -29,7 +29,7 @@ const FontSizeSetting: FC<FontSizeSettingProps> = (props) => {
   }, [props.value]);
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}} ref={el}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
       <div className={`${selectorPrefix}-rangewrap`}>
         <div className={`${selectorPrefix}-separatedtool`}>
           <div className={`${selectorPrefix}-separated`}>

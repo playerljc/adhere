@@ -88,7 +88,7 @@ class MulitLineStringGeometry extends Geometry implements IMulitLineStringGeomet
 
     const targetStyle: ILineStringGeometryStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
       arrow: {
         draw: false,
         direction: 'end',

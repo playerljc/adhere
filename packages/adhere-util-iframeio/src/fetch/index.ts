@@ -38,7 +38,7 @@ class Fetch {
       const request = new Request({
         pathname,
         headers: {
-          ...(options?.headers || {}),
+          ...(options?.headers ?? {}),
           origin: this.origin,
           referer: this.source instanceof Window ? (this.source as Window).location.href : '',
         },

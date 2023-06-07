@@ -23,8 +23,8 @@ const SubMenu: FC<SubMenuProps> = (props) => {
 
   return (
     <ul
-      className={classNames(selectorPrefix, className || '')}
-      style={{ ...(style || {}), ...getStyle() }}
+      className={classNames(selectorPrefix, className ?? '')}
+      style={{ ...(style ?? {}), ...getStyle() }}
     >
       {(data || []).map((item) => (
         <MenuItem key={item.id} data={item} />

@@ -161,21 +161,21 @@ const Push: ForwardRefRenderFunction<SlideLayoutHandle, PushProps> = (props, ref
 
   return (
     <div
-      className={classNames(`${selectorPrefix}-master`, masterClassName || '')}
-      style={{ ...(masterStyle || {}), zIndex: (zIndex as number) - 1 }}
+      className={classNames(`${selectorPrefix}-master`, masterClassName ?? '')}
+      style={{ ...(masterStyle ?? {}), zIndex: (zIndex as number) - 1 }}
       ref={pMasterEl}
     >
       <div
-        className={classNames(selectorPrefix, direction, className || '')}
-        style={{ ...(style || {}), zIndex }}
+        className={classNames(selectorPrefix, direction, className ?? '')}
+        style={{ ...(style ?? {}), zIndex }}
         ref={el}
       >
         {slide}
       </div>
 
       <div
-        className={classNames(`${selectorPrefix}-slave`, slaveClassName || '')}
-        style={{ ...(slaveStyle || {}), zIndex: (zIndex as number) - 2 }}
+        className={classNames(`${selectorPrefix}-slave`, slaveClassName ?? '')}
+        style={{ ...(slaveStyle ?? {}), zIndex: (zIndex as number) - 2 }}
         ref={pSlaveEl}
       >
         {master}

@@ -36,7 +36,7 @@ const EditableCell: TableCellComponentReducer = (props) => {
    * @description 实际的单元格配置
    */
   const editableConfig: ColumnEditableConfig = useMemo(
-    () => ({ ...defaultConfig, ...(column?.$editable || {}) }),
+    () => ({ ...defaultConfig, ...(column?.$editable ?? {}) }),
     [column, column?.dataIndex],
   );
 

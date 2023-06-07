@@ -76,25 +76,25 @@ const TCBRLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-tcbr-layout`, props?.className)}
         direction="horizontal"
       >
-        <Auto {...(autoWrapProps || {})} fit={false} className={autoWrapClassList}>
+        <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
-            {...(autoInnerProps || {})}
+            {...(autoInnerProps ?? {})}
             className={autoInnerClassList}
             direction="vertical"
           >
-            <Fixed {...(TProps || {})}>{tProps?.render?.()}</Fixed>
-            <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
-            <Fixed {...(BProps || {})}>{bProps?.render?.()}</Fixed>
+            <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+            <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+            <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>
 
-        <Fixed {...(RProps || {})}>{rProps?.render?.()}</Fixed>
+        <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>
   );

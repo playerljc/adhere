@@ -169,7 +169,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
           // initialValue={record[dataIndex as string]}
           name={nameItemPath}
           rules={rules}
-          {...(formItemProps || {})}
+          {...(formItemProps ?? {})}
         >
           {type !== 'custom'
             ? renderFormItem()

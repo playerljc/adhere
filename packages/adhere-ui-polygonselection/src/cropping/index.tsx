@@ -26,8 +26,8 @@ const Cropping: ForwardRefRenderFunction<CroppingHandle, CroppingProps> = (
   const renderMask = useCallback(
     () => (
       <div
-        className={`${classNames(`${selectorPrefix}-mask`, maskClassName || '')}`}
-        style={maskStyle || {}}
+        className={`${classNames(`${selectorPrefix}-mask`, maskClassName ?? '')}`}
+        style={maskStyle ?? {}}
         onClick={() => {
           const dialog = MessageDialog.Modal({
             config: {
@@ -53,7 +53,7 @@ const Cropping: ForwardRefRenderFunction<CroppingHandle, CroppingProps> = (
                   {Intl.v('保存')}
                 </Button>,
               ],
-              ...(modalProps || {}),
+              ...(modalProps ?? {}),
             },
             children: <CroppingCore ref={coreRef} {...coreProps} />,
           });
@@ -70,7 +70,7 @@ const Cropping: ForwardRefRenderFunction<CroppingHandle, CroppingProps> = (
   }, [value]);
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
       {renderMask()}
       {renderInner()}
     </div>

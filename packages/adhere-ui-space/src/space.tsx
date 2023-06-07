@@ -80,8 +80,8 @@ const Space: FC<SpaceProps> = (props) => {
 
   return (
     <div
-      className={classNames(selectorPrefix, className || '')}
-      style={{ ...getStyle(), ...(style || {}) }}
+      className={classNames(selectorPrefix, className ?? '')}
+      style={{ ...getStyle(), ...(style ?? {}) }}
     />
   );
 };

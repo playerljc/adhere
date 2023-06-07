@@ -81,23 +81,23 @@ const TLRCLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-tlr-layout`, props?.className)}
         direction="vertical"
       >
-        <Fixed {...(TProps || {})}>{tProps?.render?.()}</Fixed>
+        <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
 
-        <Auto {...(autoWrapProps || {})} fit={false} className={autoWrapClassList}>
+        <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
-            {...(autoInnerProps || {})}
+            {...(autoInnerProps ?? {})}
             className={autoInnerClassList}
             direction="horizontal"
           >
-            <Fixed {...(LProps || {})}>{lProps?.render?.()}</Fixed>
-            <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
-            <Fixed {...(RProps || {})}>{tProps?.render?.()}</Fixed>
+            <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+            <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+            <Fixed {...(RProps ?? {})}>{tProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>
       </FlexLayout>

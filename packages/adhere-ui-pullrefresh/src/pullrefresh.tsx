@@ -494,10 +494,10 @@ const PullRefresh: ForwardRefRenderFunction<PullRefreshRefHandle, PullRefreshPro
   });
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
       <div
-        className={classNames(`${selectorPrefix}-scroll`, scrollClassName || '')}
-        style={scrollStyle || {}}
+        className={classNames(`${selectorPrefix}-scroll`, scrollClassName ?? '')}
+        style={scrollStyle ?? {}}
         ref={scrollElRef}
       >
         {children}

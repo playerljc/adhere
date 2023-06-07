@@ -10,8 +10,8 @@ const RevolvingItem: FC<RevolvingItemProps> = (props) => {
 
   return (
     <div
-      className={classNames(selectorPrefix, 'swiper-slide', className || '')}
-      style={style || {}}
+      className={classNames(selectorPrefix, 'swiper-slide', className ?? '')}
+      style={style ?? {}}
     >
       {children}
     </div>

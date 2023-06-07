@@ -25,7 +25,7 @@ const TagHorizontalFormItem: FC<TagFormItemProps> = ({ dataSource, ...props }) =
           const Component = res.component ?? Tag;
 
           return (
-            <Component key={t.value} {...(res.props || {})}>
+            <Component key={t.value} {...(res.props ?? {})}>
               {res.children ?? t.label}
             </Component>
           );

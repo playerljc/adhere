@@ -89,9 +89,9 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
             className={classNames(
               `${selectorPrefix}-menu-item`,
               activeKey === data.key ? 'active' : null,
-              menuItemClassName || '',
+              menuItemClassName ?? '',
             )}
-            style={menuItemStyle || {}}
+            style={menuItemStyle ?? {}}
           >
             <a onClick={() => scrollTo(data.key)}>{renderMenuItem(data)}</a>
           </li>
@@ -104,9 +104,9 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
           className={classNames(
             `${selectorPrefix}-menu-item`,
             activeKey === data.key ? 'active' : null,
-            menuItemClassName || '',
+            menuItemClassName ?? '',
           )}
-          style={menuItemStyle || {}}
+          style={menuItemStyle ?? {}}
         >
           <a onClick={() => scrollTo(data.key)}>{data.name}</a>
         </li>
@@ -124,7 +124,7 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
 
       if (t.key === activeKey) {
         itemIns = React.cloneElement(t, {
-          ...(t.props || {}),
+          ...(t.props ?? {}),
           className: classNames(t?.className, 'active'),
         });
       }
@@ -156,24 +156,24 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
   }));
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}} ref={el}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
       <div
         ref={menuEl}
-        className={classNames(`${selectorPrefix}-menu`, menuClassName || '')}
+        className={classNames(`${selectorPrefix}-menu`, menuClassName ?? '')}
         style={{ ...menuStyle }}
       >
         <ul
           ref={menuInnerEl}
-          className={classNames(`${selectorPrefix}-menu-inner`, menuInnerClassName || '')}
-          style={menuInnerStyle || {}}
+          className={classNames(`${selectorPrefix}-menu-inner`, menuInnerClassName ?? '')}
+          style={menuInnerStyle ?? {}}
         >
           {renderMenu()}
         </ul>
       </div>
 
       <ul
-        className={classNames(`${selectorPrefix}-tab`, tabClassName || '')}
-        style={tabStyle || {}}
+        className={classNames(`${selectorPrefix}-tab`, tabClassName ?? '')}
+        style={tabStyle ?? {}}
       >
         {renderItem()}
       </ul>

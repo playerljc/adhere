@@ -131,7 +131,7 @@ abstract class Search<
    */
   static getDerivedStateFromProps(props: SearchProps, state: SearchState) {
     return {
-      ...(state || {}),
+      ...(state ?? {}),
       // TODO: 处理prePage
       prePage: state?.page,
     };
@@ -157,19 +157,19 @@ abstract class Search<
           },
         );
       },
-      onShowSizeChange: (page, limit) => {
-        // @ts-ignore
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            // @ts-ignore
-            this.fetchData();
-          },
-        );
-      },
+      // onShowSizeChange: (page, limit) => {
+      //   // @ts-ignore
+      //   this.setState(
+      //     {
+      //       page,
+      //       limit,
+      //     },
+      //     () => {
+      //       // @ts-ignore
+      //       this.fetchData();
+      //     },
+      //   );
+      // },
       showTotal: (total /* [page, pageSize] */) => {
         return Intl.v(`当前 {page}-{pageSize}/共 {total}条`, {
           page: this.state.page,
@@ -181,6 +181,7 @@ abstract class Search<
       current: this.state.page,
       pageSize: this.state.limit,
       showQuickJumper: true,
+      showSizeChanger: true,
     };
   }
 
@@ -237,7 +238,7 @@ abstract class Search<
       <FlexLayout
         direction="vertical"
         className={classNames(selectorPrefix, className)}
-        style={{ ...(style || {}) }}
+        style={{ ...(style ?? {}) }}
       >
         {((!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()) ||
           (!!this.renderSearchForm && !!this.renderSearchForm?.()) ||
@@ -245,7 +246,7 @@ abstract class Search<
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
             className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
-            style={{ ...(searchStyle || {}) }}
+            style={{ ...(searchStyle ?? {}) }}
             // fit={fitSearch}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
@@ -289,7 +290,7 @@ abstract class Search<
         )}
 
         <Auto
-          style={{ ...(bodyStyle || {}) }}
+          style={{ ...(bodyStyle ?? {}) }}
           className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
           })}

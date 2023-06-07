@@ -120,7 +120,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
       return (
         <div
           className={classNames(`${selectorPrefix}-load`, loadClassName)}
-          style={loadStyle || {}}
+          style={loadStyle ?? {}}
           ref={loadEl}
         >
           {renderLoading()}
@@ -131,7 +131,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     return (
       <div
         className={classNames(`${selectorPrefix}-load`, 'standard', loadClassName)}
-        style={loadStyle || {}}
+        style={loadStyle ?? {}}
         ref={loadEl}
       >
         {Intl.v('数据加载中')}
@@ -144,7 +144,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
       return (
         <div
           className={classNames(`${selectorPrefix}-empty`, emptyClassName)}
-          style={emptyStyle || {}}
+          style={emptyStyle ?? {}}
           ref={emptyEl}
         >
           {renderEmpty()}
@@ -155,7 +155,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     return (
       <div
         className={classNames(`${selectorPrefix}-empty`, emptyClassName)}
-        style={emptyStyle || {}}
+        style={emptyStyle ?? {}}
         ref={emptyEl}
       >
         ~{Intl.v('没有更多')}
@@ -168,7 +168,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
       return (
         <div
           className={classNames(`${selectorPrefix}-error`, errorClassName)}
-          style={errorStyle || {}}
+          style={errorStyle ?? {}}
           ref={errorEl}
         >
           {renderError()}
@@ -179,7 +179,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
     return (
       <div
         className={classNames(`${selectorPrefix}-error`, errorClassName)}
-        style={errorStyle || {}}
+        style={errorStyle ?? {}}
         ref={errorEl}
       >
         {Intl.v('出现错误')}
@@ -202,7 +202,7 @@ const ScrollLoad: ForwardRefRenderFunction<ScrollLoadRefHandle, ScrollLoadProps>
       {...attrs}
       className={classNames(selectorPrefix, className)}
       style={{
-        ...(style || {}),
+        ...(style ?? {}),
         overflowY: _getScrollContainer() === el.current ? 'auto' : 'initial',
       }}
       ref={el}

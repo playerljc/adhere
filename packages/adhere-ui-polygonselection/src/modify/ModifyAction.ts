@@ -78,15 +78,15 @@ abstract class ModifyAction extends Emitter.Events implements IModifyAction, IMo
   }
 
   setAnchorStyle(style: Partial<IStyle> | undefined): void {
-    this.anchorStyle = { ...defaultAnchorStyle, ...(style || {}) };
+    this.anchorStyle = { ...defaultAnchorStyle, ...(style ?? {}) };
   }
 
   setStyle(style: Partial<IStyle> | undefined): void {
-    this.style = { ...defaultStyle, ...(style || {}) };
+    this.style = { ...defaultStyle, ...(style ?? {}) };
   }
 
   setMoveGemStyle(style: Partial<IStyle> | undefined): void {
-    this.moveGemStyle = { ...defaultMoveGemStyle, ...(style || {}) };
+    this.moveGemStyle = { ...defaultMoveGemStyle, ...(style ?? {}) };
   }
 
   /**

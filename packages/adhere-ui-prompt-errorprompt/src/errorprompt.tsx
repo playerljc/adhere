@@ -18,7 +18,7 @@ export const openErrorDialog = (props?: ModalProps) =>
     content: Intl.v('系统异常'),
     mask: false,
     maskClosable: true,
-    ...(props || {}),
+    ...(props ?? {}),
   });
 
 /**

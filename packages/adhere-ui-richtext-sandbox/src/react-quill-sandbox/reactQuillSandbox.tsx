@@ -73,7 +73,7 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
         <window.ReactQuill
           ref={reactQuillRef}
           {..._props}
-          value={value.current || ''}
+          value={value.current ?? ''}
           onChange={(params) => {
             if (!isMount.current) return;
             // console.log('onChange', params);
@@ -239,7 +239,7 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
           editor: !('readOnly' in props) || !props.readOnly,
         })}">
         <body>
-          <div id="${editorId}" style="${quillStyle || ''}"></div>
+          <div id="${editorId}" style="${quillStyle ?? ''}"></div>
         </body>
         </html>
         `,
@@ -281,8 +281,8 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
   return (
     <div
       ref={wrapRef}
-      className={classNames(`${selectorPrefix}`, wrapClassName || '')}
-      style={wrapStyle || {}}
+      className={classNames(`${selectorPrefix}`, wrapClassName ?? '')}
+      style={wrapStyle ?? {}}
     >
       <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
     </div>

@@ -116,7 +116,7 @@ const SliderScale: FC<SliderScaleProps> = (props) => {
   }, [min, max, step, value, interval]);
 
   return (
-    <div className={classNames(selectorPrefix, className || '')} style={style || {}} ref={el}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
       <div className={`${selectorPrefix}-scale`}>{renderScale()}</div>
 
       <input

@@ -317,7 +317,7 @@ class StartModifyAction extends ModifyAction {
       srcData.data.center.x += offsetX;
       srcData.data.center.y += offsetY;
 
-      const style = { ...this.moveGemStyle, ...(srcData.style || {}) };
+      const style = { ...this.moveGemStyle, ...(srcData.style ?? {}) };
       srcData.style.lineWidth = style.lineWidth;
       srcData.style.lineJoin = style.lineJoin;
       srcData.style.lineCap = style.lineCap;

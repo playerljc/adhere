@@ -79,7 +79,7 @@ class MulitCircleGeometry extends Geometry implements IMulitCircleGeometry {
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     coordinates.forEach((circleGeometryData: ICircleGeometryData) => {

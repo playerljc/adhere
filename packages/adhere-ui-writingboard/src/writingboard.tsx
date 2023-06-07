@@ -701,8 +701,8 @@ const WritingBoard: ForwardRefRenderFunction<WritingBoardHandle, WritingBoardPro
   return (
     <div
       ref={containerRef}
-      className={classNames(selectorPrefix, props.className || '')}
-      style={props.style || {}}
+      className={classNames(selectorPrefix, props.className ?? '')}
+      style={props.style ?? {}}
     >
       <canvas ref={canvasRef} />
     </div>

@@ -89,7 +89,7 @@ class Util {
   getFormColumns = (Formcolumns, size, searchNow) => {
     return Formcolumns.map((temp) => {
       const t = temp;
-      t.contentProps = t.contentProps || {};
+      t.contentProps = t.contentProps ?? {};
       t.contentProps.size = size;
       if (t.type === FormItemCreator.RANGEPICKER || t.type === FormItemCreator.SELECT) {
         t.contentProps = {

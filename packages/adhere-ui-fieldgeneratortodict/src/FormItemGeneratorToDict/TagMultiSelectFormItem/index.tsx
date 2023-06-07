@@ -68,7 +68,7 @@ const TagMultiSelectFormItem: FC<TagSelectFormItemProps> = (props) => {
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={props.dataSource}
     />

@@ -255,7 +255,7 @@ const MessageDialogFactory = {
     const root = ReactDOM.createRoot(el);
 
     root.render(
-      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps || {})}>
+      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
         <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
           {children}
         </ModalDialog>

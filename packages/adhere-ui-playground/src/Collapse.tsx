@@ -43,9 +43,9 @@ const Collapse: FC<CollapseProps> = (props) => {
         className={classNames(
           `${selectorPrefix}-header`,
           border ? `${selectorPrefix}-header-border` : '',
-          headerClassName || '',
+          headerClassName ?? '',
         )}
-        style={headerStyle || {}}
+        style={headerStyle ?? {}}
         onClickCapture={onClickHeader}
       >
         <div className={`${selectorPrefix}-header-collapse`}>
@@ -71,10 +71,10 @@ const Collapse: FC<CollapseProps> = (props) => {
             className={classNames(
               `${selectorPrefix}-body`,
               border ? `${selectorPrefix}-body-border` : '',
-              bodyClassName || '',
+              bodyClassName ?? '',
               !!title || !!extra ? `${selectorPrefix}-body-exists-header` : '',
             )}
-            style={bodyStyle || {}}
+            style={bodyStyle ?? {}}
           >
             {children}
           </div>

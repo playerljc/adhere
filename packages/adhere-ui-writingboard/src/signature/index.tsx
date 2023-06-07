@@ -62,7 +62,7 @@ const Signature: ForwardRefRenderFunction<SignatureHandle, SignatureProps> = (
                   {Intl.v('保存')}
                 </Button>,
               ],
-              ...(modalProps || {}),
+              ...(modalProps ?? {}),
             },
             children: <SignatureCore ref={coreRef} {...coreProps} />,
           });
@@ -84,7 +84,7 @@ const Signature: ForwardRefRenderFunction<SignatureHandle, SignatureProps> = (
   }));
 
   return (
-    <div className={classNames(selectorPrefix, className)} style={style || {}}>
+    <div className={classNames(selectorPrefix, className)} style={style ?? {}}>
       {renderMask()}
       {renderInner()}
     </div>

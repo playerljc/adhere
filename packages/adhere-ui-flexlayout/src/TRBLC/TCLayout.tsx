@@ -47,14 +47,14 @@ const TCLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-tc-layout`, props?.className)}
         direction="vertical"
       >
-        <Fixed {...(TProps || {})}>{tProps?.render?.()}</Fixed>
-        <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
+        <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+        <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
       </FlexLayout>
     </div>
   );

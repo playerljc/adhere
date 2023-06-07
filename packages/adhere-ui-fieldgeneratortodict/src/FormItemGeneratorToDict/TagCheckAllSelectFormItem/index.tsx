@@ -102,7 +102,7 @@ const TagSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={props.dataSource}
     />

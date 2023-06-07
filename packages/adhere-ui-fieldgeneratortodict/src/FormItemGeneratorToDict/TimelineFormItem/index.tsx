@@ -27,7 +27,7 @@ const TimelineFormItem: FC<TimelineFormItemProps> = ({ firstLoading, renderEmpty
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
     >
-      <Timeline {...(props || {})} />
+      <Timeline {...(props ?? {})} />
     </Suspense.Sync>
   );
 };

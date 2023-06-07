@@ -77,7 +77,7 @@ export default {
   // @ts-ignore
   fit(map, points: BMap.Point[], config): Promise<any> {
     return new Promise((resolve) => {
-      const viewport = map.getViewport(points, config || {});
+      const viewport = map.getViewport(points, config ?? {});
 
       map.centerAndZoom(viewport.center, viewport.zoom);
 

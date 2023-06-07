@@ -12,7 +12,7 @@ export default function <P, S>(SuperClass) {
       super(props);
 
       this.state = {
-        ...(this.state || {}),
+        ...(this.state ?? {}),
         ...this.props.defaultValues,
       };
 

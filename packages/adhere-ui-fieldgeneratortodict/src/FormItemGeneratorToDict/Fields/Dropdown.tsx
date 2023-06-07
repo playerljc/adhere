@@ -42,7 +42,7 @@ setItem('Dropdown', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
     <DropdownFormItem
       {...props}
       menu={{
-        ...(props.menu || {}),
+        ...(props.menu ?? {}),
         items: dataSource,
       }}
     />
@@ -81,7 +81,7 @@ setItem('DropdownDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props 
     <DropdownFormItem
       {...props}
       menu={{
-        ...(props.menu || {}),
+        ...(props.menu ?? {}),
         items: data,
       }}
     />

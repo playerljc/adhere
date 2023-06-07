@@ -74,24 +74,24 @@ const CRBLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-crb-layout`, props?.className)}
         direction="vertical"
       >
-        <Auto {...(autoWrapProps || {})} fit={false} className={autoWrapClassList}>
+        <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
-            {...(autoInnerProps || {})}
+            {...(autoInnerProps ?? {})}
             className={autoInnerClassList}
             direction="horizontal"
           >
-            <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
-            <Fixed {...(RProps || {})}>{rProps?.render?.()}</Fixed>
+            <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+            <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>
 
-        <Fixed {...(BProps || {})}>{bProps?.render?.()}</Fixed>
+        <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>
   );

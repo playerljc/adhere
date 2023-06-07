@@ -49,8 +49,8 @@ function getOSMTileLayer(
   },
 ) {
   return new Tile({
-    source: getOSM(sourceOptions || {}),
-    ...(options || {}),
+    source: getOSM(sourceOptions ?? {}),
+    ...(options ?? {}),
   });
 }
 
@@ -66,8 +66,8 @@ function getXYZTileLayer(
   },
 ) {
   return new Tile({
-    source: getXYZ(sourceOptions || {}),
-    ...(options || {}),
+    source: getXYZ(sourceOptions ?? {}),
+    ...(options ?? {}),
   });
 }
 
@@ -83,8 +83,8 @@ function getWMTSTileLayer(
   },
 ) {
   return new Tile({
-    source: getWMTS(sourceOptions || {}),
-    ...(options || {}),
+    source: getWMTS(sourceOptions ?? {}),
+    ...(options ?? {}),
   });
 }
 
@@ -100,8 +100,8 @@ function getTileWMSTileLayer(
   },
 ) {
   return new Tile({
-    source: getTileWMS(sourceOptions || {}),
-    ...(options || {}),
+    source: getTileWMS(sourceOptions ?? {}),
+    ...(options ?? {}),
   });
 }
 

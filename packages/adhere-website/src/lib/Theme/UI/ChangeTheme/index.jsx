@@ -11,18 +11,25 @@ import styles from './index.less';
 
 const { Option } = Select;
 
+/**
+ * ChangeTheme
+ * @param className
+ * @param style
+ * @return {JSX.Element}
+ */
 export default ({ className, style }) => {
   const [theme, setTheme] = useState(getThemeKey());
 
   return (
     <div className={classNames(styles.Wrap, className)} style={style ?? {}}>
       <Select
+        allowClear={false}
+        value={theme}
         onChange={(t) => {
           setTheme(t);
           setSystemTheme(t);
           render();
         }}
-        value={theme}
       >
         {getThemeKeys().map((key) => (
           <Option key={key} value={key}>

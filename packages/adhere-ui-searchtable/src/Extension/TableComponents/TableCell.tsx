@@ -38,17 +38,17 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
   const styleList = useMemo(() => {
     if (column && 'align' in column) {
       return {
-        ...(restProps.style || {}),
+        ...(restProps.style ?? {}),
         textAlign: column.align,
       };
     }
-    return restProps?.style || {};
+    return restProps?.style ?? {};
   }, [restProps]);
 
   // 默认的row组件是一个td
   // ant-table-cell-with-append 这个是treeData的样式
   const tdREL = (
-    <td {...(restProps || {})} style={styleList}>
+    <td {...(restProps ?? {})} style={styleList}>
       {restProps?.children}
     </td>
   );

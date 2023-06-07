@@ -92,7 +92,7 @@ class SectorGeometry extends Geometry implements ISectorGeometry {
 
     const targetStyle = {
       ...GeometryStyle,
-      ...(style || {}),
+      ...(style ?? {}),
     };
 
     ctx.beginPath();

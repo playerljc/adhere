@@ -103,7 +103,7 @@ const EditableTableControl: FC<EditorTableControlProps> = ({
   return (
     <div
       className={classNames(`${selectorPrefix}-editor-table-control`, className)}
-      style={styles || {}}
+      style={styles ?? {}}
     >
       <ConditionalRender
         conditional={!context?.context.state.isTableEditor}

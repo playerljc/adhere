@@ -10,7 +10,7 @@ import { DropdownFormItemProps } from '../../types';
  * @constructor
  */
 const DropdownFormItem: FC<DropdownFormItemProps> = (props) => {
-  return <Dropdown {...(props || {})} />;
+  return <Dropdown {...(props ?? {})} />;
 };
 
 export default DropdownFormItem;

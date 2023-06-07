@@ -36,8 +36,8 @@ const Table: FC<TableProps> = (props) => {
             return (
               <th
                 {...thProps}
-                className={classNames(`${selectorPrefix}-header-column`, className || '')}
-                style={{ textAlign: align || 'left', ...(style || {}) }}
+                className={classNames(`${selectorPrefix}-header-column`, className ?? '')}
+                style={{ textAlign: align || 'left', ...(style ?? {}) }}
               >
                 {column.title || '-'}
               </th>
@@ -82,10 +82,10 @@ const Table: FC<TableProps> = (props) => {
   }
 
   return (
-    <div className={classNames(`${selectorPrefix}`, className || '')} style={style || {}}>
+    <div className={classNames(`${selectorPrefix}`, className ?? '')} style={style ?? {}}>
       <table
-        className={classNames(`${selectorPrefix}-inner`, tableClassName || '')}
-        style={tableStyle || {}}
+        className={classNames(`${selectorPrefix}-inner`, tableClassName ?? '')}
+        style={tableStyle ?? {}}
       >
         {renderHeader()}
         {renderBody()}

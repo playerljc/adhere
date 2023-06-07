@@ -13,7 +13,7 @@ import {
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
-import { getThemeValue, setTheme } from '@/lib/Theme/Util';
+import themeToken, { getThemeValue, setTheme } from '@/lib/Theme/Util';
 
 import SelfUtil from './util';
 
@@ -24,19 +24,36 @@ import '@baifendian/adhere/lib/css.less';
 // import '@baifendian/adhere/lib/index.less';
 import styles from './index.less';
 
+let root;
+let RouterConfig;
+let lang;
+let direction;
+
+/**
+ * initMessageDialog
+ * @description 初始化messageDialog
+ * @param params configProviderProps
+ */
 function initMessageDialog(params) {
   MessageDialog.setAntdConfigProviderProps(params);
 }
 
+/**
+ * Root
+ * @return {JSX.Element}
+ * @constructor
+ */
 function Root() {
   const themeValue = getThemeValue();
+
+  const colorPrimary = themeToken.getCommonPrimaryColor();
 
   const configProviderProps = {
     direction,
     theme: {
       token: {
-        colorPrimary: themeValue.token['common-primary-color'],
-        colorLink: themeValue.token['common-primary-color'],
+        colorPrimary,
+        colorLink: colorPrimary,
       },
       algorithm: themeValue.algorithm,
     },
@@ -59,7 +76,7 @@ function Root() {
             }, {}),
           }}
           theme={{
-            colorPrimary: themeValue.token['common-primary-color'],
+            colorPrimary,
             colorTextBase: themeValue.mapToken.colorTextBase,
             colorBgBase: themeValue.mapToken.colorBgBase,
             colorBorderBase: themeValue.mapToken.colorBorder,
@@ -85,25 +102,33 @@ function Root() {
 
 /**
  * render
+ * @description render
  */
-export function render() {
+function render() {
   root.render(<Root />);
 }
 
-// 配置字典
-DictConfig();
+(function () {
+  // 配置字典
+  DictConfig();
 
-setTheme('default');
+  // 设置缺省主题
+  setTheme('default');
 
-SelfUtil.initDirection();
+  // 设置方向
+  SelfUtil.initDirection();
 
-const direction = SelfUtil.getDirection();
+  // 获取方向
+  direction = SelfUtil.getDirection();
 
-// 获取当前语言
-const lang = Util.getLang();
+  // 获取当前语言
+  lang = Util.getLang();
 
-let RouterConfig;
+  // 设置root
+  root = ReactDOM.createRoot(document.getElementById('app'));
 
-const root = ReactDOM.createRoot(document.getElementById('app'));
+  // render
+  render();
+})();
 
-render();
+export { render };

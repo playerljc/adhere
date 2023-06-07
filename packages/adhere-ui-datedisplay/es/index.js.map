@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import DateDisplay from './datedisplay';\r\nexport default DateDisplay;\r\n"],"names":["DateDisplay"],"mappings":"OAAOA,gBAAiB,+BACTA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import DateDisplay from './datedisplay';\nexport default DateDisplay;\n"],"names":["DateDisplay"],"mappings":"OAAOA,gBAAiB,+BACTA"}

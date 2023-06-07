@@ -44,14 +44,14 @@ const CRLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-cr-layout`, props?.className)}
         direction="horizontal"
       >
-        <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
-        <Fixed {...(RProps || {})}>{rProps?.render?.()}</Fixed>
+        <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+        <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>
   );

@@ -16,7 +16,7 @@ import { Link } from '@ctsj/router';
  */
 export default ({ className, style, record, rowIndex, dataIndex, to, children }) => {
   return (
-    <Link className={className || ''} style={style || {}} to={to}>
+    <Link className={className ?? ''} style={style ?? {}} to={to}>
       {children ? children({ record, rowIndex, dataIndex }) : record[dataIndex]}
     </Link>
   );

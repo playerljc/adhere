@@ -20,7 +20,7 @@ class Response {
 
   constructor(options: ResponseOptions) {
     this.requestId = options.requestId;
-    this.headers = options.headers || {};
+    this.headers = options.headers ?? {};
     this.statusCode = options.statusCode || 0;
     this.stateMessage = options.stateMessage || '';
     this.body = options.body;

@@ -63,7 +63,7 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
     <Overlay
       ref={overlayRef}
       {...(overlayProps as any)}
-      className={classNames(`${_selectorPrefix}`, overlayProps.className || '')}
+      className={classNames(`${_selectorPrefix}`, overlayProps.className ?? '')}
       collapse={collapse}
     >
       <VerticalFlexLayout

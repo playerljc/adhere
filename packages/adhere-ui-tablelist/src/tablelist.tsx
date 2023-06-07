@@ -89,7 +89,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   }
 
   static getDerivedStateFromProps(nextProps: Readonly<TableListProps<object>>, prevState: any) {
-    const { dataSource } = nextProps[nextProps.mode || 'table'] || {};
+    const { dataSource } = nextProps[nextProps.mode || 'table'] ?? {};
     if (!nextProps.request && prevState?.firstLoading && dataSource) {
       return {
         firstLoading: false,
@@ -118,7 +118,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   }
 
   shouldComponentUpdate(nextProps: TableListProps<RecordType>, nextState: any) {
-    const nextModeProps = nextProps[nextProps.mode || 'table'] || {};
+    const nextModeProps = nextProps[nextProps.mode || 'table'] ?? {};
     const modeProps = this.getModeProps();
     if (
       nextState.selectAll &&

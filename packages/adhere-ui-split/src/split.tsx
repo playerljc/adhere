@@ -54,6 +54,7 @@ const SplitGroup: FC<SplitGroupProps> = ({ children, ...props }) => {
 const Split: FC<SplitProps> = (props) => {
   const {
     className = '',
+    style,
     direction = 'vertical',
     size = 20,
     isUseMedia = false,
@@ -79,7 +80,12 @@ const Split: FC<SplitProps> = (props) => {
     };
   }, [direction, size]);
 
-  return <div className={classNames(selectorPrefix, className || '')} style={getStyle()} />;
+  return (
+    <div
+      className={classNames(selectorPrefix, className ?? '')}
+      style={{ ...getStyle(), ...(style ?? {}) }}
+    />
+  );
 };
 
 // @ts-ignore

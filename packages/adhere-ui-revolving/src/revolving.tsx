@@ -94,17 +94,17 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
 
   return (
     <div
-      className={classNames(selectorPrefix, 'swiper-container', className || '')}
-      style={style || {}}
+      className={classNames(selectorPrefix, 'swiper-container', className ?? '')}
+      style={style ?? {}}
       ref={el}
     >
       <div
         className={classNames(
           `${selectorPrefix}-wrapper`,
           'swiper-wrapper',
-          classNameWrapper || '',
+          classNameWrapper ?? '',
         )}
-        style={styleWrapper || {}}
+        style={styleWrapper ?? {}}
         ref={wrapperEl}
       >
         {children}

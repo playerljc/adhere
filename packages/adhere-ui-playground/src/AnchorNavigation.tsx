@@ -23,7 +23,7 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
     children,
   } = props;
 
-  const [activeAnchor, setActiveAnchor] = useState<string>(props.activeAnchor || '');
+  const [activeAnchor, setActiveAnchor] = useState<string>(props.activeAnchor ?? '');
 
   const anchorRef = useRef<HTMLUListElement>(null);
   const anchorDimensionIndex = useRef<
@@ -155,7 +155,7 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
    * @description activeAnchor change
    */
   useEffect(() => {
-    setActiveAnchor(props.activeAnchor || '');
+    setActiveAnchor(props.activeAnchor ?? '');
   }, [props.activeAnchor]);
 
   /**

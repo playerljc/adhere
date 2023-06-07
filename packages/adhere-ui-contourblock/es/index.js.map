@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ContourBlock from './contourblock';\r\nexport default ContourBlock;\r\n"],"names":["ContourBlock"],"mappings":"OAAOA,iBAAkB,gCACVA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ContourBlock from './contourblock';\nexport default ContourBlock;\n"],"names":["ContourBlock"],"mappings":"OAAOA,iBAAkB,gCACVA"}

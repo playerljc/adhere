@@ -156,12 +156,12 @@ const WangEditorSandbox: ForwardRefRenderFunction<
           <Toolbar
             editor={editor.current}
             {...defaultToolBarConfig}
-            {...(props.toolBarProps || {})}
+            {...(props.toolBarProps ?? {})}
           />
           <Editor
             ref={ref}
             {...defaultEditorProps}
-            {...(props.editorProps || {})}
+            {...(props.editorProps ?? {})}
             onCreated={(_editor) => {
               editor.current = _editor;
               render().then(() => {
@@ -335,7 +335,7 @@ const WangEditorSandbox: ForwardRefRenderFunction<
           editor: !('readOnly' in props) || !props.readOnly,
         })}">
         <body>
-          <div id="${editorId}" style="${wangEditorStyle || ''}"></div>
+          <div id="${editorId}" style="${wangEditorStyle ?? ''}"></div>
         </body>
         </html>
         `,
@@ -399,8 +399,8 @@ const WangEditorSandbox: ForwardRefRenderFunction<
   return (
     <div
       ref={wrapRef}
-      className={classNames(`${selectorPrefix}`, wrapClassName || '')}
-      style={wrapStyle || {}}
+      className={classNames(`${selectorPrefix}`, wrapClassName ?? '')}
+      style={wrapStyle ?? {}}
     >
       <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
     </div>

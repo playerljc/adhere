@@ -50,7 +50,7 @@ class TextGeometry extends Geometry implements ITextGeometry {
   draw(ctx: CanvasRenderingContext2D, style: ITextStyle): void {
     ctx.save();
 
-    const targetStyle = { ...TextStyle, ...(style || {}) };
+    const targetStyle = { ...TextStyle, ...(style ?? {}) };
 
     ctx.beginPath();
 

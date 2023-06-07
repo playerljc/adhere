@@ -488,9 +488,9 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
       className={classNames(
         selectorPrefix,
         `${selectorPrefix}-config-position-${position}`,
-        className || '',
+        className ?? '',
       )}
-      style={style || {}}
+      style={style ?? {}}
       ref={el}
     >
       <div className={`${selectorPrefix}-highlighted`} ref={highlightedEl} />

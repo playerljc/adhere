@@ -25,7 +25,7 @@ class ResourceStateManager<
         context={this}
         {...this.props}
         antdListProps={{
-          ...(this.props.antdListProps || {}),
+          ...(this.props.antdListProps ?? {}),
           grid: { gutter: 16, column: 8 },
         }}
         defaultValues={{

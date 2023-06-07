@@ -57,7 +57,7 @@ const PlayGroundPage: ForwardRefRenderFunction<HTMLDivElement, PlayGroundPagePro
         scrollEl: scrollEl!,
       }}
     >
-      <div ref={ref} className={`${classNames(selectPrefix, className || '')}`} style={style || {}}>
+      <div ref={ref} className={`${classNames(selectPrefix, className ?? '')}`} style={style ?? {}}>
         <AnchorNavigation anchors={getAnchors()} anchorPosition={anchorPosition}>
           <Space.Group direction="vertical">{children}</Space.Group>
         </AnchorNavigation>

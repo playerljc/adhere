@@ -33,7 +33,7 @@ const StepsFormItem: FC<StepsFormItemProps> = ({ firstLoading, renderEmpty, ...p
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
     >
-      <Steps {...(props || {})} current={current} />
+      <Steps {...(props ?? {})} current={current} />
     </Suspense.Sync>
   );
 };

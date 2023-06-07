@@ -76,7 +76,7 @@ const TableSelectFormItem: FC<TableSelectFormItemProps> = ({ dataSource, ...prop
         onClear: () => {
           setInputValue('');
         },
-        ...(props.selectProps || {}),
+        ...(props.selectProps ?? {}),
       }}
       dataSource={dataSource.map((t) => ({
         label: t[props.labelKey || 'name'],

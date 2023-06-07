@@ -145,8 +145,8 @@ abstract class Suspense<
   render() {
     return (
       <div
-        className={classNames(selectorPrefix, this.props.className || '')}
-        style={this.props.style || {}}
+        className={classNames(selectorPrefix, this.props.className ?? '')}
+        style={this.props.style ?? {}}
       >
         {this.renderDispatch()}
       </div>

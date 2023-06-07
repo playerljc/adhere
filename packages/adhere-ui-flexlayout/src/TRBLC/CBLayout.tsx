@@ -46,14 +46,14 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle || {}}>
+    <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
-        {...(props || {})}
+        {...(props ?? {})}
         className={classNames(`${selectorPrefix}-cb-layout`, props?.className)}
         direction="vertical"
       >
-        <Auto {...(CProps || {})}>{cProps?.render?.()}</Auto>
-        <Fixed {...(BProps || {})}>{bProps?.render?.()}</Fixed>
+        <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+        <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>
   );
