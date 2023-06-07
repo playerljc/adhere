@@ -10,6 +10,8 @@
   - 加入图片加载错误的处理
 * **adhere-ui-ellipsis**
   - 加入adhere-ui-ellipsis组件
+* **adhere-ui-searchtable**
+  - 分页加入showSizeChanger属性
 
 # 2.8.1
 
