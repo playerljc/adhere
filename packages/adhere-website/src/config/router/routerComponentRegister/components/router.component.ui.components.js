@@ -152,3 +152,7 @@ export const FieldGeneratorToDict = lazy(() =>
 export const RichTextSandBox = lazy(() =>
   import(/* webpackChunkName: "richtextsandbox" */ '@/components/ui/richtextsandbox'),
 );
+
+export const Ellipsis = lazy(() =>
+  import(/* webpackChunkName: "ellipsis" */ '@/components/ui/ellipsis'),
+);

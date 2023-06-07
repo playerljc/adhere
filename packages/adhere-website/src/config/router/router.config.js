@@ -81,6 +81,7 @@ const {
   ConfigProvider,
   IframeIO,
   RichTextSandBox,
+  Ellipsis,
 } = Components;
 
 export default () => [
@@ -432,6 +433,11 @@ export default () => [
                 path: '/adhere/component/ui/richtextsandbox',
                 name: 'RichTextSandBox',
                 component: RichTextSandBox,
+              },
+              {
+                path: '/adhere/component/ui/ellipsis',
+                name: 'Ellipsis',
+                component: Ellipsis,
               },
             ],
           },

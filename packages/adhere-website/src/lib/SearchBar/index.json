@@ -269,7 +269,11 @@
     "group": "组件 - UI",
     "path": "/adhere/component/ui/richtextsandbox"
   },
-
+  {
+    "kw": ["文字省略", "Ellipsis"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/ellipsis"
+  },
   {
     "kw": ["组件强制刷新", "ForceUpdate"],
     "group": "组件 - Util",
