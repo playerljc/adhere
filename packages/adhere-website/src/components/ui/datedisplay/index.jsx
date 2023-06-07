@@ -483,115 +483,6 @@ export default () => {
                 info: '本地化',
               },
             },
-            codeText: `
-  import React from 'react';
-  import { DateDisplay, TableGridLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <TableGridLayout
-      data={[
-        {
-          name: 'g1',
-          width: '100%',
-          columnCount: 1,
-          colgroup: [, 'auto'],
-          data: [
-            {
-              key: 'LT',
-              label: <Label>LT</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayLT value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'LTS',
-              label: <Label>LTS</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayLTS value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'L',
-              label: <Label>L</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayL value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'LL',
-              label: <Label>LL</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayLL value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'LLL',
-              label: <Label>LLL</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayLLL value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'LLLL',
-              label: <Label>LLLL</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayLLLL value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'l',
-              label: <Label>l</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayl value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'll',
-              label: <Label>ll</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayll value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'lll',
-              label: <Label>lll</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplaylll value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-            {
-              key: 'llll',
-              label: <Label>llll</Label>,
-              value: (
-                <Value>
-                  <DateDisplay.DateDisplayllll value={Date.now()} locale="zh-cn" />
-                </Value>
-              ),
-            },
-          ],
-        },
-      ]}
-    />
-  )
-            `,
             type: 'PlayGround',
             renderChildren: () => (
               <TableGridLayout
@@ -607,7 +498,7 @@ export default () => {
                         label: <Label>LT</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayLT value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="LT" />
                           </Value>
                         ),
                       },
@@ -616,7 +507,7 @@ export default () => {
                         label: <Label>LTS</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayLTS value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="LTS" />
                           </Value>
                         ),
                       },
@@ -625,7 +516,7 @@ export default () => {
                         label: <Label>L</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayL value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="L" />
                           </Value>
                         ),
                       },
@@ -634,7 +525,7 @@ export default () => {
                         label: <Label>LL</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayLL value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="LL" />
                           </Value>
                         ),
                       },
@@ -643,7 +534,7 @@ export default () => {
                         label: <Label>LLL</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayLLL value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="LLL" />
                           </Value>
                         ),
                       },
@@ -652,7 +543,7 @@ export default () => {
                         label: <Label>LLLL</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayLLLL value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="LLLL" />
                           </Value>
                         ),
                       },
@@ -661,7 +552,7 @@ export default () => {
                         label: <Label>l</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayl value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="l" />
                           </Value>
                         ),
                       },
@@ -670,7 +561,7 @@ export default () => {
                         label: <Label>ll</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayll value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="ll" />
                           </Value>
                         ),
                       },
@@ -679,7 +570,7 @@ export default () => {
                         label: <Label>lll</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplaylll value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="lll" />
                           </Value>
                         ),
                       },
@@ -688,7 +579,16 @@ export default () => {
                         label: <Label>llll</Label>,
                         value: (
                           <Value>
-                            <DateDisplay.DateDisplayllll value={Date.now()} locale="zh-cn" />
+                            <DateDisplay.DateDisplay value={Date.now()} format="llll" />
+                          </Value>
+                        ),
+                      },
+                      {
+                        key: 'L LT',
+                        label: <Label>L LT</Label>,
+                        value: (
+                          <Value>
+                            <DateDisplay.DateDisplay value={Date.now()} format="L LT" />
                           </Value>
                         ),
                       },
@@ -729,7 +629,7 @@ export default () => {
                 <Value>
                   <DateDisplay.DateDisplay
                     value={Date.now()}
-                    locale="zh-cn"
+
                     format="L LT"
                   />
                 </Value>
@@ -742,7 +642,7 @@ export default () => {
                 <Value>
                   <DateDisplay.DateDisplay
                     value={Date.now()}
-                    locale="zh-cn"
+
                     format="[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]"
                   />
                 </Value>
@@ -766,25 +666,11 @@ export default () => {
                     data: [
                       {
                         key: 'format',
-                        label: <Label>L LT</Label>,
-                        value: (
-                          <Value>
-                            <DateDisplay.DateDisplay
-                              value={Date.now()}
-                              locale="zh-cn"
-                              format="L LT"
-                            />
-                          </Value>
-                        ),
-                      },
-                      {
-                        key: 'format',
                         label: <Label>[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]</Label>,
                         value: (
                           <Value>
                             <DateDisplay.DateDisplay
                               value={Date.now()}
-                              locale="zh-cn"
                               format="[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]"
                             />
                           </Value>
@@ -1171,187 +1057,6 @@ export default () => {
                 desc: '自定义的format字串',
                 type: 'string',
                 defaultVal: '',
-              },
-            ],
-          },
-
-          {
-            border: true,
-            title: 'DateDisplayLT',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayLTS',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayL',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayLL',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayLLL',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayLLLL',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayl',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayll',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplaylll',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
-              },
-            ],
-          },
-          {
-            border: true,
-            title: 'DateDisplayllll',
-            data: [
-              {
-                params: 'value',
-                desc: '值',
-                type: 'Date',
-                defaultVal: '',
-              },
-              {
-                params: 'locale',
-                desc: '国际化',
-                type: 'string',
-                defaultVal: 'zh-cn',
               },
             ],
           },
