@@ -45,6 +45,7 @@
     "@baifendian/adhere-ui-contourblock": "^2.7.7",
     "@baifendian/adhere-ui-css": "^2.8.0",
     "@baifendian/adhere-ui-datedisplay": "^2.8.0",
+    "@baifendian/adhere-ui-ellipsis": "^2.8.0",
     "@baifendian/adhere-ui-fieldgeneratortodict": "^2.8.0",
     "@baifendian/adhere-ui-flexlayout": "^2.8.0",
     "@baifendian/adhere-ui-fontsizesetting": "^2.8.1",
