@@ -78,6 +78,14 @@ keys.forEach((key) => {
       </ConditionalRender>
     );
   });
+
+  Components[`DateDisplay${name}`].toString = ({ value, split1 = '-', split2 = ':' }) => {
+    const dict = Resource.Dict.value[key].value;
+
+    return !!value
+      ? dayjs(value).format(dict instanceof Function ? dict(split1, split2) : dict)
+      : '';
+  };
 });
 
 /**
@@ -93,11 +101,18 @@ Components[`DateDisplayFromNow`] = memo<{
   <ConditionalRender conditional={!!value}>
     {() =>
       dayjs(value)
-        .locale(globalLocal ?? locale)
-        .fromNow(now)
+        ?.locale?.(globalLocal ?? locale)
+        ?.fromNow?.(now)
     }
   </ConditionalRender>
 ));
+
+Components[`DateDisplayFromNow`].toString = ({ value, locale, now = false }) =>
+  !!value
+    ? dayjs(value)
+        .locale(globalLocal ?? locale)
+        .fromNow(now)
+    : '';
 
 /**
  * DateDisplayToNow
@@ -117,6 +132,13 @@ Components[`DateDisplayToNow`] = memo<{
     }
   </ConditionalRender>
 ));
+
+Components[`DateDisplayToNow`].toString = ({ value, locale, now = false }) =>
+  !!value
+    ? dayjs(value)
+        .locale(globalLocal ?? locale)
+        .toNow(now)
+    : '';
 
 /**
  * DateDisplay
@@ -138,5 +160,14 @@ Components[`DateDisplay`] = memo<{
     </ConditionalRender>
   );
 });
+
+Components[`DateDisplay`].toString = ({ value, locale, format }) => {
+  const targetLocale = locale ?? globalLocal;
+
+  // @ts-ignore
+  const targetFormat = customLocaleFormats?.[targetLocale]?.[format] ?? format;
+
+  return !!value ? dayjs(value).locale(targetLocale).format(targetFormat) : '';
+};
 
 export default Components;
