@@ -16,6 +16,23 @@
     // 单行...
     &.adhere-ui-ellipsis-line-ellipsis {
       .adhere-text-inline-overflow();
+
+      > p,
+      > div,
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6,
+      > article,
+      > aside,
+      > section,
+      > nav,
+      > footer,
+      > addres {
+        .adhere-text-inline-overflow();
+      }
     }
 
     // 多行...
@@ -27,11 +44,51 @@
       text-align: justify;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
+
+      > p,
+      > div,
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6,
+      > article,
+      > aside,
+      > section,
+      > nav,
+      > footer,
+      > addres {
+        .adhere-word-break();
+
+        display: -webkit-box;
+        overflow: hidden;
+        text-align: justify;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+      }
     }
 
     // 换行
     &.adhere-ui-ellipsis-wrap {
       .adhere-word-break();
+
+      > p,
+      > div,
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6,
+      > article,
+      > aside,
+      > section,
+      > nav,
+      > footer,
+      > addres {
+        .adhere-word-break();
+      }
     }
   }
 }
