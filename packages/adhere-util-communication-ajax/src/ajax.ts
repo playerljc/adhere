@@ -98,7 +98,7 @@ class Ajax {
    * @param data
    * @param arg
    */
-  get({ data, ...arg }: ISendArg) {
+  get(this: Ajax, { data, ...arg }: ISendArg) {
     return new Promise((resolve, reject) => {
       const { xhr } = sendPrepare.call(
         this,
@@ -127,7 +127,7 @@ class Ajax {
    * post
    * @param params
    */
-  post(params: ISendArg) {
+  post(this: Ajax, params: ISendArg) {
     return complexRequest.call(this, 'post', params);
   }
 
@@ -135,7 +135,7 @@ class Ajax {
    * path
    * @param params
    */
-  path(params: ISendArg) {
+  path(this: Ajax, params: ISendArg) {
     return complexRequest.call(this, 'path', params);
   }
 
@@ -143,7 +143,7 @@ class Ajax {
    * put
    * @param params
    */
-  put(params: ISendArg) {
+  put(this: Ajax, params: ISendArg) {
     return complexRequest.call(this, 'put', params);
   }
 
@@ -151,7 +151,7 @@ class Ajax {
    * delete
    * @param params
    */
-  delete(params: ISendArg) {
+  delete(this: Ajax, params: ISendArg) {
     return complexRequest.call(this, 'delete', params);
   }
 }
@@ -634,7 +634,26 @@ function getSendParams({ data, contentType = '' }) {
     const formData = new FormData(data.form);
 
     Array.from(Object.keys(data.data)).forEach(function (k) {
-      formData.append(k, data.data[k]);
+      // 获取值
+      const value = data.data[k];
+
+      let target = value;
+
+      // 如果值是函数
+      if (value instanceof Function) {
+        target = value();
+      }
+
+      let params = [k];
+
+      if (Array.isArray(target)) {
+        params = [...params, ...target];
+      } else {
+        params = [...params, target];
+      }
+
+      // @ts-ignore
+      formData.append(...params);
       // console.log(k, data.data[k]);
     });
 
