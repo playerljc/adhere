@@ -363,6 +363,25 @@ const EncryptUtil = {
 
     return symmetricDecrypt('TripleDes', pwd, value);
   },
+  /**
+   * dataUrlToBlob
+   * @description base64转换成Blob
+   * @param {string} dataUrl base64
+   * @return {Blob}
+   */
+  dataUrlToBlob(dataUrl: string) {
+    const arr = dataUrl.split(','); //分割为数组，分割到第一个逗号
+    if (arr.length === 0 || arr.length < 2) return null;
+
+    let mime = arr[0]?.match?.(/:(.*?);/)?.[1]; //获取分割后的base64前缀中的类型
+    let bStr = window.atob(arr[1]);
+    let n = bStr.length;
+    let u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bStr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  },
 };
 
 export default EncryptUtil;
