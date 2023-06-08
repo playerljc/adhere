@@ -182,5 +182,12 @@ declare const EncryptUtil: {
      * @return 解密后的字符串
      */
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
+    /**
+     * dataUrlToBlob
+     * @description base64转换成Blob
+     * @param {string} dataUrl base64
+     * @return {Blob}
+     */
+    dataUrlToBlob(dataUrl: string): Blob | null;
 };
 export default EncryptUtil;

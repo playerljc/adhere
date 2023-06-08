@@ -1,3 +1,14 @@
+# 2.9.2
+
+***
+
+2023-06-08
+
+* **adhere-util-communication-ajax**
+  - FormData加入支持传入fileName参数
+* **adhere-util**
+  - 加入dataUrlToBlob方法
+
 # 2.9.1
 
 ***

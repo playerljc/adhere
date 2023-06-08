@@ -38,6 +38,7 @@ declare const _default: {
     symmetricDecryptToRC4(_value?: string, _pwd?: string): any;
     symmetricDecryptToRabbit(_value?: string, _pwd?: string): any;
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
+    dataUrlToBlob(dataUrl: string): Blob | null;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
     /**
      * 函数节流

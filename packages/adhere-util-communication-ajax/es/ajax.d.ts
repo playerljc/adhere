@@ -58,26 +58,26 @@ declare class Ajax {
      * @param data
      * @param arg
      */
-    get({ data, ...arg }: ISendArg): Promise<unknown>;
+    get(this: Ajax, { data, ...arg }: ISendArg): Promise<unknown>;
     /**
      * post
      * @param params
      */
-    post(params: ISendArg): Promise<unknown>;
+    post(this: Ajax, params: ISendArg): Promise<unknown>;
     /**
      * path
      * @param params
      */
-    path(params: ISendArg): Promise<unknown>;
+    path(this: Ajax, params: ISendArg): Promise<unknown>;
     /**
      * put
      * @param params
      */
-    put(params: ISendArg): Promise<unknown>;
+    put(this: Ajax, params: ISendArg): Promise<unknown>;
     /**
      * delete
      * @param params
      */
-    delete(params: ISendArg): Promise<unknown>;
+    delete(this: Ajax, params: ISendArg): Promise<unknown>;
 }
 export default Ajax;
