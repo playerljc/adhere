@@ -52,13 +52,10 @@ let ValidatorRules: ValidatorRulesType;
          * @param value
          */
         validator(_, value) {
-          console.log('value', !value);
-
           if (!value) {
             return Promise.reject();
           }
 
-          console.log('_key', [value, ...(argv?.params || [])]);
           // 调用Validator的指定方法进行校验
           if (!Validator[_key].apply(this, [value, ...(argv?.params || [])])) {
             return Promise.reject(argv?.invalidMessage ?? '');

@@ -7,6 +7,7 @@ import {
   AutoComplete,
   Cascader,
   DatePicker,
+  Form,
   Input,
   InputNumberDecimal1,
   InputNumberDecimal2,
@@ -36,9 +37,9 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="AntHOC">
-        <p>Antd组件的hoc</p>
+        <p>Antd组件HOC和增强</p>
         <ul>
-          <li>对antd一些表单组件进行HOC处理</li>
+          <li>对antd一些组件进行HOC处理同时对有些组件在HOC的同时进行增强处理</li>
         </ul>
       </Section>
 
@@ -225,6 +226,23 @@ export default () => {
   {
     precision: 0,
   }
+                `,
+              },
+              {
+                title: 'Form',
+                mode: 'code',
+                theme: 'eclipse',
+                scope: { React },
+                codeText: `
+  <Form.Item
+    name="email"
+    label="email"
+    rules={[
+      Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' }),
+    ]}
+  >
+    <Input placeholder="email" />
+  </Form.Item>
                 `,
               },
             ],
@@ -552,6 +570,91 @@ export default () => {
                     >
                       提交
                     </SubmitButton>
+                  </dd>
+                </dl>
+
+                <dl>
+                  <dt>
+                    <p>Form</p>
+                  </dt>
+                  <dd>
+                    <p>
+                      对Form的Rules进行增强(
+                      <a target="_blank" href="/adhere/component/util/validator">
+                        使用adhere-util-validator
+                      </a>
+                      )
+                    </p>
+
+                    <Form>
+                      <ul>
+                        <Space.Group direction="vertical">
+                          <li>
+                            <Form.Item
+                              name="email"
+                              label="email"
+                              rules={[
+                                Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' }),
+                              ]}
+                            >
+                              <Input placeholder="email" />
+                            </Form.Item>
+                          </li>
+                          <li>
+                            <Form.Item
+                              name="mime"
+                              label="mime"
+                              rules={[
+                                Form.ValidatorRules.isMimeType({
+                                  invalidMessage: 'MimeType格式错误',
+                                }),
+                              ]}
+                            >
+                              <Input placeholder="mime" />
+                            </Form.Item>
+                          </li>
+                          <li>
+                            <Form.Item
+                              name="hex"
+                              label="hex"
+                              rules={[
+                                Form.ValidatorRules.isHexColor({
+                                  invalidMessage: 'hex值格式错误',
+                                }),
+                              ]}
+                            >
+                              <Input placeholder="hex" />
+                            </Form.Item>
+                          </li>
+                          <li>
+                            <Form.Item
+                              name="ip"
+                              label="ip"
+                              rules={[
+                                Form.ValidatorRules.isIP({
+                                  invalidMessage: 'ip地址格式错误',
+                                }),
+                              ]}
+                            >
+                              <Input placeholder="ip" />
+                            </Form.Item>
+                          </li>
+                          <li>
+                            <Form.Item
+                              name="chinaPhoneNumber"
+                              label="手机卡 + 数据卡 + 上网卡"
+                              rules={[
+                                Form.ValidatorRules.isAllChinaPhoneNumber({
+                                  invalidMessage: '手机卡或数据卡或上网卡格式错误',
+                                }),
+                              ]}
+                            >
+                              <Input placeholder="手机卡 + 数据卡 + 上网卡" />
+                            </Form.Item>
+                          </li>
+                        </Space.Group>
+                      </ul>
+                    </Form>
                   </dd>
                 </dl>
               </Space.Group>
