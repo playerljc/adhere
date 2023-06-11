@@ -1,3 +1,12 @@
+# 2.9.3
+
+***
+
+2023-06-11
+
+* **adhere-ui-anthoc**
+  - Form加入ValidatorRules属性
+
 # 2.9.2
 
 ***
