@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-anthoc",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "description": "Antd组件的hoc",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
