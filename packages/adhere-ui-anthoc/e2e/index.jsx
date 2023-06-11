@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 
 import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
 
+import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
 
 import 'antd/dist/reset.css';
@@ -24,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => {
-        return <AntHOC />;
+        return <FormRulesTest />;
       }}
     </AdhereConfigProvider>
   </ConfigProvider>,
