@@ -225,6 +225,7 @@ declare const _default: {
         rootEl: HTMLElement;
         bodyClickHandler?: Function | undefined;
     }): Function;
+    includeHTML(): void;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

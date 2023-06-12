@@ -515,5 +515,42 @@ export default {
       document.body.removeEventListener('click', onBodyClickHandler);
     };
   },
+  /**
+   * includeHTML
+   * @description 使用ajax方式引入html
+   */
+  includeHTML() {
+    const _self = this;
+
+    /* Loop through a collection of all HTML elements: */
+    const allEls = document.getElementsByTagName('*');
+
+    for (let i = 0; i < allEls.length; i++) {
+      const el = allEls[i];
+      /*search for elements with a certain atrribute:*/
+      const file = el.getAttribute('w3-include-html');
+      if (file) {
+        /* Make an HTTP request using the attribute value as the file name: */
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4) {
+            if (this.status == 200) {
+              el.innerHTML = this.responseText;
+            }
+            if (this.status == 404) {
+              el.innerHTML = 'Page not found.';
+            }
+            /* Remove the attribute, and call this function once more: */
+            el.removeAttribute('w3-include-html');
+            _self.includeHTML();
+          }
+        };
+        xhr.open('GET', file, true);
+        xhr.send();
+        /* Exit the function: */
+        return;
+      }
+    }
+  },
   /**--------------------------dom-end-------------------------**/
 };

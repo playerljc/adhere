@@ -195,5 +195,10 @@ declare const _default: {
         rootEl: HTMLElement;
         bodyClickHandler?: Function;
     }): Function;
+    /**
+     * includeHTML
+     * @description 使用ajax方式引入html
+     */
+    includeHTML(): void;
 };
 export default _default;
