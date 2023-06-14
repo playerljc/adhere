@@ -80,20 +80,16 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
 
   function initEvent() {
     if (Util.isTouch()) {
-      indexInnerEl.current?.addEventListener('click', onClick);
+      indexInnerEl.current?.addEventListener?.('click', onClick);
 
       // 索引touchmove和mousemove
-      indexInnerEl.current?.addEventListener('touchmove', onTouchmove);
-
-      indexInnerEl.current?.addEventListener('touchend', onTouchend);
+      indexInnerEl.current?.addEventListener?.('touchmove', onTouchmove);
+      indexInnerEl.current?.addEventListener?.('touchend', onTouchend);
     } else {
-      indexInnerEl.current?.addEventListener('mousedown', onMousedown);
-
-      indexInnerEl.current?.addEventListener('mousemove', onMousemove);
-
-      indexInnerEl.current?.addEventListener('mouseleave', onMouseleave);
-
-      indexInnerEl.current?.addEventListener('mouseup', onMouseup);
+      indexInnerEl.current?.addEventListener?.('mousedown', onMousedown);
+      indexInnerEl.current?.addEventListener?.('mousemove', onMousemove);
+      indexInnerEl.current?.addEventListener?.('mouseleave', onMouseleave);
+      indexInnerEl.current?.addEventListener?.('mouseup', onMouseup);
 
       typeof window !== 'undefined' && window.addEventListener('resize', onResize);
     }
