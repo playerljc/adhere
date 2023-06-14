@@ -33,9 +33,9 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
     children,
   } = props;
 
-  const el = useRef<HTMLDivElement>(null);
-  const fixedEl = useRef<HTMLDivElement>(null);
-  const innerEl = useRef<HTMLDivElement>(null);
+  const el = useRef<HTMLDivElement | null>(null);
+  const fixedEl = useRef<HTMLDivElement | null>(null);
+  const innerEl = useRef<HTMLDivElement | null>(null);
   const key = useRef(false);
   const index = useRef<IndexItem[]>([]);
   const headerEls = useRef<NodeList>();
@@ -110,7 +110,7 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
     }
 
     if (target) {
-      if (preScrollObj.current && preScrollObj.current.index === target.index) {
+      if (preScrollObj.current && preScrollObj.current?.index === target.index) {
         return false;
       } else {
         preScrollObj.current = target;
@@ -129,13 +129,13 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
   function initial() {
     key.current = false;
     index.current = [];
-    headerEls.current = el.current?.querySelectorAll<HTMLElement>(`.${selectorPrefix}-item-header`);
+    headerEls.current = el.current?.querySelectorAll(`.${selectorPrefix}-item-header`);
 
     createIndex();
     position();
 
-    innerEl.current?.removeEventListener('scroll', onScroll);
-    innerEl.current?.addEventListener('scroll', onScroll);
+    innerEl.current?.removeEventListener?.('scroll', onScroll);
+    innerEl.current?.addEventListener?.('scroll', onScroll);
   }
 
   /**
@@ -307,15 +307,15 @@ const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayout
   }, []);
 
   return (
-    <div className={classNames(selectorPrefix, className)} style={style ?? {}} ref={el}>
+    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
       <div
-        className={classNames(`${selectorPrefix}-fixed`, fixedClassName)}
+        className={classNames(`${selectorPrefix}-fixed`, fixedClassName ?? '')}
         style={fixedStyle ?? {}}
         ref={fixedEl}
       />
 
       <div
-        className={classNames(`${selectorPrefix}-inner`, innerClassName)}
+        className={classNames(`${selectorPrefix}-inner`, innerClassName ?? '')}
         style={innerStyle ?? {}}
         ref={innerEl}
       >
