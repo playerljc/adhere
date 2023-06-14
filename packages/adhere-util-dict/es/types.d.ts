@@ -28,7 +28,7 @@ export interface DictFunctionComponentProps extends DictPromiseComponentProps {
     isUseMemo?: boolean;
 }
 export interface DictComponentHandler {
-    reset: () => Promise<any>;
+    reset: () => Promise<any> | undefined;
 }
 export interface DictReactComponentObj {
     [prop: string | symbol]: any;

@@ -36,7 +36,7 @@ export interface DictFunctionComponentProps extends DictPromiseComponentProps {
 }
 
 export interface DictComponentHandler {
-  reset: () => Promise<any>;
+  reset: () => Promise<any> | undefined;
 }
 
 export interface DictReactComponentObj {
