@@ -1,3 +1,14 @@
+# 2.9.4
+
+***
+
+2023-06-15
+
+* **adhere-util-dict**
+  - 修复refresh的BUG
+* **adhere-util**
+  - dom加入includeHTML方法
+
 # 2.9.3
 
 ***
