@@ -43,9 +43,9 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
   const [activeKey, setActiveKey] = useSetState(props.activeKey);
 
   const ease = useRef(IScroll.utils.ease);
-  const el = useRef<HTMLDivElement>(null);
-  const menuEl = useRef<HTMLDivElement>(null);
-  const menuInnerEl = useRef<HTMLUListElement>(null);
+  const el = useRef<HTMLDivElement | null>(null);
+  const menuEl = useRef<HTMLDivElement | null>(null);
+  const menuInnerEl = useRef<HTMLUListElement | null>(null);
   const scroll = useRef<IScroll>();
 
   function findElByKey(key) {
@@ -73,7 +73,7 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
 
     if (!isCan) return;
 
-    scroll.current.scrollToElement(findElByKey(key), time || 250, null, null, easing);
+    scroll.current?.scrollToElement?.(findElByKey(key), time || 250, null, null, easing);
 
     setTimeout(() => {
       setActiveKey(key, () => onChange && onChange(key));
@@ -146,9 +146,9 @@ const JdCategoryTab: ForwardRefRenderFunction<JdCategoryTabRefHandle, JdCategory
       e.preventDefault();
     }
 
-    menuEl.current?.addEventListener('touchmove', onTouchmove);
+    menuEl.current?.addEventListener?.('touchmove', onTouchmove);
 
-    return () => menuEl.current?.removeEventListener('touchmove', onTouchmove);
+    return () => menuEl.current?.removeEventListener?.('touchmove', onTouchmove);
   });
 
   useImperativeHandle(ref, () => ({

@@ -1,3 +1,23 @@
+# 2.9.5
+
+***
+
+2023-06-18
+
+* **adhere**
+  - 修复less中的@import引起的vite无法解析错误
+
+# 2.9.4
+
+***
+
+2023-06-15
+
+* **adhere-util-dict**
+  - 修复refresh的BUG
+* **adhere-util**
+  - dom加入includeHTML方法
+
 # 2.9.3
 
 ***

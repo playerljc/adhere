@@ -4,7 +4,7 @@ import type { DictReactComponentObj } from './types';
  * @param {string} key - 字典名称
  * @return {void}
  */
-export declare function set(key: string | symbol): void;
+export declare function set(key: string): void;
 /**
  * Components - 字典对用的React组件
  * 调用init后会自动填充

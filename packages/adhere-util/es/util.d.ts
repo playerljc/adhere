@@ -225,6 +225,12 @@ declare const _default: {
         rootEl: HTMLElement;
         bodyClickHandler?: Function | undefined;
     }): Function;
+    includeHTML(): void;
+    setCursorToEnd(element: any): void;
+    setCursorPosition(element: any, offset: any): void;
+    getCurrentElementWithCursor(): Node | null;
+    getCurrentParentElementWithCursor(): HTMLElement | null;
+    getCursorIndex(): number;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

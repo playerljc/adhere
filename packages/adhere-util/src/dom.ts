@@ -515,5 +515,112 @@ export default {
       document.body.removeEventListener('click', onBodyClickHandler);
     };
   },
+  /**
+   * includeHTML
+   * @description 使用ajax方式引入html
+   */
+  includeHTML() {
+    const _self = this;
+
+    /* Loop through a collection of all HTML elements: */
+    const allEls = document.getElementsByTagName('*');
+
+    for (let i = 0; i < allEls.length; i++) {
+      const el = allEls[i];
+      /*search for elements with a certain atrribute:*/
+      const file = el.getAttribute('w3-include-html');
+      if (file) {
+        /* Make an HTTP request using the attribute value as the file name: */
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4) {
+            if (this.status == 200) {
+              el.innerHTML = this.responseText;
+            }
+            if (this.status == 404) {
+              el.innerHTML = 'Page not found.';
+            }
+            /* Remove the attribute, and call this function once more: */
+            el.removeAttribute('w3-include-html');
+            _self.includeHTML();
+          }
+        };
+        xhr.open('GET', file, true);
+        xhr.send();
+        /* Exit the function: */
+        return;
+      }
+    }
+  },
+  /**
+   * setCursorToEnd
+   * @description 将光标设置到内容末尾
+   * @param {HTMLElement} element
+   */
+  setCursorToEnd(element) {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(element);
+    range.collapse(false); // 将光标设置到末尾
+    selection?.removeAllRanges?.();
+    selection?.addRange?.(range);
+  },
+  /**
+   * setCursorPosition
+   * @description 设置光标的位置
+   * @param {HTMLElement} element
+   * @param {number} offset
+   */
+  setCursorPosition(element, offset) {
+    const range = document.createRange();
+    range.setStart(element.childNodes[0], offset);
+    range.collapse(true);
+
+    const sel = window.getSelection();
+    sel?.removeAllRanges?.();
+    sel?.addRange?.(range);
+  },
+  /**
+   * getCurrentElementWithCursor
+   * @description 获取光标输入的的element
+   * @return {Node | null}
+   */
+  getCurrentElementWithCursor() {
+    const selection = window.getSelection();
+    if (selection && selection?.rangeCount > 0) {
+      const range = selection?.getRangeAt?.(0);
+      return range?.startContainer /*.parentElement*/;
+    }
+    return null;
+  },
+  /**
+   * getCurrentParentElementWithCursor
+   * @description 获取光标输入的parentElement
+   * @return {Node | null}
+   */
+  getCurrentParentElementWithCursor() {
+    const currentElement = this.getCurrentElementWithCursor();
+    if (currentElement) {
+      return currentElement.parentElement;
+    }
+
+    return null;
+  },
+  /**
+   * getCursorIndex
+   * @description 获取光标的索引
+   * @return {number}
+   */
+  getCursorIndex() {
+    const selection = window.getSelection();
+    if (selection && selection?.rangeCount > 0) {
+      const range = selection?.getRangeAt?.(0);
+      const preSelectionRange = range?.cloneRange?.();
+      preSelectionRange?.selectNodeContents(range?.startContainer);
+      preSelectionRange?.setEnd(range?.startContainer, range?.startOffset);
+      return preSelectionRange?.toString?.()?.length;
+    }
+    return -1;
+  },
   /**--------------------------dom-end-------------------------**/
 };

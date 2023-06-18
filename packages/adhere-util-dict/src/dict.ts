@@ -126,8 +126,9 @@ const Dict: DictObj = {
       if (!(property in target)) {
         receiver[property] = {
           value: initValue(property, null),
-          refresh(params) {
-            receiver[property].value = initValue(property, params);
+          refresh() {
+            // receiver[property].value = initValue(property, params);
+            delete receiver[property];
             return this;
           },
         };

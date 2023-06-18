@@ -63,12 +63,12 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
     onBeforeScroll,
   } = props;
 
-  const el = useRef<HTMLDivElement>(null);
-  const highlightedEl = useRef<HTMLDivElement>(null);
-  const contentEl = useRef<HTMLDivElement>(null);
-  const indexEl = useRef<HTMLDivElement>(null);
-  const indexInnerEl = useRef<HTMLDivElement>(null);
-  const maskEl = useRef<HTMLDivElement>();
+  const el = useRef<HTMLDivElement | null>(null);
+  const highlightedEl = useRef<HTMLDivElement | null>(null);
+  const contentEl = useRef<HTMLDivElement | null>(null);
+  const indexEl = useRef<HTMLDivElement | null>(null);
+  const indexInnerEl = useRef<HTMLDivElement | null>(null);
+  const maskEl = useRef<HTMLDivElement | null>(null);
 
   const key = useRef(false);
   const isMouseClicked = useRef(false);
@@ -80,33 +80,29 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
 
   function initEvent() {
     if (Util.isTouch()) {
-      indexInnerEl.current?.addEventListener('click', onClick);
+      indexInnerEl.current?.addEventListener?.('click', onClick);
 
       // 索引touchmove和mousemove
-      indexInnerEl.current?.addEventListener('touchmove', onTouchmove);
-
-      indexInnerEl.current?.addEventListener('touchend', onTouchend);
+      indexInnerEl.current?.addEventListener?.('touchmove', onTouchmove);
+      indexInnerEl.current?.addEventListener?.('touchend', onTouchend);
     } else {
-      indexInnerEl.current?.addEventListener('mousedown', onMousedown);
-
-      indexInnerEl.current?.addEventListener('mousemove', onMousemove);
-
-      indexInnerEl.current?.addEventListener('mouseleave', onMouseleave);
-
-      indexInnerEl.current?.addEventListener('mouseup', onMouseup);
+      indexInnerEl.current?.addEventListener?.('mousedown', onMousedown);
+      indexInnerEl.current?.addEventListener?.('mousemove', onMousemove);
+      indexInnerEl.current?.addEventListener?.('mouseleave', onMouseleave);
+      indexInnerEl.current?.addEventListener?.('mouseup', onMouseup);
 
       typeof window !== 'undefined' && window.addEventListener('resize', onResize);
     }
   }
 
   function removeEvent() {
-    indexInnerEl.current?.removeEventListener('click', onClick);
-    indexInnerEl.current?.removeEventListener('touchmove', onTouchmove);
-    indexInnerEl.current?.removeEventListener('touchend', onTouchend);
-    indexInnerEl.current?.removeEventListener('mousedown', onMousedown);
-    indexInnerEl.current?.removeEventListener('mousemove', onMousemove);
-    indexInnerEl.current?.removeEventListener('mouseleave', onMouseleave);
-    indexInnerEl.current?.removeEventListener('mouseup', onMouseup);
+    indexInnerEl.current?.removeEventListener?.('click', onClick);
+    indexInnerEl.current?.removeEventListener?.('touchmove', onTouchmove);
+    indexInnerEl.current?.removeEventListener?.('touchend', onTouchend);
+    indexInnerEl.current?.removeEventListener?.('mousedown', onMousedown);
+    indexInnerEl.current?.removeEventListener?.('mousemove', onMousemove);
+    indexInnerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
+    indexInnerEl.current?.removeEventListener?.('mouseup', onMouseup);
     typeof window !== 'undefined' && window.removeEventListener('resize', onResize);
   }
 
@@ -171,7 +167,7 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
   );
 
   function createIndexPosition() {
-    const indexItemEls = indexInnerEl.current?.querySelectorAll(
+    const indexItemEls = indexInnerEl.current?.querySelectorAll?.(
       `.${selectorPrefix}-index-item`,
     ) as NodeList;
 
@@ -295,7 +291,7 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
   }
 
   function scrollToAnimation(name: string | undefined, duration = 100) {
-    const targetEl = contentEl.current?.querySelector(
+    const targetEl = contentEl.current?.querySelector?.(
       `.${selectorPrefix}-group-title[data-name='${name}']`,
     );
 
@@ -359,7 +355,7 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
 
   function scrollTo(name: any) {
     (contentEl.current as HTMLElement).scrollTop = (
-      contentEl.current?.querySelector(
+      contentEl.current?.querySelector?.(
         `.${selectorPrefix}-group-title[data-name='${name}']`,
       ) as HTMLElement
     ).offsetTop;
@@ -472,7 +468,7 @@ const Surnames: ForwardRefRenderFunction<SurnamesRefHandle, SurnamesProps> = (pr
     createIndexPosition();
 
     return () => {
-      maskEl.current?.parentElement?.removeChild(maskEl.current);
+      maskEl.current?.parentElement?.removeChild?.(maskEl.current as HTMLDivElement);
     };
   }, []);
 

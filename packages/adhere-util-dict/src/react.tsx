@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
+import SuspenseAsync from '@baifendian/adhere-ui-suspense/es/async';
 import Util from '@baifendian/adhere-util';
 
 import Dict from './dict';
@@ -37,7 +38,7 @@ const FunctionComponent: (
   ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo, ...others }, ref) => {
     const [data, setData] = useState();
 
-    const asyncRef = useRef<Suspense.ASync>();
+    const asyncRef = useRef<SuspenseAsync>();
 
     const props = useMemo(() => {
       const _props: any = { ...others };
@@ -54,7 +55,7 @@ const FunctionComponent: (
 
     useImperativeHandle(ref, () => ({
       reload: () => asyncRef?.current?.fetchData?.(),
-      reset: () => asyncRef.current.reset(),
+      reset: () => asyncRef?.current?.reset?.(),
     }));
 
     const fetchData = () => {
@@ -135,12 +136,14 @@ const NoPromiseComponent: (key: string) => FC<DictNoPromiseComponentProps> =
     const data = Dict.value[key].value;
 
     return data === null || data === undefined || isEmpty?.(data)
-      ? renderEmpty?.()
+      ? renderEmpty
+        ? renderEmpty?.()
+        : null
       : children?.(data);
   };
 
 // 组件的config
-const ComponentMap = new Map<string, (key: string | symbol) => any>([
+const ComponentMap = new Map<string, (key: string) => any>([
   [
     'Function',
     (key) => {
@@ -148,6 +151,7 @@ const ComponentMap = new Map<string, (key: string | symbol) => any>([
         ComponentCache.set(
           `Function_${key}`,
           memo(
+            // @ts-ignore
             forwardRef<DictComponentHandler, DictFunctionComponentProps>(FunctionComponent(key)),
           ),
         );
@@ -162,6 +166,7 @@ const ComponentMap = new Map<string, (key: string | symbol) => any>([
       if (!ComponentCache.has(`Promise_${key}`)) {
         ComponentCache.set(
           `Promise_${key}`,
+          // @ts-ignore
           memo(forwardRef<DictComponentHandler, DictPromiseComponentProps>(PromiseComponent(key))),
         );
       }
@@ -180,36 +185,36 @@ const ComponentMap = new Map<string, (key: string | symbol) => any>([
   ],
 ]);
 
-const Component: (key: string | symbol) => ForwardRefRenderFunction<any, any> =
-  (key) => (props, ref) => {
-    const value = Dict.value[key].value;
+const Component: (key: string) => ForwardRefRenderFunction<any, any> = (key) => (props, ref) => {
+  const value = Dict.value[key].value;
 
-    let Component;
+  let Component;
 
-    // isFunction
-    if (Util.isFunction(value)) {
-      Component = ComponentMap.get('Function')?.(key);
+  // isFunction
+  if (Util.isFunction(value)) {
+    Component = ComponentMap.get('Function')?.(key);
+  }
+  // isNotFunction
+  else {
+    // isNotPromise
+    if (!value.then) {
+      Component = ComponentMap.get('NotPromise')?.(key);
     }
-    // isNotFunction
+    // Promise
     else {
-      // isNotPromise
-      if (!value.then) {
-        Component = ComponentMap.get('NotPromise')?.(key);
-      }
-      // Promise
-      else {
-        Component = ComponentMap.get('Promise')?.(key);
-      }
+      Component = ComponentMap.get('Promise')?.(key);
     }
+  }
 
-    return Component ? <Component ref={ref} {...props} /> : null;
-  };
+  return Component ? <Component ref={ref} {...props} /> : null;
+};
+
 /**
  * set - 设置字典对应的组件
  * @param {string} key - 字典名称
  * @return {void}
  */
-export function set(key: string | symbol) {
+export function set(key: string) {
   if (DictReactComponents[key]) return;
 
   DictReactComponents[key] = memo(forwardRef<any, any>(Component(key)));
