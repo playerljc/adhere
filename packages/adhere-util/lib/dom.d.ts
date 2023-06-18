@@ -200,5 +200,36 @@ declare const _default: {
      * @description 使用ajax方式引入html
      */
     includeHTML(): void;
+    /**
+     * setCursorToEnd
+     * @description 将光标设置到内容末尾
+     * @param {HTMLElement} element
+     */
+    setCursorToEnd(element: any): void;
+    /**
+     * setCursorPosition
+     * @description 设置光标的位置
+     * @param {HTMLElement} element
+     * @param {number} offset
+     */
+    setCursorPosition(element: any, offset: any): void;
+    /**
+     * getCurrentElementWithCursor
+     * @description 获取光标输入的的element
+     * @return {Node | null}
+     */
+    getCurrentElementWithCursor(): Node | null;
+    /**
+     * getCurrentParentElementWithCursor
+     * @description 获取光标输入的parentElement
+     * @return {Node | null}
+     */
+    getCurrentParentElementWithCursor(): HTMLElement | null;
+    /**
+     * getCursorIndex
+     * @description 获取光标的索引
+     * @return {number}
+     */
+    getCursorIndex(): number;
 };
 export default _default;

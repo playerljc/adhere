@@ -552,5 +552,75 @@ export default {
       }
     }
   },
+  /**
+   * setCursorToEnd
+   * @description 将光标设置到内容末尾
+   * @param {HTMLElement} element
+   */
+  setCursorToEnd(element) {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(element);
+    range.collapse(false); // 将光标设置到末尾
+    selection?.removeAllRanges?.();
+    selection?.addRange?.(range);
+  },
+  /**
+   * setCursorPosition
+   * @description 设置光标的位置
+   * @param {HTMLElement} element
+   * @param {number} offset
+   */
+  setCursorPosition(element, offset) {
+    const range = document.createRange();
+    range.setStart(element.childNodes[0], offset);
+    range.collapse(true);
+
+    const sel = window.getSelection();
+    sel?.removeAllRanges?.();
+    sel?.addRange?.(range);
+  },
+  /**
+   * getCurrentElementWithCursor
+   * @description 获取光标输入的的element
+   * @return {Node | null}
+   */
+  getCurrentElementWithCursor() {
+    const selection = window.getSelection();
+    if (selection && selection?.rangeCount > 0) {
+      const range = selection?.getRangeAt?.(0);
+      return range?.startContainer /*.parentElement*/;
+    }
+    return null;
+  },
+  /**
+   * getCurrentParentElementWithCursor
+   * @description 获取光标输入的parentElement
+   * @return {Node | null}
+   */
+  getCurrentParentElementWithCursor() {
+    const currentElement = this.getCurrentElementWithCursor();
+    if (currentElement) {
+      return currentElement.parentElement;
+    }
+
+    return null;
+  },
+  /**
+   * getCursorIndex
+   * @description 获取光标的索引
+   * @return {number}
+   */
+  getCursorIndex() {
+    const selection = window.getSelection();
+    if (selection && selection?.rangeCount > 0) {
+      const range = selection?.getRangeAt?.(0);
+      const preSelectionRange = range?.cloneRange?.();
+      preSelectionRange?.selectNodeContents(range?.startContainer);
+      preSelectionRange?.setEnd(range?.startContainer, range?.startOffset);
+      return preSelectionRange?.toString?.()?.length;
+    }
+    return -1;
+  },
   /**--------------------------dom-end-------------------------**/
 };
