@@ -7,6 +7,10 @@ export declare const SearchAndPaginParamsMemo: any;
 declare const _default: {
     new (props: any): {
         [x: string]: any;
+        /**
+         * ProSearchStateList
+         * @classdesc 高级查询列表
+         */
         getParams(): {};
         getColumns(): never[];
         componentWillUnmount(): void;
