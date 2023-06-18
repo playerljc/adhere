@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+
+    <style>
+      .quick-search {
+        position: relative;
+        width: 600px;
+        height: 32px;
+      }
+
+      .quick-search > .quick-search-editor {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        padding: 4px 11px;
+        overflow: hidden;
+        line-height: 22px;
+        white-space: nowrap;
+        border: 1px solid #d9d9d9;
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+      .quick-search > .quick-search-editor:focus {
+        border-color: #4096ff;
+        outline: 0;
+        box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+        border-inline-end-width: 1px;
+      }
+
+      .quick-search > .quick-search-operators {
+        display: none;
+        border: 1px solid #ccc;
+      }
+      .quick-search > .quick-search-operators > li {
+        padding: 10px;
+        color: blue;
+        font-weight: 600;
+      }
+      .quick-search > .quick-search-operators > li:hover {
+        background-color: rgba(0, 0, 255, 0.3);
+        cursor: pointer;
+      }
+      .quick-search > .quick-search-operators.quick-search-operators--show {
+        display: block;
+      }
+
+      .quick-search > .quick-search-editor-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        padding: 4px 11px;
+        overflow: hidden;
+        color: #999;
+        line-height: 22px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        pointer-events: none;
+      }
+      .quick-search > .quick-search-editor-placeholder.quick-search-editor-placeholder--show {
+        display: block;
+      }
+
+      .text {
+        color: #000;
+      }
+
+      .operator {
+        color: blue;
+        font-weight: bold;
+      }
+    </style>
+
+    <script>
+      let editor;
+      let operators;
+      let placeholder;
+      // 光标输入处的父元素
+      let cursorContextParentElement;
+      // 光标输入处的元素
+      let cursorContextElement;
+      // 光标的索引
+      let cursorIndex;
+
+      function onReady() {
+        initial();
+      }
+
+      function initial() {
+        if (isEditorEmpty()) {
+          showPlaceholder();
+        }
+      }
+
+      // 将光标设置到内容末尾
+      function setCursorToEnd(element) {
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.selectNodeContents(element);
+        range.collapse(false); // 将光标设置到末尾
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
+      // 设置光标的位置
+      function setCursorPosition(element, offset) {
+        const range = document.createRange();
+        range.setStart(element.childNodes[0], offset);
+        range.collapse(true);
+
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
+      // 获取光标输入的的element
+      function getCurrentElementWithCursor() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          return range.startContainer /*.parentElement*/;
+        }
+        return null;
+      }
+
+      // 获取光标输入的parentElement
+      function getCurrentParentElementWithCursor() {
+        const currentElement = getCurrentElementWithCursor();
+        if (currentElement) {
+          return currentElement.parentElement;
+        }
+
+        return null;
+      }
+
+      // 获取光标的索引
+      function getCursorIndex() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          const preSelectionRange = range.cloneRange();
+          preSelectionRange.selectNodeContents(range.startContainer);
+          preSelectionRange.setEnd(range.startContainer, range.startOffset);
+          return preSelectionRange.toString().length;
+        }
+        return -1;
+      }
+
+      // 编辑器是否为空
+      function isEditorEmpty() {
+        return editor.innerHTML.trim() === '';
+      }
+
+      // 显示运算符选择下拉
+      function showOperators() {
+        operators.classList.add('quick-search-operators--show');
+      }
+
+      // 关闭运算符选择下拉
+      function hideOperators() {
+        operators.classList.remove('quick-search-operators--show');
+      }
+
+      // 显示placeholder
+      function showPlaceholder() {
+        placeholder.classList.add('quick-search-editor-placeholder--show');
+      }
+
+      // 隐藏placeholder
+      function hidePlaceholder() {
+        placeholder.classList.remove('quick-search-editor-placeholder--show');
+      }
+
+      // 创建文本元素
+      function createTextElement(html) {
+        const textElement = document.createElement('span');
+        textElement.className = 'text';
+        textElement.innerHTML = html;
+        return textElement;
+      }
+
+      // 创建运算符元素
+      function createOperatorElement(text) {
+        const operatorElement = document.createElement('span');
+        operatorElement.className = 'operator';
+        operatorElement.setAttribute('contenteditable', 'false');
+        operatorElement.innerText = text;
+        return operatorElement;
+      }
+
+      // 获取插入的父元素
+      function getInsertParentElement() {
+        return cursorContextParentElement === editor
+          ? cursorContextParentElement
+          : cursorContextParentElement.parentElement;
+      }
+
+      /**
+       * onEditorInput
+       */
+      function onEditorInput() {
+        cursorContextElement = getCurrentElementWithCursor();
+        cursorContextParentElement = getCurrentParentElementWithCursor();
+        cursorIndex = getCursorIndex();
+
+        if (isEditorEmpty()) {
+          showPlaceholder();
+        } else {
+          hidePlaceholder();
+        }
+      }
+
+      /**
+       * onEditorKeyDown
+       * @param e
+       * @return {boolean}
+       */
+      function onEditorKeyDown(e) {
+        // 空格
+        if (e.keyCode === 32) {
+          showOperators();
+          return false;
+        }
+
+        // 回车
+        if (e.keyCode === 13) {
+          hideOperators();
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+
+        hideOperators();
+      }
+
+      /**
+       * onEditorBlur
+       */
+      function onEditorBlur() {
+        setTimeout(() => {
+          hideOperators();
+        }, 100);
+
+        debugger
+        if (isEditorEmpty()) {
+          showPlaceholder();
+        } else {
+          hidePlaceholder();
+        }
+      }
+
+      // function onEditorFocus() {
+      //   showPlaceholder();
+      // }
+
+      /**
+       * onOperatorsClick
+       * @param e
+       */
+      function onOperatorsClick(e) {
+        const operator = e.target.dataset.operator;
+
+        if (operator) {
+          // 括号
+          if (operator === '()') {
+            const leftElement = createOperatorElement('(');
+            const rightElement = createOperatorElement(')');
+            const textElement = createTextElement('&nbsp;&nbsp;');
+
+            // let parentElement = getInsertParentElement();
+            // parentElement.appendChild(leftElement);
+            // parentElement.appendChild(textElement);
+            // parentElement.appendChild(rightElement);
+            // setCursorPosition(textElement, 1);
+
+            if (cursorContextParentElement === editor) {
+              const text = cursorContextElement.textContent;
+              const startElement = createTextElement(text.substring(0, cursorIndex + 1));
+              const endElement = createTextElement(text.substring(cursorIndex + 1));
+
+              const df = document.createDocumentFragment();
+              df.appendChild(startElement);
+              df.appendChild(leftElement);
+              df.appendChild(textElement);
+              df.appendChild(rightElement);
+              endElement.textContent.length !== 0 && df.appendChild(endElement);
+
+              editor.replaceChild(df, cursorContextElement);
+
+              setCursorPosition(textElement, 1);
+            }
+            //
+            else {
+              const text = cursorContextElement.textContent;
+              const startElement = createTextElement(text.substring(0, cursorIndex));
+              const endElement = createTextElement(text.substring(cursorIndex));
+
+              const df = document.createDocumentFragment();
+              df.appendChild(startElement);
+              df.appendChild(startElement);
+              df.appendChild(leftElement);
+              df.appendChild(textElement);
+              df.appendChild(rightElement);
+              endElement.textContent.length !== 0 && df.appendChild(endElement);
+
+              cursorContextParentElement.parentElement.replaceChild(df, cursorContextParentElement);
+
+              setCursorPosition(textElement, 1);
+            }
+          }
+          // 其他符号
+          else {
+            const operatorElement = createOperatorElement(operator);
+            const textElement = createTextElement('&nbsp;');
+
+            if (cursorContextParentElement === editor) {
+              // 光标所在的元素现在是text元素
+              // let parentElement = getInsertParentElement();
+              // parentElement.appendChild(operatorElement);
+              // parentElement.appendChild(textElement);
+              // setCursorToEnd(parentElement);
+
+              const text = cursorContextElement.textContent;
+              const startElement = createTextElement(text.substring(0, cursorIndex + 1));
+              const endElement = createTextElement(text.substring(cursorIndex + 1));
+
+              const df = document.createDocumentFragment();
+              df.appendChild(startElement);
+              df.appendChild(operatorElement);
+              df.appendChild(textElement);
+              endElement.textContent.length !== 0 && df.appendChild(endElement);
+
+              editor.replaceChild(df, cursorContextElement);
+
+              setCursorPosition(textElement, 0);
+            }
+            //
+            else if (cursorContextParentElement.classList.contains('text')) {
+              const text = cursorContextElement.textContent;
+              const startElement = createTextElement(text.substring(0, cursorIndex));
+              const endElement = createTextElement(text.substring(cursorIndex));
+
+              const df = document.createDocumentFragment();
+              df.appendChild(startElement);
+              df.appendChild(operatorElement);
+              df.appendChild(textElement);
+              endElement.textContent.length !== 0 && df.appendChild(endElement);
+
+              cursorContextParentElement.parentElement.replaceChild(df, cursorContextParentElement);
+
+              setCursorPosition(textElement, 0);
+            }
+          }
+        }
+
+        hideOperators();
+      }
+
+      window.onload = function () {
+        // input对象
+        editor = document.querySelector('.quick-search-editor');
+
+        // 运算符下拉
+        operators = document.querySelector('.quick-search-operators');
+
+        // placeholder
+        placeholder = document.querySelector('.quick-search-editor-placeholder');
+
+        // input输入事件
+        editor.addEventListener('input', onEditorInput);
+
+        // input键盘事件
+        editor.addEventListener('keydown', onEditorKeyDown);
+
+        // 获取焦点
+        // editor.addEventListener('focus', onEditorFocus);
+        // 失去焦点事件
+        editor.addEventListener('blur', onEditorBlur);
+
+        // 运算符下拉选中事件
+        operators.addEventListener('click', onOperatorsClick);
+
+        onReady();
+      };
+    </script>
+  </head>
+  <body>
+    <div class="quick-search">
+      <div class="quick-search-editor" contenteditable="true"></div>
+      <div class="quick-search-editor-placeholder">请输入查询关键字</div>
+      <ul class="quick-search-operators">
+        <li data-operator="()">()</li>
+        <li data-operator="AND">AND</li>
+        <li data-operator="OR">OR</li>
+        <li data-operator="NOT">NOT</li>
+      </ul>
+    </div>
+  </body>
+</html>
