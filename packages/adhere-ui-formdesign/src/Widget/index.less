@@ -1,0 +1,24 @@
+@import './Widget';
+@import './LayoutWidget';
+@import './FlowLayout';
+@import './DropHelp';
+@import './WidgetDNDHelp';
+@import './LayoutWidgetDNDHelp';
+@import './WidgetHoverHighlightHelp';
+@import './LayoutWidgetHoverHighlightHelp';
+@import './Input';
+
+.adhere-ui-form-design-dnd-widget {
+  position: relative;
+  padding: 20px;
+
+  &:hover {
+    > .adhere-ui-form-design-widget-hover-highlight-help {
+      display: initial;
+    }
+  }
+
+  > .adhere-ui-form-design-widget-hover-highlight-help {
+    display: none;
+  }
+}
