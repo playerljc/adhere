@@ -9,7 +9,18 @@ module.exports = {
       modules: false,
     });
 
-    defaultBabelConfig.plugins.push(require('../../babel-plugin-import-antd-es.js'));
+    defaultBabelConfig.plugins.push(require('../../babel-plugin-import-antd.js').es);
+
+    defaultBabelConfig.plugins.push([
+      'import',
+      {
+        libraryName: '@ant-design/icons',
+        libraryDirectory: 'es/icons',
+        camel2DashComponentName: false,
+        style: false,
+      },
+      '@ant-design/icons',
+    ]);
 
     defaultBabelConfig.plugins.push([
       'import',

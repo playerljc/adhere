@@ -8,7 +8,8 @@
       .quick-search {
         position: relative;
         width: 600px;
-        height: 32px;
+        min-height: 32px;
+        max-height: 200px;
       }
 
       .quick-search > .quick-search-editor {
@@ -16,9 +17,11 @@
         width: 100%;
         height: 100%;
         padding: 4px 11px;
-        overflow: hidden;
+        overflow: auto;
         line-height: 22px;
-        white-space: nowrap;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        word-break: break-all;
         border: 1px solid #d9d9d9;
         border-radius: 6px;
         transition: all 0.2s;
@@ -32,6 +35,9 @@
 
       .quick-search > .quick-search-operators {
         display: none;
+        margin: 0;
+        padding: 0;
+        list-style: none;
         border: 1px solid #ccc;
       }
       .quick-search > .quick-search-operators > li {
@@ -44,6 +50,26 @@
         cursor: pointer;
       }
       .quick-search > .quick-search-operators.quick-search-operators--show {
+        display: block;
+      }
+
+      .quick-search > .quick-search-quick-tips {
+        display: none;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border: 1px solid #ccc;
+      }
+      .quick-search > .quick-search-quick-tips > li {
+        padding: 10px;
+        color: blue;
+        font-weight: 600;
+      }
+      .quick-search > .quick-search-quick-tips > li:hover {
+        background-color: rgba(0, 0, 255, 0.3);
+        cursor: pointer;
+      }
+      .quick-search > .quick-search-quick-tips.quick-search-quick-tips--show {
         display: block;
       }
 
@@ -80,6 +106,7 @@
     <script>
       let editor;
       let operators;
+      let quickTip;
       let placeholder;
       // 光标输入处的父元素
       let cursorContextParentElement;
@@ -87,6 +114,15 @@
       let cursorContextElement;
       // 光标的索引
       let cursorIndex;
+
+      // 之前光标的索引
+      let preCursorIndex = 0;
+      // 之前光标处的元素
+      let preCursorContextElement;
+      // 连续输入的字符
+      let continuousText = '';
+      // 若干可见字符的输入之前，而这些可见字符的输入可能需要一连串的键盘操作、点击输入法的备选词等
+      let comStart = false;
 
       function onReady() {
         initial();
@@ -167,6 +203,16 @@
         operators.classList.remove('quick-search-operators--show');
       }
 
+      // 显示运算符选择下拉
+      function showQuickTip() {
+        quickTip.classList.add('quick-search-quick-tips--show');
+      }
+
+      // 关闭运算符选择下拉
+      function hideQuickTip() {
+        quickTip.classList.remove('quick-search-quick-tips--show');
+      }
+
       // 显示placeholder
       function showPlaceholder() {
         placeholder.classList.add('quick-search-editor-placeholder--show');
@@ -201,10 +247,39 @@
           : cursorContextParentElement.parentElement;
       }
 
+      // 设置连续输入的字符
+      function setContinuousText(text) {
+        if (
+          !preCursorContextElement ||
+          (preCursorContextElement === cursorContextElement && preCursorIndex + 1 === cursorIndex)
+        ) {
+          preCursorIndex = cursorIndex;
+          preCursorContextElement = cursorContextElement;
+          continuousText += text;
+        } else {
+          preCursorIndex = cursorIndex;
+          preCursorContextElement = cursorContextElement;
+          continuousText = text;
+        }
+      }
+
+      function onEditorCompositionStart() {
+        comStart = true;
+        console.log('中文输入：开始');
+      }
+
+      function onEditorCompositionEnd(e) {
+        comStart = false;
+        console.log('中文输入：结束');
+        onEditorInput(e);
+      }
+
       /**
        * onEditorInput
        */
-      function onEditorInput() {
+      function onEditorInput(e) {
+        if (comStart) return; // 中文输入过程中不截断
+
         cursorContextElement = getCurrentElementWithCursor();
         cursorContextParentElement = getCurrentParentElementWithCursor();
         cursorIndex = getCursorIndex();
@@ -214,6 +289,26 @@
         } else {
           hidePlaceholder();
         }
+
+        const text = e.data;
+        if (text !== null) {
+          setContinuousText(text);
+        }
+
+        if (text !== ' ') {
+          showQuickTip();
+        }
+
+        console.log(continuousText);
+      }
+
+      /**
+       * onEditorPaste
+       * @param e
+       */
+      function onEditorPaste(e) {
+        // 禁止粘贴内容
+        e.preventDefault();
       }
 
       /**
@@ -224,6 +319,7 @@
       function onEditorKeyDown(e) {
         // 空格
         if (e.keyCode === 32) {
+          hideQuickTip();
           showOperators();
           return false;
         }
@@ -242,12 +338,16 @@
       /**
        * onEditorBlur
        */
-      function onEditorBlur() {
+      function onEditorBlur(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
         setTimeout(() => {
           hideOperators();
-        }, 100);
+          hideQuickTip();
+          editor.focus();
+        }, 1500);
 
-        debugger
         if (isEditorEmpty()) {
           showPlaceholder();
         } else {
@@ -264,6 +364,7 @@
        * @param e
        */
       function onOperatorsClick(e) {
+        console.log('click');
         const operator = e.target.dataset.operator;
 
         if (operator) {
@@ -272,12 +373,6 @@
             const leftElement = createOperatorElement('(');
             const rightElement = createOperatorElement(')');
             const textElement = createTextElement('&nbsp;&nbsp;');
-
-            // let parentElement = getInsertParentElement();
-            // parentElement.appendChild(leftElement);
-            // parentElement.appendChild(textElement);
-            // parentElement.appendChild(rightElement);
-            // setCursorPosition(textElement, 1);
 
             if (cursorContextParentElement === editor) {
               const text = cursorContextElement.textContent;
@@ -320,12 +415,6 @@
             const textElement = createTextElement('&nbsp;');
 
             if (cursorContextParentElement === editor) {
-              // 光标所在的元素现在是text元素
-              // let parentElement = getInsertParentElement();
-              // parentElement.appendChild(operatorElement);
-              // parentElement.appendChild(textElement);
-              // setCursorToEnd(parentElement);
-
               const text = cursorContextElement.textContent;
               const startElement = createTextElement(text.substring(0, cursorIndex + 1));
               const endElement = createTextElement(text.substring(cursorIndex + 1));
@@ -362,6 +451,35 @@
         hideOperators();
       }
 
+      /**
+       * onQuickTipClick
+       * @description 选额智能提示
+       * @param e
+       */
+      function onQuickTipClick(e) {
+        const tip = e.target.dataset.tip;
+
+        // java
+        if (tip) {
+          // 111
+          const text = cursorContextElement.textContent;
+
+          const startIndex = text.lastIndexOf(continuousText, preCursorIndex);
+          // 111(java) -> 111java
+          // (java)111 -> java111
+          // 1(java)11 -> 1java11
+
+          cursorContextElement.textContent = `${text.substring(
+            0,
+            startIndex,
+          )}${tip}${text.substring(preCursorIndex)}`;
+
+          setCursorPosition(cursorContextParentElement, startIndex + tip.length)
+        }
+
+        hideQuickTip();
+      }
+
       window.onload = function () {
         // input对象
         editor = document.querySelector('.quick-search-editor');
@@ -369,11 +487,18 @@
         // 运算符下拉
         operators = document.querySelector('.quick-search-operators');
 
+        quickTip = document.querySelector('.quick-search-quick-tips');
+
         // placeholder
         placeholder = document.querySelector('.quick-search-editor-placeholder');
 
         // input输入事件
+        editor.addEventListener('compositionstart', onEditorCompositionStart);
         editor.addEventListener('input', onEditorInput);
+        editor.addEventListener('compositionend', onEditorCompositionEnd);
+
+        // 粘贴的事件
+        editor.addEventListener('paste', onEditorPaste);
 
         // input键盘事件
         editor.addEventListener('keydown', onEditorKeyDown);
@@ -386,6 +511,8 @@
         // 运算符下拉选中事件
         operators.addEventListener('click', onOperatorsClick);
 
+        quickTip.addEventListener('click', onQuickTipClick);
+
         onReady();
       };
     </script>
@@ -394,11 +521,21 @@
     <div class="quick-search">
       <div class="quick-search-editor" contenteditable="true"></div>
       <div class="quick-search-editor-placeholder">请输入查询关键字</div>
+
       <ul class="quick-search-operators">
         <li data-operator="()">()</li>
         <li data-operator="AND">AND</li>
         <li data-operator="OR">OR</li>
         <li data-operator="NOT">NOT</li>
+      </ul>
+
+      <ul class="quick-search-quick-tips">
+        <li data-tip="java">java</li>
+        <li data-tip="javascript">javascript</li>
+        <li data-tip="css">css</li>
+        <li data-tip="less">less</li>
+        <li data-tip="vue">vue</li>
+        <li data-tip="react">react</li>
       </ul>
     </div>
   </body>

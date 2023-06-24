@@ -1,10 +1,19 @@
-import Widget from './Widget';
-import type WidgetToolBox from './WidgetToolBox';
-import { WidgetComposite } from './WidgetToolBoxManagerTypes';
-import type { GroupType, Type } from './WidgetTypes';
+import Widget from '../Widget';
+import FlowLayoutWidget from '../Widget/FlowLayout';
+import InputWidget from '../Widget/Input';
+import LayoutWidget from '../Widget/LayoutWidget';
+import { WidgetComposite } from '../types/WidgetToolBoxManagerTypes';
+import { WidgetToolBoxType } from '../types/WidgetToolBoxTypes';
+import type { GroupType } from '../types/WidgetTypes';
+import { Type } from '../types/WidgetTypes';
+import FlwLayoutToolBox from './FlowLayout';
+import InputToolBox from './Input';
 
 // 存储所有的WidgetToolBox定义
 const widgetToolBox: Map<Type, WidgetComposite> = new Map<Type, WidgetComposite>();
+
+registerWidget(Type.INPUT, 1, InputToolBox, InputWidget);
+registerWidget(Type.FLOW_LAYOUT, 2, FlwLayoutToolBox, FlowLayoutWidget);
 
 /**
  * registerWidget
@@ -14,11 +23,11 @@ const widgetToolBox: Map<Type, WidgetComposite> = new Map<Type, WidgetComposite>
  * @param {WidgetToolBox} _widgetToolBox widget的toolBox
  * @param {Widget} _widgetClass widget的Class
  */
-export function registerWidget(
+export function registerWidget<T extends typeof Widget | typeof LayoutWidget>(
   _type: Type,
   _sort: number,
-  _widgetToolBox: WidgetToolBox,
-  _widgetClass: Widget,
+  _widgetToolBox: WidgetToolBoxType,
+  _widgetClass: T,
 ) {
   widgetToolBox.set(_type, {
     type: _type,
@@ -42,6 +51,10 @@ export function getWidgetToolBoxByGroupType(groupType: GroupType) {
   return Array.from<WidgetComposite>(widgetToolBox.values())
     .filter((t) => t.toolBox.groupType === groupType)
     .map((t) => t.toolBox);
+}
+
+export function getWidgetClassByType(type: Type) {
+  return widgetToolBox?.get?.(type)?.widgetClass;
 }
 
 export function getGroups() {

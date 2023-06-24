@@ -20,7 +20,7 @@ const ContextMenuComponent: ForwardRefRenderFunction<
 > = (props, ref) => {
   const { data = [], config, el } = props;
 
-  const menuIns = useRef<MenuRefHandle>(null);
+  const menuIns = useRef<MenuRefHandle | null>(null);
 
   function onClick(e) {
     e.stopPropagation();
@@ -68,7 +68,12 @@ const ContextMenuComponent: ForwardRefRenderFunction<
         onClick={onClick}
         onContextMenu={onContextMenu}
       >
-        <Menu data={data} className={config.className} style={config.style} ref={menuIns} />
+        <Menu
+          data={data}
+          className={config.className ?? ''}
+          style={config.style ?? {}}
+          ref={menuIns}
+        />
       </div>
     </ProviderContext.Provider>
   );
