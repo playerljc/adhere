@@ -17,16 +17,13 @@ const selectorSuffix = `${selectorPrefix}-tool-box-inner`;
 const WidgetToolBoxDNDInit: FC<WidgetToolBoxDNDInitProps> = (props) => {
   const { name, iconPath } = props;
 
-  const [{}, drag] = useDrag(
-    () => ({
-      type: DND_SOURCE_TOOL_BOX,
-      item: {
-        ...props,
-      },
-      canDrag: () => true,
-    }),
-    [props],
-  );
+  const [{}, drag] = useDrag(() => ({
+    type: DND_SOURCE_TOOL_BOX,
+    item: {
+      ...props,
+    },
+    canDrag: () => true,
+  }));
 
   return (
     <div className={`${selectorSuffix}`} ref={drag}>

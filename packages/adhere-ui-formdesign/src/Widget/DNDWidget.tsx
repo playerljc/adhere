@@ -48,44 +48,41 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
    * useDrop
    * @description
    */
-  const [{ isOverCurrent }, drop] = useDrop(
-    () => ({
-      accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
-      drop(_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, _monitor) {
-        if (_monitor.canDrop()) {
-          // 需要区分出是insert swipe
+  const [{ isOverCurrent }, drop] = useDrop(() => ({
+    accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
+    drop(_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, _monitor) {
+      if (_monitor.canDrop()) {
+        // 需要区分出是insert swipe
 
-          // ToolBox -> Widget
-          // Widget -> Widget
-          // LayoutWidget -> Widget
+        // ToolBox -> Widget
+        // Widget -> Widget
+        // LayoutWidget -> Widget
 
-          // Widget间相互(swipe)
-          if (_item.id) {
-            // TODO: swipe
-            widgetDropWithWidget(_item as WidgetProps | LayoutWidgetProps, props);
-          }
-          // ToolBox拖拽进来(insert)
-          else {
-            // TODO: insert
-            // ToolBox -> DNDLayoutWidget(id) -> DNDWidget(数据)
-            toolboxDropWithWidget(_item, props);
-          }
+        // Widget间相互(swipe)
+        if (_item.id) {
+          // TODO: swipe
+          widgetDropWithWidget(_item as WidgetProps | LayoutWidgetProps, props);
         }
+        // ToolBox拖拽进来(insert)
+        else {
+          // TODO: insert
+          // ToolBox -> DNDLayoutWidget(id) -> DNDWidget(数据)
+          toolboxDropWithWidget(_item, props);
+        }
+      }
 
-        return _monitor.getDropResult();
-      },
-      canDrop: (_item, _monitor) => {
-        // 自己放在自己上面不行
-        if (getWidgetActiveKey() === id) return false;
+      return _monitor.getDropResult();
+    },
+    canDrop: (_item, _monitor) => {
+      // 自己放在自己上面不行
+      if (getWidgetActiveKey() === id) return false;
 
-        return isOver(_monitor);
-      },
-      collect: (_monitor) => ({
-        isOverCurrent: isOver(_monitor),
-      }),
+      return isOver(_monitor);
+    },
+    collect: (_monitor) => ({
+      isOverCurrent: isOver(_monitor),
     }),
-    [id, getWidgetActiveKey(), children],
-  );
+  }));
 
   /**
    * dndWidgetJSX

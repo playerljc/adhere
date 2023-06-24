@@ -28,16 +28,13 @@ const WidgetDNDHelp: FC<WidgetDNDHelpProps> = (props) => {
    * useDrag
    * @description
    */
-  const [{}, drag] = useDrag(
-    () => ({
-      type: DND_SOURCE_WIDGET,
-      item: {
-        ...props,
-      },
-      canDrag: () => true,
-    }),
-    [id, children],
-  );
+  const [{}, drag] = useDrag(() => ({
+    type: DND_SOURCE_WIDGET,
+    item: {
+      ...props,
+    },
+    canDrag: () => true,
+  }));
 
   const onMouseOver = (e) => {
     e.stopPropagation();

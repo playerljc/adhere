@@ -35,8 +35,6 @@ export const DNDLayoutWidgetContext = createContext<IDNDLayoutWidgetContext>({
  */
 const DNDLayoutWidgetProvider = DNDLayoutWidgetContext.Provider;
 
-let i = 0;
-
 /**
  * DNDLayoutWidget
  * @description 可拖放的布局容器
@@ -45,8 +43,6 @@ let i = 0;
  */
 const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
   const { id, widgets, children } = props;
-
-  i += 1;
 
   const isOver = (monitor) => monitor.isOver({ shallow: true });
 
@@ -59,44 +55,39 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
    * useDrop
    * @description 处理放置的操作，放置在布局的容器上
    */
-  const [{ isOverCurrent }, drop] = useDrop(
-    () => ({
-      accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
-      drop: (_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, _monitor) => {
-        if (_monitor.canDrop()) {
-          const type = _monitor.getItemType();
+  const [{ isOverCurrent }, drop] = useDrop(() => ({
+    accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
+    drop: (_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, _monitor) => {
+      if (_monitor.canDrop()) {
+        const type = _monitor.getItemType();
 
-          // ToolBox -> LayoutWidget
-          if (type === DND_SOURCE_TOOL_BOX) {
-            toolboxDropWithSelf(_item as WidgetToolBoxDNDInitProps);
-          } else if (type === DND_SOURCE_WIDGET) {
-            // LayoutWidget -> LayoutWidget
-            // Widget -> LayoutWidget
-            widgetDropWithSelf(_item as WidgetProps);
-          }
+        // ToolBox -> LayoutWidget
+        if (type === DND_SOURCE_TOOL_BOX) {
+          toolboxDropWithSelf(_item as WidgetToolBoxDNDInitProps);
+        } else if (type === DND_SOURCE_WIDGET) {
+          // LayoutWidget -> LayoutWidget
+          // Widget -> LayoutWidget
+          widgetDropWithSelf(_item as WidgetProps);
         }
+      }
 
-        return _monitor.getDropResult();
-      },
-      canDrop: (_item, _monitor) => {
-        // 自己放在自己上面不行
-        if (getWidgetActiveKey() === id) return false;
+      return _monitor.getDropResult();
+    },
+    canDrop: (_item, _monitor) => {
+      // 自己放在自己上面不行
+      if (getWidgetActiveKey() === id) return false;
 
-        // 自己widgets里的不能放
-        if (_monitor.getItemType() === DND_SOURCE_WIDGET) {
-          if (widgets.find((_widget) => _widget.id === _item.id)) return false;
-        }
+      // 自己widgets里的不能放
+      if (_monitor.getItemType() === DND_SOURCE_WIDGET) {
+        if (widgets.find((_widget) => _widget.id === _item.id)) return false;
+      }
 
-        console.log(`canDrop_${i}`, isOver(_monitor));
-
-        return isOver(_monitor);
-      },
-      collect: (_monitor) => ({
-        isOverCurrent: isOver(_monitor),
-      }),
+      return isOver(_monitor);
+    },
+    collect: (_monitor) => ({
+      isOverCurrent: isOver(_monitor),
     }),
-    [id, getWidgetActiveKey(), widgets, children],
-  );
+  }));
 
   /**
    * widgetDropWithSelf
@@ -301,8 +292,6 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
       {children}
     </div>
   );
-
-  console.log(`isOverCurrent_${i}`, isOverCurrent);
 
   return (
     <DNDLayoutWidgetProvider
