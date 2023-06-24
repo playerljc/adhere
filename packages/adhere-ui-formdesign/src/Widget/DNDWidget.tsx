@@ -17,10 +17,16 @@ import { DNDLayoutWidgetContext } from './DNDLayoutWidget';
 import WidgetDNDHelp from './WidgetDNDHelp';
 import WidgetHoverHighlightHelp from './WidgetHoverHighlightHelp';
 
+/**
+ * DNDWidgetContext
+ */
 export const DNDWidgetContext = createContext<IDNDWidgetContext>({
   isOverCurrent: false,
 });
 
+/**
+ * DNDWidgetProvider
+ */
 const DNDWidgetProvider = DNDWidgetContext.Provider;
 
 /**
@@ -79,7 +85,10 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
     [id, getWidgetActiveKey(), children],
   );
 
-  const dndWidget = (
+  /**
+   * dndWidgetJSX
+   */
+  const dndWidgetJSX = (
     <div ref={drop} className={`${selectorPrefix}-dnd-widget`}>
       {children}
     </div>
@@ -91,9 +100,9 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
         isOverCurrent,
       }}
     >
-      {getWidgetActiveKey() === id && <WidgetDNDHelp {...props}>{dndWidget}</WidgetDNDHelp>}
+      {getWidgetActiveKey() === id && <WidgetDNDHelp {...props}>{dndWidgetJSX}</WidgetDNDHelp>}
       {getWidgetActiveKey() !== id && (
-        <WidgetHoverHighlightHelp {...props}>{dndWidget}</WidgetHoverHighlightHelp>
+        <WidgetHoverHighlightHelp {...props}>{dndWidgetJSX}</WidgetHoverHighlightHelp>
       )}
     </DNDWidgetProvider>
   );

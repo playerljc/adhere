@@ -111,6 +111,8 @@ export interface IDNDLayoutWidgetContext {
     sourceWidget: WidgetProps | LayoutWidgetProps,
     targetWidget: WidgetProps | LayoutWidgetProps,
   );
+  copyWidget(widget: WidgetProps);
+  deleteWidget(widget: WidgetProps);
 }
 
 export interface IDNDWidgetContext {}

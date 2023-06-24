@@ -19,12 +19,20 @@ import { findParentLayoutWidgetById, findWidgetById } from '../util';
 import LayoutWidgetDNDHelp from './LayoutWidgetDNDHelp';
 import LayoutWidgetHoverHighlightHelp from './LayoutWidgetHoverHighlightHelp';
 
+/**
+ * DNDLayoutWidgetContext
+ */
 export const DNDLayoutWidgetContext = createContext<IDNDLayoutWidgetContext>({
   toolboxDropWithWidget() {},
   widgetDropWithWidget() {},
+  copyWidget() {},
+  deleteWidget() {},
   isOverCurrent: false,
 });
 
+/**
+ * DNDLayoutWidgetProvider
+ */
 const DNDLayoutWidgetProvider = DNDLayoutWidgetContext.Provider;
 
 /**
@@ -158,12 +166,78 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
     });
   };
 
+  /**
+   * copyWidget
+   * @description 复制Widget
+   * @param {WidgetProps} widget
+   */
+  const copyWidget = (widget: WidgetProps) => {
+    const dWidgetId = v1();
+
+    // 要改数据
+    setDataSource((_dataSource) => {
+      const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
+
+      const _index = dWidget.widgets.findIndex((_w) => _w.id === widget.id);
+
+      dWidget.widgets.splice(_index + 1, 0, {
+        id: dWidgetId,
+        groupType: widget.groupType,
+        type: widget.type,
+        propertys: widget.propertys,
+        widgets: widgets.widgets,
+      });
+
+      return [..._dataSource];
+    }).then(() => {
+      setWidgetActiveKey(dWidgetId);
+    });
+  };
+
+  /**
+   * deleteWidget
+   * @description 删除Widget
+   * @param {WidgetProps} widget
+   */
+  const deleteWidget = (widget: WidgetProps) => {
+    let widgetActiveKey = '';
+
+    // 要改数据
+    setDataSource((_dataSource) => {
+      const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
+
+      const _index = dWidget.widgets.findIndex((_w) => _w.id === widget.id);
+
+      if (dWidget.widgets.length > 1) {
+        // 最后一个
+        if (_index === dWidget.widgets.length - 1) {
+          widgetActiveKey = dWidget.widgets[_index - 1].id;
+        } else {
+          widgetActiveKey = dWidget.widgets[_index + 1].id;
+        }
+      }
+
+      dWidget.widgets.splice(_index, 1);
+
+      return [..._dataSource];
+    }).then(() => {
+      setWidgetActiveKey(widgetActiveKey);
+    });
+  };
+
+  /**
+   * onClick
+   * @param e
+   */
   const onClick = (e) => {
     e.stopPropagation();
     setWidgetActiveKey(id);
   };
 
-  const dndLayoutWidget = (
+  /**
+   * dndLayoutWidgetJSX
+   */
+  const dndLayoutWidgetJSX = (
     <div ref={drop} className={`${selectorPrefix}-dnd-layout-widget`} onClick={onClick}>
       {children}
     </div>
@@ -175,14 +249,16 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
         isOverCurrent,
         toolboxDropWithWidget,
         widgetDropWithWidget,
+        copyWidget,
+        deleteWidget,
       }}
     >
       {getWidgetActiveKey() === id && (
-        <LayoutWidgetDNDHelp {...props}>{dndLayoutWidget}</LayoutWidgetDNDHelp>
+        <LayoutWidgetDNDHelp {...props}>{dndLayoutWidgetJSX}</LayoutWidgetDNDHelp>
       )}
       {getWidgetActiveKey() !== id && (
         <LayoutWidgetHoverHighlightHelp {...props}>
-          {dndLayoutWidget}
+          {dndLayoutWidgetJSX}
         </LayoutWidgetHoverHighlightHelp>
       )}
     </DNDLayoutWidgetProvider>
