@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import type { FC } from 'react';
 import { useDrag } from 'react-dnd';
 
@@ -20,6 +20,8 @@ const suffix = '-widget-dnd-help';
 const WidgetDNDHelp: FC<WidgetDNDHelpProps> = (props) => {
   const { id, children } = props;
 
+  const [isHover, setHover] = useState(false);
+
   const { copyWidget, deleteWidget } = useContext(DNDLayoutWidgetContext);
 
   /**
@@ -37,6 +39,16 @@ const WidgetDNDHelp: FC<WidgetDNDHelpProps> = (props) => {
     [id, children],
   );
 
+  const onMouseOver = (e) => {
+    e.stopPropagation();
+    setHover(true);
+  };
+
+  const onMouseOut = (e) => {
+    e.stopPropagation();
+    setHover(false);
+  };
+
   const onCopy = (e) => {
     e.stopPropagation();
     copyWidget(props);
@@ -48,7 +60,13 @@ const WidgetDNDHelp: FC<WidgetDNDHelpProps> = (props) => {
   };
 
   return (
-    <div className={`${selectorPrefix}${suffix}`}>
+    <div
+      className={classNames(`${selectorPrefix}${suffix}`, {
+        [`${selectorPrefix}${suffix}--hover`]: isHover,
+      })}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
       <div ref={drag} className={`${selectorPrefix}${suffix}-drag-handle`}>
         <IconFont type="icon-yidong" />
       </div>

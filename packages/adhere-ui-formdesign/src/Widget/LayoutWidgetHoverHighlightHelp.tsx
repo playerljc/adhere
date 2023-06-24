@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import classNames from 'classnames';
+import React, { memo, useState } from 'react';
 import type { FC } from 'react';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
@@ -16,8 +17,26 @@ const LayoutWidgetHoverHighlightHelp: FC<LayoutWidgetHoverHighlightHelpProps> = 
   propertys,
   children,
 }) => {
+  const [isHover, setHover] = useState(false);
+
+  const onMouseOver = (e) => {
+    e.stopPropagation();
+    setHover(true);
+  };
+
+  const onMouseOut = (e) => {
+    e.stopPropagation();
+    setHover(false);
+  };
+
   return (
-    <div className={`${selectorPrefix}${suffix}`}>
+    <div
+      className={classNames(`${selectorPrefix}${suffix}`, {
+        [`${selectorPrefix}${suffix}--hover`]: isHover,
+      })}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
       <div className={`${selectorPrefix}${suffix}-title`}>
         {getPropertyValueByName(propertys, 'title')}
       </div>

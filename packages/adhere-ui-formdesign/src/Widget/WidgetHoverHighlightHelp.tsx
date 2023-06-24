@@ -1,4 +1,5 @@
-import React, { memo, useContext } from 'react';
+import classNames from 'classnames';
+import React, { memo, useContext, useState } from 'react';
 import type { FC } from 'react';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
@@ -20,13 +21,32 @@ const WidgetHoverHighlightHelp: FC<WidgetHoverHighlightHelpProps> = ({
 }) => {
   const { setWidgetActiveKey } = useContext(FormDesignContext);
 
+  const [isHover, setHover] = useState(false);
+
+  const onMouseOver = (e) => {
+    e.stopPropagation();
+    setHover(true);
+  };
+
+  const onMouseOut = (e) => {
+    e.stopPropagation();
+    setHover(false);
+  };
+
   const onClick = (e) => {
     e.stopPropagation();
     setWidgetActiveKey(id);
   };
 
   return (
-    <div className={`${selectorPrefix}${suffix}`} onClick={onClick}>
+    <div
+      className={classNames(`${selectorPrefix}${suffix}`, {
+        [`${selectorPrefix}${suffix}--hover`]: isHover,
+      })}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+      onClick={onClick}
+    >
       <div className={`${selectorPrefix}${suffix}-title`}>
         {getPropertyValueByName(propertys, 'title')}
       </div>
