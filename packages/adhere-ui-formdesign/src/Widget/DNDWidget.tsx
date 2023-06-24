@@ -55,11 +55,13 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
         if (_monitor.canDrop()) {
           // 需要区分出是insert swipe
 
-          debugger;
+          // ToolBox -> Widget
+          // Widget -> Widget
+          // LayoutWidget -> Widget
+
           // Widget间相互(swipe)
           if (_item.id) {
             // TODO: swipe
-            console.log('swipe');
             widgetDropWithWidget(_item as WidgetProps | LayoutWidgetProps, props);
           }
           // ToolBox拖拽进来(insert)

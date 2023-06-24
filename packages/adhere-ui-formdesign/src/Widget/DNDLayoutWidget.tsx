@@ -1,5 +1,5 @@
-import React, { createContext, memo, useContext } from 'react';
 import type { FC } from 'react';
+import React, { createContext, memo, useContext } from 'react';
 import { useDrop } from 'react-dnd';
 import { v1 } from 'uuid';
 
@@ -15,7 +15,7 @@ import {
   LayoutWidgetProps,
   WidgetProps,
 } from '../types/WidgetTypes';
-import { findParentLayoutWidgetById, findWidgetById } from '../util';
+import { copyWidget as copyWidgetUtil, findParentLayoutWidgetById, findWidgetById } from '../util';
 import LayoutWidgetDNDHelp from './LayoutWidgetDNDHelp';
 import LayoutWidgetHoverHighlightHelp from './LayoutWidgetHoverHighlightHelp';
 
@@ -35,6 +35,8 @@ export const DNDLayoutWidgetContext = createContext<IDNDLayoutWidgetContext>({
  */
 const DNDLayoutWidgetProvider = DNDLayoutWidgetContext.Provider;
 
+let i = 0;
+
 /**
  * DNDLayoutWidget
  * @description 可拖放的布局容器
@@ -44,9 +46,14 @@ const DNDLayoutWidgetProvider = DNDLayoutWidgetContext.Provider;
 const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
   const { id, widgets, children } = props;
 
+  i += 1;
+
   const isOver = (monitor) => monitor.isOver({ shallow: true });
 
   const { setDataSource, setWidgetActiveKey, getWidgetActiveKey } = useContext(FormDesignContext);
+
+  const { copyWidget: contextCopyWidget, deleteWidget: contextDeleteWidget } =
+    useContext(DNDLayoutWidgetContext);
 
   /**
    * useDrop
@@ -55,26 +62,18 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
   const [{ isOverCurrent }, drop] = useDrop(
     () => ({
       accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
-      drop: (_item: WidgetToolBoxDNDInitProps, _monitor) => {
+      drop: (_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, _monitor) => {
         if (_monitor.canDrop()) {
-          const dWidgetId = v1();
+          const type = _monitor.getItemType();
 
-          // TODO: append
-          setDataSource((_dataSource) => {
-            const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
-
-            dWidget.widgets.push({
-              id: dWidgetId,
-              groupType: _item.groupType!,
-              type: _item.type!,
-              propertys: [],
-              widgets: [],
-            });
-
-            return [..._dataSource];
-          }).then(() => {
-            setWidgetActiveKey(dWidgetId);
-          });
+          // ToolBox -> LayoutWidget
+          if (type === DND_SOURCE_TOOL_BOX) {
+            toolboxDropWithSelf(_item as WidgetToolBoxDNDInitProps);
+          } else if (type === DND_SOURCE_WIDGET) {
+            // LayoutWidget -> LayoutWidget
+            // Widget -> LayoutWidget
+            widgetDropWithSelf(_item as WidgetProps);
+          }
         }
 
         return _monitor.getDropResult();
@@ -88,6 +87,8 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
           if (widgets.find((_widget) => _widget.id === _item.id)) return false;
         }
 
+        console.log(`canDrop_${i}`, isOver(_monitor));
+
         return isOver(_monitor);
       },
       collect: (_monitor) => ({
@@ -98,8 +99,62 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
   );
 
   /**
+   * widgetDropWithSelf
+   * @description Widget | LayoutWidget -> LayoutWidget remove -> append
+   * @param {WidgetProps} widget
+   */
+  const widgetDropWithSelf = (widget: WidgetProps) => {
+    setDataSource((_dataSource) => {
+      const widgetLayoutWidget = findParentLayoutWidgetById(
+        widget.id,
+        _dataSource,
+      ) as DLayoutWidget;
+
+      const widgetIndexInWidgets = widgetLayoutWidget.widgets.findIndex(
+        (_widget) => _widget.id === widget.id,
+      );
+
+      widgetLayoutWidget.widgets.splice(widgetIndexInWidgets, 1);
+
+      const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
+
+      dWidget.widgets.push(widget);
+
+      return [..._dataSource];
+    }).then(() => {
+      setWidgetActiveKey(widget.id);
+    });
+  };
+
+  /**
+   * toolboxDropWithSelf
+   * @description ToolBox -> LayoutWidget append
+   * @param {WidgetToolBoxDNDInitProps} toolbox
+   */
+  const toolboxDropWithSelf = (toolbox: WidgetToolBoxDNDInitProps) => {
+    const dWidgetId = v1();
+
+    // TODO: append
+    setDataSource((_dataSource) => {
+      const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
+
+      dWidget.widgets.push({
+        id: dWidgetId,
+        groupType: toolbox.groupType!,
+        type: toolbox.type!,
+        propertys: [],
+        widgets: [],
+      });
+
+      return [..._dataSource];
+    }).then(() => {
+      setWidgetActiveKey(dWidgetId);
+    });
+  };
+
+  /**
    * toolboxDropWithWidget
-   * @description ToolBox -> DNDLayoutWidget -> DNDWidget (insert)
+   * @description ToolBox -> Widget (insert)
    * @param {WidgetToolBoxDNDInitProps} toolbox
    * @param {WidgetProps | LayoutWidgetProps} widget
    */
@@ -131,7 +186,7 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
 
   /**
    * widgetDropWithWidget
-   * @description Widget -> DNDLayoutWidget -> Widget (swipe)
+   * @description Widget | LayoutWidget -> Widget (swipe)
    * @param {WidgetProps | LayoutWidgetProps} sourceWidget
    * @param {WidgetProps | LayoutWidgetProps} targetWidget
    */
@@ -172,7 +227,12 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
    * @param {WidgetProps} widget
    */
   const copyWidget = (widget: WidgetProps) => {
-    const dWidgetId = v1();
+    if (widget.id === id) {
+      contextCopyWidget(widget);
+      return;
+    }
+
+    const newWidget = copyWidgetUtil(widget);
 
     // 要改数据
     setDataSource((_dataSource) => {
@@ -180,17 +240,11 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
 
       const _index = dWidget.widgets.findIndex((_w) => _w.id === widget.id);
 
-      dWidget.widgets.splice(_index + 1, 0, {
-        id: dWidgetId,
-        groupType: widget.groupType,
-        type: widget.type,
-        propertys: widget.propertys,
-        widgets: widgets.widgets,
-      });
+      dWidget.widgets.splice(_index + 1, 0, newWidget);
 
       return [..._dataSource];
     }).then(() => {
-      setWidgetActiveKey(dWidgetId);
+      setWidgetActiveKey(newWidget.id);
     });
   };
 
@@ -200,6 +254,11 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
    * @param {WidgetProps} widget
    */
   const deleteWidget = (widget: WidgetProps) => {
+    if (widget.id === id) {
+      contextDeleteWidget(widget);
+      return;
+    }
+
     let widgetActiveKey = '';
 
     // 要改数据
@@ -242,6 +301,8 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
       {children}
     </div>
   );
+
+  console.log(`isOverCurrent_${i}`, isOverCurrent);
 
   return (
     <DNDLayoutWidgetProvider

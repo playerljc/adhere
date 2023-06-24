@@ -1,16 +1,12 @@
+import cloneDeepWith from 'lodash.clonedeepwith';
+import { v1 } from 'uuid';
+
 import WidgetPropertyField from './WidgetProperty/Field/WidgetPropertyField';
 import { getFieldClassByType } from './WidgetProperty/Field/WidgetPropertyFieldManager';
 import WidgetProperty from './WidgetProperty/WidgetProperty';
 import { getWidgetClassByType } from './WidgetToolBox/WidgetToolBoxManager';
 import { DWidgetProperty } from './types/WidgetPropertyTypes';
-import {
-  DLayoutWidget,
-  DWidget,
-  GroupType,
-  ILayoutWidget,
-  IWidget,
-  Type,
-} from './types/WidgetTypes';
+import { DLayoutWidget, DWidget, ILayoutWidget, IWidget } from './types/WidgetTypes';
 
 /**
  * parseWidgets
@@ -142,7 +138,37 @@ export function findParentLayoutWidgetById(
  * @description 根据name获取property的value
  * @param {DWidgetProperty[]} propertys
  * @param {string} name
+ * @return {string | menubar | Array<any> | null | undefined}
  */
 export function getPropertyValueByName(propertys: DWidgetProperty[], name: string) {
   return (propertys || []).find((propery) => propery.key === name)?.value?.props?.value;
+}
+
+/**
+ * copyWidget
+ * @description 对Widget进行copy生成一个新的Widget
+ * @param {DWidget | DLayoutWidget} sourceWidget
+ * @return {DWidget | DLayoutWidget}
+ */
+export function copyWidget(sourceWidget: DWidget | DLayoutWidget): DWidget | DLayoutWidget {
+  const cloneWidget = cloneDeepWith(sourceWidget, function (value) {
+    if ('children' in value) {
+      const { children, ...result } = value;
+      return result;
+    } else {
+      return value;
+    }
+  });
+
+  function loop(_widget) {
+    _widget.id = v1();
+
+    const widgets = _widget.widgets || [];
+
+    widgets.forEach((_w) => loop(_w));
+  }
+
+  loop(cloneWidget);
+
+  return cloneWidget;
 }
