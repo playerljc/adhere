@@ -1,12 +1,18 @@
-import React, { createContext, memo, useContext } from 'react';
 import type { FC } from 'react';
+import React, { createContext, memo, useContext } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
 import { FormDesignContext } from '../FormDesign/FormDesignProvider';
 import { WidgetToolBoxDNDInitProps } from '../types/WidgetToolBoxDNDInitProps';
-import { DND_TYPE, IDNDWidgetContext, LayoutWidgetProps, WidgetProps } from '../types/WidgetTypes';
 import type { DNDWidgetProps } from '../types/WidgetTypes';
+import {
+  DND_SOURCE_TOOL_BOX,
+  DND_SOURCE_WIDGET,
+  IDNDWidgetContext,
+  LayoutWidgetProps,
+  WidgetProps,
+} from '../types/WidgetTypes';
 import { DNDLayoutWidgetContext } from './DNDLayoutWidget';
 import WidgetDNDHelp from './WidgetDNDHelp';
 import WidgetHoverHighlightHelp from './WidgetHoverHighlightHelp';
@@ -24,15 +30,13 @@ const DNDWidgetProvider = DNDWidgetContext.Provider;
  * @constructor
  */
 const DNDWidget: FC<DNDWidgetProps> = (props) => {
-  const { children, ..._dWidget } = props;
-
-  const { id } = _dWidget;
+  const { id, children } = props;
 
   const isOver = (monitor) => monitor.isOver({ shallow: true });
 
   const { getWidgetActiveKey } = useContext(FormDesignContext);
 
-  const { toolboxDropWithWidget } = useContext(DNDLayoutWidgetContext);
+  const { toolboxDropWithWidget, widgetDropWithWidget } = useContext(DNDLayoutWidgetContext);
 
   /**
    * useDrop
@@ -40,29 +44,45 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
    */
   const [{ isOverCurrent }, drop] = useDrop(
     () => ({
-      accept: DND_TYPE,
-      drop(_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, monitor) {
-        if (monitor.canDrop()) {
+      accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
+      drop(_item: WidgetToolBoxDNDInitProps | WidgetProps | LayoutWidgetProps, _monitor) {
+        if (_monitor.canDrop()) {
           // 需要区分出是insert swipe
 
+          debugger;
           // Widget间相互(swipe)
           if (_item.id) {
+            // TODO: swipe
+            console.log('swipe');
+            widgetDropWithWidget(_item as WidgetProps | LayoutWidgetProps, props);
           }
           // ToolBox拖拽进来(insert)
           else {
+            // TODO: insert
             // ToolBox -> DNDLayoutWidget(id) -> DNDWidget(数据)
-            toolboxDropWithWidget(_item, _dWidget);
+            toolboxDropWithWidget(_item, props);
           }
         }
 
-        return monitor.getDropResult();
+        return _monitor.getDropResult();
       },
-      canDrop: (item, monitor) => isOver(monitor),
-      collect: (monitor) => ({
-        isOverCurrent: isOver(monitor),
+      canDrop: (_item, _monitor) => {
+        // 自己放在自己上面不行
+        if (getWidgetActiveKey() === id) return false;
+
+        return isOver(_monitor);
+      },
+      collect: (_monitor) => ({
+        isOverCurrent: isOver(_monitor),
       }),
     }),
-    [id, children],
+    [id, getWidgetActiveKey(), children],
+  );
+
+  const dndWidget = (
+    <div ref={drop} className={`${selectorPrefix}-dnd-widget`}>
+      {children}
+    </div>
   );
 
   return (
@@ -71,11 +91,10 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
         isOverCurrent,
       }}
     >
-      <div ref={drop} className={`${selectorPrefix}-dnd-widget`}>
-        {children}
-        {getWidgetActiveKey() === id && <WidgetDNDHelp {..._dWidget} />}
-        {getWidgetActiveKey() !== id && <WidgetHoverHighlightHelp {..._dWidget} />}
-      </div>
+      {getWidgetActiveKey() === id && <WidgetDNDHelp {...props}>{dndWidget}</WidgetDNDHelp>}
+      {getWidgetActiveKey() !== id && (
+        <WidgetHoverHighlightHelp {...props}>{dndWidget}</WidgetHoverHighlightHelp>
+      )}
     </DNDWidgetProvider>
   );
 };

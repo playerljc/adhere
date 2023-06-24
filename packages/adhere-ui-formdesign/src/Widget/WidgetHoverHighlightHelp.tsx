@@ -13,10 +13,15 @@ const suffix = '-widget-hover-highlight-help';
  * @description Widget hover的help
  * @constructor
  */
-const WidgetHoverHighlightHelp: FC<WidgetHoverHighlightHelpProps> = ({ id, propertys }) => {
+const WidgetHoverHighlightHelp: FC<WidgetHoverHighlightHelpProps> = ({
+  id,
+  propertys,
+  children,
+}) => {
   const { setWidgetActiveKey } = useContext(FormDesignContext);
 
-  const onClick = () => {
+  const onClick = (e) => {
+    e.stopPropagation();
     setWidgetActiveKey(id);
   };
 
@@ -29,6 +34,8 @@ const WidgetHoverHighlightHelp: FC<WidgetHoverHighlightHelpProps> = ({ id, prope
       <div className={`${selectorPrefix}${suffix}-name`}>
         {getPropertyValueByName(propertys, 'name')}
       </div>
+
+      {children}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
 import { WidgetToolBoxDNDInitProps } from '../types/WidgetToolBoxDNDInitProps';
-import { DND_TYPE } from '../types/WidgetTypes';
+import { DND_SOURCE_TOOL_BOX } from '../types/WidgetTypes';
 
 const selectorSuffix = `${selectorPrefix}-tool-box-inner`;
 
@@ -19,7 +19,7 @@ const WidgetToolBoxDNDInit: FC<WidgetToolBoxDNDInitProps> = (props) => {
 
   const [{}, drag] = useDrag(
     () => ({
-      type: DND_TYPE,
+      type: DND_SOURCE_TOOL_BOX,
       item: {
         ...props,
       },

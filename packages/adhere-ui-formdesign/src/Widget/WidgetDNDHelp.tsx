@@ -7,7 +7,7 @@ import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
 import { IconFont } from '../IconFont';
-import { DND_TYPE, WidgetDNDHelpProps } from '../types/WidgetTypes';
+import { DND_SOURCE_WIDGET, WidgetDNDHelpProps } from '../types/WidgetTypes';
 
 const suffix = '-widget-dnd-help';
 
@@ -17,24 +17,20 @@ const suffix = '-widget-dnd-help';
  * @constructor
  */
 const WidgetDNDHelp: FC<WidgetDNDHelpProps> = (props) => {
-  const { id } = props;
-
+  const { id, children } = props;
   /**
    * useDrag
    * @description
    */
   const [{}, drag] = useDrag(
     () => ({
-      type: DND_TYPE,
+      type: DND_SOURCE_WIDGET,
       item: {
         ...props,
       },
       canDrag: () => true,
-      collect: (monitor) => {
-        return {};
-      },
     }),
-    [id],
+    [id, children],
   );
 
   return (
@@ -52,6 +48,8 @@ const WidgetDNDHelp: FC<WidgetDNDHelpProps> = (props) => {
           <DeleteOutlined />
         </div>
       </div>
+
+      {children}
     </div>
   );
 };

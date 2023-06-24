@@ -39,7 +39,10 @@ export enum Type {
   NUMBER = 'NUMBER',
 }
 
-export const DND_TYPE = 'WIDGET';
+// 拖拽对象 - WIDGET
+export const DND_SOURCE_WIDGET = 'WIDGET';
+// 拖拽对象 - TOOL_BOX
+export const DND_SOURCE_TOOL_BOX = 'TOOL_BOX';
 
 /**
  * DWidget
@@ -96,15 +99,17 @@ export interface LayoutWidgetProps extends WidgetProps {
   widgets: Array<Widget | LayoutWidget>;
 }
 
-export interface DNDLayoutWidgetProps extends LayoutWidgetProps {
-  children?: ReactNode;
-}
+export interface DNDLayoutWidgetProps extends LayoutWidgetProps {}
 
 export interface IDNDLayoutWidgetContext {
   isOverCurrent: boolean;
   toolboxDropWithWidget(
     toolbox: WidgetToolBoxDNDInitProps,
     widget: WidgetProps | LayoutWidgetProps,
+  );
+  widgetDropWithWidget(
+    sourceWidget: WidgetProps | LayoutWidgetProps,
+    targetWidget: WidgetProps | LayoutWidgetProps,
   );
 }
 

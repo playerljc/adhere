@@ -3,7 +3,14 @@ import { getFieldClassByType } from './WidgetProperty/Field/WidgetPropertyFieldM
 import WidgetProperty from './WidgetProperty/WidgetProperty';
 import { getWidgetClassByType } from './WidgetToolBox/WidgetToolBoxManager';
 import { DWidgetProperty } from './types/WidgetPropertyTypes';
-import { DLayoutWidget, DWidget, ILayoutWidget, IWidget } from './types/WidgetTypes';
+import {
+  DLayoutWidget,
+  DWidget,
+  GroupType,
+  ILayoutWidget,
+  IWidget,
+  Type,
+} from './types/WidgetTypes';
 
 /**
  * parseWidgets
@@ -86,6 +93,48 @@ export function findWidgetById(
   }
 
   return widget;
+}
+
+/**
+ * findParentLayoutWidgetById
+ * @description 根据id寻找widget的父亲
+ * @param {string} id
+ * @param {Array<DWidget | DLayoutWidget>} dataSource
+ * @return {DWidget | DLayoutWidget | null}
+ */
+export function findParentLayoutWidgetById(
+  id: string,
+  dataSource: Array<DWidget | DLayoutWidget>,
+): DLayoutWidget | null {
+  // @ts-ignore
+  const layoutWidget: DLayoutWidget = {
+    widgets: dataSource,
+  };
+
+  function loop(_layoutWidget: DLayoutWidget): DLayoutWidget | null {
+    let result;
+
+    const widgets = _layoutWidget.widgets || [];
+
+    for (let i = 0; i < widgets.length; i++) {
+      const itemDWidget = widgets[i];
+
+      if (itemDWidget.id === id) {
+        result = _layoutWidget;
+        break;
+      } else {
+        result = loop(itemDWidget);
+
+        if (result) {
+          break;
+        }
+      }
+    }
+
+    return result;
+  }
+
+  return loop(layoutWidget);
 }
 
 /**

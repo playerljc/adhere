@@ -1,27 +1,28 @@
 .adhere-ui-form-design-widget-hover-highlight-help {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: calc(var(--adhere-z-index-max-base) + 1);
-  background-color: rgba(var(--adhere-color-primary-rgb), 0.05);
-  border: 1px var(--adhere-line-type) var(--adhere-color-primary);
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 
-  > .adhere-ui-form-design-widget-hover-highlight-help-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 5px;
-    color: #fff;
-    background-color: rgba(var(--adhere-color-primary-rgb), 0.5);
-  }
+  &:hover {
+    background-color: rgba(var(--adhere-color-primary-rgb), 0.05);
+    outline: 1px var(--adhere-line-type) var(--adhere-color-primary);
 
-  > .adhere-ui-form-design-widget-hover-highlight-help-name {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 5px;
-    color: springgreen;
+    > .adhere-ui-form-design-widget-hover-highlight-help-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 5px;
+      color: #fff;
+      background-color: rgba(var(--adhere-color-primary-rgb), 0.5);
+    }
+
+    > .adhere-ui-form-design-widget-hover-highlight-help-name {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px;
+      color: springgreen;
+    }
   }
 }

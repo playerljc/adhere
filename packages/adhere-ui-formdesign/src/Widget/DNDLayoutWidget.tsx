@@ -1,4 +1,4 @@
-import React, { createContext, memo, useContext, useState } from 'react';
+import React, { createContext, memo, useContext } from 'react';
 import type { FC } from 'react';
 import { useDrop } from 'react-dnd';
 import { v1 } from 'uuid';
@@ -9,15 +9,19 @@ import { WidgetToolBoxDNDInitProps } from '../types/WidgetToolBoxDNDInitProps';
 import {
   DLayoutWidget,
   DNDLayoutWidgetProps,
-  DND_TYPE,
+  DND_SOURCE_TOOL_BOX,
+  DND_SOURCE_WIDGET,
   IDNDLayoutWidgetContext,
   LayoutWidgetProps,
   WidgetProps,
 } from '../types/WidgetTypes';
-import { findWidgetById } from '../util';
+import { findParentLayoutWidgetById, findWidgetById } from '../util';
+import LayoutWidgetDNDHelp from './LayoutWidgetDNDHelp';
+import LayoutWidgetHoverHighlightHelp from './LayoutWidgetHoverHighlightHelp';
 
 export const DNDLayoutWidgetContext = createContext<IDNDLayoutWidgetContext>({
   toolboxDropWithWidget() {},
+  widgetDropWithWidget() {},
   isOverCurrent: false,
 });
 
@@ -26,12 +30,12 @@ const DNDLayoutWidgetProvider = DNDLayoutWidgetContext.Provider;
 /**
  * DNDLayoutWidget
  * @description 可拖放的布局容器
- * @param id
- * @param widgets
- * @param children
  * @constructor
+ * @param props
  */
-const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = ({ id, widgets, children }) => {
+const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
+  const { id, widgets, children } = props;
+
   const isOver = (monitor) => monitor.isOver({ shallow: true });
 
   const { setDataSource, setWidgetActiveKey, getWidgetActiveKey } = useContext(FormDesignContext);
@@ -42,12 +46,12 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = ({ id, widgets, children }) =>
    */
   const [{ isOverCurrent }, drop] = useDrop(
     () => ({
-      accept: DND_TYPE,
-      drop: (_item: WidgetToolBoxDNDInitProps, monitor) => {
-        if (monitor.canDrop()) {
+      accept: [DND_SOURCE_WIDGET, DND_SOURCE_TOOL_BOX],
+      drop: (_item: WidgetToolBoxDNDInitProps, _monitor) => {
+        if (_monitor.canDrop()) {
           const dWidgetId = v1();
 
-          // 要改数据
+          // TODO: append
           setDataSource((_dataSource) => {
             const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
 
@@ -65,19 +69,29 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = ({ id, widgets, children }) =>
           });
         }
 
-        return monitor.getDropResult();
+        return _monitor.getDropResult();
       },
-      canDrop: (item, monitor) => isOver(monitor),
-      collect: (monitor) => ({
-        isOverCurrent: isOver(monitor),
+      canDrop: (_item, _monitor) => {
+        // 自己放在自己上面不行
+        if (getWidgetActiveKey() === id) return false;
+
+        // 自己widgets里的不能放
+        if (_monitor.getItemType() === DND_SOURCE_WIDGET) {
+          if (widgets.find((_widget) => _widget.id === _item.id)) return false;
+        }
+
+        return isOver(_monitor);
+      },
+      collect: (_monitor) => ({
+        isOverCurrent: isOver(_monitor),
       }),
     }),
-    [id, widgets, children],
+    [id, getWidgetActiveKey(), widgets, children],
   );
 
   /**
    * toolboxDropWithWidget
-   * @description ToolBox -> DNDLayoutWidget -> DNDWidget
+   * @description ToolBox -> DNDLayoutWidget -> DNDWidget (insert)
    * @param {WidgetToolBoxDNDInitProps} toolbox
    * @param {WidgetProps | LayoutWidgetProps} widget
    */
@@ -107,16 +121,70 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = ({ id, widgets, children }) =>
     });
   };
 
+  /**
+   * widgetDropWithWidget
+   * @description Widget -> DNDLayoutWidget -> Widget (swipe)
+   * @param {WidgetProps | LayoutWidgetProps} sourceWidget
+   * @param {WidgetProps | LayoutWidgetProps} targetWidget
+   */
+  const widgetDropWithWidget = (
+    sourceWidget: WidgetProps | LayoutWidgetProps,
+    targetWidget: WidgetProps | LayoutWidgetProps,
+  ) => {
+    // 要改数据
+    setDataSource((_dataSource) => {
+      const sourceLayoutWidget = findParentLayoutWidgetById(
+        sourceWidget.id,
+        _dataSource,
+      ) as DLayoutWidget;
+      const targetLayoutWidget = findParentLayoutWidgetById(
+        targetWidget.id,
+        _dataSource,
+      ) as DLayoutWidget;
+
+      const sourceWidgetIndexByLayoutWidget = sourceLayoutWidget.widgets.findIndex(
+        (_widget) => _widget.id === sourceWidget.id,
+      );
+      const targetWidgetIndexByLayoutWidget = targetLayoutWidget.widgets.findIndex(
+        (_widget) => _widget.id === targetWidget.id,
+      );
+
+      sourceLayoutWidget.widgets[sourceWidgetIndexByLayoutWidget] = targetWidget;
+      targetLayoutWidget.widgets[targetWidgetIndexByLayoutWidget] = sourceWidget;
+
+      return [..._dataSource];
+    }).then(() => {
+      setWidgetActiveKey(sourceWidget.id);
+    });
+  };
+
+  const onClick = (e) => {
+    e.stopPropagation();
+    setWidgetActiveKey(id);
+  };
+
+  const dndLayoutWidget = (
+    <div ref={drop} className={`${selectorPrefix}-dnd-layout-widget`} onClick={onClick}>
+      {children}
+    </div>
+  );
+
   return (
     <DNDLayoutWidgetProvider
       value={{
         isOverCurrent,
         toolboxDropWithWidget,
+        widgetDropWithWidget,
       }}
     >
-      <div ref={drop} className={`${selectorPrefix}-dnd-layout-widget`}>
-        {children}
-      </div>
+      {getWidgetActiveKey() === id && (
+        <LayoutWidgetDNDHelp {...props}>{dndLayoutWidget}</LayoutWidgetDNDHelp>
+      )}
+      {getWidgetActiveKey() !== id && (
+        <LayoutWidgetHoverHighlightHelp {...props}>
+          {dndLayoutWidget}
+        </LayoutWidgetHoverHighlightHelp>
+      )}
     </DNDLayoutWidgetProvider>
   );
 };
