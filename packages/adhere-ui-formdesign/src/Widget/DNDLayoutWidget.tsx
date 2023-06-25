@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import React, { createContext, memo, useContext } from 'react';
 import { useDrop } from 'react-dnd';
-import { v1 } from 'uuid';
+import { v4 } from 'uuid';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
 import { FormDesignContext } from '../FormDesign/FormDesignProvider';
@@ -51,6 +51,8 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
   const { copyWidget: contextCopyWidget, deleteWidget: contextDeleteWidget } =
     useContext(DNDLayoutWidgetContext);
 
+  const activeKey = getWidgetActiveKey();
+
   /**
    * useDrop
    * @description 处理放置的操作，放置在布局的容器上
@@ -75,7 +77,7 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
     },
     canDrop: (_item, _monitor) => {
       // 自己放在自己上面不行
-      if (getWidgetActiveKey() === id) return false;
+      if (activeKey === id) return false;
 
       // 自己widgets里的不能放
       if (_monitor.getItemType() === DND_SOURCE_WIDGET) {
@@ -123,7 +125,7 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
    * @param {WidgetToolBoxDNDInitProps} toolbox
    */
   const toolboxDropWithSelf = (toolbox: WidgetToolBoxDNDInitProps) => {
-    const dWidgetId = v1();
+    const dWidgetId = v4();
 
     // TODO: append
     setDataSource((_dataSource) => {
@@ -153,7 +155,7 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
     toolbox: WidgetToolBoxDNDInitProps,
     widget: WidgetProps | LayoutWidgetProps,
   ) => {
-    const dWidgetId = v1();
+    const dWidgetId = v4();
 
     // 要改数据
     setDataSource((_dataSource) => {
@@ -303,10 +305,10 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
         deleteWidget,
       }}
     >
-      {getWidgetActiveKey() === id && (
+      {activeKey === id && (
         <LayoutWidgetDNDHelp {...props}>{dndLayoutWidgetJSX}</LayoutWidgetDNDHelp>
       )}
-      {getWidgetActiveKey() !== id && (
+      {activeKey !== id && (
         <LayoutWidgetHoverHighlightHelp {...props}>
           {dndLayoutWidgetJSX}
         </LayoutWidgetHoverHighlightHelp>

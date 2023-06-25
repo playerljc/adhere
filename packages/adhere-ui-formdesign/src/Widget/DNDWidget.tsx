@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { createContext, memo, useContext } from 'react';
+import React, { createContext, memo, useContext, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
@@ -44,6 +44,8 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
 
   const { toolboxDropWithWidget, widgetDropWithWidget } = useContext(DNDLayoutWidgetContext);
 
+  const activeKey = getWidgetActiveKey();
+
   /**
    * useDrop
    * @description
@@ -73,12 +75,7 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
 
       return _monitor.getDropResult();
     },
-    canDrop: (_item, _monitor) => {
-      // 自己放在自己上面不行
-      if (getWidgetActiveKey() === id) return false;
-
-      return isOver(_monitor);
-    },
+    canDrop: (_item, _monitor) => isOver(_monitor),
     collect: (_monitor) => ({
       isOverCurrent: isOver(_monitor),
     }),
@@ -99,8 +96,8 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
         isOverCurrent,
       }}
     >
-      {getWidgetActiveKey() === id && <WidgetDNDHelp {...props}>{dndWidgetJSX}</WidgetDNDHelp>}
-      {getWidgetActiveKey() !== id && (
+      {activeKey === id && <WidgetDNDHelp {...props}>{dndWidgetJSX}</WidgetDNDHelp>}
+      {activeKey !== id && (
         <WidgetHoverHighlightHelp {...props}>{dndWidgetJSX}</WidgetHoverHighlightHelp>
       )}
     </DNDWidgetProvider>

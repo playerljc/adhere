@@ -1,6 +1,6 @@
 import Merge from 'lodash.merge';
 import React, { ReactNode } from 'react';
-import { v1 } from 'uuid';
+import { v4 } from 'uuid';
 
 import type WidgetProperty from '../WidgetProperty/WidgetProperty';
 import { Type as WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
@@ -61,7 +61,7 @@ abstract class Widget implements IWidget {
         value: {
           type: WidgetPropertyFieldType.INPUT,
           props: {
-            value: v1(),
+            value: v4(),
           },
         },
       },
@@ -158,6 +158,8 @@ abstract class Widget implements IWidget {
       type,
       propertys,
     };
+
+    console.log('renderDesign', id, propertys[0].value.props.value);
 
     return <DNDWidget {...props}>{children}</DNDWidget>;
   }

@@ -4,11 +4,12 @@ import type { ForwardRefRenderFunction } from 'react';
 import React, { forwardRef, memo, useEffect, useImperativeHandle } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { v1 } from 'uuid';
+import { v4 } from 'uuid';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 
 import type { FormDesignProps, FormDesignRefHandle } from '../types/FormDesignTypes';
+import { Type as WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
 import type { DLayoutWidget, DWidget } from '../types/WidgetTypes';
 import { GroupType, Type } from '../types/WidgetTypes';
 import { copyDataSource } from '../util';
@@ -44,18 +45,34 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
     if (!dataSource || !Array.isArray(targetDataSource) || targetDataSource.length === 0) {
       setTargetDataSource([
         {
-          id: v1(),
+          id: v4(),
           groupType: GroupType.LAYOUT,
           type: Type.FLOW_LAYOUT,
-          propertys: [],
-          widgets: [
+          propertys: [
             {
-              id: v1(),
-              groupType: GroupType.BASE,
-              type: Type.INPUT,
-              propertys: [],
+              key: 'name',
+              name: '字段标识',
+              required: true,
+              value: {
+                type: WidgetPropertyFieldType.INPUT,
+                props: {
+                  value: v4(),
+                },
+              },
+            },
+            {
+              key: 'title',
+              name: '标题',
+              required: false,
+              value: {
+                type: WidgetPropertyFieldType.INPUT,
+                props: {
+                  value: '流布局',
+                },
+              },
             },
           ],
+          widgets: [],
         },
       ]);
     } else {
@@ -117,8 +134,9 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
    * @description 设置激活的widget
    * @param {string} id
    */
-  const setWidgetActiveKey = (id) =>
-    new Promise((resolve) => setCurrentWidgetActiveKey(id, () => resolve(null)));
+  const setWidgetActiveKey = (id) => {
+    return new Promise((resolve) => setCurrentWidgetActiveKey(id, () => resolve(null)));
+  };
 
   /**
    * getWidgetActiveKey

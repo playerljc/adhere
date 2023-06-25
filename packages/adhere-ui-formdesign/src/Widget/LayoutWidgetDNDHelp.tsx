@@ -18,7 +18,7 @@ const suffix = '-layout-widget-dnd-help';
  * @constructor
  */
 const LayoutWidgetDNDHelp: FC<LayoutWidgetDNDHelpProps> = (props) => {
-  const { id, children } = props;
+  const { children } = props;
 
   const [isHover, setHover] = useState(false);
 
@@ -28,13 +28,16 @@ const LayoutWidgetDNDHelp: FC<LayoutWidgetDNDHelpProps> = (props) => {
    * useDrag
    * @description
    */
-  const [{}, drag] = useDrag(() => ({
-    type: DND_SOURCE_WIDGET,
-    item: {
-      ...props,
-    },
-    canDrag: () => true,
-  }));
+  const [{}, drag] = useDrag(() => {
+    const { children, ...item } = props;
+    return {
+      type: DND_SOURCE_WIDGET,
+      item: {
+        ...item,
+      },
+      canDrag: () => true,
+    };
+  });
 
   const onMouseOver = (e) => {
     e.stopPropagation();

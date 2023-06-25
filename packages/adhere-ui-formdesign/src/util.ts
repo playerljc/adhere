@@ -1,5 +1,5 @@
 import cloneDeepWith from 'lodash.clonedeepwith';
-import { v1 } from 'uuid';
+import { v4 } from 'uuid';
 
 import WidgetPropertyField from './WidgetProperty/Field/WidgetPropertyField';
 import { getFieldClassByType } from './WidgetProperty/Field/WidgetPropertyFieldManager';
@@ -161,7 +161,14 @@ export function copyWidget(sourceWidget: DWidget | DLayoutWidget): DWidget | DLa
   });
 
   function loop(_widget) {
-    _widget.id = v1();
+    // id需要修改
+    _widget.id = v4();
+
+    // property中key为name的value也需要修改
+    const nameProperty = (_widget.propertys || []).find((_property) => _property.key === 'name');
+    if (nameProperty && nameProperty.value && nameProperty.value.props) {
+      nameProperty.value.props.value = v4();
+    }
 
     const widgets = _widget.widgets || [];
 
