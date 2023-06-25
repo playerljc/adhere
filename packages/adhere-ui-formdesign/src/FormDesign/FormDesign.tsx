@@ -11,6 +11,7 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import type { FormDesignProps, FormDesignRefHandle } from '../types/FormDesignTypes';
 import type { DLayoutWidget, DWidget } from '../types/WidgetTypes';
 import { GroupType, Type } from '../types/WidgetTypes';
+import { copyDataSource } from '../util';
 import DesignAreaView from './DesignAreaView';
 import FooterBar from './FooterBar';
 import { FormDesignProvider } from './FormDesignProvider';
@@ -33,7 +34,10 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
   { className, style, dataSource },
   ref,
 ) => {
+  // 当前激活Widget的id
   const [currentWidgetActiveKey, setCurrentWidgetActiveKey] = useSetState('');
+
+  // 所有的数据
   const [targetDataSource, setTargetDataSource] = useSetState<Array<DWidget | DLayoutWidget>>([]);
 
   useEffect(() => {
@@ -60,7 +64,12 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
   }, [dataSource]);
 
   useImperativeHandle(ref, () => ({
-    getDataSource: () => [...targetDataSource],
+    /**
+     * getDataSource
+     * @description 获取所有的数据
+     * @return {Array<DWidget | DLayoutWidget>}
+     */
+    getDataSource: () => copyDataSource(targetDataSource),
   }));
 
   const wqViewItems = [

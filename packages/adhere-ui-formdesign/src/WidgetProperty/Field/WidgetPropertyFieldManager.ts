@@ -10,6 +10,11 @@ const widgetPropertyFields: Map<Type, typeof WidgetPropertyField> = new Map<
 
 registerField(Type.INPUT, InputPropertyField);
 
+/**
+ * registerField
+ * @param {Type} type
+ * @param {WidgetPropertyField} widgetPropertyFieldClass
+ */
 export function registerField<T extends typeof WidgetPropertyField>(
   type: Type,
   widgetPropertyFieldClass: T,

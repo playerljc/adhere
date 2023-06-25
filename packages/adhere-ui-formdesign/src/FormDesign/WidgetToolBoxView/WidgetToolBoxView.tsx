@@ -19,7 +19,7 @@ const WidgetToolBoxView: FC<WidgetToolBoxViewProps> = ({ className, style }) => 
     className={classNames(`${selectorPrefix}${selectorSuffix}`, className ?? '')}
     style={style ?? {}}
   >
-    <Collapse>
+    <Collapse ghost>
       {/*获取到所有的分组，及其分组下的WidgetToolBox*/}
       {getTypes().map((_type) => (
         <Collapse.Panel key={_type} header={getGroupNameByType(_type) as string}>

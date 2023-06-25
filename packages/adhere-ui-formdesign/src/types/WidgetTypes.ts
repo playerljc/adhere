@@ -63,9 +63,10 @@ export interface IWidget {
   readonly id: string;
   readonly type: Type;
   readonly groupType: GroupType;
-  readonly propertys: WidgetProperty[];
+  propertys: WidgetProperty[];
   render(): ReactNode;
   renderDesign(): ReactNode;
+  renderDesign(children: ReactNode): ReactNode;
   getId(): string;
   getType(): Type;
   getPropertys(): WidgetProperty[];

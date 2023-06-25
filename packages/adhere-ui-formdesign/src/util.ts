@@ -172,3 +172,22 @@ export function copyWidget(sourceWidget: DWidget | DLayoutWidget): DWidget | DLa
 
   return cloneWidget;
 }
+
+/**
+ * copyDataSource
+ * @description 克隆dataSource
+ * @param {Array<DWidget | DLayoutWidget>} dataSource
+ * @return {Array<DWidget | DLayoutWidget>}
+ */
+export function copyDataSource(
+  dataSource: Array<DWidget | DLayoutWidget>,
+): Array<DWidget | DLayoutWidget> {
+  return cloneDeepWith(dataSource, function (value) {
+    if ('children' in value) {
+      const { children, ...result } = value;
+      return result;
+    } else {
+      return value;
+    }
+  });
+}
