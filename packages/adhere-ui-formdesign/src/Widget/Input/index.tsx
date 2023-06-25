@@ -12,12 +12,6 @@ import InputFormItem from './InputFormItem';
  * @description 单行文本框
  */
 class InputWidget extends Widget {
-  constructor(...arg) {
-    super(...arg);
-
-    debugger;
-  }
-
   readonly groupType: GroupType = GroupType.BASE;
 
   readonly type: WidgetType.INPUT;
@@ -29,15 +23,15 @@ class InputWidget extends Widget {
    */
   protected defineProperts() {
     return this.mergePropertys(super.defineProperts(), [
-      // {
-      //   key: 'title',
-      //   value: {
-      //     type: WidgetPropertyFieldType.INPUT,
-      //     props: {
-      //       value: '单行文本',
-      //     },
-      //   },
-      // },
+      {
+        key: 'title',
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: '单行文本',
+          },
+        },
+      },
     ]);
   }
 

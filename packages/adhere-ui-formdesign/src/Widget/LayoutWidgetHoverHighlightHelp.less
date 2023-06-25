@@ -7,6 +7,14 @@
   width: 100%;
   min-height: 200px;
 
+  > .adhere-ui-form-design-layout-widget-hover-highlight-help-title {
+    display: none;
+  }
+
+  > .adhere-ui-form-design-layout-widget-hover-highlight-help-name {
+    display: none;
+  }
+
   &.adhere-ui-form-design-layout-widget-hover-highlight-help--hover {
     background-color: rgba(@adhere-ui-form-design-layout-widget-help-primary-color, 0.05);
     outline: 1px var(--adhere-line-type) @adhere-ui-form-design-layout-widget-help-primary-color;
@@ -15,6 +23,8 @@
       position: absolute;
       top: 0;
       left: 0;
+      z-index: var(--adhere-z-index-max-base);
+      display: block;
       padding: 5px;
       color: #fff;
       background-color: rgba(@adhere-ui-form-design-layout-widget-help-primary-color, 0.5);
@@ -24,6 +34,8 @@
       position: absolute;
       top: 0;
       right: 0;
+      z-index: var(--adhere-z-index-max-base);
+      display: block;
       padding: 5px;
       color: springgreen;
     }

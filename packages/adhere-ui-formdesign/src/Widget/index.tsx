@@ -1,5 +1,6 @@
 import Merge from 'lodash.merge';
 import React, { ReactNode } from 'react';
+import { v1 } from 'uuid';
 
 import type WidgetProperty from '../WidgetProperty/WidgetProperty';
 import { Type as WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
@@ -53,33 +54,35 @@ abstract class Widget implements IWidget {
    */
   protected defineProperts(): Array<DWidgetProperty> {
     return [
-      // {
-      //   key: 'name',
-      //   name: '字段标识',
-      //   required: true,
-      //   value: {
-      //     type: WidgetPropertyFieldType.INPUT,
-      //     props: {},
-      //   },
-      // },
-      // {
-      //   key: 'value',
-      //   name: '值',
-      //   required: false,
-      //   value: {
-      //     type: WidgetPropertyFieldType.INPUT,
-      //     props: {},
-      //   },
-      // },
-      // {
-      //   key: 'title',
-      //   name: '标题',
-      //   required: false,
-      //   value: {
-      //     type: WidgetPropertyFieldType.INPUT,
-      //     props: {},
-      //   },
-      // },
+      {
+        key: 'name',
+        name: '字段标识',
+        required: true,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: v1(),
+          },
+        },
+      },
+      {
+        key: 'value',
+        name: '值',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {},
+        },
+      },
+      {
+        key: 'title',
+        name: '标题',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {},
+        },
+      },
     ];
   }
 
