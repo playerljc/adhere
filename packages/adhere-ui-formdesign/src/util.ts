@@ -221,7 +221,7 @@ export function transformInlineCSSToCSSProperties(inlineCSS: string): Style {
 
 /**
  * getDefaultFormItemProps
- * @description
+ * @description Form.Item的默认props
  * @param {WidgetProperty[]} propertys
  * @return {{ [prop: string]: any }}
  */
@@ -235,7 +235,7 @@ export function getDefaultFormItemProps(propertys: (DWidgetProperty | WidgetProp
 
 /**
  * getDefaultFieldProps
- * @description
+ * @description Field的默认props
  * @param {WidgetProperty[]} propertys
  * @return {{ [prop: string]: any }}
  */
