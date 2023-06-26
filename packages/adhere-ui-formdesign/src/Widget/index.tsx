@@ -1,4 +1,3 @@
-import { Form } from 'antd';
 import classNames from 'classnames';
 import Merge from 'lodash.merge';
 import React, { CSSProperties, ReactNode } from 'react';
@@ -6,10 +5,10 @@ import { v4 } from 'uuid';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
 import type WidgetProperty from '../WidgetProperty/WidgetProperty';
-import { Type as WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
+import { WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
 import { DWidgetProperty } from '../types/WidgetPropertyTypes';
 import { IWidget } from '../types/WidgetTypes';
-import type { GroupType, Type as WidgetType } from '../types/WidgetTypes';
+import type { GroupType, Type } from '../types/WidgetTypes';
 import { getPropertyValueByName, parseProperty, transformInlineCSSToCSSProperties } from '../util';
 import DNDWidget from './DNDWidget';
 
@@ -25,7 +24,7 @@ abstract class Widget implements IWidget {
    * @param {WidgetType} type Widget类型
    * @param {WidgetProperty[]} propertys 所有属性
    */
-  constructor(id: string, groupType: GroupType, type: WidgetType, propertys: WidgetProperty[]) {
+  constructor(id: string, groupType: GroupType, type: Type, propertys: WidgetProperty[]) {
     this.id = id;
 
     this.groupType = groupType;
@@ -44,7 +43,7 @@ abstract class Widget implements IWidget {
   readonly groupType: GroupType;
 
   // 小部件类型
-  readonly type: WidgetType;
+  readonly type: Type;
 
   // propertys(属性面板的所有属性) 默认值
   propertys: WidgetProperty[] = [];

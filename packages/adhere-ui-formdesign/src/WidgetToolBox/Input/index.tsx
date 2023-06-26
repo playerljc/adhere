@@ -1,6 +1,6 @@
 // import Intl from '@baifendian/adhere-util-intl';
 import type { WidgetToolBoxType } from '../../types/WidgetToolBoxTypes';
-import { GroupType, Type } from '../../types/WidgetTypes';
+import { GroupType, WidgetType } from '../../types/WidgetTypes';
 import WidgetToolBox from '../WidgetToolBox';
 
 /**
@@ -11,7 +11,7 @@ const Input: WidgetToolBoxType = {
   ...WidgetToolBox,
   ...{
     groupType: GroupType.BASE,
-    type: Type.INPUT,
+    type: WidgetType.INPUT,
     name: '单行文本框',
   },
 };

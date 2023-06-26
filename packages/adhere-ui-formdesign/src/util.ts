@@ -218,3 +218,32 @@ export function transformInlineCSSToCSSProperties(inlineCSS: string): Style {
 
   return transform(output);
 }
+
+/**
+ * getDefaultFormItemProps
+ * @description
+ * @param {WidgetProperty[]} propertys
+ * @return {{ [prop: string]: any }}
+ */
+export function getDefaultFormItemProps(propertys: (DWidgetProperty | WidgetProperty)[]): {
+  [prop: string]: any;
+} {
+  return {
+    name: getPropertyValueByName(propertys, 'name'),
+  };
+}
+
+/**
+ * getDefaultFieldProps
+ * @description
+ * @param {WidgetProperty[]} propertys
+ * @return {{ [prop: string]: any }}
+ */
+export function getDefaultFieldProps(propertys: (DWidgetProperty | WidgetProperty)[]): {
+  [prop: string]: any;
+} {
+  return {
+    readonly: getPropertyValueByName(propertys, 'readonly'),
+    disabled: getPropertyValueByName(propertys, 'disabled'),
+  };
+}

@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { Type as WidgetPropertyFieldType } from '../../types/WidgetPropertyFieldTypes';
-import { GroupType, Type as WidgetType } from '../../types/WidgetTypes';
+import { WidgetPropertyFieldType } from '../../types/WidgetPropertyFieldTypes';
+import { GroupType, Type, WidgetType } from '../../types/WidgetTypes';
 import Widget from '../index';
 import InputFormItem from './InputFormItem';
 
@@ -15,7 +15,7 @@ class InputWidget extends Widget {
   readonly groupType: GroupType = GroupType.BASE;
 
   // Widget类型
-  readonly type: WidgetType.INPUT;
+  readonly type: Type = WidgetType.INPUT;
 
   /**
    * defineProperts

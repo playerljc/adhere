@@ -15,29 +15,35 @@ export enum GroupType {
   ADVANCED = 'ADVANCED',
 }
 
-/*小部件类型*/
-export enum Type {
+/**
+ * WidgetType
+ * @description Widget的枚举
+ */
+export const WidgetType = {
   // 布局
-  FLOW_LAYOUT = 'FLOW_LAYOUT',
-  INLINE_LAYOUT = 'INLINE_LAYOUT',
-  FLEX_LAYOUT = 'FLEX_LAYOUT',
-  GRID_LAYOUT = 'GRID_LAYOUT',
-  TABS_LAYOUT = 'TABS_LAYOUT',
-  CARD_LAYOUT = 'CARD_LAYOUT',
-  COLLAPSE_LAYOUT = 'COLLAPSE_LAYOUT',
-  SPACE = 'SPACE',
-  SPLIT = 'SPLIT',
+  FLOW_LAYOUT: 'FLOW_LAYOUT',
+  INLINE_LAYOUT: 'INLINE_LAYOUT',
+  FLEX_LAYOUT: 'FLEX_LAYOUT',
+  GRID_LAYOUT: 'GRID_LAYOUT',
+  TABS_LAYOUT: 'TABS_LAYOUT',
+  CARD_LAYOUT: 'CARD_LAYOUT',
+  COLLAPSE_LAYOUT: 'COLLAPSE_LAYOUT',
+  SPACE: 'SPACE',
+  SPLIT: 'SPLIT',
 
   // 容器
-  DYNAMIC_TABLE = 'DYNAMIC_TABLE',
-  DYNAMIC_GROUP = 'DYNAMIC_GROUP',
+  DYNAMIC_TABLE: 'DYNAMIC_TABLE',
+  DYNAMIC_GROUP: 'DYNAMIC_GROUP',
 
   // 基本
-  GROUP = 'GROUP',
-  INPUT = 'INPUT',
-  TEXT_AREA = 'TEXT_AREA',
-  NUMBER = 'NUMBER',
-}
+  GROUP: 'GROUP',
+  INPUT: 'INPUT',
+  TEXT_AREA: 'TEXT_AREA',
+  NUMBER: 'NUMBER',
+};
+
+/*小部件类型*/
+export type Type = keyof typeof WidgetType | string;
 
 // 拖拽对象 - WIDGET
 export const DND_SOURCE_WIDGET = 'WIDGET';

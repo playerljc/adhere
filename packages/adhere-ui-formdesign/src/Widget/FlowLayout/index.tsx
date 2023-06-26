@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { Type as WidgetPropertyFieldType } from '../../types/WidgetPropertyFieldTypes';
-import { GroupType, Type as WidgetType } from '../../types/WidgetTypes';
+import { WidgetPropertyFieldType } from '../../types/WidgetPropertyFieldTypes';
+import { GroupType, Type, WidgetType } from '../../types/WidgetTypes';
 import LayoutWidget from '../LayoutWidget';
 import DesignFlowLayout from './DesignFlowLayout';
 import FlowLayout from './FlowLayout';
@@ -16,7 +16,7 @@ class FlowLayoutWidget extends LayoutWidget {
   readonly groupType: GroupType = GroupType.LAYOUT;
 
   // LayoutWidget类型
-  readonly type: WidgetType.FLOW_LAYOUT;
+  readonly type: Type = WidgetType.FLOW_LAYOUT;
 
   /**
    * defineProperts

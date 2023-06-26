@@ -5,15 +5,15 @@ import LayoutWidget from '../Widget/LayoutWidget';
 import { WidgetComposite } from '../types/WidgetToolBoxManagerTypes';
 import { WidgetToolBoxType } from '../types/WidgetToolBoxTypes';
 import type { GroupType } from '../types/WidgetTypes';
-import { Type } from '../types/WidgetTypes';
+import { Type, WidgetType } from '../types/WidgetTypes';
 import FlwLayoutToolBox from './FlowLayout';
 import InputToolBox from './Input';
 
 // 存储所有的WidgetToolBox定义
 const widgetToolBox: Map<Type, WidgetComposite> = new Map<Type, WidgetComposite>();
 
-registerWidget(Type.INPUT, 1, InputToolBox, InputWidget);
-registerWidget(Type.FLOW_LAYOUT, 2, FlwLayoutToolBox, FlowLayoutWidget);
+registerWidget(WidgetType.INPUT, 1, InputToolBox, InputWidget);
+registerWidget(WidgetType.FLOW_LAYOUT, 2, FlwLayoutToolBox, FlowLayoutWidget);
 
 /**
  * registerWidget

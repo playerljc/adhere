@@ -1,6 +1,6 @@
 // import Intl from '@baifendian/adhere-util-intl';
 import type { WidgetToolBoxType } from '../../types/WidgetToolBoxTypes';
-import { GroupType, Type } from '../../types/WidgetTypes';
+import { GroupType, WidgetType } from '../../types/WidgetTypes';
 import WidgetToolBox from '../WidgetToolBox';
 
 /**
@@ -11,7 +11,7 @@ const FlowLayout: WidgetToolBoxType = {
   ...WidgetToolBox,
   ...{
     groupType: GroupType.LAYOUT,
-    type: Type.FLOW_LAYOUT,
+    type: WidgetType.FLOW_LAYOUT,
     name: '流布局',
   },
 };

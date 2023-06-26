@@ -9,9 +9,9 @@ import { v4 } from 'uuid';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
 import type { FormDesignProps, FormDesignRefHandle } from '../types/FormDesignTypes';
-import { Type as WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
+import { WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
 import type { DLayoutWidget, DWidget } from '../types/WidgetTypes';
-import { GroupType, Type } from '../types/WidgetTypes';
+import { GroupType, WidgetType } from '../types/WidgetTypes';
 import { copyDataSource } from '../util';
 import DesignAreaView from './DesignAreaView';
 import FooterBar from './FooterBar';
@@ -47,7 +47,7 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
         {
           id: v4(),
           groupType: GroupType.LAYOUT,
-          type: Type.FLOW_LAYOUT,
+          type: WidgetType.FLOW_LAYOUT,
           propertys: [
             {
               key: 'name',

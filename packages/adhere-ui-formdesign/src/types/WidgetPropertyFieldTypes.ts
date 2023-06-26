@@ -1,10 +1,15 @@
 /*WidgetPropertyField的类型*/
 import { ReactNode } from 'react';
 
-export enum Type {
-  INPUT = 'INPUT',
-  SWITCH = 'SWITCH',
-}
+/**
+ * WidgetPropertyFieldType
+ */
+export const WidgetPropertyFieldType = {
+  INPUT: 'INPUT',
+  SWITCH: 'SWITCH',
+};
+
+export type Type = keyof typeof WidgetPropertyFieldType | string;
 
 /**
  * DWidgetPropertyField

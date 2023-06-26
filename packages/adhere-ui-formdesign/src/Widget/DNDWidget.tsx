@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { createContext, memo, useContext, useEffect } from 'react';
+import React, { createContext, memo, useContext } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { selectorPrefix } from '../FormDesign/FormDesign';
