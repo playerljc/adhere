@@ -7,6 +7,30 @@
 @import './LayoutWidgetHoverHighlightHelp';
 @import './Input';
 
+.adhere-ui-form-design-widget {
+  display: flex;
+  align-items: center;
+
+  &.adhere-ui-form-design-widget-label--help {
+    flex-direction: column;
+
+    > .adhere-ui-form-design-widget-label {
+      margin: 0;
+    }
+  }
+
+  > .adhere-ui-form-design-widget-label {
+    flex-shrink: 0;
+    margin-right: 20px;
+    margin-bottom: 24px;
+  }
+
+  > .adhere-ui-form-design-widget-value {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
 .adhere-ui-form-design-dnd-widget {
   position: relative;
   padding: 5px;

@@ -1,4 +1,8 @@
+import transform from 'css-to-react-native';
+import type { Style } from 'css-to-react-native';
 import cloneDeepWith from 'lodash.clonedeepwith';
+import { CSSProperties } from 'react';
+import parse from 'style-to-object';
 import { v4 } from 'uuid';
 
 import WidgetPropertyField from './WidgetProperty/Field/WidgetPropertyField';
@@ -197,4 +201,20 @@ export function copyDataSource(
       return value;
     }
   });
+}
+
+/**
+ * transformInlineCSSToCSSProperties
+ * @description inline css to CSSProperties
+ * @param {string} inlineCSS
+ * @return {CSSProperties}
+ */
+export function transformInlineCSSToCSSProperties(inlineCSS: string): Style {
+  const output = [];
+
+  parse(inlineCSS, (name, value) => {
+    output.push([name, value]);
+  });
+
+  return transform(output);
 }

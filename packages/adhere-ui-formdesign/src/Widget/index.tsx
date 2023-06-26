@@ -1,13 +1,16 @@
+import { Form } from 'antd';
+import classNames from 'classnames';
 import Merge from 'lodash.merge';
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { v4 } from 'uuid';
 
+import { selectorPrefix } from '../FormDesign/FormDesign';
 import type WidgetProperty from '../WidgetProperty/WidgetProperty';
 import { Type as WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
 import { DWidgetProperty } from '../types/WidgetPropertyTypes';
 import { IWidget } from '../types/WidgetTypes';
 import type { GroupType, Type as WidgetType } from '../types/WidgetTypes';
-import { parseProperty } from '../util';
+import { getPropertyValueByName, parseProperty, transformInlineCSSToCSSProperties } from '../util';
 import DNDWidget from './DNDWidget';
 
 /**
@@ -80,7 +83,75 @@ abstract class Widget implements IWidget {
         required: false,
         value: {
           type: WidgetPropertyFieldType.INPUT,
-          props: {},
+          props: {
+            value: '',
+          },
+        },
+      },
+      {
+        key: 'wrapTitle',
+        name: '标签换行',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: false,
+          },
+        },
+      },
+      {
+        key: 'hideTitle',
+        name: '隐藏标签',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: false,
+          },
+        },
+      },
+      {
+        key: 'className',
+        name: '自定义Class',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: [],
+          },
+        },
+      },
+      {
+        key: 'style',
+        name: '自定义Style',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: '',
+          },
+        },
+      },
+      {
+        key: 'readonly',
+        name: '只读',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: false,
+          },
+        },
+      },
+      {
+        key: 'disabled',
+        name: '禁用',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: false,
+          },
         },
       },
     ];
@@ -150,6 +221,12 @@ abstract class Widget implements IWidget {
     return this.propertys;
   }
 
+  /**
+   * renderDesign
+   * @description 包装一层DNDWidget
+   * @param {ReactNode} children
+   * @return {ReactNode}
+   */
   renderDesign(children: ReactNode): ReactNode {
     const { id, groupType, type, propertys } = this;
     const props = {
@@ -159,13 +236,50 @@ abstract class Widget implements IWidget {
       propertys,
     };
 
-    console.log('renderDesign', id, propertys[0].value.props.value);
-
     return <DNDWidget {...props}>{children}</DNDWidget>;
   }
 
-  render(): ReactNode {
-    return null;
+  /**
+   * render
+   * @description 处理className、style、title布局
+   * @param {ReactNode} children
+   * @return {ReactNode}
+   */
+  render(children: ReactNode): ReactNode {
+    const { propertys } = this;
+
+    // 处理className
+    const className = getPropertyValueByName(propertys, 'className');
+
+    // 处理style
+    const style = transformInlineCSSToCSSProperties(
+      getPropertyValueByName(propertys, 'style') ?? {},
+    ) as CSSProperties;
+
+    // 标题
+    const title = getPropertyValueByName(propertys, 'title');
+
+    // 标签换行
+    const wrapTitle = getPropertyValueByName(propertys, 'wrapTitle');
+
+    // 隐藏标签
+    const hideTitle = getPropertyValueByName(propertys, 'hideTitle');
+
+    return (
+      <div
+        className={classNames(
+          `${selectorPrefix}-widget`,
+          {
+            [`${selectorPrefix}-widget-label--wrap`]: wrapTitle,
+          },
+          ...(className || []),
+        )}
+        style={style ?? {}}
+      >
+        {!hideTitle && <div className={`${selectorPrefix}-widget-label`}>{title}</div>}
+        <div className={`${selectorPrefix}-widget-value`}>{children}</div>
+      </div>
+    );
   }
 }
 

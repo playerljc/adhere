@@ -1,5 +1,6 @@
 import { Type } from '../../types/WidgetPropertyFieldTypes';
 import InputPropertyField from './Input';
+import SwitchPropertyField from './Switch';
 import WidgetPropertyField from './WidgetPropertyField';
 
 // 存储所有的WidgetPropertyFields
@@ -9,6 +10,7 @@ const widgetPropertyFields: Map<Type, typeof WidgetPropertyField> = new Map<
 >();
 
 registerField(Type.INPUT, InputPropertyField);
+registerField(Type.SWITCH, SwitchPropertyField);
 
 /**
  * registerField

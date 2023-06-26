@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 
 export enum Type {
   INPUT = 'INPUT',
+  SWITCH = 'SWITCH',
 }
 
 /**

@@ -33,6 +33,16 @@ abstract class LayoutWidget extends Widget implements ILayoutWidget {
   // 存放widgets
   readonly widgets: Array<Widget | LayoutWidget>;
 
+  getWidgets() {
+    return [...this.widgets];
+  }
+
+  /**
+   * renderDesign
+   * @description 包装一层DNDLayoutWidget
+   * @param {ReactNode} children
+   * @return {ReactNode}
+   */
   renderDesign(children: ReactNode): ReactNode {
     const { id, groupType, type, propertys, widgets } = this;
     const props = {
@@ -44,10 +54,6 @@ abstract class LayoutWidget extends Widget implements ILayoutWidget {
     };
 
     return <DNDLayoutWidget {...props}>{children}</DNDLayoutWidget>;
-  }
-
-  getWidgets() {
-    return [...this.widgets];
   }
 }
 

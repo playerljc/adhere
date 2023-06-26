@@ -9,8 +9,13 @@ const selectorSuffix = '-widget-flow-layout';
 
 /**
  * FlowLayout
+ * @description FlowLayout
+ * @constructor
+ * @param props
  */
-const FlowLayout: FC<FlowLayoutProps> = ({ widgets }) => {
+const FlowLayout: FC<FlowLayoutProps> = (props) => {
+  const { widgets } = props;
+
   const children = useMemo(
     () =>
       widgets.map((_widget) => (

@@ -14,6 +14,7 @@ import {
   WidgetProps,
 } from '../types/WidgetTypes';
 import { DNDLayoutWidgetContext } from './DNDLayoutWidget';
+import DropHelp from './DropHelp';
 import WidgetDNDHelp from './WidgetDNDHelp';
 import WidgetHoverHighlightHelp from './WidgetHoverHighlightHelp';
 
@@ -31,7 +32,7 @@ const DNDWidgetProvider = DNDWidgetContext.Provider;
 
 /**
  * DNDWidget
- * @description 可拖放的Widhet
+ * @description 可拖放的Widget
  * @param props
  * @constructor
  */
@@ -85,9 +86,12 @@ const DNDWidget: FC<DNDWidgetProps> = (props) => {
    * dndWidgetJSX
    */
   const dndWidgetJSX = (
-    <div ref={drop} className={`${selectorPrefix}-dnd-widget`}>
-      {children}
-    </div>
+    <>
+      <div ref={drop} className={`${selectorPrefix}-dnd-widget`}>
+        {children}
+      </div>
+      {isOverCurrent && <DropHelp />}
+    </>
   );
 
   return (

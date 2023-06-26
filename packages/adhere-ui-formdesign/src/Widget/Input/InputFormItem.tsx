@@ -4,7 +4,15 @@ import type { FC } from 'react';
 
 import { WidgetProps } from '../../types/WidgetTypes';
 
-const InputFormItem: FC<WidgetProps> = ({ id }) => {
+/**
+ * InputFormItem
+ * @description InputFormItem
+ * @constructor
+ * @param props
+ */
+const InputFormItem: FC<WidgetProps> = (props) => {
+  const { id } = props;
+
   return (
     <Form.Item>
       <Input value={id} />

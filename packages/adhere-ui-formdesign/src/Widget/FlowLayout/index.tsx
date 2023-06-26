@@ -9,17 +9,20 @@ import FlowLayout from './FlowLayout';
 
 /**
  * FlowLayoutWidget
- * @description 单行文本框
+ * @description 流布局
  */
 class FlowLayoutWidget extends LayoutWidget {
+  // Group类型
   readonly groupType: GroupType = GroupType.LAYOUT;
 
+  // LayoutWidget类型
   readonly type: WidgetType.FLOW_LAYOUT;
 
   /**
    * defineProperts
    * @description 定义缺省的propertys
    * @protected
+   * @return {DLayoutWIdget[]}
    */
   protected defineProperts() {
     return this.mergePropertys(super.defineProperts(), [
@@ -35,6 +38,11 @@ class FlowLayoutWidget extends LayoutWidget {
     ]);
   }
 
+  /**
+   * renderDesign
+   * @description 渲染设计视图
+   * @return {ReactNode}
+   */
   renderDesign(): ReactNode {
     const { id, type, groupType, propertys, widgets } = this;
     const props = {

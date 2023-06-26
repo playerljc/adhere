@@ -16,6 +16,7 @@ import {
   WidgetProps,
 } from '../types/WidgetTypes';
 import { copyWidget as copyWidgetUtil, findParentLayoutWidgetById, findWidgetById } from '../util';
+import DropHelp from './DropHelp';
 import LayoutWidgetDNDHelp from './LayoutWidgetDNDHelp';
 import LayoutWidgetHoverHighlightHelp from './LayoutWidgetHoverHighlightHelp';
 
@@ -292,6 +293,7 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
   const dndLayoutWidgetJSX = (
     <div ref={drop} className={`${selectorPrefix}-dnd-layout-widget`} onClick={onClick}>
       {children}
+      {isOverCurrent && <DropHelp />}
     </div>
   );
 
