@@ -53,7 +53,7 @@ class FlowLayoutWidget extends LayoutWidget {
       widgets,
     };
 
-    return super.renderDesign(<DesignFlowLayout {...props} />);
+    return super.renderDesign(super.render(<DesignFlowLayout {...props} />));
   }
 
   render(): ReactNode {
@@ -66,7 +66,7 @@ class FlowLayoutWidget extends LayoutWidget {
       widgets,
     };
 
-    return <FlowLayout {...props} />;
+    return super.render(<FlowLayout {...props} />);
   }
 }
 

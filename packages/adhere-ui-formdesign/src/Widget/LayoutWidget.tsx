@@ -1,7 +1,10 @@
-import React, { ReactNode } from 'react';
+import classNames from 'classnames';
+import React, { CSSProperties, ReactNode } from 'react';
 
+import { selectorPrefix } from '../FormDesign/FormDesign';
 import WidgetProperty from '../WidgetProperty/WidgetProperty';
 import { GroupType, ILayoutWidget, Type } from '../types/WidgetTypes';
+import { getPropertyValueByName, transformInlineCSSToCSSProperties } from '../util';
 import DNDLayoutWidget from './DNDLayoutWidget';
 import Widget from './index';
 
@@ -54,6 +57,33 @@ abstract class LayoutWidget extends Widget implements ILayoutWidget {
     };
 
     return <DNDLayoutWidget {...props}>{children}</DNDLayoutWidget>;
+  }
+
+  /**
+   * render
+   * @description 处理className、style
+   * @param {ReactNode} children
+   * @return {ReactNode}
+   */
+  render(children: ReactNode): ReactNode {
+    const { propertys } = this;
+
+    // 处理className
+    const className = getPropertyValueByName(propertys, 'className');
+
+    // 处理style
+    const style = transformInlineCSSToCSSProperties(
+      getPropertyValueByName(propertys, 'style') ?? {},
+    ) as CSSProperties;
+
+    return (
+      <div
+        className={classNames(`${selectorPrefix}-layout-widget`, ...(className || []))}
+        style={style ?? {}}
+      >
+        {children}
+      </div>
+    );
   }
 }
 
