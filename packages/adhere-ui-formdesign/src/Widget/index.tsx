@@ -69,7 +69,7 @@ abstract class Widget implements IWidget {
       },
       {
         key: 'value',
-        name: '值',
+        name: '默认值',
         required: false,
         value: {
           type: WidgetPropertyFieldType.INPUT,
@@ -132,6 +132,20 @@ abstract class Widget implements IWidget {
         },
       },
       {
+        key: 'required',
+        name: '必填',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.REQUIRED,
+          props: {
+            value: {
+              required: true,
+              message: '',
+            },
+          },
+        },
+      },
+      {
         key: 'readonly',
         name: '只读',
         required: false,
@@ -150,6 +164,17 @@ abstract class Widget implements IWidget {
           type: WidgetPropertyFieldType.SWITCH,
           props: {
             value: false,
+          },
+        },
+      },
+      {
+        key: 'tooltip',
+        name: '提示说明',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: '',
           },
         },
       },
@@ -264,6 +289,12 @@ abstract class Widget implements IWidget {
     // 隐藏标签
     const hideTitle = getPropertyValueByName(propertys, 'hideTitle');
 
+    // 提示说明
+    const tooltip = getPropertyValueByName(propertys, 'tooltip');
+
+    // require
+    const required = getPropertyValueByName(propertys, 'required').required;
+
     return (
       <div
         className={classNames(
@@ -275,8 +306,25 @@ abstract class Widget implements IWidget {
         )}
         style={style ?? {}}
       >
-        {!hideTitle && <div className={`${selectorPrefix}-widget-label`}>{title}</div>}
-        <div className={`${selectorPrefix}-widget-value`}>{children}</div>
+        <div
+          className={classNames(`${selectorPrefix}-widget-label`, {
+            [`${selectorPrefix}-widget-require`]: required,
+            [`${selectorPrefix}-widget-tooltip-label`]: !wrapTitle && tooltip,
+          })}
+        >
+          {!hideTitle ? title : null}
+        </div>
+
+        {wrapTitle && tooltip && (
+          <div className={`${selectorPrefix}-widget-tooltip`}>{tooltip}</div>
+        )}
+
+        <div className={`${selectorPrefix}-widget-value`}>
+          {!wrapTitle && tooltip && (
+            <div className={`${selectorPrefix}-widget-tooltip`}>{tooltip}</div>
+          )}
+          {children}
+        </div>
       </div>
     );
   }

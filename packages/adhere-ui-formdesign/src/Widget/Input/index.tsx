@@ -34,6 +34,17 @@ class InputWidget extends Widget {
           },
         },
       },
+      {
+        key: 'placeholder',
+        name: '占位内容',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: '单行文本',
+          },
+        },
+      },
     ]);
   }
 

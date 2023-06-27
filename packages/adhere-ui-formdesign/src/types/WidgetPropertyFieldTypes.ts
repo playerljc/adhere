@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 export const WidgetPropertyFieldType = {
   INPUT: 'INPUT',
   SWITCH: 'SWITCH',
+  REQUIRED: 'REQUIRED',
 };
 
 export type Type = keyof typeof WidgetPropertyFieldType | string;
