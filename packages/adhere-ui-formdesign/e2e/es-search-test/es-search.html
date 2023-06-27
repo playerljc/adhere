@@ -144,6 +144,16 @@
         selection.addRange(range);
       }
 
+      function setCursorPositionToNode(node, offset) {
+        const range = document.createRange();
+        range.setStart(node, offset);
+        range.collapse(true);
+
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+
       // 设置光标的位置
       function setCursorPosition(element, offset) {
         const range = document.createRange();
@@ -457,7 +467,7 @@
        * @param e
        */
       function onQuickTipClick(e) {
-        const tip = e.target.dataset.tip;
+        const tip = '<span class="text">java</span>'; //e.target.dataset.tip;
 
         // java
         if (tip) {
@@ -468,13 +478,32 @@
           // 111(java) -> 111java
           // (java)111 -> java111
           // 1(java)11 -> 1java11
+          const endIndex = startIndex + continuousText.length;
 
-          cursorContextElement.textContent = `${text.substring(
-            0,
-            startIndex,
-          )}${tip}${text.substring(preCursorIndex)}`;
+          const df = document.createDocumentFragment();
+          const startTextNode = document.createTextNode(text.substring(0, startIndex));
+          const endTextNode = document.createTextNode(text.substring(endIndex));
+          const collapseEl = document.createElement('div');
+          collapseEl.innerHTML = tip;
+          df.appendChild(startTextNode);
+          Array.from(collapseEl.childNodes).forEach((el) => {
+            df.appendChild(el);
+          });
+          df.appendChild(endTextNode);
 
-          setCursorPosition(cursorContextParentElement, startIndex + tip.length)
+          if (cursorContextParentElement === editor) {
+            cursorContextElement.parentElement.replaceChild(df, cursorContextElement);
+          } else {
+            cursorContextParentElement.parentElement.replaceChild(df, cursorContextParentElement);
+          }
+
+          setCursorPositionToNode(endTextNode, 0);
+          // cursorContextElement.textContent = `${text.substring(
+          //   0,
+          //   startIndex,
+          // )}${tip}${text.substring(preCursorIndex)}`;
+          //
+          // setCursorPosition(cursorContextParentElement, startIndex + tip.length)
         }
 
         hideQuickTip();

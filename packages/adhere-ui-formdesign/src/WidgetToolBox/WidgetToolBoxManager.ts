@@ -35,6 +35,8 @@ export function registerWidget<T extends typeof Widget | typeof LayoutWidget>(
     toolBox: _widgetToolBox,
     widgetClass: _widgetClass,
   });
+
+  WidgetType[_type] = _type;
 }
 
 export function getWidgetToolBoxByType(type: Type) {

@@ -24,6 +24,7 @@ export function registerField<T extends typeof WidgetPropertyField>(
   widgetPropertyFieldClass: T,
 ) {
   widgetPropertyFields.set(type, widgetPropertyFieldClass);
+  WidgetPropertyFieldType[type] = type;
 }
 
 export function getFieldClassByType(type: Type) {

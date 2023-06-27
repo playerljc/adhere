@@ -10,6 +10,7 @@ import { getFieldClassByType } from './WidgetProperty/Field/WidgetPropertyFieldM
 import WidgetProperty from './WidgetProperty/WidgetProperty';
 import { getWidgetClassByType } from './WidgetToolBox/WidgetToolBoxManager';
 import { DWidgetProperty } from './types/WidgetPropertyTypes';
+import { GroupType, Type } from './types/WidgetTypes';
 import { DLayoutWidget, DWidget, ILayoutWidget, IWidget } from './types/WidgetTypes';
 
 /**
@@ -246,4 +247,24 @@ export function getDefaultFieldProps(propertys: (DWidgetProperty | WidgetPropert
     readonly: getPropertyValueByName(propertys, 'readonly'),
     disabled: getPropertyValueByName(propertys, 'disabled'),
   };
+}
+
+/**
+ * getDefaultPropertys
+ * @description 获取缺省的属性
+ * @param {GroupType} groupType
+ * @param {Type} type
+ * @return {WidgetProperty[]}
+ */
+export function getDefaultPropertys(groupType: GroupType, type: Type) {
+  const WidgetClass = getWidgetClassByType(type);
+
+  // @ts-ignore
+  const Widget = new WidgetClass('', groupType, type, [], []);
+
+  try {
+    return JSON.parse(JSON.stringify(Widget?.propertys || []));
+  } catch (e) {
+    return [];
+  }
 }
