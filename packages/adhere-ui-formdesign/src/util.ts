@@ -60,7 +60,7 @@ export function parseProperty(property: DWidgetProperty) {
   return new WidgetProperty(
     key,
     name,
-    new WidgetPropertyFieldClass(value.type, value.props),
+    new WidgetPropertyFieldClass(key, name, required, value.type, value.props),
     required,
   );
 }

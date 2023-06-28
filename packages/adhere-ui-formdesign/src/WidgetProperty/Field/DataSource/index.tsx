@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react';
 
 import WidgetPropertyField from '../WidgetPropertyField';
-import SwitchComponent from './SwitchComponent';
+import DataSourceComponent from './DataSourceComponent';
 
 /**
- * SwitchPropertyField
- * @description Switch
+ * DataSourcePropertyField
+ * @description 数据源
  */
-class SwitchPropertyField extends WidgetPropertyField {
+class DataSourcePropertyField extends WidgetPropertyField {
   render(): ReactNode {
     const { key, name, required, type, props } = this;
     const args = {
@@ -18,8 +18,8 @@ class SwitchPropertyField extends WidgetPropertyField {
       props,
     };
 
-    return super.render(<SwitchComponent {...args} />);
+    return super.render(<DataSourceComponent {...args} />);
   }
 }
 
-export default SwitchPropertyField;
+export default DataSourcePropertyField;

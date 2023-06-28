@@ -109,6 +109,18 @@ abstract class Widget implements IWidget {
           },
         },
       },
+      /*{
+        key: 'titleWidth',
+        name: '标签宽度',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT_NUMBER,
+          props: {
+            value: false,
+            precision: 0,
+          },
+        },
+      },*/
       {
         key: 'className',
         name: '自定义Class',
@@ -136,10 +148,21 @@ abstract class Widget implements IWidget {
         name: '必填',
         required: false,
         value: {
-          type: WidgetPropertyFieldType.REQUIRED,
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: false,
+          },
+        },
+      },
+      {
+        key: 'requiredMessage',
+        name: '必填提示信息',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
           props: {
             value: {
-              required: true,
+              required: false,
               message: '',
             },
           },

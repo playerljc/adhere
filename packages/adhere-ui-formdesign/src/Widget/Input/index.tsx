@@ -1,7 +1,10 @@
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { WidgetPropertyFieldType } from '../../types/WidgetPropertyFieldTypes';
+import {
+  InputWidgetPropertyFieldType,
+  WidgetPropertyFieldType,
+} from '../../types/WidgetPropertyFieldTypes';
 import { GroupType, Type, WidgetType } from '../../types/WidgetTypes';
 import Widget from '../index';
 import InputFormItem from './InputFormItem';
@@ -35,6 +38,17 @@ class InputWidget extends Widget {
         },
       },
       {
+        key: 'inputType',
+        name: '类型',
+        required: true,
+        value: {
+          type: WidgetPropertyFieldType.INPUT,
+          props: {
+            value: '单行文本',
+          },
+        },
+      },
+      {
         key: 'placeholder',
         name: '占位内容',
         required: false,
@@ -42,6 +56,44 @@ class InputWidget extends Widget {
           type: WidgetPropertyFieldType.INPUT,
           props: {
             value: '单行文本',
+          },
+        },
+      },
+      {
+        key: 'maxLength',
+        name: '最大输入长度',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.INPUT_NUMBER,
+          props: {
+            value: 500,
+            precision: 0,
+          },
+        },
+      },
+      {
+        key: 'allowClear',
+        name: '显示清除按钮',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: true,
+          },
+        },
+      },
+      {
+        key: 'inputType',
+        name: 'input类型',
+        require: true,
+        value: {
+          type: WidgetPropertyFieldType.SELECT,
+          props: {
+            value: 'text',
+            dataSource: InputWidgetPropertyFieldType.map((t) => ({
+              label: t,
+              value: t,
+            })),
           },
         },
       },

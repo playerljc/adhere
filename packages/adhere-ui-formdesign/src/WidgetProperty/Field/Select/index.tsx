@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react';
 
 import WidgetPropertyField from '../WidgetPropertyField';
-import SwitchComponent from './SwitchComponent';
+import SelectComponent from './SelectComponent';
 
 /**
- * SwitchPropertyField
- * @description Switch
+ * SelectPropertyField
+ * @description Select
  */
-class SwitchPropertyField extends WidgetPropertyField {
+class SelectPropertyField extends WidgetPropertyField {
   render(): ReactNode {
     const { key, name, required, type, props } = this;
     const args = {
@@ -18,8 +18,8 @@ class SwitchPropertyField extends WidgetPropertyField {
       props,
     };
 
-    return super.render(<SwitchComponent {...args} />);
+    return super.render(<SelectComponent {...args} />);
   }
 }
 
-export default SwitchPropertyField;
+export default SelectPropertyField;

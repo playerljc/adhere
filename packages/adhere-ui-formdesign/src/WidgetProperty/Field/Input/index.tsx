@@ -1,7 +1,7 @@
-import { Input } from 'antd';
 import React, { ReactNode } from 'react';
 
 import WidgetPropertyField from '../WidgetPropertyField';
+import InputComponent from './InputComponent';
 
 /**
  * InputPropertyField
@@ -9,7 +9,16 @@ import WidgetPropertyField from '../WidgetPropertyField';
  */
 class InputPropertyField extends WidgetPropertyField {
   render(): ReactNode {
-    return <Input />;
+    const { key, name, required, type, props } = this;
+    const args = {
+      key,
+      name,
+      required,
+      type,
+      props,
+    };
+
+    return super.render(<InputComponent {...args} />);
   }
 }
 
