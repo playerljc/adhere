@@ -6,6 +6,7 @@ import {
   WidgetPropertyFieldType,
 } from '../../types/WidgetPropertyFieldTypes';
 import { GroupType, Type, WidgetType } from '../../types/WidgetTypes';
+import { getInputValidationTypeDataSource } from '../../util';
 import Widget from '../index';
 import InputFormItem from './InputFormItem';
 
@@ -30,17 +31,6 @@ class InputWidget extends Widget {
     return this.mergePropertys(super.defineProperts(), [
       {
         key: 'title',
-        value: {
-          type: WidgetPropertyFieldType.INPUT,
-          props: {
-            value: '单行文本',
-          },
-        },
-      },
-      {
-        key: 'inputType',
-        name: '类型',
-        required: true,
         value: {
           type: WidgetPropertyFieldType.INPUT,
           props: {
@@ -94,6 +84,22 @@ class InputWidget extends Widget {
               label: t,
               value: t,
             })),
+          },
+        },
+      },
+      {
+        key: 'validationType',
+        name: '校验类型',
+        require: true,
+        value: {
+          type: WidgetPropertyFieldType.INPUT_VALIDATION_TYPE,
+          props: {
+            value: {
+              checked: false,
+              type: '',
+              validationMessage: '',
+            },
+            dataSource: getInputValidationTypeDataSource(),
           },
         },
       },

@@ -1,4 +1,4 @@
-import { InputNumber } from 'antd';
+import { InputNumber, InputNumberProps } from 'antd';
 import React from 'react';
 import type { FC } from 'react';
 
@@ -9,7 +9,9 @@ import { WidgetPropertyFieldProps } from '../../../types/WidgetPropertyFieldType
  * @param props
  * @constructor
  */
-const InputNumberComponent: FC<WidgetPropertyFieldProps> = ({ props }) => {
+const InputNumberComponent: FC<WidgetPropertyFieldProps<InputNumberProps, number>> = ({
+  props,
+}) => {
   return <InputNumber {...props} />;
 };
 

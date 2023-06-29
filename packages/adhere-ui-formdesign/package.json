@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
+    "@baifendian/adhere-ui-anthoc": "^2.9.5",
     "@baifendian/adhere-ui-ellipsis": "^2.9.5",
     "@baifendian/adhere-ui-fieldgeneratortodict": "^2.9.5",
     "@baifendian/adhere-ui-hooks": "^2.9.0",

@@ -7,7 +7,7 @@ import { IWidgetPropertyField, Type } from '../../types/WidgetPropertyFieldTypes
  * WidgetPropertyField
  * @description WidgetProperty的Field(字段)
  */
-class WidgetPropertyField implements IWidgetPropertyField {
+class WidgetPropertyField<P> implements IWidgetPropertyField<P> {
   constructor(key, name, required, type, props) {
     this.key = key;
     this.name = name;
@@ -34,7 +34,7 @@ class WidgetPropertyField implements IWidgetPropertyField {
    * @description field的props
    * @private
    */
-  readonly props: { [key: string]: any };
+  readonly props: P;
 
   getKey() {
     return this.key;

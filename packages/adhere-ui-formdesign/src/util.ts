@@ -5,6 +5,8 @@ import { CSSProperties } from 'react';
 import parse from 'style-to-object';
 import { v4 } from 'uuid';
 
+import { Form } from '@baifendian/adhere-ui-anthoc';
+
 import WidgetPropertyField from './WidgetProperty/Field/WidgetPropertyField';
 import { getFieldClassByType } from './WidgetProperty/Field/WidgetPropertyFieldManager';
 import WidgetProperty from './WidgetProperty/WidgetProperty';
@@ -267,4 +269,16 @@ export function getDefaultPropertys(groupType: GroupType, type: Type) {
   } catch (e) {
     return [];
   }
+}
+
+/**
+ * getInputValidationTypeDataSource
+ * @description 获取所有验证类型的DataSource
+ */
+export function getInputValidationTypeDataSource() {
+  // Form.ValidatorRules.isIP
+  return Object.keys(Form.ValidatorRules).map((key) => ({
+    label: key.replace(/^is/, ''),
+    value: key,
+  }));
 }

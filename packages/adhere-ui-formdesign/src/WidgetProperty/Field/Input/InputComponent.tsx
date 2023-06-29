@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import { Input, InputProps } from 'antd';
 import React from 'react';
 import type { FC } from 'react';
 
@@ -9,7 +9,7 @@ import { WidgetPropertyFieldProps } from '../../../types/WidgetPropertyFieldType
  * @param props
  * @constructor
  */
-const InputComponent: FC<WidgetPropertyFieldProps> = ({ props }) => {
+const InputComponent: FC<WidgetPropertyFieldProps<InputProps, string>> = ({ props }) => {
   return <Input {...props} />;
 };
 

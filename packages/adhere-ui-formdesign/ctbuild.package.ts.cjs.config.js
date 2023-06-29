@@ -17,5 +17,15 @@ module.exports = {
       },
       '@ant-design/icons',
     ]);
+
+    defaultBabelConfig.plugins.push([
+      'import',
+      {
+        libraryName: '@baifendian/adhere-ui-anthoc',
+        libraryDirectory: 'lib',
+        style: false,
+      },
+      'adhere-ui-anthoc',
+    ]);
   },
 };

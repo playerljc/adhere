@@ -148,22 +148,11 @@ abstract class Widget implements IWidget {
         name: '必填',
         required: false,
         value: {
-          type: WidgetPropertyFieldType.SWITCH,
-          props: {
-            value: false,
-          },
-        },
-      },
-      {
-        key: 'requiredMessage',
-        name: '必填提示信息',
-        required: false,
-        value: {
-          type: WidgetPropertyFieldType.INPUT,
+          type: WidgetPropertyFieldType.REQUIRED,
           props: {
             value: {
               required: false,
-              message: '',
+              validationMessage: '',
             },
           },
         },

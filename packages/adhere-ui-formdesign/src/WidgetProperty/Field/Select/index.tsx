@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 
+import { SelectWidgetPropertyFieldProps } from '../../../types/WidgetPropertyFieldTypes';
 import WidgetPropertyField from '../WidgetPropertyField';
 import SelectComponent from './SelectComponent';
 
@@ -7,7 +8,7 @@ import SelectComponent from './SelectComponent';
  * SelectPropertyField
  * @description Select
  */
-class SelectPropertyField extends WidgetPropertyField {
+class SelectPropertyField extends WidgetPropertyField<SelectWidgetPropertyFieldProps> {
   render(): ReactNode {
     const { key, name, required, type, props } = this;
     const args = {
