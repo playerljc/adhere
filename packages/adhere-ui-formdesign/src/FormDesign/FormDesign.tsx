@@ -1,18 +1,20 @@
 import { Tabs } from 'antd';
 import classNames from 'classnames';
 import type { ForwardRefRenderFunction } from 'react';
-import React, { forwardRef, memo, useEffect, useImperativeHandle } from 'react';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { v4 } from 'uuid';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 
+import Widget from '../Widget';
+import LayoutWidget from '../Widget/LayoutWidget';
 import type { FormDesignProps, FormDesignRefHandle } from '../types/FormDesignTypes';
 import { WidgetPropertyFieldType } from '../types/WidgetPropertyFieldTypes';
 import type { DLayoutWidget, DWidget } from '../types/WidgetTypes';
 import { GroupType, WidgetType } from '../types/WidgetTypes';
-import { copyDataSource } from '../util';
+import { copyDataSource, findWidgetById, parseWidget } from '../util';
 import DesignAreaView from './DesignAreaView';
 import FooterBar from './FooterBar';
 import { FormDesignProvider } from './FormDesignProvider';
@@ -40,6 +42,17 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
 
   // 所有的数据
   const [targetDataSource, setTargetDataSource] = useSetState<Array<DWidget | DLayoutWidget>>([]);
+
+  // 当前激活的Widget
+  const currentWidget = useMemo<Widget | LayoutWidget>(() => {
+    const currentWidget = findWidgetById(currentWidgetActiveKey, targetDataSource);
+
+    if (currentWidget) {
+      return parseWidget(currentWidget);
+    }
+
+    return null;
+  }, [currentWidgetActiveKey]);
 
   useEffect(() => {
     if (!dataSource || !Array.isArray(targetDataSource) || targetDataSource.length === 0) {
@@ -106,7 +119,7 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
     {
       key: 'WidgetPropertysView',
       label: 'WidgetPropertysView',
-      children: <WidgetPropertysView />,
+      children: <WidgetPropertysView widget={currentWidget} />,
     },
     {
       key: 'FormPropertysView',

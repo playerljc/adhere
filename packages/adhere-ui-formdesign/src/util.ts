@@ -24,21 +24,28 @@ import { DLayoutWidget, DWidget, ILayoutWidget, IWidget } from './types/WidgetTy
 export function parseWidgets(
   dataSource: Array<DWidget | DLayoutWidget>,
 ): Array<IWidget | ILayoutWidget> {
-  return dataSource.map((_widget) => {
-    const { id, type, groupType, propertys } = _widget;
+  return dataSource.map((_widget) => parseWidget(_widget));
+}
 
-    const WidgetClass = getWidgetClassByType(type);
+/**
+ * parseWidget
+ * @param {DWidget | DLayoutWidget} widgetData
+ * @return IWidget | ILayoutWidget
+ */
+export function parseWidget(widgetData: DWidget | DLayoutWidget) {
+  const { id, type, groupType, propertys } = widgetData;
 
+  const WidgetClass = getWidgetClassByType(type);
+
+  // @ts-ignore
+  return new WidgetClass(
+    id,
+    groupType,
+    type,
+    parsePropertys(propertys),
     // @ts-ignore
-    return new WidgetClass(
-      id,
-      groupType,
-      type,
-      parsePropertys(propertys),
-      // @ts-ignore
-      parseWidgets(_widget.widgets || []),
-    );
-  });
+    parseWidgets(widgetData.widgets || []),
+  );
 }
 
 /**

@@ -1,6 +1,8 @@
-import { Checkbox, Input } from 'antd';
+import { Input, Switch } from 'antd';
 import React from 'react';
 import type { FC } from 'react';
+
+import Space from '@baifendian/adhere-ui-space';
 
 import {
   RequiredWidgetPropertyFieldProps,
@@ -24,15 +26,17 @@ const RequiredComponent: FC<
 
   return (
     <div>
-      <div>
-        <Checkbox checked={required} />
-      </div>
-
-      {required && (
+      <Space.Group direction="vertical">
         <div>
-          <Input placeholder="自定义提示信息" value={validationMessage} />
+          <Switch checked={required} />
         </div>
-      )}
+
+        {required && (
+          <div>
+            <Input placeholder="自定义提示信息" value={validationMessage} />
+          </div>
+        )}
+      </Space.Group>
     </div>
   );
 };
