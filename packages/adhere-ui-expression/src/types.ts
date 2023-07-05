@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties } from 'react';
+
+import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
 
 // 运算符的类型
 // unary 单目运算符
@@ -8,28 +10,68 @@ import type { CSSProperties, ReactNode } from 'react';
 export type OperatorType = 'unary' | 'binary' | 'ternary' | 'brackets';
 
 /**
+ * OperatorItem
+ */
+export type OperatorItem = {
+  // 运算符显示的内容
+  label: string;
+  // 运算符的值
+  value: string;
+  // 运算符的类型
+  type: OperatorType;
+};
+
+/**
+ * Operators
+ */
+export type Operators = Array<OperatorItem>;
+
+/**
  * ExpressionProps
  * @interface ExpressionProps
  */
-export interface ExpressionProps {
+export interface ExpressionProps<T extends { label: string; value: string }> {
   className?: string;
   style?: CSSProperties;
+  editorClassName?: string;
+  editorStyle?: CSSProperties;
+  operatorWrapClassName?: string;
+  operatorWrapStyle?: CSSProperties;
+  quickTipWrapClassName?: string;
+  quickTipWrapStyle?: CSSProperties;
+  textClassName?: string;
+  operatorClassName?: string;
+  /**
+   * value
+   */
   value?: string;
   /**
    * 运算符
    */
-  operators?: Array<{
-    // 运算符显示的内容
-    label: string;
-    // 运算符的值
-    value: string;
-    // 运算符的类型
-    type: OperatorType;
-  }>;
+  operators?: Operators;
   /**
    * 触发弹出操作符layer的charCode
    */
   triggerCharCode?: number;
+  /**
+   * placeholder
+   */
+  placeholder?: string;
+  /**
+   * quickTipDataSource
+   * @description 快速查询的数据
+   */
+  quickTipDataSource?: Array<T>;
+  // quickTip数据中哪个属性的值参与计算
+  quickTipProp?: string;
+  /**
+   * disableQuickTip
+   */
+  disableQuickTip?: boolean;
+  /**
+   * onChange
+   * @param value
+   */
   onChange: (value?: string) => void;
   /**
    * 连续输入字符的回调
@@ -38,27 +80,29 @@ export interface ExpressionProps {
   onContinuousTextChange: (continuousText: string) => void;
   /**
    * onEditorInputEnd
-   * @description input输入结束
+   * @description input输入
    * @param data
    * @param continuousText
    */
-  onEditorInputEnd: (data: string, continuousText: string) => void;
-  /***
-   * onKeyDownEnd
-   * @param e
-   */
-  onEditorKeyDownEnd: (e) => void;
-  /**
-   * onEditorBlurEnd
-   * @param e
-   */
+  onEditorInputEnd: (html: string, continuousText: string) => void;
   onEditorBlurEnd: (e) => void;
-  /**
-   * onEditorBlurTimeOut
-   * @param e
-   */
-  onEditorBlurTimeOut: (e) => void;
-  children?: ReactNode;
+  onEditorKeyDownEnd: (e) => void;
+  onEditorPasteEnd: (e) => void;
 }
 
-export interface ExpressionHandle {}
+export interface ExpressionHandle {
+  setValue(html: string): void;
+  getValue(): string;
+  isEditorEmpty(): boolean;
+  hideQuickTip(): void;
+  showQuickTip(): void;
+  showOperators(): void;
+  hideQuickTip(): void;
+  hideOperators(): void;
+}
+
+export interface ViewProps extends EllipsisProps {
+  wrapClassName?: string;
+  wrapStyle?: CSSProperties;
+  value?: string;
+}

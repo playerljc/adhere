@@ -1,11 +1,25 @@
 import { useMount, useUpdateLayoutEffect } from 'ahooks';
+import { Empty } from 'antd';
 import classNames from 'classnames';
 import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 import type { ForwardRefRenderFunction, ReactElement } from 'react';
 
+import { CloseCircleOutlined } from '@ant-design/icons';
+import Hooks from '@baifendian/adhere-ui-hooks';
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { ExpressionHandle, ExpressionProps } from './types';
+import View from './View';
+import type { ExpressionHandle, ExpressionProps, OperatorType, Operators } from './types';
+
+const {
+  getCurrentParentElementWithCursor,
+  getCurrentElementWithCursor,
+  setCursorToEnd,
+  setCursorPositionToNode,
+  setCursorPosition,
+  getCursorIndex,
+} = Util;
 
 // 缺省的触发字符code
 const defaultTriggerCharCode = 32;
@@ -13,60 +27,111 @@ const defaultTriggerCharCode = 32;
 // html的空格
 const htmlSpace = '&nbsp;';
 
-// 非html的空格
-const charSpace = '';
+const { useSetState } = Hooks;
+
+export const selectorPrefix = 'adhere-ui-expression';
 
 /**
  * Expression
- * @param props
+ * @param className
+ * @param style
+ * @param editorClassName
+ * @param editorStyle
+ * @param operatorWrapClassName
+ * @param operatorWrapStyle
+ * @param quickTipWrapClassName
+ * @param quickTipWrapStyle
+ * @param textClassName
+ * @param textStyle
+ * @param operatorClassName
+ * @param operatorStyle
+ * @param value
+ * @param placeholder
+ * @param triggerCharCode
+ * @param quickTipProp
+ * @param quickTipDataSource
+ * @param disableQuickTip
+ * @param operators
+ * @param onChange
+ * @param onContinuousTextChange
+ * @param onEditorInputEnd
+ * @param onEditorBlurEnd
+ * @param onEditorKeyDownEnd
+ * @param onEditorPasteEnd
  * @param ref
  * @constructor
  */
-const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = (
+const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any>> = (
   {
     className,
     style,
+    editorClassName,
+    editorStyle,
+    operatorWrapClassName,
+    operatorWrapStyle,
+    quickTipWrapClassName,
+    quickTipWrapStyle,
+    textClassName,
+    textStyle,
+    operatorClassName,
+    operatorStyle,
     value,
+    placeholder,
     triggerCharCode,
+    quickTipProp,
+    quickTipDataSource,
+    disableQuickTip,
     operators,
     onChange,
     onContinuousTextChange,
     onEditorInputEnd,
-    children,
+    onEditorBlurEnd,
+    onEditorKeyDownEnd,
+    onEditorPasteEnd,
   },
   ref,
 ): ReactElement => {
-  const operatorsConfig = useMemo(
+  const operatorsConfig = useMemo<Operators>(
     () =>
       operators ?? [
         {
           label: '()',
           value: '()',
+          type: 'brackets',
         },
         {
           label: 'AND',
           value: 'AND',
+          type: 'binary',
         },
         {
           label: 'OR',
           value: 'OR',
+          type: 'binary',
         },
         {
           label: 'NOT',
           value: 'NOT',
+          type: 'unary',
         },
       ],
     [operators],
   );
 
+  // contextRef
+  const contextRef = useRef<HTMLDivElement | null>(null);
+
   // input对象
-  const editorElement = useRef<HTMLDivElement | null>(null);
+  const editorRef = useRef<HTMLDivElement | null>(null);
 
   // 运算符下拉
-  const operatorsElement = useRef<HTMLUListElement | null>(null);
+  const operatorsRef = useRef<HTMLUListElement | null>(null);
+
+  // quickTipRef
+  const quickTipRef = useRef<HTMLUListElement | null>(null);
 
   // placeholder
-  const placeholderElement = useRef<HTMLDivElement | null>(null);
+  const placeholderRef = useRef<HTMLDivElement | null>(null);
 
   // 光标输入处的父元素
   const cursorContextParentElement = useRef<Node | null>(null);
@@ -86,24 +151,45 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
   // 若干可见字符的输入之前，而这些可见字符的输入可能需要一连串的键盘操作、点击输入法的备选词等
   const comStart = useRef(false);
 
+  const [operatorsShow, setOperatorsShow] = useSetState(false);
+
+  const [quickTipShow, setQuickTipShow] = useSetState(false);
+
+  const [placeholderShow, setPlaceholderShow] = useSetState(true);
+
+  const triggerChar = useMemo(
+    () => String.fromCharCode(triggerCharCode ?? defaultTriggerCharCode),
+    [triggerCharCode],
+  );
+
   useUpdateLayoutEffect(() => {
     onReady();
   }, [value]);
 
   useMount(() => {
+    const editor = getEditorEl();
+    if (editor) {
+      editor.innerHTML = value ?? '';
+    }
+    setCursorToEnd(editor as HTMLElement);
     onReady();
   });
 
-  useImperativeHandle(ref, () => ({
-    setCursorPosition,
-    getCursorContext: () => ({
-      cursorContextElement: cursorContextElement.current,
-      cursorContextParentElement: cursorContextParentElement.current,
-      continuousText,
-      preCursorContextElement,
-      preCursorIndex,
-      cursorIndex,
-    }),
+  useImperativeHandle<ExpressionHandle>(ref, () => ({
+    setValue: (_value) => {
+      const editor = getEditorEl();
+      if (editor) {
+        editor.innerHTML = _value ?? '';
+      }
+      setCursorToEnd(editor as HTMLElement);
+      onReady();
+    },
+    getValue: () => getEditorEl()?.innerHTML,
+    isEditorEmpty,
+    showQuickTip,
+    showOperators,
+    hideQuickTip,
+    hideOperators,
   }));
 
   /**
@@ -121,86 +207,21 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
   function initial() {
     if (isEditorEmpty()) {
       showPlaceholder();
-    }
-
-    if (!value?.trim?.()) {
-      setCursorToEnd(editorElement.current);
+    } else {
+      hidePlaceholder();
     }
   }
 
   /**
-   * setCursorToEnd
-   * @description 将光标设置到内容末尾
-   * @param {HTMLElement} element
+   * getEditorEl
+   * @return {HTMLElement}
    */
-  function setCursorToEnd(element) {
-    const range = document.createRange();
-    const selection = window.getSelection();
-    range.selectNodeContents(element);
-    range.collapse(false); // 将光标设置到末尾
-    selection?.removeAllRanges?.();
-    selection?.addRange?.(range);
-  }
-
-  /**
-   * setCursorPosition
-   * @description 设置光标的位置
-   * @param {HTMLElement} element
-   * @param {number} offset
-   */
-  function setCursorPosition(element, offset) {
-    const range = document.createRange();
-    range.setStart(element.childNodes[0], offset);
-    range.collapse(true);
-
-    const sel = window.getSelection();
-    sel?.removeAllRanges?.();
-    sel?.addRange?.(range);
-  }
-
-  /**
-   * getCurrentElementWithCursor
-   * @description 获取光标输入的的element
-   * @return {Node|null}
-   */
-  function getCurrentElementWithCursor() {
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      return range.startContainer /*.parentElement*/;
+  function getEditorEl() {
+    if (isFont()) {
+      return editorRef?.current?.firstElementChild;
+    } else {
+      return editorRef?.current;
     }
-    return null;
-  }
-
-  /**
-   * getCurrentParentElementWithCursor
-   * @description 获取光标输入的parentElement
-   * @return {HTMLElement|null}
-   */
-  function getCurrentParentElementWithCursor() {
-    const currentElement = getCurrentElementWithCursor();
-    if (currentElement) {
-      return currentElement.parentElement;
-    }
-
-    return null;
-  }
-
-  /**
-   * getCursorIndex
-   * @description 获取光标的索引
-   * @return {number}
-   */
-  function getCursorIndex() {
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const preSelectionRange = range.cloneRange();
-      preSelectionRange.selectNodeContents(range.startContainer);
-      preSelectionRange.setEnd(range.startContainer, range.startOffset);
-      return preSelectionRange.toString().length;
-    }
-    return -1;
   }
 
   /**
@@ -209,7 +230,24 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    * @return {boolean}
    */
   function isEditorEmpty() {
-    return editorElement?.current?.innerHTML?.trim?.() === '';
+    return getEditorEl()?.innerHTML?.trim?.() === '';
+  }
+
+  function getCursorPosition() {
+    let x = 0;
+    let y = 0;
+
+    if (window.getSelection) {
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        x = rect.left;
+        y = rect.top;
+      }
+    }
+
+    return { x, y };
   }
 
   /**
@@ -217,7 +255,12 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    * @description 显示运算符选择下拉
    */
   function showOperators() {
-    operatorsElement?.current?.classList?.add?.('system-quick-search-operators--show');
+    const point = getCursorPosition();
+
+    operatorsRef.current?.style.left = `${point.x + 10}px`;
+    operatorsRef.current?.style.top = `${point.y + 25}px`;
+
+    setOperatorsShow(true, () => {});
   }
 
   /**
@@ -225,7 +268,22 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    * @description 关闭运算符选择下拉
    */
   function hideOperators() {
-    operatorsElement?.current?.classList?.remove?.('system-quick-search-operators--show');
+    setOperatorsShow(false);
+  }
+
+  /**
+   * showQuickTip
+   */
+  function showQuickTip() {
+    setQuickTipShow(true);
+  }
+
+  /**
+   * hideOperators
+   * @description 关闭运算符选择下拉
+   */
+  function hideQuickTip() {
+    setQuickTipShow(false);
   }
 
   /**
@@ -233,7 +291,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    * @description 显示placeholder
    */
   function showPlaceholder() {
-    placeholderElement?.current?.classList?.add?.('system-quick-search-editor-placeholder--show');
+    setPlaceholderShow(true);
   }
 
   /**
@@ -241,9 +299,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    * @description 隐藏placeholder
    */
   function hidePlaceholder() {
-    placeholderElement?.current?.classList?.remove?.(
-      'system-quick-search-editor-placeholder--show',
-    );
+    setPlaceholderShow(false);
   }
 
   /**
@@ -254,7 +310,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    */
   function createTextElement(html) {
     const textElement = document.createElement('span');
-    textElement.className = 'text';
+    textElement.className = classNames('text', textClassName ?? '');
     textElement.innerHTML = html;
     return textElement;
   }
@@ -267,10 +323,19 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    */
   function createOperatorElement(text) {
     const operatorElement = document.createElement('span');
-    operatorElement.className = 'operator';
+    operatorElement.className = classNames('operator', operatorClassName ?? '');
     operatorElement.setAttribute('contenteditable', 'false');
     operatorElement.innerText = text;
     return operatorElement;
+  }
+
+  /**
+   * isFont
+   * @description 是否是font元素
+   * @return {boolean}
+   */
+  function isFont() {
+    return editorRef?.current?.firstElementChild?.tagName?.toLowerCase?.() === 'font';
   }
 
   /**
@@ -304,6 +369,17 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
   }
 
   /**
+   * onEditorCompositionEnd
+   * @description 编辑框输入中文结束
+   * @param e
+   */
+  function onEditorCompositionEnd(e) {
+    comStart.current = false;
+    // console.log('中文输入：结束');
+    onEditorInput(e);
+  }
+
+  /**
    * onEditorInput
    * @description 编辑框input
    */
@@ -324,32 +400,29 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
       hidePlaceholder();
     }
 
-    const text = e.data;
+    const text = e.nativeEvent.data;
+
     if (text !== null) {
       setContinuousText(text);
+
+      if (!disableQuickTip) {
+        onContinuousTextChange?.(continuousText.current);
+      }
     }
 
-    // 连续输入
-    onContinuousTextChange?.(continuousText.current);
+    if (!disableQuickTip) {
+      if (text !== triggerChar) {
+        showQuickTip();
+      }
+    }
 
     // input输入结束
-    if (text !== String.fromCharCode(triggerCharCode ?? defaultTriggerCharCode)) {
+    if (text !== triggerChar) {
       onEditorInputEnd?.(text, continuousText.current);
     }
 
     // onChange
-    onChange?.(editorElement?.current?.innerHTML);
-  }
-
-  /**
-   * onEditorCompositionEnd
-   * @description 编辑框输入中文结束
-   * @param e
-   */
-  function onEditorCompositionEnd(e) {
-    comStart.current = false;
-    // console.log('中文输入：结束');
-    onEditorInput(e);
+    onChange?.(editorRef?.current?.innerHTML);
   }
 
   /**
@@ -360,6 +433,8 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
   function onEditorPaste(e) {
     // 禁止粘贴内容
     e.preventDefault();
+
+    onEditorPasteEnd?.(e);
   }
 
   /**
@@ -370,8 +445,10 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
    */
   function onEditorKeyDown(e) {
     // 默认空格
-    if (e.keyCode === triggerCharCode ?? defaultTriggerCharCode) {
+    if (e.keyCode === (triggerCharCode ?? defaultTriggerCharCode)) {
+      hideQuickTip();
       showOperators();
+      onEditorKeyDownEnd?.(e);
       return false;
     }
 
@@ -380,43 +457,52 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
       hideOperators();
       e.stopPropagation();
       e.preventDefault();
+      onEditorKeyDownEnd?.(e);
       return false;
     }
 
     hideOperators();
+    onEditorKeyDownEnd?.(e);
   }
 
   /**
    * onEditorBlur
    * @description 编辑框失去焦点
    */
-  function onEditorBlur() {
-    setTimeout(() => {
-      hideOperators();
-    }, 1500);
+  function onEditorBlur(e) {
+    e.stopPropagation();
+    e.preventDefault();
 
     if (isEditorEmpty()) {
       showPlaceholder();
     } else {
       hidePlaceholder();
     }
+
+    onEditorBlurEnd?.(e);
   }
 
   /**
    * onOperatorsClick
    * @description 选择运算符
    * @param {string} operator
+   * @param {OperatorType} operatorType
    */
-  function onOperatorsClick(operator) {
+  function onOperatorsClick(operator: string, operatorType: OperatorType) {
     if (operator) {
+      const editor = getEditorEl();
+
       // 括号
-      if (operator === '()') {
-        const leftElement = createOperatorElement('(');
-        const rightElement = createOperatorElement(')');
-        const textElement = createTextElement('&nbsp;&nbsp;');
+      if (operatorType === 'brackets') {
+        const left = operator[0];
+        const right = operator[1];
+
+        const leftElement = createOperatorElement(left);
+        const rightElement = createOperatorElement(right);
+        const textElement = createTextElement(`${htmlSpace}${htmlSpace}`);
 
         // 如果是在editor的文本中进行的编辑
-        if (cursorContextParentElement.current === editorElement.current) {
+        if (cursorContextParentElement.current === editor) {
           const text = cursorContextElement?.current?.textContent;
           const startElement = createTextElement(text?.substring?.(0, cursorIndex.current + 1));
           const endElement = createTextElement(text?.substring?.(cursorIndex.current + 1));
@@ -431,8 +517,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
             endElement.textContent.length !== 0 && df.appendChild(endElement);
           }
 
-          // @ts-ignore
-          editorElement?.current?.replaceChild?.(df, cursorContextElement);
+          editor?.replaceChild?.(df, cursorContextElement.current);
 
           setCursorPosition(textElement, 1);
         }
@@ -455,7 +540,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
 
           cursorContextParentElement?.current?.parentElement?.replaceChild?.(
             df,
-            cursorContextParentElement.current,
+            cursorContextParentElement.current as Node,
           );
 
           setCursorPosition(textElement, 1);
@@ -464,10 +549,10 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
       // 其他符号
       else {
         const operatorElement = createOperatorElement(operator);
-        const textElement = createTextElement('&nbsp;');
+        const textElement = createTextElement(htmlSpace);
 
         // 如果是在editor的文本中进行的编辑
-        if (cursorContextParentElement.current === editorElement.current) {
+        if (cursorContextParentElement.current === editor) {
           // 光标所在的元素现在是text元素
           // let parentElement = getInsertParentElement();
           // parentElement.appendChild(operatorElement);
@@ -486,8 +571,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
             endElement.textContent.length !== 0 && df.appendChild(endElement);
           }
 
-          // @ts-ignore
-          editorElement?.current?.replaceChild(df, cursorContextElement.current);
+          editor?.replaceChild(df, cursorContextElement.current);
 
           setCursorPosition(textElement, 0);
         }
@@ -508,17 +592,71 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
 
           cursorContextParentElement?.current?.parentElement?.replaceChild?.(
             df,
-            cursorContextParentElement.current,
+            cursorContextParentElement.current as Node,
           );
 
           setCursorPosition(textElement, 0);
         }
       }
 
-      onChange?.(editorElement?.current?.innerHTML);
+      onChange?.(editorRef?.current?.innerHTML);
     }
 
     hideOperators();
+  }
+
+  /**
+   * onQuickTipClick
+   * @description 选额智能提示
+   * @param e
+   * @param item
+   */
+  function onQuickTipClick(e, item) {
+    const tip = item[quickTipProp ?? 'value'];
+
+    const editor = getEditorEl();
+
+    // java
+    if (tip) {
+      // 111
+      const text = cursorContextElement.current.textContent;
+
+      const startIndex = text.lastIndexOf(continuousText.current, preCursorIndex.current);
+      // 111(java) -> 111java
+      // (java)111 -> java111
+      // 1(java)11 -> 1java11
+      const endIndex = startIndex + continuousText.current.length;
+
+      const df = document.createDocumentFragment();
+      const startTextNode = document.createTextNode(text.substring(0, startIndex));
+      const endTextNode = document.createTextNode(text.substring(endIndex));
+      const collapseEl = document.createElement('div');
+      collapseEl.innerHTML = tip;
+      df.appendChild(startTextNode);
+      Array.from(collapseEl.childNodes).forEach((el) => {
+        df.appendChild(el);
+      });
+      df.appendChild(endTextNode);
+
+      if (contextRef.current === cursorContextParentElement.current) {
+        editor.innerHTML = '';
+        editor.appendChild(df);
+      } else if (editor === cursorContextParentElement.current) {
+        cursorContextElement.current.parentElement.replaceChild(df, cursorContextElement.current);
+      } else {
+        cursorContextParentElement.current.parentElement.replaceChild(
+          df,
+          cursorContextParentElement.current,
+        );
+      }
+
+      setCursorPositionToNode(endTextNode, 0);
+
+      onChange?.(editorRef?.current?.innerHTML);
+    }
+
+    hideQuickTip();
+    hidePlaceholder();
   }
 
   // 获取插入的父元素
@@ -529,30 +667,53 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
   // }
 
   return (
-    <div className={classNames('system-quick-search', className ?? '')} style={style ?? {}}>
+    <div
+      ref={contextRef}
+      className={classNames(selectorPrefix, className ?? '')}
+      style={style ?? {}}
+    >
       <div
-        className="system-quick-search-editor"
+        ref={editorRef}
+        className={classNames(`${selectorPrefix}-editor`, editorClassName ?? '')}
+        style={editorStyle ?? {}}
         contentEditable="true"
-        ref={editorElement}
-        dangerouslySetInnerHTML={{ __html: value as string }}
         onInput={onEditorInput}
         onKeyDown={onEditorKeyDown}
         onBlur={onEditorBlur}
         onCompositionStart={onEditorCompositionStart}
         onCompositionEnd={onEditorCompositionEnd}
         onPaste={onEditorPaste}
-      ></div>
-
-      <div className="system-quick-search-editor-placeholder" ref={placeholderElement}>
-        {Intl.v('please enter search keyword')}
+      >
+        {/*<span className="text" contentEditable="true"></span>*/}
       </div>
 
-      <ul className="system-quick-search-operators" ref={operatorsElement}>
-        {operatorsConfig.map(({ label, value }) => (
+      <div
+        className={classNames(`${selectorPrefix}-editor-placeholder`, {
+          [`${selectorPrefix}-editor-placeholder--show`]: placeholderShow,
+        })}
+        ref={placeholderRef}
+      >
+        {placeholder ?? Intl.v('请输入关键词')}
+      </div>
+
+      <ul
+        ref={operatorsRef}
+        className={classNames(`${selectorPrefix}-operators`, operatorWrapClassName ?? '', {
+          [`${selectorPrefix}-operators--show`]: operatorsShow,
+        })}
+        style={operatorWrapStyle ?? {}}
+      >
+        <li>
+          <i onClick={() => hideOperators()}>
+            <CloseCircleOutlined />
+          </i>
+        </li>
+
+        {operatorsConfig.map(({ label, value, type }) => (
           <li
             key={value}
             onClick={() => {
-              onOperatorsClick(value);
+              onOperatorsClick(value, type);
             }}
           >
             {label}
@@ -560,9 +721,102 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps> = 
         ))}
       </ul>
 
-      {children}
+      <ul
+        ref={quickTipRef}
+        className={classNames(`${selectorPrefix}-quick-tips`, quickTipWrapClassName ?? '', {
+          [`${selectorPrefix}-quick-tips--show`]: quickTipShow,
+        })}
+        style={quickTipWrapStyle ?? {}}
+      >
+        <li>
+          <i onClick={() => hideQuickTip()}>
+            <CloseCircleOutlined />
+          </i>
+        </li>
+
+        {!(quickTipDataSource || []).length && (
+          <li>
+            <Empty />
+          </li>
+        )}
+
+        {!!(quickTipDataSource || []).length &&
+          (quickTipDataSource || []).map((t, _index) => (
+            <li key={t.value} onClick={(e) => onQuickTipClick(e, t)}>
+              {t.label}
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };
 
-export default memo(forwardRef<ExpressionHandle, ExpressionProps>(Expression));
+const Wrap = memo(forwardRef<ExpressionHandle, ExpressionProps>(Expression));
+
+Wrap.View = View;
+
+/**
+ * parse
+ * @description 解析
+ * @param {string} queryHtml
+ * @param {(value: { nodeType: number; value: string | null }) => string} callback
+ * @return {string}
+ */
+Wrap.parse = (
+  queryHtml: string,
+  callback: (value: { nodeType: number; value: string | null }) => string,
+): string => {
+  if (!queryHtml) return '';
+
+  const context = document.createElement('div');
+  context.innerHTML = queryHtml;
+
+  if (context?.firstElementChild?.tagName?.toLowerCase() === 'font') {
+    context.innerHTML = context.firstElementChild.innerHTML;
+  }
+
+  let result = '';
+
+  result = Array.from(context.childNodes)
+    .map((node) => {
+      // 元素节点
+      if (node.nodeType === 1) {
+        // 文本节点
+        if (node.classList.contains('text')) {
+          return callback?.({ nodeType: 3, value: node.textContent }) ?? '';
+        }
+        // 运算符
+        else if (node.classList.contains('operator')) {
+          return callback?.({ nodeType: 1, value: node.textContent }) ?? '';
+        }
+      }
+      // 文本节点
+      else if (node.nodeType === 3) {
+        return callback?.({ nodeType: 3, value: node.textContent }) ?? '';
+      }
+
+      return '';
+    })
+    .join('');
+
+  return result;
+};
+
+/**
+ * validator
+ * @return {{validator(*, *): (Promise<void>)}}
+ */
+Wrap.validator = () => ({
+  validator(_, value) {
+    const context = document.createElement('div');
+    context.innerHTML = value;
+
+    if (context.innerText) {
+      return Promise.resolve();
+    }
+
+    return Promise.reject(new Error(Intl.v('请输入关键字')));
+  },
+});
+
+export default Wrap;
