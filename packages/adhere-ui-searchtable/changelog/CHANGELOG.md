@@ -5,6 +5,7 @@
 2023-07-05
 
 * ProTableFactory中列头筛选BUG修改
+* EditableCellView的样式BUG修正
 
 # 1.0.28
 
