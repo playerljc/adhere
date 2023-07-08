@@ -39,7 +39,7 @@ export default () => {
         show: true,
       },
     })
-    .then((res) => {
+    .promise.then((res) => {
       if (res) {
         if (res.data.code === 200) {
           alert(JSON.stringify(res.data.data));
@@ -61,7 +61,7 @@ export default () => {
                     show: true,
                   },
                 })
-                .then((res) => {
+                .promise.then((res) => {
                   if (res) {
                     if (res.data.code === 200) {
                       alert(JSON.stringify(res.data.data));
@@ -107,7 +107,7 @@ export default () => {
         show: true,
       },
     })
-    .then((res) => {
+    .promise.then((res) => {
       if (res) {
         if (res.data.code === 200) {
           alert(JSON.stringify(res.data.data));
@@ -137,7 +137,7 @@ export default () => {
                     show: true,
                   },
                 })
-                .then((res) => {
+                .promise.then((res) => {
                   if (res) {
                     if (res.data.code === 200) {
                       alert(JSON.stringify(res.data.data));
@@ -208,7 +208,7 @@ export default () => {
                 setPercent(100);
               },
             })
-            .then((res) => {
+            .promise.then((res) => {
               setPercent(100);
 
               if (res) {
@@ -270,7 +270,7 @@ export default () => {
                         setPercent(100);
                       },
                     })
-                    .then((res) => {
+                    .promise.then((res) => {
                       setPercent(100);
 
                       if (res) {
@@ -304,19 +304,46 @@ export default () => {
         },
         codeText: `
   import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
+  import { Button } from 'antd';
+  import { GlobalIndicator, Ajax } from '@baifendian/adhere';
 
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
+  const k007Ajax = new Ajax('http://k007-pe.baifendian.com');
 
-        resolve();
-      });
+  <Button
+    type="primary"
+    onClick={() => {
+      const globalIndicator = GlobalIndicator.show();
+
+      Promise.all([
+        k007Ajax.get({
+          path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
+        }).promise,
+        k007Ajax.get({
+          path: '/api/SystemManager/system/role/login/list?state=&kw=&pageNum=1&pageSize=10',
+        }).promise,
+        k007Ajax.post({
+          path: '/api/controlledObject/facade/fq/queryList',
+          data: [
+            {
+              resource: '12345678',
+              type: '101',
+              uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
+            },
+            { resource: '', type: '103', uuid: '562096255732281344' },
+          ],
+        }).promise,
+      ])
+        .then((res) => {
+          GlobalIndicator.hide(globalIndicator);
+          alert(JSON.stringify(res));
+        })
+        .catch(() => {
+          GlobalIndicator.hide(globalIndicator);
+        });
     }}
   >
-    <a>删除</a>
-  </DelConfirm>
+    call
+  </Button>
       `,
         type: 'PlayGround',
         renderChildren: () => (
@@ -328,10 +355,10 @@ export default () => {
               Promise.all([
                 k007Ajax.get({
                   path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
-                }),
+                }).promise,
                 k007Ajax.get({
                   path: '/api/SystemManager/system/role/login/list?state=&kw=&pageNum=1&pageSize=10',
-                }),
+                }).promise,
                 k007Ajax.post({
                   path: '/api/controlledObject/facade/fq/queryList',
                   data: [
@@ -342,7 +369,7 @@ export default () => {
                     },
                     { resource: '', type: '103', uuid: '562096255732281344' },
                   ],
-                }),
+                }).promise,
               ])
                 .then((res) => {
                   GlobalIndicator.hide(globalIndicator);
