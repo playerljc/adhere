@@ -1,4 +1,4 @@
-import type { IConfig, ISendArg } from './types';
+import type { IConfig, ISendArg, SendResult } from './types';
 /**
  * Ajax
  * @class Ajax
@@ -58,46 +58,26 @@ declare class Ajax {
      * @param data
      * @param arg
      */
-    get(this: Ajax, { data, ...arg }: ISendArg): {
-        xhr?: XMLHttpRequest | null;
-        contentType?: string | null;
-        promise: Promise<any>;
-    };
+    get(this: Ajax, { data, ...arg }: ISendArg): SendResult;
     /**
      * post
      * @param params
      */
-    post(this: Ajax, params: ISendArg): {
-        xhr?: XMLHttpRequest | null;
-        contentType?: string | null;
-        promise: Promise<any>;
-    };
+    post(this: Ajax, params: ISendArg): SendResult;
     /**
      * path
      * @param params
      */
-    path(this: Ajax, params: ISendArg): {
-        xhr?: XMLHttpRequest | null;
-        contentType?: string | null;
-        promise: Promise<any>;
-    };
+    path(this: Ajax, params: ISendArg): SendResult;
     /**
      * put
      * @param params
      */
-    put(this: Ajax, params: ISendArg): {
-        xhr?: XMLHttpRequest | null;
-        contentType?: string | null;
-        promise: Promise<any>;
-    };
+    put(this: Ajax, params: ISendArg): SendResult;
     /**
      * delete
      * @param params
      */
-    delete(this: Ajax, params: ISendArg): {
-        xhr?: XMLHttpRequest | null;
-        contentType?: string | null;
-        promise: Promise<any>;
-    };
+    delete(this: Ajax, params: ISendArg): SendResult;
 }
 export default Ajax;

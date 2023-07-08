@@ -64,6 +64,7 @@ export interface IConfig {
     codeSuccess?: number;
     showWarn?: boolean;
     responseType?: XMLHttpRequestResponseType;
+    customSendJSONStringify?: (this: any, key: string, value: any) => any;
 }
 /**
  * ISendArg
@@ -87,3 +88,10 @@ export interface ISendPrepareArg extends ISendArg {
     method: Method;
 }
 export type Method = 'get' | 'post' | 'put' | 'path' | 'delete';
+export type Prepare = {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+};
+export type SendResult = Prepare & {
+    promise: Promise<any>;
+};

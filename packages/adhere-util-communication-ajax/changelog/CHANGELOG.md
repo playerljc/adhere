@@ -5,6 +5,7 @@
 2023-07-08
 
 * get | post | path | put | delete的返回值修改，返回xhr对象加以更精细的控制
+* 发送请求参数加入需要进行JSON.stringify的时候加入customSendJSONStringify进行自定义
 
 # 1.0.18
 
