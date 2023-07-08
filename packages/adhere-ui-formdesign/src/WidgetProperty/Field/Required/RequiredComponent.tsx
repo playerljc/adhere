@@ -19,21 +19,43 @@ const RequiredComponent: FC<
     RequiredWidgetPropertyFieldProps,
     { required: boolean; validationMessage: string }
   >
-> = ({ props }) => {
+> = (props) => {
   const {
     value: { required, validationMessage },
+    onChange,
   } = props;
 
   return (
     <div>
       <Space.Group direction="vertical">
         <div>
-          <Switch checked={required} />
+          <Switch
+            checked={required}
+            onChange={(e) => {
+              if (onChange) {
+                onChange({
+                  required: e.target.checked,
+                  validationMessage,
+                });
+              }
+            }}
+          />
         </div>
 
         {required && (
           <div>
-            <Input placeholder="自定义提示信息" value={validationMessage} />
+            <Input
+              placeholder="自定义提示信息"
+              value={validationMessage}
+              onChange={(e) => {
+                if (onChange) {
+                  onChange({
+                    required,
+                    validationMessage: e.target.value.trim(),
+                  });
+                }
+              }}
+            />
           </div>
         )}
       </Space.Group>

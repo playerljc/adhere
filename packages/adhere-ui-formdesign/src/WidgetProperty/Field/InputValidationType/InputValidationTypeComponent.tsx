@@ -25,10 +25,11 @@ const InputValidationTypeComponent: FC<
       validationMessage?: string;
     }
   >
-> = ({ props }) => {
+> = (props) => {
   const {
     value: { checked, type, validationMessage },
     dataSource,
+    onChange,
   } = props;
 
   return (
@@ -37,11 +38,33 @@ const InputValidationTypeComponent: FC<
         <FlexLayout direction="horizontal">
           <Space.Group direction="horizontal" size={5}>
             <Fixed style={{ alignItems: 'center' }} fit>
-              <Switch checked={checked} />
+              <Switch
+                checked={checked}
+                onChange={(e) => {
+                  if (onChange) {
+                    onChange({
+                      checked: e.target.checked,
+                      type,
+                      validationMessage,
+                    });
+                  }
+                }}
+              />
             </Fixed>
 
             <Auto>
-              <Select value={type!}>
+              <Select
+                value={type!}
+                onChange={(_type) => {
+                  if (onChange) {
+                    onChange({
+                      checked,
+                      type: _type,
+                      validationMessage,
+                    });
+                  }
+                }}
+              >
                 {dataSource.map(({ label, value }) => (
                   <Select.Option key={value} value={value}>
                     {label}
@@ -53,7 +76,19 @@ const InputValidationTypeComponent: FC<
         </FlexLayout>
 
         <div>
-          <Input placeholder="自定义提示" value={validationMessage} />
+          <Input
+            placeholder="自定义提示"
+            value={validationMessage}
+            onChange={(e) => {
+              if (onChange) {
+                onChange({
+                  checked,
+                  type,
+                  validationMessage: e.target.value.trim(),
+                });
+              }
+            }}
+          />
         </div>
       </Space.Group>
     </div>

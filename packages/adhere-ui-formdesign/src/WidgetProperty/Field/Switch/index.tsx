@@ -1,4 +1,4 @@
-import { SwitchProps } from 'antd';
+import { Form, SwitchProps } from 'antd';
 import React, { ReactNode } from 'react';
 
 import WidgetPropertyField from '../WidgetPropertyField';
@@ -19,7 +19,21 @@ class SwitchPropertyField extends WidgetPropertyField<SwitchProps> {
       props,
     };
 
-    return super.render(<SwitchComponent {...args} />);
+    return (
+      <Form.Item
+        key={key}
+        name={key}
+        label={name}
+        valuePropName="checked"
+        rules={[
+          {
+            required,
+          },
+        ]}
+      >
+        <SwitchComponent {...args} />
+      </Form.Item>
+    );
   }
 }
 

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom/client';
 
 import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
 
-import FormDesign from './FormDesign';
+// import FormDesign from './FormDesign';
+import GridLayout from './GridLayout';
 
-// import GridLayout from './GridLayout';
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
       }}
     >
       {() => {
-        return <FormDesign />;
+        return <GridLayout />;
       }}
     </AdhereConfigProvider>
   </ConfigProvider>,
