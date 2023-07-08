@@ -1,16 +1,16 @@
 import { useMount, useUpdateLayoutEffect } from 'ahooks';
 import { Empty } from 'antd';
 import classNames from 'classnames';
-import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 import type { ForwardRefRenderFunction, ReactElement } from 'react';
+import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 
 import { CloseCircleOutlined } from '@ant-design/icons';
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
+import type { ExpressionHandle, ExpressionProps, Operators, OperatorType } from './types';
 import View from './View';
-import type { ExpressionHandle, ExpressionProps, OperatorType, Operators } from './types';
 
 const {
   getCurrentParentElementWithCursor,
@@ -42,9 +42,7 @@ export const selectorPrefix = 'adhere-ui-expression';
  * @param quickTipWrapClassName
  * @param quickTipWrapStyle
  * @param textClassName
- * @param textStyle
  * @param operatorClassName
- * @param operatorStyle
  * @param value
  * @param placeholder
  * @param triggerCharCode
@@ -72,9 +70,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
     quickTipWrapClassName,
     quickTipWrapStyle,
     textClassName,
-    textStyle,
     operatorClassName,
-    operatorStyle,
     value,
     placeholder,
     triggerCharCode,
@@ -175,7 +171,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
     onReady();
   });
 
-  useImperativeHandle<ExpressionHandle>(ref, () => ({
+  useImperativeHandle(ref, () => ({
     setValue: (_value) => {
       const editor = getEditorEl();
       if (editor) {
@@ -184,7 +180,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
       setCursorToEnd(editor as HTMLElement);
       onReady();
     },
-    getValue: () => getEditorEl()?.innerHTML,
+    getValue: () => getEditorEl()?.innerHTML as string,
     isEditorEmpty,
     showQuickTip,
     showOperators,
@@ -239,7 +235,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
 
     if (window.getSelection) {
       const selection = window.getSelection();
-      if (selection.rangeCount > 0) {
+      if (selection && selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
         const rect = range.getBoundingClientRect();
         x = rect.left;
@@ -257,8 +253,10 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
   function showOperators() {
     const point = getCursorPosition();
 
-    operatorsRef.current?.style.left = `${point.x + 10}px`;
-    operatorsRef.current?.style.top = `${point.y + 25}px`;
+    if (operatorsRef.current) {
+      operatorsRef.current.style.left = `${point.x + 10}px`;
+      operatorsRef.current.style.top = `${point.y + 25}px`;
+    }
 
     setOperatorsShow(true, () => {});
   }
@@ -517,7 +515,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
             endElement.textContent.length !== 0 && df.appendChild(endElement);
           }
 
-          editor?.replaceChild?.(df, cursorContextElement.current);
+          editor?.replaceChild?.(df, cursorContextElement.current!);
 
           setCursorPosition(textElement, 1);
         }
@@ -571,7 +569,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
             endElement.textContent.length !== 0 && df.appendChild(endElement);
           }
 
-          editor?.replaceChild(df, cursorContextElement.current);
+          editor?.replaceChild(df, cursorContextElement.current!);
 
           setCursorPosition(textElement, 0);
         }
@@ -614,12 +612,12 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
   function onQuickTipClick(e, item) {
     const tip = item[quickTipProp ?? 'value'];
 
-    const editor = getEditorEl();
+    const editor = getEditorEl() as HTMLElement;
 
     // java
     if (tip) {
       // 111
-      const text = cursorContextElement.current.textContent;
+      const text = cursorContextElement.current?.textContent || '';
 
       const startIndex = text.lastIndexOf(continuousText.current, preCursorIndex.current);
       // 111(java) -> 111java
@@ -642,12 +640,19 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
         editor.innerHTML = '';
         editor.appendChild(df);
       } else if (editor === cursorContextParentElement.current) {
-        cursorContextElement.current.parentElement.replaceChild(df, cursorContextElement.current);
+        if (cursorContextElement?.current?.parentElement) {
+          cursorContextElement.current.parentElement.replaceChild(
+            df,
+            cursorContextElement.current!,
+          );
+        }
       } else {
-        cursorContextParentElement.current.parentElement.replaceChild(
-          df,
-          cursorContextParentElement.current,
-        );
+        if (cursorContextParentElement?.current?.parentElement) {
+          cursorContextParentElement.current.parentElement.replaceChild(
+            df,
+            cursorContextParentElement.current,
+          );
+        }
       }
 
       setCursorPositionToNode(endTextNode, 0);
@@ -705,7 +710,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
       >
         <li>
           <i onClick={() => hideOperators()}>
-            <CloseCircleOutlined />
+            <CloseCircleOutlined rev={null} />
           </i>
         </li>
 
@@ -730,7 +735,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
       >
         <li>
           <i onClick={() => hideQuickTip()}>
-            <CloseCircleOutlined />
+            <CloseCircleOutlined rev={null} />
           </i>
         </li>
 
@@ -751,8 +756,9 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
   );
 };
 
-const Wrap = memo(forwardRef<ExpressionHandle, ExpressionProps>(Expression));
+const Wrap = memo(forwardRef<ExpressionHandle, ExpressionProps<any>>(Expression));
 
+// @ts-ignore
 Wrap.View = View;
 
 /**
@@ -762,6 +768,7 @@ Wrap.View = View;
  * @param {(value: { nodeType: number; value: string | null }) => string} callback
  * @return {string}
  */
+// @ts-ignore
 Wrap.parse = (
   queryHtml: string,
   callback: (value: { nodeType: number; value: string | null }) => string,
@@ -782,11 +789,11 @@ Wrap.parse = (
       // 元素节点
       if (node.nodeType === 1) {
         // 文本节点
-        if (node.classList.contains('text')) {
+        if ((node as HTMLElement).classList.contains('text')) {
           return callback?.({ nodeType: 3, value: node.textContent }) ?? '';
         }
         // 运算符
-        else if (node.classList.contains('operator')) {
+        else if ((node as HTMLElement).classList.contains('operator')) {
           return callback?.({ nodeType: 1, value: node.textContent }) ?? '';
         }
       }
@@ -806,6 +813,7 @@ Wrap.parse = (
  * validator
  * @return {{validator(*, *): (Promise<void>)}}
  */
+// @ts-ignore
 Wrap.validator = () => ({
   validator(_, value) {
     const context = document.createElement('div');
