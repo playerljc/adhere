@@ -98,9 +98,18 @@ class Ajax {
    * @param data
    * @param arg
    */
-  get(this: Ajax, { data, ...arg }: ISendArg) {
-    return new Promise((resolve, reject) => {
-      const { xhr } = sendPrepare.call(
+  get(
+    this: Ajax,
+    { data, ...arg }: ISendArg,
+  ): {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+    promise: Promise<any>;
+  } {
+    let prepare: { xhr?: XMLHttpRequest | null; contentType?: string | null } = {};
+
+    const promise = new Promise((resolve, reject) => {
+      prepare = sendPrepare.call(
         this,
         {
           // 默认的
@@ -117,17 +126,31 @@ class Ajax {
         },
       );
 
+      const { xhr } = prepare;
+
       if (xhr) {
         xhr.send(null);
       }
     });
+
+    return {
+      ...prepare,
+      promise,
+    };
   }
 
   /**
    * post
    * @param params
    */
-  post(this: Ajax, params: ISendArg) {
+  post(
+    this: Ajax,
+    params: ISendArg,
+  ): {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+    promise: Promise<any>;
+  } {
     return complexRequest.call(this, 'post', params);
   }
 
@@ -135,7 +158,14 @@ class Ajax {
    * path
    * @param params
    */
-  path(this: Ajax, params: ISendArg) {
+  path(
+    this: Ajax,
+    params: ISendArg,
+  ): {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+    promise: Promise<any>;
+  } {
     return complexRequest.call(this, 'path', params);
   }
 
@@ -143,7 +173,14 @@ class Ajax {
    * put
    * @param params
    */
-  put(this: Ajax, params: ISendArg) {
+  put(
+    this: Ajax,
+    params: ISendArg,
+  ): {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+    promise: Promise<any>;
+  } {
     return complexRequest.call(this, 'put', params);
   }
 
@@ -151,7 +188,14 @@ class Ajax {
    * delete
    * @param params
    */
-  delete(this: Ajax, params: ISendArg) {
+  delete(
+    this: Ajax,
+    params: ISendArg,
+  ): {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+    promise: Promise<any>;
+  } {
     return complexRequest.call(this, 'delete', params);
   }
 }
@@ -676,9 +720,22 @@ function getSendParams({ data, contentType = '' }) {
  * @param method
  * @param params
  */
-function complexRequest(this: Ajax, method: Method, params: ISendArg) {
-  return new Promise((resolve, reject) => {
-    const { xhr, contentType } = sendPrepare.call(
+function complexRequest(
+  this: Ajax,
+  method: Method,
+  params: ISendArg,
+): {
+  xhr?: XMLHttpRequest | null;
+  contentType?: string | null;
+  promise: Promise<any>;
+} {
+  let prepare: {
+    xhr?: XMLHttpRequest | null;
+    contentType?: string | null;
+  } = {};
+
+  const promise = new Promise((resolve, reject) => {
+    prepare = sendPrepare.call(
       this,
       {
         // 缺省的
@@ -695,6 +752,8 @@ function complexRequest(this: Ajax, method: Method, params: ISendArg) {
       },
     );
 
+    const { xhr, contentType } = prepare;
+
     if (xhr) {
       xhr.send(
         getSendParams.call(this, {
@@ -704,6 +763,11 @@ function complexRequest(this: Ajax, method: Method, params: ISendArg) {
       );
     }
   });
+
+  return {
+    ...prepare,
+    promise,
+  };
 }
 
 /**
