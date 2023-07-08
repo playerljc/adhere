@@ -57,6 +57,7 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) 
             dragIndex < rowIndex
               ? rowDragSortConfig.dropOverDownwardClassName
               : rowDragSortConfig.dropOverUpwardClasName,
+          ...(rowConfig?.$rowDragSort?.dropHooks?.collect?.(monitor) ?? {}),
         };
       },
       drop: (item: { index: number; record: any }) => {
@@ -73,31 +74,50 @@ const DragSortRow: TableRowComponentReducer = ({ rowIndex, rowConfig, record }) 
             targetId: item.record[rowKey],
           })
         ) {
-          // @ts-ignore
-          context?.context?.moveRow(item.record, record);
+          if (rowConfig?.$rowDragSort?.dropHooks?.drop) {
+            rowConfig?.$rowDragSort?.dropHooks
+              ?.drop({
+                sourceRecord: item.record,
+                targetRecord: record,
+                item,
+              })
+              .then(() => {
+                // @ts-ignore
+                context?.context?.moveRow(item.record, record);
+              });
+          } else {
+            // @ts-ignore
+            context?.context?.moveRow(item.record, record);
+          }
         }
       },
     }),
   };
 
-  const rowDragSortConfig = { ...defaultRowDragSortConfig, ...(rowConfig?.$rowDragSort ?? {}) };
+  const rowDragSortConfig = {
+    ...defaultRowDragSortConfig,
+    ...(rowConfig?.$rowDragSort?.override ?? {}),
+  };
 
-  if (rowConfig?.$rowDragSort?.dropConfig) {
-    rowDragSortConfig.dropConfig = Object.assign(
-      defaultRowDragSortConfig.dropConfig(),
-      rowConfig.$rowDragSort.dropConfig ?? {},
-    );
-  } else {
-    rowDragSortConfig.dropConfig = defaultRowDragSortConfig.dropConfig();
-  }
+  const defaultDragConfig = defaultRowDragSortConfig.dragConfig();
+  const defaultDropConfig = defaultRowDragSortConfig.dropConfig();
 
-  if (rowConfig?.$rowDragSort?.dragConfig) {
+  if (rowConfig?.$rowDragSort?.override?.dragConfig) {
     rowDragSortConfig.dragConfig = Object.assign(
-      defaultRowDragSortConfig.dragConfig(),
-      rowConfig.$rowDragSort.dragConfig ?? {},
+      defaultDragConfig,
+      rowConfig?.$rowDragSort?.override?.dragConfig?.(defaultDragConfig) ?? {},
     );
   } else {
     rowDragSortConfig.dragConfig = defaultRowDragSortConfig.dragConfig();
+  }
+
+  if (rowConfig?.$rowDragSort?.override?.dropConfig) {
+    rowDragSortConfig.dropConfig = Object.assign(
+      defaultDropConfig,
+      rowConfig?.$rowDragSort?.override?.dropConfig?.(defaultDropConfig) ?? {},
+    );
+  } else {
+    rowDragSortConfig.dropConfig = defaultRowDragSortConfig.dropConfig();
   }
 
   const ref = useRef<HTMLTableRowElement>(null);

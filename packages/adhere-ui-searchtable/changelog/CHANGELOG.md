@@ -6,6 +6,7 @@
 
 * ProTableFactory中列头筛选BUG修改
 * EditableCellView的样式BUG修正
+* DragSortRow修改
 
 # 1.0.28
 
