@@ -136,6 +136,9 @@ export default () => {
                   loading: {
                     show: true,
                   },
+                  // customSendJSONStringify: (self, key, value) => {
+                  //   return value;
+                  // },
                 })
                 .promise.then((res) => {
                   if (res) {
