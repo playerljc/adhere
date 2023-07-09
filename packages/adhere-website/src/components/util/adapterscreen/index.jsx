@@ -9,41 +9,41 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const dataSource = [
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-];
+// const dataSource = [
+//   {
+//     key: '1',
+//     name: '胡彦斌',
+//     age: 32,
+//     address: '西湖区湖底公园1号',
+//   },
+//   {
+//     key: '2',
+//     name: '胡彦祖',
+//     age: 42,
+//     address: '西湖区湖底公园1号',
+//   },
+// ];
 
-const columns = [
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address',
-  },
-];
+// const columns = [
+//   {
+//     title: '姓名',
+//     dataIndex: 'name',
+//     key: 'name',
+//   },
+//   {
+//     title: '年龄',
+//     dataIndex: 'age',
+//     key: 'age',
+//   },
+//   {
+//     title: '住址',
+//     dataIndex: 'address',
+//     key: 'address',
+//   },
+// ];
 
 export default () => {
-  const ref = useRef();
+  // const ref = useRef();
 
   function boxPanelConfig() {
     return [
@@ -66,7 +66,7 @@ export default () => {
   <Button
     type="primary"
     onClick={() => {
-      const handler = AdapterScreen();
+      AdapterScreen.init();
     }}
   >
     控制整体页面的缩放
@@ -77,14 +77,14 @@ export default () => {
           <Button
             type="primary"
             onClick={() => {
-              const handler = AdapterScreen();
+              AdapterScreen.init();
             }}
           >
             控制整体页面的缩放
           </Button>
         ),
       },
-      {
+      /*{
         id: `p2`,
         name: `传递不同的元素`,
         mode: 'code',
@@ -128,7 +128,7 @@ export default () => {
             <Table dataSource={dataSource} columns={columns} />
           </div>
         ),
-      },
+      },*/
     ];
   }
 

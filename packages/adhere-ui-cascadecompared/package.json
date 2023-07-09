@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-cascadecompared",
-  "version": "2.9.5",
+  "version": "2.10.0",
   "description": "级联比较",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -49,5 +49,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
+  "gitHead": "0a30e53db99509c44e577f464ca0bce0c457f8ba"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-warnprompt",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "警告的提示(就是为了全局统一)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -51,5 +51,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
+  "gitHead": "2c41cdf692eba92b1ba6ed19d1b6349356083a2c"
 }

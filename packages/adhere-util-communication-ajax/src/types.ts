@@ -80,6 +80,8 @@ export interface IConfig {
   showWarn?: boolean;
   // 数据的类型
   responseType?: XMLHttpRequestResponseType;
+  // 自定义发送的数据需要进行JSON.stringify的时候的自定义处理
+  customSendJSONStringify?: (this: any, key: string, value: any) => any;
 }
 
 /**
@@ -114,3 +116,12 @@ export interface ISendPrepareArg extends ISendArg {
 }
 
 export type Method = 'get' | 'post' | 'put' | 'path' | 'delete';
+
+export type Prepare = {
+  xhr?: XMLHttpRequest | null;
+  contentType?: string | null;
+};
+
+export type SendResult = Prepare & {
+  promise: Promise<any>;
+};

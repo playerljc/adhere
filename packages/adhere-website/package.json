@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-website",
-  "version": "2.9.5",
+  "version": "2.10.0",
   "private": true,
   "description": "adhere的website",
   "homepage": "https://github.com/playerljc/adhere",
@@ -36,9 +36,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
-    "@baifendian/adhere": "^2.9.5",
-    "@baifendian/adhere-ui-anthoc": "^2.9.5",
-    "@baifendian/adhere-ui-richtext-sandbox": "^2.9.5",
+    "@baifendian/adhere": "^2.10.0",
+    "@baifendian/adhere-ui-anthoc": "^2.10.0",
+    "@baifendian/adhere-ui-richtext-sandbox": "^2.10.0",
     "@ctsj/router": "^1.0.5",
     "@ctsj/state": "^2.0.24",
     "antd": "^5.5.1",
@@ -53,6 +53,7 @@
     "echarts-wordcloud": "^2.1.0",
     "faker": "^5.4.0",
     "font-awesome": "^4.7.0",
+    "lodash.debounce": "^4.0.8",
     "mark.js": "^8.11.1",
     "nprogress": "^0.2.0",
     "ol": "^6.5.0",

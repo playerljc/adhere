@@ -150,6 +150,8 @@ export interface TableMulitSelectFormItemProps extends TableSelectFormItemProps 
 export interface TransferFormItemProps extends TransferProps<any> {
   dataSource: LabelValue[];
   value?: any;
+  firstLoading?: ReactElement;
+  renderEmpty?: Function;
 }
 
 export interface TreeSelectFormItemProps extends TreeSelectProps {}

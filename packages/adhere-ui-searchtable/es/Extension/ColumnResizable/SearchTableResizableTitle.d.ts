@@ -11,6 +11,7 @@ declare namespace SearchTableResizableTitle {
     var propTypes: {
         width: PropTypes.Requireable<number>;
         onResize: PropTypes.Requireable<(...args: any[]) => any>;
+        column: PropTypes.Requireable<object>;
     };
 }
 export default SearchTableResizableTitle;

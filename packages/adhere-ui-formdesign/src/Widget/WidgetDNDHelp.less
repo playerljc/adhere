@@ -1,0 +1,55 @@
+.adhere-ui-form-design-widget-dnd-help {
+  position: relative;
+  width: 100%;
+  border: 1px var(--adhere-line-type) var(--adhere-color-primary);
+  outline: 2px var(--adhere-line-type) var(--adhere-color-primary);
+
+  &.adhere-ui-form-design-widget-dnd-help--hover {
+    background-color: rgba(var(--adhere-color-primary-rgb), 0.05);
+  }
+
+  > .adhere-ui-form-design-widget-dnd-help-drag-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: calc(var(--adhere-z-index-max-base) + 1);
+    width: 28px;
+    height: 28px;
+    color: #fff;
+    font-size: 28px;
+    line-height: 28px;
+    text-align: center;
+    background-color: rgba(var(--adhere-color-primary-rgb), 0.5);
+
+    &:hover {
+      background-color: rgb(var(--adhere-color-primary-rgb));
+      cursor: move;
+    }
+  }
+
+  > .adhere-ui-form-design-widget-dnd-help-actions {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: calc(var(--adhere-z-index-max-base) + 1);
+    display: flex;
+
+    &:hover {
+      background-color: rgb(var(--adhere-color-primary-rgb));
+    }
+
+    > .adhere-ui-form-design-widget-dnd-help-action {
+      width: 28px;
+      height: 28px;
+      color: #fff;
+      font-size: 16px;
+      line-height: 28px;
+      text-align: center;
+      background-color: rgba(var(--adhere-color-primary-rgb), 0.5);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

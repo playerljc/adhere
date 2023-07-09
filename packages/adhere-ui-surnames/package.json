@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-surnames",
-  "version": "2.9.5",
+  "version": "2.10.0",
   "description": "姓名面板",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.9.5",
+    "@baifendian/adhere-util": "^2.10.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
@@ -48,5 +48,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "dac49fef4e4aa284bc4e41a5a17bbe9f27faecb3"
+  "gitHead": "bf3903b6ea62b4bf5ac7dcf907cf76d0e47fe532"
 }

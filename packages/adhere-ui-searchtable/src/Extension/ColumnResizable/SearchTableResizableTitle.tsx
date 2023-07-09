@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Resizable } from 'react-resizable';
 
 import { selectorPrefix } from '../../SearchTable';
@@ -11,10 +11,31 @@ import { selectorPrefix } from '../../SearchTable';
  * @constructor
  */
 function SearchTableResizableTitle(props) {
-  const { onResize, width, ...restProps } = props;
+  const { onResize, width, column, ...restProps } = props;
+
+  const styleList = useMemo(() => {
+    if (column) {
+      let textAlign = 'center';
+
+      if ('headerCellAlign' in column) {
+        textAlign = column.headerCellAlign;
+      } else {
+        if ('align' in column) {
+          textAlign = column.align;
+        }
+      }
+
+      return {
+        ...(restProps.style ?? {}),
+        textAlign,
+      };
+    }
+
+    return restProps?.style ?? {};
+  }, [restProps]);
 
   if (!onResize && !width) {
-    return <th {...restProps} />;
+    return <th {...restProps} style={styleList} />;
   }
 
   return (
@@ -34,7 +55,7 @@ function SearchTableResizableTitle(props) {
       draggableOpts={{ enableUserSelectHack: false }}
       onResize={onResize}
     >
-      <th {...restProps} />
+      <th {...restProps} style={styleList} />
     </Resizable>
   );
 }
@@ -42,6 +63,7 @@ function SearchTableResizableTitle(props) {
 SearchTableResizableTitle.propTypes = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.number]),
   onResize: PropTypes.func,
+  column: PropTypes.object,
 };
 
 export default SearchTableResizableTitle;

@@ -1,4 +1,4 @@
-declare const _default: {
+declare const DomUtil: {
     /**--------------------------dom-start-------------------------**/
     /**
      * isTextNode - 是否是文本节点
@@ -30,7 +30,7 @@ declare const _default: {
      * @param {string} selector
      * @return {HtmlElement}
      */
-    getTopDom(target: any, selector: string): null | HTMLElement;
+    getTopDom(target: any, selector: string): HTMLElement | null;
     /**
      * on - 注册事件
      * @param el
@@ -198,21 +198,30 @@ declare const _default: {
     /**
      * includeHTML
      * @description 使用ajax方式引入html
+     * @param {string} attr 属性
+     * @param {string} onLoadError
      */
-    includeHTML(): void;
+    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<void>;
     /**
      * setCursorToEnd
      * @description 将光标设置到内容末尾
      * @param {HTMLElement} element
      */
-    setCursorToEnd(element: any): void;
+    setCursorToEnd(element: HTMLElement): void;
+    /**
+     * setCursorPositionToNode
+     * @description 设置Node的光标位置
+     * @param {Node} node
+     * @param {number} offset
+     */
+    setCursorPositionToNode(node: Node, offset: number): void;
     /**
      * setCursorPosition
      * @description 设置光标的位置
      * @param {HTMLElement} element
      * @param {number} offset
      */
-    setCursorPosition(element: any, offset: any): void;
+    setCursorPosition(element: HTMLElement, offset: number): void;
     /**
      * getCurrentElementWithCursor
      * @description 获取光标输入的的element
@@ -224,12 +233,18 @@ declare const _default: {
      * @description 获取光标输入的parentElement
      * @return {Node | null}
      */
-    getCurrentParentElementWithCursor(): HTMLElement | null;
+    getCurrentParentElementWithCursor(): Node | null;
     /**
      * getCursorIndex
      * @description 获取光标的索引
      * @return {number}
      */
     getCursorIndex(): number;
+    /**
+     * getCursorRectByDocument
+     * @description 获取光标在文档中的位置
+     * @return {DOMRect | null}
+     */
+    getCursorRectByDocument(): DOMRect | null;
 };
-export default _default;
+export default DomUtil;

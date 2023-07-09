@@ -275,6 +275,11 @@
     "path": "/adhere/component/ui/ellipsis"
   },
   {
+    "kw": ["表达式", "Expression"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/expression"
+  },
+  {
     "kw": ["组件强制刷新", "ForceUpdate"],
     "group": "组件 - Util",
     "path": "/adhere/component/ui/forceupdate"

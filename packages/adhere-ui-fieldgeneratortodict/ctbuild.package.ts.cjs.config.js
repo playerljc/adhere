@@ -5,15 +5,7 @@ module.exports = {
     return path.join(__dirname, 'tsconfig.cjs.json');
   },
   getBabelConfig(defaultBabelConfig) {
-    defaultBabelConfig.plugins.push([
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'lib',
-        style: false,
-      },
-      'ant',
-    ]);
+    defaultBabelConfig.plugins.push(require('../../babel-plugin-import-antd.js').lib);
 
     defaultBabelConfig.plugins.push([
       'import',

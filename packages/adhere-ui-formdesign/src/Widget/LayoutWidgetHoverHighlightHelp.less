@@ -1,0 +1,44 @@
+@import '../lessVars';
+
+.adhere-ui-form-design-layout-widget-hover-highlight-help {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 200px;
+  padding: 10px 0;
+
+  > .adhere-ui-form-design-layout-widget-hover-highlight-help-title {
+    display: none;
+  }
+
+  > .adhere-ui-form-design-layout-widget-hover-highlight-help-name {
+    display: none;
+  }
+
+  &.adhere-ui-form-design-layout-widget-hover-highlight-help--hover {
+    background-color: rgba(@adhere-ui-form-design-layout-widget-help-primary-color, 0.05);
+    outline: 1px var(--adhere-line-type) @adhere-ui-form-design-layout-widget-help-primary-color;
+
+    > .adhere-ui-form-design-layout-widget-hover-highlight-help-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: var(--adhere-z-index-max-base);
+      display: block;
+      padding: 5px;
+      color: #fff;
+      background-color: rgba(@adhere-ui-form-design-layout-widget-help-primary-color, 0.5);
+    }
+
+    > .adhere-ui-form-design-layout-widget-hover-highlight-help-name {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: var(--adhere-z-index-max-base);
+      display: block;
+      padding: 5px;
+      color: springgreen;
+    }
+  }
+}

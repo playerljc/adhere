@@ -316,7 +316,6 @@
 //
 // export default Wrap;
 // ------------------------------------------------------------------
-import { Table } from 'antd';
 import React from 'react';
 
 import { DateDisplay, Resource } from '@baifendian/adhere';
@@ -387,7 +386,8 @@ const List = SearchTableImplementFactory({
           title: '姓名',
           dataIndex: 'name',
           key: 'name',
-          width: 250,
+          width: 256,
+          headerCellAlign: 'center',
           align: 'left',
           fixed: 'left',
           render: (val) => <div style={{ color: 'red' }}>{val}</div>,
@@ -419,7 +419,8 @@ const List = SearchTableImplementFactory({
           title: '性别',
           dataIndex: 'sex',
           key: 'sex',
-          align: 'center',
+          align: 'left',
+          headerCellAlign: 'center',
           width: 150,
           render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
           $search: {
@@ -451,7 +452,8 @@ const List = SearchTableImplementFactory({
           title: '出生年月',
           dataIndex: 'birthday',
           key: 'birthday',
-          align: 'center',
+          headerCellAlign: 'center',
+          align: 'left',
           width: 200,
           sorter: true,
           sortOrder: this.sortOrder('birthday'),
@@ -577,6 +579,8 @@ const List = SearchTableImplementFactory({
           dataIndex: 'address',
           key: 'address',
           width: 300,
+          headerCellAlign: 'center',
+          align: 'left',
           $search: {
             type: 'input',
             visible: true,

@@ -1,9 +1,10 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
-type Dispatch<A> = (value: A, callback?: () => void) => void;
+type SetStateAction<S> = S | ((prevState: S) => S);
+type Dispatch<A> = (value: A, callback?: Function) => void;
 
-function useSetState<T>(defaultValue: T): [T, Dispatch<T>] {
-  const [value, setValue] = useState<T>(defaultValue);
+function useSetState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>] {
+  const [value, setValue] = useState<S>(initialState);
   const callbackRef = useRef<Function>();
 
   useLayoutEffect(() => {

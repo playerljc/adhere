@@ -2,7 +2,7 @@ import ClientDetectionUtil from './clientDetection';
 
 const eventListenerHandlers = new Map();
 
-export default {
+const DomUtil = {
   /**--------------------------dom-start-------------------------**/
   /**
    * isTextNode - 是否是文本节点
@@ -44,7 +44,7 @@ export default {
    * @param {string} selector
    * @return {HtmlElement}
    */
-  getTopDom(target, selector: string): null | HTMLElement {
+  getTopDom(target, selector: string): HTMLElement | null {
     if (!target || !selector) return null;
 
     if (target.className.indexOf(selector) !== -1) {
@@ -197,7 +197,7 @@ export default {
   prepend(el, children) {
     let childrenEl;
     if (children instanceof String) {
-      childrenEl = this.createElement(children as string);
+      childrenEl = DomUtil.createElement(children as string);
     } else {
       childrenEl = children;
     }
@@ -518,46 +518,69 @@ export default {
   /**
    * includeHTML
    * @description 使用ajax方式引入html
+   * @param {string} attr 属性
+   * @param {string} onLoadError
    */
-  includeHTML() {
-    const _self = this;
+  includeHTML(attr: string = 'w3-include-html', onLoadError: () => string) {
+    return new Promise<void>((contextResolve) => {
+      const defaultAttr = 'w3-include-html';
 
-    /* Loop through a collection of all HTML elements: */
-    const allEls = document.getElementsByTagName('*');
+      function load(el, file) {
+        return new Promise<void>((_resolve, _reject) => {
+          const xhr = new XMLHttpRequest();
 
-    for (let i = 0; i < allEls.length; i++) {
-      const el = allEls[i];
-      /*search for elements with a certain atrribute:*/
-      const file = el.getAttribute('w3-include-html');
-      if (file) {
-        /* Make an HTTP request using the attribute value as the file name: */
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-          if (this.readyState == 4) {
-            if (this.status == 200) {
-              el.innerHTML = this.responseText;
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+              if (this.status == 200) {
+                el.innerHTML = this.responseText;
+                _resolve();
+              }
+              if (this.status == 404) {
+                el.innerHTML = onLoadError?.() ?? 'Page not found.';
+                _reject();
+              }
+              el.removeAttribute(attr ?? defaultAttr);
             }
-            if (this.status == 404) {
-              el.innerHTML = 'Page not found.';
-            }
-            /* Remove the attribute, and call this function once more: */
-            el.removeAttribute('w3-include-html');
-            _self.includeHTML();
-          }
-        };
-        xhr.open('GET', file, true);
-        xhr.send();
-        /* Exit the function: */
-        return;
+          };
+          xhr.open('GET', file, true);
+          xhr.send();
+        });
       }
-    }
+
+      const loop = (_attr, _onLoadError) => {
+        const allEls = document.querySelectorAll(`[${attr ?? defaultAttr}]`);
+
+        if (!allEls.length) {
+          contextResolve();
+          return;
+        }
+
+        const tasks = [];
+
+        for (let i = 0; i < allEls.length; i++) {
+          const el = allEls[i];
+
+          const file = el.getAttribute(attr ?? defaultAttr);
+
+          tasks.push(load(el, file));
+        }
+
+        if (tasks.length) {
+          Promise.all(tasks).then(() => {
+            loop(_attr, _onLoadError);
+          });
+        }
+      };
+
+      loop(attr, onLoadError);
+    });
   },
   /**
    * setCursorToEnd
    * @description 将光标设置到内容末尾
    * @param {HTMLElement} element
    */
-  setCursorToEnd(element) {
+  setCursorToEnd(element: HTMLElement) {
     const range = document.createRange();
     const selection = window.getSelection();
     range.selectNodeContents(element);
@@ -566,12 +589,27 @@ export default {
     selection?.addRange?.(range);
   },
   /**
+   * setCursorPositionToNode
+   * @description 设置Node的光标位置
+   * @param {Node} node
+   * @param {number} offset
+   */
+  setCursorPositionToNode(node: Node, offset: number) {
+    const range = document.createRange();
+    range?.setStart?.(node, offset);
+    range?.collapse?.(true);
+
+    const sel = window.getSelection();
+    sel?.removeAllRanges?.();
+    sel?.addRange?.(range);
+  },
+  /**
    * setCursorPosition
    * @description 设置光标的位置
    * @param {HTMLElement} element
    * @param {number} offset
    */
-  setCursorPosition(element, offset) {
+  setCursorPosition(element: HTMLElement, offset: number) {
     const range = document.createRange();
     range.setStart(element.childNodes[0], offset);
     range.collapse(true);
@@ -585,7 +623,7 @@ export default {
    * @description 获取光标输入的的element
    * @return {Node | null}
    */
-  getCurrentElementWithCursor() {
+  getCurrentElementWithCursor(): Node | null {
     const selection = window.getSelection();
     if (selection && selection?.rangeCount > 0) {
       const range = selection?.getRangeAt?.(0);
@@ -598,8 +636,8 @@ export default {
    * @description 获取光标输入的parentElement
    * @return {Node | null}
    */
-  getCurrentParentElementWithCursor() {
-    const currentElement = this.getCurrentElementWithCursor();
+  getCurrentParentElementWithCursor(): Node | null {
+    const currentElement = DomUtil.getCurrentElementWithCursor();
     if (currentElement) {
       return currentElement.parentElement;
     }
@@ -611,7 +649,7 @@ export default {
    * @description 获取光标的索引
    * @return {number}
    */
-  getCursorIndex() {
+  getCursorIndex(): number {
     const selection = window.getSelection();
     if (selection && selection?.rangeCount > 0) {
       const range = selection?.getRangeAt?.(0);
@@ -622,5 +660,23 @@ export default {
     }
     return -1;
   },
+  /**
+   * getCursorRectByDocument
+   * @description 获取光标在文档中的位置
+   * @return {DOMRect | null}
+   */
+  getCursorRectByDocument(): DOMRect | null {
+    if (window.getSelection) {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        return range?.getBoundingClientRect?.();
+      }
+    }
+
+    return null;
+  },
   /**--------------------------dom-end-------------------------**/
 };
+
+export default DomUtil;

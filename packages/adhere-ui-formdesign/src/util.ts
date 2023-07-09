@@ -1,0 +1,291 @@
+import transform from 'css-to-react-native';
+import type { Style } from 'css-to-react-native';
+import cloneDeepWith from 'lodash.clonedeepwith';
+import { CSSProperties } from 'react';
+import parse from 'style-to-object';
+import { v4 } from 'uuid';
+
+import { Form } from '@baifendian/adhere-ui-anthoc';
+
+import WidgetPropertyField from './WidgetProperty/Field/WidgetPropertyField';
+import { getFieldClassByType } from './WidgetProperty/Field/WidgetPropertyFieldManager';
+import WidgetProperty from './WidgetProperty/WidgetProperty';
+import { getWidgetClassByType } from './WidgetToolBox/WidgetToolBoxManager';
+import { DWidgetProperty } from './types/WidgetPropertyTypes';
+import { GroupType, Type } from './types/WidgetTypes';
+import { DLayoutWidget, DWidget, ILayoutWidget, IWidget } from './types/WidgetTypes';
+
+/**
+ * parseWidgets
+ * @description 把数据转换成对象
+ * @param {Array<DWidget | DLayoutWidget>} dataSource
+ * @return Array<CWidget | CLayoutWidget>
+ */
+export function parseWidgets(
+  dataSource: Array<DWidget | DLayoutWidget>,
+): Array<IWidget | ILayoutWidget> {
+  return dataSource.map((_widget) => parseWidget(_widget));
+}
+
+/**
+ * parseWidget
+ * @param {DWidget | DLayoutWidget} widgetData
+ * @return IWidget | ILayoutWidget
+ */
+export function parseWidget(widgetData: DWidget | DLayoutWidget) {
+  const { id, type, groupType, propertys } = widgetData;
+
+  const WidgetClass = getWidgetClassByType(type);
+
+  // @ts-ignore
+  return new WidgetClass(
+    id,
+    groupType,
+    type,
+    parsePropertys(propertys),
+    // @ts-ignore
+    parseWidgets(widgetData.widgets || []),
+  );
+}
+
+/**
+ * parsePropertys
+ * @param {DWidgetProperty[]} propertys
+ * @return {WidgetProperty []}
+ */
+export function parsePropertys(propertys: DWidgetProperty[]) {
+  return propertys.map((property) => parseProperty(property));
+}
+
+/**
+ * parseProperty
+ * @param {DWidgetProperty} property
+ * @return {WidgetProperty}
+ */
+export function parseProperty(property: DWidgetProperty) {
+  const { key, name, value, required } = property;
+  const WidgetPropertyFieldClass = getFieldClassByType(value.type) as typeof WidgetPropertyField;
+
+  return new WidgetProperty(
+    key,
+    name,
+    new WidgetPropertyFieldClass(key, name, required, value.type, value.props),
+    required,
+  );
+}
+
+/**
+ * findWidgetById
+ * @description 根据id寻找widget
+ * @param {string} id
+ * @param {Array<DWidget | DLayoutWidget>} dataSource
+ * @return {DWidget | DLayoutWidget | null}
+ */
+export function findWidgetById(
+  id: string,
+  dataSource: Array<DWidget | DLayoutWidget>,
+): DWidget | DLayoutWidget | null {
+  let widget: DWidget | DLayoutWidget | null = null;
+
+  for (let i = 0; i < dataSource.length; i++) {
+    const item = dataSource[i];
+
+    if (item.id === id) {
+      widget = item;
+      break;
+    } else {
+      widget = findWidgetById(id, item.widgets || []);
+
+      if (widget) {
+        break;
+      }
+    }
+  }
+
+  return widget;
+}
+
+/**
+ * findParentLayoutWidgetById
+ * @description 根据id寻找widget的父亲
+ * @param {string} id
+ * @param {Array<DWidget | DLayoutWidget>} dataSource
+ * @return {DWidget | DLayoutWidget | null}
+ */
+export function findParentLayoutWidgetById(
+  id: string,
+  dataSource: Array<DWidget | DLayoutWidget>,
+): DLayoutWidget | null {
+  // @ts-ignore
+  const layoutWidget: DLayoutWidget = {
+    widgets: dataSource,
+  };
+
+  function loop(_layoutWidget: DLayoutWidget): DLayoutWidget | null {
+    let result;
+
+    const widgets = _layoutWidget.widgets || [];
+
+    for (let i = 0; i < widgets.length; i++) {
+      const itemDWidget = widgets[i];
+
+      if (itemDWidget.id === id) {
+        result = _layoutWidget;
+        break;
+      } else {
+        result = loop(itemDWidget);
+
+        if (result) {
+          break;
+        }
+      }
+    }
+
+    return result;
+  }
+
+  return loop(layoutWidget);
+}
+
+/**
+ * getPropertyValueByName
+ * @description 根据name获取property的value
+ * @param {DWidgetProperty[]} propertys
+ * @param {string} name
+ * @return {string | menubar | Array<any> | null | undefined}
+ */
+export function getPropertyValueByName(propertys: DWidgetProperty[], name: string) {
+  return (propertys || []).find((propery) => propery.key === name)?.value?.props?.value;
+}
+
+/**
+ * copyWidget
+ * @description 对Widget进行copy生成一个新的Widget
+ * @param {DWidget | DLayoutWidget} sourceWidget
+ * @return {DWidget | DLayoutWidget}
+ */
+export function copyWidget(sourceWidget: DWidget | DLayoutWidget): DWidget | DLayoutWidget {
+  const cloneWidget = cloneDeepWith(sourceWidget, function (value) {
+    if ('children' in value) {
+      const { children, ...result } = value;
+      return result;
+    } else {
+      return value;
+    }
+  });
+
+  function loop(_widget) {
+    // id需要修改
+    _widget.id = v4();
+
+    // property中key为name的value也需要修改
+    const nameProperty = (_widget.propertys || []).find((_property) => _property.key === 'name');
+    if (nameProperty && nameProperty.value && nameProperty.value.props) {
+      nameProperty.value.props.value = v4();
+    }
+
+    const widgets = _widget.widgets || [];
+
+    widgets.forEach((_w) => loop(_w));
+  }
+
+  loop(cloneWidget);
+
+  return cloneWidget;
+}
+
+/**
+ * copyDataSource
+ * @description 克隆dataSource
+ * @param {Array<DWidget | DLayoutWidget>} dataSource
+ * @return {Array<DWidget | DLayoutWidget>}
+ */
+export function copyDataSource(
+  dataSource: Array<DWidget | DLayoutWidget>,
+): Array<DWidget | DLayoutWidget> {
+  return cloneDeepWith(dataSource, function (value) {
+    if ('children' in value) {
+      const { children, ...result } = value;
+      return result;
+    } else {
+      return value;
+    }
+  });
+}
+
+/**
+ * transformInlineCSSToCSSProperties
+ * @description inline css to CSSProperties
+ * @param {string} inlineCSS
+ * @return {CSSProperties}
+ */
+export function transformInlineCSSToCSSProperties(inlineCSS: string): Style {
+  const output = [];
+
+  parse(inlineCSS, (name, value) => {
+    output.push([name, value]);
+  });
+
+  return transform(output);
+}
+
+/**
+ * getDefaultFormItemProps
+ * @description Form.Item的默认props
+ * @param {WidgetProperty[]} propertys
+ * @return {{ [prop: string]: any }}
+ */
+export function getDefaultFormItemProps(propertys: (DWidgetProperty | WidgetProperty)[]): {
+  [prop: string]: any;
+} {
+  return {
+    name: getPropertyValueByName(propertys, 'name'),
+  };
+}
+
+/**
+ * getDefaultFieldProps
+ * @description Field的默认props
+ * @param {WidgetProperty[]} propertys
+ * @return {{ [prop: string]: any }}
+ */
+export function getDefaultFieldProps(propertys: (DWidgetProperty | WidgetProperty)[]): {
+  [prop: string]: any;
+} {
+  return {
+    readonly: getPropertyValueByName(propertys, 'readonly'),
+    disabled: getPropertyValueByName(propertys, 'disabled'),
+  };
+}
+
+/**
+ * getDefaultPropertys
+ * @description 获取缺省的属性
+ * @param {GroupType} groupType
+ * @param {Type} type
+ * @return {WidgetProperty[]}
+ */
+export function getDefaultPropertys(groupType: GroupType, type: Type) {
+  const WidgetClass = getWidgetClassByType(type);
+
+  // @ts-ignore
+  const Widget = new WidgetClass('', groupType, type, [], []);
+
+  try {
+    return JSON.parse(JSON.stringify(Widget?.propertys || []));
+  } catch (e) {
+    return [];
+  }
+}
+
+/**
+ * getInputValidationTypeDataSource
+ * @description 获取所有验证类型的DataSource
+ */
+export function getInputValidationTypeDataSource() {
+  // Form.ValidatorRules.isIP
+  return Object.keys(Form.ValidatorRules).map((key) => ({
+    label: key.replace(/^is/, ''),
+    value: key,
+  }));
+}

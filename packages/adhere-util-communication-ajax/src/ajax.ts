@@ -4,7 +4,7 @@ import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
 
-import type { IConfig, ISendArg, ISendPrepareArg, Method } from './types';
+import type { IConfig, ISendArg, ISendPrepareArg, Method, Prepare, SendResult } from './types';
 
 // 是否触发过402
 let trigger402 = false;
@@ -98,9 +98,11 @@ class Ajax {
    * @param data
    * @param arg
    */
-  get(this: Ajax, { data, ...arg }: ISendArg) {
-    return new Promise((resolve, reject) => {
-      const { xhr } = sendPrepare.call(
+  get(this: Ajax, { data, ...arg }: ISendArg): SendResult {
+    let prepare: Prepare = {};
+
+    const promise = new Promise((resolve, reject) => {
+      prepare = sendPrepare.call(
         this,
         {
           // 默认的
@@ -117,17 +119,24 @@ class Ajax {
         },
       );
 
+      const { xhr } = prepare;
+
       if (xhr) {
         xhr.send(null);
       }
     });
+
+    return {
+      ...prepare,
+      promise,
+    };
   }
 
   /**
    * post
    * @param params
    */
-  post(this: Ajax, params: ISendArg) {
+  post(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'post', params);
   }
 
@@ -135,7 +144,7 @@ class Ajax {
    * path
    * @param params
    */
-  path(this: Ajax, params: ISendArg) {
+  path(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'path', params);
   }
 
@@ -143,7 +152,7 @@ class Ajax {
    * put
    * @param params
    */
-  put(this: Ajax, params: ISendArg) {
+  put(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'put', params);
   }
 
@@ -151,7 +160,7 @@ class Ajax {
    * delete
    * @param params
    */
-  delete(this: Ajax, params: ISendArg) {
+  delete(this: Ajax, params: ISendArg): SendResult {
     return complexRequest.call(this, 'delete', params);
   }
 }
@@ -457,10 +466,7 @@ function sendPrepare(
     ...curConfig // timeout && withCredentials && events
   }: ISendPrepareArg,
   { resolve, reject },
-): {
-  xhr: XMLHttpRequest | null;
-  contentType: string | null;
-} {
+): Prepare {
   let indicator;
 
   const defaultLoadingText = `${intl.v('加载中')}...`;
@@ -584,8 +590,9 @@ function sendPrepare(
  * getSendParams
  * @param data
  * @param contentType
+ * @param customSendJSONStringify
  */
-function getSendParams({ data, contentType = '' }) {
+function getSendParams({ data, contentType = '', customSendJSONStringify }) {
   // 四种Content-Type的处理(也就是send的参数)
 
   // application/json
@@ -604,6 +611,9 @@ function getSendParams({ data, contentType = '' }) {
    */
   if (contentType.startsWith(Ajax.CONTENT_TYPE_APPLICATION_JSON) && Util.isRef(data)) {
     // console.log('数据需要被转换成JSON字符串', JSON.stringify(data));
+    if (customSendJSONStringify) {
+      return JSON.stringify(data, customSendJSONStringify);
+    }
     return JSON.stringify(data);
   }
 
@@ -665,7 +675,12 @@ function getSendParams({ data, contentType = '' }) {
    */
   if (contentType.startsWith(Ajax.CONTENT_TYPE_TEXT_PLAIN)) {
     if (Util.isString(data)) return data;
-    if (Util.isObject(data)) return JSON.stringify(data);
+    if (Util.isObject(data)) {
+      if (customSendJSONStringify) {
+        return JSON.stringify(data, customSendJSONStringify);
+      }
+      return JSON.stringify(data);
+    }
   }
 
   return data.toString();
@@ -676,9 +691,11 @@ function getSendParams({ data, contentType = '' }) {
  * @param method
  * @param params
  */
-function complexRequest(this: Ajax, method: Method, params: ISendArg) {
-  return new Promise((resolve, reject) => {
-    const { xhr, contentType } = sendPrepare.call(
+function complexRequest(this: Ajax, method: Method, params: ISendArg): SendResult {
+  let prepare: Prepare = {};
+
+  const promise = new Promise((resolve, reject) => {
+    prepare = sendPrepare.call(
       this,
       {
         // 缺省的
@@ -695,15 +712,23 @@ function complexRequest(this: Ajax, method: Method, params: ISendArg) {
       },
     );
 
+    const { xhr, contentType } = prepare;
+
     if (xhr) {
       xhr.send(
         getSendParams.call(this, {
           data: params.data,
           contentType: contentType!,
+          customSendJSONStringify: params.customSendJSONStringify,
         }),
       );
     }
   });
+
+  return {
+    ...prepare,
+    promise,
+  };
 }
 
 /**

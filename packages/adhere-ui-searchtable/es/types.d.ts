@@ -82,14 +82,24 @@ export interface RowEditableConfig {
  * RowDragSortConfig
  */
 export interface RowDragSortConfig {
-    type?: string;
-    dropOverDownwardClassName?: string;
-    dropOverUpwardClasName?: string;
-    dropConfig?: {
-        [prop: string]: any;
+    override?: {
+        type?: string;
+        dropOverDownwardClassName?: string;
+        dropOverUpwardClasName?: string;
+        dragConfig?: (defaultDragConfig?: any) => {
+            [prop: string]: any;
+        };
+        dropConfig?: (defaultDropConfig?: any) => {
+            [prop: string]: any;
+        };
     };
-    dragConfig?: {
-        [prop: string]: any;
+    dropHooks?: {
+        collect?: (monitor?: any) => any;
+        drop?: (params?: {
+            sourceRecord: any;
+            targetRecord: any;
+            item: any;
+        }) => Promise<void>;
     };
 }
 /**
@@ -232,6 +242,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
     $search?: ColumnSearchConfig;
     $editable?: ColumnEditableConfig;
     $rowDragSort?: ColumnRowDragSortConfig;
+    headerCellAlign?: 'left' | 'center' | 'right';
 }
 /**
  * SearchProps

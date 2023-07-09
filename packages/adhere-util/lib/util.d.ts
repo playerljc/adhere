@@ -225,12 +225,14 @@ declare const _default: {
         rootEl: HTMLElement;
         bodyClickHandler?: Function | undefined;
     }): Function;
-    includeHTML(): void;
-    setCursorToEnd(element: any): void;
-    setCursorPosition(element: any, offset: any): void;
+    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<void>;
+    setCursorToEnd(element: HTMLElement): void;
+    setCursorPositionToNode(node: Node, offset: number): void;
+    setCursorPosition(element: HTMLElement, offset: number): void;
     getCurrentElementWithCursor(): Node | null;
-    getCurrentParentElementWithCursor(): HTMLElement | null;
+    getCurrentParentElementWithCursor(): Node | null;
     getCursorIndex(): number;
+    getCursorRectByDocument(): DOMRect | null;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

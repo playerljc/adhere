@@ -468,7 +468,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           // 处理align
           .map((t) => ({
             ...t,
-            align: ![this.getLinkColumnDataIndex() || '_linkColumn'].includes(t.dataIndex)
+            align: [this.getLinkColumnDataIndex() || '_linkColumn'].includes(t.dataIndex)
               ? 'center'
               : 'align' in t && t.align
               ? t.align
@@ -529,7 +529,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                           <Button
                             size="small"
                             type="primary"
-                            onClick={() => this.onSearch().then(() => confirm())}
+                            onClick={() => this.search().then(() => confirm())}
                           >
                             {Intl.v('确定')}
                           </Button>
@@ -1599,14 +1599,15 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 advancedSearchConfig={this.advancedSearchConfig}
                 onSearch={() =>
                   new Promise<void>((resolve) => {
-                    this.setState(
-                      {
-                        page: 1,
-                      },
-                      () => {
-                        this.onSearch().then(() => resolve());
-                      },
-                    );
+                    // this.setState(
+                    //   {
+                    //     page: 1,
+                    //   },
+                    //   () => {
+                    //     this.onSearch().then(() => resolve());
+                    //   },
+                    // );
+                    this.search().then(() => resolve());
                   })
                 }
                 onReset={() => this.onClear()}

@@ -1,3 +1,21 @@
+# 1.0.30
+
+***
+
+2023-07-09
+
+* column中headerCellAlign支持排序单独列头
+
+# 1.0.29
+
+***
+
+2023-07-05
+
+* ProTableFactory中列头筛选BUG修改
+* EditableCellView的样式BUG修正
+* DragSortRow修改
+
 # 1.0.28
 
 ***

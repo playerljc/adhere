@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-forceupdate",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "组件强制刷新",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-hooks": "^2.9.0",
+    "@baifendian/adhere-ui-hooks": "^2.10.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",
@@ -46,5 +46,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "2c41cdf692eba92b1ba6ed19d1b6349356083a2c"
 }

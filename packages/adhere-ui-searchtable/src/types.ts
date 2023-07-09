@@ -168,11 +168,17 @@ export interface RowEditableConfig {
  * RowDragSortConfig
  */
 export interface RowDragSortConfig {
-  type?: string;
-  dropOverDownwardClassName?: string;
-  dropOverUpwardClasName?: string;
-  dropConfig?: { [prop: string]: any };
-  dragConfig?: { [prop: string]: any };
+  override?: {
+    type?: string;
+    dropOverDownwardClassName?: string;
+    dropOverUpwardClasName?: string;
+    dragConfig?: (defaultDragConfig?: any) => { [prop: string]: any };
+    dropConfig?: (defaultDropConfig?: any) => { [prop: string]: any };
+  };
+  dropHooks?: {
+    collect?: (monitor?: any) => any;
+    drop?: (params?: { sourceRecord: any; targetRecord: any; item: any }) => Promise<void>;
+  };
 }
 
 /**
@@ -340,6 +346,10 @@ export interface ColumnTypeExt extends ColumnType<any> {
   $editable?: ColumnEditableConfig;
   // 行拖动排序
   $rowDragSort?: ColumnRowDragSortConfig;
+  // 列头的对其方式
+  headerCellAlign?: 'left' | 'center' | 'right';
+  // 列头属性设置
+  // onHeaderCell?: () => any;
 }
 
 /**
