@@ -81,6 +81,7 @@ export default ({
       return {
         width: _others.width,
         onResize: handleResize(context, _others, columnsWidth),
+        column: _others,
       };
     },
   };

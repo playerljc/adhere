@@ -242,6 +242,7 @@ export interface ColumnTypeExt extends ColumnType<any> {
     $search?: ColumnSearchConfig;
     $editable?: ColumnEditableConfig;
     $rowDragSort?: ColumnRowDragSortConfig;
+    headerCellAlign?: 'left' | 'center' | 'right';
 }
 /**
  * SearchProps

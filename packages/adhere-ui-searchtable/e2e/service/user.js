@@ -13,7 +13,7 @@ export const fetchList = (() => {
         loading: {
           show: false,
         },
-      });
+      }).promise;
     },
     defaultResult: () => ({
       total: 0,

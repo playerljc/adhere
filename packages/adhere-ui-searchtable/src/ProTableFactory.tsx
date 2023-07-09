@@ -468,7 +468,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           // 处理align
           .map((t) => ({
             ...t,
-            align: ![this.getLinkColumnDataIndex() || '_linkColumn'].includes(t.dataIndex)
+            align: [this.getLinkColumnDataIndex() || '_linkColumn'].includes(t.dataIndex)
               ? 'center'
               : 'align' in t && t.align
               ? t.align

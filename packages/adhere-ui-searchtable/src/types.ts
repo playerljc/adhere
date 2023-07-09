@@ -346,6 +346,10 @@ export interface ColumnTypeExt extends ColumnType<any> {
   $editable?: ColumnEditableConfig;
   // 行拖动排序
   $rowDragSort?: ColumnRowDragSortConfig;
+  // 列头的对其方式
+  headerCellAlign?: 'left' | 'center' | 'right';
+  // 列头属性设置
+  // onHeaderCell?: () => any;
 }
 
 /**

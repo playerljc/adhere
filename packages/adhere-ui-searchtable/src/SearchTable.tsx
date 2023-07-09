@@ -578,8 +578,16 @@ abstract class SearchTable<
         const loop = (_column) => {
           let _res: ColumnsType = _column;
 
+          // 如果是列可以拖动
           if ('$resizable' in _column && !!_column?.$resizable) {
             _res = this.columnResizable.searchTableResizableColumnItem(this, index, _column);
+          }
+          // 其他列
+          else {
+            // @ts-ignore
+            _res.onHeaderCell = () => ({
+              column: _column,
+            });
           }
 
           // @ts-ignore
