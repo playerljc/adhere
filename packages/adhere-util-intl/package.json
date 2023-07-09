@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-intl",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "基于 react-intl-universal 的国际化组件",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
