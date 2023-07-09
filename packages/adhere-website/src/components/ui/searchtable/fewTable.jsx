@@ -23,7 +23,7 @@ class FewTable extends Table {
                 mock: true,
                 path: oneData.data,
               })
-              .then((result) => {
+              .promise.then((result) => {
                 this.setState(
                   {
                     dataSource: {

@@ -23,7 +23,7 @@ export const fetchList = (() => {
         loading: {
           show: false,
         },
-      });
+      }).promise;
     },
     defaultResult: () => ({
       totalCount: 0,

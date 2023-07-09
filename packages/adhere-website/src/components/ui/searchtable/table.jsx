@@ -312,7 +312,7 @@ class TableImpl extends TableImplement {
                 // eslint-disable-next-line global-require
                 path: require('./mock.js').default.data,
               })
-              .then((result) => {
+              .promise.then((result) => {
                 this.setState(
                   {
                     dataSource: {
