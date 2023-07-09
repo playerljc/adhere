@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["expression/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-ui-expression/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,sDACHA"}

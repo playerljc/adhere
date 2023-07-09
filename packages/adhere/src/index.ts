@@ -10,6 +10,7 @@ import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
 import Ellipsis from '@baifendian/adhere-ui-ellipsis';
+import Expression from '@baifendian/adhere-ui-expression';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import FontSizeSetting from '@baifendian/adhere-ui-fontsizesetting';
@@ -79,6 +80,7 @@ export {
   ContourBlock,
   DateDisplay,
   Ellipsis,
+  Expression,
   FieldGeneratorToDict,
   FlexLayout,
   FontSizeSetting,
