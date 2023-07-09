@@ -1,3 +1,26 @@
+# 2.10.0
+
+***
+
+2023-07-09
+
+* **adhere-ui-expression**
+  - 加入adhere-ui-expression组件
+* **adhere-ui-searchtable**
+  - column中headerCellAlign支持排序单独列头
+  - ProTableFactory中列头筛选BUG修改
+  - EditableCellView的样式BUG修正
+  - DragSortRow修改，TreeData样式的修改
+* **adhere-util**
+  - 加入Range相关dom方法，修改includeHTML方法
+* **adhere-ui-fieldgeneratortodict**
+  - TransferFormItem加入Suspense.Sync
+* **adhere-ui-ajax**
+  - get | post | path | put | delete的返回值修改，返回xhr对象加以更精细的控制
+  - 发送请求参数加入需要进行JSON.stringify的时候加入customSendJSONStringify进行自定
+* **adhere-util-adapterscreen**
+  - 重构
+
 # 2.9.5
 
 ***
