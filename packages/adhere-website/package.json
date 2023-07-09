@@ -53,6 +53,7 @@
     "echarts-wordcloud": "^2.1.0",
     "faker": "^5.4.0",
     "font-awesome": "^4.7.0",
+    "lodash.debounce": "^4.0.8",
     "mark.js": "^8.11.1",
     "nprogress": "^0.2.0",
     "ol": "^6.5.0",

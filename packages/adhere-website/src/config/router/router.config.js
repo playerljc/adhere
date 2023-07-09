@@ -82,6 +82,7 @@ const {
   IframeIO,
   RichTextSandBox,
   Ellipsis,
+  Expression,
 } = Components;
 
 export default () => [
@@ -438,6 +439,11 @@ export default () => [
                 path: '/adhere/component/ui/ellipsis',
                 name: 'Ellipsis',
                 component: Ellipsis,
+              },
+              {
+                path: '/adhere/component/ui/expression',
+                name: 'Expression',
+                component: Expression,
               },
             ],
           },

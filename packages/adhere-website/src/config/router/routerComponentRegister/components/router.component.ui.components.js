@@ -156,3 +156,7 @@ export const RichTextSandBox = lazy(() =>
 export const Ellipsis = lazy(() =>
   import(/* webpackChunkName: "ellipsis" */ '@/components/ui/ellipsis'),
 );
+
+export const Expression = lazy(() =>
+  import(/* webpackChunkName: "expression" */ '@/components/ui/expression'),
+);
