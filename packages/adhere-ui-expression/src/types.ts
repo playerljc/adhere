@@ -39,8 +39,8 @@ export interface ExpressionProps<T extends { label: string; value: string }> {
   operatorWrapStyle?: CSSProperties;
   quickTipWrapClassName?: string;
   quickTipWrapStyle?: CSSProperties;
-  textClassName?: string;
-  operatorClassName?: string;
+  textClassName?: ((text: string) => string) | string;
+  operatorClassName?: ((operator: string) => string) | string;
   /**
    * value
    */
@@ -69,6 +69,11 @@ export interface ExpressionProps<T extends { label: string; value: string }> {
    */
   disableQuickTip?: boolean;
   /**
+   * allowClear
+   * @description 清空内容按钮
+   */
+  allowClear?: boolean;
+  /**
    * onChange
    * @param value
    */
@@ -94,11 +99,11 @@ export interface ExpressionHandle {
   setValue(html: string): void;
   getValue(): string;
   isEditorEmpty(): boolean;
-  hideQuickTip(): void;
   showQuickTip(): void;
   showOperators(): void;
   hideQuickTip(): void;
   hideOperators(): void;
+  clear(): void;
 }
 
 export interface ViewProps extends EllipsisProps {

@@ -9,8 +9,15 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
-import type { ExpressionHandle, ExpressionProps, Operators, OperatorType } from './types';
 import View from './View';
+import ElasticSearchOperators from './operators/ElasticSearch';
+import type {
+  ExpressionHandle,
+  ExpressionProps,
+  OperatorItem,
+  OperatorType,
+  Operators,
+} from './types';
 
 const {
   getCurrentParentElementWithCursor,
@@ -19,6 +26,9 @@ const {
   setCursorPositionToNode,
   setCursorPosition,
   getCursorIndex,
+  getCursorRectByDocument,
+  isString,
+  isFunction,
 } = Util;
 
 // 缺省的触发字符code
@@ -26,6 +36,9 @@ const defaultTriggerCharCode = 32;
 
 // html的空格
 const htmlSpace = '&nbsp;';
+
+// 弹层的宽度
+const modalWidth = 300;
 
 const { useSetState } = Hooks;
 
@@ -50,6 +63,7 @@ export const selectorPrefix = 'adhere-ui-expression';
  * @param quickTipDataSource
  * @param disableQuickTip
  * @param operators
+ * @param allowClear
  * @param onChange
  * @param onContinuousTextChange
  * @param onEditorInputEnd
@@ -78,6 +92,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
     quickTipDataSource,
     disableQuickTip,
     operators,
+    allowClear,
     onChange,
     onContinuousTextChange,
     onEditorInputEnd,
@@ -88,29 +103,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
   ref,
 ): ReactElement => {
   const operatorsConfig = useMemo<Operators>(
-    () =>
-      operators ?? [
-        {
-          label: '()',
-          value: '()',
-          type: 'brackets',
-        },
-        {
-          label: 'AND',
-          value: 'AND',
-          type: 'binary',
-        },
-        {
-          label: 'OR',
-          value: 'OR',
-          type: 'binary',
-        },
-        {
-          label: 'NOT',
-          value: 'NOT',
-          type: 'unary',
-        },
-      ],
+    () => operators ?? (ElasticSearchOperators as OperatorItem[]),
     [operators],
   );
 
@@ -121,10 +114,10 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   // 运算符下拉
-  const operatorsRef = useRef<HTMLUListElement | null>(null);
+  const operatorsRef = useRef<HTMLDivElement | null>(null);
 
   // quickTipRef
-  const quickTipRef = useRef<HTMLUListElement | null>(null);
+  const quickTipRef = useRef<HTMLDivElement | null>(null);
 
   // placeholder
   const placeholderRef = useRef<HTMLDivElement | null>(null);
@@ -153,14 +146,13 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
 
   const [placeholderShow, setPlaceholderShow] = useSetState(true);
 
+  // allowClear是否显示
+  const [showAllowClear, setShowAllClear] = useSetState(false);
+
   const triggerChar = useMemo(
     () => String.fromCharCode(triggerCharCode ?? defaultTriggerCharCode),
     [triggerCharCode],
   );
-
-  useUpdateLayoutEffect(() => {
-    onReady();
-  }, [value]);
 
   useMount(() => {
     const editor = getEditorEl();
@@ -170,6 +162,10 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
     setCursorToEnd(editor as HTMLElement);
     onReady();
   });
+
+  useUpdateLayoutEffect(() => {
+    onReady();
+  }, [value]);
 
   useImperativeHandle(ref, () => ({
     setValue: (_value) => {
@@ -182,10 +178,11 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
     },
     getValue: () => getEditorEl()?.innerHTML as string,
     isEditorEmpty,
-    showQuickTip,
     showOperators,
-    hideQuickTip,
     hideOperators,
+    showQuickTip,
+    hideQuickTip,
+    clear,
   }));
 
   /**
@@ -229,21 +226,62 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
     return getEditorEl()?.innerHTML?.trim?.() === '';
   }
 
-  function getCursorPosition() {
-    let x = 0;
-    let y = 0;
+  /**
+   * clear
+   * @description 清空内容
+   */
+  function clear() {
+    const contextEditor = getEditorEl();
 
-    if (window.getSelection) {
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const rect = range.getBoundingClientRect();
-        x = rect.left;
-        y = rect.top;
+    if (contextEditor) {
+      contextEditor.innerHTML = '';
+      hideOperators();
+      hideQuickTip();
+      showPlaceholder();
+      setShowAllClear(false);
+    }
+  }
+
+  /**
+   * containsEntityCharacters
+   * @description 判断是否是实体字符
+   * @param str
+   */
+  function containsEntityCharacters(str) {
+    const entityRegex = /^&#\d+;/gim;
+    return entityRegex.test(str);
+  }
+
+  /**
+   * showModal
+   * @description 显示Modal
+   * @param {HTMLElement} currentEl
+   * @param {Function} callback
+   */
+  function showModal(currentEl: HTMLElement, callback: Function) {
+    const point = getCursorRectByDocument();
+
+    if (point && currentEl) {
+      const contextWidth = contextRef.current?.offsetWidth;
+      const contextHeight = contextRef?.current?.offsetHeight;
+
+      const contextRect = contextRef.current?.getBoundingClientRect?.();
+
+      if (!!contextWidth && !!contextHeight && contextRef && currentEl && contextRect) {
+        if (point?.x === 0 && point?.y === 0) {
+          currentEl.style.left = `${contextRect.x + 20}px`;
+          currentEl.style.top = `${contextRect.y + contextHeight - 2}px`;
+        } else if (contextRect?.x + contextWidth - point?.x < modalWidth) {
+          currentEl.style.left = `${contextRect.x + contextWidth - modalWidth - 10}px`;
+          currentEl.style.top = `${point.y + 25}px`;
+        } else {
+          currentEl.style.left = `${point.x + 10}px`;
+          currentEl.style.top = `${point.y + 25}px`;
+        }
       }
     }
 
-    return { x, y };
+    callback?.();
   }
 
   /**
@@ -251,14 +289,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
    * @description 显示运算符选择下拉
    */
   function showOperators() {
-    const point = getCursorPosition();
-
-    if (operatorsRef.current) {
-      operatorsRef.current.style.left = `${point.x + 10}px`;
-      operatorsRef.current.style.top = `${point.y + 25}px`;
-    }
-
-    setOperatorsShow(true, () => {});
+    showModal(operatorsRef.current as HTMLElement, () => setOperatorsShow(true, () => {}));
   }
 
   /**
@@ -273,7 +304,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
    * showQuickTip
    */
   function showQuickTip() {
-    setQuickTipShow(true);
+    showModal(quickTipRef.current as HTMLElement, () => setQuickTipShow(true));
   }
 
   /**
@@ -307,8 +338,16 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
    * @return {HTMLSpanElement}
    */
   function createTextElement(html) {
+    let targetTextClassName: string = '';
+
+    if (isString(textClassName)) {
+      targetTextClassName = textClassName as string;
+    } else if (isFunction(textClassName)) {
+      targetTextClassName = (textClassName as Function)(html);
+    }
+
     const textElement = document.createElement('span');
-    textElement.className = classNames('text', textClassName ?? '');
+    textElement.className = classNames('text', targetTextClassName ?? '');
     textElement.innerHTML = html;
     return textElement;
   }
@@ -320,10 +359,18 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
    * @return {HTMLSpanElement}
    */
   function createOperatorElement(text) {
+    let targetOperatorClassName: string = '';
+
+    if (isString(operatorClassName)) {
+      targetOperatorClassName = operatorClassName as string;
+    } else if (isFunction(operatorClassName)) {
+      targetOperatorClassName = (operatorClassName as Function)(text);
+    }
+
     const operatorElement = document.createElement('span');
-    operatorElement.className = classNames('operator', operatorClassName ?? '');
+    operatorElement.className = classNames('operator', targetOperatorClassName ?? '');
     operatorElement.setAttribute('contenteditable', 'false');
-    operatorElement.innerText = text;
+    operatorElement.innerHTML = text;
     return operatorElement;
   }
 
@@ -382,6 +429,7 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
    * @description 编辑框input
    */
   function onEditorInput(e) {
+    console.log('Input');
     if (comStart.current) return; // 中文输入过程中不截断
 
     if (cursorContextElement) {
@@ -406,6 +454,11 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
       if (!disableQuickTip) {
         onContinuousTextChange?.(continuousText.current);
       }
+    } else {
+      if (!disableQuickTip) {
+        onContinuousTextChange?.(cursorContextElement?.current?.textContent as string);
+      }
+      // console.log('cursorContextElement', cursorContextElement.current?.textContent);
     }
 
     if (!disableQuickTip) {
@@ -421,6 +474,8 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
 
     // onChange
     onChange?.(editorRef?.current?.innerHTML);
+
+    setShowAllClear(!isEditorEmpty());
   }
 
   /**
@@ -492,8 +547,14 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
 
       // 括号
       if (operatorType === 'brackets') {
-        const left = operator[0];
-        const right = operator[1];
+        let left = operator[0];
+        let right = operator[1];
+
+        if (containsEntityCharacters(operator)) {
+          const arr = operator.split(';').filter((t) => t);
+          left = arr[0];
+          right = arr[1];
+        }
 
         const leftElement = createOperatorElement(left);
         const rightElement = createOperatorElement(right);
@@ -677,9 +738,12 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
       className={classNames(selectorPrefix, className ?? '')}
       style={style ?? {}}
     >
+      {/*editor*/}
       <div
         ref={editorRef}
-        className={classNames(`${selectorPrefix}-editor`, editorClassName ?? '')}
+        className={classNames(`${selectorPrefix}-editor`, editorClassName ?? '', {
+          [`${selectorPrefix}-editor--show-clear`]: !!allowClear,
+        })}
         style={editorStyle ?? {}}
         contentEditable="true"
         onInput={onEditorInput}
@@ -692,6 +756,21 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
         {/*<span className="text" contentEditable="true"></span>*/}
       </div>
 
+      {/*allowClear*/}
+      {!!allowClear && showAllowClear && (
+        <div className={`${selectorPrefix}-editor-clear`}>
+          <CloseCircleOutlined
+            rev={null}
+            onClick={() => {
+              clear();
+              // @ts-ignore
+              getEditorEl()?.focus();
+            }}
+          />
+        </div>
+      )}
+
+      {/*placeholder*/}
       <div
         className={classNames(`${selectorPrefix}-editor-placeholder`, {
           [`${selectorPrefix}-editor-placeholder--show`]: placeholderShow,
@@ -701,57 +780,62 @@ const Expression: ForwardRefRenderFunction<ExpressionHandle, ExpressionProps<any
         {placeholder ?? Intl.v('请输入关键词')}
       </div>
 
-      <ul
+      {/*运算符*/}
+      <div
         ref={operatorsRef}
         className={classNames(`${selectorPrefix}-operators`, operatorWrapClassName ?? '', {
           [`${selectorPrefix}-operators--show`]: operatorsShow,
         })}
         style={operatorWrapStyle ?? {}}
       >
-        <li>
+        <div className={classNames(`${selectorPrefix}-operators-header`)}>
           <i onClick={() => hideOperators()}>
             <CloseCircleOutlined rev={null} />
           </i>
-        </li>
+        </div>
 
-        {operatorsConfig.map(({ label, value, type }) => (
-          <li
-            key={value}
-            onClick={() => {
-              onOperatorsClick(value, type);
-            }}
-          >
-            {label}
-          </li>
-        ))}
-      </ul>
+        <ul className={classNames(`${selectorPrefix}-operators-main`)}>
+          {operatorsConfig.map(({ label, value, type }) => (
+            <li
+              key={value}
+              onClick={() => {
+                onOperatorsClick(value, type);
+              }}
+              dangerouslySetInnerHTML={{ __html: label }}
+            />
+          ))}
+        </ul>
+      </div>
 
-      <ul
+      {/*快速补全*/}
+      <div
         ref={quickTipRef}
         className={classNames(`${selectorPrefix}-quick-tips`, quickTipWrapClassName ?? '', {
           [`${selectorPrefix}-quick-tips--show`]: quickTipShow,
         })}
         style={quickTipWrapStyle ?? {}}
       >
-        <li>
+        <div className={classNames(`${selectorPrefix}-quick-tips-header`)}>
           <i onClick={() => hideQuickTip()}>
             <CloseCircleOutlined rev={null} />
           </i>
-        </li>
+        </div>
 
         {!(quickTipDataSource || []).length && (
-          <li>
+          <div>
             <Empty />
-          </li>
+          </div>
         )}
 
-        {!!(quickTipDataSource || []).length &&
-          (quickTipDataSource || []).map((t, _index) => (
-            <li key={t.value} onClick={(e) => onQuickTipClick(e, t)}>
-              {t.label}
-            </li>
-          ))}
-      </ul>
+        <ul className={classNames(`${selectorPrefix}-quick-tips-main`)}>
+          {!!(quickTipDataSource || []).length &&
+            (quickTipDataSource || []).map((t, _index) => (
+              <li key={t.value} onClick={(e) => onQuickTipClick(e, t)}>
+                {t.label}
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 };
