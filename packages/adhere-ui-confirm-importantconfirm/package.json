@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-confirm-importantconfirm",
-  "version": "2.10.0",
+  "version": "2.10.1",
   "description": "重要操作确认提示",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,9 +28,9 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-messagedialog": "^2.10.0",
-    "@baifendian/adhere-util-intl": "^2.10.0",
-    "@baifendian/adhere-util-resource": "^2.10.0",
+    "@baifendian/adhere-ui-messagedialog": "^2.10.1",
+    "@baifendian/adhere-util-intl": "^2.10.1",
+    "@baifendian/adhere-util-resource": "^2.10.1",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",
