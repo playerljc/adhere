@@ -501,8 +501,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         return;
       }
 
-      const res = this.fetchData().then(() => {
-        const data = this.getData();
+      const res = this.fetchData().then((_res) => {
+        const data = _res?.data?.[this.getDataKey()] || [];
 
         if (data.length) {
           resolve(res);
