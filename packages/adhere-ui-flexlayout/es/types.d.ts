@@ -172,7 +172,7 @@ export interface ScrollLayoutProps {
     children?: any;
 }
 export interface ScrollLayoutContextType {
-    getEl: () => HTMLElement | null;
+    getEl: () => HTMLElement | null | undefined;
 }
 export interface getGridStyleParams {
     gutter?: number | number[];

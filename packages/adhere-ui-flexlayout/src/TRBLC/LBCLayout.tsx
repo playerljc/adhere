@@ -42,7 +42,7 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -55,7 +55,7 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -68,7 +68,7 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -77,7 +77,7 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-lbc-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-lbc-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>

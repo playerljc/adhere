@@ -183,7 +183,7 @@ export interface ScrollLayoutProps {
 }
 
 export interface ScrollLayoutContextType {
-  getEl: () => HTMLElement | null;
+  getEl: () => HTMLElement | null | undefined;
 }
 
 export interface getGridStyleParams {

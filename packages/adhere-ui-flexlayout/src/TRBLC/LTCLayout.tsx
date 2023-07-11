@@ -44,7 +44,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -57,7 +57,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -70,7 +70,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -79,7 +79,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-ltc-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-ltc-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>

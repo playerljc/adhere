@@ -38,7 +38,7 @@ const LCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -47,7 +47,7 @@ const LCLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-lc-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>

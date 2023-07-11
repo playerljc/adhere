@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React, {
   FC,
-  createContext,
-  forwardRef, // memo,
+  createContext, // forwardRef,
+  // memo,
   useContext,
   useRef,
 } from 'react';
@@ -36,7 +36,7 @@ export const useScrollLayout = () => {
 const ScrollLayout: FC<ScrollLayoutProps> = (props) => {
   const { children, className, style, scrollY, ...attrs } = props;
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <ScrollLayoutContext.Provider
@@ -47,7 +47,7 @@ const ScrollLayout: FC<ScrollLayoutProps> = (props) => {
       <div
         ref={wrapRef}
         {...attrs}
-        className={classNames(selectorPrefix, className)}
+        className={classNames(selectorPrefix, className ?? '')}
         style={{ overflowY: scrollY ? 'auto' : 'hidden', ...(style ?? {}) }}
       >
         {children}

@@ -8,7 +8,7 @@ export declare const ScrollLayoutContext: React.Context<ScrollLayoutContextType>
  * useScrollLayout
  */
 export declare const useScrollLayout: () => {
-    getEl: () => HTMLElement | null;
+    getEl: () => HTMLElement | null | undefined;
 };
 /**
  * ScrollLayout
