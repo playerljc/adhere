@@ -419,6 +419,8 @@ abstract class SearchTable<
     // @ts-ignore
     this.setState(
       {
+        page: pagination.current,
+        limit: pagination.pageSize,
         [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
         [this.getOrderProp()]: sorter.order /* || this.getOrderPropValue()*/,
       },

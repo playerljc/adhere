@@ -144,19 +144,19 @@ abstract class Search<
    */
   getPagination() {
     return {
-      onChange: (page, limit) => {
-        // @ts-ignore
-        this.setState(
-          {
-            page,
-            limit,
-          },
-          () => {
-            // @ts-ignore
-            this.fetchData();
-          },
-        );
-      },
+      // onChange: (page, limit) => {
+      //   // @ts-ignore
+      //   this.setState(
+      //     {
+      //       page,
+      //       limit,
+      //     },
+      //     () => {
+      //       // @ts-ignore
+      //       this.fetchData();
+      //     },
+      //   );
+      // },
       // onShowSizeChange: (page, limit) => {
       //   // @ts-ignore
       //   this.setState(

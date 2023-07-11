@@ -112,7 +112,6 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @return {TablePaginationConfig}
      */
     getPagination(): {
-        onChange: (page: any, limit: any) => void;
         showTotal: (total: any) => string;
         total: number;
         current: any;
