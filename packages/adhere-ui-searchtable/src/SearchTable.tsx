@@ -416,6 +416,9 @@ abstract class SearchTable<
    * @param {any} sorter
    */
   onTableChange = (pagination, filters, sorter) => {
+    const prePage = this.state.page;
+    const preLimit = this.state.limit;
+
     // @ts-ignore
     this.setState(
       {
@@ -427,9 +430,13 @@ abstract class SearchTable<
       () => {
         const { order } = sorter;
 
-        if (!order) return;
-        // @ts-ignore
-        this.fetchData();
+        if (!order) {
+          if (this.state.page !== prePage || this.state.limit !== preLimit) {
+            this.fetchData();
+          }
+        } else {
+          this.fetchData();
+        }
 
         this.onSubTableChange(pagination, filters, sorter);
       },
