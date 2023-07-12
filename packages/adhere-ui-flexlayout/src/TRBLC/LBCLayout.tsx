@@ -23,7 +23,9 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   lProps,
+  lSplit,
   bProps,
+  bSplit,
   cProps,
   ...props
 }) => {
@@ -82,6 +84,8 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
 
+        {lSplit}
+
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
             {...(autoInnerProps ?? {})}
@@ -89,6 +93,9 @@ const LBCLayout: FC<TBLRCLayoutProps> = ({
             direction="vertical"
           >
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+            {bSplit}
+
             <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>

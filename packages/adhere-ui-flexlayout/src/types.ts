@@ -1,6 +1,8 @@
 import { FC, NamedExoticComponent, ReactNode } from 'react';
 import type { CSSProperties, Context, ReactElement } from 'react';
 
+import type { SplitLayoutProps } from '@baifendian/adhere-ui-splitlayout/es/types';
+
 export interface ContextType {
   direction: 'vertical' | 'horizontal';
   gutter?: number | number[];
@@ -204,11 +206,26 @@ export interface CenterProps extends AutoProps {
 export interface TBLRCLayoutProps extends FlexLayoutProps {
   wrapClassName?: string;
   wrapStyle?: CSSProperties;
+
+  // top
   tProps?: TBLRProps;
+  tSplit?: ReactNode;
+
+  // bottom
   bProps?: TBLRProps;
+  bSplit?: ReactNode;
+
+  // left
   lProps?: TBLRProps;
+  lSplit?: ReactNode;
+
+  // right
   rProps?: TBLRProps;
+  rSplit?: ReactNode;
+
+  // center
   cProps?: CenterProps;
+
   autoWrapProps?: AutoProps;
   autoInnerProps?: FlexLayoutProps;
 }

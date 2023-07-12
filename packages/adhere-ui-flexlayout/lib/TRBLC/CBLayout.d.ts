@@ -7,6 +7,7 @@ import type { TBLRCLayoutProps } from '../types';
  * @param autoWrapProps
  * @param autoInnerProps
  * @param bProps
+ * @param bSplit
  * @param cProps
  * @param props
  * @constructor

@@ -10,24 +10,21 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
  * TCLayout
- * @param wrapClassName
- * @param wrapStyle
- * @param autoWrapProps
- * @param autoInnerProps
- * @param tProps
- * @param cProps
- * @param props
  * @constructor
+ * @param _props
  */
-const TCLayout: FC<TBLRCLayoutProps> = ({
-  wrapClassName,
-  wrapStyle,
-  autoWrapProps,
-  autoInnerProps,
-  tProps,
-  cProps,
-  ...props
-}) => {
+const TCLayout: FC<TBLRCLayoutProps> = (_props) => {
+  const {
+    wrapClassName,
+    wrapStyle,
+    autoWrapProps,
+    autoInnerProps,
+    tProps,
+    tSplit,
+    cProps,
+    ...props
+  } = _props;
+
   // @ts-ignore
   const TProps = omit<TBLRProps, string>(tProps, ['render']);
   // @ts-ignore
@@ -54,6 +51,9 @@ const TCLayout: FC<TBLRCLayoutProps> = ({
         direction="vertical"
       >
         <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+
+        {tSplit}
+
         <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
       </FlexLayout>
     </div>

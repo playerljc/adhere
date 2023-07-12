@@ -1,17 +1,15 @@
-@import "~@baifendian/adhere-ui-css/lib/vars";
-
 .col {
   height: 55px;
 
   &:nth-child(odd) {
     > .inner {
-      background-color: @adhere-primary-color;
+      background-color: var(--adhere-color-primary);
     }
   }
 
   &:nth-child(even) {
     > .inner {
-      background-color: rgba(@adhere-primary-color, 0.3);
+      background-color: rgba(var(--adhere-color-primary-rgb), 0.3);
     }
   }
 

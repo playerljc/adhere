@@ -14,6 +14,7 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param autoWrapProps
  * @param autoInnerProps
  * @param bProps
+ * @param bSplit
  * @param cProps
  * @param props
  * @constructor
@@ -24,6 +25,7 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   bProps,
+  bSplit,
   cProps,
   ...props
 }) => {
@@ -53,6 +55,9 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
         direction="vertical"
       >
         <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+        {bSplit}
+
         <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>

@@ -20,6 +20,7 @@ const CRLayout: FC<TBLRCLayoutProps> = ({
   wrapClassName,
   wrapStyle,
   rProps,
+  rSplit,
   cProps,
   autoWrapProps,
   autoInnerProps,
@@ -51,6 +52,9 @@ const CRLayout: FC<TBLRCLayoutProps> = ({
         direction="horizontal"
       >
         <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+        {rSplit}
+
         <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>

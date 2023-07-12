@@ -22,7 +22,9 @@ const CBRLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   rProps,
+  rSplit,
   bProps,
+  bSplit,
   cProps,
   ...props
 }) => {
@@ -86,9 +88,14 @@ const CBRLayout: FC<TBLRCLayoutProps> = ({
             direction="vertical"
           >
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+            {bSplit}
+
             <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>
+
+        {rSplit}
 
         <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
       </FlexLayout>

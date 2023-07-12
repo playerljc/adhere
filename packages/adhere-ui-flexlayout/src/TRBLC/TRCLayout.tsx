@@ -12,9 +12,11 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param wrapClassName
  * @param wrapStyle
  * @param tProps
+ * @param tSplit
  * @param rProps
  * @param cProps
  * @param autoWrapProps
+ * @param rSplit
  * @param autoInnerProps
  * @param props
  * @constructor
@@ -25,7 +27,9 @@ const TRCLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   tProps,
+  tSplit,
   rProps,
+  rSplit,
   cProps,
   ...props
 }) => {
@@ -85,6 +89,8 @@ const TRCLayout: FC<TBLRCLayoutProps> = ({
       >
         <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
 
+        {tSplit}
+
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
             {...(autoInnerProps ?? {})}
@@ -92,6 +98,9 @@ const TRCLayout: FC<TBLRCLayoutProps> = ({
             direction="horizontal"
           >
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+            {rSplit}
+
             <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>

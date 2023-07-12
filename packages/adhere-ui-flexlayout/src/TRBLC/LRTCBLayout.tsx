@@ -12,12 +12,16 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param wrapClassName
  * @param wrapStyle
  * @param tProps
+ * @param tSplit
  * @param lProps
+ * @param lSplit
  * @param rProps
  * @param cProps
  * @param bProps
  * @param autoWrapProps
+ * @param rSplit
  * @param autoInnerProps
+ * @param bSplit
  * @param props
  * @constructor
  */
@@ -26,11 +30,15 @@ const LRTCBLayout: FC<TBLRCLayoutProps> = ({
   wrapStyle,
   autoWrapProps,
   autoInnerProps,
-  tProps,
   lProps,
+  lSplit,
   rProps,
+  rSplit,
+  tProps,
+  tSplit,
   cProps,
   bProps,
+  bSplit,
   ...props
 }) => {
   // @ts-ignore
@@ -92,6 +100,8 @@ const LRTCBLayout: FC<TBLRCLayoutProps> = ({
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
 
+        {lSplit}
+
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
             {...(autoInnerProps ?? {})}
@@ -99,10 +109,18 @@ const LRTCBLayout: FC<TBLRCLayoutProps> = ({
             direction="vertical"
           >
             <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+
+            {tSplit}
+
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+            {bSplit}
+
             <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>
+
+        {rSplit}
 
         <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
       </FlexLayout>
