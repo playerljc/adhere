@@ -3,7 +3,8 @@ import React, { FC, memo, useContext, useLayoutEffect, useRef } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
-import { SplitLayoutProps } from './types';
+import * as TRBLC from './TRBLC';
+import { SplitLayoutFunction, SplitLayoutProps } from './types';
 
 const FlexContext = FlexLayout.Context;
 const flexLayoutSelectorPrefix = FlexLayout.selectorPrefix;
@@ -40,16 +41,18 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
     onCanDrag,
     onDragStarted,
     onDragFinished,
-    onOut,
+    // onOut,
     onChange,
   } = props;
 
   const { direction } = useContext(FlexContext);
 
-  const el = useRef<HTMLDivElement>(null);
-  const fixedEl = useRef<HTMLElement>();
-  const autoEl = useRef<HTMLElement>();
-  const containerEl = useRef<HTMLElement>();
+  console.log('direction=====', direction);
+
+  const el = useRef<HTMLDivElement | null>(null);
+  const fixedEl = useRef<HTMLElement | null>(null);
+  const autoEl = useRef<HTMLElement | null>(null);
+  const containerEl = useRef<HTMLElement | null>();
   const situation = useRef(
     new Map([
       [`${flexLayoutSelectorPrefix}-fixed_${flexLayoutSelectorPrefix}-auto`, true],
@@ -294,103 +297,103 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
   }
 
   function initEvents() {
-    el.current?.removeEventListener('mouseenter', onMouseenter);
+    el.current?.removeEventListener?.('mouseenter', onMouseenter);
 
-    el.current?.addEventListener('mouseenter', onMouseenter);
+    el.current?.addEventListener?.('mouseenter', onMouseenter);
 
-    el.current?.removeEventListener('mousedown', onMousedown);
+    el.current?.removeEventListener?.('mousedown', onMousedown);
 
-    el.current?.addEventListener('mousedown', onMousedown);
+    el.current?.addEventListener?.('mousedown', onMousedown);
 
-    fixedEl.current?.removeEventListener('mousemove', onMousemove);
+    fixedEl.current?.removeEventListener?.('mousemove', onMousemove);
 
-    el.current?.removeEventListener('mousemove', onMousemove);
+    el.current?.removeEventListener?.('mousemove', onMousemove);
 
-    autoEl.current?.removeEventListener('mousemove', onMousemove);
+    autoEl.current?.removeEventListener?.('mousemove', onMousemove);
 
-    fixedEl.current?.addEventListener('mousemove', onMousemove);
+    fixedEl.current?.addEventListener?.('mousemove', onMousemove);
 
-    el.current?.addEventListener('mousemove', onMousemove);
+    el.current?.addEventListener?.('mousemove', onMousemove);
 
-    autoEl.current?.addEventListener('mousemove', onMousemove);
+    autoEl.current?.addEventListener?.('mousemove', onMousemove);
 
-    fixedEl.current?.removeEventListener('mouseout', onMouseout);
+    fixedEl.current?.removeEventListener?.('mouseout', onMouseout);
 
-    el.current?.removeEventListener('mouseout', onMouseout);
+    el.current?.removeEventListener?.('mouseout', onMouseout);
 
-    autoEl.current?.removeEventListener('mouseout', onMouseout);
+    autoEl.current?.removeEventListener?.('mouseout', onMouseout);
 
-    fixedEl.current?.addEventListener('mouseout', onMouseout);
+    fixedEl.current?.addEventListener?.('mouseout', onMouseout);
 
-    el.current?.addEventListener('mouseout', onMouseout);
+    el.current?.addEventListener?.('mouseout', onMouseout);
 
-    autoEl.current?.addEventListener('mouseout', onMouseout);
+    autoEl.current?.addEventListener?.('mouseout', onMouseout);
 
-    fixedEl.current?.removeEventListener('mouseup', onMouseup);
+    fixedEl.current?.removeEventListener?.('mouseup', onMouseup);
 
-    el.current?.removeEventListener('mouseup', onMouseup);
+    el.current?.removeEventListener?.('mouseup', onMouseup);
 
-    autoEl.current?.removeEventListener('mouseup', onMouseup);
+    autoEl.current?.removeEventListener?.('mouseup', onMouseup);
 
-    fixedEl.current?.addEventListener('mouseup', onMouseup);
+    fixedEl.current?.addEventListener?.('mouseup', onMouseup);
 
-    el.current?.addEventListener('mouseup', onMouseup);
+    el.current?.addEventListener?.('mouseup', onMouseup);
 
-    autoEl.current?.addEventListener('mouseup', onMouseup);
+    autoEl.current?.addEventListener?.('mouseup', onMouseup);
 
-    containerEl.current?.removeEventListener('mouseleave', onMouseleave);
+    containerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
 
-    containerEl.current?.addEventListener('mouseleave', onMouseleave);
+    containerEl.current?.addEventListener?.('mouseleave', onMouseleave);
   }
 
   function removeEvents() {
-    el.current?.removeEventListener('mouseenter', onMouseenter);
+    el.current?.removeEventListener?.('mouseenter', onMouseenter);
 
-    el.current?.removeEventListener('mouseenter', onMouseenter);
+    el.current?.removeEventListener?.('mouseenter', onMouseenter);
 
-    el.current?.removeEventListener('mousedown', onMousedown);
+    el.current?.removeEventListener?.('mousedown', onMousedown);
 
-    el.current?.removeEventListener('mousedown', onMousedown);
+    el.current?.removeEventListener?.('mousedown', onMousedown);
 
-    fixedEl.current?.removeEventListener('mousemove', onMousemove);
+    fixedEl.current?.removeEventListener?.('mousemove', onMousemove);
 
-    el.current?.removeEventListener('mousemove', onMousemove);
+    el.current?.removeEventListener?.('mousemove', onMousemove);
 
-    autoEl.current?.removeEventListener('mousemove', onMousemove);
+    autoEl.current?.removeEventListener?.('mousemove', onMousemove);
 
-    fixedEl.current?.removeEventListener('mousemove', onMousemove);
+    fixedEl.current?.removeEventListener?.('mousemove', onMousemove);
 
-    el.current?.removeEventListener('mousemove', onMousemove);
+    el.current?.removeEventListener?.('mousemove', onMousemove);
 
-    autoEl.current?.removeEventListener('mousemove', onMousemove);
+    autoEl.current?.removeEventListener?.('mousemove', onMousemove);
 
-    fixedEl.current?.removeEventListener('mouseout', onMouseout);
+    fixedEl.current?.removeEventListener?.('mouseout', onMouseout);
 
-    el.current?.removeEventListener('mouseout', onMouseout);
+    el.current?.removeEventListener?.('mouseout', onMouseout);
 
-    autoEl.current?.removeEventListener('mouseout', onMouseout);
+    autoEl.current?.removeEventListener?.('mouseout', onMouseout);
 
-    fixedEl.current?.removeEventListener('mouseout', onMouseout);
+    fixedEl.current?.removeEventListener?.('mouseout', onMouseout);
 
-    el.current?.removeEventListener('mouseout', onMouseout);
+    el.current?.removeEventListener?.('mouseout', onMouseout);
 
-    autoEl.current?.removeEventListener('mouseout', onMouseout);
+    autoEl.current?.removeEventListener?.('mouseout', onMouseout);
 
-    fixedEl.current?.removeEventListener('mouseup', onMouseup);
+    fixedEl.current?.removeEventListener?.('mouseup', onMouseup);
 
-    el.current?.removeEventListener('mouseup', onMouseup);
+    el.current?.removeEventListener?.('mouseup', onMouseup);
 
-    autoEl.current?.removeEventListener('mouseup', onMouseup);
+    autoEl.current?.removeEventListener?.('mouseup', onMouseup);
 
-    fixedEl.current?.removeEventListener('mouseup', onMouseup);
+    fixedEl.current?.removeEventListener?.('mouseup', onMouseup);
 
-    el.current?.removeEventListener('mouseup', onMouseup);
+    el.current?.removeEventListener?.('mouseup', onMouseup);
 
-    autoEl.current?.removeEventListener('mouseup', onMouseup);
+    autoEl.current?.removeEventListener?.('mouseup', onMouseup);
 
-    containerEl.current?.removeEventListener('mouseleave', onMouseleave);
+    containerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
 
-    containerEl.current?.removeEventListener('mouseleave', onMouseleave);
+    containerEl.current?.removeEventListener?.('mouseleave', onMouseleave);
   }
 
   useLayoutEffect(() => {
@@ -441,4 +444,9 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
   );
 };
 
-export default memo(SplitLayout);
+// @ts-ignore
+const SplitLayoutWrap: SplitLayoutFunction<SplitLayoutProps> = memo(SplitLayout);
+
+SplitLayoutWrap.TRBLC = TRBLC;
+
+export default SplitLayoutWrap;
