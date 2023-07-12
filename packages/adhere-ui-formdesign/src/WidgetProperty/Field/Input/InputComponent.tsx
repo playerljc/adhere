@@ -6,11 +6,16 @@ import { WidgetPropertyFieldProps } from '../../../types/WidgetPropertyFieldType
 
 /**
  * InputComponent
- * @param props
  * @constructor
  */
-const InputComponent: FC<WidgetPropertyFieldProps<InputProps, string>> = ({ props }) => {
-  return <Input {...props} />;
+const InputComponent: FC<WidgetPropertyFieldProps<InputProps, string>> = (props) => {
+  const {
+    value,
+    onChange,
+    props: { value: defaultValue, ...inputProps },
+  } = props;
+
+  return <Input defaultValue={defaultValue} value={value} onChange={onChange} {...inputProps} />;
 };
 
 export default InputComponent;

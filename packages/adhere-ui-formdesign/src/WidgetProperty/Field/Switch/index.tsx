@@ -1,6 +1,7 @@
 import { Form, SwitchProps } from 'antd';
 import React, { ReactNode } from 'react';
 
+import { selectorPrefix } from '../../../FormDesign/FormDesign';
 import WidgetPropertyField from '../WidgetPropertyField';
 import SwitchComponent from './SwitchComponent';
 
@@ -20,19 +21,21 @@ class SwitchPropertyField extends WidgetPropertyField<SwitchProps> {
     };
 
     return (
-      <Form.Item
-        key={key}
-        name={key}
-        label={name}
-        valuePropName="checked"
-        rules={[
-          {
-            required,
-          },
-        ]}
-      >
-        <SwitchComponent {...args} />
-      </Form.Item>
+      <li className={`${selectorPrefix}-widget-property-field`}>
+        <Form.Item
+          key={key}
+          name={key}
+          label={name}
+          valuePropName="checked"
+          rules={[
+            {
+              required,
+            },
+          ]}
+        >
+          <SwitchComponent {...args} />
+        </Form.Item>
+      </li>
     );
   }
 }

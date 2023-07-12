@@ -60,10 +60,15 @@ export interface DWidgetPropertyField<P> {
  * IWidgetPropertyField
  */
 export interface IWidgetPropertyField<P> {
+  // 唯一值
   readonly key: string;
+  // 名称
   readonly name: string;
+  // 是否必填
   readonly required: boolean;
+  // 空间类型
   readonly type: Type;
+  // 控件的props
   readonly props: P;
   render(children: ReactNode): ReactNode;
   render(): ReactNode;
@@ -83,8 +88,8 @@ export interface WidgetPropertyFieldProps<P, T> extends ComponentProps {
   required: boolean;
   type: Type;
   props: P;
-  value?: T;
-  onChange?: (value: T) => void;
+  value: T;
+  onChange: (value: any) => any;
 }
 
 /**

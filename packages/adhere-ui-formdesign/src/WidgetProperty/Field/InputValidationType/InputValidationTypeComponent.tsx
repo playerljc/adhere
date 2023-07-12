@@ -21,16 +21,21 @@ const InputValidationTypeComponent: FC<
   WidgetPropertyFieldProps<
     InputValidationTypeWidgetPropertyFieldProps,
     {
+      checked: boolean;
       type: string;
       validationMessage?: string;
     }
   >
 > = (props) => {
   const {
-    value: { checked, type, validationMessage },
-    dataSource,
+    value,
     onChange,
+    props: { value: defaultValue, dataSource },
   } = props;
+
+  const checked = value?.checked ?? defaultValue?.checked;
+  const type = value?.type ?? defaultValue?.type;
+  const validationMessage = value?.validationMessage ?? defaultValue?.validationMessage;
 
   return (
     <div>
@@ -40,10 +45,10 @@ const InputValidationTypeComponent: FC<
             <Fixed style={{ alignItems: 'center' }} fit>
               <Switch
                 checked={checked}
-                onChange={(e) => {
+                onChange={(_checked) => {
                   if (onChange) {
                     onChange({
-                      checked: e.target.checked,
+                      checked: _checked,
                       type,
                       validationMessage,
                     });

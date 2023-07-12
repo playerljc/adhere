@@ -9,7 +9,7 @@ import { WidgetPropertyFieldProps } from '../../../types/WidgetPropertyFieldType
  * @param props
  * @constructor
  */
-const DataSourceComponent: FC<WidgetPropertyFieldProps> = ({ props }) => {
+const DataSourceComponent: FC<WidgetPropertyFieldProps<any, any>> = ({ props }) => {
   return <Input {...props} />;
 };
 

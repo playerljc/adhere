@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import React from 'react';
 import type { ReactNode } from 'react';
 
+import { selectorPrefix } from '../../FormDesign/FormDesign';
 import { IWidgetPropertyField, Type } from '../../types/WidgetPropertyFieldTypes';
 
 /**
@@ -65,18 +66,20 @@ class WidgetPropertyField<P> implements IWidgetPropertyField<P> {
    */
   render(children: ReactNode): ReactNode {
     return (
-      <Form.Item
-        key={this.key}
-        name={this.key}
-        label={this.name}
-        rules={[
-          {
-            required: this.required,
-          },
-        ]}
-      >
-        {children}
-      </Form.Item>
+      <li className={`${selectorPrefix}-widget-property-field`}>
+        <Form.Item
+          key={this.key}
+          name={this.key}
+          label={this.name}
+          rules={[
+            {
+              required: this.required,
+            },
+          ]}
+        >
+          {children}
+        </Form.Item>
+      </li>
     );
   }
 }

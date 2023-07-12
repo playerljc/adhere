@@ -9,17 +9,21 @@ import {
 
 /**
  * SelectComponent
- * @param props
  * @constructor
+ * @param props
  */
-const SelectComponent: FC<WidgetPropertyFieldProps<SelectWidgetPropertyFieldProps, string>> = ({
+const SelectComponent: FC<WidgetPropertyFieldProps<SelectWidgetPropertyFieldProps, string>> = (
   props,
-}) => {
-  const { dataSource, ...selectProps } = props;
+) => {
+  const {
+    value,
+    onChange,
+    props: { value: defaultValue, dataSource, ...selectProps },
+  } = props;
 
   return (
-    <Select {...selectProps}>
-      {(dataSource || []).map(({ label, value }) => (
+    <Select defaultValue={defaultValue} value={value} onChange={onChange} {...selectProps}>
+      {(dataSource ?? []).map(({ label, value }) => (
         <Select.Option key={value} value={value}>
           {label}
         </Select.Option>
