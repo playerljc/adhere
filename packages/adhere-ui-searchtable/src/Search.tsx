@@ -1,7 +1,7 @@
 import { TablePaginationConfig, TableRowSelection } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Suspense from '@baifendian/adhere-ui-suspense';
@@ -25,6 +25,8 @@ abstract class Search<
   static propTypes: any;
   props: any;
   state: any;
+
+  protected searchFormRef: RefObject<HTMLElement> = createRef();
 
   protected constructor(props) {
     super(props);
@@ -257,6 +259,8 @@ abstract class Search<
 
             {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
               <Fixed
+                // @ts-ignore
+                ref={this.searchFormRef}
                 className={classNames({
                   [`${selectorPrefix}-search-form`]: true,
                   [`${selectorPrefix}-search-form-expand`]: expand,
