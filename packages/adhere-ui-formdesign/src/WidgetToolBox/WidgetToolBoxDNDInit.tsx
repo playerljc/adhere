@@ -7,7 +7,7 @@ import { selectorPrefix } from '../FormDesign/FormDesign';
 import { WidgetToolBoxDNDInitProps } from '../types/WidgetToolBoxDNDInitProps';
 import { DND_SOURCE_TOOL_BOX } from '../types/WidgetTypes';
 
-const selectorSuffix = `${selectorPrefix}-tool-box-inner`;
+// const selectorSuffix = `${selectorPrefix}-tool-box-inner`;
 
 /**
  * WidgetToolBoxDNDInit
@@ -26,12 +26,12 @@ const WidgetToolBoxDNDInit: FC<WidgetToolBoxDNDInitProps> = (props) => {
   }));
 
   return (
-    <div className={`${selectorSuffix}`} ref={drag}>
-      <div className={`${selectorSuffix}-media`}>
+    <div className={`${selectorPrefix}-tool-box-inner`} ref={drag}>
+      <div className={`${selectorPrefix}-tool-box-inner-media`}>
         <img src={iconPath!} alt={name!} />
       </div>
 
-      <div className={`${selectorSuffix}-main`}>
+      <div className={`${selectorPrefix}-tool-box-inner-main`}>
         <Ellipsis wrap={false}>{name!}</Ellipsis>
       </div>
     </div>

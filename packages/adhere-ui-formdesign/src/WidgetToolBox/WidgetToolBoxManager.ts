@@ -2,18 +2,21 @@ import Widget from '../Widget';
 import FlowLayoutWidget from '../Widget/FlowLayout';
 import InputWidget from '../Widget/Input';
 import LayoutWidget from '../Widget/LayoutWidget';
+import TextAreaWidget from '../Widget/TextArea';
 import { WidgetComposite } from '../types/WidgetToolBoxManagerTypes';
 import { WidgetToolBoxType } from '../types/WidgetToolBoxTypes';
 import type { GroupType } from '../types/WidgetTypes';
 import { Type, WidgetType } from '../types/WidgetTypes';
 import FlwLayoutToolBox from './FlowLayout';
 import InputToolBox from './Input';
+import TextAreaToolBox from './TextArea';
 
 // 存储所有的WidgetToolBox定义
 const widgetToolBox: Map<Type, WidgetComposite> = new Map<Type, WidgetComposite>();
 
 registerWidget(WidgetType.INPUT, 1, InputToolBox, InputWidget);
 registerWidget(WidgetType.FLOW_LAYOUT, 2, FlwLayoutToolBox, FlowLayoutWidget);
+registerWidget(WidgetType.TEXT_AREA, 3, TextAreaToolBox, TextAreaWidget);
 
 /**
  * registerWidget
