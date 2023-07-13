@@ -22,18 +22,18 @@ abstract class Widget implements IWidget {
    * @param {string} id 唯一标志
    * @param {GroupType} groupType 分组类型
    * @param {WidgetType} type Widget类型
-   * @param {WidgetProperty[]} propertys 所有属性
+   * @param {WidgetProperty[]} properties 所有属性
    */
-  constructor(id: string, groupType: GroupType, type: Type, propertys: WidgetProperty[]) {
+  constructor(id: string, groupType: GroupType, type: Type, properties: WidgetProperty[]) {
     this.id = id;
 
     this.groupType = groupType;
 
     this.type = type;
 
-    this.propertys = this.defineProperts().map((_t) => parseProperty(_t));
+    this.properties = this.defineProperts().map((_t) => parseProperty(_t));
 
-    this.setPropertys(propertys);
+    this.setProperties(properties);
   }
 
   // 唯一标识
@@ -45,12 +45,12 @@ abstract class Widget implements IWidget {
   // 小部件类型
   readonly type: Type;
 
-  // propertys(属性面板的所有属性) 默认值
-  propertys: WidgetProperty[] = [];
+  // properties(属性面板的所有属性) 默认值
+  properties: WidgetProperty[] = [];
 
   /**
    * defineProperts
-   * @description 定义缺省的propertys
+   * @description 定义缺省的properties
    * @return {Array<DWidgetProperty>}
    * @protected
    */
@@ -194,41 +194,43 @@ abstract class Widget implements IWidget {
   }
 
   /**
-   * setPropertys
-   * @description 处理公共propertys
-   * @param propertys
+   * setProperties
+   * @description 处理公共properties
+   * @param properties
    * @private
    */
-  protected setPropertys(propertys: WidgetProperty[]) {
-    propertys.forEach((_sourceProperty) => {
-      const _targetPropertyIndex = this.propertys.findIndex((_p) => _p.key === _sourceProperty.key);
+  protected setProperties(properties: WidgetProperty[]) {
+    properties.forEach((_sourceProperty) => {
+      const _targetPropertyIndex = this.properties.findIndex(
+        (_p) => _p.key === _sourceProperty.key,
+      );
 
       if (_targetPropertyIndex !== -1) {
-        this.propertys[_targetPropertyIndex] = {
-          ...this.propertys[_targetPropertyIndex],
+        this.properties[_targetPropertyIndex] = {
+          ...this.properties[_targetPropertyIndex],
           ..._sourceProperty,
         };
       } else {
-        this.propertys.push(_sourceProperty);
+        this.properties.push(_sourceProperty);
       }
     });
   }
 
   /**
-   * mergePropertys
+   * mergeProperties
    * @description 两个DWidgetProperty[]进行merge
-   * @param {DWidgetProperty[]} sourcePropertys
-   * @param {DWidgetProperty[]} targetPropertys
+   * @param {DWidgetProperty[]} sourceProperties
+   * @param {DWidgetProperty[]} targetProperties
    * @return {DWidgetProperty[]}
    * @protected
    */
-  protected mergePropertys(
-    sourcePropertys: DWidgetProperty[],
-    targetPropertys: Partial<DWidgetProperty>[],
+  protected mergeProperties(
+    sourceProperties: DWidgetProperty[],
+    targetProperties: Partial<DWidgetProperty>[],
   ): Partial<DWidgetProperty>[] {
-    const result: Partial<DWidgetProperty>[] = [...sourcePropertys];
+    const result: Partial<DWidgetProperty>[] = [...sourceProperties];
 
-    targetPropertys.forEach((_sourceProperty) => {
+    targetProperties.forEach((_sourceProperty) => {
       const _targetPropertyIndex = result.findIndex((_p) => _p.key === _sourceProperty.key);
 
       if (_targetPropertyIndex !== -1) {
@@ -253,8 +255,8 @@ abstract class Widget implements IWidget {
     return this.type;
   }
 
-  getPropertys() {
-    return this.propertys;
+  getProperties() {
+    return this.properties;
   }
 
   /**
@@ -264,12 +266,12 @@ abstract class Widget implements IWidget {
    * @return {ReactNode}
    */
   renderDesign(children: ReactNode): ReactNode {
-    const { id, groupType, type, propertys } = this;
+    const { id, groupType, type, properties } = this;
     const props = {
       id,
       groupType,
       type,
-      propertys,
+      properties,
     };
 
     return <DNDWidget {...props}>{children}</DNDWidget>;
@@ -282,30 +284,30 @@ abstract class Widget implements IWidget {
    * @return {ReactNode}
    */
   render(children: ReactNode): ReactNode {
-    const { propertys } = this;
+    const { properties } = this;
 
     // 处理className
-    const className = getPropertyValueByName(propertys, 'className');
+    const className = getPropertyValueByName(properties, 'className');
 
     // 处理style
     const style = transformInlineCSSToCSSProperties(
-      getPropertyValueByName(propertys, 'style') ?? {},
+      getPropertyValueByName(properties, 'style') ?? {},
     ) as CSSProperties;
 
     // 标题
-    const title = getPropertyValueByName(propertys, 'title');
+    const title = getPropertyValueByName(properties, 'title');
 
     // 标签换行
-    const wrapTitle = getPropertyValueByName(propertys, 'wrapTitle');
+    const wrapTitle = getPropertyValueByName(properties, 'wrapTitle');
 
     // 隐藏标签
-    const hideTitle = getPropertyValueByName(propertys, 'hideTitle');
+    const hideTitle = getPropertyValueByName(properties, 'hideTitle');
 
     // 提示说明
-    const tooltip = getPropertyValueByName(propertys, 'tooltip');
+    const tooltip = getPropertyValueByName(properties, 'tooltip');
 
     // require
-    const required = getPropertyValueByName(propertys, 'required').required;
+    const required = getPropertyValueByName(properties, 'required').required;
 
     return (
       <div

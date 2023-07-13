@@ -3,19 +3,19 @@ import { Form } from 'antd';
 import React, { memo, useContext, useEffect } from 'react';
 import type { FC } from 'react';
 
-import type { WidgetPropertysViewProps } from '../../types/WidgetPropertysViewTypes';
+import type { WidgetPropertiesViewProps } from '../../types/WidgetPropertiesViewTypes';
 import { findWidgetById } from '../../util';
 import { selectorPrefix } from '../FormDesign';
 import { FormDesignContext } from '../FormDesignProvider';
 
-export const suffix = '-widget-propertys-view';
+export const suffix = '-widget-properties-view';
 
 /**
- * WidgetPropertysView
+ * WidgetPropertiesView
  * @description 属性设置视图
  * @constructor
  */
-const WidgetPropertysView: FC<WidgetPropertysViewProps> = (props) => {
+const WidgetPropertiesView: FC<WidgetPropertiesViewProps> = (props) => {
   const [form] = Form.useForm();
 
   const { setDataSource, getWidgetActiveKey } = useContext(FormDesignContext);
@@ -26,14 +26,14 @@ const WidgetPropertysView: FC<WidgetPropertysViewProps> = (props) => {
 
   useUpdateEffect(() => {
     setValues();
-  }, [props?.widget?.propertys]);
+  }, [props?.widget?.properties]);
 
   /**
    * setValues
    * @description 设置属性表单的值
    */
   const setValues = () => {
-    const values = props?.widget?.propertys?.reduce((previousValue, currentValue) => {
+    const values = props?.widget?.properties?.reduce((previousValue, currentValue) => {
       previousValue[currentValue.key] = currentValue?.value?.props?.value;
 
       return previousValue;
@@ -53,7 +53,7 @@ const WidgetPropertysView: FC<WidgetPropertysViewProps> = (props) => {
 
       if (widget) {
         const dataIndex = Object.keys(values)[0];
-        const property = widget.propertys.find((property) => property.key === dataIndex);
+        const property = widget.properties.find((property) => property.key === dataIndex);
         if (property && property.value && property.value.props) {
           property.value.props.value = values[dataIndex];
         }
@@ -67,11 +67,11 @@ const WidgetPropertysView: FC<WidgetPropertysViewProps> = (props) => {
     <div className={`${selectorPrefix}${suffix}`}>
       <Form form={form} layout="vertical" onValuesChange={onValuesChange}>
         <ul className={`${selectorPrefix}${suffix}-inner`}>
-          {props?.widget?.propertys?.map((_property) => _property?.value?.render?.())}
+          {props?.widget?.properties?.map((_property) => _property?.value?.render?.())}
         </ul>
       </Form>
     </div>
   );
 };
 
-export default memo(WidgetPropertysView);
+export default memo(WidgetPropertiesView);

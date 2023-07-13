@@ -1,9 +1,9 @@
-公共的propertys(除了布局组件)
+公共的properties(除了布局组件)
  value(值)
  title(标题)
 
-1.每一个Widget新建的时候都会有默认的propertys
-2.每一个Widget都会有公共的propertys
+1.每一个Widget新建的时候都会有默认的properties
+2.每一个Widget都会有公共的properties
 
 ToolBox -> Layout append
 Widget -> Layout remove -> append

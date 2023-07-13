@@ -18,10 +18,10 @@ import { copyDataSource, findWidgetById, parseWidget } from '../util';
 import DesignAreaView from './DesignAreaView';
 import FooterBar from './FooterBar';
 import { FormDesignProvider } from './FormDesignProvider';
-import FormPropertysView from './FormPropertysView';
+import FormPropertiesView from './FormPropertiesView';
 import OutlineView from './OutlineView';
 import ToolBar from './ToolBar';
-import WidgetPropertysView from './WidgetPropertysView';
+import WidgetPropertiesView from './WidgetPropertiesView';
 import WidgetToolBoxView from './WidgetToolBoxView';
 
 export const selectorPrefix = 'adhere-ui-form-design';
@@ -61,7 +61,7 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
           id: v4(),
           groupType: GroupType.LAYOUT,
           type: WidgetType.FLOW_LAYOUT,
-          propertys: [
+          properties: [
             {
               key: 'name',
               name: '字段标识',
@@ -117,14 +117,14 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
 
   const wfViewItems = [
     {
-      key: 'WidgetPropertysView',
-      label: 'WidgetPropertysView',
-      children: <WidgetPropertysView widget={currentWidget} />,
+      key: 'WidgetPropertiesView',
+      label: 'WidgetPropertiesView',
+      children: <WidgetPropertiesView widget={currentWidget} />,
     },
     {
-      key: 'FormPropertysView',
-      label: 'FormPropertysView',
-      children: <FormPropertysView />,
+      key: 'FormPropertiesView',
+      label: 'FormPropertiesView',
+      children: <FormPropertiesView />,
     },
   ];
 
@@ -189,7 +189,7 @@ const FormDesign: ForwardRefRenderFunction<FormDesignRefHandle, FormDesignProps>
               <DesignAreaView dataSource={targetDataSource} />
             </div>
 
-            {/*WidgetPropertysView,FormPropertysView*/}
+            {/*WidgetPropertiesView,FormPropertiesView*/}
             <div className={classNames(`${selectorPrefix}-wf-view`, `${selectorPrefix}-fixed`)}>
               <Tabs defaultActiveKey={wfViewItems[0].key} items={wfViewItems} />
             </div>

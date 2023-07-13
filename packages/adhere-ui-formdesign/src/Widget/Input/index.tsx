@@ -23,12 +23,12 @@ class InputWidget extends Widget {
 
   /**
    * defineProperts
-   * @description 定义缺省的propertys
+   * @description 定义缺省的properties
    * @protected
    * @return {DWidget[]}
    */
   protected defineProperts() {
-    return this.mergePropertys(super.defineProperts(), [
+    return this.mergeProperties(super.defineProperts(), [
       {
         key: 'title',
         value: {
@@ -112,12 +112,12 @@ class InputWidget extends Widget {
    * @return {ReactNode}
    */
   renderDesign(): ReactNode {
-    const { id, groupType, type, propertys } = this;
+    const { id, groupType, type, properties } = this;
     const props = {
       id,
       groupType,
       type,
-      propertys,
+      properties,
     };
 
     return super.renderDesign(super.render(<InputFormItem {...props} />));
@@ -129,12 +129,12 @@ class InputWidget extends Widget {
    * @return {ReactNode}
    */
   render(): ReactNode {
-    const { id, groupType, type, propertys } = this;
+    const { id, groupType, type, properties } = this;
     const props = {
       id,
       groupType,
       type,
-      propertys,
+      properties,
     };
 
     return super.render(<InputFormItem {...props} />);

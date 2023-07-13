@@ -19,7 +19,7 @@ import {
   copyWidget as copyWidgetUtil,
   findParentLayoutWidgetById,
   findWidgetById,
-  getDefaultPropertys,
+  getDefaultProperties,
 } from '../util';
 import DropHelp from './DropHelp';
 import LayoutWidgetDNDHelp from './LayoutWidgetDNDHelp';
@@ -137,13 +137,13 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
     setDataSource((_dataSource) => {
       const dWidget = findWidgetById(id, _dataSource) as DLayoutWidget;
 
-      const defaultPropertys = getDefaultPropertys(toolbox.groupType!, toolbox.type!);
+      const defaultProperties = getDefaultProperties(toolbox.groupType!, toolbox.type!);
 
       dWidget.widgets.push({
         id: dWidgetId,
         groupType: toolbox.groupType!,
         type: toolbox.type!,
-        propertys: defaultPropertys,
+        properties: defaultProperties,
         widgets: [],
       });
 
@@ -171,13 +171,13 @@ const DNDLayoutWidget: FC<DNDLayoutWidgetProps> = (props) => {
 
       const _index = dWidget.widgets.findIndex((_w) => _w.id === widget.id);
 
-      const defaultPropertys = getDefaultPropertys(toolbox.groupType!, toolbox.type!);
+      const defaultProperties = getDefaultProperties(toolbox.groupType!, toolbox.type!);
 
       dWidget.widgets.splice(_index + 1, 0, {
         id: dWidgetId,
         groupType: toolbox.groupType!,
         type: toolbox.type!,
-        propertys: defaultPropertys,
+        properties: defaultProperties,
         widgets: [],
       });
 

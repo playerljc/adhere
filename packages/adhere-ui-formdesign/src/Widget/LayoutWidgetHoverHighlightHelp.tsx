@@ -14,7 +14,7 @@ const suffix = '-layout-widget-hover-highlight-help';
  * @constructor
  */
 const LayoutWidgetHoverHighlightHelp: FC<LayoutWidgetHoverHighlightHelpProps> = ({
-  propertys,
+  properties,
   children,
 }) => {
   const [isHover, setHover] = useState(false);
@@ -38,11 +38,11 @@ const LayoutWidgetHoverHighlightHelp: FC<LayoutWidgetHoverHighlightHelpProps> = 
       onMouseOut={onMouseOut}
     >
       <div className={`${selectorPrefix}${suffix}-title`}>
-        {getPropertyValueByName(propertys, 'title')}
+        {getPropertyValueByName(properties, 'title')}
       </div>
 
       <div className={`${selectorPrefix}${suffix}-name`}>
-        {getPropertyValueByName(propertys, 'name')}
+        {getPropertyValueByName(properties, 'name')}
       </div>
 
       {children}

@@ -44,13 +44,13 @@ const DesignAreaView: FC<DesignAreaViewProps> = ({ className, style, dataSource 
     function loop(_widgets) {
       for (let i = 0; i < _widgets.length; i++) {
         const _widget = _widgets[i];
-        const { propertys = [], widgets = [] } = _widget;
+        const { properties = [], widgets = [] } = _widget;
 
         if (_widget.groupType === GroupType.LAYOUT) {
           loop(widgets ?? []);
         } else {
-          const key = getPropertyValueByName(propertys ?? [], 'name');
-          values[key] = getPropertyValueByName(propertys ?? [], 'value');
+          const key = getPropertyValueByName(properties ?? [], 'name');
+          values[key] = getPropertyValueByName(properties ?? [], 'value');
         }
       }
     }

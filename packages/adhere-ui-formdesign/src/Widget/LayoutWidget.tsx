@@ -18,17 +18,17 @@ abstract class LayoutWidget extends Widget implements ILayoutWidget {
    * @param {string} id 唯一标识
    * @param {GroupType} groupType 分组类型
    * @param {WidgetType} type Widget类型
-   * @param {WidgetProperty[]} propertys 所有属性
+   * @param {WidgetProperty[]} properties 所有属性
    * @param {Widget[]} widgets 子容器
    */
   constructor(
     id: string,
     groupType: GroupType,
     type: Type,
-    propertys: WidgetProperty[],
+    properties: WidgetProperty[],
     widgets: Array<Widget | LayoutWidget>,
   ) {
-    super(id, groupType, type, propertys);
+    super(id, groupType, type, properties);
 
     this.widgets = widgets;
   }
@@ -47,12 +47,12 @@ abstract class LayoutWidget extends Widget implements ILayoutWidget {
    * @return {ReactNode}
    */
   renderDesign(children: ReactNode): ReactNode {
-    const { id, groupType, type, propertys, widgets } = this;
+    const { id, groupType, type, properties, widgets } = this;
     const props = {
       id,
       groupType,
       type,
-      propertys,
+      properties,
       widgets,
     };
 
@@ -66,14 +66,14 @@ abstract class LayoutWidget extends Widget implements ILayoutWidget {
    * @return {ReactNode}
    */
   render(children: ReactNode): ReactNode {
-    const { propertys } = this;
+    const { properties } = this;
 
     // 处理className
-    const className = getPropertyValueByName(propertys, 'className');
+    const className = getPropertyValueByName(properties, 'className');
 
     // 处理style
     const style = transformInlineCSSToCSSProperties(
-      getPropertyValueByName(propertys, 'style') ?? {},
+      getPropertyValueByName(properties, 'style') ?? {},
     ) as CSSProperties;
 
     return (
