@@ -225,7 +225,7 @@ declare const _default: {
         rootEl: HTMLElement;
         bodyClickHandler?: Function | undefined;
     }): Function;
-    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<void>;
+    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<string>;
     setCursorToEnd(element: HTMLElement): void;
     setCursorPositionToNode(node: Node, offset: number): void;
     setCursorPosition(element: HTMLElement, offset: number): void;

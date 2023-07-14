@@ -201,7 +201,7 @@ declare const DomUtil: {
      * @param {string} attr 属性
      * @param {string} onLoadError
      */
-    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<void>;
+    includeHTML(attr: string | undefined, onLoadError: () => string): Promise<string>;
     /**
      * setCursorToEnd
      * @description 将光标设置到内容末尾
