@@ -387,7 +387,110 @@ export default () => (
           {
             border: true,
             title: '属性',
-            data: [],
+            data: [
+              {
+                params: 'className',
+                desc: '附加样式',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'style',
+                desc: '附件Style',
+                type: 'CSSProperties',
+                defaultVal: '{}',
+              },
+              {
+                params: 'tooltip',
+                desc: '提示内容(如果没有则是children，只能是纯文本)',
+                type: 'string',
+                defaultVal: '19999',
+              },
+              {
+                params: 'wrap',
+                desc: '是否换行',
+                type: 'boolean',
+                defaultVal: 'false',
+              },
+              {
+                params: 'wrapLines',
+                desc: '显示的行数',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'tooltipMaxLength',
+                desc: 'tooltip最大字符数',
+                type: 'number',
+                defaultVal: '1024',
+              },
+              {
+                params: 'isUseNativeTooltip',
+                desc: '是否使用原生提示',
+                type: 'boolean',
+                defaultVal: 'false',
+              },
+              {
+                params: 'trigger',
+                desc: '触发的事件类型',
+                type: "'hover' | 'click' | 'focus' | ['hover', 'click', 'focus']",
+                defaultVal: '',
+              },
+              {
+                params: 'tooltipClassName',
+                desc: 'tooltip的className(isUseNativeTooltip是false生效)',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'tooltipStyle',
+                desc: 'tooltip的style(isUseNativeTooltip是false生效)',
+                type: 'CSSProperties',
+                defaultVal: '',
+              },
+              {
+                params: 'tooltipArrowClassName',
+                desc: 'tooltip的Arrow的className(isUseNativeTooltip是false生效)',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'tooltipArrowStyle',
+                desc: 'tooltip的Arrow的style(isUseNativeTooltip是false生效)',
+                type: 'CSSProperties',
+                defaultVal: '{}',
+              },
+              {
+                params: 'tooltipMore',
+                desc: '更多(tooltip长度大于tooltipMaxLength时生效)',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'tooltipClose',
+                desc: '收起更多(tooltip长度大于tooltipMaxLength时生效)',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'customTooltipOptions',
+                desc: '自定义tooltip的options',
+                type: 'Options',
+                defaultVal: '',
+              },
+              {
+                params: 'children',
+                desc: 'children',
+                type: 'ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'dangerouslySetInnerHTML',
+                desc: '同Html的dangerouslySetInnerHTML',
+                type: 'string',
+                defaultVal: '',
+              },
+            ],
           },
         ]}
       />
