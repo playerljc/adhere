@@ -180,6 +180,17 @@ abstract class Widget implements IWidget {
         },
       },
       {
+        key: 'hide',
+        name: '隐藏',
+        required: false,
+        value: {
+          type: WidgetPropertyFieldType.SWITCH,
+          props: {
+            value: false,
+          },
+        },
+      },
+      {
         key: 'tooltip',
         name: '提示说明',
         required: false,
@@ -279,7 +290,7 @@ abstract class Widget implements IWidget {
 
   /**
    * render
-   * @description 处理className、style、title布局
+   * @description 公共处理的部分 处理className、style、title布局
    * @param {ReactNode} children
    * @return {ReactNode}
    */
