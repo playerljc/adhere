@@ -22,9 +22,12 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   lProps,
+  lSplit,
   rProps,
+  rSplit,
   cProps,
   bProps,
+  bSplit,
   ...props
 }) => {
   // @ts-ignore
@@ -44,7 +47,7 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -57,7 +60,7 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -71,7 +74,7 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -80,7 +83,7 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-lcrb-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-lcrb-layout`, props?.className ?? '')}
         direction="vertical"
       >
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
@@ -90,10 +93,18 @@ const LCRBLayout: FC<TBLRCLayoutProps> = ({
             direction="horizontal"
           >
             <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+
+            {lSplit}
+
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+            {rSplit}
+
             <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>
+
+        {bSplit}
 
         <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
       </FlexLayout>

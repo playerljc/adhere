@@ -73,7 +73,10 @@ const EncryptUtil = {
     for (let i = 0; i < base64Str.length; i++) {
       words = CryptoJS.enc.Base64.parse(base64Str[i]);
       // @ts-ignore
-      result += words.toString(CryptoJS.enc.Utf8) + '\n';
+      result += words.toString(CryptoJS.enc.Utf8) /* + '\n'*/;
+      if (i !== 0) {
+        result = `\n${result}`;
+      }
     }
     return result;
   },

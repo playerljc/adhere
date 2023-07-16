@@ -8,6 +8,8 @@ import { TBLRCLayoutProps } from '../types';
  * @param tProps
  * @param cProps
  * @param autoWrapProps
+ * @param lSplit
+ * @param tSplit
  * @param autoInnerProps
  * @param props
  * @constructor

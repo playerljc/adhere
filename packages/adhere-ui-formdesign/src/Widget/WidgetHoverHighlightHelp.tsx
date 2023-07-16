@@ -16,7 +16,7 @@ const suffix = '-widget-hover-highlight-help';
  */
 const WidgetHoverHighlightHelp: FC<WidgetHoverHighlightHelpProps> = ({
   id,
-  propertys,
+  properties,
   children,
 }) => {
   const { setWidgetActiveKey } = useContext(FormDesignContext);
@@ -48,11 +48,11 @@ const WidgetHoverHighlightHelp: FC<WidgetHoverHighlightHelpProps> = ({
       onClick={onClick}
     >
       <div className={`${selectorPrefix}${suffix}-title`}>
-        {getPropertyValueByName(propertys, 'title')}
+        {getPropertyValueByName(properties, 'title')}
       </div>
 
       <div className={`${selectorPrefix}${suffix}-name`}>
-        {getPropertyValueByName(propertys, 'name')}
+        {getPropertyValueByName(properties, 'name')}
       </div>
 
       {children}

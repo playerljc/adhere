@@ -23,8 +23,10 @@ const LCBLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   lProps,
+  lSplit,
   cProps,
   bProps,
+  bSplit,
   ...props
 }) => {
   // @ts-ignore
@@ -42,7 +44,7 @@ const LCBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -55,7 +57,7 @@ const LCBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -69,7 +71,7 @@ const LCBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -78,7 +80,7 @@ const LCBLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-lcb-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-lcb-layout`, props?.className ?? '')}
         direction="vertical"
       >
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
@@ -88,9 +90,14 @@ const LCBLayout: FC<TBLRCLayoutProps> = ({
             direction="horizontal"
           >
             <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+
+            {lSplit}
+
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
           </FlexLayout>
         </Auto>
+
+        {bSplit}
 
         <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
       </FlexLayout>

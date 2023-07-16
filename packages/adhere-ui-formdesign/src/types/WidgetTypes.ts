@@ -58,7 +58,7 @@ export interface DWidget {
   id: string;
   type: Type;
   groupType: GroupType;
-  propertys: DWidgetProperty[];
+  properties: DWidgetProperty[];
 }
 
 /**
@@ -69,14 +69,14 @@ export interface IWidget {
   readonly id: string;
   readonly type: Type;
   readonly groupType: GroupType;
-  propertys: WidgetProperty[];
+  properties: WidgetProperty[];
   render(children?: ReactNode): ReactNode;
   render(): ReactNode;
   renderDesign(children: ReactNode): ReactNode;
   renderDesign(): ReactNode;
   getId(): string;
   getType(): Type;
-  getPropertys(): WidgetProperty[];
+  getProperties(): WidgetProperty[];
 }
 
 /**
@@ -100,7 +100,7 @@ export interface WidgetProps extends ComponentProps {
   id: string;
   type: Type;
   groupType: GroupType;
-  propertys: WidgetProperty[];
+  properties: WidgetProperty[];
 }
 
 export interface LayoutWidgetProps extends WidgetProps {

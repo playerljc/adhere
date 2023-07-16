@@ -1,6 +1,6 @@
 import { TableRowSelection } from 'antd/es/table/interface';
 import PropTypes from 'prop-types';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import type { SearchProps, SearchState } from './types';
 /**
@@ -13,6 +13,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
     static propTypes: any;
     props: any;
     state: any;
+    protected searchFormRef: RefObject<HTMLElement>;
     protected constructor(props: any);
     /**
      * renderSearchBefore
@@ -112,7 +113,6 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @return {TablePaginationConfig}
      */
     getPagination(): {
-        onChange: (page: any, limit: any) => void;
         showTotal: (total: any) => string;
         total: number;
         current: any;

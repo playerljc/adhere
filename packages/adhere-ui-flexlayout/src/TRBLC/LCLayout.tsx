@@ -9,22 +9,21 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
  * LCLayout
- * @param tProps
- * @param cProps
- * @param autoWrapProps
- * @param autoInnerProps
- * @param props
  * @constructor
+ * @param _props
  */
-const LCLayout: FC<TBLRCLayoutProps> = ({
-  wrapClassName,
-  wrapStyle,
-  autoWrapProps,
-  autoInnerProps,
-  lProps,
-  cProps,
-  ...props
-}) => {
+const LCLayout: FC<TBLRCLayoutProps> = (_props) => {
+  const {
+    wrapClassName,
+    wrapStyle,
+    autoWrapProps,
+    autoInnerProps,
+    lProps,
+    lSplit,
+    cProps,
+    ...props
+  } = _props;
+
   // @ts-ignore
   const LProps = omit<TBLRProps, string>(lProps, ['render']);
   // @ts-ignore
@@ -38,7 +37,7 @@ const LCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -47,10 +46,13 @@ const LCLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-lc-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+
+        {lSplit}
+
         <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
       </FlexLayout>
     </div>

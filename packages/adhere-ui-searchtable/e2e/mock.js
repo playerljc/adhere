@@ -3,7 +3,7 @@ import faker from 'faker';
 import { Util } from '@baifendian/adhere';
 
 const data = [];
-data.length = 2;
+data.length = 50;
 data.fill(0);
 
 export const oneData = {

@@ -13,9 +13,12 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param wrapStyle
  * @param lProps
  * @param tProps
+ * @param lSplit
+ * @param tSplit
  * @param bProps
  * @param cProps
  * @param autoWrapProps
+ * @param bSplit
  * @param autoInnerProps
  * @param props
  * @constructor
@@ -26,8 +29,11 @@ const LTCBLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   lProps,
+  lSplit,
   tProps,
+  tSplit,
   bProps,
+  bSplit,
   cProps,
   ...props
 }) => {
@@ -48,7 +54,7 @@ const LTCBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -61,7 +67,7 @@ const LTCBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -74,7 +80,7 @@ const LTCBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -83,10 +89,12 @@ const LTCBLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-ltcb-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-ltcb-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+
+        {lSplit}
 
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
@@ -95,7 +103,13 @@ const LTCBLayout: FC<TBLRCLayoutProps> = ({
             direction="vertical"
           >
             <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+
+            {tSplit}
+
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+            {bSplit}
+
             <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
           </FlexLayout>
         </Auto>

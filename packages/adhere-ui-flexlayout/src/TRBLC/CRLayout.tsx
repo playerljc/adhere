@@ -20,6 +20,7 @@ const CRLayout: FC<TBLRCLayoutProps> = ({
   wrapClassName,
   wrapStyle,
   rProps,
+  rSplit,
   cProps,
   autoWrapProps,
   autoInnerProps,
@@ -38,7 +39,7 @@ const CRLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -47,10 +48,13 @@ const CRLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-cr-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-cr-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+        {rSplit}
+
         <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>

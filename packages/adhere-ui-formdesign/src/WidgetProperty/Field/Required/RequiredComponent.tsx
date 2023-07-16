@@ -21,9 +21,14 @@ const RequiredComponent: FC<
   >
 > = (props) => {
   const {
-    value: { required, validationMessage },
+    value,
     onChange,
+    props: { value: defaultValue },
   } = props;
+
+  const required = value?.required ?? defaultValue?.required;
+
+  const validationMessage = value?.validationMessage ?? defaultValue?.validationMessage;
 
   return (
     <div>
@@ -31,10 +36,10 @@ const RequiredComponent: FC<
         <div>
           <Switch
             checked={required}
-            onChange={(e) => {
+            onChange={(checked) => {
               if (onChange) {
                 onChange({
-                  required: e.target.checked,
+                  required: checked,
                   validationMessage,
                 });
               }

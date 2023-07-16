@@ -33,7 +33,7 @@ export function parseWidgets(
  * @return IWidget | ILayoutWidget
  */
 export function parseWidget(widgetData: DWidget | DLayoutWidget) {
-  const { id, type, groupType, propertys } = widgetData;
+  const { id, type, groupType, properties } = widgetData;
 
   const WidgetClass = getWidgetClassByType(type);
 
@@ -42,19 +42,19 @@ export function parseWidget(widgetData: DWidget | DLayoutWidget) {
     id,
     groupType,
     type,
-    parsePropertys(propertys),
+    parseProperties(properties),
     // @ts-ignore
     parseWidgets(widgetData.widgets || []),
   );
 }
 
 /**
- * parsePropertys
- * @param {DWidgetProperty[]} propertys
+ * parseProperties
+ * @param {DWidgetProperty[]} properties
  * @return {WidgetProperty []}
  */
-export function parsePropertys(propertys: DWidgetProperty[]) {
-  return propertys.map((property) => parseProperty(property));
+export function parseProperties(properties: DWidgetProperty[]) {
+  return properties.map((property) => parseProperty(property));
 }
 
 /**
@@ -150,12 +150,12 @@ export function findParentLayoutWidgetById(
 /**
  * getPropertyValueByName
  * @description 根据name获取property的value
- * @param {DWidgetProperty[]} propertys
+ * @param {DWidgetProperty[]} properties
  * @param {string} name
  * @return {string | menubar | Array<any> | null | undefined}
  */
-export function getPropertyValueByName(propertys: DWidgetProperty[], name: string) {
-  return (propertys || []).find((propery) => propery.key === name)?.value?.props?.value;
+export function getPropertyValueByName(properties: DWidgetProperty[], name: string) {
+  return (properties || []).find((propery) => propery.key === name)?.value?.props?.value;
 }
 
 /**
@@ -179,7 +179,7 @@ export function copyWidget(sourceWidget: DWidget | DLayoutWidget): DWidget | DLa
     _widget.id = v4();
 
     // property中key为name的value也需要修改
-    const nameProperty = (_widget.propertys || []).find((_property) => _property.key === 'name');
+    const nameProperty = (_widget.properties || []).find((_property) => _property.key === 'name');
     if (nameProperty && nameProperty.value && nameProperty.value.props) {
       nameProperty.value.props.value = v4();
     }
@@ -232,47 +232,47 @@ export function transformInlineCSSToCSSProperties(inlineCSS: string): Style {
 /**
  * getDefaultFormItemProps
  * @description Form.Item的默认props
- * @param {WidgetProperty[]} propertys
+ * @param {WidgetProperty[]} properties
  * @return {{ [prop: string]: any }}
  */
-export function getDefaultFormItemProps(propertys: (DWidgetProperty | WidgetProperty)[]): {
+export function getDefaultFormItemProps(properties: (DWidgetProperty | WidgetProperty)[]): {
   [prop: string]: any;
 } {
   return {
-    name: getPropertyValueByName(propertys, 'name'),
+    name: getPropertyValueByName(properties, 'name'),
   };
 }
 
 /**
  * getDefaultFieldProps
  * @description Field的默认props
- * @param {WidgetProperty[]} propertys
+ * @param {WidgetProperty[]} properties
  * @return {{ [prop: string]: any }}
  */
-export function getDefaultFieldProps(propertys: (DWidgetProperty | WidgetProperty)[]): {
+export function getDefaultFieldProps(properties: (DWidgetProperty | WidgetProperty)[]): {
   [prop: string]: any;
 } {
   return {
-    readonly: getPropertyValueByName(propertys, 'readonly'),
-    disabled: getPropertyValueByName(propertys, 'disabled'),
+    readonly: getPropertyValueByName(properties, 'readonly'),
+    disabled: getPropertyValueByName(properties, 'disabled'),
   };
 }
 
 /**
- * getDefaultPropertys
+ * getDefaultProperties
  * @description 获取缺省的属性
  * @param {GroupType} groupType
  * @param {Type} type
  * @return {WidgetProperty[]}
  */
-export function getDefaultPropertys(groupType: GroupType, type: Type) {
+export function getDefaultProperties(groupType: GroupType, type: Type) {
   const WidgetClass = getWidgetClassByType(type);
 
   // @ts-ignore
   const Widget = new WidgetClass('', groupType, type, [], []);
 
   try {
-    return JSON.parse(JSON.stringify(Widget?.propertys || []));
+    return JSON.parse(JSON.stringify(Widget?.properties || []));
   } catch (e) {
     return [];
   }

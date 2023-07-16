@@ -8,7 +8,7 @@ import { DWidgetPropertyField } from './WidgetPropertyFieldTypes';
 export interface DWidgetProperty {
   key: string;
   name: string;
-  value: DWidgetPropertyField;
+  value: DWidgetPropertyField<any>;
   required: boolean;
 }
 

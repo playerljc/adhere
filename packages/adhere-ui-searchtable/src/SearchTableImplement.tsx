@@ -484,6 +484,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {Promise<any>}
    */
   fetchData(): Promise<any> {
+    // console.log('fetchData');
     return this.fetchDataExecute(this.getSearchParams());
   }
 
@@ -527,6 +528,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {Promise<any>}
    */
   fetchDataExecute(searchParams: object): Promise<any> {
+    // console.log('searchParams', searchParams);
+
     return this.props?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );

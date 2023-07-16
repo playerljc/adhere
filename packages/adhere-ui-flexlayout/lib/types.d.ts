@@ -172,7 +172,7 @@ export interface ScrollLayoutProps {
     children?: any;
 }
 export interface ScrollLayoutContextType {
-    getEl: () => HTMLElement | null;
+    getEl: () => HTMLElement | null | undefined;
 }
 export interface getGridStyleParams {
     gutter?: number | number[];
@@ -190,9 +190,13 @@ export interface TBLRCLayoutProps extends FlexLayoutProps {
     wrapClassName?: string;
     wrapStyle?: CSSProperties;
     tProps?: TBLRProps;
+    tSplit?: ReactNode;
     bProps?: TBLRProps;
+    bSplit?: ReactNode;
     lProps?: TBLRProps;
+    lSplit?: ReactNode;
     rProps?: TBLRProps;
+    rSplit?: ReactNode;
     cProps?: CenterProps;
     autoWrapProps?: AutoProps;
     autoInnerProps?: FlexLayoutProps;

@@ -12,9 +12,11 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param wrapClassName
  * @param wrapStyle
  * @param tProps
+ * @param tSplit
  * @param lProps
  * @param cProps
  * @param autoWrapProps
+ * @param lSplit
  * @param autoInnerProps
  * @param props
  * @constructor
@@ -25,7 +27,9 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   tProps,
+  tSplit,
   lProps,
+  lSplit,
   cProps,
   ...props
 }) => {
@@ -44,7 +48,7 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -57,7 +61,7 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -71,7 +75,7 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -80,10 +84,12 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-tlc-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-tlc-layout`, props?.className ?? '')}
         direction="vertical"
       >
         <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+
+        {tSplit}
 
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
@@ -92,6 +98,9 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
             direction="horizontal"
           >
             <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+
+            {lSplit}
+
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
           </FlexLayout>
         </Auto>

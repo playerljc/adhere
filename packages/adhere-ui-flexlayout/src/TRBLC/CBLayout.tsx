@@ -14,6 +14,7 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param autoWrapProps
  * @param autoInnerProps
  * @param bProps
+ * @param bSplit
  * @param cProps
  * @param props
  * @constructor
@@ -24,6 +25,7 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   bProps,
+  bSplit,
   cProps,
   ...props
 }) => {
@@ -40,7 +42,7 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -49,10 +51,13 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-cb-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-cb-layout`, props?.className ?? '')}
         direction="vertical"
       >
         <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+
+        {bSplit}
+
         <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
       </FlexLayout>
     </div>

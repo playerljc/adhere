@@ -1,3 +1,4 @@
+import { Card } from 'antd';
 import React from 'react';
 
 import { FlexLayout, Space, SplitLayout } from '@baifendian/adhere';
@@ -280,6 +281,1377 @@ export default () => {
     ];
   }
 
+  function TRBLCBoxPanelConfig() {
+    return [
+      {
+        id: `TC`,
+        name: `TC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TC',
+            info: 'TC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        tProps={{
+          render: () => <Card>top</Card>,
+        }}
+        cProps={{
+          render: () => <Card>center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              tProps={{
+                span: 12,
+                fit: true,
+                render: () => <Card>top</Card>,
+              }}
+              cProps={{
+                render: () => <Card>center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `CB`,
+        name: `CB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'CB',
+            info: 'CB',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.CBSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        bProps={{
+          span: 12,
+          fit: true,
+          render: () => <Card>bottom</Card>,
+        }}
+        cProps={{
+          render: () => <Card>center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.CBSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              bProps={{
+                span: 12,
+                fit: true,
+                render: () => <Card>bottom</Card>,
+              }}
+              cProps={{
+                render: () => <Card>center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TLC`,
+        name: `TLC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TLC',
+            info: 'TLC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TLCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 8,
+          render: () => <Card>Top</Card>,
+        }}
+        lProps={{
+          fit: true,
+          span: 8,
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          render: () => <Card>center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TLCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 8,
+                render: () => <Card>Top</Card>,
+              }}
+              lProps={{
+                fit: true,
+                span: 8,
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                render: () => <Card>center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TRC`,
+        name: `TRC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TRC',
+            info: 'TRC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TRCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 8,
+          render: () => <Card>Top</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 8,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TRCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 8,
+                render: () => <Card>Top</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 8,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TLRC`,
+        name: `TLRC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TLRC',
+            info: 'TLRC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TLRCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TLRCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LCB`,
+        name: `LCB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LCB',
+            info: 'LCB',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LCBSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LCBSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `CRB`,
+        name: `CRB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'CRB',
+            info: 'CRB',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.CRBSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.CRBSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LCRB`,
+        name: `LCRB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LCRB',
+            info: 'LCRB',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LCRBSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LCRBSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LC`,
+        name: `LC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LC',
+            info: 'LC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `CR`,
+        name: `CR`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'CR',
+            info: 'CR',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.CRSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.CRSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LTC`,
+        name: `LTC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LTC',
+            info: 'LTC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LTCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LTCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LBC`,
+        name: `LBC`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LBC',
+            info: 'LBC',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LBCSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LBCSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LTCB`,
+        name: `LTCB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LTCB',
+            info: 'LTCB',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LTCBSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LTCBSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TCR`,
+        name: `TCR`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TCR',
+            info: 'TCR',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TCRSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TCRSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `CBR`,
+        name: `CBR`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'CBR',
+            info: 'CBR',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.CBRSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.CBRSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TCBR`,
+        name: `TCBR`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TCBR',
+            info: 'TCBR',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TCBRSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TCBRSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TBLCR`,
+        name: `TBLCR`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TBLCR',
+            info: 'TBLCR',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.TBLCRSplitLayout
+        style={{ height: '100%' }}
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.TBLCRSplitLayout
+              style={{ height: '100%' }}
+              gutter={20}
+              autoInnerProps={{ gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LRTCB`,
+        name: `LRTCB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LRTCB',
+            info: 'LRTCB',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+      <SplitLayout.TRBLC.LRTCBSplitLayout
+        style={{ height: '100%' }}
+        gutter={50}
+        autoInnerProps={{ gutter: [0, 30] }}
+        tProps={{
+          fit: true,
+          span: 4,
+          render: () => <Card>Top</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        lProps={{
+          fit: true,
+          style: { width: '50%' },
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          render: () => <Card>Center</Card>,
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+            <SplitLayout.TRBLC.LRTCBSplitLayout
+              style={{ height: '100%' }}
+              gutter={50}
+              autoInnerProps={{ gutter: [0, 30] }}
+              tProps={{
+                fit: true,
+                span: 4,
+                render: () => <Card>Top</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              lProps={{
+                fit: true,
+                style: { width: '50%' },
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                render: () => <Card>Center</Card>,
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `TBLCRScroll`,
+        name: `TBLCR可滚动`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TBLCR可滚动',
+            info: 'TBLCR可滚动',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, background: '#ccc', padding: 20 }}>
+      <SplitLayout.TRBLC.TBLCRSplitLayout
+        gutter={20}
+        autoWrapProps={{ autoFixed: false }}
+        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          autoFixed: false,
+          render: () => (
+            <Card>
+              {Array.from({ length: 100 }).map((t) => (
+                <p>
+                  111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+                </p>
+              ))}
+            </Card>
+          ),
+        }}
+      />
+    </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, background: '#ccc', padding: 20 }}>
+            <SplitLayout.TRBLC.TBLCRSplitLayout
+              gutter={20}
+              autoWrapProps={{ autoFixed: false }}
+              autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                autoFixed: false,
+                render: () => (
+                  <Card>
+                    {Array.from({ length: 100 }).map((t) => (
+                      <p>
+                        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+                      </p>
+                    ))}
+                  </Card>
+                ),
+              }}
+            />
+          </div>
+        ),
+      },
+      {
+        id: `LRTCBScroll`,
+        name: `LRTCB可滚动`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LRTCB可滚动',
+            info: 'LRTCB可滚动',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Card } from 'antd';
+  import { SplitLayout } from '@baifendian/adhere';
+
+  export default () => (
+    <div style={{ height: 500, background: '#ccc', padding: 20 }}>
+      <SplitLayout.TRBLC.LRTCBSplitLayout
+        gutter={20}
+        autoWrapProps={{ autoFixed: false }}
+        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        tProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Top</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Right</Card>,
+        }}
+        bProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Bottom</Card>,
+        }}
+        lProps={{
+          fit: true,
+          span: 3,
+          render: () => <Card>Left</Card>,
+        }}
+        cProps={{
+          autoFixed: false,
+          render: () => (
+            <Card>
+              {Array.from({ length: 100 }).map((t) => (
+                <p>
+                  111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+                </p>
+              ))}
+            </Card>
+          ),
+        }}
+      />
+          </div>
+  )
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div style={{ height: 500, background: '#ccc', padding: 20 }}>
+            <SplitLayout.TRBLC.LRTCBSplitLayout
+              gutter={20}
+              autoWrapProps={{ autoFixed: false }}
+              autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+              tProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Top</Card>,
+              }}
+              rProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Right</Card>,
+              }}
+              bProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Bottom</Card>,
+              }}
+              lProps={{
+                fit: true,
+                span: 3,
+                render: () => <Card>Left</Card>,
+              }}
+              cProps={{
+                autoFixed: false,
+                render: () => (
+                  <Card>
+                    {Array.from({ length: 100 }).map((t) => (
+                      <p>
+                        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+                      </p>
+                    ))}
+                  </Card>
+                ),
+              }}
+            />
+          </div>
+        ),
+      },
+    ];
+  }
+
   return (
     <PlayGroundPage>
       <Section title="SplitLayout">
@@ -288,6 +1660,12 @@ export default () => {
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />
+
+      <CodeBoxSection
+        title="TRBLCSplit布局-代码演示"
+        columnCount={1}
+        config={TRBLCBoxPanelConfig()}
+      />
 
       <PropsSection
         title="Props"

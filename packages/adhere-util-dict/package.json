@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-dict",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "description": "字典",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,8 +29,8 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-suspense": "^2.10.1",
-    "@baifendian/adhere-util": "^2.10.1",
+    "@baifendian/adhere-ui-suspense": "^2.10.2",
+    "@baifendian/adhere-util": "^2.10.2",
     "ahooks": "^3.7.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -44,5 +44,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bf3903b6ea62b4bf5ac7dcf907cf76d0e47fe532"
+  "gitHead": "60cc2100010e6e8d5fc53eb5b5ed013bcffba3d7"
 }

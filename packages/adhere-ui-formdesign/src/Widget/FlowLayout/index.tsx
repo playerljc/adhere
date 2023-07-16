@@ -20,12 +20,12 @@ class FlowLayoutWidget extends LayoutWidget {
 
   /**
    * defineProperts
-   * @description 定义缺省的propertys
+   * @description 定义缺省的properties
    * @protected
    * @return {DLayoutWIdget[]}
    */
   protected defineProperts() {
-    return this.mergePropertys(super.defineProperts(), [
+    return this.mergeProperties(super.defineProperts(), [
       {
         key: 'title',
         value: {
@@ -44,12 +44,12 @@ class FlowLayoutWidget extends LayoutWidget {
    * @return {ReactNode}
    */
   renderDesign(): ReactNode {
-    const { id, type, groupType, propertys, widgets } = this;
+    const { id, type, groupType, properties, widgets } = this;
     const props = {
       id,
       type,
       groupType,
-      propertys,
+      properties,
       widgets,
     };
 
@@ -57,12 +57,12 @@ class FlowLayoutWidget extends LayoutWidget {
   }
 
   render(): ReactNode {
-    const { id, type, groupType, propertys, widgets } = this;
+    const { id, type, groupType, properties, widgets } = this;
     const props = {
       id,
       type,
       groupType,
-      propertys,
+      properties,
       widgets,
     };
 

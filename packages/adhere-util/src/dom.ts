@@ -522,22 +522,22 @@ const DomUtil = {
    * @param {string} onLoadError
    */
   includeHTML(attr: string = 'w3-include-html', onLoadError: () => string) {
-    return new Promise<void>((contextResolve) => {
+    return new Promise<string>((contextResolve) => {
       const defaultAttr = 'w3-include-html';
 
       function load(el, file) {
-        return new Promise<void>((_resolve, _reject) => {
+        return new Promise<string>((_resolve, _reject) => {
           const xhr = new XMLHttpRequest();
 
           xhr.onreadystatechange = function () {
             if (this.readyState == 4) {
               if (this.status == 200) {
                 el.innerHTML = this.responseText;
-                _resolve();
+                _resolve('');
               }
               if (this.status == 404) {
                 el.innerHTML = onLoadError?.() ?? 'Page not found.';
-                _reject();
+                _reject('');
               }
               el.removeAttribute(attr ?? defaultAttr);
             }
@@ -551,7 +551,7 @@ const DomUtil = {
         const allEls = document.querySelectorAll(`[${attr ?? defaultAttr}]`);
 
         if (!allEls.length) {
-          contextResolve();
+          contextResolve('');
           return;
         }
 

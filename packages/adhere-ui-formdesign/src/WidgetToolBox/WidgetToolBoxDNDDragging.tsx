@@ -7,6 +7,12 @@ import { WidgetToolBoxDNDDraggingProps } from '../types/WidgetToolBoxDNDDragging
 
 const selectorSuffix = `${selectorPrefix}-tool-box-inner`;
 
+/**
+ * WidgetToolBoxDNDDragging
+ * @param name
+ * @param iconPath
+ * @constructor
+ */
 const WidgetToolBoxDNDDragging: FC<WidgetToolBoxDNDDraggingProps> = ({ name, iconPath }) => {
   return (
     <div className={`${selectorSuffix}`}>

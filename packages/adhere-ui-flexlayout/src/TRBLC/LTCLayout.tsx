@@ -15,6 +15,8 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param tProps
  * @param cProps
  * @param autoWrapProps
+ * @param lSplit
+ * @param tSplit
  * @param autoInnerProps
  * @param props
  * @constructor
@@ -25,7 +27,9 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
   autoWrapProps,
   autoInnerProps,
   lProps,
+  lSplit,
   tProps,
+  tSplit,
   cProps,
   ...props
 }) => {
@@ -44,7 +48,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-no-autofix`]:
             cProps && 'autoFixed' in cProps && !cProps.autoFixed,
         },
-        wrapClassName,
+        wrapClassName ?? '',
       ),
     [cProps],
   );
@@ -57,7 +61,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-no-autofix`]:
             autoWrapProps && 'autoFixed' in autoWrapProps && !autoWrapProps.autoFixed,
         },
-        autoWrapProps?.className,
+        autoWrapProps?.className ?? '',
       ),
     [autoWrapProps],
   );
@@ -70,7 +74,7 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
           [`${selectorPrefix}-trblc-auto-inner-no-autofix`]:
             autoInnerProps && 'autoFixed' in autoInnerProps && !autoInnerProps.autoFixed,
         },
-        autoInnerProps?.className,
+        autoInnerProps?.className ?? '',
       ),
     [autoInnerProps],
   );
@@ -79,10 +83,12 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
     <div className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-ltc-layout`, props?.className)}
+        className={classNames(`${selectorPrefix}-ltc-layout`, props?.className ?? '')}
         direction="horizontal"
       >
         <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+
+        {lSplit}
 
         <Auto {...(autoWrapProps ?? {})} fit={false} className={autoWrapClassList}>
           <FlexLayout
@@ -91,6 +97,9 @@ const LTCLayout: FC<TBLRCLayoutProps> = ({
             direction="vertical"
           >
             <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+
+            {tSplit}
+
             <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
           </FlexLayout>
         </Auto>

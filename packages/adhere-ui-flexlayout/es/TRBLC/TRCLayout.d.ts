@@ -5,9 +5,11 @@ import { TBLRCLayoutProps } from '../types';
  * @param wrapClassName
  * @param wrapStyle
  * @param tProps
+ * @param tSplit
  * @param rProps
  * @param cProps
  * @param autoWrapProps
+ * @param rSplit
  * @param autoInnerProps
  * @param props
  * @constructor

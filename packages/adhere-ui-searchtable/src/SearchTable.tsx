@@ -389,8 +389,12 @@ abstract class SearchTable<
    */
   onBodyKeyup(e) {
     if (e.keyCode === 13) {
-      // 回车键的键码是13
-      this.search();
+      if (document.activeElement) {
+        if (this.searchFormRef.current?.contains(document.activeElement)) {
+          // 回车键的键码是13
+          this.search();
+        }
+      }
     }
   }
 
@@ -416,18 +420,27 @@ abstract class SearchTable<
    * @param {any} sorter
    */
   onTableChange = (pagination, filters, sorter) => {
+    const prePage = this.state.page;
+    const preLimit = this.state.limit;
+
     // @ts-ignore
     this.setState(
       {
+        page: pagination.current,
+        limit: pagination.pageSize,
         [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
         [this.getOrderProp()]: sorter.order /* || this.getOrderPropValue()*/,
       },
       () => {
         const { order } = sorter;
 
-        if (!order) return;
-        // @ts-ignore
-        this.fetchData();
+        if (!order) {
+          if (this.state.page !== prePage || this.state.limit !== preLimit) {
+            this.fetchData();
+          }
+        } else {
+          this.fetchData();
+        }
 
         this.onSubTableChange(pagination, filters, sorter);
       },

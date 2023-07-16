@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-iframeio",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "description": "iframe的通信客户端和服务端",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,7 +29,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.10.1",
+    "@baifendian/adhere-util": "^2.10.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -46,5 +46,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bf3903b6ea62b4bf5ac7dcf907cf76d0e47fe532"
+  "gitHead": "60cc2100010e6e8d5fc53eb5b5ed013bcffba3d7"
 }
