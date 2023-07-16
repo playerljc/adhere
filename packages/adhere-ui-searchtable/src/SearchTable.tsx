@@ -391,7 +391,6 @@ abstract class SearchTable<
     if (e.keyCode === 13) {
       if (document.activeElement) {
         if (this.searchFormRef.current?.contains(document.activeElement)) {
-          console.log('search');
           // 回车键的键码是13
           this.search();
         }
