@@ -683,7 +683,7 @@ function getSendParams({ data, contentType = '', customSendJSONStringify }) {
     }
   }
 
-  return data.toString();
+  return data?.toString?.();
 }
 
 /**
