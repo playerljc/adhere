@@ -14,7 +14,7 @@ export default [
   'Claro',
   'Cancelar',
   'confirmar para excluir',
-  'realmente deseja executar este opcode',
+  'Você realmente quer fazer isso',
   'Opa! , algo deu errado',
   'Distrito de Xinbei',
   'Ocorreu um erro na solicitação',

@@ -35,7 +35,7 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
   const footerNode = useMemo(() => {
     const closeBtnNode = renderCloseBtn();
 
-    let footerNode;
+    let footerNode: any = null;
 
     if (footer) {
       if (closeBtn) {
@@ -60,12 +60,12 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
 
   return (
     <Modal
-      {...other}
-      footer={footerNode}
       centered={centered}
       wrapClassName={selectorPrefix}
       onCancel={onCancel}
       open
+      {...other}
+      footer={footerNode}
     >
       {children}
     </Modal>
