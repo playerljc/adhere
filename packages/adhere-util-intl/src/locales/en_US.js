@@ -14,7 +14,7 @@ export default [
   'Sure',
   'Cancel',
   'confirm to delete',
-  'really want to execute this opcode',
+  'do you really want to do this',
   'Oops! , something went wrong',
   'Xinbei District',
   'An error occurred in the request',
