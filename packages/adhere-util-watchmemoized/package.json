@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-watchmemoized",
-  "version": "2.10.2",
+  "version": "2.10.3",
   "description": "对值的监控和缓存",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.10.2",
+    "@baifendian/adhere-util": "^2.10.3",
     "@baifendian/adhere-util-emitter": "^2.9.0",
     "lodash": "^4.17.21"
   },

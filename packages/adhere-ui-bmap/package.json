@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-bmap",
-  "version": "2.10.2",
+  "version": "2.10.3",
   "description": "百度地图3.0的封装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,9 +31,9 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.9.0",
-    "@baifendian/adhere-util": "^2.10.2",
+    "@baifendian/adhere-util": "^2.10.3",
     "@baifendian/adhere-util-emitter": "^2.9.0",
-    "@baifendian/adhere-util-intl": "^2.10.1",
+    "@baifendian/adhere-util-intl": "^2.10.3",
     "@turf/turf": "^6.5.0",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
