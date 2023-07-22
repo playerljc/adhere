@@ -1,4 +1,5 @@
 import WangEditorCssStr from './lib/wang-editor-css';
+import WangEditorViewCssStr from './lib/wang-editor-view-css';
 
 import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
@@ -40,9 +41,9 @@ const WangEditorSandbox: ForwardRefRenderFunction<
 > = (props, ref): ReactElement => {
   const { wrapStyle, wrapClassName, wangEditorStyle, toolBarProps, editorProps } = props;
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
-  const frameRef = useRef<HTMLIFrameElement>(null);
+  const frameRef = useRef<HTMLIFrameElement | null>(null);
 
   const isMount = useRef<boolean>(false);
 
@@ -325,6 +326,7 @@ const WangEditorSandbox: ForwardRefRenderFunction<
             }
 
             ${WangEditorCssStr}
+            ${WangEditorViewCssStr}
           </style>
           <script src="${reactUrl}"><\/script>
           <script src="${reactDOMUrl}"><\/script>
@@ -335,7 +337,7 @@ const WangEditorSandbox: ForwardRefRenderFunction<
           editor: !('readOnly' in props) || !props.readOnly,
         })}">
         <body>
-          <div id="${editorId}" style="${wangEditorStyle ?? ''}"></div>
+          <div id="${editorId}" class="editor-content-view" style="${wangEditorStyle ?? ''}"></div>
         </body>
         </html>
         `,
