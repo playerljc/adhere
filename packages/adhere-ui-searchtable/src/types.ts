@@ -95,6 +95,8 @@ export interface ColumnSearchConfig {
   labelAttrs?: any;
   // TableGridLayout的Value的attrs
   valueAttrs?: any;
+  // 查询项的排序
+  sort?: boolean;
   // 权限码
   authority?: string[];
   // 渲染无权限的UI
