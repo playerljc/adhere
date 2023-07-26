@@ -5,6 +5,7 @@
 2023-07-26
 
 * $search类型加入sort字段定义
+* ProTableFactory的getGridSearchFormGroupDataByColumnConfig方法排序修改
 
 # 1.0.32
 
