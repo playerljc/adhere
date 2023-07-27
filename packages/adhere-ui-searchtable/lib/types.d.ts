@@ -19,6 +19,7 @@ export interface ColumnSearchConfig {
     props?: any;
     labelAttrs?: any;
     valueAttrs?: any;
+    sort?: boolean;
     authority?: string[];
     renderNoAuthority?: (params?: any) => ReactNode | null;
     dataIndex?: string;

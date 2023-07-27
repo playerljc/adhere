@@ -679,9 +679,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const config = searchFormGroupData?.filter?.((t) => !!t.value) || [];
 
       // 以下是包含sort字段的处理
-      const containSort = config.filter(
-        (t) => 'sort' in t && t.sort !== null && t.sort !== undefined,
-      );
+      const containSort = config
+        .filter((t) => 'sort' in t && t.sort !== null && t.sort !== undefined)
+        .sort((a, b) => (a.sort as number) - (b.sort as number));
+
       const noContainSort = config.filter(
         (t) =>
           !('sort' in t) || t.sort === null || t.sort === undefined || typeof t.sort !== 'number',

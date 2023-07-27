@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-website",
-  "version": "2.10.3",
+  "version": "2.10.4",
   "private": true,
   "description": "adhere的website",
   "homepage": "https://github.com/playerljc/adhere",
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
-    "@baifendian/adhere": "^2.10.3",
+    "@baifendian/adhere": "^2.10.4",
     "@baifendian/adhere-ui-anthoc": "^2.10.3",
     "@baifendian/adhere-ui-richtext-sandbox": "^2.10.3",
     "@ctsj/router": "^1.0.5",

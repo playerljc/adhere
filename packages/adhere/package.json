@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere",
-  "version": "2.10.3",
+  "version": "2.10.4",
   "description": "adhere",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -56,7 +56,7 @@
     "@baifendian/adhere-ui-historyback": "^2.9.0",
     "@baifendian/adhere-ui-hooks": "^2.10.1",
     "@baifendian/adhere-ui-imagelazy": "^2.9.0",
-    "@baifendian/adhere-ui-jdcategorytab": "^2.10.3",
+    "@baifendian/adhere-ui-jdcategorytab": "^2.10.4",
     "@baifendian/adhere-ui-messagedialog": "^2.10.3",
     "@baifendian/adhere-ui-notification": "^2.10.3",
     "@baifendian/adhere-ui-olmap": "^2.10.3",
@@ -70,8 +70,8 @@
     "@baifendian/adhere-ui-pullrefresh": "^2.10.3",
     "@baifendian/adhere-ui-revolving": "^2.10.1",
     "@baifendian/adhere-ui-scrollload": "^2.10.3",
-    "@baifendian/adhere-ui-searchlist": "^2.10.3",
-    "@baifendian/adhere-ui-searchtable": "^2.10.3",
+    "@baifendian/adhere-ui-searchlist": "^2.10.4",
+    "@baifendian/adhere-ui-searchtable": "^2.10.4",
     "@baifendian/adhere-ui-slidelayout": "^2.9.0",
     "@baifendian/adhere-ui-sliderscale": "^2.9.0",
     "@baifendian/adhere-ui-space": "^2.9.0",
