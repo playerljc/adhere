@@ -548,6 +548,87 @@ export default () => {
           </Button>
         ),
       },
+      {
+        id: `p9`,
+        name: `MaximizeModal`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'MaximizeModal',
+            info: '使用MaximizeModal',
+          },
+        },
+        codeText: `
+  import React from 'react';
+  import { Result, Button } from 'antd';
+  import { MessageDialog } from '@baifendian/adhere';
+
+  <Button
+    type="primary"
+    onClick={() => {
+      const {close} = MessageDialog.Modal({
+        config: {
+          title: '提示',
+        },
+        defaultCloseBtn: false,
+        children: (
+          <Result
+            title="Your operation has been executed"
+            extra={
+              <Button
+                type="primary"
+                key="console"
+                onClick={() => {
+                  // MessageDialog.close(el);
+                  close();
+                }}
+              >
+                Close
+              </Button>
+            }
+          />
+        ),
+      });
+    }}
+  >
+    Open Modal
+  </Button>
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <Button
+            type="primary"
+            onClick={() => {
+              const { close } = MessageDialog.MaximizeModal({
+                config: {
+                  title: '提示',
+                },
+                defaultCloseBtn: false,
+                children: (
+                  <Result
+                    title="Your operation has been executed"
+                    extra={
+                      <Button
+                        type="primary"
+                        key="console"
+                        onClick={() => {
+                          // MessageDialog.close(el);
+                          close();
+                        }}
+                      >
+                        Close
+                      </Button>
+                    }
+                  />
+                ),
+              });
+            }}
+          >
+            Open MaximizeModal
+          </Button>
+        ),
+      },
     ];
   }
 

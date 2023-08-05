@@ -1,11 +1,10 @@
+import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 
 import { Select } from '@baifendian/adhere-ui-anthoc';
 
-import { render } from '@/index';
-
-import { getThemeKey, getThemeKeys, setTheme as setSystemTheme } from '../../Util';
+import { changeTheme, getThemeKey, getThemeKeys } from '../../Util';
 
 import styles from './index.less';
 
@@ -20,6 +19,10 @@ const { Option } = Select;
 export default ({ className, style }) => {
   const [theme, setTheme] = useState(getThemeKey());
 
+  useUpdateEffect(() => {
+    setTheme(getThemeKey);
+  }, [getThemeKey()]);
+
   return (
     <div className={classNames(styles.Wrap, className)} style={style ?? {}}>
       <Select
@@ -27,8 +30,7 @@ export default ({ className, style }) => {
         value={theme}
         onChange={(t) => {
           setTheme(t);
-          setSystemTheme(t);
-          render();
+          changeTheme(t);
         }}
       >
         {getThemeKeys().map((key) => (

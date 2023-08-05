@@ -1,11 +1,12 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { Emitter } from '@baifendian/adhere';
 import { ColorPicker } from '@baifendian/adhere-ui-anthoc';
 
 import { render } from '@/index';
 
-import token, { getThemeValue } from '../../Util';
+import token from '../../Util';
 
 import styles from './index.less';
 
@@ -16,7 +17,19 @@ import styles from './index.less';
  * @return {JSX.Element}
  */
 export default ({ className, style }) => {
-  const [colorPrimary, setColorPrimary] = useState(getThemeValue().token['common-primary-color']);
+  const [colorPrimary, setColorPrimary] = useState(token.getCommonPrimaryColor());
+
+  useEffect(() => {
+    function onSystemThemeChange() {
+      setColorPrimary(token.getCommonPrimaryColor());
+    }
+
+    Emitter.on('SystemThemeChange', onSystemThemeChange);
+
+    return () => {
+      Emitter.remove('SystemThemeChange', onSystemThemeChange);
+    };
+  }, []);
 
   return (
     <div className={classNames(styles.Wrap, className)} style={style ?? {}}>

@@ -26,6 +26,7 @@ export default {
         icon: '',
         module: zh_CN,
         direction: 'ltr',
+        dayjsCode: 'zh',
       },
       en_US: {
         name: 'EN',
@@ -33,6 +34,7 @@ export default {
         icon: '',
         module: en_US,
         direction: 'ltr',
+        dayjsCode: 'en',
       },
       pt_PT: {
         name: 'PT',
@@ -40,6 +42,7 @@ export default {
         icon: '',
         module: pt_PT,
         direction: 'ltr',
+        dayjsCode: 'pt',
       },
       ar_EG: {
         name: 'AR',
@@ -47,6 +50,7 @@ export default {
         icon: '',
         module: ar_EG,
         direction: 'rtl',
+        dayjsCode: 'ar',
       },
     });
   },
