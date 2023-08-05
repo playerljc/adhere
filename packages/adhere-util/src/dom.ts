@@ -555,7 +555,7 @@ const DomUtil = {
           return;
         }
 
-        const tasks = [];
+        const tasks: Promise<string>[] = [];
 
         for (let i = 0; i < allEls.length; i++) {
           const el = allEls[i];
