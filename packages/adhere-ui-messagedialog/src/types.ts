@@ -1,4 +1,4 @@
-import type { ModalProps } from 'antd/lib/modal/Modal';
+import type { ModalProps } from 'antd/lib/modal/interface';
 import type { ReactElement } from 'react';
 
 import type {

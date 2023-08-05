@@ -1,2 +1,2 @@
-import MessageDialog from"./messagedialog";export default MessageDialog;
+import MessageDialog from"./MessageDialog";export default MessageDialog;
 //# sourceMappingURL=index.js.map

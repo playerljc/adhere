@@ -7,8 +7,9 @@ import ReactDOM, { Root } from 'react-dom/client';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './constent';
-import ModalDialog, { selectorPrefix } from './modal';
+import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './Constent';
+import MaximizeModalDialog from './MaximizeModal';
+import ModalDialog, { selectorPrefix } from './Modal';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 
 let antdConfigProviderProps: ConfigProviderProps = {};
@@ -259,6 +260,44 @@ const MessageDialogFactory = {
         <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
           {children}
         </ModalDialog>
+      </ConfigProvider>,
+    );
+
+    MessageDialogHandlers.set(el, root);
+
+    document.body.appendChild(el);
+
+    return {
+      el,
+      close,
+    };
+  },
+  MaximizeModal({
+    config = {},
+    children = null,
+    defaultCloseBtn = true,
+    local = DEFAULT_LOCAL,
+  }: ModalArgv) {
+    const modalConfig = Object.assign(
+      {
+        maskClosable: false,
+      },
+      config,
+    );
+
+    const el = document.createElement('div');
+
+    function close() {
+      root.unmount();
+    }
+
+    const root = ReactDOM.createRoot(el);
+
+    root.render(
+      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
+        <MaximizeModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
+          {children}
+        </MaximizeModalDialog>
       </ConfigProvider>,
     );
 
