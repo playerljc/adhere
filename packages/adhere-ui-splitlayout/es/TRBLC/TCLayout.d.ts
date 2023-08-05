@@ -1,8 +1,4 @@
-import type { FC } from 'react';
+import React from 'react';
 import { TBLRCSplitLayoutProps } from '../types';
-/**
- * TCLayout
- * @constructor
- */
-declare const TCLayout: FC<TBLRCSplitLayoutProps>;
-export default TCLayout;
+declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<TBLRCSplitLayoutProps & React.RefAttributes<any>>>;
+export default _default;

@@ -14,11 +14,11 @@ export default () => {
       {/*<SplitLayout.TRBLC.TCSplitLayout
         gutter={20}
         tProps={{
-          render: () => <Card style={{ height: '100%' }}>top</Card>,
+          children: <Card style={{ height: '100%' }}>top</Card>,
         }}
         cProps={{
           autoFixed: false,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>111111</p>
@@ -33,10 +33,10 @@ export default () => {
         bProps={{
           span: 12,
           fit: true,
-          render: () => <Card>bottom</Card>,
+          children: <Card>bottom</Card>,
         }}
         cProps={{
-          render: () => <Card>center</Card>,
+          children: <Card>center</Card>,
         }}
       />*/}
 
@@ -47,16 +47,16 @@ export default () => {
         tProps={{
           fit: true,
           span: 8,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         lProps={{
           fit: true,
           span: 8,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
           autoFixed: false,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 1 }).map((t) => (
                 <p>1</p>
@@ -72,15 +72,15 @@ export default () => {
         tProps={{
           fit: true,
           span: 8,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         rProps={{
           fit: true,
           span: 8,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>center</Card>,
+          children: <Card>center</Card>,
         }}
       />*/}
 
@@ -90,20 +90,20 @@ export default () => {
         tProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>center</Card>,
+          children: <Card>center</Card>,
         }}
       />*/}
 
@@ -113,15 +113,15 @@ export default () => {
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
       />*/}
 
@@ -131,15 +131,15 @@ export default () => {
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
       />*/}
 
@@ -149,20 +149,20 @@ export default () => {
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
       />*/}
 
@@ -171,11 +171,11 @@ export default () => {
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
           autoFixed: true,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>
@@ -192,10 +192,10 @@ export default () => {
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
       />*/}
 
@@ -205,15 +205,15 @@ export default () => {
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         tProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
       />*/}
 
@@ -223,15 +223,15 @@ export default () => {
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
       />*/}
 
@@ -242,21 +242,21 @@ export default () => {
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         tProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         cProps={{
           autoFixed: false,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>
@@ -274,15 +274,15 @@ export default () => {
         tProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
       />*/}
 
@@ -292,15 +292,15 @@ export default () => {
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          render: () => <Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
       />*/}
 
@@ -311,21 +311,21 @@ export default () => {
         tProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
           autoFixed: false,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>
@@ -344,26 +344,26 @@ export default () => {
         tProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         lProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
           autoFixed: false,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>
@@ -382,26 +382,26 @@ export default () => {
         tProps={{
           fit: true,
           span: 4,
-          render: () => <Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          render: () => <Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         lProps={{
           fit: true,
           style: { width: '50%' },
-          render: () => <Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
           autoFixed: false,
-          render: () => (
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>
