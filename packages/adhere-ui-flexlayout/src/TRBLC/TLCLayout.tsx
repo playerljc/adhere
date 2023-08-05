@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { FC, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../auto';
 import Fixed from '../fixed';
@@ -19,26 +19,30 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param lSplit
  * @param autoInnerProps
  * @param props
+ * @param ref
  * @constructor
  */
-const TLCLayout: FC<TBLRCLayoutProps> = ({
-  wrapClassName,
-  wrapStyle,
-  autoWrapProps,
-  autoInnerProps,
-  tProps,
-  tSplit,
-  lProps,
-  lSplit,
-  cProps,
-  ...props
-}) => {
+const TLCLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (
+  {
+    wrapClassName,
+    wrapStyle,
+    autoWrapProps,
+    autoInnerProps,
+    tProps,
+    tSplit,
+    lProps,
+    lSplit,
+    cProps,
+    ...props
+  },
+  ref,
+) => {
   // @ts-ignore
-  const TProps = omit<TBLRProps, string>(tProps, ['render']);
+  const TProps = omit<TBLRProps, string>(tProps, ['children']);
   // @ts-ignore
-  const LProps = omit<TBLRProps, string>(lProps, ['render']);
+  const LProps = omit<TBLRProps, string>(lProps, ['children']);
   // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['render']);
+  const CProps = omit<CenterProps, string>(cProps, ['children']);
 
   const classList = useMemo(
     () =>
@@ -81,13 +85,13 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle ?? {}}>
+    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
         className={classNames(`${selectorPrefix}-tlc-layout`, props?.className ?? '')}
         direction="vertical"
       >
-        <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+        <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
 
         {tSplit}
 
@@ -97,11 +101,11 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
             className={autoInnerClassList}
             direction="horizontal"
           >
-            <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+            <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
 
             {lSplit}
 
-            <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+            <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
           </FlexLayout>
         </Auto>
       </FlexLayout>
@@ -109,4 +113,4 @@ const TLCLayout: FC<TBLRCLayoutProps> = ({
   );
 };
 
-export default TLCLayout;
+export default memo(forwardRef<any, TBLRCLayoutProps>(TLCLayout));
