@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { AutoCompleteFormItemProps } from '../../types';
+import type { FC } from 'react';
+import type { AutoCompleteFormItemProps } from '../../types';
 /**
  * AutoCompleteFormItem
  * @param props

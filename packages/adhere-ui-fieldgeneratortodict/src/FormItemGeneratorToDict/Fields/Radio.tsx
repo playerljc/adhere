@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import React, { useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
@@ -10,26 +11,9 @@ import RadioSelectFormItem from '../RadioSelectFormItem';
 import RadioVerticalFormItem from '../RadioVerticalFormItem';
 import { deepDep } from '../util';
 
-// const FormItemComponents = {};
-
 /**
- * initRadio
- * @description 初始化Radio
+ * RadioVerticalFormItem
  */
-// export default () => {
-//   // 名称以Radio结尾的字典
-//   const radioDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('Radio'),
-//   );
-//
-//   // 名称以DynamicRadio结尾的字典
-//   const radioDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('RadioDynamic'),
-//   );
-
-// 静态的Radio
-// radioDictNames.forEach((dictName) => {
-// RadioVerticalFormItem
 setItem('Radio', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -45,7 +29,9 @@ setItem('Radio', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props })
   return <RadioVerticalFormItem {...props} dataSource={dataSource} />;
 });
 
-// RadioHorizontalFormItem
+/**
+ * RadioHorizontalFormItem
+ */
 setItem('Radio', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -61,7 +47,9 @@ setItem('Radio', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props 
   return <RadioHorizontalFormItem {...props} dataSource={dataSource} />;
 });
 
-// RadioButtonFormItem
+/**
+ * RadioButtonFormItem
+ */
 setItem('Radio', 'ButtonFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -77,7 +65,9 @@ setItem('Radio', 'ButtonFormItem', (dictName) => ({ cascadeParams, ...props }) =
   return <RadioButtonFormItem {...props} dataSource={dataSource} />;
 });
 
-// RadioSelectFormItem
+/**
+ * RadioSelectFormItem
+ */
 setItem('Radio', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -93,7 +83,9 @@ setItem('Radio', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) =
   return <RadioSelectFormItem {...props} dataSource={dataSource} />;
 });
 
-// RadioCustomFormItem
+/**
+ * RadioCustomFormItem
+ */
 setItem('Radio', 'CustomFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -108,27 +100,26 @@ setItem('Radio', 'CustomFormItem', (dictName) => ({ cascadeParams, ...props }) =
 
   return <RadioCustomFormItem {...props} dataSource={dataSource} />;
 });
-// });
 
-// 动态的Radio
-// radioDynamicDictNames.forEach((dictName) => {
-// RadioVerticalFormItem
+/**
+ * RadioDynamicVerticalFormItem
+ */
 setItem('RadioDynamic', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const [data, setData] = useState([]);
 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -140,23 +131,25 @@ setItem('RadioDynamic', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...p
   return <RadioVerticalFormItem {...props} dataSource={data} />;
 });
 
-// RadioHorizontalFormItem
+/**
+ * RadioDynamicHorizontalFormItem
+ */
 setItem('RadioDynamic', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const [data, setData] = useState([]);
 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -168,23 +161,25 @@ setItem('RadioDynamic', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ..
   return <RadioHorizontalFormItem {...props} dataSource={data} />;
 });
 
-// RadioButtonFormItem
+/**
+ * RadioDynamicButtonFormItem
+ */
 setItem('RadioDynamic', 'ButtonFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const [data, setData] = useState([]);
 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -196,23 +191,25 @@ setItem('RadioDynamic', 'ButtonFormItem', (dictName) => ({ cascadeParams, ...pro
   return <RadioButtonFormItem {...props} dataSource={data} />;
 });
 
-// RadioSelectFormItem
+/**
+ * RadioDynamicSelectFormItem
+ */
 setItem('RadioDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const [data, setData] = useState([]);
 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -224,23 +221,25 @@ setItem('RadioDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...pro
   return <RadioSelectFormItem {...props} dataSource={data} />;
 });
 
-// RadioCustomFormItem
+/**
+ * RadioDynamicCustomFormItem
+ */
 setItem('RadioDynamic', 'CustomFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const [data, setData] = useState([]);
 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -251,7 +250,3 @@ setItem('RadioDynamic', 'CustomFormItem', (dictName) => ({ cascadeParams, ...pro
 
   return <RadioCustomFormItem {...props} dataSource={data} />;
 });
-// });
-
-// return FormItemComponents;
-// };

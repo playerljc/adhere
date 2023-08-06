@@ -2,9 +2,9 @@
  * setItem
  * @param {string} itemName - 组件名称
  * @param {string} functionName - 功能名称
- * @param {(dictName: string) => any)} handler
+ * @param {(originDictName: string, dictName?: string) => any)} handler
  */
-export declare function setItem(itemName: string, functionName: string, handler: (dictName: string) => any): void;
+export declare function setItem(itemName: string, functionName: string, handler: (originDictName: string, dictName?: string) => any): void;
 /**
  * getItem
  * @param {string} itemName - 组件名

@@ -1,5 +1,7 @@
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
+import { getOriginDictNameByItemName } from './util';
+
 const { memoized } = WatchMemoized;
 
 const map = new Map<string, (dictName: string) => any>();
@@ -8,12 +10,12 @@ const map = new Map<string, (dictName: string) => any>();
  * setItem
  * @param {string} itemName - 组件名称
  * @param {string} functionName - 功能名称
- * @param {(dictName: string) => any)} handler
+ * @param {(originDictName: string, dictName?: string) => any)} handler
  */
 export function setItem(
   itemName: string,
   functionName: string,
-  handler: (dictName: string) => any,
+  handler: (originDictName: string, dictName?: string) => any,
 ) {
   map.set(`${itemName}${functionName}`, handler);
 }
@@ -33,7 +35,13 @@ export function getItem({
   functionName: string;
   dictName: string;
 }) {
-  return memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(dictName);
+  const name = getOriginDictNameByItemName(dictName, itemName);
+
+  if (!name) return null;
+  return memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(
+    name,
+    dictName,
+  );
 }
 
 /**

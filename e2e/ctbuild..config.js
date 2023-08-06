@@ -130,6 +130,15 @@ module.exports = {
         [
           'import',
           {
+            libraryName: '@baifendian/adhere-ui-anthoc',
+            libraryDirectory: 'es',
+            style: false,
+          },
+          'adhere-ui-anthoc',
+        ],
+        [
+          'import',
+          {
             libraryName: '@ant-design/icons',
             libraryDirectory: 'es/icons',
             camel2DashComponentName: false,

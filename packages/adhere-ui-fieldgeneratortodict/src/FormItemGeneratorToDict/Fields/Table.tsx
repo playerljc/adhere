@@ -14,7 +14,8 @@
    Select单选
    MulitSelect多选
 ***/
-import React, { useEffect, useRef, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import React, { useRef, useState } from 'react';
 
 import { Table } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
@@ -27,30 +28,6 @@ import TableMulitSelectFormItem from '../TableMulitSelectFormItem';
 import TableSelectFormItem from '../TableSelectFormItem';
 import { deepDep } from '../util';
 
-// const FormItemComponents = {};
-
-/**
- * initTable
- * @description 初始化Table
- */
-// export default () => {
-//   // 名称以Table结尾的字典
-//   const tableDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('Table'),
-//   );
-//
-//   // 名称以DynamicTable结尾的字典
-//   const tableDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('TableDynamic'),
-//   );
-//
-//   // 名称以TablePagination结尾的字典(肯定是动态数据)
-//   const tablePaginationDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('TablePagination'),
-//   );
-
-// 静态的Table
-// tableDictNames.forEach((dictName) => {
 /**
  * TableFormItem
  * @param cascadeParams
@@ -124,10 +101,7 @@ setItem('Table', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props
 
   return <TableMulitSelectFormItem {...props} dataSource={dataSource} />;
 });
-// });
 
-// 动态的Table
-// tableDynamicDictNames.forEach((dictName) => {
 /**
  * TableFormItem
  * @param cascadeParams
@@ -143,16 +117,16 @@ setItem('TableDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -180,16 +154,16 @@ setItem('TableDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...pro
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -217,16 +191,16 @@ setItem('TableDynamic', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, .
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -237,10 +211,7 @@ setItem('TableDynamic', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, .
 
   return <TableMulitSelectFormItem {...props} dataSource={data} />;
 });
-// });
 
-// 动态的分页Table
-// tablePaginationDictNames.forEach((dictName) => {
 /**
  * TableFormItem
  * @param props {
@@ -315,7 +286,11 @@ setItem('TablePagination', 'FormItem', (dictName) => (props) => {
       });
   }
 
-  useEffect(() => {
+  useMount(() => {
+    loadData();
+  });
+
+  useUpdateEffect(() => {
     loadData();
   }, [pagin.current, pagin.pageSize]);
 
@@ -331,7 +306,7 @@ setItem('TablePagination', 'FormItem', (dictName) => (props) => {
 });
 
 /**
- * SelectFormItem
+ * TablePaginationSelectFormItem
  * @param props {
  *    rowKey
  *    labelKey
@@ -437,11 +412,15 @@ setItem('TablePagination', 'SelectFormItem', (dictName) => (props) => {
     );
   }
 
-  useEffect(() => {
+  useMount(() => {
+    loadData();
+  });
+
+  useUpdateEffect(() => {
     loadData();
   }, [pagin.current, pagin.pageSize]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (props.value) {
       setSelectedRowKeys([props.value]);
       setSelectedRows([data.find((t) => t[props.rowKey || 'id'] === props.value)!]);
@@ -480,7 +459,7 @@ setItem('TablePagination', 'SelectFormItem', (dictName) => (props) => {
 });
 
 /**
- * MulitSelectFormItem
+ * TablePaginationMulitSelectFormItem
  * @param props {
  *    rowKey
  *    labelKey
@@ -622,7 +601,11 @@ setItem('TablePagination', 'MulitSelectFormItem', (dictName) => (props) => {
     );
   }
 
-  useEffect(() => {
+  useMount(() => {
+    loadData();
+  });
+
+  useUpdateEffect(() => {
     loadData();
   }, [pagin.current, pagin.pageSize]);
 
@@ -664,7 +647,3 @@ setItem('TablePagination', 'MulitSelectFormItem', (dictName) => (props) => {
     />
   );
 });
-// });
-
-// return FormItemComponents;
-// };

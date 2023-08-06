@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import React, { useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
@@ -12,20 +13,9 @@ import TagSelectFormItem from '../TagSelectFormItem';
 import TagVerticalFormItem from '../TagVerticalFormItem';
 import { deepDep } from '../util';
 
-// const FormItemComponents = {};
-
-// export default () => {
-//   // 名称以Tag结尾的字典
-//   const dictNames = Object.keys(Dict.handlers).filter((dictName) => dictName.endsWith('Tag'));
-//
-//   // 名称以DynamicTag结尾的字典
-//   const tagDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('TagDynamic'),
-//   );
-
-// 静态的tag
-// dictNames.forEach((dictName) => {
-// TagVerticalFormItem
+/**
+ * TagVerticalFormItem
+ */
 setItem('Tag', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -41,7 +31,9 @@ setItem('Tag', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props }) =
   return <TagVerticalFormItem {...props} dataSource={dataSource} />;
 });
 
-// TagHorizontalFormItem
+/**
+ * TagHorizontalFormItem
+ */
 setItem('Tag', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -57,7 +49,9 @@ setItem('Tag', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props })
   return <TagHorizontalFormItem {...props} dataSource={dataSource} />;
 });
 
-// TagCheckAllVerticalFormItem
+/**
+ * TagCheckAllVerticalFormItem
+ */
 setItem('Tag', 'CheckAllVerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -73,7 +67,9 @@ setItem('Tag', 'CheckAllVerticalFormItem', (dictName) => ({ cascadeParams, ...pr
   return <TagCheckAllVerticalFormItem {...props} dataSource={dataSource} />;
 });
 
-// TagCheckAllHorizontalFormItem
+/**
+ * TagCheckAllHorizontalFormItem
+ */
 setItem('Tag', 'CheckAllHorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -89,7 +85,9 @@ setItem('Tag', 'CheckAllHorizontalFormItem', (dictName) => ({ cascadeParams, ...
   return <TagCheckAllHorizontalFormItem {...props} dataSource={dataSource} />;
 });
 
-// TagSelectFormItem
+/**
+ * TagSelectFormItem
+ */
 setItem('Tag', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -105,7 +103,9 @@ setItem('Tag', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => 
   return <TagSelectFormItem {...props} dataSource={dataSource} />;
 });
 
-// TagMultiSelectFormItem
+/**
+ * TagMultiSelectFormItem
+ */
 setItem('Tag', 'MultiSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -121,7 +121,9 @@ setItem('Tag', 'MultiSelectFormItem', (dictName) => ({ cascadeParams, ...props }
   return <TagMultiSelectFormItem {...props} dataSource={dataSource} />;
 });
 
-// TagCheckAllSelectFormItem
+/**
+ * TagCheckAllSelectFormItem
+ */
 setItem('Tag', 'CheckAllSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -136,7 +138,6 @@ setItem('Tag', 'CheckAllSelectFormItem', (dictName) => ({ cascadeParams, ...prop
 
   return <TagCheckAllSelectFormItem {...props} dataSource={dataSource} />;
 });
-// });
 
 // 动态的tag
 // tagDynamicDictNames.forEach((dictName) => {
@@ -147,16 +148,16 @@ setItem('TagDynamic', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...pro
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -175,16 +176,16 @@ setItem('TagDynamic', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...p
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -203,16 +204,16 @@ setItem('TagDynamic', 'CheckAllVerticalFormItem', (dictName) => ({ cascadeParams
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -231,16 +232,16 @@ setItem('TagDynamic', 'CheckAllHorizontalFormItem', (dictName) => ({ cascadePara
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -259,16 +260,16 @@ setItem('TagDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -287,16 +288,16 @@ setItem('TagDynamic', 'CheckAllSelectFormItem', (dictName) => ({ cascadeParams, 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -307,7 +308,3 @@ setItem('TagDynamic', 'CheckAllSelectFormItem', (dictName) => ({ cascadeParams, 
 
   return <TagCheckAllSelectFormItem {...props} dataSource={data} />;
 });
-// });
-
-// return FormItemComponents;
-// };

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import React, { useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
@@ -8,23 +9,6 @@ import TreeSelectFormItem from '../TreeSelectFormItem';
 import TreeSelectLeafFormItem from '../TreeSelectLeafFormItem';
 import TreeSelectLeafMulitFormItem from '../TreeSelectLeafMulitFormItem';
 import { deepDep } from '../util';
-
-// const FormItemComponents = {};
-
-/**
- * initTreeSelect
- * @description 初始化TreeSelect
- */
-// export default () => {
-//   // 名称以Tree结尾的字典
-//   const treeSelectDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('Tree'),
-//   );
-//
-//   // 名称以DynamicTree结尾的字典
-//   const treeSelectDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('TreeDynamic'),
-//   );
 
 // treeSelectFormItem
 const TreeSelectFormItemWrap = ({ dataSource, ...props }) => {
@@ -101,7 +85,6 @@ setItem('Tree', 'LeafMulitFormItem', (dictName) => ({ cascadeParams, ...props })
 
   return <TreeSelectLeafMulitFormItem {...props} dataSource={dataSource} />;
 });
-// });
 
 // 动态的TreeSelect
 // treeSelectDynamicDictNames.forEach((dictName) => {
@@ -112,16 +95,16 @@ setItem('TreeDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) =
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -140,16 +123,16 @@ setItem('TreeDynamic', 'LeafFormItem', (dictName) => ({ cascadeParams, ...props 
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -168,16 +151,16 @@ setItem('TreeDynamic', 'MulitFormItem', (dictName) => ({ cascadeParams, ...props
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -196,16 +179,16 @@ setItem('TreeDynamic', 'LeafMulitFormItem', (dictName) => ({ cascadeParams, ...p
   // 存放字典的返回值(可能是promise也可能是Function)
   const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
+  useMount(() => {
     // 如果是Promise直接返回
     if (handler.then) {
       handler.then((res) => {
         setData(res);
       });
     }
-  }, []);
+  });
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     // 如果是函数(一般是级联)
     if (handler instanceof Function) {
       handler(cascadeParams).then((res) => {
@@ -216,7 +199,3 @@ setItem('TreeDynamic', 'LeafMulitFormItem', (dictName) => ({ cascadeParams, ...p
 
   return <TreeSelectLeafMulitFormItem {...props} dataSource={data} />;
 });
-// });
-
-// return FormItemComponents;
-// };
