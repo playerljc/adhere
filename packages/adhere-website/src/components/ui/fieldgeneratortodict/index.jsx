@@ -1024,6 +1024,134 @@ export default () => {
               />
             ),
           },
+          {
+            id: 'p5',
+            name: '异步加载',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载',
+                info: '异步加载`',
+              },
+            },
+            codeText: `
+ import React from 'react';
+ import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+ export default () => (
+  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+    style={{ width: 200 }}
+    value={vals}
+    onChange={(v) => setVals(v)}
+  />
+ )
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p6',
+            name: '异步加载(多选)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(多选)',
+                info: '异步加载(多选)`',
+              },
+            },
+            codeText: `
+ import React from 'react';
+ import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+ export default () => (
+  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+    style={{ width: 200 }}
+    value={vals}
+    onChange={(v) => setVals(v)}
+  />
+ )
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p7',
+            name: '异步加载(只能选叶子节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(只能选叶子节点)',
+                info: '异步加载(只能选叶子节点)`',
+              },
+            },
+            codeText: `
+ import React from 'react';
+ import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+ export default () => (
+  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
+    style={{ width: 200 }}
+    value={vals}
+    onChange={(v) => setVals(v)}
+  />
+ )
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p8',
+            name: '异步加载多选(只能选叶子节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载多选(只能选叶子节点)',
+                info: '异步加载多选(只能选叶子节点)`',
+              },
+            },
+            codeText: `
+ import React from 'react';
+ import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+ export default () => (
+  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+    style={{ width: 200 }}
+    value={vals}
+    onChange={(v) => setVals(v)}
+  />
+ )
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
         ]}
       />
 

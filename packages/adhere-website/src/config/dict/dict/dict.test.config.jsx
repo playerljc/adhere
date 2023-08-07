@@ -20369,5 +20369,34 @@ export default {
 
       return Promise.resolve(res.data);
     };
+
+    Dict.handlers.SystemDepartment = () => (pid, cascadeParams) =>
+      Promise.resolve(
+        Array.from({
+          length: 10,
+        })
+          .fill(() => 0)
+          .map(() => ({
+            title: faker.internet.userName(),
+            value: faker.random.uuid(),
+          })),
+      );
+
+    // Dict.handlers.SystemDepartment = () => (pid, cascadeParams) =>
+    //   new Promise((resolve) => {
+    //     setTimeout(() => {
+    //       resolve(
+    //         Array.from({
+    //           length: 10,
+    //         })
+    //           .fill(() => 0)
+    //           .map(() => ({
+    //             title: faker.internet.userName(),
+    //             value: faker.random.uuid(),
+    //             // children: [],
+    //           })),
+    //       );
+    //     }, 1500);
+    //   });
   },
 };
