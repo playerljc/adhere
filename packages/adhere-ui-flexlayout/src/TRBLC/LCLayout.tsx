@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { FC, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../auto';
 import Fixed from '../fixed';
@@ -11,8 +11,9 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * LCLayout
  * @constructor
  * @param _props
+ * @param ref
  */
-const LCLayout: FC<TBLRCLayoutProps> = (_props) => {
+const LCLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (_props, ref) => {
   const {
     wrapClassName,
     wrapStyle,
@@ -25,9 +26,9 @@ const LCLayout: FC<TBLRCLayoutProps> = (_props) => {
   } = _props;
 
   // @ts-ignore
-  const LProps = omit<TBLRProps, string>(lProps, ['render']);
+  const LProps = omit<TBLRProps, string>(lProps, ['children']);
   // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['render']);
+  const CProps = omit<CenterProps, string>(cProps, ['children']);
 
   const classList = useMemo(
     () =>
@@ -43,20 +44,20 @@ const LCLayout: FC<TBLRCLayoutProps> = (_props) => {
   );
 
   return (
-    <div className={classList} style={wrapStyle ?? {}}>
+    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
         className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
         direction="horizontal"
       >
-        <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+        <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
 
         {lSplit}
 
-        <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+        <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
       </FlexLayout>
     </div>
   );
 };
 
-export default LCLayout;
+export default memo(forwardRef<any, TBLRCLayoutProps>(LCLayout));

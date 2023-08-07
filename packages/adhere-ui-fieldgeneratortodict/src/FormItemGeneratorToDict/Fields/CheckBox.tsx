@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import React, { useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
 
@@ -13,233 +14,245 @@ import CheckBoxVerticalFormItem from '../CheckBoxVerticalFormItem';
 import { setItem } from '../ItemFactory';
 import { deepDep } from '../util';
 
-// const FormItemComponents = {};
+/**
+ * CheckBoxVerticalFormItem
+ */
+setItem(
+  'CheckBox',
+  'VerticalFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxVerticalFormItem {...props} dataSource={dataSource} />;
+    },
+);
 
 /**
- * initCheckBox
- * @description 初始化CheckBox
+ * CheckBoxHorizontalFormItem
  */
-// export default () => {
-// 名称以CheckBox结尾的字典
-// const checkBoxDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//   dictName.endsWith('CheckBox'),
-// );
-//
-// // 名称以DynamicCheckBox结尾的字典
-// const checkBoxDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//   dictName.endsWith('CheckBoxDynamic'),
-// );
-
-// 静态的CheckBox
-// checkBoxDictNames.forEach((dictName) => {
-// CheckBoxVerticalFormItem
-setItem('CheckBox', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxVerticalFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxHorizontalFormItem
-setItem('CheckBox', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxHorizontalFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxCheckAllVerticalFormItem
-setItem('CheckBox', 'CheckAllVerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxCheckAllVerticalFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxCheckAllHorizontalFormItem
-setItem('CheckBox', 'CheckAllHorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxCheckAllHorizontalFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxSelectFormItem
-setItem('CheckBox', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxSelectFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxCheckAllSelectFormItem
-setItem('CheckBox', 'CheckAllSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxCheckAllSelectFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxCustomFormItem
-setItem('CheckBox', 'CustomFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxCustomFormItem {...props} dataSource={dataSource} />;
-});
-
-// CheckBoxCheckAllCustomFormItem
-setItem('CheckBox', 'CheckAllCustomFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  let dataSource;
-
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
-
-  return <CheckBoxCheckAllCustomFormItem {...props} dataSource={dataSource} />;
-});
-// });
-
-// 动态的CheckBox
-// checkBoxDynamicDictNames.forEach((dictName) => {
-// CheckBoxDynamicVerticalFormItem
-setItem('CheckBoxDynamic', 'VerticalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
-
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
-
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
-
-  return <CheckBoxVerticalFormItem {...props} dataSource={data} />;
-});
-
-// CheckBoxDynamicHorizontalFormItem
-setItem('CheckBoxDynamic', 'HorizontalFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
-
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
-
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
-
-  return <CheckBoxHorizontalFormItem {...props} dataSource={data} />;
-});
-
-// CheckBoxDynamicCheckAllVerticalFormItem
 setItem(
-  'CheckBoxDynamic',
+  'CheckBox',
+  'HorizontalFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxHorizontalFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxCheckAllVerticalFormItem
+ */
+setItem(
+  'CheckBox',
   'CheckAllVerticalFormItem',
   (dictName) =>
-    ({ cascadeParams, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxCheckAllVerticalFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxCheckAllHorizontalFormItem
+ */
+setItem(
+  'CheckBox',
+  'CheckAllHorizontalFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxCheckAllHorizontalFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxSelectFormItem
+ */
+setItem(
+  'CheckBox',
+  'SelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxSelectFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxCheckAllSelectFormItem
+ */
+setItem(
+  'CheckBox',
+  'CheckAllSelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxCheckAllSelectFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxCustomFormItem
+ */
+setItem(
+  'CheckBox',
+  'CustomFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxCustomFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxCheckAllCustomFormItem
+ */
+setItem(
+  'CheckBox',
+  'CheckAllCustomFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
+
+      let dataSource;
+
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <CheckBoxCheckAllCustomFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * CheckBoxDynamicVerticalFormItem
+ */
+setItem(
+  'CheckBoxDynamic',
+  'VerticalFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useEffect(() => {
+      useMount(() => {
         // 如果是Promise直接返回
         if (handler.then) {
           handler.then((res) => {
             setData(res);
           });
         }
-      }, []);
+      });
 
-      useEffect(() => {
+      useUpdateEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
@@ -247,32 +260,116 @@ setItem(
           });
         }
       }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <CheckBoxVerticalFormItem {...props} dataSource={data} />;
+    },
+);
+
+/**
+ * CheckBoxDynamicHorizontalFormItem
+ */
+setItem(
+  'CheckBoxDynamic',
+  'HorizontalFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
+      });
+
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <CheckBoxHorizontalFormItem {...props} dataSource={data} />;
+    },
+);
+
+/**
+ * CheckBoxDynamicCheckAllVerticalFormItem
+ */
+setItem(
+  'CheckBoxDynamic',
+  'CheckAllVerticalFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
+      });
+
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
 
       return <CheckBoxCheckAllVerticalFormItem {...props} dataSource={data} />;
     },
 );
 
-// CheckBoxDynamicCheckAllHorizontalFormItem
+/**
+ * CheckBoxDynamicCheckAllHorizontalFormItem
+ */
 setItem(
   'CheckBoxDynamic',
   'CheckAllHorizontalFormItem',
   (dictName) =>
-    ({ cascadeParams, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useEffect(() => {
+      useMount(() => {
         // 如果是Promise直接返回
         if (handler.then) {
           handler.then((res) => {
             setData(res);
           });
         }
-      }, []);
+      });
 
-      useEffect(() => {
+      useUpdateEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
@@ -280,60 +377,38 @@ setItem(
           });
         }
       }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
 
       return <CheckBoxCheckAllHorizontalFormItem {...props} dataSource={data} />;
     },
 );
 
-// CheckBoxDynamicSelectFormItem
-setItem('CheckBoxDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
-
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
-
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
-
-  return <CheckBoxSelectFormItem {...props} dataSource={data} />;
-});
-
-// CheckBoxDynamicCheckAllSelectFormItem
+/**
+ * CheckBoxDynamicSelectFormItem
+ */
 setItem(
   'CheckBoxDynamic',
-  'CheckAllSelectFormItem',
+  'SelectFormItem',
   (dictName) =>
-    ({ cascadeParams, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useEffect(() => {
+      useMount(() => {
         // 如果是Promise直接返回
         if (handler.then) {
           handler.then((res) => {
             setData(res);
           });
         }
-      }, []);
+      });
 
-      useEffect(() => {
+      useUpdateEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
@@ -341,60 +416,77 @@ setItem(
           });
         }
       }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <CheckBoxSelectFormItem {...props} dataSource={data} />;
+    },
+);
+
+/**
+ * CheckBoxDynamicCheckAllSelectFormItem
+ */
+setItem(
+  'CheckBoxDynamic',
+  'CheckAllSelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
+      });
+
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
 
       return <CheckBoxCheckAllSelectFormItem {...props} dataSource={data} />;
     },
 );
 
-// CheckBoxCustomFormItem
-setItem('CheckBoxDynamic', 'CustomFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
-
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
-
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
-
-  return <CheckBoxCustomFormItem {...props} dataSource={data} />;
-});
-
-// CheckBoxCheckAllCustomFormItem
+/**
+ * CheckBoxDynamicCustomFormItem
+ */
 setItem(
   'CheckBoxDynamic',
-  'CheckAllCustomFormItem',
+  'CustomFormItem',
   (dictName) =>
-    ({ cascadeParams, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
 
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useEffect(() => {
+      useMount(() => {
         // 如果是Promise直接返回
         if (handler.then) {
           handler.then((res) => {
             setData(res);
           });
         }
-      }, []);
+      });
 
-      useEffect(() => {
+      useUpdateEffect(() => {
         // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
@@ -403,10 +495,49 @@ setItem(
         }
       }, [deepDep(cascadeParams)]);
 
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <CheckBoxCustomFormItem {...props} dataSource={data} />;
+    },
+);
+
+/**
+ * CheckBoxDynamicCheckAllCustomFormItem
+ */
+setItem(
+  'CheckBoxDynamic',
+  'CheckAllCustomFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
+      });
+
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
       return <CheckBoxCheckAllCustomFormItem {...props} dataSource={data} />;
     },
 );
-// });
-
-// return FormItemComponents;
-// };

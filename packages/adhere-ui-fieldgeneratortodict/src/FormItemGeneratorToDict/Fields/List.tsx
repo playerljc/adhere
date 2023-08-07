@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import React, { ReactNode, useRef, useState } from 'react';
 
 import { Checkbox, List, Radio } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -6,32 +7,14 @@ import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
 import ListFormItem from '../ListFormItem';
-import ListMulitSelectFormItem from '../ListMulitSelectFormItem';
+import ListMultiSelectFormItem from '../ListMultiSelectFormItem';
 import ListSelectFormItem from '../ListSelectFormItem';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
 import { deepDep } from '../util';
 
 const selectorPrefix = 'adhere-ui-antdformitem';
 
-// const FormItemComponents = {};
-
-// export default () => {
-//   // 名称以List结尾的字典
-//   const listDictNames = Object.keys(Dict.handlers).filter((dictName) => dictName.endsWith('List'));
-//
-//   // 名称以DynamicList结尾的字典
-//   const listDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('ListDynamic'),
-//   );
-//
-//   // 名称以ListPagination结尾的字典(肯定是动态数据)
-//   const listPaginationDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('ListPagination'),
-//   );
-
-// 静态的List
-// listDictNames.forEach((dictName) => {
 /**
  * ListFormItem
  * @param cascadeParams
@@ -41,7 +24,7 @@ const selectorPrefix = 'adhere-ui-antdformitem';
  * }
  * @return {JSX.Element}
  */
-setItem('List', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
+setItem('List', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
   const handler = Dict.value[dictName].value;
 
   let dataSource;
@@ -52,6 +35,10 @@ setItem('List', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
   } else {
     dataSource = handler;
   }
+
+  useUpdateEffect(() => {
+    onDataSourceChange?.(dataSource);
+  }, [dataSource]);
 
   return <ListFormItem {...props} dataSource={dataSource} />;
 });
@@ -66,23 +53,32 @@ setItem('List', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
  * }
  * @return {JSX.Element}
  */
-setItem('List', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+setItem(
+  'List',
+  'SelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  let dataSource;
+      let dataSource;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-  return <ListSelectFormItem {...props} dataSource={dataSource} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <ListSelectFormItem {...props} dataSource={dataSource} />;
+    },
+);
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param cascadeParams
  * @param props {
  *   cascadeParams
@@ -91,24 +87,30 @@ setItem('List', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) =>
  * }
  * @return {JSX.Element}
  */
-setItem('List', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+setItem(
+  'List',
+  'MultiSelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  let dataSource;
+      let dataSource;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-  return <ListMulitSelectFormItem {...props} dataSource={dataSource} />;
-});
-// });
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
 
-// 动态的List
-// listDynamicDictNames.forEach((dictName) => {
+      return <ListMultiSelectFormItem {...props} dataSource={dataSource} />;
+    },
+);
+
 /**
  * ListFormItem
  * @param cascadeParams
@@ -118,32 +120,41 @@ setItem('List', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props 
  * }
  * @return {JSX.Element}
  */
-setItem('ListDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'ListDynamic',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  }, []);
 
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <ListFormItem {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <ListFormItem {...props} dataSource={data} />;
+    },
+);
 
 /**
  * SelectFormItem
@@ -155,35 +166,44 @@ setItem('ListDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) =
  * }
  * @return {JSX.Element}
  */
-setItem('ListDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'ListDynamic',
+  'SelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  }, []);
 
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <ListSelectFormItem {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <ListSelectFormItem {...props} dataSource={data} />;
+    },
+);
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param cascadeParams
  * @param props {
  *   cascadeParams
@@ -192,36 +212,42 @@ setItem('ListDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...prop
  * }
  * @return {JSX.Element}
  */
-setItem('ListDynamic', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'ListDynamic',
+  'MultiSelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  }, []);
 
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <ListMulitSelectFormItem {...props} dataSource={data} />;
-});
-// });
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
 
-// 动态的分页List
-// listPaginationDictNames.forEach((dictName) => {
+      return <ListMultiSelectFormItem {...props} dataSource={data} />;
+    },
+);
+
 /**
  * ListFormItem
  * @param props {
@@ -296,7 +322,11 @@ setItem('ListPagination', 'FormItem', (dictName) => (props) => {
       });
   }
 
-  useEffect(() => {
+  useMount(() => {
+    loadData();
+  });
+
+  useUpdateEffect(() => {
     loadData();
   }, [pagin.current, pagin.pageSize]);
 
@@ -450,11 +480,15 @@ setItem('ListPagination', 'SelectFormItem', (dictName) => (props) => {
     );
   }
 
-  useEffect(() => {
+  useMount(() => {
+    loadData();
+  });
+
+  useUpdateEffect(() => {
     loadData();
   }, [pagin.current, pagin.pageSize]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (props.value) {
       setSelectedRowKeys([props.value]);
       setSelectedRows([data.find((t) => t[props.rowKey || 'id'] === props.value)!]);
@@ -493,13 +527,13 @@ setItem('ListPagination', 'SelectFormItem', (dictName) => (props) => {
 });
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param props {
  *    rowKey
  *    labelKey
  * }
  */
-setItem('ListPagination', 'MulitSelectFormItem', (dictName) => (props) => {
+setItem('ListPagination', 'MultiSelectFormItem', (dictName) => (props) => {
   const [inputValue, setInputValue] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -643,12 +677,16 @@ setItem('ListPagination', 'MulitSelectFormItem', (dictName) => (props) => {
     );
   }
 
-  useEffect(() => {
+  useMount(() => {
+    loadData();
+  });
+
+  useUpdateEffect(() => {
     loadData();
   }, [pagin.current, pagin.pageSize]);
 
   return (
-    <MulitSelectFormItem
+    <MultiSelectFormItem
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,
@@ -685,7 +723,3 @@ setItem('ListPagination', 'MulitSelectFormItem', (dictName) => (props) => {
     />
   );
 });
-// });
-
-// return FormItemComponents;
-// };

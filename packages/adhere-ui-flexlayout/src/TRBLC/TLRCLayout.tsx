@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { FC, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../auto';
 import Fixed from '../fixed';
@@ -12,36 +12,43 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param wrapClassName
  * @param wrapStyle
  * @param tProps
+ * @param tSplit
  * @param lProps
+ * @param lSplit
  * @param rProps
  * @param cProps
  * @param autoWrapProps
+ * @param rSplit
  * @param autoInnerProps
  * @param props
+ * @param ref
  * @constructor
  */
-const TLRCLayout: FC<TBLRCLayoutProps> = ({
-  wrapClassName,
-  wrapStyle,
-  autoWrapProps,
-  autoInnerProps,
-  tProps,
-  tSplit,
-  lProps,
-  lSplit,
-  rProps,
-  rSplit,
-  cProps,
-  ...props
-}) => {
+const TLRCLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (
+  {
+    wrapClassName,
+    wrapStyle,
+    autoWrapProps,
+    autoInnerProps,
+    tProps,
+    tSplit,
+    lProps,
+    lSplit,
+    rProps,
+    rSplit,
+    cProps,
+    ...props
+  },
+  ref,
+) => {
   // @ts-ignore
-  const TProps = omit<TBLRProps, string>(tProps, ['render']);
+  const TProps = omit<TBLRProps, string>(tProps, ['children']);
   // @ts-ignore
-  const LProps = omit<TBLRProps, string>(lProps, ['render']);
+  const LProps = omit<TBLRProps, string>(lProps, ['children']);
   // @ts-ignore
-  const RProps = omit<TBLRProps, string>(rProps, ['render']);
+  const RProps = omit<TBLRProps, string>(rProps, ['children']);
   // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['render']);
+  const CProps = omit<CenterProps, string>(cProps, ['children']);
 
   const classList = useMemo(
     () =>
@@ -84,13 +91,13 @@ const TLRCLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle ?? {}}>
+    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
         className={classNames(`${selectorPrefix}-tlr-layout`, props?.className ?? '')}
         direction="vertical"
       >
-        <Fixed {...(TProps ?? {})}>{tProps?.render?.()}</Fixed>
+        <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
 
         {tSplit}
 
@@ -100,15 +107,15 @@ const TLRCLayout: FC<TBLRCLayoutProps> = ({
             className={autoInnerClassList}
             direction="horizontal"
           >
-            <Fixed {...(LProps ?? {})}>{lProps?.render?.()}</Fixed>
+            <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
 
             {lSplit}
 
-            <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+            <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
 
             {tSplit}
 
-            <Fixed {...(RProps ?? {})}>{tProps?.render?.()}</Fixed>
+            <Fixed {...(RProps ?? {})}>{tProps?.children}</Fixed>
           </FlexLayout>
         </Auto>
       </FlexLayout>
@@ -116,4 +123,4 @@ const TLRCLayout: FC<TBLRCLayoutProps> = ({
   );
 };
 
-export default TLRCLayout;
+export default memo(forwardRef<any, TBLRCLayoutProps>(TLRCLayout));

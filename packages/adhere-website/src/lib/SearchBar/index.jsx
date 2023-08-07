@@ -89,6 +89,7 @@ export default withRouter((props) => {
         <Select
           open={open}
           style={{ width: 600 }}
+          placeholder="请输入关键词"
           autoFocus
           showSearch
           defaultActiveFirstOption={false}

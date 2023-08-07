@@ -2,9 +2,9 @@ import AutoCompleteFormItem from './AutoCompleteFormItem';
 import BreadcrumbFormItem from './BreadcrumbFormItem';
 import CascaderFormItem from './CascaderFormItem';
 import CascaderLeafFormItem from './CascaderLeafFormItem';
-import CascaderLeafMulitFormItem from './CascaderLeafMulitFormItem';
-import CascaderMulitFormItem from './CascaderMulitFormItem';
-import CheckAllMulitSelectFormItem from './CheckAllMulitSelectFormItem';
+import CascaderLeafMultiFormItem from './CascaderLeafMultiFormItem';
+import CascaderMultiFormItem from './CascaderMultiFormItem';
+import CheckAllMultiSelectFormItem from './CheckAllMultiSelectFormItem';
 import CheckBoxCheckAllCustomFormItem from './CheckBoxCheckAllCustomFormItem';
 import CheckBoxCheckAllHorizontalFormItem from './CheckBoxCheckAllHorizontalFormItem';
 import CheckBoxCheckAllSelectFormItem from './CheckBoxCheckAllSelectFormItem';
@@ -33,11 +33,11 @@ import './Fields/Transfer';
 import './Fields/TreeSelect';
 import ItemFactory from './ItemFactory';
 import ListFormItem from './ListFormItem';
-import ListMulitSelectFormItem from './ListMulitSelectFormItem';
+import ListMultiSelectFormItem from './ListMultiSelectFormItem';
 import ListSelectFormItem from './ListSelectFormItem';
 import MentionsFormItem from './MentionsFormItem';
 import MenuFormItem from './MenuFormItem';
-import MulitSelectFormItem from './MulitSelectFormItem';
+import MultiSelectFormItem from './MultiSelectFormItem';
 import RadioButtonFormItem from './RadioButtonFormItem';
 import RadioCustomFormItem from './RadioCustomFormItem';
 import RadioHorizontalFormItem from './RadioHorizontalFormItem';
@@ -47,7 +47,7 @@ import SegmentedFormItem from './SegmentedFormItem';
 import SelectFormItem from './SelectFormItem';
 import StepsFormItem from './StepsFormItem';
 import TableFormItem from './TableFormItem';
-import TableMulitSelectFormItem from './TableMulitSelectFormItem';
+import TableMultiSelectFormItem from './TableMultiSelectFormItem';
 import TableSelectFormItem from './TableSelectFormItem';
 import TagCheckAllHorizontalFormItem from './TagCheckAllHorizontalFormItem';
 import TagCheckAllSelectFormItem from './TagCheckAllSelectFormItem';
@@ -59,11 +59,12 @@ import TagVerticalFormItem from './TagVerticalFormItem';
 import TimelineFormItem from './TimelineFormItem';
 import TransferFormItem from './TransferFormItem';
 import TransferSelectFormItem from './TransferSelectFormItem';
-import TreeMulitSelectFormItem from './TreeMulitSelectFormItem';
+import TreeMultiSelectFormItem from './TreeMultiSelectFormItem';
 import TreeSelectFormItem from './TreeSelectFormItem';
 import TreeSelectLeafFormItem from './TreeSelectLeafFormItem';
-import TreeSelectLeafMulitFormItem from './TreeSelectLeafMulitFormItem';
-import TreeSelectMulitFormItem from './TreeSelectMulitFormItem';
+import TreeSelectLeafMultiFormItem from './TreeSelectLeafMultiFormItem';
+import TreeSelectMultiFormItem from './TreeSelectMultiFormItem';
+import { getOriginDictNameByItemName } from './util';
 
 export const validatorNormal = (message) => ({
   validator(_, value) {
@@ -94,9 +95,9 @@ export {
   BreadcrumbFormItem,
   CascaderFormItem,
   CascaderLeafFormItem,
-  CascaderLeafMulitFormItem,
-  CascaderMulitFormItem,
-  CheckAllMulitSelectFormItem,
+  CascaderLeafMultiFormItem,
+  CascaderMultiFormItem,
+  CheckAllMultiSelectFormItem,
   CheckBoxCheckAllCustomFormItem,
   CheckBoxCheckAllHorizontalFormItem,
   CheckBoxCheckAllSelectFormItem,
@@ -107,11 +108,11 @@ export {
   CheckBoxVerticalFormItem,
   DropdownFormItem,
   ListFormItem,
-  ListMulitSelectFormItem,
+  ListMultiSelectFormItem,
   ListSelectFormItem,
   MentionsFormItem,
   MenuFormItem,
-  MulitSelectFormItem,
+  MultiSelectFormItem,
   RadioButtonFormItem,
   RadioCustomFormItem,
   RadioHorizontalFormItem,
@@ -121,7 +122,7 @@ export {
   SelectFormItem,
   StepsFormItem,
   TableFormItem,
-  TableMulitSelectFormItem,
+  TableMultiSelectFormItem,
   TableSelectFormItem,
   TagCheckAllHorizontalFormItem,
   TagCheckAllSelectFormItem,
@@ -133,11 +134,11 @@ export {
   TimelineFormItem,
   TransferFormItem,
   TransferSelectFormItem,
-  TreeMulitSelectFormItem,
+  TreeMultiSelectFormItem,
   TreeSelectFormItem,
   TreeSelectLeafFormItem,
-  TreeSelectLeafMulitFormItem,
-  TreeSelectMulitFormItem,
+  TreeSelectLeafMultiFormItem,
+  TreeSelectMultiFormItem,
 };
 
 const ItemNames = new Map([
@@ -147,8 +148,8 @@ const ItemNames = new Map([
   ['BreadcrumbDynamic', ['FormItem']],
   ['Breadcrumb', ['FormItem']],
 
-  ['CascaderDynamic', ['FormItem', 'LeafFormItem', 'MulitFormItem', 'LeafMulitFormItem']],
-  ['Cascader', ['FormItem', 'LeafFormItem', 'MulitFormItem', 'LeafMulitFormItem']],
+  ['CascaderDynamic', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
+  ['Cascader', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
 
   [
     'CheckBoxDynamic',
@@ -180,9 +181,9 @@ const ItemNames = new Map([
   ['DropdownDynamic', ['FormItem']],
   ['Dropdown', ['FormItem']],
 
-  ['ListPagination', ['FormItem', 'SelectFormItem', 'MulitSelectFormItem']],
-  ['ListDynamic', ['FormItem', 'SelectFormItem', 'MulitSelectFormItem']],
-  ['List', ['FormItem', 'SelectFormItem', 'MulitSelectFormItem']],
+  ['ListPagination', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
+  ['ListDynamic', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
+  ['List', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
 
   ['MentionsDynamic', ['FormItem']],
   ['Mentions', ['FormItem']],
@@ -217,9 +218,9 @@ const ItemNames = new Map([
   ['StepsDynamic', ['FormItem']],
   ['Steps', ['FormItem']],
 
-  ['TablePagination', ['FormItem', 'SelectFormItem', 'MulitSelectFormItem']],
-  ['TableDynamic', ['FormItem', 'SelectFormItem', 'MulitSelectFormItem']],
-  ['Table', ['FormItem', 'SelectFormItem', 'MulitSelectFormItem']],
+  ['TablePagination', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
+  ['TableDynamic', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
+  ['Table', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
 
   [
     'TagDynamic',
@@ -252,13 +253,14 @@ const ItemNames = new Map([
   ['TransferDynamic', ['FormItem', 'SelectFormItem']],
   ['Transfer', ['FormItem', 'SelectFormItem']],
 
-  ['TreeDynamic', ['FormItem', 'LeafFormItem', 'MulitFormItem', 'LeafMulitFormItem']],
-  ['Tree', ['FormItem', 'LeafFormItem', 'MulitFormItem', 'LeafMulitFormItem']],
+  ['TreeDynamic', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
+  ['Tree', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
+  ['TreeAsync', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
 
   // 必须放在最后
-  ['AutoSelectComplete', ['FormItem', 'MulitFormItem', 'CheckAllMulitFormItem']],
-  ['SelectDynamic', ['FormItem', 'MulitFormItem', 'CheckAllMulitFormItem']],
-  ['Select', ['FormItem', 'MulitFormItem', 'CheckAllMulitFormItem']],
+  ['AutoSelectComplete', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],
+  ['SelectDynamic', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],
+  ['Select', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],
 ]);
 
 export default new Proxy(
@@ -266,10 +268,10 @@ export default new Proxy(
   {
     get(target: {}, p: string, receiver: any): any {
       // p
-      // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamicMulitFormItem
-      // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamic + MulitFormItem
+      // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamicMultiFormItem
+      // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamic + MultiFormItem
       // (业务名 + 组件名 + 功能名)
-      // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MulitFormItem
+      // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MultiFormItem
 
       // 存在则返回
       if (p in target && !!target[p]) return Reflect.get(target, p, receiver);

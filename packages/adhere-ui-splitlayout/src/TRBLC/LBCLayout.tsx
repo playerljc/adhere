@@ -1,5 +1,5 @@
-import React from 'react';
-import type { FC } from 'react';
+import React, { forwardRef, memo } from 'react';
+import type { ForwardRefRenderFunction } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -10,9 +10,13 @@ import { TBLRCSplitLayoutProps } from '../types';
  * LBCLayout
  * @constructor
  */
-const LBCLayout: FC<TBLRCSplitLayoutProps> = ({ bSplitProps, lSplitProps, ...props }) => {
+const LBCLayout: ForwardRefRenderFunction<any, TBLRCSplitLayoutProps> = (
+  { bSplitProps, lSplitProps, ...props },
+  ref,
+) => {
   return (
     <FlexLayout.TRBLC.LBCLayout
+      ref={ref}
       {...props}
       lSplit={<SplitLayout {...(lSplitProps ?? {})} />}
       bSplit={<SplitLayout {...(bSplitProps ?? {})} />}
@@ -20,4 +24,4 @@ const LBCLayout: FC<TBLRCSplitLayoutProps> = ({ bSplitProps, lSplitProps, ...pro
   );
 };
 
-export default LBCLayout;
+export default memo(forwardRef<any, TBLRCSplitLayoutProps>(LBCLayout));

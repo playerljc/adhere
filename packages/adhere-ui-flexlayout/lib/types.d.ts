@@ -181,10 +181,10 @@ export interface getGridStyleParams {
     direction: 'vertical' | 'horizontal';
 }
 export interface TBLRProps extends FixedProps {
-    render: () => ReactNode;
+    children: ReactNode;
 }
 export interface CenterProps extends AutoProps {
-    render: () => ReactNode;
+    children: ReactNode;
 }
 export interface TBLRCLayoutProps extends FlexLayoutProps {
     wrapClassName?: string;

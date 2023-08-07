@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import { Tag } from '@baifendian/adhere-ui-anthoc';
 
 import { TagSelectFormItemProps } from '../../types';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 import TagVerticalFormItem from '../TagVerticalFormItem';
 
 const { CheckableTag } = Tag;
@@ -53,7 +53,7 @@ const TagMultiSelectFormItem: FC<TagSelectFormItemProps> = (props) => {
   }
 
   return (
-    <MulitSelectFormItem
+    <MultiSelectFormItem
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,

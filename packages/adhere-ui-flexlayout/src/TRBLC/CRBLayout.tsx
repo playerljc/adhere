@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { FC, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../auto';
 import Fixed from '../fixed';
@@ -14,26 +14,30 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param autoWrapProps
  * @param autoInnerProps
  * @param props
+ * @param ref
  * @constructor
  */
-const CRBLayout: FC<TBLRCLayoutProps> = ({
-  wrapClassName,
-  wrapStyle,
-  autoWrapProps,
-  autoInnerProps,
-  rProps,
-  rSplit,
-  cProps,
-  bProps,
-  bSplit,
-  ...props
-}) => {
+const CRBLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (
+  {
+    wrapClassName,
+    wrapStyle,
+    autoWrapProps,
+    autoInnerProps,
+    rProps,
+    rSplit,
+    cProps,
+    bProps,
+    bSplit,
+    ...props
+  },
+  ref,
+) => {
   // @ts-ignore
-  const RProps = omit<TBLRProps, string>(rProps, ['render']);
+  const RProps = omit<TBLRProps, string>(rProps, ['children']);
   // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['render']);
+  const CProps = omit<CenterProps, string>(cProps, ['children']);
   // @ts-ignore
-  const BProps = omit<TBLRProps, string>(bProps, ['render']);
+  const BProps = omit<TBLRProps, string>(bProps, ['children']);
 
   const classList = useMemo(
     () =>
@@ -76,7 +80,7 @@ const CRBLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle ?? {}}>
+    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
         className={classNames(`${selectorPrefix}-crb-layout`, props?.className ?? '')}
@@ -88,20 +92,20 @@ const CRBLayout: FC<TBLRCLayoutProps> = ({
             className={autoInnerClassList}
             direction="horizontal"
           >
-            <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+            <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
 
             {rSplit}
 
-            <Fixed {...(RProps ?? {})}>{rProps?.render?.()}</Fixed>
+            <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
           </FlexLayout>
         </Auto>
 
         {bSplit}
 
-        <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
+        <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
       </FlexLayout>
     </div>
   );
 };
 
-export default CRBLayout;
+export default memo(forwardRef<any, TBLRCLayoutProps>(CRBLayout));

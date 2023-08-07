@@ -44,6 +44,37 @@ const DateUtil = {
       new Date().getTimezoneOffset() / 60,
     );
   },
+  /**
+   * formatMilliseconds
+   * @description format毫秒数
+   * @param {number} milliseconds 毫秒数
+   * @return {
+   *   days: number;
+   *   hours: number;
+   *   minutes: number;
+   *   remainingSeconds: number;
+   * }
+   */
+  formatMilliseconds(milliseconds: number): {
+    days: number;
+    hours: number;
+    minutes: number;
+    remainingSeconds: number;
+  } {
+    const seconds = Math.floor(milliseconds / 1000);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor(((seconds % 86400) % 3600) / 60);
+    const remainingSeconds = ((seconds % 86400) % 3600) % 60;
+
+    return {
+      days,
+      hours,
+      minutes,
+      remainingSeconds,
+    };
+    // return `${days} 天 ${hours} 小时 ${minutes} 分钟 ${remainingSeconds} 秒`;
+  },
 };
 
 export default DateUtil;

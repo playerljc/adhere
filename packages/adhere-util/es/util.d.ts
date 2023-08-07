@@ -40,12 +40,15 @@ declare const _default: {
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
     dataUrlToBlob(dataUrl: string): Blob | null;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
-    /**
-     * 函数节流
-     */
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
+    formatMilliseconds(milliseconds: number): {
+        days: number;
+        hours: number;
+        minutes: number;
+        remainingSeconds: number;
+    };
     parse(path?: string | undefined, config?: import("./types").IUrlConfig): object | null;
     stringify(record: object, config?: import("./types").IUrlConfig): string;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {

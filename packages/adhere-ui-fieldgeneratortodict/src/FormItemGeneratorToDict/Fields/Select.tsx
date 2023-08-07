@@ -1,4 +1,5 @@
-import debounce from 'lodash/debounce';
+import { useMount, useUpdateEffect } from 'ahooks';
+import debounce from 'lodash.debounce';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Spin } from '@baifendian/adhere-ui-anthoc';
@@ -6,37 +7,17 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import Dict from '@baifendian/adhere-util-dict';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-import CheckAllMulitSelectFormItem from '../CheckAllMulitSelectFormItem';
+import CheckAllMultiSelectFormItem from '../CheckAllMultiSelectFormItem';
 import { getItem, setItem } from '../ItemFactory';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
 import { deepDep } from '../util';
-
-// const FormItemComponents = {};
 
 const { memoized } = WatchMemoized;
 
 const { useForceUpdate } = Hooks;
 
-/**
- * initSelect
- * @description 初始化Select
- */
-// export default () => {
-//   // 名称以Select结尾的字典
-//   const selectDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('Select'),
-//   );
-//
-//   // 名称以DynamicSelect结尾的字典
-//   const selectDynamicDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('SelectDynamic'),
-//   );
-//
-//   // 名称以AutoComplete结尾的字典
-//   const selectAutoCompleteDictNames = Object.keys(Dict.handlers).filter((dictName) =>
-//     dictName.endsWith('AutoSelectComplete'),
-//   );
+let AutoSelectCompleteFormItem;
 
 // SelectFormItemWrap
 const SelectFormItemWrap = ({ dataSource, ...props }) => {
@@ -44,16 +25,16 @@ const SelectFormItemWrap = ({ dataSource, ...props }) => {
   return <SelectFormItem selectProps={{ ...props }} dataSource={dataSource} />;
 };
 
-// MulitSelectFormItem
-const SelectMulitFormItemWrap = ({ dataSource, ...props }) => {
+// MultiSelectFormItem
+const SelectMultiFormItemWrap = ({ dataSource, ...props }) => {
   // @ts-ignore
-  return <MulitSelectFormItem selectProps={{ ...props }} dataSource={dataSource} />;
+  return <MultiSelectFormItem selectProps={{ ...props }} dataSource={dataSource} />;
 };
 
-// CheckAllMulitSelectFormItem
-const SelectCheckAllMulitFormItemWrap = ({ dataSource, onCheckAllChange, ...props }) => {
+// CheckAllMultiSelectFormItem
+const SelectCheckAllMultiFormItemWrap = ({ dataSource, onCheckAllChange, ...props }) => {
   return (
-    <CheckAllMulitSelectFormItem
+    <CheckAllMultiSelectFormItem
       // @ts-ignore
       selectProps={{ ...props }}
       dataSource={dataSource}
@@ -64,14 +45,10 @@ const SelectCheckAllMulitFormItemWrap = ({ dataSource, onCheckAllChange, ...prop
   );
 };
 
-// 静态的Select
-// selectDictNames.forEach((selectDictName) => {
-// 创建三个FormItem
-// SelectFormItem
-// MulitSelectFormItem
-// CheckAllMulitSelectFormItem
-// SelectFormItem
-setItem('Select', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
+/**
+ * SelectFormItem
+ */
+setItem('Select', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
   const handler = Dict.value[dictName].value;
 
   let dataSource;
@@ -82,140 +59,190 @@ setItem('Select', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
   } else {
     dataSource = handler;
   }
+
+  useUpdateEffect(() => {
+    onDataSourceChange?.(dataSource);
+  }, [dataSource]);
 
   return <SelectFormItemWrap {...props} dataSource={dataSource} />;
 });
 
-// MulitSelectFormItem
-setItem('Select', 'MulitFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+/**
+ * SelectMultiFormItem
+ */
+setItem(
+  'Select',
+  'MultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  let dataSource;
+      let dataSource;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-  return <SelectMulitFormItemWrap {...props} dataSource={dataSource} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
 
-// CheckAllMulitSelectFormItem
-setItem('Select', 'CheckAllMulitFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+      return <SelectMultiFormItemWrap {...props} dataSource={dataSource} />;
+    },
+);
 
-  let dataSource;
+/**
+ * SelectCheckAllMultiFormItem
+ */
+setItem(
+  'Select',
+  'CheckAllMultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      let dataSource;
 
-  // @ts-ignore
-  return <SelectCheckAllMulitFormItemWrap {...props} dataSource={dataSource} />;
-});
-// });
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-// 动态的Select
-// selectDynamicDictNames.forEach((dictName) => {
-// 创建三个FormItem
-// SelectFormItem
-// MulitSelectFormItem
-// CheckAllMulitSelectFormItem
-// SelectFormItem
-setItem('SelectDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // @ts-ignore
+      return <SelectCheckAllMultiFormItemWrap {...props} dataSource={dataSource} />;
+    },
+);
 
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+/**
+ * SelectDynamicFormItem
+ */
+setItem(
+  'SelectDynamic',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  }, []);
 
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
+
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <SelectFormItemWrap {...props} dataSource={data} />;
+    },
+);
+
+/**
+ * SelectDynamicMultiFormItem
+ */
+setItem(
+  'SelectDynamic',
+  'MultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  }, [deepDep(cascadeParams)]);
 
-  return <SelectFormItemWrap {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-// MulitSelectFormItem
-setItem('SelectDynamic', 'MulitFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      return <SelectMultiFormItemWrap {...props} dataSource={data} />;
+    },
+);
 
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+/**
+ * SelectDynamicCheckAllMultiFormItem
+ */
+setItem(
+  'SelectDynamic',
+  'CheckAllMultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
+
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
+
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  }, []);
 
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <SelectMulitFormItemWrap {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
 
-// CheckAllMulitSelectFormItem
-setItem('SelectDynamic', 'CheckAllMulitFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+      // @ts-ignore
+      return <SelectCheckAllMultiFormItemWrap {...props} dataSource={data} />;
+    },
+);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
-
-  useEffect(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
-
-  // @ts-ignore
-  return <SelectCheckAllMulitFormItemWrap {...props} dataSource={data} />;
-});
-// });
-
-// 自动补全的Select
-// selectAutoCompleteDictNames.forEach((dictName) => {
-// AutoCompleteFormItem
-// FormItem
+/**
+ * AutoSelectCompleteFormItem
+ */
 setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300, ...props }) => {
   const forceUpdate = useForceUpdate();
 
@@ -232,6 +259,7 @@ setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300
   useEffect(() => {
     debounceFetcher.current = debounce(
       memoized.createMemoFun((value) => {
+        debugger;
         fetchRef.current += 1;
         const fetchId = fetchRef.current;
 
@@ -305,24 +333,26 @@ setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300
   );
 });
 
-let AutoSelectCompleteFormItem;
-
-// AutoCompleteMulitFormItem
-setItem('AutoSelectComplete', 'MulitFormItem', (dictName) => (props) => {
+/**
+ * AutoSelectCompleteMultiFormItem
+ */
+setItem('AutoSelectComplete', 'MultiFormItem', (originDictName, dictName) => (props) => {
   // FormItemComponents[`${dictName}FormItem`];
   let Component =
     AutoSelectCompleteFormItem ??
     (AutoSelectCompleteFormItem = getItem({
       itemName: 'AutoSelectComplete',
       functionName: 'FormItem',
-      dictName,
+      dictName: dictName as string,
     }));
 
   return <Component mode="multiple" {...props} />;
 });
 
-// CheckAllAutoCompleteMulitSelectFormItem
-setItem('AutoSelectComplete', 'CheckAllMulitFormItem', (dictName) => (props) => {
+/**
+ * AutoSelectCompleteCheckAllMultiFormItem
+ */
+setItem('AutoSelectComplete', 'CheckAllMultiFormItem', (dictName) => (props) => {
   const forceUpdate = useForceUpdate();
 
   const { onCheckAllChange, debounceTimeout, ...others } = props;
@@ -396,7 +426,7 @@ setItem('AutoSelectComplete', 'CheckAllMulitFormItem', (dictName) => (props) => 
   }, [debounceTimeout, props.value]);
 
   return (
-    <CheckAllMulitSelectFormItem
+    <CheckAllMultiSelectFormItem
       selectProps={{
         notFoundContent: fetching ? <Spin size="small" /> : null,
         filterOption: false,
@@ -415,7 +445,3 @@ setItem('AutoSelectComplete', 'CheckAllMulitFormItem', (dictName) => (props) => 
     />
   );
 });
-// });
-
-// return FormItemComponents;
-// };

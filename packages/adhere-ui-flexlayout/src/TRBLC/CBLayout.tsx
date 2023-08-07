@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { FC, useMemo } from 'react';
+import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../auto';
 import Fixed from '../fixed';
@@ -17,22 +17,17 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param bSplit
  * @param cProps
  * @param props
+ * @param ref
  * @constructor
  */
-const CBLayout: FC<TBLRCLayoutProps> = ({
-  wrapClassName,
-  wrapStyle,
-  autoWrapProps,
-  autoInnerProps,
-  bProps,
-  bSplit,
-  cProps,
-  ...props
-}) => {
+const CBLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (
+  { wrapClassName, wrapStyle, autoWrapProps, autoInnerProps, bProps, bSplit, cProps, ...props },
+  ref,
+) => {
   // @ts-ignore
-  const BProps = omit<TBLRProps, string>(bProps, ['render']);
+  const BProps = omit<TBLRProps, string>(bProps, ['children']);
   // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['render']);
+  const CProps = omit<CenterProps, string>(cProps, ['children']);
 
   const classList = useMemo(
     () =>
@@ -48,20 +43,20 @@ const CBLayout: FC<TBLRCLayoutProps> = ({
   );
 
   return (
-    <div className={classList} style={wrapStyle ?? {}}>
+    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
       <FlexLayout
         {...(props ?? {})}
         className={classNames(`${selectorPrefix}-cb-layout`, props?.className ?? '')}
         direction="vertical"
       >
-        <Auto {...(CProps ?? {})}>{cProps?.render?.()}</Auto>
+        <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
 
         {bSplit}
 
-        <Fixed {...(BProps ?? {})}>{bProps?.render?.()}</Fixed>
+        <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
       </FlexLayout>
     </div>
   );
 };
 
-export default CBLayout;
+export default memo(forwardRef<any, TBLRCLayoutProps>(CBLayout));

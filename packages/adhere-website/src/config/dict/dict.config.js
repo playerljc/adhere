@@ -3,7 +3,7 @@
  */
 
 export default () => {
-  const requireComponent = require.context('./dict', false, /.*\.(js)$/);
+  const requireComponent = require.context('./dict', false, /.*\.jsx?$/);
 
   requireComponent.keys().forEach((path) => {
     const dict = requireComponent(path).default;

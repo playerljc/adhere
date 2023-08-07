@@ -1,2 +1,2 @@
 export default{close:"close"};
-//# sourceMappingURL=actions.js.map
+//# sourceMappingURL=Actions.js.map

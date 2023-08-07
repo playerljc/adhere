@@ -1,13 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import { TBLRCLayoutProps } from '../types';
-/**
- * LCRBLayout
- * @param tProps
- * @param cProps
- * @param autoWrapProps
- * @param autoInnerProps
- * @param props
- * @constructor
- */
-declare const LCRBLayout: FC<TBLRCLayoutProps>;
-export default LCRBLayout;
+declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<TBLRCLayoutProps & React.RefAttributes<any>>>;
+export default _default;
