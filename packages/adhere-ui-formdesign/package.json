@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-formdesign",
-  "version": "2.10.3",
+  "version": "2.10.5",
   "description": "表单设计器",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,14 +32,14 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
-    "@baifendian/adhere-ui-anthoc": "^2.10.3",
-    "@baifendian/adhere-ui-ellipsis": "^2.10.3",
-    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.10.3",
-    "@baifendian/adhere-ui-flexlayout": "^2.10.3",
+    "@baifendian/adhere-ui-anthoc": "^2.10.5",
+    "@baifendian/adhere-ui-ellipsis": "^2.10.5",
+    "@baifendian/adhere-ui-fieldgeneratortodict": "^2.10.5",
+    "@baifendian/adhere-ui-flexlayout": "^2.10.5",
     "@baifendian/adhere-ui-hooks": "^2.10.1",
     "@baifendian/adhere-ui-space": "^2.9.0",
-    "@baifendian/adhere-util": "^2.10.3",
-    "@baifendian/adhere-util-dict": "^2.10.3",
+    "@baifendian/adhere-util": "^2.10.5",
+    "@baifendian/adhere-util-dict": "^2.10.5",
     "@baifendian/adhere-util-intl": "^2.10.3",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
