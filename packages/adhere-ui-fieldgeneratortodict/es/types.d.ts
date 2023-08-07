@@ -53,10 +53,10 @@ export type CascaderFormItemProps = {
 export type CascaderLeafFormItemProps = {
     dataSource: LabelValue[];
 } & CascaderProps<any>;
-export type CascaderMulitFormItemProps = {
+export type CascaderMultiFormItemProps = {
     options: LabelValue[];
 } & CascaderProps<any>;
-export type CascaderLeafMulitFormItemProps = {
+export type CascaderLeafMultiFormItemProps = {
     dataSource: LabelValue[];
 } & CascaderProps<any>;
 export interface ListFormItemProps extends ListProps<any> {
@@ -68,7 +68,7 @@ export interface ListSelectFormItemProps extends FormItemProps, ListFormItemProp
     selectProps?: SelectFormItemProps;
     labelKey?: string;
 }
-export interface ListMulitSelectFormItemProps extends ListSelectFormItemProps {
+export interface ListMultiSelectFormItemProps extends ListSelectFormItemProps {
 }
 export interface RadioSelectFormItemProps extends FormItemProps, SelectFormItemProps {
     dataSource: RadioLabelValue[];
@@ -99,7 +99,7 @@ export type TableSelectFormItemProps = FormItemProps & TableFormItemProps & {
     dataSource: LabelValue[];
     rowKey?: string;
 };
-export interface TableMulitSelectFormItemProps extends TableSelectFormItemProps {
+export interface TableMultiSelectFormItemProps extends TableSelectFormItemProps {
 }
 export interface TransferFormItemProps extends TransferProps<any> {
     dataSource: LabelValue[];
@@ -112,9 +112,9 @@ export interface TreeSelectFormItemProps extends TreeSelectProps {
 export interface TreeSelectLeafFormItemProps extends TreeSelectFormItemProps {
     dataSource: LabelValue[];
 }
-export interface TreeSelectMulitFormItemProps extends TreeSelectLeafFormItemProps {
+export interface TreeSelectMultiFormItemProps extends TreeSelectLeafFormItemProps {
 }
-export interface TreeSelectLeafMulitFormItemProps extends TreeSelectMulitFormItemProps {
+export interface TreeSelectLeafMultiFormItemProps extends TreeSelectMultiFormItemProps {
 }
 export type AutoCompleteFormItemProps = FormItemProps & AutoCompleteProps & {
     dataSource: LabelValue[];

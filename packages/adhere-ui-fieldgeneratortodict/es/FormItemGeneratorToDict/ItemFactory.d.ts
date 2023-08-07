@@ -19,7 +19,7 @@ export declare function getItem({ itemName, functionName, dictName, }: {
 /**
  * ItemFactory
  * // p = 字典名(业务名 + 组件名) + 功能名
- * // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MulitFormItem
+ * // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MultiFormItem
  * @param params
  * @return {any}
  */

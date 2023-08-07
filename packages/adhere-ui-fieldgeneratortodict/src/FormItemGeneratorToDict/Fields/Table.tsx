@@ -2,17 +2,17 @@
   静态的数据
    普通的表格
    Select单选
-   MulitSelect多选
+   MultiSelect多选
 
   动态的数据
    普通的表格
    Select单选
-   MulitSelect多选
+   MultiSelect多选
 
   动态的分页数据
    普通的表格
    Select单选
-   MulitSelect多选
+   MultiSelect多选
 ***/
 import { useMount, useUpdateEffect } from 'ahooks';
 import React, { useRef, useState } from 'react';
@@ -21,10 +21,10 @@ import { Table } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
 import TableFormItem from '../TableFormItem';
-import TableMulitSelectFormItem from '../TableMulitSelectFormItem';
+import TableMultiSelectFormItem from '../TableMultiSelectFormItem';
 import TableSelectFormItem from '../TableSelectFormItem';
 import { deepDep } from '../util';
 
@@ -91,7 +91,7 @@ setItem(
 );
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param cascadeParams
  * @param props {
  *   cascadeParams
@@ -102,7 +102,7 @@ setItem(
  */
 setItem(
   'Table',
-  'MulitSelectFormItem',
+  'MultiSelectFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -120,7 +120,7 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <TableMulitSelectFormItem {...props} dataSource={dataSource} />;
+      return <TableMultiSelectFormItem {...props} dataSource={dataSource} />;
     },
 );
 
@@ -216,7 +216,7 @@ setItem(
 );
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param cascadeParams
  * @param props {
  *   cascadeParams
@@ -227,7 +227,7 @@ setItem(
  */
 setItem(
   'TableDynamic',
-  'MulitSelectFormItem',
+  'MultiSelectFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -257,7 +257,7 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <TableMulitSelectFormItem {...props} dataSource={data} />;
+      return <TableMultiSelectFormItem {...props} dataSource={data} />;
     },
 );
 
@@ -508,13 +508,13 @@ setItem('TablePagination', 'SelectFormItem', (dictName) => (props) => {
 });
 
 /**
- * TablePaginationMulitSelectFormItem
+ * TablePaginationMultiSelectFormItem
  * @param props {
  *    rowKey
  *    labelKey
  * }
  */
-setItem('TablePagination', 'MulitSelectFormItem', (dictName) => (props) => {
+setItem('TablePagination', 'MultiSelectFormItem', (dictName) => (props) => {
   const [inputValue, setInputValue] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -659,7 +659,7 @@ setItem('TablePagination', 'MulitSelectFormItem', (dictName) => (props) => {
   }, [pagin.current, pagin.pageSize]);
 
   return (
-    <MulitSelectFormItem
+    <MultiSelectFormItem
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,

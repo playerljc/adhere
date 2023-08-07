@@ -1,2 +1,0 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,e=1,a=arguments.length;e<a;e++)for(var s in t=arguments[e])Object.prototype.hasOwnProperty.call(t,s)&&(r[s]=t[s]);return r}).apply(this,arguments)};import React from"react";import CascaderFormItem from"../CascaderFormItem";var CascaderMulitFormItem=function(r){return React.createElement(CascaderFormItem,__assign({},r,{multiple:!0,maxTagCount:"responsive"}))};export default CascaderMulitFormItem;
-//# sourceMappingURL=index.js.map

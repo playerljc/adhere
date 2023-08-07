@@ -5,8 +5,8 @@ import Dict from '@baifendian/adhere-util-dict';
 
 import CascaderFormItem from '../CascaderFormItem';
 import CascaderLeafFormItem from '../CascaderLeafFormItem';
-import CascaderLeafMulitFormItem from '../CascaderLeafMulitFormItem';
-import CascaderMulitFormItem from '../CascaderMulitFormItem';
+import CascaderLeafMultiFormItem from '../CascaderLeafMultiFormItem';
+import CascaderMultiFormItem from '../CascaderMultiFormItem';
 import { setItem } from '../ItemFactory';
 import { deepDep } from '../util';
 
@@ -60,11 +60,11 @@ setItem(
 );
 
 /**
- * CascaderMulitFormItem
+ * CascaderMultiFormItem
  */
 setItem(
   'Cascader',
-  'MulitFormItem',
+  'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -82,16 +82,16 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <CascaderMulitFormItem {...props} options={dataSource} />;
+      return <CascaderMultiFormItem {...props} options={dataSource} />;
     },
 );
 
 /**
- * CascaderLeafMulitFormItem
+ * CascaderLeafMultiFormItem
  */
 setItem(
   'Cascader',
-  'LeafMulitFormItem',
+  'LeafMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -109,7 +109,7 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <CascaderLeafMulitFormItem {...props} dataSource={dataSource} />;
+      return <CascaderLeafMultiFormItem {...props} dataSource={dataSource} />;
     },
 );
 
@@ -192,11 +192,11 @@ setItem(
 );
 
 /**
- * CascaderDynamicMulitFormItem
+ * CascaderDynamicMultiFormItem
  */
 setItem(
   'CascaderDynamic',
-  'MulitFormItem',
+  'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -226,16 +226,16 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <CascaderMulitFormItem {...props} options={data} />;
+      return <CascaderMultiFormItem {...props} options={data} />;
     },
 );
 
 /**
- * CascaderDynamicLeafMulitFormItem
+ * CascaderDynamicLeafMultiFormItem
  */
 setItem(
   'CascaderDynamic',
-  'LeafMulitFormItem',
+  'LeafMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -265,6 +265,6 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <CascaderLeafMulitFormItem {...props} dataSource={data} />;
+      return <CascaderLeafMultiFormItem {...props} dataSource={data} />;
     },
 );

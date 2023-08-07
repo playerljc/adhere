@@ -7,9 +7,9 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import Dict from '@baifendian/adhere-util-dict';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-import CheckAllMulitSelectFormItem from '../CheckAllMulitSelectFormItem';
+import CheckAllMultiSelectFormItem from '../CheckAllMultiSelectFormItem';
 import { getItem, setItem } from '../ItemFactory';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
 import { deepDep } from '../util';
 
@@ -25,16 +25,16 @@ const SelectFormItemWrap = ({ dataSource, ...props }) => {
   return <SelectFormItem selectProps={{ ...props }} dataSource={dataSource} />;
 };
 
-// MulitSelectFormItem
-const SelectMulitFormItemWrap = ({ dataSource, ...props }) => {
+// MultiSelectFormItem
+const SelectMultiFormItemWrap = ({ dataSource, ...props }) => {
   // @ts-ignore
-  return <MulitSelectFormItem selectProps={{ ...props }} dataSource={dataSource} />;
+  return <MultiSelectFormItem selectProps={{ ...props }} dataSource={dataSource} />;
 };
 
-// CheckAllMulitSelectFormItem
-const SelectCheckAllMulitFormItemWrap = ({ dataSource, onCheckAllChange, ...props }) => {
+// CheckAllMultiSelectFormItem
+const SelectCheckAllMultiFormItemWrap = ({ dataSource, onCheckAllChange, ...props }) => {
   return (
-    <CheckAllMulitSelectFormItem
+    <CheckAllMultiSelectFormItem
       // @ts-ignore
       selectProps={{ ...props }}
       dataSource={dataSource}
@@ -68,11 +68,11 @@ setItem('Select', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange
 });
 
 /**
- * SelectMulitFormItem
+ * SelectMultiFormItem
  */
 setItem(
   'Select',
-  'MulitFormItem',
+  'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -90,16 +90,16 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <SelectMulitFormItemWrap {...props} dataSource={dataSource} />;
+      return <SelectMultiFormItemWrap {...props} dataSource={dataSource} />;
     },
 );
 
 /**
- * SelectCheckAllMulitFormItem
+ * SelectCheckAllMultiFormItem
  */
 setItem(
   'Select',
-  'CheckAllMulitFormItem',
+  'CheckAllMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -118,7 +118,7 @@ setItem(
       }, [dataSource]);
 
       // @ts-ignore
-      return <SelectCheckAllMulitFormItemWrap {...props} dataSource={dataSource} />;
+      return <SelectCheckAllMultiFormItemWrap {...props} dataSource={dataSource} />;
     },
 );
 
@@ -162,11 +162,11 @@ setItem(
 );
 
 /**
- * SelectDynamicMulitFormItem
+ * SelectDynamicMultiFormItem
  */
 setItem(
   'SelectDynamic',
-  'MulitFormItem',
+  'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -196,16 +196,16 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <SelectMulitFormItemWrap {...props} dataSource={data} />;
+      return <SelectMultiFormItemWrap {...props} dataSource={data} />;
     },
 );
 
 /**
- * SelectDynamicCheckAllMulitFormItem
+ * SelectDynamicCheckAllMultiFormItem
  */
 setItem(
   'SelectDynamic',
-  'CheckAllMulitFormItem',
+  'CheckAllMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -236,7 +236,7 @@ setItem(
       }, [data]);
 
       // @ts-ignore
-      return <SelectCheckAllMulitFormItemWrap {...props} dataSource={data} />;
+      return <SelectCheckAllMultiFormItemWrap {...props} dataSource={data} />;
     },
 );
 
@@ -334,9 +334,9 @@ setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300
 });
 
 /**
- * AutoSelectCompleteMulitFormItem
+ * AutoSelectCompleteMultiFormItem
  */
-setItem('AutoSelectComplete', 'MulitFormItem', (originDictName, dictName) => (props) => {
+setItem('AutoSelectComplete', 'MultiFormItem', (originDictName, dictName) => (props) => {
   // FormItemComponents[`${dictName}FormItem`];
   let Component =
     AutoSelectCompleteFormItem ??
@@ -350,9 +350,9 @@ setItem('AutoSelectComplete', 'MulitFormItem', (originDictName, dictName) => (pr
 });
 
 /**
- * AutoSelectCompleteCheckAllMulitFormItem
+ * AutoSelectCompleteCheckAllMultiFormItem
  */
-setItem('AutoSelectComplete', 'CheckAllMulitFormItem', (dictName) => (props) => {
+setItem('AutoSelectComplete', 'CheckAllMultiFormItem', (dictName) => (props) => {
   const forceUpdate = useForceUpdate();
 
   const { onCheckAllChange, debounceTimeout, ...others } = props;
@@ -426,7 +426,7 @@ setItem('AutoSelectComplete', 'CheckAllMulitFormItem', (dictName) => (props) => 
   }, [debounceTimeout, props.value]);
 
   return (
-    <CheckAllMulitSelectFormItem
+    <CheckAllMultiSelectFormItem
       selectProps={{
         notFoundContent: fetching ? <Spin size="small" /> : null,
         filterOption: false,

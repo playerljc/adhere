@@ -7,9 +7,9 @@ import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
 import ListFormItem from '../ListFormItem';
-import ListMulitSelectFormItem from '../ListMulitSelectFormItem';
+import ListMultiSelectFormItem from '../ListMultiSelectFormItem';
 import ListSelectFormItem from '../ListSelectFormItem';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 import SelectFormItem from '../SelectFormItem';
 import { deepDep } from '../util';
 
@@ -78,7 +78,7 @@ setItem(
 );
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param cascadeParams
  * @param props {
  *   cascadeParams
@@ -89,7 +89,7 @@ setItem(
  */
 setItem(
   'List',
-  'MulitSelectFormItem',
+  'MultiSelectFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -107,7 +107,7 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <ListMulitSelectFormItem {...props} dataSource={dataSource} />;
+      return <ListMultiSelectFormItem {...props} dataSource={dataSource} />;
     },
 );
 
@@ -203,7 +203,7 @@ setItem(
 );
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param cascadeParams
  * @param props {
  *   cascadeParams
@@ -214,7 +214,7 @@ setItem(
  */
 setItem(
   'ListDynamic',
-  'MulitSelectFormItem',
+  'MultiSelectFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -244,7 +244,7 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <ListMulitSelectFormItem {...props} dataSource={data} />;
+      return <ListMultiSelectFormItem {...props} dataSource={data} />;
     },
 );
 
@@ -527,13 +527,13 @@ setItem('ListPagination', 'SelectFormItem', (dictName) => (props) => {
 });
 
 /**
- * MulitSelectFormItem
+ * MultiSelectFormItem
  * @param props {
  *    rowKey
  *    labelKey
  * }
  */
-setItem('ListPagination', 'MulitSelectFormItem', (dictName) => (props) => {
+setItem('ListPagination', 'MultiSelectFormItem', (dictName) => (props) => {
   const [inputValue, setInputValue] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -686,7 +686,7 @@ setItem('ListPagination', 'MulitSelectFormItem', (dictName) => (props) => {
   }, [pagin.current, pagin.pageSize]);
 
   return (
-    <MulitSelectFormItem
+    <MultiSelectFormItem
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,

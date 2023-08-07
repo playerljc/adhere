@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import { Checkbox, Space } from '@baifendian/adhere-ui-anthoc';
 
 import { RadioSelectFormItemProps } from '../../types';
-import MulitSelectFormItem from '../MulitSelectFormItem';
+import MultiSelectFormItem from '../MultiSelectFormItem';
 
 /**
  * CheckBoxSelectFormItem
@@ -43,7 +43,7 @@ const CheckBoxSelectFormItem: FC<RadioSelectFormItemProps> = (props) => {
   }
 
   return (
-    <MulitSelectFormItem
+    <MultiSelectFormItem
       selectProps={{
         value: props.value,
         dropdownRender: renderDropdownRender,

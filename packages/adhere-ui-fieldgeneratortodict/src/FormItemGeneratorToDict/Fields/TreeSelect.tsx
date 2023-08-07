@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
-import TreeMulitSelectFormItem from '../TreeMulitSelectFormItem';
+import TreeMultiSelectFormItem from '../TreeMultiSelectFormItem';
 import TreeSelectFormItem from '../TreeSelectFormItem';
 import TreeSelectLeafFormItem from '../TreeSelectLeafFormItem';
-import TreeSelectLeafMulitFormItem from '../TreeSelectLeafMulitFormItem';
+import TreeSelectLeafMultiFormItem from '../TreeSelectLeafMultiFormItem';
 import { deepDep } from '../util';
 
 // treeSelectFormItem
@@ -15,14 +15,14 @@ const TreeSelectFormItemWrap = ({ dataSource, ...props }) => {
   return <TreeSelectFormItem {...props} treeData={dataSource} /*selectMode="any" */ />;
 };
 
-// MulitSelectFormItem
-const TreeSelectMulitFormItemWrap = ({ dataSource, ...props }) => {
-  return <TreeMulitSelectFormItem {...props} treeData={dataSource} /*selectMode="any"*/ />;
+// MultiSelectFormItem
+const TreeSelectMultiFormItemWrap = ({ dataSource, ...props }) => {
+  return <TreeMultiSelectFormItem {...props} treeData={dataSource} /*selectMode="any"*/ />;
 };
 
-// 静态的TreeSelect
-// treeSelectDictNames.forEach((selectDictName) => {
-// treeSelectFormItem
+/**
+ * TreeFormItem
+ */
 setItem('Tree', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -42,7 +42,9 @@ setItem('Tree', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, 
   return <TreeSelectFormItemWrap {...props} dataSource={dataSource} />;
 });
 
-// treeSelectLeafFormItem
+/**
+ * TreeLeafFormItem
+ */
 setItem('Tree', 'LeafFormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
   const handler = Dict.value[dictName].value;
 
@@ -62,10 +64,12 @@ setItem('Tree', 'LeafFormItem', (dictName) => ({ cascadeParams, onDataSourceChan
   return <TreeSelectLeafFormItem {...props} dataSource={dataSource} />;
 });
 
-// MulitSelectFormItem
+/**
+ * TreeMultiFormItem
+ */
 setItem(
   'Tree',
-  'MulitFormItem',
+  'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -83,14 +87,16 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <TreeSelectMulitFormItemWrap {...props} dataSource={dataSource} />;
+      return <TreeSelectMultiFormItemWrap {...props} dataSource={dataSource} />;
     },
 );
 
-// MulitSelectLeafFormItem
+/**
+ * TreeLeafMultiFormItem
+ */
 setItem(
   'Tree',
-  'LeafMulitFormItem',
+  'LeafMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
@@ -108,13 +114,13 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <TreeSelectLeafMulitFormItem {...props} dataSource={dataSource} />;
+      return <TreeSelectLeafMultiFormItem {...props} dataSource={dataSource} />;
     },
 );
 
-// 动态的TreeSelect
-// treeSelectDynamicDictNames.forEach((dictName) => {
-// treeSelectFormItem
+/**
+ * TreeDynamicFormItem
+ */
 setItem(
   'TreeDynamic',
   'FormItem',
@@ -151,7 +157,9 @@ setItem(
     },
 );
 
-// treeSelectLeafFormItem
+/**
+ * TreeDynamicLeafFormItem
+ */
 setItem(
   'TreeDynamic',
   'LeafFormItem',
@@ -188,10 +196,12 @@ setItem(
     },
 );
 
-// MulitSelectFormItem
+/**
+ * TreeDynamicMultiFormItem
+ */
 setItem(
   'TreeDynamic',
-  'MulitFormItem',
+  'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -221,14 +231,16 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <TreeSelectMulitFormItemWrap {...props} dataSource={data} />;
+      return <TreeSelectMultiFormItemWrap {...props} dataSource={data} />;
     },
 );
 
-// MulitSelectFormItem
+/**
+ * TreeDynamicLeafMultiFormItem
+ */
 setItem(
   'TreeDynamic',
-  'LeafMulitFormItem',
+  'LeafMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const [data, setData] = useState([]);
@@ -258,6 +270,6 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <TreeSelectLeafMulitFormItem {...props} dataSource={data} />;
+      return <TreeSelectLeafMultiFormItem {...props} dataSource={data} />;
     },
 );
