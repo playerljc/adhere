@@ -10,49 +10,67 @@ import { deepDep } from '../util';
 /**
  * BreadcrumbFormItem
  */
-setItem('Breadcrumb', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+setItem(
+  'Breadcrumb',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  let dataSource;
+      let dataSource;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-  // @ts-ignore
-  return <BreadcrumbFormItem {...props} items={dataSource} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      // @ts-ignore
+      return <BreadcrumbFormItem {...props} items={dataSource} />;
+    },
+);
 
 /**
  * BreadcrumbDynamicFormItem
  */
-setItem('BreadcrumbDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'BreadcrumbDynamic',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useMount(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  });
 
-  useUpdateEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  // @ts-ignore
-  return <BreadcrumbFormItem {...props} items={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      // @ts-ignore
+      return <BreadcrumbFormItem {...props} items={data} />;
+    },
+);

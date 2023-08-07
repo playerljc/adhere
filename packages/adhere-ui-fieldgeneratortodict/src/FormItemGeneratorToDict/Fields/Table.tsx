@@ -37,7 +37,7 @@ import { deepDep } from '../util';
  * }
  * @return {JSX.Element}
  */
-setItem('Table', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
+setItem('Table', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
   const handler = Dict.value[dictName].value;
 
   let dataSource;
@@ -48,6 +48,10 @@ setItem('Table', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
   } else {
     dataSource = handler;
   }
+
+  useUpdateEffect(() => {
+    onDataSourceChange?.(dataSource);
+  }, [dataSource]);
 
   return <TableFormItem {...props} dataSource={dataSource} />;
 });
@@ -62,20 +66,29 @@ setItem('Table', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
  * }
  * @return {JSX.Element}
  */
-setItem('Table', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+setItem(
+  'Table',
+  'SelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  let dataSource;
+      let dataSource;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-  return <TableSelectFormItem {...props} dataSource={dataSource} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <TableSelectFormItem {...props} dataSource={dataSource} />;
+    },
+);
 
 /**
  * MulitSelectFormItem
@@ -87,20 +100,29 @@ setItem('Table', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) =
  * }
  * @return {JSX.Element}
  */
-setItem('Table', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const handler = Dict.value[dictName].value;
+setItem(
+  'Table',
+  'MulitSelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const handler = Dict.value[dictName].value;
 
-  let dataSource;
+      let dataSource;
 
-  // 如果是函数(一般是级联)
-  if (handler instanceof Function) {
-    dataSource = handler(cascadeParams);
-  } else {
-    dataSource = handler;
-  }
+      // 如果是函数(一般是级联)
+      if (handler instanceof Function) {
+        dataSource = handler(cascadeParams);
+      } else {
+        dataSource = handler;
+      }
 
-  return <TableMulitSelectFormItem {...props} dataSource={dataSource} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(dataSource);
+      }, [dataSource]);
+
+      return <TableMulitSelectFormItem {...props} dataSource={dataSource} />;
+    },
+);
 
 /**
  * TableFormItem
@@ -111,32 +133,41 @@ setItem('Table', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props
  * }
  * @return {JSX.Element}
  */
-setItem('TableDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'TableDynamic',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useMount(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  });
 
-  useUpdateEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <TableFormItem {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <TableFormItem {...props} dataSource={data} />;
+    },
+);
 
 /**
  * SelectFormItem
@@ -148,32 +179,41 @@ setItem('TableDynamic', 'FormItem', (dictName) => ({ cascadeParams, ...props }) 
  * }
  * @return {JSX.Element}
  */
-setItem('TableDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'TableDynamic',
+  'SelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useMount(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  });
 
-  useUpdateEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <TableSelectFormItem {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <TableSelectFormItem {...props} dataSource={data} />;
+    },
+);
 
 /**
  * MulitSelectFormItem
@@ -185,32 +225,41 @@ setItem('TableDynamic', 'SelectFormItem', (dictName) => ({ cascadeParams, ...pro
  * }
  * @return {JSX.Element}
  */
-setItem('TableDynamic', 'MulitSelectFormItem', (dictName) => ({ cascadeParams, ...props }) => {
-  const [data, setData] = useState([]);
+setItem(
+  'TableDynamic',
+  'MulitSelectFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const [data, setData] = useState([]);
 
-  // 存放字典的返回值(可能是promise也可能是Function)
-  const handler = Dict.value[dictName].value;
+      // 存放字典的返回值(可能是promise也可能是Function)
+      const handler = Dict.value[dictName].value;
 
-  useMount(() => {
-    // 如果是Promise直接返回
-    if (handler.then) {
-      handler.then((res) => {
-        setData(res);
+      useMount(() => {
+        // 如果是Promise直接返回
+        if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
+        }
       });
-    }
-  });
 
-  useUpdateEffect(() => {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      handler(cascadeParams).then((res) => {
-        setData(res);
-      });
-    }
-  }, [deepDep(cascadeParams)]);
+      useUpdateEffect(() => {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          handler(cascadeParams).then((res) => {
+            setData(res);
+          });
+        }
+      }, [deepDep(cascadeParams)]);
 
-  return <TableMulitSelectFormItem {...props} dataSource={data} />;
-});
+      useUpdateEffect(() => {
+        onDataSourceChange?.(data);
+      }, [data]);
+
+      return <TableMulitSelectFormItem {...props} dataSource={data} />;
+    },
+);
 
 /**
  * TableFormItem

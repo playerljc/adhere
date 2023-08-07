@@ -2,11 +2,15 @@ import { Space as AntdSpace, Avatar, Checkbox, List } from 'antd';
 import React, { useState } from 'react';
 
 import { DownOutlined } from '@ant-design/icons';
+import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Space from '@baifendian/adhere-ui-space';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/PlaygroundPage';
 
 import FieldGeneratorToDict from '../src/index';
+
+import '@baifendian/adhere-ui-flexlayout/es/index.less';
+import '@baifendian/adhere-ui-space/es/index.less';
 
 import '../src/index.less';
 
@@ -19,6 +23,10 @@ export default () => {
     selectValue: '',
   });
   const [current, setCurrent] = useState('mail');
+
+  const [province, setProvince] = useState();
+  const [city, setCity] = useState();
+  const [county, setCounty] = useState();
 
   const onClick = (e) => {
     console.log('click ', e);
@@ -275,6 +283,63 @@ export default () => {
                 value={vals}
                 onChange={(v) => setVals(v)}
               />
+            ),
+          },
+
+          {
+            id: 'p7',
+            name: '省市区级联',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '省市区级联',
+                info: '省市区级联`',
+              },
+            },
+            codeText: ``,
+            renderChildren: () => (
+              <div>
+                <Space.Group direction="vertical">
+                  <FlexLayout direction="horizontal">
+                    <FlexLayout.Fixed>省：</FlexLayout.Fixed>
+                    <FlexLayout.Auto>
+                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemProvinceSelectDynamicFormItem
+                        style={{ width: 200 }}
+                        value={province}
+                        onChange={(v) => setProvince(v)}
+                      />
+                    </FlexLayout.Auto>
+                  </FlexLayout>
+
+                  <FlexLayout direction="horizontal">
+                    <FlexLayout.Fixed>市：</FlexLayout.Fixed>
+                    <FlexLayout.Auto>
+                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCitySelectDynamicFormItem
+                        style={{ width: 200 }}
+                        value={city}
+                        onChange={(v) => setCity(v)}
+                        cascadeParams={province}
+                        onDataSourceChange={() => setCity('')}
+                      />
+                    </FlexLayout.Auto>
+                  </FlexLayout>
+
+                  <FlexLayout direction="horizontal">
+                    <FlexLayout.Fixed>区：</FlexLayout.Fixed>
+                    <FlexLayout.Auto>
+                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCountySelectDynamicFormItem
+                        style={{ width: 200 }}
+                        value={county}
+                        onChange={(v) => setCounty(v)}
+                        cascadeParams={city}
+                        onDataSourceChange={() => setCounty('')}
+                      />
+                    </FlexLayout.Auto>
+                  </FlexLayout>
+                </Space.Group>
+              </div>
             ),
           },
         ]}
