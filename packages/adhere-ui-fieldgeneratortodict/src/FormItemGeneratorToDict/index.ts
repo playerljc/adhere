@@ -255,6 +255,7 @@ const ItemNames = new Map([
 
   ['TreeDynamic', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
   ['Tree', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
+  ['TreeAsync', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
 
   // 必须放在最后
   ['AutoSelectComplete', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],

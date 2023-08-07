@@ -8,6 +8,7 @@ import TreeMultiSelectFormItem from '../TreeMultiSelectFormItem';
 import TreeSelectFormItem from '../TreeSelectFormItem';
 import TreeSelectLeafFormItem from '../TreeSelectLeafFormItem';
 import TreeSelectLeafMultiFormItem from '../TreeSelectLeafMultiFormItem';
+import { useAsyncTreeSelect } from '../hooks';
 import { deepDep } from '../util';
 
 // treeSelectFormItem
@@ -271,5 +272,103 @@ setItem(
       }, [data]);
 
       return <TreeSelectLeafMultiFormItem {...props} dataSource={data} />;
+    },
+);
+
+// ---------------------------------------------------------------------------------------------------------------------
+setItem(
+  'TreeAsync',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+        cascadeParams,
+        onDataSourceChange,
+        fetchBranch,
+        defaultId,
+        value: props.value,
+      });
+
+      return (
+        <TreeSelectFormItemWrap
+          virtual={false}
+          // @ts-ignore
+          loadData={onLoadData}
+          dataSource={treeData}
+          {...props}
+        />
+      );
+    },
+);
+setItem(
+  'TreeAsync',
+  'LeafFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+        cascadeParams,
+        onDataSourceChange,
+        fetchBranch,
+        defaultId,
+        value: props.value,
+      });
+
+      return (
+        <TreeSelectLeafFormItem
+          virtual={false}
+          // @ts-ignore
+          loadData={onLoadData}
+          dataSource={treeData}
+          {...props}
+        />
+      );
+    },
+);
+setItem(
+  'TreeAsync',
+  'MultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+        cascadeParams,
+        onDataSourceChange,
+        fetchBranch,
+        defaultId,
+        value: props.value,
+      });
+
+      return (
+        <TreeSelectMultiFormItemWrap
+          virtual={false}
+          // @ts-ignore
+          loadData={onLoadData}
+          dataSource={treeData}
+          {...props}
+        />
+      );
+    },
+);
+setItem(
+  'TreeAsync',
+  'LeafMultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+        cascadeParams,
+        onDataSourceChange,
+        fetchBranch,
+        defaultId,
+        value: props.value,
+      });
+
+      return (
+        <TreeSelectLeafMultiFormItem
+          virtual={false}
+          // @ts-ignore
+          loadData={onLoadData}
+          dataSource={treeData}
+          {...props}
+        />
+      );
     },
 );

@@ -6,6 +6,7 @@
 
 * 根据原始字典生成各种形式的组件，无需像之前一样定义出所有字典
 * 加入onDataSourceChange事件
+* 加入TreeSelect的异步加载
 
 # 1.0.8
 

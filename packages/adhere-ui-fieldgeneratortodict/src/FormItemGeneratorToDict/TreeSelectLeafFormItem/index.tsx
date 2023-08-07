@@ -1,7 +1,8 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 
 import { TreeSelectLeafFormItemProps } from '../../types';
 import TreeSelectFormItem from '../TreeSelectFormItem';
+import { useTreeSelectLeaf } from '../hooks';
 
 /**
  * TreeSelectLeafFormItem
@@ -10,21 +11,7 @@ import TreeSelectFormItem from '../TreeSelectFormItem';
  * @constructor
  */
 const TreeSelectLeafFormItem: FC<TreeSelectLeafFormItemProps> = ({ dataSource, ...props }) => {
-  const targetDataSource = useMemo(() => {
-    function loop(nodes) {
-      (nodes || []).forEach((node) => {
-        node.disabled = !('leaf' in node && node.leaf);
-
-        loop(node.children);
-      });
-    }
-
-    const source = JSON.parse(JSON.stringify(dataSource));
-
-    loop(source);
-
-    return source;
-  }, [dataSource]);
+  const targetDataSource = useTreeSelectLeaf(dataSource);
 
   return <TreeSelectFormItem {...props} treeData={targetDataSource} /*selectMode="leaf"*/ />;
 };

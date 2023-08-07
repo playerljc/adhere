@@ -156,6 +156,8 @@ export interface TransferFormItemProps extends TransferProps<any> {
 
 export interface TreeSelectFormItemProps extends TreeSelectProps {}
 
+export interface TreeSelectAsyncFormItemProps extends TreeSelectFormItemProps {}
+
 export interface TreeSelectLeafFormItemProps extends TreeSelectFormItemProps {
   dataSource: LabelValue[];
 }
