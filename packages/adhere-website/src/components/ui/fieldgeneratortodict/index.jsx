@@ -104,7 +104,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -116,7 +116,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -142,7 +142,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -154,7 +154,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -218,7 +218,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -230,7 +230,7 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => {
@@ -258,7 +258,7 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectCheckAllMulitFormItem
+            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectCheckAllMultiFormItem
               selectProps={{
                 style: {
                   width: 200,
@@ -270,14 +270,13 @@ export default () => {
           }
                     `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteCheckAllMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteCheckAllMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
               />
             ),
           },
-
           {
             id: 'p7',
             name: '省市区级联',
@@ -290,7 +289,60 @@ export default () => {
                 info: '省市区级联`',
               },
             },
-            codeText: ``,
+            codeText: `
+import React, { useState } from 'react';
+
+import { FieldGeneratorToDict, FlexLayout, Space } from '@baifendian/adhere';
+
+export default () => {
+  const [province, setProvince] = useState();
+  const [city, setCity] = useState();
+  const [county, setCounty] = useState();
+
+  return (
+    <div>
+      <Space.Group direction="vertical">
+        <FlexLayout direction="horizontal">
+          <FlexLayout.Fixed>省：</FlexLayout.Fixed>
+          <FlexLayout.Auto>
+            <FieldGeneratorToDict.FormItemGeneratorToDict.SystemProvinceSelectDynamicFormItem
+              style={{ width: 200 }}
+              value={province}
+              onChange={(v) => setProvince(v)}
+            />
+          </FlexLayout.Auto>
+        </FlexLayout>
+
+        <FlexLayout direction="horizontal">
+          <FlexLayout.Fixed>市：</FlexLayout.Fixed>
+          <FlexLayout.Auto>
+            <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCitySelectDynamicFormItem
+              style={{ width: 200 }}
+              value={city}
+              onChange={(v) => setCity(v)}
+              cascadeParams={province}
+              onDataSourceChange={() => setCity('')}
+            />
+          </FlexLayout.Auto>
+        </FlexLayout>
+
+        <FlexLayout direction="horizontal">
+          <FlexLayout.Fixed>区：</FlexLayout.Fixed>
+          <FlexLayout.Auto>
+            <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCountySelectDynamicFormItem
+              style={{ width: 200 }}
+              value={county}
+              onChange={(v) => setCounty(v)}
+              cascadeParams={city}
+              onDataSourceChange={() => setCounty('')}
+            />
+          </FlexLayout.Auto>
+        </FlexLayout>
+      </Space.Group>
+    </div>
+  )
+}
+            `,
             renderChildren: () => (
               <div>
                 <Space.Group direction="vertical">
@@ -915,7 +967,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
       selectProps={{
         style: {
           width: 200,
@@ -927,7 +979,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -953,7 +1005,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
       selectProps={{
         style: {
           width: 200,
@@ -965,7 +1017,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -1253,7 +1305,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMultiSelectFormItem
       selectProps={{
         style: {
           width: 1024,
@@ -1292,7 +1344,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserTableMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserTableMultiSelectFormItem
                 selectProps={{
                   style: {
                     width: 1024,
@@ -1529,7 +1581,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMultiSelectFormItem
       selectProps={{
         style: { width: 1024 },
       }}
@@ -1570,7 +1622,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginTablePaginationMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginTablePaginationMultiSelectFormItem
                 selectProps={{
                   style: { width: 1024 },
                 }}
@@ -1703,7 +1755,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMultiFormItem
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
@@ -1711,7 +1763,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderMultiFormItem
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
@@ -1737,7 +1789,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMulitFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMultiFormItem
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
@@ -1745,7 +1797,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderLeafMulitFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderLeafMultiFormItem
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
@@ -1882,7 +1934,7 @@ export default () => {
       </List.Item>
     );
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMultiSelectFormItem
       selectProps={{
         style: {
           width: 1024,
@@ -1895,7 +1947,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserListMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserListMultiSelectFormItem
                 selectProps={{
                   style: {
                     width: 1024,
@@ -2033,7 +2085,7 @@ export default () => {
       </List.Item>
     );
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMulitSelectFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMultiSelectFormItem
       selectProps={{
         style: {
           width: 1024,
@@ -2050,7 +2102,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginListPaginationMulitSelectFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginListPaginationMultiSelectFormItem
                 selectProps={{
                   style: { width: 1024 },
                 }}
