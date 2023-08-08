@@ -1,15 +1,7 @@
 import { useUpdateEffect } from 'ahooks';
 import { Button, Card, InputNumber, Space } from 'antd';
 import type { ForwardRefRenderFunction } from 'react';
-import React, {
-  forwardRef,
-  memo,
-  useCallback,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { CompactPicker } from 'react-color';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -67,13 +59,8 @@ const Signature: ForwardRefRenderFunction<SignatureCoreHandle, SignatureCoreProp
     [],
   );
 
-  const renderTool = useCallback<() => React.ReactNode>(() => {
-    // 线条宽度
-    // 颜色
-    // 橡皮
-    // 预览
-    // 清除
-    return (
+  const renderTool = useMemo<React.ReactNode>(
+    () => (
       <Card>
         <Space direction="vertical" size={20}>
           <InputNumber
@@ -130,11 +117,12 @@ const Signature: ForwardRefRenderFunction<SignatureCoreHandle, SignatureCoreProp
           </Button>
         </Space>
       </Card>
-    );
-  }, [mode, width, color, toolProps]);
+    ),
+    [mode, width, color, toolProps],
+  );
 
-  const renderArea = useCallback<() => React.ReactNode>(() => {
-    return (
+  const renderArea = useMemo<React.ReactNode>(
+    () => (
       <Card>
         <WritingBoard
           ref={writingBoardRef}
@@ -143,8 +131,9 @@ const Signature: ForwardRefRenderFunction<SignatureCoreHandle, SignatureCoreProp
           defaultStrokeStyle={color}
         />
       </Card>
-    );
-  }, [areaProps]);
+    ),
+    [areaProps],
+  );
 
   useImperativeHandle(ref, () => ({
     /**
@@ -183,12 +172,12 @@ const Signature: ForwardRefRenderFunction<SignatureCoreHandle, SignatureCoreProp
       lProps={{
         ...defaultLProps,
         ...toolProps,
-        render: renderTool,
+        children: renderTool,
       }}
       cProps={{
         ...defaultCProps,
         ...areaProps,
-        render: renderArea,
+        children: renderArea,
       }}
     />
   );
