@@ -1,10 +1,10 @@
-import type { ModalProps } from 'antd/lib/modal/Modal';
+import type { ModalProps } from 'antd/lib/modal/interface';
 import type { CSSProperties, ReactNode } from 'react';
 
 import type {
   CenterProps,
   TBLRCLayoutProps,
-  TBLRProps
+  TBLRProps,
 } from '@baifendian/adhere-ui-flexlayout/es/types';
 
 /**
@@ -84,7 +84,7 @@ export interface IAction {
   // 设置上下文对象
   setContext: (context: IPolygonSelection) => void;
 
-  on(type: string | symbol, handler: Function, makStackSize?: number); 
+  on(type: string | symbol, handler: Function, makStackSize?: number);
 }
 
 /**

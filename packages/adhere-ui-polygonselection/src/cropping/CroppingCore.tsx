@@ -97,12 +97,12 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
           lProps={{
             ...defaultToolbarProps,
             ...toolProps,
-            render: renderTool,
+            children: renderTool,
           }}
           cProps={{
             ...defaultCProps,
             ...areaProps,
-            render: renderArea,
+            children: renderArea,
           }}
         />
       ),
@@ -116,12 +116,12 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
           rProps={{
             ...defaultToolbarProps,
             ...toolProps,
-            render: renderTool,
+            children: renderTool,
           }}
           cProps={{
             ...defaultCProps,
             ...areaProps,
-            render: renderArea,
+            children: renderArea,
           }}
         />
       ),
@@ -135,12 +135,12 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
           tProps={{
             ...defaultToolbarProps,
             ...toolProps,
-            render: renderTool,
+            children: renderTool,
           }}
           cProps={{
             ...defaultCProps,
             ...areaProps,
-            render: renderArea,
+            children: renderArea,
           }}
         />
       ),
@@ -154,12 +154,12 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
           bProps={{
             ...defaultToolbarProps,
             ...toolProps,
-            render: renderTool,
+            children: renderTool,
           }}
           cProps={{
             ...defaultCProps,
             ...areaProps,
-            render: renderArea,
+            children: renderArea,
           }}
         />
       ),
@@ -236,7 +236,7 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   /**
    * renderTool
    */
-  const renderTool = useCallback(() => {
+  const renderTool = useMemo(() => {
     const getType = (_type) => {
       return _type === type ? 'primary' : 'default';
     };
@@ -470,7 +470,7 @@ const CroppingCore: ForwardRefRenderFunction<CroppingCoreHandle, CroppingCorePro
   /**
    * renderArea
    */
-  const renderArea = useCallback(
+  const renderArea = useMemo(
     () => (
       <Card>
         <div className={`${selectorPrefix}-background`} style={{ minHeight: minHeight || 200 }}>

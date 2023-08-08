@@ -1,4 +1,4 @@
-import type { ModalProps } from 'antd/lib/modal/Modal';
+import type { ModalProps } from 'antd/lib/modal/interface';
 import type { CSSProperties, ReactNode } from 'react';
 import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '@baifendian/adhere-ui-flexlayout/es/types';
 /**
