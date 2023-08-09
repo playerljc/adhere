@@ -146,4 +146,7 @@ export interface TimelineFormItemProps extends SyncFormItemProps, TimelineProps 
 }
 export type StepsFormItemProps = SyncFormItemProps & StepsProps;
 export type MentionsFormItemProps = FormItemProps & MentionProps;
+export interface DictRefreshWrapperFunction {
+    refresh(): any;
+}
 export {};

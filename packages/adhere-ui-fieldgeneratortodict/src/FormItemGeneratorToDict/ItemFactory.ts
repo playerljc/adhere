@@ -1,5 +1,6 @@
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
+import DictRefreshHOC from './DictRefreshHOC';
 import { getOriginDictNameByItemName } from './util';
 
 const { memoized } = WatchMemoized;
@@ -38,9 +39,9 @@ export function getItem({
   const name = getOriginDictNameByItemName(dictName, itemName);
 
   if (!name) return null;
-  return memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(
-    name,
-    dictName,
+
+  return DictRefreshHOC(
+    memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(name, dictName),
   );
 }
 
