@@ -1,3 +1,15 @@
+# 2.10.7
+
+***
+
+2023-08-09
+
+* **adhere-ui-fieldgeneratortodict**
+  - 动态、静态字典内部加载数据策略修改
+  - 组件上加入了refresh刷新字典的方法
+* **adhere-ui-polygonselection**
+  - cropping样式修改
+
 # 2.10.6
 
 ***

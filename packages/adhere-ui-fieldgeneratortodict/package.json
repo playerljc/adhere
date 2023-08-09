@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-fieldgeneratortodict",
-  "version": "2.10.6",
+  "version": "2.10.7",
   "description": "字典生成器",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -33,6 +33,7 @@
   "dependencies": {
     "@baifendian/adhere-ui-anthoc": "^2.10.6",
     "@baifendian/adhere-ui-conditionalrender": "^2.9.0",
+    "@baifendian/adhere-ui-forceupdate": "^2.10.1",
     "@baifendian/adhere-ui-hooks": "^2.10.1",
     "@baifendian/adhere-ui-suspense": "^2.10.6",
     "@baifendian/adhere-util-dict": "^2.10.6",

@@ -1,3 +1,4 @@
+/// <reference types="react" />
 /**
  * setItem
  * @param {string} itemName - 组件名称
@@ -15,7 +16,7 @@ export declare function getItem({ itemName, functionName, dictName, }: {
     itemName: string;
     functionName: string;
     dictName: string;
-}): any;
+}): import("react").ForwardRefExoticComponent<Omit<any, "ref"> & import("react").RefAttributes<import("../types").DictRefreshWrapperFunction>> | null;
 /**
  * ItemFactory
  * // p = 字典名(业务名 + 组件名) + 功能名

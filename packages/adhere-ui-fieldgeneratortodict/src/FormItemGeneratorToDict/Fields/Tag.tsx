@@ -23,14 +23,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -50,14 +60,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -77,14 +97,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -104,14 +134,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -131,14 +171,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -158,14 +208,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -185,14 +245,24 @@ setItem(
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const handler = Dict.value[dictName].value;
 
-      let dataSource;
+      const [dataSource, setDataSource] = useState([]);
 
-      // 如果是函数(一般是级联)
-      if (handler instanceof Function) {
-        dataSource = handler(cascadeParams);
-      } else {
-        dataSource = handler;
+      function loadData() {
+        // 如果是函数(一般是级联)
+        if (handler instanceof Function) {
+          setDataSource(handler(cascadeParams));
+        } else {
+          setDataSource(handler);
+        }
       }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
+      }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
         onDataSourceChange?.(dataSource);
@@ -215,22 +285,25 @@ setItem(
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useMount(() => {
+      function loadData() {
         // 如果是Promise直接返回
-        if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      });
-
-      useUpdateEffect(() => {
-        // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
             setData(res);
           });
+        } else if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
         }
+      }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
       }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
@@ -252,22 +325,25 @@ setItem(
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useMount(() => {
+      function loadData() {
         // 如果是Promise直接返回
-        if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      });
-
-      useUpdateEffect(() => {
-        // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
             setData(res);
           });
+        } else if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
         }
+      }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
       }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
@@ -289,22 +365,25 @@ setItem(
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useMount(() => {
+      function loadData() {
         // 如果是Promise直接返回
-        if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      });
-
-      useUpdateEffect(() => {
-        // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
             setData(res);
           });
+        } else if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
         }
+      }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
       }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
@@ -326,22 +405,25 @@ setItem(
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useMount(() => {
+      function loadData() {
         // 如果是Promise直接返回
-        if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      });
-
-      useUpdateEffect(() => {
-        // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
             setData(res);
           });
+        } else if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
         }
+      }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
       }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
@@ -363,22 +445,25 @@ setItem(
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useMount(() => {
+      function loadData() {
         // 如果是Promise直接返回
-        if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      });
-
-      useUpdateEffect(() => {
-        // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
             setData(res);
           });
+        } else if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
         }
+      }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
       }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
@@ -400,22 +485,25 @@ setItem(
       // 存放字典的返回值(可能是promise也可能是Function)
       const handler = Dict.value[dictName].value;
 
-      useMount(() => {
+      function loadData() {
         // 如果是Promise直接返回
-        if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      });
-
-      useUpdateEffect(() => {
-        // 如果是函数(一般是级联)
         if (handler instanceof Function) {
           handler(cascadeParams).then((res) => {
             setData(res);
           });
+        } else if (handler.then) {
+          handler.then((res) => {
+            setData(res);
+          });
         }
+      }
+
+      useMount(() => {
+        loadData();
+      });
+
+      useUpdateEffect(() => {
+        loadData();
       }, [deepDep(cascadeParams)]);
 
       useUpdateEffect(() => {
