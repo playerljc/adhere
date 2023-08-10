@@ -17,10 +17,12 @@
     .adhere-ui-tablegridlayout-table {
       tr {
         > td {
-          border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+          border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+            var(--adhere-color-border-base);
 
           &:not(:last-child) {
-            border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+            border-right: var(--adhere-line-width) var(--adhere-line-type)
+              var(--adhere-color-border-base);
           }
 
           &.adhere-ui-tablegridlayout-table-noborder {
@@ -36,12 +38,27 @@
     table-layout: fixed;
     border-collapse: collapse;
 
+    &.adhere-ui-tablegridlayout-table-horizontal {
+      .adhere-ui-tablegridlayout-table-row {
+        > .adhere-ui-tablegridlayout-table-row-label {
+          text-align: right;
+        }
+      }
+    }
+
+    &.adhere-ui-tablegridlayout-table-vertical {
+      .adhere-ui-tablegridlayout-table-row {
+        > .adhere-ui-tablegridlayout-table-row-label {
+          text-align: left;
+        }
+      }
+    }
+
     .adhere-ui-tablegridlayout-table-row {
       > .adhere-ui-tablegridlayout-table-row-label {
         padding-right: 10px;
         color: var(--adhere-color-text-secondary);
         white-space: nowrap;
-        text-align: right;
         word-break: keep-all;
 
         &.require {
@@ -172,7 +189,8 @@
             &:not(:last-child) {
               > .adhere-ui-tablegridlayout-table-row-value {
                 .adm-list-item.adm-form-item {
-                  border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+                  border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+                    var(--adhere-color-border-base);
                 }
               }
             }

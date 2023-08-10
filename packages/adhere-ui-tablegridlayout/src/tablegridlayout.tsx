@@ -299,8 +299,11 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
     <table
       className={classNames(
         `${selectorPrefix}-table`,
+        `${selectorPrefix}-table-${layout}`,
         densityClass.get(_density || 'default'),
-        _parity ? 'parity' : '',
+        {
+          parity: _parity,
+        },
         className ?? '',
       )}
       style={{ width: _width ? _width : '100%', ...(style ?? {}) }}
