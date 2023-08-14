@@ -1,3 +1,14 @@
+# 2.10.9
+
+***
+
+2023-08-14
+
+* **adhere-ui-revoiving**
+  - 加入Swiper的config
+* **adhere-ui-ajax**
+  - 修复出现异常的时候进行reject的操作
+
 # 2.10.8
 
 ***
