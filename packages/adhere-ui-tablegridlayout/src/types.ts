@@ -70,7 +70,6 @@ export interface TableGridLayoutProps {
   innerClassName?: string;
   innerStyle?: CSSProperties;
   data?: DataItem[];
-  //
   className?: string;
   style?: CSSProperties;
   layout: 'horizontal' | 'vertical';

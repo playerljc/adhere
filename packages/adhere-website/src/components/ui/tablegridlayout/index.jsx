@@ -1055,28 +1055,28 @@ export default () => {
                 data: [
                   {
                     key: 'UserName',
-                    label: <Label style={{ textAlign: 'left' }}>UserName：</Label>,
+                    label: <Label >UserName：</Label>,
                     value: <Value>Zhou Maomao</Value>,
                   },
                   {
                     key: 'Telephone',
-                    label: <Label style={{ textAlign: 'left' }}>Telephone：</Label>,
+                    label: <Label >Telephone：</Label>,
                     value: <Value>1810000000</Value>,
                   },
                   {
                     key: 'Live',
-                    label: <Label style={{ textAlign: 'left' }}>Live：</Label>,
+                    label: <Label >Live：</Label>,
                     value: <Value>Hangzhou, Zhejiang</Value>,
                   },
                   {
                     key: 'Remark',
-                    label: <Label style={{ textAlign: 'left' }}>Remark：</Label>,
+                    label: <Label >Remark：</Label>,
                     value: <Value>empty</Value>,
                   },
                   {
                     key: 'Address',
                     label: (
-                      <Label style={{ textAlign: 'left' }} colSpan={2} valign="top">
+                      <Label  colSpan={2} valign="top">
                         Address：
                       </Label>
                     ),
@@ -1173,28 +1173,28 @@ export default () => {
                           data: [
                             {
                               key: 'UserName',
-                              label: <Label style={{ textAlign: 'left' }}>UserName：</Label>,
+                              label: <Label>UserName：</Label>,
                               value: <Value>Zhou Maomao</Value>,
                             },
                             {
                               key: 'Telephone',
-                              label: <Label style={{ textAlign: 'left' }}>Telephone：</Label>,
+                              label: <Label>Telephone：</Label>,
                               value: <Value>1810000000</Value>,
                             },
                             {
                               key: 'Live',
-                              label: <Label style={{ textAlign: 'left' }}>Live：</Label>,
+                              label: <Label>Live：</Label>,
                               value: <Value>Hangzhou, Zhejiang</Value>,
                             },
                             {
                               key: 'Remark',
-                              label: <Label style={{ textAlign: 'left' }}>Remark：</Label>,
+                              label: <Label>Remark：</Label>,
                               value: <Value>empty</Value>,
                             },
                             {
                               key: 'Address',
                               label: (
-                                <Label style={{ textAlign: 'left' }} colSpan={2} valign="top">
+                                <Label colSpan={2} valign="top">
                                   Address：
                                 </Label>
                               ),

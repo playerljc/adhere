@@ -23,6 +23,7 @@ export interface RevolvingProps {
     stopOnLastSlide?: boolean;
     listeners?: object;
     children?: any;
+    swiperConfig?: any;
 }
 export interface RevolvingItemProps {
     className?: string;

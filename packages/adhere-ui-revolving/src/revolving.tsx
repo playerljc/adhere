@@ -27,6 +27,7 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
     loop = true,
     stopOnLastSlide = false,
     listeners = {},
+    swiperConfig = {},
   } = props;
 
   const el = useRef<HTMLDivElement>(null);
@@ -53,6 +54,7 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
         reverseDirection: direction === 'right' || direction === 'bottom',
       },
       on: listeners,
+      ...(swiperConfig ?? {}),
     });
   }
 
