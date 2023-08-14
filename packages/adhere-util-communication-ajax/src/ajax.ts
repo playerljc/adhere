@@ -273,14 +273,30 @@ function getDefaultConfig(this: Ajax): IConfig {
  * initXhrEvents - 初始化XHR的事件
  * @param xhr
  * @param events
+ * @param reject
  */
-function initXhrEvents(xhr, events) {
+function initXhrEvents({ xhr, events, reject }) {
   const { onTimeout, onLoadsStart, onProgress, onAbort, onError, onLoad, onLoadend } = events;
 
-  // events
-
   if (onTimeout) {
-    xhr.addEventListener('timeout', onTimeout);
+    xhr.addEventListener('timeout', function (...params) {
+      onTimeout(...(params ?? {}));
+      reject(...(params ?? {}));
+    });
+  }
+
+  if (onAbort) {
+    xhr.addEventListener('abort', function (...params) {
+      onAbort(...(params ?? {}));
+      reject(...(params ?? {}));
+    });
+  }
+
+  if (onError) {
+    xhr.addEventListener('error', function (...params) {
+      onError(...(params ?? {}));
+      reject(...(params ?? {}));
+    });
   }
 
   if (onLoadsStart) {
@@ -289,14 +305,6 @@ function initXhrEvents(xhr, events) {
 
   if (onProgress) {
     xhr.addEventListener('progress', onProgress);
-  }
-
-  if (onAbort) {
-    xhr.addEventListener('abort', onAbort);
-  }
-
-  if (onError) {
-    xhr.addEventListener('error', onError);
   }
 
   if (onLoad) {
@@ -405,13 +413,13 @@ function onreadystatechange({
       });
 
       // catch
-      if (xhr.status)
-        reject({
-          status: xhr.status,
-          statusText: xhr.statusText,
-          response: xhr.response,
-          responseText: xhr.responseText,
-        });
+      // if (xhr.status)
+      reject({
+        status: xhr.status,
+        statusText: xhr.statusText,
+        response: xhr.response,
+        responseText: xhr.responseText,
+      });
 
       // 取消遮罩
       if (show && indicator) {
@@ -558,7 +566,7 @@ function sendPrepare(
   // }
 
   // events
-  initXhrEvents(xhr, events);
+  initXhrEvents({ xhr, events, reject });
 
   // onreadystatechange
   xhr.onreadystatechange = onreadystatechange.bind(this, {
