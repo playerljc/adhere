@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { FC, memo, useEffect, useLayoutEffect, useRef } from 'react';
-import Swiper from 'swiper';
+import { Swiper } from 'swiper';
 
 import { SwipeOutProps } from './types';
 
@@ -37,7 +37,10 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
   );
 
   function slide() {
-    swiper.current.slideTo(map.current.get([beforeShow, afterShow].toString()), duration);
+    swiper?.current?.slideTo?.(
+      map.current.get([beforeShow, afterShow].toString()) as number,
+      duration,
+    );
   }
 
   function createSwiper() {
@@ -48,7 +51,7 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
 
     const initialSlide = map.current.get([beforeShow, afterShow].toString());
 
-    swiper.current = new Swiper(ref.current, {
+    swiper.current = new Swiper(ref.current as HTMLElement, {
       init: false,
       // 初始化在第一个选项卡上
       initialSlide,
@@ -58,17 +61,17 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
       spaceBetween: 0,
     });
 
-    swiper.current.on('init', () => trigger('onInit'));
+    swiper?.current?.on?.('init', () => trigger('onInit'));
 
-    swiper.current.on('slideChangeTransitionStart', () =>
-      trigger('onSlideChangeTransitionStart', swiper.current.activeIndex),
+    swiper?.current?.on?.('slideChangeTransitionStart', () =>
+      trigger('onSlideChangeTransitionStart', swiper.current?.activeIndex),
     );
 
-    swiper.current.on('slideChangeTransitionEnd', () =>
-      trigger('onSlideChangeTransitionEnd', swiper.current.activeIndex),
+    swiper?.current?.on?.('slideChangeTransitionEnd', () =>
+      trigger('onSlideChangeTransitionEnd', swiper.current?.activeIndex),
     );
 
-    swiper.current.init();
+    swiper?.current?.init?.();
   }
 
   function trigger(action: string, params?: any): void {
@@ -87,7 +90,7 @@ const SwipeOut: FC<SwipeOutProps> = (props) => {
 
   return (
     <div
-      className={classNames(selectorPrefix, 'swiper-container', className ?? '')}
+      className={classNames(selectorPrefix, 'swiper', className ?? '')}
       style={style ?? {}}
       ref={ref}
     >
