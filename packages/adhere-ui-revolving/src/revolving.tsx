@@ -7,7 +7,8 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react';
-import Swiper from 'swiper';
+import { Swiper } from 'swiper';
+import { Autoplay } from 'swiper/modules';
 
 import RevolvingItem from './item';
 import { RevolvingHOCFunction, RevolvingProps, RevolvingRefHandle } from './types';
@@ -30,9 +31,12 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
     swiperConfig = {},
   } = props;
 
+  Swiper.use([Autoplay]);
+
   const el = useRef<HTMLDivElement>(null);
   const wrapperEl = useRef<HTMLDivElement>(null);
-  const swiper = useRef<Swiper>();
+
+  const swiper = useRef<Swiper | null>(null);
 
   function initial() {
     if (swiper.current) {
@@ -43,7 +47,7 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
       swiper.current = null;
     }
 
-    swiper.current = new Swiper(el.current, {
+    swiper.current = new Swiper(el.current as HTMLElement, {
       allowTouchMove: false,
       direction: getDirection(direction),
       loop,
@@ -66,14 +70,14 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
    * start
    */
   function start() {
-    swiper.current.autoplay.start();
+    swiper.current?.autoplay?.start?.();
   }
 
   /**
    * stop
    */
   function stop() {
-    swiper.current.autoplay.stop();
+    swiper.current?.autoplay?.stop?.();
   }
 
   /**
@@ -81,7 +85,7 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
    * @return {boolean}
    */
   function isRunning() {
-    return swiper.current.autoplay.running;
+    return swiper.current?.autoplay?.running as boolean;
   }
 
   useImperativeHandle(ref, () => ({
@@ -96,7 +100,7 @@ const Revolving: ForwardRefRenderFunction<RevolvingRefHandle, RevolvingProps> = 
 
   return (
     <div
-      className={classNames(selectorPrefix, 'swiper-container', className ?? '')}
+      className={classNames(selectorPrefix, 'swiper', className ?? '')}
       style={style ?? {}}
       ref={el}
     >
