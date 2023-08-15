@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-swipeout",
-  "version": "2.10.1",
+  "version": "2.10.11",
   "description": "滑动操作",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -34,7 +34,7 @@
     "omit.js": "^2.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swiper": "^4.5.0"
+    "swiper": "^10.1.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.21.0",

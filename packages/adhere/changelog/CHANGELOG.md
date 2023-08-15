@@ -1,3 +1,14 @@
+# 2.10.11
+
+***
+
+2023-08-15
+
+* **adhere-ui-revoiving**
+  - Swiper升级到最新版本
+* **adhere-ui-swipeout**
+  - Swiper升级到最新版本
+
 # 2.10.10
 
 ***
