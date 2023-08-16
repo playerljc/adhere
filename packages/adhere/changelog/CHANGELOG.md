@@ -1,3 +1,16 @@
+# 2.10.12
+
+***
+
+2023-08-17
+
+* **adhere-ui-suspense**
+  - 加入renderNormalLoading设置
+* **adhere-ui-fieldgeneratortodict**
+  - Suspense.Sync加入renderNormalLoading
+* **adhere-ui-dict**
+  - 返回值结构调整为data,isPending,isValidate,加入renderNormalLoading设置
+
 # 2.10.11
 
 ***
