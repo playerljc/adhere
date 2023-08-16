@@ -10,10 +10,16 @@ import { StepsFormItemProps } from '../../types';
  * StepsFormItem
  * @param firstLoading
  * @param renderEmpty
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */
-const StepsFormItem: FC<StepsFormItemProps> = ({ firstLoading, renderEmpty, ...props }) => {
+const StepsFormItem: FC<StepsFormItemProps> = ({
+  firstLoading,
+  renderEmpty,
+  renderNormalLoading,
+  ...props
+}) => {
   const [current, setCurrent] = useState<number>(props.value);
 
   const [data, setData] = useState<StepProps[]>([]);
@@ -32,6 +38,7 @@ const StepsFormItem: FC<StepsFormItemProps> = ({ firstLoading, renderEmpty, ...p
       isEmpty={() => data.length === 0}
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
+      renderNormalLoading={renderNormalLoading}
     >
       <Steps {...(props ?? {})} current={current} />
     </Suspense.Sync>

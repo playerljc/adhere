@@ -1,3 +1,11 @@
+# 1.0.11
+
+***
+
+2023-08-17
+
+* Suspense.Sync加入renderNormalLoading
+
 # 1.0.10
 
 ***

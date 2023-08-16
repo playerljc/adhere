@@ -10,6 +10,7 @@ import type { LabelValue, ListFormItemProps } from '../../types';
  * @param firstLoading
  * @param renderEmpty
  * @param dataSource
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */
@@ -17,6 +18,7 @@ const ListFormItem: FC<ListFormItemProps> = ({
   firstLoading,
   renderEmpty,
   dataSource,
+  renderNormalLoading,
   ...props
 }) => {
   const [data, setData] = useState<LabelValue[]>([]);
@@ -31,6 +33,7 @@ const ListFormItem: FC<ListFormItemProps> = ({
       isEmpty={() => data.length === 0}
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
+      renderNormalLoading={renderNormalLoading}
     >
       <List dataSource={dataSource} pagination={false} rowKey={props.rowKey || 'id'} {...props} />
     </Suspense.Sync>

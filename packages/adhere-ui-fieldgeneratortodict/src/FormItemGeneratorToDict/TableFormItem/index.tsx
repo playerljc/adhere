@@ -11,6 +11,7 @@ import { TableFormItemProps } from '../../types';
  * @param firstLoading
  * @param renderEmpty
  * @param dataSource
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */
@@ -18,6 +19,7 @@ const TableFormItem: FC<TableFormItemProps> = ({
   firstLoading,
   renderEmpty,
   dataSource,
+  renderNormalLoading,
   ...props
 }) => {
   const [data, setData] = useState<RcTableProps['data']>([]);
@@ -32,6 +34,7 @@ const TableFormItem: FC<TableFormItemProps> = ({
       isEmpty={() => data?.length === 0}
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
+      renderNormalLoading={renderNormalLoading}
     >
       <Table dataSource={dataSource} pagination={false} rowKey={props.rowKey || 'id'} {...props} />
     </Suspense.Sync>

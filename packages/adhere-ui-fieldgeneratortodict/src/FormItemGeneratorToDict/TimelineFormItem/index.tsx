@@ -10,10 +10,16 @@ import { TimelineFormItemProps } from '../../types';
  * TimelineFormItem
  * @param firstLoading
  * @param renderEmpty
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */
-const TimelineFormItem: FC<TimelineFormItemProps> = ({ firstLoading, renderEmpty, ...props }) => {
+const TimelineFormItem: FC<TimelineFormItemProps> = ({
+  firstLoading,
+  renderEmpty,
+  renderNormalLoading,
+  ...props
+}) => {
   const [data, setData] = useState<TimelineItemProps[]>([]);
 
   useEffect(() => {
@@ -26,6 +32,7 @@ const TimelineFormItem: FC<TimelineFormItemProps> = ({ firstLoading, renderEmpty
       isEmpty={() => data.length === 0}
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
+      renderNormalLoading={renderNormalLoading}
     >
       <Timeline {...(props ?? {})} />
     </Suspense.Sync>

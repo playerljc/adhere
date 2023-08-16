@@ -4,6 +4,7 @@ import { TimelineFormItemProps } from '../../types';
  * TimelineFormItem
  * @param firstLoading
  * @param renderEmpty
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */

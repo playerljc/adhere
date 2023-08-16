@@ -10,6 +10,7 @@ import { LabelValue, TransferFormItemProps } from '../../types';
  * @param firstLoading
  * @param renderEmpty
  * @param dataSource
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */
@@ -17,6 +18,7 @@ const TransferFormItem: FC<TransferFormItemProps> = ({
   firstLoading,
   renderEmpty,
   dataSource,
+  renderNormalLoading,
   ...props
 }) => {
   const [data, setData] = useState<LabelValue[]>([]);
@@ -31,6 +33,7 @@ const TransferFormItem: FC<TransferFormItemProps> = ({
       isEmpty={() => data.length === 0}
       firstLoading={firstLoading}
       renderEmpty={renderEmpty}
+      renderNormalLoading={renderNormalLoading}
     >
       <Transfer
         // @ts-ignore

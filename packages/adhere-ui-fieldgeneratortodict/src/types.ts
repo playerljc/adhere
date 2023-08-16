@@ -36,6 +36,7 @@ interface FormItemProps {
 
 interface SyncFormItemProps extends FormItemProps {
   firstLoading?: ReactElement;
+  renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
 }
 
@@ -97,6 +98,7 @@ export type CascaderLeafMultiFormItemProps = {
 export interface ListFormItemProps extends ListProps<any> {
   dataSource: LabelValue[];
   firstLoading?: ReactElement;
+  renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
 }
 
@@ -134,6 +136,7 @@ export type RadioCustomFormItemProps = RadioVerticalFormItemProps & {
 
 export interface TableFormItemProps extends TableProps<any> {
   firstLoading?: ReactElement;
+  renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
 }
 
@@ -151,6 +154,7 @@ export interface TransferFormItemProps extends TransferProps<any> {
   dataSource: LabelValue[];
   value?: any;
   firstLoading?: ReactElement;
+  renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
 }
 

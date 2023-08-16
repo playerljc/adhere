@@ -4,6 +4,7 @@ import { StepsFormItemProps } from '../../types';
  * StepsFormItem
  * @param firstLoading
  * @param renderEmpty
+ * @param renderNormalLoading
  * @param props
  * @constructor
  */
