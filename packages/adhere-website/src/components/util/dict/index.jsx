@@ -687,9 +687,9 @@ export default () => {
                 <Space.Group direction="horizontal">
                   <div>
                     <Dict.React.Test7PDict>
-                      {(pArr) => (
+                      {({ data }) => (
                         <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
-                          {pArr?.map?.((t) => (
+                          {data?.map?.((t) => (
                             <Option key={t.code}>{t.value}</Option>
                           ))}
                         </Select>
@@ -699,9 +699,9 @@ export default () => {
 
                   <div>
                     <Dict.React.Test7CDict args={[p]}>
-                      {(cArr) => (
+                      {({ data }) => (
                         <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
-                          {cArr?.map?.((t) => (
+                          {data?.map?.((t) => (
                             <Option key={t.code}>{t.value}</Option>
                           ))}
                         </Select>
@@ -711,9 +711,9 @@ export default () => {
 
                   <div>
                     <Dict.React.Test7ADict args={[p, c]}>
-                      {(aArr) => (
+                      {({ data }) => (
                         <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
-                          {aArr?.map?.((t) => (
+                          {data?.map?.((t) => (
                             <Option key={t.code}>{t.value}</Option>
                           ))}
                         </Select>

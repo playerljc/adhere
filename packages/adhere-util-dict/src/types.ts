@@ -28,6 +28,7 @@ export interface DictNoPromiseComponentProps {
 
 export interface DictPromiseComponentProps extends DictNoPromiseComponentProps {
   firstLoading?: ReactElement;
+  renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
 }
 
 export interface DictFunctionComponentProps extends DictPromiseComponentProps {
@@ -41,4 +42,10 @@ export interface DictComponentHandler {
 
 export interface DictReactComponentObj {
   [prop: string | symbol]: any;
+}
+
+export interface StateData {
+  data: any;
+  isValidate: boolean;
+  isPending: boolean;
 }

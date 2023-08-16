@@ -1,3 +1,12 @@
+# 1.0.23
+
+***
+
+2023-08-17
+
+* 返回值结构调整为data,isPending,isValidate
+* 加入renderNormalLoading设置
+
 # 1.0.22
 
 ***

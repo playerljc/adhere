@@ -21,10 +21,13 @@ import type {
   DictNoPromiseComponentProps,
   DictPromiseComponentProps,
   DictReactComponentObj,
+  StateData,
 } from './types';
 
 // 组件的缓存
 const ComponentCache = new Map<string, any>();
+
+// data, isValidate, isPending
 
 /**
  * FunctionComponent
@@ -35,27 +38,66 @@ const FunctionComponent: (
   key: string,
 ) => ForwardRefRenderFunction<DictComponentHandler, DictFunctionComponentProps> =
   (key: string) =>
-  ({ children, firstLoading, isEmpty, renderEmpty, args, isUseMemo, ...others }, ref) => {
-    const [data, setData] = useState();
+  (
+    {
+      children,
+      firstLoading,
+      renderNormalLoading,
+      isEmpty,
+      renderEmpty,
+      args,
+      isUseMemo,
+      ...others
+    },
+    ref,
+  ) => {
+    const [data, setData] = useState<StateData>({
+      data: null,
+      isValidate: true,
+      isPending: true,
+    });
 
     const asyncRef = useRef<SuspenseAsync>();
 
     const props = useMemo(() => {
       const _props: any = { ...others };
       if (firstLoading) _props.firstLoading = firstLoading;
+      if (renderNormalLoading) _props.renderNormalLoading = renderNormalLoading;
       if (renderEmpty) _props.renderEmpty = renderEmpty;
       if (isEmpty) _props.isEmpty = isEmpty;
 
       return _props;
-    }, [firstLoading, renderEmpty, isEmpty]);
+    }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty]);
 
     useUpdateLayoutEffect(() => {
+      setData((_preData) => ({
+        data: _preData.data,
+        isValidate: true,
+        isPending: true,
+      }));
+
       asyncRef?.current?.fetchData?.();
     }, args || []);
 
     useImperativeHandle(ref, () => ({
-      reload: () => asyncRef?.current?.fetchData?.(),
-      reset: () => asyncRef?.current?.reset?.(),
+      reload: () => {
+        setData((_preData) => ({
+          data: _preData.data,
+          isValidate: true,
+          isPending: true,
+        }));
+
+        return asyncRef?.current?.fetchData?.();
+      },
+      reset: () => {
+        setData((_preData) => ({
+          data: null,
+          isValidate: true,
+          isPending: true,
+        }));
+
+        return asyncRef?.current?.reset?.();
+      },
     }));
 
     const fetchData = () => {
@@ -63,13 +105,36 @@ const FunctionComponent: (
 
       const result = Dict.value[key].value(...(args || []));
 
+      // 返回的Promise
       if (result.then) {
-        return result.then((res) => {
-          setData(res);
-          return res;
+        return result
+          .then((res) => {
+            setData({
+              data: res,
+              isValidate: true,
+              isPending: false,
+            });
+
+            return res;
+          })
+          .catch((error) => {
+            setData({
+              data: error,
+              isValidate: false,
+              isPending: false,
+            });
+
+            return error;
+          });
+      }
+      // 非Promise
+      else {
+        setData({
+          data: result,
+          isValidate: true,
+          isPending: false,
         });
-      } else {
-        setData(result);
+
         return Promise.resolve(result);
       }
     };
@@ -95,23 +160,43 @@ const PromiseComponent: (
   key: string,
 ) => ForwardRefRenderFunction<DictComponentHandler, DictPromiseComponentProps> =
   (key: string) =>
-  ({ children, firstLoading, isEmpty, renderEmpty, ...others }, ref) => {
-    const [data, setData] = useState();
+  ({ children, firstLoading, renderNormalLoading, isEmpty, renderEmpty, ...others }, ref) => {
+    const [data, setData] = useState<StateData>({
+      data: null,
+      isPending: true,
+      isValidate: true,
+    });
 
     const props = useMemo(() => {
       const _props: any = { ...others };
       if (firstLoading) _props.firstLoading = firstLoading;
+      if (renderNormalLoading) _props.renderNormalLoading = renderNormalLoading;
       if (renderEmpty) _props.renderEmpty = renderEmpty;
       if (isEmpty) _props.isEmpty = isEmpty;
 
       return _props;
-    }, [firstLoading, renderEmpty, isEmpty]);
+    }, [firstLoading, renderNormalLoading, renderEmpty, isEmpty]);
 
     const fetchData = () =>
-      Dict.value[key].value.then((res) => {
-        setData(res);
-        return res;
-      });
+      Dict.value[key].value
+        .then((res) => {
+          setData({
+            data: res,
+            isValidate: true,
+            isPending: false,
+          });
+
+          return res;
+        })
+        .catch((error) => {
+          setData({
+            data: error,
+            isValidate: false,
+            isPending: false,
+          });
+
+          return error;
+        });
 
     return (
       <Suspense.ASync
@@ -135,11 +220,25 @@ const NoPromiseComponent: (key: string) => FC<DictNoPromiseComponentProps> =
   ({ children, isEmpty, renderEmpty }) => {
     const data = Dict.value[key].value;
 
-    return data === null || data === undefined || isEmpty?.(data)
-      ? renderEmpty
-        ? renderEmpty?.()
-        : null
-      : children?.(data);
+    if (data === null || data === undefined || isEmpty?.(data)) {
+      if (renderEmpty) {
+        return renderEmpty?.();
+      }
+
+      return null;
+    }
+
+    return children?.({
+      data,
+      isValidate: true,
+      isPending: false,
+    });
+
+    // return data === null || data === undefined || isEmpty?.(data)
+    //   ? renderEmpty
+    //     ? renderEmpty?.()
+    //     : null
+    //   : children?.(data);
   };
 
 // 组件的config
@@ -221,7 +320,7 @@ export function set(key: string) {
 }
 
 /**
- * Components - 字典对用的React组件
+ * Components - 字典对应的React组件
  * 调用init后会自动填充
  */
 const DictReactComponents: DictReactComponentObj = {};

@@ -35,21 +35,26 @@ export default {
         },
       ]);
 
-    Dict.handlers.SystemGetInfo = () => (id) =>
-      Promise.resolve([
-        {
-          value: 1,
-          label: '通过',
-        },
-        {
-          value: 2,
-          label: '不通过',
-        },
-        {
-          value: 3,
-          label: '退回',
-        },
-      ]);
+    Dict.handlers.SystemGetInfo = () => (id) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve([
+            {
+              value: 1,
+              label: '通过',
+            },
+            {
+              value: 2,
+              label: '不通过',
+            },
+            {
+              value: 3,
+              label: '退回',
+            },
+          ]);
+        }, 3000);
+      });
+    };
   },
 
   initRemote() {},

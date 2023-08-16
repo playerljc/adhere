@@ -6,7 +6,7 @@ import type { DictReactComponentObj } from './types';
  */
 export declare function set(key: string): void;
 /**
- * Components - 字典对用的React组件
+ * Components - 字典对应的React组件
  * 调用init后会自动填充
  */
 declare const DictReactComponents: DictReactComponentObj;

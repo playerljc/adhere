@@ -112,6 +112,7 @@ const Dict: DictObj = {
     set(target: Object, property, value, receiver) {
       const result = Reflect.set(target, property, value, receiver);
 
+      // @ts-ignore
       set(property);
 
       return result;
