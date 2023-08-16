@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-cascadecompared",
-  "version": "2.10.1",
+  "version": "2.10.12",
   "description": "级联比较",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-stickuplayout": "^2.9.4",
+    "@baifendian/adhere-ui-stickuplayout": "^2.10.12",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",

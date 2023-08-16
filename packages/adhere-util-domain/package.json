@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-domain",
-  "version": "2.9.0",
+  "version": "2.10.12",
   "description": "domain模块的浏览器端实现",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {

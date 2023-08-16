@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-fontsizesetting",
-  "version": "2.10.10",
+  "version": "2.10.12",
   "description": "字体设置",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -30,8 +30,8 @@
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereFontSizeSetting --define alias=@,evnVars=true"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^2.10.6",
-    "@baifendian/adhere-util-intl": "^2.10.3",
+    "@baifendian/adhere-ui-css": "^2.10.12",
+    "@baifendian/adhere-util-intl": "^2.10.12",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "antd": "^5.8.3",
