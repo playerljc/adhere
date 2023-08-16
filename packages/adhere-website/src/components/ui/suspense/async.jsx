@@ -6,7 +6,7 @@ import { Hooks, Space, Suspense } from '@baifendian/adhere';
 
 const { useSetState } = Hooks;
 
-export default () => {
+export default (props) => {
   const [data, setData] = useSetState([]);
 
   const ref = useRef();
@@ -63,7 +63,7 @@ export default () => {
   }
 
   return (
-    <Suspense.ASync ref={ref} fetchData={fetchData} isEmpty={() => data.length === 0}>
+    <Suspense.ASync ref={ref} fetchData={fetchData} isEmpty={() => data.length === 0} {...props}>
       <Space.Group direction="horizontal">
         <Button type="primary" onClick={() => ref.current.reset().then(() => fetchData())}>
           重置
