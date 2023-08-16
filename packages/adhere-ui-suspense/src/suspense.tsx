@@ -109,9 +109,20 @@ abstract class Suspense<
    * @return {React.Element}
    */
   private renderNormal() {
+    const children = this.renderInner();
+
+    // 如果自定义了normalLoading则使用renderNormalLoading
+    if (this.props.renderNormalLoading) {
+      return this.props.renderNormalLoading?.({
+        children,
+        loading: this.showLoading(),
+      });
+    }
+
+    // 缺省的normalLoading
     return (
       <Spin size="large" spinning={this.showLoading()}>
-        {this.renderInner()}
+        {children}
       </Spin>
     );
   }
@@ -166,6 +177,7 @@ Suspense.propTypes = {
   style: PropTypes.object,
   reset: PropTypes.bool,
   firstLoading: PropTypes.node,
+  renderNormalLoading: PropTypes.func,
 };
 
 export default Suspense;

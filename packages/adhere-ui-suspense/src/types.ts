@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 export interface ISuspense {
   fetchData?: fetchData;
@@ -15,6 +15,7 @@ export interface SuspenseProps {
   style?: CSSProperties;
   reset: boolean;
   firstLoading: ReactElement;
+  renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
 }
 
 export interface SuspenseState {}
