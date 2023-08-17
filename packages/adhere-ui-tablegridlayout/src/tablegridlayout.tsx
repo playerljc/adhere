@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactElement } from 'react';
+import React, { FC, ReactElement, memo, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -13,6 +13,7 @@ import type {
   RenderVertical,
   RowCountRef,
   TableGridLayoutProps,
+  TableGridLayoutWrap
 } from './types';
 
 const selectorPrefix = 'adhere-ui-tablegridlayout';
@@ -328,13 +329,24 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
  * @return {ReactElement}
  * @constructor
  */
-function TableGridLayout({ data, className, style, ...props }: TableGridLayoutProps): ReactElement {
+const TableGridLayout: FC<TableGridLayoutProps> = ({ data, className, style, ...props }) => {
+  const computedData = useMemo(
+    () =>
+      (data ?? []).map((_record) => ({
+        ..._record,
+        data: _record.data?.filter?.((_item) => !('show' in _item) || !!_item.show),
+      })).filter(_record => !!_record?.data?.length),
+    [data, className, style, props],
+  );
+
   return (
     <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-      {TableGridLayout.renderGridSearchFormGroup(data, props)}
+      {TableGridLayoutWrap.renderGridSearchFormGroup(computedData, props)}
     </div>
   );
-}
+};
+
+const TableGridLayoutWrap: TableGridLayoutWrap = memo(TableGridLayout) as TableGridLayoutWrap;
 
 /**
  * Label
@@ -342,7 +354,7 @@ function TableGridLayout({ data, className, style, ...props }: TableGridLayoutPr
  * @param props
  * @constructor
  */
-TableGridLayout.Label = (props) => {
+TableGridLayoutWrap.Label = (props) => {
   const { className, ..._props } = props;
 
   return (
@@ -358,7 +370,7 @@ TableGridLayout.Label = (props) => {
  * @param props
  * @constructor
  */
-TableGridLayout.Value = (props) => {
+TableGridLayoutWrap.Value = (props) => {
   const { className, ..._props } = props;
 
   return (
@@ -375,7 +387,7 @@ TableGridLayout.Value = (props) => {
  * @param props
  * @return {ReactElement}
  */
-TableGridLayout.renderGridSearchFormGroup = (
+TableGridLayoutWrap.renderGridSearchFormGroup = (
   data?: DataItem[],
   props?: Omit<TableGridLayoutProps, 'data'>,
 ) => {
@@ -391,8 +403,10 @@ TableGridLayout.renderGridSearchFormGroup = (
   return (
     <div
       className={classNames(
-        bordered ? `${selectorPrefix}-border` : null,
-        `${selectorPrefix}-inner-wrap`,
+          `${selectorPrefix}-inner-wrap`,
+          {
+          [`${selectorPrefix}-border`]: bordered
+        },
         innerClassName ?? '',
       )}
       style={innerStyle ?? {}}
@@ -431,7 +445,7 @@ TableGridLayout.renderGridSearchFormGroup = (
  * @param props - 配置
  * @return RenderDetail
  */
-TableGridLayout.getRenderDetail = (
+TableGridLayoutWrap.getRenderDetail = (
   data: DataItem[],
   props: Omit<TableGridLayoutProps, 'data'>,
 ): RenderDetail => {
@@ -473,13 +487,13 @@ TableGridLayout.getRenderDetail = (
   return result;
 };
 
-TableGridLayout.defaultProps = {
+TableGridLayoutWrap.defaultProps = {
   data: [],
   layout: 'horizontal',
   bordered: false,
 };
 
-TableGridLayout.propTypes = {
+TableGridLayoutWrap.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   innerClassName: PropTypes.string,
@@ -516,10 +530,12 @@ TableGridLayout.propTypes = {
           label: PropTypes.node.isRequired,
           // Value组件
           value: PropTypes.node.isRequired,
+          // 是否显示此项
+          show: PropTypes.bool,
         }),
       ).isRequired,
     }),
   ).isRequired,
 };
 
-export default TableGridLayout;
+export default TableGridLayoutWrap;

@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
+export type DensityType = 'default' | 'middle' | 'small' | undefined;
+export type LayoutType = 'vertical' | 'horizontal';
 /**
  * RowCountRef
  */
@@ -33,8 +35,8 @@ export interface RenderGridSearchForm {
     (params: {
         data: DataItem;
         rowCountRef?: RowCountRef;
-        layout?: 'horizontal' | 'vertical';
-        density?: string;
+        layout?: LayoutType;
+        density?: DensityType;
         parity?: boolean;
     }): ReactElement;
 }
@@ -56,6 +58,7 @@ export interface DataItem {
         require?: boolean;
         label: any;
         value: any;
+        show?: boolean;
     }[];
 }
 /**
@@ -69,8 +72,8 @@ export interface TableGridLayoutProps {
     data?: DataItem[];
     className?: string;
     style?: CSSProperties;
-    layout: 'horizontal' | 'vertical';
-    density?: string;
+    layout: LayoutType;
+    density?: DensityType;
     parity?: boolean;
 }
 /**
@@ -87,10 +90,18 @@ export type GroupRenderDetail = {
  */
 export interface RenderDetail {
     rowCount: number;
-    layout: 'horizontal' | 'vertical';
+    layout: LayoutType;
     detail: {
         name: string;
         rowCount: number;
         detail: GroupRenderDetail;
     }[];
+}
+export interface TableGridLayoutWrap extends NamedExoticComponent {
+    propTypes: object;
+    defaultProps: object;
+    Label: any;
+    Value: any;
+    renderGridSearchFormGroup(data?: DataItem[], props?: Omit<TableGridLayoutProps, 'data'>): ReactNode;
+    getRenderDetail(data: DataItem[], props: Omit<TableGridLayoutProps, 'data'>): RenderDetail;
 }
