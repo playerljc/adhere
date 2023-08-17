@@ -846,7 +846,7 @@ export default () => {
               Array.from({ length: 10 }).map((v, index) => ({
                 id: Mock.mock('@guid'),
                 name: Mock.mock('@name'),
-                sex: \`${(index + 1) % 2}\`,
+                sex: \`\${(index + 1) % 2}\`,
                 birthDay: Mock.mock('@now'),
                 deptName: Mock.mock('@name'),
                 height: Mock.mock({
