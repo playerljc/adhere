@@ -1525,6 +1525,238 @@ export default () => {
               </Space.Group>
             ),
           },
+          {
+            id: `p10`,
+            name: `隐藏和显示`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '隐藏和显示',
+                info: '隐藏和显示',
+              },
+            },
+            codeText: `
+  import React,{ useState } from 'react';
+  import { Radio, } from 'antd';
+  import { TableGridLayout, Space} from '@baifendian/adhere';
+
+  const { Label, Value } = TableGridLayout;
+
+  function MyComponent() {
+    const [show, setShow] = useState(true);
+
+    return (
+      <Space.Group direction="vertical">
+        <div>
+          <Radio.Group value={show ? 1 : 0} onChange={(e) => setShow(e.target.value)}>
+            <Radio.Button value={1}>显示</Radio.Button>
+            <Radio.Button value={0}>隐藏</Radio.Button>
+          </Radio.Group>
+        </div>
+        <TableGridLayout
+          data={[
+            {
+              name: 'g1',
+              width: '100%',
+              columnCount: 3,
+              colgroup: [, 'auto', , 'auto', , 'auto'],
+              data: [
+                {
+                  key: 'UserName',
+                  label: <Label>UserName：</Label>,
+                  value: <Value>Zhou Maomao</Value>,
+                  show,
+                },
+                {
+                  key: 'Telephone',
+                  label: <Label>Telephone：</Label>,
+                  value: <Value>1810000000</Value>,
+                  show,
+                },
+                {
+                  key: 'Live',
+                  label: <Label>Live：</Label>,
+                  value: <Value>Hangzhou, Zhejiang</Value>,
+                  show,
+                },
+                {
+                  key: 'Remark',
+                  label: <Label>Remark：</Label>,
+                  value: <Value>empty</Value>,
+                  show,
+                },
+                {
+                  key: 'Address',
+                  label: <Label valign="top">Address：</Label>,
+                  value: (
+                    <Value>
+                      No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                    </Value>
+                  ),
+                  show,
+                },
+              ],
+            },
+            {
+              name: 'g2',
+              width: '100%',
+              columnCount: 3,
+              colgroup: [, 'auto', , 'auto', , 'auto'],
+              data: [
+                {
+                  key: 'UserName',
+                  label: <Label>UserName：</Label>,
+                  value: <Value>Zhou Maomao</Value>,
+                  show,
+                },
+                {
+                  key: 'Telephone',
+                  label: <Label>Telephone：</Label>,
+                  value: <Value>1810000000</Value>,
+                  show,
+                },
+                {
+                  key: 'Live',
+                  label: <Label>Live：</Label>,
+                  value: <Value>Hangzhou, Zhejiang</Value>,
+                  show,
+                },
+                {
+                  key: 'Remark',
+                  label: <Label>Remark：</Label>,
+                  value: <Value>empty</Value>,
+                  show,
+                },
+                {
+                  key: 'Address',
+                  label: <Label valign="top">Address：</Label>,
+                  value: (
+                    <Value>
+                      No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                    </Value>
+                  ),
+                  show,
+                },
+              ],
+            },
+          ]}
+        />
+      </Space.Group>
+    );
+  }
+
+  return <MyComponent />;
+
+            `,
+            type: 'PlayGround',
+            renderChildren: () => {
+              function MyComponent() {
+                const [show, setShow] = useState(true);
+
+                return (
+                  <Space.Group direction="vertical">
+                    <div>
+                      <Radio.Group value={show ? 1 : 0} onChange={(e) => setShow(e.target.value)}>
+                        <Radio.Button value={1}>显示</Radio.Button>
+                        <Radio.Button value={0}>隐藏</Radio.Button>
+                      </Radio.Group>
+                    </div>
+                    <TableGridLayout
+                      data={[
+                        {
+                          name: 'g1',
+                          width: '100%',
+                          columnCount: 3,
+                          colgroup: [, 'auto', , 'auto', , 'auto'],
+                          data: [
+                            {
+                              key: 'UserName',
+                              label: <Label>UserName：</Label>,
+                              value: <Value>Zhou Maomao</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Telephone',
+                              label: <Label>Telephone：</Label>,
+                              value: <Value>1810000000</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Live',
+                              label: <Label>Live：</Label>,
+                              value: <Value>Hangzhou, Zhejiang</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Remark',
+                              label: <Label>Remark：</Label>,
+                              value: <Value>empty</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Address',
+                              label: <Label valign="top">Address：</Label>,
+                              value: (
+                                <Value>
+                                  No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                                </Value>
+                              ),
+                              show,
+                            },
+                          ],
+                        },
+                        {
+                          name: 'g2',
+                          width: '100%',
+                          columnCount: 3,
+                          colgroup: [, 'auto', , 'auto', , 'auto'],
+                          data: [
+                            {
+                              key: 'UserName',
+                              label: <Label>UserName：</Label>,
+                              value: <Value>Zhou Maomao</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Telephone',
+                              label: <Label>Telephone：</Label>,
+                              value: <Value>1810000000</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Live',
+                              label: <Label>Live：</Label>,
+                              value: <Value>Hangzhou, Zhejiang</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Remark',
+                              label: <Label>Remark：</Label>,
+                              value: <Value>empty</Value>,
+                              show,
+                            },
+                            {
+                              key: 'Address',
+                              label: <Label valign="top">Address：</Label>,
+                              value: (
+                                <Value>
+                                  No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                                </Value>
+                              ),
+                              show,
+                            },
+                          ],
+                        },
+                      ]}
+                    />
+                  </Space.Group>
+                );
+              }
+
+              return <MyComponent />;
+            },
+          },
         ]}
       />
 
@@ -1739,6 +1971,7 @@ export default () => {
                     key: string;
                     label: JSX.Element;
                     value: JSX.Element;
+                    show: boolean;
                   }>
                 `,
                 defaultVal: '[]',
