@@ -12,8 +12,8 @@ import type {
   RenderHorizontal,
   RenderVertical,
   RowCountRef,
+  TableGridLayoutMemoWrap,
   TableGridLayoutProps,
-  TableGridLayoutWrap
 } from './types';
 
 const selectorPrefix = 'adhere-ui-tablegridlayout';
@@ -332,10 +332,12 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
 const TableGridLayout: FC<TableGridLayoutProps> = ({ data, className, style, ...props }) => {
   const computedData = useMemo(
     () =>
-      (data ?? []).map((_record) => ({
-        ..._record,
-        data: _record.data?.filter?.((_item) => !('show' in _item) || !!_item.show),
-      })).filter(_record => !!_record?.data?.length),
+      (data ?? [])
+        .map((_record) => ({
+          ..._record,
+          data: _record.data?.filter?.((_item) => !('show' in _item) || !!_item.show),
+        }))
+        .filter((_record) => !!_record?.data?.length),
     [data, className, style, props],
   );
 
@@ -346,7 +348,9 @@ const TableGridLayout: FC<TableGridLayoutProps> = ({ data, className, style, ...
   );
 };
 
-const TableGridLayoutWrap: TableGridLayoutWrap = memo(TableGridLayout) as TableGridLayoutWrap;
+const TableGridLayoutWrap: TableGridLayoutMemoWrap = memo(
+  TableGridLayout,
+) as TableGridLayoutMemoWrap;
 
 /**
  * Label
@@ -403,9 +407,9 @@ TableGridLayoutWrap.renderGridSearchFormGroup = (
   return (
     <div
       className={classNames(
-          `${selectorPrefix}-inner-wrap`,
-          {
-          [`${selectorPrefix}-border`]: bordered
+        `${selectorPrefix}-inner-wrap`,
+        {
+          [`${selectorPrefix}-border`]: bordered,
         },
         innerClassName ?? '',
       )}

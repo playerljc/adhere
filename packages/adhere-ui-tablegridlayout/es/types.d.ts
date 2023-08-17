@@ -97,7 +97,7 @@ export interface RenderDetail {
         detail: GroupRenderDetail;
     }[];
 }
-export interface TableGridLayoutWrap extends NamedExoticComponent {
+export interface TableGridLayoutMemoWrap extends NamedExoticComponent {
     propTypes: object;
     defaultProps: object;
     Label: any;
