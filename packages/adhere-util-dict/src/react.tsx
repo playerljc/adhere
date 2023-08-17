@@ -1,9 +1,10 @@
-import { useUpdateLayoutEffect } from 'ahooks';
+import { useMount, useUpdateEffect, useUpdateLayoutEffect } from 'ahooks';
 import React, {
   FC,
   ForwardRefRenderFunction,
   forwardRef,
   memo,
+  useCallback,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -22,6 +23,8 @@ import type {
   DictPromiseComponentProps,
   DictReactComponentObj,
   StateData,
+  UseDictOptions,
+  UseDictState,
 } from './types';
 
 // 组件的缓存
@@ -318,6 +321,113 @@ export function set(key: string) {
 
   DictReactComponents[key] = memo(forwardRef<any, any>(Component(key)));
 }
+
+/**
+ * useDict
+ * @description dict的hook
+ * @param {string} dictName - 字典名称 如：SystemUser
+ * @param {UseDictOptions} _options 配置
+ * @return { data: any, isPending: boolean, isValidate: boolean, refresh:Function }
+ */
+export const useDict = (dictName: string, _options?: UseDictOptions) => {
+  const value = Dict.value[dictName].value;
+
+  const refresh = Dict.value[dictName].refresh;
+
+  const options = _options ?? {};
+
+  const [data, setData] = useState<UseDictState>({
+    data: null,
+    isPending: true,
+    isValidate: true,
+    refresh,
+  });
+
+  const getData = useCallback(() => {
+    // isFunction
+    if (Util.isFunction(value)) {
+      Dict.handlers[dictName].isUseMemo = !!options?.isUseMemo;
+
+      const result = value(options?.functionArgs ?? []);
+
+      if (result.then) {
+        result
+          .then((res) => {
+            setData({
+              data: res,
+              isValidate: true,
+              isPending: false,
+              refresh,
+            });
+          })
+          .catch((error) => {
+            setData({
+              data: error,
+              isValidate: false,
+              isPending: false,
+              refresh,
+            });
+          });
+      } else {
+        setData({
+          data: result,
+          isValidate: true,
+          isPending: false,
+          refresh,
+        });
+      }
+    } else {
+      // isNotPromise
+      if (!value.then) {
+        setData({
+          data: value,
+          isValidate: true,
+          isPending: false,
+          refresh,
+        });
+      }
+      // Promise
+      else {
+        value
+          .then((res) => {
+            setData({
+              data: res,
+              isValidate: true,
+              isPending: false,
+              refresh,
+            });
+          })
+          .catch((error) => {
+            setData({
+              data: error,
+              isValidate: false,
+              isPending: false,
+              refresh,
+            });
+          });
+      }
+    }
+  }, [dictName, value, refresh, JSON.stringify(options)]);
+
+  useMount(() => {
+    // console.log('mount');
+    getData();
+  });
+
+  useUpdateEffect(() => {
+    // console.log('update');
+    setData(({ data: _preData }) => ({
+      data: _preData,
+      isValidate: true,
+      isPending: true,
+      refresh,
+    }));
+
+    getData();
+  }, [dictName, value, refresh, JSON.stringify(options)]);
+
+  return data;
+};
 
 /**
  * Components - 字典对应的React组件

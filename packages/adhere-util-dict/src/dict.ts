@@ -1,4 +1,4 @@
-import DictReactComponent, { set } from './react';
+import DictReactComponent, { set, useDict } from './react';
 import type { DictObj, IConfig } from './types';
 
 const target = {};
@@ -163,6 +163,10 @@ const Dict: DictObj = {
    * React - 字典对应的React组件
    */
   React: DictReactComponent,
+  /**
+   * useDict - 字典的hook
+   */
+  useDict,
 };
 
 export default Dict;

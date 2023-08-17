@@ -10,6 +10,7 @@ export interface DictObj {
   value: any;
   init: InitFunc;
   React: DictReactComponentObj;
+  useDict: Function;
 }
 
 export interface InitFunc {
@@ -48,4 +49,13 @@ export interface StateData {
   data: any;
   isValidate: boolean;
   isPending: boolean;
+}
+
+export interface UseDictState extends StateData {
+  refresh(): Promise<void>;
+}
+
+export interface UseDictOptions {
+  functionArgs?: any[];
+  isUseMemo?: boolean;
 }
