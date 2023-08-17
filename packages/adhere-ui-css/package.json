@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-css",
-  "version": "2.10.12",
+  "version": "2.10.14",
   "description": "提供很多公共的样式",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.10.12",
+    "@baifendian/adhere-util": "^2.10.14",
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
