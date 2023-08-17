@@ -55,6 +55,7 @@
     "font-awesome": "^4.7.0",
     "lodash.debounce": "^4.0.8",
     "mark.js": "^8.11.1",
+    "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "ol": "^6.5.0",
     "rc-queue-anim": "^2.0.0",
