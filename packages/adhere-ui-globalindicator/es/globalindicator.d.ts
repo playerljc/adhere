@@ -1,12 +1,14 @@
+import { Size } from './types';
 declare const _default: {
     /**
      * show - 显示一个遮罩
      * @param {HTMLElement} parent
      * @param {string} text
      * @param {number} zIndex
+     * @param size
      * @return {HTMLElement}
      */
-    show(parent?: HTMLElement, text?: string, zIndex?: number): HTMLElement;
+    show(parent?: HTMLElement, text?: string, zIndex?: number, size?: Size): HTMLElement;
     /**
      * hide - 取消一个遮罩
      * @param {HTMLElement} indicatorDom
