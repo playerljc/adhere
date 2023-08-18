@@ -1,3 +1,5 @@
+@import '~spin.js/spin.css';
+
 .adhere-ui-spin {
   position: absolute;
   top: 0;
@@ -16,57 +18,18 @@
 
   > .adhere-ui-spin-dot {
     position: relative;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 60px;
     animation: adhere-ui-spin-rotate 1.2s infinite linear;
-
-    > i {
-      position: absolute;
-      display: block;
-      width: 9px;
-      height: 9px;
-      background-color: var(--adhere-color-primary);
-      border-radius: 100%;
-      transform: scale(0.75);
-      transform-origin: 50% 50%;
-      opacity: 0.3;
-      animation: adhere-ui-spin-move 1s infinite linear alternate;
-    }
-
-    > i:first-child {
-      top: 0;
-      left: 0;
-    }
-
-    > i:nth-child(2) {
-      top: 0;
-      right: 0;
-      animation-delay: 0.4s;
-    }
-
-    > i:nth-child(3) {
-      right: 0;
-      bottom: 0;
-      animation-delay: 0.8s;
-    }
-
-    > i:nth-child(4) {
-      bottom: 0;
-      left: 0;
-      animation-delay: 1.2s;
-    }
   }
 }
 
 @keyframes adhere-ui-spin-rotate {
-  to {
-    transform: rotate(405deg);
+  0% {
+    transform: rotate(0deg);
   }
-}
 
-@keyframes adhere-ui-spin-move {
-  to {
-    opacity: 1;
+  100% {
+    transform: rotate(360deg);
   }
 }
