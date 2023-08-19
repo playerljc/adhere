@@ -1,3 +1,16 @@
+# 2.10.15
+
+***
+
+2023-08-19
+
+* **adhere-ui-globalindicator**
+  - 使用spin.js重构
+* **adhere-ui-spin**
+  - 使用spin.js重构
+* **adhere-ui-suspense**
+  - 默认renderNormalLoading使用adhere-ui-spin实现
+
 # 2.10.14
 
 ***
