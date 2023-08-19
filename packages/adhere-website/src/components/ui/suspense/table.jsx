@@ -124,7 +124,7 @@ class TableWrap extends Suspense {
           rowKey="id"
           columns={this.getColumns()}
           dataSource={this.state.dataSource}
-          loading={this.showLoading()}
+          // loading={this.showLoading()}
           pagination={this.state.pagination}
           onChange={this.handleTableChange}
         />
