@@ -1,12 +1,14 @@
-import { Button } from 'antd';
+import { Button, Select } from 'antd';
 import React, { useState } from 'react';
 
-import { Spin } from '@baifendian/adhere';
+import { Space, Spin } from '@baifendian/adhere';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
-  const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [size, setSize] = useState('default');
 
   function boxPanelConfig() {
     return [
@@ -24,32 +26,35 @@ export default () => {
         codeText: `
   import React, { useState } from 'react';
   import { Button } from 'antd';
-  import { Spin } from '@baifendian/adhere';
+  import { Spin, Space } from '@baifendian/adhere';
 
   <div>
     <div style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}>
       In the process of internal desktop applications development, many different design specs
       and implementations would be involved, which might cause designers and developers
       difficulties and duplication and reduce the efficiency of development.
-      <Spin text="处理中..." spinning={show} />
+      <Spin spinning={show} text="处理中..." />
     </div>
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          setShow(true);
-        }}
-      >
-        显示
-      </Button>
 
-      <Button
-        onClick={() => {
-          setShow(false);
-        }}
-      >
-        取消
-      </Button>
+    <div>
+      <Space.Group direction="horizontal" size={5}>
+        <Button
+          type="primary"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          显示
+        </Button>
+
+        <Button
+          onClick={() => {
+            setShow(false);
+          }}
+        >
+          取消
+        </Button>
+      </Space.Group>
     </div>
   </div>
       `,
@@ -60,25 +65,119 @@ export default () => {
               In the process of internal desktop applications development, many different design
               specs and implementations would be involved, which might cause designers and
               developers difficulties and duplication and reduce the efficiency of development.
-              <Spin text="处理中..." spinning={show} />
+              <Spin spinning={show1} text="处理中..." />
             </div>
-            <div>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setShow(true);
-                }}
-              >
-                显示
-              </Button>
 
-              <Button
-                onClick={() => {
-                  setShow(false);
-                }}
-              >
-                取消
-              </Button>
+            <div>
+              <Space.Group direction="horizontal" size={5}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setShow1(true);
+                  }}
+                >
+                  显示
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    setShow1(false);
+                  }}
+                >
+                  取消
+                </Button>
+              </Space.Group>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: `p2`,
+        name: `各种尺寸`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '各种尺寸',
+            info: '各种尺寸',
+          },
+        },
+        codeText: `
+  import React, { useState } from 'react';
+  import { Button, Select } from 'antd';
+  import { Spin, Space } from '@baifendian/adhere';
+
+  <div>
+    <div style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}>
+      In the process of internal desktop applications development, many different design specs
+      and implementations would be involved, which might cause designers and developers
+      difficulties and duplication and reduce the efficiency of development.
+      <Spin spinning={show} text="处理中..." size={size} />
+    </div>
+
+    <div>
+      <Space.Group direction="horizontal" size={5}>
+        <Select value={size} onChange={(e) => setSize(e)}>
+          <Select.Option value="small">small</Select.Option>
+          <Select.Option value="default">default</Select.Option>
+          <Select.Option value="large">large</Select.Option>
+        </Select>
+
+        <Button
+          type="primary"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          显示
+        </Button>
+
+        <Button
+          onClick={() => {
+            setShow(false);
+          }}
+        >
+          取消
+        </Button>
+      </Space.Group>
+    </div>
+  </div>
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div>
+            <div style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}>
+              In the process of internal desktop applications development, many different design
+              specs and implementations would be involved, which might cause designers and
+              developers difficulties and duplication and reduce the efficiency of development.
+              <Spin spinning={show2} text="处理中..." size={size} />
+            </div>
+
+            <div>
+              <Space.Group direction="horizontal" size={5}>
+                <Select value={size} onChange={(e) => setSize(e)}>
+                  <Select.Option value="small">small</Select.Option>
+                  <Select.Option value="default">default</Select.Option>
+                  <Select.Option value="large">large</Select.Option>
+                </Select>
+
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setShow2(true);
+                  }}
+                >
+                  显示
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    setShow2(false);
+                  }}
+                >
+                  取消
+                </Button>
+              </Space.Group>
             </div>
           </div>
         ),
@@ -119,6 +218,12 @@ export default () => {
                 desc: '遮罩的层级',
                 type: 'number',
                 defaultVal: '19999',
+              },
+              {
+                params: 'size',
+                desc: '大小',
+                type: 'default | small | large',
+                defaultVal: 'default',
               },
             ],
           },
