@@ -1,3 +1,12 @@
+# 2.10.16
+
+***
+
+2023-08-20
+
+* **adhere-ui-suspense**
+  - 修复未引入@baifendian/adhere-ui-spin样式的错误
+
 # 2.10.15
 
 ***
