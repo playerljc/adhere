@@ -1,7 +1,7 @@
 import { Button } from 'antd';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { Spin } from '@baifendian/adhere';
+import { ForceUpdate, Spin } from '@baifendian/adhere';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -15,9 +15,9 @@ import Sync from './sync';
 import Table from './table';
 
 export default () => {
-  const [reset, setReset] = useState(false);
+  const t1 = useRef();
 
-  const [reser1, setReset1] = useState(false);
+  const t2 = useRef();
 
   function boxPanelConfig() {
     return [
@@ -32,11 +32,15 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  // table.jsx
-
-  import React from 'react';
+        config: [
+          {
+            title: 'table.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: `
   import { Table } from 'antd';
+  import React from 'react';
+
   import { Suspense } from '@baifendian/adhere';
 
   class TableWrap extends Suspense {
@@ -114,7 +118,7 @@ export default () => {
           setTimeout(() => {
             const dataSource = list.map((t, index) => ({
               id: index + 1,
-              name: "人" + (index + 1),
+              name: \`人\${index + 1}\`,
               sex: '男',
               age: 66,
               height: 180,
@@ -160,7 +164,6 @@ export default () => {
             rowKey="id"
             columns={this.getColumns()}
             dataSource={this.state.dataSource}
-            loading={this.showLoading()}
             pagination={this.state.pagination}
             onChange={this.handleTableChange}
           />
@@ -170,36 +173,56 @@ export default () => {
   }
 
   export default TableWrap;
-
-  import React, { useState } from 'react';
+                  `,
+          },
+          {
+            title: 'test.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: `
+  import React,{ useRef } from 'react';
+  import { ForceUpdate } from '@baifendian/adhere';
   import { Button } from 'antd';
-  import { Spin } from '@baifendian/adhere';
-  import Table from './table';
+  import Table from './table.jsx';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      setReset(true);
-    }}
-  >
-    重置
-  </Button>
+  export default () => {
+    const t1 = useRef();
 
-  <Table reset={reset} />
-      `,
-        type: 'PlayGround',
+    return (
+      <>
+        <Button
+          type="primary"
+          onClick={() => {
+            t1.current.reMount();
+          }}
+        >
+          重置
+        </Button>
+
+        <ForceUpdate ref={t1}>
+          <Table />
+        </ForceUpdate>
+      </>
+    );
+  }
+                  `,
+          },
+        ],
+        type: 'PlayGroundMulit',
         renderChildren: () => (
           <>
             <Button
               type="primary"
               onClick={() => {
-                setReset(true);
+                t1.current.reMount();
               }}
             >
               重置
             </Button>
 
-            <Table reset={reset} />
+            <ForceUpdate ref={t1}>
+              <Table />
+            </ForceUpdate>
           </>
         ),
       },
@@ -214,52 +237,210 @@ export default () => {
             info: '自定义firstLoading的UI',
           },
         },
-        codeText: `
-  import React, { useState } from 'react';
-  import { Button } from 'antd';
-  import { Spin } from '@baifendian/adhere';
-  import Table from './table';
+        config: [
+          {
+            title: 'table.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: `
+  import { Table } from 'antd';
+  import React from 'react';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      setReset1(true);
-    }}
-  >
-    重置
-  </Button>
+  import { Suspense } from '@baifendian/adhere';
 
-  <Table
-    firstLoading={
-      <div style={{ position: 'relative' }}>
-        <Spin spinning />
-      </div>
+  class TableWrap extends Suspense {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        dataSource: [],
+        loading: false,
+        pagination: {
+          current: 1,
+          pageSize: 2,
+        },
+      };
     }
-    reset={reser1}
-  />
 
-  <Table reset={reset} />
-      `,
-        type: 'PlayGround',
+    componentWillReceiveProps(nextProps) {
+      super.componentWillReceiveProps(nextProps);
+
+      if (nextProps.reset) {
+        this.setState(
+          {
+            pagination: {
+              current: 1,
+              pageSize: 2,
+            },
+          },
+          () => {
+            this.fetchData();
+          },
+        );
+      }
+    }
+
+    getColumns() {
+      return [
+        {
+          title: '姓名',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: '性别',
+          key: 'sex',
+          dataIndex: 'sex',
+        },
+        {
+          title: '年龄',
+          key: 'age',
+          dataIndex: 'age',
+        },
+        {
+          title: '身高',
+          key: 'height',
+          dataIndex: 'height',
+        },
+        {
+          title: '体重',
+          key: 'width',
+          dataIndex: 'width',
+        },
+      ];
+    }
+
+    fetchData() {
+      const list = [];
+      list.length = 10;
+      list.fill(0);
+
+      this.setState(
+        {
+          loading: true,
+        },
+        () => {
+          setTimeout(() => {
+            const dataSource = list.map((t, index) => ({
+              id: index + 1,
+              name: \`人\${index + 1}\`,
+              sex: '男',
+              age: 66,
+              height: 180,
+              width: 180,
+            }));
+
+            this.setState(
+              {
+                dataSource,
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({
+                    loading: false,
+                  });
+                }, 200);
+              },
+            );
+          }, 2000);
+        },
+      );
+    }
+
+    showLoading() {
+      return this.state.loading;
+    }
+
+    handleTableChange = (pagination) => {
+      this.setState(
+        {
+          pagination,
+        },
+        () => {
+          this.fetchData();
+        },
+      );
+    };
+
+    renderInner() {
+      return (
+        <div style={{ position: 'relative' }}>
+          <Table
+            rowKey="id"
+            columns={this.getColumns()}
+            dataSource={this.state.dataSource}
+            // loading={this.showLoading()}
+            pagination={this.state.pagination}
+            onChange={this.handleTableChange}
+          />
+        </div>
+      );
+    }
+  }
+
+  export default TableWrap;
+                  `,
+          },
+          {
+            title: 'test.jsx',
+            mode: 'code',
+            scope: { React },
+            codeText: `
+  import React,{ useRef } from 'react';
+  import { ForceUpdate, Spin } from '@baifendian/adhere';
+  import { Button } from 'antd';
+  import Table from './table.jsx';
+
+  export default () => {
+    const t2 = useRef();
+
+    return (
+      <>
+        <Button
+          type="primary"
+          onClick={() => {
+            t2.current.reMount();
+          }}
+        >
+          重置
+        </Button>
+
+        <ForceUpdate ref={t2}>
+          <Table
+            firstLoading={
+              <div style={{ position: 'relative' }}>
+                <Spin spinning />
+              </div>
+            }
+          />
+        </ForceUpdate>
+      </>
+    );
+  }
+                  `,
+          },
+        ],
+        type: 'PlayGroundMulit',
         renderChildren: () => (
           <>
             <Button
               type="primary"
               onClick={() => {
-                setReset1(true);
+                t2.current.reMount();
               }}
             >
               重置
             </Button>
 
-            <Table
-              firstLoading={
-                <div style={{ position: 'relative' }}>
-                  <Spin spinning />
-                </div>
-              }
-              reset={reser1}
-            />
+            <ForceUpdate ref={t2}>
+              <Table
+                firstLoading={
+                  <div style={{ position: 'relative' }}>
+                    <Spin spinning />
+                  </div>
+                }
+              />
+            </ForceUpdate>
           </>
         ),
       },
