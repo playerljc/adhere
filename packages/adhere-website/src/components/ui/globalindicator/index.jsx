@@ -1,7 +1,7 @@
-import { Button } from 'antd';
-import React, { useRef } from 'react';
+import { Button, Select } from 'antd';
+import React, { useRef, useState } from 'react';
 
-import { GlobalIndicator } from '@baifendian/adhere';
+import { GlobalIndicator, Space } from '@baifendian/adhere';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,8 +10,11 @@ import PlayGroundPage, {
 } from '@/lib/PlaygroundPage';
 
 export default () => {
-  const ref = useRef();
-  let handler = null;
+  const ref1 = useRef();
+  const ref2 = useRef();
+  const [size, setSize] = useState('default');
+  let handler1 = null;
+  let handler2 = null;
 
   function boxPanelConfig() {
     return [
@@ -74,7 +77,7 @@ export default () => {
         codeText: `
   import React, { useRef } from 'react';
   import { Button } from 'antd';
-  import { GlobalIndicator } from '@baifendian/adhere';
+  import { GlobalIndicator, Space } from '@baifendian/adhere';
 
   let handler = null;
   const ref = useRef();
@@ -88,23 +91,26 @@ export default () => {
       and implementations would be involved, which might cause designers and developers
       difficulties and duplication and reduce the efficiency of development.
     </div>
-    <div>
-      <Button
-        type="primary"
-        onClick={() => {
-          handler = GlobalIndicator.show(ref.current, '处理中...');
-        }}
-      >
-        显示
-      </Button>
 
-      <Button
-        onClick={() => {
-          GlobalIndicator.hide(handler);
-        }}
-      >
-        取消
-      </Button>
+    <div>
+      <Space.Group direction="horizontal" size={5}>
+        <Button
+          type="primary"
+          onClick={() => {
+            handler1 = GlobalIndicator.show(ref1.current, '处理中...');
+          }}
+        >
+          显示
+        </Button>
+
+        <Button
+          onClick={() => {
+            GlobalIndicator.hide(handler1);
+          }}
+        >
+          取消
+        </Button>
+      </Space.Group>
     </div>
   </div>
       `,
@@ -112,30 +118,132 @@ export default () => {
         renderChildren: () => (
           <div>
             <div
-              ref={ref}
+              ref={ref1}
               style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}
             >
               In the process of internal desktop applications development, many different design
               specs and implementations would be involved, which might cause designers and
               developers difficulties and duplication and reduce the efficiency of development.
             </div>
-            <div>
-              <Button
-                type="primary"
-                onClick={() => {
-                  handler = GlobalIndicator.show(ref.current, '处理中...');
-                }}
-              >
-                显示
-              </Button>
 
-              <Button
-                onClick={() => {
-                  GlobalIndicator.hide(handler);
-                }}
-              >
-                取消
-              </Button>
+            <div>
+              <Space.Group direction="horizontal" size={5}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    handler1 = GlobalIndicator.show(ref1.current, '处理中...');
+                  }}
+                >
+                  显示
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    GlobalIndicator.hide(handler1);
+                  }}
+                >
+                  取消
+                </Button>
+              </Space.Group>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: `p3`,
+        name: `各种大小`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '各种大小',
+            info: '各种大小',
+          },
+        },
+        codeText: `
+  import React, { useRef, useState } from 'react';
+  import { Button, Select } from 'antd';
+  import { GlobalIndicator, Space } from '@baifendian/adhere';
+
+  let handler = null;
+  const ref = useRef();
+  const [size, setSize] = useState('default');
+
+  <div>
+    <div
+      ref={ref}
+      style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}
+    >
+      In the process of internal desktop applications development, many different design specs
+      and implementations would be involved, which might cause designers and developers
+      difficulties and duplication and reduce the efficiency of development.
+    </div>
+
+    <div>
+      <Space.Group direction="horizontal" size={5}>
+        <Select value={size} onChange={(e) => setSize(e)}>
+          <Select.Option value="small">small</Select.Option>
+          <Select.Option value="default">default</Select.Option>
+          <Select.Option value="large">large</Select.Option>
+        </Select>
+
+        <Button
+          type="primary"
+          onClick={() => {
+            handler2 = GlobalIndicator.show(ref2.current, '处理中...', undefined, size);
+          }}
+        >
+          显示
+        </Button>
+
+        <Button
+          onClick={() => {
+            GlobalIndicator.hide(handler2);
+          }}
+        >
+          取消
+        </Button>
+      </Space.Group>
+    </div>
+  </div>
+      `,
+        type: 'PlayGround',
+        renderChildren: () => (
+          <div>
+            <div
+              ref={ref2}
+              style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}
+            >
+              In the process of internal desktop applications development, many different design
+              specs and implementations would be involved, which might cause designers and
+              developers difficulties and duplication and reduce the efficiency of development.
+            </div>
+
+            <div>
+              <Space.Group direction="horizontal" size={5}>
+                <Select value={size} onChange={(e) => setSize(e)}>
+                  <Select.Option value="small">small</Select.Option>
+                  <Select.Option value="default">default</Select.Option>
+                  <Select.Option value="large">large</Select.Option>
+                </Select>
+
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    handler2 = GlobalIndicator.show(ref2.current, '处理中...', undefined, size);
+                  }}
+                >
+                  显示
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    GlobalIndicator.hide(handler2);
+                  }}
+                >
+                  取消
+                </Button>
+              </Space.Group>
             </div>
           </div>
         ),
@@ -182,6 +290,13 @@ export default () => {
                     desc: '遮罩的层级',
                     type: 'number',
                     defaultVal: '19999',
+                    required: 'false',
+                  },
+                  {
+                    name: 'size',
+                    desc: '大小',
+                    type: 'default | small | large',
+                    defaultVal: 'default',
                     required: 'false',
                   },
                 ],
