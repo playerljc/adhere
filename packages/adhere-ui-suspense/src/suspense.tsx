@@ -1,7 +1,9 @@
-import { Skeleton, Spin } from 'antd';
+import { Skeleton } from 'antd';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement } from 'react';
+
+import Spin from '@baifendian/adhere-ui-spin';
 
 import { ISuspense, SuspenseProps, SuspenseState } from './types';
 
@@ -121,9 +123,10 @@ abstract class Suspense<
 
     // 缺省的normalLoading
     return (
-      <Spin size="large" spinning={this.showLoading()}>
+      <>
+        <Spin size="large" spinning={this.showLoading()}></Spin>
         {children}
-      </Spin>
+      </>
     );
   }
 

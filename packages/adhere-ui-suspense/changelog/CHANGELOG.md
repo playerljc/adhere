@@ -1,3 +1,11 @@
+# 1.0.5
+
+***
+
+2023-08-19
+
+* 默认renderNormalLoading使用adhere-ui-spin实现
+
 # 1.0.4
 
 ***
