@@ -1,3 +1,14 @@
+# 2.10.17
+
+***
+
+2023-08-20
+
+* **adhere-ui-playground**
+  - 修复PlayGroundMulit.less样式
+* **adhere-util-dict**
+  - 加入必要的异常处理
+
 # 2.10.16
 
 ***
