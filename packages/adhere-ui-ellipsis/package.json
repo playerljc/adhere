@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-ellipsis",
-  "version": "2.10.14",
+  "version": "2.10.17",
   "description": "文字省略",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,7 +29,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.10.12",
+    "@baifendian/adhere-ui-conditionalrender": "^2.10.17",
     "@baifendian/adhere-ui-css": "^2.10.14",
     "@baifendian/adhere-util-intl": "^2.10.12",
     "@popperjs/core": "^2.11.8",
