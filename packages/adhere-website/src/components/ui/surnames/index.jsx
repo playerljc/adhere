@@ -217,7 +217,7 @@ export default () => {
   </div>
       `,
         type: 'PlayGround',
-        "antd": "^5.8.3"
+
         renderChildren: () => (
           <div style={{ display: 'flex' }}>
             <Space.Group direction="horizontal">

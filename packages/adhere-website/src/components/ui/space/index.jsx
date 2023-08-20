@@ -101,7 +101,7 @@ export default () => {
   </div>
       `,
         type: 'PlayGround',
-        "antd": "^5.8.3"
+
         renderChildren: () => (
           <div>
             <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>

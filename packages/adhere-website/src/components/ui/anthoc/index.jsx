@@ -60,7 +60,7 @@ export default () => {
               {
                 title: 'Select',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -74,7 +74,7 @@ export default () => {
               {
                 title: 'MultipleSelect',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -88,7 +88,7 @@ export default () => {
               {
                 title: 'TreeSelect',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -101,7 +101,7 @@ export default () => {
               {
                 title: 'AutoComplete',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -114,7 +114,7 @@ export default () => {
               {
                 title: 'DatePicker',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -126,7 +126,7 @@ export default () => {
               {
                 title: 'RangePicker',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -138,7 +138,7 @@ export default () => {
               {
                 title: 'TimePicker',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -150,7 +150,7 @@ export default () => {
               {
                 title: 'Cascader',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -166,7 +166,7 @@ export default () => {
               {
                 title: 'Upload',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -179,7 +179,7 @@ export default () => {
               {
                 title: 'Modal',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -195,7 +195,7 @@ export default () => {
               {
                 title: 'InputNumberDecimal1',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -207,7 +207,7 @@ export default () => {
               {
                 title: 'InputNumberDecimal2',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -219,7 +219,7 @@ export default () => {
               {
                 title: 'InputNumberInteger',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   // 默认normalize
@@ -231,7 +231,7 @@ export default () => {
               {
                 title: 'Form',
                 mode: 'code',
-                "antd": "^5.8.3"
+
                 scope: { React },
                 codeText: `
   <Form.Item
