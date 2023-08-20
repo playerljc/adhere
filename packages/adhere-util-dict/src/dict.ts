@@ -81,8 +81,14 @@ function CreateFunProxy(fun: Function, property: string) {
 function initValue(p, params) {
   const handler = Dict.handlers[p];
 
+  let value:any = null;
+
   // 返回值 - 一般都不是函数
-  let value = handler(params);
+  try {
+    value = handler(params);
+  } catch (error) {
+    throw new Error(`${p} dict does not exist`);
+  }
 
   // 如果value是函数则默认是缓存的
   if (value instanceof Function) {
