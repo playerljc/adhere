@@ -9,6 +9,20 @@ import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/Pla
 export default () => {
   const [val, setVal] = useState();
   const [vals, setVals] = useState([]);
+
+  const [branchVals, setBranchVals] = useState(['210102000000']);
+  const [branchMultiVals, setBranchMultiVals] = useState(['230102000000', '210102000000']);
+
+  const [cascaderBranchVals, setCascaderBranchVals] = useState([
+    '210000000000',
+    '210100000000',
+    '210102000000',
+  ]);
+  const [cascaderBranchMultiVals, setCascaderBranchMultiVals] = useState([
+    ['210000000000', '210100000000', '210102000000'],
+    ['230000000000', '230100000000', '230102000000'],
+  ]);
+
   const [listVals, setListVals] = useState([]);
   const [autoCompleteValue, setAutoCompleteValue] = useState({
     inputValue: '',
@@ -1036,18 +1050,6 @@ export default () => {
                 info: '异步加载`',
               },
             },
-            codeText: `
- import React from 'react';
- import { FieldGeneratorToDict } from '@baifendian/adhere';
-
- export default () => (
-  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-    style={{ width: 200 }}
-    value={vals}
-    onChange={(v) => setVals(v)}
-  />
- )
-            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
                 style={{ width: 200 }}
@@ -1068,18 +1070,6 @@ export default () => {
                 info: '异步加载(多选)`',
               },
             },
-            codeText: `
- import React from 'react';
- import { FieldGeneratorToDict } from '@baifendian/adhere';
-
- export default () => (
-  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-    style={{ width: 200 }}
-    value={vals}
-    onChange={(v) => setVals(v)}
-  />
- )
-            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
                 style={{ width: 200 }}
@@ -1100,18 +1090,6 @@ export default () => {
                 info: '异步加载(只能选叶子节点)`',
               },
             },
-            codeText: `
- import React from 'react';
- import { FieldGeneratorToDict } from '@baifendian/adhere';
-
- export default () => (
-  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
-    style={{ width: 200 }}
-    value={vals}
-    onChange={(v) => setVals(v)}
-  />
- )
-            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
                 style={{ width: 200 }}
@@ -1132,23 +1110,169 @@ export default () => {
                 info: '异步加载多选(只能选叶子节点)`',
               },
             },
-            codeText: `
- import React from 'react';
- import { FieldGeneratorToDict } from '@baifendian/adhere';
-
- export default () => (
-  <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-    style={{ width: 200 }}
-    value={vals}
-    onChange={(v) => setVals(v)}
-  />
- )
-            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p9',
+            name: '异步加载(回显)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显)',
+                info: '异步加载(回显)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+                style={{ width: 200 }}
+                value={branchVals}
+                onChange={(v) => setBranchVals(v)}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      title: '辽宁省',
+                      value: '210000000000',
+                      children: [
+                        {
+                          title: '沈阳市',
+                          value: '210100000000',
+                          children: [
+                            {
+                              title: '和平区',
+                              value: '210102000000',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ]);
+                }}
+              />
+            ),
+          },
+          {
+            id: 'p10',
+            name: '异步加载(回显-多数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显-多数据)',
+                info: '异步加载(回显-多数据)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+                style={{ width: 200 }}
+                value={branchMultiVals}
+                onChange={(v) => setBranchMultiVals(v)}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      title: '辽宁省',
+                      value: '210000000000',
+                      children: [
+                        {
+                          title: '沈阳市',
+                          value: '210100000000',
+                          children: [
+                            {
+                              title: '和平区',
+                              value: '210102000000',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      title: '黑龙江省',
+                      value: '230000000000',
+                      children: [
+                        {
+                          title: '哈尔滨市',
+                          value: '230100000000',
+                          children: [
+                            {
+                              title: '道里区',
+                              value: '230102000000',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ]);
+                }}
+              />
+            ),
+          },
+          {
+            id: 'p11',
+            name: '异步加载(回显-多数据-只能选叶子节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显-多数据-只能选叶子节点)',
+                info: '异步加载(回显-多数据-只能选叶子节点)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+                style={{ width: 200 }}
+                value={branchMultiVals}
+                onChange={(v) => setBranchMultiVals(v)}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      title: '辽宁省',
+                      value: '210000000000',
+                      leaf: false,
+                      children: [
+                        {
+                          title: '沈阳市',
+                          value: '210100000000',
+                          leaf: false,
+                          children: [
+                            {
+                              title: '和平区',
+                              value: '210102000000',
+                              leaf: true,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      title: '黑龙江省',
+                      value: '230000000000',
+                      leaf: false,
+                      children: [
+                        {
+                          title: '哈尔滨市',
+                          value: '230100000000',
+                          leaf: false,
+                          children: [
+                            {
+                              title: '道里区',
+                              value: '230102000000',
+                              leaf: true,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ]);
+                }}
               />
             ),
           },
@@ -1929,6 +2053,144 @@ export default () => {
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
+              />
+            ),
+          },
+          {
+            id: 'p5',
+            name: '异步加载',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载',
+                info: '异步加载`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p6',
+            name: '异步加载(多选)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(多选)',
+                info: '异步加载(多选)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p7',
+            name: '异步加载(回显)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显)',
+                info: '异步加载(回显)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+                value={cascaderBranchVals}
+                onChange={(v) => {
+                  console.log('v======', v);
+                  setCascaderBranchVals(v);
+                }}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      label: '辽宁省',
+                      value: '210000000000',
+                      children: [
+                        {
+                          label: '沈阳市',
+                          value: '210100000000',
+                          children: [
+                            {
+                              label: '和平区',
+                              value: '210102000000',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ]);
+                }}
+              />
+            ),
+          },
+          {
+            id: 'p8',
+            name: '异步加载(回显-多数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显-多数据)',
+                info: '异步加载(回显-多数据)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
+                value={cascaderBranchMultiVals}
+                onChange={(v) => {
+                  console.log('v======', v);
+                  setCascaderBranchMultiVals(v);
+                }}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      label: '辽宁省',
+                      value: '210000000000',
+                      children: [
+                        {
+                          label: '沈阳市',
+                          value: '210100000000',
+                          children: [
+                            {
+                              label: '和平区',
+                              value: '210102000000',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      label: '黑龙江省',
+                      value: '230000000000',
+                      children: [
+                        {
+                          label: '哈尔滨市',
+                          value: '230100000000',
+                          children: [
+                            {
+                              label: '道里区',
+                              value: '230102000000',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ]);
+                }}
               />
             ),
           },
