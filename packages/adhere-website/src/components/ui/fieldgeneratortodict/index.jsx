@@ -1050,6 +1050,19 @@ export default () => {
                 info: '异步加载`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
                 style={{ width: 200 }}
@@ -1070,6 +1083,19 @@ export default () => {
                 info: '异步加载(多选)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
                 style={{ width: 200 }}
@@ -1090,6 +1116,20 @@ export default () => {
                 info: '异步加载(只能选叶子节点)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
+      style={{ width: 200 }}
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
                 style={{ width: 200 }}
@@ -1110,6 +1150,20 @@ export default () => {
                 info: '异步加载多选(只能选叶子节点)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+      style={{ width: 200 }}
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
                 style={{ width: 200 }}
@@ -1130,6 +1184,20 @@ export default () => {
                 info: '异步加载(回显)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+      style={{ width: 200 }}
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
                 style={{ width: 200 }}
@@ -1170,6 +1238,56 @@ export default () => {
                 info: '异步加载(回显-多数据)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+      style={{ width: 200 }}
+      value={branchMultiVals}
+      onChange={(v) => setBranchMultiVals(v)}
+      fetchBranch={(value, cascadeParams) => {
+        return Promise.resolve([
+          {
+            title: '辽宁省',
+            value: '210000000000',
+            children: [
+              {
+                title: '沈阳市',
+                value: '210100000000',
+                children: [
+                  {
+                    title: '和平区',
+                    value: '210102000000',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            title: '黑龙江省',
+            value: '230000000000',
+            children: [
+              {
+                title: '哈尔滨市',
+                value: '230100000000',
+                children: [
+                  {
+                    title: '道里区',
+                    value: '230102000000',
+                  },
+                ],
+              },
+            ],
+          },
+        ]);
+      }}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
                 style={{ width: 200 }}
@@ -1226,6 +1344,62 @@ export default () => {
                 info: '异步加载(回显-多数据-只能选叶子节点)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+      style={{ width: 200 }}
+      value={branchMultiVals}
+      onChange={(v) => setBranchMultiVals(v)}
+      fetchBranch={(value, cascadeParams) => {
+        return Promise.resolve([
+          {
+            title: '辽宁省',
+            value: '210000000000',
+            leaf: false,
+            children: [
+              {
+                title: '沈阳市',
+                value: '210100000000',
+                leaf: false,
+                children: [
+                  {
+                    title: '和平区',
+                    value: '210102000000',
+                    leaf: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            title: '黑龙江省',
+            value: '230000000000',
+            leaf: false,
+            children: [
+              {
+                title: '哈尔滨市',
+                value: '230100000000',
+                leaf: false,
+                children: [
+                  {
+                    title: '道里区',
+                    value: '230102000000',
+                    leaf: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ]);
+      }}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
                 style={{ width: 200 }}
@@ -2068,6 +2242,19 @@ export default () => {
                 info: '异步加载`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
                 value={vals}
@@ -2087,6 +2274,19 @@ export default () => {
                 info: '异步加载(多选)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
                 value={vals}
@@ -2106,6 +2306,42 @@ export default () => {
                 info: '异步加载(回显)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+      value={vals}
+      onChange={(v) => {
+        console.log('v======', v);
+        setCascaderBranchVals(v);
+      }}
+      fetchBranch={(value, cascadeParams) => {
+        return Promise.resolve([
+          {
+            label: '辽宁省',
+            value: '210000000000',
+            children: [
+              {
+                label: '沈阳市',
+                value: '210100000000',
+                children: [
+                  {
+                    label: '和平区',
+                    value: '210102000000',
+                  },
+                ],
+              },
+            ],
+          },
+        ]);
+      }}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
                 value={cascaderBranchVals}
@@ -2148,6 +2384,58 @@ export default () => {
                 info: '异步加载(回显-多数据)`',
               },
             },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
+      value={vals}
+      onChange={(v) => {
+        console.log('v======', v);
+        setCascaderBranchVals(v);
+      }}
+      fetchBranch={(value, cascadeParams) => {
+        return Promise.resolve([
+          {
+            label: '辽宁省',
+            value: '210000000000',
+            children: [
+              {
+                label: '沈阳市',
+                value: '210100000000',
+                children: [
+                  {
+                    label: '和平区',
+                    value: '210102000000',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            label: '黑龙江省',
+            value: '230000000000',
+            children: [
+              {
+                label: '哈尔滨市',
+                value: '230100000000',
+                children: [
+                  {
+                    label: '道里区',
+                    value: '230102000000',
+                  },
+                ],
+              },
+            ],
+          },
+        ]);
+      }}
+    />
+  }
+            `,
             renderChildren: () => (
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
                 value={cascaderBranchMultiVals}
