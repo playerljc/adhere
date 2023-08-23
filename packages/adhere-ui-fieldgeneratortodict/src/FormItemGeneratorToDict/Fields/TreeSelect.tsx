@@ -333,7 +333,7 @@ setItem(
   'FormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
-      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+      const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
         fetchBranch,
@@ -348,6 +348,7 @@ setItem(
           loadData={onLoadData}
           dataSource={treeData}
           {...props}
+          onChange={(...params) => onChange(props.onChange, params)}
         />
       );
     },
@@ -357,7 +358,7 @@ setItem(
   'LeafFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
-      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+      const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
         fetchBranch,
@@ -372,6 +373,7 @@ setItem(
           loadData={onLoadData}
           dataSource={treeData}
           {...props}
+          onChange={(...params) => onChange(props.onChange, params)}
         />
       );
     },
@@ -381,7 +383,7 @@ setItem(
   'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
-      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+      const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
         fetchBranch,
@@ -396,6 +398,7 @@ setItem(
           loadData={onLoadData}
           dataSource={treeData}
           {...props}
+          onChange={(...params) => onChange(props.onChange, params)}
         />
       );
     },
@@ -405,7 +408,7 @@ setItem(
   'LeafMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
-      const { treeData, onLoadData } = useAsyncTreeSelect(dictName, {
+      const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
         fetchBranch,
@@ -420,6 +423,7 @@ setItem(
           loadData={onLoadData}
           dataSource={treeData}
           {...props}
+          onChange={(...params) => onChange(props.onChange, params)}
         />
       );
     },

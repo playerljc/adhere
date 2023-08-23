@@ -20370,17 +20370,34 @@ export default {
       return Promise.resolve(res.data);
     };
 
-    Dict.handlers.SystemDepartment = () => (pid, cascadeParams) =>
-      Promise.resolve(
-        Array.from({
-          length: 10,
-        })
-          .fill(() => 0)
-          .map(() => ({
-            title: faker.internet.userName(),
-            value: faker.random.uuid(),
+    Dict.handlers.SystemDepartment = () => (pid, cascadeParams) => {
+      if (!pid) {
+        return Promise.resolve(
+          Province.map((t) => ({
+            title: t.name,
+            label: t.name,
+            value: t.id,
+            leaf: false,
+            isLeaf: false,
           })),
-      );
+        );
+      }
+
+      const countyIds = Object.keys(County)
+        .map((key) => County[key])
+        .flat()
+        .map((t) => t.id);
+
+      const result = { ...City, ...County }[pid]?.map?.((t) => ({
+        title: t.name,
+        label: t.name,
+        value: t.id,
+        leaf: countyIds.includes(t.id),
+        isLeaf: countyIds.includes(t.id),
+      }));
+
+      return Promise.resolve(result);
+    };
 
     // Dict.handlers.SystemDepartment = () => (pid, cascadeParams) =>
     //   new Promise((resolve) => {

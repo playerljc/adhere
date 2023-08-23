@@ -8,6 +8,7 @@ import CascaderLeafFormItem from '../CascaderLeafFormItem';
 import CascaderLeafMultiFormItem from '../CascaderLeafMultiFormItem';
 import CascaderMultiFormItem from '../CascaderMultiFormItem';
 import { setItem } from '../ItemFactory';
+import { useAsyncCascader } from '../hooks';
 import { deepDep } from '../util';
 
 /**
@@ -318,5 +319,54 @@ setItem(
       }, [data]);
 
       return <CascaderLeafMultiFormItem {...props} dataSource={data} />;
+    },
+);
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+setItem(
+  'CascaderAsync',
+  'FormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      const { treeData, onLoadData, onChange } = useAsyncCascader(dictName, {
+        cascadeParams,
+        onDataSourceChange,
+        fetchBranch,
+        defaultId,
+        value: props.value,
+      });
+
+      return (
+        <CascaderFormItem
+          loadData={onLoadData}
+          options={treeData}
+          {...props}
+          onChange={(...params) => onChange(props.onChange, params)}
+        />
+      );
+    },
+);
+
+setItem(
+  'CascaderAsync',
+  'MultiFormItem',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      const { treeData, onLoadData, onChange } = useAsyncCascader(dictName, {
+        cascadeParams,
+        onDataSourceChange,
+        fetchBranch,
+        defaultId,
+        value: props.value,
+      });
+
+      return (
+        <CascaderMultiFormItem
+          loadData={onLoadData}
+          options={treeData}
+          {...props}
+          onChange={(...params) => onChange(props.onChange, params)}
+        />
+      );
     },
 );

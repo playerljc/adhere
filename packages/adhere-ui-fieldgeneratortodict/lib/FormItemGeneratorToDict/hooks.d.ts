@@ -25,4 +25,25 @@ export declare function useAsyncTreeSelect(dictName: string, { cascadeParams, on
     onLoadData: ({ value: id }: {
         value: any;
     }) => Promise<unknown>;
+    onChange: (callback: any, params: any) => void;
+};
+/**
+ * useAsyncCascader
+ * @param dictName
+ * @param cascadeParams
+ * @param onDataSourceChange
+ * @param fetchBranch
+ * @param defaultId
+ * @param value
+ */
+export declare function useAsyncCascader(dictName: string, { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value }: {
+    cascadeParams: any;
+    onDataSourceChange: any;
+    fetchBranch: any;
+    defaultId: any;
+    value: any;
+}): {
+    treeData: LabelValue[];
+    onLoadData: (selectedOptions: any) => Promise<unknown>;
+    onChange: (callback: any, params: any) => void;
 };

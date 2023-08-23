@@ -150,6 +150,7 @@ const ItemNames = new Map([
 
   ['CascaderDynamic', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
   ['Cascader', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
+  ['CascaderAsync', ['FormItem', 'MultiFormItem']],
 
   [
     'CheckBoxDynamic',
