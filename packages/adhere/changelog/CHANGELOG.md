@@ -1,3 +1,15 @@
+# 2.10.18
+
+***
+
+2023-08-23
+
+* **adhere-ui-fieldgeneratortodict**
+  - 修复TreeSelect异步加载生成器BUG
+  - 加入Cascader异步加载生成器
+* **adhere-util-resource**
+  - dict.gis.config.js加入Dict.handlers.ResourceGisDefaultExtent
+
 # 2.10.17
 
 ***
