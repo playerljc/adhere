@@ -1,3 +1,15 @@
+# 2.10.19
+
+***
+
+2023-08-26
+
+* **adhere-ui-fieldgeneratortodict**
+  - TreeSelect和Cascader加入flat数据的支持
+  - 修复TreeSelect异步加载生成器BUG和Cascader异步加载生成器的BUG
+* **adhere-util**
+  - 修复tree的arrayToAntdTree方法
+
 # 2.10.18
 
 ***
