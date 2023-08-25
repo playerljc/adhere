@@ -1,10 +1,10 @@
-import { LabelValue } from '../types';
+import type { LabelValue, UseTreeSelectLeaf } from '../types';
 /**
  * useTreeSelectLeaf
  * @description 处理TreeSelect数据的leaf
  * @param dataSource
  */
-export declare function useTreeSelectLeaf(dataSource: any): LabelValue[];
+export declare const useTreeSelectLeaf: UseTreeSelectLeaf;
 /**
  * useAsyncTreeSelect
  * @param dictName
@@ -13,14 +13,16 @@ export declare function useTreeSelectLeaf(dataSource: any): LabelValue[];
  * @param fetchBranch
  * @param defaultId
  * @param value
+ * @param treeDataSimpleMode
  */
-export declare function useAsyncTreeSelect(dictName: string, { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value }: {
+export declare const useAsyncTreeSelect: (dictName: string, { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value, treeDataSimpleMode }: {
     cascadeParams: any;
     onDataSourceChange: any;
     fetchBranch: any;
     defaultId: any;
     value: any;
-}): {
+    treeDataSimpleMode: any;
+}) => {
     treeData: LabelValue[];
     onLoadData: ({ value: id }: {
         value: any;
@@ -35,15 +37,29 @@ export declare function useAsyncTreeSelect(dictName: string, { cascadeParams, on
  * @param fetchBranch
  * @param defaultId
  * @param value
+ * @param treeDataSimpleMode
  */
-export declare function useAsyncCascader(dictName: string, { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value }: {
+export declare function useAsyncCascader(dictName: string, { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value, treeDataSimpleMode }: {
     cascadeParams: any;
     onDataSourceChange: any;
     fetchBranch: any;
     defaultId: any;
     value: any;
+    treeDataSimpleMode: any;
 }): {
     treeData: LabelValue[];
     onLoadData: (selectedOptions: any) => Promise<unknown>;
     onChange: (callback: any, params: any) => void;
 };
+/**
+ * useCascaderData
+ * @description 拉平数据处理
+ * @param {Array} options
+ * @param {Object} config
+ * @param {boolean} async
+ */
+export declare function useCascaderData({ options, treeDataSimpleMode, config }: {
+    options: any;
+    treeDataSimpleMode: any;
+    config: any;
+}): any;

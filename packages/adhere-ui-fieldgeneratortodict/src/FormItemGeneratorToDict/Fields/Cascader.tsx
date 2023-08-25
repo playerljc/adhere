@@ -334,6 +334,7 @@ setItem(
         fetchBranch,
         defaultId,
         value: props.value,
+        treeDataSimpleMode: props.treeDataSimpleMode,
       });
 
       return (
@@ -358,6 +359,7 @@ setItem(
         fetchBranch,
         defaultId,
         value: props.value,
+        treeDataSimpleMode: props.treeDataSimpleMode,
       });
 
       return (

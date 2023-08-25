@@ -5,6 +5,8 @@ export interface LabelValue {
     label: string;
     value: string | number;
     disabled?: boolean;
+    id?: string | number;
+    pId?: string | number;
 }
 interface RadioLabelValue extends LabelValue {
     disabled: boolean;
@@ -52,6 +54,13 @@ export type CheckBoxCustomFormItemProps = CheckboxGroupProps & {
 export interface CheckBoxCheckAllCustomFormItemProps extends CheckBoxCustomFormItemProps {
 }
 export type CascaderFormItemProps = {
+    treeDataSimpleMode?: boolean;
+    arrayToAntdTreeSelectConfig?: {
+        keyAttr: 'value';
+        titleAttr: 'value';
+        rootParentId: 0;
+        parentIdAttr: 'pId';
+    };
     options: LabelValue[];
 } & CascaderProps<any>;
 export type CascaderLeafFormItemProps = {
@@ -165,4 +174,5 @@ export type MentionsFormItemProps = FormItemProps & MentionProps;
 export interface DictRefreshWrapperFunction {
     refresh(): any;
 }
+export type UseTreeSelectLeaf = (dataSource: LabelValue[]) => LabelValue[];
 export {};

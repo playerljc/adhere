@@ -1,9 +1,10 @@
-import { useMount, usePrevious, useUpdateEffect } from 'ahooks';
-import { useMemo, useRef, useState } from 'react';
+import { useMount, useUpdateEffect } from 'ahooks';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
+import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
-import { LabelValue } from '../types';
+import type { LabelValue, UseTreeSelectLeaf } from '../types';
 import { deepDep } from './util';
 
 /**
@@ -11,8 +12,8 @@ import { deepDep } from './util';
  * @description 处理TreeSelect数据的leaf
  * @param dataSource
  */
-export function useTreeSelectLeaf(dataSource) {
-  return useMemo<LabelValue[]>(() => {
+export const useTreeSelectLeaf: UseTreeSelectLeaf = (dataSource) =>
+  useMemo<LabelValue[]>(() => {
     function loop(nodes) {
       (nodes || []).forEach((node) => {
         node.disabled = !('leaf' in node && node.leaf);
@@ -27,7 +28,6 @@ export function useTreeSelectLeaf(dataSource) {
 
     return source;
   }, [dataSource]);
-}
 
 /**
  * useAsyncTreeSelect
@@ -37,11 +37,12 @@ export function useTreeSelectLeaf(dataSource) {
  * @param fetchBranch
  * @param defaultId
  * @param value
+ * @param treeDataSimpleMode
  */
-export function useAsyncTreeSelect(
+export const useAsyncTreeSelect = (
   dictName: string,
-  { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value },
-) {
+  { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value, treeDataSimpleMode },
+) => {
   const [treeData, setTreeData] = useState<LabelValue[]>([]);
 
   const changeValue = useRef();
@@ -130,6 +131,12 @@ export function useAsyncTreeSelect(
       setTimeout(() => {
         loadData(id).then((data) => {
           setTreeData((_treeData) => {
+            // 拉平数据处理
+            if (!!treeDataSimpleMode) {
+              return [...data, ..._treeData.filter((t) => t.pId !== id)];
+            }
+
+            // 正常数据处理
             const node = findNodeById(_treeData, id);
 
             // children中可能有回显数据，需要分情况处理
@@ -198,7 +205,7 @@ export function useAsyncTreeSelect(
     onLoadData,
     onChange,
   };
-}
+};
 
 /**
  * useAsyncCascader
@@ -208,10 +215,11 @@ export function useAsyncTreeSelect(
  * @param fetchBranch
  * @param defaultId
  * @param value
+ * @param treeDataSimpleMode
  */
 export function useAsyncCascader(
   dictName: string,
-  { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value },
+  { cascadeParams, onDataSourceChange, fetchBranch, defaultId, value, treeDataSimpleMode },
 ) {
   const [treeData, setTreeData] = useState<LabelValue[]>([]);
 
@@ -302,6 +310,11 @@ export function useAsyncCascader(
       setTimeout(() => {
         loadData(id).then((data) => {
           setTreeData((_treeData) => {
+            // 拉平数据处理
+            if (!!treeDataSimpleMode) {
+              return [...data, ..._treeData.filter((t) => t.pId !== id)];
+            }
+
             const node = findNodeById(_treeData, id);
 
             // children中可能有回显数据，需要分情况处理
@@ -370,4 +383,26 @@ export function useAsyncCascader(
     onLoadData,
     onChange,
   };
+}
+
+/**
+ * useCascaderData
+ * @description 拉平数据处理
+ * @param {Array} options
+ * @param {Object} config
+ * @param {boolean} async
+ */
+export function useCascaderData({ options, treeDataSimpleMode, config }) {
+  const getTreeData = useCallback(
+    () =>
+      Util.arrayToAntdTreeSelect(options, {
+        keyAttr: config?.keyAttr ?? 'value',
+        titleAttr: config?.titleAttr ?? 'value',
+        rootParentId: config?.rootParentId ?? 0,
+        parentIdAttr: config?.parentIdAttr ?? 'pId',
+      }),
+    [options],
+  );
+
+  return treeDataSimpleMode ? getTreeData() : options;
 }

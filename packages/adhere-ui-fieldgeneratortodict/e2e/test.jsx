@@ -841,400 +841,507 @@ export default () => {
 
       <CodeBoxSection
         title="FormItemGeneratorToDict - TreeSelect"
-        config={
-          [
-            // {
-            //   id: 'p1',
-            //   name: 'TreeSelect单选(能选任意节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect单选(能选任意节点)',
-            //       info: 'TreeSelect单选(能选任意节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [val, setVal] = useState('');
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={val}
-            //     onChange={(v) => setVal(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
-            //       style={{ width: 200 }}
-            //       value={val}
-            //       onChange={(v) => setVal(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p2',
-            //   name: 'TreeSelect单选(只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect单选(只能选叶子节点)',
-            //       info: 'TreeSelect单选(只能选叶子节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [val, setVal] = useState('');
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={val}
-            //     onChange={(v) => setVal(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
-            //       style={{ width: 200 }}
-            //       value={val}
-            //       onChange={(v) => setVal(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p3',
-            //   name: 'TreeSelect多选(能选任意节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect多选(能选任意节点)',
-            //       info: 'TreeSelect多选(能选任意节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [vals, setVals] = useState([]);
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={vals}
-            //     onChange={(v) => setVals(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
-            //       style={{ width: 300 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p4',
-            //   name: 'TreeSelect多选(只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect多选(只能选叶子节点)',
-            //       info: 'TreeSelect多选(只能选叶子节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [vals, setVals] = useState([]);
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={vals}
-            //     onChange={(v) => setVals(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
-            //       style={{ width: 200 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p5',
-            //   name: '异步加载',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载',
-            //       info: '异步加载`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-            //       style={{ width: 200 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p6',
-            //   name: '异步加载(多选)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载(多选)',
-            //       info: '异步加载(多选)`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-            //       style={{ width: 200 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p7',
-            //   name: '异步加载(只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载(只能选叶子节点)',
-            //       info: '异步加载(只能选叶子节点)`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
-            //       style={{ width: 200 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p8',
-            //   name: '异步加载多选(只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载多选(只能选叶子节点)',
-            //       info: '异步加载多选(只能选叶子节点)`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-            //       style={{ width: 200 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p9',
-            //   name: '异步加载(回显)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载(回显)',
-            //       info: '异步加载(回显)`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-            //       style={{ width: 200 }}
-            //       value={branchVals}
-            //       onChange={(v) => setBranchVals(v)}
-            //       fetchBranch={(value, cascadeParams) => {
-            //         return Promise.resolve([
-            //           {
-            //             title: '辽宁省',
-            //             value: '210000000000',
-            //             children: [
-            //               {
-            //                 title: '沈阳市',
-            //                 value: '210100000000',
-            //                 children: [
-            //                   {
-            //                     title: '和平区',
-            //                     value: '210102000000',
-            //                   },
-            //                 ],
-            //               },
-            //             ],
-            //           },
-            //         ]);
-            //       }}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p10',
-            //   name: '异步加载(回显-多数据)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载(回显-多数据)',
-            //       info: '异步加载(回显-多数据)`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-            //       style={{ width: 200 }}
-            //       value={branchMultiVals}
-            //       onChange={(v) => setBranchMultiVals(v)}
-            //       fetchBranch={(value, cascadeParams) => {
-            //         return Promise.resolve([
-            //           {
-            //             title: '辽宁省',
-            //             value: '210000000000',
-            //             children: [
-            //               {
-            //                 title: '沈阳市',
-            //                 value: '210100000000',
-            //                 children: [
-            //                   {
-            //                     title: '和平区',
-            //                     value: '210102000000',
-            //                   },
-            //                 ],
-            //               },
-            //             ],
-            //           },
-            //           {
-            //             title: '黑龙江省',
-            //             value: '230000000000',
-            //             children: [
-            //               {
-            //                 title: '哈尔滨市',
-            //                 value: '230100000000',
-            //                 children: [
-            //                   {
-            //                     title: '道里区',
-            //                     value: '230102000000',
-            //                   },
-            //                 ],
-            //               },
-            //             ],
-            //           },
-            //         ]);
-            //       }}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p11',
-            //   name: '异步加载(回显-多数据-只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: '异步加载(回显-多数据-只能选叶子节点)',
-            //       info: '异步加载(回显-多数据-只能选叶子节点)`',
-            //     },
-            //   },
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-            //       style={{ width: 200 }}
-            //       value={branchMultiVals}
-            //       onChange={(v) => setBranchMultiVals(v)}
-            //       fetchBranch={(value, cascadeParams) => {
-            //         return Promise.resolve([
-            //           {
-            //             title: '辽宁省',
-            //             value: '210000000000',
-            //             leaf: false,
-            //             children: [
-            //               {
-            //                 title: '沈阳市',
-            //                 value: '210100000000',
-            //                 leaf: false,
-            //                 children: [
-            //                   {
-            //                     title: '和平区',
-            //                     value: '210102000000',
-            //                     leaf: true,
-            //                   },
-            //                 ],
-            //               },
-            //             ],
-            //           },
-            //           {
-            //             title: '黑龙江省',
-            //             value: '230000000000',
-            //             leaf: false,
-            //             children: [
-            //               {
-            //                 title: '哈尔滨市',
-            //                 value: '230100000000',
-            //                 leaf: false,
-            //                 children: [
-            //                   {
-            //                     title: '道里区',
-            //                     value: '230102000000',
-            //                     leaf: true,
-            //                   },
-            //                 ],
-            //               },
-            //             ],
-            //           },
-            //         ]);
-            //       }}
-            //     />
-            //   ),
-            // },
-          ]
-        }
+        config={[
+          // {
+          //   id: 'p1',
+          //   name: 'TreeSelect单选(能选任意节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: 'TreeSelect单选(能选任意节点)',
+          //       info: 'TreeSelect单选(能选任意节点)`',
+          //     },
+          //   },
+          //   codeText: `
+          // import React, { useState } from 'react';
+          // import { FieldGeneratorToDict } from '@baifendian/adhere';
+          //
+          // export default () => {
+          //   const [val, setVal] = useState('');
+          //
+          //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
+          //     selectProps={{
+          //       style: {
+          //         width: 200,
+          //       },
+          //     }}
+          //     value={val}
+          //     onChange={(v) => setVal(v)}
+          //   />
+          // }
+          //           `,
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
+          //       style={{ width: 200 }}
+          //       value={val}
+          //       onChange={(v) => setVal(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p2',
+          //   name: 'TreeSelect单选(只能选叶子节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: 'TreeSelect单选(只能选叶子节点)',
+          //       info: 'TreeSelect单选(只能选叶子节点)`',
+          //     },
+          //   },
+          //   codeText: `
+          // import React, { useState } from 'react';
+          // import { FieldGeneratorToDict } from '@baifendian/adhere';
+          //
+          // export default () => {
+          //   const [val, setVal] = useState('');
+          //
+          //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
+          //     selectProps={{
+          //       style: {
+          //         width: 200,
+          //       },
+          //     }}
+          //     value={val}
+          //     onChange={(v) => setVal(v)}
+          //   />
+          // }
+          //           `,
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
+          //       style={{ width: 200 }}
+          //       value={val}
+          //       onChange={(v) => setVal(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p3',
+          //   name: 'TreeSelect多选(能选任意节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: 'TreeSelect多选(能选任意节点)',
+          //       info: 'TreeSelect多选(能选任意节点)`',
+          //     },
+          //   },
+          //   codeText: `
+          // import React, { useState } from 'react';
+          // import { FieldGeneratorToDict } from '@baifendian/adhere';
+          //
+          // export default () => {
+          //   const [vals, setVals] = useState([]);
+          //
+          //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
+          //     selectProps={{
+          //       style: {
+          //         width: 200,
+          //       },
+          //     }}
+          //     value={vals}
+          //     onChange={(v) => setVals(v)}
+          //   />
+          // }
+          //           `,
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
+          //       style={{ width: 300 }}
+          //       value={vals}
+          //       onChange={(v) => setVals(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p4',
+          //   name: 'TreeSelect多选(只能选叶子节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: 'TreeSelect多选(只能选叶子节点)',
+          //       info: 'TreeSelect多选(只能选叶子节点)`',
+          //     },
+          //   },
+          //   codeText: `
+          // import React, { useState } from 'react';
+          // import { FieldGeneratorToDict } from '@baifendian/adhere';
+          //
+          // export default () => {
+          //   const [vals, setVals] = useState([]);
+          //
+          //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
+          //     selectProps={{
+          //       style: {
+          //         width: 200,
+          //       },
+          //     }}
+          //     value={vals}
+          //     onChange={(v) => setVals(v)}
+          //   />
+          // }
+          //           `,
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
+          //       style={{ width: 200 }}
+          //       value={vals}
+          //       onChange={(v) => setVals(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p5',
+          //   name: '异步加载',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载',
+          //       info: '异步加载`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+          //       style={{ width: 200 }}
+          //       value={vals}
+          //       onChange={(v) => setVals(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p6',
+          //   name: '异步加载(多选)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载(多选)',
+          //       info: '异步加载(多选)`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+          //       style={{ width: 200 }}
+          //       value={vals}
+          //       onChange={(v) => setVals(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p7',
+          //   name: '异步加载(只能选叶子节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载(只能选叶子节点)',
+          //       info: '异步加载(只能选叶子节点)`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
+          //       style={{ width: 200 }}
+          //       value={vals}
+          //       onChange={(v) => setVals(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p8',
+          //   name: '异步加载多选(只能选叶子节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载多选(只能选叶子节点)',
+          //       info: '异步加载多选(只能选叶子节点)`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+          //       style={{ width: 200 }}
+          //       value={vals}
+          //       onChange={(v) => setVals(v)}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p9',
+          //   name: '异步加载(回显)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载(回显)',
+          //       info: '异步加载(回显)`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+          //       style={{ width: 200 }}
+          //       value={branchVals}
+          //       onChange={(v) => setBranchVals(v)}
+          //       fetchBranch={(value, cascadeParams) => {
+          //         return Promise.resolve([
+          //           {
+          //             title: '辽宁省',
+          //             value: '210000000000',
+          //             children: [
+          //               {
+          //                 title: '沈阳市',
+          //                 value: '210100000000',
+          //                 children: [
+          //                   {
+          //                     title: '和平区',
+          //                     value: '210102000000',
+          //                   },
+          //                 ],
+          //               },
+          //             ],
+          //           },
+          //         ]);
+          //       }}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p10',
+          //   name: '异步加载(回显-多数据)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载(回显-多数据)',
+          //       info: '异步加载(回显-多数据)`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+          //       style={{ width: 200 }}
+          //       value={branchMultiVals}
+          //       onChange={(v) => setBranchMultiVals(v)}
+          //       fetchBranch={(value, cascadeParams) => {
+          //         return Promise.resolve([
+          //           {
+          //             title: '辽宁省',
+          //             value: '210000000000',
+          //             children: [
+          //               {
+          //                 title: '沈阳市',
+          //                 value: '210100000000',
+          //                 children: [
+          //                   {
+          //                     title: '和平区',
+          //                     value: '210102000000',
+          //                   },
+          //                 ],
+          //               },
+          //             ],
+          //           },
+          //           {
+          //             title: '黑龙江省',
+          //             value: '230000000000',
+          //             children: [
+          //               {
+          //                 title: '哈尔滨市',
+          //                 value: '230100000000',
+          //                 children: [
+          //                   {
+          //                     title: '道里区',
+          //                     value: '230102000000',
+          //                   },
+          //                 ],
+          //               },
+          //             ],
+          //           },
+          //         ]);
+          //       }}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p11',
+          //   name: '异步加载(回显-多数据-只能选叶子节点)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: '异步加载(回显-多数据-只能选叶子节点)',
+          //       info: '异步加载(回显-多数据-只能选叶子节点)`',
+          //     },
+          //   },
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+          //       style={{ width: 200 }}
+          //       value={branchMultiVals}
+          //       onChange={(v) => setBranchMultiVals(v)}
+          //       fetchBranch={(value, cascadeParams) => {
+          //         return Promise.resolve([
+          //           {
+          //             title: '辽宁省',
+          //             value: '210000000000',
+          //             leaf: false,
+          //             children: [
+          //               {
+          //                 title: '沈阳市',
+          //                 value: '210100000000',
+          //                 leaf: false,
+          //                 children: [
+          //                   {
+          //                     title: '和平区',
+          //                     value: '210102000000',
+          //                     leaf: true,
+          //                   },
+          //                 ],
+          //               },
+          //             ],
+          //           },
+          //           {
+          //             title: '黑龙江省',
+          //             value: '230000000000',
+          //             leaf: false,
+          //             children: [
+          //               {
+          //                 title: '哈尔滨市',
+          //                 value: '230100000000',
+          //                 leaf: false,
+          //                 children: [
+          //                   {
+          //                     title: '道里区',
+          //                     value: '230102000000',
+          //                     leaf: true,
+          //                   },
+          //                 ],
+          //               },
+          //             ],
+          //           },
+          //         ]);
+          //       }}
+          //     />
+          //   ),
+          // },
+          // {
+          //   id: 'p12',
+          //   name: 'TreeSelect单选(能选任意节点，flat数据)',
+          //   mode: 'code',
+          //   scope: { React },
+          //   type: 'PlayGround',
+          //   cardProps: {
+          //     description: {
+          //       title: 'TreeSelect单选(能选任意节点，flat数据)',
+          //       info: 'TreeSelect单选(能选任意节点，flat数据)`',
+          //     },
+          //   },
+          //   codeText: `
+          //   import React, { useState } from 'react';
+          //   import { FieldGeneratorToDict } from '@baifendian/adhere';
+          //
+          //   export default () => {
+          //     const [val, setVal] = useState('');
+          //
+          //     return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
+          //       selectProps={{
+          //         style: {
+          //           width: 200,
+          //         },
+          //       }}
+          //       value={val}
+          //       onChange={(v) => setVal(v)}
+          //     />
+          //   }
+          //             `,
+          //   renderChildren: () => (
+          //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllTreeDynamicFormItem
+          //       style={{ width: 200 }}
+          //       treeDataSimpleMode
+          //       value={val}
+          //       onChange={(v) => setVal(v)}
+          //     />
+          //   ),
+          // },
+          {
+            id: 'p13',
+            name: '异步加载(flat数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(flat数据)',
+                info: '异步加载(flat数据)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+                style={{ width: 200 }}
+                treeDataSimpleMode
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          /*{
+            id: 'p14',
+            name: '异步加载(回显,flat数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显,flat数据)',
+                info: '异步加载(回显,flat数据)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+                style={{ width: 200 }}
+                treeDataSimpleMode
+                value={branchVals}
+                onChange={(v) => setBranchVals(v)}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      title: '辽宁省',
+                      value: '210000000000',
+                      id: '210000000000',
+                      pId: 0,
+                      leaf: false,
+                      isLeaf: false,
+                    },
+                    {
+                      title: '沈阳市',
+                      value: '210100000000',
+                      id: '210100000000',
+                      pId: '210000000000',
+                      leaf: false,
+                      isLeaf: false,
+                    },
+                    {
+                      title: '和平区',
+                      value: '210102000000',
+                      id: '210102000000',
+                      pId: '210100000000',
+                      leaf: true,
+                      isLeaf: true,
+                    },
+                  ]);
+                }}
+              />
+            ),
+          },*/
+        ]}
       />
 
       {/*<CodeBoxSection
@@ -2054,7 +2161,6 @@ export default () => {
           //     />
           //   ),
           // },
-
           // {
           //   id: 'p9',
           //   name: '异步加载(回显)',
@@ -2097,8 +2203,7 @@ export default () => {
           //     />
           //   ),
           // },
-
-          {
+          /*{
             id: 'p10',
             name: '异步加载(回显-多数据)',
             mode: 'code',
@@ -2153,6 +2258,60 @@ export default () => {
                     },
                   ]);
                 }}
+              />
+            ),
+          },*/
+          /*{
+            id: 'p11',
+            name: 'Cascader(能选任意节点，拉平数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Cascader(能选任意节点，拉平数据)',
+                info: 'Cascader(能选任意节点，拉平数据)',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderFormItem
+      style={{ width: 500 }}
+      value={vals}
+      onChange={(v) => setVals(v || [])}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllCascaderDynamicMultiFormItem
+                treeDataSimpleMode
+                value={vals}
+                onChange={(v) => setVals(v || [])}
+              />
+            ),
+          },*/
+          {
+            id: 'p12',
+            name: '异步加载(拉平数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(拉平数据)',
+                info: '异步加载(拉平数据)`',
+              },
+            },
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+                treeDataSimpleMode
+                value={vals}
+                onChange={(v) => setVals(v)}
               />
             ),
           },
