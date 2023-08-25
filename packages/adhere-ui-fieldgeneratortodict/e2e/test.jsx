@@ -2165,7 +2165,7 @@ export default () => {
             ),
           },
           {
-            id: 'p9',
+            id: 'p7',
             name: '异步加载(回显)',
             mode: 'code',
             scope: { React },
@@ -2188,14 +2188,17 @@ export default () => {
                     {
                       label: '辽宁省',
                       value: '210000000000',
+                      isLeaf: false,
                       children: [
                         {
                           label: '沈阳市',
                           value: '210100000000',
+                          isLeaf: false,
                           children: [
                             {
                               label: '和平区',
                               value: '210102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -2207,7 +2210,7 @@ export default () => {
             ),
           },
           {
-            id: 'p10',
+            id: 'p8',
             name: '异步加载(回显-多数据)',
             mode: 'code',
             scope: { React },
@@ -2265,7 +2268,7 @@ export default () => {
             ),
           },
           {
-            id: 'p11',
+            id: 'p9',
             name: 'Cascader(能选任意节点，拉平数据)',
             mode: 'code',
             scope: { React },
@@ -2299,7 +2302,7 @@ export default () => {
             ),
           },
           {
-            id: 'p12',
+            id: 'p10',
             name: '异步加载(拉平数据)',
             mode: 'code',
             scope: { React },

@@ -1058,6 +1058,11 @@ export default () => {
     const [vals, setVals] = useState([]);
 
     return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+      selectProps={{
+        style: {
+          width: 200,
+        },
+      }}
       value={vals}
       onChange={(v) => setVals(v)}
     />
@@ -1091,6 +1096,11 @@ export default () => {
     const [vals, setVals] = useState([]);
 
     return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+      selectProps={{
+        style: {
+          width: 200,
+        },
+      }}
       value={vals}
       onChange={(v) => setVals(v)}
     />
@@ -1124,7 +1134,11 @@ export default () => {
     const [vals, setVals] = useState([]);
 
     return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
-      style={{ width: 200 }}
+      selectProps={{
+        style: {
+          width: 200,
+        },
+      }}
       value={vals}
       onChange={(v) => setVals(v)}
     />
@@ -1158,7 +1172,11 @@ export default () => {
     const [vals, setVals] = useState([]);
 
     return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-      style={{ width: 200 }}
+      selectProps={{
+        style: {
+          width: 200,
+        },
+      }}
       value={vals}
       onChange={(v) => setVals(v)}
     />
@@ -1191,10 +1209,33 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
       style={{ width: 200 }}
-      value={vals}
-      onChange={(v) => setVals(v)}
+      value={branchVals}
+      onChange={(v) => setBranchVals(v)}
+      fetchBranch={(value, cascadeParams) => {
+        return Promise.resolve([
+          {
+            title: '辽宁省',
+            value: '210000000000',
+            isLeaf: false,
+            children: [
+              {
+                title: '沈阳市',
+                value: '210100000000',
+                isLeaf: false,
+                children: [
+                  {
+                    title: '和平区',
+                    value: '210102000000',
+                    isLeaf: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ]);
+      }}
     />
   }
             `,
@@ -1208,14 +1249,17 @@ export default () => {
                     {
                       title: '辽宁省',
                       value: '210000000000',
+                      isLeaf: false,
                       children: [
                         {
                           title: '沈阳市',
                           value: '210100000000',
+                          isLeaf: false,
                           children: [
                             {
                               title: '和平区',
                               value: '210102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -1245,7 +1289,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
       style={{ width: 200 }}
       value={branchMultiVals}
       onChange={(v) => setBranchMultiVals(v)}
@@ -1254,14 +1298,17 @@ export default () => {
           {
             title: '辽宁省',
             value: '210000000000',
+            isLeaf: false,
             children: [
               {
                 title: '沈阳市',
                 value: '210100000000',
+                isLeaf: false,
                 children: [
                   {
                     title: '和平区',
                     value: '210102000000',
+                    isLeaf: true,
                   },
                 ],
               },
@@ -1270,14 +1317,17 @@ export default () => {
           {
             title: '黑龙江省',
             value: '230000000000',
+            isLeaf: false,
             children: [
               {
                 title: '哈尔滨市',
                 value: '230100000000',
+                isLeaf: false,
                 children: [
                   {
                     title: '道里区',
                     value: '230102000000',
+                    isLeaf: true,
                   },
                 ],
               },
@@ -1298,14 +1348,17 @@ export default () => {
                     {
                       title: '辽宁省',
                       value: '210000000000',
+                      isLeaf: false,
                       children: [
                         {
                           title: '沈阳市',
                           value: '210100000000',
+                          isLeaf: false,
                           children: [
                             {
                               title: '和平区',
                               value: '210102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -1314,14 +1367,17 @@ export default () => {
                     {
                       title: '黑龙江省',
                       value: '230000000000',
+                      isLeaf: false,
                       children: [
                         {
                           title: '哈尔滨市',
                           value: '230100000000',
+                          isLeaf: false,
                           children: [
                             {
                               title: '道里区',
                               value: '230102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -1351,7 +1407,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
       style={{ width: 200 }}
       value={branchMultiVals}
       onChange={(v) => setBranchMultiVals(v)}
@@ -1360,17 +1416,17 @@ export default () => {
           {
             title: '辽宁省',
             value: '210000000000',
-            leaf: false,
+            isLeaf: false,
             children: [
               {
                 title: '沈阳市',
                 value: '210100000000',
-                leaf: false,
+                isLeaf: false,
                 children: [
                   {
                     title: '和平区',
                     value: '210102000000',
-                    leaf: true,
+                    isLeaf: true,
                   },
                 ],
               },
@@ -1379,17 +1435,17 @@ export default () => {
           {
             title: '黑龙江省',
             value: '230000000000',
-            leaf: false,
+            isLeaf: false,
             children: [
               {
                 title: '哈尔滨市',
                 value: '230100000000',
-                leaf: false,
+                isLeaf: false,
                 children: [
                   {
                     title: '道里区',
                     value: '230102000000',
-                    leaf: true,
+                    isLeaf: true,
                   },
                 ],
               },
@@ -1410,17 +1466,17 @@ export default () => {
                     {
                       title: '辽宁省',
                       value: '210000000000',
-                      leaf: false,
+                      isLeaf: false,
                       children: [
                         {
                           title: '沈阳市',
                           value: '210100000000',
-                          leaf: false,
+                          isLeaf: false,
                           children: [
                             {
                               title: '和平区',
                               value: '210102000000',
-                              leaf: true,
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -1429,21 +1485,179 @@ export default () => {
                     {
                       title: '黑龙江省',
                       value: '230000000000',
-                      leaf: false,
+                      isLeaf: false,
                       children: [
                         {
                           title: '哈尔滨市',
                           value: '230100000000',
-                          leaf: false,
+                          isLeaf: false,
                           children: [
                             {
                               title: '道里区',
                               value: '230102000000',
-                              leaf: true,
+                              isLeaf: true,
                             },
                           ],
                         },
                       ],
+                    },
+                  ]);
+                }}
+              />
+            ),
+          },
+          {
+            id: 'p12',
+            name: 'TreeSelect单选(能选任意节点，flat数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'TreeSelect单选(能选任意节点，flat数据)',
+                info: 'TreeSelect单选(能选任意节点，flat数据)`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllTreeDynamicFormItem
+      style={{ width: 200 }}
+      treeDataSimpleMode
+      value={val}
+      onChange={(v) => setVal(v)}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllTreeDynamicFormItem
+                style={{ width: 200 }}
+                treeDataSimpleMode
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            ),
+          },
+          {
+            id: 'p13',
+            name: '异步加载(flat数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(flat数据)',
+                info: '异步加载(flat数据)`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+      style={{ width: 200 }}
+      treeDataSimpleMode
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
+                style={{ width: 200 }}
+                treeDataSimpleMode
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            ),
+          },
+          {
+            id: 'p14',
+            name: '异步加载(回显,flat数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(回显,flat数据)',
+                info: '异步加载(回显,flat数据)`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+      style={{ width: 200 }}
+      treeDataSimpleMode
+      value={branchVals}
+      onChange={(v) => setBranchVals(v)}
+      fetchBranch={(value, cascadeParams) => {
+        return Promise.resolve([
+          {
+            title: '辽宁省',
+            value: '210000000000',
+            id: '210000000000',
+            pId: 0,
+            isLeaf: false,
+          },
+          {
+            title: '沈阳市',
+            value: '210100000000',
+            id: '210100000000',
+            pId: '210000000000',
+            isLeaf: false,
+          },
+          {
+            title: '和平区',
+            value: '210102000000',
+            id: '210102000000',
+            pId: '210100000000',
+            isLeaf: true,
+          },
+        ]);
+      }}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+                style={{ width: 200 }}
+                treeDataSimpleMode
+                value={branchVals}
+                onChange={(v) => setBranchVals(v)}
+                fetchBranch={(value, cascadeParams) => {
+                  return Promise.resolve([
+                    {
+                      title: '辽宁省',
+                      value: '210000000000',
+                      id: '210000000000',
+                      pId: 0,
+                      isLeaf: false,
+                    },
+                    {
+                      title: '沈阳市',
+                      value: '210100000000',
+                      id: '210100000000',
+                      pId: '210000000000',
+                      isLeaf: false,
+                    },
+                    {
+                      title: '和平区',
+                      value: '210102000000',
+                      id: '210102000000',
+                      pId: '210100000000',
+                      isLeaf: true,
                     },
                   ]);
                 }}
@@ -2324,14 +2538,17 @@ export default () => {
           {
             label: '辽宁省',
             value: '210000000000',
+            isLeaf: false,
             children: [
               {
                 label: '沈阳市',
                 value: '210100000000',
+                isLeaf: false,
                 children: [
                   {
                     label: '和平区',
                     value: '210102000000',
+                    isLeaf: true,
                   },
                 ],
               },
@@ -2354,14 +2571,17 @@ export default () => {
                     {
                       label: '辽宁省',
                       value: '210000000000',
+                      isLeaf: false,
                       children: [
                         {
                           label: '沈阳市',
                           value: '210100000000',
+                          isLeaf: false,
                           children: [
                             {
                               label: '和平区',
                               value: '210102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -2402,14 +2622,17 @@ export default () => {
           {
             label: '辽宁省',
             value: '210000000000',
+            isLeaf: false,
             children: [
               {
                 label: '沈阳市',
                 value: '210100000000',
+                isLeaf: false,
                 children: [
                   {
                     label: '和平区',
                     value: '210102000000',
+                    isLeaf: true,
                   },
                 ],
               },
@@ -2418,14 +2641,17 @@ export default () => {
           {
             label: '黑龙江省',
             value: '230000000000',
+            isLeaf: false,
             children: [
               {
                 label: '哈尔滨市',
                 value: '230100000000',
+                isLeaf: false,
                 children: [
                   {
                     label: '道里区',
                     value: '230102000000',
+                    isLeaf: true,
                   },
                 ],
               },
@@ -2448,14 +2674,17 @@ export default () => {
                     {
                       label: '辽宁省',
                       value: '210000000000',
+                      isLeaf: false,
                       children: [
                         {
                           label: '沈阳市',
                           value: '210100000000',
+                          isLeaf: false,
                           children: [
                             {
                               label: '和平区',
                               value: '210102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -2464,14 +2693,17 @@ export default () => {
                     {
                       label: '黑龙江省',
                       value: '230000000000',
+                      isLeaf: false,
                       children: [
                         {
                           label: '哈尔滨市',
                           value: '230100000000',
+                          isLeaf: false,
                           children: [
                             {
                               label: '道里区',
                               value: '230102000000',
+                              isLeaf: true,
                             },
                           ],
                         },
@@ -2479,6 +2711,74 @@ export default () => {
                     },
                   ]);
                 }}
+              />
+            ),
+          },
+          {
+            id: 'p9',
+            name: 'Cascader(能选任意节点，拉平数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'Cascader(能选任意节点，拉平数据)',
+                info: 'Cascader(能选任意节点，拉平数据)',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllCascaderDynamicMultiFormItem
+      treeDataSimpleMode
+      value={vals}
+      onChange={(v) => setVals(v || [])}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllCascaderDynamicMultiFormItem
+                treeDataSimpleMode
+                value={vals}
+                onChange={(v) => setVals(v || [])}
+              />
+            ),
+          },
+          {
+            id: 'p10',
+            name: '异步加载(拉平数据)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: '异步加载(拉平数据)',
+                info: '异步加载(拉平数据)`',
+              },
+            },
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+      treeDataSimpleMode
+      value={vals}
+      onChange={(v) => setVals(v || [])}
+    />
+  }
+            `,
+            renderChildren: () => (
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+                treeDataSimpleMode
+                value={vals}
+                onChange={(v) => setVals(v)}
               />
             ),
           },
