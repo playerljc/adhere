@@ -9,16 +9,16 @@ export interface ICircle {
 export interface IAntdTreeNode {
     key: string;
     title?: string;
-    value: string;
-    isLeaf: boolean;
+    value?: string;
+    isLeaf?: boolean;
     children?: IAntdTreeNode[];
     properties?: any;
 }
 export interface IAntdTreeSelectNode {
     key: string;
     label?: string;
-    value: string;
-    isLeaf: boolean;
+    value?: string;
+    isLeaf?: boolean;
     children?: IAntdTreeNode[];
     properties?: any;
 }

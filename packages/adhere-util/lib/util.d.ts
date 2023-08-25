@@ -40,6 +40,9 @@ declare const _default: {
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
     dataUrlToBlob(dataUrl: string): Blob | null;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
+    /**
+     * 函数节流
+     */
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
@@ -62,6 +65,9 @@ declare const _default: {
     arrayToAntdTree: (arr: {
         [props: string]: any;
         children?: any[] | undefined;
+        /**
+         * 函数节流
+         */
         isLeaf?: boolean | undefined;
         properties?: any;
     }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];

@@ -202,7 +202,7 @@ const TreeUtil: TreeUtilType = {
           ...item,
           title: item[titleAttr],
           key: item[keyAttr],
-          isLeaf: true,
+          // isLeaf: true,
           children: [],
           properties: { ...item },
         }));
@@ -214,7 +214,9 @@ const TreeUtil: TreeUtilType = {
      */
     function Recursion(node) {
       node.children = findNodesByParentId(arr, node.properties[keyAttr]);
-      node.isLeaf = !node.children.length;
+
+      node.isLeaf = 'isLeaf' in node ? node.isLeaf : !node.children.length;
+
       if (node.isLeaf) {
         delete node.children;
       }
@@ -239,13 +241,13 @@ const TreeUtil: TreeUtilType = {
    */
   arrayToAntdTreeSelect(arr, config) {
     const { keyAttr, titleAttr, rootParentId, parentIdAttr } = config;
+
     /**
      * findNodesByParentId
      * @param arr
      * @param parentId
      * @return {*}
      */
-
     function findNodesByParentId(arr: IFlatTreeArrNode[], parentId: string | number) {
       return arr
         .filter((item) => item[parentIdAttr] == parentId)
@@ -254,7 +256,7 @@ const TreeUtil: TreeUtilType = {
           key: item[keyAttr],
           title: item[titleAttr],
           value: item[keyAttr],
-          isLeaf: true,
+          // isLeaf: true,
           children: [],
           properties: { ...item },
         }));
@@ -266,7 +268,9 @@ const TreeUtil: TreeUtilType = {
      */
     function Recursion(node) {
       node.children = findNodesByParentId(arr, node.properties[keyAttr]);
-      node.isLeaf = !node.children.length;
+
+      node.isLeaf = 'isLeaf' in node ? node.isLeaf : !node.children.length;
+
       if (node.isLeaf) {
         delete node.children;
       }
