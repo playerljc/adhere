@@ -81,7 +81,7 @@ function CreateFunProxy(fun: Function, property: string) {
 function initValue(p, params) {
   const handler = Dict.handlers[p];
 
-  let value:any = null;
+  let value: any = null;
 
   // 返回值 - 一般都不是函数
   try {
@@ -95,18 +95,21 @@ function initValue(p, params) {
     // 函数单独的缓存开关
     if ('isUseMemo' in handler) {
       if (handler.isUseMemo) {
+        // console.log('handler.isUseMemo', p);
         value = CreateFunProxy(value, p);
       }
     } else {
       // 总体的缓存开关
       if ('isUseMemo' in config) {
         if (config.isUseMemo) {
+          // console.log('config.isUseMemo', p);
           value = CreateFunProxy(value, p);
         }
       }
     }
   }
 
+  // console.log('noMemo', p);
   return value;
 }
 
@@ -132,6 +135,7 @@ const Dict: DictObj = {
       // 如果p属性没在t中
       if (!(property in target)) {
         receiver[property] = {
+          // 给例如SystemXXX赋值，property是SystemXXX
           value: initValue(property, null),
           refresh() {
             // receiver[property].value = initValue(property, params);
@@ -141,6 +145,7 @@ const Dict: DictObj = {
         };
       }
 
+      // 此处直接获取相当于只用一次
       return Reflect.get(target, property, receiver);
     },
   }),
