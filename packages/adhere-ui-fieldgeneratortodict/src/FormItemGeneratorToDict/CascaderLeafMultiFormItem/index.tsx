@@ -16,7 +16,7 @@ const CascaderLeafMultiFormItem: FC<CascaderLeafMultiFormItemProps> = ({
   const targetDataSource = useMemo(() => {
     function loop(nodes) {
       (nodes || []).forEach((node) => {
-        node.disabled = !('leaf' in node && node.leaf);
+        node.disabled = !('isLeaf' in node && node.isLeaf);
 
         loop(node.children);
       });

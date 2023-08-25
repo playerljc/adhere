@@ -1,4 +1,4 @@
-import { useMount, useUpdateEffect } from 'ahooks';
+import { useMount, useUnmount, useUpdateEffect } from 'ahooks';
 import React, { useState } from 'react';
 
 import Dict from '@baifendian/adhere-util-dict';
@@ -333,6 +333,9 @@ setItem(
   'FormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      Dict.value[dictName].refresh();
+      Dict.handlers[dictName].isUseMemo = false;
+
       const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
@@ -340,6 +343,11 @@ setItem(
         defaultId,
         value: props.value,
         treeDataSimpleMode: props.treeDataSimpleMode,
+      });
+
+      useUnmount(() => {
+        Dict.value[dictName].refresh();
+        Dict.handlers[dictName].isUseMemo = true;
       });
 
       return (
@@ -359,6 +367,9 @@ setItem(
   'LeafFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      Dict.value[dictName].refresh();
+      Dict.handlers[dictName].isUseMemo = false;
+
       const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
@@ -366,6 +377,11 @@ setItem(
         defaultId,
         value: props.value,
         treeDataSimpleMode: props.treeDataSimpleMode,
+      });
+
+      useUnmount(() => {
+        Dict.value[dictName].refresh();
+        Dict.handlers[dictName].isUseMemo = true;
       });
 
       return (
@@ -385,6 +401,9 @@ setItem(
   'MultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      Dict.value[dictName].refresh();
+      Dict.handlers[dictName].isUseMemo = false;
+
       const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
@@ -392,6 +411,11 @@ setItem(
         defaultId,
         value: props.value,
         treeDataSimpleMode: props.treeDataSimpleMode,
+      });
+
+      useUnmount(() => {
+        Dict.value[dictName].refresh();
+        Dict.handlers[dictName].isUseMemo = true;
       });
 
       return (
@@ -411,6 +435,9 @@ setItem(
   'LeafMultiFormItem',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, fetchBranch, defaultId, ...props }) => {
+      Dict.value[dictName].refresh();
+      Dict.handlers[dictName].isUseMemo = false;
+
       const { treeData, onLoadData, onChange } = useAsyncTreeSelect(dictName, {
         cascadeParams,
         onDataSourceChange,
@@ -418,6 +445,11 @@ setItem(
         defaultId,
         value: props.value,
         treeDataSimpleMode: props.treeDataSimpleMode,
+      });
+
+      useUnmount(() => {
+        Dict.value[dictName].refresh();
+        Dict.handlers[dictName].isUseMemo = true;
       });
 
       return (

@@ -20,7 +20,6 @@ const PCCFlat = [
     label: t.name,
     value: t.id,
     id: t.id,
-    leaf: false,
     isLeaf: false,
     pId: 0,
   })),
@@ -31,7 +30,6 @@ const PCCFlat = [
         label: t.name,
         value: t.id,
         id: t.id,
-        leaf: false,
         isLeaf: false,
         pId: `${key}`,
       })),
@@ -44,7 +42,6 @@ const PCCFlat = [
         label: t.name,
         value: t.id,
         id: t.id,
-        leaf: true,
         isLeaf: true,
         pId: key,
       })),
@@ -181,24 +178,24 @@ export default {
       {
         title: 'Node1',
         value: '0-0',
-        leaf: false,
+        isLeaf: false,
         children: [
           {
             title: 'Child Node1',
             value: '0-0-1',
-            leaf: true,
+            isLeaf: true,
           },
           {
             title: 'Child Node2',
             value: '0-0-2',
-            leaf: true,
+            isLeaf: true,
           },
         ],
       },
       {
         title: 'Node2',
         value: '0-1',
-        leaf: true,
+        isLeaf: true,
       },
     ];
 
@@ -595,8 +592,6 @@ export default {
       return Promise.resolve(data.filter((t) => t.label.includes(kw)));
     };
 
-    Dict.handlers.SystemSSQRemote = () => ssqCascade;
-
     Dict.handlers.SystemUserPagin = () => (paging) => {
       const { current, pageSize } = paging;
 
@@ -640,7 +635,6 @@ export default {
             value: t.id,
             id: t.id,
             pId: 0,
-            leaf: false,
             isLeaf: false,
           })),
         );
@@ -657,7 +651,6 @@ export default {
         value: t.id,
         id: t.id,
         pId: pid,
-        leaf: countyIds.includes(t.id),
         isLeaf: countyIds.includes(t.id),
       }));
 
@@ -666,6 +659,6 @@ export default {
 
     Dict.handlers.SystemDepartmentAll = () => Promise.resolve(PCCFlat);
 
-    console.log(JSON.stringify(PCCFlat));
+    Dict.handlers.SystemSSQRemote = () => ssqCascade;
   },
 };

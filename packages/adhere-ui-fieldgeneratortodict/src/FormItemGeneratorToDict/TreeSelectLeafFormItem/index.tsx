@@ -13,7 +13,7 @@ import { useTreeSelectLeaf } from '../hooks';
 const TreeSelectLeafFormItem: FC<TreeSelectLeafFormItemProps> = ({ dataSource, ...props }) => {
   const targetDataSource = useTreeSelectLeaf(dataSource);
 
-  return <TreeSelectFormItem {...props} treeData={targetDataSource} /*selectMode="leaf"*/ />;
+  return <TreeSelectFormItem {...props} treeData={targetDataSource} /*selectMode="isLeaf"*/ />;
 };
 
 export default TreeSelectLeafFormItem;

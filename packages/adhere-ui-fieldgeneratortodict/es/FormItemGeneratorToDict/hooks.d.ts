@@ -1,7 +1,7 @@
 import type { LabelValue, UseTreeSelectLeaf } from '../types';
 /**
  * useTreeSelectLeaf
- * @description 处理TreeSelect数据的leaf
+ * @description 处理TreeSelect数据的isLeaf
  * @param dataSource
  */
 export declare const useTreeSelectLeaf: UseTreeSelectLeaf;

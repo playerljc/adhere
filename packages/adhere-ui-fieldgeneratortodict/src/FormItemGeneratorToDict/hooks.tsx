@@ -9,14 +9,14 @@ import { deepDep } from './util';
 
 /**
  * useTreeSelectLeaf
- * @description 处理TreeSelect数据的leaf
+ * @description 处理TreeSelect数据的isLeaf
  * @param dataSource
  */
 export const useTreeSelectLeaf: UseTreeSelectLeaf = (dataSource) =>
   useMemo<LabelValue[]>(() => {
     function loop(nodes) {
       (nodes || []).forEach((node) => {
-        node.disabled = !('leaf' in node && node.leaf);
+        node.disabled = !('isLeaf' in node && node.isLeaf);
 
         loop(node.children);
       });
@@ -100,6 +100,8 @@ export const useAsyncTreeSelect = (
     //   parentIdAttr: 'pid',
     // });
 
+    if (!fetchBranch) return;
+
     // 回显 回显数据 并集 topLevel
     Promise.all([loadData(defaultId), fetchBranch?.(value, cascadeParams)]).then(
       ([rootNodes = [], treeBranchNode = []]) => {
@@ -167,6 +169,8 @@ export const useAsyncTreeSelect = (
   };
 
   useMount(() => {
+    debugger;
+
     if (value) {
       if (Array.isArray(value)) {
         if (!!value.length) {
@@ -277,6 +281,8 @@ export function useAsyncCascader(
     //   rootParentId: '0',
     //   parentIdAttr: 'pid',
     // });
+
+    if (!fetchBranch) return;
 
     // 回显 回显数据 并集 topLevel
     Promise.all([loadData(defaultId), fetchBranch?.(value, cascadeParams)]).then(

@@ -64,7 +64,6 @@ import TreeSelectFormItem from './TreeSelectFormItem';
 import TreeSelectLeafFormItem from './TreeSelectLeafFormItem';
 import TreeSelectLeafMultiFormItem from './TreeSelectLeafMultiFormItem';
 import TreeSelectMultiFormItem from './TreeSelectMultiFormItem';
-import { getOriginDictNameByItemName } from './util';
 
 export const validatorNormal = (message) => ({
   validator(_, value) {

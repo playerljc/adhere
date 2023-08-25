@@ -16,7 +16,7 @@ const TreeSelectLeafMultiFormItem: FC<TreeSelectLeafMultiFormItemProps> = ({
 }) => {
   const targetDataSource = useTreeSelectLeaf(dataSource);
 
-  return <TreeMultiSelectFormItem {...props} treeData={targetDataSource} /*selectMode="leaf"*/ />;
+  return <TreeMultiSelectFormItem {...props} treeData={targetDataSource} /*selectMode="isLeaf"*/ />;
 };
 
 export default TreeSelectLeafMultiFormItem;

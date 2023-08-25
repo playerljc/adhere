@@ -25,6 +25,7 @@ export interface LabelValue {
   disabled?: boolean;
   id?: string | number;
   pId?: string | number;
+  isLeaf?: boolean;
 }
 
 interface RadioLabelValue extends LabelValue {
