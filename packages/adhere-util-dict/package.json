@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-dict",
-  "version": "2.10.18",
+  "version": "2.10.19",
   "description": "字典",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,8 +29,8 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-suspense": "^2.10.18",
-    "@baifendian/adhere-util": "^2.10.14",
+    "@baifendian/adhere-ui-suspense": "^2.10.19",
+    "@baifendian/adhere-util": "^2.10.19",
     "ahooks": "^3.7.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
