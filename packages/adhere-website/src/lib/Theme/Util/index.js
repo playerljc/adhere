@@ -54,10 +54,10 @@ let currentTheme = 'default';
 const setCssVariable = (varName) => {
   // 小写驼峰
   // 例子: adhereColorPrimary
-  const varCamelCaseName = Util.toCamelCase(varName);
+  const varCamelCaseName = Util.toCamelCase(varName, '-');
   // 大写驼峰
   // 例子: AdhereColorPrimary
-  const varUpperCamelCaseName = Util.toCamelCase(varName, true);
+  const varUpperCamelCaseName = Util.toCamelCase(varName, '-', true);
 
   if (varCamelCaseName in cssVars) return;
 
@@ -125,7 +125,7 @@ const init = (theme, useStore) => {
   const mapToken = (themes.get(theme) ?? themes.get('default')).mapToken;
 
   Array.from(token.keys()).forEach((_key) => {
-    const varName = Util.toCamelCase(_key, true);
+    const varName = Util.toCamelCase(_key, '-', true);
 
     const varValue = token.get(_key).value;
 
@@ -136,14 +136,14 @@ const init = (theme, useStore) => {
 
   Object.keys(mapToken).forEach((_key) => {
     // colorPrimary
-    const varName = Util.capitalized(Util.toCamelCase(_key, true));
+    const varName = Util.capitalized(Util.toCamelCase(_key, '-', true));
 
     exportObj[`setAntd${varName}`](mapToken[_key]);
   });
 
   Object.keys(designToken).forEach((_key) => {
     // colorPrimary
-    const varName = Util.capitalized(Util.toCamelCase(_key, true));
+    const varName = Util.capitalized(Util.toCamelCase(_key, '-', true));
 
     exportObj[`setAntd${varName}`](designToken[_key]);
   });
