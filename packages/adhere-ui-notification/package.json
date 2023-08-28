@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-notification",
-  "version": "2.10.19",
+  "version": "2.10.20",
   "description": "通知",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -28,7 +28,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-css": "^2.10.19",
+    "@baifendian/adhere-ui-css": "^2.10.20",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
