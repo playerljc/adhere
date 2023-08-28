@@ -65,9 +65,6 @@ declare const _default: {
     arrayToAntdTree: (arr: {
         [props: string]: any;
         children?: any[] | undefined;
-        /**
-         * 函数节流
-         */
         isLeaf?: boolean | undefined;
         properties?: any;
     }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
@@ -265,7 +262,7 @@ declare const _default: {
         obj: any;
         chainStr: any;
     }): any;
-    toCamelCase(str: any, toUpperCase?: boolean): any;
+    toCamelCase(str: any, split?: string, toUpperCase?: boolean): any;
     isKebabCase(name: any): boolean;
     isPascalCase(name: any): boolean;
     pascalCaseToKebabCase(name: any): any;

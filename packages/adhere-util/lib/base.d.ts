@@ -84,10 +84,11 @@ declare const _default: {
      * toCamelCase - 用连接符链接的字符串转换成驼峰写法
      * 例：abc-def AbcDef
      * @param str - string 用连接符节点的字符串
+     * @param split - string 分割的字符
      * @param toUpperCase - boolean 是否转换成大写
      * @return {String}
      */
-    toCamelCase(str: any, toUpperCase?: boolean): any;
+    toCamelCase(str: any, split?: string, toUpperCase?: boolean): any;
     /**
      * isKebabCase - 是否是烤肉串形式的名字
      * @param name - string 名称

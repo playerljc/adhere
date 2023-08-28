@@ -154,12 +154,13 @@ export default {
    * toCamelCase - 用连接符链接的字符串转换成驼峰写法
    * 例：abc-def AbcDef
    * @param str - string 用连接符节点的字符串
+   * @param split - string 分割的字符
    * @param toUpperCase - boolean 是否转换成大写
    * @return {String}
    */
-  toCamelCase(str, toUpperCase = false) {
+  toCamelCase(str, split = '_', toUpperCase = false) {
     const result = str
-      .split('-')
+      .split(split)
       .map((item) => item.charAt(0).toUpperCase() + item.substring(1))
       .join('');
     return !toUpperCase ? `${result.charAt(0).toLowerCase()}${result.substring(1)}` : result;
