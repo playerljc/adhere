@@ -298,7 +298,6 @@ setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300
   useEffect(() => {
     debounceFetcher.current = debounce(
       memoized.createMemoFun((value) => {
-        debugger;
         fetchRef.current += 1;
         const fetchId = fetchRef.current;
 
