@@ -2,7 +2,7 @@ import tinyColor from 'tinycolor2';
 
 import Util from '@baifendian/adhere-util';
 
-const defaultThemeMap = new Map([
+const defaultThemeMap = new Map<string, any>([
   // 品牌颜色
   [
     'adhere-color-primary',
@@ -116,10 +116,10 @@ const exportObj = {};
   keys.forEach((varName) => {
     // 小写的驼峰
     // 例子: adhereColorPrimary
-    const varCamelCaseName = Util.toCamelCase(varName);
+    const varCamelCaseName = Util.toCamelCase(varName, '-');
     // 大写的驼峰
     // 例子: AdhereColorPrimary
-    const varUpperCamelCaseName = Util.toCamelCase(varName, true);
+    const varUpperCamelCaseName = Util.toCamelCase(varName, '-', true);
 
     const entryValue = defaultThemeMap.get(varName);
 
@@ -195,7 +195,7 @@ export default (theme) => {
     // varName === adhere-color-primary
 
     // AdhereColorPrimary
-    const varCamelCaseName = Util.toCamelCase(varName, true);
+    const varCamelCaseName = Util.toCamelCase(varName, '-', true);
 
     // ColorPrimary
     const inputName = Util.lowercaseInitial(
