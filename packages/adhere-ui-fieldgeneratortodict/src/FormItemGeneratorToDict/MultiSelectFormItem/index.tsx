@@ -15,8 +15,12 @@ const { Option } = MultipleSelect;
  * @constructor
  */
 const MultiSelectFormItem: FC<SelectFormItemProps> = ({ selectProps, dataSource }) => {
+  function onChange(...params: [any, any]) {
+    selectProps?.onChange?.(...(params ?? []), dataSource);
+  }
+
   return (
-    <MultipleSelect {...selectProps}>
+    <MultipleSelect {...selectProps} onChange={onChange}>
       {dataSource.map((item) => (
         <Option key={item.value} value={item.value}>
           {item.label}

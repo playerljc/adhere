@@ -14,8 +14,12 @@ const { Option } = Select;
  * @constructor
  */
 const SelectFormItem: FC<SelectFormItemProps> = ({ selectProps, dataSource }) => {
+  function onChange(...params: [any, any]) {
+    selectProps?.onChange?.(...(params ?? []), dataSource);
+  }
+
   return (
-    <Select {...(selectProps ?? {})}>
+    <Select {...(selectProps ?? {})} onChange={onChange}>
       {(dataSource || []).map((item) => (
         <Option key={item.value} value={item.value}>
           {item.label}

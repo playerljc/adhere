@@ -66,7 +66,7 @@ export default () => {
         </ul>
       </Section>
 
-      {/*<CodeBoxSection
+      <CodeBoxSection
         title="FormItemGeneratorToDict - Select"
         config={[
           {
@@ -103,7 +103,10 @@ export default () => {
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectFormItem
                 style={{ width: 200 }}
                 value={val}
-                onChange={(v) => setVal(v)}
+                onChange={(v, ...reset) => {
+                  console.log('_v1', v, ...reset);
+                  setVal(v);
+                }}
               />
             ),
           },
@@ -141,11 +144,14 @@ export default () => {
               <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
                 style={{ width: 300 }}
                 value={vals}
-                onChange={(v) => setVals(v)}
+                onChange={(v, ...reset) => {
+                  console.log('_v2', v, ...reset);
+                  setVals(v);
+                }}
               />
             ),
           },
-          {
+          /*{
             id: 'p3',
             name: 'Select全选',
             mode: 'code',
@@ -182,8 +188,8 @@ export default () => {
                 onChange={(v) => setVals(v)}
               />
             ),
-          },
-          {
+          },*/
+          /*{
             id: 'p4',
             name: 'AutoComplete的单选',
             mode: 'code',
@@ -220,8 +226,8 @@ export default () => {
                 onChange={(v) => setVal(v)}
               />
             ),
-          },
-          {
+          },*/
+          /*{
             id: 'p5',
             name: 'AutoComplete的多选',
             mode: 'code',
@@ -260,8 +266,8 @@ export default () => {
                 }}
               />
             ),
-          },
-          {
+          },*/
+          /*{
             id: 'p6',
             name: 'AutoComplete的全选',
             mode: 'code',
@@ -298,9 +304,8 @@ export default () => {
                 onChange={(v) => setVals(v)}
               />
             ),
-          },
-
-          {
+          },*/
+          /*{
             id: 'p7',
             name: '省市区级联',
             mode: 'code',
@@ -355,9 +360,9 @@ export default () => {
                 </Space.Group>
               </div>
             ),
-          },
+          },*/
         ]}
-      />*/}
+      />
 
       {/*<CodeBoxSection
         title="FormItemGeneratorToDict - Radio(字典中以Radio或DynamicRadio结尾)"

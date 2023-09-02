@@ -25,8 +25,8 @@ interface SyncFormItemProps extends FormItemProps {
     renderEmpty?: Function;
 }
 export interface SelectFormItemProps {
-    selectProps?: SelectProps & {
-        onChange: (any: any) => void;
+    selectProps?: Omit<SelectProps, 'onChange'> & {
+        onChange: (value?: any, valueOpt?: any, dataSource?: LabelValue[]) => void;
     };
     dataSource: LabelValue[];
 }
