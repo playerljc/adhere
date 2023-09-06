@@ -117,6 +117,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
         total: number;
         current: any;
         pageSize: any;
+        pageSizeOptions: number[];
         showQuickJumper: boolean;
         showSizeChanger: boolean;
     };

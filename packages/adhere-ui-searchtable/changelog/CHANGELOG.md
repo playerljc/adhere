@@ -1,3 +1,13 @@
+pageSizeOptions
+
+# 1.0.34
+
+***
+
+2023-09-06
+
+* getPagination加入pageSizeOptions参数
+
 # 1.0.33
 
 ***
