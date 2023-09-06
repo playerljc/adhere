@@ -7,13 +7,13 @@ export default {
    * getLang
    * @return {String}
    */
-  getLang(): string {
+  getLang(defaultLocal?: string): string {
     let language = Base.getCookie('lang') || Preferences.getStringByLocal('language');
 
     if (!language) {
-      Preferences.putStringByLocal('language', 'zh_CN');
+      Preferences.putStringByLocal('language', defaultLocal ?? 'zh_CN');
 
-      language = 'zh_CN';
+      language = defaultLocal ?? 'zh_CN';
     }
 
     return language;
@@ -42,10 +42,11 @@ export default {
    * 401 casUrl
    * @param baseUrl
    * @param enterUrl
+   * @param defaultLocal
    * @return {string}
    */
-  casUrl({ baseUrl, enterUrl }): string {
-    const language = this.getLang();
+  casUrl({ baseUrl, enterUrl, defaultLocal }): string {
+    const language = this.getLang(defaultLocal);
 
     const languageParam = language ? `&locale=${language}` : '';
 

@@ -107,12 +107,13 @@ declare const _default: {
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
     excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
-    getLang(): string;
+    getLang(defaultLocal?: string | undefined): string;
     setLang(lang?: string): void;
     getDatePickerFormat(): string;
-    casUrl({ baseUrl, enterUrl }: {
+    casUrl({ baseUrl, enterUrl, defaultLocal }: {
         baseUrl: any;
         enterUrl: any;
+        defaultLocal: any;
     }): string;
     casLogoutUrl({ baseUrl, enterUrl, params }: {
         baseUrl: any;

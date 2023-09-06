@@ -5,6 +5,7 @@
 2023-09-06
 
 * tree.ts加入findParentNodeByKey方法
+* casUrl加入defaultLocal参数
 
 # 1.0.32
 

@@ -3,7 +3,7 @@ declare const _default: {
      * getLang
      * @return {String}
      */
-    getLang(): string;
+    getLang(defaultLocal?: string): string;
     /**
      * setLang
      * @param lang
@@ -18,11 +18,13 @@ declare const _default: {
      * 401 casUrl
      * @param baseUrl
      * @param enterUrl
+     * @param defaultLocal
      * @return {string}
      */
-    casUrl({ baseUrl, enterUrl }: {
+    casUrl({ baseUrl, enterUrl, defaultLocal }: {
         baseUrl: any;
         enterUrl: any;
+        defaultLocal: any;
     }): string;
     /**
      * casLogoutUrl
