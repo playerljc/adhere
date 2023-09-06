@@ -60,7 +60,7 @@ declare const _default: {
     }) => {
         [props: string]: any;
         children?: any[] | undefined;
-        key?: string | number | undefined;
+        key: string;
     }[];
     arrayToAntdTree: (arr: {
         [props: string]: any;
@@ -80,6 +80,9 @@ declare const _default: {
     findNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
     }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null;
+    findParentNodeByKey: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], val: any, config: {
+        keyAttr: string;
+    }) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode | null | undefined;
     transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode) => (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[];
     getLeafNodesByIndex: (nodes: {
         [props: string]: any;

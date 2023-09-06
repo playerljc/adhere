@@ -145,6 +145,12 @@ abstract class Search<
    * @return {TablePaginationConfig}
    */
   getPagination() {
+    const defaultLimit = this.getLimit();
+    const defaultPageSizeOptions = [10, 20, 50, 100];
+    if (!defaultPageSizeOptions.includes(defaultLimit)) {
+      defaultPageSizeOptions.push(defaultLimit);
+    }
+
     return {
       // onChange: (page, limit) => {
       //   // @ts-ignore
@@ -182,6 +188,7 @@ abstract class Search<
       total: this.getTotal(),
       current: this.state.page,
       pageSize: this.state.limit,
+      pageSizeOptions: defaultPageSizeOptions.sort((t1, t2) => t1 - t2),
       showQuickJumper: true,
       showSizeChanger: true,
     };
@@ -239,7 +246,7 @@ abstract class Search<
     return (
       <FlexLayout
         direction="vertical"
-        className={classNames(selectorPrefix, className)}
+        className={classNames(selectorPrefix, className ?? '')}
         style={{ ...(style ?? {}) }}
       >
         {((!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.()) ||

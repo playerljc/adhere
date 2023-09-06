@@ -1,3 +1,11 @@
+# 1.0.33
+
+***
+
+2023-09-06
+
+* tree.ts加入findParentNodeByKey方法
+
 # 1.0.32
 
 ***

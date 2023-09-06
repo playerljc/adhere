@@ -6,7 +6,7 @@ interface TreeUtilType {
     }) => {
         [props: string]: any;
         children?: any[];
-        key?: string | number;
+        key: string;
     }[];
     arrayToAntdTree: (arr: {
         [props: string]: any;
@@ -26,6 +26,9 @@ interface TreeUtilType {
     findNodeByKey: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], val: any, config: {
         keyAttr: string;
     }) => IAntdTreeNode | IAntdTreeSelectNode | null;
+    findParentNodeByKey: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], val: any, config: {
+        keyAttr: string;
+    }) => IAntdTreeNode | IAntdTreeSelectNode | null | undefined;
     transformTreeData: (treeData: any[], childrenAttr: string, onCallback: (node: any) => IAntdTreeNode | IAntdTreeSelectNode) => (IAntdTreeNode | IAntdTreeSelectNode)[];
     getLeafNodesByIndex: (nodes: {
         [props: string]: any;

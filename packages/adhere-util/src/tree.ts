@@ -10,7 +10,7 @@ interface TreeUtilType {
   ) => {
     [props: string]: any;
     children?: any[];
-    key?: string | number;
+    key: string;
   }[];
 
   arrayToAntdTree: (
@@ -63,6 +63,12 @@ interface TreeUtilType {
     val: any,
     config: { keyAttr: string },
   ) => IAntdTreeNode | IAntdTreeSelectNode | null;
+
+  findParentNodeByKey: (
+    treeData: (IAntdTreeNode | IAntdTreeSelectNode)[],
+    val: any,
+    config: { keyAttr: string },
+  ) => IAntdTreeNode | IAntdTreeSelectNode | null | undefined;
 
   transformTreeData: (
     treeData: any[],
@@ -431,6 +437,37 @@ const TreeUtil: TreeUtilType = {
     }
 
     return findLoop(treeData);
+  },
+  /**
+   * findParentNodeByKey
+   * @description 根据key查找parentNode
+   * @param treeData
+   * @param val
+   * @param config
+   */
+  findParentNodeByKey(treeData, val, { keyAttr }) {
+    let parentNode;
+
+    function loop(_parentNode, _nodes) {
+      for (let i = 0; i < _nodes.length; i++) {
+        const _node = _nodes[i];
+
+        if (_node[keyAttr] === val) {
+          parentNode = _parentNode;
+          break;
+        } else {
+          loop(_node, _node.children ?? []);
+
+          if (parentNode) {
+            break;
+          }
+        }
+      }
+    }
+
+    loop(parentNode, treeData);
+
+    return parentNode;
   },
   /**
    * transformTreeData

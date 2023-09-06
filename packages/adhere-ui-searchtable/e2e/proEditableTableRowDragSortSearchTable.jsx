@@ -355,6 +355,10 @@ const List = SearchTableImplementFactory({
       return 'height';
     }
 
+    getLimit() {
+      return 70;
+    }
+
     /**
      * getDataKey
      * @description - 获取数据的key
