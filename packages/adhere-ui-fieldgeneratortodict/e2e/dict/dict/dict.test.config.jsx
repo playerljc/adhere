@@ -174,6 +174,14 @@ export default {
         value: t.id,
       }));
 
+    Dict.handlers.SystemBookCatalogRem = () =>
+      Promise.resolve(
+        [].map((t) => ({
+          label: t.catalog,
+          value: t.id,
+        })),
+      );
+
     Dict.handlers.SystemOrg = () => [
       {
         title: 'Node1',

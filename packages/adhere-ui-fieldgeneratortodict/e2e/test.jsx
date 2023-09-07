@@ -68,8 +68,9 @@ export default () => {
 
       <CodeBoxSection
         title="FormItemGeneratorToDict - Select"
-        config={[
-          {
+        config={
+          [
+            /*{
             id: 'p1',
             name: 'Select单选',
             mode: 'code',
@@ -109,8 +110,8 @@ export default () => {
                 }}
               />
             ),
-          },
-          {
+          },*/
+            /*{
             id: 'p2',
             name: 'Select多选',
             mode: 'code',
@@ -150,8 +151,8 @@ export default () => {
                 }}
               />
             ),
-          },
-          /*{
+          },*/
+            /*{
             id: 'p3',
             name: 'Select全选',
             mode: 'code',
@@ -189,7 +190,7 @@ export default () => {
               />
             ),
           },*/
-          /*{
+            /*{
             id: 'p4',
             name: 'AutoComplete的单选',
             mode: 'code',
@@ -227,7 +228,7 @@ export default () => {
               />
             ),
           },*/
-          /*{
+            /*{
             id: 'p5',
             name: 'AutoComplete的多选',
             mode: 'code',
@@ -267,7 +268,7 @@ export default () => {
               />
             ),
           },*/
-          /*{
+            /*{
             id: 'p6',
             name: 'AutoComplete的全选',
             mode: 'code',
@@ -305,7 +306,7 @@ export default () => {
               />
             ),
           },*/
-          /*{
+            /*{
             id: 'p7',
             name: '省市区级联',
             mode: 'code',
@@ -361,7 +362,8 @@ export default () => {
               </div>
             ),
           },*/
-        ]}
+          ]
+        }
       />
 
       {/*<CodeBoxSection
@@ -1354,7 +1356,7 @@ export default () => {
         }
       />
 
-      {/*<CodeBoxSection
+      <CodeBoxSection
         title="FormItemGeneratorToDict - Transfer"
         config={[
           {
@@ -1385,7 +1387,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTransferFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRemTransferDynamicFormItem
                 targetKeys={vals}
                 onChange={(v) => {
                   setVals(v);
@@ -1393,7 +1395,7 @@ export default () => {
               />
             ),
           },
-          {
+          /*{
             id: 'p2',
             name: 'SelectFormItem',
             mode: 'code',
@@ -1430,9 +1432,9 @@ export default () => {
                 onChange={(v) => setVals(v)}
               />
             ),
-          },
+          },*/
         ]}
-      />*/}
+      />
 
       {/*<CodeBoxSection
         title="FormItemGeneratorToDict - Table"
