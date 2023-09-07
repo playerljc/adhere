@@ -11,11 +11,13 @@ import { StepsFormItemProps } from '../../types';
  * @param firstLoading
  * @param renderEmpty
  * @param renderNormalLoading
+ * @param isEmpty
  * @param props
  * @constructor
  */
 const StepsFormItem: FC<StepsFormItemProps> = ({
   firstLoading,
+  isEmpty,
   renderEmpty,
   renderNormalLoading,
   ...props
@@ -35,9 +37,9 @@ const StepsFormItem: FC<StepsFormItemProps> = ({
   return (
     <Suspense.Sync
       data={data}
-      isEmpty={() => data.length === 0}
+      isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty}
+      renderEmpty={renderEmpty ? renderEmpty(data) : <Steps />}
       renderNormalLoading={renderNormalLoading}
     >
       <Steps {...(props ?? {})} current={current} />

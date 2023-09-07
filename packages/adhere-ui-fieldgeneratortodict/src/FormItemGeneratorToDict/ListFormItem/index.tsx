@@ -9,6 +9,7 @@ import type { LabelValue, ListFormItemProps } from '../../types';
  * ListFormItem
  * @param firstLoading
  * @param renderEmpty
+ * @param isEmpty
  * @param dataSource
  * @param renderNormalLoading
  * @param props
@@ -17,6 +18,7 @@ import type { LabelValue, ListFormItemProps } from '../../types';
 const ListFormItem: FC<ListFormItemProps> = ({
   firstLoading,
   renderEmpty,
+  isEmpty,
   dataSource,
   renderNormalLoading,
   ...props
@@ -30,9 +32,9 @@ const ListFormItem: FC<ListFormItemProps> = ({
   return (
     <Suspense.Sync
       data={data}
-      isEmpty={() => data.length === 0}
+      isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty}
+      renderEmpty={renderEmpty ? renderEmpty(data) : <List />}
       renderNormalLoading={renderNormalLoading}
     >
       <List dataSource={dataSource} pagination={false} rowKey={props.rowKey || 'id'} {...props} />

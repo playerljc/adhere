@@ -23,6 +23,7 @@ interface SyncFormItemProps extends FormItemProps {
         loading: boolean;
     }) => ReactNode;
     renderEmpty?: Function;
+    isEmpty?: Function;
 }
 export interface SelectFormItemProps {
     selectProps?: Omit<SelectProps, 'onChange'> & {
@@ -81,6 +82,7 @@ export interface ListFormItemProps extends ListProps<any> {
         loading: boolean;
     }) => ReactNode;
     renderEmpty?: Function;
+    isEmpty?: Function;
 }
 export interface ListSelectFormItemProps extends FormItemProps, ListFormItemProps {
     selectProps?: SelectFormItemProps;
@@ -114,6 +116,7 @@ export interface TableFormItemProps extends TableProps<any> {
         loading: boolean;
     }) => ReactNode;
     renderEmpty?: Function;
+    isEmpty?: Function;
 }
 export type TableSelectFormItemProps = FormItemProps & TableFormItemProps & {
     selectProps?: SelectFormItemProps;
@@ -132,6 +135,7 @@ export interface TransferFormItemProps extends TransferProps<any> {
         loading: boolean;
     }) => ReactNode;
     renderEmpty?: Function;
+    isEmpty?: Function;
 }
 export interface TreeSelectFormItemProps extends TreeSelectProps {
 }

@@ -9,6 +9,7 @@ import { TimelineFormItemProps } from '../../types';
 /**
  * TimelineFormItem
  * @param firstLoading
+ * @param isEmpty
  * @param renderEmpty
  * @param renderNormalLoading
  * @param props
@@ -16,6 +17,7 @@ import { TimelineFormItemProps } from '../../types';
  */
 const TimelineFormItem: FC<TimelineFormItemProps> = ({
   firstLoading,
+  isEmpty,
   renderEmpty,
   renderNormalLoading,
   ...props
@@ -29,9 +31,9 @@ const TimelineFormItem: FC<TimelineFormItemProps> = ({
   return (
     <Suspense.Sync
       data={data}
-      isEmpty={() => data.length === 0}
+      isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty}
+      renderEmpty={renderEmpty ? renderEmpty(data) : <Timeline />}
       renderNormalLoading={renderNormalLoading}
     >
       <Timeline {...(props ?? {})} />

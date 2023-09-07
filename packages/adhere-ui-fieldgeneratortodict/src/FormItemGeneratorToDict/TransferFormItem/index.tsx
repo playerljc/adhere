@@ -9,6 +9,7 @@ import { LabelValue, TransferFormItemProps } from '../../types';
  * TransferFormItem
  * @param firstLoading
  * @param renderEmpty
+ * @param isEmpty
  * @param dataSource
  * @param renderNormalLoading
  * @param props
@@ -17,6 +18,7 @@ import { LabelValue, TransferFormItemProps } from '../../types';
 const TransferFormItem: FC<TransferFormItemProps> = ({
   firstLoading,
   renderEmpty,
+  isEmpty,
   dataSource,
   renderNormalLoading,
   ...props
@@ -30,9 +32,9 @@ const TransferFormItem: FC<TransferFormItemProps> = ({
   return (
     <Suspense.Sync
       data={data}
-      isEmpty={() => data.length === 0}
+      isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty}
+      renderEmpty={renderEmpty ? renderEmpty(data) : <Transfer />}
       renderNormalLoading={renderNormalLoading}
     >
       <Transfer

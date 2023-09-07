@@ -41,6 +41,7 @@ interface SyncFormItemProps extends FormItemProps {
   firstLoading?: ReactElement;
   renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
+  isEmpty?: Function;
 }
 
 export interface SelectFormItemProps {
@@ -110,6 +111,7 @@ export interface ListFormItemProps extends ListProps<any> {
   firstLoading?: ReactElement;
   renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
+  isEmpty?: Function;
 }
 
 export interface ListSelectFormItemProps extends FormItemProps, ListFormItemProps {
@@ -148,6 +150,7 @@ export interface TableFormItemProps extends TableProps<any> {
   firstLoading?: ReactElement;
   renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
+  isEmpty?: Function;
 }
 
 export type TableSelectFormItemProps = FormItemProps &
@@ -166,6 +169,7 @@ export interface TransferFormItemProps extends TransferProps<any> {
   firstLoading?: ReactElement;
   renderNormalLoading?: (params: { children: ReactNode; loading: boolean }) => ReactNode;
   renderEmpty?: Function;
+  isEmpty?: Function;
 }
 
 export interface TreeSelectFormItemProps extends TreeSelectProps {}
