@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
-import Util from '@baifendian/adhere-util';
 
 import Suspense from './suspense';
 import { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
@@ -36,19 +35,20 @@ class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implem
   }
 
   isDataDirty(data, nextData) {
-    if (typeof data !== typeof nextData) return true;
-
-    if (Util.isObject(data) && Util.isObject(nextData)) {
-      return !Object.is(data, nextData);
-    }
-
-    if (Util.isArray(data) && Util.isArray(nextData)) {
-      if (data.length !== nextData.length) return true;
-
-      return data.some((t1, index) => !Object.is(t1, nextData[index]));
-    }
-
-    return false;
+    // if (typeof data !== typeof nextData) return true;
+    //
+    // if (Util.isObject(data) && Util.isObject(nextData)) {
+    //   return !Object.is(data, nextData);
+    // }
+    //
+    // if (Util.isArray(data) && Util.isArray(nextData)) {
+    //   if (data.length !== nextData.length) return true;
+    //
+    //   return data.some((t1, index) => !Object.is(t1, nextData[index]));
+    // }
+    //
+    // return false;
+    return !Object.is(data, nextData);
   }
 
   reset(): Promise<void> {
