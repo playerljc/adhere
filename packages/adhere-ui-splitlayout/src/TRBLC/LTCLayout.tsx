@@ -16,6 +16,7 @@ const LTCLayout: ForwardRefRenderFunction<any, TBLRCSplitLayoutProps> = (
 ) => {
   return (
     <FlexLayout.TRBLC.LTCLayout
+      // @ts-ignore
       ref={ref}
       {...props}
       lSplit={<SplitLayout {...(lSplitProps ?? {})} />}

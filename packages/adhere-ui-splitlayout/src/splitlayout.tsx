@@ -47,8 +47,6 @@ const SplitLayout: FC<SplitLayoutProps> = (props) => {
 
   const { direction } = useContext(FlexContext);
 
-  console.log('direction=====', direction);
-
   const el = useRef<HTMLDivElement | null>(null);
   const fixedEl = useRef<HTMLElement | null>(null);
   const autoEl = useRef<HTMLElement | null>(null);
