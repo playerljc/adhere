@@ -14,7 +14,15 @@ const selectorPrefix = 'adhere-ui-split';
  * @constructor
  */
 const SplitGroup: FC<SplitGroupProps> = ({ children, ...props }) => {
-  if (React.Children.count(children) <= 1) return children;
+  const filterChildren = useMemo(() => {
+    if (Array.isArray(children)) {
+      return (children || []).filter((t) => !!t);
+    }
+
+    return children;
+  }, [children]);
+
+  if (React.Children.count(filterChildren) <= 1) return filterChildren;
 
   const childrenFlat = useMemo<any>(() => {
     const flat: any[] = [];
@@ -22,17 +30,17 @@ const SplitGroup: FC<SplitGroupProps> = ({ children, ...props }) => {
     function loop(_children) {
       React.Children.map(_children, (child) => {
         if (ReactIs.isFragment(child)) {
-          loop(child?.props?.children || []);
+          loop((child?.props?.children || []).filter((t) => !!t));
         } else {
           flat.push(child);
         }
       });
     }
 
-    loop(children);
+    loop(filterChildren);
 
     return flat;
-  }, [children]);
+  }, [filterChildren]);
 
   return childrenFlat.map((child, index) => {
     if (index === 0) return child;
