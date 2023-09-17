@@ -1214,6 +1214,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInput = ({ searchConfig, dataIndex }) => {
         return (
           <Input
+            autoFocus
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1223,6 +1224,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderTextArea = ({ searchConfig, dataIndex }) => {
         return (
           <Input.TextArea
+            autoFocus
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1232,6 +1234,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumber = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumber
+            autoFocus
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1241,6 +1244,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal1
+            autoFocus
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1250,6 +1254,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberDecimal2
+            autoFocus
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1259,6 +1264,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const renderInputNumberInteger = ({ searchConfig, dataIndex }) => {
         return (
           <InputNumberInteger
+            autoFocus
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
