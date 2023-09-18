@@ -1,4 +1,11 @@
-pageSizeOptions
+# 1.0.35
+
+***
+
+2023-09-17
+
+* 列头查询的输入条件框加入默认获取焦点
+* rowSelection的onChange事件对外提供结构
 
 # 1.0.34
 

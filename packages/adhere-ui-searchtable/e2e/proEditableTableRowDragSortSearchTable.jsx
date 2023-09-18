@@ -628,6 +628,21 @@ const List = SearchTableImplementFactory({
         ...defaultItems,
       ]);
     }
+
+    /**
+     * onRowSelectionChange
+     */
+    onRowSelectionChange() {}
+
+    /**
+     * onRowSelectionSelect
+     */
+    onRowSelectionSelect() {}
+
+    /**
+     * onRowSelectionSelectAll
+     */
+    onRowSelectionSelectAll() {}
   },
 );
 

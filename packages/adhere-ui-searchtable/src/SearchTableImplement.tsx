@@ -131,6 +131,21 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   };
 
   /**
+   * onRowSelectionChange
+   */
+  onRowSelectionChange() {}
+
+  /**
+   * onRowSelectionSelect
+   */
+  onRowSelectionSelect() {}
+
+  /**
+   * onRowSelectionSelectAll
+   */
+  onRowSelectionSelectAll() {}
+
+  /**
    * getParams
    * @override
    * @description - 获取查询参数对象
@@ -264,33 +279,44 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @return {TableRowSelection<object>}
    */
   getRowSelection(): TableRowSelection<object> {
-    const filter = (selected: boolean, records: any[]): void => {
-      const rowKey = this.getRowKey();
+    const filter = (selected: boolean, records: any[]): Promise<void> =>
+      new Promise((resolve) => {
+        const rowKey = this.getRowKey();
 
-      if (selected) {
-        // add
-        // @ts-ignore
-        this.setState({
-          selectedRowKeys: [
-            ...(this.state?.selectedRowKeys || []),
-            ...records.map((r) => r[rowKey]),
-          ],
-          selectedRows: [...(this.state?.selectedRows || []), ...records],
-        });
-      } else {
-        // remove
-        // @ts-ignore
-        this.setState({
-          selectedRows: (this.state?.selectedRows || []).filter(
-            (row) => !records.find((r) => r[rowKey] === row[rowKey]),
-          ),
+        if (selected) {
+          // add
+          // @ts-ignore
+          this.setState(
+            {
+              selectedRowKeys: [
+                ...(this.state?.selectedRowKeys || []),
+                ...records.map((r) => r[rowKey]),
+              ],
+              selectedRows: [...(this.state?.selectedRows || []), ...records],
+            },
+            () => {
+              resolve();
+            },
+          );
+        } else {
+          // remove
+          // @ts-ignore
+          this.setState(
+            {
+              selectedRows: (this.state?.selectedRows || []).filter(
+                (row) => !records.find((r) => r[rowKey] === row[rowKey]),
+              ),
 
-          selectedRowKeys: (this.state?.selectedRowKeys || []).filter(
-            (key) => !records.find((r) => r[rowKey] === key),
-          ),
-        });
-      }
-    };
+              selectedRowKeys: (this.state?.selectedRowKeys || []).filter(
+                (key) => !records.find((r) => r[rowKey] === key),
+              ),
+            },
+            () => {
+              resolve();
+            },
+          );
+        }
+      });
 
     return {
       selectedRowKeys: this.state?.selectedRowKeys,
@@ -300,20 +326,29 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         // 如果是缺省模式(不能跨页选取)
 
         // @ts-ignore
-        this.setState({
-          selectedRowKeys,
-          selectedRows,
-        });
+        this.setState(
+          {
+            selectedRowKeys,
+            selectedRows,
+          },
+          () => {
+            this?.onRowSelectionChange?.();
+          },
+        );
       },
       onSelect: (record, selected) => {
         if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
 
-        filter(selected, [record]);
+        filter(selected, [record]).then(() => {
+          this?.onRowSelectionSelect?.();
+        });
       },
       onSelectAll: (selected, selectedRows, changeRows) => {
         if (this.getRowSelectionMode() === SearchTable.ROW_SELECTION_NORMAL_MODE) return;
 
-        filter(selected, changeRows);
+        filter(selected, changeRows).then(() => {
+          this?.onRowSelectionSelectAll?.();
+        });
       },
     };
   }

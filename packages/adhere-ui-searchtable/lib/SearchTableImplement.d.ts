@@ -48,6 +48,18 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      */
     onDateTimeRangeChange: (propertys: string[], dayjs: any[]) => void;
     /**
+     * onRowSelectionChange
+     */
+    onRowSelectionChange(): void;
+    /**
+     * onRowSelectionSelect
+     */
+    onRowSelectionSelect(): void;
+    /**
+     * onRowSelectionSelectAll
+     */
+    onRowSelectionSelectAll(): void;
+    /**
      * getParams
      * @override
      * @description - 获取查询参数对象
