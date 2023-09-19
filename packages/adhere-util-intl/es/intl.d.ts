@@ -16,9 +16,6 @@ declare const _default: {
     /**
      * init
      * @param {String} - prefix
-     * @param {String} - currentLocale
-     * @param {Object} - locales
-     * @param {Object} - ...other
      * @param reload 是否是重新载入
      */
     init({ prefix, currentLocale, locales, mainLanguage, ...other }: {
