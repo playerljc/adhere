@@ -578,7 +578,7 @@ abstract class SearchTable<
     // 对权限进行过滤
     const columns = this.getColumns()
       .filter((column: ColumnTypeExt) => {
-        if ('$hide' in column && !column.$hide) return false;
+        if ('$hide' in column && !!column.$hide) return false;
 
         if ('$authorized' in column) return column?.$authorized?.();
 
