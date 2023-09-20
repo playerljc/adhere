@@ -59,13 +59,14 @@ class OlMap extends React.Component<OLMapProps, any> {
 
   componentDidMount() {
     // @ts-ignore
-    const { mapConfig, type, maxZoom, minZoom, zoom, layers, center, extent } = this.props;
+    const { mapConfig, type, maxZoom, minZoom, zoom, layers, center, extent, fitZoom } = this.props;
 
     this.map = Util.createMap({
       config: {
         target: this.el.current,
       },
       type,
+      fitZoom,
       maxZoom,
       zoom,
       minZoom,

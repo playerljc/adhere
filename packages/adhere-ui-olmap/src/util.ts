@@ -70,7 +70,6 @@ export default {
       layers = [TitleLayer.getOSMTileLayer()],
     } = Config;
 
-    // console.log(layers);
     // @ts-ignore
     const map = new Map({
       ...config,
@@ -107,11 +106,12 @@ export default {
     setTimeout(() => {
       let zoom;
 
+      debugger
       if (fitZoom) {
         zoom = fitZoom;
       } else {
         // @ts-ignore
-        const mapExtentTransform = [].concat(fromLonLat(extent[0])).concat(fromLonLat(extent[1]));
+        const mapExtentTransform = [...fromLonLat(extent[0]),...fromLonLat(extent[1])];
         const resolution = map.getView().getResolutionForExtent(mapExtentTransform);
         zoom = map.getView().getZoomForResolution(resolution);
         // zoom = 11.5;
