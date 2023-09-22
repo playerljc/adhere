@@ -305,6 +305,45 @@ abstract class SearchList<
   }
 
   /**
+   * getPagination
+   * @param params
+   */
+  getPagination(...params) {
+    // @ts-ignore
+    const pagination = super.getPagination(...params);
+
+    return {
+      onChange: (page, limit) => {
+        // @ts-ignore
+        this.setState(
+          {
+            page,
+            limit,
+          },
+          () => {
+            // @ts-ignore
+            this.fetchData();
+          },
+        );
+      },
+      onShowSizeChange: (page, limit) => {
+        // @ts-ignore
+        this.setState(
+          {
+            page,
+            limit,
+          },
+          () => {
+            // @ts-ignore
+            this.fetchData();
+          },
+        );
+      },
+      ...pagination,
+    };
+  }
+
+  /**
    * renderBody
    * @return {ReactNode}
    */

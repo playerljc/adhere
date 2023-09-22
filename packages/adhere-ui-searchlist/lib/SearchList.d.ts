@@ -102,6 +102,21 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     renderSearchToolBar(): ReactElement;
     /**
+     * getPagination
+     * @param params
+     */
+    getPagination(...params: any[]): {
+        showTotal: (total: any) => string;
+        total: number;
+        current: any;
+        pageSize: any;
+        pageSizeOptions: number[];
+        showQuickJumper: boolean;
+        showSizeChanger: boolean;
+        onChange: (page: any, limit: any) => void;
+        onShowSizeChange: (page: any, limit: any) => void;
+    };
+    /**
      * renderBody
      * @return {ReactNode}
      */
