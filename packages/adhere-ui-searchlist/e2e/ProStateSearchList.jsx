@@ -40,7 +40,7 @@ class ProSearchStateListImpl extends ProResourceStateManager {
   }
 
   getTotalKey() {
-    return 'totalCount';
+    return 'total';
   }
 
   // getViewParams() {

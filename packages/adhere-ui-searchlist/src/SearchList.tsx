@@ -127,8 +127,12 @@ abstract class SearchList<
    */
   onBodyKeyup(e) {
     if (e.keyCode === 13) {
-      // 回车键的键码是13
-      this.search();
+      if (document.activeElement) {
+        if (this.searchFormRef.current?.contains(document.activeElement)) {
+          // 回车键的键码是13
+          this.search();
+        }
+      }
     }
   }
 

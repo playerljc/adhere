@@ -24,7 +24,7 @@ import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
-import InputHOC from './Extension/InputHOC';
+// import InputHOC from './Extension/InputHOC';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData } from './types';
@@ -1212,16 +1212,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       //     />
       //   );
       // };
-      const InputComponent = InputHOC(Input);
-      const TextAreaComponent = InputHOC(Input.TextArea);
-      const InputNumberComponent = InputHOC(InputNumber);
-      const InputNumberDecimal1Component = InputHOC(InputNumberDecimal1);
-      const InputNumberDecimal2Component = InputHOC(InputNumberDecimal2);
-      const InputNumberIntegerComponent = InputHOC(InputNumberInteger);
+      // const InputComponent = InputHOC(Input);
+      // const TextAreaComponent = InputHOC(Input.TextArea);
+      // const InputNumberComponent = InputHOC(InputNumber);
+      // const InputNumberDecimal1Component = InputHOC(InputNumberDecimal1);
+      // const InputNumberDecimal2Component = InputHOC(InputNumberDecimal2);
+      // const InputNumberIntegerComponent = InputHOC(InputNumberInteger);
 
       const renderInput = ({ searchConfig, dataIndex }) => {
         return (
-          <InputComponent
+          <Input
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1230,7 +1230,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
       const renderTextArea = ({ searchConfig, dataIndex }) => {
         return (
-          <TextAreaComponent
+          <Input.TextArea
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1239,7 +1239,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
       const renderInputNumber = ({ searchConfig, dataIndex }) => {
         return (
-          <InputNumberComponent
+          <InputNumber
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1248,7 +1248,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
       const renderInputNumberDecimal1 = ({ searchConfig, dataIndex }) => {
         return (
-          <InputNumberDecimal1Component
+          <InputNumberDecimal1
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1257,7 +1257,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
       const renderInputNumberDecimal2 = ({ searchConfig, dataIndex }) => {
         return (
-          <InputNumberDecimal2Component
+          <InputNumberDecimal2
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1266,7 +1266,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
       const renderInputNumberInteger = ({ searchConfig, dataIndex }) => {
         return (
-          <InputNumberIntegerComponent
+          <InputNumberInteger
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}

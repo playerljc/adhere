@@ -11,9 +11,11 @@ import '../src/index.less';
 // 配置字典
 DictConfig();
 
-const List = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './ProStateSearchList.jsx'),
-);
+/*const List = lazy(() =>
+  import(/!* webpackChunkName: "conditionalrender" *!/ './ProStateSearchList.jsx'),
+);*/
+
+const List = lazy(() => import(/* webpackChunkName: "conditionalrender" */ './normalList.jsx'));
 
 ReactDOM.createRoot(document.getElementById('app')).render(
   <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
