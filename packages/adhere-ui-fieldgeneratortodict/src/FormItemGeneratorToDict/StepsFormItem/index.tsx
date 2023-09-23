@@ -39,7 +39,7 @@ const StepsFormItem: FC<StepsFormItemProps> = ({
       data={data}
       isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty ? renderEmpty(data) : <Steps />}
+      renderEmpty={renderEmpty ? renderEmpty(data) : () => <Steps />}
       renderNormalLoading={renderNormalLoading}
     >
       <Steps {...(props ?? {})} current={current} />

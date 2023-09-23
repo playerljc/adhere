@@ -34,7 +34,7 @@ const ListFormItem: FC<ListFormItemProps> = ({
       data={data}
       isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty ? renderEmpty(data) : <List />}
+      renderEmpty={renderEmpty ? renderEmpty(data) : () => <List />}
       renderNormalLoading={renderNormalLoading}
     >
       <List dataSource={dataSource} pagination={false} rowKey={props.rowKey || 'id'} {...props} />

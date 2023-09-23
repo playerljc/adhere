@@ -35,7 +35,7 @@ const TableFormItem: FC<TableFormItemProps> = ({
       data={data}
       isEmpty={() => (isEmpty ? isEmpty?.(data) : data?.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty ? renderEmpty(data) : <Table />}
+      renderEmpty={renderEmpty ? renderEmpty(data) : () => <Table />}
       renderNormalLoading={renderNormalLoading}
     >
       <Table dataSource={dataSource} pagination={false} rowKey={props.rowKey || 'id'} {...props} />

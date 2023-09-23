@@ -33,7 +33,7 @@ const TimelineFormItem: FC<TimelineFormItemProps> = ({
       data={data}
       isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty ? renderEmpty(data) : <Timeline />}
+      renderEmpty={renderEmpty ? renderEmpty(data) : () => <Timeline />}
       renderNormalLoading={renderNormalLoading}
     >
       <Timeline {...(props ?? {})} />

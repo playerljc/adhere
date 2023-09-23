@@ -34,7 +34,7 @@ const TransferFormItem: FC<TransferFormItemProps> = ({
       data={data}
       isEmpty={() => (isEmpty ? isEmpty?.(data) : data.length === 0)}
       firstLoading={firstLoading}
-      renderEmpty={renderEmpty ? renderEmpty(data) : <Transfer />}
+      renderEmpty={renderEmpty ? renderEmpty(data) : () => <Transfer />}
       renderNormalLoading={renderNormalLoading}
     >
       <Transfer
