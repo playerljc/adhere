@@ -22,8 +22,6 @@ const SpaceGroup: FC<SpaceGroupProps> = ({ children, ...props }) => {
     return children;
   }, [children]);
 
-  if (React.Children.count(filterChildren) <= 1) return filterChildren;
-
   const childrenFlat = useMemo<any>(() => {
     const flat: any[] = [];
 
@@ -41,6 +39,8 @@ const SpaceGroup: FC<SpaceGroupProps> = ({ children, ...props }) => {
 
     return flat;
   }, [filterChildren]);
+
+  if (React.Children.count(filterChildren) <= 1) return filterChildren;
 
   return childrenFlat.map((child, index) => {
     if (index === 0) return child;
