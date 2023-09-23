@@ -35,9 +35,7 @@ export default ({ className, style }) => {
       >
         {getThemeKeys().map((key) => (
           <Option key={key} value={key}>
-            <div className={styles.Option}>
-              <span>{key}</span>
-            </div>
+            {key}
           </Option>
         ))}
       </Select>

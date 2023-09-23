@@ -36,11 +36,13 @@ export default ({ className, style }) => {
       >
         {Array.from(Object.values(Dict.value.SystemLang.value)).map((t) => (
           <Option key={t.code} value={t.code}>
-            <div className={styles.Option}>
+            {t.name}
+          </Option>
+          /*<div className={styles.Option}>
               <img src={t.icon} alt="" />
               <span>{t.name}</span>
-            </div>
-          </Option>
+            </div>*/
+          /*</Option>*/
         ))}
       </Select>
     </div>
