@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-searchtable",
-  "version": "2.10.24",
+  "version": "2.10.25",
   "description": "一种查询表格的通用模式(如果 UI 没有明确给出查询表格的 UI，就可以用这个默认模式)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
