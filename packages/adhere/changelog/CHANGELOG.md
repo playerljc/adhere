@@ -1,3 +1,14 @@
+# 2.10.26
+
+***
+
+2023-09-23
+
+* **adhere-ui-space**
+  - 去掉无用的console.log输出
+* **adhere-util-intl**
+  - 去掉无用的console.log输出
+
 # 2.10.25
 
 ***
