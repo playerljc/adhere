@@ -134,8 +134,6 @@ export default {
       return _targetLocales;
     }, {});
 
-    console.log('targetLocales', targetLocales);
-
     // 整合用户的locales
     libLocaleKeys.forEach((_libLocalKey) => {
       // 每一种语言都需要处理成k,v对象
