@@ -21,6 +21,6 @@ yarn add @baifendian/adhere-ui-prompt-successprompt
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/successprompt](http://49.232.163.126:8083/adhere/ui/successprompt)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/successprompt](http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/successprompt)
 
 

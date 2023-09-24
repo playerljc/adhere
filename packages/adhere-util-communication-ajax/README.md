@@ -29,7 +29,7 @@ yarn add @baifendian/adhere-util-communication-ajax
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/util/ajax](http://49.232.163.126:8083/adhere/util/ajax)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/ajax](http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/ajax)
 
 
 

@@ -21,5 +21,5 @@ yarn add adhere-ui-confirm-importantconfirm
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/importantconfirm](http://49.232.163.126:8083/adhere/ui/importantconfirm)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/importantconfirm](http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/importantconfirm)
 
