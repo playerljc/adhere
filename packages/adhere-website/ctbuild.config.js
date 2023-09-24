@@ -22,7 +22,11 @@ module.exports = {
   getTheme() {
     return modifyVars;
   },
-  getConfig({ webpackConfig, plugins }) {
+  getConfig({ webpack, webpackConfig, plugins }) {
+    const publicPath = process.env.publicPath || '/';
+
+    console.log('publicPath', publicPath);
+
     // TODO:umd  umd时候需要打开
     // webpackConfig.externals = {
     //   '@baifendian/adhere': "adhere",
@@ -31,6 +35,18 @@ module.exports = {
     //   'react-dom':"ReactDOM",
     //   'moment':'moment',
     // };
+
+    if (isDev(process.env.mode)) {
+      if (publicPath !== '/') {
+        webpackConfig.devServer.historyApiFallback = {
+          index: `/${publicPath}/index.html`,
+        };
+      }
+    }
+
+    if (publicPath !== '/') {
+      webpackConfig.output.publicPath = `/${publicPath}/`;
+    }
 
     webpackConfig.output.filename = chunkNameJs;
 
@@ -56,6 +72,18 @@ module.exports = {
       /packages[\\/]adhere[\\/]es[\\/].*[\\/]style[\\/]index\.less/,
       /packages[\\/]adhere[\\/]es[\\/].*\.less/,
       /packages[\\/]adhere-.{1,}[\\/]es[\\/].*\.less/,
+    );
+
+    // 变量的引入
+    webpackConfig.plugins.push(
+      new webpack.DefinePlugin({
+        CustomEvnVars: {
+          mode: JSON.stringify(process.env.mode),
+          environment: JSON.stringify(process.env.environment),
+          publicPath: JSON.stringify(process.env.publicPath),
+          router: JSON.stringify(process.env.router),
+        },
+      }),
     );
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);

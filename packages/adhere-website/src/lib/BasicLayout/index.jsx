@@ -6,7 +6,7 @@ import pathToRegexp from 'path-to-regexp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Footer from '@/lib/Footer';
-
+import { getPathName, getSearch } from "../Router/path";
 import styles from './index.less';
 
 const { SubMenu } = Menu;
@@ -103,7 +103,8 @@ class BasicLayout extends React.Component {
    * @param routes
    */
   static loopRoutes({ defaultOpenKeys, defaultSelectedKeys, routes }) {
-    const { pathname } = window.location;
+    const pathname = getPathName();
+
     for (let i = 0; i < routes.length; i++) {
       const route = routes[i];
       if (pathname.indexOf(route.path) !== -1) {
@@ -354,7 +355,7 @@ class BasicLayout extends React.Component {
     const { name } = this.props;
     const { routes } = this.state;
 
-    const selectKey = window.location.pathname;
+    const selectKey = getPathName()/*window.location.pathname;*/
 
     const path = [];
     BasicLayout.getPathBySelectKey({
@@ -390,7 +391,7 @@ class BasicLayout extends React.Component {
    * @param pathname
    * @return {{defaultOpenKeys: [], defaultSelectedKeys: []}}
    */
-  getDefaultKeys(pathname = window.location.pathname) {
+  getDefaultKeys(pathname = getPathName()/*window.location.pathname*/) {
     const { routes = [] } = this.props;
     const defaultSelectedKeys = [];
     const defaultOpenKeys = [];
@@ -412,7 +413,7 @@ class BasicLayout extends React.Component {
    * getDefault
    * @return {{selectedKeys: ([]|*[]), openKeys: ([]|*[])}}
    */
-  getKeys(pathname = window.location.pathname) {
+  getKeys(pathname = getPathName()/*window.location.pathname*/) {
     const { defaultSelectedKeys, defaultOpenKeys } = this.getDefaultKeys(pathname);
 
     const { selectedKeys, openKeys } = this.state;

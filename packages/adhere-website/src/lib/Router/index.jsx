@@ -2,15 +2,34 @@ import { Skeleton } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import React, { Suspense } from 'react';
 
-import { browserConfig } from '@ctsj/router';
+import { browserConfig, hashConfig } from '@ctsj/router';
 
 import RouterConfig from '@/config/router/router.config';
+import Util from '@/util';
 
 import BasicLayout from '../BasicLayout';
 
 import styles from './index.less';
 
 const loadingRows = 15;
+
+/**
+ * getRouterConfig
+ * @description 获取路由配置
+ * @return {object}
+ */
+export const getRouterConfig = () => {
+  const router = Util.getEvnVars().router;
+
+  const routerMode = router || 'browser';
+
+  const config = new Map([
+    ['hash', hashConfig],
+    ['browser', browserConfig],
+  ]);
+
+  return config.get(routerMode);
+};
 
 /**
  * WrapperComponent
@@ -105,25 +124,6 @@ function renderRouterLoop(router, routes = [], authorized) {
 }
 
 /**
- * Router - Router的创建
- * @return {Promise<*>}
- */
-export default async () => {
-  // 路由配置
-  const config = RouterConfig();
-
-  // eslint-disable-next-line no-redeclare
-  const authorized = [];
-
-  const router = [];
-
-  // 根据路由配置生成实际的路由
-  renderRouterLoop(router, config, authorized);
-  // eslint-disable-next-line no-unused-vars
-  return browserConfig(router, () => {});
-};
-
-/**
  * renderChildren - 处理这个节点是一个SubMenu有自己的组件，但是它下面的子路由不显示，但面包屑上还要显示SubMenu中的Name
  * @param path
  * @param Component
@@ -138,3 +138,32 @@ export function renderChildren({ path, Component }) {
     return props.children;
   };
 }
+
+/**
+ * Router - Router的创建
+ * @return {Promise<*>}
+ */
+export default async () => {
+  // 路由配置
+  const config = RouterConfig();
+
+  // eslint-disable-next-line no-redeclare
+  const authorized = [];
+
+  const router = [];
+
+  // 根据路由配置生成实际的路由
+  renderRouterLoop(router, config, authorized);
+
+  return getRouterConfig()(
+    router,
+    (/*routerIns*/) => {
+      /*if (routerIns) {
+        sage.setRouter(routerIns);
+      }*/
+    },
+    {
+      basename: Util.getEvnVars().publicPath,
+    },
+  );
+};
