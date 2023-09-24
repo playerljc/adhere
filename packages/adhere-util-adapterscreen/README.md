@@ -17,6 +17,6 @@ yarn add @baifendian/adhere-util-adapterscreen
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/util/adapterscreen](http://49.232.163.126:8083/adhere/util/adapterscreen)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/adapterscreen](http://playerljc.github.io/adhere/index.html#/adhere/adhere/util/adapterscreen)
 
 

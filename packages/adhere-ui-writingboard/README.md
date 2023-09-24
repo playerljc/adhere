@@ -20,4 +20,4 @@ yarn add @baifendian/adhere-ui-writingboard
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/writingboard](http://49.232.163.126:8083/adhere/ui/writingboard)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/writingboard](http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/writingboard)

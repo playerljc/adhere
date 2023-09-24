@@ -21,5 +21,5 @@ yarn add adhere-ui-formitemcreator
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/formitemcreator](http://49.232.163.126:8083/adhere/ui/formitemcreator)
+[http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/formitemcreator](http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/formitemcreator)
 

@@ -26,5 +26,5 @@ yarn add adhere-ui-messagedialog
 ```
 
 # 线上地址(临时)
-[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/messagedialog](http://49.232.163.126:8083/adhere/ui/messagedialog)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/messagedialog](http://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/messagedialog)
 
