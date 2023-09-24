@@ -23,4 +23,4 @@ yarn add @baifendian/adhere-ui-slidelayout
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/slidelayout](http://49.232.163.126:8083/adhere/ui/slidelayout)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/slidelayout](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/slidelayout)

@@ -26,5 +26,5 @@ yarn add @baifendian/adhere-ui-css
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/css](http://49.232.163.126:8083/adhere/ui/css)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/css](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/css)
 

@@ -20,5 +20,5 @@ yarn add @baifendian/adhere-ui-scrollload
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/scrollload](http://49.232.163.126:8083/adhere/ui/scrollload)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/scrollload](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/scrollload)
 

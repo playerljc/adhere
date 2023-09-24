@@ -20,4 +20,4 @@ yarn add adhere-ui-imagelazy
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/imagelazy](http://49.232.163.126:8083/adhere/ui/imagelazy)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/imagelazy](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/imagelazy)

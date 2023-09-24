@@ -23,4 +23,4 @@ yarn add @baifendian/adhere-ui-permission
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/permission](http://49.232.163.126:8083/adhere/ui/permission)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/permission](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/permission)

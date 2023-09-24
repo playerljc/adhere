@@ -20,4 +20,4 @@ yarn add @baifendian/adhere-ui-forceupdate
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/forceupdate](http://49.232.163.126:8083/adhere/ui/forceupdate)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/forceupdate](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/forceupdate)

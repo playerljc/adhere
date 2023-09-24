@@ -20,4 +20,4 @@ yarn add @baifendian/adhere-ui-popup
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/popup](http://49.232.163.126:8083/adhere/ui/popup)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/popup](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/popup)

@@ -29,5 +29,5 @@ yarn add @baifendian/adhere-ui-playground
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/playground](http://49.232.163.126:8083/adhere/ui/playground)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/playground](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/playground)
 

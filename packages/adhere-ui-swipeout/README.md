@@ -20,5 +20,5 @@ yarn add @baifendian/adhere-ui-swipeout
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/swipeout](http://49.232.163.126:8083/adhere/ui/swipeout)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/swipeout](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/swipeout)
 

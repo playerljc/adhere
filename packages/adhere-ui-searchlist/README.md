@@ -24,4 +24,4 @@ yarn add @baifendian/adhere-ui-searchlist
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/searchlist](http://49.232.163.126:8083/adhere/ui/searchlist)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/searchlist](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/searchlist)

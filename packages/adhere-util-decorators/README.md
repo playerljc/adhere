@@ -26,7 +26,7 @@ yarn add @baifendian/adhere-util-decorators
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/util/decorators](http://49.232.163.126:8083/adhere/util/decorators)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/util/decorators](https://playerljc.github.io/adhere/index.html#/adhere/adhere/util/decorators)
 
 
   

@@ -20,5 +20,5 @@ yarn add @baifendian/adhere-ui-surnames
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/surnames](http://49.232.163.126:8083/adhere/ui/surnames)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/surnames](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/surnames)
 

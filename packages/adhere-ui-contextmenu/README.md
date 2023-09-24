@@ -20,5 +20,5 @@ yarn add adhere-ui-contextmenu
 ```
 
 # 线上地址(临时)
-[http://49.232.163.126:8083/adhere/ui/contextmenu](http://49.232.163.126:8083/adhere/ui/contextmenu)
+[https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/contextmenu](https://playerljc.github.io/adhere/index.html#/adhere/adhere/ui/contextmenu)
 
