@@ -29,3 +29,5 @@ npm-debug
 **/.idea
 **/node_modules
 **/dist
+
+packages/**/lessFiles
