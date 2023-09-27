@@ -565,16 +565,18 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       const { $search, dataIndex } = column;
 
       // @ts-ignore
-      return !!this.state?.searchParams?.[$search?.dataIndex || dataIndex] ? (
-        <div>
+      if (!!this.state?.searchParams?.[$search?.dataIndex || dataIndex]) {
+        return (
           <div>
-            <SearchOutlined style={{ fontSize: 14 }} />
+            <div>
+              <SearchOutlined style={{ fontSize: 14 }} />
+            </div>
+            <div style={{ height: 2, background: '#ccc' }} />
           </div>
-          <div style={{ height: 2, background: '#ccc' }} />
-        </div>
-      ) : (
-        <SearchOutlined />
-      );
+        );
+      }
+
+      return <SearchOutlined />;
     }
 
     /**
