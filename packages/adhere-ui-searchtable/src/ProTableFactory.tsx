@@ -6,7 +6,7 @@ import qs from 'qs';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { FilterOutlined } from '@ant-design/icons';
+import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import {
   DatePicker,
   InputNumberDecimal1,
@@ -27,7 +27,7 @@ import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 // import InputHOC from './Extension/InputHOC';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
-import type { AdvancedSearchPanelGroupData } from './types';
+import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
 const { FormItemGeneratorToDict } = FieldGeneratorToDict;
 
@@ -537,7 +537,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                         </div>
                       </div>
                     );
-                  }),
+                  }, this.getTableColumnSearchHeaderIcon(column)),
                 };
               }
 
@@ -552,6 +552,27 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
             return loop(_t);
           })
+      );
+    }
+
+    /**
+     * getTableColumnSearchHeaderIcon
+     * @description 获取列头查询图标
+     * @param {ColumnTypeExt} column
+     * @return JSX.Element
+     */
+    getTableColumnSearchHeaderIcon(column: ColumnTypeExt) {
+      const { $search, dataIndex } = column;
+
+      return !!this.state?.searchParams?.[$search?.dataIndex || dataIndex] ? (
+        <div>
+          <div>
+            <SearchOutlined style={{ fontSize: 14 }} />
+          </div>
+          <div style={{ height: 2, background: '#ccc' }} />
+        </div>
+      ) : (
+        <SearchOutlined />
       );
     }
 
