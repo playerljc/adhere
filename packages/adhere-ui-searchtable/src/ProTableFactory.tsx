@@ -287,38 +287,38 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     getParams() {
       const params = {};
 
-      const loop = (columns) => {
-        columns.reduce((params, column) => {
-          const { $search, children } = column;
+      const loop = (_columns) => {
+        _columns.reduce((_params, _column) => {
+          const { $search, children } = _column;
           const searchConfig = $search ?? {};
-          const dataIndex = searchConfig.dataIndex || column.dataIndex;
+          const dataIndex = searchConfig.dataIndex || _column.dataIndex;
 
           if (
             [this.getOptionsColumnDataIndex(), this.getLinkColumnDataIndex(), '_number'].includes(
               dataIndex,
             )
           ) {
-            return params;
+            return _params;
           }
 
           if (searchConfig.type === 'rangePicker') {
-            if (searchConfig.startName) params[searchConfig.startName] = null;
-            if (searchConfig.endName) params[searchConfig.endName] = null;
+            if (searchConfig.startName) _params[searchConfig.startName] = null;
+            if (searchConfig.endName) _params[searchConfig.endName] = null;
           } else if (['datePicker', 'timePicker'].includes(searchConfig.type)) {
-            params[dataIndex] = null;
+            _params[dataIndex] = null;
           } else {
-            params[dataIndex] = undefined;
+            _params[dataIndex] = undefined;
           }
 
           if (children && Array.isArray(children)) {
             loop(children);
           }
 
-          return params;
+          return _params;
         }, params);
       };
 
-      loop(this.getTableColumns());
+      loop(this.getTableColumnsAll());
 
       return params;
     }

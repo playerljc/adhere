@@ -568,22 +568,13 @@ abstract class SearchTable<
   }
 
   /**
-   * getTableColumns
-   * @description 获取表格的列数据
-   * @return Array<any>
+   * getTableColumnsAll
    */
-  getTableColumns(): any[] {
+  getTableColumnsAll(): any[] {
     const isShowNumber = this.isShowNumber();
 
     // 对权限进行过滤
     const columns = this.getColumns()
-      .filter((column: ColumnTypeExt) => {
-        if ('$hide' in column && !!column.$hide) return false;
-
-        if ('$authorized' in column) return column?.$authorized?.();
-
-        return true;
-      })
       // $resizable 设置
       .map((column: ColumnTypeExt, index) => {
         const res = { value: column };
@@ -652,6 +643,21 @@ abstract class SearchTable<
     }
 
     return columns;
+  }
+
+  /**
+   * getTableColumns
+   * @description 获取表格的列数据
+   * @return Array<any>
+   */
+  getTableColumns(): any[] {
+    return this.getTableColumnsAll().filter((column: ColumnTypeExt) => {
+      if ('$hide' in column && !!column.$hide) return false;
+
+      if ('$authorized' in column) return column?.$authorized?.();
+
+      return true;
+    });
   }
 
   /**
