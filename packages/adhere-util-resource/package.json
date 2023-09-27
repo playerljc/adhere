@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-resource",
-  "version": "2.10.26",
+  "version": "2.10.28",
   "description": "常用的资源",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -29,10 +29,10 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.10.23",
-    "@baifendian/adhere-util-dict": "^2.10.26",
-    "@baifendian/adhere-util-intl": "^2.10.26",
-    "antd": "^5.9.2",
+    "@baifendian/adhere-util": "^2.10.28",
+    "@baifendian/adhere-util-dict": "^2.10.28",
+    "@baifendian/adhere-util-intl": "^2.10.28",
+    "antd": "^5.9.3",
     "dayjs": "^1.11.7"
   },
   "devDependencies": {

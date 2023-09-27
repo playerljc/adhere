@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-successprompt",
-  "version": "2.10.26",
+  "version": "2.10.28",
   "description": "成功的提示(就是为了全局统一)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -30,10 +30,10 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^2.10.26",
+    "@baifendian/adhere-util-intl": "^2.10.28",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
-    "antd": "^5.9.2",
+    "antd": "^5.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

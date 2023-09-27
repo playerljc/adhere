@@ -419,39 +419,39 @@ const List = SearchTableImplementFactory({
           },
           $resizable: true,
         },
-        {
-          title: '性别',
-          dataIndex: 'sex',
-          key: 'sex',
-          align: 'left',
-          headerCellAlign: 'center',
-          width: 150,
-          render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
-          $search: {
-            type: 'dict',
-            visible: true,
-            dictName: 'SystemTestSexSelect',
-          },
-          $editable: {
-            editable: true,
-            type: 'dict',
-            dictName: 'SystemTestSexSelect',
-            rules: [
-              {
-                required: true,
-                message: '请选择',
-              },
-            ],
-            onSave: ({ record, dataIndex, value }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDate({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-        },
+        // {
+        //   title: '性别',
+        //   dataIndex: 'sex',
+        //   key: 'sex',
+        //   align: 'left',
+        //   headerCellAlign: 'center',
+        //   width: 150,
+        //   render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
+        //   $search: {
+        //     type: 'dict',
+        //     visible: true,
+        //     dictName: 'SystemTestSexSelect',
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'dict',
+        //     dictName: 'SystemTestSexSelect',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请选择',
+        //       },
+        //     ],
+        //     onSave: ({ record, dataIndex, value }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDate({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        // },
         {
           title: '出生年月',
           dataIndex: 'birthday',
@@ -585,6 +585,7 @@ const List = SearchTableImplementFactory({
           width: 300,
           headerCellAlign: 'center',
           align: 'left',
+          $hide: true,
           $search: {
             type: 'input',
             visible: true,

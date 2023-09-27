@@ -6,7 +6,7 @@ import qs from 'qs';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { FilterOutlined } from '@ant-design/icons';
+import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import {
   DatePicker,
   InputNumberDecimal1,
@@ -27,7 +27,7 @@ import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
 // import InputHOC from './Extension/InputHOC';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
-import type { AdvancedSearchPanelGroupData } from './types';
+import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
 const { FormItemGeneratorToDict } = FieldGeneratorToDict;
 
@@ -287,38 +287,38 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     getParams() {
       const params = {};
 
-      const loop = (columns) => {
-        columns.reduce((params, column) => {
-          const { $search, children } = column;
+      const loop = (_columns) => {
+        _columns.reduce((_params, _column) => {
+          const { $search, children } = _column;
           const searchConfig = $search ?? {};
-          const dataIndex = searchConfig.dataIndex || column.dataIndex;
+          const dataIndex = searchConfig.dataIndex || _column.dataIndex;
 
           if (
             [this.getOptionsColumnDataIndex(), this.getLinkColumnDataIndex(), '_number'].includes(
               dataIndex,
             )
           ) {
-            return params;
+            return _params;
           }
 
           if (searchConfig.type === 'rangePicker') {
-            if (searchConfig.startName) params[searchConfig.startName] = null;
-            if (searchConfig.endName) params[searchConfig.endName] = null;
+            if (searchConfig.startName) _params[searchConfig.startName] = null;
+            if (searchConfig.endName) _params[searchConfig.endName] = null;
           } else if (['datePicker', 'timePicker'].includes(searchConfig.type)) {
-            params[dataIndex] = null;
+            _params[dataIndex] = null;
           } else {
-            params[dataIndex] = undefined;
+            _params[dataIndex] = undefined;
           }
 
           if (children && Array.isArray(children)) {
             loop(children);
           }
 
-          return params;
+          return _params;
         }, params);
       };
 
-      loop(this.getTableColumns());
+      loop(this.getTableColumnsAll());
 
       return params;
     }
@@ -537,7 +537,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                         </div>
                       </div>
                     );
-                  }),
+                  }, this.getTableColumnSearchHeaderIcon(column)),
                 };
               }
 
@@ -553,6 +553,30 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             return loop(_t);
           })
       );
+    }
+
+    /**
+     * getTableColumnSearchHeaderIcon
+     * @description 获取列头查询图标
+     * @param {ColumnTypeExt} column
+     * @return JSX.Element
+     */
+    getTableColumnSearchHeaderIcon(column: ColumnTypeExt) {
+      const { $search, dataIndex } = column;
+
+      // @ts-ignore
+      if (!!this.state?.searchParams?.[$search?.dataIndex || dataIndex]) {
+        return (
+          <div>
+            <div>
+              <SearchOutlined style={{ fontSize: 14 }} />
+            </div>
+            <div style={{ height: 2, background: '#ccc' }} />
+          </div>
+        );
+      }
+
+      return <SearchOutlined />;
     }
 
     /**
