@@ -564,6 +564,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     getTableColumnSearchHeaderIcon(column: ColumnTypeExt) {
       const { $search, dataIndex } = column;
 
+      // @ts-ignore
       return !!this.state?.searchParams?.[$search?.dataIndex || dataIndex] ? (
         <div>
           <div>

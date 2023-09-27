@@ -25,6 +25,7 @@ declare const _default: {
         getFetchDataParams(): {};
         getColumns(columns: any): any;
         getTableColumns(): any;
+        getTableColumnSearchHeaderIcon(column: import("../types").ColumnTypeExt): JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;

@@ -247,6 +247,10 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getTableDensity(): TableDensity;
     /**
+     * getTableColumnsAll
+     */
+    getTableColumnsAll(): any[];
+    /**
      * getTableColumns
      * @description 获取表格的列数据
      * @return Array<any>
@@ -333,7 +337,11 @@ export declare const defaultProps: {
     style: {};
     searchClassName: string;
     searchStyle: {};
-    isFirst: boolean;
+    isFirst: boolean; /**
+     * columnSettingEffect
+     * @param {SearchTableProps} props
+     * @protected
+     */
     isFirstLoading: null;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { ColumnTypeExt } from './types';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
         [x: string]: any;
@@ -100,6 +101,13 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @returns {*}
          */
         getTableColumns(): any;
+        /**
+         * getTableColumnSearchHeaderIcon
+         * @description 获取列头查询图标
+         * @param {ColumnTypeExt} column
+         * @return JSX.Element
+         */
+        getTableColumnSearchHeaderIcon(column: ColumnTypeExt): JSX.Element;
         /**
          * getOptionsColumnDataIndex
          * @description 操作列的索引名
