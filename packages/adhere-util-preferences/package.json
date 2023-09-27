@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-preferences",
-  "version": "2.10.12",
+  "version": "2.10.28",
   "description": "sessionStore和localStore进行的封装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
