@@ -793,6 +793,46 @@ abstract class SearchTable<
   }
 
   /**
+   * getExportExcelColumns
+   * @description 获取导出excel的列
+   * @param _columns
+   * return _columns
+   */
+  getExportExcelColumns(_columns: any[]): any[] {
+    const result = _columns
+      .filter(
+        ({ dataIndex }) =>
+          ![
+            '_number',
+            // @ts-ignore
+            this?.getOptionsColumnDataIndex?.() || '_options',
+          ].includes(dataIndex),
+      )
+      .map((_column) => {
+        if ('children' in _column && Array.isArray(_column.children) && !!_column.children.length) {
+          return {
+            ..._column,
+            children: this.getExportExcelColumns(_column.children || []),
+          };
+        }
+
+        return _column;
+      });
+
+    debugger;
+    return result;
+  }
+
+  /**
+   * getExportExcelData
+   * @description 获取导出excel的数据
+   * @return any[]
+   */
+  getExportExcelData() {
+    return this.getData();
+  }
+
+  /**
    * renderExportExcel
    * @description 渲染导出excel
    * @return {ReactElement}
@@ -801,8 +841,8 @@ abstract class SearchTable<
     return (
       <ExportExcel
         title={this.props.title}
-        getDataSource={() => this.getData()}
-        getColumns={() => this.getTableColumns()}
+        getDataSource={() => this.getExportExcelData()}
+        getColumns={() => this.getExportExcelColumns(this.getTableColumns())}
       />
     );
   }

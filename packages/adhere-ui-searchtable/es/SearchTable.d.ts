@@ -298,6 +298,19 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderColumnSetting(): ReactElement;
     /**
+     * getExportExcelColumns
+     * @description 获取导出excel的列
+     * @param _columns
+     * return _columns
+     */
+    getExportExcelColumns(_columns: any[]): any[];
+    /**
+     * getExportExcelData
+     * @description 获取导出excel的数据
+     * @return any[]
+     */
+    getExportExcelData(): object[];
+    /**
      * renderExportExcel
      * @description 渲染导出excel
      * @return {ReactElement}

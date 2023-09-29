@@ -79,7 +79,7 @@ function renderColumns({ worksheet, columns, leafNodes, level }) {
 
       if (isLeaf(column)) {
         // 竖着合并
-        const position = leafNodes.findIndsex((node) => node.key === column.key) + 1;
+        const position = leafNodes.findIndex((node) => node.key === column.key) + 1;
         mergeCellsData = {
           startRow: startRowNumber + currentLevel,
           startCell: position,
