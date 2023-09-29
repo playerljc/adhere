@@ -3,7 +3,7 @@ interface TreeUtilType {
     treeToArray: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
-    }) => {
+    }, keyAttr?: string) => {
         [props: string]: any;
         children?: any[];
         key: string;
@@ -46,13 +46,14 @@ interface TreeUtilType {
     getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string) => {
         [props: string]: any;
     }[];
-    getTreeLevel: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[]) => number;
-    getTreeLevelByIndex: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[], indexAttr?: string) => number;
+    getTreeLevel: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[], keyAttr?: string) => number;
+    getTreeLevelByIndex: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[], indexAttr: string, keyAttr: string) => number;
     getTreeLevelToFlat: (flatArr: any[], config: IFlatTreeArrNode) => number;
     getTreeLevelByIndexToFlat: (flatArr: any[], config: IFlatTreeArrNode, indexAttr: string) => number;
+    getNodeLevel: (nodes: (IAntdTreeNode | IAntdTreeSelectNode)[], node: IAntdTreeNode | IAntdTreeSelectNode, keyAttr: string) => number;
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: IFlatTreeArrNode) => (IFlatTreeArrNode & Omit<IAntdTreeNode | IAntdTreeSelectNode, 'value'>)[];
-    excludeAntdTreeNodes: (nodes: IAntdTreeNode[], excludeKeys: string[]) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
-    excludeAntdSelectTreeNodes: (nodes: IAntdTreeSelectNode[], excludeKeys: string[]) => (IFlatTreeArrNode & Omit<IAntdTreeSelectNode, 'value'>)[];
+    excludeAntdTreeNodes: (nodes: IAntdTreeNode[], excludeKeys: string[], keyAttr?: string) => (IFlatTreeArrNode & Omit<IAntdTreeNode, 'value'>)[];
+    excludeAntdSelectTreeNodes: (nodes: IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string) => (IFlatTreeArrNode & Omit<IAntdTreeSelectNode, 'value'>)[];
 }
 declare const TreeUtil: TreeUtilType;
 export default TreeUtil;

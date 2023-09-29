@@ -57,7 +57,7 @@ declare const _default: {
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;
-    }) => {
+    }, keyAttr?: string | undefined) => {
         [props: string]: any;
         children?: any[] | undefined;
         key: string;
@@ -100,13 +100,14 @@ declare const _default: {
     getLeafNodeByFlatDataToIndex: (arr: any[], indexAttr?: string | undefined) => {
         [props: string]: any;
     }[];
-    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[]) => number;
-    getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr?: string | undefined) => number;
+    getTreeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], keyAttr?: string | undefined) => number;
+    getTreeLevelByIndex: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], indexAttr: string, keyAttr: string) => number;
     getTreeLevelToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode) => number;
     getTreeLevelByIndexToFlat: (flatArr: any[], config: import("./types").IFlatTreeArrNode, indexAttr: string) => number;
+    getNodeLevel: (nodes: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], node: import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, keyAttr: string) => number;
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
-    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
-    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[]) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
+    excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
+    excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
     getLang(defaultLocal?: string | undefined): string;
     setLang(lang?: string): void;
     getDatePickerFormat(): string;
