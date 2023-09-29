@@ -1,11 +1,8 @@
-import {
-  Popover,
-  /*Dropdown*/
-} from 'antd';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { Popover } from 'antd';
+// import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 
-import { TableDensity } from '../../types';
+import { TableDensity, TableDensitySettingProps } from '../../types';
 import Setting from './setting';
 
 /**
@@ -14,10 +11,10 @@ import Setting from './setting';
  * @param props
  * @constructor
  */
-function TableDensitySetting(props) {
+const TableDensitySetting: FC<TableDensitySettingProps> = (props) => {
   return (
     <Popover
-      content={<Setting {...props} />}
+      content={<Setting {...props} density={props.density ?? TableDensity.DEFAULT} />}
       placement="bottomRight"
       trigger="click"
       getPopupContainer={(el) => el.parentElement as HTMLElement}
@@ -30,16 +27,16 @@ function TableDensitySetting(props) {
       </a>
     </Popover>
   );
-}
-
-TableDensitySetting.defaultProps = {
-  density: TableDensity.DEFAULT,
 };
 
-TableDensitySetting.propTypes = {
-  density: PropTypes.string,
-  onReset: PropTypes.func,
-  onChange: PropTypes.func,
-};
+// TableDensitySetting.defaultProps = {
+//   density: TableDensity.DEFAULT,
+// };
+//
+// TableDensitySetting.propTypes = {
+//   density: PropTypes.string,
+//   onReset: PropTypes.func,
+//   onChange: PropTypes.func,
+// };
 
 export default TableDensitySetting;

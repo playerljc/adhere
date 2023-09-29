@@ -410,6 +410,23 @@ export interface SearchTableStateImplementFactoryFunction<T, P> {
         mapDispatchToProps?: (dispatch?: any) => any;
     }): (Component: typeof SearchTableStateImplement) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>>;
 }
+export interface TableDensitySettingProps {
+    density: TableDensity;
+    onReset: (...args: any[]) => any;
+    onChange: (...args: any[]) => any;
+}
+export interface ColumnSettingProps {
+    columns: ColumnTypeExt[];
+    onShowColumns: (...args: any[]) => any;
+    onReset: (...args: any[]) => any;
+    onDisplayColumn: (...args: any[]) => any;
+    onSortEnd: (...args: any[]) => any;
+}
+export interface ExportExcelProps {
+    title: string;
+    getDataSource: () => any[];
+    getColumns: () => ColumnTypeExt[];
+}
 /**
  * TableDensity
  */

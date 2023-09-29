@@ -24,6 +24,7 @@ import ColumnResizable, {
   SearchTableResizableTitle,
 } from './Extension/ColumnResizable';
 import ColumnSetting from './Extension/ColumnSetting';
+import ExportExcel from './Extension/ExportExcel';
 import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
@@ -456,9 +457,11 @@ abstract class SearchTable<
   sortOrder(columnName: string): string {
     if (!this.state) return '';
 
-    return this.state[this.getOrderFieldProp()] === columnName
-      ? this.state[this.getOrderProp()]
-      : '';
+    if (this.state[this.getOrderFieldProp()] === columnName) {
+      return this.state[this.getOrderProp()];
+    }
+
+    return '';
   }
 
   /**
@@ -785,6 +788,21 @@ abstract class SearchTable<
             })),
           }));
         }}
+      />
+    );
+  }
+
+  /**
+   * renderExportExcel
+   * @description 渲染导出excel
+   * @return {ReactElement}
+   */
+  renderExportExcel(): ReactElement {
+    return (
+      <ExportExcel
+        title={this.props.title}
+        getDataSource={() => this.getData()}
+        getColumns={() => this.getTableColumns()}
       />
     );
   }

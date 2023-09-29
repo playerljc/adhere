@@ -384,41 +384,106 @@ const List = SearchTableImplementFactory({
      */
     getColumns() {
       return super.getColumns([
-        // Table.EXPAND_COLUMN,
-        // {},
         {
-          title: '姓名',
+          title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          width: 256,
-          headerCellAlign: 'center',
-          align: 'left',
-          fixed: 'left',
-          render: (val) => <div style={{ color: 'red' }}>{val}</div>,
-          $search: {
-            type: 'input',
-            visible: true,
-          },
-          $editable: {
-            editable: true,
-            type: 'input',
-            rules: [
-              {
-                required: true,
-                message: '请输入姓名',
-              },
-            ],
-            onSave: ({ value, record, dataIndex }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDate({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-          $resizable: true,
+          width: 400,
         },
+        {
+          title: 'Other',
+          key: 'Other',
+          children: [
+            {
+              title: 'Age',
+              dataIndex: 'sex',
+              key: 'sex',
+            },
+            {
+              title: 'Address',
+              key: 'Address',
+              children: [
+                {
+                  title: 'Street',
+                  dataIndex: 'address',
+                  key: 'address',
+                },
+                {
+                  title: 'Block',
+                  key: 'Block',
+                  children: [
+                    {
+                      title: 'Building',
+                      dataIndex: 'birthday',
+                      key: 'birthday',
+                    },
+                    {
+                      title: 'Door No.',
+                      dataIndex: 'deptName',
+                      key: 'deptName',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Company',
+          key: 'Company',
+          children: [
+            {
+              title: 'Company Address',
+              dataIndex: 'height',
+              key: 'height',
+            },
+            {
+              title: 'Company Name',
+              dataIndex: 'width',
+              key: 'width',
+            },
+          ],
+        },
+        {
+          title: 'Gender',
+          dataIndex: 'id',
+          key: 'id',
+        },
+        // Table.EXPAND_COLUMN,
+        // {},
+        // {
+        //   title: '姓名',
+        //   dataIndex: 'name',
+        //   key: 'name',
+        //   width: 256,
+        //   headerCellAlign: 'center',
+        //   align: 'left',
+        //   fixed: 'left',
+        //   render: (val) => <div style={{ color: 'red' }}>{val}</div>,
+        //   $search: {
+        //     type: 'input',
+        //     visible: true,
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'input',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请输入姓名',
+        //       },
+        //     ],
+        //     onSave: ({ value, record, dataIndex }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDate({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        //   $resizable: true,
+        // },
         // {
         //   title: '性别',
         //   dataIndex: 'sex',
@@ -452,166 +517,166 @@ const List = SearchTableImplementFactory({
         //       }),
         //   },
         // },
-        {
-          title: '出生年月',
-          dataIndex: 'birthday',
-          key: 'birthday',
-          headerCellAlign: 'center',
-          align: 'left',
-          width: 200,
-          sorter: true,
-          sortOrder: this.sortOrder('birthday'),
-          render: (val) => <DateDisplay.DateDisplay10 value={val} />,
-          $search: {
-            type: 'rangePicker',
-            visible: true,
-            startName: 'birthDayStart',
-            endName: 'birthDayEnd',
-          },
-          $editable: {
-            editable: true,
-            type: 'datePicker',
-            rules: [
-              {
-                required: true,
-                message: '请选择',
-              },
-            ],
-            onSave: ({ record, dataIndex, value }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDateData({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-        },
-        {
-          title: '身高',
-          dataIndex: 'height',
-          key: 'height',
-          align: 'center',
-          width: 150,
-          sorter: true,
-          sortOrder: this.sortOrder('height'),
-          $search: {
-            type: 'inputNumberDecimal2',
-            visible: true,
-          },
-          $editable: {
-            editable: true,
-            type: 'inputNumberDecimal2',
-            rules: [
-              {
-                required: true,
-                message: '请选择',
-              },
-            ],
-            onSave: ({ record, dataIndex, value }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDate({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-        },
-        {
-          title: '体重',
-          dataIndex: 'width',
-          key: 'width',
-          align: 'center',
-          width: 150,
-          sorter: true,
-          sortOrder: this.sortOrder('width'),
-          $search: {
-            type: 'inputNumberDecimal2',
-            visible: true,
-          },
-          $editable: {
-            editable: true,
-            type: 'inputNumberDecimal2',
-            rules: [
-              {
-                required: true,
-                message: '请选择',
-              },
-            ],
-            onSave: ({ record, dataIndex, value }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDate({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-        },
-        {
-          title: '籍贯',
-          dataIndex: 'homeTown',
-          key: 'homeTown',
-          ellipsis: true,
-          width: 200,
-          $search: {
-            type: 'input',
-            visible: true,
-          },
-          $editable: {
-            editable: true,
-            type: 'input',
-            rules: [
-              {
-                required: true,
-                message: '请选择',
-              },
-            ],
-            onSave: ({ record, dataIndex, value }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDate({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-        },
-        {
-          title: '现居住地',
-          dataIndex: 'address',
-          key: 'address',
-          width: 300,
-          headerCellAlign: 'center',
-          align: 'left',
-          $hide: true,
-          $search: {
-            type: 'input',
-            visible: true,
-            valueAttrs: {
-              colSpan: 5,
-            },
-          },
-          $editable: {
-            editable: true,
-            type: 'input',
-            rules: [
-              {
-                required: true,
-                message: '请选择',
-              },
-            ],
-            onSave: ({ record, dataIndex, value }) =>
-              new Promise((resolve) => {
-                this.updateEditorCellDate({
-                  record,
-                  dataIndex,
-                  value,
-                }).then(() => resolve());
-              }),
-          },
-        },
+        // {
+        //   title: '出生年月',
+        //   dataIndex: 'birthday',
+        //   key: 'birthday',
+        //   headerCellAlign: 'center',
+        //   align: 'left',
+        //   width: 200,
+        //   sorter: true,
+        //   sortOrder: this.sortOrder('birthday'),
+        //   render: (val) => <DateDisplay.DateDisplay10 value={val} />,
+        //   $search: {
+        //     type: 'rangePicker',
+        //     visible: true,
+        //     startName: 'birthDayStart',
+        //     endName: 'birthDayEnd',
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'datePicker',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请选择',
+        //       },
+        //     ],
+        //     onSave: ({ record, dataIndex, value }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDateData({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        // },
+        // {
+        //   title: '身高',
+        //   dataIndex: 'height',
+        //   key: 'height',
+        //   align: 'center',
+        //   width: 150,
+        //   sorter: true,
+        //   sortOrder: this.sortOrder('height'),
+        //   $search: {
+        //     type: 'inputNumberDecimal2',
+        //     visible: true,
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'inputNumberDecimal2',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请选择',
+        //       },
+        //     ],
+        //     onSave: ({ record, dataIndex, value }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDate({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        // },
+        // {
+        //   title: '体重',
+        //   dataIndex: 'width',
+        //   key: 'width',
+        //   align: 'center',
+        //   width: 150,
+        //   sorter: true,
+        //   sortOrder: this.sortOrder('width'),
+        //   $search: {
+        //     type: 'inputNumberDecimal2',
+        //     visible: true,
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'inputNumberDecimal2',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请选择',
+        //       },
+        //     ],
+        //     onSave: ({ record, dataIndex, value }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDate({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        // },
+        // {
+        //   title: '籍贯',
+        //   dataIndex: 'homeTown',
+        //   key: 'homeTown',
+        //   ellipsis: true,
+        //   width: 200,
+        //   $search: {
+        //     type: 'input',
+        //     visible: true,
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'input',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请选择',
+        //       },
+        //     ],
+        //     onSave: ({ record, dataIndex, value }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDate({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        // },
+        // {
+        //   title: '现居住地',
+        //   dataIndex: 'address',
+        //   key: 'address',
+        //   width: 300,
+        //   headerCellAlign: 'center',
+        //   align: 'left',
+        //   $hide: true,
+        //   $search: {
+        //     type: 'input',
+        //     visible: true,
+        //     valueAttrs: {
+        //       colSpan: 5,
+        //     },
+        //   },
+        //   $editable: {
+        //     editable: true,
+        //     type: 'input',
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: '请选择',
+        //       },
+        //     ],
+        //     onSave: ({ record, dataIndex, value }) =>
+        //       new Promise((resolve) => {
+        //         this.updateEditorCellDate({
+        //           record,
+        //           dataIndex,
+        //           value,
+        //         }).then(() => resolve());
+        //       }),
+        //   },
+        // },
       ]);
     }
 
@@ -647,4 +712,11 @@ const List = SearchTableImplementFactory({
   },
 );
 
-export default (props) => <List {...props} />;
+export default (props) => (
+  <List
+    antdTableProps={{
+      bordered: true,
+    }}
+    {...props}
+  />
+);

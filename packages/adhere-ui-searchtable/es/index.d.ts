@@ -8,7 +8,6 @@ import SearchEditableRowTable from './Editable/SearchEditableRowTable';
 import SearchEditableStateTable from './Editable/SearchEditableStateTable';
 import SearchEditableTable from './Editable/SearchEditableTable';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
-import TableDensitySetting from './Extension/TableDensitySetting';
 import Search from './Search';
 import SearchTable from './SearchTable';
 import { SearchTableImplement } from './SearchTableImplement';
@@ -32,7 +31,7 @@ declare const _default: {
             } | undefined;
         } | undefined;
     } | null>;
-    TableDensitySetting: typeof TableDensitySetting;
+    TableDensitySetting: import("react").FC<import("./types").TableDensitySettingProps>;
     TableImplement: typeof SearchTableImplement;
     TableStateImplement: typeof SearchTableStateImplement;
     SearchTableImplementFactory: import("./types").SearchTableImplementFactoryFunction<any, any>;

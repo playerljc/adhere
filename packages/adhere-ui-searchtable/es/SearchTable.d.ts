@@ -298,6 +298,12 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderColumnSetting(): ReactElement;
     /**
+     * renderExportExcel
+     * @description 渲染导出excel
+     * @return {ReactElement}
+     */
+    renderExportExcel(): ReactElement;
+    /**
      * renderTableDensitySetting
      * @description 表格密度设置
      * @return {ReactElement}
@@ -337,11 +343,7 @@ export declare const defaultProps: {
     style: {};
     searchClassName: string;
     searchStyle: {};
-    isFirst: boolean; /**
-     * columnSettingEffect
-     * @param {SearchTableProps} props
-     * @protected
-     */
+    isFirst: boolean;
     isFirstLoading: null;
     isShowExpandSearch: boolean;
     defaultExpandSearchCollapse: boolean;

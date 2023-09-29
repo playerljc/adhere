@@ -1,7 +1,8 @@
 import { Popover } from 'antd';
-import PropTypes from 'prop-types';
-import React from 'react';
+// import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 
+import type { ColumnSettingProps } from '../../types';
 import Setting from './setting';
 
 /**
@@ -10,7 +11,7 @@ import Setting from './setting';
  * @param props
  * @constructor
  */
-function ColumnSetting(props) {
+const ColumnSetting: FC<ColumnSettingProps> = (props) => {
   return (
     <Popover
       content={<Setting {...props} />}
@@ -26,18 +27,18 @@ function ColumnSetting(props) {
       </a>
     </Popover>
   );
-}
-
-ColumnSetting.defaultProps = {
-  columns: [],
 };
 
-ColumnSetting.propTypes = {
-  columns: PropTypes.array,
-  onShowColumns: PropTypes.func,
-  onReset: PropTypes.func,
-  onDisplayColumn: PropTypes.func,
-  onSortEnd: PropTypes.func,
-};
+// ColumnSetting.defaultProps = {
+//   columns: [],
+// };
+
+// ColumnSetting.propTypes = {
+//   columns: PropTypes.array,
+//   onShowColumns: PropTypes.func,
+//   onReset: PropTypes.func,
+//   onDisplayColumn: PropTypes.func,
+//   onSortEnd: PropTypes.func,
+// };
 
 export default ColumnSetting;

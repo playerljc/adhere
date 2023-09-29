@@ -842,6 +842,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         this.renderColumnSetting && !!this.renderColumnSetting?.() && (
           <div className={`${_selectorPrefix}-headeritem`}>{this.renderColumnSetting()}</div>
         ),
+        this.renderExportExcel && !!this.renderExportExcel?.() && (
+          <div className={`${_selectorPrefix}-headeritem`}>{this.renderExportExcel()}</div>
+        ),
       ].filter((t) => !!t);
     }
 
