@@ -29,7 +29,7 @@ export default [
   'middle',
   'Big',
   'extra large',
-  'serial number',
+  'No',
   'Inquire',
   'reset',
   'Current {page}-{pageSize}/total {total}',
