@@ -23,7 +23,7 @@ import type {
   SearchTableState,
 } from './types';
 
-export const selectorPrefix = 'adhere-ui-searchtableimplement';
+export const selectorPrefix = 'adhere-ui-search-table-implement';
 
 /**
  * SearchTableImplement
@@ -372,7 +372,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   renderInner(): ReactElement | null {
     const innerJSX = super.renderInner();
     return (
-      <div ref={this.innerWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+      <div ref={this.innerWrapRef} className={`${selectorPrefix}-table-wrapper`}>
         {innerJSX}
       </div>
     );
@@ -662,7 +662,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  renderSearchFormToolBarDefaultPanel(): ReactNode {
+    return null;
+  }
+
+  renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[] {
+    return defaultItems;
+  }
+
   /**
    * onTableRowComponentReducers
    * @param {ColumnTypeExt[]} columns
@@ -672,7 +679,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
     return this.tableRowComponentReducers;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   /**
    * onTableCellComponentReducers
    * @param {ColumnTypeExt[]} columns

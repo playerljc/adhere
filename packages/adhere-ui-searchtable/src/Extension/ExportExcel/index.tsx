@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import ExcelJS from 'exceljs';
 import FileSaver from 'file-saver';
 import React, { FC } from 'react';
@@ -7,6 +8,7 @@ import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import ErrorPrompt from '@baifendian/adhere-ui-prompt-errorprompt';
 import SuccessPrompt from '@baifendian/adhere-ui-prompt-successprompt';
 import Util from '@baifendian/adhere-util';
+import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../SearchTable';
 import type { ExportExcelProps } from '../../types';
@@ -247,7 +249,12 @@ function exportExcel({ dataSource, columns, title }) {
  * @param {Function} getColumns
  * @constructor
  */
-const ExportExcel: FC<ExportExcelProps> = ({ title = 'excel', getDataSource, getColumns }) => {
+const ExportExcel: FC<ExportExcelProps> = ({
+  title = 'excel',
+  getDataSource,
+  getColumns,
+  renderExportExcelBtn,
+}) => {
   function onExportExcel() {
     const indicator = GlobalIndicator.show();
 
@@ -266,7 +273,17 @@ const ExportExcel: FC<ExportExcelProps> = ({ title = 'excel', getDataSource, get
       });
   }
 
-  return <FileExcelOutlined onClick={onExportExcel} className={`${selectorPrefix}-export-excel`} />;
+  return (
+    <Tooltip title={`${Intl.v('导出excel')}`}>
+      {renderExportExcelBtn && renderExportExcelBtn(onExportExcel)}
+      {!renderExportExcelBtn && (
+        <FileExcelOutlined
+          onClick={onExportExcel}
+          className={`${selectorPrefix}-export-excel-btn`}
+        />
+      )}
+    </Tooltip>
+  );
 };
 
 export default ExportExcel;

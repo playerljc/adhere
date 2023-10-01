@@ -5,7 +5,7 @@ import { selectorPrefix } from '../../SearchTable';
 
 export default ({ className, style, children }) => (
   <div
-    className={classNames(`${selectorPrefix}-disabledoption`, className ?? '')}
+    className={classNames(`${selectorPrefix}-disabled-option`, className ?? '')}
     style={style ?? {}}
   >
     {children}

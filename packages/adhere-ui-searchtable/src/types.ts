@@ -336,6 +336,10 @@ export interface ColumnRowDragSortConfig {}
  * @description Column列的扩展设置
  */
 export interface ColumnTypeExt extends ColumnType<any> {
+  // 列头的提示信息，同时也是此列筛选项label的提示信息
+  $tip?: ReactNode;
+  // 自定义渲染tip
+  renderTip?: (tip: ReactNode) => ReactNode;
   // 列的权限设置，有权限才显示，没权限不显示
   $authorized?: () => boolean;
   // 列头是否可以拖动
@@ -562,6 +566,7 @@ export interface TableDensitySettingProps {
   density: TableDensity;
   onReset: (...args: any[]) => any;
   onChange: (...args: any[]) => any;
+  renderDensitySettingBtn?: () => ReactNode;
 }
 
 export interface ColumnSettingProps {
@@ -570,12 +575,31 @@ export interface ColumnSettingProps {
   onReset: (...args: any[]) => any;
   onDisplayColumn: (...args: any[]) => any;
   onSortEnd: (...args: any[]) => any;
+  renderColumnSettingBtn?: () => ReactNode;
 }
 
 export interface ExportExcelProps {
   title: string;
   getDataSource: () => any[];
   getColumns: () => ColumnTypeExt[];
+  renderExportExcelBtn?: (onExportExcel: () => void) => ReactNode;
+}
+
+export interface ReloadTableProps {
+  onReload: () => void;
+  showLoading: boolean;
+  renderReloadBtn?: ({
+    showLoading,
+    onReload,
+  }: {
+    showLoading: boolean;
+    onReload: () => void;
+  }) => ReactNode;
+}
+
+export interface ColumnTipTitleProps {
+  tip: ReactNode;
+  title: ReactNode;
 }
 
 /**

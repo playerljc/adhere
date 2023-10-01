@@ -25,7 +25,7 @@ const { VerticalFlexLayout, ScrollLayout } = FlexLayout;
 const { renderGridSearchFormGroup } = TableGridLayout;
 const { Overlay } = SlideLayout;
 
-const _selectorPrefix = `${selectorPrefix}-advancedsearchpanel`;
+const _selectorPrefix = `${selectorPrefix}-advanced-search-panel`;
 
 /**
  * AdvancedSearchPanel

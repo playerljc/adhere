@@ -7,7 +7,7 @@ import ColumnResizable, { SearchTableResizableTitle } from './Extension/ColumnRe
 import Search from './Search';
 import type { CellConfigReducer, ColumnTypeExt, RowConfig, RowConfigReducer, SearchTableProps, SearchTableState } from './types';
 import { TableDensity } from './types';
-export declare const selectorPrefix = "adhere-ui-searchtable";
+export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchTableContext: React.Context<{
     context: SearchTable;
     editable?: {
@@ -280,24 +280,6 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getTableCellComponentReducers(): string[];
     /**
-     * renderTableNumberColumn
-     * @description - 渲染序号列
-     * @param {string} number
-     * @param {{ value: any; record: object; index: number }} params
-     * @return {ReactNode}
-     */
-    renderTableNumberColumn(number: string | undefined, params: {
-        value: any;
-        record: object;
-        index: number;
-    }): JSX.Element;
-    /**
-     * renderColumnSetting
-     * @description 创建列设置组件
-     * @return {ReactElement}
-     */
-    renderColumnSetting(): ReactElement;
-    /**
      * getExportExcelColumns
      * @description 获取导出excel的列
      * @param _columns
@@ -311,17 +293,47 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getExportExcelData(): object[];
     /**
-     * renderExportExcel
-     * @description 渲染导出excel
+     * renderTableNumberColumn
+     * @description - 渲染序号列
+     * @param {string} number
+     * @param {{ value: any; record: object; index: number }} params
+     * @return {ReactNode}
+     */
+    renderTableNumberColumn(number: string | undefined, params: {
+        value: any;
+        record: object;
+        index: number;
+    }): JSX.Element;
+    /**
+     * renderTableReload
+     * @description 刷新表格
      * @return {ReactElement}
      */
-    renderExportExcel(): ReactElement;
+    renderTableReload(): ReactElement;
+    /**
+     * renderColumnSetting
+     * @description 创建列设置组件
+     * @return {ReactElement}
+     */
+    renderColumnSetting(): ReactElement;
     /**
      * renderTableDensitySetting
      * @description 表格密度设置
      * @return {ReactElement}
      */
     renderTableDensitySetting(): ReactElement;
+    /**
+     * renderExportExcel
+     * @description 渲染导出excel
+     * @return {ReactElement}
+     */
+    renderExportExcel(): ReactElement;
+    /**
+     * renderSearchFormToolBar
+     * @description 渲染查询表单的工具栏
+     * @return {ReactNode}
+     */
+    renderSearchFormToolBar(): ReactNode;
     /**
      * renderSearchToolBar
      * @description 渲染查询工具栏

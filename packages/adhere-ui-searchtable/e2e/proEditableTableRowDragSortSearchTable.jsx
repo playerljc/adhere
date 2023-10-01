@@ -327,6 +327,8 @@ const {
   EditableTableControl,
   ProSearchEditableTableRowDragSortTable,
   ProEditableSearchTable,
+  OptionsWrap,
+  DisabledOption,
 } = SearchTable;
 
 const serviceName = 'user';
@@ -389,6 +391,10 @@ const List = SearchTableImplementFactory({
           dataIndex: 'name',
           key: 'name',
           width: 400,
+          $tip: 'Name',
+          $search: {
+            visible: true,
+          },
         },
         {
           title: 'Other',
@@ -448,6 +454,45 @@ const List = SearchTableImplementFactory({
           title: 'Gender',
           dataIndex: 'id',
           key: 'id',
+        },
+        {
+          title: '操作',
+          dataIndex: this.getOptionsColumnDataIndex(),
+          key: this.getOptionsColumnDataIndex(),
+          width: 200,
+          render: (v, record) => (
+            <OptionsWrap style={{ justifyContent: 'center' }}>
+              {this.renderOptionColumn(
+                [
+                  {
+                    key: 'edit',
+                    value: <DisabledOption>编辑</DisabledOption>,
+                  },
+                  {
+                    key: 'view',
+                    value: <a>查看</a>,
+                  },
+                  {
+                    key: 'modalView',
+                    value: <DisabledOption>弹窗查看</DisabledOption>,
+                  },
+                  {
+                    key: 'modalEdit',
+                    value: <a href="#">弹窗修改</a>,
+                  },
+                  {
+                    key: 'modalList',
+                    value: <a href="#">列表弹窗</a>,
+                  },
+                  {
+                    key: 'delete',
+                    value: <a href="#">删除</a>,
+                  },
+                ],
+                { value: v, record },
+              )}
+            </OptionsWrap>
+          ),
         },
         // Table.EXPAND_COLUMN,
         // {},
@@ -687,6 +732,34 @@ const List = SearchTableImplementFactory({
      */
     renderSearchFooterItems(defaultItems) {
       return super.renderSearchFooterItems([
+        {
+          key: 'editorTable1',
+          value: <EditableTableControl />,
+        },
+        {
+          key: 'editorTable2',
+          value: <EditableTableControl />,
+        },
+        {
+          key: 'editorTable3',
+          value: <EditableTableControl />,
+        },
+        {
+          key: 'editorTable4',
+          value: <EditableTableControl />,
+        },
+        {
+          key: 'editorTable5',
+          value: <EditableTableControl />,
+        },
+        {
+          key: 'editorTable6',
+          value: <EditableTableControl />,
+        },
+        {
+          key: 'editorTable7',
+          value: <EditableTableControl />,
+        },
         {
           key: 'editorTable',
           value: <EditableTableControl />,

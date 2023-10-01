@@ -30,8 +30,10 @@ import DisabledOption from './Extension/DisabledOption';
 import { EditableContext } from './Extension/EditableCell/EditableRow';
 import EditableRowControl from './Extension/EditableCell/EditableRowControl';
 import EditableTableControl from './Extension/EditableCell/EditableTableControl';
+import ExportExcel from './Extension/ExportExcel';
 import LinkColumn from './Extension/LinkColumn';
 import OptionsWrap from './Extension/OptionsWrap';
+import ReloadTable from './Extension/ReloadTable';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import ProSearchStateTable from './ProSearchStateTable';
@@ -49,6 +51,8 @@ export default {
   Table: SearchTable,
   SearchTableContext,
   TableDensitySetting,
+  ReloadTable,
+  ExportExcel,
   TableImplement: SearchTableImplement,
   TableStateImplement: SearchTableStateImplement,
   SearchTableImplementFactory,

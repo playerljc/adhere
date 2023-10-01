@@ -5,11 +5,15 @@
  * @param children
  * @param className
  * @param style
+ * @param ellipsisCount
+ * @param isEllipsesShowOnlyOneAfterCollapsing
  * @return {JSX.Element}
  */
-declare const _default: ({ children, className, style }: {
-    children: any;
+declare const _default: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
     className?: string | undefined;
     style?: {} | undefined;
+    ellipsisCount?: number | undefined;
+    isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+    children: any;
 }) => JSX.Element;
 export default _default;

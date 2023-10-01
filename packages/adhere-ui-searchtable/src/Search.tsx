@@ -47,6 +47,28 @@ abstract class Search<
   abstract renderSearchForm(): ReactNode;
 
   /**
+   * renderSearchFormToolBar
+   * @description 渲染查询表单的工具栏
+   * @return {ReactNode}
+   */
+  abstract renderSearchFormToolBar(): ReactNode;
+
+  /**
+   * renderSearchFormToolBarItems
+   * @description 渲染查询表单的工具栏项
+   * @param {ReactElement[]} defaultItems
+   * @return {ReactNode []}
+   */
+  abstract renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
+
+  /**
+   * renderSearchFormToolBarDefaultPanel
+   * @description 渲染查询表单工具栏缺省面板
+   * @return {ReactNode}
+   */
+  abstract renderSearchFormToolBarDefaultPanel(): ReactNode;
+
+  /**
    * renderSearchBefore
    * @description 渲染查询面板之后
    * @return {ReactNode}
@@ -236,7 +258,6 @@ abstract class Search<
       bodyStyle,
       searchClassName,
       searchStyle,
-      // fitSearch,
       fitBody = true,
       autoFixed = true,
     } = this.props;
@@ -254,9 +275,8 @@ abstract class Search<
           (!!this.renderSearchToolBar && !!this.renderSearchToolBar?.()) ||
           (!!this.renderSearchFormAfter && !!this.renderSearchFormAfter?.())) && (
           <Fixed
-            className={classNames(`${selectorPrefix}-searchwrapper`, searchClassName)}
+            className={classNames(`${selectorPrefix}-search-wrapper`, searchClassName)}
             style={{ ...(searchStyle ?? {}) }}
-            // fit={fitSearch}
           >
             {!!this.renderSearchFormBefore && !!this.renderSearchFormBefore?.() && (
               <Fixed className={`${selectorPrefix}-search-form-before`}>
@@ -264,6 +284,7 @@ abstract class Search<
               </Fixed>
             )}
 
+            {/* 查询 */}
             {!!this.renderSearchForm && !!this.renderSearchForm?.() && expand && (
               <Fixed
                 // @ts-ignore
@@ -276,7 +297,17 @@ abstract class Search<
                 {this.renderSearchForm()}
               </Fixed>
             )}
+            {/* 查询的工具栏 */}
+            {!!this.renderSearchForm &&
+              !!this.renderSearchForm?.() &&
+              !!this.renderSearchFormToolBar &&
+              !!this.renderSearchFormToolBar?.() && (
+                <Fixed className={classNames(`${selectorPrefix}-search-form-tool-bar`)}>
+                  {this.renderSearchFormToolBar()}
+                </Fixed>
+              )}
 
+            {/* 工具栏 */}
             {!!this.renderSearchToolBar && !!this.renderSearchToolBar?.() && (
               <Fixed
                 data-title={this.props.title}
@@ -296,23 +327,26 @@ abstract class Search<
           </Fixed>
         )}
 
+        {/* Header */}
         {!!this.renderSearchHeader && !!this.renderSearchHeader?.() && (
           <Fixed className={`${selectorPrefix}-search-header`}>{this.renderSearchHeader?.()}</Fixed>
         )}
 
+        {/* Body */}
         <Auto
           style={{ ...(bodyStyle ?? {}) }}
-          className={classNames(`${selectorPrefix}-autowrapper`, bodyClassName, {
+          className={classNames(`${selectorPrefix}-auto-wrapper`, bodyClassName, {
             ['autofixed']: autoFixed,
           })}
           fit={fitBody}
           autoFixed={autoFixed}
         >
-          <div ref={bodyWrapRef} className={`${selectorPrefix}-tablewrapper`}>
+          <div ref={bodyWrapRef} className={`${selectorPrefix}-table-wrapper`}>
             {this.renderBody()}
           </div>
         </Auto>
 
+        {/* Footer */}
         {!!this.renderSearchFooter && !!this.renderSearchFooter?.() && (
           <Fixed className={`${selectorPrefix}-search-footer`}>{this.renderSearchFooter?.()}</Fixed>
         )}

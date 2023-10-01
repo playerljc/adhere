@@ -167,12 +167,37 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @override
          */
         renderSearchForm(): JSX.Element;
+        /**
+         * renderSearchFormToolBarItems
+         * @description 渲染查询表单的工具栏项
+         * @return {ReactNode []}
+         * @param _defaultItems
+         */
+        renderSearchFormToolBarItems(_defaultItems: any): any[];
+        /**
+         * renderSearchFormToolBarDefaultPanel
+         * @description 渲染查询表单工具栏缺省面板
+         * @return {ReactNode}
+         */
+        renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
         /***
          * renderSearchFooterItems
          * @param _defaultItems
          * @return {*}
          */
         renderSearchFooterItems(_defaultItems: any): any[];
+        /**
+         * getSearchFooterItemsEllipsisCount
+         * @description 获取SearchFooterItems省略的个数
+         * @return {Number}
+         */
+        getSearchFooterItemsEllipsisCount(): number;
+        /**
+         * isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing
+         * @description 是否折叠后只显示一个操作按钮
+         * @return {boolean}
+         */
+        isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         /**
          * renderSearchFooterItemsImpl
          * @param defaultItems

@@ -237,6 +237,8 @@ export interface ColumnRowDragSortConfig {
  * @description Column列的扩展设置
  */
 export interface ColumnTypeExt extends ColumnType<any> {
+    $tip?: ReactNode;
+    renderTip?: (tip: ReactNode) => ReactNode;
     $authorized?: () => boolean;
     $resizable?: boolean;
     $hide?: boolean;
@@ -414,6 +416,7 @@ export interface TableDensitySettingProps {
     density: TableDensity;
     onReset: (...args: any[]) => any;
     onChange: (...args: any[]) => any;
+    renderDensitySettingBtn?: () => ReactNode;
 }
 export interface ColumnSettingProps {
     columns: ColumnTypeExt[];
@@ -421,11 +424,25 @@ export interface ColumnSettingProps {
     onReset: (...args: any[]) => any;
     onDisplayColumn: (...args: any[]) => any;
     onSortEnd: (...args: any[]) => any;
+    renderColumnSettingBtn?: () => ReactNode;
 }
 export interface ExportExcelProps {
     title: string;
     getDataSource: () => any[];
     getColumns: () => ColumnTypeExt[];
+    renderExportExcelBtn?: (onExportExcel: () => void) => ReactNode;
+}
+export interface ReloadTableProps {
+    onReload: () => void;
+    showLoading: boolean;
+    renderReloadBtn?: ({ showLoading, onReload, }: {
+        showLoading: boolean;
+        onReload: () => void;
+    }) => ReactNode;
+}
+export interface ColumnTipTitleProps {
+    tip: ReactNode;
+    title: ReactNode;
 }
 /**
  * TableDensity

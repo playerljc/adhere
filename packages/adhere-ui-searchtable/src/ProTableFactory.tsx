@@ -1,4 +1,4 @@
-import { Button, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import { Button, Dropdown, Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import dayjs from 'dayjs';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
@@ -6,7 +6,7 @@ import qs from 'qs';
 import type { ReactNode } from 'react';
 import React from 'react';
 
-import { FilterOutlined, SearchOutlined } from '@ant-design/icons';
+import { EllipsisOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import {
   DatePicker,
   InputNumberDecimal1,
@@ -24,6 +24,7 @@ import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 
 import AdvancedSearchPanel from './Extension/AdvancedSearchPanel';
+import ColumnTipTitle from './Extension/ColumnTipTitle';
 // import InputHOC from './Extension/InputHOC';
 import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
@@ -178,7 +179,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       }
 
       //{
-      // key: adhere-ui-searchtable
+      // key: adhere-ui-search-table
       // value: [
       //   {
       //     path: 路由
@@ -552,6 +553,33 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
             return loop(_t);
           })
+          // 处理tip
+          .map((_t) => {
+            const loop = (t) => {
+              const { $tip, title, renderTip } = t;
+
+              let currentTitle = title;
+
+              if ($tip) {
+                currentTitle = renderTip?.($tip) ?? <ColumnTipTitle tip={$tip} title={title} />;
+              }
+
+              let column = {
+                ...t,
+                title: currentTitle,
+              };
+
+              if (t.children && Array.isArray(t.children)) {
+                t.children.forEach((item, _index) => {
+                  t.children[_index] = loop(item);
+                });
+              }
+
+              return column;
+            };
+
+            return loop(_t);
+          })
       );
     }
 
@@ -662,17 +690,23 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         columns
           .filter((t) => '$search' in t && !!t.$search.visible)
           .forEach((t) => {
-            const { $search, ...column } = t;
+            const { $search, $tip, renderTip, ...column } = t;
 
             const searchConfig = this.assignSearchConfig($search, column);
             const type = searchConfig?.type || 'input';
             const dataIndex = searchConfig.dataIndex || t.dataIndex;
             const title = $search.title || t.title;
 
+            let currentTitle = title;
+
+            if ($tip) {
+              currentTitle = renderTip?.($tip) ?? <ColumnTipTitle tip={$tip} title={title} />;
+            }
+
             searchFormGroupData.push({
               key: dataIndex,
               sort: $search.sort,
-              label: <Label {...($search.labelAttrs ?? {})}>{title}：</Label>,
+              label: <Label {...($search.labelAttrs ?? {})}>{currentTitle}：</Label>,
               value: ConditionalRender.conditionalRender({
                 conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
                 /*Dict.value.SystemAuthoritySwitch.value
@@ -774,12 +808,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
     }
 
-    /***
-     * renderSearchFooterItems
+    /**
+     * renderSearchFormToolBarItems
+     * @description 渲染查询表单的工具栏项
+     * @return {ReactNode []}
      * @param _defaultItems
-     * @return {*}
      */
-    renderSearchFooterItems(_defaultItems) {
+    renderSearchFormToolBarItems(_defaultItems) {
       const defaultItems = [...(_defaultItems || [])];
 
       if (this.hasAdvancedSearch() && this.hasAdvancedSearchPanel && this.state.expand) {
@@ -823,9 +858,68 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         }
       }
 
+      return defaultItems;
+    }
+
+    /**
+     * renderSearchFormToolBarDefaultPanel
+     * @description 渲染查询表单工具栏缺省面板
+     * @return {ReactNode}
+     */
+    renderSearchFormToolBarDefaultPanel() {
+      const { expand = false } = this.state;
+
+      if (expand) {
+        return null;
+      }
+
+      const gridSearchFormGroupParams: any[] = [...this.getGridSearchFormGroupParams()];
+
+      gridSearchFormGroupParams[0][0].columnCount = 2;
+
+      const layout = gridSearchFormGroupParams[1].layout;
+
+      if (layout === 'horizontal') {
+        gridSearchFormGroupParams[0][0].colgroup = [, 'auto', , 'auto'];
+      } else if (layout === 'vertical') {
+        gridSearchFormGroupParams[0][0].colgroup = ['auto', 'auto'];
+      }
+
+      gridSearchFormGroupParams[2].rowCount = 1;
+
+      // @ts-ignore
+      return this.renderGridSearchFormGroup(...gridSearchFormGroupParams);
+    }
+
+    /***
+     * renderSearchFooterItems
+     * @param _defaultItems
+     * @return {*}
+     */
+    renderSearchFooterItems(_defaultItems) {
+      const defaultItems = [...(_defaultItems || [])];
+
       return this.renderSearchFooterItemsImpl(defaultItems).map((t) =>
         '$$typeof' in t ? t : t.value,
       );
+    }
+
+    /**
+     * getSearchFooterItemsEllipsisCount
+     * @description 获取SearchFooterItems省略的个数
+     * @return {Number}
+     */
+    getSearchFooterItemsEllipsisCount() {
+      return 5;
+    }
+
+    /**
+     * isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing
+     * @description 是否折叠后只显示一个操作按钮
+     * @return {boolean}
+     */
+    isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing() {
+      return false;
     }
 
     /**
@@ -834,8 +928,48 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @return {*}
      */
     renderSearchFooterItemsImpl(defaultItems) {
+      let currentDefaultItems = [...defaultItems];
+
+      let searchFooterItemsEllipsisCount = this.getSearchFooterItemsEllipsisCount() ?? 5;
+      if (searchFooterItemsEllipsisCount <= 0) {
+        searchFooterItemsEllipsisCount = 5;
+      }
+
+      if (defaultItems.length >= searchFooterItemsEllipsisCount) {
+        const showOnlyOneDisplay = this.isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing();
+        const displayEndIndex = showOnlyOneDisplay ? 1 : searchFooterItemsEllipsisCount - 1;
+        const ellipseStartIndex = showOnlyOneDisplay ? 1 : searchFooterItemsEllipsisCount - 1;
+
+        if (!!defaultItems.length && defaultItems.length >= searchFooterItemsEllipsisCount) {
+          currentDefaultItems = [
+            ...defaultItems.slice(0, displayEndIndex),
+            {
+              key: 'menu',
+              value: (
+                <Dropdown
+                  key="menu"
+                  menu={{
+                    items: defaultItems.slice(ellipseStartIndex).map(({ key, value }) => ({
+                      key: key,
+                      label: value,
+                    })),
+                  }}
+                >
+                  <Button>
+                    <EllipsisOutlined />
+                  </Button>
+                </Dropdown>
+              ),
+            },
+          ];
+        }
+      }
+
       return [
-        ...defaultItems,
+        ...currentDefaultItems,
+        this.renderTableReload && !!this.renderTableReload?.() && (
+          <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableReload()}</div>
+        ),
         this.renderTableDensitySetting && !!this.renderTableDensitySetting?.() && (
           <div className={`${_selectorPrefix}-headeritem`}>{this.renderTableDensitySetting()}</div>
         ),

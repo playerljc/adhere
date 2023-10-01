@@ -28,6 +28,25 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     abstract renderSearchForm(): ReactNode;
     /**
+     * renderSearchFormToolBar
+     * @description 渲染查询表单的工具栏
+     * @return {ReactNode}
+     */
+    abstract renderSearchFormToolBar(): ReactNode;
+    /**
+     * renderSearchFormToolBarItems
+     * @description 渲染查询表单的工具栏项
+     * @param {ReactElement[]} defaultItems
+     * @return {ReactNode []}
+     */
+    abstract renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
+    /**
+     * renderSearchFormToolBarDefaultPanel
+     * @description 渲染查询表单工具栏缺省面板
+     * @return {ReactNode}
+     */
+    abstract renderSearchFormToolBarDefaultPanel(): ReactNode;
+    /**
      * renderSearchBefore
      * @description 渲染查询面板之后
      * @return {ReactNode}

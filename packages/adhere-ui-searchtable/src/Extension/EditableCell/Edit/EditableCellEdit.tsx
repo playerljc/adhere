@@ -205,8 +205,8 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
   // }, [record?.[dataIndex as string]]);
 
   return (
-    <div className={`${selectorPrefix}-editablecell-edit`}>
-      <div className={`${selectorPrefix}-editablecell-edit-inner`}>
+    <div className={`${selectorPrefix}-editable-cell-edit`}>
+      <div className={`${selectorPrefix}-editable-cell-edit-inner`}>
         <Form.Item
           // initialValue={record[dataIndex as string]}
           name={dataIndex as string}
@@ -228,10 +228,10 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
 
       <ConditionalRender conditional={!!useTrigger && !useKeepEdit}>
         {() => (
-          <div className={`${selectorPrefix}-editablecell-edit-trigger`}>
-            <div className={`${selectorPrefix}-editablecell-edit-trigger-inner`}>
+          <div className={`${selectorPrefix}-editable-cell-edit-trigger`}>
+            <div className={`${selectorPrefix}-editable-cell-edit-trigger-inner`}>
               <div
-                className={`${selectorPrefix}-editablecell-edit-trigger-save`}
+                className={`${selectorPrefix}-editable-cell-edit-trigger-save`}
                 onClick={onSaveTrigger}
               >
                 {!!renderSaveTrigger &&
@@ -245,7 +245,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
               </div>
 
               <div
-                className={`${selectorPrefix}-editablecell-edit-trigger-cancel`}
+                className={`${selectorPrefix}-editable-cell-edit-trigger-cancel`}
                 onClick={onCancelTrigger}
               >
                 {!!renderCancelTrigger &&

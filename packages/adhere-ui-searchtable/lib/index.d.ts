@@ -32,6 +32,8 @@ declare const _default: {
         } | undefined;
     } | null>;
     TableDensitySetting: import("react").FC<import("./types").TableDensitySettingProps>;
+    ReloadTable: import("react").FC<import("./types").ReloadTableProps>;
+    ExportExcel: import("react").FC<import("./types").ExportExcelProps>;
     TableImplement: typeof SearchTableImplement;
     TableStateImplement: typeof SearchTableStateImplement;
     SearchTableImplementFactory: import("./types").SearchTableImplementFactoryFunction<any, any>;
@@ -98,7 +100,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -158,7 +164,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -218,7 +228,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -278,7 +292,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -338,7 +356,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -398,7 +420,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -458,7 +484,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -518,7 +548,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -578,7 +612,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -638,7 +676,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -698,7 +740,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -758,7 +804,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -818,7 +868,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -878,7 +932,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -938,7 +996,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -998,7 +1060,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -1058,7 +1124,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -1084,10 +1154,12 @@ declare const _default: {
         to: any;
         children: any;
     }) => JSX.Element;
-    OptionsWrap: ({ children, className, style }: {
-        children: any;
+    OptionsWrap: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
         className?: string | undefined;
         style?: {} | undefined;
+        ellipsisCount?: number | undefined;
+        isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+        children: any;
     }) => JSX.Element;
     EditableContext: import("react").Context<import("antd").FormInstance<any> | null>;
     EditableRowControl: import("react").FC<import("./types").EditorRowControlProps>;

@@ -2,7 +2,7 @@ import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, Tab
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import SearchTable from './SearchTable';
 import type { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
-export declare const selectorPrefix = "adhere-ui-searchtableimplement";
+export declare const selectorPrefix = "adhere-ui-search-table-implement";
 /**
  * SearchTableImplement
  * @class SearchTableImplement
@@ -292,6 +292,8 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @return {ReactNode}
      */
     renderSearchHeader(): ReactNode;
+    renderSearchFormToolBarDefaultPanel(): ReactNode;
+    renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
     /**
      * onTableRowComponentReducers
      * @param {ColumnTypeExt[]} columns
