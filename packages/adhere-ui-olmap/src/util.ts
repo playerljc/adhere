@@ -106,7 +106,6 @@ export default {
     setTimeout(() => {
       let zoom;
 
-      debugger
       if (fitZoom) {
         zoom = fitZoom;
       } else {

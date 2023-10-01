@@ -14,7 +14,7 @@ import Util from './util';
 // import 'ol/ol.css';
 // import './olmap.less';
 
-const selectorPrefix = 'adhere-ui-olmap';
+const selectorPrefix = 'adhere-ui-ol-map';
 
 // const DEFAULT_STYLE = {
 //   stroke: {
@@ -215,7 +215,7 @@ OlMap.defaultProps = {
   // geoJSONData: Resource.Dict.value.ResourceGisXinbeiquGeoJSON.value,
   maxZoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
   zoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
-  fitZoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
+  // fitZoom: Resource.Dict.value.ResourceGisMapMaxZoom.value,
   minZoom: Resource.Dict.value.ResourceGisMapMinZoom.value,
   center: Resource.Dict.value.ResourceGisXinbeiquCenterPoint.value,
   extent: Resource.Dict.value.ResourceGisXinbeiquMapExtent.value,
