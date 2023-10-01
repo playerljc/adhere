@@ -4,7 +4,7 @@ import { TableRowSelection } from 'antd/es/table/interface';
 import { ReactElement, ReactNode, RefObject } from 'react';
 import SearchList from './SearchList';
 import type { ISearchListImplement, ListExpandable, SearchListImplementFactoryFunction, SearchListImplementProps, SearchListImplementState, SearchListProps, SearchListState } from './types';
-export declare const selectorPrefix = "adhere-ui-searchtableimplement";
+export declare const selectorPrefix = "adhere-ui-search-table-implement";
 export declare class SearchListImplement<P extends SearchListProps, S extends SearchListState> extends SearchList<SearchListImplementProps, SearchListImplementState> implements ISearchListImplement {
     innerWrapRef: RefObject<HTMLDivElement>;
     constructor(props: any);
@@ -205,10 +205,6 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @return {Promise<void>}
      */
     unSelectedAll(): Promise<void>;
-    renderSearchFormAfter(): ReactElement | null;
-    renderSearchFormBefore(): ReactElement | null;
-    renderSearchFooter(): ReactElement | null;
-    renderSearchHeader(): ReactElement | null;
     /**
      * renderItemSelection
      * @description 渲染selection
@@ -380,6 +376,12 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @return {ReactNode}
      */
     renderListHeader(): ReactNode;
+    renderSearchFormAfter(): ReactNode;
+    renderSearchFormBefore(): ReactNode;
+    renderSearchFooter(): ReactNode;
+    renderSearchHeader(): ReactNode;
+    renderSearchFormToolBarDefaultPanel(): ReactNode;
+    renderSearchFormToolBarItems(defaultItems: ReactElement[]): ReactNode[];
 }
 /**
  * SearchListImplementFactory

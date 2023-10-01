@@ -25,6 +25,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         getLimit(): number;
         getFetchDataParams(): {};
         getTableColumns(): any;
+        getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/lib/types").ColumnTypeExt): JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
@@ -51,7 +52,11 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
         renderSearchForm(): JSX.Element;
+        renderSearchFormToolBarItems(_defaultItems: any): any[];
+        renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];
+        getSearchFooterItemsEllipsisCount(): number;
+        isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         renderSearchFooterItemsImpl(defaultItems: any): any[];
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
             searchConfig: any;

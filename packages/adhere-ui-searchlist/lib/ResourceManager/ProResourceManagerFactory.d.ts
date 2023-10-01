@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-export declare const selectorPrefix = "adhere-ui-searchtable-protable";
+export declare const selectorPrefix = "adhere-ui-search-table-pro-table";
 /**
  * ProResourceManagerFactory
  * @param SuperClass

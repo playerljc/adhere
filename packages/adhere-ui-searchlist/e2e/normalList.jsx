@@ -50,6 +50,24 @@ class ProSearchStateListImpl extends ProSearchStateList {
     return null;
   }
 
+  renderSearchFooterItems(defaultItems) {
+    return super.renderSearchFooterItems([
+      {
+        key: 'editorTable1',
+        value: <span>编辑</span>,
+      },
+      {
+        key: 'editorTable1',
+        value: <span>编辑</span>,
+      },
+      {
+        key: 'editorTable1',
+        value: <span>编辑</span>,
+      },
+      ...defaultItems,
+    ]);
+  }
+
   getColumns() {
     return [
       {
@@ -72,7 +90,7 @@ class ProSearchStateListImpl extends ProSearchStateList {
       },
       {
         dataIndex: 'content',
-        key: 'subTitle',
+        key: 'content',
         title: '副标题',
         $search: {
           visible: true,

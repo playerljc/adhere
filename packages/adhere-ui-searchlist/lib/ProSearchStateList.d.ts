@@ -7,10 +7,6 @@ export declare const SearchAndPaginParamsMemo: any;
 declare const _default: {
     new (props: any): {
         [x: string]: any;
-        /**
-         * ProSearchStateList
-         * @classdesc 高级查询列表
-         */
         getParams(): {};
         getColumns(): never[];
         componentWillUnmount(): void;
@@ -29,6 +25,7 @@ declare const _default: {
         getLimit(): number;
         getFetchDataParams(): {};
         getTableColumns(): any;
+        getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/lib/types").ColumnTypeExt): JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
@@ -55,7 +52,11 @@ declare const _default: {
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
         renderSearchForm(): JSX.Element;
+        renderSearchFormToolBarItems(_defaultItems: any): any[];
+        renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];
+        getSearchFooterItemsEllipsisCount(): number;
+        isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
         renderSearchFooterItemsImpl(defaultItems: any): any[];
         renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
             searchConfig: any;

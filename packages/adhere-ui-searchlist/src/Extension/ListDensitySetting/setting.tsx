@@ -3,7 +3,7 @@ import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-const selectorPrefix = 'adhere-ui-searchlist';
+const selectorPrefix = 'adhere-ui-search-list';
 
 const config = [
   {

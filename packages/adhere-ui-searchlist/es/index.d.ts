@@ -38,6 +38,7 @@ declare const _default: {
             getLimit(): number;
             getFetchDataParams(): {};
             getTableColumns(): any;
+            getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/lib/types").ColumnTypeExt): JSX.Element;
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
@@ -64,7 +65,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -96,6 +101,7 @@ declare const _default: {
             getLimit(): number;
             getFetchDataParams(): {};
             getTableColumns(): any;
+            getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/lib/types").ColumnTypeExt): JSX.Element;
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
@@ -122,7 +128,11 @@ declare const _default: {
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
             renderSearchForm(): JSX.Element;
+            renderSearchFormToolBarItems(_defaultItems: any): any[];
+            renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
+            getSearchFooterItemsEllipsisCount(): number;
+            isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
             renderSearchFooterItemsImpl(defaultItems: any): any[];
             renderGridSearchFormGroupDataItem(type: any, { searchConfig, column, dataIndex }: {
                 searchConfig: any;
@@ -305,5 +315,18 @@ declare const _default: {
         };
         [x: string]: any;
     };
+    OptionsWrap: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+        className?: string | undefined;
+        style?: {} | undefined;
+        ellipsisCount?: number | undefined;
+        isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+        children: any;
+    }) => JSX.Element;
+    DisabledOption: ({ className, style, children }: {
+        className: any;
+        style: any;
+        children: any;
+    }) => JSX.Element;
+    SearchAndPaginParams: typeof import("@baifendian/adhere-ui-searchtable/lib/Extension/SearchAndPaginParams");
 };
 export default _default;

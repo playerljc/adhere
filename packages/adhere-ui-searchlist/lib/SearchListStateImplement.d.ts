@@ -1,6 +1,6 @@
 import { SearchListImplement } from './SearchListImplement';
 import type { SearchListImplementState, SearchListStateImplementFactoryFunction, SearchListStateImplementProps } from './types';
-export declare const selectorPrefix = "adhere-ui-searchstatetableimplement";
+export declare const selectorPrefix = "adhere-ui-search-state-table-implement";
 /**
  * SearchListStateImplement
  * @class

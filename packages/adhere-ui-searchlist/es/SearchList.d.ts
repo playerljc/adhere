@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import type { Metas, SearchListProps, SearchListState } from './types';
 declare const Search: typeof import("@baifendian/adhere-ui-searchtable/lib/Search").default;
-export declare const selectorPrefix = "adhere-ui-searchtable";
+export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchListContext: React.Context<{
     context: SearchList;
 } | null>;
@@ -90,11 +90,42 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     getListDensity(): ListSize;
     /**
+     * getExportExcelData
+     * @description 获取导出excel的数据
+     * @return any[]
+     */
+    getExportExcelData(): object[];
+    /**
+     * getExportExcelColumns
+     * @description 获取导出excel的列
+     * @param _columns
+     * return _columns
+     */
+    getExportExcelColumns(_columns: any[]): any[];
+    /**
      * renderTableDensitySetting
      * @description 表格密度设置
      * @return {ReactElement}
      */
     renderTableDensitySetting(): ReactElement;
+    /**
+     * renderTableReload
+     * @description 刷新
+     * @return {ReactElement}
+     */
+    renderTableReload(): ReactElement;
+    /**
+     * renderExportExcel
+     * @description 导出excel
+     * @return {ReactElement}
+     */
+    renderExportExcel(): ReactElement;
+    /**
+     * renderSearchFormToolBar
+     * @description 渲染查询表单的工具栏
+     * @return {ReactNode}
+     */
+    renderSearchFormToolBar(): ReactNode;
     /**
      * renderSearchToolBar
      * @description 渲染查询工具栏
@@ -146,6 +177,7 @@ export declare const defaultProps: {
     fixedListSpaceBetween: boolean;
 };
 export declare const propTypes: {
+    title: PropTypes.Requireable<string>;
     antdListProps: PropTypes.Requireable<object>;
     fixedSelectionHeaderAutoList: PropTypes.Requireable<boolean>;
     fixedListSpaceBetween: PropTypes.Requireable<boolean>;

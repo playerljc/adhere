@@ -9,7 +9,7 @@ import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 import Intl from '@baifendian/adhere-util-intl';
 
-export const selectorPrefix = 'adhere-ui-searchtable-protable';
+export const selectorPrefix = 'adhere-ui-search-table-pro-table';
 // @ts-ignore
 const { DateDisplay18 } = DateDisplay;
 
@@ -135,7 +135,7 @@ export default function <P, S>(SuperClass) {
           sorter: true,
           sortOrder: this?.sortOrder?.('resourceType'),
           $search: {
-            type: 'select',
+            type: 'dict',
             visible: true,
             dictName: 'AdhereSearchListResourceManagerLabelValueSelect',
           },
