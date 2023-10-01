@@ -548,6 +548,18 @@ export default {
         label: 'yesmeck',
       },
     ];
+
+    // sex
+    Dict.handlers.SystemTestSex = () => [
+      {
+        label: '男',
+        value: 1,
+      },
+      {
+        label: '女',
+        value: 2,
+      },
+    ];
   },
   initRemote() {
     // 省数据

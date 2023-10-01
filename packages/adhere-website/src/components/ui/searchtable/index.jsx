@@ -1504,7 +1504,7 @@ export default () => {
               width: 150,
               render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
               $search: {
-                type: 'select',
+                type: 'dict',
                 visible: true,
                 dictName: 'SystemTestSexSelect',
               },
@@ -1829,7 +1829,7 @@ export default () => {
               width: 150,
               render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
               $search: {
-                type: 'select',
+                type: 'dict',
                 visible: true,
                 dictName: 'SystemTestSexSelect',
               },
@@ -2196,7 +2196,7 @@ export default () => {
               width: 150,
               render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
               $search: {
-                type: 'select',
+                type: 'dict',
                 visible: true,
                 dictName: 'SystemTestSexSelect',
               },
@@ -2537,7 +2537,7 @@ export default () => {
               width: 150,
               render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
               $search: {
-                type: 'select',
+                type: 'dict',
                 visible: true,
                 dictName: 'SystemTestSexSelect',
               },
@@ -2877,7 +2877,7 @@ export default () => {
               width: 150,
               render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
               $search: {
-                type: 'select',
+                type: 'dict',
                 visible: true,
                 dictName: 'SystemTestSexSelect',
               },
@@ -3231,7 +3231,7 @@ export default () => {
               width: 150,
               render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
               $search: {
-                type: 'select',
+                type: 'dict',
                 visible: true,
                 dictName: 'SystemTestSexSelect',
               },

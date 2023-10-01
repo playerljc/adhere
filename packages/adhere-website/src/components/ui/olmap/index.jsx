@@ -48,13 +48,13 @@ export default () => {
   } = OLMap;
 
   <div style={{ width: '100%', height: 500 }}>
-    <OLMapComponent zoom={11.5} />
+    <OLMapComponent  />
   </div>
       `,
         type: 'PlayGround',
         renderChildren: () => (
           <div style={{ width: '100%', height: 500 }}>
-            <OLMapComponent zoom={11.5} />
+            <OLMapComponent zoom={17} />
           </div>
         ),
       },
@@ -105,7 +105,7 @@ export default () => {
     >
       添加新北区的GeoJSONLayer
     </Button>
-    <OLMapComponent zoom={11.5} ref={xbqRef} />
+    <OLMapComponent  ref={xbqRef} />
   </div>
       `,
         type: 'PlayGround',
@@ -138,7 +138,7 @@ export default () => {
             >
               添加新北区的GeoJSONLayer
             </Button>
-            <OLMapComponent zoom={11.5} ref={xbqRef} />
+            <OLMapComponent ref={xbqRef} />
           </div>
         ),
       },
@@ -204,7 +204,7 @@ export default () => {
       <Radio.Button value="DianziGaodeXYZ">高德电子地图</Radio.Button>
     </Radio.Group>
 
-    <OLMapComponent zoom={11.5} ref={changeRef} />
+    <OLMapComponent  ref={changeRef} />
   </div>
       `,
         type: 'PlayGround',
@@ -252,7 +252,7 @@ export default () => {
               <Radio.Button value="DianziGaodeXYZ">高德电子地图</Radio.Button>
             </Radio.Group>
 
-            <OLMapComponent zoom={11.5} ref={changeRef} />
+            <OLMapComponent ref={changeRef} />
           </div>
         ),
       },
@@ -329,7 +329,7 @@ export default () => {
     >
       添加新北区的GeoJSON数据
     </Button>
-    <HeatMap zoom={11.5} ref={heatRef} />
+    <HeatMap  ref={heatRef} />
   </div>
       `,
         type: 'PlayGround',
@@ -388,7 +388,7 @@ export default () => {
             >
               添加新北区的GeoJSON数据
             </Button>
-            <HeatMap zoom={11.5} ref={heatRef} />
+            <HeatMap ref={heatRef} />
           </div>
         ),
       },
@@ -557,7 +557,7 @@ export default () => {
     >
       显示Features
     </Button>
-    <OLMapComponent zoom={11.5} ref={fRef} />
+    <OLMapComponent  ref={fRef} />
   </div>
       `,
         type: 'PlayGround',
@@ -707,7 +707,7 @@ export default () => {
             >
               显示Features
             </Button>
-            <OLMapComponent zoom={11.5} ref={fRef} />
+            <OLMapComponent ref={fRef} />
           </div>
         ),
       },
@@ -788,7 +788,7 @@ export default () => {
     >
       轨迹播放
     </Button>
-    <OLMapComponent zoom={11.5} ref={animationRef} />
+    <OLMapComponent  ref={animationRef} />
   </div>
       `,
         type: 'PlayGround',
@@ -846,7 +846,7 @@ export default () => {
             >
               轨迹播放
             </Button>
-            <OLMapComponent zoom={11.5} ref={animationRef} />
+            <OLMapComponent ref={animationRef} />
           </div>
         ),
       },

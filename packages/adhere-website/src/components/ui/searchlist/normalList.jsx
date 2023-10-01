@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { SearchList } from '@baifendian/adhere';
+import { DelConfirm, SearchList } from '@baifendian/adhere';
 
 import './serviceRegister';
 
-const { ProSearchStateList, SearchListStateImplementFactory } = SearchList;
+const { ProSearchStateList, SearchListStateImplementFactory, OptionsWrap, DisabledOption } =
+  SearchList;
 
 const serviceName = 'user';
 
@@ -69,7 +70,7 @@ class ProSearchStateListImpl extends ProSearchStateList {
       },
       {
         dataIndex: 'content',
-        key: 'subTitle',
+        key: 'content',
         title: '副标题',
         $search: {
           visible: true,
@@ -77,6 +78,67 @@ class ProSearchStateListImpl extends ProSearchStateList {
         },
       },
     ];
+  }
+
+  getMetas() {
+    return {
+      actions: {
+        dataIndex: 'actions',
+        cardActionProps: 'extra',
+        // render: () => [<a>1</a>, <a>2</a>, <a>3</a>],
+        render: (record) => (
+          <OptionsWrap style={{ justifyContent: 'center', marginLeft: 15 }}>
+            {this.renderOptionColumn(
+              [
+                {
+                  key: 'edit',
+                  value: (
+                    <DisabledOption className="" style={{}}>
+                      编辑
+                    </DisabledOption>
+                  ),
+                },
+                {
+                  key: 'view',
+                  value: <a>查看</a>,
+                },
+                {
+                  key: 'modalView',
+                  value: <a>弹窗查看</a>,
+                },
+                {
+                  key: 'modalEdit',
+                  value: <a>弹窗修改</a>,
+                },
+                {
+                  key: 'modalList',
+                  value: <a>列表弹窗</a>,
+                },
+                {
+                  key: 'delete',
+                  value: (
+                    <DelConfirm
+                      success={() =>
+                        new Promise((resolve) => {
+                          resolve();
+                        })
+                      }
+                    >
+                      <a>删除</a>
+                    </DelConfirm>
+                  ),
+                },
+              ],
+              { value: null, record },
+            )}
+          </OptionsWrap>
+        ),
+      },
+      extra: {
+        dataIndex: 'extra',
+        render: () => <div>extra</div>,
+      },
+    };
   }
 }
 

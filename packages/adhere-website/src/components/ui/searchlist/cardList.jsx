@@ -78,6 +78,20 @@ class ProSearchStateListImpl extends ProSearchStateList {
       },
     ];
   }
+
+  getMetas() {
+    return {
+      actions: {
+        dataIndex: 'actions',
+        // cardActionProps: 'extra',
+        render: () => [<a>1</a>, <a>2</a>, <a>3</a>],
+      },
+      extra: {
+        dataIndex: 'extra',
+        render: () => <div>extra</div>,
+      },
+    };
+  }
 }
 
 ProSearchStateListImpl.propTypes = {};
