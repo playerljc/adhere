@@ -102,4 +102,8 @@ export default [
   'Recorte de diamantes',
   'Recorte de polígonos',
   'Abrir',
+  'densidade',
+  'Configurações de coluna',
+  'Exportar Excel',
+  'fechar',
 ];

@@ -101,5 +101,9 @@ export default [
   'triangle clipping',
   'diamond clipping',
   'polygon clipping',
-  'open',
+  'Open',
+  'Density',
+  'Column settings',
+  'Export excel',
+  'Close',
 ];
