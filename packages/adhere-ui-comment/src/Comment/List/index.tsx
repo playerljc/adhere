@@ -108,7 +108,7 @@ const CommentList: FC<ListProps> = (props) => {
               noMatch={() => (
                 <BackTopAnimation
                   getContainer={() =>
-                    wrapRef?.current?.querySelector?.('.adhere-ui-scrollload') as HTMLElement
+                    wrapRef?.current?.querySelector?.('.adhere-ui-scroll-load') as HTMLElement
                   }
                   onTrigger={() => Promise.resolve()}
                 />

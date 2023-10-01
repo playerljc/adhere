@@ -4,7 +4,7 @@ import Overlay from './overlay';
 import Push from './push';
 import Revolving from './reveal';
 
-export const selectorPrefix = 'adhere-ui-slidelayout';
+export const selectorPrefix = 'adhere-ui-slide-layout';
 
 /**
  * slider

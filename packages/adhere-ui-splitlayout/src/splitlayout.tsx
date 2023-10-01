@@ -20,7 +20,7 @@ const directionProp = {
     offset: 'offsetHeight',
   },
 };
-const selectorPrefix = 'adhere-ui-splitlayout';
+const selectorPrefix = 'adhere-ui-split-layout';
 
 /**
  * toPoint - 百分数转化为小数

@@ -12,7 +12,7 @@ import type {
   MenuRefHandle,
 } from './types';
 
-const selectorPrefix = 'adhere-ui-contextmenu';
+const selectorPrefix = 'adhere-ui-context-menu';
 
 const ContextMenuComponent: ForwardRefRenderFunction<
   ContextMenuComponentRefHandle,

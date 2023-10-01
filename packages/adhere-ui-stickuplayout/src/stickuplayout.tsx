@@ -16,7 +16,7 @@ import {
   StickupLayoutProps,
 } from './types';
 
-const selectorPrefix = 'adhere-ui-stickuplayout';
+const selectorPrefix = 'adhere-ui-stickup-layout';
 
 const StickupLayout: ForwardRefRenderFunction<StickupLayoutHandle, StickupLayoutProps> = (
   props,

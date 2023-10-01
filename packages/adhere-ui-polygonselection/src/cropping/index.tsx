@@ -9,7 +9,7 @@ import Intl from '@baifendian/adhere-util-intl';
 import { CroppingCoreHandle, CroppingHandle, CroppingProps } from '../types';
 import CroppingCore from './CroppingCore';
 
-const selectorPrefix = 'adhere-ui-polygonselection-cropping';
+const selectorPrefix = 'adhere-ui-polygon-selection-cropping';
 
 /**
  * ForwardRefRenderFunction

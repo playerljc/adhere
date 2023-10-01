@@ -15,7 +15,7 @@ import { ResizeObserver } from '@juggle/resize-observer';
 import Signature from './signature';
 import { Mode, Point, WritingBoardHandle, WritingBoardProps } from './types';
 
-const selectorPrefix = 'adhere-ui-writingboard';
+const selectorPrefix = 'adhere-ui-writing-board';
 
 /**
  * WritingBoard

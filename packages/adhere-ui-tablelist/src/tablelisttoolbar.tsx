@@ -128,7 +128,7 @@ export const ToolbarSetting = ({
       }
       trigger="click"
       placement="bottomRight"
-      overlayClassName={`${selectorPrefix}-settingOverlay`}
+      overlayClassName={`${selectorPrefix}-setting-overlay`}
       {...setting.Popover}
     >
       <Tooltip title={Intl.v('设置')} placement="top" {...setting}>

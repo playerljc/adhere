@@ -12,7 +12,7 @@ import { slider } from './slidelayout';
 import { PushProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
-const selectorPrefix = 'adhere-ui-slidelayout-push';
+const selectorPrefix = 'adhere-ui-slide-layout-push';
 
 /**
  * Push

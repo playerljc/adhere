@@ -1,6 +1,6 @@
 @import '~@baifendian/adhere-ui-flexlayout/lib/index';
 
-.adhere-ui-splitlayout {
+.adhere-ui-split-layout {
   position: relative;
   display: flex;
   flex-shrink: 0;
@@ -8,8 +8,8 @@
   justify-content: center;
   touch-action: none;
 
-  &.adhere-ui-splitlayout-vertical,
-  &.adhere-ui-splitlayout-horizontal {
+  &.adhere-ui-split-layout-vertical,
+  &.adhere-ui-split-layout-horizontal {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
     }
   }
 
-  &.adhere-ui-splitlayout-vertical {
+  &.adhere-ui-split-layout-vertical {
     flex-direction: column;
     height: 10px;
 
@@ -31,7 +31,7 @@
     }
   }
 
-  &.adhere-ui-splitlayout-horizontal {
+  &.adhere-ui-split-layout-horizontal {
     flex-direction: row;
     width: 10px;
 
@@ -54,15 +54,15 @@
   //}
 }
 
-.adhere-ui-splitlayout-no-select {
+.adhere-ui-split-layout-no-select {
   user-select: none; /* Chrome/Safari/Opera */
   -webkit-touch-callout: none; /* iOS Safari */
 }
 
-.adhere-ui-splitlayout-col-resize {
+.adhere-ui-split-layout-col-resize {
   cursor: col-resize;
 }
 
-.adhere-ui-splitlayout-row-resize {
+.adhere-ui-split-layout-row-resize {
   cursor: row-resize;
 }

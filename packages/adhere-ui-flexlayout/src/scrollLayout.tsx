@@ -9,7 +9,7 @@ import React, {
 
 import { ScrollLayoutContextType, ScrollLayoutProps } from './types';
 
-const selectorPrefix = 'adhere-ui-flexlayout-scrolllayout';
+const selectorPrefix = 'adhere-ui-flex-layout-scroll-layout';
 
 /**
  * ScrollLayoutContext

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableListProps } from './types';
-export declare const selectorPrefix = "adhere-ui-tablelist";
+export declare const selectorPrefix = "adhere-ui-table-list";
 /**
  * Template
  * @class Template

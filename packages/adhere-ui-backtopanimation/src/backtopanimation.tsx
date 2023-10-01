@@ -5,7 +5,7 @@ import Resource from '@baifendian/adhere-util-resource';
 
 import { BackTopAnimationProps } from './types';
 
-const selectorPrefix = 'adhere-ui-backtopanimation';
+const selectorPrefix = 'adhere-ui-back-top-animation';
 
 /**
  * BackTopAnimation

@@ -18,7 +18,7 @@ import { ToolbarReload, ToolbarSelectAll, ToolbarSetting } from './tablelisttool
 import { TableListProps } from './types';
 import Util from './util';
 
-export const selectorPrefix = 'adhere-ui-tablelist';
+export const selectorPrefix = 'adhere-ui-table-list';
 const defaultRowKey = 'id';
 /**
  * Template
@@ -176,8 +176,8 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           layout="inline"
           ref={this.searchFormRef}
           className={classNames(`${selectorPrefix}-search-form`, {
-            [`${selectorPrefix}-search-form-havebefore`]: beforeContent,
-            [`${selectorPrefix}-search-form-haveafter`]: afterContent,
+            [`${selectorPrefix}-search-form-have-before`]: beforeContent,
+            [`${selectorPrefix}-search-form-have-after`]: afterContent,
           })}
         >
           <div className="ant-form-search">
@@ -192,7 +192,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
           {search.hasOwnProperty('optionRender') ? (
             optionRender
           ) : (
-            <div className="ant-form-btngroup">
+            <div className="ant-form-btn-group">
               <Button onClick={() => this.onResetSearch()} size={size}>
                 {resetText || intl.v('重置')}
               </Button>

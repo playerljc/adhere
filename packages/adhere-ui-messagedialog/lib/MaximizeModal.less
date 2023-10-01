@@ -1,35 +1,34 @@
-.adhere-ui-messagedialog-maximize-modal {
-  &.adhere-ui-messagedialog-maximize-modal-maximize {
+.adhere-ui-message-dialog-maximize-modal {
+  &.adhere-ui-message-dialog-maximize-modal-maximize {
     width: 100% !important;
     max-width: 100%;
     height: 100%;
 
-    .adhere-ui-messagedialog-maximize-modal-inner {
+    .adhere-ui-message-dialog-maximize-modal-inner {
       height: 100%;
       border-radius: 0;
       transform: translate3d(0, 0, 0) !important;
     }
   }
 
-  .adhere-ui-messagedialog-maximize-modal-inner {
+  .adhere-ui-message-dialog-maximize-modal-inner {
     display: flex;
     flex-direction: column;
-    //height: 800px;
     padding: calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px);
     background-color: #fff;
     border-radius: calc(var(--antd-border-radius-l-g) * 1px);
     box-shadow: var(--antd-box-shadow);
     pointer-events: auto;
 
-    > .adhere-ui-messagedialog-maximize-modal-header {
+    > .adhere-ui-message-dialog-maximize-modal-header {
       display: flex;
       flex-shrink: 0;
 
-      &.adhere-ui-messagedialog-maximize-modal-header-draggable {
+      &.adhere-ui-message-dialog-maximize-modal-header-draggable {
         cursor: move;
       }
 
-      > .adhere-ui-messagedialog-maximize-modal-header-title {
+      > .adhere-ui-message-dialog-maximize-modal-header-title {
         flex-shrink: 0;
         margin: 0;
         color: var(--antd-color-text);
@@ -39,14 +38,14 @@
         word-wrap: break-word;
       }
 
-      > .adhere-ui-messagedialog-maximize-modal-header-actions {
+      > .adhere-ui-message-dialog-maximize-modal-header-actions {
         display: flex;
         flex: 1;
         align-items: center;
         justify-content: flex-end;
         min-width: 0;
 
-        > .adhere-ui-messagedialog-maximize-modal-header-action {
+        > .adhere-ui-message-dialog-maximize-modal-header-action {
           font-size: 18px;
 
           &:hover {
@@ -56,7 +55,7 @@
       }
     }
 
-    > .adhere-ui-messagedialog-maximize-modal-body {
+    > .adhere-ui-message-dialog-maximize-modal-body {
       flex: 1;
       min-height: 0;
       overflow-y: auto;

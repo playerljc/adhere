@@ -6,7 +6,7 @@ import Resource from '@baifendian/adhere-util-resource';
 
 import { DelConfirmProps, OpenFunction } from './types';
 
-const selectorPrefix = 'adhere-ui-delconfirm';
+const selectorPrefix = 'adhere-ui-del-confirm';
 
 /**
  * DelConform

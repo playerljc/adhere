@@ -7,7 +7,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { FontSizeSettingProps } from './types';
 
-const selectorPrefix = 'adhere-ui-fontsizesetting';
+const selectorPrefix = 'adhere-ui-font-size-setting';
 
 const FontSizeSetting: FC<FontSizeSettingProps> = (props) => {
   const { className, style, onChange } = props;
@@ -30,8 +30,8 @@ const FontSizeSetting: FC<FontSizeSettingProps> = (props) => {
 
   return (
     <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
-      <div className={`${selectorPrefix}-rangewrap`}>
-        <div className={`${selectorPrefix}-separatedtool`}>
+      <div className={`${selectorPrefix}-range-wrap`}>
+        <div className={`${selectorPrefix}-separated-tool`}>
           <div className={`${selectorPrefix}-separated`}>
             <span>{Intl.v('小')}</span>
           </div>

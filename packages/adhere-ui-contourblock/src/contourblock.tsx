@@ -2,7 +2,7 @@ import React, { FC, memo } from 'react';
 
 import { ContourBlockProps } from './types';
 
-const selectorPrefix = 'adhere-ui-contourblock';
+const selectorPrefix = 'adhere-ui-contour-block';
 
 /**
  * ContourBlock

@@ -6,7 +6,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import type { ToolBarLayoutProps } from './types';
 import VerticalFlexLayout from './verticalFlexLayout';
 
-const selectorPrefix = 'adhere-ui-flexlayout-toolbarlayout';
+const selectorPrefix = 'adhere-ui-flex-layout-tool-bar-layout';
 
 /**
  * ToolBarLayout

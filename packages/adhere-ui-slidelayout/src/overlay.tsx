@@ -5,7 +5,6 @@ import React, {
   memo,
   useEffect,
   useImperativeHandle,
-  useLayoutEffect,
   useRef,
 } from 'react';
 
@@ -13,7 +12,7 @@ import { slider } from './slidelayout';
 import { OverlayProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
-const selectorPrefix = 'adhere-ui-slidelayout-overlay';
+const selectorPrefix = 'adhere-ui-slide-layout-overlay';
 
 /**
  * Overlay

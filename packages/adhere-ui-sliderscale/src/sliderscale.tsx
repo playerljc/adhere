@@ -3,7 +3,7 @@ import React, { FC, ReactElement, memo, useCallback, useLayoutEffect, useRef } f
 
 import { SliderScaleProps } from './types';
 
-const selectorPrefix = 'adhere-ui-sliderscale';
+const selectorPrefix = 'adhere-ui-slider-scale';
 
 const SliderScale: FC<SliderScaleProps> = (props) => {
   const {

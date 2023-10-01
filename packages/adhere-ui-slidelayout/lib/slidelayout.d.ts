@@ -1,5 +1,5 @@
 import React from 'react';
-export declare const selectorPrefix = "adhere-ui-slidelayout";
+export declare const selectorPrefix = "adhere-ui-slide-layout";
 /**
  * slider
  * @param el

@@ -12,7 +12,7 @@ import ToolBarLayout from './toolBarLayout';
 import type { FlexLayoutFunction, FlexLayoutProps } from './types';
 import VerticalFlexLayout from './verticalFlexLayout';
 
-export const selectorPrefix = 'adhere-ui-flexlayout';
+export const selectorPrefix = 'adhere-ui-flex-layout';
 
 /**
  * FlexLayout

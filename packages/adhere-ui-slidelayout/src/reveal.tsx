@@ -12,7 +12,7 @@ import { slider } from './slidelayout';
 import { RevealProps, SlideLayoutHandle } from './types';
 import useSlide from './useSlide';
 
-const selectorPrefix = 'adhere-ui-slidelayout-reveal';
+const selectorPrefix = 'adhere-ui-slide-layout-reveal';
 
 /**
  * Reveal

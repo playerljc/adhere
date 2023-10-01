@@ -6,7 +6,7 @@ import { useGap, useGrid } from './hooks';
 import { ContextType, FixedProps } from './types';
 import { getGridStyle } from './util';
 
-const selectorPrefix = 'adhere-ui-flexlayout-fixed';
+const selectorPrefix = 'adhere-ui-flex-layout-fixed';
 
 export const gridCount = 24;
 

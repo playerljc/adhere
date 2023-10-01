@@ -8,7 +8,7 @@ import Space from '@baifendian/adhere-ui-space';
 import Modal from './Modal';
 import { ModalDialogProps } from './types';
 
-export const selectorPrefix = 'adhere-ui-messagedialog-maximize-modal';
+export const selectorPrefix = 'adhere-ui-message-dialog-maximize-modal';
 
 /**
  * MaximizeModalDialog

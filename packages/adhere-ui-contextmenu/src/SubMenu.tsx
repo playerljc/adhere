@@ -5,7 +5,7 @@ import { ProviderContext } from './ContextMenuContext';
 import MenuItem from './MenuItem';
 import { ContextMenuContext, SubMenuProps } from './types';
 
-const selectorPrefix = 'adhere-ui-contextmenu-submenu';
+const selectorPrefix = 'adhere-ui-context-menu-sub-menu';
 
 const SubMenu: FC<SubMenuProps> = (props) => {
   const { className = '', style = {}, data = [] } = props;

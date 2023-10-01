@@ -16,7 +16,7 @@ import type {
   TableGridLayoutProps,
 } from './types';
 
-const selectorPrefix = 'adhere-ui-tablegridlayout';
+const selectorPrefix = 'adhere-ui-table-grid-layout';
 
 /**
  * renderHorizontal

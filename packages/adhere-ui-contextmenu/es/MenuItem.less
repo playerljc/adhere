@@ -1,6 +1,6 @@
 //@import '~@baifendian/adhere-ui-css/lib/vars.less';
 
-.adhere-ui-contextmenu-menuitem() {
+.adhere-ui-context-menu-menu-item() {
   position: relative;
   display: flex;
   align-items: center;
@@ -11,20 +11,20 @@
       background-color: initial;
       border-color: initial;
 
-      > .adhere-ui-contextmenu-submenu {
+      > .adhere-ui-context-menu-sub-menu {
         display: none !important;
       }
     }
 
-    > .adhere-ui-contextmenu-menuitem-icon {
+    > .adhere-ui-context-menu-menu-item-icon {
       color: var(--adhere-color-text-secondary);
     }
 
-    > .adhere-ui-contextmenu-menuitem-name {
+    > .adhere-ui-context-menu-menu-item-name {
       color: var(--adhere-color-text-secondary);
     }
 
-    > .adhere-ui-contextmenu-menuitem-more {
+    > .adhere-ui-context-menu-menu-item-more {
       color: var(--adhere-color-text-secondary);
     }
   }
@@ -33,12 +33,12 @@
     background-color: rgba(var(--adhere-color-primary-rgb), 0.5);
     border-color: rgba(var(--adhere-color-primary-rgb), 0.4);
 
-    > .adhere-ui-contextmenu-submenu {
+    > .adhere-ui-context-menu-sub-menu {
       display: block !important;
     }
   }
 
-  > .adhere-ui-contextmenu-menuitem-icon {
+  > .adhere-ui-context-menu-menu-item-icon {
     display: flex;
     flex-shrink: 0;
     align-items: center;
@@ -48,7 +48,7 @@
     margin: 0 10px;
   }
 
-  > .adhere-ui-contextmenu-menuitem-name {
+  > .adhere-ui-context-menu-menu-item-name {
     flex-grow: 1;
     min-width: 0;
     overflow: hidden;
@@ -57,21 +57,21 @@
     text-overflow: ellipsis;
   }
 
-  > .adhere-ui-contextmenu-menuitem-more {
+  > .adhere-ui-context-menu-menu-item-more {
     flex-shrink: 0;
     margin-right: 5px;
     color: var(--adhere-color-text);
     font-size: var(--adhere-font-size-sm);
   }
 
-  > .adhere-ui-contextmenu-submenu {
+  > .adhere-ui-context-menu-sub-menu {
     top: 0;
     left: 100%;
     display: none;
   }
 }
 
-.adhere-ui-contextmenu-menuitem-separation() {
+.adhere-ui-context-menu-menu-item-separation() {
   height: 1px;
   margin: 5px 0;
   background-color: var(--adhere-color-border-base);

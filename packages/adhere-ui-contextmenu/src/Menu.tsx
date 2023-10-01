@@ -13,7 +13,7 @@ import { ProviderContext } from './ContextMenuContext';
 import MenuItem from './MenuItem';
 import { ContextMenuContext, MenuProps, MenuRefHandle } from './types';
 
-const selectorPrefix = 'adhere-ui-contextmenu-submenu';
+const selectorPrefix = 'adhere-ui-context-menu-sub-menu';
 
 const Menu: ForwardRefRenderFunction<MenuRefHandle, MenuProps> = (props, ref) => {
   const { className = '', style = {}, data = [] } = props;

@@ -13,7 +13,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import type { ScrollLoadHOCFunction, ScrollLoadProps, ScrollLoadRefHandle } from './types';
 
-const selectorPrefix = 'adhere-ui-scrollload';
+const selectorPrefix = 'adhere-ui-scroll-load';
 
 const EMPTY = 'empty';
 const ERROR = 'error';

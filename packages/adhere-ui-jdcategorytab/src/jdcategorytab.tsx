@@ -14,7 +14,7 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import JdCategoryTabItem from './item';
 import type { JdCategoryTabHOCFunction, JdCategoryTabProps, JdCategoryTabRefHandle } from './types';
 
-const selectorPrefix = 'adhere-ui-jdcategorytab';
+const selectorPrefix = 'adhere-ui-jd-category-tab';
 
 const { useSetState } = Hooks;
 

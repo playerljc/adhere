@@ -3,7 +3,7 @@ import React, { FC, memo } from 'react';
 
 import type { JdCategoryTabItemProps } from './types';
 
-const selectorPrefix = 'adhere-ui-jdcategorytab';
+const selectorPrefix = 'adhere-ui-jd-category-tab';
 
 const JdCategoryTabItem: FC<JdCategoryTabItemProps> = (props) => {
   const { children, className = '', style = {} } = props;

@@ -1,20 +1,20 @@
 @import '~@baifendian/adhere-ui-css/lib/mixin';
 
-@adhere-ui-tablegridlayout-table-row-label-require-color: red;
-@adhere-ui-tablegridlayout-table-row-odd-color: #fff;
-@adhere-ui-tablegridlayout-table-row-even-color: #fafafa;
+@adhere-ui-table-grid-layout-table-row-label-require-color: red;
+@adhere-ui-table-grid-layout-table-row-odd-color: #fff;
+@adhere-ui-table-grid-layout-table-row-even-color: #fafafa;
 
-.adhere-ui-tablegridlayout {
+.adhere-ui-table-grid-layout {
   width: 100%;
 }
 
-.adhere-ui-tablegridlayout-inner-wrap {
-  &.adhere-ui-tablegridlayout-border {
+.adhere-ui-table-grid-layout-inner-wrap {
+  &.adhere-ui-table-grid-layout-border {
     border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
     border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
     border-left: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
-    .adhere-ui-tablegridlayout-table {
+    .adhere-ui-table-grid-layout-table {
       tr {
         > td {
           border-bottom: var(--adhere-line-width) var(--adhere-line-type)
@@ -25,7 +25,7 @@
               var(--adhere-color-border-base);
           }
 
-          &.adhere-ui-tablegridlayout-table-noborder {
+          &.adhere-ui-table-grid-layout-table-noborder {
             border: 0;
           }
         }
@@ -33,29 +33,29 @@
     }
   }
 
-  .adhere-ui-tablegridlayout-table {
+  .adhere-ui-table-grid-layout-table {
     min-width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
 
-    &.adhere-ui-tablegridlayout-table-horizontal {
-      .adhere-ui-tablegridlayout-table-row {
-        > .adhere-ui-tablegridlayout-table-row-label {
+    &.adhere-ui-table-grid-layout-table-horizontal {
+      .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-label {
           text-align: right;
         }
       }
     }
 
-    &.adhere-ui-tablegridlayout-table-vertical {
-      .adhere-ui-tablegridlayout-table-row {
-        > .adhere-ui-tablegridlayout-table-row-label {
+    &.adhere-ui-table-grid-layout-table-vertical {
+      .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-label {
           text-align: left;
         }
       }
     }
 
-    .adhere-ui-tablegridlayout-table-row {
-      > .adhere-ui-tablegridlayout-table-row-label {
+    .adhere-ui-table-grid-layout-table-row {
+      > .adhere-ui-table-grid-layout-table-row-label {
         padding-right: 10px;
         color: var(--adhere-color-text-secondary);
         white-space: nowrap;
@@ -64,14 +64,14 @@
         &.require {
           &::before {
             margin-right: 5px;
-            color: @adhere-ui-tablegridlayout-table-row-label-require-color;
+            color: @adhere-ui-table-grid-layout-table-row-label-require-color;
             vertical-align: middle;
             content: '*';
           }
         }
       }
 
-      > .adhere-ui-tablegridlayout-table-row-value {
+      > .adhere-ui-table-grid-layout-table-row-value {
         color: var(--adhere-color-text-tertiary);
         white-space: normal;
         .adhere-word-break();
@@ -111,48 +111,48 @@
     }
 
     &.parity {
-      .adhere-ui-tablegridlayout-table-row {
+      .adhere-ui-table-grid-layout-table-row {
         &.odd {
-          background-color: @adhere-ui-tablegridlayout-table-row-odd-color;
+          background-color: @adhere-ui-table-grid-layout-table-row-odd-color;
         }
 
         &.even {
-          background-color: @adhere-ui-tablegridlayout-table-row-even-color;
+          background-color: @adhere-ui-table-grid-layout-table-row-even-color;
         }
       }
     }
 
     &.densitydefault {
-      .adhere-ui-tablegridlayout-table-row {
-        > .adhere-ui-tablegridlayout-table-row-label {
+      .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-label {
           padding: 20px;
         }
 
-        > .adhere-ui-tablegridlayout-table-row-value {
+        > .adhere-ui-table-grid-layout-table-row-value {
           padding: 20px;
         }
       }
     }
 
     &.densitymiddle {
-      .adhere-ui-tablegridlayout-table-row {
-        > .adhere-ui-tablegridlayout-table-row-label {
+      .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-label {
           padding: 10px;
         }
 
-        > .adhere-ui-tablegridlayout-table-row-value {
+        > .adhere-ui-table-grid-layout-table-row-value {
           padding: 10px;
         }
       }
     }
 
     &.densitysmall {
-      .adhere-ui-tablegridlayout-table-row {
-        > .adhere-ui-tablegridlayout-table-row-label {
+      .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-label {
           padding: 0;
         }
 
-        > .adhere-ui-tablegridlayout-table-row-value {
+        > .adhere-ui-table-grid-layout-table-row-value {
           padding: 0;
         }
       }
@@ -164,13 +164,13 @@
   > .adm-list {
     > .adm-list-body {
       > .adm-list-body-inner {
-        .adhere-ui-tablegridlayout-table {
-          .adhere-ui-tablegridlayout-table-row {
-            > .adhere-ui-tablegridlayout-table-row-label {
+        .adhere-ui-table-grid-layout-table {
+          .adhere-ui-table-grid-layout-table-row {
+            > .adhere-ui-table-grid-layout-table-row-label {
               text-align: left;
             }
 
-            > .adhere-ui-tablegridlayout-table-row-value {
+            > .adhere-ui-table-grid-layout-table-row-value {
               padding-top: 0;
 
               .adm-list-item.adm-form-item {
@@ -187,7 +187,7 @@
             }
 
             &:not(:last-child) {
-              > .adhere-ui-tablegridlayout-table-row-value {
+              > .adhere-ui-table-grid-layout-table-row-value {
                 .adm-list-item.adm-form-item {
                   border-bottom: var(--adhere-line-width) var(--adhere-line-type)
                     var(--adhere-color-border-base);

@@ -5,7 +5,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { ModalDialogProps } from './types';
 
-export const selectorPrefix = 'adhere-ui-messagedialog';
+export const selectorPrefix = 'adhere-ui-message-dialog';
 
 const ModalDialog: FC<ModalDialogProps> = (props) => {
   const { config, closeBtn, close, children } = props;

@@ -4,7 +4,7 @@ import { Swiper } from 'swiper';
 
 import { SwipeOutProps } from './types';
 
-const selectorPrefix = 'adhere-ui-swipeout';
+const selectorPrefix = 'adhere-ui-swipe-out';
 
 const SwipeOut: FC<SwipeOutProps> = (props) => {
   const {

@@ -3,7 +3,7 @@ import React, { FC, ReactElement, memo } from 'react';
 
 import { StickupLayoutItemProps } from './types';
 
-const selectorPrefix = 'adhere-ui-stickuplayout-item';
+const selectorPrefix = 'adhere-ui-stickup-layout-item';
 
 const StickupLayoutItem: FC<StickupLayoutItemProps> = (props): ReactElement => {
   const { className, style, title, content } = props;

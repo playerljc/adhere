@@ -6,7 +6,7 @@ import { useGap } from './hooks';
 import { AutoProps, ContextType } from './types';
 import { getGridStyle } from './util';
 
-const selectorPrefix = 'adhere-ui-flexlayout-auto';
+const selectorPrefix = 'adhere-ui-flex-layout-auto';
 
 /**
  * Auto
