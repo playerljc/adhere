@@ -54,7 +54,7 @@ export default () => {
         type: 'PlayGround',
         renderChildren: () => (
           <div style={{ width: '100%', height: 500 }}>
-            <OLMapComponent zoom={17} />
+            <OLMapComponent />
           </div>
         ),
       },
