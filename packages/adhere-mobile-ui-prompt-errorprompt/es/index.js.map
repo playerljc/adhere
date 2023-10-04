@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import { openErrorDialog, openErrorMessage } from './errorprompt';\nexport default {\n  openErrorMessage: openErrorMessage,\n  openErrorDialog: openErrorDialog\n};"],"names":["openErrorDialog","openErrorMessage"],"mappings":"OAASA,gBAAiBC,gBAAuC,KAAf,8BACnC,CACbA,iBAAkBA,iBAClBD,gBAAiBA,eACnB"}
