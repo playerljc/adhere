@@ -1,10 +1,18 @@
+# 1.0.16
+
+***
+
+2023-10-04
+
+* 加入PlayGroundTabMobile组件
+
 # 1.0.15
 
 ***
 
 2023-08-20
 
-* 修复PlayGroundMulit.less样式
+* 修复PlayGroundMulti.less样式
 
 # 1.0.14
 
