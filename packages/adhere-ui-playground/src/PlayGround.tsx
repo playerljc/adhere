@@ -21,14 +21,14 @@ class PlayGround extends APlayGround {
 
     const { isFirst } = this;
 
-    const { cardProps, id, isActive, ...others } = this.props;
+    const { cardProps, id, isActive, ...restProps } = this.props;
 
     return (
       <ConditionalRender
         conditional={isFirst}
         noMatch={() => (
           <Card style={{ display: expand ? '' : 'none' }}>
-            <CodePanel {...others} />
+            <CodePanel {...restProps} />
           </Card>
         )}
       >
@@ -36,7 +36,7 @@ class PlayGround extends APlayGround {
           <ConditionalRender conditional={!!expand}>
             {() => (
               <Card>
-                <CodePanel {...others} />
+                <CodePanel {...restProps} />
               </Card>
             )}
           </ConditionalRender>

@@ -1,25 +1,39 @@
 import { Modal, message } from 'antd';
-import { ArgsProps } from 'antd/lib/message';
-import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-type ConfigContent = React.ReactNode;
-type JointContent = ConfigContent | ArgsProps;
+import { ErrorDialog, JointContent, duration } from './types';
+
+let handler;
 
 /**
  * openErrorDialog
+ * @param duration
  * @param props
  */
-export const openErrorDialog = (props?: ModalProps) =>
-  Modal.error({
+export const openErrorDialog: ErrorDialog = ({ duration = 3000, ...props }) => {
+  const result = Modal.error({
     title: Intl.v('提示'),
     content: Intl.v('系统异常'),
     mask: false,
     maskClosable: true,
+    footer: null,
     ...(props ?? {}),
   });
+
+  if (duration) {
+    if (handler) {
+      clearTimeout(handler);
+    }
+
+    handler = setTimeout(() => {
+      result.destroy();
+    }, duration as number);
+  }
+
+  return result;
+};
 
 /**
  * 错误的提示
@@ -29,6 +43,6 @@ export const openErrorDialog = (props?: ModalProps) =>
  */
 export const openErrorMessage = (
   content?: JointContent,
-  duration?: number | VoidFunction,
+  duration?: duration,
   onClose?: VoidFunction,
 ) => message.error(content ? content : Intl.v('系统异常'), duration, onClose);

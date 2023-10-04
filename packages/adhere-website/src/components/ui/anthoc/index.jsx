@@ -55,7 +55,7 @@ export default () => {
                 info: '默认都可以进行查询合清除',
               },
             },
-            type: 'PlayGroundMulit',
+            type: 'PlayGroundMulti',
             config: [
               {
                 title: 'Select',

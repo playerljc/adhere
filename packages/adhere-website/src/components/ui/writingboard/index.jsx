@@ -80,7 +80,7 @@ export default () => {
                 info: '切换类型、颜色和粗细',
               },
             },
-            type: 'PlayGroundMulit',
+            type: 'PlayGroundMulti',
             config: [
               {
                 title: 'index.jsx',

@@ -73,16 +73,19 @@ export interface PlayGroundProps extends CodePanelProps {
   expand?: boolean;
   title?: any;
   active?: string;
+  className?: string;
+  style?: CSSProperties;
+  children?: ReactNode;
 }
 
 /**
- * PlayGroundMulitProps
+ * PlayGroundMultiProps
  */
-export interface PlayGroundMulitProps extends PlayGroundProps {
+export interface PlayGroundMultiProps extends PlayGroundProps {
   config?: PlayGroundProps[];
 }
 
-export interface PlayGroundMulitState extends PlayGroundState {
+export interface PlayGroundMultiState extends PlayGroundState {
   config?: PlayGroundProps[];
 }
 
@@ -168,18 +171,18 @@ export interface CodeBoxPlayGroundProps extends PlayGroundProps {
   ) => ReactNode;
 }
 
-export interface CodeBoxPlayGroundMulitProps extends PlayGroundMulitProps {
-  type: 'PlayGroundMulit';
+export interface CodeBoxPlayGroundMultiProps extends PlayGroundMultiProps {
+  type: 'PlayGroundMulti';
   renderWrap?: (
     columnIndex: number,
     index: number,
-    config: Array<CodeBoxPlayGroundMulitProps>,
+    config: Array<CodeBoxPlayGroundMultiProps>,
     children: ReactNode,
   ) => ReactNode;
   renderChildren?: (
     columnIndex: number,
     index: number,
-    config: Array<CodeBoxPlayGroundMulitProps>,
+    config: Array<CodeBoxPlayGroundMultiProps>,
   ) => ReactNode;
 }
 
@@ -198,13 +201,28 @@ export interface CodeBoxPlayGroundTabProps extends PlayGroundTabProps {
   ) => ReactNode;
 }
 
+export interface CodeBoxPlayGroundMobileTabProps extends PlayGroundTabMobileProps {
+  type: 'PlayGroundTabMobile';
+  renderWrap?: (
+    columnIndex: number,
+    index: number,
+    config: PlayGroundTabMobileProps,
+    children: ReactNode,
+  ) => ReactNode;
+}
+
 export interface CodeBoxProps {
   title?: string | ReactNode;
   extra?: ReactNode;
   isShowExpandAllBtn: boolean;
   columnCount: number;
-  expandAll?: boolean;
-  config: Array<CodeBoxPlayGroundProps | CodeBoxPlayGroundMulitProps | CodeBoxPlayGroundTabProps>;
+  expandAll: boolean;
+  config: Array<
+    | CodeBoxPlayGroundProps
+    | CodeBoxPlayGroundMultiProps
+    | CodeBoxPlayGroundTabProps
+    | CodeBoxPlayGroundMobileTabProps
+  >;
 }
 
 export interface CollapseState {
@@ -217,15 +235,28 @@ export interface CodeTabPanelItemProps extends CodePanelProps {
 }
 
 export interface CodeTabPanelProps {
-  active?: string;
+  active: string;
   config?: CodeTabPanelItemProps[];
   onChange?: (activeKey: string) => void;
 }
 
 export interface PlayGroundTabProps extends CodeTabPanelProps, PlayGroundProps {}
 
+export interface PlayGroundTabMobileProps extends PlayGroundTabProps {
+  url: string;
+  bodyClassName?: string;
+  bodyStyle?: CSSProperties;
+  displayClassName?: string;
+  displayBodyStyle?: CSSProperties;
+}
+
 export interface PlayGroundTabState extends PlayGroundState {
   activeKey?: string;
+}
+
+export interface PlayGroundTabMobileState extends PlayGroundTabState {
+  iframeCount?: number;
+  qrcode?: string;
 }
 
 export interface CodeBoxContextValue {

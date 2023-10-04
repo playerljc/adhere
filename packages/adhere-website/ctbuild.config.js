@@ -25,8 +25,6 @@ module.exports = {
   getConfig({ webpack, webpackConfig, plugins }) {
     const publicPath = process.env.publicPath || '/';
 
-    console.log('publicPath', publicPath);
-
     // TODO:umd  umd时候需要打开
     // webpackConfig.externals = {
     //   '@baifendian/adhere': "adhere",
@@ -110,37 +108,47 @@ module.exports = {
     });
 
     if (babelLoaderConfig) {
-      babelLoaderConfig.options.plugins.push([
-        'import',
-        {
-          libraryName: '@baifendian/adhere',
-          libraryDirectory: 'es',
-          transformToDefaultImport: true,
-          style: true,
-          // styleLibraryDirectory: 'es'
-        },
-        'adhere',
-      ]);
-
-      babelLoaderConfig.options.plugins.push([
-        'import',
-        {
-          libraryName: '@baifendian/adhere-ui-anthoc',
-          libraryDirectory: 'es',
-          style: false,
-        },
-        'adhere-ui-anthoc',
-      ]);
-
-      babelLoaderConfig.options.plugins.push([
-        'import',
-        {
-          libraryName: '@baifendian/adhere-ui-richtext-sandbox',
-          libraryDirectory: 'es',
-          style: true,
-        },
-        'adhere-ui-richtext-sandbox',
-      ]);
+      babelLoaderConfig.options.plugins.push(
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere',
+            libraryDirectory: 'es',
+            transformToDefaultImport: true,
+            style: true,
+            // styleLibraryDirectory: 'es'
+          },
+          'adhere',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere-ui-anthoc',
+            libraryDirectory: 'es',
+            style: false,
+          },
+          'adhere-ui-anthoc',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@baifendian/adhere-ui-richtext-sandbox',
+            libraryDirectory: 'es',
+            style: true,
+          },
+          'adhere-ui-richtext-sandbox',
+        ],
+        [
+          'import',
+          {
+            libraryName: '@ant-design/icons',
+            libraryDirectory: 'es/icons',
+            camel2DashComponentName: false,
+            style: false,
+          },
+          '@ant-design/icons',
+        ],
+      );
     }
 
     if (webpackConfig.mode === 'production') {

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Requireable } from 'react';
 import { PlayGroundProps, PlayGroundState } from './types';
+export declare const selectPrefix = "adhere-ui-playground";
 /**
  * APlayGround
  * @class APlayGround
@@ -12,9 +13,9 @@ declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, 
     protected actionConfig: (() => JSX.Element)[];
     static defaultProps: PlayGroundProps;
     static propTypes: {
+        id: any;
         cardProps: any;
         expand: Requireable<boolean>;
-        id: any;
         isActive: Requireable<boolean>;
     };
     /**

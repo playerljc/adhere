@@ -1,32 +1,47 @@
 import { Modal, message } from 'antd';
-import { ArgsProps } from 'antd/lib/message';
-import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-type ConfigContent = React.ReactNode;
-type JointContent = ConfigContent | ArgsProps;
+import { JointContent, WarnDialog, duration } from './types';
+
+let handler;
 
 /**
- * openErrorDialog
+ * openWarnDialog
+ * @param duration
  * @param props
  */
-export const openWarnDialog = (props?: ModalProps) =>
-  Modal.warning({
+export const openWarnDialog: WarnDialog = ({ duration = 3000, ...props }) => {
+  const result = Modal.warning({
     title: Intl.v('提示'),
     mask: false,
     maskClosable: true,
+    footer: null,
     ...(props ?? {}),
   });
+
+  if (duration) {
+    if (handler) {
+      clearTimeout(handler);
+    }
+
+    handler = setTimeout(() => {
+      result.destroy();
+    }, duration as number);
+  }
+
+  return result;
+};
 
 /**
  * 警告的提示
  * @param content
  * @param duration
+ * @param onClose
  */
 export const openWarnMessage = (
   content?: JointContent,
-  duration?: number | VoidFunction,
+  duration?: duration,
   onClose?: VoidFunction,
 ) => message.warning(content, duration, onClose);

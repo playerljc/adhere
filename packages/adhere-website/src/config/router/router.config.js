@@ -83,6 +83,9 @@ const {
   RichTextSandBox,
   Ellipsis,
   Expression,
+  MobileSuccessPrompt,
+  MobileErrorPrompt,
+  MobileWarnPrompt,
 } = Components;
 
 export default () => [
@@ -534,6 +537,31 @@ export default () => [
                 path: '/adhere/component/util/iframeio',
                 name: 'IframeIO',
                 component: IframeIO,
+              },
+            ],
+          },
+          {
+            path: '/adhere/component/mobile',
+            name: 'Mobile',
+            routes: [
+              {
+                path: '/',
+                redirect: '/adhere/component/mobile/successprompt',
+              },
+              {
+                path: '/adhere/component/mobile/successprompt',
+                name: 'SuccessPrompt',
+                component: MobileSuccessPrompt,
+              },
+              {
+                path: '/adhere/component/mobile/errorprompt',
+                name: 'ErrorPrompt',
+                component: MobileErrorPrompt,
+              },
+              {
+                path: '/adhere/component/mobile/warnprompt',
+                name: 'WarnPrompt',
+                component: MobileWarnPrompt,
               },
             ],
           },

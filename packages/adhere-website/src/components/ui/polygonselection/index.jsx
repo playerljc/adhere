@@ -488,7 +488,7 @@ export default () => {
             codeText: baseCssCodeSrc,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => <ImageSelect />,
       },
       {
@@ -514,7 +514,7 @@ export default () => {
             codeText: croppingCssCodeSrc,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => <Cropping />,
       },
     ];

@@ -268,7 +268,7 @@ export default () => {
             info: '打开',
           },
         },
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <Button
             type="primary"

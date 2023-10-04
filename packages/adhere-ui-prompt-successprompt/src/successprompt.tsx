@@ -1,25 +1,39 @@
 import { Modal, message } from 'antd';
-import { ArgsProps } from 'antd/lib/message';
-import { ModalProps } from 'antd/lib/modal/Modal';
 import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-type ConfigContent = React.ReactNode;
-type JointContent = ConfigContent | ArgsProps;
+import { JointContent, SuccessDialog, duration } from './types';
+
+let handler;
 
 /**
  * openSuccessDialog
+ * @param duration
  * @param props
  */
-export const openSuccessDialog = (props?: ModalProps) =>
-  Modal.success({
+export const openSuccessDialog: SuccessDialog = ({ duration = 3000, ...props }) => {
+  const result = Modal.success({
     title: Intl.v('提示'),
     content: Intl.v('操作成功'),
     mask: false,
     maskClosable: true,
+    footer: null,
     ...(props ?? {}),
   });
+
+  if (duration) {
+    if (handler) {
+      clearTimeout(handler);
+    }
+
+    handler = setTimeout(() => {
+      result.destroy();
+    }, duration as number);
+  }
+
+  return result;
+};
 
 /**
  * 成功的提示
@@ -29,6 +43,6 @@ export const openSuccessDialog = (props?: ModalProps) =>
  */
 export const openSuccessMessage = (
   content?: JointContent,
-  duration?: number | VoidFunction,
+  duration?: duration,
   onClose?: VoidFunction,
 ) => message.success(content ? content : Intl.v('操作成功'), duration, onClose);

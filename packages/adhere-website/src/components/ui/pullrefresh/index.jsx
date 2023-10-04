@@ -305,7 +305,7 @@ export default () => {
           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <PullRefresh
             ref={ref3}

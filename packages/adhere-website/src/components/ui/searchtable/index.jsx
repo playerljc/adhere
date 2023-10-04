@@ -244,7 +244,7 @@ export default () => {
                           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <>
             <Switch
@@ -351,7 +351,7 @@ export default () => {
                           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <>
             <Switch
@@ -755,7 +755,7 @@ export default () => {
                           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <>
             <Switch
@@ -1088,7 +1088,7 @@ export default () => {
                         `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
       },
       {
         id: 'p8',
@@ -1126,7 +1126,7 @@ export default () => {
                           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <RowSelectedNormal isShowExpandSearch defaultExpandSearchCollapse={false} />
         ),
@@ -1167,7 +1167,7 @@ export default () => {
                           `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <RowSelectedContinuous isShowExpandSearch defaultExpandSearchCollapse={false} />
         ),
@@ -1208,7 +1208,7 @@ export default () => {
                       `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <div style={{ display: 'flex', height: 700 }}>
             <ColumnResizeTable
@@ -1259,7 +1259,7 @@ export default () => {
                       `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <ColumnSettingTable isShowExpandSearch defaultExpandSearchCollapse={false} />
         ),
@@ -1303,7 +1303,7 @@ export default () => {
                       `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <TableDensitySetting isShowExpandSearch defaultExpandSearchCollapse={false} />
         ),
@@ -1392,7 +1392,7 @@ export default () => {
                       `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <>
             <div style={{ display: 'flex', height: 800 }}>

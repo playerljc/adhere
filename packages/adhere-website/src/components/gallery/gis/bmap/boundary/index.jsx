@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { GlobalIndicator, Resource } from '@baifendian/adhere';
 
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
+import PlaygroundMulti from '@/lib/PlaygroundMulti';
 
 import data from './data.json';
 
@@ -143,7 +143,7 @@ function Boundary() {
   }
 
   return (
-    <PlaygroundMulit
+    <PlaygroundMulti
       config={[
         {
           title: 'index.jsx',
@@ -189,7 +189,7 @@ function Boundary() {
           </Select>
         </div>
       </div>
-    </PlaygroundMulit>
+    </PlaygroundMulti>
   );
 }
 
@@ -324,7 +324,7 @@ function Boundary() {
   }
 
   return (
-    <PlaygroundMulit
+    <PlaygroundMulti
       config={[
         {
           title: 'index.jsx',
@@ -371,7 +371,7 @@ function Boundary() {
           </Select>
         </div>
       </div>
-    </PlaygroundMulit>
+    </PlaygroundMulti>
   );
 }
 

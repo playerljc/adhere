@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import PlaygroundMulit from '@/lib/PlaygroundMulit';
+import PlaygroundMulti from '@/lib/PlaygroundMulti';
 
 import VectorLayer from './VectoryLayer';
 import data from './data.json';
@@ -244,7 +244,7 @@ function MassivePoints() {
   }, []);
 
   return (
-    <PlaygroundMulit
+    <PlaygroundMulti
       config={[
         {
           title: 'index.jsx',
@@ -267,7 +267,7 @@ function MassivePoints() {
       ]}
     >
       <div className={styles.Wrap} ref={ref} />
-    </PlaygroundMulit>
+    </PlaygroundMulti>
   );
 }
 

@@ -208,7 +208,7 @@ export default () => {
                   `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <>
             <Button
@@ -420,7 +420,7 @@ export default () => {
                   `,
           },
         ],
-        type: 'PlayGroundMulit',
+        type: 'PlayGroundMulti',
         renderChildren: () => (
           <>
             <Button

@@ -9,7 +9,7 @@ import { PropsProps } from './types';
 const selectPrefix = 'adhere-ui-playground-props';
 
 const Props: FC<PropsProps> = (props) => {
-  const { data = [], children, ...others } = props;
+  const { data = [], children, ...restProps } = props;
 
   const columns = useMemo(
     () => [
@@ -44,7 +44,7 @@ const Props: FC<PropsProps> = (props) => {
   );
 
   return (
-    <Collapse {...others}>
+    <Collapse {...restProps}>
       <div className={selectPrefix}>
         <Table
           columns={columns}

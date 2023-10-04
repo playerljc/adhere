@@ -2,16 +2,16 @@ import CircleGeometry from './CircleGeometry';
 import Geometry from './Geometry';
 import LeafGeometry from './LeafGeometry';
 import LineStringGeometry from './LineStringGeometry';
-import MulitCircleGeometry from './MulitCircleGeometry';
-import MulitLeafGeometry from './MulitLeafGeometry';
-import MulitLineStringGeometry from './MulitLineStringGeometry';
-import MulitPointGeometry from './MulitPointGeometry';
-import MulitPolygonGeometry from './MulitPolygonGeometry';
-import MulitRadiusRectGeometry from './MulitRadiusRectGeometry';
-import MulitRectGeometry from './MulitRectGeometry';
-import MulitRegularPolygonGeometry from './MulitRegularPolygonGeometry';
-import MulitSectorGeometry from './MulitSectorGeometry';
-import MulitStartGeometry from './MulitStartGeometry';
+import MultiCircleGeometry from './MultiCircleGeometry';
+import MultiLeafGeometry from './MultiLeafGeometry';
+import MultiLineStringGeometry from './MultiLineStringGeometry';
+import MultiPointGeometry from './MultiPointGeometry';
+import MultiPolygonGeometry from './MultiPolygonGeometry';
+import MultiRadiusRectGeometry from './MultiRadiusRectGeometry';
+import MultiRectGeometry from './MultiRectGeometry';
+import MultiRegularPolygonGeometry from './MultiRegularPolygonGeometry';
+import MultiSectorGeometry from './MultiSectorGeometry';
+import MultiStartGeometry from './MultiStartGeometry';
 import PointGeometry from './PointGeometry';
 import PolygonGeometry from './PolygonGeometry';
 import RadiusRectGeometry from './RadiusRectGeometry';
@@ -26,16 +26,16 @@ export {
   Geometry,
   LeafGeometry,
   LineStringGeometry,
-  MulitCircleGeometry,
-  MulitLeafGeometry,
-  MulitLineStringGeometry,
-  MulitPointGeometry,
-  MulitPolygonGeometry,
-  MulitRadiusRectGeometry,
-  MulitRectGeometry,
-  MulitRegularPolygonGeometry,
-  MulitSectorGeometry,
-  MulitStartGeometry,
+  MultiCircleGeometry,
+  MultiLeafGeometry,
+  MultiLineStringGeometry,
+  MultiPointGeometry,
+  MultiPolygonGeometry,
+  MultiRadiusRectGeometry,
+  MultiRectGeometry,
+  MultiRegularPolygonGeometry,
+  MultiSectorGeometry,
+  MultiStartGeometry,
   PointGeometry,
   PolygonGeometry,
   RectGeometry,

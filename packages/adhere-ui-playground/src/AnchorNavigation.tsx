@@ -171,8 +171,9 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
         {() => (
           <div className={`${selectPrefix}-fixed`} style={{ width: `${anchorPosition.width}px` }}>
             <ul className={`${selectPrefix}-anchor`} ref={anchorRef}>
-              {(anchors || []).map((anchor) => (
+              {(anchors || []).map((anchor, _index) => (
                 <li
+                  key={`${_index}`}
                   className={anchor.anchor === activeAnchor ? `${selectPrefix}-active` : ''}
                   title={anchor.name}
                 >

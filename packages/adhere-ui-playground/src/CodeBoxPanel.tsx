@@ -3,10 +3,11 @@ import React, { FC, memo, useEffect, useRef, useState } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import PlayGround from './PlayGround';
-import PlayGroundMulit from './PlayGroundMulit';
+import PlayGroundMulti from './PlayGroundMulti';
 import PlayGroundTab from './PlayGroundTab';
+import PlayGroundTabMobile from './PlayGroundTabMobile';
 import Constant from './constant';
-import { CodeBoxPlayGroundMulitProps, CodeBoxPlayGroundProps, CodeBoxProps } from './types';
+import type { CodeBoxProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-code-box';
 
@@ -22,16 +23,13 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
   const [expandAll, setExpandAll] = useState(props.expandAll);
   const expandLock = useRef(false);
 
-  const column: any[] = [];
-  if (columnCount != null) {
-    column.length = columnCount;
-  }
-  column.fill(undefined);
+  const column: any[] = Array.from<any>({ length: columnCount }).fill(undefined);
 
   const renderMap = new Map<string, Function>([
-    ['PlayGroundMulit', renderPlayGroundMulit],
+    ['PlayGroundMulti', renderPlayGroundMulti],
     ['PlayGround', renderPlayGround],
     ['PlayGroundTab', renderPlayGroundTab],
+    ['PlayGroundTabMobile', renderPlayGroundTabMobile],
   ]);
 
   /**
@@ -69,29 +67,24 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
   }, [expandAll]);
 
   /**
-   * renderPlayGroundMulit
-   * @description - 渲染PlayGroundMulit
+   * renderPlayGroundMulti
+   * @description - 渲染PlayGroundMulti
    * @param columnIndex
    * @param index
    * @return JSX
    */
-  function renderPlayGroundMulit(columnIndex: number, index: number) {
+  function renderPlayGroundMulti(columnIndex: number, index: number) {
     const { config } = props;
 
-    const { renderWrap, renderChildren, type, ...playGroundProps } = config[index];
-    // activeAnchor
+    const { renderWrap, renderChildren, type, ...restProps } = config[index];
 
     const children = (
       // @ts-ignore
-      <PlayGroundMulit
-        {...playGroundProps}
-        isActive={activeAnchor === playGroundProps.id}
-        expand={expandAll}
-      >
+      <PlayGroundMulti {...restProps} isActive={activeAnchor === restProps.id} expand={expandAll}>
         <ConditionalRender conditional={!!renderChildren}>
           {() => renderChildren?.(columnIndex, index, config as Array<any>)}
         </ConditionalRender>
-      </PlayGroundMulit>
+      </PlayGroundMulti>
     );
 
     return (
@@ -109,16 +102,11 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
    * @return JSX
    */
   function renderPlayGround(columnIndex: number, index: number) {
-    const { renderWrap, renderChildren, type, ...playGroundProps } = config[index];
-    // activeAnchor
+    const { renderWrap, renderChildren, type, ...restProps } = config[index];
 
     const children = (
       // @ts-ignore
-      <PlayGround
-        {...playGroundProps}
-        isActive={activeAnchor === playGroundProps.id}
-        expand={expandAll}
-      >
+      <PlayGround {...restProps} isActive={activeAnchor === restProps.id} expand={expandAll}>
         <ConditionalRender conditional={!!renderChildren}>
           {() => renderChildren?.(columnIndex, index, config as any)}
         </ConditionalRender>
@@ -134,22 +122,43 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
 
   /**
    * renderPlayGroundTab
+   * @param columnIndex
+   * @param index
    */
   function renderPlayGroundTab(columnIndex: number, index: number) {
-    const { renderWrap, renderChildren, type, ...playGroundTabProps } = config[index];
-    // activeAnchor
+    const { renderWrap, renderChildren, type, ...restProps } = config[index];
 
     const children = (
       // @ts-ignore
-      <PlayGroundTab
-        {...playGroundTabProps}
-        isActive={activeAnchor === playGroundTabProps.id}
-        expand={expandAll}
-      >
+      <PlayGroundTab {...restProps} isActive={activeAnchor === restProps.id} expand={expandAll}>
         <ConditionalRender conditional={!!renderChildren}>
           {() => renderChildren?.(columnIndex, index, config as any)}
         </ConditionalRender>
       </PlayGroundTab>
+    );
+
+    return (
+      <ConditionalRender conditional={!!renderWrap} noMatch={() => children}>
+        {() => renderWrap?.(columnIndex, index, config as any, children)}
+      </ConditionalRender>
+    );
+  }
+
+  /**
+   * renderPlayGroundTabMobile
+   * @param columnIndex
+   * @param index
+   */
+  function renderPlayGroundTabMobile(columnIndex: number, index: number) {
+    const { renderWrap, type, ...restProps } = config[index];
+
+    const children = (
+      // @ts-ignore
+      <PlayGroundTabMobile
+        {...restProps}
+        isActive={activeAnchor === restProps.id}
+        expand={expandAll}
+      />
     );
 
     return (
@@ -170,7 +179,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
           <ConditionalRender conditional={isShowExpandAllBtn}>
             {() => (
               <ConditionalRender
-                conditional={!!expandAll}
+                conditional={expandAll}
                 noMatch={() => (
                   <img
                     className={`${selectPrefix}-expand-code`}
@@ -205,12 +214,12 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
 
       <div className={`${selectPrefix}-main`}>
         {column.map((_v, columnIndex) => (
-          <div className={`${selectPrefix}-column`}>
+          <div className={`${selectPrefix}-column`} key={`${columnIndex}`}>
             {config.map((item, index) => {
               if (index % columnCount === columnIndex) {
                 return (
                   <div className={`${selectPrefix}-item`} key={item.id}>
-                    {renderMap?.get(item.type)?.(columnIndex, index)}
+                    {renderMap?.get?.(item.type)?.(columnIndex, index)}
                   </div>
                 );
               }
@@ -242,7 +251,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
 //   config: PropTypes.arrayOf(
 //     PropTypes.oneOfType([
 //       {
-//         ...PlayGroundMulitPropTypes,
+//         ...PlayGroundMultiPropTypes,
 //
 //         type: PropTypes.string,
 //         renderWrap: PropTypes.func,

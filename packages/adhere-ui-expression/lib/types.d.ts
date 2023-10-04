@@ -87,7 +87,6 @@ export interface ExpressionHandle {
     setValue(html: string): void;
     getValue(): string;
     isEditorEmpty(): boolean;
-    hideQuickTip(): void;
     showQuickTip(): void;
     showOperators(): void;
     hideQuickTip(): void;
