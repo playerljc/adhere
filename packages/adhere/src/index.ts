@@ -1,3 +1,6 @@
+import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
+import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
+import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -68,6 +71,9 @@ import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
+  MobileErrorPrompt,
+  MobileSuccessPrompt,
+  MobileWarnPrompt,
   BackTopAnimation,
   BMap,
   CascadeCompared,

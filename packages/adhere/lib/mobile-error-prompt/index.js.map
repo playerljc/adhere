@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["mobile-error-prompt/index.js"],"sourcesContent":["import Model from '@baifendian/adhere-mobile-ui-prompt-errorprompt/lib';\nexport default Model;\n"],"names":["Model"],"mappings":"OAAOA,UAAW,qEACHA"}

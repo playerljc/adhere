@@ -67,7 +67,6 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-bmap', 'BMap'],
   ['@baifendian/adhere-ui-forceupdate', 'ForceUpdate'],
   ['@baifendian/adhere-ui-configprovider', 'ConfigProvider'],
-  // ['@baifendian/adhere-ui-antdformitem', 'AntdFormItem'],
   ['@baifendian/adhere-ui-fieldgeneratortodict', 'FieldGeneratorToDict'],
   ['@baifendian/adhere-ui-ellipsis', 'Ellipsis'],
   ['@baifendian/adhere-ui-expression', 'Expression'],
@@ -87,6 +86,9 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-validator', 'Validator'],
   ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
   ['@baifendian/adhere-util-iframeio', 'IframeIO'],
+  ['@baifendian/adhere-mobile-ui-prompt-errorprompt', 'MobileErrorPrompt'],
+  ['@baifendian/adhere-mobile-ui-prompt-successprompt', 'MobileSuccessPrompt'],
+  ['@baifendian/adhere-mobile-ui-prompt-warnprompt', 'MobileWarnPrompt'],
 ]);
 
 /**
