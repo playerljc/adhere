@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ImportantConform from './importantconfirm';\nexport default ImportantConform;"],"names":["ImportantConform"],"mappings":"OAAOA,qBAAsB,oCACdA"}
