@@ -232,6 +232,8 @@ export interface CollapseState {
 export interface CodeTabPanelItemProps extends CodePanelProps {
   key?: string;
   title: string | ReactNode;
+  className?: string;
+  style?: CSSProperties;
 }
 
 export interface CodeTabPanelProps {
@@ -286,6 +288,7 @@ export interface TabContextValue {
 
 export interface TabPanelProps {
   className?: string;
+  style?: CSSProperties;
   index?: number | string;
   children?: any;
 }

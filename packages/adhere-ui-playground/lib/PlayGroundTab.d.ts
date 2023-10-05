@@ -23,6 +23,8 @@ export declare const PlayGroundTabDefaultProps: PlayGroundTabProps;
 export declare const PlayGroundTabPropTypes: {
     active: import("prop-types").Requireable<string>;
     config: import("prop-types").Requireable<(import("prop-types").InferProps<{
+        className: import("prop-types").Requireable<string>;
+        style: import("prop-types").Requireable<object>;
         key: import("prop-types").Requireable<string>;
         title: import("prop-types").Requireable<NonNullable<import("prop-types").ReactNodeLike>>;
         codeText: import("prop-types").Requireable<string>;

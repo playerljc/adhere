@@ -40,9 +40,9 @@ const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
   return (
     <div className={selectPrefix}>
       <SimpleTabs activeKey={active} onChange={SimpleTabsOnChange}>
-        {(config || []).map(({ key, title, ...codePanelConfig }) => (
+        {(config || []).map(({ key, title, className, style, ...codePanelConfig }) => (
           // @ts-ignore
-          <TabPanel title={title} key={key} index={key}>
+          <TabPanel key={key} index={key} className={className} style={style} title={title}>
             <ConditionalRender conditional={active === key}>
               {() => <CodePanel {...codePanelConfig} />}
             </ConditionalRender>
@@ -63,6 +63,8 @@ export const CodeTabPanelPropTypes = {
   config: PropTypes.arrayOf(
     PropTypes.shape({
       ...CodePanelPropTypes,
+      className: PropTypes.string,
+      style: PropTypes.object,
       key: PropTypes.string,
       title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     }),

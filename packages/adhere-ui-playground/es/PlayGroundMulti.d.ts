@@ -59,6 +59,8 @@ export declare const PlayGroundMultiPropTypes: {
     }> | PropTypes.InferProps<{
         active: PropTypes.Requireable<string>;
         config: PropTypes.Requireable<(PropTypes.InferProps<{
+            className: PropTypes.Requireable<string>;
+            style: PropTypes.Requireable<object>;
             key: PropTypes.Requireable<string>;
             title: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
             codeText: PropTypes.Requireable<string>;
