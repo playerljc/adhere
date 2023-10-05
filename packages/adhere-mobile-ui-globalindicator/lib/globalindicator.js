@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var antd_mobile_1=require("antd-mobile");exports.default={show:function(e,o){return void 0===e&&(e=document.body),antd_mobile_1.Toast.show({content:o=void 0===o?"":o,maskClickable:!1,icon:"loading",getContainer:null!=e?e:document.body,duration:0})},hide:function(e){e.close()},hideAll:function(){antd_mobile_1.Toast.clear()}};
+//# sourceMappingURL=globalindicator.js.map
