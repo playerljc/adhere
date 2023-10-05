@@ -89,6 +89,9 @@ const namedMap = new Map([
   ['@baifendian/adhere-mobile-ui-prompt-errorprompt', 'MobileErrorPrompt'],
   ['@baifendian/adhere-mobile-ui-prompt-successprompt', 'MobileSuccessPrompt'],
   ['@baifendian/adhere-mobile-ui-prompt-warnprompt', 'MobileWarnPrompt'],
+  ['@baifendian/adhere-mobile-ui-globalindicator', 'MobileGlobalIndicator'],
+  ['@baifendian/adhere-mobile-ui-confirm-delconfirm', 'MobileDelConfirm'],
+  ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],
 ]);
 
 /**

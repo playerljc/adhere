@@ -1,6 +1,9 @@
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
 import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
+import MobileDelConfirm from '@baifendian/adhere-mobile-ui-confirm-delconfirm';
+import MobileImportantConfirm from '@baifendian/adhere-mobile-ui-confirm-importantconfirm';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -71,9 +74,12 @@ import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
+  MobileGlobalIndicator,
   MobileErrorPrompt,
   MobileSuccessPrompt,
   MobileWarnPrompt,
+  MobileDelConfirm,
+  MobileImportantConfirm,
   BackTopAnimation,
   BMap,
   CascadeCompared,

@@ -15,8 +15,8 @@ export default () => {
         name: `基本使用`,
         cardProps: {
           description: {
-            title: '使用message',
-            info: 'openWarnMessage',
+            title: '基本使用',
+            info: '基本使用',
           },
         },
         active: 'Javascript',
@@ -25,58 +25,43 @@ export default () => {
             key: 'Javascript',
             title: 'Javascript',
             codeText: `
+  import { Button } from 'antd-mobile';
   import React from 'react';
-  import { Button } from 'antd';
+
   import { MobileWarnPrompt } from '@baifendian/adhere';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      MobileWarnPrompt.openWarnMessage({
-        content: '操作警告'
-      });
-    }}
-  >
-    显示警告提示
-  </Button>
-      `,
-            url: 'http://www.baidu.com',
-          },
-        ],
-        type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
-      },
-      {
-        id: `p2`,
-        name: `使用Dialog`,
-        cardProps: {
-          description: {
-            title: '使用Dialog',
-            info: 'openWarnDialog',
-          },
-        },
-        active: 'Javascript',
-        config: [
-          {
-            key: 'Javascript',
-            title: 'Javascript',
-            codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MobileWarnPrompt } from '@baifendian/adhere';
+  import DemoBlock from '@/lib/DemoBlock';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      MobileWarnPrompt.openWarnDialog({
-        content: '操作警告'
-      });
-    }}
-  >
-    显示警告提示
-  </Button>
+  export default () => (
+    <DemoBlock>
+      <DemoBlock.Item title="openWarnMessage">
+        <Button
+          onClick={() => {
+            MobileWarnPrompt.openWarnMessage({
+              content: '操作异常',
+            });
+          }}
+        >
+          openWarnMessage
+        </Button>
+      </DemoBlock.Item>
+
+      <DemoBlock.Item title="openWarnDialog">
+        <Button
+          onClick={() => {
+            MobileWarnPrompt.openWarnDialog({
+              content: '操作异常',
+            });
+          }}
+        >
+          openWarnDialog
+        </Button>
+      </DemoBlock.Item>
+    </DemoBlock>
+  );
       `,
-            url: 'http://www.baidu.com',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
           },
         ],
         type: 'PlayGroundTabMobile',

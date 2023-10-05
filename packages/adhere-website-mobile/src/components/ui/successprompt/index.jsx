@@ -1,14 +1,14 @@
-import { List } from 'antd-mobile';
+import { Button } from 'antd-mobile';
 import React from 'react';
 
 import { MobileSuccessPrompt } from '@baifendian/adhere';
 
-export default () => {
-  debugger;
+import DemoBlock from '@/lib/DemoBlock';
 
-  return (
-    <List>
-      <List.Item
+export default () => (
+  <DemoBlock>
+    <DemoBlock.Item title="openSuccessMessage">
+      <Button
         onClick={() => {
           MobileSuccessPrompt.openSuccessMessage({
             content: '操作成功',
@@ -16,8 +16,11 @@ export default () => {
         }}
       >
         openSuccessMessage
-      </List.Item>
-      <List.Item
+      </Button>
+    </DemoBlock.Item>
+
+    <DemoBlock.Item title="openSuccessDialog">
+      <Button
         onClick={() => {
           MobileSuccessPrompt.openSuccessDialog({
             content: '操作成功',
@@ -25,7 +28,7 @@ export default () => {
         }}
       >
         openSuccessDialog
-      </List.Item>
-    </List>
-  );
-};
+      </Button>
+    </DemoBlock.Item>
+  </DemoBlock>
+);

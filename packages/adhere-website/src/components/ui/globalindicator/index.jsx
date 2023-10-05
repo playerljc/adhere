@@ -319,6 +319,14 @@ export default () => {
                 returnType: '',
                 returnDesc: '',
               },
+              {
+                name: 'hideAll',
+                desc: '取消所有遮罩',
+                modifier: 'public',
+                params: [],
+                returnType: '',
+                returnDesc: '',
+              },
             ],
           },
         ]}

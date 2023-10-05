@@ -1,6 +1,9 @@
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
 import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
+import MobileDelConfirm from '@baifendian/adhere-mobile-ui-confirm-delconfirm';
+import MobileImportantConfirm from '@baifendian/adhere-mobile-ui-confirm-importantconfirm';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -69,4 +72,4 @@ import ReactUtil from '@baifendian/adhere-util-reactutil';
 import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-export { MobileErrorPrompt, MobileSuccessPrompt, MobileWarnPrompt, BackTopAnimation, BMap, CascadeCompared, Comment, ConditionalRender, ConfigProvider, DelConfirm, ImportantConfirm, ContextMenu, ContourBlock, DateDisplay, Ellipsis, Expression, FieldGeneratorToDict, FlexLayout, FontSizeSetting, ForceUpdate, FormItemCreator, GlobalIndicator, HistoryBack, Hooks, ImageLazy, JdCategoryTab, MessageDialog, Notification, OLMap, Permission, PlayGround, PolygonSelection, Popup, ErrorPrompt, SuccessPrompt, WarnPrompt, PullRefresh, Revolving, ScrollLoad, SearchList, SearchTable, SlideLayout, SliderScale, Space, Spin, Split, SplitLayout, StickupLayout, Surnames, Suspense, SwipeOut, TableGridLayout, TableHeadSearch, TableList, WritingBoard, Util, AdapterScreen, Browsersniff, Ajax, Decorators, Dict, Domain, Emitter, IframeIO, Intl, NotNull, Preferences, ReactUtil, Resource, Validator, WatchMemoized, };
+export { MobileGlobalIndicator, MobileErrorPrompt, MobileSuccessPrompt, MobileWarnPrompt, MobileDelConfirm, MobileImportantConfirm, BackTopAnimation, BMap, CascadeCompared, Comment, ConditionalRender, ConfigProvider, DelConfirm, ImportantConfirm, ContextMenu, ContourBlock, DateDisplay, Ellipsis, Expression, FieldGeneratorToDict, FlexLayout, FontSizeSetting, ForceUpdate, FormItemCreator, GlobalIndicator, HistoryBack, Hooks, ImageLazy, JdCategoryTab, MessageDialog, Notification, OLMap, Permission, PlayGround, PolygonSelection, Popup, ErrorPrompt, SuccessPrompt, WarnPrompt, PullRefresh, Revolving, ScrollLoad, SearchList, SearchTable, SlideLayout, SliderScale, Space, Spin, Split, SplitLayout, StickupLayout, Surnames, Suspense, SwipeOut, TableGridLayout, TableHeadSearch, TableList, WritingBoard, Util, AdapterScreen, Browsersniff, Ajax, Decorators, Dict, Domain, Emitter, IframeIO, Intl, NotNull, Preferences, ReactUtil, Resource, Validator, WatchMemoized, };

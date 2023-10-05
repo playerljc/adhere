@@ -9,3 +9,12 @@ export const MobileErrorPrompt = lazy(() =>
 export const MobileWarnPrompt = lazy(() =>
   import(/* webpackChunkName: "mobilewarnprompt" */ '@/components/mobile/warnprompt'),
 );
+export const MobileGlobalIndicator = lazy(() =>
+  import(/* webpackChunkName: "mobileglobalindicator" */ '@/components/mobile/globalindicator'),
+);
+export const MobileDelConfirm = lazy(() =>
+  import(/* webpackChunkName: "mobiledelconfirm" */ '@/components/mobile/delconfirm'),
+);
+export const MobileImportantConfirm = lazy(() =>
+  import(/* webpackChunkName: "mobileimportantconfirm" */ '@/components/mobile/importantconfirm'),
+);

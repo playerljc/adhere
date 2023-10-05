@@ -14,8 +14,8 @@ export default () => {
         name: `基本使用`,
         cardProps: {
           description: {
-            title: '使用message',
-            info: 'openSuccessMessage',
+            title: '基本使用',
+            info: '基本使用',
           },
         },
         active: 'Javascript',
@@ -24,58 +24,43 @@ export default () => {
             key: 'Javascript',
             title: 'Javascript',
             codeText: `
+  import { Button } from 'antd-mobile';
   import React from 'react';
-  import { Button } from 'antd';
+
   import { MobileSuccessPrompt } from '@baifendian/adhere';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      MobileSuccessPrompt.openSuccessMessage({
-        content: '操作成功'
-      });
-    }}
-  >
-    显示成功提示
-  </Button>
-      `,
-            url: 'http://www.baidu.com',
-          },
-        ],
-        type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
-      },
-      {
-        id: `p2`,
-        name: `使用Dialog`,
-        cardProps: {
-          description: {
-            title: '使用Dialog',
-            info: 'openSuccessDialog',
-          },
-        },
-        active: 'Javascript',
-        config: [
-          {
-            key: 'Javascript',
-            title: 'Javascript',
-            codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MobileSuccessPrompt } from '@baifendian/adhere';
+  import DemoBlock from '@/lib/DemoBlock';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      MobileSuccessPrompt.openSuccessDialog({
-        content: '操作成功'
-      });
-    }}
-  >
-    显示成功提示
-  </Button>
+  export default () => (
+    <DemoBlock>
+      <DemoBlock.Item title="openSuccessMessage">
+        <Button
+          onClick={() => {
+            MobileSuccessPrompt.openSuccessMessage({
+              content: '操作成功',
+            });
+          }}
+        >
+          openSuccessMessage
+        </Button>
+      </DemoBlock.Item>
+
+      <DemoBlock.Item title="openSuccessDialog">
+        <Button
+          onClick={() => {
+            MobileSuccessPrompt.openSuccessDialog({
+              content: '操作成功',
+            });
+          }}
+        >
+          openSuccessDialog
+        </Button>
+      </DemoBlock.Item>
+    </DemoBlock>
+  );
       `,
-            url: 'http://www.baidu.com',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
           },
         ],
         type: 'PlayGroundTabMobile',

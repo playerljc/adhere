@@ -15,8 +15,8 @@ export default () => {
         name: `基本使用`,
         cardProps: {
           description: {
-            title: '使用message',
-            info: 'openErrorMessage',
+            title: '基本使用',
+            info: '基本使用',
           },
         },
         active: 'Javascript',
@@ -25,58 +25,43 @@ export default () => {
             key: 'Javascript',
             title: 'Javascript',
             codeText: `
+  import { Button } from 'antd-mobile';
   import React from 'react';
-  import { Button } from 'antd';
+
   import { MobileErrorPrompt } from '@baifendian/adhere';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      MobileErrorPrompt.openErrorMessage({
-        content: '操作错误'
-      });
-    }}
-  >
-    显示错误提示
-  </Button>
-      `,
-            url: 'http://www.baidu.com',
-          },
-        ],
-        type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
-      },
-      {
-        id: `p2`,
-        name: `使用Dialog`,
-        cardProps: {
-          description: {
-            title: '使用Dialog',
-            info: 'openErrorDialog',
-          },
-        },
-        active: 'Javascript',
-        config: [
-          {
-            key: 'Javascript',
-            title: 'Javascript',
-            codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MobileErrorPrompt } from '@baifendian/adhere';
+  import DemoBlock from '@/lib/DemoBlock';
 
-  <Button
-    type="primary"
-    onClick={() => {
-      MobileErrorPrompt.openErrorDialog({
-        content: '操作错误'
-      });
-    }}
-  >
-    显示错误提示
-  </Button>
+  export default () => (
+    <DemoBlock>
+      <DemoBlock.Item title="openErrorMessage">
+        <Button
+          onClick={() => {
+            MobileErrorPrompt.openErrorMessage({
+              content: '操作失败',
+            });
+          }}
+        >
+          openErrorMessage
+        </Button>
+      </DemoBlock.Item>
+
+      <DemoBlock.Item title="openErrorDialog">
+        <Button
+          onClick={() => {
+            MobileErrorPrompt.openErrorDialog({
+              content: '操作失败',
+            });
+          }}
+        >
+          openErrorDialog
+        </Button>
+      </DemoBlock.Item>
+    </DemoBlock>
+  );
       `,
-            url: 'http://www.baidu.com',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
           },
         ],
         type: 'PlayGroundTabMobile',
