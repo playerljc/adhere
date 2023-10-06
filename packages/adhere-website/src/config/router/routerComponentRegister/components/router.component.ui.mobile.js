@@ -18,3 +18,6 @@ export const MobileDelConfirm = lazy(() =>
 export const MobileImportantConfirm = lazy(() =>
   import(/* webpackChunkName: "mobileimportantconfirm" */ '@/components/mobile/importantconfirm'),
 );
+export const MobileTabs = lazy(() =>
+  import(/* webpackChunkName: "mobiletabs" */ '@/components/mobile/tabs'),
+);

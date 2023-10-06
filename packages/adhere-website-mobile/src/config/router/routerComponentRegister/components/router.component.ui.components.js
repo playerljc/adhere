@@ -23,3 +23,5 @@ export const DelConfirm = lazy(() =>
 export const ImportantConfirm = lazy(() =>
   import(/* webpackChunkName: "importantconfirm" */ '@/components/ui/importantconfirm'),
 );
+
+export const Tabs = lazy(() => import(/* webpackChunkName: "tabs" */ '@/components/ui/tabs'));

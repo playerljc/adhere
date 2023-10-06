@@ -4,6 +4,7 @@ import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprom
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
 import MobileDelConfirm from '@baifendian/adhere-mobile-ui-confirm-delconfirm';
 import MobileImportantConfirm from '@baifendian/adhere-mobile-ui-confirm-importantconfirm';
+import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -80,6 +81,7 @@ export {
   MobileWarnPrompt,
   MobileDelConfirm,
   MobileImportantConfirm,
+  MobileTabs,
   BackTopAnimation,
   BMap,
   CascadeCompared,

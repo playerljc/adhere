@@ -89,6 +89,7 @@ const {
   MobileGlobalIndicator,
   MobileDelConfirm,
   MobileImportantConfirm,
+  MobileTabs,
 } = Components;
 
 export default () => [
@@ -566,7 +567,6 @@ export default () => [
                 name: 'WarnPrompt',
                 component: MobileWarnPrompt,
               },
-
               {
                 path: '/adhere/component/mobile/globalindicator',
                 name: 'GlobalIndicator',
@@ -581,6 +581,11 @@ export default () => [
                 path: '/adhere/component/mobile/importantconfirm',
                 name: 'ImportantConfirm',
                 component: MobileImportantConfirm,
+              },
+              {
+                path: '/adhere/component/mobile/tabs',
+                name: 'Tabs',
+                component: MobileTabs,
               },
             ],
           },

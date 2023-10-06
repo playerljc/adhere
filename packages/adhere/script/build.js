@@ -92,6 +92,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-mobile-ui-globalindicator', 'MobileGlobalIndicator'],
   ['@baifendian/adhere-mobile-ui-confirm-delconfirm', 'MobileDelConfirm'],
   ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],
+  ['@baifendian/adhere-mobile-ui-tabs', 'MobileTabs'],
 ]);
 
 /**
