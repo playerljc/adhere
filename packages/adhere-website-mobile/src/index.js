@@ -9,7 +9,6 @@ import {
   ConfigProvider as AdhereConfigProvider,
   DateDisplay,
   Dict,
-  Preferences,
   Util,
 } from '@baifendian/adhere';
 

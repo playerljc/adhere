@@ -12,6 +12,7 @@ const {
   DelConfirm,
   ImportantConfirm,
   Tabs,
+  TimePickerView,
 } = Components;
 
 export default () => [
@@ -38,7 +39,6 @@ export default () => [
         path: '/adhere/component/ui/globalindicator',
         component: GlobalIndicator,
       },
-
       {
         path: '/adhere/component/ui/delconfirm',
         component: DelConfirm,
@@ -72,6 +72,10 @@ export default () => [
             component: TabsPersonalCenter,
           },
         ],
+      },
+      {
+        path: '/adhere/component/ui/timepickerview',
+        component: TimePickerView,
       },
     ],
   },

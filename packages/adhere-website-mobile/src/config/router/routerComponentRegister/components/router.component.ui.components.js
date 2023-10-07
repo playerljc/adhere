@@ -25,3 +25,7 @@ export const ImportantConfirm = lazy(() =>
 );
 
 export const Tabs = lazy(() => import(/* webpackChunkName: "tabs" */ '@/components/ui/tabs'));
+
+export const TimePickerView = lazy(() =>
+  import(/* webpackChunkName: "timepickerview" */ '@/components/ui/timepickerview'),
+);
