@@ -90,6 +90,7 @@ const {
   MobileDelConfirm,
   MobileImportantConfirm,
   MobileTabs,
+  MobileTimePickerView,
 } = Components;
 
 export default () => [
@@ -586,6 +587,11 @@ export default () => [
                 path: '/adhere/component/mobile/tabs',
                 name: 'Tabs',
                 component: MobileTabs,
+              },
+              {
+                path: '/adhere/component/mobile/timepickerview',
+                name: 'TimePickerView',
+                component: MobileTimePickerView,
               },
             ],
           },

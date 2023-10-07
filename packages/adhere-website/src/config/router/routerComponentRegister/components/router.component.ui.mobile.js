@@ -21,3 +21,6 @@ export const MobileImportantConfirm = lazy(() =>
 export const MobileTabs = lazy(() =>
   import(/* webpackChunkName: "mobiletabs" */ '@/components/mobile/tabs'),
 );
+export const MobileTimePickerView = lazy(() =>
+  import(/* webpackChunkName: "mobiletimepickerview" */ '@/components/mobile/timepickerview'),
+);

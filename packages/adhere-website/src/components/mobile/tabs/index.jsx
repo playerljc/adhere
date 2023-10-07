@@ -388,7 +388,6 @@ export default () => {
               },
             ],
           },
-
           {
             border: true,
             title: 'JumboTabs',
@@ -461,7 +460,6 @@ export default () => {
               },
             ],
           },
-
           {
             border: true,
             title: 'SideTabs',
@@ -528,7 +526,6 @@ export default () => {
               },
             ],
           },
-
           {
             border: true,
             title: 'TabBar',
@@ -631,7 +628,6 @@ export default () => {
               },
             ],
           },
-
           {
             border: true,
             title: 'Tabs',
