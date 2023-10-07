@@ -146,6 +146,26 @@ module.exports = {
           },
           '@ant-design/icons',
         ],
+
+        [
+          'import',
+          {
+            libraryName: 'antd-mobile',
+            libraryDirectory: 'es/components',
+            style: false,
+          },
+          'ant-mobile',
+        ],
+        [
+          'import',
+          {
+            libraryName: 'antd-mobile-icons',
+            libraryDirectory: 'es',
+            camel2DashComponentName: false,
+            style: false,
+          },
+          'antd-mobile-icons',
+        ],
       );
     }
 
