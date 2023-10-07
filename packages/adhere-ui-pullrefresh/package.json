@@ -38,7 +38,7 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
-    "dayjs": "^1.11.7",
+    "dayjs": "^1.11.10",
     "load-awesome": "^1.1.0",
     "omit.js": "^2.0.2",
     "react": "^18.2.0",

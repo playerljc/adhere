@@ -31,7 +31,7 @@
   "dependencies": {
     "@baifendian/adhere-ui-suspense": "^2.10.28",
     "@baifendian/adhere-util": "^2.10.28",
-    "ahooks": "^3.7.5",
+    "ahooks": "^3.7.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
