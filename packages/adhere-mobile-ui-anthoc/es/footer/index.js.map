@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["footer/index.js"],"sourcesContent":["import { Footer } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Footer, {});"],"names":["Footer","createFactory"],"mappings":"OAASA,MAA2B,KAAb,qBACdC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}

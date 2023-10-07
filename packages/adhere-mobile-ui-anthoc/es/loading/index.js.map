@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["loading/index.js"],"sourcesContent":["import { Loading } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Loading, {});"],"names":["Loading","createFactory"],"mappings":"OAASA,OAA4B,KAAb,qBACfC,aAA8B,KAAT,yBACfA,cAAcD,QAAS,EAAE"}

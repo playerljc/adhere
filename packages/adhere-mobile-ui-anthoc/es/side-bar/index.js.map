@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["side-bar/index.js"],"sourcesContent":["import { SideBar } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(SideBar, {});"],"names":["SideBar","createFactory"],"mappings":"OAASA,OAA4B,KAAb,qBACfC,aAA8B,KAAT,yBACfA,cAAcD,QAAS,EAAE"}

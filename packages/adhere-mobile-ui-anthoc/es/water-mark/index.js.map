@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["water-mark/index.js"],"sourcesContent":["import { WaterMark } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(WaterMark, {});"],"names":["WaterMark","createFactory"],"mappings":"OAASA,SAA8B,KAAb,qBACjBC,aAA8B,KAAT,yBACfA,cAAcD,UAAW,EAAE"}

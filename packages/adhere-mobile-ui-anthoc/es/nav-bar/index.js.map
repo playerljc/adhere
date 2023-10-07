@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["nav-bar/index.js"],"sourcesContent":["import { NavBar } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(NavBar, {});"],"names":["NavBar","createFactory"],"mappings":"OAASA,MAA2B,KAAb,qBACdC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}

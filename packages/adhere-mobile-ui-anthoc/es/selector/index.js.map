@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["selector/index.js"],"sourcesContent":["import { Selector } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Selector, {});"],"names":["Selector","createFactory"],"mappings":"OAASA,QAA6B,KAAb,qBAChBC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}

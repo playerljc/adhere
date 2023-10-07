@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["picker-view/index.js"],"sourcesContent":["import { PickerView } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(PickerView, {});"],"names":["PickerView","createFactory"],"mappings":"OAASA,UAA+B,KAAb,qBAClBC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}

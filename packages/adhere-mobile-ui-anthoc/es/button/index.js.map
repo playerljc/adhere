@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["button/index.js"],"sourcesContent":["import { Button } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Button, {});"],"names":["Button","createFactory"],"mappings":"OAASA,MAA2B,KAAb,qBACdC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}

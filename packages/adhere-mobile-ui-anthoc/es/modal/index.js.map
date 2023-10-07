@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["modal/index.js"],"sourcesContent":["import { Modal } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Modal, {});"],"names":["Modal","createFactory"],"mappings":"OAASA,KAA0B,KAAb,qBACbC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}

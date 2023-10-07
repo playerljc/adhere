@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["number-keyboard/index.js"],"sourcesContent":["import { NumberKeyboard } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(NumberKeyboard, {});"],"names":["NumberKeyboard","createFactory"],"mappings":"OAASA,cAAmC,KAAb,qBACtBC,aAA8B,KAAT,yBACfA,cAAcD,eAAgB,EAAE"}

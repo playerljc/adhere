@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["result-page/index.js"],"sourcesContent":["import { ResultPage } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(ResultPage, {});"],"names":["ResultPage","createFactory"],"mappings":"OAASA,UAA+B,KAAb,qBAClBC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}
