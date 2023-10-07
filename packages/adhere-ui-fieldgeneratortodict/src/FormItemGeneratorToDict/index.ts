@@ -140,7 +140,7 @@ export {
   TreeSelectMultiFormItem,
 };
 
-const ItemNames = new Map([
+export const ItemNames = new Map([
   ['AutoCompleteDynamic', ['FormItem']],
   ['AutoComplete', ['FormItem']],
 

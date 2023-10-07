@@ -1,6 +1,7 @@
 import { AutoCompleteProps, BreadcrumbProps, CascaderProps, DropdownProps, ListProps, MentionProps, MenuProps, RadioGroupProps, SegmentedProps, SelectProps, StepsProps, TableProps, TagProps, TimelineProps, TransferProps, TreeSelectProps } from 'antd';
 import { CheckboxGroupProps } from 'antd/es/checkbox';
 import { ReactElement, ReactNode } from 'react';
+import { DictNames } from './DictNames';
 export interface LabelValue {
     label: string;
     value: string | number;
@@ -180,4 +181,5 @@ export interface DictRefreshWrapperFunction {
     refresh(): any;
 }
 export type UseTreeSelectLeaf = (dataSource: LabelValue[]) => LabelValue[];
+export type DictNamesType = typeof DictNames;
 export {};

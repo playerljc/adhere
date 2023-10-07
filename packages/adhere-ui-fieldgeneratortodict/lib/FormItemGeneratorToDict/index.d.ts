@@ -70,5 +70,6 @@ export declare const validatorMulti: (message: any) => {
     validator(_: any, value: any): Promise<void>;
 };
 export { AutoCompleteFormItem, BreadcrumbFormItem, CascaderFormItem, CascaderLeafFormItem, CascaderLeafMultiFormItem, CascaderMultiFormItem, CheckAllMultiSelectFormItem, CheckBoxCheckAllCustomFormItem, CheckBoxCheckAllHorizontalFormItem, CheckBoxCheckAllSelectFormItem, CheckBoxCheckAllVerticalFormItem, CheckBoxCustomFormItem, CheckBoxHorizontalFormItem, CheckBoxSelectFormItem, CheckBoxVerticalFormItem, DropdownFormItem, ListFormItem, ListMultiSelectFormItem, ListSelectFormItem, MentionsFormItem, MenuFormItem, MultiSelectFormItem, RadioButtonFormItem, RadioCustomFormItem, RadioHorizontalFormItem, RadioSelectFormItem, RadioVerticalFormItem, SegmentedFormItem, SelectFormItem, StepsFormItem, TableFormItem, TableMultiSelectFormItem, TableSelectFormItem, TagCheckAllHorizontalFormItem, TagCheckAllSelectFormItem, TagCheckAllVerticalFormItem, TagHorizontalFormItem, TagMultiSelectFormItem, TagSelectFormItem, TagVerticalFormItem, TimelineFormItem, TransferFormItem, TransferSelectFormItem, TreeMultiSelectFormItem, TreeSelectFormItem, TreeSelectLeafFormItem, TreeSelectLeafMultiFormItem, TreeSelectMultiFormItem, };
+export declare const ItemNames: Map<string, string[]>;
 declare const _default: {};
 export default _default;
