@@ -1,6 +1,5 @@
 import { Modal } from 'antd';
 
-// import Resource from '@baifendian/adhere-util-resource';
 import { createFactory } from '../util';
 
 export default createFactory(Modal, {
@@ -8,5 +7,5 @@ export default createFactory(Modal, {
   centered: true,
   maskClosable: true,
   destroyOnClose: true,
-  zIndex: 999 /*Resource.Dict.value.ResourceNormalMaxZIndex.value*/,
+  zIndex: 999,
 });
