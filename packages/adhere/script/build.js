@@ -94,6 +94,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],
   ['@baifendian/adhere-mobile-ui-tabs', 'MobileTabs'],
   ['@baifendian/adhere-mobile-ui-time-picker-view', 'MobileTimePickerView'],
+  ['@baifendian/adhere-mobile-ui-auto-complete', 'MobileAutoComplete'],
 ]);
 
 /**

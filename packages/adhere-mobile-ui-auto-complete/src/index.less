@@ -1,0 +1,53 @@
+@import '~antd-mobile/es/components/check-list/check-list.css';
+@import '~antd-mobile/es/components/search-bar/search-bar.css';
+@import '~antd-mobile/es/components/error-block/error-block.css';
+@import '~antd-mobile/es/components/error-block/error-block.patch.css';
+
+.adhere-mobile-ui-auto-complete {
+  display: flex;
+  flex-direction: column;
+
+  > .adhere-mobile-ui-auto-complete-search-bar {
+    flex-shrink: 0;
+    padding: 15px;
+  }
+
+  > .adhere-mobile-ui-auto-complete-body {
+    flex: 1;
+    min-height: 0;
+    padding: 15px;
+    overflow-y: auto;
+  }
+
+  > .adhere-mobile-ui-auto-complete-result {
+    flex-shrink: 0;
+    padding: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+
+    > .adhere-mobile-ui-auto-complete-result-item {
+      position: relative;
+      display: inline-block;
+      padding: 15px 20px;
+      color: var(--adhere-color-text);
+      font-size: var(--adhere-font-size-base);
+      border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+      border-radius: 15px;
+
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+
+      > .adhere-mobile-ui-auto-complete-result-item-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: red;
+        font-weight: bold;
+        font-size: 20px;
+        transform: translate3d(0, -50%, 0);
+      }
+    }
+  }
+}

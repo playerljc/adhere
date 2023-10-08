@@ -6,6 +6,7 @@ import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprom
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
 import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
+import MobileAutoComplete from '@baifendian/adhere-mobile-ui-auto-complete';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
 import CascadeCompared from '@baifendian/adhere-ui-cascadecompared';
@@ -84,6 +85,7 @@ export {
   MobileWarnPrompt,
   MobileTabs,
   MobileTimePickerView,
+  MobileAutoComplete,
   BackTopAnimation,
   BMap,
   CascadeCompared,
