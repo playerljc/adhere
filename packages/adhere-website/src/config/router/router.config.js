@@ -91,6 +91,7 @@ const {
   MobileImportantConfirm,
   MobileTabs,
   MobileTimePickerView,
+  MobileAutoComplete,
 } = Components;
 
 export default () => [
@@ -592,6 +593,11 @@ export default () => [
                 path: '/adhere/component/mobile/timepickerview',
                 name: 'TimePickerView',
                 component: MobileTimePickerView,
+              },
+              {
+                path: '/adhere/component/mobile/autocomplete',
+                name: 'AutoComplete',
+                component: MobileAutoComplete,
               },
             ],
           },

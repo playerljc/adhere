@@ -24,3 +24,6 @@ export const MobileTabs = lazy(() =>
 export const MobileTimePickerView = lazy(() =>
   import(/* webpackChunkName: "mobiletimepickerview" */ '@/components/mobile/timepickerview'),
 );
+export const MobileAutoComplete = lazy(() =>
+  import(/* webpackChunkName: "mobileautocomplete" */ '@/components/mobile/autocomplete'),
+);
