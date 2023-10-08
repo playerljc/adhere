@@ -29,3 +29,7 @@ export const Tabs = lazy(() => import(/* webpackChunkName: "tabs" */ '@/componen
 export const TimePickerView = lazy(() =>
   import(/* webpackChunkName: "timepickerview" */ '@/components/ui/timepickerview'),
 );
+
+export const AutoComplete = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
+);

@@ -13,6 +13,7 @@ const {
   ImportantConfirm,
   Tabs,
   TimePickerView,
+  AutoComplete,
 } = Components;
 
 export default () => [
@@ -76,6 +77,10 @@ export default () => [
       {
         path: '/adhere/component/ui/timepickerview',
         component: TimePickerView,
+      },
+      {
+        path: '/adhere/component/ui/autocomplete',
+        component: AutoComplete,
       },
     ],
   },
