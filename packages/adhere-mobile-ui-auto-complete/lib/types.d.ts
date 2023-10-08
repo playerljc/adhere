@@ -9,11 +9,12 @@ export interface AutoCompleteProps {
     checkListProps?: Omit<CheckListProps, 'value' | 'onChange'>;
     loadData?: (kw: string | undefined | null) => Promise<Record<any, any>>;
     rowKey?: string;
-    renderItem: (record: any, rowIndex: number) => CheckListItemProps;
-    searchDataSource: any[];
-    value?: CheckListValue[];
-    onChange?: (val: CheckListValue[]) => void;
     labelProp?: string;
     valueProp?: string;
+    renderItem?: (record: any, rowIndex: number) => CheckListItemProps;
+    renderResultItem?: (record: any) => ReactNode;
     renderEmpty?: () => ReactNode;
+    searchDataSource?: any[];
+    value?: CheckListValue[];
+    onChange?: (val: CheckListValue[]) => void;
 }

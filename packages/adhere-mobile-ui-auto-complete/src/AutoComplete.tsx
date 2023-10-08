@@ -1,6 +1,7 @@
 import { CheckList, ErrorBlock, SearchBar } from 'antd-mobile';
 import { CloseCircleFill } from 'antd-mobile-icons';
 import { CheckListValue } from 'antd-mobile/es/components/check-list/check-list';
+import type { CheckListItemProps } from 'antd-mobile/es/components/check-list/check-list-item';
 import classNames from 'classnames';
 import React, { memo, useEffect, useState } from 'react';
 import type { FC } from 'react';
@@ -36,18 +37,19 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   loadData,
   searchDataSource,
   rowKey,
-  renderItem,
   labelProp,
   valueProp,
   value,
   onChange,
+  renderItem,
+  renderResultItem,
   renderEmpty,
 }) => {
   const [kw, setKw] = useState<string>('');
 
   const [dataSource, setDataSource] = useState<any[]>([]);
 
-  const isEmpty = () => !searchDataSource.length;
+  const isEmpty = () => !searchDataSource?.length;
 
   const empty = () => renderEmpty?.() ?? <ErrorBlock status="empty" />;
 
@@ -76,7 +78,7 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   const onCheckListChange = (_values) => {
     setDataSource((_dataSource) =>
       _values.map((_value) =>
-        [...searchDataSource, ..._dataSource]?.find?.(
+        [...(searchDataSource ?? []), ..._dataSource]?.find?.(
           (_r) => (getValue(_r) ?? getKey(_r)) === _value,
         ),
       ),
@@ -95,9 +97,12 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
   useEffect(() => {
     setDataSource(
-      value?.map?.((_value) =>
-        searchDataSource?.find?.((_r) => (getValue(_r) ?? getKey(_r)) === _value),
-      ) ?? [],
+      (_dataSource) =>
+        value?.map?.((_value) =>
+          [...(searchDataSource ?? []), ..._dataSource]?.find?.(
+            (_r) => (getValue(_r) ?? getKey(_r)) === _value,
+          ),
+        ) ?? [],
     );
   }, [searchDataSource, value]);
 
@@ -119,14 +124,19 @@ const AutoComplete: FC<AutoCompleteProps> = ({
         {!isEmpty() && (
           <CheckList {...(checkListProps ?? {})} value={value} onChange={onCheckListChange}>
             {(searchDataSource ?? []).map((_record, _index) => {
-              let checkListItemProps;
+              let checkListItemProps: CheckListItemProps = {
+                value: getValue(_record) ?? getKey(_record),
+              };
 
               if (renderItem) {
-                checkListItemProps = renderItem(_record, _index);
+                checkListItemProps = {
+                  ...renderItem(_record, _index),
+                  ...checkListItemProps,
+                };
               } else {
                 checkListItemProps = {
-                  value: getValue(_record) ?? getKey(_record),
                   children: labelProp ?? <span>{getLabel(_record)}</span>,
+                  ...checkListItemProps,
                 };
               }
 
@@ -147,7 +157,7 @@ const AutoComplete: FC<AutoCompleteProps> = ({
                 <CloseCircleFill />
               </div>
 
-              <span>{getLabel(_record)}</span>
+              {renderResultItem?.(_record) ?? <span>{getLabel(_record)}</span>}
             </div>
           ))}
         </div>
