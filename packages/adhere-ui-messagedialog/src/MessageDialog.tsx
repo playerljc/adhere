@@ -10,6 +10,8 @@ import Intl from '@baifendian/adhere-util-intl';
 import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './Constent';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
+import Trigger from './Trigger';
+import TriggerPrompt from './TriggerPrompt';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 
 let antdConfigProviderProps: ConfigProviderProps = {};
@@ -183,6 +185,12 @@ const MessageDialogFactory = {
       ),
     });
   },
+  /**
+   * InputPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   InputPrompt({ config, ...params }: PromptArgv) {
     MessageDialogFactory.Prompt({
       ...params,
@@ -192,6 +200,12 @@ const MessageDialogFactory = {
       },
     });
   },
+  /**
+   * TextAreaPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   TextAreaPrompt({ config, ...params }) {
     MessageDialogFactory.Prompt({
       ...params,
@@ -201,6 +215,12 @@ const MessageDialogFactory = {
       },
     });
   },
+  /**
+   * PassWordPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   PassWordPrompt({ config, ...params }) {
     MessageDialogFactory.Prompt({
       ...params,
@@ -210,6 +230,12 @@ const MessageDialogFactory = {
       },
     });
   },
+  /**
+   * NumberPrompt
+   * @param config
+   * @param params
+   * @constructor
+   */
   NumberPrompt({ config, ...params }) {
     MessageDialogFactory.Prompt({
       ...params,
@@ -240,6 +266,18 @@ const MessageDialogFactory = {
     defaultCloseBtn = true,
     local = DEFAULT_LOCAL,
   }: ModalArgv) {
+    let open = true;
+
+    function render() {
+      root.render(
+        <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
+          <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
+            {children}
+          </ModalDialog>
+        </ConfigProvider>,
+      );
+    }
+
     const modalConfig = Object.assign(
       {
         maskClosable: false,
@@ -250,18 +288,18 @@ const MessageDialogFactory = {
     const el = document.createElement('div');
 
     function close() {
-      root.unmount();
+      open = false;
+
+      render();
+
+      setTimeout(() => {
+        root.unmount();
+      }, 300);
     }
 
     const root = ReactDOM.createRoot(el);
 
-    root.render(
-      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-        <ModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
-          {children}
-        </ModalDialog>
-      </ConfigProvider>,
-    );
+    render();
 
     MessageDialogHandlers.set(el, root);
 
@@ -272,12 +310,37 @@ const MessageDialogFactory = {
       close,
     };
   },
+  /**
+   * MaximizeModal
+   * @param config
+   * @param children
+   * @param defaultCloseBtn
+   * @param local
+   * @constructor
+   */
   MaximizeModal({
     config = {},
     children = null,
     defaultCloseBtn = true,
     local = DEFAULT_LOCAL,
   }: ModalArgv) {
+    let open = true;
+
+    function render() {
+      root.render(
+        <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
+          <MaximizeModalDialog
+            close={close}
+            open={open}
+            config={modalConfig}
+            closeBtn={defaultCloseBtn}
+          >
+            {children}
+          </MaximizeModalDialog>
+        </ConfigProvider>,
+      );
+    }
+
     const modalConfig = Object.assign(
       {
         maskClosable: false,
@@ -288,18 +351,18 @@ const MessageDialogFactory = {
     const el = document.createElement('div');
 
     function close() {
-      root.unmount();
+      open = false;
+
+      render();
+
+      setTimeout(() => {
+        root.unmount();
+      }, 300);
     }
 
     const root = ReactDOM.createRoot(el);
 
-    root.render(
-      <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-        <MaximizeModalDialog close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
-          {children}
-        </MaximizeModalDialog>
-      </ConfigProvider>,
-    );
+    render();
 
     MessageDialogHandlers.set(el, root);
 
@@ -324,6 +387,14 @@ const MessageDialogFactory = {
     //   el?.parentElement?.removeChild?.(el);
     // }
   },
+  /**
+   * Trigger
+   */
+  Trigger,
+  /**
+   * TriggerPrompt
+   */
+  TriggerPrompt,
 };
 
 export default MessageDialogFactory;

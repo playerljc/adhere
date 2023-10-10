@@ -43,10 +43,11 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
     [isMaximize],
   );
 
-  const modalRender = useCallback(
-    (_modal) => renderDraggableModal(_modal),
-    [isMaximize, bounds, draggableDisabled],
-  );
+  const modalRender = useCallback((_modal) => renderDraggableModal(_modal), [
+    isMaximize,
+    bounds,
+    draggableDisabled,
+  ]);
 
   /**
    * renderDraggableModal
@@ -77,7 +78,7 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
       );
     }
 
-    return <CloseOutlined className={`${selectorPrefix}-header-action`} onClick={onClose} />;
+    return <CloseOutlined rev="" className={`${selectorPrefix}-header-action`} onClick={onClose} />;
   }
 
   /**
@@ -108,10 +109,15 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
           <div className={`${selectorPrefix}-header-actions`}>
             <Space.Group direction="horizontal" size={5}>
               {isMaximize && (
-                <BlockOutlined className={`${selectorPrefix}-header-action`} onClick={onRevert} />
+                <BlockOutlined
+                  rev=""
+                  className={`${selectorPrefix}-header-action`}
+                  onClick={onRevert}
+                />
               )}
               {!isMaximize && (
                 <BorderOutlined
+                  rev=""
                   className={`${selectorPrefix}-header-action`}
                   onClick={onMaximize}
                 />

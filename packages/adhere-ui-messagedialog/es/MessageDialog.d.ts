@@ -1,3 +1,4 @@
+import React from 'react';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 declare const MessageDialogFactory: {
     /**
@@ -38,15 +39,39 @@ declare const MessageDialogFactory: {
      * @constructor
      */
     Prompt({ title, config, layout, width, zIndex, local, onSuccess, }: PromptArgv): void;
+    /**
+     * InputPrompt
+     * @param config
+     * @param params
+     * @constructor
+     */
     InputPrompt({ config, ...params }: PromptArgv): void;
+    /**
+     * TextAreaPrompt
+     * @param config
+     * @param params
+     * @constructor
+     */
     TextAreaPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
     }): void;
+    /**
+     * PassWordPrompt
+     * @param config
+     * @param params
+     * @constructor
+     */
     PassWordPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
     }): void;
+    /**
+     * NumberPrompt
+     * @param config
+     * @param params
+     * @constructor
+     */
     NumberPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
@@ -70,6 +95,14 @@ declare const MessageDialogFactory: {
         el: HTMLDivElement;
         close: () => void;
     };
+    /**
+     * MaximizeModal
+     * @param config
+     * @param children
+     * @param defaultCloseBtn
+     * @param local
+     * @constructor
+     */
     MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
         el: HTMLDivElement;
         close: () => void;
@@ -79,5 +112,13 @@ declare const MessageDialogFactory: {
      * @param el
      */
     close(el: HTMLElement): void;
+    /**
+     * Trigger
+     */
+    Trigger: React.FC<import("./types").TriggerProps>;
+    /**
+     * TriggerPrompt
+     */
+    TriggerPrompt: React.FC<import("./types").TriggerPromptProps>;
 };
 export default MessageDialogFactory;
