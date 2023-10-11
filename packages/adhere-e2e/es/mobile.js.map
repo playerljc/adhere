@@ -1,0 +1,1 @@
+{"version":3,"file":"mobile.js","sources":["mobile.js"],"sourcesContent":["export default (function (children) {\n  console.log(children);\n});"],"names":["children","console","log"],"mappings":"eAAe,SAAWA,GACxBC,QAAQC,IAAIF,CAAQ,CACrB"}
