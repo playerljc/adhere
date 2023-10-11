@@ -19,7 +19,7 @@ const TriggerPrompt: FC<TriggerPromptProps> = ({ onSubmit, modalConfig, okText, 
     <Trigger
       {...props}
       modalConfig={modalConfig}
-      footer={[
+      actions={[
         {
           key: 'submit',
           // @ts-ignore

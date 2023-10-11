@@ -29,7 +29,7 @@ const Trigger: FC<TriggerProps> = ({
   children,
   renderTrigger,
   modalConfig,
-  footer,
+  actions,
 }) => {
   const onConfirm = (onClick, close) =>
     new Promise((resolve, reject) => {
@@ -65,10 +65,10 @@ const Trigger: FC<TriggerProps> = ({
 
     const _modalConfig: ModalProps = modalConfig?.config ?? {};
     _modalConfig.footer =
-      (footer ?? []).map?.((_footerConfig) => (
+      (actions ?? []).map?.((_actionConfig) => (
         <SubmitButton
-          {...(_footerConfig ?? {})}
-          onClick={() => onConfirm(_footerConfig.onClick, dialog?.close)}
+          {...(_actionConfig ?? {})}
+          onClick={() => onConfirm(_actionConfig.onClick, dialog?.close)}
         />
       )) ?? [];
 

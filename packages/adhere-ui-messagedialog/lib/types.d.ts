@@ -68,7 +68,7 @@ export interface TriggerProps {
     value?: any;
     onChange?: (params?: any) => void;
     renderTrigger?: () => ReactNode;
-    footer?: Omit<ButtonProps, 'onClick'> & {
+    actions?: Omit<ButtonProps, 'onClick'> & {
         key: any;
         onClick?: () => Promise<any>;
     }[];
@@ -76,6 +76,9 @@ export interface TriggerProps {
         config?: Omit<ModalProps, 'footer'>;
     }, 'children' | 'defaultCloseBtn'>;
 }
+/**
+ * SubmitButtonProps
+ */
 export type SubmitButtonProps = Omit<ButtonProps, 'onClick'> & {
     onClick: (e?: any) => Promise<void>;
 };

@@ -4,7 +4,7 @@ import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 import type {
   ColumnItemProps,
-  FormItemLayoutProps
+  FormItemLayoutProps,
 } from '@baifendian/adhere-ui-formitemcreator/lib/types';
 
 /**
@@ -79,7 +79,7 @@ export interface TriggerProps {
   value?: any;
   onChange?: (params?: any) => void;
   renderTrigger?: () => ReactNode;
-  footer?: Omit<ButtonProps, 'onClick'> &
+  actions?: Omit<ButtonProps, 'onClick'> &
     {
       key: any;
       onClick?: () => Promise<any>;
