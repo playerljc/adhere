@@ -30,6 +30,7 @@ const Trigger: FC<TriggerProps> = ({
   renderTrigger,
   modalConfig,
   actions,
+  maximized = true,
 }) => {
   const onConfirm = (onClick, close) =>
     new Promise((resolve, reject) => {
@@ -72,7 +73,12 @@ const Trigger: FC<TriggerProps> = ({
         />
       )) ?? [];
 
-    dialog = MessageDialog.Modal({
+    const modalMap = new Map([
+      [true, MessageDialog.MaximizeModal],
+      [false, MessageDialog.Modal],
+    ]);
+
+    dialog = modalMap.get(maximized as boolean)?.({
       config: _modalConfig,
       defaultCloseBtn: true,
       children: Children,
