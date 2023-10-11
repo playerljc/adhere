@@ -1,3 +1,4 @@
+import React from 'react';
 import { IConfig } from './types';
 /**
  * Popup
@@ -113,5 +114,13 @@ declare const PopupFactory: {
      * @param tel
      */
     setEl(tel: any): void;
+    /**
+     * Trigger
+     */
+    Trigger: React.FC<import("./types").TriggerProps>;
+    /**
+     * TriggerPrompt
+     */
+    TriggerPrompt: React.FC<import("./types").TriggerPromptProps>;
 };
 export default PopupFactory;

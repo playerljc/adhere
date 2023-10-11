@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Popup from './popup';\nexport default Popup;\n"],"names":["Popup"],"mappings":"OAAOA,UAAW,yBACHA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Popup from './popup';\nexport default Popup;"],"names":["Popup"],"mappings":"OAAOA,UAAW,yBACHA"}

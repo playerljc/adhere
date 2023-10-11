@@ -21,16 +21,24 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
-    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage:cjs": "ctbuild buildpackagets-babel -c ctbuild.package.ts.cjs.config.js -o lib",
+    "postbuildpackage:cjs": "tsc --declaration -p ./ --emitDeclarationOnly --outDir lib",
+    "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
+    "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdherePopup --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true"
   },
   "dependencies": {
+    "@baifendian/adhere-util-intl": "^2.10.28",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
+    "antd": "^5.9.4",
+    "antd-mobile": "^5.32.4",
+    "antd-mobile-icons": "^0.3.0",
     "classnames": "^2.3.2",
+    "lodash.debounce": "^4.0.8",
     "omit.js": "^2.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -43,6 +51,8 @@
     "typescript": "^5.0.4"
   },
   "peerDependencies": {
+    "antd": ">=5.0.0 - <6.0.0",
+    "antd-mobile": ">=5.0.0 - <6.0.0",
     "react": ">=18.0.0 - <19.0.0",
     "react-dom": ">=18.0.0 - <19.0.0"
   },

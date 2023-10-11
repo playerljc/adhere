@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 import { v1 } from 'uuid';
 
+import Trigger from './Trigger';
+import TriggerPrompt from './TriggerPrompt';
 import { IConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
@@ -90,7 +92,7 @@ class Popup {
    */
   private trigger(hookName: string): void {
     if (this.config?.[hookName]) {
-      return this.config[hookName]();
+      return this?.config?.[hookName]?.();
     }
   }
 
@@ -351,6 +353,7 @@ const PopupFactory = {
   getEl() {
     return el || document.body;
   },
+
   /**
    * setEl
    * @param tel
@@ -358,6 +361,14 @@ const PopupFactory = {
   setEl(tel) {
     el = tel;
   },
+  /**
+   * Trigger
+   */
+  Trigger,
+  /**
+   * TriggerPrompt
+   */
+  TriggerPrompt,
 };
 
 export default PopupFactory;

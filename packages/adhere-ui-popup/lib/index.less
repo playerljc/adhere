@@ -1,8 +1,8 @@
-//@import '~@baifendian/adhere-ui-css/lib/vars';
+@import '~antd-mobile/es/components/button/button.css';
+@import '~antd-mobile/es/components/button/button.patch.css';
+@import './Trigger.less';
 
 @adhere-ui-popup-duration: 0.4s;
-//@adhere-ui-popup-popupZIndex: 11000;
-//@adhere-ui-popup-popupMaskZIndex: 9500;
 
 .adhere-ui-popup {
   position: absolute;
@@ -11,9 +11,7 @@
   display: none;
   width: 100%;
   height: 100%;
-  //z-index: @adhere-ui-popup-popupZIndex;
   overflow: hidden;
-  //background-color: #fff;
   background-color: var(--adhere-color-bg-base);
   transform: translate3d(0, 100%, 0);
   transition: transform @adhere-ui-popup-duration;
@@ -33,7 +31,7 @@
   height: 100%;
   background-color: rgb(0 0 0 / 0%);
   transition-duration: @adhere-ui-popup-duration;
-  //z-index: @adhere-ui-popup-popupMaskZIndex;
+
   &.modal-in {
     background-color: rgb(0 0 0 / 40%);
   }
