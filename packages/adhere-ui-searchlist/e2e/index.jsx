@@ -1,8 +1,6 @@
-import { ConfigProvider } from 'antd';
 import React, { Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
+import e2e from '@baifendian/adhere-e2e';
 
 import DictConfig from './config/dict/dict.config';
 
@@ -17,30 +15,12 @@ DictConfig();
 
 const List = lazy(() => import(/* webpackChunkName: "conditionalrender" */ './normalList.jsx'));
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-  <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
-    <AdhereConfigProvider
-      intl={{
-        lang: 'zh_CN',
-        locales: {
-          en_US: [],
-          zh_CN: [],
-          pt_PT: [],
-        },
-      }}
-    >
-      {() => (
-        /*<div style={{ display: 'flex', width: 700, height: 700 }}>
-          <Suspense fallback={<div>loading</div>}>
-            <List />
-          </Suspense>
-        </div>*/
-        <div style={{ display: 'flex' }}>
-          <Suspense fallback={<div>loading</div>}>
-            <List />
-          </Suspense>
-        </div>
-      )}
-    </AdhereConfigProvider>
-  </ConfigProvider>,
-);
+e2e.PC({
+  children: (
+    <div style={{ display: 'flex' }}>
+      <Suspense fallback={<div>loading</div>}>
+        <List />
+      </Suspense>
+    </div>
+  ),
+});

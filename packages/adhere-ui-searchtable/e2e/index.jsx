@@ -1,8 +1,6 @@
-import { ConfigProvider } from 'antd';
 import React, { Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
+import e2e from '@baifendian/adhere-e2e';
 import { createLoggerMiddleware } from '@ctsj/state/lib/middleware';
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
 import { Provider } from '@ctsj/state/lib/react';
@@ -67,27 +65,14 @@ const ProSearchStateTableImpl = lazy(() =>
   ),
 );
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-  <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value['zh_CN']}>
-    <AdhereConfigProvider
-      intl={{
-        lang: 'zh_CN',
-        locales: {
-          en_US: [],
-          zh_CN: [],
-          pt_PT: [],
-        },
-      }}
-    >
-      {() => (
-        <Provider store={store}>
-          <div style={{ display: 'flex', height: 700 }}>
-            <Suspense fallback={<div>loading</div>}>
-              <ProSearchStateTableImpl pagination={true} />
-            </Suspense>
-          </div>
-        </Provider>
-      )}
-    </AdhereConfigProvider>
-  </ConfigProvider>,
-);
+e2e.PC({
+  children: (
+    <Provider store={store}>
+      <div style={{ display: 'flex', height: 700 }}>
+        <Suspense fallback={<div>loading</div>}>
+          <ProSearchStateTableImpl pagination={true} />
+        </Suspense>
+      </div>
+    </Provider>
+  ),
+});
