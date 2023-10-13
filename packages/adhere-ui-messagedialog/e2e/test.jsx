@@ -1,7 +1,8 @@
-import { Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import MessageDialog from '../src/index';
+import SelectPerson from './SelectPerson';
 
 import '../src/index.less';
 
@@ -76,6 +77,12 @@ export default () => {
 
   const formRef = useRef();
 
+  const [form] = Form.useForm();
+
+  const personSelectRef = useRef();
+
+  const person = Form.useWatch('person', form);
+
   return (
     <div>
       <div
@@ -132,24 +139,50 @@ export default () => {
         <UserForm ref={formRef} />
       </MessageDialog.TriggerPrompt>
 
-      <Form>
+      <Form
+        name="PersonForm"
+        form={form}
+        onFinish={(values) => {
+          alert(values);
+        }}
+      >
         <Form.Item
-          name="values"
-          label="选人"
+          name="person"
+          label="人员选择"
           rules={[
             {
               required: true,
+              message: '请选择人员',
             },
           ]}
         >
           <MessageDialog.TriggerPrompt
-            renderTrigger={() => <div>触发</div>}
-            onSubmit={() => {
-              return new Promise((resolve, reject) => {});
+            okText="确认"
+            renderTrigger={() => <Button type="primary">选取({person?.length})</Button>}
+            modalConfig={{
+              config: {
+                title: '人员选择',
+              },
             }}
+            onSubmit={() =>
+              new Promise((resolve) => {
+                resolve(personSelectRef.current.getValues());
+              })
+            }
           >
-            <div>111</div>
+            <SelectPerson ref={personSelectRef} />
           </MessageDialog.TriggerPrompt>
+        </Form.Item>
+
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            提交
+          </Button>
         </Form.Item>
       </Form>
 
