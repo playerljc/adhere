@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Result } from 'antd';
 import React from 'react';
 
 import { Popup } from '@baifendian/adhere';
@@ -370,6 +370,30 @@ export default () => {
             Open Popup
           </Button>
         ),
+      },
+      {
+        id: `p3`,
+        name: `使用TriggerPrompt弹出MessageDialog`,
+        cardProps: {
+          description: {
+            title: '使用TriggerPrompt弹出MessageDialog',
+            info: '基本的显示 - 只显示内容',
+          },
+        },
+        active: 'Javascript',
+        config: [
+          {
+            key: 'Javascript',
+            title: 'Javascript',
+            codeText: `
+
+      `,
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+          },
+        ],
+        type: 'PlayGroundTabMobile',
+        url: 'http://www.baidu.com',
       },
     ];
   }

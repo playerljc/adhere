@@ -33,3 +33,5 @@ export const TimePickerView = lazy(() =>
 export const AutoComplete = lazy(() =>
   import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
 );
+
+export const Popup = lazy(() => import(/* webpackChunkName: "popup" */ '@/components/ui/popup'));

@@ -14,6 +14,7 @@ const {
   Tabs,
   TimePickerView,
   AutoComplete,
+  Popup,
 } = Components;
 
 export default () => [
@@ -81,6 +82,10 @@ export default () => [
       {
         path: '/adhere/component/ui/autocomplete',
         component: AutoComplete,
+      },
+      {
+        path: '/adhere/component/ui/popup',
+        component: Popup,
       },
     ],
   },
