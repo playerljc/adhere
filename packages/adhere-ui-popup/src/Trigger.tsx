@@ -6,8 +6,8 @@ import React, { useMemo } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import Popup from './popup';
 import SubmitButton from './SubmitButton';
+import Popup from './popup';
 import type { TriggerProps } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
@@ -51,7 +51,7 @@ const Trigger: FC<TriggerProps> = ({
           setTimeout(() => {
             resolve(result);
             close?.();
-          }, 300);
+          }, 400);
         })
         .catch((error) => reject(error));
     });
@@ -79,7 +79,12 @@ const Trigger: FC<TriggerProps> = ({
       children: (
         <div className={classNames(triggerSelectorInnerPrefix)}>
           <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
-            <div className={`${triggerSelectorInnerPrefix}-close`} onClick={() => popup.close()}>
+            <div
+              className={`${triggerSelectorInnerPrefix}-close`}
+              onClick={() => {
+                popup.close();
+              }}
+            >
               {closeIcon && (
                 <span className={`${triggerSelectorInnerPrefix}-close-inner`}>
                   {<LeftOutline />}
@@ -101,7 +106,10 @@ const Trigger: FC<TriggerProps> = ({
                   key="close"
                   onClick={() =>
                     new Promise((resolve) => {
-                      popup?.close();
+                      setTimeout(() => {
+                        popup?.close();
+                      }, 100);
+
                       resolve();
                     })
                   }

@@ -12,7 +12,6 @@ import type { SubmitButtonProps } from './types';
 const SubmitButton: FC<SubmitButtonProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  debugger;
   return (
     <Button
       loading={loading}
