@@ -2,7 +2,6 @@ import { CheckList, Image } from 'antd-mobile';
 import React, { useState } from 'react';
 
 import { MobileGlobalIndicator } from '@baifendian/adhere';
-import GlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 
 import MobileAutoComplete from '../src';
 import Book from './data';
@@ -35,23 +34,7 @@ export default () => {
       onChange={(_value) => {
         setValue(_value);
       }}
-      checkListProps={{
-        multiple: true,
-      }}
       searchDataSource={searchDataSource}
-      renderItem={(record) => ({
-        description: record.label,
-        prefix: (
-          <Image
-            src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-            style={{ borderRadius: 20 }}
-            fit="cover"
-            width={40}
-            height={40}
-          />
-        ),
-        children: record.t,
-      })}
       renderResultItem={(record) => (
         <CheckList>
           <CheckList.Item
@@ -70,6 +53,29 @@ export default () => {
           </CheckList.Item>
         </CheckList>
       )}
-    />
+    >
+      {({ value: _value, onChange: _onChange, searchDataSource: _searchDataSource }) => (
+        <CheckList multiple value={_value} onChange={_onChange}>
+          {(_searchDataSource ?? []).map((_record, _index) => (
+            <CheckList.Item
+              key={_record.id}
+              value={_record.id}
+              description={_record.label}
+              prefix={
+                <Image
+                  src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                  style={{ borderRadius: 20 }}
+                  fit="cover"
+                  width={40}
+                  height={40}
+                />
+              }
+            >
+              {_record.t}
+            </CheckList.Item>
+          ))}
+        </CheckList>
+      )}
+    </MobileAutoComplete>
   );
 };
