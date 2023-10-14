@@ -256,7 +256,7 @@ export default () => {
         config={[
           {
             border: true,
-            title: 'MobileTimePickerView',
+            title: 'AutoCompleteProps',
             data: [
               {
                 params: 'className',
@@ -271,21 +271,75 @@ export default () => {
                 defaultVal: '',
               },
               {
+                params: 'searchBarProps',
+                desc: '',
+                type: 'SearchBarProps',
+                defaultVal: '',
+              },
+              {
+                params: 'loadData',
+                desc: '',
+                type: '(kw?: string) => Promise<Record<any, any>>',
+                defaultVal: '',
+              },
+              {
+                params: 'rowKey',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'labelProp',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'valueProp',
+                desc: '',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'renderResultItem',
+                desc: '',
+                type: '(record: any) => ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'renderEmpty',
+                desc: '',
+                type: '() => ReactNode',
+                defaultVal: '',
+              },
+              {
+                params: 'searchDataSource',
+                desc: '',
+                type: 'any[]',
+                defaultVal: '',
+              },
+              {
                 params: 'value',
-                desc: '值',
-                type: 'dayjs.Dayjs | null',
+                desc: '',
+                type: 'CheckListValue[]',
                 defaultVal: '',
               },
               {
                 params: 'onChange',
-                desc: '切换时间触发',
-                type: '(value: dayjs.Dayjs | null) => void',
+                desc: '',
+                type: '(val: CheckListValue[]) => void',
                 defaultVal: '',
               },
               {
-                params: 'format',
-                desc: '格式化',
-                type: "'HH:mm:ss' | 'HH:mm' | 'HH' | 'mm:ss' | 'ss' | undefined",
+                params: 'children',
+                desc: '',
+                type: `
+                   (arg: {
+                    value?: CheckListValue[];
+                    onChange?: (_values: CheckListValue[]) => void;
+                    searchDataSource?: any[];
+                  }) => ReactNode
+                `,
                 defaultVal: '',
               },
             ],

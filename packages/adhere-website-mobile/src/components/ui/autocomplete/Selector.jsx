@@ -1,4 +1,4 @@
-import { CheckList, Image } from 'antd-mobile';
+import { CheckList, Image, Selector } from 'antd-mobile';
 import React, { useState } from 'react';
 
 import { MobileAutoComplete, MobileGlobalIndicator } from '@baifendian/adhere';
@@ -31,23 +31,7 @@ export default () => {
       onChange={(_value) => {
         setValue(_value);
       }}
-      checkListProps={{
-        multiple: true,
-      }}
       searchDataSource={searchDataSource}
-      renderItem={(record) => ({
-        description: record.label,
-        prefix: (
-          <Image
-            src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-            style={{ borderRadius: 20 }}
-            fit="cover"
-            width={40}
-            height={40}
-          />
-        ),
-        children: record.t,
-      })}
       renderResultItem={(record) => (
         <CheckList>
           <CheckList.Item
@@ -66,6 +50,19 @@ export default () => {
           </CheckList.Item>
         </CheckList>
       )}
-    />
+    >
+      {({ value: _value, onChange: _onChange, searchDataSource: _searchDataSource }) => (
+        <Selector
+          columns={3}
+          options={_searchDataSource.map((t) => ({
+            label: t.t,
+            value: t.id,
+          }))}
+          multiple
+          value={_value}
+          onChange={_onChange}
+        />
+      )}
+    </MobileAutoComplete>
   );
 };
