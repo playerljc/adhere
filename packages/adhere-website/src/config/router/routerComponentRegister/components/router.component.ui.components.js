@@ -160,3 +160,7 @@ export const Ellipsis = lazy(() =>
 export const Expression = lazy(() =>
   import(/* webpackChunkName: "expression" */ '@/components/ui/expression'),
 );
+
+export const AutoComplete = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/AutoComplete'),
+);

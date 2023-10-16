@@ -83,6 +83,7 @@ const {
   RichTextSandBox,
   Ellipsis,
   Expression,
+  AutoComplete,
   MobileSuccessPrompt,
   MobileErrorPrompt,
   MobileWarnPrompt,
@@ -424,11 +425,6 @@ export default () => [
                 name: 'ConfigProvider',
                 component: ConfigProvider,
               },
-              // {
-              //   path: '/adhere/component/ui/antdformitem',
-              //   name: 'AntdFormItem',
-              //   component: AntdFormItem,
-              // },
               {
                 path: '/adhere/component/ui/anthoc',
                 name: 'AntHOC',
@@ -453,6 +449,11 @@ export default () => [
                 path: '/adhere/component/ui/expression',
                 name: 'Expression',
                 component: Expression,
+              },
+              {
+                path: '/adhere/component/ui/autocomplete',
+                name: 'AutoComplete',
+                component: AutoComplete,
               },
             ],
           },

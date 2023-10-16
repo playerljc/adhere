@@ -280,6 +280,11 @@
     "path": "/adhere/component/ui/expression"
   },
   {
+    "kw": ["自动补全","AutoComplete"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/autocomplete"
+  },
+  {
     "kw": ["组件强制刷新", "ForceUpdate"],
     "group": "组件 - Util",
     "path": "/adhere/component/ui/forceupdate"
@@ -365,6 +370,51 @@
     "path": "/adhere/component/util/iframeio"
   },
 
+  {
+    "kw": ["自动补全", "MobileAutoComplete"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/autocomplete"
+  },
+  {
+    "kw": ["删除确认提示", "MobileDelConfirm"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/delconfirm"
+  },
+  {
+    "kw": ["重要操作确认提示", "MobileImportantConfirm"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/importantconfirm"
+  },
+  {
+    "kw": ["全局无侵入的遮罩", "MobileGlobalIndicator"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/globalindicator"
+  },
+  {
+    "kw": ["错误的提示(就是为了全局统一)", "MobileErrorPrompt"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/errorprompt"
+  },
+  {
+    "kw": ["成功的提示(就是为了全局统一)", "MobileSuccessPrompt"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/successprompt"
+  },
+  {
+    "kw": ["警告的提示(就是为了全局统一)", "MobileWarnPrompt"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/warnprompt"
+  },
+  {
+    "kw": ["选项卡", "MobileTabs"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/tabs"
+  },
+  {
+    "kw": ["时间选择", "MobileTimePickerView"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/timepickerview"
+  },
   {
     "kw": ["echarts", "echarts"],
     "group": "Gallery",
