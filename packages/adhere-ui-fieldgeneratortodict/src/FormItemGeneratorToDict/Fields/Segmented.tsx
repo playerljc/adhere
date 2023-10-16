@@ -1,10 +1,10 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import React, { useState } from 'react';
 
+import { Segmented } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
-import SegmentedFormItem from '../SegmentedFormItem';
 import { deepDep } from '../util';
 
 /**
@@ -40,7 +40,7 @@ setItem(
         onDataSourceChange?.(dataSource);
       }, [dataSource]);
 
-      return <SegmentedFormItem {...props} options={dataSource} />;
+      return <Segmented {...props} options={dataSource} />;
     },
 );
 
@@ -82,6 +82,6 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <SegmentedFormItem {...props} options={data} />;
+      return <Segmented {...props} options={data} />;
     },
 );

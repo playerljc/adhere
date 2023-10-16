@@ -1,10 +1,10 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import React, { useState } from 'react';
 
+import { Mentions } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
-import MentionsFormItem from '../MentionsFormItem';
 import { deepDep } from '../util';
 
 /**
@@ -36,7 +36,7 @@ setItem('Mentions', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChan
     onDataSourceChange?.(dataSource);
   }, [dataSource]);
 
-  return <MentionsFormItem {...props} options={dataSource} />;
+  return <Mentions {...props} options={dataSource} />;
 });
 
 /**
@@ -77,6 +77,6 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <MentionsFormItem {...props} options={data} />;
+      return <Mentions {...props} options={data} />;
     },
 );

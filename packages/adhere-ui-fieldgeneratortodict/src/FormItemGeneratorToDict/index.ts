@@ -1,5 +1,4 @@
 import AutoCompleteFormItem from './AutoCompleteFormItem';
-import BreadcrumbFormItem from './BreadcrumbFormItem';
 import CascaderFormItem from './CascaderFormItem';
 import CascaderLeafFormItem from './CascaderLeafFormItem';
 import CascaderLeafMultiFormItem from './CascaderLeafMultiFormItem';
@@ -13,7 +12,6 @@ import CheckBoxCustomFormItem from './CheckBoxCustomFormItem';
 import CheckBoxHorizontalFormItem from './CheckBoxHorizontalFormItem';
 import CheckBoxSelectFormItem from './CheckBoxSelectFormItem';
 import CheckBoxVerticalFormItem from './CheckBoxVerticalFormItem';
-import DropdownFormItem from './DropdownFormItem';
 import './Fields/AutoComplete';
 import './Fields/Breadcrumb';
 import './Fields/Cascader';
@@ -35,15 +33,12 @@ import ItemFactory from './ItemFactory';
 import ListFormItem from './ListFormItem';
 import ListMultiSelectFormItem from './ListMultiSelectFormItem';
 import ListSelectFormItem from './ListSelectFormItem';
-import MentionsFormItem from './MentionsFormItem';
-import MenuFormItem from './MenuFormItem';
 import MultiSelectFormItem from './MultiSelectFormItem';
 import RadioButtonFormItem from './RadioButtonFormItem';
 import RadioCustomFormItem from './RadioCustomFormItem';
 import RadioHorizontalFormItem from './RadioHorizontalFormItem';
 import RadioSelectFormItem from './RadioSelectFormItem';
 import RadioVerticalFormItem from './RadioVerticalFormItem';
-import SegmentedFormItem from './SegmentedFormItem';
 import SelectFormItem from './SelectFormItem';
 import StepsFormItem from './StepsFormItem';
 import TableFormItem from './TableFormItem';
@@ -91,7 +86,6 @@ export const validatorMulti = (message) => ({
 
 export {
   AutoCompleteFormItem,
-  BreadcrumbFormItem,
   CascaderFormItem,
   CascaderLeafFormItem,
   CascaderLeafMultiFormItem,
@@ -105,19 +99,15 @@ export {
   CheckBoxHorizontalFormItem,
   CheckBoxSelectFormItem,
   CheckBoxVerticalFormItem,
-  DropdownFormItem,
   ListFormItem,
   ListMultiSelectFormItem,
   ListSelectFormItem,
-  MentionsFormItem,
-  MenuFormItem,
   MultiSelectFormItem,
   RadioButtonFormItem,
   RadioCustomFormItem,
   RadioHorizontalFormItem,
   RadioSelectFormItem,
   RadioVerticalFormItem,
-  SegmentedFormItem,
   SelectFormItem,
   StepsFormItem,
   TableFormItem,

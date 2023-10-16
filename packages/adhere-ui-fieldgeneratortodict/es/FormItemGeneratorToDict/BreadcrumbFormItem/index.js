@@ -1,2 +1,0 @@
-import _Breadcrumb from"@baifendian/adhere-ui-anthoc/es/breadcrumb";var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var e,t=1,a=arguments.length;t<a;t++)for(var n in e=arguments[t])Object.prototype.hasOwnProperty.call(e,n)&&(r[n]=e[n]);return r}).apply(this,arguments)};import React from"react";var BreadcrumbFormItem=function(r){return React.createElement(_Breadcrumb,__assign({},null!=r?r:{}))};export default BreadcrumbFormItem;
-//# sourceMappingURL=index.js.map

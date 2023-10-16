@@ -357,7 +357,7 @@ setItem('AutoSelectComplete', 'FormItem', (dictName) => ({ debounceTimeout = 300
     <SelectFormItem
       // @ts-ignore
       selectProps={{
-        notFoundContent: fetching ? <Spin size="small" /> : null,
+        notFoundContent: fetching && <Spin size="small" />,
         filterOption: false,
         onSearch: debounceFetcher.current,
         onClear: () => {

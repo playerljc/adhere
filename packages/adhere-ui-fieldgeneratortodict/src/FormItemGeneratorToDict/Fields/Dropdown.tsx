@@ -1,9 +1,9 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import React, { useState } from 'react';
 
+import { Dropdown } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
 
-import DropdownFormItem from '../DropdownFormItem';
 import { setItem } from '../ItemFactory';
 import { deepDep } from '../util';
 
@@ -37,7 +37,7 @@ setItem('Dropdown', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChan
   }, [dataSource]);
 
   return (
-    <DropdownFormItem
+    <Dropdown
       {...props}
       menu={{
         ...(props.menu ?? {}),
@@ -86,7 +86,7 @@ setItem(
       }, [data]);
 
       return (
-        <DropdownFormItem
+        <Dropdown
           {...props}
           menu={{
             ...(props.menu ?? {}),

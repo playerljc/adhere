@@ -1,9 +1,9 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import React, { useState } from 'react';
 
+import { Breadcrumb } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
 
-import BreadcrumbFormItem from '../BreadcrumbFormItem';
 import { setItem } from '../ItemFactory';
 import { deepDep } from '../util';
 
@@ -36,8 +36,7 @@ setItem(
         loadData();
       }, [deepDep(cascadeParams)]);
 
-      // @ts-ignore
-      return <BreadcrumbFormItem {...props} items={dataSource} />;
+      return <Breadcrumb {...props} items={dataSource} />;
     },
 );
 
@@ -79,7 +78,6 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      // @ts-ignore
-      return <BreadcrumbFormItem {...props} items={data} />;
+      return <Breadcrumb {...props} items={data} />;
     },
 );

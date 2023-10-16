@@ -1,10 +1,10 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import React, { useState } from 'react';
 
+import { Menu } from '@baifendian/adhere-ui-anthoc';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
-import MenuFormItem from '../MenuFormItem';
 import { deepDep } from '../util';
 
 /**
@@ -36,7 +36,7 @@ setItem('Menu', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, 
     onDataSourceChange?.(dataSource);
   }, [dataSource]);
 
-  return <MenuFormItem {...props} items={dataSource} />;
+  return <Menu {...props} items={dataSource} />;
 });
 
 /**
@@ -77,6 +77,6 @@ setItem(
         onDataSourceChange?.(data);
       }, [data]);
 
-      return <MenuFormItem {...props} items={data} />;
+      return <Menu {...props} items={data} />;
     },
 );
