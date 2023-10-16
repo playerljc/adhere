@@ -1,11 +1,6 @@
-import {
-  /*CheckList, */
-  ErrorBlock,
-  SearchBar,
-} from 'antd-mobile';
+import { ErrorBlock, SearchBar } from 'antd-mobile';
 import { CloseCircleFill } from 'antd-mobile-icons';
 import { CheckListValue } from 'antd-mobile/es/components/check-list/check-list';
-// import type { CheckListItemProps } from 'antd-mobile/es/components/check-list/check-list-item';
 import classNames from 'classnames';
 import React, { memo, useEffect, useState } from 'react';
 import type { FC } from 'react';
@@ -37,7 +32,6 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   className,
   style,
   searchBarProps,
-  // checkListProps,
   loadData,
   searchDataSource,
   rowKey,
@@ -45,7 +39,6 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   valueProp,
   value,
   onChange,
-  // renderItem,
   renderResultItem,
   renderEmpty,
   children,
@@ -81,7 +74,6 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   };
 
   const onCheckListChange = (_values) => {
-    debugger;
     setDataSource((_dataSource) =>
       _values.map((_value) =>
         [...(searchDataSource ?? []), ..._dataSource]?.find?.(
@@ -127,35 +119,12 @@ const AutoComplete: FC<AutoCompleteProps> = ({
       <div className={`${selectorPrefix}-body`}>
         {isEmpty() && empty()}
 
-        {
-          !isEmpty() &&
-            children?.({
-              value,
-              onChange: onCheckListChange,
-              searchDataSource: [...(searchDataSource ?? [])],
-            })
-          /*<CheckList {...(checkListProps ?? {})} value={value} onChange={onCheckListChange}>
-            {(searchDataSource ?? []).map((_record, _index) => {
-              let checkListItemProps: CheckListItemProps = {
-                value: getValue(_record) ?? getKey(_record),
-              };
-
-              if (renderItem) {
-                checkListItemProps = {
-                  ...renderItem(_record, _index),
-                  ...checkListItemProps,
-                };
-              } else {
-                checkListItemProps = {
-                  children: labelProp ?? <span>{getLabel(_record)}</span>,
-                  ...checkListItemProps,
-                };
-              }
-
-              return <CheckList.Item key={getKey(_record)} {...(checkListItemProps ?? {})} />;
-            })}
-          </CheckList>*/
-        }
+        {!isEmpty() &&
+          children?.({
+            value,
+            onChange: onCheckListChange,
+            searchDataSource: [...(searchDataSource ?? [])],
+          })}
       </div>
 
       {!!value?.length && (
