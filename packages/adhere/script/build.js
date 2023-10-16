@@ -17,6 +17,7 @@ const indexJsExportContent = ['export { \r\n'];
 const type = args.getArg('module');
 
 const namedMap = new Map([
+  ['@baifendian/adhere-ui-auto-complete', 'AutoComplete'],
   ['@baifendian/adhere-ui-conditionalrender', 'ConditionalRender'],
   ['@baifendian/adhere-ui-confirm-delconfirm', 'DelConfirm'],
   ['@baifendian/adhere-ui-confirm-importantconfirm', 'ImportantConfirm'],
