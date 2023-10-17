@@ -1,4 +1,4 @@
-import { Space as AntdSpace, Avatar, Checkbox, List } from 'antd';
+import { Space as AntdSpace, Avatar, List } from 'antd';
 import React, { useState } from 'react';
 
 import { DownOutlined } from '@ant-design/icons';
@@ -68,9 +68,8 @@ export default () => {
 
       <CodeBoxSection
         title="FormItemGeneratorToDict - Select"
-        config={
-          [
-            /*{
+        config={[
+          {
             id: 'p1',
             name: 'Select单选',
             mode: 'code',
@@ -79,7 +78,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Select单选',
-                info: 'Select单选`',
+                info: 'Select单选',
               },
             },
             codeText: `
@@ -88,8 +87,9 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectFormItem
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.FormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    return <DictComponent
       selectProps={{
         style: {
           width: 200,
@@ -100,18 +100,23 @@ export default () => {
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v, ...reset) => {
-                  console.log('_v1', v, ...reset);
-                  setVal(v);
-                }}
-              />
-            ),
-          },*/
-            /*{
+            renderChildren: () => {
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return (
+                <DictComponent
+                  style={{ width: 200 }}
+                  value={val}
+                  onChange={(v, ...reset) => {
+                    console.log('_v1', v, ...reset);
+                    setVal(v);
+                  }}
+                />
+              );
+            },
+          },
+          {
             id: 'p2',
             name: 'Select多选',
             mode: 'code',
@@ -120,7 +125,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Select多选',
-                info: 'Select多选`',
+                info: 'Select多选',
               },
             },
             codeText: `
@@ -129,8 +134,10 @@ export default () => {
 
           export default () => {
             const [vals, setVals] = useState([]);
-
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
+            const DictComponentName =
+              'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.MultiFormItem;
+            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+            return <DictComponent
               selectProps={{
                 style: {
                   width: 200,
@@ -141,18 +148,23 @@ export default () => {
             />
           }
                     `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v, ...reset) => {
-                  console.log('_v2', v, ...reset);
-                  setVals(v);
-                }}
-              />
-            ),
-          },*/
-            /*{
+            renderChildren: () => {
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.MultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return (
+                <DictComponent
+                  style={{ width: 300 }}
+                  value={vals}
+                  onChange={(v, ...reset) => {
+                    console.log('_v2', v, ...reset);
+                    setVals(v);
+                  }}
+                />
+              );
+            },
+          },
+          {
             id: 'p3',
             name: 'Select全选',
             mode: 'code',
@@ -161,7 +173,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Select全选',
-                info: 'Select全选`',
+                info: 'Select全选',
               },
             },
             codeText: `
@@ -170,8 +182,11 @@ export default () => {
 
           export default () => {
             const [vals, setVals] = useState([]);
+            const DictComponentName =
+              'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.CheckAllMultiFormItem;
+            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMultiFormItem
+            return <DictComponent
               selectProps={{
                 style: {
                   width: 200,
@@ -182,15 +197,16 @@ export default () => {
             />
           }
                     `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMultiFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },*/
-            /*{
+            renderChildren: () => {
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.CheckAllMultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return (
+                <DictComponent style={{ width: 300 }} value={vals} onChange={(v) => setVals(v)} />
+              );
+            },
+          },
+          {
             id: 'p4',
             name: 'AutoComplete的单选',
             mode: 'code',
@@ -199,7 +215,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'AutoComplete的单选',
-                info: 'AutoComplete的单选`',
+                info: 'AutoComplete的单选',
               },
             },
             codeText: `
@@ -208,8 +224,11 @@ export default () => {
 
           export default () => {
             const [val, setVal] = useState([]);
+            const DictComponentName =
+              'SystemFilterBookList' + FieldGeneratorToDict.Components.AutoSelectComplete.FormItem;
+            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectFormItem
+            return <DictComponent
               selectProps={{
                 style: {
                   width: 200,
@@ -220,15 +239,17 @@ export default () => {
             />
           }
                     `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },*/
-            /*{
+            renderChildren: () => {
+              const DictComponentName =
+                'SystemFilterBookList' +
+                FieldGeneratorToDict.Components.AutoSelectComplete.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return (
+                <DictComponent style={{ width: 200 }} value={val} onChange={(v) => setVal(v)} />
+              );
+            },
+          },
+          {
             id: 'p5',
             name: 'AutoComplete的多选',
             mode: 'code',
@@ -237,7 +258,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'AutoComplete的多选',
-                info: 'AutoComplete的多选`',
+                info: 'AutoComplete的多选',
               },
             },
             codeText: `
@@ -246,6 +267,10 @@ export default () => {
 
           export default () => {
             const [vals, setVals] = useState([]);
+            const DictComponentName =
+              'SystemFilterBookList' +
+              FieldGeneratorToDict.Components.AutoSelectComplete.MultiFormItem;
+            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
 
             return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectMultiFormItem
               selectProps={{
@@ -258,17 +283,23 @@ export default () => {
             />
           }
                     `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => {
-                  setVals(v);
-                }}
-              />
-            ),
-          },*/
-            /*{
+            renderChildren: () => {
+              const DictComponentName =
+                'SystemFilterBookList' +
+                FieldGeneratorToDict.Components.AutoSelectComplete.MultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return (
+                <DictComponent
+                  style={{ width: 200 }}
+                  value={vals}
+                  onChange={(v) => {
+                    setVals(v);
+                  }}
+                />
+              );
+            },
+          },
+          {
             id: 'p6',
             name: 'AutoComplete的全选',
             mode: 'code',
@@ -277,7 +308,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'AutoComplete的全选',
-                info: 'AutoComplete的全选`',
+                info: 'AutoComplete的全选',
               },
             },
             codeText: `
@@ -286,8 +317,12 @@ export default () => {
 
           export default () => {
             const [vals, setVals] = useState([]);
+              const DictComponentName =
+              'SystemFilterBookList' +
+              FieldGeneratorToDict.Components.AutoSelectComplete.CheckAllMultiFormItem;
+            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectCheckAllMultiFormItem
+            return <DictComponent
               selectProps={{
                 style: {
                   width: 200,
@@ -298,15 +333,18 @@ export default () => {
             />
           }
                     `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteCheckAllMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },*/
-            /*{
+            renderChildren: () => {
+              const DictComponentName =
+                'SystemFilterBookList' +
+                FieldGeneratorToDict.Components.AutoSelectComplete.CheckAllMultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+
+              return (
+                <DictComponent style={{ width: 200 }} value={vals} onChange={(v) => setVals(v)} />
+              );
+            },
+          },
+          {
             id: 'p7',
             name: '省市区级联',
             mode: 'code',
@@ -315,17 +353,29 @@ export default () => {
             cardProps: {
               description: {
                 title: '省市区级联',
-                info: '省市区级联`',
+                info: '省市区级联',
               },
             },
-            codeText: ``,
-            renderChildren: () => (
-              <div>
+            codeText: `
+            import React, { useState } from 'react';
+            import { FieldGeneratorToDict } from '@baifendian/adhere';
+  
+            export default () => {
+              const ProvinceDictComponentName = 'SystemProvince' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
+              const ProvinceDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[ProvinceDictComponentName];
+
+              const CityDictComponentName = 'SystemCity' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
+              const CityDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CityDictComponentName];
+
+              const CountyDictComponentName = 'SystemCounty' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
+              const CountyDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CountyDictComponentName];
+  
+              return (
                 <Space.Group direction="vertical">
                   <FlexLayout direction="horizontal">
                     <FlexLayout.Fixed>省：</FlexLayout.Fixed>
                     <FlexLayout.Auto>
-                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemProvinceSelectDynamicFormItem
+                      <ProvinceDictComponent
                         style={{ width: 200 }}
                         value={province}
                         onChange={(v) => setProvince(v)}
@@ -336,7 +386,7 @@ export default () => {
                   <FlexLayout direction="horizontal">
                     <FlexLayout.Fixed>市：</FlexLayout.Fixed>
                     <FlexLayout.Auto>
-                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCitySelectDynamicFormItem
+                      <CityDictComponent
                         style={{ width: 200 }}
                         value={city}
                         onChange={(v) => setCity(v)}
@@ -349,7 +399,59 @@ export default () => {
                   <FlexLayout direction="horizontal">
                     <FlexLayout.Fixed>区：</FlexLayout.Fixed>
                     <FlexLayout.Auto>
-                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCountySelectDynamicFormItem
+                      <CountyDictComponent
+                        style={{ width: 200 }}
+                        value={county}
+                        onChange={(v) => setCounty(v)}
+                        cascadeParams={city}
+                        onDataSourceChange={() => setCounty('')}
+                      />
+                    </FlexLayout.Auto>
+                  </FlexLayout>
+                </Space.Group>
+              )
+            }
+            `,
+            renderChildren: () => {
+              const ProvinceDictComponentName = 'SystemProvince' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
+              const ProvinceDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[ProvinceDictComponentName];
+
+              const CityDictComponentName = 'SystemCity' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
+              const CityDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CityDictComponentName];
+
+              const CountyDictComponentName = 'SystemCounty' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
+              const CountyDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CountyDictComponentName];
+
+              return <div>
+                <Space.Group direction="vertical">
+                  <FlexLayout direction="horizontal">
+                    <FlexLayout.Fixed>省：</FlexLayout.Fixed>
+                    <FlexLayout.Auto>
+                      <ProvinceDictComponent
+                        style={{ width: 200 }}
+                        value={province}
+                        onChange={(v) => setProvince(v)}
+                      />
+                    </FlexLayout.Auto>
+                  </FlexLayout>
+
+                  <FlexLayout direction="horizontal">
+                    <FlexLayout.Fixed>市：</FlexLayout.Fixed>
+                    <FlexLayout.Auto>
+                      <CityDictComponent
+                        style={{ width: 200 }}
+                        value={city}
+                        onChange={(v) => setCity(v)}
+                        cascadeParams={province}
+                        onDataSourceChange={() => setCity('')}
+                      />
+                    </FlexLayout.Auto>
+                  </FlexLayout>
+
+                  <FlexLayout direction="horizontal">
+                    <FlexLayout.Fixed>区：</FlexLayout.Fixed>
+                    <FlexLayout.Auto>
+                      <CountyDictComponent
                         style={{ width: 200 }}
                         value={county}
                         onChange={(v) => setCounty(v)}
@@ -360,13 +462,12 @@ export default () => {
                   </FlexLayout>
                 </Space.Group>
               </div>
-            ),
-          },*/
-          ]
-        }
+            },
+          },
+        ]}
       />
 
-      {/*<CodeBoxSection
+      <CodeBoxSection
         title="FormItemGeneratorToDict - Radio(字典中以Radio或DynamicRadio结尾)"
         config={[
           {
@@ -378,7 +479,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Radio横向',
-                info: 'Radio横向`',
+                info: 'Radio横向',
               },
             },
             codeText: `
@@ -387,19 +488,22 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioHorizontalFormItem
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.HorizontalFormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    return <DictComponent
       value={val}
       onChange={(v) => setVal(v)}
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioHorizontalFormItem
+            renderChildren: () => {
+              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.HorizontalFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return <DictComponent
                 value={val}
                 onChange={(v) => setVal(v)}
               />
-            ),
+            },
           },
           {
             id: 'p2',
@@ -410,7 +514,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Radio纵向',
-                info: 'Radio纵向`',
+                info: 'Radio纵向',
               },
             },
             codeText: `
@@ -419,19 +523,22 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioVerticalFormItem
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.VerticalFormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    return <DictComponent
       value={val}
       onChange={(v) => setVal(v)}
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioVerticalFormItem
+            renderChildren: () => {
+              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.VerticalFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return <DictComponent
                 value={val}
                 onChange={(v) => setVal(v)}
               />
-            ),
+            },
           },
           {
             id: 'p3',
@@ -442,7 +549,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Radio的Button',
-                info: 'Radio的Button`',
+                info: 'Radio的Button',
               },
             },
             codeText: `
@@ -451,21 +558,25 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioButtonFormItem
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.ButtonFormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    return <DictComponent
       buttonStyle="solid"
       value={val}
       onChange={(v) => setVal(v)}
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioButtonFormItem
+            renderChildren: () => {
+              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.ButtonFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return <DictComponent
                 buttonStyle="solid"
                 value={val}
                 onChange={(v) => setVal(v)}
               />
-            ),
+            }
+
           },
           {
             id: 'p4',
@@ -476,7 +587,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Radio的Select',
-                info: 'Radio的Select`',
+                info: 'Radio的Select',
               },
             },
             codeText: `
@@ -485,8 +596,9 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioSelectFormItem
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.SelectFormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    return <DictComponent
       selectProps={{
         style: {
           width: 200,
@@ -497,8 +609,10 @@ export default () => {
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioSelectFormItem
+            renderChildren: () => {
+              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.SelectFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return <DictComponent
                 selectProps={{
                   style: {
                     width: 200,
@@ -507,7 +621,7 @@ export default () => {
                 value={val}
                 onChange={(v) => setVal(v)}
               />
-            ),
+            }
           },
           {
             id: 'p5',
@@ -528,30 +642,33 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.CustomFormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    return <DictComponent
       optionType="button"
       buttonStyle="solid"
       value={val}
       onChange={(v) => setVal(v)}
     >
       {(data) => <AntdSpace size={8}>{data.map(({ item }) => item)}</AntdSpace>}
-    </FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem>
+    </DictComponent>
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem
+            renderChildren: () => {
+              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.CustomFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              return <DictComponent
                 optionType="button"
                 buttonStyle="solid"
                 value={val}
                 onChange={(v) => setVal(v)}
               >
                 {(data) => <AntdSpace size={8}>{data.map(({ item }) => item)}</AntdSpace>}
-              </FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem>
-            ),
+              </DictComponent>
+            }
           },
         ]}
-      />*/}
+      />
 
       {/*<CodeBoxSection
         title="FormItemGeneratorToDict - Checkbox(字典中以Checkbox或DynamicCheckbox结尾)"
@@ -565,7 +682,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Checkbox横向',
-                info: 'Checkbox横向`',
+                info: 'Checkbox横向',
               },
             },
             codeText: `
@@ -597,7 +714,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Checkbox纵向',
-                info: 'Checkbox纵向`',
+                info: 'Checkbox纵向',
               },
             },
             codeText: `
@@ -629,7 +746,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Checkbox横向全选',
-                info: 'Checkbox横向全选`',
+                info: 'Checkbox横向全选',
               },
             },
             codeText: `
@@ -663,7 +780,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Checkbox纵向全选',
-                info: 'Checkbox纵向全选`',
+                info: 'Checkbox纵向全选',
               },
             },
             codeText: `
@@ -848,161 +965,174 @@ export default () => {
 
       <CodeBoxSection
         title="FormItemGeneratorToDict - TreeSelect"
-        config={
-          [
-            // {
-            //   id: 'p1',
-            //   name: 'TreeSelect单选(能选任意节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect单选(能选任意节点)',
-            //       info: 'TreeSelect单选(能选任意节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [val, setVal] = useState('');
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={val}
-            //     onChange={(v) => setVal(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
-            //       style={{ width: 200 }}
-            //       value={val}
-            //       onChange={(v) => setVal(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p2',
-            //   name: 'TreeSelect单选(只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect单选(只能选叶子节点)',
-            //       info: 'TreeSelect单选(只能选叶子节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [val, setVal] = useState('');
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={val}
-            //     onChange={(v) => setVal(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
-            //       style={{ width: 200 }}
-            //       value={val}
-            //       onChange={(v) => setVal(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p3',
-            //   name: 'TreeSelect多选(能选任意节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect多选(能选任意节点)',
-            //       info: 'TreeSelect多选(能选任意节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [vals, setVals] = useState([]);
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={vals}
-            //     onChange={(v) => setVals(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
-            //       style={{ width: 300 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            // {
-            //   id: 'p4',
-            //   name: 'TreeSelect多选(只能选叶子节点)',
-            //   mode: 'code',
-            //   scope: { React },
-            //   type: 'PlayGround',
-            //   cardProps: {
-            //     description: {
-            //       title: 'TreeSelect多选(只能选叶子节点)',
-            //       info: 'TreeSelect多选(只能选叶子节点)`',
-            //     },
-            //   },
-            //   codeText: `
-            // import React, { useState } from 'react';
-            // import { FieldGeneratorToDict } from '@baifendian/adhere';
-            //
-            // export default () => {
-            //   const [vals, setVals] = useState([]);
-            //
-            //   return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
-            //     selectProps={{
-            //       style: {
-            //         width: 200,
-            //       },
-            //     }}
-            //     value={vals}
-            //     onChange={(v) => setVals(v)}
-            //   />
-            // }
-            //           `,
-            //   renderChildren: () => (
-            //     <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
-            //       style={{ width: 200 }}
-            //       value={vals}
-            //       onChange={(v) => setVals(v)}
-            //     />
-            //   ),
-            // },
-            /*{
+        config={[
+          {
+            id: 'p1',
+            name: 'TreeSelect单选(能选任意节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'TreeSelect单选(能选任意节点)',
+                info: 'TreeSelect单选(能选任意节点)',
+              },
+            },
+            codeText: `
+            import React, { useState } from 'react';
+            import { FieldGeneratorToDict } from '@baifendian/adhere';
+            
+            export default () => {
+              const [val, setVal] = useState('');
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            }
+                      `,
+            renderChildren: () => {
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
+                style={{ width: 200 }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            }
+          },
+          {
+            id: 'p2',
+            name: 'TreeSelect单选(只能选叶子节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'TreeSelect单选(只能选叶子节点)',
+                info: 'TreeSelect单选(只能选叶子节点)',
+              },
+            },
+            codeText: `
+            import React, { useState } from 'react';
+            import { FieldGeneratorToDict } from '@baifendian/adhere';
+            
+            export default () => {
+              const [val, setVal] = useState('');
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            }
+                      `,
+            renderChildren: () => {
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
+                style={{ width: 200 }}
+                value={val}
+                onChange={(v) => setVal(v)}
+              />
+            }
+          },
+          {
+            id: 'p3',
+            name: 'TreeSelect多选(能选任意节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'TreeSelect多选(能选任意节点)',
+                info: 'TreeSelect多选(能选任意节点)',
+              },
+            },
+            codeText: `
+            import React, { useState } from 'react';
+            import { FieldGeneratorToDict } from '@baifendian/adhere';
+            
+            export default () => {
+              const [vals, setVals] = useState([]);
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.MultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            }
+                      `,
+            renderChildren: () => {
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.MultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
+                style={{ width: 300 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+
+            }
+          },
+          {
+            id: 'p4',
+            name: 'TreeSelect多选(只能选叶子节点)',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            cardProps: {
+              description: {
+                title: 'TreeSelect多选(只能选叶子节点)',
+                info: 'TreeSelect多选(只能选叶子节点)',
+              },
+            },
+            codeText: `
+            import React, { useState } from 'react';
+            import { FieldGeneratorToDict } from '@baifendian/adhere';
+            
+            export default () => {
+              const [vals, setVals] = useState([]);
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafMultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              <DictComponent
+                selectProps={{
+                  style: {
+                    width: 200,
+                  },
+                }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+            }
+                      `,
+            renderChildren: () => {
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafMultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              <DictComponent
+                style={{ width: 200 }}
+                value={vals}
+                onChange={(v) => setVals(v)}
+              />
+
+            }
+          },
+          /*{
             id: 'p5',
             name: '异步加载',
             mode: 'code',
@@ -1011,7 +1141,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载',
-                info: '异步加载`',
+                info: '异步加载',
               },
             },
             renderChildren: () => (
@@ -1022,7 +1152,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p6',
             name: '异步加载(多选)',
             mode: 'code',
@@ -1031,7 +1161,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(多选)',
-                info: '异步加载(多选)`',
+                info: '异步加载(多选)',
               },
             },
             renderChildren: () => (
@@ -1042,7 +1172,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p7',
             name: '异步加载(只能选叶子节点)',
             mode: 'code',
@@ -1051,7 +1181,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(只能选叶子节点)',
-                info: '异步加载(只能选叶子节点)`',
+                info: '异步加载(只能选叶子节点)',
               },
             },
             renderChildren: () => (
@@ -1062,7 +1192,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p8',
             name: '异步加载多选(只能选叶子节点)',
             mode: 'code',
@@ -1071,7 +1201,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载多选(只能选叶子节点)',
-                info: '异步加载多选(只能选叶子节点)`',
+                info: '异步加载多选(只能选叶子节点)',
               },
             },
             renderChildren: () => (
@@ -1082,7 +1212,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p9',
             name: '异步加载(回显)',
             mode: 'code',
@@ -1091,7 +1221,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(回显)',
-                info: '异步加载(回显)`',
+                info: '异步加载(回显)',
               },
             },
             renderChildren: () => (
@@ -1125,7 +1255,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p10',
             name: '异步加载(回显-多数据)',
             mode: 'code',
@@ -1134,7 +1264,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(回显-多数据)',
-                info: '异步加载(回显-多数据)`',
+                info: '异步加载(回显-多数据)',
               },
             },
             renderChildren: () => (
@@ -1184,7 +1314,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p11',
             name: '异步加载(回显-多数据-只能选叶子节点)',
             mode: 'code',
@@ -1193,7 +1323,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(回显-多数据-只能选叶子节点)',
-                info: '异步加载(回显-多数据-只能选叶子节点)`',
+                info: '异步加载(回显-多数据-只能选叶子节点)',
               },
             },
             renderChildren: () => (
@@ -1246,7 +1376,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p12',
             name: 'TreeSelect单选(能选任意节点，flat数据)',
             mode: 'code',
@@ -1255,7 +1385,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'TreeSelect单选(能选任意节点，flat数据)',
-                info: 'TreeSelect单选(能选任意节点，flat数据)`',
+                info: 'TreeSelect单选(能选任意节点，flat数据)',
               },
             },
             codeText: `
@@ -1285,7 +1415,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p13',
             name: '异步加载(flat数据)',
             mode: 'code',
@@ -1294,7 +1424,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(flat数据)',
-                info: '异步加载(flat数据)`',
+                info: '异步加载(flat数据)',
               },
             },
             renderChildren: () => (
@@ -1306,7 +1436,7 @@ export default () => {
               />
             ),
           },*/
-            /*{
+          /*{
             id: 'p14',
             name: '异步加载(回显,flat数据)',
             mode: 'code',
@@ -1315,7 +1445,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(回显,flat数据)',
-                info: '异步加载(回显,flat数据)`',
+                info: '异步加载(回显,flat数据)',
               },
             },
             renderChildren: () => (
@@ -1352,8 +1482,7 @@ export default () => {
               />
             ),
           },*/
-          ]
-        }
+        ]}
       />
 
       <CodeBoxSection
@@ -1368,7 +1497,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本',
-                info: '基本`',
+                info: '基本',
               },
             },
             codeText: `
@@ -1377,8 +1506,9 @@ export default () => {
 
   export default () => {
     const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTransferFormItem
+    const dictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.TransferDynamic.FormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    return <DictComponent
       targetKeys={vals}
       onChange={(v) => {
         setVals(v);
@@ -1386,14 +1516,17 @@ export default () => {
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRemTransferDynamicFormItem
+            renderChildren: () => {
+              const dictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.TransferDynamic.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 targetKeys={vals}
                 onChange={(v) => {
                   setVals(v);
                 }}
               />
-            ),
+
+            }
           },
           /*{
             id: 'p2',
@@ -1404,7 +1537,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'SelectFormItem',
-                info: 'SelectFormItem`',
+                info: 'SelectFormItem',
               },
             },
             codeText: `
@@ -1448,7 +1581,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '普通不带分页',
-                info: '普通不带分页`',
+                info: '普通不带分页',
               },
             },
             codeText: `
@@ -1528,7 +1661,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '普通单选Select',
-                info: '普通单选Select`',
+                info: '普通单选Select',
               },
             },
             codeText: `
@@ -1624,7 +1757,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '普通多选Select',
-                info: '普通多选Select`',
+                info: '普通多选Select',
               },
             },
             codeText: `
@@ -1720,7 +1853,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '分页的动态数据',
-                info: '分页的动态数据`',
+                info: '分页的动态数据',
               },
             },
             codeText: `
@@ -1800,7 +1933,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '分页的动态数据Select单选',
-                info: '分页的动态数据Select单选`',
+                info: '分页的动态数据Select单选',
               },
             },
             codeText: `
@@ -1900,7 +2033,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '分页的动态数据Select多选',
-                info: '分页的动态数据Select多选`',
+                info: '分页的动态数据Select多选',
               },
             },
             codeText: `
@@ -2074,7 +2207,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Cascader多选(能选任意节点)',
-                info: 'Cascader多选(能选任意节点)`',
+                info: 'Cascader多选(能选任意节点)',
               },
             },
             codeText: `
@@ -2145,12 +2278,30 @@ export default () => {
                 info: '异步加载',
               },
             },
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+            codeText: `
+  import React, { useState } from 'react';
+  import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+
+  export default () => {
+    const [vals, setVals] = useState([]);
+
+    const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    return <DictComponent
+      value={vals}
+      onChange={(v) => setVals(v)}
+    />
+  }
+            `,
+            renderChildren: () => {
+              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 value={vals}
                 onChange={(v) => setVals(v)}
               />
-            ),
+            }
           },
           {
             id: 'p6',
@@ -2161,15 +2312,33 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(多选)',
-                info: '异步加载(多选)`',
+                info: '异步加载(多选)',
               },
             },
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
+            codeText: `
+import React, { useState } from 'react';
+import { FieldGeneratorToDict } from '@baifendian/adhere';
+
+
+export default () => {
+  const [vals, setVals] = useState([]);
+
+  const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.MultiFormItem;
+  const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+  return <DictComponent
+    value={vals}
+    onChange={(v) => setVals(v)}
+  />
+}
+          `,
+            renderChildren: () => {
+              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.MultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 value={vals}
                 onChange={(v) => setVals(v)}
               />
-            ),
+            }
           },
           {
             id: 'p7',
@@ -2180,11 +2349,13 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(回显)',
-                info: '异步加载(回显)`',
+                info: '异步加载(回显)',
               },
             },
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+            renderChildren: () => {
+              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 value={cascaderBranchVals}
                 onChange={(v) => {
                   console.log('v======', v);
@@ -2214,7 +2385,7 @@ export default () => {
                   ]);
                 }}
               />
-            ),
+            }
           },
           {
             id: 'p8',
@@ -2225,11 +2396,13 @@ export default () => {
             cardProps: {
               description: {
                 title: '异步加载(回显-多数据)',
-                info: '异步加载(回显-多数据)`',
+                info: '异步加载(回显-多数据)',
               },
             },
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
+            renderChildren: () => {
+              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.MultiFormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 value={cascaderBranchMultiVals}
                 onChange={(v) => {
                   console.log('v======', v);
@@ -2272,7 +2445,7 @@ export default () => {
                   ]);
                 }}
               />
-            ),
+            }
           },
           {
             id: 'p9',
@@ -2292,21 +2465,24 @@ export default () => {
 
   export default () => {
     const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderFormItem
+    const dictComponentName = 'SystemDepartmentAll' + FieldGeneratorToDict.Components.CascaderDynamic.FormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    return <DictComponent
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
     />
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllCascaderDynamicFormItem
+            renderChildren: () => {
+              const dictComponentName = 'SystemDepartmentAll' + FieldGeneratorToDict.Components.CascaderDynamic.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 treeDataSimpleMode
                 value={vals}
                 onChange={(v) => setVals(v || [])}
               />
-            ),
+            }
           },
           {
             id: 'p10',
@@ -2320,13 +2496,15 @@ export default () => {
                 info: '异步加载(拉平数据)',
               },
             },
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
+            renderChildren: () => {
+              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent
                 treeDataSimpleMode
                 value={vals}
                 onChange={(v) => setVals(v)}
               />
-            ),
+            }
           },
         ]}
       />
@@ -2343,7 +2521,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '普通不带分页',
-                info: '普通不带分页`',
+                info: '普通不带分页',
               },
             },
             codeText: `
@@ -2382,7 +2560,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '普通单选Select',
-                info: '普通单选Select`',
+                info: '普通单选Select',
               },
             },
             codeText: `
@@ -2437,7 +2615,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '普通多选Select',
-                info: '普通多选Select`',
+                info: '普通多选Select',
               },
             },
             codeText: `
@@ -2492,7 +2670,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '分页的动态数据',
-                info: '分页的动态数据`',
+                info: '分页的动态数据',
               },
             },
             codeText: `
@@ -2531,7 +2709,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '分页的动态数据Select单选',
-                info: '分页的动态数据Select单选`',
+                info: '分页的动态数据Select单选',
               },
             },
             codeText: `
@@ -2588,7 +2766,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '分页的动态数据Select多选',
-                info: '分页的动态数据Select多选`',
+                info: '分页的动态数据Select多选',
               },
             },
             codeText: `
@@ -2655,7 +2833,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2704,7 +2882,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2724,7 +2902,7 @@ export default () => {
         ]}
       />*/}
 
-      {/*<CodeBoxSection
+      <CodeBoxSection
         title="FormItemGeneratorToDict - Dropdown"
         config={[
           {
@@ -2736,7 +2914,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2745,27 +2923,32 @@ export default () => {
   import { DownOutlined } from '@ant-design/icons';
 
   export default () => {
+    const dictComponentName = 'SystemDropNav' + FieldGeneratorToDict.Components.Dropdown.FormItem;
+    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
     return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestDropdownFormItem>
+      <DictComponent>
         <a onClick={(e) => e.preventDefault()}>
           Hover me
           <DownOutlined />
         </a>
-      </FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestDropdownFormItem>
+      </DictComponent>
     )
   }
             `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDropNavDropdownFormItem>
+            renderChildren: () => {
+              const dictComponentName = 'SystemDropNav' + FieldGeneratorToDict.Components.Dropdown.FormItem;
+              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              return <DictComponent>
                 <a onClick={(e) => e.preventDefault()}>
                   Hover me
                   <DownOutlined />
                 </a>
-              </FieldGeneratorToDict.FormItemGeneratorToDict.SystemDropNavDropdownFormItem>
-            ),
+              </DictComponent>
+
+            }
           },
         ]}
-      />*/}
+      />
 
       {/*<CodeBoxSection
         title="FormItemGeneratorToDict - Mentions"
@@ -2779,7 +2962,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2811,7 +2994,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2837,7 +3020,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2875,7 +3058,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2923,7 +3106,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2949,7 +3132,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -2981,7 +3164,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -3009,7 +3192,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -3049,7 +3232,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag横向',
-                info: 'Tag横向`',
+                info: 'Tag横向',
               },
             },
             codeText: `
@@ -3119,7 +3302,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag纵向',
-                info: 'Tag纵向`',
+                info: 'Tag纵向',
               },
             },
             codeText: `
@@ -3191,7 +3374,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag纵向全选',
-                info: 'Tag纵向全选`',
+                info: 'Tag纵向全选',
               },
             },
             codeText: `
@@ -3223,7 +3406,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag横向全选',
-                info: 'Tag横向全选`',
+                info: 'Tag横向全选',
               },
             },
             codeText: `
@@ -3255,7 +3438,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag的Select',
-                info: 'Tag的Select`',
+                info: 'Tag的Select',
               },
             },
             codeText: `
@@ -3297,7 +3480,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag的Select多选',
-                info: 'Tag的Select多选`',
+                info: 'Tag的Select多选',
               },
             },
             codeText: `
@@ -3339,7 +3522,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'Tag的CheckAllSelect',
-                info: 'Tag的CheckAllSelect`',
+                info: 'Tag的CheckAllSelect',
               },
             },
             codeText: `
@@ -3387,7 +3570,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -3413,7 +3596,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -3439,7 +3622,7 @@ export default () => {
             cardProps: {
               description: {
                 title: '基本使用',
-                info: '基本使用`',
+                info: '基本使用',
               },
             },
             codeText: `
@@ -3464,11 +3647,11 @@ export default () => {
         config={[
           {
             border: true,
-            title: 'SystemTestRadioHorizontalFormItem',
+            title: '字典组件生成器代理对象',
             data: [
               {
                 params: 'name',
-                desc: '发到后台的文件参数名',
+                desc: '字典组件名称，规则为 字典名+组件名+功能名，字典名+组件名可使用 FieldGeneratorToDict.Components 静态枚举值获取',
                 type: 'string',
                 defaultVal: 'file',
               },
