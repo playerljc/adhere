@@ -19,7 +19,7 @@ import {
 import { CheckboxGroupProps } from 'antd/es/checkbox';
 import { ReactElement, ReactNode } from 'react';
 
-import { DictNames } from './DictNames';
+import type { Components } from './FormItemGeneratorToDict';
 
 export interface LabelValue {
   label: string;
@@ -226,4 +226,4 @@ export interface DictRefreshWrapperFunction {
 
 export type UseTreeSelectLeaf = (dataSource: LabelValue[]) => LabelValue[];
 
-export type DictNamesType = typeof DictNames;
+export type ComponentsType = typeof Components;
