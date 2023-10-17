@@ -1,8 +1,10 @@
-import { DictNames } from './DictNames';
-import FormItemGeneratorToDict, * as FormItemGeneratorToDictComponents from './FormItemGeneratorToDict';
+import FormItemGeneratorToDict, {
+  Components,
+  components as FormItemGeneratorToDictComponents,
+} from './FormItemGeneratorToDict';
 
 export default {
-  DictNames,
+  Components,
   FormItemGeneratorToDict,
   FormItemGeneratorToDictComponents,
 };

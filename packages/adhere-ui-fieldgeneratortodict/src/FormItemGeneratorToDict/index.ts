@@ -12,6 +12,7 @@ import CheckBoxCustomFormItem from './CheckBoxCustomFormItem';
 import CheckBoxHorizontalFormItem from './CheckBoxHorizontalFormItem';
 import CheckBoxSelectFormItem from './CheckBoxSelectFormItem';
 import CheckBoxVerticalFormItem from './CheckBoxVerticalFormItem';
+import Components from './Components';
 import './Fields/AutoComplete';
 import './Fields/Breadcrumb';
 import './Fields/Cascader';
@@ -84,7 +85,7 @@ export const validatorMulti = (message) => ({
   },
 });
 
-export {
+export const components = {
   AutoCompleteFormItem,
   CascaderFormItem,
   CascaderLeafFormItem,
@@ -130,128 +131,14 @@ export {
   TreeSelectMultiFormItem,
 };
 
-export const ItemNames = new Map([
-  ['AutoCompleteDynamic', ['FormItem']],
-  ['AutoComplete', ['FormItem']],
+export { Components };
 
-  ['BreadcrumbDynamic', ['FormItem']],
-  ['Breadcrumb', ['FormItem']],
-
-  ['CascaderDynamic', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
-  ['Cascader', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
-  ['CascaderAsync', ['FormItem', 'MultiFormItem']],
-
-  [
-    'CheckBoxDynamic',
-    [
-      'VerticalFormItem',
-      'HorizontalFormItem',
-      'CheckAllVerticalFormItem',
-      'CheckAllHorizontalFormItem',
-      'SelectFormItem',
-      'CheckAllSelectFormItem',
-      'CustomFormItem',
-      'CheckAllCustomFormItem',
-    ],
-  ],
-  [
-    'CheckBox',
-    [
-      'VerticalFormItem',
-      'HorizontalFormItem',
-      'CheckAllVerticalFormItem',
-      'CheckAllHorizontalFormItem',
-      'SelectFormItem',
-      'CheckAllSelectFormItem',
-      'CustomFormItem',
-      'CheckAllCustomFormItem',
-    ],
-  ],
-
-  ['DropdownDynamic', ['FormItem']],
-  ['Dropdown', ['FormItem']],
-
-  ['ListPagination', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
-  ['ListDynamic', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
-  ['List', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
-
-  ['MentionsDynamic', ['FormItem']],
-  ['Mentions', ['FormItem']],
-
-  ['MenuDynamic', ['FormItem']],
-  ['Menu', ['FormItem']],
-
-  [
-    'RadioDynamic',
-    [
-      'VerticalFormItem',
-      'HorizontalFormItem',
-      'ButtonFormItem',
-      'SelectFormItem',
-      'CustomFormItem',
-    ],
-  ],
-  [
-    'Radio',
-    [
-      'VerticalFormItem',
-      'HorizontalFormItem',
-      'ButtonFormItem',
-      'SelectFormItem',
-      'CustomFormItem',
-    ],
-  ],
-
-  ['SegmentedDynamic', ['FormItem']],
-  ['Segmented', ['FormItem']],
-
-  ['StepsDynamic', ['FormItem']],
-  ['Steps', ['FormItem']],
-
-  ['TablePagination', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
-  ['TableDynamic', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
-  ['Table', ['FormItem', 'SelectFormItem', 'MultiSelectFormItem']],
-
-  [
-    'TagDynamic',
-    [
-      'VerticalFormItem',
-      'HorizontalFormItem',
-      'CheckAllVerticalFormItem',
-      'CheckAllHorizontalFormItem',
-      'SelectFormItem',
-      'MultiSelectFormItem',
-      'CheckAllSelectFormItem',
-    ],
-  ],
-  [
-    'Tag',
-    [
-      'VerticalFormItem',
-      'HorizontalFormItem',
-      'CheckAllVerticalFormItem',
-      'CheckAllHorizontalFormItem',
-      'SelectFormItem',
-      'MultiSelectFormItem',
-      'CheckAllSelectFormItem',
-    ],
-  ],
-
-  ['TimelineDynamic', ['FormItem']],
-  ['Timeline', ['FormItem']],
-
-  ['TransferDynamic', ['FormItem', 'SelectFormItem']],
-  ['Transfer', ['FormItem', 'SelectFormItem']],
-
-  ['TreeDynamic', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
-  ['Tree', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
-  ['TreeAsync', ['FormItem', 'LeafFormItem', 'MultiFormItem', 'LeafMultiFormItem']],
-
-  // 必须放在最后
-  ['AutoSelectComplete', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],
-  ['SelectDynamic', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],
-  ['Select', ['FormItem', 'MultiFormItem', 'CheckAllMultiFormItem']],
-]);
+export const ItemNames = Object.entries(Components).reduce((ret, entry) => {
+  const [componentName, functionNameHash] = entry;
+  const functionNameArray = Object.keys(functionNameHash);
+  ret.set(componentName, functionNameArray);
+  return ret;
+}, new Map());
 
 export default new Proxy(
   {},
