@@ -11,5 +11,6 @@ export type AutoCompleteProps = Omit<SelectProps, 'children'> & {
         value?: SelectProps['value'];
         onChange?: SelectProps['onChange'];
         options?: SelectProps['options'];
+        loading?: boolean;
     }) => ReactElement;
 };

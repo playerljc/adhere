@@ -38,6 +38,8 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
   const [fetching, setFetching] = useState(false);
 
+  const selectedRows = useRef<any[]>([]);
+
   const FetchLoading = useMemo(
     () =>
       renderLoading?.() ?? (
@@ -52,9 +54,24 @@ const AutoComplete: FC<AutoCompleteProps> = ({
    * onSelectChange
    * @description 从下方组件触发的
    * @param _values
+   * @param {boolean} isLock 是否加锁
    */
-  const onSelectChange = (_values) => {
-    lock.current = true;
+  const onSelectChange = (_values, isLock = true) => {
+    if (isLock) {
+      lock.current = true;
+    }
+
+    const allOptions = [...(options ?? []), ...(selectedRows.current ?? [])];
+
+    if (Array.isArray(_values)) {
+      selectedRows.current = _values
+        .map((_value) => allOptions.find((_option) => _option.value === _value))
+        .filter((_option) => !!_option);
+    } else {
+      selectedRows.current = [allOptions.find((option) => option.value === _values)].filter(
+        (_value) => !!_value,
+      );
+    }
 
     // @ts-ignore
     props.onChange?.(_values);
@@ -92,18 +109,42 @@ const AutoComplete: FC<AutoCompleteProps> = ({
     [debounceTimeout],
   );
 
-  console.log('value', props.value);
+  const _options = useMemo(() => {
+    // 用于直接使用value进行初始化的时候对selectedRows进行赋值
+    if (Array.isArray(props.value)) {
+      props.value.forEach((_value) => {
+        const current = options?.find?.((option) => option.value === _value);
+
+        if (current && !selectedRows.current.find((t) => t.value === _value)) {
+          selectedRows.current.push(current);
+        }
+      });
+    } else {
+      const current = options?.find?.((option) => option.value === props.value);
+
+      if (current && !selectedRows.current.find((t) => t.value === props.value)) {
+        selectedRows.current.push(current);
+      }
+    }
+
+    const allOptions = [...(options ?? []), ...(selectedRows.current ?? [])];
+
+    const allOptionKeys = allOptions.map(({ value }) => value);
+
+    const distinctKeys = Array.from(new Set(allOptionKeys));
+
+    return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
+  }, [props.value, options]);
 
   return (
     <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
       <Select
-        {...props}
         showSearch
         allowClear
         notFoundContent={fetching && FetchLoading}
         filterOption={false}
         // onSearch={debounceFetcher.current}
-        options={options ?? []}
+        options={_options ?? []}
         // @ts-ignore
         onInput={onInput}
         onClear={onClear}
@@ -111,10 +152,13 @@ const AutoComplete: FC<AutoCompleteProps> = ({
           children?.({
             originNode,
             value: props.value,
-            onChange: onSelectChange,
-            options: options,
+            onChange: (_value) => onSelectChange(_value, true),
+            options: _options ?? [],
+            loading: fetching,
           }) ?? originNode
         }
+        {...props}
+        onChange={(_value) => onSelectChange(_value, false)}
       />
     </div>
   );

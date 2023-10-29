@@ -42,9 +42,10 @@ export default () => {
         setValue(_value);
       }}
     >
-      {({ value: _value, onChange: _onChange, options }) => {
+      {({ value: _value, onChange: _onChange, options, loading }) => {
         return (
           <Table
+            loading={loading}
             columns={[
               {
                 title: '名称',
