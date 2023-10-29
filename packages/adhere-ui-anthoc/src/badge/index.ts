@@ -1,5 +1,5 @@
-import { Badge } from 'antd';
+import { Badge, BadgeProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Badge, {});
+export default createFactory<BadgeProps>(Badge, {});

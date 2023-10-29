@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var a,e=1,t=arguments.length;e<t;e++)for(var o in a=arguments[e])Object.prototype.hasOwnProperty.call(a,o)&&(r[o]=a[o]);return r}).apply(this,arguments)};import React,{memo}from"react";import CheckableTagGroup from"./CheckableTagGroup";var HorizontalCheckableTagGroup=function(r){return React.createElement(CheckableTagGroup,__assign({},r,{direction:"horizontal"}))};export default memo(HorizontalCheckableTagGroup);
+//# sourceMappingURL=HorizontalCheckableTagGroup.js.map

@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,r=1,c=arguments.length;r<c;r++)for(var n in t=arguments[r])Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e}).apply(this,arguments)};import React,{memo}from"react";import AsyncTreeSelect from"./AsyncTreeSelect";var AsyncTreeCheckedShowChildSelect=function(e){return React.createElement(AsyncTreeSelect,__assign({},e,{treeCheckable:!0}))};export default memo(AsyncTreeCheckedShowChildSelect);
+//# sourceMappingURL=AsyncTreeCheckedShowChildSelect.js.map

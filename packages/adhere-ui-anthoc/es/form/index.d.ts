@@ -1,2 +1,3 @@
-declare const FormWrap: any;
-export default FormWrap;
+import type { FormHOCComponent } from '../types';
+declare const FormHOC: FormHOCComponent;
+export default FormHOC;

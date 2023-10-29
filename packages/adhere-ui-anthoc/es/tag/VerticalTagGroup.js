@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,a=1,e=arguments.length;a<e;a++)for(var o in t=arguments[a])Object.prototype.hasOwnProperty.call(t,o)&&(r[o]=t[o]);return r}).apply(this,arguments)};import React,{memo}from"react";import TagGroup from"./TagGroup";var VerticalTagGroup=function(r){return React.createElement(TagGroup,__assign({},r,{direction:"vertical"}))};export default memo(VerticalTagGroup);
+//# sourceMappingURL=VerticalTagGroup.js.map

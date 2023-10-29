@@ -1,5 +1,32 @@
-import { Checkbox } from 'antd';
+import AutoCompleteCheckAllCheckboxSelect from './AutoCompleteCheckAllCheckboxSelect';
+import AutoCompleteCheckAllCustomCheckboxSelect from './AutoCompleteCheckAllCustomCheckboxSelect';
+import AutoCompleteCheckboxSelect from './AutoCompleteCheckboxSelect';
+import AutoCompleteCustomCheckboxSelect from './AutoCompleteCustomCheckboxSelect';
+import CheckAllCheckboxSelect from './CheckAllCheckboxSelect';
+import CheckAllCustomCheckboxSelect from './CheckAllCustomCheckboxSelect';
+import Checkbox from './Checkbox';
+import CheckboxSelect from './CheckboxSelect';
+import CustomCheckAllCheckbox from './CustomCheckAllCheckbox';
+import CustomCheckbox from './CustomCheckbox';
+import CustomCheckboxSelect from './CustomCheckboxSelect';
+import HorizontalCheckAllCheckbox from './HorizontalCheckAllCheckbox';
+import HorizontalCheckbox from './HorizontalCheckbox';
+import VerticalCheckAllCheckbox from './VerticalCheckAllCheckbox';
+import VerticalCheckbox from './VerticalCheckbox';
 
-import { createFactory } from '../util';
+Checkbox.AutoCompleteCheckAllCheckboxSelect = AutoCompleteCheckAllCheckboxSelect;
+Checkbox.AutoCompleteCheckAllCustomCheckboxSelect = AutoCompleteCheckAllCustomCheckboxSelect;
+Checkbox.AutoCompleteCheckboxSelect = AutoCompleteCheckboxSelect;
+Checkbox.AutoCompleteCustomCheckboxSelect = AutoCompleteCustomCheckboxSelect;
+Checkbox.CheckAllCheckboxSelect = CheckAllCheckboxSelect;
+Checkbox.CheckAllCustomCheckboxSelect = CheckAllCustomCheckboxSelect;
+Checkbox.CheckboxSelect = CheckboxSelect;
+Checkbox.CustomCheckbox = CustomCheckbox;
+Checkbox.CustomCheckAllCheckbox = CustomCheckAllCheckbox;
+Checkbox.CustomCheckboxSelect = CustomCheckboxSelect;
+Checkbox.HorizontalCheckAllCheckbox = HorizontalCheckAllCheckbox;
+Checkbox.HorizontalCheckbox = HorizontalCheckbox;
+Checkbox.VerticalCheckAllCheckbox = VerticalCheckAllCheckbox;
+Checkbox.VerticalCheckbox = VerticalCheckbox;
 
-export default createFactory(Checkbox, {});
+export default Checkbox;

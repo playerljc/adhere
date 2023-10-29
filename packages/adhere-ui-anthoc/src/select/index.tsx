@@ -1,10 +1,8 @@
-import { Select } from 'antd';
+import AutoCompleteSelect from './AutoCompleteSelect';
+import DropdownRenderSelect from './DropdownRenderSelect';
+import Select from './Select';
 
-import { createFactory } from '../util';
+Select.DropdownRenderSelect = DropdownRenderSelect;
+Select.AutoCompleteSelect = AutoCompleteSelect;
 
-export default createFactory(Select, {
-  showSearch: true,
-  allowClear: true,
-  placement: 'bottomLeft',
-  filterOption: (input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
-});
+export default Select;

@@ -1,2 +1,2 @@
-import _Table from"antd/es/table";import{createFactory}from"../util";export default createFactory(_Table,{});
+import Table from"./Table";import TablePagingSelect from"./TablePagingSelect";import TableSelect from"./TableSelect";Table.TableSelect=TableSelect,Table.TablePagingSelect=TablePagingSelect;export default Table;
 //# sourceMappingURL=index.js.map

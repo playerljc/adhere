@@ -1,2 +1,2 @@
-import _Transfer from"antd/es/transfer";import{createFactory}from"../util";export default createFactory(_Transfer,{});
+import Transfer from"./Transfer";import TransferSelect from"./TransferSelect";Transfer.TransferSelect=TransferSelect;export default Transfer;
 //# sourceMappingURL=index.js.map

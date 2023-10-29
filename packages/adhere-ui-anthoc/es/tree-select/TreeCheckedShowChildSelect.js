@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,r=1,a=arguments.length;r<a;r++)for(var c in t=arguments[r])Object.prototype.hasOwnProperty.call(t,c)&&(e[c]=t[c]);return e}).apply(this,arguments)};import React,{memo}from"react";import TreeSelect from"./TreeSelect";var TreeCheckedShowChildSelect=function(e){return React.createElement(TreeSelect,__assign({},e,{treeCheckable:!0}))};export default memo(TreeCheckedShowChildSelect);
+//# sourceMappingURL=TreeCheckedShowChildSelect.js.map

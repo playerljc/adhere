@@ -1,5 +1,5 @@
-import { Rate } from 'antd';
+import { Rate, RateProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Rate, {});
+export default createFactory<RateProps>(Rate, {});

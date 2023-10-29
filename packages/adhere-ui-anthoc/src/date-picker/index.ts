@@ -1,5 +1,8 @@
-import { DatePicker } from 'antd';
+import { DatePicker, DatePickerProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(DatePicker, { allowClear: true, placement: 'bottomLeft' });
+export default createFactory<DatePickerProps>(DatePicker, {
+  allowClear: true,
+  placement: 'bottomLeft',
+});

@@ -1,5 +1,8 @@
-import { Table } from 'antd';
+import Table from './Table';
+import TablePagingSelect from './TablePagingSelect';
+import TableSelect from './TableSelect';
 
-import { createFactory } from '../util';
+Table.TableSelect = TableSelect;
+Table.TablePagingSelect = TablePagingSelect;
 
-export default createFactory(Table, {});
+export default Table;

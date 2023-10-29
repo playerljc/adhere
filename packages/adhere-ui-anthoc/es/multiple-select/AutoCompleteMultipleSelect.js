@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,o=1,l=arguments.length;o<l;o++)for(var r in t=arguments[o])Object.prototype.hasOwnProperty.call(t,r)&&(e[r]=t[r]);return e}).apply(this,arguments)};import React from"react";import AutoCompleteSelect from"../select/AutoCompleteSelect";var AutoCompleteMultipleSelect=function(e){return React.createElement(AutoCompleteSelect,__assign({},e,{mode:"multiple"}))};export default AutoCompleteMultipleSelect;
+//# sourceMappingURL=AutoCompleteMultipleSelect.js.map

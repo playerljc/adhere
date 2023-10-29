@@ -1,5 +1,6 @@
-import { Transfer } from 'antd';
+import Transfer from './Transfer';
+import TransferSelect from './TransferSelect';
 
-import { createFactory } from '../util';
+Transfer.TransferSelect = TransferSelect;
 
-export default createFactory(Transfer, {});
+export default Transfer;

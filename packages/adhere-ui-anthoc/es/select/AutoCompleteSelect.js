@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,o=1,r=arguments.length;o<r;o++)for(var a in e=arguments[o])Object.prototype.hasOwnProperty.call(e,a)&&(t[a]=e[a]);return t}).apply(this,arguments)};import React from"react";import AutoComplete from"@baifendian/adhere-ui-auto-complete";var AutoCompleteSelect=function(t){return React.createElement(AutoComplete,__assign({},t))};export default AutoCompleteSelect;
+//# sourceMappingURL=AutoCompleteSelect.js.map

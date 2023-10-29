@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var r,e=1,o=arguments.length;e<o;e++)for(var n in r=arguments[e])Object.prototype.hasOwnProperty.call(r,n)&&(t[n]=r[n]);return t}).apply(this,arguments)};import React from"react";import Checkbox from"./index";var HorizontalCheckbox=function(t){return React.createElement(Checkbox.Group,__assign({},t))};export default HorizontalCheckbox;
+//# sourceMappingURL=HorizontalCheckbox.js.map

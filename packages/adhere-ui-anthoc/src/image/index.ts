@@ -1,5 +1,5 @@
-import { Image } from 'antd';
+import { Image, ImageProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Image, {});
+export default createFactory<ImageProps>(Image, {});

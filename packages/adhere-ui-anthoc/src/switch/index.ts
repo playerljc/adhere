@@ -1,5 +1,5 @@
-import { Switch } from 'antd';
+import { Switch, SwitchProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Switch, {});
+export default createFactory<SwitchProps>(Switch, {});

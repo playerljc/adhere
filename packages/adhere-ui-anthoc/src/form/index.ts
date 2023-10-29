@@ -1,17 +1,14 @@
-import { Form, FormRule } from 'antd';
+import { Form, FormProps } from 'antd';
 
 import Validator from '@baifendian/adhere-util-validator';
 
+import type { FormHOCComponent, FormValidatorRulesType } from '../types';
 import { createFactory } from '../util';
 
 // Form对象
-const FormWrap = createFactory(Form, {});
+const FormHOC: FormHOCComponent = createFactory<FormProps>(Form, {});
 
-type ValidatorRulesType = {
-  [prop: string]: (argv?: { params?: any; invalidMessage?: string }) => FormRule;
-};
-
-let ValidatorRules: ValidatorRulesType;
+let ValidatorRules: FormValidatorRulesType;
 
 (() => {
   const excludes = [
@@ -43,7 +40,7 @@ let ValidatorRules: ValidatorRulesType;
    */
   ValidatorRules = Array.from(Object.keys(Validator))
     .filter((_key) => !excludes.includes(_key))
-    .reduce<ValidatorRulesType>((result, _key) => {
+    .reduce<FormValidatorRulesType>((result, _key) => {
       result[_key] = (argv) => ({
         /**
          * validator
@@ -69,6 +66,6 @@ let ValidatorRules: ValidatorRulesType;
     }, {});
 })();
 
-FormWrap.ValidatorRules = ValidatorRules;
+FormHOC.ValidatorRules = ValidatorRules;
 
-export default FormWrap;
+export default FormHOC;

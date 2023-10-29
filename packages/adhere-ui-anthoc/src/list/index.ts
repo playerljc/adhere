@@ -1,5 +1,10 @@
-import { List } from 'antd';
+import CheckAllListSelect from './CheckAllListSelect';
+import List from './List';
+import ListPagingSelect from './ListPagingSelect';
+import ListSelect from './ListSelect';
 
-import { createFactory } from '../util';
+List.ListSelect = ListSelect;
+List.CheckAllListSelect = CheckAllListSelect;
+List.ListPagingSelect = ListPagingSelect;
 
-export default createFactory(List, {});
+export default List;

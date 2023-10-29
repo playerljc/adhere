@@ -1,5 +1,5 @@
-import { Tabs } from 'antd';
+import { Tabs, TabsProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Tabs, {});
+export default createFactory<TabsProps>(Tabs, {});

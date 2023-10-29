@@ -1,5 +1,5 @@
-import { Drawer } from 'antd';
+import { Drawer, DrawerProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Drawer, {});
+export default createFactory<DrawerProps>(Drawer, {});

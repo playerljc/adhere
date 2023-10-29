@@ -1,2 +1,2 @@
-import _Select from"antd/es/select";import{createFactory}from"../util";export default createFactory(_Select,{showSearch:!0,allowClear:!0,placement:"bottomLeft",filterOption:function(e,t){return 0<=t.children.toLowerCase().indexOf(e.toLowerCase())}});
+import AutoCompleteSelect from"./AutoCompleteSelect";import DropdownRenderSelect from"./DropdownRenderSelect";import Select from"./Select";Select.DropdownRenderSelect=DropdownRenderSelect,Select.AutoCompleteSelect=AutoCompleteSelect;export default Select;
 //# sourceMappingURL=index.js.map

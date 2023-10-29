@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var t,o=1,a=arguments.length;o<a;o++)for(var n in t=arguments[o])Object.prototype.hasOwnProperty.call(t,n)&&(r[n]=t[n]);return r}).apply(this,arguments)};import React,{memo}from"react";import TagGroup from"./TagGroup";var HorizontalTagGroup=function(r){return React.createElement(TagGroup,__assign({},r,{direction:"horizontal"}))};export default memo(HorizontalTagGroup);
+//# sourceMappingURL=HorizontalTagGroup.js.map

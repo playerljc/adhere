@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(a){for(var r,t=1,e=arguments.length;t<e;t++)for(var s in r=arguments[t])Object.prototype.hasOwnProperty.call(r,s)&&(a[s]=r[s]);return a}).apply(this,arguments)};import React from"react";import Cascader from"./Cascader";import CascaderMulti from"./CascaderMulti";var CascaderShowParent=function(a){return React.createElement(CascaderMulti,__assign({},a,{showCheckedStrategy:Cascader.SHOW_PARENT}))};export default CascaderShowParent;
+//# sourceMappingURL=CascaderShowParent.js.map

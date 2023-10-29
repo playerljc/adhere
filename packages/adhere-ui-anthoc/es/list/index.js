@@ -1,2 +1,2 @@
-import _List from"antd/es/list";import{createFactory}from"../util";export default createFactory(_List,{});
+import CheckAllListSelect from"./CheckAllListSelect";import List from"./List";import ListPagingSelect from"./ListPagingSelect";import ListSelect from"./ListSelect";List.ListSelect=ListSelect,List.CheckAllListSelect=CheckAllListSelect,List.ListPagingSelect=ListPagingSelect;export default List;
 //# sourceMappingURL=index.js.map

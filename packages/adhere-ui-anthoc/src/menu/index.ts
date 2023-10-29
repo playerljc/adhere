@@ -1,5 +1,5 @@
-import { Menu } from 'antd';
+import { Menu, MenuProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Menu, {});
+export default createFactory<MenuProps>(Menu, {});
