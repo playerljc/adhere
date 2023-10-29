@@ -34,11 +34,17 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   children,
   ...props
 }) => {
-  const lock = useRef(false);
+  // const lock = useRef(false);
 
   const [fetching, setFetching] = useState(false);
 
+  const [open, setOpen] = useState(false);
+
   const selectedRows = useRef<any[]>([]);
+
+  const onSelectChangeStartTime = useRef<number>(0);
+
+  const isMultiple = 'mode' in props && props.mode === 'multiple';
 
   const FetchLoading = useMemo(
     () =>
@@ -54,12 +60,14 @@ const AutoComplete: FC<AutoCompleteProps> = ({
    * onSelectChange
    * @description 从下方组件触发的
    * @param _values
-   * @param {boolean} isLock 是否加锁
+   // * @param {boolean} isLock 是否加锁
    */
-  const onSelectChange = (_values, isLock = true) => {
-    if (isLock) {
-      lock.current = true;
-    }
+  const onSelectChange = (_values /*isLock = true*/) => {
+    // if (isLock) {
+    //   lock.current = true;
+    // }
+
+    // console.log('onSelectChange', lock.current);
 
     const allOptions = [...(options ?? []), ...(selectedRows.current ?? [])];
 
@@ -75,6 +83,13 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
     // @ts-ignore
     props.onChange?.(_values);
+
+    if (isMultiple) {
+      onSelectChangeStartTime.current = Date.now();
+    } else {
+      // 单选
+      setOpen(false);
+    }
   };
 
   const onClear = () => {
@@ -97,12 +112,35 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
   const onInput = useCallback(
     debounce((e) => {
-      const _kw = e.target.value.trim();
+      const currentTime = Date.now();
 
-      if (lock.current) {
-        lock.current = false;
+      // console.log('isMultiple', isMultiple);
+      // console.log('currentTime', currentTime);
+      // console.log('onSelectChangeStartTime.current', onSelectChangeStartTime.current);
+      // console.log(
+      //   'currentTime - onSelectChangeStartTime.current',
+      //   currentTime - onSelectChangeStartTime.current,
+      // );
+
+      if (
+        isMultiple &&
+        onSelectChangeStartTime.current !== 0 &&
+        currentTime - onSelectChangeStartTime.current <= 400
+      ) {
+        onSelectChangeStartTime.current = 0;
         return;
       }
+
+      onSelectChangeStartTime.current = 0;
+
+      const _kw = e.target.value.trim();
+
+      // if (lock.current) {
+      //   lock.current = false;
+      //   return;
+      // }
+
+      // console.log('onInput - lock', lock.current);
 
       onInputMemo(_kw);
     }, debounceTimeout ?? 300),
@@ -144,6 +182,7 @@ const AutoComplete: FC<AutoCompleteProps> = ({
         notFoundContent={fetching && FetchLoading}
         filterOption={false}
         // onSearch={debounceFetcher.current}
+        open={open}
         options={_options ?? []}
         // @ts-ignore
         onInput={onInput}
@@ -152,13 +191,14 @@ const AutoComplete: FC<AutoCompleteProps> = ({
           children?.({
             originNode,
             value: props.value,
-            onChange: (_value) => onSelectChange(_value, true),
+            onChange: (_value) => onSelectChange(_value /*true*/),
             options: _options ?? [],
             loading: fetching,
           }) ?? originNode
         }
+        onDropdownVisibleChange={setOpen}
         {...props}
-        onChange={(_value) => onSelectChange(_value, false)}
+        onChange={(_value) => onSelectChange(_value /*false*/)}
       />
     </div>
   );
