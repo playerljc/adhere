@@ -32,7 +32,7 @@
     "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-dict": "^2.10.28",
     "@baifendian/adhere-util-intl": "^2.10.28",
-    "antd": "^5.9.4",
+    "antd": "^5.10.2",
     "dayjs": "^1.11.10"
   },
   "devDependencies": {
