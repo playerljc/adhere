@@ -236,6 +236,9 @@ export type CheckboxSelectProps = DropdownRenderSelectProps & {
 export type AutoCompleteCheckboxSelectProps = AutoCompleteProps & {
     checkboxProps?: Omit<CheckboxGroupProps, 'value' | 'onChange' | 'options'>;
 };
+export type AutoCompleteRadioSelectProps = AutoCompleteProps & {
+    radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
+};
 export type CheckAllCheckboxSelectProps = CheckAllSelectProps & CheckAllWrapperStyleProps & DropdownWrapperStyleProps & {
     checkboxProps?: Omit<CheckboxGroupProps, 'value' | 'onChange' | 'options'>;
 };
@@ -253,6 +256,10 @@ export type AutoCompleteCustomCheckboxSelectProps = AutoCompleteProps & {
     children: CustomCheckboxProps['children'];
     checkboxProps: Omit<CheckboxGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
 };
+export type AutoCompleteCustomRadioSelectProps = AutoCompleteProps & {
+    children: CustomRadioProps['children'];
+    radioProps: Omit<RadioGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
+};
 export type AutoCompleteCheckAllCustomCheckboxSelectProps = AutoCompleteCheckAllMultipleSelectProps & {
     children: CustomCheckboxProps['children'];
     checkboxProps: Omit<CheckboxGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
@@ -262,6 +269,9 @@ export type RadioSelectProps = DropdownRenderSelectProps & {
     radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
 };
 export type ButtonRadioSelectProps = DropdownRenderSelectProps & {
+    radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
+};
+export type AutoCompleteButtonRadioSelectProps = AutoCompleteProps & {
     radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
 };
 export type CustomRadioSelectProps = DropdownRenderSelectProps & {
@@ -369,4 +379,10 @@ export type UseCheckboxRenderProps = (checkboxProps: CheckboxSelectProps['checkb
     options?: SelectProps['options'];
     loading?: boolean;
 }) => CheckboxGroupProps;
+export type UseRadioRenderProps = (radioProps: RadioSelectProps['radioProps'] | CustomRadioSelectProps['radioProps']) => (arg: {
+    value?: SelectProps['value'];
+    onChange?: SelectProps['onChange'];
+    options?: SelectProps['options'];
+    loading?: boolean;
+}) => RadioGroupProps;
 export type UseAutoCompleteFetchLoading = (renderLoading?: () => ReactNode) => ReactNode;

@@ -379,6 +379,10 @@ export type AutoCompleteCheckboxSelectProps = AutoCompleteProps & {
   checkboxProps?: Omit<CheckboxGroupProps, 'value' | 'onChange' | 'options'>;
 };
 
+export type AutoCompleteTagSelectProps = AutoCompleteProps & {
+  tagProps?: Omit<VerticalCheckableTagGroupProps, 'value' | 'onChange' | 'options'>;
+};
+
 export type AutoCompleteRadioSelectProps = AutoCompleteProps & {
   radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
 };
@@ -391,8 +395,14 @@ export type CheckAllCheckboxSelectProps = CheckAllSelectProps &
 
 export type AutoCompleteCheckAllCheckboxSelectProps = CheckAllSelectProps &
   CheckAllWrapperStyleProps &
-  AutoCompleteProps & {
+  AutoCompleteCheckAllMultipleSelectProps & {
     checkboxProps?: Omit<CheckboxGroupProps, 'value' | 'onChange' | 'options'>;
+  };
+
+export type AutoCompleteCheckAllTagSelectProps = CheckAllTagSelectProps &
+  CheckAllWrapperProps &
+  AutoCompleteCheckAllMultipleSelectProps & {
+    tagProps?: Omit<VerticalCheckableTagGroupProps, 'value' | 'onChange' | 'options'>;
   };
 
 export type CheckAllTagSelectProps = CheckAllWrapperStyleProps &
@@ -411,6 +421,11 @@ export type AutoCompleteCustomCheckboxSelectProps = AutoCompleteProps & {
   checkboxProps: Omit<CheckboxGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
 };
 
+export type AutoCompleteCustomRadioSelectProps = AutoCompleteProps & {
+  children: CustomRadioProps['children'];
+  radioProps: Omit<RadioGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
+};
+
 export type AutoCompleteCheckAllCustomCheckboxSelectProps =
   AutoCompleteCheckAllMultipleSelectProps & {
     children: CustomCheckboxProps['children'];
@@ -426,6 +441,10 @@ export type RadioSelectProps = DropdownRenderSelectProps & {
 };
 
 export type ButtonRadioSelectProps = DropdownRenderSelectProps & {
+  radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type AutoCompleteButtonRadioSelectProps = AutoCompleteProps & {
   radioProps?: Omit<RadioGroupProps, 'value' | 'onChange' | 'options'>;
 };
 
@@ -466,6 +485,9 @@ export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> 
 };
 
 export type RadioHOCComponent = ReturnType<typeof createFactory<RadioProps>> & {
+  AutoCompleteRadioSelect: FC<AutoCompleteRadioSelectProps>;
+  AutoCompleteCustomRadioSelect: FC<AutoCompleteCustomRadioSelectProps>;
+  AutoCompleteButtonRadioSelect: FC<AutoCompleteButtonRadioSelectProps>;
   ButtonRadio: typeof ButtonRadio;
   ButtonRadioSelect: FC<ButtonRadioSelectProps>;
   CustomRadio: FC<CustomRadioProps>;
@@ -481,6 +503,8 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
 };
 
 export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
+  AutoCompleteTagSelect: FC<AutoCompleteTagSelectProps>;
+  AutoCompleteCheckAllTagSelect: FC<AutoCompleteCheckAllTagSelectProps>;
   CheckAllTagSelect: FC<CheckAllTagSelectProps>;
   HorizontalCheckAllCheckableTagGroup: FC<HorizontalCheckableTagGroupProps>;
   HorizontalCheckableTagGroup: FC<HorizontalCheckableTagGroupProps>;
@@ -553,13 +577,23 @@ export type UseCheckboxRenderProps = (
 }) => CheckboxGroupProps;
 
 export type UseRadioRenderProps = (
-  radioProps: RadioSelectProps['checkboxProps'] | CustomRadioSelectProps['checkboxProps'],
+  radioProps: RadioSelectProps['radioProps'] | CustomRadioSelectProps['radioProps'],
 ) => (arg: {
   value?: SelectProps['value'];
   onChange?: SelectProps['onChange'];
   options?: SelectProps['options'];
   loading?: boolean;
 }) => RadioGroupProps;
+
+export type UseTagRenderProps = (
+  tagProps: TagSelectProps['tagProps'],
+  mode?: HorizontalCheckableTagGroupProps['mode'],
+) => (arg: {
+  value?: SelectProps['value'];
+  onChange?: SelectProps['onChange'];
+  options?: SelectProps['options'];
+  loading?: boolean;
+}) => VerticalCheckableTagGroupProps;
 
 export type UseAutoCompleteFetchLoading = (renderLoading?: () => ReactNode) => ReactNode;
 

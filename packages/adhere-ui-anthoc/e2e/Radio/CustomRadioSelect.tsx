@@ -10,6 +10,7 @@ export default () => {
   return (
     <Radio.CustomRadioSelect
       style={{ width: 300 }}
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       placeholder="A-Z"
       value={value}
       onChange={setValue}

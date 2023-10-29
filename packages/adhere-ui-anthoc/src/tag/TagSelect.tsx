@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { TagSelectProps } from '../types';
 import VerticalCheckableTagGroup from './VerticalCheckableTagGroup';
+import useRenderProps from './useRenderProps';
 
 /**
  * TagSelect
@@ -11,17 +12,14 @@ import VerticalCheckableTagGroup from './VerticalCheckableTagGroup';
  * @param props
  * @constructor
  */
-const TagSelect: FC<TagSelectProps> = ({ tagProps, ...props }) => (
-  <DropdownRenderSelect {...props}>
-    {({ value, onChange, options }) => (
-      <VerticalCheckableTagGroup
-        value={value}
-        onChange={onChange}
-        options={(options as any[]) ?? []}
-        {...(tagProps ?? {})}
-      />
-    )}
-  </DropdownRenderSelect>
-);
+const TagSelect: FC<TagSelectProps> = ({ tagProps, ...props }) => {
+  const renderProps = useRenderProps(tagProps);
+
+  return (
+    <DropdownRenderSelect {...props}>
+      {({ originNode, ...rest }) => <VerticalCheckableTagGroup {...renderProps(rest)} />}
+    </DropdownRenderSelect>
+  );
+};
 
 export default memo(TagSelect);

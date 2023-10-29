@@ -1,8 +1,7 @@
 import type { FC } from 'react';
 import React, { memo } from 'react';
 
-import AutoComplete from '@baifendian/adhere-ui-auto-complete';
-
+import AutoComplete from '../select/AutoCompleteSelect';
 import type { AutoCompleteCheckAllMultipleSelectProps } from '../types';
 import useCheckAllMultiple from './useCheckAllMultiple';
 

@@ -1,3 +1,6 @@
+import AutoCompleteButtonRadioSelect from './AutoCompleteButtonRadioSelect';
+import AutoCompleteCustomRadioSelect from './AutoCompleteCustomRadioSelect';
+import AutoCompleteRadioSelect from './AutoCompleteRadioSelect';
 import ButtonRadio from './ButtonRadio';
 import ButtonRadioSelect from './ButtonRadioSelect';
 import CustomRadio from './CustomRadio';
@@ -7,6 +10,9 @@ import Radio from './Radio';
 import RadioSelect from './RadioSelect';
 import VerticalRadio from './VerticalRadio';
 
+Radio.AutoCompleteRadioSelect = AutoCompleteRadioSelect;
+Radio.AutoCompleteCustomRadioSelect = AutoCompleteCustomRadioSelect;
+Radio.AutoCompleteButtonRadioSelect = AutoCompleteButtonRadioSelect;
 Radio.ButtonRadio = ButtonRadio;
 Radio.ButtonRadioSelect = ButtonRadioSelect;
 Radio.CustomRadio = CustomRadio;

@@ -26,8 +26,6 @@ const CheckableTagGroup: FC<CheckableTagGroupProps> = ({
   onChange,
   ...props
 }) => {
-  console.log('options', options);
-
   return (
     <Space direction={direction} {...props}>
       {options?.map?.(({ value: _value, ...tagProps }) => {

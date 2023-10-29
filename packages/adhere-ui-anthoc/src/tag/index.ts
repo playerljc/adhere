@@ -1,3 +1,5 @@
+import AutoCompleteCheckAllTagSelect from './AutoCompleteCheckAllTagSelect';
+import AutoCompleteTagSelect from './AutoCompleteTagSelect';
 import CheckAllTagSelect from './CheckAllTagSelect';
 import HorizontalCheckAllCheckableTagGroup from './HorizontalCheckAllCheckableTagGroup';
 import HorizontalCheckableTagGroup from './HorizontalCheckableTagGroup';
@@ -8,6 +10,8 @@ import VerticalCheckAllCheckableTagGroup from './VerticalCheckAllCheckableTagGro
 import VerticalCheckableTagGroup from './VerticalCheckableTagGroup';
 import VerticalTagGroup from './VerticalTagGroup';
 
+Tag.AutoCompleteTagSelect = AutoCompleteTagSelect;
+Tag.AutoCompleteCheckAllTagSelect = AutoCompleteCheckAllTagSelect;
 Tag.CheckAllTagSelect = CheckAllTagSelect;
 Tag.HorizontalCheckAllCheckableTagGroup = HorizontalCheckAllCheckableTagGroup;
 Tag.HorizontalCheckableTagGroup = HorizontalCheckableTagGroup;

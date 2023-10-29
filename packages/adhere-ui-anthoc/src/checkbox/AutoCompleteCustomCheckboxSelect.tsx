@@ -27,15 +27,7 @@ const AutoCompleteCustomCheckboxSelect: FC<AutoCompleteCustomCheckboxSelectProps
       {({ originNode, loading, ...rest }) => (
         <>
           {loading && fetchLoading}
-          {!loading && (
-            <CustomCheckbox
-              {...renderProps({
-                ...rest,
-              })}
-            >
-              {children}
-            </CustomCheckbox>
-          )}
+          {!loading && <CustomCheckbox {...renderProps(rest)}>{children}</CustomCheckbox>}
         </>
       )}
     </AutoCompleteMultipleSelect>

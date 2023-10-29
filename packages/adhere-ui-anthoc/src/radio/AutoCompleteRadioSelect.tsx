@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import type { FC } from 'react';
 
-import AutoCompleteSelect from '@baifendian/adhere-ui-auto-complete';
-
+import AutoComplete from '../select/AutoCompleteSelect';
 import { AutoCompleteRadioSelectProps } from '../types';
 import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import VerticalRadio from './VerticalRadio';
@@ -19,14 +18,14 @@ const AutoCompleteRadioSelect: FC<AutoCompleteRadioSelectProps> = ({ radioProps,
   const renderProps = useRenderProps(radioProps);
 
   return (
-    <AutoCompleteSelect {...props}>
+    <AutoComplete {...props}>
       {({ originNode, loading, ...rest }) => (
         <>
           {loading && fetchLoading}
           {!loading && <VerticalRadio {...renderProps(rest)} />}
         </>
       )}
-    </AutoCompleteSelect>
+    </AutoComplete>
   );
 };
 
