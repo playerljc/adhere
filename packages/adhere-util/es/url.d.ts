@@ -1,4 +1,5 @@
 import { IUrlConfig } from './types';
+export declare const defaultConfig: IUrlConfig;
 declare const methods: {
     /**
      * parse
