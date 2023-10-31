@@ -2,6 +2,7 @@ import { useUpdateEffect } from 'ahooks';
 import type { FC, ReactElement } from 'react';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
+import Empty from '../empty';
 import type { DropdownRenderSelectProps } from '../types';
 import Select from './Select';
 
@@ -11,6 +12,7 @@ import Select from './Select';
  * @param children
  * @param options
  * @param defaultInputValue
+ * @param emptyContent
  * @param props
  * @constructor
  */
@@ -18,6 +20,7 @@ const DropdownRenderSelect: FC<DropdownRenderSelectProps> = ({
   children,
   options,
   defaultInputValue,
+  emptyContent,
   ...props
 }) => {
   const [inputValue, setInputValue] = useState(defaultInputValue ?? '');
@@ -38,13 +41,14 @@ const DropdownRenderSelect: FC<DropdownRenderSelectProps> = ({
     (_originNode) => {
       currentOriginNode.current = _originNode;
 
-      dropdownRenderElement.current =
-        children?.({
-          originNode: _originNode,
-          value: props.value,
-          onChange: props.onChange,
-          options: filterOptions,
-        }) ?? _originNode;
+      dropdownRenderElement.current = !!filterOptions?.length
+        ? children?.({
+            originNode: _originNode,
+            value: props.value,
+            onChange: props.onChange,
+            options: filterOptions,
+          }) ?? _originNode
+        : emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
 
       return dropdownRenderElement.current;
     },
@@ -57,7 +61,7 @@ const DropdownRenderSelect: FC<DropdownRenderSelectProps> = ({
 
   return (
     <Select
-      filterOption={() => dropdownRenderElement.current === currentOriginNode.current /*!children*/}
+      filterOption={() => dropdownRenderElement.current === currentOriginNode.current}
       onSearch={(v) => {
         setInputValue(v);
         props?.onSearch?.(v);

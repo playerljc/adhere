@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import CheckAllMultipleSelect from '../multiple-select/CheckAllMultipleSelect';
 import type { CheckAllListSelectProps } from '../types';
 import CheckboxList from './CheckboxList';
+import useRenderProps from './useRenderProps';
 
 /**
  * CheckAllListSelect
@@ -12,17 +13,14 @@ import CheckboxList from './CheckboxList';
  * @param props
  * @constructor
  */
-const CheckAllListSelect: FC<CheckAllListSelectProps> = ({ listProps, ...props }) => (
-  <CheckAllMultipleSelect {...props}>
-    {({ value, onChange, options }) => (
-      <CheckboxList
-        value={value}
-        onChange={(v) => onChange?.(v, [])}
-        options={options}
-        {...(listProps ?? {})}
-      />
-    )}
-  </CheckAllMultipleSelect>
-);
+const CheckAllListSelect: FC<CheckAllListSelectProps> = ({ listProps, ...props }) => {
+  const renderProps = useRenderProps(listProps);
+
+  return (
+    <CheckAllMultipleSelect {...props}>
+      {({ originNode, ...rest }) => <CheckboxList {...renderProps(rest)} />}
+    </CheckAllMultipleSelect>
+  );
+};
 
 export default memo(CheckAllListSelect);

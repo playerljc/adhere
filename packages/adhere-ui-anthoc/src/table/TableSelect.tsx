@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { TableSelectProps } from '../types';
 import CheckboxTable from './CheckboxTable';
 import RadioTable from './RadioTable';
+import useRenderProps from './useRenderProps';
 
 /**
  * TableSelect
@@ -13,31 +14,22 @@ import RadioTable from './RadioTable';
  * @param props
  * @constructor
  */
-const TableSelect: FC<TableSelectProps> = ({ tableProps, ...props }) => (
-  <DropdownRenderSelect {...props}>
-    {({ value, onChange, options }) => (
-      <>
-        {'mode' in props && props.mode === 'multiple' && (
-          <CheckboxTable
-            value={value}
-            onChange={(v) => onChange?.(v, [])}
-            options={options}
-            {...(tableProps ?? {})}
-          />
-        )}
-        {!('mode' in props) && (
-          <RadioTable
-            value={value}
-            onChange={(v) => {
-              onChange?.(v, []);
-            }}
-            options={options}
-            {...(tableProps ?? {})}
-          />
-        )}
-      </>
-    )}
-  </DropdownRenderSelect>
-);
+const TableSelect: FC<TableSelectProps> = ({ tableProps, ...props }) => {
+  const isMultiple = useMemo(() => 'mode' in props && props.mode === 'multiple', [props.mode]);
+  const renderProps = useRenderProps(tableProps);
+
+  return (
+    <DropdownRenderSelect {...props}>
+      {({ originNode, ...rest }) => (
+        <>
+          <>
+            {isMultiple && <CheckboxTable {...renderProps(rest)} />}
+            {!isMultiple && <RadioTable {...renderProps(rest)} />}
+          </>
+        </>
+      )}
+    </DropdownRenderSelect>
+  );
+};
 
 export default memo(TableSelect);

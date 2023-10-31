@@ -34,11 +34,13 @@ export default () => {
     <List.ListPagingSelect
       mode="multiple"
       style={{ width: 600 }}
-      placeholder="RadioPagingList"
+      placeholder="CheckboxListPagingSelect"
       value={value}
       onChange={setValue}
-      loadData={loadData}
-      defaultLimit={5}
+      pagingProps={{
+        loadData,
+        defaultLimit: 5,
+      }}
       listPagingProps={{
         itemLayout: 'horizontal',
         renderItem: (item, index) => (

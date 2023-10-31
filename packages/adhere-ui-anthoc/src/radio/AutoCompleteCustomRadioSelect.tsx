@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
 import type { FC } from 'react';
 
-import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { CustomRadioSelectProps } from '../types';
+import AutoComplete from '../select/AutoCompleteSelect';
+import type { AutoCompleteCustomRadioSelectProps } from '../types';
+import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import CustomRadio from './CustomRadio';
 import useRenderProps from './useRenderProps';
 
@@ -13,14 +14,24 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const CustomRadioSelect: FC<CustomRadioSelectProps> = ({ radioProps, children, ...props }) => {
+const AutoCompleteCustomRadioSelect: FC<AutoCompleteCustomRadioSelectProps> = ({
+  radioProps,
+  children,
+  ...props
+}) => {
+  const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
   const renderProps = useRenderProps(radioProps);
 
   return (
-    <DropdownRenderSelect {...props}>
-      {({ originNode, ...rest }) => <CustomRadio {...renderProps(rest)}>{children}</CustomRadio>}
-    </DropdownRenderSelect>
+    <AutoComplete {...props}>
+      {({ originNode, loading, ...rest }) => (
+        <>
+          {loading && fetchLoading}
+          {!loading && <CustomRadio {...renderProps(rest)}>{children}</CustomRadio>}
+        </>
+      )}
+    </AutoComplete>
   );
 };
 
-export default memo(CustomRadioSelect);
+export default memo(AutoCompleteCustomRadioSelect);

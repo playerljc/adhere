@@ -16,11 +16,16 @@ const CheckAllWrapper: FC<CheckAllWrapperProps> = ({ value, onChange, options })
   const checkAll = useMemo(() => {
     if (!options?.length) return false;
 
-    return value?.length === options?.length;
+    return options.map((_option) => _option.value).every((_value) => value?.includes(_value));
   }, [value, options]);
 
   const indeterminate = useMemo(
     () => value?.length > 0 && value?.length < (options ?? []).length,
+    // () => {
+    //   if (!options?.length) return false;
+    //
+    //   return options.map((_option) => _option.value).every((_value) => value?.includes(_value));
+    // },
     [value, options],
   );
 
@@ -30,9 +35,16 @@ const CheckAllWrapper: FC<CheckAllWrapperProps> = ({ value, onChange, options })
       checked={checkAll}
       onChange={(e) => {
         if (e.target.checked) {
-          onChange?.(options?.map?.((t) => t.value) ?? [], []);
+          onChange?.(
+            Array.from(new Set([...(options?.map?.((t) => t.value) ?? []), ...(value ?? [])])),
+            [],
+          );
         } else {
-          onChange?.([], []);
+          const values = options?.map?.((_option) => _option.value) ?? [];
+          onChange?.(
+            value?.filter((_value) => !values.includes(_value)),
+            [],
+          );
         }
       }}
     >

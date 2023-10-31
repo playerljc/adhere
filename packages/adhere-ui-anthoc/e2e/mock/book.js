@@ -764,6 +764,7 @@ export default [
 
   return {
     ...t,
+    title: t.label,
     t: `${t.t}1`,
     value: id,
     label: t.t,

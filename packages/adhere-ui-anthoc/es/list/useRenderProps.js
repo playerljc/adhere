@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(n){for(var t,r=1,e=arguments.length;r<e;r++)for(var s in t=arguments[r])Object.prototype.hasOwnProperty.call(t,s)&&(n[s]=t[s]);return n}).apply(this,arguments)},useListRenderProps=function(e){return function(n){var t=n.value,r=n.onChange,n=n.options;return __assign({value:t,onChange:function(n){return null==r?void 0:r(n,[])},options:n},null!=e?e:{})}};export default useListRenderProps;
+//# sourceMappingURL=useRenderProps.js.map
