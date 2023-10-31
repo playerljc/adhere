@@ -6,6 +6,8 @@ export type AutoCompleteProps = Omit<SelectProps, 'children'> & {
     renderLoading?: () => ReactNode;
     debounceTimeout?: number;
     loadData?: (kw?: string) => Promise<void>;
+    defaultOptions?: SelectProps['options'];
+    emptyContent?: ReactElement;
     children?: (arg: {
         originNode?: ReactElement;
         value?: SelectProps['value'];

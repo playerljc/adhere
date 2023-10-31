@@ -51,22 +51,20 @@ export default () => {
       value={value}
       style={{ width: 600 }}
       loadData={(_kw) => {
-        return new Promise((resolve) => {
-          kw.current = _kw;
+        kw.current = _kw;
 
-          pagin.current = {
-            page: 1,
-            limit: 10,
-          };
+        pagin.current = {
+          page: 1,
+          limit: 10,
+        };
 
-          if (!_kw) {
-            setOptions([]);
-            resolve();
-            return;
-          }
+        if (!_kw) {
+          setTotalCount(0);
+          setOptions([]);
+          return Promise.resolve();
+        }
 
-          loadData();
-        });
+        return loadData();
       }}
       options={options}
       onChange={(_value) => {

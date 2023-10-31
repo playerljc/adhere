@@ -8,5 +8,5 @@ import TablePaginRadio from './TablePaginRadio';
 import Test from './Test.jsx';
 
 e2e.PC({
-  children: <TableTest />,
+  children: <TablePaginMultiple />,
 });

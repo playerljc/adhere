@@ -1,4 +1,5 @@
-import { Select, Spin } from 'antd';
+import { useUpdateEffect } from 'ahooks';
+import { Empty, Select, Spin } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import type { FC } from 'react';
@@ -20,6 +21,8 @@ const selectorPrefix = 'adhere-ui-auto-complete';
  * @param debounceTimeout
  * @param options
  * @param loadData
+ * @param defaultOptions
+ * @param emptyContent
  * @param children
  * @param props
  * @constructor
@@ -31,6 +34,8 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   debounceTimeout = 300,
   options,
   loadData,
+  defaultOptions,
+  emptyContent,
   children,
   ...props
 }) => {
@@ -40,7 +45,7 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
   const [open, setOpen] = useState(false);
 
-  const selectedRows = useRef<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
 
   const onSelectChangeStartTime = useRef<number>(0);
 
@@ -60,24 +65,17 @@ const AutoComplete: FC<AutoCompleteProps> = ({
    * onSelectChange
    * @description 从下方组件触发的
    * @param _values
-   // * @param {boolean} isLock 是否加锁
    */
-  const onSelectChange = (_values /*isLock = true*/) => {
-    // if (isLock) {
-    //   lock.current = true;
-    // }
-
-    // console.log('onSelectChange', lock.current);
-
-    const allOptions = [...(options ?? []), ...(selectedRows.current ?? [])];
-
+  const onSelectChange = (_values) => {
     if (Array.isArray(_values)) {
-      selectedRows.current = _values
-        .map((_value) => allOptions.find((_option) => _option.value === _value))
-        .filter((_option) => !!_option);
+      setSelectedRows(
+        _values
+          .map((_value) => options?.find((_option) => _option.value === _value))
+          .filter((t) => !!t),
+      );
     } else {
-      selectedRows.current = [allOptions.find((option) => option.value === _values)].filter(
-        (_value) => !!_value,
+      setSelectedRows(
+        [(options ?? []).find((option) => option.value === _values)].filter((_value) => !!_value),
       );
     }
 
@@ -114,14 +112,6 @@ const AutoComplete: FC<AutoCompleteProps> = ({
     debounce((e) => {
       const currentTime = Date.now();
 
-      // console.log('isMultiple', isMultiple);
-      // console.log('currentTime', currentTime);
-      // console.log('onSelectChangeStartTime.current', onSelectChangeStartTime.current);
-      // console.log(
-      //   'currentTime - onSelectChangeStartTime.current',
-      //   currentTime - onSelectChangeStartTime.current,
-      // );
-
       if (
         isMultiple &&
         onSelectChangeStartTime.current !== 0 &&
@@ -135,55 +125,36 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
       const _kw = e.target.value.trim();
 
-      // if (lock.current) {
-      //   lock.current = false;
-      //   return;
-      // }
-
-      // console.log('onInput - lock', lock.current);
-
       onInputMemo(_kw);
     }, debounceTimeout ?? 300),
     [debounceTimeout],
   );
 
-  const _options = useMemo(() => {
-    // 用于直接使用value进行初始化的时候对selectedRows进行赋值
-    if (Array.isArray(props.value)) {
-      props.value.forEach((_value) => {
-        const current = options?.find?.((option) => option.value === _value);
-
-        if (current && !selectedRows.current.find((t) => t.value === _value)) {
-          selectedRows.current.push(current);
-        }
-      });
-    } else {
-      const current = options?.find?.((option) => option.value === props.value);
-
-      if (current && !selectedRows.current.find((t) => t.value === props.value)) {
-        selectedRows.current.push(current);
-      }
-    }
-
-    const allOptions = [...(options ?? []), ...(selectedRows.current ?? [])];
+  const selectOptions = useMemo<any[]>(() => {
+    const allOptions = [...(options ?? []), ...(selectedRows ?? [])];
 
     const allOptionKeys = allOptions.map(({ value }) => value);
 
     const distinctKeys = Array.from(new Set(allOptionKeys));
 
     return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
-  }, [props.value, options]);
+  }, [selectedRows, options]);
+
+  useUpdateEffect(() => {
+    setSelectedRows(defaultOptions ?? []);
+  }, [defaultOptions]);
 
   return (
     <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
       <Select
         showSearch
         allowClear
-        notFoundContent={fetching && FetchLoading}
+        notFoundContent={
+          fetching ? FetchLoading : emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        }
         filterOption={false}
-        // onSearch={debounceFetcher.current}
         open={open}
-        options={_options ?? []}
+        options={selectOptions ?? []}
         // @ts-ignore
         onInput={onInput}
         onClear={onClear}
@@ -191,14 +162,14 @@ const AutoComplete: FC<AutoCompleteProps> = ({
           children?.({
             originNode,
             value: props.value,
-            onChange: (_value) => onSelectChange(_value /*true*/),
-            options: _options ?? [],
+            onChange: (_value) => onSelectChange(_value),
+            options: options ?? [],
             loading: fetching,
           }) ?? originNode
         }
         onDropdownVisibleChange={setOpen}
         {...props}
-        onChange={(_value) => onSelectChange(_value /*false*/)}
+        onChange={(_value) => onSelectChange(_value)}
       />
     </div>
   );

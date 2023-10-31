@@ -7,7 +7,15 @@ import Book from './data';
 import '../src/index.less';
 
 export default () => {
-  const [options, setOptions] = useState([
+  const [options, setOptions] = useState([]);
+
+  const kw = useRef();
+
+  const [totalCount, setTotalCount] = useState(0);
+
+  const [value, setValue] = useState([0]);
+
+  const defaultOptions = useRef([
     {
       broker_info:
         'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
@@ -52,12 +60,6 @@ export default () => {
     },
   ]);
 
-  const kw = useRef();
-
-  const [totalCount, setTotalCount] = useState(0);
-
-  const [value, setValue] = useState([0]);
-
   const pagin = useRef({
     page: 1,
     limit: 10,
@@ -95,24 +97,23 @@ export default () => {
       mode="multiple"
       style={{ width: 600 }}
       loadData={(_kw) => {
-        return new Promise((resolve) => {
-          kw.current = _kw;
+        kw.current = _kw;
 
-          pagin.current = {
-            page: 1,
-            limit: 10,
-          };
+        pagin.current = {
+          page: 1,
+          limit: 10,
+        };
 
-          if (!_kw) {
-            setOptions([]);
-            resolve();
-            return;
-          }
+        if (!_kw) {
+          setTotalCount(0);
+          setOptions([]);
+          return Promise.resolve();
+        }
 
-          loadData();
-        });
+        return loadData();
       }}
       options={options}
+      defaultOptions={defaultOptions.current}
       onChange={(_value) => {
         setValue(_value);
       }}
