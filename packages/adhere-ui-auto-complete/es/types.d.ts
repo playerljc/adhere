@@ -1,9 +1,9 @@
 import { SelectProps } from 'antd';
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 export type AutoCompleteProps = Omit<SelectProps, 'children'> & {
     classNameWrap?: string;
     styleWrap?: CSSProperties;
-    renderLoading?: () => ReactNode;
+    renderLoading?: () => ReactElement;
     debounceTimeout?: number;
     loadData?: (kw?: string) => Promise<void>;
     defaultOptions?: SelectProps['options'];

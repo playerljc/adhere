@@ -67,6 +67,8 @@ const AutoComplete: FC<AutoCompleteProps> = ({
    * @param _values
    */
   const onSelectChange = (_values) => {
+    // console.log('onSelectChange ~ _value', _values);
+
     if (Array.isArray(_values)) {
       setSelectedRows(
         _values
@@ -113,6 +115,12 @@ const AutoComplete: FC<AutoCompleteProps> = ({
       const currentTime = Date.now();
 
       if (
+        ['ant-checkbox-input'].some((className) => e.target.className.indexOf(className) !== -1)
+      ) {
+        return;
+      }
+
+      if (
         isMultiple &&
         onSelectChangeStartTime.current !== 0 &&
         currentTime - onSelectChangeStartTime.current <= 400
@@ -140,33 +148,45 @@ const AutoComplete: FC<AutoCompleteProps> = ({
     return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
   }, [selectedRows, options]);
 
+  const empty = useMemo(
+    () => emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />,
+    [emptyContent],
+  );
+
   useUpdateEffect(() => {
+    // console.log('defaultOptions', defaultOptions);
     setSelectedRows(defaultOptions ?? []);
   }, [defaultOptions]);
+
+  // console.log('options', options);
+  // console.log('selectedRows', selectedRows);
+  // console.log('selectOptions', selectOptions);
 
   return (
     <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
       <Select
         showSearch
         allowClear
-        notFoundContent={
-          fetching ? FetchLoading : emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        }
+        // notFoundContent={fetching ? FetchLoading : <div>notFoundContent</div>}
         filterOption={false}
         open={open}
         options={selectOptions ?? []}
         // @ts-ignore
         onInput={onInput}
         onClear={onClear}
-        dropdownRender={(originNode) =>
-          children?.({
-            originNode,
-            value: props.value,
-            onChange: (_value) => onSelectChange(_value),
-            options: options ?? [],
-            loading: fetching,
-          }) ?? originNode
-        }
+        dropdownRender={(originNode) => {
+          if (fetching) return FetchLoading;
+
+          return !!options?.length
+            ? children?.({
+                originNode,
+                value: props.value,
+                onChange: (_value) => onSelectChange(_value),
+                options: options ?? [],
+                loading: fetching,
+              }) ?? originNode
+            : empty;
+        }}
         onDropdownVisibleChange={setOpen}
         {...props}
         onChange={(_value) => onSelectChange(_value)}
