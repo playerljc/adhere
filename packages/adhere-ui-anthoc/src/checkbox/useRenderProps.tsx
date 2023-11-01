@@ -9,7 +9,7 @@ const useCheckboxRenderProps: UseCheckboxRenderProps =
   (checkboxProps) =>
   ({ value, onChange, options }) => ({
     value,
-    onChange: (v) => onChange?.(v, []),
+    onChange,
     options:
       options?.map?.((t) => ({
         label: t.label,

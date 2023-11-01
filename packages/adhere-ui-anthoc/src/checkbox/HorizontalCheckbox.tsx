@@ -1,8 +1,8 @@
-import type { CheckboxGroupProps } from 'antd/es/checkbox';
-import React from 'react';
+import React, { memo } from 'react';
 import type { FC } from 'react';
 
-import Checkbox from './index';
+import type { CheckboxGroupExtProps } from '../types';
+import CheckboxGroup from './CheckboxGroup';
 
 /**
  * HorizontalCheckbox
@@ -10,6 +10,8 @@ import Checkbox from './index';
  * @param props
  * @constructor
  */
-const HorizontalCheckbox: FC<CheckboxGroupProps> = (props) => <Checkbox.Group {...props} />;
+const HorizontalCheckbox: FC<CheckboxGroupExtProps> = (props) => (
+  <CheckboxGroup {...props} direction="horizontal" />
+);
 
-export default HorizontalCheckbox;
+export default memo(HorizontalCheckbox);

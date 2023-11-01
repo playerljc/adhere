@@ -4,6 +4,7 @@ import React, { memo, useMemo } from 'react';
 import AutoCompleteMultipleSelect from '../multiple-select/AutoCompleteMultipleSelect';
 import AutoCompleteSelect from '../select/AutoCompleteSelect';
 import type { AutoCompleteTablePagingSelectProps } from '../types';
+import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import CheckboxPagingTable from './CheckboxPagingTable';
 import RadioPagingTable from './RadioPagingTable';
 import usePagingRenderProps from './usePagingRenderProps';
@@ -20,6 +21,8 @@ const AutoCompleteTablePagingSelect: FC<AutoCompleteTablePagingSelectProps> = ({
   tablePagingProps,
   ...props
 }) => {
+  const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
+
   const {
     isMultiple,
     options,
@@ -27,6 +30,7 @@ const AutoCompleteTablePagingSelect: FC<AutoCompleteTablePagingSelectProps> = ({
     defaultCurrentPage,
     defaultPageSize,
     setPaging,
+    setKw,
     renderProps,
   } = usePagingRenderProps({
     tablePagingProps,
@@ -50,11 +54,23 @@ const AutoCompleteTablePagingSelect: FC<AutoCompleteTablePagingSelectProps> = ({
           limit: defaultPageSize,
         });
       }}
+      loadData={(_kw) => {
+        setKw(_kw);
+        setPaging({
+          page: defaultCurrentPage,
+          limit: defaultPageSize,
+        });
+
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(), 300);
+        });
+      }}
     >
-      {({ originNode, ...rest }) => (
+      {({ originNode, loading, ...rest }) => (
         <>
-          {isMultiple && <CheckboxPagingTable {...renderProps(rest)} />}
-          {!isMultiple && <RadioPagingTable {...renderProps(rest)} />}
+          {loading && fetchLoading}
+          {!loading && isMultiple && <CheckboxPagingTable {...renderProps(rest)} />}
+          {!loading && !isMultiple && <RadioPagingTable {...renderProps(rest)} />}
         </>
       )}
     </Component>

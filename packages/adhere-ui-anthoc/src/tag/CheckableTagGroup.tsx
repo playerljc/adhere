@@ -43,17 +43,17 @@ const CheckableTagGroup: FC<CheckableTagGroupProps> = ({
             checked={checked}
             onChange={(_checked) => {
               if (mode === 'single') {
-                onChange?.(_value, []);
+                onChange?.(_value as any, _checked, _value as any);
               } else if (mode === 'multiple') {
                 let values = [...value];
 
                 if (_checked) {
                   values = [...values, _value];
+                  onChange?.(values, checked, value);
                 } else {
                   values = values.filter((_v) => _v !== _value);
+                  onChange?.(values, false, values);
                 }
-
-                onChange?.(values, []);
               }
             }}
             {...tagProps}

@@ -17,7 +17,14 @@ const TagSelect: FC<TagSelectProps> = ({ tagProps, ...props }) => {
 
   return (
     <DropdownRenderSelect {...props}>
-      {({ originNode, ...rest }) => <VerticalCheckableTagGroup {...renderProps(rest)} />}
+      {({ originNode, ...rest }) => (
+        <VerticalCheckableTagGroup
+          {...renderProps({
+            ...rest,
+            onChange: (_value) => rest.onChange?.(_value, []),
+          })}
+        />
+      )}
     </DropdownRenderSelect>
   );
 };

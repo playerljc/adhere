@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import Tag from '../../src/tag';
 
 export default () => {
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState([]);
 
   return (
     <Tag.HorizontalCheckableTagGroup
+      mode="multiple"
       value={value}
       onChange={(v) => {
         setValue(v);

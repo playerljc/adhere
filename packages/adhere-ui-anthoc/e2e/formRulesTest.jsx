@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Form, Input } from '../src/index';
 
-console.log('111======', Form.ValidatorRules);
-
 export default () => {
   return (
     <Form>

@@ -33,7 +33,9 @@ const VerticalCheckAllCheckbox: FC<VerticalCheckAllCheckboxProps> = ({
     >
       <CheckAllWrapper
         value={props.value}
-        onChange={props.onChange}
+        onChange={(...arg) => {
+          props.onChange?.(...arg);
+        }}
         options={
           props?.options?.map((t) => {
             const option = t as CheckboxOptionType;

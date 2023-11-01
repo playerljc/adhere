@@ -1,9 +1,10 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { TransferSelectProps } from '../types';
 import Transfer from './Transfer';
+import useRenderProps from './useRenderProps';
 
 /**
  * TransferSelect
@@ -12,32 +13,11 @@ import Transfer from './Transfer';
  * @constructor
  */
 const TransferSelect: FC<TransferSelectProps> = ({ transferProps, ...props }) => {
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const renderProps = useRenderProps(transferProps);
 
   return (
     <DropdownRenderSelect {...props} mode="multiple">
-      {({ value, onChange, options }) => (
-        <Transfer
-          render={(item) => item.title}
-          selectedKeys={selectedKeys}
-          targetKeys={value}
-          dataSource={
-            options?.map?.((option) => ({
-              key: option.value,
-              title: option.label,
-              description: option.label,
-            })) ?? []
-          }
-          onChange={(targetKeys) => {
-            onChange?.(targetKeys, []);
-          }}
-          onSelectChange={(sourceSelectedKeys, targetSelectedKeys) => {
-            setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-          }}
-          {...(transferProps ?? {})}
-          {...props}
-        />
-      )}
+      {({ originNode, ...rest }) => <Transfer {...renderProps(rest)} />}
     </DropdownRenderSelect>
   );
 };

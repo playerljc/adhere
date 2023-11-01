@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import CheckAllMultipleSelect from '../multiple-select/CheckAllMultipleSelect';
 import type { CheckAllCustomCheckboxSelectProps } from '../types';
 import CustomCheckbox from './CustomCheckbox';
-import useCheckboxRenderProps from './useRenderProps';
+import useRenderProps from './useRenderProps';
 
 /**
  * CheckAllCustomCheckboxSelect
@@ -18,7 +18,7 @@ const CheckAllCustomCheckboxSelect: FC<CheckAllCustomCheckboxSelectProps> = ({
   children,
   ...props
 }) => {
-  const renderProps = useCheckboxRenderProps(checkboxProps);
+  const renderProps = useRenderProps(checkboxProps);
 
   return (
     <CheckAllMultipleSelect {...props}>
@@ -26,6 +26,7 @@ const CheckAllCustomCheckboxSelect: FC<CheckAllCustomCheckboxSelectProps> = ({
         <CustomCheckbox
           {...renderProps({
             ...rest,
+            onChange: (_value) => rest.onChange?.(_value, []),
           })}
         >
           {children}

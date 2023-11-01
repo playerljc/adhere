@@ -19,6 +19,8 @@ const dataSource = Array.from({ length: 100 }).map(() => {
   };
 });
 
+console.log(dataSource);
+
 export default () => {
   const [value, setValue] = useState(undefined);
 
@@ -39,8 +41,10 @@ export default () => {
       placeholder="RadioPagingList"
       value={value}
       onChange={setValue}
-      loadData={loadData}
-      defaultLimit={5}
+      pagingProps={{
+        loadData,
+        defaultLimit: 5,
+      }}
       tablePagingProps={{
         rowKey: 'id',
         columns: [

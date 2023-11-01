@@ -25,7 +25,14 @@ const AutoCompleteCheckAllTagSelect: FC<AutoCompleteCheckAllTagSelectProps> = ({
       {({ originNode, loading, ...rest }) => (
         <>
           {loading && fetchLoading}
-          {!loading && <VerticalCheckableTagGroup {...renderProps(rest)} />}
+          {!loading && (
+            <VerticalCheckableTagGroup
+              {...renderProps({
+                ...rest,
+                onChange: (_value) => rest.onChange?.(_value, []),
+              })}
+            />
+          )}
         </>
       )}
     </AutoCompleteCheckAllMultipleSelect>

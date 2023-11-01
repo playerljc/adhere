@@ -24,9 +24,16 @@ export default () => {
     >
       {(options) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data }) => (
-            <Col span={4}>
-              <Checkbox key={data?.value} {...(data ?? {})}>
+          {options.map(({ data, onChange, checked, disabled }) => (
+            <Col key={data?.value} span={4}>
+              <Checkbox
+                {...(data ?? {})}
+                checked={checked}
+                disabled={disabled}
+                onChange={(v) => {
+                  onChange(v, data.value);
+                }}
+              >
                 {data?.label}
               </Checkbox>
             </Col>

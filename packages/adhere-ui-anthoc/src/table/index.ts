@@ -4,8 +4,8 @@ import Table from './Table';
 import TablePagingSelect from './TablePagingSelect';
 import TableSelect from './TableSelect';
 
-Table.TAutoCompleteTablePagingSelect = AutoCompleteTablePagingSelect;
-Table.TAutoCompleteTableSelect = AutoCompleteTableSelect;
+Table.AutoCompleteTablePagingSelect = AutoCompleteTablePagingSelect;
+Table.AutoCompleteTableSelect = AutoCompleteTableSelect;
 Table.TableSelect = TableSelect;
 Table.TablePagingSelect = TablePagingSelect;
 

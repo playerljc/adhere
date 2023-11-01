@@ -17,7 +17,14 @@ const CheckAllTagSelect: FC<CheckAllTagSelectProps> = ({ tagProps, ...props }) =
 
   return (
     <CheckAllMultipleSelect {...props} mode="multiple">
-      {({ originNode, ...rest }) => <VerticalCheckableTagGroup {...renderProps(rest)} />}
+      {({ originNode, ...rest }) => (
+        <VerticalCheckableTagGroup
+          {...renderProps({
+            ...rest,
+            onChange: (_value) => rest.onChange?.(_value, []),
+          })}
+        />
+      )}
     </CheckAllMultipleSelect>
   );
 };

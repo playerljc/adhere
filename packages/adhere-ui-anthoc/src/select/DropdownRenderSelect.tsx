@@ -23,7 +23,26 @@ const DropdownRenderSelect: FC<DropdownRenderSelectProps> = ({
   emptyContent,
   ...props
 }) => {
+  const isMultiple = 'mode' in props && props.mode === 'multiple';
+
+  /**
+   * onSelectChange
+   * @description 从下方组件触发的
+   * @param _values
+   */
+  const onSelectChange = (_values) => {
+    // @ts-ignore
+    props.onChange?.(_values);
+
+    if (!isMultiple) {
+      // 单选
+      setOpen(false);
+    }
+  };
+
   const [inputValue, setInputValue] = useState(defaultInputValue ?? '');
+
+  const [open, setOpen] = useState(false);
 
   const currentOriginNode = useRef<ReactElement>();
 
@@ -45,7 +64,10 @@ const DropdownRenderSelect: FC<DropdownRenderSelectProps> = ({
         ? children?.({
             originNode: _originNode,
             value: props.value,
-            onChange: props.onChange,
+            onChange: (...arg) => {
+              onSelectChange(arg[0]);
+              props.onChange?.(...arg);
+            },
             options: filterOptions,
           }) ?? _originNode
         : emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
@@ -61,22 +83,21 @@ const DropdownRenderSelect: FC<DropdownRenderSelectProps> = ({
 
   return (
     <Select
+      options={filterOptions}
       filterOption={() => dropdownRenderElement.current === currentOriginNode.current}
+      dropdownRender={onDropdownRender}
+      open={open}
+      onDropdownVisibleChange={setOpen}
       onSearch={(v) => {
-        setInputValue(v);
-        props?.onSearch?.(v);
+        setInputValue(v?.trim?.());
+        props?.onSearch?.(v?.trim?.());
       }}
-      // onBlur={(e) => {
-      //   e.stopPropagation();
-      //   setInputValue('');
-      // }}
       onClear={() => {
         setInputValue('');
         props?.onClear?.();
       }}
-      dropdownRender={onDropdownRender}
-      options={filterOptions}
       {...props}
+      onChange={(_value) => onSelectChange(_value)}
     />
   );
 };

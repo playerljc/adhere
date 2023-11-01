@@ -6,11 +6,10 @@ import Book from '../mock/book';
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(undefined);
 
   return (
     <List.AutoCompleteListSelect
-      mode="multiple"
       placeholder="AutoCompleteListSelect"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}

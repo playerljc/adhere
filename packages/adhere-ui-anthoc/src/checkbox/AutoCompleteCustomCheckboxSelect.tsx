@@ -5,7 +5,7 @@ import AutoCompleteMultipleSelect from '../multiple-select/AutoCompleteMultipleS
 import { AutoCompleteCustomCheckboxSelectProps } from '../types';
 import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import CustomCheckbox from './CustomCheckbox';
-import useCheckboxRenderProps from './useRenderProps';
+import useRenderProps from './useRenderProps';
 
 /**
  * AutoCompleteCustomCheckboxSelect
@@ -20,14 +20,23 @@ const AutoCompleteCustomCheckboxSelect: FC<AutoCompleteCustomCheckboxSelectProps
   ...props
 }) => {
   const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
-  const renderProps = useCheckboxRenderProps(checkboxProps);
+  const renderProps = useRenderProps(checkboxProps);
 
   return (
     <AutoCompleteMultipleSelect {...props}>
       {({ originNode, loading, ...rest }) => (
         <>
           {loading && fetchLoading}
-          {!loading && <CustomCheckbox {...renderProps(rest)}>{children}</CustomCheckbox>}
+          {!loading && (
+            <CustomCheckbox
+              {...renderProps({
+                ...rest,
+                onChange: (_value) => rest.onChange?.(_value, []),
+              })}
+            >
+              {children}
+            </CustomCheckbox>
+          )}
         </>
       )}
     </AutoCompleteMultipleSelect>

@@ -10,7 +10,9 @@ export default () => {
   return (
     <Checkbox.CustomCheckAllCheckbox
       value={value}
-      onChange={setValue}
+      onChange={(v) => {
+        setValue(v);
+      }}
       options={Array.from({ length: 26 }).map((t, _index) => {
         const letter = String.fromCharCode(97 + _index).toUpperCase();
 
@@ -22,9 +24,16 @@ export default () => {
     >
       {(options) => (
         <Row gutter={[16, 24]}>
-          {options.map(({ data }) => (
-            <Col span={4}>
-              <Checkbox key={data?.value} {...(data ?? {})}>
+          {options.map(({ data, onChange, checked, disabled }) => (
+            <Col span={4} key={data?.value}>
+              <Checkbox
+                {...(data ?? {})}
+                checked={checked}
+                disabled={disabled}
+                onChange={(v) => {
+                  onChange(v, data.value);
+                }}
+              >
                 {data?.label}
               </Checkbox>
             </Col>

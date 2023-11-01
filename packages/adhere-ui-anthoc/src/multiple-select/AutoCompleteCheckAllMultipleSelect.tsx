@@ -35,7 +35,14 @@ const AutoCompleteCheckAllMultipleSelect: FC<AutoCompleteCheckAllMultipleSelectP
 
   return (
     <AutoComplete {...props} mode="multiple">
-      {(arg) => renderProps(arg)}
+      {(arg) =>
+        renderProps({
+          ...arg,
+          onChange: (_values) => {
+            arg.onChange?.(_values, []);
+          },
+        })
+      }
     </AutoComplete>
   );
 };

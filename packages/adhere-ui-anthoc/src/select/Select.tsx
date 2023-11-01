@@ -9,7 +9,7 @@ const SelectHOC: SelectHOCComponent = createFactory<SelectProps>(Select, {
   allowClear: true,
   placement: 'bottomLeft',
   filterOption: (input, option) =>
-    (option?.children as any)?.toLowerCase?.()?.indexOf?.(input.toLowerCase()) >= 0,
+    (option?.label as any)?.toLowerCase?.()?.indexOf?.(input.toLowerCase()) >= 0,
 });
 
 export default SelectHOC;

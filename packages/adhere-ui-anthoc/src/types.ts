@@ -14,6 +14,7 @@ import type {
 } from 'antd';
 import { FormRule } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
+import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
@@ -55,7 +56,13 @@ export type DropdownWrapperStyleProps = {
   dropdownWrapperStyle?: CSSProperties;
 };
 
-export type CheckAllWrapperProps = Pick<SelectProps, 'value' | 'options' | 'onChange'>;
+export type CheckAllWrapperProps = Pick<SelectProps, 'value' | 'options'> & {
+  onChange?: (
+    checkedValue: CheckboxValueType[],
+    checked: boolean,
+    changeValue: CheckboxValueType[],
+  ) => void;
+};
 
 export type AutoCompleteCheckAllMultipleSelectProps = DropdownWrapperStyleProps &
   CheckAllWrapperStyleProps &
@@ -63,7 +70,6 @@ export type AutoCompleteCheckAllMultipleSelectProps = DropdownWrapperStyleProps 
 
 export type CheckAllSelectProps = DropdownWrapperStyleProps &
   CheckAllWrapperStyleProps &
-  CheckAllWrapperProps &
   DropdownRenderSelectProps;
 
 export type DropdownRenderSelectProps = Omit<SelectProps, 'children'> & {
@@ -77,16 +83,21 @@ export type DropdownRenderSelectProps = Omit<SelectProps, 'children'> & {
   }) => ReactElement;
 };
 
-export type CustomCheckboxProps = CheckboxGroupProps &
-  CheckAllWrapperStyleProps &
-  DropdownWrapperStyleProps & {
-    children?: (
-      data: {
-        data: CheckboxOptionType;
-        defaultNode: ReactElement;
-      }[],
-    ) => ReactElement;
-  };
+export type CustomCheckAllCheckboxProps = CheckAllWrapperStyleProps &
+  DropdownWrapperStyleProps &
+  CustomCheckboxProps;
+
+export type CustomCheckboxProps = {
+  children?: (
+    data: {
+      data: CheckboxOptionType;
+      onChange: (e: any, itemValue: CheckboxOptionType['value']) => void;
+      disabled: boolean;
+      checked: boolean;
+      defaultNode: ReactElement;
+    }[],
+  ) => ReactElement;
+} & CheckboxGroupExtProps;
 
 export type CustomRadioProps = RadioGroupProps & {
   children?: (
@@ -111,7 +122,7 @@ export type HorizontalCheckableTagGroupProps = CheckAllWrapperStyleProps &
   DropdownWrapperStyleProps & {
     mode?: 'multiple' | 'single';
     value: SelectProps['value'];
-    onChange: SelectProps['onChange'];
+    onChange: CheckboxGroupExtProps['onChange'];
     options: (Partial<CheckableTagProps> & { value: string | number; label: string })[];
   };
 
@@ -333,10 +344,7 @@ export type UsePagingTableRenderProps = (arg: {
   defaultCurrentPage: number;
   defaultPageSize: number;
   isMultiple: boolean;
-  fetchData: () => Promise<{
-    totalCount: number;
-    data: any[];
-  }>;
+  fetchData: () => any;
   setKw: (_kw?: string) => void;
   renderProps: (arg: {
     value?: SelectProps['value'];
@@ -378,10 +386,7 @@ export type UsePagingListRenderProps = (arg: {
   defaultCurrentPage: number;
   defaultPageSize: number;
   isMultiple: boolean;
-  fetchData: () => Promise<{
-    totalCount: number;
-    data: any[];
-  }>;
+  fetchData: any;
   setKw: (_kw?: string) => void;
   renderProps: (arg: {
     value?: SelectProps['value'];
@@ -484,13 +489,13 @@ export type MultipleSelectHOCComponent = ReturnType<typeof createFactory<SelectP
   AutoCompleteCheckAllMultipleSelect: FC<AutoCompleteCheckAllMultipleSelectProps>;
 };
 
-export type HorizontalCheckAllCheckboxProps = CheckboxGroupProps &
-  CheckAllWrapperStyleProps &
-  DropdownWrapperStyleProps;
+export type HorizontalCheckAllCheckboxProps = CheckAllWrapperStyleProps &
+  DropdownWrapperStyleProps &
+  CheckboxGroupExtProps;
 
-export type VerticalCheckAllCheckboxProps = CheckboxGroupProps &
-  CheckAllWrapperStyleProps &
-  DropdownWrapperStyleProps;
+export type VerticalCheckAllCheckboxProps = CheckAllWrapperStyleProps &
+  DropdownWrapperStyleProps &
+  CheckboxGroupExtProps;
 
 export type ListSelectProps = DropdownRenderSelectProps & {
   listProps?: Omit<CheckboxListProps | RadioListProps, 'value' | 'onChange' | 'options'>;
@@ -501,11 +506,15 @@ export type TableSelectProps = DropdownRenderSelectProps & {
 };
 
 export type CheckboxSelectProps = DropdownRenderSelectProps & {
-  checkboxProps?: Omit<CheckboxGroupProps, 'value' | 'onChange' | 'options'>;
+  checkboxProps?: Omit<CheckboxGroupExtProps, 'value' | 'options'>;
 };
 
 export type AutoCompleteCheckboxSelectProps = AutoCompleteProps & {
   checkboxProps?: CheckboxSelectProps['checkboxProps'];
+};
+
+export type AutoCompleteTransferSelectProps = AutoCompleteProps & {
+  transferProps?: TransferSelectProps['transferProps'];
 };
 
 export type AutoCompleteListSelectProps = AutoCompleteProps & {
@@ -554,17 +563,13 @@ export type AutoCompleteRadioSelectProps = AutoCompleteProps & {
   radioProps?: RadioSelectProps['radioProps'];
 };
 
-export type CheckAllCheckboxSelectProps = CheckAllSelectProps &
-  CheckAllWrapperStyleProps &
-  DropdownWrapperStyleProps & {
-    checkboxProps?: CheckboxSelectProps['checkboxProps'];
-  };
+export type CheckAllCheckboxSelectProps = CheckAllWrapperStyleProps &
+  DropdownWrapperStyleProps &
+  CheckboxSelectProps;
 
-export type AutoCompleteCheckAllCheckboxSelectProps = CheckAllSelectProps &
-  CheckAllWrapperStyleProps &
-  AutoCompleteCheckAllMultipleSelectProps & {
-    checkboxProps?: CheckboxSelectProps['checkboxProps'];
-  };
+export type AutoCompleteCheckAllCheckboxSelectProps = AutoCompleteCheckAllMultipleSelectProps & {
+  checkboxProps?: CheckboxSelectProps['checkboxProps'];
+};
 
 export type AutoCompleteCheckAllListSelectProps = CheckAllSelectProps &
   CheckAllWrapperStyleProps &
@@ -572,26 +577,22 @@ export type AutoCompleteCheckAllListSelectProps = CheckAllSelectProps &
     listProps?: ListSelectProps['listProps'];
   };
 
-export type AutoCompleteCheckAllTagSelectProps = CheckAllTagSelectProps &
-  CheckAllWrapperProps &
-  AutoCompleteCheckAllMultipleSelectProps & {
-    tagProps?: TagSelectProps['tagProps'];
-  };
+export type AutoCompleteCheckAllTagSelectProps = AutoCompleteCheckAllMultipleSelectProps & {
+  tagProps?: TagSelectProps['tagProps'];
+};
 
 export type CheckAllTagSelectProps = CheckAllWrapperStyleProps &
   DropdownWrapperStyleProps &
-  DropdownRenderSelectProps & {
-    tagProps?: TagSelectProps['tagProps'];
-  };
+  TagSelectProps;
 
 export type CustomCheckboxSelectProps = DropdownRenderSelectProps & {
   children: CustomCheckboxProps['children'];
-  checkboxProps: Omit<CheckboxGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
+  checkboxProps: Omit<CheckboxGroupExtProps, 'children' | 'value' | 'options'>;
 };
 
 export type AutoCompleteCustomCheckboxSelectProps = AutoCompleteProps & {
   children: CustomCheckboxProps['children'];
-  checkboxProps: Omit<CheckboxGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
+  checkboxProps: CustomCheckboxSelectProps['checkboxProps'];
 };
 
 export type AutoCompleteCustomRadioSelectProps = AutoCompleteProps & {
@@ -602,7 +603,7 @@ export type AutoCompleteCustomRadioSelectProps = AutoCompleteProps & {
 export type AutoCompleteCheckAllCustomCheckboxSelectProps =
   AutoCompleteCheckAllMultipleSelectProps & {
     children: CustomCheckboxProps['children'];
-    checkboxProps: Omit<CheckboxGroupProps, 'children' | 'value' | 'onChange' | 'options'>;
+    checkboxProps?: CustomCheckboxSelectProps['checkboxProps'];
   };
 
 export type CheckAllCustomCheckboxSelectProps = CheckAllWrapperStyleProps &
@@ -640,10 +641,10 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxProps
   CheckAllCustomCheckboxSelect: FC<CheckAllCustomCheckboxSelectProps>;
   CustomCheckboxSelect: FC<CustomCheckboxSelectProps>;
   CustomCheckbox: FC<CustomCheckboxProps>;
-  CustomCheckAllCheckbox: FC<CustomCheckboxProps>;
+  CustomCheckAllCheckbox: FC<CustomCheckAllCheckboxProps>;
   HorizontalCheckAllCheckbox: FC<HorizontalCheckAllCheckboxProps>;
-  HorizontalCheckbox: FC<CheckboxGroupProps>;
-  VerticalCheckbox: FC<CheckboxGroupProps>;
+  HorizontalCheckbox: FC<CheckboxGroupExtProps>;
+  VerticalCheckbox: FC<CheckboxGroupExtProps>;
   VerticalCheckAllCheckbox: FC<VerticalCheckAllCheckboxProps>;
 };
 
@@ -694,6 +695,7 @@ export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
 };
 
 export type TransferHOCComponent = ReturnType<typeof createFactory<TransferProps<any>>> & {
+  AutoCompleteTransferSelect: FC<AutoCompleteTransferSelectProps>;
   TransferSelect: FC<TransferSelectProps>;
 };
 
@@ -739,7 +741,7 @@ export type UseCheckAllMultiple = (
   renderProps: (arg: {
     originNode?: ReactElement;
     value?: SelectProps['value'];
-    onChange?: SelectProps['onChange'];
+    onChange?: CheckboxGroupExtProps['onChange'];
     options?: SelectProps['options'];
     loading?: boolean;
   }) => ReactElement;
@@ -749,10 +751,10 @@ export type UseCheckboxRenderProps = (
   checkboxProps: CheckboxSelectProps['checkboxProps'] | CustomCheckboxSelectProps['checkboxProps'],
 ) => (arg: {
   value?: SelectProps['value'];
-  onChange?: SelectProps['onChange'];
+  onChange?: CheckboxGroupExtProps['onChange'];
   options?: SelectProps['options'];
   loading?: boolean;
-}) => CheckboxGroupProps;
+}) => CheckboxGroupExtProps;
 
 export type UseRadioRenderProps = (
   radioProps: RadioSelectProps['radioProps'] | CustomRadioSelectProps['radioProps'],
@@ -768,14 +770,30 @@ export type UseTagRenderProps = (
   mode?: HorizontalCheckableTagGroupProps['mode'],
 ) => (arg: {
   value?: SelectProps['value'];
-  onChange?: SelectProps['onChange'];
+  onChange?: CheckboxGroupExtProps['onChange'];
   options?: SelectProps['options'];
   loading?: boolean;
 }) => VerticalCheckableTagGroupProps;
 
+export type UseTransferRenderProps = (
+  transferProps: TransferSelectProps['transferProps'],
+) => (arg: {
+  value?: SelectProps['value'];
+  onChange?: SelectProps['onChange'];
+  options?: SelectProps['options'];
+  loading?: boolean;
+}) => TransferProps<any>;
+
 export type UseAutoCompleteFetchLoading = (renderLoading?: () => ReactNode) => ReactNode;
 
-// | CheckboxSelectProps
-// | CheckAllCheckboxSelectProps
-// | CustomCheckboxSelectProps
-// | CheckAllCustomCheckboxSelectProps;
+export type CheckboxGroupExtProps = Omit<CheckboxGroupProps, 'onChange' | 'children'> & {
+  className?: string;
+  style?: CSSProperties;
+  direction?: SpaceProps['direction'];
+  onChange?: (
+    checkedValue: CheckboxValueType[],
+    checked: boolean,
+    changeValue: CheckboxValueType[],
+  ) => void;
+  children?: (onChange: (e: any, itemValue: CheckboxOptionType['value']) => void) => ReactNode;
+};

@@ -1,3 +1,4 @@
+import { useMount } from 'ahooks';
 import React, { memo } from 'react';
 import type { FC } from 'react';
 
@@ -27,11 +28,16 @@ const TablePagingSelect: FC<TablePagingSelectProps<any>> = ({
     defaultCurrentPage,
     defaultPageSize,
     setPaging,
+    fetchData,
     renderProps,
   } = usePagingRenderProps({
     tablePagingProps,
     mode: props.mode,
     ...pagingProps,
+  });
+
+  useMount(() => {
+    fetchData();
   });
 
   return (

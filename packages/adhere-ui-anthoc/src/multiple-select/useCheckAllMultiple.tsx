@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ReactElement, ReactNode, useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
 
 import CheckAllWrapper from '../CheckAllWrapper';
 import { UseCheckAllMultiple } from '../types';
@@ -37,6 +37,7 @@ const useCheckAllMultiple: UseCheckAllMultiple = ({
     renderProps: ({ originNode, ..._renderProps }) => {
       currentOriginNode.current = originNode;
 
+      // @ts-ignore
       dropdownRenderElement.current = children?.({
         originNode,
         ..._renderProps,

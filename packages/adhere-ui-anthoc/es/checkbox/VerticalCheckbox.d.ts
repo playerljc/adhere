@@ -1,4 +1,4 @@
-import type { CheckboxGroupProps } from 'antd/es/checkbox';
 import React from 'react';
-declare const _default: React.NamedExoticComponent<CheckboxGroupProps>;
+import type { CheckboxGroupExtProps } from '../types';
+declare const _default: React.NamedExoticComponent<CheckboxGroupExtProps>;
 export default _default;

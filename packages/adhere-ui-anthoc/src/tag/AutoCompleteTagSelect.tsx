@@ -29,7 +29,14 @@ const AutoCompleteTagSelect: FC<AutoCompleteTagSelectProps> = ({ tagProps, ...pr
       {({ originNode, loading, ...rest }) => (
         <>
           {loading && fetchLoading}
-          {!loading && <VerticalCheckableTagGroup {...renderProps(rest)} />}
+          {!loading && (
+            <VerticalCheckableTagGroup
+              {...renderProps({
+                ...rest,
+                onChange: (_value) => rest.onChange?.(_value, []),
+              })}
+            />
+          )}
         </>
       )}
     </Component>

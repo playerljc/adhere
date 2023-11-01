@@ -38,7 +38,14 @@ const CheckAllSelect: FC<CheckAllSelectProps> = ({
       mode="multiple"
       filterOption={() => dropdownRenderElement === currentOriginNode}
     >
-      {(arg) => renderProps(arg)}
+      {(arg) =>
+        renderProps({
+          ...arg,
+          onChange: (_values) => {
+            arg.onChange?.(_values, []);
+          },
+        })
+      }
     </DropdownRenderSelect>
   );
 };

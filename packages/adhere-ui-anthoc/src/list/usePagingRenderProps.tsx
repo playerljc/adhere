@@ -33,8 +33,6 @@ const usePagingListRenderProps: UsePagingListRenderProps = ({
 
   function fetchData() {
     return loadData?.(paging.page, paging.limit, kw.current)?.then?.(({ totalCount, data }) => {
-      console.log('totalCount', totalCount);
-      console.log('data', data);
       setTotalCount(totalCount);
       setOptions(data);
     });

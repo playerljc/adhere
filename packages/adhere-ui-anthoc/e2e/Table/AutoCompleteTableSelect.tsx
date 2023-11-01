@@ -22,11 +22,11 @@ const dataSource = Array.from({ length: 100 }).map(() => {
 export default () => {
   const [options, setOptions] = useState([]);
 
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState(undefined);
 
   return (
     <Table.AutoCompleteTableSelect
-      mode="multiple"
+      // mode="multiple"
       placeholder="AutoCompleteTableSelect"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
@@ -79,6 +79,7 @@ export default () => {
             dataIndex: 'width',
           },
         ],
+        pagination: false,
       }}
     />
   );

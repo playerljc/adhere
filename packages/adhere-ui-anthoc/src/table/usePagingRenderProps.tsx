@@ -1,5 +1,5 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import { useMemo, useState } from 'react';
+import { useUpdateEffect } from 'ahooks';
+import { useMemo, useRef, useState } from 'react';
 
 import { UsePagingTableRenderProps } from '../types';
 
@@ -16,6 +16,7 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
   tablePagingProps,
   mode,
 }) => {
+  const kw = useRef<string | undefined>(undefined);
   const defaultPageSize = defaultLimit ?? DEFAULT_LIMIT;
   const defaultCurrentPage = defaultPage ?? DEFAULT_PAGE;
 
@@ -31,10 +32,14 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
   const isMultiple = useMemo(() => mode === 'multiple', [mode]);
 
   function fetchData() {
-    return loadData?.(paging.page, paging.limit)?.then?.(({ totalCount, data }) => {
+    return loadData?.(paging.page, paging.limit, kw.current)?.then?.(({ totalCount, data }) => {
       setTotalCount(totalCount);
       setOptions(data);
     });
+  }
+
+  function setKw(_kw) {
+    kw.current = _kw;
   }
 
   function onPagingChange(page, pageSize) {
@@ -55,10 +60,6 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
     setInputValue('');
   }
 
-  useMount(() => {
-    fetchData();
-  });
-
   useUpdateEffect(() => {
     setPaging({
       page: defaultCurrentPage,
@@ -78,6 +79,8 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
     defaultCurrentPage,
     defaultPageSize,
     isMultiple,
+    fetchData,
+    setKw,
     renderProps: (arg) => ({
       ...(tablePagingProps ?? {}),
       ...arg,

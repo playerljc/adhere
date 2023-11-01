@@ -7,6 +7,7 @@ export default () => {
 
   return (
     <Tag.TagSelect
+      // mode="multiple"
       style={{ width: 200 }}
       placeholder="A-Z"
       value={value}

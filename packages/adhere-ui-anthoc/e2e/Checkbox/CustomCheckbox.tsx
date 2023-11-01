@@ -14,12 +14,23 @@ export default () => (
         value: letter,
       };
     })}
+    onChange={(v) => {
+      console.log('v', v);
+    }}
   >
     {(options) => (
       <Row gutter={[16, 24]}>
-        {options.map(({ data }) => (
+        {options.map(({ data, onChange, checked, disabled }) => (
           <Col span={4}>
-            <Checkbox key={data?.value} {...(data ?? {})}>
+            <Checkbox
+              key={data?.value}
+              {...(data ?? {})}
+              checked={checked}
+              disabled={disabled}
+              onChange={(e) => {
+                onChange(e, data.value);
+              }}
+            >
               {data?.label}
             </Checkbox>
           </Col>

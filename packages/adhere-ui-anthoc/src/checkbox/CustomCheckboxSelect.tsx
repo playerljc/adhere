@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { CustomCheckboxSelectProps } from '../types';
 import CustomCheckbox from './CustomCheckbox';
-import useCheckboxRenderProps from './useRenderProps';
+import useRenderProps from './useRenderProps';
 
 /**
  * CustomCheckboxSelect
@@ -18,7 +18,7 @@ const CustomCheckboxSelect: FC<CustomCheckboxSelectProps> = ({
   children,
   ...props
 }) => {
-  const renderProps = useCheckboxRenderProps(checkboxProps);
+  const renderProps = useRenderProps(checkboxProps);
 
   return (
     <DropdownRenderSelect {...props} mode="multiple">
@@ -26,6 +26,7 @@ const CustomCheckboxSelect: FC<CustomCheckboxSelectProps> = ({
         <CustomCheckbox
           {...renderProps({
             ...rest,
+            onChange: (_value) => rest.onChange?.(_value, []),
           })}
         >
           {children}

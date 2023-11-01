@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
 import type { CheckboxSelectProps } from '../types';
 import VerticalCheckbox from './VerticalCheckbox';
-import useCheckboxRenderProps from './useRenderProps';
+import useRenderProps from './useRenderProps';
 
 /**
  * CheckboxSelect
@@ -13,11 +13,18 @@ import useCheckboxRenderProps from './useRenderProps';
  * @constructor
  */
 const CheckboxSelect: FC<CheckboxSelectProps> = ({ checkboxProps, ...props }) => {
-  const renderProps = useCheckboxRenderProps(checkboxProps);
+  const renderProps = useRenderProps(checkboxProps);
 
   return (
     <DropdownRenderSelect {...props} mode="multiple">
-      {({ originNode, ...rest }) => <VerticalCheckbox {...renderProps(rest)} />}
+      {({ originNode, ...rest }) => (
+        <VerticalCheckbox
+          {...renderProps({
+            ...rest,
+            onChange: (_value) => rest?.onChange?.(_value, []),
+          })}
+        />
+      )}
     </DropdownRenderSelect>
   );
 };

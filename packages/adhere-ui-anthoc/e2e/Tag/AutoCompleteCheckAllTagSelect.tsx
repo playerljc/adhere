@@ -17,8 +17,6 @@ export default () => {
       onChange={setValue}
       loadData={(_kw) =>
         new Promise((resolve) => {
-          console.log('_kw', _kw);
-
           if (!_kw) {
             setOptions([]);
             resolve();
