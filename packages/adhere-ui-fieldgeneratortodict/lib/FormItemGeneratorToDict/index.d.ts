@@ -71,5 +71,22 @@ export declare const components: {
 };
 export { Components };
 export declare const ItemNames: Map<any, any>;
+/**
+ * 生成字典组件名
+ * @param dictName - 字典名
+ * @param componentName - 组件名 (如: SelectFormItem)，可通过 Components 获取
+ * @example
+ * ```js
+ * const dictComponentName = genDictComponentName('SystemUsers', Components.Select.FormItem);
+ * ```
+ */
+export declare const genDictComponentName: (dictName: string, componentName: string) => string;
+/**
+ * 获取字典组件
+ * @param dictName - 字典名
+ * @param componentName - 组件名 (如: SelectFormItem)，可通过 Components 获取
+ * @returns
+ */
+export declare const getDictComponent: (dictName: string, componentName: string) => any;
 declare const _default: {};
 export default _default;

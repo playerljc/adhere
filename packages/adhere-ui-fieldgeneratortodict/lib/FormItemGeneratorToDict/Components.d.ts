@@ -5,7 +5,7 @@
  * ```js
  * import { Components } from 'adhere-ui-fieldgeneratortodict';
  *
- * ITEM_NAMES.AutoComplete.FormItem; // 'AutoCompleteFormItem'
+ * Components.AutoComplete.FormItem; // 'AutoCompleteFormItem'
  * ```
  *
  */
@@ -116,7 +116,13 @@ declare const Components: {
     readonly SegmentedDynamic: {
         readonly FormItem: "SegmentedDynamicFormItem";
     };
+    /**
+     * 下拉选择器
+     */
     readonly Select: {
+        /**
+         * 下拉单选
+         */
         readonly FormItem: "SelectFormItem";
         readonly MultiFormItem: "SelectMultiFormItem";
         readonly CheckAllMultiFormItem: "SelectCheckAllMultiFormItem";

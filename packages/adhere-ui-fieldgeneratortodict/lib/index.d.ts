@@ -189,6 +189,8 @@ declare const _default: {
             readonly LeafMultiFormItem: "TreeDynamicLeafMultiFormItem";
         };
     };
+    genDictComponentName: (dictName: string, componentName: string) => string;
+    getDictComponent: (dictName: string, componentName: string) => any;
     FormItemGeneratorToDict: {};
     FormItemGeneratorToDictComponents: {
         AutoCompleteFormItem: import("react").FC<import("./types").AutoCompleteFormItemProps>;
