@@ -13,13 +13,6 @@ import TreeMultiLeafSelect from './TreeMultiLeafSelect';
 import TreeMultiSelect from './TreeMultiSelect';
 import TreeSelect from './TreeSelect';
 
-TreeSelect.TreeMultiSelect = TreeMultiSelect;
-TreeSelect.TreeLeafSelect = TreeLeafSelect;
-TreeSelect.TreeMultiLeafSelect = TreeMultiLeafSelect;
-TreeSelect.TreeCheckedShowAllSelect = TreeCheckedShowAllSelect;
-TreeSelect.TreeCheckedShowChildSelect = TreeCheckedShowChildSelect;
-TreeSelect.TreeCheckedShowParentSelect = TreeCheckedShowParentSelect;
-
 TreeSelect.AsyncTreeCheckedShowAllSelect = AsyncTreeCheckedShowAllSelect;
 TreeSelect.AsyncTreeCheckedShowChildSelect = AsyncTreeCheckedShowChildSelect;
 TreeSelect.AsyncTreeCheckedShowParentSelect = AsyncTreeCheckedShowParentSelect;
@@ -27,5 +20,11 @@ TreeSelect.AsyncTreeLeafSelect = AsyncTreeLeafSelect;
 TreeSelect.AsyncTreeMultiLeafSelect = AsyncTreeMultiLeafSelect;
 TreeSelect.AsyncTreeMultiSelect = AsyncTreeMultiSelect;
 TreeSelect.AsyncTreeSelect = AsyncTreeSelect;
+TreeSelect.TreeMultiSelect = TreeMultiSelect;
+TreeSelect.TreeLeafSelect = TreeLeafSelect;
+TreeSelect.TreeMultiLeafSelect = TreeMultiLeafSelect;
+TreeSelect.TreeCheckedShowAllSelect = TreeCheckedShowAllSelect;
+TreeSelect.TreeCheckedShowChildSelect = TreeCheckedShowChildSelect;
+TreeSelect.TreeCheckedShowParentSelect = TreeCheckedShowParentSelect;
 
 export default TreeSelect;

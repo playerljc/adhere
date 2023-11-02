@@ -5,6 +5,7 @@ import AutoCompleteCustomCheckboxSelect from './AutoCompleteCustomCheckboxSelect
 import CheckAllCheckboxSelect from './CheckAllCheckboxSelect';
 import CheckAllCustomCheckboxSelect from './CheckAllCustomCheckboxSelect';
 import Checkbox from './Checkbox';
+import CheckboxGroupExt from './CheckboxGroup';
 import CheckboxSelect from './CheckboxSelect';
 import CustomCheckAllCheckbox from './CustomCheckAllCheckbox';
 import CustomCheckbox from './CustomCheckbox';
@@ -28,5 +29,5 @@ Checkbox.HorizontalCheckAllCheckbox = HorizontalCheckAllCheckbox;
 Checkbox.HorizontalCheckbox = HorizontalCheckbox;
 Checkbox.VerticalCheckAllCheckbox = VerticalCheckAllCheckbox;
 Checkbox.VerticalCheckbox = VerticalCheckbox;
-
+Checkbox.CheckboxGroupExt = CheckboxGroupExt;
 export default Checkbox;

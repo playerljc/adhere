@@ -646,6 +646,7 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxProps
   HorizontalCheckbox: FC<CheckboxGroupExtProps>;
   VerticalCheckbox: FC<CheckboxGroupExtProps>;
   VerticalCheckAllCheckbox: FC<VerticalCheckAllCheckboxProps>;
+  CheckboxGroupExt: FC<CheckboxGroupExtProps>;
 };
 
 export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
