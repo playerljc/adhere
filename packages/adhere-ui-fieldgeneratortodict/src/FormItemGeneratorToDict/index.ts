@@ -140,6 +140,40 @@ export const ItemNames = Object.entries(Components).reduce((ret, entry) => {
   return ret;
 }, new Map());
 
+const dictComponentHash = Object.entries(Components).reduce((ret, entry) => {
+  const [componentName, functionNameHash] = entry;
+  const functionNameArray = Object.keys(functionNameHash);
+  functionNameArray.forEach((functionName) => {
+    const dictComponentName = functionNameHash[functionName];
+    ret[dictComponentName] = { componentName, functionName };
+  });
+  return ret;
+}, {});
+
+/**
+ * 生成字典组件名
+ * @param dictName - 字典名
+ * @param componentName - 组件名 (如: SelectFormItem)，可通过 Components 获取
+ * @example
+ * ```js
+ * const dictComponentName = genDictComponentName('SystemUsers', Components.Select.FormItem);
+ * ```
+ */
+export const genDictComponentName = (dictName: string, componentName: string) => {
+  return `${dictName}${componentName}`;
+};
+
+/**
+ * 获取字典组件
+ * @param dictName - 字典名
+ * @param componentName - 组件名 (如: SelectFormItem)，可通过 Components 获取
+ * @returns
+ */
+export const getDictComponent = (dictName: string, componentName: string) => {
+  const { componentName: itemName, functionName } = dictComponentHash[componentName];
+  return ItemFactory({ dictName, itemName, functionName });
+};
+
 export default new Proxy(
   {},
   {
