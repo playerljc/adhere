@@ -1,0 +1,2 @@
+"use strict";var __assign=function(){return(__assign=Object.assign||function(e){for(var n,r=1,t=arguments.length;r<t;r++)for(var o in n=arguments[r])Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o]);return e}).apply(this,arguments)},useTagRenderProps=(Object.defineProperty(exports,"__esModule",{value:!0}),function(t,o){return function(e){var n=e.value,r=e.onChange,e=e.options,r=__assign({value:n,onChange:r,options:null!=(n=e)?n:[]},null!=t?t:{});return o&&(r.mode=o),r}});exports.default=useTagRenderProps;
+//# sourceMappingURL=useRenderProps.js.map

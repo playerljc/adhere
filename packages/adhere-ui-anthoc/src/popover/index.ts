@@ -1,5 +1,5 @@
-import { Popover } from 'antd';
+import { Popover, PopoverProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Popover, {});
+export default createFactory<PopoverProps>(Popover, {});

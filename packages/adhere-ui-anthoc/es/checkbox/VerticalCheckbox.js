@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(r){for(var e,t=1,o=arguments.length;t<o;t++)for(var a in e=arguments[t])Object.prototype.hasOwnProperty.call(e,a)&&(r[a]=e[a]);return r}).apply(this,arguments)};import React,{memo}from"react";import CheckboxGroup from"./CheckboxGroup";var VerticalCheckbox=function(r){return React.createElement(CheckboxGroup,__assign({},r,{direction:"vertical"}))};export default memo(VerticalCheckbox);
+//# sourceMappingURL=VerticalCheckbox.js.map

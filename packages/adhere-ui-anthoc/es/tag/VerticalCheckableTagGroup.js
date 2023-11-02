@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var r,a=1,t=arguments.length;a<t;a++)for(var o in r=arguments[a])Object.prototype.hasOwnProperty.call(r,o)&&(e[o]=r[o]);return e}).apply(this,arguments)};import React,{memo}from"react";import CheckableTagGroup from"./CheckableTagGroup";var VerticalCheckableTagGroup=function(e){return React.createElement(CheckableTagGroup,__assign({},e,{direction:"vertical"}))};export default memo(VerticalCheckableTagGroup);
+//# sourceMappingURL=VerticalCheckableTagGroup.js.map

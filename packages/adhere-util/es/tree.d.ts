@@ -1,5 +1,5 @@
 import { IAntdTreeNode, IAntdTreeSelectNode, IFlatTreeArrNode } from './types';
-interface TreeUtilType {
+export interface TreeUtilType {
     treeToArray: (treeData: (IAntdTreeNode | IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;

@@ -3,7 +3,7 @@ import { IUrlConfig } from './types';
 
 // const { memoized } = WatchMemoized;
 
-const defaultConfig: IUrlConfig = {
+export const defaultConfig: IUrlConfig = {
   ignoreInvalid: true,
   isDecode: true,
   isEncode: true,

@@ -1,5 +1,5 @@
-import { Result } from 'antd';
+import { Result, ResultProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Result, {});
+export default createFactory<ResultProps>(Result, {});

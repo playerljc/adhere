@@ -1,5 +1,5 @@
-import { BackTop } from 'antd';
+import { BackTop, BackTopProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(BackTop, {});
+export default createFactory<BackTopProps>(BackTop, {});

@@ -22,6 +22,7 @@ import Divider from './divider';
 import Drawer from './drawer';
 import Dropdown from './dropdown';
 import Empty from './empty';
+import Flex from './flex';
 import FloatButton from './float-button';
 import Form from './form';
 import Grid from './grid';
@@ -96,6 +97,7 @@ export {
   Drawer,
   Dropdown,
   Empty,
+  Flex,
   FloatButton,
   Form,
   Grid,

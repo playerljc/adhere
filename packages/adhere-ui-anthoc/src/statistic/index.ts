@@ -1,5 +1,5 @@
-import { Statistic } from 'antd';
+import { Statistic, StatisticProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Statistic, {});
+export default createFactory<StatisticProps>(Statistic, {});

@@ -1,5 +1,5 @@
-import { Collapse } from 'antd';
+import { Collapse, CollapseProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Collapse, {});
+export default createFactory<CollapseProps>(Collapse, {});

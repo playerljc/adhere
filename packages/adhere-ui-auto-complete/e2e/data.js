@@ -759,8 +759,8 @@ export default [
     wxspTag: 0,
     wxspVenderId: 0,
   },
-].map((t) => {
-  const id = Mock.mock('@guid');
+].map((t, index) => {
+  const id = index; //Mock.mock('@guid');
 
   return {
     ...t,

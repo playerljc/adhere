@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var usePaging=function(e){var n=e.totalCount,t=e.paging,a=e.onPagingChange,i=e.onPagingShowSizeChange,e=e.defaultLimit,g=[10,20,50,100];return g.includes(e)||g.push(e),{current:t.page,pageSize:t.limit,total:n,showSizeChanger:!0,onChange:a,onShowSizeChange:i,pageSizeOptions:g.sort(function(e,n){return e-n})}};exports.default=usePaging;
+//# sourceMappingURL=usePaging.js.map

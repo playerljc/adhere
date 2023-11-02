@@ -1,5 +1,5 @@
-import { Divider } from 'antd';
+import { Divider, DividerProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Divider, {});
+export default createFactory<DividerProps>(Divider, {});

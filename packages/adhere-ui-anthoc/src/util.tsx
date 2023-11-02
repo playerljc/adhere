@@ -1,4 +1,5 @@
 import React from 'react';
+import type { FC } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -11,8 +12,13 @@ const { useScrollLayout } = FlexLayout;
  * @param defaultProps
  * @return {function(*)}
  */
-export function createFactory(Component, defaultProps): any {
-  function fn(_props) {
+export function createFactory<P>(
+  Component: any,
+  defaultProps: Partial<P>,
+): FC<P> & {
+  defaultProps?: Partial<P>;
+} & typeof Component /*{ [key in keyof typeof Component]?: T[key] }*/ {
+  const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
     const props = { ...defaultProps, ..._props };
@@ -23,10 +29,10 @@ export function createFactory(Component, defaultProps): any {
       };
     }
 
-    const { children, ...reset } = props;
+    const { children, ...rest } = props;
 
-    return <Component {...reset}>{children}</Component>;
-  }
+    return <Component {...rest}>{children}</Component>;
+  };
 
   Object.assign(fn, Component);
 

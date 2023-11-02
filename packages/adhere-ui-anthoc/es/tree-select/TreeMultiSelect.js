@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,r=1,i=arguments.length;r<i;r++)for(var l in t=arguments[r])Object.prototype.hasOwnProperty.call(t,l)&&(e[l]=t[l]);return e}).apply(this,arguments)};import React,{memo}from"react";import TreeSelect from"./TreeSelect";import useTreeSelectMulti from"./useTreeSelectMulti";var TreeMultiSelect=function(e){var t=useTreeSelectMulti();return React.createElement(TreeSelect,__assign({},t,e))};export default memo(TreeMultiSelect);
+//# sourceMappingURL=TreeMultiSelect.js.map

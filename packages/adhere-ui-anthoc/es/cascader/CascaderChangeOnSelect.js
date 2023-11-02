@@ -1,0 +1,2 @@
+var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var a,r=1,t=arguments.length;r<t;r++)for(var n in a=arguments[r])Object.prototype.hasOwnProperty.call(a,n)&&(e[n]=a[n]);return e}).apply(this,arguments)};import React from"react";import Cascader from"./CascaderTreeSelect";var CascaderChangeOnSelect=function(e){return React.createElement(Cascader,__assign({},e,{changeOnSelect:!0}))};export default CascaderChangeOnSelect;
+//# sourceMappingURL=CascaderChangeOnSelect.js.map

@@ -1,4 +1,5 @@
-import { Select, Spin } from 'antd';
+import { useUpdateEffect } from 'ahooks';
+import { Empty, Select, Spin } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import type { FC } from 'react';
@@ -20,6 +21,8 @@ const selectorPrefix = 'adhere-ui-auto-complete';
  * @param debounceTimeout
  * @param options
  * @param loadData
+ * @param defaultOptions
+ * @param emptyContent
  * @param children
  * @param props
  * @constructor
@@ -31,12 +34,22 @@ const AutoComplete: FC<AutoCompleteProps> = ({
   debounceTimeout = 300,
   options,
   loadData,
+  defaultOptions,
+  emptyContent,
   children,
   ...props
 }) => {
-  const lock = useRef(false);
+  // const lock = useRef(false);
 
   const [fetching, setFetching] = useState(false);
+
+  const [open, setOpen] = useState(false);
+
+  const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
+
+  const onSelectChangeStartTime = useRef<number>(0);
+
+  const isMultiple = 'mode' in props && props.mode === 'multiple';
 
   const FetchLoading = useMemo(
     () =>
@@ -54,10 +67,29 @@ const AutoComplete: FC<AutoCompleteProps> = ({
    * @param _values
    */
   const onSelectChange = (_values) => {
-    lock.current = true;
+    // console.log('onSelectChange ~ _value', _values);
+
+    if (Array.isArray(_values)) {
+      setSelectedRows(
+        _values
+          .map((_value) => options?.find((_option) => _option.value === _value))
+          .filter((t) => !!t),
+      );
+    } else {
+      setSelectedRows(
+        [(options ?? []).find((option) => option.value === _values)].filter((_value) => !!_value),
+      );
+    }
 
     // @ts-ignore
     props.onChange?.(_values);
+
+    if (isMultiple) {
+      onSelectChangeStartTime.current = Date.now();
+    } else {
+      // 单选
+      setOpen(false);
+    }
   };
 
   const onClear = () => {
@@ -80,41 +112,84 @@ const AutoComplete: FC<AutoCompleteProps> = ({
 
   const onInput = useCallback(
     debounce((e) => {
-      const _kw = e.target.value.trim();
+      const currentTime = Date.now();
 
-      if (lock.current) {
-        lock.current = false;
+      if (
+        ['ant-checkbox-input'].some((className) => e.target.className.indexOf(className) !== -1)
+      ) {
         return;
       }
+
+      if (
+        isMultiple &&
+        onSelectChangeStartTime.current !== 0 &&
+        currentTime - onSelectChangeStartTime.current <= 400
+      ) {
+        onSelectChangeStartTime.current = 0;
+        return;
+      }
+
+      onSelectChangeStartTime.current = 0;
+
+      const _kw = e.target.value.trim();
 
       onInputMemo(_kw);
     }, debounceTimeout ?? 300),
     [debounceTimeout],
   );
 
-  console.log('value', props.value);
+  const selectOptions = useMemo<any[]>(() => {
+    const allOptions = [...(options ?? []), ...(selectedRows ?? [])];
+
+    const allOptionKeys = allOptions.map(({ value }) => value);
+
+    const distinctKeys = Array.from(new Set(allOptionKeys));
+
+    return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
+  }, [selectedRows, options]);
+
+  const empty = useMemo(
+    () => emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />,
+    [emptyContent],
+  );
+
+  useUpdateEffect(() => {
+    // console.log('defaultOptions', defaultOptions);
+    setSelectedRows(defaultOptions ?? []);
+  }, [defaultOptions]);
+
+  // console.log('options', options);
+  // console.log('selectedRows', selectedRows);
+  // console.log('selectOptions', selectOptions);
 
   return (
     <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
       <Select
-        {...props}
         showSearch
         allowClear
-        notFoundContent={fetching && FetchLoading}
+        // notFoundContent={fetching ? FetchLoading : <div>notFoundContent</div>}
         filterOption={false}
-        // onSearch={debounceFetcher.current}
-        options={options ?? []}
+        open={open}
+        options={selectOptions ?? []}
         // @ts-ignore
         onInput={onInput}
         onClear={onClear}
-        dropdownRender={(originNode) =>
-          children?.({
-            originNode,
-            value: props.value,
-            onChange: onSelectChange,
-            options: options,
-          }) ?? originNode
-        }
+        dropdownRender={(originNode) => {
+          if (fetching) return FetchLoading;
+
+          return !!options?.length
+            ? children?.({
+                originNode,
+                value: props.value,
+                onChange: (_value) => onSelectChange(_value),
+                options: options ?? [],
+                loading: fetching,
+              }) ?? originNode
+            : empty;
+        }}
+        onDropdownVisibleChange={setOpen}
+        {...props}
+        onChange={(_value) => onSelectChange(_value)}
       />
     </div>
   );

@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var antd_1=require("antd"),util_1=require("../util"),SelectHOC=(0,util_1.createFactory)(antd_1.Select,{showSearch:!0,allowClear:!0,placement:"bottomLeft",filterOption:function(e,l){var t;return 0<=(null==(l=null==(t=null==(t=null==(l=null==l?void 0:l.label)?void 0:l.toLowerCase)?void 0:t.call(l))?void 0:t.indexOf)?void 0:l.call(t,e.toLowerCase()))}});exports.default=SelectHOC;
+//# sourceMappingURL=Select.js.map

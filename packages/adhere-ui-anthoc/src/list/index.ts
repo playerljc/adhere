@@ -1,5 +1,16 @@
-import { List } from 'antd';
+import AutoCompleteCheckAllListSelect from './AutoCompleteCheckAllListSelect';
+import AutoCompleteListPagingSelect from './AutoCompleteListPagingSelect';
+import AutoCompleteListSelect from './AutoCompleteListSelect';
+import CheckAllListSelect from './CheckAllListSelect';
+import List from './List';
+import ListPagingSelect from './ListPagingSelect';
+import ListSelect from './ListSelect';
 
-import { createFactory } from '../util';
+List.AutoCompleteCheckAllListSelect = AutoCompleteCheckAllListSelect;
+List.AutoCompleteListPagingSelect = AutoCompleteListPagingSelect;
+List.AutoCompleteListSelect = AutoCompleteListSelect;
+List.ListSelect = ListSelect;
+List.CheckAllListSelect = CheckAllListSelect;
+List.ListPagingSelect = ListPagingSelect;
 
-export default createFactory(List, {});
+export default List;

@@ -1,5 +1,5 @@
-import { InputNumber } from 'antd';
+import { InputNumber, InputNumberProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(InputNumber, { precision: 0 });
+export default createFactory<InputNumberProps>(InputNumber, { precision: 0 });

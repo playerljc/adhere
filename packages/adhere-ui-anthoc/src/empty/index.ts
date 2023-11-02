@@ -1,5 +1,5 @@
-import { Empty } from 'antd';
+import { Empty, EmptyProps } from 'antd';
 
 import { createFactory } from '../util';
 
-export default createFactory(Empty, {});
+export default createFactory<EmptyProps>(Empty, {});
