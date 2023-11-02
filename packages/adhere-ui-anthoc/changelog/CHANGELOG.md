@@ -1,3 +1,11 @@
+# 1.0.4
+
+***
+
+2023-11-02
+
+* Select、Radio、Checkbox、Tag、TreeSelect、Cascader和Transfer加入一系列hoc
+
 # 1.0.3
 
 ***
