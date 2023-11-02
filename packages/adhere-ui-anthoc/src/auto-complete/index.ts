@@ -1,9 +1,6 @@
-import { AutoComplete, AutoCompleteProps } from 'antd';
+import AutoComplete from './AutoComplete';
+import AutoCompleteSelectInput from './AutoCompleteSelectInput';
 
-import { createFactory } from '../util';
+AutoComplete.AutoCompleteSelectInput = AutoCompleteSelectInput;
 
-export default createFactory<AutoCompleteProps>(AutoComplete, {
-  allowClear: true,
-  filterOption: (input, option) =>
-    (option?.value as string)?.toUpperCase?.()?.indexOf?.(input?.toUpperCase?.()) >= 0,
-});
+export default AutoComplete;

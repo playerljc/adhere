@@ -19,8 +19,6 @@ const dataSource = Array.from({ length: 100 }).map(() => {
   };
 });
 
-console.log(dataSource);
-
 export default () => {
   const [value, setValue] = useState(undefined);
 

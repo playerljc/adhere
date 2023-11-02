@@ -2,6 +2,7 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
+import AutoCompleteTest from './AutoComplete/AutoCompleteSelectInput';
 import CascaderTest from './Cascader/AsyncCascaderMultiEcho';
 import CheckboxTest from './Checkbox/AutoCompleteCheckAllCustomCheckboxSelect.tsx';
 import ListTest from './List/RadioListPagingSelect';
@@ -18,5 +19,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <TagTest />,
+  children: <AutoCompleteTest />,
 });

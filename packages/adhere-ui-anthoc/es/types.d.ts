@@ -1,4 +1,4 @@
-import type { CascaderProps, CheckboxProps, FormProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TransferProps, TreeSelectProps } from 'antd';
+import type { AutoCompleteProps as AntdAutoCompleteProps, CascaderProps, CheckboxProps, FormProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TransferProps, TreeSelectProps } from 'antd';
 import { FormRule } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
@@ -554,4 +554,17 @@ export type CheckboxGroupExtProps = Omit<CheckboxGroupProps, 'onChange' | 'child
     direction?: SpaceProps['direction'];
     onChange?: (checkedValue: CheckboxValueType[], checked: boolean, changeValue: CheckboxValueType[]) => void;
     children?: (onChange: (e: any, itemValue: CheckboxOptionType['value']) => void) => ReactNode;
+};
+export type AutoCompleteSelectInputProps = Omit<AntdAutoCompleteProps, 'value' | 'onChange'> & {
+    value: {
+        inputValue: AntdAutoCompleteProps['value'];
+        selectValue: AntdAutoCompleteProps['value'];
+    };
+    onChange: (value?: {
+        inputValue: AntdAutoCompleteProps['value'];
+        selectValue: AntdAutoCompleteProps['value'];
+    }) => void;
+};
+export type AutoCompleteHOCComponent = ReturnType<typeof createFactory<AutoCompleteProps>> & {
+    AutoCompleteSelectInput: FC<AutoCompleteSelectInputProps>;
 };

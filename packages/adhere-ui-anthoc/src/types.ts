@@ -1,4 +1,5 @@
 import type {
+  AutoCompleteProps as AntdAutoCompleteProps,
   CascaderProps,
   CheckboxProps,
   FormProps,
@@ -797,4 +798,19 @@ export type CheckboxGroupExtProps = Omit<CheckboxGroupProps, 'onChange' | 'child
     changeValue: CheckboxValueType[],
   ) => void;
   children?: (onChange: (e: any, itemValue: CheckboxOptionType['value']) => void) => ReactNode;
+};
+
+export type AutoCompleteSelectInputProps = Omit<AntdAutoCompleteProps, 'value' | 'onChange'> & {
+  value: {
+    inputValue: AntdAutoCompleteProps['value'];
+    selectValue: AntdAutoCompleteProps['value'];
+  };
+  onChange: (value?: {
+    inputValue: AntdAutoCompleteProps['value'];
+    selectValue: AntdAutoCompleteProps['value'];
+  }) => void;
+};
+
+export type AutoCompleteHOCComponent = ReturnType<typeof createFactory<AutoCompleteProps>> & {
+  AutoCompleteSelectInput: FC<AutoCompleteSelectInputProps>;
 };
