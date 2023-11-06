@@ -103,10 +103,11 @@ declare const _default: {
     isPascalCase(name: any): boolean;
     /**
      * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
-     * @param name - string pascalCase的字符串
+     * @param _str - string pascalCase的字符串
+     * @param symbol 分隔符
      * @return {string}
      */
-    pascalCaseToKebabCase(name: any): any;
+    pascalCaseToKebabCase(_str: any, symbol?: string): any;
     /**
      * execExpression - 执行表达式
      * @param context - {Object} 执行的上下文

@@ -183,12 +183,15 @@ export default {
   },
   /**
    * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
-   * @param name - string pascalCase的字符串
+   * @param _str - string pascalCase的字符串
+   * @param symbol 分隔符
    * @return {string}
    */
-  pascalCaseToKebabCase(name) {
-    const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
-    return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+  pascalCaseToKebabCase(_str, symbol = '-') {
+    // const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
+    // return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+    const cells = _str.match(/([A-Z]+(?=[A-Z]|$))|([A-Z]?[^A-Z]+)/g) || [];
+    return cells.map((c) => c.toLowerCase()).join(symbol);
   },
   /**
    * execExpression - 执行表达式
