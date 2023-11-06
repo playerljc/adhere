@@ -1,5 +1,3 @@
-import { Anchor, AnchorProps } from 'antd';
+import Anchor from './Anchor';
 
-import { createFactory } from '../util';
-
-export default createFactory<AnchorProps>(Anchor, {});
+export default Anchor;

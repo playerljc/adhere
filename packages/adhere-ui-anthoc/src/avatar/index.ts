@@ -1,5 +1,3 @@
-import { Avatar, AvatarProps } from 'antd';
+import Avatar from './Avatar';
 
-import { createFactory } from '../util';
-
-export default createFactory<AvatarProps>(Avatar, {});
+export default Avatar;

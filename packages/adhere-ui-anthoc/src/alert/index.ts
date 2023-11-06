@@ -1,6 +1,3 @@
-import { Alert } from 'antd';
-import type { AlertProps } from 'antd';
+import Alert from './Alert';
 
-import { createFactory } from '../util';
-
-export default createFactory<AlertProps>(Alert, {});
+export default Alert;
