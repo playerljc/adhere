@@ -1,0 +1,346 @@
+/**
+ * 生成器支持的所有组件名称
+ *
+ * @example
+ * ```js
+ * import { Components } from 'adhere-ui-fieldgeneratortodict';
+ *
+ * Components.AutoComplete.FormItem; // 'AutoCompleteFormItem'
+ * ```
+ *
+ */
+declare const Components: {
+    readonly Select: {
+        readonly Standard: "SelectStandard";
+        readonly Multi: "SelectMulti";
+        readonly CheckAll: "SelectCheckAll";
+        readonly DropdownRender: "SelectDropdownRender";
+    };
+    readonly SelectDynamic: {
+        readonly Standard: "SelectDynamicStandard";
+        readonly Multi: "SelectDynamicMulti";
+        readonly CheckAll: "SelectDynamicCheckAll";
+        readonly DropdownRender: "SelectDynamicDropdownRender";
+    };
+    readonly AutoCompleteSelect: {
+        readonly Standard: "AutoCompleteSelectStandard";
+        readonly Multi: "AutoCompleteSelectMulti";
+        readonly CheckAll: "AutoCompleteSelectCheckAll";
+    };
+    readonly CheckBox: {
+        readonly Standard: "CheckBoxStandard";
+        readonly GroupExt: "CheckBoxGroupExt";
+        readonly Vertical: "CheckBoxVertical";
+        readonly CheckAllVertical: "CheckBoxCheckAllVertical";
+        readonly Horizontal: "CheckBoxHorizontal";
+        readonly CheckAllHorizontal: "CheckBoxCheckAllHorizontal";
+        readonly Custom: "CheckBoxCustom";
+        readonly CheckAllCustom: "CheckBoxCheckAllCustom";
+        readonly SuspenseStandard: "CheckBoxSuspenseStandard";
+        readonly SuspenseGroupExt: "CheckBoxSuspenseGroupExt";
+        readonly SuspenseVertical: "CheckBoxSuspenseVertical";
+        readonly SuspenseCheckAllVertical: "CheckBoxSuspenseCheckAllVertical";
+        readonly SuspenseHorizontal: "CheckBoxSuspenseHorizontal";
+        readonly SuspenseCheckAllHorizontal: "CheckBoxSuspenseCheckAllHorizontal";
+        readonly SuspenseCustom: "CheckBoxSuspenseCustom";
+        readonly SuspenseCheckAllCustom: "CheckBoxSuspenseCheckAllCustom";
+        readonly Select: "CheckBoxSelect";
+        readonly CheckAllSelect: "CheckBoxCheckAllSelect";
+        readonly CustomSelect: "CheckBoxCustomSelect";
+        readonly CheckAllCustomSelect: "CheckBoxCheckAllCustomSelect";
+    };
+    readonly CheckBoxDynamic: {
+        readonly Standard: "CheckBoxDynamicStandard";
+        readonly GroupExt: "CheckBoxDynamicGroupExt";
+        readonly Vertical: "CheckBoxDynamicVertical";
+        readonly CheckAllVertical: "CheckBoxDynamicCheckAllVertical";
+        readonly Horizontal: "CheckBoxDynamicHorizontal";
+        readonly CheckAllHorizontal: "CheckBoxDynamicCheckAllHorizontal";
+        readonly Custom: "CheckBoxDynamicCustom";
+        readonly CheckAllCustom: "CheckBoxDynamicCheckAllCustom";
+        readonly SuspenseStandard: "CheckBoxDynamicSuspenseStandard";
+        readonly SuspenseGroupExt: "CheckBoxDynamicSuspenseGroupExt";
+        readonly SuspenseVertical: "CheckBoxDynamicSuspenseVertical";
+        readonly SuspenseCheckAllVertical: "CheckBoxDynamicSuspenseCheckAllVertical";
+        readonly SuspenseHorizontal: "CheckBoxDynamicSuspenseHorizontal";
+        readonly SuspenseCheckAllHorizontal: "CheckBoxDynamicSuspenseCheckAllHorizontal";
+        readonly SuspenseCustom: "CheckBoxDynamicSuspenseCustom";
+        readonly SuspenseCheckAllCustom: "CheckBoxDynamicSuspenseCheckAllCustom";
+        readonly Select: "CheckBoxDynamicSelect";
+        readonly CheckAllSelect: "CheckBoxDynamicCheckAllSelect";
+        readonly CustomSelect: "CheckBoxDynamicCustomSelect";
+        readonly CheckAllCustomSelect: "CheckBoxDynamicCheckAllCustomSelect";
+    };
+    readonly AutoCompleteCheckBox: {
+        readonly Standard: "AutoCompleteCheckBoxStandard";
+        readonly CheckAll: "AutoCompleteCheckBoxCheckAll";
+        readonly Custom: "AutoCompleteCheckBoxCustom";
+        readonly CheckAllCustom: "AutoCompleteCheckBoxCheckAllCustom";
+    };
+    readonly Radio: {
+        readonly Vertical: "RadioVertical";
+        readonly Horizontal: "RadioHorizontal";
+        readonly Custom: "RadioCustom";
+        readonly Button: "RadioButton";
+        readonly Select: "RadioSelect";
+        readonly SuspenseVertical: "RadioSuspenseVertical";
+        readonly SuspenseHorizontal: "RadioSuspenseHorizontal";
+        readonly SuspenseCustom: "RadioSuspenseCustom";
+        readonly SuspenseButton: "RadioSuspenseButton";
+        readonly CustomSelect: "RadioCustomSelect";
+        readonly ButtonSelect: "RadioButtonSelect";
+    };
+    readonly RadioDynamic: {
+        readonly Vertical: "RadioDynamicVertical";
+        readonly Horizontal: "RadioDynamicHorizontal";
+        readonly Custom: "RadioDynamicCustom";
+        readonly Button: "RadioDynamicButton";
+        readonly SuspenseVertical: "RadioDynamicSuspenseVertical";
+        readonly SuspenseHorizontal: "RadioDynamicSuspenseHorizontal";
+        readonly SuspenseCustom: "RadioDynamicSuspenseCustom";
+        readonly SuspenseButton: "RadioDynamicSuspenseButton";
+        readonly Select: "RadioDynamicSelect";
+        readonly CustomSelect: "RadioDynamicCustomSelect";
+        readonly ButtonSelect: "RadioDynamicButtonSelect";
+    };
+    readonly AutoCompleteRadio: {
+        readonly Standard: "AutoCompleteRadioStandard";
+        readonly Custom: "AutoCompleteRadioCustom";
+        readonly Button: "AutoCompleteRadioButton";
+    };
+    readonly Tag: {
+        readonly Vertical: "TagVertical";
+        readonly VerticalCheckable: "TagVerticalCheckable";
+        readonly CheckAllVerticalCheckable: "TagCheckAllVerticalCheckable";
+        readonly Horizontal: "TagHorizontal";
+        readonly HorizontalCheckable: "TagVerticalCheckable";
+        readonly CheckAllHorizontalCheckable: "TagCheckAllHorizontalCheckable";
+        readonly SuspenseVertical: "TagSuspenseVertical";
+        readonly SuspenseVerticalCheckable: "TagSuspenseVerticalCheckable";
+        readonly SuspenseCheckAllVerticalCheckable: "TagSuspenseCheckAllVerticalCheckable";
+        readonly SuspenseHorizontal: "TagSuspenseHorizontal";
+        readonly SuspenseHorizontalCheckable: "TagSuspenseVerticalCheckable";
+        readonly SuspenseCheckAllHorizontalCheckable: "TagSuspenseCheckAllHorizontalCheckable";
+        readonly Select: "TagSelect";
+        readonly MultiSelect: "TagMultiSelect";
+        readonly CheckAllSelect: "TagCheckAllSelect";
+    };
+    readonly TagDynamic: {
+        readonly Vertical: "TagDynamicVertical";
+        readonly VerticalCheckable: "TagDynamicVerticalCheckable";
+        readonly CheckAllVerticalCheckable: "TagDynamicCheckAllVerticalCheckable";
+        readonly Horizontal: "TagDynamicHorizontal";
+        readonly HorizontalCheckable: "TagDynamicVerticalCheckable";
+        readonly CheckAllHorizontalCheckable: "TagDynamicCheckAllHorizontalCheckable";
+        readonly SuspenseVertical: "TagDynamicSuspenseVertical";
+        readonly SuspenseVerticalCheckable: "TagDynamicSuspenseVerticalCheckable";
+        readonly SuspenseCheckAllVerticalCheckable: "TagDynamicSuspenseCheckAllVerticalCheckable";
+        readonly SuspenseHorizontal: "TagDynamicSuspenseHorizontal";
+        readonly SuspenseHorizontalCheckable: "TagDynamicSuspenseVerticalCheckable";
+        readonly SuspenseCheckAllHorizontalCheckable: "TagDynamicSuspenseCheckAllHorizontalCheckable";
+        readonly Select: "TagDynamicSelect";
+        readonly MultiSelect: "TagDynamicMultiSelect";
+        readonly CheckAllSelect: "TagDynamicCheckAllSelect";
+    };
+    readonly AutoCompleteTag: {
+        readonly Standard: "AutoCompleteTagStandard";
+        readonly CheckAll: "AutoCompleteTagCheckAll";
+    };
+    readonly List: {
+        readonly Standard: "ListStandard";
+        readonly Select: "ListSelect";
+        readonly MultiSelect: "ListMultiSelect";
+        readonly CheckAllSelect: "ListCheckAllSelect";
+    };
+    readonly ListDynamic: {
+        readonly Standard: "ListDynamicStandard";
+        readonly Select: "ListDynamicSelect";
+        readonly MultiSelect: "ListDynamicMultiSelect";
+        readonly CheckAllSelect: "ListDynamicCheckAllSelect";
+    };
+    readonly ListPagination: {
+        readonly Standard: "ListPagination";
+        readonly Multi: "ListPaginationMulti";
+        readonly Select: "ListPaginationSelect";
+        readonly MultiSelect: "ListPaginationMultiSelect";
+    };
+    readonly AutoCompleteList: {
+        readonly Standard: "AutoCompleteListStandard";
+        readonly Multi: "AutoCompleteListMulti";
+        readonly CheckAll: "AutoCompleteListCheckAll";
+        readonly Paging: "AutoCompleteListPaging";
+        readonly MultiPaging: "AutoCompleteListMultiPaging";
+    };
+    readonly Table: {
+        readonly Standard: "TableStandard";
+        readonly Select: "TableSelect";
+        readonly MultiSelect: "TableMultiSelect";
+    };
+    readonly TableDynamic: {
+        readonly Standard: "TableDynamicStandard";
+        readonly Select: "TableDynamicSelect";
+        readonly MultiSelect: "TableDynamicMultiSelect";
+    };
+    readonly TablePagination: {
+        readonly Standard: "TablePaginationStandard";
+        readonly Multi: "TablePaginationMulti";
+        readonly Select: "TablePaginationSelect";
+        readonly MultiSelect: "TablePaginationMultiSelect";
+    };
+    readonly AutoCompleteTable: {
+        readonly Standard: "AutoCompleteTableStandard";
+        readonly Multi: "AutoCompleteTableMulti";
+        readonly Paging: "AutoCompleteTablePaging";
+        readonly MultiPaging: "AutoCompleteTableMultiPaging";
+    };
+    readonly Transfer: {
+        readonly Standard: "TransferStandard";
+        readonly Select: "TransferSelect";
+    };
+    readonly TransferDynamic: {
+        readonly Standard: "TransferDynamicStandard";
+        readonly Select: "TransferDynamicSelect";
+    };
+    readonly AutoCompleteTransfer: {
+        readonly Standard: "AutoCompleteTransferStandard";
+    };
+    readonly Tree: {
+        readonly Standard: "TreeStandard";
+        readonly Multi: "TreeMulti";
+        readonly Leaf: "TreeLeaf";
+        readonly LeafMulti: "TreeLeafMulti";
+        readonly CheckedShowAll: "TreeCheckedShowAll";
+        readonly CheckedShowChild: "TreeCheckedShowChild";
+        readonly CheckedShowParent: "TreeCheckedShowParent";
+        readonly Flat: "TreeFlat";
+        readonly FlatMulti: "TreeFlatMulti";
+        readonly FlatLeaf: "TreeFlatLeaf";
+        readonly FlatLeafMulti: "TreeFlatLeafMulti";
+        readonly FlatCheckedShowAll: "TreeFlatCheckedShowAll";
+        readonly FlatCheckedShowChild: "TreeFlatCheckedShowChild";
+        readonly FlatCheckedShowParent: "TreeFlatCheckedShowParent";
+    };
+    readonly TreeDynamic: {
+        readonly Standard: "TreeDynamicStandard";
+        readonly Multi: "TreeDynamicMulti";
+        readonly Leaf: "TreeDynamicLeaf";
+        readonly LeafMulti: "TreeDynamicLeafMulti";
+        readonly CheckedShowAll: "TreeDynamicCheckedShowAll";
+        readonly CheckedShowChild: "TreeDynamicCheckedShowChild";
+        readonly CheckedShowParent: "TreeDynamicCheckedShowParent";
+        readonly Flat: "TreeDynamicFlat";
+        readonly FlatMulti: "TreeDynamicFlatMulti";
+        readonly FlatLeaf: "TreeDynamicFlatLeaf";
+        readonly FlatLeafMulti: "TreeDynamicFlatLeafMulti";
+        readonly FlatCheckedShowAll: "TreeDynamicFlatCheckedShowAll";
+        readonly FlatCheckedShowChild: "TreeDynamicFlatCheckedShowChild";
+        readonly FlatCheckedShowParent: "TreeDynamicFlatCheckedShowParent";
+    };
+    readonly TreeAsync: {
+        readonly Standard: "TreeAsyncStandard";
+        readonly Multi: "TreeAsyncMulti";
+        readonly Leaf: "TreeAsyncLeaf";
+        readonly LeafMulti: "TreeAsyncLeafMulti";
+        readonly CheckedShowAll: "TreeAsyncCheckedShowAll";
+        readonly CheckedShowChild: "TreeAsyncCheckedShowChild";
+        readonly CheckedShowParent: "TreeAsyncCheckedShowParent";
+        readonly FlatStandard: "TreeAsyncFlatStandard";
+        readonly FlatMulti: "TreeAsyncFlatMulti";
+        readonly FlatLeaf: "TreeAsyncFlatLeaf";
+        readonly FlatLeafMulti: "TreeAsyncFlatLeafMulti";
+        readonly FlatCheckedShowAll: "TreeAsyncFlatCheckedShowAll";
+        readonly FlatCheckedShowChild: "TreeAsyncFlatCheckedShowChild";
+        readonly FlatCheckedShowParent: "TreeAsyncFlatCheckedShowParent";
+    };
+    readonly Cascader: {
+        readonly Standard: "CascaderStandard";
+        readonly Multi: "CascaderMulti";
+        readonly ShowChild: "CascaderShowChild";
+        readonly ShowParent: "CascaderShowParent";
+        readonly ChangeOnSelect: "CascaderChangeOnSelect";
+        readonly TreeSelect: "CascaderTreeSelect";
+        readonly FlatStandard: "CascaderFlatStandard";
+        readonly FlatMulti: "CascaderFlatMulti";
+        readonly FlatShowChild: "CascaderFlatShowChild";
+        readonly FlatShowParent: "CascaderFlatShowParent";
+        readonly FlatChangeOnSelect: "CascaderFlatChangeOnSelect";
+        readonly FlatTreeSelect: "CascaderFlatTreeSelect";
+    };
+    readonly CascaderDynamic: {
+        readonly Standard: "CascaderDynamicStandard";
+        readonly Multi: "CascaderDynamicMulti";
+        readonly ShowChild: "CascaderDynamicShowChild";
+        readonly ShowParent: "CascaderDynamicShowParent";
+        readonly ChangeOnSelect: "CascaderDynamicChangeOnSelect";
+        readonly TreeSelect: "CascaderDynamicTreeSelect";
+        readonly FlatStandard: "CascaderDynamicFlatStandard";
+        readonly FlatMulti: "CascaderDynamicFlatMulti";
+        readonly FlatShowChild: "CascaderDynamicFlatShowChild";
+        readonly FlatShowParent: "CascaderDynamicFlatShowParent";
+        readonly FlatChangeOnSelect: "CascaderDynamicFlatChangeOnSelect";
+        readonly FlatTreeSelect: "CascaderDynamicFlatTreeSelect";
+    };
+    readonly CascaderAsync: {
+        readonly Standard: "CascaderAsyncStandard";
+        readonly Multi: "CascaderAsyncMulti";
+        readonly ShowChild: "CascaderAsyncShowChild";
+        readonly ShowParent: "CascaderAsyncShowParent";
+        readonly ChangeOnSelect: "CascaderAsyncChangeOnSelect";
+        readonly FlatStandard: "CascaderAsyncFlatStandard";
+        readonly FlatMulti: "CascaderAsyncFlatMulti";
+        readonly FlatShowChild: "CascaderAsyncFlatShowChild";
+        readonly FlatShowParent: "CascaderAsyncFlatShowParent";
+        readonly FlatChangeOnSelect: "CascaderAsyncFlatChangeOnSelect";
+    };
+    readonly AutoComplete: {
+        readonly Standard: "AutoCompleteStandard";
+        readonly SelectInput: "AutoCompleteSelectInput";
+    };
+    readonly AutoCompleteDynamic: {
+        readonly Standard: "AutoCompleteDynamicStandard";
+        readonly SelectInput: "AutoCompleteDynamicSelectInput";
+    };
+    readonly Breadcrumb: {
+        readonly Standard: "BreadcrumbStandard";
+    };
+    readonly BreadcrumbDynamic: {
+        readonly Standard: "BreadcrumbDynamicStandard";
+    };
+    readonly Dropdown: {
+        readonly Standard: "DropdownStandard";
+    };
+    readonly DropdownDynamic: {
+        readonly Standard: "DropdownDynamicStandard";
+    };
+    readonly Mentions: {
+        readonly Standard: "MentionsStandard";
+    };
+    readonly MentionsDynamic: {
+        readonly Standard: "MentionsDynamicStandard";
+    };
+    readonly Menu: {
+        readonly Standard: "MenuStandard";
+    };
+    readonly MenuDynamic: {
+        readonly Standard: "MenuDynamicStandard";
+    };
+    readonly Segmented: {
+        readonly Standard: "SegmentedStandard";
+    };
+    readonly SegmentedDynamic: {
+        readonly Standard: "SegmentedDynamicStandard";
+    };
+    readonly Steps: {
+        readonly Standard: "StepsStandard";
+    };
+    readonly StepsDynamic: {
+        readonly Standard: "StepsDynamicStandard";
+    };
+    readonly Timeline: {
+        readonly Standard: "TimelineStandard";
+    };
+    readonly TimelineDynamic: {
+        readonly Standard: "TimelineDynamicStandard";
+    };
+};
+export default Components;

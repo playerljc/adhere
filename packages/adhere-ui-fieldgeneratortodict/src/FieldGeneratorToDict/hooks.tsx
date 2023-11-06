@@ -16,11 +16,7 @@ import { deepDep } from './util';
  * @param {Object} cascadeParams 级联参数
  * @param {Function} onDataSourceChange dataSource改变
  */
-export function useDict<D extends any[]>({
-  dictName,
-  cascadeParams,
-  onDataSourceChange,
-}: UseDictParams<D>): D {
+export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseDictParams<D>): D {
   const dictValue = Dict.value[dictName].value;
 
   const [dataSource, setDataSource] = useState<D>([]);
@@ -55,7 +51,7 @@ export function useDict<D extends any[]>({
  * @param {Object} cascadeParams 级联参数
  * @param {Function} onDataSourceChange dataSource改变
  */
-export function useDynamicDict<D extends any[]>({
+export function useDynamicDict<D>({
   dictName,
   cascadeParams,
   onDataSourceChange,
@@ -98,7 +94,7 @@ export function useDynamicDict<D extends any[]>({
  * @param {Object} cascadeParams 级联参数
  * @param {Function} onDataSourceChange dataSource改变
  */
-export function useAutoCompleteDict<D extends any[]>({
+export function useAutoCompleteDict<D>({
   dictName,
   cascadeParams,
   onDataSourceChange,
@@ -132,7 +128,7 @@ export function useAutoCompleteDict<D extends any[]>({
  * @param {Object} cascadeParams 级联参数
  * @param {Function} onDataSourceChange dataSource改变
  */
-export function usePaging<D extends any[]>({
+export function usePaging<D>({
   dictName,
   cascadeParams,
   onDataSourceChange,
@@ -157,7 +153,7 @@ export function usePaging<D extends any[]>({
  * @param {Object} cascadeParams 级联参数
  * @param {Function} onDataSourceChange dataSource改变
  */
-export function useAutoCompletePaging<D extends any[]>({
+export function useAutoCompletePaging<D>({
   dictName,
   cascadeParams,
   onDataSourceChange,
@@ -187,7 +183,7 @@ export function useAutoCompletePaging<D extends any[]>({
  * @description TreeSelece或Cascader的Async
  * @param {string} dictName 字典名称
  */
-export function useAsyncTree<D extends any[]>({
+export function useAsyncTree<D>({
   dictName,
 }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] {
   const dictValue = Dict.value[dictName].value;

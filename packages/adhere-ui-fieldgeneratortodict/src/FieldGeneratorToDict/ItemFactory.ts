@@ -16,7 +16,7 @@ const map = new Map<string, (dictName: string) => any>();
  * @param {string} functionName - 功能名称
  * @param {(originDictName: string, dictName?: string) => any)} handler
  */
-export function setItem<T, D extends any[]>(
+export function setItem<T, D>(
   itemName: string,
   functionName: string,
   handler: (originDictName: string, dictName?: string) => FC<DictComponentProps<T, D>>,

@@ -230,16 +230,13 @@ export interface DictRefreshWrapperFunction {
 //
 // export type ComponentsType = typeof Components;
 
-export type UseDictParams<D extends any[]> = {
+export type UseDictParams<D> = {
   dictName: string;
   cascadeParams?: object;
   onDataSourceChange?: (dataSource: D) => void;
 };
 
-export type DictComponentProps<T, D extends any[]> = Omit<
-  T,
-  'options' | 'dataSource' | 'treeData'
-> & {
+export type DictComponentProps<T, D> = Omit<T, 'options' | 'dataSource' | 'treeData'> & {
   cascadeParams?: object;
   onDataSourceChange?: (dataSource: D) => void;
 };
