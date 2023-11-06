@@ -4,7 +4,7 @@ import { fromLonLat } from 'ol/proj.js';
 import { Vector as VectorSource } from 'ol/source';
 import React, { useRef } from 'react';
 
-import { OLMap, Resource, Space } from '@baifendian/adhere';
+import { OLMap, Resource } from '@baifendian/adhere';
 import XinBei from '@baifendian/adhere-util-resource/resource/gis/geoJson/China/320000/320400.json';
 
 import PlayGroundPage, {

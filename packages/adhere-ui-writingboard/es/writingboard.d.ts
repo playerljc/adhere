@@ -1,4 +1,3 @@
-import React from 'react';
-import { WritingBoardHandle, WritingBoardProps } from './types';
-declare const SignatureHOC: React.MemoExoticComponent<React.ForwardRefExoticComponent<WritingBoardProps & React.RefAttributes<WritingBoardHandle>>>;
-export default SignatureHOC;
+import { WritingBoardComponent } from './types';
+declare const WritingBoard: WritingBoardComponent;
+export default WritingBoard;

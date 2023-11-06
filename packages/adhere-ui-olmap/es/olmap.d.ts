@@ -81,6 +81,6 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * @return {*|Map}
      */
     getMap(): any;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default OlMap;

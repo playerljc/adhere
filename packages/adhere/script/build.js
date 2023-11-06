@@ -100,12 +100,15 @@ const namedMap = new Map([
 
 /**
  * pascalCaseToKebabCase
- * @param name
  * @return {string}
+ * @param _str
+ * @param symbol
  */
-function pascalCaseToKebabCase(name) {
-  const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
-  return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();
+function pascalCaseToKebabCase(_str, symbol = '-') {
+  /*const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
+  return (result.startsWith('-') ? result.substring(1) : result).toLowerCase();*/
+  const cells = _str.match(/([A-Z]+(?=[A-Z]|$))|([A-Z]?[^A-Z]+)/g) || [];
+  return cells.map((c) => c.toLowerCase()).join(symbol);
 }
 
 // let dependenciesAll = {};
