@@ -1,4 +1,4 @@
-import { getGridStyleParams } from './types';
+import type { getGridStyleParams } from './types';
 /**
  * getGridStyle
  * @description 获取栅格系统的样式

@@ -1,3 +1,3 @@
-import { PlayGroundPageHOC, PlayGroundPageProps } from '../types';
-declare const PlayGroundPageForward: PlayGroundPageHOC<HTMLDivElement, PlayGroundPageProps>;
-export default PlayGroundPageForward;
+import type { PlayGroundPageComponent } from '../types';
+declare const PlayGroundPage: PlayGroundPageComponent;
+export default PlayGroundPage;

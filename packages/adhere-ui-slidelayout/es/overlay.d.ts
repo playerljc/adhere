@@ -1,4 +1,10 @@
 import React from 'react';
-import { OverlayProps, SlideLayoutHandle } from './types';
-declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<OverlayProps & React.RefAttributes<SlideLayoutHandle>>>;
-export default _default;
+import { OverlayProps } from './types';
+/**
+ * Overlay
+ * @param props
+ * @param ref
+ * @constructor
+ */
+declare const Overlay: React.NamedExoticComponent<OverlayProps>;
+export default Overlay;

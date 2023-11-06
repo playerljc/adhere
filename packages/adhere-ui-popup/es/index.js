@@ -1,2 +1,2 @@
-import Popup from"./popup";export default Popup;
+import Popup from"./Popup";export default Popup;
 //# sourceMappingURL=index.js.map

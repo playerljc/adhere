@@ -6,8 +6,8 @@ import React, { useMemo } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
+import Popup from './Popup';
 import SubmitButton from './SubmitButton';
-import Popup from './popup';
 import type { TriggerProps } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';

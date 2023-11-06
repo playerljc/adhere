@@ -4,7 +4,6 @@ import { PickerColumnItem, PickerValue } from 'antd-mobile/es/components/picker-
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 import React, { memo, useMemo, useState } from 'react';
-import type { FC } from 'react';
 
 import { Format, TimePickerViewProps } from './types';
 
@@ -39,74 +38,69 @@ const timeMap = new Map<Format, PickerColumnItem[][] | undefined>([
  * @param value
  * @param props
  */
-const TimePickerView: FC<TimePickerViewProps> = ({
-  className,
-  style,
-  format = 'HH:mm:ss',
-  onChange,
-  value,
-  ...props
-}) => {
-  const columns = useMemo<PickerColumnItem[][] | undefined>(() => timeMap.get(format), [format]);
+const TimePickerView = memo<TimePickerViewProps>(
+  ({ className, style, format = 'HH:mm:ss', onChange, value, ...props }) => {
+    const columns = useMemo<PickerColumnItem[][] | undefined>(() => timeMap.get(format), [format]);
 
-  const [stateValues, setStateValues] = useState<PickerValue[] | undefined>(undefined);
+    const [stateValues, setStateValues] = useState<PickerValue[] | undefined>(undefined);
 
-  function changeValues() {
-    let hour;
-    let minute;
-    let second;
+    function changeValues() {
+      let hour;
+      let minute;
+      let second;
 
-    let dayIns = dayjs();
+      let dayIns = dayjs();
 
-    if (value) {
-      dayIns = value;
+      if (value) {
+        dayIns = value;
+      }
+
+      hour = dayIns.hour();
+      minute = dayIns.minute();
+      second = dayIns.second();
+
+      const _values = [hour, minute, second];
+
+      const map = new Map<Format, PickerValue[]>([
+        ['HH:mm:ss', _values],
+        ['HH:mm', [_values[0], _values[1]]],
+        ['HH', [_values[0]]],
+        ['mm:ss', [_values[1], _values[2]]],
+        ['ss', [_values[2]]],
+      ]);
+
+      setStateValues(map.get(format) ?? []);
     }
 
-    hour = dayIns.hour();
-    minute = dayIns.minute();
-    second = dayIns.second();
+    useMount(() => {
+      changeValues();
+    });
 
-    const _values = [hour, minute, second];
+    useUpdateEffect(() => {
+      changeValues();
+    }, [value]);
 
-    const map = new Map<Format, PickerValue[]>([
-      ['HH:mm:ss', _values],
-      ['HH:mm', [_values[0], _values[1]]],
-      ['HH', [_values[0]]],
-      ['mm:ss', [_values[1], _values[2]]],
-      ['ss', [_values[2]]],
-    ]);
+    function valueToDayjs(values) {
+      return dayjs().hour(values[0]).minute(values[1]).second(values[2]);
+    }
 
-    setStateValues(map.get(format) ?? []);
-  }
+    return (
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        {stateValues && (
+          <PickerView
+            columns={columns ?? []}
+            onChange={(_values) => {
+              setStateValues(_values);
 
-  useMount(() => {
-    changeValues();
-  });
+              onChange?.(valueToDayjs(_values));
+            }}
+            {...props}
+            value={stateValues as PickerValue[]}
+          />
+        )}
+      </div>
+    );
+  },
+);
 
-  useUpdateEffect(() => {
-    changeValues();
-  }, [value]);
-
-  function valueToDayjs(values) {
-    return dayjs().hour(values[0]).minute(values[1]).second(values[2]);
-  }
-
-  return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-      {stateValues && (
-        <PickerView
-          columns={columns ?? []}
-          onChange={(_values) => {
-            setStateValues(_values);
-
-            onChange?.(valueToDayjs(_values));
-          }}
-          {...props}
-          value={stateValues as PickerValue[]}
-        />
-      )}
-    </div>
-  );
-};
-
-export default memo(TimePickerView);
+export default TimePickerView;

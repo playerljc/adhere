@@ -20,8 +20,6 @@ export default () => {
   const [value, setValue] = useState([]);
 
   function loadData(page, limit) {
-    console.log('paging', page, limit);
-
     return new Promise((resolve) => {
       resolve({
         totalCount: data.length,

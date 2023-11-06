@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import APlayGround from './APlayGround';
 /**
  * PlayGround
@@ -10,7 +10,7 @@ declare class PlayGround extends APlayGround {
      * renderCodeView - 代码展示视图
      * @return {*}
      */
-    protected renderCodeView(): JSX.Element;
+    protected renderCodeView(): React.JSX.Element;
     /**
      * getClipboardText
      */

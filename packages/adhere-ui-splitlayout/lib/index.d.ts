@@ -1,2 +1,2 @@
-import SplitLayout from './splitlayout';
+import SplitLayout from './SplitLayout';
 export default SplitLayout;

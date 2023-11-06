@@ -1,13 +1,13 @@
 import { Skeleton } from 'antd';
 import classnames from 'classnames';
-import React, { FC, ReactElement, memo, useRef } from 'react';
+import React, { ReactElement, memo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 
-import { ListProps } from '../../types';
+import type { ListProps } from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-inner-list';
 
@@ -16,7 +16,7 @@ const selectorPrefix = 'adhere-ui-comment-inner-list';
  * @constructor
  * @classdesc 评论列表
  */
-const CommentList: FC<ListProps> = (props) => {
+const CommentList = memo<ListProps>((props) => {
   const {
     className = '',
     style = {},
@@ -35,7 +35,7 @@ const CommentList: FC<ListProps> = (props) => {
   // 第一次加载
   const isFirstLoading = useRef(false);
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   /**
    * renderDispatch
@@ -137,6 +137,6 @@ const CommentList: FC<ListProps> = (props) => {
       {renderDispatch()}
     </div>
   );
-};
+});
 
-export default memo(CommentList);
+export default CommentList;

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -7,7 +7,7 @@ import { CollapseProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-collapse';
 
-const Collapse: FC<CollapseProps> = (props) => {
+const Collapse = memo<CollapseProps>((props) => {
   const {
     headerClassName = '',
     headerStyle = {},
@@ -82,7 +82,7 @@ const Collapse: FC<CollapseProps> = (props) => {
       </ConditionalRender>
     </div>
   );
-};
+});
 
 // /**
 //  * Collapse
@@ -221,4 +221,4 @@ const Collapse: FC<CollapseProps> = (props) => {
 //   fixedHeaderScrollBody: PropTypes.bool,
 // };
 
-export default memo(Collapse);
+export default Collapse;

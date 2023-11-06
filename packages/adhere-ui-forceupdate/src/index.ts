@@ -1,3 +1,3 @@
-import ForceUpdate from './forceupdate';
+import ForceUpdate from './ForceUpdate';
 
 export default ForceUpdate;

@@ -1,2 +1,2 @@
-import TableHeadSearch from"./tableheadsearch";export default TableHeadSearch;
+import TableHeadSearch from"./TableHeadSearch";export default TableHeadSearch;
 //# sourceMappingURL=index.js.map

@@ -43,16 +43,16 @@
  *
  * */
 
-import React, { FC,memo } from 'react';
+import React, {memo } from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import intl from '@baifendian/adhere-util-intl';
 
 import Collapse from './Collapse';
-import { FunctionProps } from './types';
+import type { FunctionProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-functionprops';
 
-const FunctionProps: FC<FunctionProps> = (props) => {
+const FunctionProps = memo<FunctionProps>((props) => {
   const { data = [], ...restProps } = props;
 
   return (
@@ -160,7 +160,7 @@ const FunctionProps: FC<FunctionProps> = (props) => {
       </div>
     </Collapse>
   );
-};
+});
 
 // /**
 //  * FunctionProps
@@ -437,4 +437,4 @@ const FunctionProps: FC<FunctionProps> = (props) => {
 //
 // FunctionProps.propTypes = FunctionPropsPropTypes;
 
-export default memo(FunctionProps);
+export default FunctionProps;

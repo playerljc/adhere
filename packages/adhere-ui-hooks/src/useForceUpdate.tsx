@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 
-export default () => {
+import type { UseForceUpdate } from './types';
+
+const useForceUpdate: UseForceUpdate = () => {
   const count = useRef(0);
   const state = useState(count.current);
 
@@ -8,3 +10,5 @@ export default () => {
     state[1](++count.current);
   };
 };
+
+export default useForceUpdate;

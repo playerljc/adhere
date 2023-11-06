@@ -14,7 +14,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 
-import { ListStandardProps } from '../../types';
+import type { ListStandardProps } from '../../types';
 import CommentList from '../List';
 
 const { VerticalFlexLayout } = FlexLayout;
@@ -28,7 +28,7 @@ const selectorPrefix = 'adhere-ui-comment-list-standard';
  * @constructor
  * @classdesc 上拉下拽
  */
-const ListStandard: FC<ListStandardProps> = (props) => {
+const ListStandard = memo<ListStandardProps>((props) => {
   const {
     limit = 10,
     dataKeys = {
@@ -51,7 +51,7 @@ const ListStandard: FC<ListStandardProps> = (props) => {
   });
   const callbackHandler = useRef<(params?: any) => void>();
   const status = useRef(ScrollLoad.NORMAL);
-  const mainRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement | null>(null);
 
   const [data, setData] = useState({
     [dataKeys.current]: 1,
@@ -202,6 +202,6 @@ const ListStandard: FC<ListStandardProps> = (props) => {
       }
     />
   );
-};
+});
 
-export default memo(ListStandard);
+export default ListStandard;

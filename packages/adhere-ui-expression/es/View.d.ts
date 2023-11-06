@@ -1,4 +1,13 @@
 import React from 'react';
 import type { ViewProps } from './types';
-declare const _default: React.NamedExoticComponent<ViewProps>;
-export default _default;
+/**
+ * View
+ * @param wrapClassName
+ * @param wrapStyle
+ * @param value
+ * @param ellipsisProps
+ * @return {JSX.Element}
+ * @constructor
+ */
+declare const View: React.NamedExoticComponent<ViewProps>;
+export default View;

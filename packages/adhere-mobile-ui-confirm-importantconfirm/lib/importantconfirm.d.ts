@@ -1,9 +1,3 @@
-import type { FC } from 'react';
-import { ImportantConfirmProps } from './types';
-/**
- * ImportantConform
- * @param props
- * @constructor
- */
-declare const ImportantConform: FC<ImportantConfirmProps>;
+import type { ImportantConfirmComponent } from './types';
+declare const ImportantConform: ImportantConfirmComponent;
 export default ImportantConform;

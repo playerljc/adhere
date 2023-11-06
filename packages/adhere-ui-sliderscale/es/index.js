@@ -1,2 +1,2 @@
-import SliderScale from"./sliderscale";export default SliderScale;
+import SliderScale from"./SliderScale";export default SliderScale;
 //# sourceMappingURL=index.js.map

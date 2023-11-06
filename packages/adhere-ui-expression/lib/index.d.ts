@@ -1,2 +1,2 @@
-import Expression from './expression';
+import Expression from './Expression';
 export default Expression;

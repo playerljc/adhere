@@ -1,2 +1,2 @@
-import ASync from"./async";import Suspense from"./suspense";import Sync from"./sync";Suspense.Sync=Sync,Suspense.ASync=ASync;export default Suspense;
+import SuspenseAsync from"./Async";import Suspense from"./Suspense";import SuspenseSync from"./Sync";Suspense.Sync=SuspenseSync,Suspense.ASync=SuspenseAsync;export default Suspense;
 //# sourceMappingURL=index.js.map

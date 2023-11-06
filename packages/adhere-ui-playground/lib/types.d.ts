@@ -1,5 +1,10 @@
-import { FC, ForwardRefExoticComponent, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import { NamedExoticComponent } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import CodeBoxSection from './PlayGroundPage/CodeBoxSection';
+import FunctionPropsSection from './PlayGroundPage/FunctionPropsSection';
+import PropsSection from './PlayGroundPage/PropsSection';
+import Section from './PlayGroundPage/Section';
+import TabPanel from './SimpleTabs/TabPanel';
 /**
  * CardProps
  */
@@ -164,7 +169,7 @@ export interface CodeTabPanelItemProps extends CodePanelProps {
     style?: CSSProperties;
 }
 export interface CodeTabPanelProps {
-    active: string;
+    active?: string;
     config?: CodeTabPanelItemProps[];
     onChange?: (activeKey: string) => void;
 }
@@ -211,9 +216,9 @@ export interface TabPanelProps {
     index?: number | string;
     children?: any;
 }
-export interface SimpleTabsFunction<P> extends NamedExoticComponent<P> {
-    TabPanel: FC<TabPanelProps>;
-}
+export type SimpleTabsComponent = NamedExoticComponent<SimpleTabsProps> & {
+    TabPanel: typeof TabPanel;
+};
 export interface SimpleTabsProps {
     activeKey?: string;
     className?: string;
@@ -236,12 +241,12 @@ export interface FunctionPropsSectionProps extends SectionProps {
 export interface PlayGroundPageContextValue {
     scrollEl?: HTMLElement | null;
 }
-export interface PlayGroundPageHOC<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
-    Section: FC<SectionProps>;
-    CodeBoxSection: FC<CodeBoxProps>;
-    PropsSection: FC<PropsSectionProps>;
-    FunctionPropsSection: FC<FunctionPropsSectionProps>;
-}
+export type PlayGroundPageComponent = NamedExoticComponent<PlayGroundPageProps> & {
+    Section: typeof Section;
+    CodeBoxSection: typeof CodeBoxSection;
+    PropsSection: typeof PropsSection;
+    FunctionPropsSection: typeof FunctionPropsSection;
+};
 export interface PlayGroundPageProps {
     className?: string;
     style?: CSSProperties;

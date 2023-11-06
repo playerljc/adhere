@@ -19,8 +19,8 @@ declare class SortableTable<RecordType extends object = any> extends React.Compo
         [x: string]: any;
         className: any;
         style: any;
-    }) => JSX.Element;
-    DraggableContainer: (containerProps: any) => JSX.Element;
+    }) => React.JSX.Element;
+    DraggableContainer: (containerProps: any) => React.JSX.Element;
     /**
      * 拖拽完成时更改dataSource
      */
@@ -28,6 +28,6 @@ declare class SortableTable<RecordType extends object = any> extends React.Compo
         oldIndex: any;
         newIndex: any;
     }) => void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SortableTable;

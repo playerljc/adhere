@@ -3,6 +3,7 @@ import AutoCompleteListPagingSelect from './AutoCompleteListPagingSelect';
 import AutoCompleteListSelect from './AutoCompleteListSelect';
 import CheckAllListSelect from './CheckAllListSelect';
 import List from './List';
+import ListPaging from './ListPaging';
 import ListPagingSelect from './ListPagingSelect';
 import ListSelect from './ListSelect';
 
@@ -12,5 +13,6 @@ List.AutoCompleteListSelect = AutoCompleteListSelect;
 List.ListSelect = ListSelect;
 List.CheckAllListSelect = CheckAllListSelect;
 List.ListPagingSelect = ListPagingSelect;
+List.ListPaging = ListPaging;
 
 export default List;

@@ -1,3 +1,3 @@
-import Revolving from './revolving';
+import Revolving from './Revolving';
 
 export default Revolving;

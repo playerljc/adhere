@@ -30,6 +30,14 @@ export type PagingProps = {
     onPagingShowSizeChange: PaginationProps['onShowSizeChange'];
     onPagingChange: PaginationProps['onChange'];
 };
+export type PagingWrapperProps<T> = {
+    loadData: (page: number, limit: number) => Promise<{
+        totalCount: number;
+        data: T[];
+    }>;
+    defaultPage?: number;
+    defaultLimit?: number;
+};
 export type CheckAllWrapperStyleProps = {
     checkAllWrapperClassName?: string;
     checkAllWrapperStyle?: CSSProperties;
@@ -109,28 +117,22 @@ export type CheckboxListProps = ListProps<any> & {
     options?: ListProps<any>['dataSource'];
 };
 export type CheckboxPagingListProps = CheckboxListProps & PagingProps;
-export type ListPagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & {
-    pagingProps: {
-        loadData: (page: number, limit: number) => Promise<{
-            totalCount: number;
-            data: T[];
-        }>;
-        defaultPage?: number;
-        defaultLimit?: number;
-    };
+export type ListPagingProps<T> = {
+    pagingProps: PagingWrapperProps<T>;
     listPagingProps: Omit<CheckboxPagingListProps, 'value' | 'onChange'> | Omit<RadioPagingListProps, 'value' | 'onChange'>;
+    value?: DropdownRenderSelectProps['value'];
+    onChange?: DropdownRenderSelectProps['onChange'];
+    mode?: DropdownRenderSelectProps['mode'];
 };
-export type TablePagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & {
-    pagingProps: {
-        loadData: (page: number, limit: number) => Promise<{
-            totalCount: number;
-            data: T[];
-        }>;
-        defaultPage?: number;
-        defaultLimit?: number;
-    };
+export type ListPagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
+export type TablePagingProps<T> = {
+    pagingProps: PagingWrapperProps<T>;
     tablePagingProps: Omit<CheckboxPagingTableProps, 'value' | 'onChange'> | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
+    value?: DropdownRenderSelectProps['value'];
+    onChange?: DropdownRenderSelectProps['onChange'];
+    mode?: DropdownRenderSelectProps['mode'];
 };
+export type TablePagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & Omit<TablePagingProps<T>, 'mode' | 'value' | 'onChange'>;
 export type RadioTableProps = Omit<TableProps<any>, 'onChange'> & {
     value?: SelectProps['value'];
     onChange?: SelectProps['onChange'];
@@ -446,6 +448,7 @@ export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> 
     ListSelect: FC<ListSelectProps>;
     CheckAllListSelect: FC<CheckAllListSelectProps>;
     ListPagingSelect: FC<ListPagingSelectProps<any>>;
+    ListPaging: FC<ListPagingProps<any>>;
 };
 export type RadioHOCComponent = ReturnType<typeof createFactory<RadioProps>> & {
     AutoCompleteRadioSelect: FC<AutoCompleteRadioSelectProps>;
@@ -464,6 +467,7 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
     AutoCompleteTableSelect: FC<AutoCompleteTableSelectProps>;
     TableSelect: FC<TableSelectProps>;
     TablePagingSelect: FC<TablePagingSelectProps<any>>;
+    TablePaging: FC<TablePagingProps<any>>;
 };
 export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
     AutoCompleteTagSelect: FC<AutoCompleteTagSelectProps>;

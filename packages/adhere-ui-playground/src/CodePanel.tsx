@@ -1,6 +1,6 @@
 import PlayGroundExt from 'component-playground';
 import PropTypes from 'prop-types';
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import { CodePanelProps } from './types';
 
@@ -11,7 +11,7 @@ const selectPrefix = 'adhere-ui-playground-code-panel';
  * @classdesc - 单一的代码片段
  * @constructor
  */
-const CodePanel: FC<CodePanelProps> = (props) => {
+const CodePanel = memo<CodePanelProps>((props) => {
   return (
     <div className={selectPrefix}>
       <PlayGroundExt
@@ -25,7 +25,7 @@ const CodePanel: FC<CodePanelProps> = (props) => {
       />
     </div>
   );
-};
+});
 
 export const CodePanelDefaultProps = {
   codeText: '',
@@ -37,8 +37,4 @@ export const CodePanelPropTypes = {
   theme: PropTypes.string,
 };
 
-// CodePanel.defaultProps = CodePanelDefaultProps;
-
-// CodePanel.propTypes = CodePanelPropTypes;
-
-export default memo<CodePanelProps>(CodePanel);
+export default CodePanel;

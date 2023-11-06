@@ -1,10 +1,3 @@
-import { FC } from 'react';
-import type { SystemSideTabsProps } from '../types';
-/**
- * SystemSideTabs
- * @param props
- * @return {JSX.Element}
- * @constructor
- */
-declare const SystemSideTabs: FC<SystemSideTabsProps>;
+import type { SystemSideTabsComponent } from '../types';
+declare const SystemSideTabs: SystemSideTabsComponent;
 export default SystemSideTabs;

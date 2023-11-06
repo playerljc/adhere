@@ -1,2 +1,2 @@
-import{forwardRef,useImperativeHandle}from"react";import Hooks from"@baifendian/adhere-ui-hooks";var useSetState=Hooks.useSetState,ForceUpdate=function(e,r){var e=e.children,t=useSetState(!0),n=t[0],o=t[1];return useImperativeHandle(r,function(){return{reMount:function(){return new Promise(function(e){return o(!1,function(){return o(!0,function(){return e()})})})}}}),n?e:null};export default forwardRef(ForceUpdate);
-//# sourceMappingURL=forceupdate.js.map
+import{forwardRef,useImperativeHandle}from"react";import Hooks from"@baifendian/adhere-ui-hooks";var useSetState=Hooks.useSetState,ForceUpdate=forwardRef(function(e,r){var e=e.children,t=useSetState(!0),n=t[0],o=t[1];return useImperativeHandle(r,function(){return{reMount:function(){return new Promise(function(e){return o(!1,function(){return o(!0,function(){return e()})})})}}}),n?e:null});export default ForceUpdate;
+//# sourceMappingURL=ForceUpdate.js.map

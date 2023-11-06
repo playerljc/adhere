@@ -1,2 +1,2 @@
-import StickupLayout from"./stickuplayout";export default StickupLayout;
+import StickupLayout from"./StickUpLayout";export default StickupLayout;
 //# sourceMappingURL=index.js.map

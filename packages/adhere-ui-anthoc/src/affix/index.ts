@@ -1,6 +1,3 @@
-import { Affix } from 'antd';
-import type { AffixProps } from 'antd';
+import Affix from './Affix';
 
-import { createFactory } from '../util';
-
-export default createFactory<AffixProps>(Affix, {});
+export default Affix;

@@ -11,7 +11,7 @@ import {
   OutCircleData,
   Points,
   RectangleData,
-  SelectType
+  SelectType,
 } from '../types';
 
 /**
@@ -278,7 +278,7 @@ export function getClipDataUrl({
 
 /**
  * sort
- * @param {Array<{ [key: string]: any; sort?: number }>} arr 
+ * @param {Array<{ [key: string]: any; sort?: number }>} arr
  * @returns {Array<any>}
  */
 export function sort(arr: Array<{ [key: string]: any; sort?: number }>): Array<any> {
@@ -298,5 +298,5 @@ export function sort(arr: Array<{ [key: string]: any; sort?: number }>): Array<a
     result.splice(t.sort as number, 0, t);
   });
 
-  return result.filter(t => !!t);
+  return result.filter((t) => !!t);
 }

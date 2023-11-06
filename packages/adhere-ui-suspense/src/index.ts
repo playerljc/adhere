@@ -1,8 +1,8 @@
-import ASync from './async';
-import Suspense from './suspense';
-import Sync from './sync';
+import SuspenseAsync from './Async';
+import Suspense from './Suspense';
+import SuspenseSync from './Sync';
 
-Suspense.Sync = Sync;
-Suspense.ASync = ASync;
+Suspense.Sync = SuspenseSync;
+Suspense.ASync = SuspenseAsync;
 
 export default Suspense;

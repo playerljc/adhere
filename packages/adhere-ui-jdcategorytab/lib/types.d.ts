@@ -1,14 +1,14 @@
-import type { CSSProperties, FC, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
-import type { StickupLayoutItemProps } from '@baifendian/adhere-ui-stickuplayout/lib/types';
+import type { CSSProperties, NamedExoticComponent } from 'react';
+import JdCategoryTabItem from './Item';
 export interface JdCategoryTabRefHandle {
     scrollTo: (key: string, time?: number, easing?: any) => void;
 }
 /**
  * JdCategoryTabHOCFunction
  */
-export interface JdCategoryTabHOCFunction<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
-    Item: FC<StickupLayoutItemProps>;
-}
+export type JdCategoryTabComponent = NamedExoticComponent<JdCategoryTabProps> & {
+    Item: typeof JdCategoryTabItem;
+};
 /**
  * JdCategoryTabProps
  * @interface JdCategoryTabProps

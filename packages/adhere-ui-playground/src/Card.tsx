@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
-import { CardProps } from './types';
+import type { CardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-playground-card';
 
-const Card: FC<CardProps> = (props) => {
+const Card = memo<CardProps>((props) => {
   const {
     className = '',
     style = {},
@@ -91,7 +91,7 @@ const Card: FC<CardProps> = (props) => {
       </ConditionalRender>
     </div>
   );
-};
+});
 
 // /**
 //  * Card
@@ -218,4 +218,4 @@ export const cardPropTypes = {
 
 // Card.propTypes = cardPropTypes;
 
-export default memo(Card);
+export default Card;

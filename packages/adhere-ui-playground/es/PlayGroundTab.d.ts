@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import APlayGround from './APlayGround';
 import { PlayGroundTabProps, PlayGroundTabState } from './types';
 /**
@@ -13,7 +13,7 @@ declare class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTa
      * renderCodeView - 代码展示视图
      * @return {*}
      */
-    protected renderCodeView(): JSX.Element;
+    protected renderCodeView(): React.JSX.Element;
     /**
      * getClipboardText
      */

@@ -1,3 +1,5 @@
+import type { NamedExoticComponent } from 'react';
+import { Context } from './ConfigProvider';
 /**
  * IntlType
  */
@@ -31,3 +33,6 @@ export interface ConfigProviderProps {
 export interface ConfigProviderContext {
     intl?: IntlType;
 }
+export type ConfigProviderComponent = NamedExoticComponent<ConfigProviderProps> & {
+    Context: typeof Context;
+};

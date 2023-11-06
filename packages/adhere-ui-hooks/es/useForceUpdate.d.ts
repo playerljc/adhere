@@ -1,2 +1,3 @@
-declare const _default: () => () => void;
-export default _default;
+import type { UseForceUpdate } from './types';
+declare const useForceUpdate: UseForceUpdate;
+export default useForceUpdate;

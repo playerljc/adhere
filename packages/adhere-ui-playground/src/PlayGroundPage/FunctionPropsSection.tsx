@@ -1,9 +1,9 @@
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import Space from '@baifendian/adhere-ui-space';
 
 import FunctionProps from '../FunctionProps';
-import { FunctionPropsSectionProps } from '../types';
+import type { FunctionPropsSectionProps } from '../types';
 import Section from './Section';
 
 /**
@@ -11,7 +11,7 @@ import Section from './Section';
  * @param props
  * @constructor
  */
-const FunctionPropsSection: FC<FunctionPropsSectionProps> = (props) => {
+const FunctionPropsSection = memo<FunctionPropsSectionProps>((props) => {
   const { title, extra, config = [] } = props;
 
   return (
@@ -23,7 +23,7 @@ const FunctionPropsSection: FC<FunctionPropsSectionProps> = (props) => {
       </Space.Group>
     </Section>
   );
-};
+});
 
 // FunctionPropsSection.defaultProps = {
 //   ...SectionDefaultProps,

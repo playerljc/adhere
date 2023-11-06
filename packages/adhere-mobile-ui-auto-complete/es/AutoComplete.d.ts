@@ -1,4 +1,21 @@
 import React from 'react';
-import { AutoCompleteProps } from './types';
-declare const _default: React.NamedExoticComponent<AutoCompleteProps>;
-export default _default;
+import type { AutoCompleteProps } from './types';
+/**
+ * AutoComplete
+ * @param className
+ * @param style
+ * @param searchBarProps
+ * @param checkListProps
+ * @param loadData
+ * @param rowKey
+ // * @param renderItem
+ * @param labelProp
+ * @param valueProp
+ * @param value
+ * @param onChange
+ * @param renderEmpty
+ * @param children
+ * @constructor
+ */
+declare const AutoComplete: React.NamedExoticComponent<AutoCompleteProps>;
+export default AutoComplete;

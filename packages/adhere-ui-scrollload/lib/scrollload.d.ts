@@ -1,3 +1,3 @@
-import type { ScrollLoadHOCFunction, ScrollLoadProps, ScrollLoadRefHandle } from './types';
-declare const ScrollLoadHOC: ScrollLoadHOCFunction<ScrollLoadRefHandle, ScrollLoadProps>;
-export default ScrollLoadHOC;
+import type { ScrollLoadComponent } from './types';
+declare const ScrollLoad: ScrollLoadComponent;
+export default ScrollLoad;

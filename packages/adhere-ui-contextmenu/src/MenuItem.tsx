@@ -1,16 +1,16 @@
 import classNames from 'classnames';
-import React, { FC, memo, useCallback, useContext } from 'react';
+import React, { memo, useCallback, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import { ProviderContext } from './ContextMenuContext';
 import SubMenu from './SubMenu';
-import { ContextMenuContext, MenuItemProps } from './types';
+import type { ContextMenuContext, MenuItemProps } from './types';
 
 const selectorPrefix = 'adhere-ui-context-menu-menu-item';
 
-const MenuItem: FC<MenuItemProps> = (props) => {
+const MenuItem = memo<MenuItemProps>((props) => {
   const {
     data: {
       separation,
@@ -96,6 +96,6 @@ const MenuItem: FC<MenuItemProps> = (props) => {
       )}
     </ConditionalRender>
   );
-};
+});
 
-export default memo(MenuItem);
+export default MenuItem;

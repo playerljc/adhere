@@ -1,3 +1,3 @@
-import { SplitLayoutFunction, SplitLayoutProps } from './types';
-declare const SplitLayoutWrap: SplitLayoutFunction<SplitLayoutProps>;
-export default SplitLayoutWrap;
+import type { SplitLayoutComponent } from './types';
+declare const SplitLayout: SplitLayoutComponent;
+export default SplitLayout;

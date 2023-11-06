@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 
-export default () => {
+import { UseFirst } from './types';
+
+const useFirst: UseFirst = () => {
   const isFirst = useRef(true);
 
   return [
@@ -10,3 +12,5 @@ export default () => {
     },
   ];
 };
+
+export default useFirst;

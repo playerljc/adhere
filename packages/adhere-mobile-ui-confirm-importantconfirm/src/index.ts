@@ -1,3 +1,3 @@
-import ImportantConform from './importantconfirm';
+import ImportantConform from './ImportantConfirm';
 
 export default ImportantConform;

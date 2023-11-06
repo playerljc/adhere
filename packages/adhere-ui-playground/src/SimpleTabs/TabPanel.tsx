@@ -1,12 +1,12 @@
 import classNames from 'classnames';
-import React, { FC, memo, useContext } from 'react';
+import React, { memo, useContext } from 'react';
 
 import { TabPanelProps } from '../types';
 import { TabContext } from './Context';
 
 const selectorPrefix = 'adhere-ui-playground-simple-tabs-panel';
 
-const TabPanel: FC<TabPanelProps> = ({ className = '', style, children, index = '' }) => {
+const TabPanel = memo<TabPanelProps>(({ className = '', style, children, index = '' }) => {
   const { activeKey } = useContext(TabContext);
 
   return (
@@ -19,18 +19,6 @@ const TabPanel: FC<TabPanelProps> = ({ className = '', style, children, index = 
       {children}
     </div>
   );
-};
+});
 
-// TabPanel.defaultProps = {
-//   title: '',
-//   index: '',
-//   className: '',
-// };
-//
-// TabPanel.propTypes = {
-//   title: PropTypes.node,
-//   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//   className: PropTypes.string,
-// };
-
-export default memo(TabPanel);
+export default TabPanel;

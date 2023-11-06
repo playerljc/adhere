@@ -1,2 +1,2 @@
-import FontSizeSetting from"./fontsizesetting";export default FontSizeSetting;
+import FontSizeSetting from"./FontSizeSetting";export default FontSizeSetting;
 //# sourceMappingURL=index.js.map

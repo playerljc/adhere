@@ -1,2 +1,2 @@
-import TableHeadSearch from './tableheadsearch';
+import TableHeadSearch from './TableHeadSearch';
 export default TableHeadSearch;

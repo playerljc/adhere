@@ -38,7 +38,7 @@ const TabBarNav: FC<SystemTabBarNavProps> = (props) => {
   );
 };
 
-const SystemTabBar: FC<SystemTabBarProps> = (props) => {
+const SystemTabBar = memo<SystemTabBarProps>((props) => {
   const {
     className = '',
     style = {},
@@ -74,6 +74,6 @@ const SystemTabBar: FC<SystemTabBarProps> = (props) => {
       }
     />
   );
-};
+});
 
-export default memo(SystemTabBar);
+export default SystemTabBar;

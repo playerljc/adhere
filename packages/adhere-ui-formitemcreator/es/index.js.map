@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FormItemCreator from './formitemcreator';\nexport default FormItemCreator;"],"names":["FormItemCreator"],"mappings":"OAAOA,oBAAqB,mCACbA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import FormItemCreator from './FormItemCreator';\nexport default FormItemCreator;"],"names":["FormItemCreator"],"mappings":"OAAOA,oBAAqB,mCACbA"}

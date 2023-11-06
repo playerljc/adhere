@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -16,7 +16,7 @@ const selectPrefix = 'adhere-ui-playground-code-box';
  * @classdesc - 代码组
  * @constructor
  */
-const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
+const CodeBoxPanel = memo<CodeBoxProps>((props) => {
   const { columnCount = 1, config = [], title, isShowExpandAllBtn = true } = props;
 
   const [activeAnchor, setAnchor] = useState('');
@@ -76,6 +76,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
   function renderPlayGroundMulti(columnIndex: number, index: number) {
     const { config } = props;
 
+    // @ts-ignore
     const { renderWrap, renderChildren, type, ...restProps } = config[index];
 
     const children = (
@@ -102,6 +103,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
    * @return JSX
    */
   function renderPlayGround(columnIndex: number, index: number) {
+    // @ts-ignore
     const { renderWrap, renderChildren, type, ...restProps } = config[index];
 
     const children = (
@@ -126,6 +128,7 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
    * @param index
    */
   function renderPlayGroundTab(columnIndex: number, index: number) {
+    // @ts-ignore
     const { renderWrap, renderChildren, type, ...restProps } = config[index];
 
     const children = (
@@ -231,48 +234,6 @@ const CodeBoxPanel: FC<CodeBoxProps> = (props) => {
       </div>
     </div>
   );
-};
+});
 
-// CodeBoxPanel.defaultProps = {
-//   title: '',
-//   extra: null,
-//   isShowExpandAllBtn: true,
-//   columnCount: 1,
-//   expandAll: false,
-//   config: [],
-// };
-
-// CodeBoxPanel.propTypes = {
-//   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-//   extra: PropTypes.node,
-//   isShowExpandAllBtn: PropTypes.bool,
-//   columnCount: PropTypes.number,
-//   expandAll: PropTypes.bool,
-//   config: PropTypes.arrayOf(
-//     PropTypes.oneOfType([
-//       {
-//         ...PlayGroundMultiPropTypes,
-//
-//         type: PropTypes.string,
-//         renderWrap: PropTypes.func,
-//         renderChildren: PropTypes.func,
-//       },
-//       {
-//         ...APlayGroundPropTypes,
-//
-//         type: PropTypes.string,
-//         renderWrap: PropTypes.func,
-//         renderChildren: PropTypes.func,
-//       },
-//       {
-//         ...PlayGroundTabPropTypes,
-//
-//         type: PropTypes.string,
-//         renderWrap: PropTypes.func,
-//         renderChildren: PropTypes.func,
-//       },
-//     ]),
-//   ),
-// };
-
-export default memo<CodeBoxProps>(CodeBoxPanel);
+export default CodeBoxPanel;

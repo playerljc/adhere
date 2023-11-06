@@ -1,2 +1,2 @@
-import IJdCategoryTabProps from"./jdcategorytab";export default IJdCategoryTabProps;
+import IJdCategoryTabProps from"./JdCategoryTab";export default IJdCategoryTabProps;
 //# sourceMappingURL=index.js.map

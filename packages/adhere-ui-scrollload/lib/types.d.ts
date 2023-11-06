@@ -1,10 +1,10 @@
-import { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import { NamedExoticComponent } from 'react';
 import type { CSSProperties } from 'react';
-export interface ScrollLoadHOCFunction<T, P> extends ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
+export type ScrollLoadComponent = NamedExoticComponent<ScrollLoadProps> & {
     EMPTY: string;
     ERROR: string;
     NORMAL: string;
-}
+};
 export interface ScrollLoadRefHandle {
     hideAll: () => void;
 }

@@ -1,7 +1,7 @@
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 
 import Node from '../../Components/Node';
-import { NodeProps } from '../../types';
+import type { NodeProps } from '../../types';
 
 /**
  * ReplyInfo
@@ -9,6 +9,6 @@ import { NodeProps } from '../../types';
  * @constructor
  * @classdesc 回复节点
  */
-const ReplyInfo: FC<NodeProps> = (props) => <Node {...props} isReply />;
+const ReplyInfo = memo<NodeProps>((props) => <Node {...props} isReply />);
 
-export default memo(ReplyInfo);
+export default ReplyInfo;

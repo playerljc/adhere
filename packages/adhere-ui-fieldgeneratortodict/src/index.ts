@@ -1,14 +1,16 @@
-import FormItemGeneratorToDict, {
+import FieldGeneratorToDict, {
   Components,
-  components as FormItemGeneratorToDictComponents,
   genDictComponentName,
   getDictComponent,
-} from './FormItemGeneratorToDict';
+  validatorMulti,
+  validatorNormal,
+} from './FieldGeneratorToDict';
 
 export default {
   Components,
   genDictComponentName,
   getDictComponent,
-  FormItemGeneratorToDict,
-  FormItemGeneratorToDictComponents,
+  validatorMulti,
+  validatorNormal,
+  FieldGeneratorToDict,
 };

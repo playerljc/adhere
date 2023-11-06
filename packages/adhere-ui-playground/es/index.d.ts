@@ -12,7 +12,7 @@ declare const _default: {
     PlayGroundTab: typeof PlayGroundTab;
     PlayGroundMulti: typeof PlayGroundMulti;
     PlayGroundTabMobile: typeof PlayGroundTabMobile;
-    PlayGroundPage: import("./types").PlayGroundPageHOC<HTMLDivElement, import("./types").PlayGroundPageProps>;
+    PlayGroundPage: import("./types").PlayGroundPageComponent;
     FunctionProps: import("react").NamedExoticComponent<import("./types").FunctionProps>;
     AnchorNavigation: import("react").NamedExoticComponent<import("./types").AnchorNavigationProps>;
     AnchorNavigationContext: import("react").Context<import("./types").AnchorNavigationContextValue>;

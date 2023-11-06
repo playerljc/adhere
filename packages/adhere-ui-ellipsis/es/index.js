@@ -1,2 +1,2 @@
-import Ellipsis from"./ellipsis";export default Ellipsis;
+import Ellipsis from"./Ellipsis";export default Ellipsis;
 //# sourceMappingURL=index.js.map

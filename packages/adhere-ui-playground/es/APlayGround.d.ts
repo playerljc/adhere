@@ -10,7 +10,7 @@ export declare const selectPrefix = "adhere-ui-playground";
 declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, S extends PlayGroundState = PlayGroundState> extends React.PureComponent<P, S> {
     protected isFirst: boolean;
     protected clipboardRef: React.RefObject<HTMLDivElement>;
-    protected actionConfig: (() => JSX.Element)[];
+    protected actionConfig: (() => React.JSX.Element)[];
     static defaultProps: PlayGroundProps;
     static propTypes: {
         id: any;
@@ -36,21 +36,21 @@ declare abstract class APlayGround<P extends PlayGroundProps = PlayGroundProps, 
     /**
      * renderAction
      */
-    protected renderAction(): JSX.Element[];
+    protected renderAction(): React.JSX.Element[];
     /**
      * renderClipboardAction
      */
-    protected renderClipboardAction(): JSX.Element;
+    protected renderClipboardAction(): React.JSX.Element;
     /**
      * renderExpandAction
      * @return {*}
      */
-    protected renderExpandAction(): JSX.Element;
+    protected renderExpandAction(): React.JSX.Element;
     /**
      * render
      * @return {*}
      */
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export declare const APlayGroundDefaultProps: PlayGroundProps;
 export declare const APlayGroundPropTypes: {

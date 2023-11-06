@@ -1,11 +1,12 @@
 import classNames from 'classnames';
-import React, { ForwardRefRenderFunction, forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import { ProviderContext } from './ContextMenuContext';
 import Menu from './Menu';
 import type {
   Config,
+  ContextMenuComponent,
   ContextMenuComponentProps,
   ContextMenuComponentRefHandle,
   MenuData,
@@ -14,13 +15,13 @@ import type {
 
 const selectorPrefix = 'adhere-ui-context-menu';
 
-const ContextMenuComponent: ForwardRefRenderFunction<
+const ContextMenuComponentFunction = forwardRef<
   ContextMenuComponentRefHandle,
   ContextMenuComponentProps
-> = (props, ref) => {
+>((props, ref) => {
   const { data = [], config, el } = props;
 
-  const menuIns = useRef<MenuRefHandle | null>(null);
+  const menuIns = useRef<MenuRefHandle>();
 
   function onClick(e) {
     e.stopPropagation();
@@ -72,21 +73,17 @@ const ContextMenuComponent: ForwardRefRenderFunction<
           data={data}
           className={config.className ?? ''}
           style={config.style ?? {}}
+          // @ts-ignore
           ref={menuIns}
         />
       </div>
     </ProviderContext.Provider>
   );
-};
-
-const ContextMenuComponentHOC = forwardRef<
-  ContextMenuComponentRefHandle,
-  ContextMenuComponentProps
->(ContextMenuComponent);
+});
 
 const openHandlers = new WeakMap<HTMLElement, Root>();
 
-const ContextMenu = {
+const ContextMenu: ContextMenuComponent = {
   /**
    * config
    * {
@@ -124,7 +121,7 @@ const ContextMenu = {
     );
 
     root.render(
-      <ContextMenuComponentHOC
+      <ContextMenuComponentFunction
         data={data}
         config={config}
         el={parentEl}

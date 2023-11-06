@@ -57,6 +57,6 @@ declare class TableList<RecordType extends object = any> extends React.PureCompo
      * 加载效果
      */
     private renderLoading;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default TableList;

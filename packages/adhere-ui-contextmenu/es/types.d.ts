@@ -46,3 +46,7 @@ export interface MenuData {
     separation?: boolean;
     children?: MenuData[];
 }
+export type ContextMenuComponent = {
+    open: (data: MenuData[], config: Config) => HTMLDivElement;
+    close: (el: HTMLDivElement) => void;
+};

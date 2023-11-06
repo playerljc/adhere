@@ -1,4 +1,4 @@
-import { FixedProps } from './types';
+import type { FixedProps } from './types';
 /**
  * useGrid
  * @description 是否使用了栅格系统

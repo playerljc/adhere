@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ScrollLoad from './scrollload';\nexport default ScrollLoad;\n"],"names":["ScrollLoad"],"mappings":"OAAOA,eAAgB,8BACRA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import ScrollLoad from './ScrollLoad';\nexport default ScrollLoad;\n"],"names":["ScrollLoad"],"mappings":"OAAOA,eAAgB,8BACRA"}

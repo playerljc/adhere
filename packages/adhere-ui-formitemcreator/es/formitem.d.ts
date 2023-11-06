@@ -11,7 +11,7 @@ declare const _default: {
     renderSearch: React.NamedExoticComponent<InputProps>;
     renderPassword: React.NamedExoticComponent<InputProps>;
     renderInputArea: React.NamedExoticComponent<TextAreaProps>;
-    renderInputNumber: React.NamedExoticComponent<InputNumberProps<import("@rc-component/mini-decimal").ValueType>>;
+    renderInputNumber: React.NamedExoticComponent<InputNumberProps<import("rc-input-number").ValueType>>;
     renderRadio: React.NamedExoticComponent<RadioGroupProps>;
     renderCheckbox: React.NamedExoticComponent<CheckboxProps | CheckboxGroupProps>;
     renderSelect: React.NamedExoticComponent<SelectProps<any, import("rc-select/lib/Select").DefaultOptionType> & {

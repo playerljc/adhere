@@ -1,4 +1,3 @@
-import type { FC } from 'react';
-import type { SystemTabsProps } from '../types';
-declare const SystemTabs: FC<SystemTabsProps>;
+import type { SystemTabsComponent } from '../types';
+declare const SystemTabs: SystemTabsComponent;
 export default SystemTabs;

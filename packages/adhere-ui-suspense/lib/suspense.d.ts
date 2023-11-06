@@ -1,4 +1,6 @@
 import React from 'react';
+import SuspenseAsync from './Async';
+import SuspenseSync from './Sync';
 import { ISuspense, SuspenseProps, SuspenseState } from './types';
 /**
  * Suspense
@@ -15,8 +17,8 @@ declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S exten
     isFirstLoading: boolean;
     static defaultProps: any;
     static propTypes: any;
-    static Sync: Function;
-    static ASync: Function;
+    static Sync: typeof SuspenseSync;
+    static ASync: typeof SuspenseAsync;
     /**
      * fetchData - 加载数据
      */
@@ -54,6 +56,6 @@ declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S exten
      * @return {React.Element|*}
      */
     private renderDispatch;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Suspense;

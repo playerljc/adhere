@@ -1,5 +1,8 @@
 import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
 
+import Label from './Label';
+import Value from './Value';
+
 export type DensityType = 'default' | 'middle' | 'small' | undefined;
 
 export type LayoutType = 'vertical' | 'horizontal';
@@ -113,14 +116,14 @@ export interface RenderDetail {
   }[];
 }
 
-export interface TableGridLayoutMemoWrap extends NamedExoticComponent {
+export type TableGridLayoutComponent = NamedExoticComponent<TableGridLayoutProps> & {
   propTypes: object;
   defaultProps: object;
-  Label: any;
-  Value: any;
+  Label: typeof Label;
+  Value: typeof Value;
   renderGridSearchFormGroup(
     data?: DataItem[],
     props?: Omit<TableGridLayoutProps, 'data'>,
   ): ReactNode;
   getRenderDetail(data: DataItem[], props: Omit<TableGridLayoutProps, 'data'>): RenderDetail;
-}
+};

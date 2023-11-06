@@ -1,9 +1,8 @@
 import { CapsuleTabs } from 'antd-mobile';
 import classNames from 'classnames';
-import React from 'react';
-import type { FC } from 'react';
+import React, { memo } from 'react';
 
-import type { SystemCapsuleTabsProps } from '../types';
+import type { SystemCapsuleTabsComponent, SystemCapsuleTabsProps } from '../types';
 
 const selectorPrefix = 'adhere-ui-tabs-capsule-tabs';
 
@@ -12,7 +11,7 @@ const selectorPrefix = 'adhere-ui-tabs-capsule-tabs';
  * @param props
  * @constructor
  */
-const SystemCapsuleTabs: FC<SystemCapsuleTabsProps> = (props) => {
+const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>((props) => {
   const { className = '', style = {}, innerClassName = '', innerStyle = {} } = props;
 
   return (
@@ -20,9 +19,10 @@ const SystemCapsuleTabs: FC<SystemCapsuleTabsProps> = (props) => {
       <CapsuleTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}} />
     </div>
   );
-};
+});
 
-// @ts-ignore
+const SystemCapsuleTabs = InternalSystemCapsuleTabs as SystemCapsuleTabsComponent;
+
 SystemCapsuleTabs.Tab = CapsuleTabs.Tab;
 
 export default SystemCapsuleTabs;

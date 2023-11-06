@@ -1,3 +1,3 @@
-import GlobalIndicator from './globalindicator';
+import GlobalIndicator from './GlobalIndicator';
 
 export default GlobalIndicator;

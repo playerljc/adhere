@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { FC, memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
@@ -16,7 +16,7 @@ const { TabPanel } = SimpleTabs;
  * @param props
  * @constructor
  */
-const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
+const CodeTabPanel = memo<CodeTabPanelProps>((props) => {
   const { config = [], onChange } = props;
 
   const [active, setActive] = useState(props.active);
@@ -51,7 +51,7 @@ const CodeTabPanel: FC<CodeTabPanelProps> = (props) => {
       </SimpleTabs>
     </div>
   );
-};
+});
 
 export const CodeTabPanelDefaultProps = {
   active: '',
@@ -76,4 +76,4 @@ export const CodeTabPanelPropTypes = {
 
 // CodeTabPanel.propTypes = CodeTabPanelPropTypes;
 
-export default memo<CodeTabPanelProps>(CodeTabPanel);
+export default CodeTabPanel;

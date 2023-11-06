@@ -1,5 +1,5 @@
 import { Spin } from 'antd';
-import React, { FC, memo, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 
 import {
   CaretDownOutlined,
@@ -22,7 +22,7 @@ const selectorPrefix = 'adhere-ui-comment';
  * @constructor
  * @classdesc 评论
  */
-const Comment: FC<CommentProps> = (props) => {
+const Comment = memo<CommentProps>((props) => {
   const {
     listProps,
     commentDataKeys = {
@@ -188,6 +188,6 @@ const Comment: FC<CommentProps> = (props) => {
       flexLayoutProps={flexLayoutProps}
     />
   );
-};
+});
 
-export default memo(Comment);
+export default Comment;

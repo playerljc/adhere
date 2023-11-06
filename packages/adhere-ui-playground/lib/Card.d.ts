@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { CardProps } from './types';
+import type { CardProps } from './types';
+declare const Card: React.NamedExoticComponent<CardProps>;
 export declare const cardPropTypes: {
     className: PropTypes.Requireable<string>;
     style: PropTypes.Requireable<object>;
@@ -18,5 +19,4 @@ export declare const cardPropTypes: {
         info: PropTypes.Requireable<NonNullable<PropTypes.ReactNodeLike>>;
     }>>;
 };
-declare const _default: React.NamedExoticComponent<CardProps>;
-export default _default;
+export default Card;

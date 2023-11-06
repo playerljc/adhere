@@ -1,4 +1,3 @@
-import React from 'react';
-import type { SignatureHandle, SignatureProps } from '../types';
-declare const SignatureHOC: React.MemoExoticComponent<React.ForwardRefExoticComponent<SignatureProps & React.RefAttributes<SignatureHandle>>>;
-export default SignatureHOC;
+import type { SignatureComponent } from '../types';
+declare const Signature: SignatureComponent;
+export default Signature;

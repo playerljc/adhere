@@ -1,7 +1,14 @@
+import { CapsuleTabs, JumboTabs } from 'antd-mobile';
 import type { SwiperProps } from 'antd-mobile/es/components/swiper/swiper';
 import type { TabBarItemProps } from 'antd-mobile/es/components/tab-bar/tab-bar';
 import type { TabProps, TabsProps } from 'antd-mobile/es/components/tabs/tabs';
+import type { FC, NamedExoticComponent } from 'react';
 import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
+import MobileCapsuleTabs from './CapsuleTabs';
+import MobileJumboTabs from './JumboTabs';
+import MobileSideTabs from './SideTabs';
+import MobileTabBar from './TabBar';
+import MobileTabs from './Tabs';
 export interface SystemCapsuleTabsProps {
     className?: string;
     style?: CSSProperties;
@@ -9,6 +16,9 @@ export interface SystemCapsuleTabsProps {
     innerStyle?: CSSProperties;
     children?: ReactElement[];
 }
+export type SystemCapsuleTabsComponent = NamedExoticComponent<SystemCapsuleTabsProps> & {
+    Tab: typeof CapsuleTabs.Tab;
+};
 export interface SystemJumboTabsProps {
     className?: string;
     style?: CSSProperties;
@@ -16,6 +26,9 @@ export interface SystemJumboTabsProps {
     innerStyle?: CSSProperties;
     children?: ReactElement[];
 }
+export type SystemJumboTabsComponent = NamedExoticComponent<SystemJumboTabsProps> & {
+    Tab: typeof JumboTabs.Tab;
+};
 export interface SystemSideTabsProps {
     className?: string;
     style?: CSSProperties;
@@ -24,6 +37,9 @@ export interface SystemSideTabsProps {
     onChange?: (params?: any) => void;
     children?: ReactElement[];
 }
+export type SystemSideTabsComponent = NamedExoticComponent<SystemSideTabsProps> & {
+    Tab: FC<SystemSideTabProps>;
+};
 export interface SystemSideTabProps {
     className?: string;
     style?: CSSProperties;
@@ -56,6 +72,9 @@ export interface SystemTabsProps extends TabsProps {
     swiperProps?: SwiperProps;
     children?: ReactElement[];
 }
+export type SystemTabsComponent = NamedExoticComponent<SystemTabsProps> & {
+    Tab: FC<SystemTabProps>;
+};
 export type SystemTabProps = TabProps;
 export interface SystemTabArrowMoreProps {
     data?: {
@@ -69,3 +88,10 @@ export interface SystemTabArrowMoreProps {
     onChange?: (key?: any) => void;
     wrapRef?: RefObject<HTMLElement>;
 }
+export type TabsComponent = {
+    CapsuleTabs: typeof MobileCapsuleTabs;
+    JumboTabs: typeof MobileJumboTabs;
+    SideTabs: typeof MobileSideTabs;
+    TabBar: typeof MobileTabBar;
+    Tabs: typeof MobileTabs;
+};

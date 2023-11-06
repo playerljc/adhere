@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SwipeOut from './swipeout';\nexport default SwipeOut;\n"],"names":["SwipeOut"],"mappings":"OAAOA,aAAc,4BACNA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import SwipeOut from './SwipeOut';\nexport default SwipeOut;\n"],"names":["SwipeOut"],"mappings":"OAAOA,aAAc,4BACNA"}

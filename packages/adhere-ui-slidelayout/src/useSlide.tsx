@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 
-import { createMask } from './slidelayout';
+import { createMask } from './SlideLayout';
 import type { OverlayProps } from './types';
 
 export default (

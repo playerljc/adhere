@@ -81,10 +81,7 @@ declare class Notification {
      */
     close(id: any): void;
 }
-/**
- * NotificationFactory
- */
-declare const _default: {
+declare const NotificationFactory: {
     /**
      * build
      * @param container
@@ -93,4 +90,7 @@ declare const _default: {
      */
     build(container: HTMLElement, config: Config): Notification;
 };
-export default _default;
+/**
+ * NotificationFactory
+ */
+export default NotificationFactory;

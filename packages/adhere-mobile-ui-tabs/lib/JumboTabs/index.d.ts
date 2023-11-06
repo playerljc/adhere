@@ -1,9 +1,3 @@
-import type { FC } from 'react';
-import type { SystemJumboTabsProps } from '../types';
-/**
- * SystemJumboTabs
- * @param props
- * @constructor
- */
-declare const SystemJumboTabs: FC<SystemJumboTabsProps>;
+import type { SystemJumboTabsComponent } from '../types';
+declare const SystemJumboTabs: SystemJumboTabsComponent;
 export default SystemJumboTabs;

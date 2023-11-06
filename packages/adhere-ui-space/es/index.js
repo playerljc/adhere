@@ -1,2 +1,2 @@
-import Space from"./space";export default Space;
+import Space from"./Space";export default Space;
 //# sourceMappingURL=index.js.map

@@ -1,6 +1,9 @@
-import { openErrorDialog, openErrorMessage } from './errorprompt';
+import { openErrorDialog, openErrorMessage } from './ErrorPrompt';
+import type { ErrorPromptComponent } from './types';
 
-export default {
+const ErrorPrompt: ErrorPromptComponent = {
   openErrorMessage,
   openErrorDialog,
 };
+
+export default ErrorPrompt;

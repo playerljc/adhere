@@ -1,6 +1,5 @@
-/// <reference types="react" />
-import PropTypes from 'prop-types';
-import { PermissionFunction, PermissionProps } from './types';
+import type { FC } from 'react';
+import type { PermissionFunction, PermissionProps } from './types';
 /**
  * setPermission - 设置拥有的所有权限
  * @param {Array<String>} permission
@@ -26,21 +25,7 @@ export declare const checkPermission: (allPermission: any, currentPermissions: a
  * @param {String | ReactElement} noMatch 没有权限是想要提示的部分
  * @return {String | ReactElement}
  */
-export declare const Permission: {
-    ({ allPermission, permissions, children, noMatch, }: PermissionProps): JSX.Element;
-    defaultProps: {
-        allPermission: undefined;
-        permissions: string;
-        noMatch: null;
-        children: null;
-    };
-    propTypes: {
-        allPermission: PropTypes.Requireable<any[]>;
-        permissions: PropTypes.Requireable<NonNullable<string | any[] | null | undefined>>;
-        noMatch: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-        children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
-    };
-};
+export declare const Permission: FC<PermissionProps>;
 /**
  * PermissionFun - 函数方式实现
  * @param allPermission

@@ -1,9 +1,8 @@
 import { JumboTabs } from 'antd-mobile';
 import classNames from 'classnames';
-import React from 'react';
-import type { FC } from 'react';
+import React, { memo } from 'react';
 
-import type { SystemJumboTabsProps } from '../types';
+import type { SystemJumboTabsComponent, SystemJumboTabsProps } from '../types';
 
 const selectorPrefix = 'adhere-ui-tabs-jumbo-tabs';
 
@@ -12,7 +11,7 @@ const selectorPrefix = 'adhere-ui-tabs-jumbo-tabs';
  * @param props
  * @constructor
  */
-const SystemJumboTabs: FC<SystemJumboTabsProps> = (props) => {
+const InternalSystemJumboTabs = memo<SystemJumboTabsProps>((props) => {
   const { className = '', style = {}, innerClassName = '', innerStyle = {} } = props;
 
   return (
@@ -20,9 +19,10 @@ const SystemJumboTabs: FC<SystemJumboTabsProps> = (props) => {
       <JumboTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}} />
     </div>
   );
-};
+});
 
-// @ts-ignore
+const SystemJumboTabs = InternalSystemJumboTabs as SystemJumboTabsComponent;
+
 SystemJumboTabs.Tab = JumboTabs.Tab;
 
 export default SystemJumboTabs;

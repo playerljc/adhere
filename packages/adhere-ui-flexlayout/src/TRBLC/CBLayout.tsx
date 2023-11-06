@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
+import React, { forwardRef, memo, useMemo } from 'react';
 
-import Auto from '../auto';
-import Fixed from '../fixed';
-import FlexLayout, { selectorPrefix } from '../flexlayout';
+import Auto from '../Auto';
+import Fixed from '../Fixed';
+import FlexLayout, { selectorPrefix } from '../FlexLayout';
 import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
@@ -20,43 +20,47 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param ref
  * @constructor
  */
-const CBLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (
-  { wrapClassName, wrapStyle, autoWrapProps, autoInnerProps, bProps, bSplit, cProps, ...props },
-  ref,
-) => {
-  // @ts-ignore
-  const BProps = omit<TBLRProps, string>(bProps, ['children']);
-  // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['children']);
+const CBLayout = memo<TBLRCLayoutProps>(
+  forwardRef<any, TBLRCLayoutProps>(
+    (
+      { wrapClassName, wrapStyle, autoWrapProps, autoInnerProps, bProps, bSplit, cProps, ...props },
+      ref,
+    ) => {
+      // @ts-ignore
+      const BProps = omit<TBLRProps, string>(bProps, ['children']);
+      // @ts-ignore
+      const CProps = omit<CenterProps, string>(cProps, ['children']);
 
-  const classList = useMemo(
-    () =>
-      classNames(
-        `${selectorPrefix}-trblc`,
-        {
-          [`${selectorPrefix}-trblc-no-autofix`]:
-            cProps && 'autoFixed' in cProps && !cProps.autoFixed,
-        },
-        wrapClassName ?? '',
-      ),
-    [cProps],
-  );
+      const classList = useMemo(
+        () =>
+          classNames(
+            `${selectorPrefix}-trblc`,
+            {
+              [`${selectorPrefix}-trblc-no-autofix`]:
+                cProps && 'autoFixed' in cProps && !cProps.autoFixed,
+            },
+            wrapClassName ?? '',
+          ),
+        [cProps],
+      );
 
-  return (
-    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
-      <FlexLayout
-        {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-cb-layout`, props?.className ?? '')}
-        direction="vertical"
-      >
-        <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
+      return (
+        <div ref={ref} className={classList} style={wrapStyle ?? {}}>
+          <FlexLayout
+            {...(props ?? {})}
+            className={classNames(`${selectorPrefix}-cb-layout`, props?.className ?? '')}
+            direction="vertical"
+          >
+            <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
 
-        {bSplit}
+            {bSplit}
 
-        <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
-      </FlexLayout>
-    </div>
-  );
-};
+            <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
+          </FlexLayout>
+        </div>
+      );
+    },
+  ),
+);
 
-export default memo(forwardRef<any, TBLRCLayoutProps>(CBLayout));
+export default CBLayout;

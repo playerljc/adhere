@@ -1,3 +1,3 @@
-import { RevolvingHOCFunction, RevolvingProps, RevolvingRefHandle } from './types';
-declare const RevolvingHOC: RevolvingHOCFunction<RevolvingRefHandle, RevolvingProps>;
-export default RevolvingHOC;
+import type { RevolvingComponent } from './types';
+declare const Revolving: RevolvingComponent;
+export default Revolving;

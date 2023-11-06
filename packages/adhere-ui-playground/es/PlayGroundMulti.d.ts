@@ -25,11 +25,11 @@ declare class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGrou
      * @param index
      * <CodePanel {...config} />
      */
-    protected renderCodePanelView(config: any, index: any): JSX.Element;
+    protected renderCodePanelView(config: any, index: any): React.JSX.Element;
     /**
      * renderCodeView
      */
-    protected renderCodeView(): JSX.Element;
+    protected renderCodeView(): React.JSX.Element;
 }
 export declare const PlayGroundMultiDefaultProps: PlayGroundMultiProps;
 export declare const PlayGroundMultiPropTypes: {

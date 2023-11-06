@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
@@ -8,7 +8,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import ReplyInfo from '../../Reply/Info';
 import ReplySubmit from '../../Reply/Submit';
-import { NodeProps } from '../../types';
+import type { NodeProps } from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-node';
 
@@ -18,7 +18,7 @@ const selectorPrefix = 'adhere-ui-comment-node';
  * @constructor
  * @classdesc 节点(评论 | 回复)
  */
-const Node: FC<NodeProps> = (props) => {
+const Node = memo<NodeProps>((props) => {
   const {
     isReply = false,
     dataKeys = {
@@ -320,7 +320,9 @@ const Node: FC<NodeProps> = (props) => {
   return (
     <FlexLayout
       direction="horizontal"
-      className={classNames(selectorPrefix, isReply ? `${selectorPrefix}-reply` : null)}
+      className={classNames(selectorPrefix, {
+        [`${selectorPrefix}-reply`]: isReply,
+      })}
     >
       <FlexLayout.Fixed className={`${selectorPrefix}-avatar-wrap`}>
         {renderAvatar?.({ ...data })}
@@ -386,6 +388,6 @@ const Node: FC<NodeProps> = (props) => {
       </FlexLayout.Auto>
     </FlexLayout>
   );
-};
+});
 
-export default memo(Node);
+export default Node;

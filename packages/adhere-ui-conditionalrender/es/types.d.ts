@@ -1,4 +1,4 @@
-import type { FC, FunctionComponent } from 'react';
+import type { FC, NamedExoticComponent } from 'react';
 /**
  * ConditionalRenderProps
  * @interface ConditionalRenderProps
@@ -8,13 +8,13 @@ export interface ConditionalRenderProps {
     noMatch?: any;
     children?: any;
 }
-export interface ConditionalRenderFunction<P> extends FunctionComponent<P> {
+export type ConditionalRenderComponent = NamedExoticComponent<ConditionalRenderProps> & {
     Show: FC<ConditionalRenderShowProps>;
     Visibility: FC<ConditionalRenderShowProps>;
     conditionalRender: ConditionalRenderFunctionStatic;
     conditionalArr: ConditionalRenderArrayFunctionStatic;
     conditionalNotEmptyArr: ConditionalNotEmptyArrFunctionStatic;
-}
+};
 export interface ConditionalRenderFunctionStatic {
     (params: {
         conditional: boolean;

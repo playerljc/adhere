@@ -1,2 +1,2 @@
-import CascadeCompared from"./cascadecompared";export default CascadeCompared;
+import CascadeCompared from"./CascadeCompared";export default CascadeCompared;
 //# sourceMappingURL=index.js.map

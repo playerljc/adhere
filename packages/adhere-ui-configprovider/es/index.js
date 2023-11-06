@@ -1,2 +1,2 @@
-import ConfigProvider from"./configprovider";export default ConfigProvider;
+import ConfigProvider from"./ConfigProvider";export default ConfigProvider;
 //# sourceMappingURL=index.js.map

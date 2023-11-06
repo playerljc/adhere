@@ -1,2 +1,2 @@
-import ConfigProvider from './configprovider';
+import ConfigProvider from './ConfigProvider';
 export default ConfigProvider;

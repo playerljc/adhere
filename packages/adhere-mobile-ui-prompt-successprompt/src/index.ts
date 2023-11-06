@@ -1,6 +1,9 @@
-import { openSuccessDialog, openSuccessMessage } from './successprompt';
+import { openSuccessDialog, openSuccessMessage } from './SuccessPrompt';
+import type { SuccessDialogComponent } from './types';
 
-export default {
+const SuccessDialog: SuccessDialogComponent = {
   openSuccessMessage,
   openSuccessDialog,
 };
+
+export default SuccessDialog;

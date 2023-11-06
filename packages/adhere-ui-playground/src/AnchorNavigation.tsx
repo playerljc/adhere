@@ -1,10 +1,10 @@
-import React, { FC, memo, useContext, useEffect, useRef, useState } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Util from '@baifendian/adhere-util';
 
 import { AnchorNavigationContext } from './AnchorNavigationContext';
-import { AnchorNavigationProps } from './types';
+import type { AnchorNavigationProps } from './types';
 
 const selectPrefix = 'adhere-ui-playground-anchor-navigation';
 
@@ -13,7 +13,7 @@ const selectPrefix = 'adhere-ui-playground-anchor-navigation';
  * @classdesc 带有锚点导航的面板
  * @constructor
  */
-const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
+const AnchorNavigation = memo<AnchorNavigationProps>((props) => {
   const {
     anchors = [],
     anchorPosition = {
@@ -25,7 +25,7 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
 
   const [activeAnchor, setActiveAnchor] = useState<string>(props.activeAnchor ?? '');
 
-  const anchorRef = useRef<HTMLUListElement>(null);
+  const anchorRef = useRef<HTMLUListElement | null>(null);
   const anchorDimensionIndex = useRef<
     {
       anchor: string;
@@ -186,29 +186,6 @@ const AnchorNavigation: FC<AnchorNavigationProps> = (props) => {
       </ConditionalRender>
     </div>
   );
-};
+});
 
-// AnchorNavigation.defaultProps = {
-//   activeAnchor: '',
-//   anchors: [],
-//   anchorPosition: {
-//     top: 77,
-//     width: 120,
-//   },
-// };
-//
-// AnchorNavigation.propTypes = {
-//   activeAnchor: PropTypes.string,
-//   anchors: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-//       anchor: PropTypes.string,
-//     }),
-//   ),
-//   anchorPosition: PropTypes.shape({
-//     top: PropTypes.number,
-//     width: PropTypes.number,
-//   }),
-// };
-
-export default memo(AnchorNavigation);
+export default AnchorNavigation;

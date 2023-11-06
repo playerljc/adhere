@@ -1,10 +1,10 @@
 import { SideBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { FC, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 
-import type { SystemSideTabsProps } from '../types';
+import type { SystemSideTabsComponent, SystemSideTabsProps } from '../types';
 import Tab from './tab';
 
 const selectorPrefix = 'adhere-ui-tabs-side-tabs';
@@ -17,7 +17,7 @@ const { useSetState } = Hooks;
  * @return {JSX.Element}
  * @constructor
  */
-const SystemSideTabs: FC<SystemSideTabsProps> = (props) => {
+const InternalSystemSideTabs = memo<SystemSideTabsProps>((props) => {
   const { className = '', style = {}, children, defaultActiveKey, onChange } = props;
 
   const [activeKey, setActiveKey] = useSetState(props.defaultActiveKey ?? props.activeKey ?? '');
@@ -67,9 +67,10 @@ const SystemSideTabs: FC<SystemSideTabsProps> = (props) => {
       <div className={`${selectorPrefix}-auto`}>{renderBody()}</div>
     </div>
   );
-};
+});
 
-// @ts-ignore
+const SystemSideTabs = InternalSystemSideTabs as SystemSideTabsComponent;
+
 SystemSideTabs.Tab = Tab;
 
 export default SystemSideTabs;

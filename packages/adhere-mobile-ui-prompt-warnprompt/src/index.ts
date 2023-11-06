@@ -1,6 +1,9 @@
-import { openWarnDialog, openWarnMessage } from './warnprompt';
+import { openWarnDialog, openWarnMessage } from './WarnPrompt';
+import type { WarnPromptComponent } from './types';
 
-export default {
+const WarnPrompt: WarnPromptComponent = {
   openWarnMessage,
   openWarnDialog,
 };
+
+export default WarnPrompt;

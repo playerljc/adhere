@@ -1,2 +1,2 @@
-import ConditionalRender from"./conditionalrender";export default ConditionalRender;
+import ConditionalRender from"./ConditionalRender";export default ConditionalRender;
 //# sourceMappingURL=index.js.map

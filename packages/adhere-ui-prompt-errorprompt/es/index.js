@@ -1,2 +1,2 @@
-import{openErrorDialog,openErrorMessage}from"./errorprompt";export default{openErrorDialog:openErrorDialog,openErrorMessage:openErrorMessage};
+import{openErrorDialog,openErrorMessage}from"./ErrorPrompt";export default{openErrorDialog:openErrorDialog,openErrorMessage:openErrorMessage};
 //# sourceMappingURL=index.js.map

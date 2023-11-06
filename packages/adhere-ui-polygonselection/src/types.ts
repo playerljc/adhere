@@ -1,11 +1,13 @@
 import type { ModalProps } from 'antd/lib/modal/interface';
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, NamedExoticComponent, ReactNode } from 'react';
 
 import type {
   CenterProps,
   TBLRCLayoutProps,
   TBLRProps,
 } from '@baifendian/adhere-ui-flexlayout/es/types';
+
+import CroppingCore from './cropping/CroppingCore';
 
 /**
  * Action的状态
@@ -403,3 +405,7 @@ export interface CroppingCoreProps {
 export interface CroppingCoreHandle {
   save?: () => string;
 }
+
+export type CroppingComponent = NamedExoticComponent<CroppingProps> & {
+  CroppingCore: typeof CroppingCore;
+};

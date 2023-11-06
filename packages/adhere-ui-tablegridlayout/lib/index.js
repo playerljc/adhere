@@ -1,2 +1,2 @@
-"use strict";var __importDefault=this&&this.__importDefault||function(t){return t&&t.__esModule?t:{default:t}},tablegridlayout_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./tablegridlayout")));exports.default=tablegridlayout_1.default;
+"use strict";var __importDefault=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},TableGridLayout_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./TableGridLayout")));exports.default=TableGridLayout_1.default;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var warnprompt_1=require("./warnprompt");exports.default={openWarnMessage:warnprompt_1.openWarnMessage,openWarnDialog:warnprompt_1.openWarnDialog};
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var WarnPrompt_1=require("./WarnPrompt"),WarnPrompt={openWarnMessage:WarnPrompt_1.openWarnMessage,openWarnDialog:WarnPrompt_1.openWarnDialog};exports.default=WarnPrompt;
 //# sourceMappingURL=index.js.map

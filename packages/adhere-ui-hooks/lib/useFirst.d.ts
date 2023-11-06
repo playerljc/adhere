@@ -1,2 +1,3 @@
-declare const _default: () => (boolean | ((first: any) => void))[];
-export default _default;
+import { UseFirst } from './types';
+declare const useFirst: UseFirst;
+export default useFirst;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Suspense from './suspense';
+import Suspense from './Suspense';
 import { SuspenseASyncProps, SuspenseASyncState } from './types';
 /**
  * SuspenseAsync

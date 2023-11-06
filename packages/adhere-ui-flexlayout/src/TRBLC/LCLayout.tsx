@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
+import React, { forwardRef, memo, useMemo } from 'react';
 
-import Auto from '../auto';
-import Fixed from '../fixed';
-import FlexLayout, { selectorPrefix } from '../flexlayout';
-import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
+import Auto from '../Auto';
+import Fixed from '../Fixed';
+import FlexLayout, { selectorPrefix } from '../FlexLayout';
+import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
  * LCLayout
@@ -13,51 +13,53 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param _props
  * @param ref
  */
-const LCLayout: ForwardRefRenderFunction<any, TBLRCLayoutProps> = (_props, ref) => {
-  const {
-    wrapClassName,
-    wrapStyle,
-    autoWrapProps,
-    autoInnerProps,
-    lProps,
-    lSplit,
-    cProps,
-    ...props
-  } = _props;
+const LCLayout = memo<TBLRCLayoutProps>(
+  forwardRef<any, TBLRCLayoutProps>((_props, ref) => {
+    const {
+      wrapClassName,
+      wrapStyle,
+      autoWrapProps,
+      autoInnerProps,
+      lProps,
+      lSplit,
+      cProps,
+      ...props
+    } = _props;
 
-  // @ts-ignore
-  const LProps = omit<TBLRProps, string>(lProps, ['children']);
-  // @ts-ignore
-  const CProps = omit<CenterProps, string>(cProps, ['children']);
+    // @ts-ignore
+    const LProps = omit<TBLRProps, string>(lProps, ['children']);
+    // @ts-ignore
+    const CProps = omit<CenterProps, string>(cProps, ['children']);
 
-  const classList = useMemo(
-    () =>
-      classNames(
-        `${selectorPrefix}-trblc`,
-        {
-          [`${selectorPrefix}-trblc-no-autofix`]:
-            cProps && 'autoFixed' in cProps && !cProps.autoFixed,
-        },
-        wrapClassName ?? '',
-      ),
-    [cProps],
-  );
+    const classList = useMemo(
+      () =>
+        classNames(
+          `${selectorPrefix}-trblc`,
+          {
+            [`${selectorPrefix}-trblc-no-autofix`]:
+              cProps && 'autoFixed' in cProps && !cProps.autoFixed,
+          },
+          wrapClassName ?? '',
+        ),
+      [cProps],
+    );
 
-  return (
-    <div ref={ref} className={classList} style={wrapStyle ?? {}}>
-      <FlexLayout
-        {...(props ?? {})}
-        className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
-        direction="horizontal"
-      >
-        <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+    return (
+      <div ref={ref} className={classList} style={wrapStyle ?? {}}>
+        <FlexLayout
+          {...(props ?? {})}
+          className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
+          direction="horizontal"
+        >
+          <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
 
-        {lSplit}
+          {lSplit}
 
-        <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
-      </FlexLayout>
-    </div>
-  );
-};
+          <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
+        </FlexLayout>
+      </div>
+    );
+  }),
+);
 
-export default memo(forwardRef<any, TBLRCLayoutProps>(LCLayout));
+export default LCLayout;

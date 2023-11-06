@@ -1,4 +1,21 @@
 import React from 'react';
-import { TBLRCLayoutProps } from '../types';
-declare const _default: React.MemoExoticComponent<React.ForwardRefExoticComponent<TBLRCLayoutProps & React.RefAttributes<any>>>;
-export default _default;
+import type { TBLRCLayoutProps } from '../types';
+/**
+ * TLRCLayout
+ * @param wrapClassName
+ * @param wrapStyle
+ * @param tProps
+ * @param tSplit
+ * @param lProps
+ * @param lSplit
+ * @param rProps
+ * @param cProps
+ * @param autoWrapProps
+ * @param rSplit
+ * @param autoInnerProps
+ * @param props
+ * @param ref
+ * @constructor
+ */
+declare const TLRCLayout: React.NamedExoticComponent<TBLRCLayoutProps>;
+export default TLRCLayout;

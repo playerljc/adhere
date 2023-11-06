@@ -1,5 +1,5 @@
 import { Button, Input, Popover } from 'antd';
-import React, { FC, memo, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 import Intl from '@baifendian/adhere-util-intl';
@@ -20,7 +20,7 @@ import uk from '@emoji-mart/data/i18n/uk.json';
 import zh from '@emoji-mart/data/i18n/zh.json';
 import Picker from '@emoji-mart/react';
 
-import { ReplyProps } from '../../types';
+import type { ReplyProps } from '../../types';
 import EmojiIcon from './emoji';
 
 const { TextArea } = Input;
@@ -52,15 +52,15 @@ const LOCAL_MAP = new Map<string, any>([
  * @constructor
  * @classdesc 回复
  */
-const Reply: FC<ReplyProps> = (props) => {
+const Reply = memo<ReplyProps>((props) => {
   const { local = 'zh', emojiPickerProps = {}, onResult, onCancel } = props;
 
   const [value, setValue] = useSetState<string>('');
 
   // 回复内容的textarea
-  const textAreaRef = useRef<HTMLDivElement>(null);
+  const textAreaRef = useRef<HTMLDivElement | null>(null);
 
-  const emojiWrapRef = useRef<HTMLDivElement>(null);
+  const emojiWrapRef = useRef<HTMLDivElement | null>(null);
 
   const [emojiIconWrapVisible, setEmojiIconWrapVisible] = useState(false);
 
@@ -176,6 +176,6 @@ const Reply: FC<ReplyProps> = (props) => {
       </div>
     </div>
   );
-};
+});
 
-export default memo(Reply);
+export default Reply;

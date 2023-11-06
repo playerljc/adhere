@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 
-export default (value) => {
+import type { UsePrevious } from './types';
+
+const usePrevious: UsePrevious = (value) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -9,3 +11,5 @@ export default (value) => {
 
   return ref.current;
 };
+
+export default usePrevious;

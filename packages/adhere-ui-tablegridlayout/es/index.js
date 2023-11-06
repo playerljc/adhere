@@ -1,2 +1,2 @@
-import TableGridLayout from"./tablegridlayout";export default TableGridLayout;
+import TableGridLayout from"./TableGridLayout";export default TableGridLayout;
 //# sourceMappingURL=index.js.map

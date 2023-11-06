@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import APlayGround from './APlayGround';
 import { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
 /**
@@ -12,12 +12,12 @@ declare class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, 
     /**
      * renderAction
      */
-    protected renderAction(): JSX.Element[];
+    protected renderAction(): React.JSX.Element[];
     /**
      * renderCodeView - 代码展示视图
      * @return {*}
      */
-    protected renderCodeView(): JSX.Element;
+    protected renderCodeView(): React.JSX.Element;
     /**
      * getClipboardText
      */
@@ -26,7 +26,7 @@ declare class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, 
      * render
      * @return {*}
      */
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export declare const PlayGroundTabDefaultProps: PlayGroundTabMobileProps;
 export declare const PlayGroundTabPropTypes: {

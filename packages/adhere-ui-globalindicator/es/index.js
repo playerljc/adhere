@@ -1,2 +1,2 @@
-import GlobalIndicator from"./globalindicator";export default GlobalIndicator;
+import GlobalIndicator from"./GlobalIndicator";export default GlobalIndicator;
 //# sourceMappingURL=index.js.map

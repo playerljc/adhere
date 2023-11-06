@@ -1,0 +1,1 @@
+{"version":3,"file":"type.js","sources":["type.js"],"sourcesContent":["\"use strict\";\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});"],"names":["Object","defineProperty","exports","value"],"mappings":"AAAA,aAEAA,OAAOC,eAAeC,QAAS,aAAc,CAC3CC,MAAO,CAAA,CACT,CAAC"}

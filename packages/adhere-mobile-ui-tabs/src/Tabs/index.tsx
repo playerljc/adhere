@@ -1,13 +1,12 @@
 import { Swiper, Tabs } from 'antd-mobile';
 import type { SwiperRef } from 'antd-mobile/es/components/swiper/swiper';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
-import type { FC } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
 
-import type { SystemTabsProps } from '../types';
+import type { SystemTabsComponent, SystemTabsProps } from '../types';
 import ArrowMore from './arrowMore';
 import Tab from './tab';
 
@@ -15,7 +14,7 @@ const { useForceUpdate } = Hooks;
 
 const selectorPrefix = 'adhere-ui-tabs';
 
-const SystemTabs: FC<SystemTabsProps> = (props) => {
+const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   const {
     swiper = false,
     showArrowMore = true,
@@ -28,9 +27,9 @@ const SystemTabs: FC<SystemTabsProps> = (props) => {
     ...restProps
   } = props;
 
-  const swiperRef = useRef<SwiperRef>(null);
+  const swiperRef = useRef<SwiperRef | null>(null);
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   const childrenEffectFirst = useRef(false);
 
@@ -165,9 +164,10 @@ const SystemTabs: FC<SystemTabsProps> = (props) => {
       </ConditionalRender>
     </div>
   );
-};
+});
 
-// @ts-ignore
+const SystemTabs = InternalSystemTabs as SystemTabsComponent;
+
 SystemTabs.Tab = Tab;
 
 export default SystemTabs;

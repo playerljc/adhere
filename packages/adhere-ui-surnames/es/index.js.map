@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Surnames from './surnames';\nexport default Surnames;\n"],"names":["Surnames"],"mappings":"OAAOA,aAAc,4BACNA"}
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import Surnames from './Surnames';\nexport default Surnames;\n"],"names":["Surnames"],"mappings":"OAAOA,aAAc,4BACNA"}

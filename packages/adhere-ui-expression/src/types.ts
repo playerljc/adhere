@@ -1,3 +1,4 @@
+import { FC, ForwardRefRenderFunction, NamedExoticComponent } from 'react';
 import type { CSSProperties } from 'react';
 
 import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
@@ -111,3 +112,14 @@ export interface ViewProps extends EllipsisProps {
   wrapStyle?: CSSProperties;
   value?: string;
 }
+
+export type ExpressionComponent = NamedExoticComponent<ExpressionProps<any>> & {
+  View: FC<ViewProps>;
+  parse: (
+    queryHtml: string,
+    callback: (value: { nodeType: number; value: string | null }) => string,
+  ) => string;
+  validator: () => {
+    validator: (_: any, value: string) => Promise<any>;
+  };
+};
