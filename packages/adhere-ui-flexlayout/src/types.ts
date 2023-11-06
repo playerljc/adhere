@@ -1,4 +1,4 @@
-import { FC, ForwardRefRenderFunction, NamedExoticComponent, ReactNode } from 'react';
+import { FC, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { CSSProperties, Context, ReactElement } from 'react';
 
 import Auto from './Auto';
@@ -255,7 +255,9 @@ export interface TBLRCLayoutProps extends FlexLayoutProps {
   autoInnerProps?: FlexLayoutProps;
 }
 
-export type FlexLayoutComponent = NamedExoticComponent<FlexLayoutProps> & {
+export type FlexLayoutComponent = NamedExoticComponent<
+  PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>
+> & {
   selectorPrefix: string;
   Context: typeof FlexContext;
   Fixed: typeof Fixed;

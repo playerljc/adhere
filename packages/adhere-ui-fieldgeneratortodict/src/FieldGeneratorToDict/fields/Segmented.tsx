@@ -1,87 +1,89 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import React, { useState } from 'react';
+import type { SegmentedProps } from 'antd';
+import React from 'react';
 
 import { Segmented } from '@baifendian/adhere-ui-anthoc';
-import Dict from '@baifendian/adhere-util-dict';
 
+import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
-import { deepDep } from '../util';
+import Suspense from '../Suspense';
+import { useDict, useDynamicDict } from '../hooks';
 
 /**
- * SegmentedFormItem
+ * SegmentedStandard
  */
-setItem(
+setItem<SegmentedProps, SegmentedProps['options']>(
   'Segmented',
-  'FormItem',
+  'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const handler = Dict.value[dictName].value;
-
-      const [dataSource, setDataSource] = useState([]);
-
-      function loadData() {
-        // 如果是函数(一般是级联)
-        if (handler instanceof Function) {
-          setDataSource(handler(cascadeParams));
-        } else {
-          setDataSource(handler);
-        }
-      }
-
-      useMount(() => {
-        loadData();
+      const options = useDict<SegmentedProps['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
       });
 
-      useUpdateEffect(() => {
-        loadData();
-      }, [deepDep(cascadeParams)]);
-
-      useUpdateEffect(() => {
-        onDataSourceChange?.(dataSource);
-      }, [dataSource]);
-
-      return <Segmented {...props} options={dataSource} />;
+      return <Segmented {...props} options={options} />;
     },
 );
 
 /**
- * SegmentedDynamicFormItem
+ * SegmentedSuspenseStandard
  */
-setItem(
-  'SegmentedDynamic',
-  'FormItem',
+setItem<SuspenseComponentProps<SegmentedProps>, SegmentedProps['options']>(
+  'Segmented',
+  'SuspenseStandard',
   (dictName) =>
-    ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const [data, setData] = useState([]);
-
-      // 存放字典的返回值(可能是promise也可能是Function)
-      const handler = Dict.value[dictName].value;
-
-      function loadData() {
-        // 如果是Promise直接返回
-        if (handler instanceof Function) {
-          handler(cascadeParams).then((res) => {
-            setData(res);
-          });
-        } else if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      }
-
-      useMount(() => {
-        loadData();
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDict<SegmentedProps['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
       });
 
-      useUpdateEffect(() => {
-        loadData();
-      }, [deepDep(cascadeParams)]);
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options}>
+          <Segmented {...props} options={options} />
+        </Suspense>
+      );
+    },
+);
 
-      useUpdateEffect(() => {
-        onDataSourceChange?.(data);
-      }, [data]);
+/**
+ * SegmentedDynamicStandard
+ */
+setItem<SegmentedProps, SegmentedProps['options']>(
+  'SegmentedDynamic',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const options = useDynamicDict<SegmentedProps['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
 
-      return <Segmented {...props} options={data} />;
+      return <Segmented {...props} options={options} />;
+    },
+);
+
+/**
+ * SegmentedDynamicSuspenseStandard
+ */
+setItem<SuspenseComponentProps<SegmentedProps>, SegmentedProps['options']>(
+  'SegmentedDynamic',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDynamicDict<SegmentedProps['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options}>
+          <Segmented {...props} options={options} />
+        </Suspense>
+      );
     },
 );

@@ -385,7 +385,7 @@ setItem<HorizontalTagGroupProps, HorizontalTagGroupProps['options']>(
   'Horizontal',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const options = useDDynamicDict<HorizontalTagGroupProps['options']>({
+      const options = useDynamicDict<HorizontalTagGroupProps['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,

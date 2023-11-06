@@ -1,5 +1,13 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import { Swiper } from 'swiper';
 import { Autoplay } from 'swiper/modules';
 
@@ -8,7 +16,7 @@ import type { RevolvingComponent, RevolvingProps, RevolvingRefHandle } from './t
 
 const selectorPrefix = 'adhere-ui-revolving';
 
-const InternalRevolving = memo<RevolvingProps>(
+const InternalRevolving = memo<PropsWithoutRef<RevolvingProps> & RefAttributes<RevolvingRefHandle>>(
   forwardRef<RevolvingRefHandle, RevolvingProps>((props, ref) => {
     const {
       className = '',
@@ -30,7 +38,7 @@ const InternalRevolving = memo<RevolvingProps>(
     const el = useRef<HTMLDivElement>(null);
     const wrapperEl = useRef<HTMLDivElement>(null);
 
-    const swiper = useRef<Swiper | null>(null);
+    const swiper = useRef<typeof Swiper | null>(null);
 
     function initial() {
       if (swiper.current) {

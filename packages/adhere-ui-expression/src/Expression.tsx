@@ -2,6 +2,7 @@ import { useMount, useUpdateLayoutEffect } from 'ahooks';
 import { Empty } from 'antd';
 import classNames from 'classnames';
 import React, { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
+import type { PropsWithoutRef, RefAttributes } from 'react';
 
 import { CloseCircleOutlined } from '@ant-design/icons';
 import Hooks from '@baifendian/adhere-ui-hooks';
@@ -73,7 +74,9 @@ export const selectorPrefix = 'adhere-ui-expression';
  * @param ref
  * @constructor
  */
-const InternalExpression = memo<ExpressionProps<any>>(
+const InternalExpression = memo<
+  PropsWithoutRef<ExpressionProps<any>> & RefAttributes<ExpressionHandle>
+>(
   forwardRef<ExpressionHandle, ExpressionProps<any>>(
     (
       {

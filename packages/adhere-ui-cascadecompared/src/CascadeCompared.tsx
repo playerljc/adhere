@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
 import React, { forwardRef, memo, useImperativeHandle, useLayoutEffect, useRef } from 'react';
-import type { ReactElement } from 'react';
+import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
 import type { StickupLayoutHandle } from '@baifendian/adhere-ui-stickuplayout/lib/types';
@@ -59,7 +59,9 @@ initTouch();
  * @param ref
  * @constructor
  */
-const CascadeCompared = memo<CascadeComparedProps>(
+const CascadeCompared = memo<
+  PropsWithoutRef<CascadeComparedProps> & RefAttributes<CascadeComparedHandle>
+>(
   forwardRef<CascadeComparedHandle, CascadeComparedProps>((props, ref) => {
     const {
       className = '',
@@ -85,7 +87,7 @@ const CascadeCompared = memo<CascadeComparedProps>(
 
     const el = useRef<HTMLDivElement | null>(null);
     const stickup = useRef<StickupLayoutHandle | null>(null);
-    const scrolls = useRef<IScroll[]>([]);
+    const scrolls = useRef<(typeof IScroll)[]>([]);
 
     /**
      * initScroll

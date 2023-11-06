@@ -11,5 +11,5 @@ import type { TBLRCLayoutProps } from '../types';
  * @param ref
  * @constructor
  */
-declare const LBCLayout: React.NamedExoticComponent<TBLRCLayoutProps>;
+declare const LBCLayout: React.NamedExoticComponent<TBLRCLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export default LBCLayout;

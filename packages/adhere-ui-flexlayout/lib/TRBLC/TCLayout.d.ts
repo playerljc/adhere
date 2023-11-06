@@ -6,5 +6,5 @@ import type { TBLRCLayoutProps } from '../types';
  * @param _props
  * @param ref
  */
-declare const TCLayout: React.NamedExoticComponent<TBLRCLayoutProps>;
+declare const TCLayout: React.NamedExoticComponent<TBLRCLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export default TCLayout;

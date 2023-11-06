@@ -1,5 +1,13 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import { slider } from './SlideLayout';
 import { PushProps, SlideLayoutHandle } from './types';
@@ -13,7 +21,7 @@ const selectorPrefix = 'adhere-ui-slide-layout-push';
  * @param ref
  * @constructor
  */
-const Push = memo<PushProps>(
+const Push = memo<PropsWithoutRef<PushProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, PushProps>((props, ref) => {
     const {
       masterClassName = '',

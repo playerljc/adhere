@@ -1,4 +1,4 @@
 import React from 'react';
-import { PullRefreshProps } from './types';
-declare const PullRefresh: React.NamedExoticComponent<PullRefreshProps>;
+import { PullRefreshProps, PullRefreshRefHandle } from './types';
+declare const PullRefresh: React.NamedExoticComponent<PullRefreshProps & React.RefAttributes<PullRefreshRefHandle>>;
 export default PullRefresh;

@@ -19,6 +19,7 @@ import { deepDep } from './util';
 export function useDict<D>({ dictName, cascadeParams, onDataSourceChange }: UseDictParams<D>): D {
   const dictValue = Dict.value[dictName].value;
 
+  // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
 
   function loadData() {
@@ -56,6 +57,7 @@ export function useDynamicDict<D>({
   cascadeParams,
   onDataSourceChange,
 }: UseDictParams<D>): D {
+  // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
 
   const dictValue = Dict.value[dictName].value;
@@ -101,6 +103,7 @@ export function useAutoCompleteDict<D>({
 }: UseDictParams<D>): { options: any[]; loadData: AutoCompleteProps['loadData'] } {
   const dictValue = Dict.value[dictName].value;
 
+  // @ts-ignore
   const [dataSource, setDataSource] = useState<D>([]);
 
   useUpdateEffect(() => {
@@ -108,7 +111,7 @@ export function useAutoCompleteDict<D>({
   }, [dataSource]);
 
   return {
-    options: [...dataSource],
+    options: [...((dataSource as any) ?? [])],
     loadData: (_kw) =>
       new Promise((resolve, reject) => {
         dictValue(_kw, cascadeParams)
@@ -167,8 +170,7 @@ export function useAutoCompletePaging<D>({
 }> {
   const dictValue = Dict.value[dictName].value;
 
-  // @ts-ignore
-  return useCallback(
+  return useCallback<any>(
     () => (page, limit, kw) =>
       dictValue(page, limit, kw, cascadeParams).then((res) => {
         onDataSourceChange?.(res);
@@ -188,6 +190,5 @@ export function useAsyncTree<D>({
 }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] {
   const dictValue = Dict.value[dictName].value;
 
-  // @ts-ignore
-  return useCallback(() => dictValue, [dictName]);
+  return useCallback<any>(() => dictValue, [dictName]);
 }

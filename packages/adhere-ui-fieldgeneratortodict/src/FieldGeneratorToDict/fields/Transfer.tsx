@@ -7,7 +7,9 @@ import type {
   TransferSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
+import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
+import Suspense from '../Suspense';
 import { useAutoCompleteDict, useDict, useDynamicDict } from '../hooks';
 
 /**
@@ -25,6 +27,28 @@ setItem<TransferProps<any>, TransferProps<any>['dataSource']>(
       });
 
       return <Transfer {...props} dataSource={options} />;
+    },
+);
+
+/**
+ * TransferSuspenseStandard
+ */
+setItem<SuspenseComponentProps<TransferProps<any>>, TransferProps<any>['dataSource']>(
+  'Transfer',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDict<TransferProps<any>['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options} emptyComponent={<Transfer />}>
+          <Transfer {...props} dataSource={options} />
+        </Suspense>
+      );
     },
 );
 
@@ -54,13 +78,35 @@ setItem<TransferProps<any>, TransferProps<any>['dataSource']>(
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const options = useDynamicDict<TransferProps<any>['options']>({
+      const options = useDynamicDict<TransferProps<any>['dataSource']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
       });
 
       return <Transfer {...props} dataSource={options} />;
+    },
+);
+
+/**
+ * TransferDynamicSuspenseStandard
+ */
+setItem<SuspenseComponentProps<TransferProps<any>>, TransferProps<any>['dataSource']>(
+  'TransferDynamic',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDynamicDict<TransferProps<any>['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options} emptyComponent={<Transfer />}>
+          <Transfer {...props} dataSource={options} />
+        </Suspense>
+      );
     },
 );
 

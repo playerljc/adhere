@@ -80,7 +80,7 @@ setItem<TreeSelectProps, TreeSelectProps['treeData']>(
         onDataSourceChange,
       });
 
-      return <Tree.TreeMultiLeafSelect {...props} treeData={treeData} />;
+      return <TreeSelect.TreeMultiLeafSelect {...props} treeData={treeData} />;
     },
 );
 
@@ -338,7 +338,7 @@ setItem<TreeSelectProps, TreeSelectProps['treeData']>(
         onDataSourceChange,
       });
 
-      return <Tree.TreeMultiLeafSelect {...props} treeData={treeData} />;
+      return <TreeSelect.TreeMultiLeafSelect {...props} treeData={treeData} />;
     },
 );
 

@@ -36,8 +36,8 @@ abstract class Suspense<
 
   static defaultProps: any;
   static propTypes: any;
-  static Sync: typeof SuspenseSync;
-  static ASync: typeof SuspenseAsync;
+  static Sync = SuspenseSync;
+  static ASync = SuspenseAsync;
 
   /**
    * fetchData - 加载数据

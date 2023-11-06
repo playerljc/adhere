@@ -1,83 +1,89 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import React, { useState } from 'react';
+import type { BreadcrumbProps } from 'antd';
+import React from 'react';
 
 import { Breadcrumb } from '@baifendian/adhere-ui-anthoc';
-import Dict from '@baifendian/adhere-util-dict';
 
+import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
-import { deepDep } from '../util';
+import Suspense from '../Suspense';
+import { useDict, useDynamicDict } from '../hooks';
 
 /**
- * BreadcrumbFormItem
+ * BreadcrumbStandard
  */
-setItem(
+setItem<BreadcrumbProps, BreadcrumbProps['items']>(
   'Breadcrumb',
-  'FormItem',
+  'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const handler = Dict.value[dictName].value;
-
-      const [dataSource, setDataSource] = useState([]);
-
-      function loadData() {
-        // 如果是函数(一般是级联)
-        if (handler instanceof Function) {
-          setDataSource(handler(cascadeParams));
-        } else {
-          setDataSource(handler);
-        }
-      }
-
-      useMount(() => {
-        loadData();
+      const options = useDict<BreadcrumbProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
       });
 
-      useUpdateEffect(() => {
-        loadData();
-      }, [deepDep(cascadeParams)]);
-
-      return <Breadcrumb {...props} items={dataSource} />;
+      return <Breadcrumb {...props} options={options} />;
     },
 );
 
 /**
- * BreadcrumbDynamicFormItem
+ * BreadcrumbSuspenseStandard
  */
-setItem(
-  'BreadcrumbDynamic',
-  'FormItem',
+setItem<SuspenseComponentProps<BreadcrumbProps>, BreadcrumbProps['items']>(
+  'Breadcrumb',
+  'SuspenseStandard',
   (dictName) =>
-    ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const [data, setData] = useState([]);
-
-      // 存放字典的返回值(可能是promise也可能是Function)
-      const handler = Dict.value[dictName].value;
-
-      function loadData() {
-        // 如果是Promise直接返回
-        if (handler instanceof Function) {
-          handler(cascadeParams).then((res) => {
-            setData(res);
-          });
-        } else if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      }
-
-      useMount(() => {
-        loadData();
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDict<BreadcrumbProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
       });
 
-      useUpdateEffect(() => {
-        loadData();
-      }, [deepDep(cascadeParams)]);
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options}>
+          <Breadcrumb {...props} options={options} />
+        </Suspense>
+      );
+    },
+);
 
-      useUpdateEffect(() => {
-        onDataSourceChange?.(data);
-      }, [data]);
+/**
+ * BreadcrumbDynamicStandard
+ */
+setItem<BreadcrumbProps, BreadcrumbProps['items']>(
+  'BreadcrumbDynamic',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const options = useDynamicDict<BreadcrumbProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
 
-      return <Breadcrumb {...props} items={data} />;
+      return <Breadcrumb {...props} options={options} />;
+    },
+);
+
+/**
+ * BreadcrumbDynamicSuspenseStandard
+ */
+setItem<SuspenseComponentProps<BreadcrumbProps>, BreadcrumbProps['items']>(
+  'BreadcrumbDynamic',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDynamicDict<BreadcrumbProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options}>
+          <Breadcrumb {...props} options={options} />
+        </Suspense>
+      );
     },
 );

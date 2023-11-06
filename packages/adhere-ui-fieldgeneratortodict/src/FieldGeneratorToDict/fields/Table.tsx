@@ -10,8 +10,17 @@ import type {
   TableSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
+import { SuspenseAsyncComponentProps, SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
-import { useAutoCompleteDict, useDict, useDynamicDict, usePaging } from '../hooks';
+import Suspense from '../Suspense';
+import SuspenseAsync from '../SuspenseAsync';
+import {
+  useAutoCompleteDict,
+  useAutoCompletePaging,
+  useDict,
+  useDynamicDict,
+  usePaging,
+} from '../hooks';
 
 /**
  * TableStandard
@@ -28,6 +37,28 @@ setItem<TableProps<any>, TableProps<any>['dataSource']>(
       });
 
       return <Table {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * TableSuspenseStandard
+ */
+setItem<SuspenseComponentProps<TableProps<any>>, TableProps<any>['dataSource']>(
+  'Table',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const dataSource = useDict<TableProps<any>['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={dataSource} emptyComponent={<Table />}>
+          <Table {...props} dataSource={dataSource} />
+        </Suspense>
+      );
     },
 );
 
@@ -82,6 +113,28 @@ setItem<TableProps<any>, TableProps<any>['dataSource']>(
       });
 
       return <Table {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * TableDynamicSuspenseStandard
+ */
+setItem<SuspenseComponentProps<TableProps<any>>, TableProps<any>['dataSource']>(
+  'TableDynamic',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const dataSource = useDynamicDict<TableProps<any>['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={dataSource} emptyComponent={<Table />}>
+          <Table {...props} dataSource={dataSource} />
+        </Suspense>
+      );
     },
 );
 
@@ -164,6 +217,66 @@ setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['option
       };
 
       return <Table.TablePaging {...props} {...pagingProps} mode="multiple" />;
+    },
+);
+
+/**
+ * TablePaginationSuspenseStandard
+ */
+setItem<
+  SuspenseAsyncComponentProps<TablePagingProps<any>>,
+  TablePagingProps<any>['tablePagingProps']['options']
+>(
+  'TablePagination',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const loadData = usePaging<TablePagingProps<any>['tablePagingProps']['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return (
+        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<Table />}>
+          <Table.TablePaging {...props} {...pagingProps} />
+        </SuspenseAsync>
+      );
+    },
+);
+
+/**
+ * TablePaginationSuspenseMulti
+ */
+setItem<
+  SuspenseAsyncComponentProps<TablePagingProps<any>>,
+  TablePagingProps<any>['tablePagingProps']['options']
+>(
+  'TablePagination',
+  'SuspenseMulti',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const loadData = usePaging<TablePagingProps<any>['tablePagingProps']['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return (
+        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<Table />}>
+          <Table.TablePaging {...props} {...pagingProps} mode="multiple" />
+        </SuspenseAsync>
+      );
     },
 );
 
@@ -264,7 +377,7 @@ setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['
   'Paging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const loadData = useAutoCompleteDict<AutoCompleteTablePagingSelectProps['options']>({
+      const loadData = useAutoCompletePaging<AutoCompleteTablePagingSelectProps['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
@@ -287,7 +400,7 @@ setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['
   'MultiPaging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const loadData = useAutoCompleteDict<AutoCompleteTablePagingSelectProps['options']>({
+      const loadData = useAutoCompletePaging<AutoCompleteTablePagingSelectProps['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,

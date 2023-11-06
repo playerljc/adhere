@@ -1,6 +1,14 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
-import React, { forwardRef, memo, useCallback, useImperativeHandle, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
@@ -21,7 +29,7 @@ const selectorPrefix = 'adhere-ui-signature';
  * @param ref
  * @constructor
  */
-const InternalSignature = memo<SignatureProps>(
+const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<SignatureHandle>>(
   forwardRef<SignatureHandle, SignatureProps>(
     ({ className, style, value, onChange, modalProps, coreProps }, ref) => {
       const coreRef = useRef<SignatureCoreHandle>(null);

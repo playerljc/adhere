@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React, {
+  PropsWithoutRef,
+  RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -10,11 +12,11 @@ import React, {
 
 import { ProviderContext } from './ContextMenuContext';
 import MenuItem from './MenuItem';
-import { ContextMenuContext, MenuProps, MenuRefHandle } from './types';
+import type { ContextMenuContext, MenuProps, MenuRefHandle } from './types';
 
 const selectorPrefix = 'adhere-ui-context-menu-sub-menu';
 
-const Menu = memo<MenuProps>(
+const Menu = memo<PropsWithoutRef<MenuProps> & RefAttributes<MenuRefHandle>>(
   forwardRef<MenuRefHandle, MenuProps>((props, ref) => {
     const { className = '', style = {}, data = [] } = props;
 

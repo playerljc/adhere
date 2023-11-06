@@ -125,14 +125,12 @@ const Components = {
     Horizontal: 'TagHorizontal',
     HorizontalCheckable: 'TagVerticalCheckable',
     CheckAllHorizontalCheckable: 'TagCheckAllHorizontalCheckable',
-
     SuspenseVertical: 'TagSuspenseVertical',
     SuspenseVerticalCheckable: 'TagSuspenseVerticalCheckable',
     SuspenseCheckAllVerticalCheckable: 'TagSuspenseCheckAllVerticalCheckable',
     SuspenseHorizontal: 'TagSuspenseHorizontal',
     SuspenseHorizontalCheckable: 'TagSuspenseVerticalCheckable',
     SuspenseCheckAllHorizontalCheckable: 'TagSuspenseCheckAllHorizontalCheckable',
-
     Select: 'TagSelect',
     MultiSelect: 'TagMultiSelect',
     CheckAllSelect: 'TagCheckAllSelect',
@@ -144,14 +142,12 @@ const Components = {
     Horizontal: 'TagDynamicHorizontal',
     HorizontalCheckable: 'TagDynamicVerticalCheckable',
     CheckAllHorizontalCheckable: 'TagDynamicCheckAllHorizontalCheckable',
-
     SuspenseVertical: 'TagDynamicSuspenseVertical',
     SuspenseVerticalCheckable: 'TagDynamicSuspenseVerticalCheckable',
     SuspenseCheckAllVerticalCheckable: 'TagDynamicSuspenseCheckAllVerticalCheckable',
     SuspenseHorizontal: 'TagDynamicSuspenseHorizontal',
     SuspenseHorizontalCheckable: 'TagDynamicSuspenseVerticalCheckable',
     SuspenseCheckAllHorizontalCheckable: 'TagDynamicSuspenseCheckAllHorizontalCheckable',
-
     Select: 'TagDynamicSelect',
     MultiSelect: 'TagDynamicMultiSelect',
     CheckAllSelect: 'TagDynamicCheckAllSelect',
@@ -165,12 +161,14 @@ const Components = {
   /* ------ List start ------ */
   List: {
     Standard: 'ListStandard',
+    SuspenseStandard: 'ListSuspenseStandard',
     Select: 'ListSelect',
     MultiSelect: 'ListMultiSelect',
     CheckAllSelect: 'ListCheckAllSelect',
   },
   ListDynamic: {
     Standard: 'ListDynamicStandard',
+    SuspenseStandard: 'ListDynamicSuspenseStandard',
     Select: 'ListDynamicSelect',
     MultiSelect: 'ListDynamicMultiSelect',
     CheckAllSelect: 'ListDynamicCheckAllSelect',
@@ -180,6 +178,8 @@ const Components = {
     Standard: 'ListPagination',
     // 普通列表
     Multi: 'ListPaginationMulti',
+    SuspenseStandard: 'ListPaginationSuspenseStandard',
+    SuspenseMulti: 'ListPaginationSuspenseMulti',
     // 下拉列表
     Select: 'ListPaginationSelect',
     // 下拉列表
@@ -199,17 +199,21 @@ const Components = {
   /* ------ Table start ------ */
   Table: {
     Standard: 'TableStandard',
+    SuspenseStandard: 'TableSuspenseStandard',
     Select: 'TableSelect',
     MultiSelect: 'TableMultiSelect',
   },
   TableDynamic: {
     Standard: 'TableDynamicStandard',
+    SuspenseStandard: 'TableDynamicSuspenseStandard',
     Select: 'TableDynamicSelect',
     MultiSelect: 'TableDynamicMultiSelect',
   },
   TablePagination: {
     Standard: 'TablePaginationStandard',
     Multi: 'TablePaginationMulti',
+    SuspenseStandard: 'TablePaginationSuspenseStandard',
+    SuspenseMulti: 'TablePaginationSuspenseMulti',
     Select: 'TablePaginationSelect',
     MultiSelect: 'TablePaginationMultiSelect',
   },
@@ -224,10 +228,12 @@ const Components = {
   /* ------ Transfer start ------ */
   Transfer: {
     Standard: 'TransferStandard',
+    SuspenseStandard: 'TransferSuspenseStandard',
     Select: 'TransferSelect',
   },
   TransferDynamic: {
     Standard: 'TransferDynamicStandard',
+    SuspenseStandard: 'TransferDynamicSuspenseStandard',
     Select: 'TransferDynamicSelect',
   },
   AutoCompleteTransfer: {
@@ -342,9 +348,11 @@ const Components = {
 
   Breadcrumb: {
     Standard: 'BreadcrumbStandard',
+    SuspenseStandard: 'BreadcrumbSuspenseStandard',
   },
   BreadcrumbDynamic: {
     Standard: 'BreadcrumbDynamicStandard',
+    SuspenseStandard: 'BreadcrumbDynamicSuspenseStandard',
   },
   Dropdown: {
     Standard: 'DropdownStandard',
@@ -354,9 +362,11 @@ const Components = {
   },
   Mentions: {
     Standard: 'MentionsStandard',
+    SuspenseStandard: 'MentionsSuspenseStandard',
   },
   MentionsDynamic: {
     Standard: 'MentionsDynamicStandard',
+    SuspenseStandard: 'MentionsDynamicSuspenseStandard',
   },
   Menu: {
     Standard: 'MenuStandard',
@@ -366,21 +376,27 @@ const Components = {
   },
   Segmented: {
     Standard: 'SegmentedStandard',
+    SuspenseStandard: 'SegmentedSuspenseStandard',
   },
   SegmentedDynamic: {
     Standard: 'SegmentedDynamicStandard',
+    SuspenseStandard: 'SegmentedDynamicSuspenseStandard',
   },
   Steps: {
     Standard: 'StepsStandard',
+    SuspenseStandard: 'StandardSuspenseStandard',
   },
   StepsDynamic: {
     Standard: 'StepsDynamicStandard',
+    SuspenseStandard: 'StepsDynamicSuspenseStandard',
   },
   Timeline: {
     Standard: 'TimelineStandard',
+    SuspenseStandard: 'TimelineSuspenseStandard',
   },
   TimelineDynamic: {
     Standard: 'TimelineDynamicStandard',
+    SuspenseStandard: 'TimelineDynamicSuspenseStandard',
   },
 } as const;
 

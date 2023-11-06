@@ -10,5 +10,5 @@ import { TBLRCLayoutProps } from '../types';
  * @param ref
  * @constructor
  */
-declare const TCBRLayout: React.NamedExoticComponent<TBLRCLayoutProps>;
+declare const TCBRLayout: React.NamedExoticComponent<TBLRCLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export default TCBRLayout;

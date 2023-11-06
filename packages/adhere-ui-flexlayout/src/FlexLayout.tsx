@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { forwardRef, memo, useMemo } from 'react';
+import type { PropsWithoutRef, RefAttributes } from 'react';
 
 import Auto from './Auto';
 import BackLayout from './BackLayout';
@@ -20,7 +21,7 @@ export const selectorPrefix = 'adhere-ui-flex-layout';
  * @param ref
  * @constructor
  */
-const InternalFlexLayout = memo<FlexLayoutProps>(
+const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>>(
   forwardRef<any, FlexLayoutProps>((props, ref) => {
     const {
       className = '',

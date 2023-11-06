@@ -1,5 +1,13 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import { slider } from './SlideLayout';
 import { RevealProps, SlideLayoutHandle } from './types';
@@ -13,7 +21,7 @@ const selectorPrefix = 'adhere-ui-slide-layout-reveal';
  * @param ref
  * @constructor
  */
-const Reveal = memo<RevealProps>(
+const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, RevealProps>((props, ref) => {
     const {
       masterClassName = '',

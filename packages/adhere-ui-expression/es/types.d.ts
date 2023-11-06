@@ -1,4 +1,4 @@
-import { FC, NamedExoticComponent } from 'react';
+import { FC, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties } from 'react';
 import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
 export type OperatorType = 'unary' | 'binary' | 'ternary' | 'brackets';
@@ -99,7 +99,7 @@ export interface ViewProps extends EllipsisProps {
     wrapStyle?: CSSProperties;
     value?: string;
 }
-export type ExpressionComponent = NamedExoticComponent<ExpressionProps<any>> & {
+export type ExpressionComponent = NamedExoticComponent<PropsWithoutRef<ExpressionProps<any>> & RefAttributes<ExpressionHandle>> & {
     View: FC<ViewProps>;
     parse: (queryHtml: string, callback: (value: {
         nodeType: number;

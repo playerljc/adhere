@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { ForwardRefRenderFunction, forwardRef, memo, useMemo } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../Auto';
 import Fixed from '../Fixed';
@@ -17,8 +17,8 @@ import { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param ref
  * @constructor
  */
-const TCBRLayout = memo<TBLRCLayoutProps>(
-  forwardRef<any, TBLRCLayoutProps>(
+const TCBRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCLayoutProps>(
     (
       {
         wrapClassName,

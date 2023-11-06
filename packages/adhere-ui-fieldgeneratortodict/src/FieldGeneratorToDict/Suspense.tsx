@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react';
-import type { FC } from 'react';
-
+// @ts-ignore
+import Suspense from '@baifendian/adhere-ui-suspense';
 import type { SuspenseProps } from '../types';
 
 /**
@@ -8,7 +8,7 @@ import type { SuspenseProps } from '../types';
  * @param props
  * @constructor
  */
-const Suspense: FC<SuspenseProps> = (props) => {
+const Suspense = memo<SuspenseProps>((props) => {
   const { data, renderEmpty, isEmpty, emptyComponent, children } = props;
 
   const [dataSource, setDataSource] = useState<any[]>([]);
@@ -26,6 +26,6 @@ const Suspense: FC<SuspenseProps> = (props) => {
       {children}
     </Suspense.Sync>
   );
-};
+});
 
-export default memo(Suspense);
+export default Suspense;

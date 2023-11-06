@@ -12,8 +12,17 @@ import {
   ListSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
+import type { SuspenseAsyncComponentProps, SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
-import { useAutoCompleteDict, useDict, useDynamicDict, usePaging } from '../hooks';
+import Suspense from '../Suspense';
+import SuspenseAsync from '../SuspenseAsync';
+import {
+  useAutoCompleteDict,
+  useAutoCompletePaging,
+  useDict,
+  useDynamicDict,
+  usePaging,
+} from '../hooks';
 
 /**
  * ListStandard
@@ -30,6 +39,28 @@ setItem<ListProps<any>, ListProps<any>['dataSource']>(
       });
 
       return <List {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * ListSuspenseStandard
+ */
+setItem<SuspenseComponentProps<ListProps<any>>, ListProps<any>['dataSource']>(
+  'List',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const dataSource = useDict<ListProps<any>['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={dataSource} emptyComponent={<List />}>
+          <List {...props} dataSource={dataSource} />
+        </Suspense>
+      );
     },
 );
 
@@ -102,6 +133,28 @@ setItem<ListProps<any>, ListProps<any>['dataSource']>(
       });
 
       return <List {...props} dataSource={dataSource} />;
+    },
+);
+
+/**
+ * ListDynamicSuspenseStandard
+ */
+setItem<SuspenseComponentProps<ListProps<any>>, ListProps<any>['dataSource']>(
+  'ListDynamic',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const dataSource = useDynamicDict<ListProps<any>['dataSource']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={dataSource} emptyComponent={<List />}>
+          <List {...props} dataSource={dataSource} />
+        </Suspense>
+      );
     },
 );
 
@@ -202,6 +255,66 @@ setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']
       };
 
       return <List.ListPaging {...props} {...pagingProps} mode="multiple" />;
+    },
+);
+
+/**
+ * ListPaginationSuspenseStandard
+ */
+setItem<
+  SuspenseAsyncComponentProps<ListPagingProps<any>>,
+  ListPagingProps<any>['listPagingProps']['options']
+>(
+  'ListPagination',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const loadData = usePaging<ListPagingProps<any>['listPagingProps']['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return (
+        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<List />}>
+          <List.ListPaging {...props} {...pagingProps} />
+        </SuspenseAsync>
+      );
+    },
+);
+
+/**
+ * ListPaginationSuspenseMulti
+ */
+setItem<
+  SuspenseAsyncComponentProps<ListPagingProps<any>>,
+  ListPagingProps<any>['listPagingProps']['options']
+>(
+  'ListPagination',
+  'SuspenseMulti',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const loadData = usePaging<ListPagingProps<any>['listPagingProps']['options']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return (
+        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<List />}>
+          <List.ListPaging {...props} {...pagingProps} mode="multiple" />
+        </SuspenseAsync>
+      );
     },
 );
 
@@ -324,7 +437,7 @@ setItem<AutoCompleteListPagingSelectProps, AutoCompleteListPagingSelectProps['op
   'Paging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const loadData = useAutoCompleteDict<AutoCompleteListPagingSelectProps['options']>({
+      const loadData = useAutoCompletePaging<AutoCompleteListPagingSelectProps['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
@@ -347,7 +460,7 @@ setItem<AutoCompleteListPagingSelectProps, AutoCompleteListPagingSelectProps['op
   'MultiPaging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const loadData = useAutoCompleteDict<AutoCompleteListPagingSelectProps['options']>({
+      const loadData = useAutoCompletePaging<AutoCompleteListPagingSelectProps['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,

@@ -1,4 +1,5 @@
 import type { ModalProps } from 'antd/lib/modal/interface';
+import { PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties, NamedExoticComponent, ReactNode } from 'react';
 
 import type {
@@ -406,6 +407,8 @@ export interface CroppingCoreHandle {
   save?: () => string;
 }
 
-export type CroppingComponent = NamedExoticComponent<CroppingProps> & {
+export type CroppingComponent = NamedExoticComponent<
+  PropsWithoutRef<CroppingProps> & RefAttributes<CroppingHandle>
+> & {
   CroppingCore: typeof CroppingCore;
 };

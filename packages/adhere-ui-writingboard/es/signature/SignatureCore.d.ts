@@ -7,5 +7,5 @@ import type { SignatureCoreHandle, SignatureCoreProps } from '../types';
  * @param ref
  * @constructor
  */
-declare const Signature: React.ForwardRefExoticComponent<SignatureCoreProps & React.RefAttributes<SignatureCoreHandle>>;
+declare const Signature: React.NamedExoticComponent<SignatureCoreProps & React.RefAttributes<SignatureCoreHandle>>;
 export default Signature;

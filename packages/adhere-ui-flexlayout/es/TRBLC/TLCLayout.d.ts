@@ -15,5 +15,5 @@ import type { TBLRCLayoutProps } from '../types';
  * @param ref
  * @constructor
  */
-declare const TLCLayout: React.NamedExoticComponent<TBLRCLayoutProps>;
+declare const TLCLayout: React.NamedExoticComponent<TBLRCLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export default TLCLayout;

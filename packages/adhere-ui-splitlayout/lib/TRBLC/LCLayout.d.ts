@@ -4,5 +4,5 @@ import { TBLRCSplitLayoutProps } from '../types';
  * LCLayout
  * @constructor
  */
-declare const LCLayout: React.NamedExoticComponent<TBLRCSplitLayoutProps>;
+declare const LCLayout: React.NamedExoticComponent<TBLRCSplitLayoutProps & React.RefAttributes<HTMLDivElement>>;
 export default LCLayout;

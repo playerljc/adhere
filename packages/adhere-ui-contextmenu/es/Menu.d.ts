@@ -1,4 +1,4 @@
 import React from 'react';
-import { MenuProps } from './types';
-declare const Menu: React.NamedExoticComponent<MenuProps>;
+import type { MenuProps, MenuRefHandle } from './types';
+declare const Menu: React.NamedExoticComponent<MenuProps & React.RefAttributes<MenuRefHandle>>;
 export default Menu;

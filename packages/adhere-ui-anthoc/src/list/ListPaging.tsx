@@ -1,8 +1,9 @@
 import { useMount } from 'ahooks';
 import { useUpdateEffect } from 'ahooks';
 import type { SelectProps } from 'antd';
-import React, { memo, useMemo, useState } from 'react';
-import type { FC } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+
+import Suspense from '@baifendian/adhere-ui-suspense';
 
 import type { ListPagingProps } from '../types';
 import CheckboxPagingList from './CheckboxPagingList';
@@ -16,42 +17,71 @@ import usePagingRenderProps from './usePagingRenderProps';
  * @param onChange
  * @param pagingProps
  * @param listPagingProps
+ * @param isSuspenseAsync
+ * @param suspenseProps
  * @constructor
  */
-const ListPaging: FC<ListPagingProps<any>> = ({
-  mode,
-  value,
-  onChange,
-  pagingProps,
-  listPagingProps,
-}) => {
-  const [currentValue, setCurrentValue] = useState(value);
-
-  const { isMultiple, options, fetchData, renderProps } = usePagingRenderProps({
-    listPagingProps,
+const ListPaging = memo<ListPagingProps<any>>(
+  ({
     mode,
-    ...pagingProps,
-  });
+    value,
+    onChange,
+    pagingProps,
+    listPagingProps,
+    isSuspenseAsync = true,
+    suspenseProps,
+  }) => {
+    const [currentValue, setCurrentValue] = useState(value);
 
-  const onListPagingChange = useMemo<SelectProps['onChange']>(
-    () => (_value, option) => {
-      setCurrentValue(_value);
-      onChange?.(_value, option);
-    },
-    [onChange],
-  );
+    const suspenseRef = useRef();
 
-  useMount(() => {
-    fetchData();
-  });
+    const { isMultiple, options, fetchData, renderProps } = usePagingRenderProps({
+      listPagingProps,
+      mode,
+      ...pagingProps,
+    });
 
-  useUpdateEffect(() => {
-    setCurrentValue(value);
-  }, [value]);
+    const onListPagingChange = useMemo<SelectProps['onChange']>(
+      () => (_value, option) => {
+        setCurrentValue(_value);
+        onChange?.(_value, option);
+      },
+      [onChange],
+    );
 
-  return (
-    <>
-      {isMultiple && (
+    useMount(() => {
+      if (!isSuspenseAsync) {
+        fetchData();
+      }
+    });
+
+    useUpdateEffect(() => {
+      if (!isSuspenseAsync) {
+        fetchData();
+      } else {
+      }
+    }, [isSuspenseAsync]);
+
+    useUpdateEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
+
+    const render = useCallback(
+      (children) => {
+        if (isSuspenseAsync)
+          return (
+            <Suspense.ASync ref={suspenseRef} {...(suspenseProps ?? {})} fetchData={fetchData}>
+              {children}
+            </Suspense.ASync>
+          );
+
+        return <>{children}</>;
+      },
+      [isSuspenseAsync],
+    );
+
+    return render([
+      isMultiple && (
         <CheckboxPagingList
           {...renderProps({
             value: currentValue,
@@ -59,8 +89,8 @@ const ListPaging: FC<ListPagingProps<any>> = ({
             options,
           })}
         />
-      )}
-      {!isMultiple && (
+      ),
+      !isMultiple && (
         <RadioPagingList
           {...renderProps({
             value: currentValue,
@@ -68,9 +98,9 @@ const ListPaging: FC<ListPagingProps<any>> = ({
             options,
           })}
         />
-      )}
-    </>
-  );
-};
+      ),
+    ]);
+  },
+);
 
-export default memo(ListPaging);
+export default ListPaging;

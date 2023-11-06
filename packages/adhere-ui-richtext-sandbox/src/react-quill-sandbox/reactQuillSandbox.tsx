@@ -2,8 +2,9 @@ import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import Quill from 'quill';
 import React, {
-  ForwardRefRenderFunction,
+  PropsWithoutRef,
   ReactElement,
+  RefAttributes,
   forwardRef,
   memo,
   useImperativeHandle,
@@ -18,7 +19,11 @@ import ReactStr from '../common-lib/react.production.min';
 import QuillBubbleCssStr from './lib/quill.bubble';
 import QuillSnowCssStr from './lib/quill.snow';
 import ReactQuillStr from './lib/react-quill';
-import { ReactQuillSandboxHandler, ReactQuillSandboxProps } from './types';
+import type {
+  ReactQuillSandboxComponent,
+  ReactQuillSandboxHandler,
+  ReactQuillSandboxProps,
+} from './types';
 
 const editorId = 'quillWrap';
 
@@ -38,141 +43,149 @@ const selectorPrefix = 'adhere-ui-richtext-reactquill-sandbox';
  * @param ref
  * @constructor
  */
-const ReactQuillSandbox: ForwardRefRenderFunction<
-  ReactQuillSandboxHandler,
-  ReactQuillSandboxProps
-> = (props, ref): ReactElement => {
-  const { wrapStyle, wrapClassName, quillStyle, value: _value, ..._props } = props;
+const InternalReactQuillSandbox = memo<
+  PropsWithoutRef<ReactQuillSandboxProps> & RefAttributes<ReactQuillSandboxHandler>
+>(
+  forwardRef<ReactQuillSandboxHandler, ReactQuillSandboxProps>((props, ref): ReactElement => {
+    const { wrapStyle, wrapClassName, quillStyle, value: _value, ..._props } = props;
 
-  const wrapRef = useRef<HTMLDivElement>(null);
+    const wrapRef = useRef<HTMLDivElement>(null);
 
-  const frameRef = useRef<HTMLIFrameElement>(null);
+    const frameRef = useRef<HTMLIFrameElement>(null);
 
-  const isMount = useRef<boolean>(false);
+    const isMount = useRef<boolean>(false);
 
-  const value = useRef<string>(props.value as string);
+    const value = useRef<string>(props.value as string);
 
-  const reactQuillRef = useRef<ReactQuill>();
+    const reactQuillRef = useRef<ReactQuill>();
 
-  /**
-   * renderQuill
-   * @description 渲染富文本
-   */
-  function renderQuill() {
-    return new Promise<{ window: Window; document: Document; wrap: HTMLDivElement }>((resolve) => {
-      const document = frameRef?.current?.contentDocument as Document;
-      const window = frameRef?.current?.contentWindow as Window;
+    /**
+     * renderQuill
+     * @description 渲染富文本
+     */
+    function renderQuill() {
+      return new Promise<{ window: Window; document: Document; wrap: HTMLDivElement }>(
+        (resolve) => {
+          const document = frameRef?.current?.contentDocument as Document;
+          const window = frameRef?.current?.contentWindow as Window;
 
-      if (!document || !window) return;
+          if (!document || !window) return;
 
-      const wrap = document.getElementById(editorId) as HTMLDivElement;
+          const wrap = document.getElementById(editorId) as HTMLDivElement;
 
-      // @ts-ignore
-      window.ReactDOM.render(
-        // @ts-ignore
-        <window.ReactQuill
-          ref={reactQuillRef}
-          {..._props}
-          value={value.current ?? ''}
-          onChange={(params) => {
-            if (!isMount.current) return;
-            // console.log('onChange', params);
+          // @ts-ignore
+          window.ReactDOM.render(
+            // @ts-ignore
+            <window.ReactQuill
+              ref={reactQuillRef}
+              {..._props}
+              value={value.current ?? ''}
+              onChange={(params) => {
+                if (!isMount.current) return;
+                // console.log('onChange', params);
 
-            if (props.onChange) {
-              // @ts-ignore
-              props?.onChange?.(params);
-            }
-          }}
-        />,
-        wrap,
-        () => {
-          isMount.current = true;
-
-          resolve({
-            document,
-            window,
+                if (props.onChange) {
+                  // @ts-ignore
+                  props?.onChange?.(params);
+                }
+              }}
+            />,
             wrap,
-          });
+            () => {
+              isMount.current = true;
+
+              resolve({
+                document,
+                window,
+                wrap,
+              });
+            },
+          );
         },
       );
-    });
-  }
-
-  /**
-   * renderHTML
-   * @description 渲染HTML
-   */
-  function renderHTML() {
-    const document = frameRef?.current?.contentDocument as Document;
-
-    if (!document) return;
-
-    const wrap = document.getElementById(editorId) as HTMLDivElement;
-    wrap.innerHTML = props.value as string;
-
-    if (wrapRef.current) {
-      wrapRef.current.style.height = `${document.documentElement.offsetHeight}px`;
     }
-  }
 
-  /**
-   * render
-   * @description 渲染内容
-   */
-  function render(): Promise<{ window: Window; document: Document; wrap: HTMLDivElement } | void> {
-    return new Promise<void>((resolve) => {
-      // 只读模式
-      if ('readOnly' in props && props.readOnly) {
-        renderHTML();
-        resolve();
-        return;
+    /**
+     * renderHTML
+     * @description 渲染HTML
+     */
+    function renderHTML() {
+      const document = frameRef?.current?.contentDocument as Document;
+
+      if (!document) return;
+
+      const wrap = document.getElementById(editorId) as HTMLDivElement;
+      wrap.innerHTML = props.value as string;
+
+      if (wrapRef.current) {
+        wrapRef.current.style.height = `${document.documentElement.offsetHeight}px`;
+      }
+    }
+
+    /**
+     * render
+     * @description 渲染内容
+     */
+    function render(): Promise<{
+      window: Window;
+      document: Document;
+      wrap: HTMLDivElement;
+    } | void> {
+      return new Promise<void>((resolve) => {
+        // 只读模式
+        if ('readOnly' in props && props.readOnly) {
+          renderHTML();
+          resolve();
+          return;
+        }
+
+        return renderQuill();
+      });
+    }
+
+    /**
+     * useImperativeHandle
+     * @description 向外暴漏的方法
+     */
+    useImperativeHandle(ref, () => ({
+      focus() {
+        reactQuillRef.current?.focus();
+      },
+      blur() {
+        reactQuillRef.current?.blur();
+      },
+      getEditor(): Quill {
+        return reactQuillRef.current?.getEditor() as Quill;
+      },
+      getQuill(): Quill {
+        // @ts-ignore
+        return (frameRef?.current?.contentWindow as Window)?.ReactQuill?.Quill;
+      },
+    }));
+
+    /**
+     * useLayoutEffect
+     */
+    useLayoutEffect(() => {
+      function onLoad() {
+        render().then(() => {});
       }
 
-      return renderQuill();
-    });
-  }
+      frameRef?.current?.addEventListener('load', onLoad);
 
-  /**
-   * useImperativeHandle
-   * @description 向外暴漏的方法
-   */
-  useImperativeHandle(ref, () => ({
-    focus() {
-      reactQuillRef.current?.focus();
-    },
-    blur() {
-      reactQuillRef.current?.blur();
-    },
-    getEditor(): Quill {
-      return reactQuillRef.current?.getEditor() as Quill;
-    },
-    getQuill(): Quill {
-      // @ts-ignore
-      return (frameRef?.current?.contentWindow as Window)?.ReactQuill?.Quill;
-    },
-  }));
+      const propTypesUrl = URL.createObjectURL(
+        new Blob([PropTypesStr], { type: 'text/javascript' }),
+      );
+      const reactUrl = URL.createObjectURL(new Blob([ReactStr], { type: 'text/javascript' }));
+      const reactDOMUrl = URL.createObjectURL(new Blob([ReactDOMStr], { type: 'text/javascript' }));
+      const reactQuillUrl = URL.createObjectURL(
+        new Blob([ReactQuillStr], { type: 'text/javascript' }),
+      );
 
-  /**
-   * useLayoutEffect
-   */
-  useLayoutEffect(() => {
-    function onLoad() {
-      render().then(() => {});
-    }
-
-    frameRef?.current?.addEventListener('load', onLoad);
-
-    const propTypesUrl = URL.createObjectURL(new Blob([PropTypesStr], { type: 'text/javascript' }));
-    const reactUrl = URL.createObjectURL(new Blob([ReactStr], { type: 'text/javascript' }));
-    const reactDOMUrl = URL.createObjectURL(new Blob([ReactDOMStr], { type: 'text/javascript' }));
-    const reactQuillUrl = URL.createObjectURL(
-      new Blob([ReactQuillStr], { type: 'text/javascript' }),
-    );
-
-    const iframeUrl = URL.createObjectURL(
-      new Blob(
-        [
-          `
+      const iframeUrl = URL.createObjectURL(
+        new Blob(
+          [
+            `
         <!DOCTYPE html>
         <head>
           <meta charset="UTF-8" />
@@ -243,58 +256,56 @@ const ReactQuillSandbox: ForwardRefRenderFunction<
         </body>
         </html>
         `,
-        ],
-        {
-          type: 'text/html',
-        },
-      ),
+          ],
+          {
+            type: 'text/html',
+          },
+        ),
+      );
+      frameRef!.current!.src = iframeUrl;
+
+      return () => {
+        frameRef?.current?.removeEventListener('load', onLoad);
+        URL.revokeObjectURL(iframeUrl);
+        URL.revokeObjectURL(reactUrl);
+        URL.revokeObjectURL(reactDOMUrl);
+        URL.revokeObjectURL(reactQuillUrl);
+        URL.revokeObjectURL(propTypesUrl);
+      };
+    }, []);
+
+    /**
+     * useUpdateEffect
+     */
+    useUpdateEffect(() => {
+      value.current = props.value as string;
+
+      if (isMount.current) {
+        render().then(() => {});
+      }
+    }, [props.value]);
+
+    useUpdateEffect(() => {
+      if (isMount.current) {
+        render().then(() => {});
+      }
+    }, [_props]);
+
+    return (
+      <div
+        ref={wrapRef}
+        className={classNames(`${selectorPrefix}`, wrapClassName ?? '')}
+        style={wrapStyle ?? {}}
+      >
+        <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
+      </div>
     );
-    frameRef!.current!.src = iframeUrl;
-
-    return () => {
-      frameRef?.current?.removeEventListener('load', onLoad);
-      URL.revokeObjectURL(iframeUrl);
-      URL.revokeObjectURL(reactUrl);
-      URL.revokeObjectURL(reactDOMUrl);
-      URL.revokeObjectURL(reactQuillUrl);
-      URL.revokeObjectURL(propTypesUrl);
-    };
-  }, []);
-
-  /**
-   * useUpdateEffect
-   */
-  useUpdateEffect(() => {
-    value.current = props.value as string;
-
-    if (isMount.current) {
-      render().then(() => {});
-    }
-  }, [props.value]);
-
-  useUpdateEffect(() => {
-    if (isMount.current) {
-      render().then(() => {});
-    }
-  }, [_props]);
-
-  return (
-    <div
-      ref={wrapRef}
-      className={classNames(`${selectorPrefix}`, wrapClassName ?? '')}
-      style={wrapStyle ?? {}}
-    >
-      <iframe ref={frameRef} className={`${selectorPrefix}-frame`}></iframe>
-    </div>
-  );
-};
-
-const ReactQuillSandboxHOC = memo(
-  forwardRef<ReactQuillSandboxHandler, ReactQuillSandboxProps>(ReactQuillSandbox),
+  }),
 );
 
-// @ts-ignore
-ReactQuillSandboxHOC.AntdFormRequireValidator = (editor, tip) => ({
+const ReactQuillSandbox = InternalReactQuillSandbox as ReactQuillSandboxComponent;
+
+ReactQuillSandbox.AntdFormRequireValidator = (editor, tip) => ({
   validator: (rule, value, callback) => {
     if (editor?.()?.getLength?.() > 1) {
       callback();
@@ -304,4 +315,4 @@ ReactQuillSandboxHOC.AntdFormRequireValidator = (editor, tip) => ({
   },
 });
 
-export default ReactQuillSandboxHOC;
+export default ReactQuillSandbox;

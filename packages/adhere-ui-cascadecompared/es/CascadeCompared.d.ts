@@ -1,10 +1,10 @@
 import React from 'react';
-import { CascadeComparedProps } from './types';
+import { CascadeComparedHandle, CascadeComparedProps } from './types';
 /**
  * CascadeComparedProps
  * @param props
  * @param ref
  * @constructor
  */
-declare const CascadeCompared: React.NamedExoticComponent<CascadeComparedProps>;
+declare const CascadeCompared: React.NamedExoticComponent<CascadeComparedProps & React.RefAttributes<CascadeComparedHandle>>;
 export default CascadeCompared;

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, { forwardRef, memo, useMemo } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../Auto';
 import Fixed from '../Fixed';
@@ -13,8 +13,8 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  * @param _props
  * @param ref
  */
-const LCLayout = memo<TBLRCLayoutProps>(
-  forwardRef<any, TBLRCLayoutProps>((_props, ref) => {
+const LCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCLayoutProps>((_props, ref) => {
     const {
       wrapClassName,
       wrapStyle,

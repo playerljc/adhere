@@ -1,3 +1,4 @@
+import { PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties, NamedExoticComponent } from 'react';
 
 import JdCategoryTabItem from './Item';
@@ -9,7 +10,9 @@ export interface JdCategoryTabRefHandle {
 /**
  * JdCategoryTabHOCFunction
  */
-export type JdCategoryTabComponent = NamedExoticComponent<JdCategoryTabProps> & {
+export type JdCategoryTabComponent = NamedExoticComponent<
+  PropsWithoutRef<JdCategoryTabProps> & RefAttributes<JdCategoryTabRefHandle>
+> & {
   Item: typeof JdCategoryTabItem;
 };
 

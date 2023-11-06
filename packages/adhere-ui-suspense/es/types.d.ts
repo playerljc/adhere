@@ -34,7 +34,7 @@ export interface SuspenseSyncState extends SuspenseState {
 export interface SuspenseASyncProps extends SuspenseProps {
     isEmpty: () => boolean;
     renderEmpty?: Function;
-    children?: Function;
+    children?: ReactNode;
     fetchData?: Function;
 }
 export interface SuspenseASyncState extends SuspenseState {

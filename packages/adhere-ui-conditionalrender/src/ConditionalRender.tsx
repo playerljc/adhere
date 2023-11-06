@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 
-import ConditionalRenderShow from './show';
+import ConditionalRenderShow from './Show';
+import ConditionalRenderVisibility from './Visibility';
 import type { ConditionalRenderComponent, ConditionalRenderProps } from './types';
-import ConditionalRenderVisibility from './visibility';
 
 const InternalConditionalRender = memo<ConditionalRenderProps>((props) => {
   const { conditional, noMatch, children } = props;

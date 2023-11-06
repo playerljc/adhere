@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 import React, {
+  PropsWithoutRef,
+  RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -25,7 +27,7 @@ const defaultImg =
 
 const { useSetState } = Hooks;
 
-const PullRefresh = memo<PullRefreshProps>(
+const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullRefreshRefHandle>>(
   forwardRef<PullRefreshRefHandle, PullRefreshProps>((props, ref) => {
     const {
       className = '',
@@ -188,9 +190,9 @@ const PullRefresh = memo<PullRefreshProps>(
     }
 
     function initEvents() {
-      scrollEl.current?.addEventListener('touchstart', onTouchStart);
-      scrollEl.current?.addEventListener('mousedown', onTouchStart);
-      scrollEl.current?.addEventListener('scroll', onScroll);
+      scrollEl.current?.addEventListener?.('touchstart', onTouchStart);
+      scrollEl.current?.addEventListener?.('mousedown', onTouchStart);
+      scrollEl.current?.addEventListener?.('scroll', onScroll);
     }
 
     /**
@@ -269,7 +271,7 @@ const PullRefresh = memo<PullRefreshProps>(
 
       removeEvents();
 
-      scrollEl.current?.addEventListener('transitionend', onTransitionEnd);
+      scrollEl.current?.addEventListener?.('transitionend', onTransitionEnd);
 
       translateY(scrollEl.current, `${refreshHeight.current}px`, 500);
 
@@ -283,14 +285,14 @@ const PullRefresh = memo<PullRefreshProps>(
      */
     function reset() {
       function onTransitionEnd() {
-        scrollEl.current?.removeEventListener('transitionend', onTransitionEnd);
+        scrollEl.current?.removeEventListener?.('transitionend', onTransitionEnd);
 
         (triggerInnerEl.current as HTMLElement).style.display = 'flex';
       }
 
       clear();
 
-      scrollEl.current?.addEventListener('transitionend', onTransitionEnd);
+      scrollEl.current?.addEventListener?.('transitionend', onTransitionEnd);
 
       translateY(scrollEl.current, '0px', 200);
 
@@ -447,15 +449,15 @@ const PullRefresh = memo<PullRefreshProps>(
       if (e.target.scrollTop === 0) {
         isTop.current = true;
 
-        scrollEl.current?.addEventListener('touchstart', onTouchStart);
+        scrollEl.current?.addEventListener?.('touchstart', onTouchStart);
 
-        scrollEl.current?.addEventListener('mousedown', onTouchStart);
+        scrollEl.current?.addEventListener?.('mousedown', onTouchStart);
       } else if (isTop.current) {
         isTop.current = false;
 
-        scrollEl.current?.removeEventListener('touchstart', onTouchStart);
+        scrollEl.current?.removeEventListener?.('touchstart', onTouchStart);
 
-        scrollEl.current?.removeEventListener('mousedown', onTouchStart);
+        scrollEl.current?.removeEventListener?.('mousedown', onTouchStart);
       }
     }
 

@@ -1,8 +1,11 @@
+import { PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties, NamedExoticComponent } from 'react';
 
 import RevolvingItem from './Item';
 
-export type RevolvingComponent = NamedExoticComponent<RevolvingProps> & {
+export type RevolvingComponent = NamedExoticComponent<
+  PropsWithoutRef<RevolvingProps> & RefAttributes<RevolvingRefHandle>
+> & {
   Item: typeof RevolvingItem;
 };
 

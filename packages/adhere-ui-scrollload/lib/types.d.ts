@@ -1,6 +1,6 @@
-import { NamedExoticComponent } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties } from 'react';
-export type ScrollLoadComponent = NamedExoticComponent<ScrollLoadProps> & {
+export type ScrollLoadComponent = NamedExoticComponent<PropsWithoutRef<ScrollLoadProps> & RefAttributes<ScrollLoadRefHandle>> & {
     EMPTY: string;
     ERROR: string;
     NORMAL: string;

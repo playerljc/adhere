@@ -1,82 +1,43 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import React, { useState } from 'react';
+import { MenuProps } from 'antd';
+import React from 'react';
 
 import { Menu } from '@baifendian/adhere-ui-anthoc';
-import Dict from '@baifendian/adhere-util-dict';
 
 import { setItem } from '../ItemFactory';
-import { deepDep } from '../util';
+import { useDict, useDynamicDict } from '../hooks';
 
 /**
- * MenuFormItem
+ * MenuStandard
  */
-setItem('Menu', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  const [dataSource, setDataSource] = useState([]);
-
-  function loadData() {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      setDataSource(handler(cascadeParams));
-    } else {
-      setDataSource(handler);
-    }
-  }
-
-  useMount(() => {
-    loadData();
-  });
-
-  useUpdateEffect(() => {
-    loadData();
-  }, [deepDep(cascadeParams)]);
-
-  useUpdateEffect(() => {
-    onDataSourceChange?.(dataSource);
-  }, [dataSource]);
-
-  return <Menu {...props} items={dataSource} />;
-});
-
-/**
- * MenuDynamicFormItem
- */
-setItem(
-  'MenuDynamic',
-  'FormItem',
+setItem<MenuProps, MenuProps['items']>(
+  'Menu',
+  'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const [data, setData] = useState([]);
-
-      // 存放字典的返回值(可能是promise也可能是Function)
-      const handler = Dict.value[dictName].value;
-
-      function loadData() {
-        // 如果是Promise直接返回
-        if (handler instanceof Function) {
-          handler(cascadeParams).then((res) => {
-            setData(res);
-          });
-        } else if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      }
-
-      useMount(() => {
-        loadData();
+      const options = useDict<MenuProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
       });
 
-      useUpdateEffect(() => {
-        loadData();
-      }, [deepDep(cascadeParams)]);
+      return <Menu {...props} options={options} />;
+    },
+);
 
-      useUpdateEffect(() => {
-        onDataSourceChange?.(data);
-      }, [data]);
+/**
+ * MenuDynamicStandard
+ */
+setItem<MenuProps, MenuProps['items']>(
+  'MenuDynamic',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const options = useDynamicDict<MenuProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
 
-      return <Menu {...props} items={data} />;
+      return <Menu {...props} options={options} />;
     },
 );

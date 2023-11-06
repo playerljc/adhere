@@ -138,12 +138,14 @@ declare const _default: {
         };
         readonly List: {
             readonly Standard: "ListStandard";
+            readonly SuspenseStandard: "ListSuspenseStandard";
             readonly Select: "ListSelect";
             readonly MultiSelect: "ListMultiSelect";
             readonly CheckAllSelect: "ListCheckAllSelect";
         };
         readonly ListDynamic: {
             readonly Standard: "ListDynamicStandard";
+            readonly SuspenseStandard: "ListDynamicSuspenseStandard";
             readonly Select: "ListDynamicSelect";
             readonly MultiSelect: "ListDynamicMultiSelect";
             readonly CheckAllSelect: "ListDynamicCheckAllSelect";
@@ -151,6 +153,8 @@ declare const _default: {
         readonly ListPagination: {
             readonly Standard: "ListPagination";
             readonly Multi: "ListPaginationMulti";
+            readonly SuspenseStandard: "ListPaginationSuspenseStandard";
+            readonly SuspenseMulti: "ListPaginationSuspenseMulti";
             readonly Select: "ListPaginationSelect";
             readonly MultiSelect: "ListPaginationMultiSelect";
         };
@@ -163,17 +167,21 @@ declare const _default: {
         };
         readonly Table: {
             readonly Standard: "TableStandard";
+            readonly SuspenseStandard: "TableSuspenseStandard";
             readonly Select: "TableSelect";
             readonly MultiSelect: "TableMultiSelect";
         };
         readonly TableDynamic: {
             readonly Standard: "TableDynamicStandard";
+            readonly SuspenseStandard: "TableDynamicSuspenseStandard";
             readonly Select: "TableDynamicSelect";
             readonly MultiSelect: "TableDynamicMultiSelect";
         };
         readonly TablePagination: {
             readonly Standard: "TablePaginationStandard";
             readonly Multi: "TablePaginationMulti";
+            readonly SuspenseStandard: "TablePaginationSuspenseStandard";
+            readonly SuspenseMulti: "TablePaginationSuspenseMulti";
             readonly Select: "TablePaginationSelect";
             readonly MultiSelect: "TablePaginationMultiSelect";
         };
@@ -185,10 +193,12 @@ declare const _default: {
         };
         readonly Transfer: {
             readonly Standard: "TransferStandard";
+            readonly SuspenseStandard: "TransferSuspenseStandard";
             readonly Select: "TransferSelect";
         };
         readonly TransferDynamic: {
             readonly Standard: "TransferDynamicStandard";
+            readonly SuspenseStandard: "TransferDynamicSuspenseStandard";
             readonly Select: "TransferDynamicSelect";
         };
         readonly AutoCompleteTransfer: {
@@ -292,9 +302,11 @@ declare const _default: {
         };
         readonly Breadcrumb: {
             readonly Standard: "BreadcrumbStandard";
+            readonly SuspenseStandard: "BreadcrumbSuspenseStandard";
         };
         readonly BreadcrumbDynamic: {
             readonly Standard: "BreadcrumbDynamicStandard";
+            readonly SuspenseStandard: "BreadcrumbDynamicSuspenseStandard";
         };
         readonly Dropdown: {
             readonly Standard: "DropdownStandard";
@@ -304,9 +316,11 @@ declare const _default: {
         };
         readonly Mentions: {
             readonly Standard: "MentionsStandard";
+            readonly SuspenseStandard: "MentionsSuspenseStandard";
         };
         readonly MentionsDynamic: {
             readonly Standard: "MentionsDynamicStandard";
+            readonly SuspenseStandard: "MentionsDynamicSuspenseStandard";
         };
         readonly Menu: {
             readonly Standard: "MenuStandard";
@@ -316,21 +330,27 @@ declare const _default: {
         };
         readonly Segmented: {
             readonly Standard: "SegmentedStandard";
+            readonly SuspenseStandard: "SegmentedSuspenseStandard";
         };
         readonly SegmentedDynamic: {
             readonly Standard: "SegmentedDynamicStandard";
+            readonly SuspenseStandard: "SegmentedDynamicSuspenseStandard";
         };
         readonly Steps: {
             readonly Standard: "StepsStandard";
+            readonly SuspenseStandard: "StandardSuspenseStandard";
         };
         readonly StepsDynamic: {
             readonly Standard: "StepsDynamicStandard";
+            readonly SuspenseStandard: "StepsDynamicSuspenseStandard";
         };
         readonly Timeline: {
             readonly Standard: "TimelineStandard";
+            readonly SuspenseStandard: "TimelineSuspenseStandard";
         };
         readonly TimelineDynamic: {
             readonly Standard: "TimelineDynamicStandard";
+            readonly SuspenseStandard: "TimelineDynamicSuspenseStandard";
         };
     };
     genDictComponentName: (dictName: string, componentName: string) => string;

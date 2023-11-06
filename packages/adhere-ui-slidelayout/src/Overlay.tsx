@@ -1,5 +1,13 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import { slider } from './SlideLayout';
 import { OverlayProps, SlideLayoutHandle } from './types';
@@ -13,7 +21,7 @@ const selectorPrefix = 'adhere-ui-slide-layout-overlay';
  * @param ref
  * @constructor
  */
-const Overlay = memo<OverlayProps>(
+const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHandle>>(
   forwardRef<SlideLayoutHandle, OverlayProps>((props, ref) => {
     const {
       className = '',

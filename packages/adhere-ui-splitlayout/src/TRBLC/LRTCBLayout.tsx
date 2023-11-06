@@ -1,4 +1,4 @@
-import React, { forwardRef, memo } from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -9,8 +9,8 @@ import { TBLRCSplitLayoutProps } from '../types';
  * LRTCBLayout
  * @constructor
  */
-const LRTCBLayout = memo<TBLRCSplitLayoutProps>(
-  forwardRef<any, TBLRCSplitLayoutProps>(
+const LRTCBLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HTMLDivElement>>(
+  forwardRef<HTMLDivElement, TBLRCSplitLayoutProps>(
     ({ bSplitProps, lSplitProps, tSplitProps, rSplitProps, ...props }, ref) => {
       return (
         <FlexLayout.TRBLC.LRTCBLayout

@@ -1,5 +1,12 @@
 import classNames from 'classnames';
-import React, { ReactElement, forwardRef, memo, useContext } from 'react';
+import React, {
+  PropsWithoutRef,
+  ReactElement,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useContext,
+} from 'react';
 
 import Space from '@baifendian/adhere-ui-space';
 
@@ -18,7 +25,9 @@ const selectPrefix = 'adhere-ui-playground-page';
  * PlayGroundPage
  * @constructor
  */
-const InternalPlayGroundPage = memo<PlayGroundPageProps>(
+const InternalPlayGroundPage = memo<
+  PropsWithoutRef<PlayGroundPageProps> & RefAttributes<HTMLElement>
+>(
   forwardRef<HTMLElement, PlayGroundPageProps>((props, ref) => {
     const {
       className = '',

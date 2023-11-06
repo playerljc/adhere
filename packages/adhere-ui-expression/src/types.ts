@@ -1,4 +1,4 @@
-import { FC, ForwardRefRenderFunction, NamedExoticComponent } from 'react';
+import { FC, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties } from 'react';
 
 import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
@@ -113,7 +113,9 @@ export interface ViewProps extends EllipsisProps {
   value?: string;
 }
 
-export type ExpressionComponent = NamedExoticComponent<ExpressionProps<any>> & {
+export type ExpressionComponent = NamedExoticComponent<
+  PropsWithoutRef<ExpressionProps<any>> & RefAttributes<ExpressionHandle>
+> & {
   View: FC<ViewProps>;
   parse: (
     queryHtml: string,

@@ -1,6 +1,13 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
-import React, { forwardRef, memo, useCallback, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useCallback,
+  useRef,
+} from 'react';
 
 import MessageDialog from '@baifendian/adhere-ui-messagedialog';
 import Intl from '@baifendian/adhere-util-intl';
@@ -21,7 +28,7 @@ const selectorPrefix = 'adhere-ui-polygon-selection-cropping';
  * @param ref
  * @constructor
  */
-const InternalCropping = memo<CroppingProps>(
+const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<CroppingHandle>>(
   forwardRef<CroppingHandle, CroppingProps>(
     (
       { className, style, maskClassName, maskStyle, mask, value, onChange, modalProps, coreProps },

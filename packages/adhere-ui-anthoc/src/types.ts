@@ -21,17 +21,12 @@ import type { CheckableTagProps } from 'antd/es/tag';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
 
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 
 import ButtonRadio from './radio/ButtonRadio';
-import TablePaging from './table/TablePaging';
 import { createFactory } from './util';
-
-export type LabelValue = {
-  label: string;
-  value: string | number;
-};
 
 export type FormValidatorRulesType = {
   [prop: string]: (argv?: { params?: any; invalidMessage?: string }) => FormRule;
@@ -176,6 +171,8 @@ export type CheckboxListProps = ListProps<any> & {
 export type CheckboxPagingListProps = CheckboxListProps & PagingProps;
 
 export type ListPagingProps<T> = {
+  isSuspenseAsync?: boolean;
+  suspenseProps?: SuspenseASyncProps;
   pagingProps: PagingWrapperProps<T>;
   listPagingProps:
     | Omit<CheckboxPagingListProps, 'value' | 'onChange'>
@@ -189,6 +186,8 @@ export type ListPagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children
   Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
 
 export type TablePagingProps<T> = {
+  isSuspenseAsync?: boolean;
+  suspenseProps?: SuspenseASyncProps;
   pagingProps: PagingWrapperProps<T>;
   tablePagingProps:
     | Omit<CheckboxPagingTableProps, 'value' | 'onChange'>

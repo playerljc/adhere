@@ -1,82 +1,89 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import React, { useState } from 'react';
+import type { StepsProps } from 'antd';
+import React from 'react';
 
-import Dict from '@baifendian/adhere-util-dict';
+import { Steps } from '@baifendian/adhere-ui-anthoc';
 
+import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
-import StepsFormItem from '../StepsFormItem';
-import { deepDep } from '../util';
+import Suspense from '../Suspense';
+import { useDict, useDynamicDict } from '../hooks';
 
 /**
- * StepsFormItem
+ * StepsStandard
  */
-setItem('Steps', 'FormItem', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
-  const handler = Dict.value[dictName].value;
-
-  const [dataSource, setDataSource] = useState([]);
-
-  function loadData() {
-    // 如果是函数(一般是级联)
-    if (handler instanceof Function) {
-      setDataSource(handler(cascadeParams));
-    } else {
-      setDataSource(handler);
-    }
-  }
-
-  useMount(() => {
-    loadData();
-  });
-
-  useUpdateEffect(() => {
-    loadData();
-  }, [deepDep(cascadeParams)]);
-
-  useUpdateEffect(() => {
-    onDataSourceChange?.(dataSource);
-  }, [dataSource]);
-
-  return <StepsFormItem {...props} items={dataSource} />;
-});
-
-/**
- * StepsDynamicFormItem
- */
-setItem(
-  'StepsDynamic',
-  'FormItem',
+setItem<StepsProps, StepsProps['items']>(
+  'Steps',
+  'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const [data, setData] = useState([]);
-
-      // 存放字典的返回值(可能是promise也可能是Function)
-      const handler = Dict.value[dictName].value;
-
-      function loadData() {
-        // 如果是Promise直接返回
-        if (handler instanceof Function) {
-          handler(cascadeParams).then((res) => {
-            setData(res);
-          });
-        } else if (handler.then) {
-          handler.then((res) => {
-            setData(res);
-          });
-        }
-      }
-
-      useMount(() => {
-        loadData();
+      const options = useDict<StepsProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
       });
 
-      useUpdateEffect(() => {
-        loadData();
-      }, [deepDep(cascadeParams)]);
+      return <Steps {...props} options={options} />;
+    },
+);
 
-      useUpdateEffect(() => {
-        onDataSourceChange?.(data);
-      }, [data]);
+/**
+ * StepsSuspenseStandard
+ */
+setItem<SuspenseComponentProps<StepsProps>, StepsProps['items']>(
+  'Steps',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDict<StepsProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
 
-      return <StepsFormItem {...props} items={data} />;
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options}>
+          <Steps {...props} options={options} />
+        </Suspense>
+      );
+    },
+);
+
+/**
+ * StepsDynamicStandard
+ */
+setItem<StepsProps, StepsProps['items']>(
+  'StepsDynamic',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const options = useDynamicDict<StepsProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return <Steps {...props} options={options} />;
+    },
+);
+
+/**
+ * StepsDynamicSuspenseStandard
+ */
+setItem<SuspenseComponentProps<StepsProps>, StepsProps['items']>(
+  'StepsDynamic',
+  'SuspenseStandard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+      const options = useDynamicDict<StepsProps['items']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Suspense {...(suspenseProps ?? {})} data={options}>
+          <Steps {...props} options={options} />
+        </Suspense>
+      );
     },
 );

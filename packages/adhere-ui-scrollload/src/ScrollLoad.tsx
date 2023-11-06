@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React, {
+  PropsWithoutRef,
+  RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -18,7 +20,9 @@ const EMPTY = 'empty';
 const ERROR = 'error';
 const NORMAL = 'normal';
 
-const InternalScrollLoad = memo<ScrollLoadProps>(
+const InternalScrollLoad = memo<
+  PropsWithoutRef<ScrollLoadProps> & RefAttributes<ScrollLoadRefHandle>
+>(
   forwardRef<ScrollLoadRefHandle, ScrollLoadProps>((props, ref) => {
     const {
       className = '',

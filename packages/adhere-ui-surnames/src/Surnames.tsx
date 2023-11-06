@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React, {
+  PropsWithoutRef,
+  RefAttributes,
   forwardRef,
   memo,
   useCallback,
@@ -16,7 +18,7 @@ const selectorPrefix = 'adhere-ui-surnames';
 
 const DURATION = 100;
 
-const Surnames = memo<SurnamesProps>(
+const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRefHandle>>(
   forwardRef<SurnamesRefHandle, SurnamesProps>((props, ref) => {
     const {
       position = 'right',

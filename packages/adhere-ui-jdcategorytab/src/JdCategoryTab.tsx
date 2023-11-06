@@ -1,6 +1,14 @@
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll';
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 
@@ -11,7 +19,9 @@ const selectorPrefix = 'adhere-ui-jd-category-tab';
 
 const { useSetState } = Hooks;
 
-const InternalJdCategoryTab = memo<JdCategoryTabProps>(
+const InternalJdCategoryTab = memo<
+  PropsWithoutRef<JdCategoryTabProps> & RefAttributes<JdCategoryTabRefHandle>
+>(
   forwardRef<JdCategoryTabRefHandle, JdCategoryTabProps>((props, ref) => {
     const {
       className = '',
@@ -37,7 +47,7 @@ const InternalJdCategoryTab = memo<JdCategoryTabProps>(
     const el = useRef<HTMLDivElement | null>(null);
     const menuEl = useRef<HTMLDivElement | null>(null);
     const menuInnerEl = useRef<HTMLUListElement | null>(null);
-    const scroll = useRef<IScroll>();
+    const scroll = useRef<typeof IScroll>();
 
     function findElByKey(key) {
       const index = menuData.findIndex((t) => t.key === key);

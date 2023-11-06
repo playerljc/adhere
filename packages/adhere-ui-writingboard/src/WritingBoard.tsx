@@ -1,6 +1,14 @@
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import React, { forwardRef, memo, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, {
+  PropsWithoutRef,
+  RefAttributes,
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
 import Util from '@baifendian/adhere-util';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -16,7 +24,9 @@ const selectorPrefix = 'adhere-ui-writing-board';
  * @param ref
  * @constructor
  */
-const InternalWritingBoard = memo<WritingBoardProps>(
+const InternalWritingBoard = memo<
+  PropsWithoutRef<WritingBoardProps> & RefAttributes<WritingBoardHandle>
+>(
   forwardRef<WritingBoardHandle, WritingBoardProps>((props, ref) => {
     const {
       defaultMode = Mode.FREE,
