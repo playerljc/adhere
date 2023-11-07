@@ -33,12 +33,13 @@ const ListPaging = memo<ListPagingProps<any>>(
   }) => {
     const [currentValue, setCurrentValue] = useState(value);
 
-    const suspenseRef = useRef();
+    const suspenseRef = useRef<typeof Suspense.ASync>();
 
-    const { isMultiple, options, fetchData, renderProps } = usePagingRenderProps({
+    const { isMultiple, options, fetchData, renderProps, paging } = usePagingRenderProps({
       listPagingProps,
       mode,
       ...pagingProps,
+      suspenseRef: suspenseRef.current,
     });
 
     const onListPagingChange = useMemo<SelectProps['onChange']>(
@@ -48,6 +49,8 @@ const ListPaging = memo<ListPagingProps<any>>(
       },
       [onChange],
     );
+
+    const isEmpty = useCallback(() => paging.page === 1 && !options.length, [paging, options]);
 
     useMount(() => {
       if (!isSuspenseAsync) {
@@ -59,8 +62,9 @@ const ListPaging = memo<ListPagingProps<any>>(
       if (!isSuspenseAsync) {
         fetchData();
       } else {
+        suspenseRef.current.reset();
       }
-    }, [isSuspenseAsync]);
+    }, [isSuspenseAsync, suspenseRef.current]);
 
     useUpdateEffect(() => {
       setCurrentValue(value);
@@ -70,14 +74,19 @@ const ListPaging = memo<ListPagingProps<any>>(
       (children) => {
         if (isSuspenseAsync)
           return (
-            <Suspense.ASync ref={suspenseRef} {...(suspenseProps ?? {})} fetchData={fetchData}>
+            <Suspense.ASync
+              ref={suspenseRef}
+              {...(suspenseProps ?? {})}
+              fetchData={fetchData}
+              isEmpty={isEmpty}
+            >
               {children}
             </Suspense.ASync>
           );
 
         return <>{children}</>;
       },
-      [isSuspenseAsync],
+      [isSuspenseAsync, suspenseProps, paging, options],
     );
 
     return render([

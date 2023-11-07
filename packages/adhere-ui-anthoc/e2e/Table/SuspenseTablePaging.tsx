@@ -26,10 +26,12 @@ export default () => {
     console.log('paging', page, limit);
 
     return new Promise((resolve) => {
-      resolve({
-        totalCount: dataSource.length,
-        data: dataSource.slice((page - 1) * limit, page * limit),
-      });
+      setTimeout(() => {
+        resolve({
+          totalCount: dataSource.length,
+          data: dataSource.slice((page - 1) * limit, page * limit),
+        });
+      }, 2000);
     });
   }
 
@@ -38,7 +40,6 @@ export default () => {
       mode="multiple"
       value={value}
       onChange={setValue}
-      isSuspenseAsync={false}
       pagingProps={{
         loadData,
         defaultLimit: 5,

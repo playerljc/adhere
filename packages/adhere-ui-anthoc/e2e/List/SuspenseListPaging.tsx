@@ -21,10 +21,12 @@ export default () => {
 
   function loadData(page, limit) {
     return new Promise((resolve) => {
-      resolve({
-        totalCount: data.length,
-        data: data.slice((page - 1) * limit, page * limit),
-      });
+      setTimeout(() => {
+        resolve({
+          totalCount: data.length,
+          data: data.slice((page - 1) * limit, page * limit),
+        });
+      }, 1000);
     });
   }
 
@@ -33,7 +35,6 @@ export default () => {
       mode="multiple"
       value={value}
       onChange={setValue}
-      isSuspenseAsync={false}
       pagingProps={{
         loadData,
         defaultLimit: 5,

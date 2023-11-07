@@ -15,9 +15,9 @@ const { useScrollLayout } = FlexLayout;
 export function createFactory<P>(
   Component: any,
   defaultProps: Partial<P>,
-): FC<P> & {
+): typeof Component & {
   defaultProps?: Partial<P>;
-} & typeof Component /*{ [key in keyof typeof Component]?: T[key] }*/ {
+} /*{ [key in keyof typeof Component]?: T[key] }*/ {
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
 

@@ -21,6 +21,7 @@ import type { CheckableTagProps } from 'antd/es/tag';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
 
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import Suspense from '@baifendian/adhere-ui-suspense';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
@@ -337,9 +338,11 @@ export type UsePagingTableRenderProps = (arg: {
     | Omit<CheckboxPagingTableProps, 'value' | 'onChange'>
     | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
   mode?: SelectProps['mode'];
+  suspenseRef?: typeof Suspense.ASync;
 }) => {
   inputValue: string;
   options: any[];
+  paging: PagingProps['paging'];
   setInputValue: (value: ((prevState: string) => string) | string) => void;
   setPaging: (
     value:
@@ -379,9 +382,11 @@ export type UsePagingListRenderProps = (arg: {
     | Omit<CheckboxPagingListProps, 'value' | 'onChange'>
     | Omit<RadioPagingListProps, 'value' | 'onChange'>;
   mode?: SelectProps['mode'];
+  suspenseRef?: typeof Suspense.ASync;
 }) => {
   inputValue: string;
   options: any[];
+  paging: PagingProps['paging'];
   setInputValue: (value: ((prevState: string) => string) | string) => void;
   setPaging: (
     value:

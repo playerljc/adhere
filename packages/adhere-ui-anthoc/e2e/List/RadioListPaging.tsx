@@ -37,6 +37,7 @@ export default () => {
         console.log(_value);
         setValue(_value);
       }}
+      isSuspenseAsync={false}
       pagingProps={{
         loadData,
         defaultLimit: 5,

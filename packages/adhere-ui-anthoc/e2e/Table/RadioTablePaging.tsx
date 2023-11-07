@@ -37,6 +37,7 @@ export default () => {
     <Table.TablePaging
       value={value}
       onChange={setValue}
+      isSuspenseAsync={false}
       pagingProps={{
         loadData,
         defaultLimit: 5,

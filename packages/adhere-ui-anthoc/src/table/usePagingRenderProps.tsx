@@ -15,6 +15,7 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
   defaultLimit,
   tablePagingProps,
   mode,
+  suspenseRef,
 }) => {
   const kw = useRef<string | undefined>(undefined);
   const defaultPageSize = defaultLimit ?? DEFAULT_LIMIT;
@@ -32,9 +33,23 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
   const isMultiple = useMemo(() => mode === 'multiple', [mode]);
 
   function fetchData() {
-    return loadData?.(paging.page, paging.limit, kw.current)?.then?.(({ totalCount, data }) => {
-      setTotalCount(totalCount);
-      setOptions(data);
+    return new Promise((resolve, reject) => {
+      setPaging((_paging) => {
+        const { page: _currentPage, limit: _currentLimit } = _paging;
+
+        loadData?.(_currentPage, _currentLimit, kw.current)
+          ?.then?.((res) => {
+            const { totalCount, data } = res;
+
+            setTotalCount(totalCount);
+            setOptions(data);
+
+            resolve(res);
+          })
+          .catch((error) => reject(error));
+
+        return _paging;
+      });
     });
   }
 
@@ -68,12 +83,18 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
   }, [defaultPage, defaultLimit]);
 
   useUpdateEffect(() => {
+    if (suspenseRef) {
+      suspenseRef.fetchData?.();
+      return;
+    }
+
     fetchData();
   }, [paging]);
 
   return {
     inputValue,
     options,
+    paging,
     setInputValue,
     setPaging,
     defaultCurrentPage,
