@@ -1,5 +1,3 @@
-import { Spin, SpinProps } from 'antd';
+import Spin from './Spin';
 
-import { createFactory } from '../util';
-
-export default createFactory<SpinProps>(Spin, {});
+export default Spin;

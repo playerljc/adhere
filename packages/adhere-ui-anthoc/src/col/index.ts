@@ -1,5 +1,3 @@
-import { Col, ColProps } from 'antd';
+import Col from './Col';
 
-import { createFactory } from '../util';
-
-export default createFactory<ColProps>(Col, {});
+export default Col;

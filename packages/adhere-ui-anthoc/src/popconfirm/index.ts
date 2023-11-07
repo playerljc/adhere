@@ -1,5 +1,3 @@
-import { Popconfirm, PopconfirmProps } from 'antd';
+import Popconfirm from './Popconfirm';
 
-import { createFactory } from '../util';
-
-export default createFactory<PopconfirmProps>(Popconfirm, {});
+export default Popconfirm;

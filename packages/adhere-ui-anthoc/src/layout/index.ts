@@ -1,5 +1,3 @@
-import { Layout, LayoutProps } from 'antd';
+import Layout from './Layout';
 
-import { createFactory } from '../util';
-
-export default createFactory<LayoutProps>(Layout, {});
+export default Layout;

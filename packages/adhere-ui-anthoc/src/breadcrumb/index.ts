@@ -1,5 +1,3 @@
-import { Breadcrumb, BreadcrumbProps } from 'antd';
+import Breadcrumb from './Breadcrumb';
 
-import { createFactory } from '../util';
-
-export default createFactory<BreadcrumbProps>(Breadcrumb, {});
+export default Breadcrumb;

@@ -1,5 +1,3 @@
-import { QRCode, QRCodeProps } from 'antd';
+import QRCode from './QRCode';
 
-import { createFactory } from '../util';
-
-export default createFactory<QRCodeProps>(QRCode, {});
+export default QRCode;

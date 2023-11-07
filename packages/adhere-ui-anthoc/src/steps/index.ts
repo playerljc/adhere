@@ -1,5 +1,3 @@
-import { Steps, StepsProps } from 'antd';
+import Steps from './Steps';
 
-import { createFactory } from '../util';
-
-export default createFactory<StepsProps>(Steps, {});
+export default Steps;

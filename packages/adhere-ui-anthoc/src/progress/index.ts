@@ -1,5 +1,3 @@
-import { Progress, ProgressProps } from 'antd';
+import Progress from './Progress';
 
-import { createFactory } from '../util';
-
-export default createFactory<ProgressProps>(Progress, {});
+export default Progress;

@@ -1,11 +1,3 @@
-import { Modal, ModalProps } from 'antd';
+import Modal from './Modal';
 
-import { createFactory } from '../util';
-
-export default createFactory<ModalProps>(Modal, {
-  closable: true,
-  centered: true,
-  maskClosable: true,
-  destroyOnClose: true,
-  zIndex: 999,
-});
+export default Modal;

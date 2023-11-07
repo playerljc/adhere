@@ -1,5 +1,3 @@
-import { Tour, TourProps } from 'antd';
+import Tour from './Tour';
 
-import { createFactory } from '../util';
-
-export default createFactory<TourProps>(Tour, {});
+export default Tour;

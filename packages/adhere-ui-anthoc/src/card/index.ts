@@ -1,5 +1,3 @@
-import { Card, CardProps } from 'antd';
+import Card from './Card';
 
-import { createFactory } from '../util';
-
-export default createFactory<CardProps>(Card, {});
+export default Card;

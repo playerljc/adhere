@@ -1,5 +1,3 @@
-import { Skeleton, SkeletonProps } from 'antd';
+import Skeleton from './Skeleton';
 
-import { createFactory } from '../util';
-
-export default createFactory<SkeletonProps>(Skeleton, {});
+export default Skeleton;
