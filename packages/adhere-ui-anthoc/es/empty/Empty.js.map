@@ -1,0 +1,1 @@
+{"version":3,"file":"Empty.js","sources":["empty/Empty.js"],"sourcesContent":["import _Empty from \"antd/es/empty\";\nimport { createFactory } from '../util';\nvar EmptyHOC = createFactory(_Empty, {});\nexport default EmptyHOC;"],"names":["_Empty","createFactory","EmptyHOC"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,UAC9B,IAAIC,SAAWD,cAAcD,OAAQ,EAAE,iBACxBE"}

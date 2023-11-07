@@ -1,2 +1,2 @@
-import _Steps from"antd/es/steps";import{createFactory}from"../util";export default createFactory(_Steps,{});
+import Steps from"./Steps";export default Steps;
 //# sourceMappingURL=index.js.map

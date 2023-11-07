@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var antd_1=require("antd"),util_1=require("../util");exports.default=(0,util_1.createFactory)(antd_1.Statistic,{});
+"use strict";var __importDefault=function(t){return t&&t.__esModule?t:{default:t}},Statistic_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./Statistic")));exports.default=Statistic_1.default;
 //# sourceMappingURL=index.js.map

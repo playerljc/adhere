@@ -25,7 +25,6 @@ import Empty from './empty';
 import Flex from './flex';
 import FloatButton from './float-button';
 import Form from './form';
-import Grid from './grid';
 import Image from './image';
 import Input from './input';
 import InputNumberDecimal1 from './input-number-decimal1';
@@ -100,7 +99,6 @@ export {
   Flex,
   FloatButton,
   Form,
-  Grid,
   Image,
   Input,
   InputNumberDecimal1,

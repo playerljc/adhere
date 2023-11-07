@@ -1,2 +1,2 @@
-import _Tour from"antd/es/tour";import{createFactory}from"../util";export default createFactory(_Tour,{});
+import Tour from"./Tour";export default Tour;
 //# sourceMappingURL=index.js.map

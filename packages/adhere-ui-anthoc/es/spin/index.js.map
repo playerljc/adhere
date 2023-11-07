@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["spin/index.js"],"sourcesContent":["import _Spin from \"antd/es/spin\";\nimport { createFactory } from '../util';\nexport default createFactory(_Spin, {});"],"names":["_Spin","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["spin/index.js"],"sourcesContent":["import Spin from './Spin';\nexport default Spin;"],"names":["Spin"],"mappings":"OAAOA,SAAU,wBACFA"}

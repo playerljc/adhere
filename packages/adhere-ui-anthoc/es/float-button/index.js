@@ -1,2 +1,2 @@
-import _FloatButton from"antd/es/float-button";import{createFactory}from"../util";export default createFactory(_FloatButton,{});
+import FloatButton from"./FloatButton";export default FloatButton;
 //# sourceMappingURL=index.js.map

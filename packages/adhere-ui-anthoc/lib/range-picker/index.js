@@ -1,2 +1,2 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var antd_1=require("antd"),util_1=require("../util"),RangePicker=antd_1.DatePicker.RangePicker;exports.default=(0,util_1.createFactory)(RangePicker,{allowClear:!0,placement:"bottomLeft"});
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},RangePicker_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./RangePicker")));exports.default=RangePicker_1.default;
 //# sourceMappingURL=index.js.map

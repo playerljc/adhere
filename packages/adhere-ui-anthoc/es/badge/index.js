@@ -1,2 +1,2 @@
-import _Badge from"antd/es/badge";import{createFactory}from"../util";export default createFactory(_Badge,{});
+import Badge from"./Badge";export default Badge;
 //# sourceMappingURL=index.js.map

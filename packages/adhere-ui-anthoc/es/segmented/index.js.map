@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["segmented/index.js"],"sourcesContent":["import _Segmented from \"antd/es/segmented\";\nimport { createFactory } from '../util';\nexport default createFactory(_Segmented, {});"],"names":["_Segmented","createFactory"],"mappings":"OAAOA,eAAgB,2BACdC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}
+{"version":3,"file":"index.js","sources":["segmented/index.js"],"sourcesContent":["import Segmented from './Segmented';\nexport default Segmented;"],"names":["Segmented"],"mappings":"OAAOA,cAAe,6BACPA"}

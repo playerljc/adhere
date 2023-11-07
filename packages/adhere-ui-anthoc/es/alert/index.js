@@ -1,2 +1,2 @@
-import _Alert from"antd/es/alert";import{createFactory}from"../util";export default createFactory(_Alert,{});
+import Alert from"./Alert";export default Alert;
 //# sourceMappingURL=index.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"BackTop.js","sources":["back-top/BackTop.js"],"sourcesContent":["import _BackTop from \"antd/es/back-top\";\nimport { createFactory } from '../util';\nvar BackTopHOC = createFactory(_BackTop, {});\nexport default BackTopHOC;"],"names":["_BackTop","createFactory","BackTopHOC"],"mappings":"OAAOA,aAAc,0BACZC,aAA8B,KAAT,UAC9B,IAAIC,WAAaD,cAAcD,SAAU,EAAE,iBAC5BE"}

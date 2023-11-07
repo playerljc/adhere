@@ -1,0 +1,1 @@
+{"version":3,"file":"Card.js","sources":["card/Card.js"],"sourcesContent":["import _Card from \"antd/es/card\";\nimport { createFactory } from '../util';\nvar CardHOC = createFactory(_Card, {});\nexport default CardHOC;"],"names":["_Card","createFactory","CardHOC"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,UAC9B,IAAIC,QAAUD,cAAcD,MAAO,EAAE,iBACtBE"}

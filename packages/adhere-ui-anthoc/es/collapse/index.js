@@ -1,2 +1,2 @@
-import _Collapse from"antd/es/collapse";import{createFactory}from"../util";export default createFactory(_Collapse,{});
+import Collapse from"./Collapse";export default Collapse;
 //# sourceMappingURL=index.js.map

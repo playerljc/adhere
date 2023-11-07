@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["divider/index.js"],"sourcesContent":["import _Divider from \"antd/es/divider\";\nimport { createFactory } from '../util';\nexport default createFactory(_Divider, {});"],"names":["_Divider","createFactory"],"mappings":"OAAOA,aAAc,yBACZC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}
+{"version":3,"file":"index.js","sources":["divider/index.js"],"sourcesContent":["import Divider from './Divider';\nexport default Divider;"],"names":["Divider"],"mappings":"OAAOA,YAAa,2BACLA"}

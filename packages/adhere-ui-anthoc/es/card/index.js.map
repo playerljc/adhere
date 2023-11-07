@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["card/index.js"],"sourcesContent":["import _Card from \"antd/es/card\";\nimport { createFactory } from '../util';\nexport default createFactory(_Card, {});"],"names":["_Card","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["card/index.js"],"sourcesContent":["import Card from './Card';\nexport default Card;"],"names":["Card"],"mappings":"OAAOA,SAAU,wBACFA"}

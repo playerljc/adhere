@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["anchor/index.js"],"sourcesContent":["import _Anchor from \"antd/es/anchor\";\nimport { createFactory } from '../util';\nexport default createFactory(_Anchor, {});"],"names":["_Anchor","createFactory"],"mappings":"OAAOA,YAAa,wBACXC,aAA8B,KAAT,yBACfA,cAAcD,QAAS,EAAE"}
+{"version":3,"file":"index.js","sources":["anchor/index.js"],"sourcesContent":["import Anchor from './Anchor';\nexport default Anchor;"],"names":["Anchor"],"mappings":"OAAOA,WAAY,0BACJA"}

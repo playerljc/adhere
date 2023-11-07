@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["float-button/index.js"],"sourcesContent":["import _FloatButton from \"antd/es/float-button\";\nimport { createFactory } from '../util';\nexport default createFactory(_FloatButton, {});"],"names":["_FloatButton","createFactory"],"mappings":"OAAOA,iBAAkB,8BAChBC,aAA8B,KAAT,yBACfA,cAAcD,aAAc,EAAE"}
+{"version":3,"file":"index.js","sources":["float-button/index.js"],"sourcesContent":["import FloatButton from './FloatButton';\nexport default FloatButton;"],"names":["FloatButton"],"mappings":"OAAOA,gBAAiB,+BACTA"}

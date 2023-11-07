@@ -4,6 +4,7 @@ import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import type { FC } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
+import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 
 import type { TablePagingProps } from '../types';
 import CheckboxPagingTable from './CheckboxPagingTable';
@@ -17,6 +18,8 @@ import usePagingRenderProps from './usePagingRenderProps';
  * @param onChange
  * @param pagingProps
  * @param tablePagingProps
+ * @param isSuspenseAsync
+ * @param suspenseProps
  * @constructor
  */
 const TablePaging: FC<TablePagingProps<any>> = ({
@@ -30,7 +33,7 @@ const TablePaging: FC<TablePagingProps<any>> = ({
 }) => {
   const [currentValue, setCurrentValue] = useState(value);
 
-  const suspenseRef = useRef<typeof Suspense.ASync>();
+  const suspenseRef = useRef<ASync | null>(null);
 
   const { isMultiple, options, fetchData, renderProps, paging } = usePagingRenderProps({
     tablePagingProps,
@@ -59,7 +62,7 @@ const TablePaging: FC<TablePagingProps<any>> = ({
     if (!isSuspenseAsync) {
       fetchData();
     } else {
-      suspenseRef.current.reset();
+      suspenseRef?.current?.reset?.();
     }
   }, [isSuspenseAsync, suspenseRef.current]);
 
@@ -72,6 +75,7 @@ const TablePaging: FC<TablePagingProps<any>> = ({
       if (isSuspenseAsync)
         return (
           <Suspense.ASync
+            // @ts-ignore
             ref={suspenseRef}
             {...(suspenseProps ?? {})}
             fetchData={fetchData}

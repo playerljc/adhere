@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import _Space from \"antd/es/space\";\nimport { createFactory } from '../util';\nexport default createFactory(_Space, {});"],"names":["_Space","createFactory"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}
+{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import Space from './Space';\nexport default Space;"],"names":["Space"],"mappings":"OAAOA,UAAW,yBACHA"}

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["popconfirm/index.js"],"sourcesContent":["import _Popconfirm from \"antd/es/popconfirm\";\nimport { createFactory } from '../util';\nexport default createFactory(_Popconfirm, {});"],"names":["_Popconfirm","createFactory"],"mappings":"OAAOA,gBAAiB,4BACfC,aAA8B,KAAT,yBACfA,cAAcD,YAAa,EAAE"}
+{"version":3,"file":"index.js","sources":["popconfirm/index.js"],"sourcesContent":["import Popconfirm from './Popconfirm';\nexport default Popconfirm;"],"names":["Popconfirm"],"mappings":"OAAOA,eAAgB,8BACRA"}

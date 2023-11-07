@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["switch/index.js"],"sourcesContent":["import _Switch from \"antd/es/switch\";\nimport { createFactory } from '../util';\nexport default createFactory(_Switch, {});"],"names":["_Switch","createFactory"],"mappings":"OAAOA,YAAa,wBACXC,aAA8B,KAAT,yBACfA,cAAcD,QAAS,EAAE"}
+{"version":3,"file":"index.js","sources":["switch/index.js"],"sourcesContent":["import Switch from './Switch';\nexport default Switch;"],"names":["Switch"],"mappings":"OAAOA,WAAY,0BACJA"}

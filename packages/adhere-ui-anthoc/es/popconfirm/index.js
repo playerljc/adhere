@@ -1,2 +1,2 @@
-import _Popconfirm from"antd/es/popconfirm";import{createFactory}from"../util";export default createFactory(_Popconfirm,{});
+import Popconfirm from"./Popconfirm";export default Popconfirm;
 //# sourceMappingURL=index.js.map

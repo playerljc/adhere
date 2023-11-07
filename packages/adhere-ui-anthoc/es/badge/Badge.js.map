@@ -1,0 +1,1 @@
+{"version":3,"file":"Badge.js","sources":["badge/Badge.js"],"sourcesContent":["import _Badge from \"antd/es/badge\";\nimport { createFactory } from '../util';\nvar BadgeHoc = createFactory(_Badge, {});\nexport default BadgeHoc;"],"names":["_Badge","createFactory","BadgeHoc"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,UAC9B,IAAIC,SAAWD,cAAcD,OAAQ,EAAE,iBACxBE"}

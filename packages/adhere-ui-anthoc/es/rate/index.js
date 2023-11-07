@@ -1,2 +1,2 @@
-import _Rate from"antd/es/rate";import{createFactory}from"../util";export default createFactory(_Rate,{});
+import Rate from"./Rate";export default Rate;
 //# sourceMappingURL=index.js.map

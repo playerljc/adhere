@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import Watermark from './Watermark';
+export default Watermark;

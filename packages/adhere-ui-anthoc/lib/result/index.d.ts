@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import Result from './Result';
+export default Result;

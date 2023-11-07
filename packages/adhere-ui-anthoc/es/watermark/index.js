@@ -1,2 +1,2 @@
-import _Watermark from"antd/es/watermark";import{createFactory}from"../util";export default createFactory(_Watermark,{});
+import Watermark from"./Watermark";export default Watermark;
 //# sourceMappingURL=index.js.map

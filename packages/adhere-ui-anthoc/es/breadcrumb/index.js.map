@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["breadcrumb/index.js"],"sourcesContent":["import _Breadcrumb from \"antd/es/breadcrumb\";\nimport { createFactory } from '../util';\nexport default createFactory(_Breadcrumb, {});"],"names":["_Breadcrumb","createFactory"],"mappings":"OAAOA,gBAAiB,4BACfC,aAA8B,KAAT,yBACfA,cAAcD,YAAa,EAAE"}
+{"version":3,"file":"index.js","sources":["breadcrumb/index.js"],"sourcesContent":["import Breadcrumb from './Breadcrumb';\nexport default Breadcrumb;"],"names":["Breadcrumb"],"mappings":"OAAOA,eAAgB,8BACRA"}

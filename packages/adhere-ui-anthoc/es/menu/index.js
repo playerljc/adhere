@@ -1,2 +1,2 @@
-import _Menu from"antd/es/menu";import{createFactory}from"../util";export default createFactory(_Menu,{});
+import Menu from"./Menu";export default Menu;
 //# sourceMappingURL=index.js.map

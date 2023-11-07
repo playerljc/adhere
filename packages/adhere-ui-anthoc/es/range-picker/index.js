@@ -1,2 +1,2 @@
-import _DatePicker from"antd/es/date-picker";import{createFactory}from"../util";var RangePicker=_DatePicker.RangePicker;export default createFactory(RangePicker,{allowClear:!0,placement:"bottomLeft"});
+import RangePicker from"./RangePicker";export default RangePicker;
 //# sourceMappingURL=index.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["flex/index.js"],"sourcesContent":["import _Flex from \"antd/es/flex\";\nimport { createFactory } from '../util';\nexport default createFactory(_Flex, {});"],"names":["_Flex","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["flex/index.js"],"sourcesContent":["import Flex from './Flex';\nexport default Flex;"],"names":["Flex"],"mappings":"OAAOA,SAAU,wBACFA"}

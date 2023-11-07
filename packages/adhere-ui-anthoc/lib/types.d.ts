@@ -6,14 +6,12 @@ import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import ASync from '@baifendian/adhere-ui-suspense/es/Async';
+import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 import ButtonRadio from './radio/ButtonRadio';
 import { createFactory } from './util';
-export type LabelValue = {
-    label: string;
-    value: string | number;
-};
 export type FormValidatorRulesType = {
     [prop: string]: (argv?: {
         params?: any;
@@ -118,6 +116,8 @@ export type CheckboxListProps = ListProps<any> & {
 };
 export type CheckboxPagingListProps = CheckboxListProps & PagingProps;
 export type ListPagingProps<T> = {
+    isSuspenseAsync?: boolean;
+    suspenseProps?: SuspenseASyncProps;
     pagingProps: PagingWrapperProps<T>;
     listPagingProps: Omit<CheckboxPagingListProps, 'value' | 'onChange'> | Omit<RadioPagingListProps, 'value' | 'onChange'>;
     value?: DropdownRenderSelectProps['value'];
@@ -126,6 +126,8 @@ export type ListPagingProps<T> = {
 };
 export type ListPagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'children'> & Omit<ListPagingProps<T>, 'mode' | 'value' | 'onChange'>;
 export type TablePagingProps<T> = {
+    isSuspenseAsync?: boolean;
+    suspenseProps?: SuspenseASyncProps;
     pagingProps: PagingWrapperProps<T>;
     tablePagingProps: Omit<CheckboxPagingTableProps, 'value' | 'onChange'> | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
     value?: DropdownRenderSelectProps['value'];
@@ -221,9 +223,11 @@ export type UsePagingTableRenderProps = (arg: {
     defaultLimit?: number;
     tablePagingProps?: Omit<CheckboxPagingTableProps, 'value' | 'onChange'> | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
     mode?: SelectProps['mode'];
+    suspenseRef?: ASync | null;
 }) => {
     inputValue: string;
     options: any[];
+    paging: PagingProps['paging'];
     setInputValue: (value: ((prevState: string) => string) | string) => void;
     setPaging: (value: ((prevState: {
         limit: number;
@@ -260,9 +264,11 @@ export type UsePagingListRenderProps = (arg: {
     defaultLimit?: number;
     listPagingProps?: Omit<CheckboxPagingListProps, 'value' | 'onChange'> | Omit<RadioPagingListProps, 'value' | 'onChange'>;
     mode?: SelectProps['mode'];
+    suspenseRef?: ASync | null;
 }) => {
     inputValue: string;
     options: any[];
+    paging: PagingProps['paging'];
     setInputValue: (value: ((prevState: string) => string) | string) => void;
     setPaging: (value: ((prevState: {
         limit: number;

@@ -1,3 +1,2 @@
-import type { FormHOCComponent } from '../types';
-declare const FormHOC: FormHOCComponent;
-export default FormHOC;
+import Form from './Form';
+export default Form;

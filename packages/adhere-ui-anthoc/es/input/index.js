@@ -1,2 +1,2 @@
-import _Input from"antd/es/input";import{createFactory}from"../util";export default createFactory(_Input,{allowClear:!0,maxLength:1e3,showCount:!0});
+import Input from"./Input";export default Input;
 //# sourceMappingURL=index.js.map

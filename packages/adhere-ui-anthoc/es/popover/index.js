@@ -1,2 +1,2 @@
-import _Popover from"antd/es/popover";import{createFactory}from"../util";export default createFactory(_Popover,{});
+import Popover from"./Popover";export default Popover;
 //# sourceMappingURL=index.js.map

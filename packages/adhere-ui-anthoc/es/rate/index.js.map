@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["rate/index.js"],"sourcesContent":["import _Rate from \"antd/es/rate\";\nimport { createFactory } from '../util';\nexport default createFactory(_Rate, {});"],"names":["_Rate","createFactory"],"mappings":"OAAOA,UAAW,sBACTC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["rate/index.js"],"sourcesContent":["import Rate from './Rate';\nexport default Rate;"],"names":["Rate"],"mappings":"OAAOA,SAAU,wBACFA"}

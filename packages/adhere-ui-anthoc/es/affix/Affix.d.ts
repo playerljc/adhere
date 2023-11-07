@@ -1,6 +1,6 @@
+import { Affix } from 'antd';
 import type { AffixProps } from 'antd';
-import { FC } from 'react';
-declare const AffixHOC: FC<AffixProps> & {
+declare const AffixHOC: typeof Affix & {
     defaultProps?: Partial<AffixProps>;
 };
 export default AffixHOC;

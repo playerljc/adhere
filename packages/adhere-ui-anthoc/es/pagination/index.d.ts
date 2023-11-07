@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import Pagination from './Pagination';
+export default Pagination;

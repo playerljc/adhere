@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["watermark/index.js"],"sourcesContent":["import _Watermark from \"antd/es/watermark\";\nimport { createFactory } from '../util';\nexport default createFactory(_Watermark, {});"],"names":["_Watermark","createFactory"],"mappings":"OAAOA,eAAgB,2BACdC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}
+{"version":3,"file":"index.js","sources":["watermark/index.js"],"sourcesContent":["import Watermark from './Watermark';\nexport default Watermark;"],"names":["Watermark"],"mappings":"OAAOA,cAAe,6BACPA"}

@@ -1,2 +1,2 @@
-import _Mentions from"antd/es/mentions";import{createFactory}from"../util";export default createFactory(_Mentions,{});
+import Mentions from"./Mentions";export default Mentions;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-import _Image from"antd/es/image";import{createFactory}from"../util";export default createFactory(_Image,{});
+import Image from"./Image";export default Image;
 //# sourceMappingURL=index.js.map

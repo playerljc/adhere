@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["steps/index.js"],"sourcesContent":["import _Steps from \"antd/es/steps\";\nimport { createFactory } from '../util';\nexport default createFactory(_Steps, {});"],"names":["_Steps","createFactory"],"mappings":"OAAOA,WAAY,uBACVC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}
+{"version":3,"file":"index.js","sources":["steps/index.js"],"sourcesContent":["import Steps from './Steps';\nexport default Steps;"],"names":["Steps"],"mappings":"OAAOA,UAAW,yBACHA"}

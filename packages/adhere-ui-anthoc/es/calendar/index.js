@@ -1,2 +1,2 @@
-import _Calendar from"antd/es/calendar";import{createFactory}from"../util";export default createFactory(_Calendar,{});
+import Calendar from"./Calendar";export default Calendar;
 //# sourceMappingURL=index.js.map
