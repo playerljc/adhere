@@ -137,7 +137,7 @@ export function antdThemeToCssVariable(curTheme) {
 
   /* 全局的css Vars*/
   [...antdKeys, ...antdDesignKeys]
-    .map((_key) => Util.pascalCaseToKebabCase(`antd${Util.capitalized(_key)}`))
+    .map((_key) => Util.pascalCaseToKebabCase2(`antd${Util.capitalized(_key)}`))
     .forEach((varName) => {
       setCssVariable(varName);
     });
