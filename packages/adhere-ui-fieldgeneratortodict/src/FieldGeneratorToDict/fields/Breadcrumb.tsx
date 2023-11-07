@@ -22,7 +22,7 @@ setItem<BreadcrumbProps, BreadcrumbProps['items']>(
         onDataSourceChange,
       });
 
-      return <Breadcrumb {...props} options={options} />;
+      return <Breadcrumb {...props} items={options} />;
     },
 );
 
@@ -42,7 +42,7 @@ setItem<SuspenseComponentProps<BreadcrumbProps>, BreadcrumbProps['items']>(
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Breadcrumb {...props} options={options} />
+          <Breadcrumb {...props} items={options} />
         </Suspense>
       );
     },
@@ -62,7 +62,7 @@ setItem<BreadcrumbProps, BreadcrumbProps['items']>(
         onDataSourceChange,
       });
 
-      return <Breadcrumb {...props} options={options} />;
+      return <Breadcrumb {...props} items={options} />;
     },
 );
 
@@ -82,7 +82,7 @@ setItem<SuspenseComponentProps<BreadcrumbProps>, BreadcrumbProps['items']>(
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Breadcrumb {...props} options={options} />
+          <Breadcrumb {...props} items={options} />
         </Suspense>
       );
     },

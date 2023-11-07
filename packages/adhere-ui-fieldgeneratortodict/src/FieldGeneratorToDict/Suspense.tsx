@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
-// @ts-ignore
-import Suspense from '@baifendian/adhere-ui-suspense';
+
+import AdhereSuspense from '@baifendian/adhere-ui-suspense';
+
 import type { SuspenseProps } from '../types';
 
 /**
@@ -18,13 +19,13 @@ const Suspense = memo<SuspenseProps>((props) => {
   }, [data]);
 
   return (
-    <Suspense.Sync
+    <AdhereSuspense.Sync
       {...props}
       isEmpty={() => (isEmpty ? isEmpty?.(dataSource) : dataSource.length === 0)}
       renderEmpty={renderEmpty ? renderEmpty(dataSource) : emptyComponent}
     >
       {children}
-    </Suspense.Sync>
+    </AdhereSuspense.Sync>
   );
 });
 

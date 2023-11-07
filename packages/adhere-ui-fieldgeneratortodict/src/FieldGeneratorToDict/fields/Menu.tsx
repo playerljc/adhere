@@ -20,7 +20,7 @@ setItem<MenuProps, MenuProps['items']>(
         onDataSourceChange,
       });
 
-      return <Menu {...props} options={options} />;
+      return <Menu {...props} items={options} />;
     },
 );
 
@@ -38,6 +38,6 @@ setItem<MenuProps, MenuProps['items']>(
         onDataSourceChange,
       });
 
-      return <Menu {...props} options={options} />;
+      return <Menu {...props} items={options} />;
     },
 );

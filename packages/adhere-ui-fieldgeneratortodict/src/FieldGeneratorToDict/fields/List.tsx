@@ -12,10 +12,9 @@ import {
   ListSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
-import type { SuspenseAsyncComponentProps, SuspenseComponentProps } from '../../types';
+import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import SuspenseAsync from '../SuspenseAsync';
 import {
   useAutoCompleteDict,
   useAutoCompletePaging,
@@ -261,14 +260,11 @@ setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']
 /**
  * ListPaginationSuspenseStandard
  */
-setItem<
-  SuspenseAsyncComponentProps<ListPagingProps<any>>,
-  ListPagingProps<any>['listPagingProps']['options']
->(
+setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']>(
   'ListPagination',
   'SuspenseStandard',
   (dictName) =>
-    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const loadData = usePaging<ListPagingProps<any>['listPagingProps']['options']>({
         dictName,
         cascadeParams,
@@ -280,25 +276,18 @@ setItem<
         loadData,
       };
 
-      return (
-        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<List />}>
-          <List.ListPaging {...props} {...pagingProps} />
-        </SuspenseAsync>
-      );
+      return <List.ListPaging {...props} {...pagingProps} isSuspenseAsync />;
     },
 );
 
 /**
  * ListPaginationSuspenseMulti
  */
-setItem<
-  SuspenseAsyncComponentProps<ListPagingProps<any>>,
-  ListPagingProps<any>['listPagingProps']['options']
->(
+setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']>(
   'ListPagination',
   'SuspenseMulti',
   (dictName) =>
-    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const loadData = usePaging<ListPagingProps<any>['listPagingProps']['options']>({
         dictName,
         cascadeParams,
@@ -310,11 +299,7 @@ setItem<
         loadData,
       };
 
-      return (
-        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<List />}>
-          <List.ListPaging {...props} {...pagingProps} mode="multiple" />
-        </SuspenseAsync>
-      );
+      return <List.ListPaging {...props} {...pagingProps} mode="multiple" isSuspenseAsync />;
     },
 );
 

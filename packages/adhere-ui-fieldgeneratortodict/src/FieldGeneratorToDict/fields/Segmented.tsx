@@ -1,5 +1,6 @@
-import type { SegmentedProps } from 'antd';
+import type { SegmentedProps as AntdSegmentedProps } from 'antd';
 import React from 'react';
+import type { RefAttributes } from 'react';
 
 import { Segmented } from '@baifendian/adhere-ui-anthoc';
 
@@ -7,6 +8,8 @@ import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
 import { useDict, useDynamicDict } from '../hooks';
+
+type SegmentedProps = Omit<AntdSegmentedProps, 'ref'> & RefAttributes<HTMLDivElement>;
 
 /**
  * SegmentedStandard

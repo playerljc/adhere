@@ -22,7 +22,7 @@ setItem<StepsProps, StepsProps['items']>(
         onDataSourceChange,
       });
 
-      return <Steps {...props} options={options} />;
+      return <Steps {...props} items={options} />;
     },
 );
 
@@ -42,7 +42,7 @@ setItem<SuspenseComponentProps<StepsProps>, StepsProps['items']>(
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Steps {...props} options={options} />
+          <Steps {...props} items={options} />
         </Suspense>
       );
     },
@@ -62,7 +62,7 @@ setItem<StepsProps, StepsProps['items']>(
         onDataSourceChange,
       });
 
-      return <Steps {...props} options={options} />;
+      return <Steps {...props} items={options} />;
     },
 );
 
@@ -82,7 +82,7 @@ setItem<SuspenseComponentProps<StepsProps>, StepsProps['items']>(
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Steps {...props} options={options} />
+          <Steps {...props} items={options} />
         </Suspense>
       );
     },

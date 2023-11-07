@@ -22,7 +22,7 @@ setItem<TimelineProps, TimelineProps['items']>(
         onDataSourceChange,
       });
 
-      return <Timeline {...props} options={options} />;
+      return <Timeline {...props} items={options} />;
     },
 );
 
@@ -42,7 +42,7 @@ setItem<SuspenseComponentProps<TimelineProps>, TimelineProps['items']>(
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Timeline {...props} options={options} />
+          <Timeline {...props} items={options} />
         </Suspense>
       );
     },
@@ -62,7 +62,7 @@ setItem<TimelineProps, TimelineProps['items']>(
         onDataSourceChange,
       });
 
-      return <Timeline {...props} options={options} />;
+      return <Timeline {...props} items={options} />;
     },
 );
 
@@ -82,7 +82,7 @@ setItem<SuspenseComponentProps<TimelineProps>, TimelineProps['items']>(
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Timeline {...props} options={options} />
+          <Timeline {...props} items={options} />
         </Suspense>
       );
     },

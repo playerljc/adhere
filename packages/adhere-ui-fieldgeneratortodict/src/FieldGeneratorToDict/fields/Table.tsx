@@ -10,10 +10,9 @@ import type {
   TableSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
-import { SuspenseAsyncComponentProps, SuspenseComponentProps } from '../../types';
+import type { SuspenseComponentProps } from '../../types';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import SuspenseAsync from '../SuspenseAsync';
 import {
   useAutoCompleteDict,
   useAutoCompletePaging,
@@ -223,14 +222,11 @@ setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['option
 /**
  * TablePaginationSuspenseStandard
  */
-setItem<
-  SuspenseAsyncComponentProps<TablePagingProps<any>>,
-  TablePagingProps<any>['tablePagingProps']['options']
->(
+setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['options']>(
   'TablePagination',
   'SuspenseStandard',
   (dictName) =>
-    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const loadData = usePaging<TablePagingProps<any>['tablePagingProps']['options']>({
         dictName,
         cascadeParams,
@@ -242,25 +238,18 @@ setItem<
         loadData,
       };
 
-      return (
-        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<Table />}>
-          <Table.TablePaging {...props} {...pagingProps} />
-        </SuspenseAsync>
-      );
+      return <Table.TablePaging {...props} {...pagingProps} isSuspenseAsync />;
     },
 );
 
 /**
  * TablePaginationSuspenseMulti
  */
-setItem<
-  SuspenseAsyncComponentProps<TablePagingProps<any>>,
-  TablePagingProps<any>['tablePagingProps']['options']
->(
+setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['options']>(
   'TablePagination',
   'SuspenseMulti',
   (dictName) =>
-    ({ cascadeParams, onDataSourceChange, suspenseProps, ...props }) => {
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
       const loadData = usePaging<TablePagingProps<any>['tablePagingProps']['options']>({
         dictName,
         cascadeParams,
@@ -272,11 +261,7 @@ setItem<
         loadData,
       };
 
-      return (
-        <SuspenseAsync {...(suspenseProps ?? {})} fetchData={loadData} emptyComponent={<Table />}>
-          <Table.TablePaging {...props} {...pagingProps} mode="multiple" />
-        </SuspenseAsync>
-      );
+      return <Table.TablePaging {...props} {...pagingProps} mode="multiple" isSuspenseAsync />;
     },
 );
 
