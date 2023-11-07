@@ -5,8 +5,6 @@ import React, { ReactElement } from 'react';
 
 import Spin from '@baifendian/adhere-ui-spin';
 
-import SuspenseAsync from './Async';
-import SuspenseSync from './Sync';
 import { ISuspense, SuspenseProps, SuspenseState } from './types';
 
 const selectorPrefix = 'adhere-ui-suspense';
@@ -36,8 +34,6 @@ abstract class Suspense<
 
   static defaultProps: any;
   static propTypes: any;
-  static Sync = SuspenseSync;
-  static ASync = SuspenseAsync;
 
   /**
    * fetchData - 加载数据
@@ -184,5 +180,7 @@ Suspense.propTypes = {
   firstLoading: PropTypes.node,
   renderNormalLoading: PropTypes.func,
 };
+
+// 前女友閨密
 
 export default Suspense;

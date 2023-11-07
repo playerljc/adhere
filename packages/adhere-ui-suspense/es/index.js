@@ -1,2 +1,2 @@
-import Suspense from"./Suspense";export default Suspense;
+import Suspense from"./SuspenseImpl";export default Suspense;
 //# sourceMappingURL=index.js.map
