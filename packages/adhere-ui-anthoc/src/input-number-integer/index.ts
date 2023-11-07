@@ -1,5 +1,3 @@
-import { InputNumber, InputNumberProps } from 'antd';
+import InputNumberInteger from './InputNumberInteger';
 
-import { createFactory } from '../util';
-
-export default createFactory<InputNumberProps>(InputNumber, { precision: 0 });
+export default InputNumberInteger;

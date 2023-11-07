@@ -1,5 +1,3 @@
-import { Button, ButtonProps } from 'antd';
+import Button from './Button';
 
-import { createFactory } from '../util';
-
-export default createFactory<ButtonProps>(Button, {});
+export default Button;

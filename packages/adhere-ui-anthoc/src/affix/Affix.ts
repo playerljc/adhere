@@ -1,10 +1,9 @@
 import { Affix } from 'antd';
 import type { AffixProps } from 'antd';
-import type { FC } from 'react';
 
 import { createFactory } from '../util';
 
-const AffixHOC: FC<AffixProps> & {
+const AffixHOC: typeof Affix & {
   defaultProps?: Partial<AffixProps>;
 } = createFactory<AffixProps>(Affix, {});
 

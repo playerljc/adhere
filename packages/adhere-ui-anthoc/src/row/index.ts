@@ -1,5 +1,3 @@
-import { Row, RowProps } from 'antd';
+import Row from './Row';
 
-import { createFactory } from '../util';
-
-export default createFactory<RowProps>(Row, {});
+export default Row;

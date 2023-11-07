@@ -1,5 +1,3 @@
-import { FloatButton, FloatButtonProps } from 'antd';
+import FloatButton from './FloatButton';
 
-import { createFactory } from '../util';
-
-export default createFactory<FloatButtonProps>(FloatButton, {});
+export default FloatButton;

@@ -1,5 +1,3 @@
-import { Timeline, TimelineProps } from 'antd';
+import Timeline from './Timeline';
 
-import { createFactory } from '../util';
-
-export default createFactory<TimelineProps>(Timeline, {});
+export default Timeline;

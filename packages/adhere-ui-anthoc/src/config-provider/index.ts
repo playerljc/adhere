@@ -1,6 +1,3 @@
-import { ConfigProvider } from 'antd';
-import { ConfigProviderProps } from 'antd/es/config-provider';
+import ConfigProvider from './ConfigProvider';
 
-import { createFactory } from '../util';
-
-export default createFactory<ConfigProviderProps>(ConfigProvider, {});
+export default ConfigProvider;

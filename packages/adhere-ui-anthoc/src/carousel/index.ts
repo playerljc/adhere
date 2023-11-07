@@ -1,5 +1,3 @@
-import { Carousel, CarouselProps } from 'antd';
+import Carousel from './Carousel';
 
-import { createFactory } from '../util';
-
-export default createFactory<CarouselProps>(Carousel, {});
+export default Carousel;

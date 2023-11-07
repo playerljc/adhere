@@ -1,5 +1,3 @@
-import { Space, SpaceProps } from 'antd';
+import Space from './Space';
 
-import { createFactory } from '../util';
-
-export default createFactory<SpaceProps>(Space, {});
+export default Space;

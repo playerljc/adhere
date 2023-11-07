@@ -1,9 +1,3 @@
-import { Input, InputProps } from 'antd';
+import Input from './Input';
 
-import { createFactory } from '../util';
-
-export default createFactory<InputProps>(Input, {
-  allowClear: true,
-  maxLength: 1000,
-  showCount: true,
-});
+export default Input;

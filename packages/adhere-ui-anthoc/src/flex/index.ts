@@ -1,5 +1,3 @@
-import { Flex, FlexProps } from 'antd';
+import Flex from './Flex';
 
-import { createFactory } from '../util';
-
-export default createFactory<FlexProps>(Flex, {});
+export default Flex;

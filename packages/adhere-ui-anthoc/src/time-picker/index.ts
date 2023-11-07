@@ -1,8 +1,3 @@
-import { TimePicker, TimePickerProps } from 'antd';
+import TimePicker from './TimePicker';
 
-import { createFactory } from '../util';
-
-export default createFactory<TimePickerProps>(TimePicker, {
-  allowClear: true,
-  placement: 'bottomLeft',
-});
+export default TimePicker;

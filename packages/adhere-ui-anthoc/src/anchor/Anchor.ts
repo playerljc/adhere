@@ -1,10 +1,9 @@
 import { Anchor } from 'antd';
 import type { AnchorProps } from 'antd';
-import type { FC } from 'react';
 
 import { createFactory } from '../util';
 
-const AnchorHOC: FC<AnchorProps> & {
+const AnchorHOC: typeof Anchor & {
   defaultProps?: Partial<AnchorProps>;
 } = createFactory<AnchorProps>(Anchor, {});
 

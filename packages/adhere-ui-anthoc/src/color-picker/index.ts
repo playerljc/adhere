@@ -1,5 +1,3 @@
-import { ColorPicker, ColorPickerProps } from 'antd';
+import ColorPicker from './ColorPicker';
 
-import { createFactory } from '../util';
-
-export default createFactory<ColorPickerProps>(ColorPicker, {});
+export default ColorPicker;

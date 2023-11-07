@@ -1,5 +1,3 @@
-import { Dropdown, DropdownProps } from 'antd';
+import Dropdown from './Dropdown';
 
-import { createFactory } from '../util';
-
-export default createFactory<DropdownProps>(Dropdown, {});
+export default Dropdown;

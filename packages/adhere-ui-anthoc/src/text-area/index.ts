@@ -1,13 +1,3 @@
-import { Input } from 'antd';
-import { TextAreaProps } from 'antd/es/input';
+import TextArea from './TextArea';
 
-import { createFactory } from '../util';
-
-const { TextArea } = Input;
-
-export default createFactory<TextAreaProps>(TextArea, {
-  allowClear: true,
-  maxLength: 1000,
-  showCount: true,
-  autoSize: false,
-});
+export default TextArea;

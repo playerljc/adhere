@@ -1,5 +1,3 @@
-import { Descriptions, DescriptionsProps } from 'antd';
+import Descriptions from './Descriptions';
 
-import { createFactory } from '../util';
-
-export default createFactory<DescriptionsProps>(Descriptions, {});
+export default Descriptions;
