@@ -109,6 +109,13 @@ declare const _default: {
      */
     pascalCaseToKebabCase(_str: any, symbol?: string): any;
     /**
+     * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
+     * @param name
+     * @param symbol 分隔符
+     * @return {string}
+     */
+    pascalCaseToKebabCase2(name: any, symbol?: string): any;
+    /**
      * execExpression - 执行表达式
      * @param context - {Object} 执行的上下文
      * @param expressionStr - {String} 表达式

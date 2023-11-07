@@ -271,6 +271,7 @@ declare const _default: {
     isKebabCase(name: any): boolean;
     isPascalCase(name: any): boolean;
     pascalCaseToKebabCase(_str: any, symbol?: string): any;
+    pascalCaseToKebabCase2(name: any, symbol?: string): any;
     execExpression(context: any, expressionStr: any, data: any): any;
     getCookie(name?: string): string;
     noop(): Function;

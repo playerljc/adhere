@@ -194,6 +194,16 @@ export default {
     return cells.map((c) => c.toLowerCase()).join(symbol);
   },
   /**
+   * pascalCaseToKebabCase 驼峰转xxx-xxx-xxx
+   * @param name
+   * @param symbol 分隔符
+   * @return {string}
+   */
+  pascalCaseToKebabCase2(name, symbol = '-') {
+    const result = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2');
+    return (result.startsWith(symbol) ? result.substring(1) : result).toLowerCase();
+  },
+  /**
    * execExpression - 执行表达式
    * @param context - {Object} 执行的上下文
    * @param expressionStr - {String} 表达式
