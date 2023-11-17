@@ -1,4 +1,4 @@
-import intl from 'react-intl-universal';
+/// <reference types="react-intl-universal" />
 /**
  * getLocal
  * @description 生成k,v的对象
@@ -57,7 +57,7 @@ declare const _default: {
     /**
      * getInitOptions
      */
-    getInitOptions(): intl.ReactIntlUniversalOptions;
+    getInitOptions(): import("react-intl-universal").ReactIntlUniversalOptions;
     /**
      * formatMessage
      * @param options

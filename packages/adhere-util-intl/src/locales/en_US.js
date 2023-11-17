@@ -106,4 +106,5 @@ export default [
   'Column settings',
   'Export excel',
   'Close',
+  'Exporting',
 ];
