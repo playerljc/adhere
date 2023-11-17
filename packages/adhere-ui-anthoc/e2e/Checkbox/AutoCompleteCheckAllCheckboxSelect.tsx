@@ -10,7 +10,7 @@ export default () => {
 
   return (
     <Checkbox.AutoCompleteCheckAllCheckboxSelect
-      placeholder="AutoCompleteCheckAllCheckboxSelect"
+      placeholder="AutoCompleteCheckAllCheckboxSelect111"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}

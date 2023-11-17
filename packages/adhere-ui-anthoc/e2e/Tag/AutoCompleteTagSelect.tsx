@@ -11,6 +11,7 @@ export default () => {
   return (
     <Tag.AutoCompleteTagSelect
       placeholder="AutoCompleteTagSelect"
+      mode="multiple"
       style={{ width: 600 }}
       value={value}
       options={options}

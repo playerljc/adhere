@@ -22,13 +22,13 @@ const AutoCompleteSelectInput = memo<AutoCompleteSelectInputProps>(
       if (value?.inputValue) return value?.inputValue;
 
       if (value?.selectValue) return options?.find((t) => t.value === value?.selectValue)?.label;
-    }, [value, value?.inputValue, value?.selectValue]);
+    }, [value, value?.inputValue, value?.selectValue, options]);
 
     const _options = useMemo(() => {
       if (!value?.inputValue) return options || [];
 
       return options?.filter?.((t) => (t?.label as string)?.includes?.(value?.inputValue)) || [];
-    }, [value, value?.inputValue, value?.selectValue]);
+    }, [value, value?.inputValue, value?.selectValue, options]);
 
     // 选择Select的时候调用
     const onSelect = (selectValue) => {

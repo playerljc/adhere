@@ -74,6 +74,7 @@ const TablePaging: FC<TablePagingProps<any>> = ({
     (children) => {
       if (isSuspenseAsync)
         return (
+          // @ts-ignore
           <Suspense.ASync
             // @ts-ignore
             ref={suspenseRef}

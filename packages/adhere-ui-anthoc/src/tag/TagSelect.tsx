@@ -23,6 +23,7 @@ const TagSelect: FC<TagSelectProps> = ({ tagProps, ...props }) => {
             ...rest,
             onChange: (_value) => rest.onChange?.(_value, []),
           })}
+          mode={props.mode === 'multiple' ? 'multiple' : 'single'}
         />
       )}
     </DropdownRenderSelect>

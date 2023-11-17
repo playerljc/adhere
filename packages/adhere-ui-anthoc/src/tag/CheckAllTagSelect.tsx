@@ -23,6 +23,7 @@ const CheckAllTagSelect: FC<CheckAllTagSelectProps> = ({ tagProps, ...props }) =
             ...rest,
             onChange: (_value) => rest.onChange?.(_value, []),
           })}
+          mode="multiple"
         />
       )}
     </CheckAllMultipleSelect>

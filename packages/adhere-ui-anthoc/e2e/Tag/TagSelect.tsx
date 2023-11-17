@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import Tag from '../../src/tag';
 
 export default () => {
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState([]);
 
   return (
     <Tag.TagSelect
-      // mode="multiple"
+      mode="multiple"
       style={{ width: 200 }}
       placeholder="A-Z"
       value={value}

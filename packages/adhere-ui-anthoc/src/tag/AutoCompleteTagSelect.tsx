@@ -35,6 +35,7 @@ const AutoCompleteTagSelect: FC<AutoCompleteTagSelectProps> = ({ tagProps, ...pr
                 ...rest,
                 onChange: (_value) => rest.onChange?.(_value, []),
               })}
+              mode={props.mode === 'multiple' ? 'multiple' : 'single'}
             />
           )}
         </>

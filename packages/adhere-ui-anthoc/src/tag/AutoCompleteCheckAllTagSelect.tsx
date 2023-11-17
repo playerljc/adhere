@@ -31,6 +31,7 @@ const AutoCompleteCheckAllTagSelect: FC<AutoCompleteCheckAllTagSelectProps> = ({
                 ...rest,
                 onChange: (_value) => rest.onChange?.(_value, []),
               })}
+              mode="multiple"
             />
           )}
         </>

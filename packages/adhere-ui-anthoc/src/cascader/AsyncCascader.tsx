@@ -23,7 +23,6 @@ const AsyncCascader: FC<AsyncCascaderProps> = ({
   fetchBranch,
   fetchData,
   defaultId,
-  treeDataSimpleMode,
   onChange,
   ...props
 }) => {
@@ -38,7 +37,7 @@ const AsyncCascader: FC<AsyncCascaderProps> = ({
     fetchData,
     defaultId,
     value: props.value,
-    treeDataSimpleMode: treeDataSimpleMode,
+    treeDataSimpleMode: props.treeDataSimpleMode,
   });
 
   return (
