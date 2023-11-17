@@ -14,6 +14,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -33,6 +34,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",
     "@baifendian/adhere-mobile-ui-confirm-delconfirm": "^2.10.28",
     "@baifendian/adhere-mobile-ui-confirm-importantconfirm": "^2.10.28",
     "@baifendian/adhere-mobile-ui-globalindicator": "^2.10.28",
@@ -41,7 +43,6 @@
     "@baifendian/adhere-mobile-ui-prompt-warnprompt": "^2.10.28",
     "@baifendian/adhere-mobile-ui-tabs": "^2.10.28",
     "@baifendian/adhere-mobile-ui-time-picker-view": "^2.10.28",
-    "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",
     "@baifendian/adhere-ui-auto-complete": "^2.10.28",
     "@baifendian/adhere-ui-backtopanimation": "^2.10.28",
     "@baifendian/adhere-ui-bmap": "^2.10.28",

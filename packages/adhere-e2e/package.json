@@ -15,6 +15,7 @@
   "author": "playerljc",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
