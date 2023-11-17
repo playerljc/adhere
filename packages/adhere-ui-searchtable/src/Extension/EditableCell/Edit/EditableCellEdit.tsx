@@ -161,7 +161,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       type,
       props: formItemNodeProps,
       dictName: props.editableConfig.dictName,
-      renderChildren: props.editableConfig.renderChildren,
+      // renderChildren: props.editableConfig.renderChildren,
       form,
       dataIndex,
       rowIndex,

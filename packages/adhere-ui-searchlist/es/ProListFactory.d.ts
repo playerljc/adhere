@@ -25,7 +25,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         getLimit(): number;
         getFetchDataParams(): {};
         getTableColumns(): any;
-        getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/lib/types").ColumnTypeExt): JSX.Element;
+        getTableColumnSearchHeaderIcon(column: import("@baifendian/adhere-ui-searchtable/es/types").ColumnTypeExt): React.JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
@@ -51,9 +51,9 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             value: React.ReactNode;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
-        renderSearchForm(): JSX.Element;
+        renderSearchForm(): React.JSX.Element;
         renderSearchFormToolBarItems(_defaultItems: any): any[];
-        renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
+        renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];
         getSearchFooterItemsEllipsisCount(): number;
         isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
@@ -63,7 +63,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             column: any;
             dataIndex: any;
         }): React.ReactNode;
-        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
 };

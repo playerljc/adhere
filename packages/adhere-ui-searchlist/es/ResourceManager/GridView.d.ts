@@ -8,7 +8,7 @@ declare const GridView_base: {
             density: any;
             onChange: any;
             onReset: any;
-        }): JSX.Element;
+        }): React.JSX.Element;
         isMount: boolean;
         componentDidMount(): void;
         fetchData(): Promise<any>;

@@ -116,17 +116,15 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
   }
 
   function renderFormItem() {
-    const formItemNode = FormItemGenerator.render({
+    return FormItemGenerator.render({
       type,
       props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
       dictName: props.editableConfig.dictName,
-      renderChildren: props.editableConfig.renderChildren,
+      // renderChildren: props.editableConfig.renderChildren,
       form: context?.editable?.tableEditable?.form,
       dataIndex,
       rowIndex,
-    });
-
-    return formItemNode; /*render
+    }); /*render
       ? render({
           value: record?.[dataIndex as string],
           record,

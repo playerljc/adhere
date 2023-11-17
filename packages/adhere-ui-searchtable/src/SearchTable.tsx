@@ -1073,7 +1073,7 @@ abstract class SearchTable<
    * @description 渲染SearchTable
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     const { fixedTableSpaceBetween } = this.props;
 
     return super.renderInner(

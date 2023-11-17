@@ -186,7 +186,6 @@ export interface FormItemGeneratorConfig {
     type?: FormItemType | string;
     props?: any;
     dictName?: string;
-    renderChildren?: (params?: any) => ReactNode | null;
     form?: FormInstance<any> | null;
     dataIndex?: DataIndex;
     rowIndex?: number;

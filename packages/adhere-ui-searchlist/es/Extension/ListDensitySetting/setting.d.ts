@@ -1,5 +1,5 @@
-/// <reference types="react" />
 import PropTypes from 'prop-types';
+import React from 'react';
 /**
  * ListDensitySetting
  * @param props
@@ -9,7 +9,7 @@ declare function ListDensitySetting({ density, onReset, onChange }: {
     density: any;
     onReset: any;
     onChange: any;
-}): JSX.Element;
+}): React.JSX.Element;
 declare namespace ListDensitySetting {
     var defaultProps: {
         density: string;

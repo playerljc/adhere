@@ -369,7 +369,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @description - 渲染主体
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     const innerJSX = super.renderInner();
     return (
       <div ref={this.innerWrapRef} className={`${selectorPrefix}-table-wrapper`}>

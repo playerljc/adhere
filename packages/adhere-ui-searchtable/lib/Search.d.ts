@@ -1,6 +1,6 @@
 import { TableRowSelection } from 'antd/es/table/interface';
 import PropTypes from 'prop-types';
-import { ReactElement, ReactNode, RefObject } from 'react';
+import React, { ReactElement, ReactNode, RefObject } from 'react';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import type { SearchProps, SearchState } from './types';
 /**
@@ -163,9 +163,9 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @description
      * @param {any} bodyWrapRef
      * @param {string} className
-     * @return {ReactElement | null}
+     * @return {ReactElement}
      */
-    renderInner(bodyWrapRef?: any, className?: string): ReactElement | null;
+    renderInner(bodyWrapRef?: any, className?: string): React.JSX.Element;
 }
 export declare const defaultProps: {
     className: string;

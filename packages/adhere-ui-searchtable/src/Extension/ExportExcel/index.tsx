@@ -256,7 +256,12 @@ const ExportExcel: FC<ExportExcelProps> = ({
   renderExportExcelBtn,
 }) => {
   function onExportExcel() {
-    const indicator = GlobalIndicator.show();
+    const indicator = GlobalIndicator.show(
+      document.body,
+      `${Intl.v('正在导出')}...`,
+      19999,
+      'default',
+    );
 
     const columns = getColumns();
 

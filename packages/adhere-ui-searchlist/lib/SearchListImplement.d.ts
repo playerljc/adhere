@@ -1,7 +1,7 @@
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ListItemProps } from 'antd/es/list';
 import { TableRowSelection } from 'antd/es/table/interface';
-import { ReactElement, ReactNode, RefObject } from 'react';
+import React, { ReactElement, ReactNode, RefObject } from 'react';
 import SearchList from './SearchList';
 import type { ISearchListImplement, ListExpandable, SearchListImplementFactoryFunction, SearchListImplementProps, SearchListImplementState, SearchListProps, SearchListState } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table-implement";
@@ -134,7 +134,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @description - 渲染主体
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderSearchFooterItems
      * @description - 渲染表格的工具栏
@@ -237,7 +237,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
     renderNumberColumnInner(number: string | number, params: {
         record: any;
         index: number;
-    }): JSX.Element;
+    }): React.JSX.Element;
     /**
      * renderNumberColumn
      * @description 渲染序号列
@@ -334,7 +334,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
         rowIndex: any;
         collapseChildren: any;
         children: any;
-    }): JSX.Element;
+    }): React.JSX.Element;
     /**
      * renderHorizontalExpandable
      * @description 横向 可展开渲染item

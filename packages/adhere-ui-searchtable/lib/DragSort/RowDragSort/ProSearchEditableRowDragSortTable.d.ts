@@ -25,7 +25,7 @@ declare const _default: {
         getFetchDataParams(): {};
         getColumns(columns: any): any;
         getTableColumns(): any;
-        getTableColumnSearchHeaderIcon(column: import("../../types").ColumnTypeExt): JSX.Element;
+        getTableColumnSearchHeaderIcon(column: import("../../types").ColumnTypeExt): React.JSX.Element;
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
@@ -51,9 +51,9 @@ declare const _default: {
             value: React.ReactNode;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
-        renderSearchForm(): JSX.Element;
+        renderSearchForm(): React.JSX.Element;
         renderSearchFormToolBarItems(_defaultItems: any): any[];
-        renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
+        renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];
         getSearchFooterItemsEllipsisCount(): number;
         isSearchFooterItemEllipsesShowOnlyOneAfterCollapsing(): boolean;
@@ -63,7 +63,7 @@ declare const _default: {
             column: any;
             dataIndex: any;
         }): React.ReactNode;
-        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     [x: string]: any;

@@ -263,7 +263,7 @@ export interface FormItemGeneratorConfig {
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)
   dictName?: string;
   // children自定义的渲染，适用于FormItemGeneratorToDict的自定义children时候使用
-  renderChildren?: (params?: any) => ReactNode | null;
+  // renderChildren?: (params?: any) => ReactNode | null;
   // 表单的实例
   form?: FormInstance<any> | null;
   // 行的索引值

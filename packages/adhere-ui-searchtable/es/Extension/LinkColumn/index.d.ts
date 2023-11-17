@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 /**
  * LinkColumn
  * @param className
@@ -18,5 +18,5 @@ declare const _default: ({ className, style, record, rowIndex, dataIndex, to, ch
     dataIndex: any;
     to: any;
     children: any;
-}) => JSX.Element;
+}) => React.JSX.Element;
 export default _default;

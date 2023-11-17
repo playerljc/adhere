@@ -438,7 +438,7 @@ abstract class SearchList<
    * @description 渲染SearchTable
    * @return {ReactElement | null}
    */
-  renderInner(): ReactElement | null {
+  renderInner() {
     // @ts-ignore
     const { fixedListSpaceBetween = true } = this.props;
 

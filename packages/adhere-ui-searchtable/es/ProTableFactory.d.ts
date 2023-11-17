@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import React from 'react';
 import type { ColumnTypeExt } from './types';
 declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
     new (props: any): {
@@ -107,7 +108,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @param {ColumnTypeExt} column
          * @return JSX.Element
          */
-        getTableColumnSearchHeaderIcon(column: ColumnTypeExt): JSX.Element;
+        getTableColumnSearchHeaderIcon(column: ColumnTypeExt): React.JSX.Element;
         /**
          * getOptionsColumnDataIndex
          * @description 操作列的索引名
@@ -166,7 +167,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * 渲染Table查询的表单
          * @override
          */
-        renderSearchForm(): JSX.Element;
+        renderSearchForm(): React.JSX.Element;
         /**
          * renderSearchFormToolBarItems
          * @description 渲染查询表单的工具栏项
@@ -179,7 +180,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description 渲染查询表单工具栏缺省面板
          * @return {ReactNode}
          */
-        renderSearchFormToolBarDefaultPanel(): JSX.Element | null;
+        renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
         /***
          * renderSearchFooterItems
          * @param _defaultItems
@@ -224,7 +225,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @param advancedSearchConfig - 高级搜索条件
          * @return {JSX.Element}
          */
-        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): JSX.Element;
+        renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
         /**
          * renderOptionColumn
          * @description 渲染配置列

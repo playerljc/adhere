@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import type { SearchTableImplementState, SearchTableStateImplementProps } from '@baifendian/adhere-ui-searchtable/es/types';
 declare const TableStateView_base: {
     new (props: any): {
@@ -8,7 +8,7 @@ declare const TableStateView_base: {
             density: any;
             onChange: any;
             onReset: any;
-        }): JSX.Element;
+        }): React.JSX.Element;
         isMount: boolean;
         componentDidMount(): void;
         fetchData(): Promise<any>;

@@ -1,4 +1,4 @@
-import { Button, Dropdown, Input, InputNumber, Rate, Slider, Switch } from 'antd';
+import { InputNumber } from 'antd';
 import dayjs from 'dayjs';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
@@ -8,11 +8,18 @@ import React from 'react';
 
 import { EllipsisOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import {
+  Button,
   DatePicker,
+  Dropdown,
+  Input,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,
   RangePicker,
+  Rate,
+  Slider,
+  Switch,
+  TextArea,
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -30,7 +37,7 @@ import RouteListen from './Extension/SearchAndPaginParams/routeListen';
 import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
-const { FormItemGeneratorToDict } = FieldGeneratorToDict;
+// const { FormItemGeneratorToDict } = FieldGeneratorToDict;
 
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
@@ -991,395 +998,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @param dataIndex
      */
     renderGridSearchFormGroupDataItem(type, { searchConfig, column, dataIndex }) {
-      // const renderSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderCheckAllMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderAutoCompleteSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderAutoCompleteSelectMulti = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderAutoCompleteSelectCheckAllMulti = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderRadioHorizontal = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}HorizontalFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderRadioButton = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}ButtonFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderRadioSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderRadioCustom = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CustomFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     >
-      //       {(data) => searchConfig?.renderChildren?.(data)}
-      //     </Component>
-      //   );
-      // };
-      //
-      // const renderCheckBoxHorizontal = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}HorizontalFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCheckBoxCheckAllHorizontal = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllHorizontalFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCheckboxSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderCheckBoxCheckAllSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderCheckBoxCustom = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CustomFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     >
-      //       {(dataSource) => searchConfig?.renderChildren?.(dataSource)}
-      //     </Component>
-      //   );
-      // };
-      // const renderCheckBoxCheckAllCustom = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}CheckAllCustomFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     >
-      //       {(dataSource) => searchConfig?.renderChildren?.(dataSource)}
-      //     </Component>
-      //   );
-      // };
-      //
-      // const renderTransferSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderTableSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderTableMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderTablePagingSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      // const renderTablePagingMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationMulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props || defaultModalProps)}
-      //     />
-      //   );
-      // };
-      //
-      // const renderListSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}SelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderListMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderListPagingSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderListPagingMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component =
-      //     FormItemGeneratorToDict[`${searchConfig.dictName}PaginationMulitSelectFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      //
-      // const renderTreeSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderTreeMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderTreeSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderTreeMultiSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      //
-      // const renderCascaderSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCascaderMultiSelect = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}MulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCascaderSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const renderCascaderMultiSelectLeaf = ({ searchConfig, dataIndex }) => {
-      //   const Component = FormItemGeneratorToDict[`${searchConfig.dictName}LeafMulitFormItem`];
-      //
-      //   return (
-      //     <Component
-      //       value={this.state[dataIndex]}
-      //       onChange={(e) => this.onSelectChange(dataIndex, e)}
-      //       {...(searchConfig.props ?? {})}
-      //     />
-      //   );
-      // };
-      // const InputComponent = InputHOC(Input);
-      // const TextAreaComponent = InputHOC(Input.TextArea);
-      // const InputNumberComponent = InputHOC(InputNumber);
-      // const InputNumberDecimal1Component = InputHOC(InputNumberDecimal1);
-      // const InputNumberDecimal2Component = InputHOC(InputNumberDecimal2);
-      // const InputNumberIntegerComponent = InputHOC(InputNumberInteger);
-
       const renderInput = ({ searchConfig, dataIndex }) => {
         return (
           <Input
@@ -1391,7 +1009,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
       const renderTextArea = ({ searchConfig, dataIndex }) => {
         return (
-          <Input.TextArea
+          <TextArea
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
             {...(searchConfig.props ?? {})}
@@ -1514,7 +1132,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         return searchConfig?.render?.({ searchConfig, column, dataIndex });
       };
       const renderDict = ({ searchConfig, column, dataIndex }) => {
-        const Component = FormItemGeneratorToDict[`${searchConfig.dictName}FormItem`];
+        const Component = FieldGeneratorToDict.Components[searchConfig.dictName];
 
         // popUp控件的缺省popps
         const popUpDefaultProps = {
@@ -1526,17 +1144,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           },
         };
 
-        if (searchConfig.dictName.indexOf('CustomFormItem') !== -1) {
-          return (
-            <Component
-              value={this.state[dataIndex]}
-              onChange={(e) => this.onSelectChange(dataIndex, e)}
-              {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
-            >
-              {(data) => searchConfig?.renderChildren?.(data)}
-            </Component>
-          );
-        }
+        // if (searchConfig.dictName.indexOf('CustomFormItem') !== -1) {
+        //   return (
+        //     <Component
+        //       value={this.state[dataIndex]}
+        //       onChange={(e) => this.onSelectChange(dataIndex, e)}
+        //       {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
+        //     >
+        //       {(data) => searchConfig?.renderChildren?.(data)}
+        //     </Component>
+        //   );
+        // }
 
         return (
           <Component

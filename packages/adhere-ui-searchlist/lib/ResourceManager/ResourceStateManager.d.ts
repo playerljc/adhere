@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 import type { ResourceManagerProps, ResourceManagerState } from '../types';
 declare const ResourceStateManager_base: {
     new (props: any): {
@@ -26,7 +26,7 @@ declare const ResourceStateManager_base: {
  * @classdesc 可编辑单元格的表格
  */
 declare class ResourceStateManager<P extends ResourceManagerProps, S extends ResourceManagerState> extends ResourceStateManager_base {
-    renderThumbnailView(): JSX.Element;
-    renderInfoView(): JSX.Element;
+    renderThumbnailView(): React.JSX.Element;
+    renderInfoView(): React.JSX.Element;
 }
 export default ResourceStateManager;

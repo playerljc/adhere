@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 /**
  * TableViewFactory
  * @param SuperClass
@@ -18,7 +18,7 @@ export default function <P, S>(SuperClass: any): {
             density: any;
             onChange: any;
             onReset: any;
-        }): JSX.Element;
+        }): React.JSX.Element;
         isMount: boolean; /**
          * TableViewFactory
          * @param SuperClass

@@ -2,7 +2,7 @@ import { ListSize } from 'antd/es/list';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject } from 'react';
 import type { Metas, SearchListProps, SearchListState } from './types';
-declare const Search: typeof import("@baifendian/adhere-ui-searchtable/lib/Search").default;
+declare const Search: typeof import("@baifendian/adhere-ui-searchtable/es/Search").default;
 export declare const selectorPrefix = "adhere-ui-search-table";
 export declare const SearchListContext: React.Context<{
     context: SearchList;
@@ -138,7 +138,11 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     getPagination(...params: any[]): {
         showTotal: (total: any) => string;
-        total: number;
+        total: number; /**
+         * getTableDensity
+         * @description 表格密度
+         * @return {ListSize}
+         */
         current: any;
         pageSize: any;
         pageSizeOptions: number[];
@@ -151,19 +155,19 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      * renderBody
      * @return {ReactNode}
      */
-    renderBody(): JSX.Element;
+    renderBody(): React.JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderChildren
      * @description renderChildren
      * @return {ReactNode}
      */
-    renderChildren(): JSX.Element;
+    renderChildren(): React.JSX.Element;
     /**
      * render
      * @protected

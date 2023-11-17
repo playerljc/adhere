@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 /**
  * GridViewFactory
  * @param SuperClass
@@ -11,7 +11,7 @@ export default function <P, S>(SuperClass: any): {
             density: any;
             onChange: any;
             onReset: any;
-        }): JSX.Element;
+        }): React.JSX.Element;
         isMount: boolean;
         componentDidMount(): void;
         fetchData(): Promise<any>;

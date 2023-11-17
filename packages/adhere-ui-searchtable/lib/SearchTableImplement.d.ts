@@ -1,5 +1,6 @@
 import type { ColumnType, FilterValue, SorterResult, TableCurrentDataSource, TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import type { ReactElement, ReactNode, RefObject } from 'react';
+import React from 'react';
 import SearchTable from './SearchTable';
 import type { ColumnTypeExt, ISearchTableImplement, SearchTableImplementFactoryFunction, SearchTableImplementProps, SearchTableImplementState, SearchTableProps, SearchTableState } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table-implement";
@@ -167,7 +168,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @description - 渲染主体
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderSearchFooterItems
      * @description - 渲染表格的工具栏

@@ -267,7 +267,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         key: string;
         align: string;
         width: number;
-        render: (v: any, r: any, index: any) => JSX.Element;
+        render: (v: any, r: any, index: any) => React.JSX.Element;
     };
     /**
      * getTableRowComponentReducers
@@ -303,7 +303,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
         value: any;
         record: object;
         index: number;
-    }): JSX.Element;
+    }): React.JSX.Element;
     /**
      * renderTableReload
      * @description 刷新表格
@@ -345,18 +345,18 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @description - 认选表格体
      * @return {ReactElement}
      */
-    renderBody(): JSX.Element;
+    renderBody(): React.JSX.Element;
     /**
      * renderInner
      * @description 渲染SearchTable
      * @return {ReactElement | null}
      */
-    renderInner(): ReactElement | null;
+    renderInner(): React.JSX.Element;
     /**
      * renderChildren
      * @return {ReactElement}
      */
-    renderChildren(): JSX.Element;
+    renderChildren(): React.JSX.Element;
     /**
      * render
      * @return {ReactElement}

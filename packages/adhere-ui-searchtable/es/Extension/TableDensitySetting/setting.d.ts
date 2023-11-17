@@ -1,5 +1,5 @@
-/// <reference types="react" />
 import PropTypes from 'prop-types';
+import React from 'react';
 import { TableDensity } from '../../types';
 /**
  * TableDensitySetting
@@ -10,7 +10,7 @@ declare function TableDensitySetting({ density, onReset, onChange }: {
     density: any;
     onReset: any;
     onChange: any;
-}): JSX.Element;
+}): React.JSX.Element;
 declare namespace TableDensitySetting {
     var defaultProps: {
         density: TableDensity;

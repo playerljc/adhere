@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import React from 'react';
 /**
  * OptionsWrap
  * @description - 表格操作列的父组件，自动加入分割线
@@ -15,5 +15,5 @@ declare const _default: ({ className, style, ellipsisCount, isEllipsesShowOnlyOn
     ellipsisCount?: number | undefined;
     isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
     children: any;
-}) => JSX.Element;
+}) => React.JSX.Element;
 export default _default;

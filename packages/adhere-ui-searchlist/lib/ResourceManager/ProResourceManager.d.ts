@@ -31,7 +31,7 @@ declare const _default: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any, record: any) => JSX.Element;
+            render: (value: any, record: any) => React.JSX.Element;
             align?: undefined;
             width?: undefined;
         } | {
@@ -49,7 +49,7 @@ declare const _default: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => JSX.Element;
+            render: (value: any) => React.JSX.Element;
         } | {
             title: string;
             dataIndex: string;
@@ -65,7 +65,7 @@ declare const _default: {
                 startName?: undefined;
                 endName?: undefined;
             };
-            render: (value: any) => JSX.Element | "-";
+            render: (value: any) => React.JSX.Element | "-";
         } | {
             title: string;
             dataIndex: string;
@@ -81,7 +81,7 @@ declare const _default: {
                 endName: string;
                 dictName?: undefined;
             };
-            render: (value: any) => JSX.Element;
+            render: (value: any) => React.JSX.Element;
         })[];
         renderGridViewCard({ record }: {
             record: any;

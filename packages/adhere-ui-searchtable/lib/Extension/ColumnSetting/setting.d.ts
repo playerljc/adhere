@@ -1,5 +1,5 @@
-/// <reference types="react" />
 import PropTypes from 'prop-types';
+import React from 'react';
 /**
  * ColumnSetting
  * @param props
@@ -11,7 +11,7 @@ declare function ColumnSetting({ columns, onShowColumns, onReset, onDisplayColum
     onReset: any;
     onDisplayColumn: any;
     onSortEnd: any;
-}): JSX.Element;
+}): React.JSX.Element;
 declare namespace ColumnSetting {
     var defaultProps: {
         columns: never[];
