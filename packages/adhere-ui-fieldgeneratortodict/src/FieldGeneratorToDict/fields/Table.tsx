@@ -11,15 +11,15 @@ import type {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import type { SuspenseComponentProps } from '../../types';
-import { setItem } from '../ItemFactory';
-import Suspense from '../Suspense';
 import {
   useAutoCompleteDict,
   useAutoCompletePaging,
   useDict,
   useDynamicDict,
   usePaging,
-} from '../hooks';
+} from '../Hooks';
+import { setItem } from '../ItemFactory';
+import Suspense from '../Suspense';
 
 /**
  * TableStandard
@@ -192,7 +192,7 @@ setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['option
         loadData,
       };
 
-      return <Table.TablePaging {...props} {...pagingProps} />;
+      return <Table.TablePaging {...props} pagingProps={pagingProps} isSuspenseAsync={false} />;
     },
 );
 
@@ -215,7 +215,14 @@ setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['option
         loadData,
       };
 
-      return <Table.TablePaging {...props} {...pagingProps} mode="multiple" />;
+      return (
+        <Table.TablePaging
+          {...props}
+          pagingProps={pagingProps}
+          isSuspenseAsync={false}
+          mode="multiple"
+        />
+      );
     },
 );
 
@@ -238,7 +245,7 @@ setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['option
         loadData,
       };
 
-      return <Table.TablePaging {...props} {...pagingProps} isSuspenseAsync />;
+      return <Table.TablePaging {...props} pagingProps={pagingProps} />;
     },
 );
 
@@ -261,7 +268,7 @@ setItem<TablePagingProps<any>, TablePagingProps<any>['tablePagingProps']['option
         loadData,
       };
 
-      return <Table.TablePaging {...props} {...pagingProps} mode="multiple" isSuspenseAsync />;
+      return <Table.TablePaging {...props} pagingProps={pagingProps} mode="multiple" />;
     },
 );
 
@@ -284,7 +291,7 @@ setItem<TablePagingSelectProps<any>, TablePagingSelectProps<any>['tablePagingPro
         loadData,
       };
 
-      return <Table.TablePagingSelect {...props} {...pagingProps} />;
+      return <Table.TablePagingSelect {...props} pagingProps={pagingProps} />;
     },
 );
 
@@ -307,15 +314,15 @@ setItem<TablePagingSelectProps<any>, TablePagingSelectProps<any>['tablePagingPro
         loadData,
       };
 
-      return <Table.TablePagingSelect {...props} {...pagingProps} mode="multiple" />;
+      return <Table.TablePagingSelect {...props} pagingProps={pagingProps} mode="multiple" />;
     },
 );
 
 /**
- * AutoCompleteTableStandard
+ * TableACStandard
  */
 setItem<AutoCompleteTableSelectProps, AutoCompleteTableSelectProps['options']>(
-  'AutoCompleteTable',
+  'TableAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -330,10 +337,10 @@ setItem<AutoCompleteTableSelectProps, AutoCompleteTableSelectProps['options']>(
 );
 
 /**
- * AutoCompleteTableMulti
+ * TableACMulti
  */
 setItem<AutoCompleteTableSelectProps, AutoCompleteTableSelectProps['options']>(
-  'AutoCompleteTable',
+  'TableAC',
   'Multi',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -355,10 +362,10 @@ setItem<AutoCompleteTableSelectProps, AutoCompleteTableSelectProps['options']>(
 );
 
 /**
- * AutoCompleteTablePaging
+ * TableACPaging
  */
 setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['options']>(
-  'AutoCompleteTable',
+  'TableAC',
   'Paging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -373,15 +380,15 @@ setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['
         loadData,
       };
 
-      return <Table.AutoCompleteTablePagingSelect {...props} {...pagingProps} />;
+      return <Table.AutoCompleteTablePagingSelect {...props} pagingProps={pagingProps} />;
     },
 );
 
 /**
- * AutoCompleteTableMultiPaging
+ * TableACMultiPaging
  */
 setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['options']>(
-  'AutoCompleteTable',
+  'TableAC',
   'MultiPaging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -396,6 +403,8 @@ setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['
         loadData,
       };
 
-      return <Table.AutoCompleteTablePagingSelect {...props} {...pagingProps} mode="multiple" />;
+      return (
+        <Table.AutoCompleteTablePagingSelect {...props} pagingProps={pagingProps} mode="multiple" />
+      );
     },
 );

@@ -18,9 +18,9 @@ import type {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import { SuspenseComponentProps } from '../../types';
+import { useAutoCompleteDict, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import { useAutoCompleteDict, useDict, useDynamicDict } from '../hooks';
 
 /**
  * CheckBoxStandard
@@ -126,7 +126,7 @@ setItem<HorizontalCheckAllCheckboxProps, HorizontalCheckAllCheckboxProps['option
         onDataSourceChange,
       });
 
-      return <Checkbox.HorizontalCheckAllCheckboxProps {...props} options={options} />;
+      return <Checkbox.HorizontalCheckAllCheckbox {...props} options={options} />;
     },
 );
 
@@ -298,7 +298,7 @@ setItem<
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Checkbox.HorizontalCheckAllCheckboxProps {...props} options={options} />
+          <Checkbox.HorizontalCheckAllCheckbox {...props} options={options} />
         </Suspense>
       );
     },
@@ -419,7 +419,7 @@ setItem<CustomCheckAllCheckboxProps, CustomCheckAllCheckboxProps['options']>(
         onDataSourceChange,
       });
 
-      return <Checkbox.CustomCheckAllCheckbox {...props} options={options} />;
+      return <Checkbox.CheckAllCustomCheckboxSelect {...props} options={options} />;
     },
 );
 
@@ -529,7 +529,7 @@ setItem<HorizontalCheckAllCheckboxProps, HorizontalCheckAllCheckboxProps['option
         onDataSourceChange,
       });
 
-      return <Checkbox.HorizontalCheckAllCheckboxProps {...props} options={options} />;
+      return <Checkbox.HorizontalCheckAllCheckbox {...props} options={options} />;
     },
 );
 
@@ -701,7 +701,7 @@ setItem<
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
-          <Checkbox.HorizontalCheckAllCheckboxProps {...props} options={options} />
+          <Checkbox.HorizontalCheckAllCheckbox {...props} options={options} />
         </Suspense>
       );
     },
@@ -822,15 +822,15 @@ setItem<CustomCheckAllCheckboxProps, CustomCheckAllCheckboxProps['options']>(
         onDataSourceChange,
       });
 
-      return <Checkbox.CustomCheckAllCheckbox {...props} options={options} />;
+      return <Checkbox.CheckAllCustomCheckboxSelect {...props} options={options} />;
     },
 );
 
 /**
- * AutoCompleteCheckBoxStandard
+ * CheckBoxACStandard
  */
 setItem<AutoCompleteCheckboxSelectProps, AutoCompleteCheckboxSelectProps['options']>(
-  'AutoCompleteCheckBox',
+  'CheckBoxAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -849,39 +849,30 @@ setItem<AutoCompleteCheckboxSelectProps, AutoCompleteCheckboxSelectProps['option
 );
 
 /**
- * AutoCompleteCheckBoxCheckAll
+ * CheckBoxACCheckAll
  */
 setItem<
   AutoCompleteCheckAllCheckboxSelectProps,
   AutoCompleteCheckAllCheckboxSelectProps['options']
->(
-  'AutoCompleteCheckBox',
-  'CheckAll',
-  (dictName) =>
-    ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const { options, loadData } = useAutoCompleteDict<
-        AutoCompleteCheckAllCheckboxSelectProps['options']
-      >({
-        dictName,
-        cascadeParams,
-        onDataSourceChange,
-      });
+>('CheckBoxAC', 'CheckAll', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
+  const { options, loadData } = useAutoCompleteDict<
+    AutoCompleteCheckAllCheckboxSelectProps['options']
+  >({
+    dictName,
+    cascadeParams,
+    onDataSourceChange,
+  });
 
-      return (
-        <Checkbox.AutoCompleteCheckAllCheckboxSelect
-          {...props}
-          options={options}
-          loadData={loadData}
-        />
-      );
-    },
-);
+  return (
+    <Checkbox.AutoCompleteCheckAllCheckboxSelect {...props} options={options} loadData={loadData} />
+  );
+});
 
 /**
- * AutoCompleteCheckBoxCustom
+ * CheckBoxACCustom
  */
 setItem<AutoCompleteCustomCheckboxSelectProps, AutoCompleteCustomCheckboxSelectProps['options']>(
-  'AutoCompleteCheckBox',
+  'CheckBoxAC',
   'Custom',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -904,13 +895,13 @@ setItem<AutoCompleteCustomCheckboxSelectProps, AutoCompleteCustomCheckboxSelectP
 );
 
 /**
- * AutoCompleteCheckBoxCheckAllCustom
+ * CheckBoxACCheckAllCustom
  */
 setItem<
   AutoCompleteCheckAllCustomCheckboxSelectProps,
   AutoCompleteCheckAllCustomCheckboxSelectProps['options']
 >(
-  'AutoCompleteCheckBox',
+  'CheckBoxAC',
   'CheckAllCustom',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {

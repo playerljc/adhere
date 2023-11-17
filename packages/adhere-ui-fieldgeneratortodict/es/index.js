@@ -1,2 +1,2 @@
-import FieldGeneratorToDict,{Components,genDictComponentName,getDictComponent,validatorMulti,validatorNormal}from"./FieldGeneratorToDict";export default{Components:Components,genDictComponentName:genDictComponentName,getDictComponent:getDictComponent,validatorMulti:validatorMulti,validatorNormal:validatorNormal,FieldGeneratorToDict:FieldGeneratorToDict};
+import FieldGeneratorToDict,{Components,genDictComponentName,getDictComponent,validatorMulti,validatorNormal}from"./FieldGeneratorToDict";export default{ComponentNames:Components,Components:FieldGeneratorToDict,genDictComponentName:genDictComponentName,getDictComponent:getDictComponent,validatorMulti:validatorMulti,validatorNormal:validatorNormal};
 //# sourceMappingURL=index.js.map

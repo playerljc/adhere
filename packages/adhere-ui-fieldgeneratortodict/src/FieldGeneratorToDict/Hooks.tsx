@@ -7,7 +7,7 @@ import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/t
 import Dict from '@baifendian/adhere-util-dict';
 
 import { UseDictParams } from '../types';
-import { deepDep } from './util';
+import { deepDep } from './Util';
 
 /**
  * useDict
@@ -86,7 +86,8 @@ export function useDynamicDict<D>({
     onDataSourceChange?.(dataSource);
   }, [dataSource]);
 
-  return dataSource;
+  // @ts-ignore
+  return [...dataSource];
 }
 
 /**
@@ -140,7 +141,7 @@ export function usePaging<D>({
 
   // @ts-ignore
   return useCallback(
-    () => (page, limit) =>
+    (page, limit) =>
       dictValue(page, limit, cascadeParams).then((res) => {
         onDataSourceChange?.(res);
         return res;
@@ -171,7 +172,7 @@ export function useAutoCompletePaging<D>({
   const dictValue = Dict.value[dictName].value;
 
   return useCallback<any>(
-    () => (page, limit, kw) =>
+    (page, limit, kw) =>
       dictValue(page, limit, kw, cascadeParams).then((res) => {
         onDataSourceChange?.(res);
         return res;
@@ -190,5 +191,5 @@ export function useAsyncTree<D>({
 }: UseDictParams<D>): AsyncTreeSelectProps['fetchData'] | AsyncCascaderProps['fetchData'] {
   const dictValue = Dict.value[dictName].value;
 
-  return useCallback<any>(() => dictValue, [dictName]);
+  return useCallback<any>(dictValue, [dictName]);
 }

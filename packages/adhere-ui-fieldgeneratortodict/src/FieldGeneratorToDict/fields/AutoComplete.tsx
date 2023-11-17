@@ -4,14 +4,14 @@ import React from 'react';
 import { AutoComplete } from '@baifendian/adhere-ui-anthoc';
 import type { AutoCompleteSelectInputProps } from '@baifendian/adhere-ui-anthoc/es/types';
 
+import { useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
-import { useDict, useDynamicDict } from '../hooks';
 
 /**
  * AutoCompleteStandard
  */
 setItem<AutoCompleteProps, AutoCompleteProps['options']>(
-  'Transfer',
+  'AutoComplete',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {

@@ -13,9 +13,9 @@ import type {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import type { SuspenseComponentProps } from '../../types';
+import { useAutoCompleteDict, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import { useAutoCompleteDict, useDict, useDynamicDict } from '../hooks';
 
 /**
  * TagVertical
@@ -31,6 +31,7 @@ setItem<VerticalTagGroupProps, VerticalTagGroupProps['options']>(
         onDataSourceChange,
       });
 
+      console.log('options', options);
       return <Tag.VerticalTagGroup {...props} options={options} />;
     },
 );
@@ -138,6 +139,8 @@ setItem<SuspenseComponentProps<VerticalTagGroupProps>, VerticalTagGroupProps['op
         cascadeParams,
         onDataSourceChange,
       });
+
+      console.log('options', options);
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
@@ -607,6 +610,8 @@ setItem<TagSelectProps, TagSelectProps['options']>(
         onDataSourceChange,
       });
 
+      console.log('TagDynamicMultiSelect', props.value);
+
       return <Tag.TagSelect {...props} mode="multiple" options={options} />;
     },
 );
@@ -630,10 +635,10 @@ setItem<CheckAllTagSelectProps, CheckAllTagSelectProps['options']>(
 );
 
 /**
- * AutoCompleteTagStandard
+ * TagACStandard
  */
 setItem<AutoCompleteTagSelectProps, AutoCompleteTagSelectProps['options']>(
-  'AutoCompleteTag',
+  'TagAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -648,10 +653,10 @@ setItem<AutoCompleteTagSelectProps, AutoCompleteTagSelectProps['options']>(
 );
 
 /**
- * AutoCompleteTagCheckAll
+ * TagACCheckAll
  */
 setItem<AutoCompleteCheckAllTagSelectProps, AutoCompleteCheckAllTagSelectProps['options']>(
-  'AutoCompleteTag',
+  'TagAC',
   'CheckAll',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {

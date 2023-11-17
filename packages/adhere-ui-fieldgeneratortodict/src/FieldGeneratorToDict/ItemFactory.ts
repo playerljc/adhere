@@ -4,7 +4,7 @@ import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 import type { DictComponentProps } from '../types';
 import DictRefreshHOC from './DictRefreshHOC';
-import { getOriginDictNameByItemName } from './util';
+import { getOriginDictNameByItemName } from './Util';
 
 const { memoized } = WatchMemoized;
 
@@ -30,7 +30,7 @@ export function setItem<T, D>(
  * @param {string} functionName - 功能名
  * @param {string} dictName - 字典的名称
  */
-export function getItem({
+export function getItem<P>({
   itemName,
   functionName,
   dictName,
@@ -43,7 +43,7 @@ export function getItem({
 
   if (!name) return null;
 
-  return DictRefreshHOC(
+  return DictRefreshHOC<P>(
     memoized.createMemoFun(map.get(`${itemName}${functionName}`) as Function)?.(name, dictName),
   );
 }
@@ -53,9 +53,8 @@ export function getItem({
  * // p = 字典名(业务名 + 组件名) + 功能名
  * // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MultiFormItem
  * @param params
- * @return {any}
  */
-export default ({
+function ItemFactory<P>({
   itemName,
   functionName,
   dictName,
@@ -63,4 +62,8 @@ export default ({
   itemName: string;
   functionName: string;
   dictName: string;
-}): any => getItem({ itemName, functionName, dictName });
+}) {
+  return getItem<P>({ itemName, functionName, dictName });
+}
+
+export default ItemFactory;

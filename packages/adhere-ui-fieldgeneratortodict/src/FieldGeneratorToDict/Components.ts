@@ -23,10 +23,10 @@ const Components = {
     CheckAll: 'SelectDynamicCheckAll',
     DropdownRender: 'SelectDynamicDropdownRender',
   },
-  AutoCompleteSelect: {
-    Standard: 'AutoCompleteSelectStandard',
-    Multi: 'AutoCompleteSelectMulti',
-    CheckAll: 'AutoCompleteSelectCheckAll',
+  SelectAC: {
+    Standard: 'SelectACStandard',
+    Multi: 'SelectACMulti',
+    CheckAll: 'SelectACCheckAll',
   },
   /* ------ Select下拉 end ------ */
 
@@ -75,11 +75,11 @@ const Components = {
     CustomSelect: 'CheckBoxDynamicCustomSelect',
     CheckAllCustomSelect: 'CheckBoxDynamicCheckAllCustomSelect',
   },
-  AutoCompleteCheckBox: {
-    Standard: 'AutoCompleteCheckBoxStandard',
-    CheckAll: 'AutoCompleteCheckBoxCheckAll',
-    Custom: 'AutoCompleteCheckBoxCustom',
-    CheckAllCustom: 'AutoCompleteCheckBoxCheckAllCustom',
+  CheckBoxAC: {
+    Standard: 'CheckBoxACStandard',
+    CheckAll: 'CheckBoxACCheckAll',
+    Custom: 'CheckBoxACCustom',
+    CheckAllCustom: 'CheckBoxACCheckAllCustom',
   },
   /* ------ Checkbox end ------*/
 
@@ -89,11 +89,11 @@ const Components = {
     Horizontal: 'RadioHorizontal',
     Custom: 'RadioCustom',
     Button: 'RadioButton',
-    Select: 'RadioSelect',
     SuspenseVertical: 'RadioSuspenseVertical',
     SuspenseHorizontal: 'RadioSuspenseHorizontal',
     SuspenseCustom: 'RadioSuspenseCustom',
     SuspenseButton: 'RadioSuspenseButton',
+    Select: 'RadioSelect',
     CustomSelect: 'RadioCustomSelect',
     ButtonSelect: 'RadioButtonSelect',
   },
@@ -110,10 +110,10 @@ const Components = {
     CustomSelect: 'RadioDynamicCustomSelect',
     ButtonSelect: 'RadioDynamicButtonSelect',
   },
-  AutoCompleteRadio: {
-    Standard: 'AutoCompleteRadioStandard',
-    Custom: 'AutoCompleteRadioCustom',
-    Button: 'AutoCompleteRadioButton',
+  RadioAC: {
+    Standard: 'RadioACStandard',
+    Custom: 'RadioACCustom',
+    Button: 'RadioACButton',
   },
   /* ------Radio end ------ */
 
@@ -129,7 +129,7 @@ const Components = {
     SuspenseVerticalCheckable: 'TagSuspenseVerticalCheckable',
     SuspenseCheckAllVerticalCheckable: 'TagSuspenseCheckAllVerticalCheckable',
     SuspenseHorizontal: 'TagSuspenseHorizontal',
-    SuspenseHorizontalCheckable: 'TagSuspenseVerticalCheckable',
+    SuspenseHorizontalCheckable: 'TagSuspenseHorizontalCheckable',
     SuspenseCheckAllHorizontalCheckable: 'TagSuspenseCheckAllHorizontalCheckable',
     Select: 'TagSelect',
     MultiSelect: 'TagMultiSelect',
@@ -146,15 +146,15 @@ const Components = {
     SuspenseVerticalCheckable: 'TagDynamicSuspenseVerticalCheckable',
     SuspenseCheckAllVerticalCheckable: 'TagDynamicSuspenseCheckAllVerticalCheckable',
     SuspenseHorizontal: 'TagDynamicSuspenseHorizontal',
-    SuspenseHorizontalCheckable: 'TagDynamicSuspenseVerticalCheckable',
+    SuspenseHorizontalCheckable: 'TagDynamicSuspenseHorizontalCheckable',
     SuspenseCheckAllHorizontalCheckable: 'TagDynamicSuspenseCheckAllHorizontalCheckable',
     Select: 'TagDynamicSelect',
     MultiSelect: 'TagDynamicMultiSelect',
     CheckAllSelect: 'TagDynamicCheckAllSelect',
   },
-  AutoCompleteTag: {
-    Standard: 'AutoCompleteTagStandard',
-    CheckAll: 'AutoCompleteTagCheckAll',
+  TagAC: {
+    Standard: 'TagACStandard',
+    CheckAll: 'TagACCheckAll',
   },
   /* ------Tag end ------ */
 
@@ -175,7 +175,7 @@ const Components = {
   },
   ListPagination: {
     // 普通列表(少一个ListPaging 文件) ******
-    Standard: 'ListPagination',
+    Standard: 'ListPaginationStandard',
     // 普通列表
     Multi: 'ListPaginationMulti',
     SuspenseStandard: 'ListPaginationSuspenseStandard',
@@ -185,14 +185,14 @@ const Components = {
     // 下拉列表
     MultiSelect: 'ListPaginationMultiSelect',
   },
-  AutoCompleteList: {
-    Standard: 'AutoCompleteListStandard',
-    Multi: 'AutoCompleteListMulti',
-    CheckAll: 'AutoCompleteListCheckAll',
+  ListAC: {
+    Standard: 'ListACStandard',
+    Multi: 'ListACMulti',
+    CheckAll: 'ListACCheckAll',
     // 下拉分页列表
-    Paging: 'AutoCompleteListPaging',
+    Paging: 'ListACPaging',
     // 下拉分页列表
-    MultiPaging: 'AutoCompleteListMultiPaging',
+    MultiPaging: 'ListACMultiPaging',
   },
   /* ------ List end ------ */
 
@@ -217,11 +217,11 @@ const Components = {
     Select: 'TablePaginationSelect',
     MultiSelect: 'TablePaginationMultiSelect',
   },
-  AutoCompleteTable: {
-    Standard: 'AutoCompleteTableStandard',
-    Multi: 'AutoCompleteTableMulti',
-    Paging: 'AutoCompleteTablePaging',
-    MultiPaging: 'AutoCompleteTableMultiPaging',
+  TableAC: {
+    Standard: 'TableACStandard',
+    Multi: 'TableACMulti',
+    Paging: 'TableACPaging',
+    MultiPaging: 'TableACMultiPaging',
   },
   /* ------ Table end ------ */
 
@@ -236,8 +236,8 @@ const Components = {
     SuspenseStandard: 'TransferDynamicSuspenseStandard',
     Select: 'TransferDynamicSelect',
   },
-  AutoCompleteTransfer: {
-    Standard: 'AutoCompleteTransferStandard',
+  TransferAC: {
+    Standard: 'TransferACStandard',
   },
   /* ------ Transfer end ------ */
 
@@ -384,7 +384,7 @@ const Components = {
   },
   Steps: {
     Standard: 'StepsStandard',
-    SuspenseStandard: 'StandardSuspenseStandard',
+    SuspenseStandard: 'StepsSuspenseStandard',
   },
   StepsDynamic: {
     Standard: 'StepsDynamicStandard',

@@ -9,8 +9,8 @@ import type {
   AsyncTreeSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
+import { useAsyncTree, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
-import { useAsyncTree, useDict, useDynamicDict } from '../hooks';
 
 /**
  * TreeStandard
@@ -139,11 +139,11 @@ setItem<TreeSelectProps, TreeSelectProps['treeData']>(
 );
 
 /**
- * TreeFlatStandard
+ * TreeFlat
  */
 setItem<TreeSelectProps, TreeSelectProps['treeData']>(
   'Tree',
-  'FlatStandard',
+  'Flat',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const treeData = useDict<TreeSelectProps['treeData']>({
@@ -397,11 +397,11 @@ setItem<TreeSelectProps, TreeSelectProps['treeData']>(
 );
 
 /**
- * TreeDynamicFlatStandard
+ * TreeDynamicFlat
  */
 setItem<TreeSelectProps, TreeSelectProps['treeData']>(
   'TreeDynamic',
-  'FlatStandard',
+  'Flat',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
       const treeData = useDynamicDict<TreeSelectProps['treeData']>({

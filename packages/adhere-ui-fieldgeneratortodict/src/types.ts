@@ -1,7 +1,4 @@
-import type {
-  SuspenseASyncProps,
-  SuspenseSyncProps,
-} from '@baifendian/adhere-ui-suspense/es/types';
+import type { SuspenseSyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 
 // import {
 //   AutoCompleteProps,
@@ -249,15 +246,6 @@ export type SuspenseProps = Omit<SuspenseSyncProps, 'isEmpty'> & {
   emptyComponent: any;
 };
 
-// export type SuspenseAsyncProps = Omit<SuspenseASyncProps, 'isEmpty'> & {
-//   isEmpty: (data: any) => boolean;
-//   emptyComponent: any;
-// };
-
 export type SuspenseComponentProps<T> = T & {
   suspenseProps: Omit<SuspenseProps, 'data'>;
 };
-
-// export type SuspenseAsyncComponentProps<T> = T & {
-//   suspenseProps: SuspenseAsyncProps;
-// };

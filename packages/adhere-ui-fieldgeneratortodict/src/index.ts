@@ -7,10 +7,10 @@ import FieldGeneratorToDict, {
 } from './FieldGeneratorToDict';
 
 export default {
-  Components,
+  ComponentNames: Components,
+  Components: FieldGeneratorToDict,
   genDictComponentName,
   getDictComponent,
   validatorMulti,
   validatorNormal,
-  FieldGeneratorToDict,
 };

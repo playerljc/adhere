@@ -7,8 +7,8 @@ import type {
   CascaderTreeSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
+import { useAsyncTree, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
-import { useAsyncTree, useDict, useDynamicDict } from '../hooks';
 
 /**
  * CascaderStandard
@@ -132,7 +132,7 @@ setItem<CascaderProps, CascaderProps['options']>(
         onDataSourceChange,
       });
 
-      return <Cascader {...props} options={options} treeDataSimpleMode />;
+      return <Cascader.CascaderTreeSelect {...props} options={options} treeDataSimpleMode />;
     },
 );
 
@@ -348,7 +348,7 @@ setItem<CascaderProps, CascaderProps['options']>(
         onDataSourceChange,
       });
 
-      return <Cascader {...props} options={options} treeDataSimpleMode />;
+      return <Cascader.CascaderTreeSelect {...props} options={options} treeDataSimpleMode />;
     },
 );
 

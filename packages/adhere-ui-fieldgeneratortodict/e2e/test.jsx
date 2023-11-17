@@ -87,8 +87,8 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState([]);
-    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.FormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Select;
+    const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
     return <DictComponent
       selectProps={{
         style: {
@@ -102,8 +102,8 @@ export default () => {
             `,
             renderChildren: () => {
               const DictComponentName =
-                'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Select.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
               return (
                 <DictComponent
                   style={{ width: 200 }}
@@ -135,8 +135,8 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
             const DictComponentName =
-              'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.MultiFormItem;
-            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Select.Multi;
+            const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
             return <DictComponent
               selectProps={{
                 style: {
@@ -150,8 +150,8 @@ export default () => {
                     `,
             renderChildren: () => {
               const DictComponentName =
-                'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.MultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Select.Multi;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
               return (
                 <DictComponent
                   style={{ width: 300 }}
@@ -183,8 +183,8 @@ export default () => {
           export default () => {
             const [vals, setVals] = useState([]);
             const DictComponentName =
-              'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.CheckAllMultiFormItem;
-            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Select.CheckAll;
+            const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
             return <DictComponent
               selectProps={{
@@ -199,8 +199,8 @@ export default () => {
                     `,
             renderChildren: () => {
               const DictComponentName =
-                'SystemBookCatalog' + FieldGeneratorToDict.Components.Select.CheckAllMultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Select.CheckAll;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
               return (
                 <DictComponent style={{ width: 300 }} value={vals} onChange={(v) => setVals(v)} />
               );
@@ -225,8 +225,8 @@ export default () => {
           export default () => {
             const [val, setVal] = useState([]);
             const DictComponentName =
-              'SystemFilterBookList' + FieldGeneratorToDict.Components.AutoSelectComplete.FormItem;
-            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              'SystemFilterBookList' + FieldGeneratorToDict.ComponentNames.SelectAC.Standard;
+            const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
             return <DictComponent
               selectProps={{
@@ -241,9 +241,8 @@ export default () => {
                     `,
             renderChildren: () => {
               const DictComponentName =
-                'SystemFilterBookList' +
-                FieldGeneratorToDict.Components.AutoSelectComplete.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+                'SystemFilterBookList' + FieldGeneratorToDict.ComponentNames.SelectAC.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
               return (
                 <DictComponent style={{ width: 200 }} value={val} onChange={(v) => setVal(v)} />
               );
@@ -269,10 +268,10 @@ export default () => {
             const [vals, setVals] = useState([]);
             const DictComponentName =
               'SystemFilterBookList' +
-              FieldGeneratorToDict.Components.AutoSelectComplete.MultiFormItem;
-            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              FieldGeneratorToDict.ComponentNames.SelectAC.Multi;
+            const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectMultiFormItem
+            return <FDictComponent
               selectProps={{
                 style: {
                   width: 200,
@@ -285,9 +284,8 @@ export default () => {
                     `,
             renderChildren: () => {
               const DictComponentName =
-                'SystemFilterBookList' +
-                FieldGeneratorToDict.Components.AutoSelectComplete.MultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+                'SystemFilterBookList' + FieldGeneratorToDict.ComponentNames.SelectAC.Multi;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
               return (
                 <DictComponent
                   style={{ width: 200 }}
@@ -319,8 +317,8 @@ export default () => {
             const [vals, setVals] = useState([]);
               const DictComponentName =
               'SystemFilterBookList' +
-              FieldGeneratorToDict.Components.AutoSelectComplete.CheckAllMultiFormItem;
-            const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+              FieldGeneratorToDict.ComponentNames.SelectAC.CheckAll;
+            const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
             return <DictComponent
               selectProps={{
@@ -335,9 +333,8 @@ export default () => {
                     `,
             renderChildren: () => {
               const DictComponentName =
-                'SystemFilterBookList' +
-                FieldGeneratorToDict.Components.AutoSelectComplete.CheckAllMultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+                'SystemFilterBookList' + FieldGeneratorToDict.ComponentNames.SelectAC.CheckAll;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
               return (
                 <DictComponent style={{ width: 200 }} value={vals} onChange={(v) => setVals(v)} />
@@ -361,14 +358,14 @@ export default () => {
             import { FieldGeneratorToDict } from '@baifendian/adhere';
   
             export default () => {
-              const ProvinceDictComponentName = 'SystemProvince' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
-              const ProvinceDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[ProvinceDictComponentName];
+              const ProvinceDictComponentName = 'SystemProvince' + FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard;
+              const ProvinceDictComponent = FieldGeneratorToDict.Components[ProvinceDictComponentName];
 
-              const CityDictComponentName = 'SystemCity' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
-              const CityDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CityDictComponentName];
+              const CityDictComponentName = 'SystemCity' + FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard;
+              const CityDictComponent = FieldGeneratorToDict.Components[CityDictComponentName];
 
-              const CountyDictComponentName = 'SystemCounty' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
-              const CountyDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CountyDictComponentName];
+              const CountyDictComponentName = 'SystemCounty' + FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard;
+              const CountyDictComponent = FieldGeneratorToDict.Components[CountyDictComponentName];
   
               return (
                 <Space.Group direction="vertical">
@@ -413,55 +410,61 @@ export default () => {
             }
             `,
             renderChildren: () => {
-              const ProvinceDictComponentName = 'SystemProvince' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
-              const ProvinceDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[ProvinceDictComponentName];
+              const ProvinceDictComponentName =
+                'SystemProvince' + FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard;
+              const ProvinceDictComponent =
+                FieldGeneratorToDict.Components[ProvinceDictComponentName];
 
-              const CityDictComponentName = 'SystemCity' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
-              const CityDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CityDictComponentName];
+              const CityDictComponentName =
+                'SystemCity' + FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard;
+              const CityDictComponent = FieldGeneratorToDict.Components[CityDictComponentName];
 
-              const CountyDictComponentName = 'SystemCounty' + FieldGeneratorToDict.Components.SelectDynamic.FormItem;
-              const CountyDictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[CountyDictComponentName];
+              const CountyDictComponentName =
+                'SystemCounty' + FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard;
+              const CountyDictComponent = FieldGeneratorToDict.Components[CountyDictComponentName];
 
-              return <div>
-                <Space.Group direction="vertical">
-                  <FlexLayout direction="horizontal">
-                    <FlexLayout.Fixed>省：</FlexLayout.Fixed>
-                    <FlexLayout.Auto>
-                      <ProvinceDictComponent
-                        style={{ width: 200 }}
-                        value={province}
-                        onChange={(v) => setProvince(v)}
-                      />
-                    </FlexLayout.Auto>
-                  </FlexLayout>
+              return (
+                <div>
+                  <Space.Group direction="vertical">
+                    <FlexLayout direction="horizontal">
+                      <FlexLayout.Fixed>省：</FlexLayout.Fixed>
+                      <FlexLayout.Auto>
+                        <ProvinceDictComponent
+                          style={{ width: 200 }}
+                          value={province}
+                          onChange={(v) => setProvince(v)}
+                        />
+                      </FlexLayout.Auto>
+                    </FlexLayout>
 
-                  <FlexLayout direction="horizontal">
-                    <FlexLayout.Fixed>市：</FlexLayout.Fixed>
-                    <FlexLayout.Auto>
-                      <CityDictComponent
-                        style={{ width: 200 }}
-                        value={city}
-                        onChange={(v) => setCity(v)}
-                        cascadeParams={province}
-                        onDataSourceChange={() => setCity('')}
-                      />
-                    </FlexLayout.Auto>
-                  </FlexLayout>
+                    <FlexLayout direction="horizontal">
+                      <FlexLayout.Fixed>市：</FlexLayout.Fixed>
+                      <FlexLayout.Auto>
+                        <CityDictComponent
+                          style={{ width: 200 }}
+                          value={city}
+                          onChange={(v) => setCity(v)}
+                          cascadeParams={province}
+                          onDataSourceChange={() => setCity('')}
+                        />
+                      </FlexLayout.Auto>
+                    </FlexLayout>
 
-                  <FlexLayout direction="horizontal">
-                    <FlexLayout.Fixed>区：</FlexLayout.Fixed>
-                    <FlexLayout.Auto>
-                      <CountyDictComponent
-                        style={{ width: 200 }}
-                        value={county}
-                        onChange={(v) => setCounty(v)}
-                        cascadeParams={city}
-                        onDataSourceChange={() => setCounty('')}
-                      />
-                    </FlexLayout.Auto>
-                  </FlexLayout>
-                </Space.Group>
-              </div>
+                    <FlexLayout direction="horizontal">
+                      <FlexLayout.Fixed>区：</FlexLayout.Fixed>
+                      <FlexLayout.Auto>
+                        <CountyDictComponent
+                          style={{ width: 200 }}
+                          value={county}
+                          onChange={(v) => setCounty(v)}
+                          cascadeParams={city}
+                          onDataSourceChange={() => setCounty('')}
+                        />
+                      </FlexLayout.Auto>
+                    </FlexLayout>
+                  </Space.Group>
+                </div>
+              );
             },
           },
         ]}
@@ -488,8 +491,8 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.HorizontalFormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Horizontal;
+    const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
     return <DictComponent
       value={val}
       onChange={(v) => setVal(v)}
@@ -497,12 +500,10 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.HorizontalFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
-              return <DictComponent
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Horizontal;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+              return <DictComponent value={val} onChange={(v) => setVal(v)} />;
             },
           },
           {
@@ -523,8 +524,8 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.VerticalFormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Vertical;
+    const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
     return <DictComponent
       value={val}
       onChange={(v) => setVal(v)}
@@ -532,12 +533,10 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.VerticalFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
-              return <DictComponent
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Vertical;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+              return <DictComponent value={val} onChange={(v) => setVal(v)} />;
             },
           },
           {
@@ -558,8 +557,8 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.ButtonFormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Button;
+    const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
     return <DictComponent
       buttonStyle="solid"
       value={val}
@@ -568,15 +567,11 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.ButtonFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
-              return <DictComponent
-                buttonStyle="solid"
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            }
-
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Button;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+              return <DictComponent buttonStyle="solid" value={val} onChange={(v) => setVal(v)} />;
+            },
           },
           {
             id: 'p4',
@@ -596,8 +591,8 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.SelectFormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Select;
+    const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
     return <DictComponent
       selectProps={{
         style: {
@@ -610,18 +605,21 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.SelectFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
-              return <DictComponent
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            }
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Select;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+              return (
+                <DictComponent
+                  selectProps={{
+                    style: {
+                      width: 200,
+                    },
+                  }}
+                  value={val}
+                  onChange={(v) => setVal(v)}
+                />
+              );
+            },
           },
           {
             id: 'p5',
@@ -642,8 +640,8 @@ export default () => {
 
   export default () => {
     const [val, setVal] = useState();
-    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.CustomFormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
+    const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Custom;
+    const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
     return <DictComponent
       optionType="button"
       buttonStyle="solid"
@@ -655,17 +653,20 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const DictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.Radio.CustomFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[DictComponentName];
-              return <DictComponent
-                optionType="button"
-                buttonStyle="solid"
-                value={val}
-                onChange={(v) => setVal(v)}
-              >
-                {(data) => <AntdSpace size={8}>{data.map(({ item }) => item)}</AntdSpace>}
-              </DictComponent>
-            }
+              const DictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.Radio.Custom;
+              const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+              return (
+                <DictComponent
+                  optionType="button"
+                  buttonStyle="solid"
+                  value={val}
+                  onChange={(v) => setVal(v)}
+                >
+                  {(data) => <AntdSpace size={8}>{data.map(({ item }) => item)}</AntdSpace>}
+                </DictComponent>
+              );
+            },
           },
         ]}
       />
@@ -984,8 +985,8 @@ export default () => {
             
             export default () => {
               const [val, setVal] = useState('');
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
               return <DictComponent
                 selectProps={{
                   style: {
@@ -998,14 +999,13 @@ export default () => {
             }
                       `,
             renderChildren: () => {
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            }
+              const dictComponentName =
+                'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent style={{ width: 200 }} value={val} onChange={(v) => setVal(v)} />
+              );
+            },
           },
           {
             id: 'p2',
@@ -1025,8 +1025,8 @@ export default () => {
             
             export default () => {
               const [val, setVal] = useState('');
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.Leaf;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
               return <DictComponent
                 selectProps={{
                   style: {
@@ -1039,14 +1039,12 @@ export default () => {
             }
                       `,
             renderChildren: () => {
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            }
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.Leaf;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent style={{ width: 200 }} value={val} onChange={(v) => setVal(v)} />
+              );
+            },
           },
           {
             id: 'p3',
@@ -1066,8 +1064,8 @@ export default () => {
             
             export default () => {
               const [vals, setVals] = useState([]);
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.MultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.Multi;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
               return <DictComponent
                 selectProps={{
                   style: {
@@ -1080,15 +1078,13 @@ export default () => {
             }
                       `,
             renderChildren: () => {
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.MultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-
-            }
+              const dictComponentName =
+                'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.Multi;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent style={{ width: 300 }} value={vals} onChange={(v) => setVals(v)} />
+              );
+            },
           },
           {
             id: 'p4',
@@ -1108,8 +1104,8 @@ export default () => {
             
             export default () => {
               const [vals, setVals] = useState([]);
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafMultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.LeafMulti;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
               <DictComponent
                 selectProps={{
                   style: {
@@ -1122,15 +1118,11 @@ export default () => {
             }
                       `,
             renderChildren: () => {
-              const dictComponentName = 'SystemOrg' + FieldGeneratorToDict.Components.Tree.LeafMultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              <DictComponent
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-
-            }
+              const dictComponentName =
+                'SystemOrg' + FieldGeneratorToDict.ComponentNames.Tree.LeafMulti;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              <DictComponent style={{ width: 200 }} value={vals} onChange={(v) => setVals(v)} />;
+            },
           },
           /*{
             id: 'p5',
@@ -1165,7 +1157,7 @@ export default () => {
               },
             },
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMulti
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -1205,7 +1197,7 @@ export default () => {
               },
             },
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMulti
                 style={{ width: 200 }}
                 value={vals}
                 onChange={(v) => setVals(v)}
@@ -1268,7 +1260,7 @@ export default () => {
               },
             },
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMulti
                 style={{ width: 200 }}
                 value={branchMultiVals}
                 onChange={(v) => setBranchMultiVals(v)}
@@ -1327,7 +1319,7 @@ export default () => {
               },
             },
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMulti
                 style={{ width: 200 }}
                 value={branchMultiVals}
                 onChange={(v) => setBranchMultiVals(v)}
@@ -1449,7 +1441,7 @@ export default () => {
               },
             },
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMulti
                 style={{ width: 200 }}
                 treeDataSimpleMode
                 value={branchVals}
@@ -1506,8 +1498,8 @@ export default () => {
 
   export default () => {
     const [vals, setVals] = useState([]);
-    const dictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.TransferDynamic.FormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    const dictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.TransferDynamic.Standard;
+    const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
     return <DictComponent
       targetKeys={vals}
       onChange={(v) => {
@@ -1517,16 +1509,18 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const dictComponentName = 'SystemBookCatalog' + FieldGeneratorToDict.Components.TransferDynamic.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                targetKeys={vals}
-                onChange={(v) => {
-                  setVals(v);
-                }}
-              />
-
-            }
+              const dictComponentName =
+                'SystemBookCatalog' + FieldGeneratorToDict.ComponentNames.TransferDynamic.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent
+                  targetKeys={vals}
+                  onChange={(v) => {
+                    setVals(v);
+                  }}
+                />
+              );
+            },
           },
           /*{
             id: 'p2',
@@ -2217,7 +2211,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMultiFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMulti
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
@@ -2225,7 +2219,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderMulti
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
@@ -2251,7 +2245,7 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMultiFormItem
+    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMulti
       style={{ width: 500 }}
       value={vals}
       onChange={(v) => setVals(v || [])}
@@ -2259,7 +2253,7 @@ export default () => {
   }
             `,
             renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderLeafMultiFormItem
+              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderLeafMulti
                 style={{ width: 500 }}
                 value={vals}
                 onChange={(v) => setVals(v || [])}
@@ -2286,8 +2280,8 @@ export default () => {
   export default () => {
     const [vals, setVals] = useState([]);
 
-    const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Standard;
+    const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
     return <DictComponent
       value={vals}
       onChange={(v) => setVals(v)}
@@ -2295,13 +2289,11 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            }
+              const dictComponentName =
+                'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return <DictComponent value={vals} onChange={(v) => setVals(v)} />;
+            },
           },
           {
             id: 'p6',
@@ -2323,8 +2315,8 @@ import { FieldGeneratorToDict } from '@baifendian/adhere';
 export default () => {
   const [vals, setVals] = useState([]);
 
-  const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.MultiFormItem;
-  const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+  const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Multi;
+  const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
   return <DictComponent
     value={vals}
     onChange={(v) => setVals(v)}
@@ -2332,13 +2324,11 @@ export default () => {
 }
           `,
             renderChildren: () => {
-              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.MultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            }
+              const dictComponentName =
+                'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Multi;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return <DictComponent value={vals} onChange={(v) => setVals(v)} />;
+            },
           },
           {
             id: 'p7',
@@ -2353,39 +2343,42 @@ export default () => {
               },
             },
             renderChildren: () => {
-              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                value={cascaderBranchVals}
-                onChange={(v) => {
-                  console.log('v======', v);
-                  setCascaderBranchVals(v);
-                }}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      label: '辽宁省',
-                      value: '210000000000',
-                      isLeaf: false,
-                      children: [
-                        {
-                          label: '沈阳市',
-                          value: '210100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              label: '和平区',
-                              value: '210102000000',
-                              isLeaf: true,
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ]);
-                }}
-              />
-            }
+              const dictComponentName =
+                'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent
+                  value={cascaderBranchVals}
+                  onChange={(v) => {
+                    console.log('v======', v);
+                    setCascaderBranchVals(v);
+                  }}
+                  fetchBranch={(value, cascadeParams) => {
+                    return Promise.resolve([
+                      {
+                        label: '辽宁省',
+                        value: '210000000000',
+                        isLeaf: false,
+                        children: [
+                          {
+                            label: '沈阳市',
+                            value: '210100000000',
+                            isLeaf: false,
+                            children: [
+                              {
+                                label: '和平区',
+                                value: '210102000000',
+                                isLeaf: true,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ]);
+                  }}
+                />
+              );
+            },
           },
           {
             id: 'p8',
@@ -2400,52 +2393,55 @@ export default () => {
               },
             },
             renderChildren: () => {
-              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.MultiFormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                value={cascaderBranchMultiVals}
-                onChange={(v) => {
-                  console.log('v======', v);
-                  setCascaderBranchMultiVals(v);
-                }}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      label: '辽宁省',
-                      value: '210000000000',
-                      children: [
-                        {
-                          label: '沈阳市',
-                          value: '210100000000',
-                          children: [
-                            {
-                              label: '和平区',
-                              value: '210102000000',
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    {
-                      label: '黑龙江省',
-                      value: '230000000000',
-                      children: [
-                        {
-                          label: '哈尔滨市',
-                          value: '230100000000',
-                          children: [
-                            {
-                              label: '道里区',
-                              value: '230102000000',
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ]);
-                }}
-              />
-            }
+              const dictComponentName =
+                'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Multi;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent
+                  value={cascaderBranchMultiVals}
+                  onChange={(v) => {
+                    console.log('v======', v);
+                    setCascaderBranchMultiVals(v);
+                  }}
+                  fetchBranch={(value, cascadeParams) => {
+                    return Promise.resolve([
+                      {
+                        label: '辽宁省',
+                        value: '210000000000',
+                        children: [
+                          {
+                            label: '沈阳市',
+                            value: '210100000000',
+                            children: [
+                              {
+                                label: '和平区',
+                                value: '210102000000',
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        label: '黑龙江省',
+                        value: '230000000000',
+                        children: [
+                          {
+                            label: '哈尔滨市',
+                            value: '230100000000',
+                            children: [
+                              {
+                                label: '道里区',
+                                value: '230102000000',
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ]);
+                  }}
+                />
+              );
+            },
           },
           {
             id: 'p9',
@@ -2465,8 +2461,8 @@ export default () => {
 
   export default () => {
     const [vals, setVals] = useState([]);
-    const dictComponentName = 'SystemDepartmentAll' + FieldGeneratorToDict.Components.CascaderDynamic.FormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    const dictComponentName = 'SystemDepartmentAll' + FieldGeneratorToDict.ComponentNames.CascaderDynamic.Standard;
+    const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
     return <DictComponent
       style={{ width: 500 }}
       value={vals}
@@ -2475,14 +2471,14 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const dictComponentName = 'SystemDepartmentAll' + FieldGeneratorToDict.Components.CascaderDynamic.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                treeDataSimpleMode
-                value={vals}
-                onChange={(v) => setVals(v || [])}
-              />
-            }
+              const dictComponentName =
+                'SystemDepartmentAll' +
+                FieldGeneratorToDict.ComponentNames.CascaderDynamic.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent treeDataSimpleMode value={vals} onChange={(v) => setVals(v || [])} />
+              );
+            },
           },
           {
             id: 'p10',
@@ -2497,14 +2493,11 @@ export default () => {
               },
             },
             renderChildren: () => {
-              const dictComponentName = 'SystemDepartment' + FieldGeneratorToDict.Components.CascaderAsync.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent
-                treeDataSimpleMode
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            }
+              const dictComponentName =
+                'SystemDepartment' + FieldGeneratorToDict.ComponentNames.CascaderAsync.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return <DictComponent treeDataSimpleMode value={vals} onChange={(v) => setVals(v)} />;
+            },
           },
         ]}
       />
@@ -2923,8 +2916,8 @@ export default () => {
   import { DownOutlined } from '@ant-design/icons';
 
   export default () => {
-    const dictComponentName = 'SystemDropNav' + FieldGeneratorToDict.Components.Dropdown.FormItem;
-    const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
+    const dictComponentName = 'SystemDropNav' + FieldGeneratorToDict.ComponentNames.Dropdown.Standard;
+    const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
     return (
       <DictComponent>
         <a onClick={(e) => e.preventDefault()}>
@@ -2936,16 +2929,18 @@ export default () => {
   }
             `,
             renderChildren: () => {
-              const dictComponentName = 'SystemDropNav' + FieldGeneratorToDict.Components.Dropdown.FormItem;
-              const DictComponent = FieldGeneratorToDict.FormItemGeneratorToDict[dictComponentName];
-              return <DictComponent>
-                <a onClick={(e) => e.preventDefault()}>
-                  Hover me
-                  <DownOutlined />
-                </a>
-              </DictComponent>
-
-            }
+              const dictComponentName =
+                'SystemDropNav' + FieldGeneratorToDict.ComponentNames.Dropdown.Standard;
+              const DictComponent = FieldGeneratorToDict.Components[dictComponentName];
+              return (
+                <DictComponent>
+                  <a onClick={(e) => e.preventDefault()}>
+                    Hover me
+                    <DownOutlined />
+                  </a>
+                </DictComponent>
+              );
+            },
           },
         ]}
       />
@@ -3651,7 +3646,7 @@ export default () => {
             data: [
               {
                 params: 'name',
-                desc: '字典组件名称，规则为 字典名+组件名+功能名，字典名+组件名可使用 FieldGeneratorToDict.Components 静态枚举值获取',
+                desc: '字典组件名称，规则为 字典名+组件名+功能名，字典名+组件名可使用 FieldGeneratorToDict.ComponentNames.静态枚举值获取',
                 type: 'string',
                 defaultVal: 'file',
               },

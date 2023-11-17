@@ -22,10 +22,10 @@ declare const Components: {
         readonly CheckAll: "SelectDynamicCheckAll";
         readonly DropdownRender: "SelectDynamicDropdownRender";
     };
-    readonly AutoCompleteSelect: {
-        readonly Standard: "AutoCompleteSelectStandard";
-        readonly Multi: "AutoCompleteSelectMulti";
-        readonly CheckAll: "AutoCompleteSelectCheckAll";
+    readonly SelectAC: {
+        readonly Standard: "SelectACStandard";
+        readonly Multi: "SelectACMulti";
+        readonly CheckAll: "SelectACCheckAll";
     };
     readonly CheckBox: {
         readonly Standard: "CheckBoxStandard";
@@ -71,22 +71,22 @@ declare const Components: {
         readonly CustomSelect: "CheckBoxDynamicCustomSelect";
         readonly CheckAllCustomSelect: "CheckBoxDynamicCheckAllCustomSelect";
     };
-    readonly AutoCompleteCheckBox: {
-        readonly Standard: "AutoCompleteCheckBoxStandard";
-        readonly CheckAll: "AutoCompleteCheckBoxCheckAll";
-        readonly Custom: "AutoCompleteCheckBoxCustom";
-        readonly CheckAllCustom: "AutoCompleteCheckBoxCheckAllCustom";
+    readonly CheckBoxAC: {
+        readonly Standard: "CheckBoxACStandard";
+        readonly CheckAll: "CheckBoxACCheckAll";
+        readonly Custom: "CheckBoxACCustom";
+        readonly CheckAllCustom: "CheckBoxACCheckAllCustom";
     };
     readonly Radio: {
         readonly Vertical: "RadioVertical";
         readonly Horizontal: "RadioHorizontal";
         readonly Custom: "RadioCustom";
         readonly Button: "RadioButton";
-        readonly Select: "RadioSelect";
         readonly SuspenseVertical: "RadioSuspenseVertical";
         readonly SuspenseHorizontal: "RadioSuspenseHorizontal";
         readonly SuspenseCustom: "RadioSuspenseCustom";
         readonly SuspenseButton: "RadioSuspenseButton";
+        readonly Select: "RadioSelect";
         readonly CustomSelect: "RadioCustomSelect";
         readonly ButtonSelect: "RadioButtonSelect";
     };
@@ -103,10 +103,10 @@ declare const Components: {
         readonly CustomSelect: "RadioDynamicCustomSelect";
         readonly ButtonSelect: "RadioDynamicButtonSelect";
     };
-    readonly AutoCompleteRadio: {
-        readonly Standard: "AutoCompleteRadioStandard";
-        readonly Custom: "AutoCompleteRadioCustom";
-        readonly Button: "AutoCompleteRadioButton";
+    readonly RadioAC: {
+        readonly Standard: "RadioACStandard";
+        readonly Custom: "RadioACCustom";
+        readonly Button: "RadioACButton";
     };
     readonly Tag: {
         readonly Vertical: "TagVertical";
@@ -119,7 +119,7 @@ declare const Components: {
         readonly SuspenseVerticalCheckable: "TagSuspenseVerticalCheckable";
         readonly SuspenseCheckAllVerticalCheckable: "TagSuspenseCheckAllVerticalCheckable";
         readonly SuspenseHorizontal: "TagSuspenseHorizontal";
-        readonly SuspenseHorizontalCheckable: "TagSuspenseVerticalCheckable";
+        readonly SuspenseHorizontalCheckable: "TagSuspenseHorizontalCheckable";
         readonly SuspenseCheckAllHorizontalCheckable: "TagSuspenseCheckAllHorizontalCheckable";
         readonly Select: "TagSelect";
         readonly MultiSelect: "TagMultiSelect";
@@ -136,15 +136,15 @@ declare const Components: {
         readonly SuspenseVerticalCheckable: "TagDynamicSuspenseVerticalCheckable";
         readonly SuspenseCheckAllVerticalCheckable: "TagDynamicSuspenseCheckAllVerticalCheckable";
         readonly SuspenseHorizontal: "TagDynamicSuspenseHorizontal";
-        readonly SuspenseHorizontalCheckable: "TagDynamicSuspenseVerticalCheckable";
+        readonly SuspenseHorizontalCheckable: "TagDynamicSuspenseHorizontalCheckable";
         readonly SuspenseCheckAllHorizontalCheckable: "TagDynamicSuspenseCheckAllHorizontalCheckable";
         readonly Select: "TagDynamicSelect";
         readonly MultiSelect: "TagDynamicMultiSelect";
         readonly CheckAllSelect: "TagDynamicCheckAllSelect";
     };
-    readonly AutoCompleteTag: {
-        readonly Standard: "AutoCompleteTagStandard";
-        readonly CheckAll: "AutoCompleteTagCheckAll";
+    readonly TagAC: {
+        readonly Standard: "TagACStandard";
+        readonly CheckAll: "TagACCheckAll";
     };
     readonly List: {
         readonly Standard: "ListStandard";
@@ -161,19 +161,19 @@ declare const Components: {
         readonly CheckAllSelect: "ListDynamicCheckAllSelect";
     };
     readonly ListPagination: {
-        readonly Standard: "ListPagination";
+        readonly Standard: "ListPaginationStandard";
         readonly Multi: "ListPaginationMulti";
         readonly SuspenseStandard: "ListPaginationSuspenseStandard";
         readonly SuspenseMulti: "ListPaginationSuspenseMulti";
         readonly Select: "ListPaginationSelect";
         readonly MultiSelect: "ListPaginationMultiSelect";
     };
-    readonly AutoCompleteList: {
-        readonly Standard: "AutoCompleteListStandard";
-        readonly Multi: "AutoCompleteListMulti";
-        readonly CheckAll: "AutoCompleteListCheckAll";
-        readonly Paging: "AutoCompleteListPaging";
-        readonly MultiPaging: "AutoCompleteListMultiPaging";
+    readonly ListAC: {
+        readonly Standard: "ListACStandard";
+        readonly Multi: "ListACMulti";
+        readonly CheckAll: "ListACCheckAll";
+        readonly Paging: "ListACPaging";
+        readonly MultiPaging: "ListACMultiPaging";
     };
     readonly Table: {
         readonly Standard: "TableStandard";
@@ -195,11 +195,11 @@ declare const Components: {
         readonly Select: "TablePaginationSelect";
         readonly MultiSelect: "TablePaginationMultiSelect";
     };
-    readonly AutoCompleteTable: {
-        readonly Standard: "AutoCompleteTableStandard";
-        readonly Multi: "AutoCompleteTableMulti";
-        readonly Paging: "AutoCompleteTablePaging";
-        readonly MultiPaging: "AutoCompleteTableMultiPaging";
+    readonly TableAC: {
+        readonly Standard: "TableACStandard";
+        readonly Multi: "TableACMulti";
+        readonly Paging: "TableACPaging";
+        readonly MultiPaging: "TableACMultiPaging";
     };
     readonly Transfer: {
         readonly Standard: "TransferStandard";
@@ -211,8 +211,8 @@ declare const Components: {
         readonly SuspenseStandard: "TransferDynamicSuspenseStandard";
         readonly Select: "TransferDynamicSelect";
     };
-    readonly AutoCompleteTransfer: {
-        readonly Standard: "AutoCompleteTransferStandard";
+    readonly TransferAC: {
+        readonly Standard: "TransferACStandard";
     };
     readonly Tree: {
         readonly Standard: "TreeStandard";
@@ -348,7 +348,7 @@ declare const Components: {
     };
     readonly Steps: {
         readonly Standard: "StepsStandard";
-        readonly SuspenseStandard: "StandardSuspenseStandard";
+        readonly SuspenseStandard: "StepsSuspenseStandard";
     };
     readonly StepsDynamic: {
         readonly Standard: "StepsDynamicStandard";

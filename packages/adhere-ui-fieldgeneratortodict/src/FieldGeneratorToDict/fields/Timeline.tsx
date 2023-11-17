@@ -4,9 +4,9 @@ import React from 'react';
 import { Timeline } from '@baifendian/adhere-ui-anthoc';
 
 import type { SuspenseComponentProps } from '../../types';
+import { useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import { useDict, useDynamicDict } from '../hooks';
 
 /**
  * TimelineStandard

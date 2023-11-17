@@ -1,6 +1,8 @@
+import faker from 'faker';
+
 export const books = [
   {
-    label: '机工出版',
+    name: '机工出版',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -40,7 +42,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '中国电力出版社（zhongguodianlichubanshe）',
+    name: '中国电力出版社（zhongguodianlichubanshe）',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -80,7 +82,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '机工出版',
+    name: '机工出版',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -120,7 +122,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '机工出版',
+    name: '机工出版',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -160,7 +162,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '机工出版',
+    name: '机工出版',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -199,7 +201,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '异步图书',
+    name: '异步图书',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -239,7 +241,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '机工出版',
+    name: '机工出版',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -279,7 +281,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '异步图书',
+    name: '异步图书',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -318,7 +320,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '机械工业出版社（CMP）',
+    name: '机械工业出版社（CMP）',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -358,7 +360,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '电子工业出版社',
+    name: '电子工业出版社',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -398,7 +400,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '清华大学',
+    name: '清华大学',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -438,7 +440,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '异步图书',
+    name: '异步图书',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -478,7 +480,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '电子工业出版社',
+    name: '电子工业出版社',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -518,7 +520,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: 'iTuring',
+    name: 'iTuring',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -558,7 +560,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '电子工业出版社',
+    name: '电子工业出版社',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -598,7 +600,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '后浪',
+    name: '后浪',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -638,7 +640,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '中国电力出版社（zhongguodianlichubanshe）',
+    name: '中国电力出版社（zhongguodianlichubanshe）',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -678,7 +680,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '电子工业出版社',
+    name: '电子工业出版社',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -718,7 +720,7 @@ export const books = [
     wxspVenderId: 0,
   },
   {
-    label: '机工出版',
+    name: '机工出版',
     broker_info:
       'eyJwIjoiOTAyMDIyIiwiY2x1c3Rlcl9pZCI6ImxmIiwic291cmNlIjoiMCIsInRhZyI6IjUiLCJjc191c2VyIjoiMiIsInBhbGFudGlyX2V4cGlkcyI6IlJ8Ul9SX0xGaXJzdF9MMTg1NTEiLCJleHBpZCI6IiIsInJlcXNpZyI6IjY3NDdmYzk0MmMxM2NkM2QxYzIzOGY1ZmYyOTdlZmFlZTMzOGQxY2MifQ==',
     bylkState: 0,
@@ -757,7 +759,15 @@ export const books = [
     wxspTag: 0,
     wxspVenderId: 0,
   },
-];
+].map((t) => ({
+  ...t,
+  label: t.t,
+  title: t.t,
+  children: t.t,
+  value: faker.random.uuid(),
+  id: t.itemid,
+  key: t.itemid,
+}));
 
 export const Province = [
   {
@@ -2663,86 +2673,6 @@ export const City = {
 
 export const County = {
   120100000000: [
-    {
-      city: '市辖区',
-      name: '和平区',
-      id: '120101000000',
-    },
-    {
-      city: '市辖区',
-      name: '河东区',
-      id: '120102000000',
-    },
-    {
-      city: '市辖区',
-      name: '河西区',
-      id: '120103000000',
-    },
-    {
-      city: '市辖区',
-      name: '南开区',
-      id: '120104000000',
-    },
-    {
-      city: '市辖区',
-      name: '河北区',
-      id: '120105000000',
-    },
-    {
-      city: '市辖区',
-      name: '红桥区',
-      id: '120106000000',
-    },
-    {
-      city: '市辖区',
-      name: '东丽区',
-      id: '120110000000',
-    },
-    {
-      city: '市辖区',
-      name: '西青区',
-      id: '120111000000',
-    },
-    {
-      city: '市辖区',
-      name: '津南区',
-      id: '120112000000',
-    },
-    {
-      city: '市辖区',
-      name: '北辰区',
-      id: '120113000000',
-    },
-    {
-      city: '市辖区',
-      name: '武清区',
-      id: '120114000000',
-    },
-    {
-      city: '市辖区',
-      name: '宝坻区',
-      id: '120115000000',
-    },
-    {
-      city: '市辖区',
-      name: '滨海新区',
-      id: '120116000000',
-    },
-    {
-      city: '市辖区',
-      name: '宁河区',
-      id: '120117000000',
-    },
-    {
-      city: '市辖区',
-      name: '静海区',
-      id: '120118000000',
-    },
-    {
-      city: '市辖区',
-      name: '蓟州区',
-      id: '120119000000',
-    },
     {
       city: '市辖区',
       name: '和平区',

@@ -1,3 +1,6 @@
+import type { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+
+import type { DictRefreshWrapperFunction } from '../types';
 import Components from './Components';
 import ItemFactory from './ItemFactory';
 import './fields/AutoComplete';
@@ -78,23 +81,28 @@ const genDictComponentName = (dictName: string, componentName: string) => {
  * @param componentName - 组件名 (如: SelectFormItem)，可通过 Components 获取
  * @returns
  */
-const getDictComponent = (dictName: string, componentName: string) => {
+const getDictComponent = <P>(dictName: string, componentName: string) => {
   const { componentName: itemName, functionName } = dictComponentHash[componentName];
-  return ItemFactory({ dictName, itemName, functionName });
+  return ItemFactory<P>({ dictName, itemName, functionName });
 };
 
 export { Components, ItemNames, getDictComponent, genDictComponentName };
 
-export default new Proxy<any>(
+const ProxyComponent = new Proxy<{
+  [prop in string]: ForwardRefExoticComponent<
+    PropsWithoutRef<any> & RefAttributes<DictRefreshWrapperFunction>
+  >;
+}>(
   {},
   {
-    get(target: {}, p: string, receiver: any): any {
+    get(target: {}, p: string, receiver: any) {
       // p
       // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamicMultiFormItem
       // p = SystemAppBasicLayoutRectifyTransferListSectionSelectDynamic + MultiFormItem
       // (业务名 + 组件名 + 功能名)
       // p = SystemAppBasicLayoutRectifyTransferListSection + SelectDynamic + MultiFormItem
 
+      if (p === '$$typeof') return Reflect.get(target, p, receiver);
       // 存在则返回
       if (p in target && !!target[p]) return Reflect.get(target, p, receiver);
 
@@ -105,12 +113,22 @@ export default new Proxy<any>(
 
       const itemNames = Array.from(ItemNames.keys());
 
+      // console.log('p', 'SystemFilterBookListAutoCompleteSelectStandard');
+
       for (let i = 0; i < itemNames.length; i++) {
+        if (p === 'SystemFilterBookListAutoCompleteSelectStandard') {
+          debugger;
+        }
+
+        // Components的key
         const _itemName = itemNames[i];
+        // key的值
         const _functionNames = ItemNames.get(_itemName) ?? [];
-        const _functionNameIndex = _functionNames.findIndex((_functionName) =>
-          p.endsWith(`${_itemName}${_functionName}`),
-        );
+
+        const _functionNameIndex = _functionNames.findIndex((_functionName) => {
+          const concatName = `${_itemName}${_functionName}`;
+          return p.endsWith(concatName);
+        });
 
         if (_functionNameIndex !== -1) {
           itemName = _itemName;
@@ -119,14 +137,21 @@ export default new Proxy<any>(
         }
       }
 
+      console.log('itemName', itemName);
+      console.log('functionName', functionName);
+
       if (!itemName || !functionName) return;
 
       // 字典名
       const dictName = p.substring(0, p.lastIndexOf(functionName));
 
-      receiver[p] = ItemFactory({ itemName, functionName, dictName });
+      receiver[p] = ItemFactory<{
+        a: 1;
+      }>({ itemName, functionName, dictName });
 
       return Reflect.get(target, p, receiver);
     },
   },
 );
+
+export default ProxyComponent;

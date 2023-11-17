@@ -9,8 +9,8 @@ import type {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 
+import { useAutoCompleteDict, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
-import { useAutoCompleteDict, useDict, useDynamicDict } from '../hooks';
 
 /**
  * SelectStandard
@@ -157,10 +157,10 @@ setItem<DropdownRenderSelectProps, DropdownRenderSelectProps['options']>(
 );
 
 /**
- * AutoCompleteSelectStandard
+ * SelectACStandard
  */
 setItem<AutoCompleteProps, AutoCompleteProps['options']>(
-  'AutoCompleteSelect',
+  'SelectAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -175,10 +175,10 @@ setItem<AutoCompleteProps, AutoCompleteProps['options']>(
 );
 
 /**
- * AutoSelectCompleteMulti
+ * SelectACMulti
  */
 setItem<AutoCompleteProps, AutoCompleteProps['options']>(
-  'AutoSelectComplete',
+  'SelectAC',
   'Multi',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -199,30 +199,25 @@ setItem<AutoCompleteProps, AutoCompleteProps['options']>(
 );
 
 /**
- * AutoSelectCompleteCheckAll
+ * SelectACCheckAll
  */
 setItem<
   AutoCompleteCheckAllMultipleSelectProps,
   AutoCompleteCheckAllMultipleSelectProps['options']
->(
-  'AutoSelectComplete',
-  'CheckAll',
-  (dictName) =>
-    ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const { options, loadData } = useAutoCompleteDict<
-        AutoCompleteCheckAllMultipleSelectProps['options']
-      >({
-        dictName,
-        cascadeParams,
-        onDataSourceChange,
-      });
+>('SelectAC', 'CheckAll', (dictName) => ({ cascadeParams, onDataSourceChange, ...props }) => {
+  const { options, loadData } = useAutoCompleteDict<
+    AutoCompleteCheckAllMultipleSelectProps['options']
+  >({
+    dictName,
+    cascadeParams,
+    onDataSourceChange,
+  });
 
-      return (
-        <MultipleSelect.AutoCompleteCheckAllMultipleSelect
-          {...props}
-          options={options}
-          loadData={loadData}
-        />
-      );
-    },
-);
+  return (
+    <MultipleSelect.AutoCompleteCheckAllMultipleSelect
+      {...props}
+      options={options}
+      loadData={loadData}
+    />
+  );
+});

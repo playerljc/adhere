@@ -1,4 +1,9 @@
 import React from 'react';
 import { DictRefreshWrapperFunction } from '../types';
-declare const _default: (FieldComponent: any) => React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<DictRefreshWrapperFunction>>;
-export default _default;
+/**
+ * DictRefreshHOC
+ * @param FieldComponent
+ * @constructor
+ */
+declare function DictRefreshHOC<P>(FieldComponent: any): React.ForwardRefExoticComponent<React.PropsWithoutRef<P> & React.RefAttributes<DictRefreshWrapperFunction>>;
+export default DictRefreshHOC;

@@ -13,15 +13,15 @@ import {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import type { SuspenseComponentProps } from '../../types';
-import { setItem } from '../ItemFactory';
-import Suspense from '../Suspense';
 import {
   useAutoCompleteDict,
   useAutoCompletePaging,
   useDict,
   useDynamicDict,
   usePaging,
-} from '../hooks';
+} from '../Hooks';
+import { setItem } from '../ItemFactory';
+import Suspense from '../Suspense';
 
 /**
  * ListStandard
@@ -230,7 +230,7 @@ setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']
         loadData,
       };
 
-      return <List.ListPaging {...props} {...pagingProps} />;
+      return <List.ListPaging {...props} pagingProps={pagingProps} isSuspenseAsync={false} />;
     },
 );
 
@@ -253,7 +253,14 @@ setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']
         loadData,
       };
 
-      return <List.ListPaging {...props} {...pagingProps} mode="multiple" />;
+      return (
+        <List.ListPaging
+          {...props}
+          pagingProps={pagingProps}
+          mode="multiple"
+          isSuspenseAsync={false}
+        />
+      );
     },
 );
 
@@ -276,7 +283,7 @@ setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']
         loadData,
       };
 
-      return <List.ListPaging {...props} {...pagingProps} isSuspenseAsync />;
+      return <List.ListPaging {...props} pagingProps={pagingProps} isSuspenseAsync />;
     },
 );
 
@@ -299,7 +306,9 @@ setItem<ListPagingProps<any>, ListPagingProps<any>['listPagingProps']['options']
         loadData,
       };
 
-      return <List.ListPaging {...props} {...pagingProps} mode="multiple" isSuspenseAsync />;
+      return (
+        <List.ListPaging {...props} pagingProps={pagingProps} mode="multiple" isSuspenseAsync />
+      );
     },
 );
 
@@ -322,7 +331,7 @@ setItem<ListPagingSelectProps<any>, ListPagingSelectProps<any>['listPagingProps'
         loadData,
       };
 
-      return <List.ListPagingSelect {...props} {...pagingProps} />;
+      return <List.ListPagingSelect {...props} pagingProps={pagingProps} />;
     },
 );
 
@@ -345,15 +354,15 @@ setItem<ListPagingSelectProps<any>, ListPagingSelectProps<any>['listPagingProps'
         loadData,
       };
 
-      return <List.ListPagingSelect {...props} {...pagingProps} mode="multiple" />;
+      return <List.ListPagingSelect {...props} pagingProps={pagingProps} mode="multiple" />;
     },
 );
 
 /**
- * AutoCompleteListStandard
+ * ListACStandard
  */
 setItem<AutoCompleteListSelectProps, AutoCompleteListSelectProps['options']>(
-  'AutoCompleteList',
+  'ListAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -368,10 +377,10 @@ setItem<AutoCompleteListSelectProps, AutoCompleteListSelectProps['options']>(
 );
 
 /**
- * AutoCompleteListMulti
+ * ListACMulti
  */
 setItem<AutoCompleteListSelectProps, AutoCompleteListSelectProps['options']>(
-  'AutoCompleteList',
+  'ListAC',
   'Multi',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -393,10 +402,10 @@ setItem<AutoCompleteListSelectProps, AutoCompleteListSelectProps['options']>(
 );
 
 /**
- * AutoCompleteListCheckAll
+ * ListACCheckAll
  */
 setItem<AutoCompleteCheckAllListSelectProps, AutoCompleteCheckAllListSelectProps['options']>(
-  'AutoCompleteList',
+  'ListAC',
   'CheckAll',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -415,10 +424,10 @@ setItem<AutoCompleteCheckAllListSelectProps, AutoCompleteCheckAllListSelectProps
 );
 
 /**
- * AutoCompleteListPaging
+ * ListACPaging
  */
 setItem<AutoCompleteListPagingSelectProps, AutoCompleteListPagingSelectProps['options']>(
-  'AutoCompleteList',
+  'ListAC',
   'Paging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -433,15 +442,15 @@ setItem<AutoCompleteListPagingSelectProps, AutoCompleteListPagingSelectProps['op
         loadData,
       };
 
-      return <List.AutoCompleteListPagingSelect {...props} {...pagingProps} />;
+      return <List.AutoCompleteListPagingSelect {...props} pagingProps={pagingProps} />;
     },
 );
 
 /**
- * AutoCompleteListMultiPaging
+ * ListACMultiPaging
  */
 setItem<AutoCompleteListPagingSelectProps, AutoCompleteListPagingSelectProps['options']>(
-  'AutoCompleteList',
+  'ListAC',
   'MultiPaging',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -456,6 +465,8 @@ setItem<AutoCompleteListPagingSelectProps, AutoCompleteListPagingSelectProps['op
         loadData,
       };
 
-      return <List.AutoCompleteListPagingSelect {...props} {...pagingProps} mode="multiple" />;
+      return (
+        <List.AutoCompleteListPagingSelect {...props} pagingProps={pagingProps} mode="multiple" />
+      );
     },
 );

@@ -13,9 +13,9 @@ import type {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import type { SuspenseComponentProps } from '../../types';
+import { useAutoCompleteDict, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import { useAutoCompleteDict, useDict, useDynamicDict } from '../hooks';
 
 /**
  * RadioVertical
@@ -396,7 +396,7 @@ setItem<SuspenseComponentProps<CustomRadioProps>, CustomRadioProps['options']>(
  * RadioDynamicSelect
  */
 setItem<RadioSelectProps, RadioSelectProps['options']>(
-  'Radio',
+  'RadioDynamic',
   'Select',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -414,7 +414,7 @@ setItem<RadioSelectProps, RadioSelectProps['options']>(
  * RadioDynamicCustomSelect
  */
 setItem<CustomRadioSelectProps, CustomRadioSelectProps['options']>(
-  'Radio',
+  'RadioDynamic',
   'CustomSelect',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -447,10 +447,10 @@ setItem<ButtonRadioSelectProps, ButtonRadioSelectProps['options']>(
 );
 
 /**
- * AutoCompleteRadioStandard
+ * RadioACStandard
  */
 setItem<AutoCompleteRadioSelectProps, AutoCompleteRadioSelectProps['options']>(
-  'AutoCompleteRadio',
+  'RadioAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -465,10 +465,10 @@ setItem<AutoCompleteRadioSelectProps, AutoCompleteRadioSelectProps['options']>(
 );
 
 /**
- * AutoCompleteRadioCustom
+ * RadioACCustom
  */
 setItem<AutoCompleteCustomRadioSelectProps, AutoCompleteCustomRadioSelectProps['options']>(
-  'AutoCompleteRadio',
+  'RadioAC',
   'Custom',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -487,10 +487,10 @@ setItem<AutoCompleteCustomRadioSelectProps, AutoCompleteCustomRadioSelectProps['
 );
 
 /**
- * AutoCompleteRadioButton
+ * RadioACButton
  */
 setItem<AutoCompleteButtonRadioSelectProps, AutoCompleteButtonRadioSelectProps['options']>(
-  'AutoCompleteRadio',
+  'RadioAC',
   'Button',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
@@ -502,6 +502,8 @@ setItem<AutoCompleteButtonRadioSelectProps, AutoCompleteButtonRadioSelectProps['
         onDataSourceChange,
       });
 
-      return <Radio.AutoCompleteRadioSelect {...props} options={options} loadData={loadData} />;
+      return (
+        <Radio.AutoCompleteButtonRadioSelect {...props} options={options} loadData={loadData} />
+      );
     },
 );

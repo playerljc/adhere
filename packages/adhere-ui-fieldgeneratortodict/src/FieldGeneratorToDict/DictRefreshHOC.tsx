@@ -5,8 +5,13 @@ import type { ForceUpdateRefHandle } from '@baifendian/adhere-ui-forceupdate/es/
 
 import { DictRefreshWrapperFunction } from '../types';
 
-export default (FieldComponent) =>
-  forwardRef<DictRefreshWrapperFunction, any>((props, ref) => {
+/**
+ * DictRefreshHOC
+ * @param FieldComponent
+ * @constructor
+ */
+function DictRefreshHOC<P>(FieldComponent) {
+  return forwardRef<DictRefreshWrapperFunction, P>((props, ref) => {
     const fuRef = useRef<ForceUpdateRefHandle | null>(null);
 
     useImperativeHandle(ref, () => ({
@@ -19,3 +24,6 @@ export default (FieldComponent) =>
       </ForceUpdate>
     );
   });
+}
+
+export default DictRefreshHOC;

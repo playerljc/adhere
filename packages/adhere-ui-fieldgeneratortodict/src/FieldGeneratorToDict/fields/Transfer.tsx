@@ -8,9 +8,9 @@ import type {
 } from '@baifendian/adhere-ui-anthoc/es/types';
 
 import type { SuspenseComponentProps } from '../../types';
+import { useAutoCompleteDict, useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
-import { useAutoCompleteDict, useDict, useDynamicDict } from '../hooks';
 
 /**
  * TransferStandard
@@ -129,10 +129,10 @@ setItem<TransferSelectProps, TransferSelectProps['options']>(
 );
 
 /**
- * AutoCompleteTransferStandard
+ * TransferACStandard
  */
 setItem<AutoCompleteTransferSelectProps, AutoCompleteTransferSelectProps['options']>(
-  'AutoCompleteTransfer',
+  'TransferAC',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {

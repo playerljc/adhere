@@ -3,8 +3,8 @@ import React from 'react';
 
 import { Dropdown } from '@baifendian/adhere-ui-anthoc';
 
+import { useDict, useDynamicDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
-import { useDict, useDynamicDict } from '../hooks';
 
 /**
  * DropdownStandard
