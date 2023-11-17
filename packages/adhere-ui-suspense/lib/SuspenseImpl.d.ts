@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import SuspenseAsync from './Async';
 import Suspense from './Suspense';
 import SuspenseSync from './Sync';
@@ -10,7 +11,7 @@ declare class SuspenseImpl<P extends SuspenseProps = SuspenseProps, S extends Su
     static ASync: typeof SuspenseAsync;
     constructor(props: any);
     fetchData(): void;
-    renderInner(): null;
+    renderInner(): ReactNode;
     showLoading(): boolean;
 }
 export default SuspenseImpl;

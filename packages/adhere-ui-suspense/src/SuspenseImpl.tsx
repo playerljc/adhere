@@ -1,4 +1,5 @@
 import React from 'react';
+import type { ReactNode } from 'react';
 
 import SuspenseAsync from './Async';
 import Suspense from './Suspense';
@@ -21,7 +22,7 @@ class SuspenseImpl<
 
   fetchData(): void {}
 
-  renderInner() {
+  renderInner(): ReactNode {
     return null;
   }
 

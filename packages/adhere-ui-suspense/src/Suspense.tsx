@@ -44,7 +44,7 @@ abstract class Suspense<
    * renderInner - 渲染实际内容
    * @return React.ReactElement
    */
-  abstract renderInner(): React.ReactElement | null;
+  abstract renderInner(): React.ReactNode;
 
   /**
    * showLoading - 是否显示遮罩

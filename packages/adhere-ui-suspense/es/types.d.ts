@@ -47,5 +47,5 @@ export interface showLoading {
     (): boolean;
 }
 export interface renderInner {
-    (): ReactElement | null;
+    (): ReactNode;
 }
