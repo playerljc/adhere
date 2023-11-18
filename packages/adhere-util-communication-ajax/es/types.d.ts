@@ -1,3 +1,4 @@
+import { Size } from '@baifendian/adhere-ui-globalindicator/es/types';
 /**
  * IConfig
  * @interface IConfig
@@ -56,6 +57,8 @@ export interface IConfig {
         show: boolean;
         text: string;
         el: HTMLElement;
+        zIndex: number;
+        size: Size;
     };
     onBeforeResponse?: () => void;
     dataKey?: string;

@@ -258,6 +258,8 @@ function getDefaultConfig(this: Ajax): IConfig {
       text: '',
       // 遮罩的元素
       el: document.body,
+      zIndex: 19999,
+      size: 'default',
     },
     onBeforeResponse: () => {},
     dataKey: 'data',
@@ -479,11 +481,17 @@ function sendPrepare(
 
   const defaultLoadingText = `${intl.v('加载中')}...`;
 
-  const { show = false, text = defaultLoadingText, el = document.body } = loading!;
+  const {
+    show = false,
+    text = defaultLoadingText,
+    el = document.body,
+    zIndex = 19999,
+    size = 'default',
+  } = loading!;
 
   // 显示loading
   if (show) {
-    indicator = GlobalIndicator.show(el || document.body, text || defaultLoadingText);
+    indicator = GlobalIndicator.show(el || document.body, text || defaultLoadingText, zIndex, size);
   }
 
   // 如果是mock数据
@@ -655,23 +663,37 @@ function getSendParams({ data, contentType = '', customSendJSONStringify }) {
       // 获取值
       const value = data.data[k];
 
-      let target = value;
-
       // 如果值是函数
       if (value instanceof Function) {
-        target = value();
+        formData.append(k, value());
       }
-
-      let params = [k];
-
-      if (Array.isArray(target)) {
-        params = [...params, ...target];
-      } else {
-        params = [...params, target];
+      // 如果值是数组
+      else if (Array.isArray(value)) {
+        value.forEach((_value) => {
+          formData.append(k, _value);
+        });
       }
+      // 正常的情况
+      else {
+        formData.append(k, value);
+      }
+      // let target = value;
 
-      // @ts-ignore
-      formData.append(...params);
+      // // 如果值是函数
+      // if (value instanceof Function) {
+      //   target = value();
+      // }
+      //
+      // let params = [k];
+      //
+      // if (Array.isArray(target)) {
+      //   params = [...params, ...target];
+      // } else {
+      //   params = [...params, target];
+      // }
+      //
+      // // @ts-ignore
+      // formData.append(...params);
       // console.log(k, data.data[k]);
     });
 
@@ -756,6 +778,7 @@ function deal401(this: Ajax) {
   window.location.href = Util.casUrl({
     baseUrl: this.systemManagerBaseURL,
     enterUrl: window.location.href,
+    defaultLocal: 'zh_CN',
   });
 }
 

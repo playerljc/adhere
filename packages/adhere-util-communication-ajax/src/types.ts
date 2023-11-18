@@ -1,3 +1,5 @@
+import { Size } from '@baifendian/adhere-ui-globalindicator/es/types';
+
 /**
  * IConfig
  * @interface IConfig
@@ -65,6 +67,10 @@ export interface IConfig {
     text: string;
     // 遮罩的元素
     el: HTMLElement;
+    // 层级
+    zIndex: number;
+    // 大小
+    size: Size;
   };
   // 和后端定义的三大业务key
   onBeforeResponse?: () => void;
