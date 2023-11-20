@@ -1,10 +1,10 @@
-import { NamedExoticComponent } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties, ReactElement } from 'react';
 import Item from './Item';
 /**
  * StickupLayoutHOCType
  */
-export type StickupLayoutComponent = NamedExoticComponent<StickupLayoutProps> & {
+export type StickupLayoutComponent = NamedExoticComponent<PropsWithoutRef<StickupLayoutProps> & RefAttributes<StickupLayoutHandle>> & {
     Item: typeof Item;
 };
 /**
