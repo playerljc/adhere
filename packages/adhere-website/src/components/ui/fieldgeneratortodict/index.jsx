@@ -1,3924 +1,5657 @@
-import { Space as AntdSpace, Avatar, Checkbox, List } from 'antd';
+import { Avatar } from 'antd';
 import React, { useState } from 'react';
 
-import { DownOutlined } from '@ant-design/icons';
-import { FieldGeneratorToDict, FlexLayout, Space } from '@baifendian/adhere';
+import { FieldGeneratorToDict } from '@baifendian/adhere';
+import { Checkbox, Col, List, Radio, Row } from '@baifendian/adhere-ui-anthoc';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 export default () => {
-  const [val, setVal] = useState();
-  const [vals, setVals] = useState([]);
-
-  const [branchVals, setBranchVals] = useState(['210102000000']);
-  const [branchMultiVals, setBranchMultiVals] = useState(['230102000000', '210102000000']);
-
-  const [cascaderBranchVals, setCascaderBranchVals] = useState([
-    '210000000000',
-    '210100000000',
-    '210102000000',
-  ]);
-  const [cascaderBranchMultiVals, setCascaderBranchMultiVals] = useState([
-    ['210000000000', '210100000000', '210102000000'],
-    ['230000000000', '230100000000', '230102000000'],
-  ]);
-
-  const [listVals, setListVals] = useState([]);
-  const [autoCompleteValue, setAutoCompleteValue] = useState({
-    inputValue: '',
-    selectValue: '',
-  });
-  const [current, setCurrent] = useState('mail');
-
-  const [province, setProvince] = useState();
-  const [city, setCity] = useState();
-  const [county, setCounty] = useState();
-
-  const onClick = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
-
-  const listRenderItem = (item) => (
-    <List.Item>
-      <List.Item.Meta
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-        title={<a href="https://ant.design">{item.name}</a>}
-        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-      />
-    </List.Item>
-  );
-
   return (
     <PlayGroundPage>
       <Section title="FieldGeneratorToDict">
         <p>字典生成器</p>
         <ul>
-          <li>从Dict(adhere-util-dict)自动生成FormItem</li>
+          <li>使用Dict生成数据源组件</li>
         </ul>
       </Section>
 
       <CodeBoxSection
-        title="FormItemGeneratorToDict - Select"
+        title="AutoComplete生成器"
         config={[
           {
-            id: 'p1',
-            name: 'Select单选',
+            id: `SelectInput`,
+            name: `SelectInput`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Select单选',
-                info: 'Select单选`',
+                title: 'SelectInput',
+                info: 'SelectInput',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState({
+                  inputValue: '',
+                  selectValue: '',
+                });
 
-  export default () => {
-    const [val, setVal] = useState([]);
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.AutoCompleteDynamic.SelectInput}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p2',
-            name: 'Select多选',
+            id: `Standard`,
+            name: `Standard`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Select多选',
-                info: 'Select多选`',
+                title: 'Standard',
+                info: 'Standard',
               },
             },
-            codeText: `
-          import React, { useState } from 'react';
-          import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-          export default () => {
-            const [vals, setVals] = useState([]);
-
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
-              selectProps={{
-                style: {
-                  width: 200,
-                },
-              }}
-              value={vals}
-              onChange={(v) => setVals(v)}
-            />
-          }
-                    `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectMultiFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p3',
-            name: 'Select全选',
-            mode: 'code',
-            scope: { React },
             type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Select全选',
-                info: 'Select全选`',
-              },
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.AutoCompleteDynamic.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+              };
+
+              return <Component />;
             },
-            codeText: `
-          import React, { useState } from 'react';
-          import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-          export default () => {
-            const [vals, setVals] = useState([]);
-
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMultiFormItem
-              selectProps={{
-                style: {
-                  width: 200,
-                },
-              }}
-              value={vals}
-              onChange={(v) => setVals(v)}
-            />
-          }
-                    `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogSelectCheckAllMultiFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p4',
-            name: 'AutoComplete的单选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'AutoComplete的单选',
-                info: 'AutoComplete的单选`',
-              },
-            },
-            codeText: `
-          import React, { useState } from 'react';
-          import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-          export default () => {
-            const [val, setVal] = useState([]);
-
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectFormItem
-              selectProps={{
-                style: {
-                  width: 200,
-                },
-              }}
-              value={val}
-              onChange={(v) => setVal(v)}
-            />
-          }
-                    `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: 'AutoComplete的多选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'AutoComplete的多选',
-                info: 'AutoComplete的多选`',
-              },
-            },
-            codeText: `
-          import React, { useState } from 'react';
-          import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-          export default () => {
-            const [vals, setVals] = useState([]);
-
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectMultiFormItem
-              selectProps={{
-                style: {
-                  width: 200,
-                },
-              }}
-              value={vals}
-              onChange={(v) => setVals(v)}
-            />
-          }
-                    `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => {
-                  setVals(v);
-                }}
-              />
-            ),
-          },
-          {
-            id: 'p6',
-            name: 'AutoComplete的全选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'AutoComplete的全选',
-                info: 'AutoComplete的全选`',
-              },
-            },
-            codeText: `
-          import React, { useState } from 'react';
-          import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-          export default () => {
-            const [vals, setVals] = useState([]);
-
-            return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteSelectCheckAllMultiFormItem
-              selectProps={{
-                style: {
-                  width: 200,
-                },
-              }}
-              value={vals}
-              onChange={(v) => setVals(v)}
-            />
-          }
-                    `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemFilterBookListAutoSelectCompleteCheckAllMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p7',
-            name: '省市区级联',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '省市区级联',
-                info: '省市区级联`',
-              },
-            },
-            codeText: `
-import React, { useState } from 'react';
-
-import { FieldGeneratorToDict, FlexLayout, Space } from '@baifendian/adhere';
-
-export default () => {
-  const [province, setProvince] = useState();
-  const [city, setCity] = useState();
-  const [county, setCounty] = useState();
-
-  return (
-    <div>
-      <Space.Group direction="vertical">
-        <FlexLayout direction="horizontal">
-          <FlexLayout.Fixed>省：</FlexLayout.Fixed>
-          <FlexLayout.Auto>
-            <FieldGeneratorToDict.FormItemGeneratorToDict.SystemProvinceSelectDynamicFormItem
-              style={{ width: 200 }}
-              value={province}
-              onChange={(v) => setProvince(v)}
-            />
-          </FlexLayout.Auto>
-        </FlexLayout>
-
-        <FlexLayout direction="horizontal">
-          <FlexLayout.Fixed>市：</FlexLayout.Fixed>
-          <FlexLayout.Auto>
-            <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCitySelectDynamicFormItem
-              style={{ width: 200 }}
-              value={city}
-              onChange={(v) => setCity(v)}
-              cascadeParams={province}
-              onDataSourceChange={() => setCity('')}
-            />
-          </FlexLayout.Auto>
-        </FlexLayout>
-
-        <FlexLayout direction="horizontal">
-          <FlexLayout.Fixed>区：</FlexLayout.Fixed>
-          <FlexLayout.Auto>
-            <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCountySelectDynamicFormItem
-              style={{ width: 200 }}
-              value={county}
-              onChange={(v) => setCounty(v)}
-              cascadeParams={city}
-              onDataSourceChange={() => setCounty('')}
-            />
-          </FlexLayout.Auto>
-        </FlexLayout>
-      </Space.Group>
-    </div>
-  )
-}
-            `,
-            renderChildren: () => (
-              <div>
-                <Space.Group direction="vertical">
-                  <FlexLayout direction="horizontal">
-                    <FlexLayout.Fixed>省：</FlexLayout.Fixed>
-                    <FlexLayout.Auto>
-                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemProvinceSelectDynamicFormItem
-                        style={{ width: 200 }}
-                        value={province}
-                        onChange={(v) => setProvince(v)}
-                      />
-                    </FlexLayout.Auto>
-                  </FlexLayout>
-
-                  <FlexLayout direction="horizontal">
-                    <FlexLayout.Fixed>市：</FlexLayout.Fixed>
-                    <FlexLayout.Auto>
-                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCitySelectDynamicFormItem
-                        style={{ width: 200 }}
-                        value={city}
-                        onChange={(v) => setCity(v)}
-                        cascadeParams={province}
-                        onDataSourceChange={() => setCity('')}
-                      />
-                    </FlexLayout.Auto>
-                  </FlexLayout>
-
-                  <FlexLayout direction="horizontal">
-                    <FlexLayout.Fixed>区：</FlexLayout.Fixed>
-                    <FlexLayout.Auto>
-                      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemCountySelectDynamicFormItem
-                        style={{ width: 200 }}
-                        value={county}
-                        onChange={(v) => setCounty(v)}
-                        cascadeParams={city}
-                        onDataSourceChange={() => setCounty('')}
-                      />
-                    </FlexLayout.Auto>
-                  </FlexLayout>
-                </Space.Group>
-              </div>
-            ),
           },
         ]}
       />
 
       <CodeBoxSection
-        title="FormItemGeneratorToDict - Radio(字典中以Radio或DynamicRadio结尾)"
+        title="Breadcrumb生成器"
         config={[
           {
-            id: 'p1',
-            name: 'Radio横向',
+            id: `Standard`,
+            name: `Standard`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Radio横向',
-                info: 'Radio横向`',
+                title: 'Standard',
+                info: 'Standard',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBCNav${FieldGeneratorToDict.ComponentNames.Breadcrumb.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-  export default () => {
-    const [val, setVal] = useState();
+                return <DictComponent />;
+              };
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioHorizontalFormItem
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioHorizontalFormItem
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
+              return <Component />;
+            },
           },
           {
-            id: 'p2',
-            name: 'Radio纵向',
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Radio纵向',
-                info: 'Radio纵向`',
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioVerticalFormItem
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioVerticalFormItem
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p3',
-            name: 'Radio的Button',
-            mode: 'code',
-            scope: { React },
             type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Radio的Button',
-                info: 'Radio的Button`',
-              },
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBCNav${FieldGeneratorToDict.ComponentNames.Breadcrumb.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioButtonFormItem
-      buttonStyle="solid"
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioButtonFormItem
-                buttonStyle="solid"
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p4',
-            name: 'Radio的Select',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Radio的Select',
-                info: 'Radio的Select`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioSelectFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: 'Radio的自定义',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Radio的自定义',
-                info: 'Radio的自定义',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { Space as AntdSpace } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState();
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem
-      optionType="button"
-      buttonStyle="solid"
-      value={val}
-      onChange={(v) => setVal(v)}
-    >
-      {(data) => <AntdSpace size={8}>{data.map(({ item }) => item)}</AntdSpace>}
-    </FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem>
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem
-                optionType="button"
-                buttonStyle="solid"
-                value={val}
-                onChange={(v) => setVal(v)}
-              >
-                {(data) => <AntdSpace size={8}>{data.map(({ item }) => item)}</AntdSpace>}
-              </FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogRadioCustomFormItem>
-            ),
           },
         ]}
       />
 
       <CodeBoxSection
-        title="FormItemGeneratorToDict - Checkbox(字典中以Checkbox或DynamicCheckbox结尾)"
+        title="Cascader生成器"
         config={[
           {
-            id: 'p1',
-            name: 'Checkbox横向',
+            id: `CascaderAsync`,
+            name: `CascaderAsync`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Checkbox横向',
-                info: 'Checkbox横向`',
+                title: 'CascaderAsync',
+                info: 'CascaderAsync',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxHorizontalFormItem
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxHorizontalFormItem
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p2',
-            name: 'Checkbox纵向',
+            id: `CascaderAsyncChangeOnSelect`,
+            name: `CascaderAsyncChangeOnSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Checkbox纵向',
-                info: 'Checkbox纵向`',
+                title: 'CascaderAsyncChangeOnSelect',
+                info: 'CascaderAsyncChangeOnSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.ChangeOnSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxVerticalFormItem
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxVerticalFormItem
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p3',
-            name: 'Checkbox纵向全选',
+            id: `CascaderAsyncFlatChangeOnSelect`,
+            name: `CascaderAsyncFlatChangeOnSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Checkbox横向全选',
-                info: 'Checkbox横向全选`',
+                title: 'CascaderAsyncFlatChangeOnSelect',
+                info: 'CascaderAsyncFlatChangeOnSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatChangeOnSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCheckAllVerticalFormItem
-      buttonStyle="solid"
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCheckAllVerticalFormItem
-                buttonStyle="solid"
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p4',
-            name: 'Checkbox横向全选',
+            id: `CascaderAsyncFlatMulti`,
+            name: `CascaderAsyncFlatMulti`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Checkbox纵向全选',
-                info: 'Checkbox纵向全选`',
+                title: 'CascaderAsyncFlatMulti',
+                info: 'CascaderAsyncFlatMulti',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCheckAllHorizontalFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCheckAllHorizontalFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p5',
-            name: 'Checkbox的Select',
+            id: `CascaderAsyncFlatShowChild`,
+            name: `CascaderAsyncFlatShowChild`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Checkbox的Select',
-                info: 'Checkbox的Select',
+                title: 'CascaderAsyncFlatShowChild',
+                info: 'CascaderAsyncFlatShowChild',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxSelectFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p6',
-            name: 'Checkbox的CheckAllSelect',
+            id: `CascaderAsyncFlatShowParent`,
+            name: `CascaderAsyncFlatShowParent`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Checkbox的CheckAllSelect',
-                info: 'Checkbox的CheckAllSelect',
+                title: 'CascaderAsyncFlatShowParent',
+                info: 'CascaderAsyncFlatShowParent',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCheckAllSelectFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCheckAllSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p7',
-            name: '自定义CheckBox',
+            id: `CascaderAsyncFlatStandard`,
+            name: `CascaderAsyncFlatStandard`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '自定义CheckBox',
-                info: '自定义CheckBox',
+                title: 'CascaderAsyncFlatStandard',
+                info: 'CascaderAsyncFlatStandard',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import {Space as AntdSpace, Checkbox} from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCustomFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    >
-      {(dataSource) => (
-        <AntdSpace size={8}>
-          {dataSource.map(({ data }) => (
-            <Checkbox key={data.value} value={data.value}>
-              {data.label}
-            </Checkbox>
-          ))}
-        </AntdSpace>
-      )}
-    </FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCustomFormItem>
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCustomFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              >
-                {(dataSource) => (
-                  <AntdSpace size={8}>
-                    {dataSource.map(({ data }) => (
-                      <Checkbox key={data.value} value={data.value}>
-                        {data.label}
-                      </Checkbox>
-                    ))}
-                  </AntdSpace>
-                )}
-              </FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogCheckBoxCustomFormItem>
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CascaderAsyncMulti`,
+            name: `CascaderAsyncMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CascaderAsyncMulti',
+                info: 'CascaderAsyncMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CascaderAsyncShowChild`,
+            name: `CascaderAsyncShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CascaderAsyncShowChild',
+                info: 'CascaderAsyncShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.ShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CascaderAsyncShowParent`,
+            name: `CascaderAsyncShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CascaderAsyncShowParent',
+                info: 'CascaderAsyncShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.ShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `ChangeOnSelect`,
+            name: `ChangeOnSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ChangeOnSelect',
+                info: 'ChangeOnSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.ChangeOnSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatChangeOnSelect`,
+            name: `FlatChangeOnSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatChangeOnSelect',
+                info: 'FlatChangeOnSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.CascaderDynamic.FlatChangeOnSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatMulti`,
+            name: `FlatMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatMulti',
+                info: 'FlatMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.CascaderDynamic.FlatMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatShowChild`,
+            name: `FlatShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatShowChild',
+                info: 'FlatShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.CascaderDynamic.FlatShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatShowParent`,
+            name: `FlatShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatShowParent',
+                info: 'FlatShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.CascaderDynamic.FlatShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatStandard`,
+            name: `FlatStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatStandard',
+                info: 'FlatStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.CascaderDynamic.FlatStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatTreeSelect`,
+            name: `FlatTreeSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatTreeSelect',
+                info: 'FlatTreeSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.CascaderDynamic.FlatTreeSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Multi`,
+            name: `Multi`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Multi',
+                info: 'Multi',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `ShowChild`,
+            name: `ShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ShowChild',
+                info: 'ShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.ShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `ShowParent`,
+            name: `ShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ShowParent',
+                info: 'ShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.ShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeSelect`,
+            name: `TreeSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeSelect',
+                info: 'TreeSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.TreeSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+              };
+
+              return <Component />;
+            },
           },
         ]}
       />
 
       <CodeBoxSection
-        title="FormItemGeneratorToDict - TreeSelect"
+        title="Checkbox生成器"
         config={[
           {
-            id: 'p1',
-            name: 'TreeSelect单选(能选任意节点)',
+            id: `AutoCompleteCheckboxCheckAllCustomSelect`,
+            name: `AutoCompleteCheckboxCheckAllCustomSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'TreeSelect单选(能选任意节点)',
-                info: 'TreeSelect单选(能选任意节点)`',
+                title: 'AutoCompleteCheckboxCheckAllCustomSelect',
+                info: 'AutoCompleteCheckboxCheckAllCustomSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [val, setVal] = useState('');
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.CheckBoxAC.CheckAllCustom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p2',
-            name: 'TreeSelect单选(只能选叶子节点)',
+            id: `AutoCompleteCheckboxCheckAllSelect`,
+            name: `AutoCompleteCheckboxCheckAllSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'TreeSelect单选(只能选叶子节点)',
-                info: 'TreeSelect单选(只能选叶子节点)`',
+                title: 'AutoCompleteCheckboxCheckAllSelect',
+                info: 'AutoCompleteCheckboxCheckAllSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [val, setVal] = useState('');
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.CheckBoxAC.CheckAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafFormItem
-                style={{ width: 200 }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p3',
-            name: 'TreeSelect多选(能选任意节点)',
+            id: `AutoCompleteCheckboxCustomSelect`,
+            name: `AutoCompleteCheckboxCustomSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'TreeSelect多选(能选任意节点)',
-                info: 'TreeSelect多选(能选任意节点)`',
+                title: 'AutoCompleteCheckboxCustomSelect',
+                info: 'AutoCompleteCheckboxCustomSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.CheckBoxAC.Custom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeMultiFormItem
-                style={{ width: 300 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p4',
-            name: 'TreeSelect多选(只能选叶子节点)',
+            id: `AutoCompleteCheckboxSelect`,
+            name: `AutoCompleteCheckboxSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'TreeSelect多选(只能选叶子节点)',
-                info: 'TreeSelect多选(只能选叶子节点)`',
+                title: 'AutoCompleteCheckboxSelect',
+                info: 'AutoCompleteCheckboxSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.CheckBoxAC.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOrgTreeLeafMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p5',
-            name: '异步加载',
+            id: `CheckAllCustom`,
+            name: `CheckAllCustom`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载',
-                info: '异步加载`',
+                title: 'CheckAllCustom',
+                info: 'CheckAllCustom',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllCustom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent value={value} onChange={setValue}>
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p6',
-            name: '异步加载(多选)',
+            id: `CheckAllCustomSelect`,
+            name: `CheckAllCustomSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(多选)',
-                info: '异步加载(多选)`',
+                title: 'CheckAllCustomSelect',
+                info: 'CheckAllCustomSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllCustomSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p7',
-            name: '异步加载(只能选叶子节点)',
+            id: `CheckAllHorizontal`,
+            name: `CheckAllHorizontal`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(只能选叶子节点)',
-                info: '异步加载(只能选叶子节点)`',
+                title: 'CheckAllHorizontal',
+                info: 'CheckAllHorizontal',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllHorizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p8',
-            name: '异步加载多选(只能选叶子节点)',
+            id: `CheckAllSelect`,
+            name: `CheckAllSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载多选(只能选叶子节点)',
-                info: '异步加载多选(只能选叶子节点)`',
+                title: 'CheckAllSelect',
+                info: 'CheckAllSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-      selectProps={{
-        style: {
-          width: 200,
-        },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-                style={{ width: 200 }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p9',
-            name: '异步加载(回显)',
+            id: `CheckAllVertical`,
+            name: `CheckAllVertical`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(回显)',
-                info: '异步加载(回显)`',
+                title: 'CheckAllVertical',
+                info: 'CheckAllVertical',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CheckAllVertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-      style={{ width: 200 }}
-      value={branchVals}
-      onChange={(v) => setBranchVals(v)}
-      fetchBranch={(value, cascadeParams) => {
-        return Promise.resolve([
-          {
-            title: '辽宁省',
-            value: '210000000000',
-            isLeaf: false,
-            children: [
-              {
-                title: '沈阳市',
-                value: '210100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    title: '和平区',
-                    value: '210102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
           },
-        ]);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-                style={{ width: 200 }}
-                value={branchVals}
-                onChange={(v) => setBranchVals(v)}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      title: '辽宁省',
-                      value: '210000000000',
-                      isLeaf: false,
-                      children: [
+          {
+            id: `Checkbox`,
+            name: `Checkbox`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Checkbox',
+                info: 'Checkbox',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckboxExt`,
+            name: `CheckboxExt`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckboxExt',
+                info: 'CheckboxExt',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.GroupExt}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Custom`,
+            name: `Custom`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Custom',
+                info: 'Custom',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.Custom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent value={value} onChange={setValue}>
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CustomSelect`,
+            name: `CustomSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CustomSelect',
+                info: 'CustomSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.CustomSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Horizontal`,
+            name: `Horizontal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Horizontal',
+                info: 'Horizontal',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.Horizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Select`,
+            name: `Select`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Select',
+                info: 'Select',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckAllCustom`,
+            name: `SuspenseCheckAllCustom`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckAllCustom',
+                info: 'SuspenseCheckAllCustom',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseCheckAllCustom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent value={value} onChange={setValue}>
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckAllHorizontal`,
+            name: `SuspenseCheckAllHorizontal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckAllHorizontal',
+                info: 'SuspenseCheckAllHorizontal',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseCheckAllHorizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckAllVertical`,
+            name: `SuspenseCheckAllVertical`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckAllVertical',
+                info: 'SuspenseCheckAllVertical',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseCheckAllVertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckboxd`,
+            name: `SuspenseCheckboxd`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckboxd',
+                info: 'SuspenseCheckboxd',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCustom`,
+            name: `SuspenseCustom`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCustom',
+                info: 'SuspenseCustom',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseCustom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent value={value} onChange={setValue}>
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data, onChange, checked, disabled }) => (
+                          <Col span={4}>
+                            <Checkbox
+                              key={data?.value}
+                              {...(data ?? {})}
+                              checked={checked}
+                              disabled={disabled}
+                              onChange={(e) => {
+                                onChange(e, data.value);
+                              }}
+                            >
+                              {data?.label}
+                            </Checkbox>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseGroupExt`,
+            name: `SuspenseGroupExt`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseGroupExt',
+                info: 'SuspenseGroupExt',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseGroupExt}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseHorizontal`,
+            name: `SuspenseHorizontal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseHorizontal',
+                info: 'SuspenseHorizontal',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseHorizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseVertical`,
+            name: `SuspenseVertical`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseVertical',
+                info: 'SuspenseVertical',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.SuspenseVertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Vertical`,
+            name: `Vertical`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Vertical',
+                info: 'Vertical',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.CheckBoxDynamic.Vertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Dropdown生成器"
+        config={[
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDropNav${FieldGeneratorToDict.ComponentNames.Dropdown.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent>
+                    <a onClick={(e) => e.preventDefault()}>Hover me</a>
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="List生成器"
+        config={[
+          {
+            id: `AutoCompleteChecckboxList`,
+            name: `AutoCompleteChecckboxList`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteChecckboxList',
+                info: 'AutoCompleteChecckboxList',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    listProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteCheckAllList`,
+            name: `AutoCompleteCheckAllList`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteCheckAllList',
+                info: 'AutoCompleteCheckAllList',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.CheckAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    listProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteCheckboxPagin`,
+            name: `AutoCompleteCheckboxPagin`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteCheckboxPagin',
+                info: 'AutoCompleteCheckboxPagin',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserACPagin${FieldGeneratorToDict.ComponentNames.ListAC.MultiPaging}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteRadioList`,
+            name: `AutoCompleteRadioList`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteRadioList',
+                info: 'AutoCompleteRadioList',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    listProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteRadioPagin`,
+            name: `AutoCompleteRadioPagin`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteRadioPagin',
+                info: 'AutoCompleteRadioPagin',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserACPagin${FieldGeneratorToDict.ComponentNames.ListAC.Paging}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckAllSelect`,
+            name: `CheckAllSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckAllSelect',
+                info: 'CheckAllSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.CheckAllSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    listProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckboxListPaging`,
+            name: `CheckboxListPaging`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckboxListPaging',
+                info: 'CheckboxListPaging',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckboxListPagingSelect`,
+            name: `CheckboxListPagingSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckboxListPagingSelect',
+                info: 'CheckboxListPagingSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.MultiSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `ListStandard`,
+            name: `ListStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ListStandard',
+                info: 'ListStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    itemLayout="horizontal"
+                    renderItem={(item, index) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          avatar={
+                            <Avatar
+                              src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                            />
+                          }
+                          title={<a href="https://ant.design">{item.title}</a>}
+                          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                        />
+                      </List.Item>
+                    )}
+                    pagination
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `MultiSelect`,
+            name: `MultiSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'MultiSelect',
+                info: 'MultiSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.MultiSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    listProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `RadioListPaging`,
+            name: `RadioListPaging`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RadioListPaging',
+                info: 'RadioListPaging',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `RadioListPagingSelect`,
+            name: `RadioListPagingSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RadioListPagingSelect',
+                info: 'RadioListPagingSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Select`,
+            name: `Select`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Select',
+                info: 'Select',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    listProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckboxListPaging`,
+            name: `SuspenseCheckboxListPaging`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckboxListPaging',
+                info: 'SuspenseCheckboxListPaging',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.SuspenseMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseRadioListPaging`,
+            name: `SuspenseRadioListPaging`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseRadioListPaging',
+                info: 'SuspenseRadioListPaging',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.ListPagination.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    listPagingProps={{
+                      itemLayout: 'horizontal',
+                      renderItem: (item, index) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={
+                              <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                              />
+                            }
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                          />
+                        </List.Item>
+                      ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBook${FieldGeneratorToDict.ComponentNames.ListDynamic.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    itemLayout="horizontal"
+                    renderItem={(item, index) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          avatar={
+                            <Avatar
+                              src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                            />
+                          }
+                          title={<a href="https://ant.design">{item.title}</a>}
+                          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                        />
+                      </List.Item>
+                    )}
+                    pagination
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Mentions生成器"
+        config={[
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemMent${FieldGeneratorToDict.ComponentNames.Mentions.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Menu生成器"
+        config={[
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemNav${FieldGeneratorToDict.ComponentNames.Menu.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Radio生成器"
+        config={[
+          {
+            id: `AutoCompleteButtonRadioSelectndard`,
+            name: `AutoCompleteButtonRadioSelectndard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteButtonRadioSelectndard',
+                info: 'AutoCompleteButtonRadioSelectndard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.RadioAC.Button}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteCustomRadioSelect`,
+            name: `AutoCompleteCustomRadioSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteCustomRadioSelect',
+                info: 'AutoCompleteCustomRadioSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.RadioAC.Custom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data }) => (
+                          <Col span={4}>
+                            <Radio key={data?.value} {...(data ?? {})}>
+                              {data?.label}
+                            </Radio>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteRadioSelect`,
+            name: `AutoCompleteRadioSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteRadioSelect',
+                info: 'AutoCompleteRadioSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.RadioAC.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `ButtonRadio`,
+            name: `ButtonRadio`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ButtonRadio',
+                info: 'ButtonRadio',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.Button}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `ButtonRadioSelect`,
+            name: `ButtonRadioSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ButtonRadioSelect',
+                info: 'ButtonRadioSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.ButtonSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CustomRadio`,
+            name: `CustomRadio`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CustomRadio',
+                info: 'CustomRadio',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.Custom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent>
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data }) => (
+                          <Col span={4}>
+                            <Radio key={data?.value} {...(data ?? {})}>
+                              {data?.label}
+                            </Radio>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CustomRadioSelect`,
+            name: `CustomRadioSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CustomRadioSelect',
+                info: 'CustomRadioSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.CustomSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data }) => (
+                          <Col span={4}>
+                            <Radio key={data?.value} {...(data ?? {})}>
+                              {data?.label}
+                            </Radio>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `HorizontalRadio`,
+            name: `HorizontalRadio`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'HorizontalRadio',
+                info: 'HorizontalRadio',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.Horizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `RadioSelect`,
+            name: `RadioSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RadioSelect',
+                info: 'RadioSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState();
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseButton`,
+            name: `SuspenseButton`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseButton',
+                info: 'SuspenseButton',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.SuspenseButton}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCustom`,
+            name: `SuspenseCustom`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCustom',
+                info: 'SuspenseCustom',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.SuspenseCustom}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent>
+                    {(options) => (
+                      <Row gutter={[16, 24]}>
+                        {options.map(({ data }) => (
+                          <Col span={4}>
+                            <Radio key={data?.value} {...(data ?? {})}>
+                              {data?.label}
+                            </Radio>
+                          </Col>
+                        ))}
+                      </Row>
+                    )}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseHorizontal`,
+            name: `SuspenseHorizontal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseHorizontal',
+                info: 'SuspenseHorizontal',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.SuspenseHorizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseVertical`,
+            name: `SuspenseVertical`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseVertical',
+                info: 'SuspenseVertical',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.SuspenseVertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `VerticalRadio`,
+            name: `VerticalRadio`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'VerticalRadio',
+                info: 'VerticalRadio',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.RadioDynamic.Vertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Segmented生成器"
+        config={[
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSegNav${FieldGeneratorToDict.ComponentNames.Segmented.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemSegNav${FieldGeneratorToDict.ComponentNames.Segmented.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Select生成器"
+        config={[
+          {
+            id: `AutoCompleteCheckAllMultipleSelect`,
+            name: `AutoCompleteCheckAllMultipleSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteCheckAllMultipleSelect',
+                info: 'AutoCompleteCheckAllMultipleSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.SelectAC.CheckAll}`;
+
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {({ originNode, value, onChange, options }) => {
+                      // return originNode;
+                      return <Checkbox.Group value={value} onChange={onChange} options={options} />;
+                    }}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteMultipleSelect`,
+            name: `AutoCompleteMultipleSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteMultipleSelect',
+                info: 'AutoCompleteMultipleSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.SelectAC.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteSelect`,
+            name: `AutoCompleteSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteSelect',
+                info: 'AutoCompleteSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.SelectAC.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    placeholder={DictComponentName}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckAllMultipleSelect`,
+            name: `CheckAllMultipleSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckAllMultipleSelect',
+                info: 'CheckAllMultipleSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.CheckAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 500 }}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {({ originNode, value, onChange, options }) => {
+                      // return originNode;
+                      return <Checkbox.Group value={value} onChange={onChange} options={options} />;
+                    }}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `DropdownRenderSelect`,
+            name: `DropdownRenderSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'DropdownRenderSelect',
+                info: 'DropdownRenderSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.DropdownRender}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    mode="multiple"
+                    placeholder={DictComponentName}
+                    style={{ width: 500 }}
+                    value={value}
+                    onChange={setValue}
+                  >
+                    {({ originNode, value, onChange, options }) => {
+                      // return originNode;
+                      return <Checkbox.Group value={value} onChange={onChange} options={options} />;
+                    }}
+                  </DictComponent>
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `MultipleSelect`,
+            name: `MultipleSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'MultipleSelect',
+                info: 'MultipleSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 500 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Select`,
+            name: `Select`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Select',
+                info: 'Select',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 500 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Steps生成器"
+        config={[
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOneWizard${FieldGeneratorToDict.ComponentNames.Steps.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOneWizard${FieldGeneratorToDict.ComponentNames.Steps.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Table生成器"
+        config={[
+          {
+            id: `AutoCompleteCheckboxPagin`,
+            name: `AutoCompleteCheckboxPagin`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteCheckboxPagin',
+                info: 'AutoCompleteCheckboxPagin',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserACPagin${FieldGeneratorToDict.ComponentNames.TableAC.MultiPaging}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowId: 'itemid',
+                      columns: [
                         {
-                          title: '沈阳市',
-                          value: '210100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              title: '和平区',
-                              value: '210102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: '名称',
+                          key: 'label',
+                          dataIndex: 'label',
                         },
                       ],
-                    },
-                  ]);
-                }}
-              />
-            ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p10',
-            name: '异步加载(回显-多数据)',
+            id: `AutoCompleteCheckboxTable`,
+            name: `AutoCompleteCheckboxTable`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(回显-多数据)',
-                info: '异步加载(回显-多数据)`',
+                title: 'AutoCompleteCheckboxTable',
+                info: 'AutoCompleteCheckboxTable',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemTableBookAC${FieldGeneratorToDict.ComponentNames.TableAC.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-      style={{ width: 200 }}
-      value={branchMultiVals}
-      onChange={(v) => setBranchMultiVals(v)}
-      fetchBranch={(value, cascadeParams) => {
-        return Promise.resolve([
-          {
-            title: '辽宁省',
-            value: '210000000000',
-            isLeaf: false,
-            children: [
-              {
-                title: '沈阳市',
-                value: '210100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    title: '和平区',
-                    value: '210102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            title: '黑龙江省',
-            value: '230000000000',
-            isLeaf: false,
-            children: [
-              {
-                title: '哈尔滨市',
-                value: '230100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    title: '道里区',
-                    value: '230102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-        ]);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-                style={{ width: 200 }}
-                value={branchMultiVals}
-                onChange={(v) => setBranchMultiVals(v)}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      title: '辽宁省',
-                      value: '210000000000',
-                      isLeaf: false,
-                      children: [
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    tableProps={{
+                      rowId: 'itemid',
+                      pagination: false,
+                      columns: [
                         {
-                          title: '沈阳市',
-                          value: '210100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              title: '和平区',
-                              value: '210102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: '名称',
+                          key: 'label',
+                          dataIndex: 'label',
+                        },
+                        {
+                          title: '出版社',
+                          key: 'name',
+                          dataIndex: 'name',
+                        },
+                        {
+                          title: 'jp',
+                          key: 'jp',
+                          dataIndex: 'jp',
+                        },
+                        {
+                          title: 'onTime',
+                          key: 'onTime',
+                          dataIndex: 'onTime',
+                        },
+                        {
+                          title: 'rn',
+                          key: 'rn',
+                          dataIndex: 'rn',
                         },
                       ],
-                    },
-                    {
-                      title: '黑龙江省',
-                      value: '230000000000',
-                      isLeaf: false,
-                      children: [
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `AutoCompleteRadioPagin`,
+            name: `AutoCompleteRadioPagin`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoCompleteRadioPagin',
+                info: 'AutoCompleteRadioPagin',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserACPagin${FieldGeneratorToDict.ComponentNames.TableAC.Paging}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowId: 'itemid',
+                      columns: [
                         {
-                          title: '哈尔滨市',
-                          value: '230100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              title: '道里区',
-                              value: '230102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: '名称',
+                          key: 'label',
+                          dataIndex: 'label',
                         },
                       ],
-                    },
-                  ]);
-                }}
-              />
-            ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p11',
-            name: '异步加载(回显-多数据-只能选叶子节点)',
+            id: `AutoCompleteRadioTable`,
+            name: `AutoCompleteRadioTable`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(回显-多数据-只能选叶子节点)',
-                info: '异步加载(回显-多数据-只能选叶子节点)`',
+                title: 'AutoCompleteRadioTable',
+                info: 'AutoCompleteRadioTable',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemTableBookAC${FieldGeneratorToDict.ComponentNames.TableAC.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-      style={{ width: 200 }}
-      value={branchMultiVals}
-      onChange={(v) => setBranchMultiVals(v)}
-      fetchBranch={(value, cascadeParams) => {
-        return Promise.resolve([
-          {
-            title: '辽宁省',
-            value: '210000000000',
-            isLeaf: false,
-            children: [
-              {
-                title: '沈阳市',
-                value: '210100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    title: '和平区',
-                    value: '210102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            title: '黑龙江省',
-            value: '230000000000',
-            isLeaf: false,
-            children: [
-              {
-                title: '哈尔滨市',
-                value: '230100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    title: '道里区',
-                    value: '230102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-        ]);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncLeafMultiFormItem
-                style={{ width: 200 }}
-                value={branchMultiVals}
-                onChange={(v) => setBranchMultiVals(v)}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      title: '辽宁省',
-                      value: '210000000000',
-                      isLeaf: false,
-                      children: [
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    tableProps={{
+                      rowId: 'itemid',
+                      columns: [
                         {
-                          title: '沈阳市',
-                          value: '210100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              title: '和平区',
-                              value: '210102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: '名称',
+                          key: 'label',
+                          dataIndex: 'label',
+                        },
+                        {
+                          title: '出版社',
+                          key: 'name',
+                          dataIndex: 'name',
+                        },
+                        {
+                          title: 'jp',
+                          key: 'jp',
+                          dataIndex: 'jp',
+                        },
+                        {
+                          title: 'onTime',
+                          key: 'onTime',
+                          dataIndex: 'onTime',
+                        },
+                        {
+                          title: 'rn',
+                          key: 'rn',
+                          dataIndex: 'rn',
                         },
                       ],
-                    },
-                    {
-                      title: '黑龙江省',
-                      value: '230000000000',
-                      isLeaf: false,
-                      children: [
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckboxTablePaging`,
+            name: `CheckboxTablePaging`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckboxTablePaging',
+                info: 'CheckboxTablePaging',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowKey: 'id',
+                      columns: [
                         {
-                          title: '哈尔滨市',
-                          value: '230100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              title: '道里区',
-                              value: '230102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: 'title',
+                          key: 'title',
+                          dataIndex: 'title',
+                        },
+                        {
+                          title: 'avatar',
+                          key: 'avatar',
+                          dataIndex: 'avatar',
+                          render: (v) => <img width={50} src={v} alt="" />,
                         },
                       ],
-                    },
-                  ]);
-                }}
-              />
-            ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p12',
-            name: 'TreeSelect单选(能选任意节点，flat数据)',
+            id: `CheckboxTablePagingSelect`,
+            name: `CheckboxTablePagingSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'TreeSelect单选(能选任意节点，flat数据)',
-                info: 'TreeSelect单选(能选任意节点，flat数据)`',
+                title: 'CheckboxTablePagingSelect',
+                info: 'CheckboxTablePagingSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllTreeDynamicFormItem
-      style={{ width: 200 }}
-      treeDataSimpleMode
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllTreeDynamicFormItem
-                style={{ width: 200 }}
-                treeDataSimpleMode
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p13',
-            name: '异步加载(flat数据)',
-            mode: 'code',
-            scope: { React },
             type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '异步加载(flat数据)',
-                info: '异步加载(flat数据)`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.MultiSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-      style={{ width: 200 }}
-      treeDataSimpleMode
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncFormItem
-                style={{ width: 200 }}
-                treeDataSimpleMode
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p14',
-            name: '异步加载(回显,flat数据)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '异步加载(回显,flat数据)',
-                info: '异步加载(回显,flat数据)`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-      style={{ width: 200 }}
-      treeDataSimpleMode
-      value={branchVals}
-      onChange={(v) => setBranchVals(v)}
-      fetchBranch={(value, cascadeParams) => {
-        return Promise.resolve([
-          {
-            title: '辽宁省',
-            value: '210000000000',
-            id: '210000000000',
-            pId: 0,
-            isLeaf: false,
-          },
-          {
-            title: '沈阳市',
-            value: '210100000000',
-            id: '210100000000',
-            pId: '210000000000',
-            isLeaf: false,
-          },
-          {
-            title: '和平区',
-            value: '210102000000',
-            id: '210102000000',
-            pId: '210100000000',
-            isLeaf: true,
-          },
-        ]);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentTreeAsyncMultiFormItem
-                style={{ width: 200 }}
-                treeDataSimpleMode
-                value={branchVals}
-                onChange={(v) => setBranchVals(v)}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      title: '辽宁省',
-                      value: '210000000000',
-                      id: '210000000000',
-                      pId: 0,
-                      isLeaf: false,
-                    },
-                    {
-                      title: '沈阳市',
-                      value: '210100000000',
-                      id: '210100000000',
-                      pId: '210000000000',
-                      isLeaf: false,
-                    },
-                    {
-                      title: '和平区',
-                      value: '210102000000',
-                      id: '210102000000',
-                      pId: '210100000000',
-                      isLeaf: true,
-                    },
-                  ]);
-                }}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Transfer"
-        config={[
-          {
-            id: 'p1',
-            name: '基本',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本',
-                info: '基本`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTransferFormItem
-      targetKeys={vals}
-      onChange={(v) => {
-        setVals(v);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTransferFormItem
-                targetKeys={vals}
-                onChange={(v) => {
-                  setVals(v);
-                }}
-              />
-            ),
-          },
-          {
-            id: 'p2',
-            name: 'SelectFormItem',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'SelectFormItem',
-                info: 'SelectFormItem`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTransferSelectFormItem
-      selectProps={{
-        style: { width: 300 },
-      }}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTransferSelectFormItem
-                selectProps={{
-                  style: { width: 300 },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Table"
-        config={[
-          {
-            id: 'p1',
-            name: '普通不带分页',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '普通不带分页',
-                info: '普通不带分页`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableFormItem
-      columns={[
-        {
-          key: 'name',
-          dataIndex: 'name',
-          title: '姓名',
-        },
-        {
-          key: 'sex',
-          dataIndex: 'sex',
-          title: '性别',
-        },
-        {
-          key: 'birthDay',
-          dataIndex: 'birthDay',
-          title: '生日',
-        },
-        {
-          key: 'deptName',
-          dataIndex: 'deptName',
-          title: '部门',
-        },
-        {
-          key: 'address',
-          dataIndex: 'address',
-          title: '地址',
-        },
-      ]}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserTableFormItem
-                columns={[
-                  {
-                    key: 'name',
-                    dataIndex: 'name',
-                    title: '姓名',
-                  },
-                  {
-                    key: 'sex',
-                    dataIndex: 'sex',
-                    title: '性别',
-                  },
-                  {
-                    key: 'birthDay',
-                    dataIndex: 'birthDay',
-                    title: '生日',
-                  },
-                  {
-                    key: 'deptName',
-                    dataIndex: 'deptName',
-                    title: '部门',
-                  },
-                  {
-                    key: 'address',
-                    dataIndex: 'address',
-                    title: '地址',
-                  },
-                ]}
-              />
-            ),
-          },
-          {
-            id: 'p2',
-            name: '普通单选Select',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '普通单选Select',
-                info: '普通单选Select`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState('');
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableSelectFormItem
-      selectProps={{
-        style: {
-          width: 1024,
-        },
-      }}
-      columns={[
-        {
-          key: 'name',
-          dataIndex: 'name',
-          title: '姓名',
-        },
-        {
-          key: 'sex',
-          dataIndex: 'sex',
-          title: '性别',
-        },
-        {
-          key: 'birthDay',
-          dataIndex: 'birthDay',
-          title: '生日',
-        },
-        {
-          key: 'deptName',
-          dataIndex: 'deptName',
-          title: '部门',
-        },
-        {
-          key: 'address',
-          dataIndex: 'address',
-          title: '地址',
-        },
-      ]}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserTableSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 1024,
-                  },
-                }}
-                columns={[
-                  {
-                    key: 'name',
-                    dataIndex: 'name',
-                    title: '姓名',
-                  },
-                  {
-                    key: 'sex',
-                    dataIndex: 'sex',
-                    title: '性别',
-                  },
-                  {
-                    key: 'birthDay',
-                    dataIndex: 'birthDay',
-                    title: '生日',
-                  },
-                  {
-                    key: 'deptName',
-                    dataIndex: 'deptName',
-                    title: '部门',
-                  },
-                  {
-                    key: 'address',
-                    dataIndex: 'address',
-                    title: '地址',
-                  },
-                ]}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p3',
-            name: '普通多选Select',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '普通多选Select',
-                info: '普通多选Select`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTableMultiSelectFormItem
-      selectProps={{
-        style: {
-          width: 1024,
-        },
-      }}
-      columns={[
-        {
-          key: 'name',
-          dataIndex: 'name',
-          title: '姓名',
-        },
-        {
-          key: 'sex',
-          dataIndex: 'sex',
-          title: '性别',
-        },
-        {
-          key: 'birthDay',
-          dataIndex: 'birthDay',
-          title: '生日',
-        },
-        {
-          key: 'deptName',
-          dataIndex: 'deptName',
-          title: '部门',
-        },
-        {
-          key: 'address',
-          dataIndex: 'address',
-          title: '地址',
-        },
-      ]}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserTableMultiSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 1024,
-                  },
-                }}
-                columns={[
-                  {
-                    key: 'name',
-                    dataIndex: 'name',
-                    title: '姓名',
-                  },
-                  {
-                    key: 'sex',
-                    dataIndex: 'sex',
-                    title: '性别',
-                  },
-                  {
-                    key: 'birthDay',
-                    dataIndex: 'birthDay',
-                    title: '生日',
-                  },
-                  {
-                    key: 'deptName',
-                    dataIndex: 'deptName',
-                    title: '部门',
-                  },
-                  {
-                    key: 'address',
-                    dataIndex: 'address',
-                    title: '地址',
-                  },
-                ]}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p4',
-            name: '分页的动态数据',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '分页的动态数据',
-                info: '分页的动态数据`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationFormItem
-      columns={[
-        {
-          key: 'name',
-          dataIndex: 'name',
-          title: '姓名',
-        },
-        {
-          key: 'sex',
-          dataIndex: 'sex',
-          title: '性别',
-        },
-        {
-          key: 'birthDay',
-          dataIndex: 'birthDay',
-          title: '生日',
-        },
-        {
-          key: 'deptName',
-          dataIndex: 'deptName',
-          title: '部门',
-        },
-        {
-          key: 'address',
-          dataIndex: 'address',
-          title: '地址',
-        },
-      ]}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginTablePaginationFormItem
-                columns={[
-                  {
-                    key: 'name',
-                    dataIndex: 'name',
-                    title: '姓名',
-                  },
-                  {
-                    key: 'sex',
-                    dataIndex: 'sex',
-                    title: '性别',
-                  },
-                  {
-                    key: 'birthDay',
-                    dataIndex: 'birthDay',
-                    title: '生日',
-                  },
-                  {
-                    key: 'deptName',
-                    dataIndex: 'deptName',
-                    title: '部门',
-                  },
-                  {
-                    key: 'address',
-                    dataIndex: 'address',
-                    title: '地址',
-                  },
-                ]}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: '分页的动态数据Select单选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '分页的动态数据Select单选',
-                info: '分页的动态数据Select单选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [val, setVal] = useState('');
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationSelectFormItem
-      selectProps={{
-        style: { width: 1024 },
-      }}
-      columns={[
-        {
-          key: 'name',
-          dataIndex: 'name',
-          title: '姓名',
-        },
-        {
-          key: 'sex',
-          dataIndex: 'sex',
-          title: '性别',
-        },
-        {
-          key: 'birthDay',
-          dataIndex: 'birthDay',
-          title: '生日',
-        },
-        {
-          key: 'deptName',
-          dataIndex: 'deptName',
-          title: '部门',
-        },
-        {
-          key: 'address',
-          dataIndex: 'address',
-          title: '地址',
-        },
-      ]}
-      value={val}
-      onChange={(v) => {
-        if (typeof v !== 'object') {
-          setVal(v);
-        }
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginTablePaginationSelectFormItem
-                selectProps={{
-                  style: { width: 1024 },
-                }}
-                columns={[
-                  {
-                    key: 'name',
-                    dataIndex: 'name',
-                    title: '姓名',
-                  },
-                  {
-                    key: 'sex',
-                    dataIndex: 'sex',
-                    title: '性别',
-                  },
-                  {
-                    key: 'birthDay',
-                    dataIndex: 'birthDay',
-                    title: '生日',
-                  },
-                  {
-                    key: 'deptName',
-                    dataIndex: 'deptName',
-                    title: '部门',
-                  },
-                  {
-                    key: 'address',
-                    dataIndex: 'address',
-                    title: '地址',
-                  },
-                ]}
-                value={val}
-                onChange={(v) => {
-                  if (typeof v !== 'object') {
-                    setVal(v);
-                  }
-                }}
-              />
-            ),
-          },
-          {
-            id: 'p6',
-            name: '分页的动态数据Select多选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '分页的动态数据Select多选',
-                info: '分页的动态数据Select多选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTablePaginationMultiSelectFormItem
-      selectProps={{
-        style: { width: 1024 },
-      }}
-      columns={[
-        {
-          key: 'name',
-          dataIndex: 'name',
-          title: '姓名',
-        },
-        {
-          key: 'sex',
-          dataIndex: 'sex',
-          title: '性别',
-        },
-        {
-          key: 'birthDay',
-          dataIndex: 'birthDay',
-          title: '生日',
-        },
-        {
-          key: 'deptName',
-          dataIndex: 'deptName',
-          title: '部门',
-        },
-        {
-          key: 'address',
-          dataIndex: 'address',
-          title: '地址',
-        },
-      ]}
-      value={vals}
-      onChange={(v) => {
-        if (typeof v !== 'object') {
-          setVals(v);
-        }
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginTablePaginationMultiSelectFormItem
-                selectProps={{
-                  style: { width: 1024 },
-                }}
-                columns={[
-                  {
-                    key: 'name',
-                    dataIndex: 'name',
-                    title: '姓名',
-                  },
-                  {
-                    key: 'sex',
-                    dataIndex: 'sex',
-                    title: '性别',
-                  },
-                  {
-                    key: 'birthDay',
-                    dataIndex: 'birthDay',
-                    title: '生日',
-                  },
-                  {
-                    key: 'deptName',
-                    dataIndex: 'deptName',
-                    title: '部门',
-                  },
-                  {
-                    key: 'address',
-                    dataIndex: 'address',
-                    title: '地址',
-                  },
-                ]}
-                value={vals}
-                onChange={(v) => {
-                  if (Array.isArray(v)) {
-                    setVals(v);
-                  }
-                }}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Cascader"
-        config={[
-          {
-            id: 'p1',
-            name: 'Cascader(能选任意节点)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Cascader(能选任意节点)',
-                info: 'Cascader(能选任意节点)',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderFormItem
-      style={{ width: 500 }}
-      value={vals}
-      onChange={(v) => setVals(v || [])}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderFormItem
-                style={{ width: 500 }}
-                value={vals}
-                onChange={(v) => setVals(v || [])}
-              />
-            ),
-          },
-          {
-            id: 'p2',
-            name: 'Cascader(只能选叶子节点)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Cascader(只能选叶子节点)',
-                info: 'Cascader(只能选叶子节点)',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafFormItem
-      style={{ width: 500 }}
-      value={vals}
-      onChange={(v) => setVals(v || [])}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderLeafFormItem
-                style={{ width: 500 }}
-                value={vals}
-                onChange={(v) => setVals(v || [])}
-              />
-            ),
-          },
-          {
-            id: 'p3',
-            name: 'Cascader多选(能选任意节点)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Cascader多选(能选任意节点)',
-                info: 'Cascader多选(能选任意节点)`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderMultiFormItem
-      style={{ width: 500 }}
-      value={vals}
-      onChange={(v) => setVals(v || [])}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderMultiFormItem
-                style={{ width: 500 }}
-                value={vals}
-                onChange={(v) => setVals(v || [])}
-              />
-            ),
-          },
-          {
-            id: 'p4',
-            name: 'Cascader多选(只能选叶子节点)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Cascader多选(只能选叶子节点)',
-                info: 'Cascader多选(只能选叶子节点)',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestCascaderLeafMultiFormItem
-      style={{ width: 500 }}
-      value={vals}
-      onChange={(v) => setVals(v || [])}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSSQCascaderLeafMultiFormItem
-                style={{ width: 500 }}
-                value={vals}
-                onChange={(v) => setVals(v || [])}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: '异步加载',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '异步加载',
-                info: '异步加载`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p6',
-            name: '异步加载(多选)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '异步加载(多选)',
-                info: '异步加载(多选)`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p7',
-            name: '异步加载(回显)',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '异步加载(回显)',
-                info: '异步加载(回显)`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
-      value={vals}
-      onChange={(v) => {
-        console.log('v======', v);
-        setCascaderBranchVals(v);
-      }}
-      fetchBranch={(value, cascadeParams) => {
-        return Promise.resolve([
-          {
-            label: '辽宁省',
-            value: '210000000000',
-            isLeaf: false,
-            children: [
-              {
-                label: '沈阳市',
-                value: '210100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    label: '和平区',
-                    value: '210102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-        ]);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
-                value={cascaderBranchVals}
-                onChange={(v) => {
-                  console.log('v======', v);
-                  setCascaderBranchVals(v);
-                }}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      label: '辽宁省',
-                      value: '210000000000',
-                      isLeaf: false,
-                      children: [
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowKey: 'id',
+                      columns: [
                         {
-                          label: '沈阳市',
-                          value: '210100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              label: '和平区',
-                              value: '210102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: 'title',
+                          key: 'title',
+                          dataIndex: 'title',
+                        },
+                        {
+                          title: 'avatar',
+                          key: 'avatar',
+                          dataIndex: 'avatar',
+                          render: (v) => <img width={50} src={v} alt="" />,
                         },
                       ],
-                    },
-                  ]);
-                }}
-              />
-            ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p8',
-            name: '异步加载(回显-多数据)',
+            id: `MultiSelect`,
+            name: `MultiSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(回显-多数据)',
-                info: '异步加载(回显-多数据)`',
+                title: 'MultiSelect',
+                info: 'MultiSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemTableBook${FieldGeneratorToDict.ComponentNames.TableDynamic.MultiSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
-      value={vals}
-      onChange={(v) => {
-        console.log('v======', v);
-        setCascaderBranchVals(v);
-      }}
-      fetchBranch={(value, cascadeParams) => {
-        return Promise.resolve([
-          {
-            label: '辽宁省',
-            value: '210000000000',
-            isLeaf: false,
-            children: [
-              {
-                label: '沈阳市',
-                value: '210100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    label: '和平区',
-                    value: '210102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: '黑龙江省',
-            value: '230000000000',
-            isLeaf: false,
-            children: [
-              {
-                label: '哈尔滨市',
-                value: '230100000000',
-                isLeaf: false,
-                children: [
-                  {
-                    label: '道里区',
-                    value: '230102000000',
-                    isLeaf: true,
-                  },
-                ],
-              },
-            ],
-          },
-        ]);
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncMultiFormItem
-                value={cascaderBranchMultiVals}
-                onChange={(v) => {
-                  console.log('v======', v);
-                  setCascaderBranchMultiVals(v);
-                }}
-                fetchBranch={(value, cascadeParams) => {
-                  return Promise.resolve([
-                    {
-                      label: '辽宁省',
-                      value: '210000000000',
-                      isLeaf: false,
-                      children: [
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    tableProps={{
+                      columns: [
                         {
-                          label: '沈阳市',
-                          value: '210100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              label: '和平区',
-                              value: '210102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: '名称',
+                          key: 'label',
+                          dataIndex: 'label',
+                        },
+                        {
+                          title: '出版社',
+                          key: 'name',
+                          dataIndex: 'name',
+                        },
+                        {
+                          title: 'jp',
+                          key: 'jp',
+                          dataIndex: 'jp',
+                        },
+                        {
+                          title: 'onTime',
+                          key: 'onTime',
+                          dataIndex: 'onTime',
+                        },
+                        {
+                          title: 'rn',
+                          key: 'rn',
+                          dataIndex: 'rn',
                         },
                       ],
-                    },
-                    {
-                      label: '黑龙江省',
-                      value: '230000000000',
-                      isLeaf: false,
-                      children: [
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `RadioTablePaging`,
+            name: `RadioTablePaging`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RadioTablePaging',
+                info: 'RadioTablePaging',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowKey: 'id',
+                      columns: [
                         {
-                          label: '哈尔滨市',
-                          value: '230100000000',
-                          isLeaf: false,
-                          children: [
-                            {
-                              label: '道里区',
-                              value: '230102000000',
-                              isLeaf: true,
-                            },
-                          ],
+                          title: 'title',
+                          key: 'title',
+                          dataIndex: 'title',
+                        },
+                        {
+                          title: 'avatar',
+                          key: 'avatar',
+                          dataIndex: 'avatar',
+                          render: (v) => <img width={50} src={v} alt="" />,
                         },
                       ],
-                    },
-                  ]);
-                }}
-              />
-            ),
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p9',
-            name: 'Cascader(能选任意节点，拉平数据)',
+            id: `RadioTablePagingSelect`,
+            name: `RadioTablePagingSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Cascader(能选任意节点，拉平数据)',
-                info: 'Cascader(能选任意节点，拉平数据)',
+                title: 'RadioTablePagingSelect',
+                info: 'RadioTablePagingSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllCascaderDynamicMultiFormItem
-      treeDataSimpleMode
-      value={vals}
-      onChange={(v) => setVals(v || [])}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentAllCascaderDynamicMultiFormItem
-                treeDataSimpleMode
-                value={vals}
-                onChange={(v) => setVals(v || [])}
-              />
-            ),
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowKey: 'id',
+                      columns: [
+                        {
+                          title: 'title',
+                          key: 'title',
+                          dataIndex: 'title',
+                        },
+                        {
+                          title: 'avatar',
+                          key: 'avatar',
+                          dataIndex: 'avatar',
+                          render: (v) => <img width={50} src={v} alt="" />,
+                        },
+                      ],
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p10',
-            name: '异步加载(拉平数据)',
+            id: `Select`,
+            name: `Select`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '异步加载(拉平数据)',
-                info: '异步加载(拉平数据)`',
+                title: 'Select',
+                info: 'Select',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [vals, setVals] = useState([]);
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
-      treeDataSimpleMode
-      value={vals}
-      onChange={(v) => setVals(v || [])}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDepartmentCascaderAsyncFormItem
-                treeDataSimpleMode
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - List"
-        config={[
-          {
-            id: 'p1',
-            name: '普通不带分页',
-            mode: 'code',
-            scope: { React },
             type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '普通不带分页',
-                info: '普通不带分页`',
-              },
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemTableBook${FieldGeneratorToDict.ComponentNames.TableDynamic.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 600 }}
+                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    value={value}
+                    onChange={setValue}
+                    tableProps={{
+                      columns: [
+                        {
+                          title: '名称',
+                          key: 'label',
+                          dataIndex: 'label',
+                        },
+                        {
+                          title: '出版社',
+                          key: 'name',
+                          dataIndex: 'name',
+                        },
+                        {
+                          title: 'jp',
+                          key: 'jp',
+                          dataIndex: 'jp',
+                        },
+                        {
+                          title: 'onTime',
+                          key: 'onTime',
+                          dataIndex: 'onTime',
+                        },
+                        {
+                          title: 'rn',
+                          key: 'rn',
+                          dataIndex: 'rn',
+                        },
+                      ],
+                    }}
+                  />
+                );
+              };
+
+              return <Component />;
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { List,Avatar } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const listRenderItem = (item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={<a href="https://ant.design">{item.name}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    );
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListFormItem
-      renderItem={listRenderItem}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserListFormItem
-                renderItem={listRenderItem}
-              />
-            ),
           },
           {
-            id: 'p2',
-            name: '普通单选Select',
+            id: `SuspenseCheckboxTablePaging`,
+            name: `SuspenseCheckboxTablePaging`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '普通单选Select',
-                info: '普通单选Select`',
+                title: 'SuspenseCheckboxTablePaging',
+                info: 'SuspenseCheckboxTablePaging',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { List,Avatar } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    const [val, setVal] = useState('');
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.SuspenseMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    const listRenderItem = (item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={<a href="https://ant.design">{item.name}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    );
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowKey: 'id',
+                      columns: [
+                        {
+                          title: 'title',
+                          key: 'title',
+                          dataIndex: 'title',
+                        },
+                        {
+                          title: 'avatar',
+                          key: 'avatar',
+                          dataIndex: 'avatar',
+                          render: (v) => <img width={50} src={v} alt="" />,
+                        },
+                      ],
+                    }}
+                  />
+                );
+              };
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListSelectFormItem
-      selectProps={{
-        style: {
-          width: 1024,
-        },
-      }}
-      renderItem={listRenderItem}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserListSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 1024,
-                  },
-                }}
-                renderItem={listRenderItem}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
+              return <Component />;
+            },
           },
           {
-            id: 'p3',
-            name: '普通多选Select',
+            id: `SuspenseRadioTablePaging`,
+            name: `SuspenseRadioTablePaging`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '普通多选Select',
-                info: '普通多选Select`',
+                title: 'SuspenseRadioTablePaging',
+                info: 'SuspenseRadioTablePaging',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { List,Avatar } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
 
-  export default () => {
-    const [vals, setVals] = useState([]);
+                const DictComponentName = `SystemUserPagin${FieldGeneratorToDict.ComponentNames.TablePagination.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-    const listRenderItem = (item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={<a href="https://ant.design">{item.name}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    );
+                return (
+                  <DictComponent
+                    value={value}
+                    onChange={setValue}
+                    pagingProps={{
+                      defaultLimit: 10,
+                    }}
+                    tablePagingProps={{
+                      rowKey: 'id',
+                      columns: [
+                        {
+                          title: 'title',
+                          key: 'title',
+                          dataIndex: 'title',
+                        },
+                        {
+                          title: 'avatar',
+                          key: 'avatar',
+                          dataIndex: 'avatar',
+                          render: (v) => <img width={50} src={v} alt="" />,
+                        },
+                      ],
+                    }}
+                  />
+                );
+              };
 
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListMultiSelectFormItem
-      selectProps={{
-        style: {
-          width: 1024,
-        },
-      }}
-      renderItem={listRenderItem}
-      value={vals}
-      onChange={(v) => setVals(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserListMultiSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 1024,
-                  },
-                }}
-                renderItem={listRenderItem}
-                value={listVals}
-                onChange={(v) => setListVals(v)}
-              />
-            ),
+              return <Component />;
+            },
           },
           {
-            id: 'p4',
-            name: '分页的动态数据',
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '分页的动态数据',
-                info: '分页的动态数据`',
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
               },
             },
-            codeText: `
-  import React from 'react';
-  import { List,Avatar } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const listRenderItem = (item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={<a href="https://ant.design">{item.name}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    );
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationFormItem
-      renderItem={listRenderItem}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginListPaginationFormItem
-                renderItem={listRenderItem}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: '分页的动态数据Select单选',
-            mode: 'code',
-            scope: { React },
             type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '分页的动态数据Select单选',
-                info: '分页的动态数据Select单选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { List,Avatar } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemTableBook${FieldGeneratorToDict.ComponentNames.TableDynamic.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-  export default () => {
-    const [val, setVal] = useState('');
-
-    const listRenderItem = (item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={<a href="https://ant.design">{item.name}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    );
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationSelectFormItem
-      selectProps={{
-        style: {
-          width: 1024,
-        },
-      }}
-      renderItem={listRenderItem}
-      value={val}
-      onChange={(v) => setVal(v)}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginListPaginationSelectFormItem
-                selectProps={{
-                  style: { width: 1024 },
-                }}
-                renderItem={listRenderItem}
-                value={val}
-                onChange={(v) => {
-                  if (typeof v !== 'object') {
-                    setVal(v);
-                  }
-                }}
-              />
-            ),
-          },
-          {
-            id: 'p6',
-            name: '分页的动态数据Select多选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '分页的动态数据Select多选',
-                info: '分页的动态数据Select多选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { List,Avatar } from 'antd';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [listVals, setListVals] = useState([]);
-
-    const listRenderItem = (item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title={<a href="https://ant.design">{item.name}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    );
-
-    return <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestListPaginationMultiSelectFormItem
-      selectProps={{
-        style: {
-          width: 1024,
-        },
-      }}
-      renderItem={listRenderItem}
-      value={listVals}
-      onChange={(v) => {
-        if (Array.isArray(v)) {
-          setListVals(v);
-        }
-      }}
-    />
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemUserPaginListPaginationMultiSelectFormItem
-                selectProps={{
-                  style: { width: 1024 },
-                }}
-                renderItem={listRenderItem}
-                value={listVals}
-                onChange={(v) => {
-                  if (Array.isArray(v)) {
-                    setListVals(v);
-                  }
-                }}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - AutoComplete"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [autoCompleteValue, setAutoCompleteValue] = useState({
-      inputValue: '',
-      selectValue: '',
-    });
-
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestAutoCompleteFormItem
-        style={{ width: 200 }}
-        value={autoCompleteValue}
-        onChange={(v) => {
-          setAutoCompleteValue(v);
-        }}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogAutoCompleteFormItem
-                style={{ width: 200 }}
-                value={autoCompleteValue}
-                onChange={(v) => {
-                  setAutoCompleteValue(v);
-                }}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Breadcrumb"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestBreadcrumbFormItem />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBCNavBreadcrumbFormItem />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Dropdown"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-  import { DownOutlined } from '@ant-design/icons';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestDropdownFormItem>
-        <a onClick={(e) => e.preventDefault()}>
-          Hover me
-          <DownOutlined />
-        </a>
-      </FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestDropdownFormItem>
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemDropNavDropdownFormItem>
-                <a onClick={(e) => e.preventDefault()}>
-                  Hover me
-                  <DownOutlined />
-                </a>
-              </FieldGeneratorToDict.FormItemGeneratorToDict.SystemDropNavDropdownFormItem>
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Mentions"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestMentionsFormItem />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemMentMentionsFormItem />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Menu"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestMenuFormItem />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemNavMenuFormItem />
-            ),
-          },
-          {
-            id: 'p2',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    const [current, setCurrent] = useState(1);
-
-    const onClick = () => {};
-
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestJSX1MenuFormItem
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemJSX1NavMenuFormItem
-                onClick={onClick}
-                selectedKeys={[current]}
-                mode="horizontal"
-              />
-            ),
-          },
-          {
-            id: 'p3',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestJSX2MenuFormItem
-        onClick={() => {}}
-        style={{
-          width: 256,
-        }}
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemJSX2NavMenuFormItem
-                onClick={() => {}}
-                style={{
-                  width: 256,
-                }}
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                mode="inline"
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Segmented"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestObjArraySegmentedFormItem />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemObjArraySegNavSegmentedFormItem />
-            ),
-          },
-          {
-            id: 'p2',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestSegmentedFormItem />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemSegNavSegmentedFormItem />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Steps"
-        config={[
-          {
-            id: 'p1',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestOneStepsFormItem value={1} />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOneWizardStepsFormItem
-                value={1}
-              />
-            ),
-          },
-          {
-            id: 'p2',
-            name: '基本使用',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: '基本使用',
-                info: '基本使用`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestOneStepsFormItem
-        direction="vertical"
-        size="small"
-        value={1}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTwoWizardStepsFormItem
-                direction="vertical"
-                size="small"
-                value={1}
-              />
-            ),
-          },
-        ]}
-      />
-
-      <CodeBoxSection
-        title="FormItemGeneratorToDict - Tag"
-        config={[
-          {
-            id: 'p1',
-            name: 'Tag横向',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Tag横向',
-                info: 'Tag横向`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem, Space } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <Space.Group direction="vertical">
-        <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagHorizontalFormItem
-          value={vals}
-          onChange={(v) => setVals(v)}
-        />
-        <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagHorizontalFormItem
-          renderItem={({ index }) => {
-            const colorMap = new Map([
-              [0, 'magenta'],
-              [1, 'red'],
-              [2, 'volcano'],
-            ]);
-
-            return {
-              props: {
-                color: colorMap.get(index),
-              },
-            };
-          }}
-          value={vals}
-          onChange={(v) => setVals(v)}
-        />
-      </Space.Group>
-    )
-  }
-            `,
-            renderChildren: () => (
-              <Space.Group direction="vertical">
-                <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagHorizontalFormItem
-                  value={vals}
-                  onChange={(v) => setVals(v)}
-                />
-                <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagHorizontalFormItem
-                  renderItem={({ index }) => {
-                    const colorMap = new Map([
-                      [0, 'magenta'],
-                      [1, 'red'],
-                      [2, 'volcano'],
-                    ]);
-
-                    return {
-                      props: {
-                        color: colorMap.get(index),
+                return (
+                  <DictComponent
+                    columns={[
+                      {
+                        title: '名称',
+                        key: 'label',
+                        dataIndex: 'label',
                       },
-                    };
-                  }}
-                  value={vals}
-                  onChange={(v) => setVals(v)}
-                />
-              </Space.Group>
-            ),
-          },
-          {
-            id: 'p2',
-            name: 'Tag纵向',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Tag纵向',
-                info: 'Tag纵向`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { AntdFormItem, Space } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <Space.Group direction="vertical">
-        <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagVerticalFormItem
-          value={vals}
-          onChange={(v) => setVals(v)}
-        />
-
-        <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagVerticalFormItem
-          renderItem={({ index }) => {
-            const colorMap = new Map([
-              [0, 'magenta'],
-              [1, 'red'],
-              [2, 'volcano'],
-            ]);
-
-            return {
-              props: {
-                color: colorMap.get(index),
-              },
-            };
-          }}
-          value={vals}
-          onChange={(v) => setVals(v)}
-        />
-      </Space.Group>
-    )
-  }
-            `,
-            renderChildren: () => (
-              <Space.Group direction="vertical">
-                <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagVerticalFormItem
-                  value={vals}
-                  onChange={(v) => setVals(v)}
-                />
-
-                <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagVerticalFormItem
-                  renderItem={({ index }) => {
-                    const colorMap = new Map([
-                      [0, 'magenta'],
-                      [1, 'red'],
-                      [2, 'volcano'],
-                    ]);
-
-                    return {
-                      props: {
-                        color: colorMap.get(index),
+                      {
+                        title: '出版社',
+                        key: 'name',
+                        dataIndex: 'name',
                       },
-                    };
-                  }}
-                  value={vals}
-                  onChange={(v) => setVals(v)}
-                />
-              </Space.Group>
-            ),
+                      {
+                        title: 'jp',
+                        key: 'jp',
+                        dataIndex: 'jp',
+                      },
+                      {
+                        title: 'onTime',
+                        key: 'onTime',
+                        dataIndex: 'onTime',
+                      },
+                      {
+                        title: 'rn',
+                        key: 'rn',
+                        dataIndex: 'rn',
+                      },
+                    ]}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p3',
-            name: 'Tag纵向全选',
+            id: `TableStandard`,
+            name: `TableStandard`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: 'Tag纵向全选',
-                info: 'Tag纵向全选`',
+                title: 'TableStandard',
+                info: 'TableStandard',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagCheckAllVerticalFormItem
-        value={vals}
-        onChange={(v) => setVals(v)}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagCheckAllVerticalFormItem
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p4',
-            name: 'Tag横向全选',
-            mode: 'code',
-            scope: { React },
             type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Tag横向全选',
-                info: 'Tag横向全选`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemTableBook${FieldGeneratorToDict.ComponentNames.TableDynamic.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagCheckAllHorizontalFormItem
-        value={vals}
-        onChange={(v) => setVals(v)}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagCheckAllHorizontalFormItem
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p5',
-            name: 'Tag的Select',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Tag的Select',
-                info: 'Tag的Select`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+                return (
+                  <DictComponent
+                    columns={[
+                      {
+                        title: '名称',
+                        key: 'label',
+                        dataIndex: 'label',
+                      },
+                      {
+                        title: '出版社',
+                        key: 'name',
+                        dataIndex: 'name',
+                      },
+                      {
+                        title: 'jp',
+                        key: 'jp',
+                        dataIndex: 'jp',
+                      },
+                      {
+                        title: 'onTime',
+                        key: 'onTime',
+                        dataIndex: 'onTime',
+                      },
+                      {
+                        title: 'rn',
+                        key: 'rn',
+                        dataIndex: 'rn',
+                      },
+                    ]}
+                  />
+                );
+              };
 
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagSelectFormItem
-        selectProps={{
-          style: {
-            width: 200,
-          },
-        }}
-        value={val}
-        onChange={(v) => setVal(v)}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={val}
-                onChange={(v) => setVal(v)}
-              />
-            ),
-          },
-          {
-            id: 'p6',
-            name: 'Tag的Select多选',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Tag的Select多选',
-                info: 'Tag的Select多选`',
-              },
+              return <Component />;
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagMultiSelectFormItem
-        selectProps={{
-          style: {
-            width: 200,
-          },
-        }}
-        value={vals}
-        onChange={(v) => setVals(v)}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagMultiSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
-          },
-          {
-            id: 'p7',
-            name: 'Tag的CheckAllSelect',
-            mode: 'code',
-            scope: { React },
-            type: 'PlayGround',
-            cardProps: {
-              description: {
-                title: 'Tag的CheckAllSelect',
-                info: 'Tag的CheckAllSelect`',
-              },
-            },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
-
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagCheckAllSelectFormItem
-        selectProps={{
-          style: {
-            width: 200,
-          },
-        }}
-        value={vals}
-        onChange={(v) => setVals(v)}
-      />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemBookCatalogTagCheckAllSelectFormItem
-                selectProps={{
-                  style: {
-                    width: 200,
-                  },
-                }}
-                value={vals}
-                onChange={(v) => setVals(v)}
-              />
-            ),
           },
         ]}
       />
 
       <CodeBoxSection
-        title="FormItemGeneratorToDict - Timeline"
+        title="Tag生成器"
         config={[
           {
-            id: 'p1',
-            name: '基本使用',
+            id: `AutoCompleteTagCheckAllSelect`,
+            name: `AutoCompleteTagCheckAllSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '基本使用',
-                info: '基本使用`',
+                title: 'AutoCompleteTagCheckAllSelect',
+                info: 'AutoCompleteTagCheckAllSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestOneTimelineFormItem />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemOneTLTimelineFormItem />
-            ),
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.TagAC.CheckAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{
+                      width: 350,
+                    }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p2',
-            name: '基本使用',
+            id: `AutoCompleteTagSelect`,
+            name: `AutoCompleteTagSelect`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '基本使用',
-                info: '基本使用`',
+                title: 'AutoCompleteTagSelect',
+                info: 'AutoCompleteTagSelect',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestTwoTimelineFormItem mode="alternate" />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTwoTLTimelineFormItem mode="alternate" />
-            ),
+                const DictComponentName = `SystemFilterBookList${FieldGeneratorToDict.ComponentNames.TagAC.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    mode="multiple"
+                    placeholder={DictComponentName}
+                    style={{
+                      width: 350,
+                    }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
           {
-            id: 'p3',
-            name: '基本使用',
+            id: `CheckAllHorizontalCheckable`,
+            name: `CheckAllHorizontalCheckable`,
             mode: 'code',
             scope: { React },
-            type: 'PlayGround',
             cardProps: {
               description: {
-                title: '基本使用',
-                info: '基本使用`',
+                title: 'CheckAllHorizontalCheckable',
+                info: 'CheckAllHorizontalCheckable',
               },
             },
-            codeText: `
-  import React, { useState } from 'react';
-  import { FieldGeneratorToDict } from '@baifendian/adhere';
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
 
-  export default () => {
-    return (
-      <FieldGeneratorToDict.FormItemGeneratorToDict.SystemTestThreeTimelineFormItem mode="right" />
-    )
-  }
-            `,
-            renderChildren: () => (
-              <FieldGeneratorToDict.FormItemGeneratorToDict.SystemThreeTLTimelineFormItem mode="right" />
-            ),
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.CheckAllHorizontalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckAllSelect`,
+            name: `CheckAllSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckAllSelect',
+                info: 'CheckAllSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.CheckAllSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{
+                      width: 200,
+                    }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckAllVerticalCheckable`,
+            name: `CheckAllVerticalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckAllVerticalCheckable',
+                info: 'CheckAllVerticalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.CheckAllVerticalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Horizontal`,
+            name: `Horizontal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Horizontal',
+                info: 'Horizontal',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.Horizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `HorizontalCheckable`,
+            name: `HorizontalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'HorizontalCheckable',
+                info: 'HorizontalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.VerticalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `MultiSelect`,
+            name: `MultiSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'MultiSelect',
+                info: 'MultiSelect',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.MultiSelect}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{
+                      width: 200,
+                    }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Select`,
+            name: `Select`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Select',
+                info: 'Select',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{
+                      width: 200,
+                    }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckAllHorizontalCheckable`,
+            name: `SuspenseCheckAllHorizontalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckAllHorizontalCheckable',
+                info: 'SuspenseCheckAllHorizontalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.SuspenseCheckAllHorizontalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseCheckAllVerticalCheckable`,
+            name: `SuspenseCheckAllVerticalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseCheckAllVerticalCheckable',
+                info: 'SuspenseCheckAllVerticalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.SuspenseCheckAllVerticalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseHorizontal`,
+            name: `SuspenseHorizontal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseHorizontal',
+                info: 'SuspenseHorizontal',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.SuspenseHorizontal}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseHorizontalCheckable`,
+            name: `SuspenseHorizontalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseHorizontalCheckable',
+                info: 'SuspenseHorizontalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.SuspenseHorizontalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseVertical`,
+            name: `SuspenseVertical`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseVertical',
+                info: 'SuspenseVertical',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.SuspenseVertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseVerticalCheckable`,
+            name: `SuspenseVerticalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseVerticalCheckable',
+                info: 'SuspenseVerticalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.SuspenseVerticalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Vertical`,
+            name: `Vertical`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Vertical',
+                info: 'Vertical',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.Vertical}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `VerticalCheckable`,
+            name: `VerticalCheckable`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'VerticalCheckable',
+                info: 'VerticalCheckable',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TagDynamic.CheckAllVerticalCheckable}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent value={value} onChange={setValue} />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Timeline生成器"
+        config={[
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOneTL${FieldGeneratorToDict.ComponentNames.Timeline.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOneTL${FieldGeneratorToDict.ComponentNames.Timeline.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent />;
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="Transfer生成器"
+        config={[
+          {
+            id: `AutoComplete`,
+            name: `AutoComplete`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AutoComplete',
+                info: 'AutoComplete',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {};
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Select`,
+            name: `Select`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Select',
+                info: 'Select',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState([]);
+
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.Select}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                    render={(item) => item.title}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                const [targetKeys, setTargetKeys] = useState();
+                const [selectedKeys, setSelectedKeys] = useState([]);
+
+                const onChange = (nextTargetKeys, direction, moveKeys) => {
+                  console.log('targetKeys:', nextTargetKeys);
+                  console.log('direction:', direction);
+                  console.log('moveKeys:', moveKeys);
+                  setTargetKeys(nextTargetKeys);
+                };
+                const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+                  console.log('sourceSelectedKeys:', sourceSelectedKeys);
+                  console.log('targetSelectedKeys:', targetSelectedKeys);
+                  setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+                };
+                const onScroll = (direction, e) => {
+                  console.log('direction:', direction);
+                  console.log('target:', e.target);
+                };
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    titles={['Source', 'Target']}
+                    targetKeys={targetKeys}
+                    selectedKeys={selectedKeys}
+                    onChange={onChange}
+                    onSelectChange={onSelectChange}
+                    onScroll={onScroll}
+                    render={(item) => item.title}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `SuspenseStandard`,
+            name: `SuspenseStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SuspenseStandard',
+                info: 'SuspenseStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.SuspenseStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                const [targetKeys, setTargetKeys] = useState();
+                const [selectedKeys, setSelectedKeys] = useState([]);
+
+                const onChange = (nextTargetKeys, direction, moveKeys) => {
+                  console.log('targetKeys:', nextTargetKeys);
+                  console.log('direction:', direction);
+                  console.log('moveKeys:', moveKeys);
+                  setTargetKeys(nextTargetKeys);
+                };
+                const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+                  console.log('sourceSelectedKeys:', sourceSelectedKeys);
+                  console.log('targetSelectedKeys:', targetSelectedKeys);
+                  setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+                };
+                const onScroll = (direction, e) => {
+                  console.log('direction:', direction);
+                  console.log('target:', e.target);
+                };
+
+                return (
+                  <DictComponent
+                    style={{ width: 600 }}
+                    titles={['Source', 'Target']}
+                    targetKeys={targetKeys}
+                    selectedKeys={selectedKeys}
+                    onChange={onChange}
+                    onSelectChange={onSelectChange}
+                    onScroll={onScroll}
+                    render={(item) => item.title}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="TreeSelect生成器"
+        config={[
+          {
+            id: `CheckedShowAll`,
+            name: `CheckedShowAll`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckedShowAll',
+                info: 'CheckedShowAll',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.CheckedShowAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckedShowChild`,
+            name: `CheckedShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckedShowChild',
+                info: 'CheckedShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.CheckedShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `CheckedShowParent`,
+            name: `CheckedShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckedShowParent',
+                info: 'CheckedShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.CheckedShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Flat`,
+            name: `Flat`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Flat',
+                info: 'Flat',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.Flat}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatCheckedShowAll`,
+            name: `FlatCheckedShowAll`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatCheckedShowAll',
+                info: 'FlatCheckedShowAll',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatCheckedShowAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatCheckedShowChild`,
+            name: `FlatCheckedShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatCheckedShowChild',
+                info: 'FlatCheckedShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatCheckedShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatCheckedShowParent`,
+            name: `FlatCheckedShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatCheckedShowParent',
+                info: 'FlatCheckedShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatCheckedShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatLeaf`,
+            name: `FlatLeaf`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatLeaf',
+                info: 'FlatLeaf',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatLeaf}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatLeafMulti`,
+            name: `FlatLeafMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatLeafMulti',
+                info: 'FlatLeafMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatLeafMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `FlatMulti`,
+            name: `FlatMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'FlatMulti',
+                info: 'FlatMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Leaf`,
+            name: `Leaf`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Leaf',
+                info: 'Leaf',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Leaf}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `LeafMulti`,
+            name: `LeafMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'LeafMulti',
+                info: 'LeafMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.LeafMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Multi`,
+            name: `Multi`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Multi',
+                info: 'Multi',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `Standard`,
+            name: `Standard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Standard',
+                info: 'Standard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsync`,
+            name: `TreeAsync`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsync',
+                info: 'TreeAsync',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.Standard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncCheckedShowAll`,
+            name: `TreeAsyncCheckedShowAll`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncCheckedShowAll',
+                info: 'TreeAsyncCheckedShowAll',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.CheckedShowAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncCheckedShowChild`,
+            name: `TreeAsyncCheckedShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncCheckedShowChild',
+                info: 'TreeAsyncCheckedShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.CheckedShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncCheckedShowParent`,
+            name: `TreeAsyncCheckedShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncCheckedShowParent',
+                info: 'TreeAsyncCheckedShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.CheckedShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatCheckedShowAll`,
+            name: `TreeAsyncFlatCheckedShowAll`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatCheckedShowAll',
+                info: 'TreeAsyncFlatCheckedShowAll',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatCheckedShowAll}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatCheckedShowChild`,
+            name: `TreeAsyncFlatCheckedShowChild`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatCheckedShowChild',
+                info: 'TreeAsyncFlatCheckedShowChild',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatCheckedShowChild}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatCheckedShowParent`,
+            name: `TreeAsyncFlatCheckedShowParent`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatCheckedShowParent',
+                info: 'TreeAsyncFlatCheckedShowParent',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatCheckedShowParent}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatLeaf`,
+            name: `TreeAsyncFlatLeaf`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatLeaf',
+                info: 'TreeAsyncFlatLeaf',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatLeaf}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatLeafMulti`,
+            name: `TreeAsyncFlatLeafMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatLeafMulti',
+                info: 'TreeAsyncFlatLeafMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatLeafMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatMulti`,
+            name: `TreeAsyncFlatMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatMulti',
+                info: 'TreeAsyncFlatMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncFlatStandard`,
+            name: `TreeAsyncFlatStandard`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncFlatStandard',
+                info: 'TreeAsyncFlatStandard',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.FlatStandard}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncLeaf`,
+            name: `TreeAsyncLeaf`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncLeaf',
+                info: 'TreeAsyncLeaf',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.Leaf}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncLeafMulti`,
+            name: `TreeAsyncLeafMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncLeafMulti',
+                info: 'TreeAsyncLeafMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.LeafMulti}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
+          },
+          {
+            id: `TreeAsyncMulti`,
+            name: `TreeAsyncMulti`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeAsyncMulti',
+                info: 'TreeAsyncMulti',
+              },
+            },
+            type: 'PlayGround',
+            renderChildren: () => {
+              const Component = () => {
+                const [value, setValue] = useState(undefined);
+
+                const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.TreeAsync.Multi}`;
+                const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
+
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    style={{ width: 350 }}
+                    value={value}
+                    onChange={setValue}
+                  />
+                );
+              };
+
+              return <Component />;
+            },
           },
         ]}
       />
 
       <PropsSection
-        title="FieldGeneratorToDict.FormItemGeneratorToDict"
+        title="anthoc"
         config={[
           {
             border: true,
-            title: 'SystemTestRadioHorizontalFormItem',
+            title: 'Select（单选）、MultipleSelect（多选）',
+            data: [
+              {
+                params: 'showSearch',
+                desc: '配置是否可搜索',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft',
+              },
+              {
+                params: 'filterOption',
+                desc: '是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false',
+                type: 'boolean | function(inputValue, option)',
+                defaultVal:
+                  '(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0',
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/select-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'TreeSelect',
+            data: [
+              {
+                params: 'showSearch',
+                desc: '配置是否可搜索',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft',
+              },
+              {
+                params: 'treeNodeFilterProp',
+                desc: '输入项过滤对应的 treeNode 属性',
+                type: 'string',
+                defaultVal: 'title',
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/tree-select-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'AutoComplete',
+            data: [
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'filterOption',
+                desc: '是否根据输入项进行筛选。当其为一个函数时，会接收 inputValue option 两个参数，当 option 符合筛选条件时，应返回 true，反之则返回 false',
+                type: 'boolean | function(inputValue, option)',
+                defaultVal:
+                  '(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0',
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/auto-complete-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'DatePicker、RangePicker、TimePicker',
+            data: [
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft',
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/date-picker-cn#api、https://ant.design/components/time-picker-cn',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Cascader',
+            data: [
+              {
+                params: 'showSearch',
+                desc: '配置是否可搜索',
+                type: 'boolean',
+                defaultVal: `{
+                  filter: (inputValue, path) =>
+                    path.some((option) => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1),
+                },`,
+              },
+              {
+                params: 'allowClear',
+                desc: '支持清除',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'placement',
+                desc: '选择框弹出的位置',
+                type: 'bottomLeft bottomRight topLeft topRight',
+                defaultVal: 'bottomLeft',
+              },
+              {
+                params: 'getPopupContainer',
+                desc: '',
+                type: 'function(triggerNode)',
+                defaultVal: '默认浮层跟随滚动',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/cascader-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Upload',
             data: [
               {
                 params: 'name',
@@ -3927,8 +5660,124 @@ export default () => {
                 defaultVal: 'file',
               },
               {
+                params: 'withCredentials',
+                desc: '上传请求时是否携带 cookie',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
                 params: '其他属性',
                 desc: '参考 https://ant.design/components/upload-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Modal',
+            data: [
+              {
+                params: 'closable',
+                desc: '是否显示右上角的关闭按钮',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'centered',
+                desc: '垂直居中展示 Modal',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'maskClosable',
+                desc: '点击蒙层是否允许关闭',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'destroyOnClose',
+                desc: '关闭时销毁 Modal 里的子元素',
+                type: 'boolean',
+                defaultVal: 'true',
+              },
+              {
+                params: 'zIndex',
+                desc: '设置 Modal 的 z-index',
+                type: 'number',
+                defaultVal: 'Resource.Dict.value.ResourceNormalMaxZIndex.value',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/modal-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'Input、TextArea',
+            data: [
+              {
+                params: 'allowClear',
+                desc: '可以点击清除图标删除内容',
+                type: 'boolean | { clearIcon: ReactNode }',
+                defaultVal: 'true',
+              },
+              {
+                params: 'maxLength',
+                desc: '最大长度',
+                type: 'number',
+                defaultVal: '1000',
+              },
+              {
+                params: 'showCount',
+                desc: '是否展示字数',
+                type: 'boolean | { formatter: (info: { value: string, count: number, maxLength?: number }) => ReactNode }',
+                defaultVal: 'true',
+              },
+              {
+                params: 'autoSize（适用于TextArea）',
+                desc: '自适应内容高度，可设置为 true | false 或对象：{ minRows: 2, maxRows: 6 }',
+                type: 'boolean | object',
+                defaultVal: 'false',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/input-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title:
+              'InputNumberDecimal1（1位小数）、InputNumberDecimal2（2位小数）、InputNumberInteger（整数）',
+            data: [
+              {
+                params: 'precision',
+                desc: '数值精度，配置 formatter 时会以 formatter 为准',
+                type: 'number',
+                defaultVal:
+                  'InputNumberDecimal1 = 1、 InputNumberDecimal2 = 2、 InputNumberInteger = 0',
+              },
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/input-number-cn#api',
+                type: '-',
+                defaultVal: '-',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'SubmitButton（默认点击显示loading,通过onClick事件返回promise来取消loading）',
+            data: [
+              {
+                params: '其他属性',
+                desc: '参考 https://ant.design/components/button-cn#api',
                 type: '-',
                 defaultVal: '-',
               },

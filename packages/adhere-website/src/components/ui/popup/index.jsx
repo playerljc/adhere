@@ -584,7 +584,7 @@ export default () => {
     length: 20,
   }).map((_, i) => ({
     key: i.toString(),
-    title: \`content${i + 1}\`,
+    title: \`content\${i + 1}\`,
     description: \`description of content\${i + 1}\`,
   }));
 

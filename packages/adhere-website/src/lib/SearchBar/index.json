@@ -280,7 +280,7 @@
     "path": "/adhere/component/ui/expression"
   },
   {
-    "kw": ["自动补全","AutoComplete"],
+    "kw": ["自动补全", "AutoComplete"],
     "group": "组件 - UI",
     "path": "/adhere/component/ui/autocomplete"
   },
