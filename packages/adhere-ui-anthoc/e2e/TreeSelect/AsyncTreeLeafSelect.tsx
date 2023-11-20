@@ -43,9 +43,9 @@ export default () => {
   }
 
   return (
-    <TreeSelect.AsyncLeafTreeSelect
+    <TreeSelect.AsyncTreeLeafSelect
       style={{ width: 200 }}
-      placeholder="AsyncLeafTreeSelect"
+      placeholder="AsyncTreeLeafSelect"
       value={value}
       onChange={setValue}
       fetchData={fetchData}

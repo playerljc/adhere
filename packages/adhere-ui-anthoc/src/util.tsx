@@ -1,5 +1,4 @@
 import React from 'react';
-import type { FC } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 

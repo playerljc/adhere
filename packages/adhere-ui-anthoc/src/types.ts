@@ -672,6 +672,8 @@ export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> 
   CheckAllListSelect: FC<CheckAllListSelectProps>;
   ListPagingSelect: FC<ListPagingSelectProps<any>>;
   ListPaging: FC<ListPagingProps<any>>;
+  RadioList: FC<RadioListProps>;
+  CheckboxList: FC<CheckboxListProps>;
 };
 
 export type RadioHOCComponent = ReturnType<typeof createFactory<RadioProps>> & {
@@ -693,6 +695,8 @@ export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>
   TableSelect: FC<TableSelectProps>;
   TablePagingSelect: FC<TablePagingSelectProps<any>>;
   TablePaging: FC<TablePagingProps<any>>;
+  RadioTable: FC<RadioTableProps>;
+  CheckboxTable: FC<CheckboxTableProps>;
 };
 
 export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {
