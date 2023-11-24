@@ -178,4 +178,6 @@ const Reply = memo<ReplyProps>((props) => {
   );
 });
 
+Reply.displayName = 'Reply';
+
 export default Reply;

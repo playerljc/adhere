@@ -1,4 +1,4 @@
 import React from 'react';
-import type { RadioListProps } from '../types';
-declare const _default: React.NamedExoticComponent<RadioListProps>;
-export default _default;
+import type { DisplayNameInternal, RadioListProps } from '../types';
+declare const RadioList: DisplayNameInternal<React.NamedExoticComponent<RadioListProps>>;
+export default RadioList;

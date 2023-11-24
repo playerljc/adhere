@@ -1,4 +1,4 @@
 import React from 'react';
-import type { TablePagingProps } from '../types';
-declare const _default: React.NamedExoticComponent<TablePagingProps<any>>;
-export default _default;
+import type { DisplayNameInternal, TablePagingProps } from '../types';
+declare const TablePaging: DisplayNameInternal<React.NamedExoticComponent<TablePagingProps<any>>>;
+export default TablePaging;

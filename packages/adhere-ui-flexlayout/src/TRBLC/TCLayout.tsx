@@ -63,4 +63,6 @@ const TCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
   }),
 );
 
+TCLayout.displayName = 'TCLayout';
+
 export default TCLayout;

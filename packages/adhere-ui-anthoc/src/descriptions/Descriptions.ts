@@ -7,4 +7,6 @@ const DescriptionsHOC: typeof Descriptions & {
   defaultProps?: Partial<DescriptionsProps>;
 } = createFactory<DescriptionsProps>(Descriptions, {});
 
+DescriptionsHOC.displayName = 'Descriptions';
+
 export default DescriptionsHOC;

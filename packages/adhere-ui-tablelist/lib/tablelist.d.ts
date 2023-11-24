@@ -7,6 +7,7 @@ export declare const selectorPrefix = "adhere-ui-table-list";
  * @classdesc Template
  */
 declare class TableList<RecordType extends object = any> extends React.PureComponent<TableListProps<RecordType>, any> {
+    static displayName: string;
     static defaultProps: any;
     static propTypes: any;
     private readonly searchFormRef;

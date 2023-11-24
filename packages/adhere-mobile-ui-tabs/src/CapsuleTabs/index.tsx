@@ -25,4 +25,6 @@ const SystemCapsuleTabs = InternalSystemCapsuleTabs as SystemCapsuleTabsComponen
 
 SystemCapsuleTabs.Tab = CapsuleTabs.Tab;
 
+SystemCapsuleTabs.displayName = 'SystemCapsuleTabs';
+
 export default SystemCapsuleTabs;

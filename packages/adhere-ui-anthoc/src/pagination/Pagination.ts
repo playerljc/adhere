@@ -9,4 +9,6 @@ const PaginationHOC: typeof Pagination & {
   showQuickJumper: true,
 });
 
+PaginationHOC.displayName = 'Pagination';
+
 export default PaginationHOC;

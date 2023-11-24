@@ -582,3 +582,6 @@ export type AutoCompleteSelectInputProps = Omit<AntdAutoCompleteProps, 'value' |
 export type AutoCompleteHOCComponent = ReturnType<typeof createFactory<AutoCompleteProps>> & {
     AutoCompleteSelectInput: FC<AutoCompleteSelectInputProps>;
 };
+export type DisplayNameInternal<T> = T & {
+    displayName: string;
+};

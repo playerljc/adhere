@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import CheckAllMultipleSelect from '../multiple-select/CheckAllMultipleSelect';
-import type { CheckAllListSelectProps } from '../types';
+import type { CheckAllListSelectProps, DisplayNameInternal } from '../types';
 import CheckboxList from './CheckboxList';
 import useRenderProps from './useRenderProps';
 
@@ -13,7 +12,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const CheckAllListSelect: FC<CheckAllListSelectProps> = ({ listProps, ...props }) => {
+const InternalCheckAllListSelect = memo<CheckAllListSelectProps>(({ listProps, ...props }) => {
   const renderProps = useRenderProps(listProps);
 
   return (
@@ -21,6 +20,11 @@ const CheckAllListSelect: FC<CheckAllListSelectProps> = ({ listProps, ...props }
       {({ originNode, ...rest }) => <CheckboxList {...renderProps(rest)} />}
     </CheckAllMultipleSelect>
   );
-};
+});
 
-export default memo(CheckAllListSelect);
+const CheckAllListSelect = InternalCheckAllListSelect as DisplayNameInternal<
+  typeof InternalCheckAllListSelect
+>;
+CheckAllListSelect.displayName = 'CheckAllListSelect';
+
+export default CheckAllListSelect;

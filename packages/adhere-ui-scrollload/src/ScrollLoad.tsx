@@ -222,6 +222,8 @@ const InternalScrollLoad = memo<
 
 const ScrollLoad = InternalScrollLoad as ScrollLoadComponent;
 
+ScrollLoad.displayName = 'ScrollLoad';
+
 ScrollLoad.EMPTY = 'empty';
 ScrollLoad.ERROR = 'error';
 ScrollLoad.NORMAL = 'normal';

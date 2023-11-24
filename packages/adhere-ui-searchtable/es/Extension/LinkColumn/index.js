@@ -1,2 +1,2 @@
-import React from"react";import{Link}from"@ctsj/router";export default function(e){var r=e.className,t=e.style,a=e.record,n=e.rowIndex,o=e.dataIndex,c=e.to,e=e.children;return React.createElement(Link,{className:null!=r?r:"",style:null!=t?t:{},to:c},e?e({record:a,rowIndex:n,dataIndex:o}):a[o])}
+import React from"react";import{Link}from"@ctsj/router";var LinkColumn=function(e){var n=e.className,r=e.style,t=e.record,a=e.rowIndex,o=e.dataIndex,l=e.to,e=e.children;return React.createElement(Link,{className:null!=n?n:"",style:null!=r?r:{},to:l},e?e({record:t,rowIndex:a,dataIndex:o}):t[o])};LinkColumn.displayName="LinkColumn";export default LinkColumn;
 //# sourceMappingURL=index.js.map

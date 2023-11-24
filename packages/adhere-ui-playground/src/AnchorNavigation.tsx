@@ -188,4 +188,6 @@ const AnchorNavigation = memo<AnchorNavigationProps>((props) => {
   );
 });
 
+AnchorNavigation.displayName = 'AnchorNavigation';
+
 export default AnchorNavigation;

@@ -1,7 +1,7 @@
 import type { TreeSelectProps } from 'antd';
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
+import type { DisplayNameInternal } from '../types';
 import TreeLeafSelect from './TreeLeafSelect';
 import useTreeSelectMulti from './useTreeSelectMulti';
 
@@ -11,10 +11,15 @@ import useTreeSelectMulti from './useTreeSelectMulti';
  * @param props
  * @constructor
  */
-const TreeMultiLeafSelect: FC<TreeSelectProps> = (props) => {
+const InternalTreeMultiLeafSelect = memo<TreeSelectProps>((props) => {
   const multiProps = useTreeSelectMulti();
 
   return <TreeLeafSelect {...multiProps} {...props} />;
-};
+});
 
-export default memo(TreeMultiLeafSelect);
+const TreeMultiLeafSelect = InternalTreeMultiLeafSelect as DisplayNameInternal<
+  typeof InternalTreeMultiLeafSelect
+>;
+TreeMultiLeafSelect.displayName = 'TreeMultiLeafSelect';
+
+export default TreeMultiLeafSelect;

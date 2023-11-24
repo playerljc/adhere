@@ -91,4 +91,6 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
   ).value as any;
 };
 
+TableCell.displayName = 'TableCell';
+
 export default TableCell;

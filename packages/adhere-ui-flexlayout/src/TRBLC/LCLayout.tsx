@@ -62,4 +62,6 @@ const LCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
   }),
 );
 
+LCLayout.displayName = 'LCLayout';
+
 export default LCLayout;

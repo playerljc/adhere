@@ -55,6 +55,8 @@ const Props = memo<PropsProps>((props) => {
     </Collapse>
   );
 });
+
+Props.displayName = 'Props';
 // /**
 //  * Props
 //  * @class Props

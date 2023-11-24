@@ -1,11 +1,15 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { VerticalCheckableTagGroupProps } from '../types';
+import type { DisplayNameInternal, VerticalCheckableTagGroupProps } from '../types';
 import CheckableTagGroup from './CheckableTagGroup';
 
-const VerticalCheckableTagGroup: FC<VerticalCheckableTagGroupProps> = (props) => (
+const InternalVerticalCheckableTagGroup = memo<VerticalCheckableTagGroupProps>((props) => (
   <CheckableTagGroup {...props} direction="vertical" />
-);
+));
 
-export default memo(VerticalCheckableTagGroup);
+const VerticalCheckableTagGroup = InternalVerticalCheckableTagGroup as DisplayNameInternal<
+  typeof InternalVerticalCheckableTagGroup
+>;
+VerticalCheckableTagGroup.displayName = 'VerticalCheckableTagGroup';
+
+export default VerticalCheckableTagGroup;

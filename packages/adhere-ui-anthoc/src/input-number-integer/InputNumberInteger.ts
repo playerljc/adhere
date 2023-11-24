@@ -7,4 +7,6 @@ const InputNumberIntegerHOC: typeof InputNumber & {
   defaultProps?: Partial<InputNumberProps>;
 } = createFactory<InputNumberProps>(InputNumber, { precision: 0 });
 
+InputNumberIntegerHOC.displayName = 'InputNumberInteger';
+
 export default InputNumberIntegerHOC;

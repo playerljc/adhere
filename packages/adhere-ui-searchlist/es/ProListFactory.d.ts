@@ -66,5 +66,6 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
+    displayName: string;
 };
 export default _default;

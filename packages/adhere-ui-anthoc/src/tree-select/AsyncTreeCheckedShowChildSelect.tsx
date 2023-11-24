@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { AsyncTreeSelectProps } from '../types';
+import type { AsyncTreeSelectProps, DisplayNameInternal } from '../types';
 import AsyncTreeSelect from './AsyncTreeSelect';
 
 /**
@@ -9,8 +8,14 @@ import AsyncTreeSelect from './AsyncTreeSelect';
  * @param props
  * @constructor
  */
-const AsyncTreeCheckedShowChildSelect: FC<AsyncTreeSelectProps> = (props) => (
+const InternalAsyncTreeCheckedShowChildSelect = memo<AsyncTreeSelectProps>((props) => (
   <AsyncTreeSelect {...props} treeCheckable />
-);
+));
 
-export default memo(AsyncTreeCheckedShowChildSelect);
+const AsyncTreeCheckedShowChildSelect =
+  InternalAsyncTreeCheckedShowChildSelect as DisplayNameInternal<
+    typeof InternalAsyncTreeCheckedShowChildSelect
+  >;
+AsyncTreeCheckedShowChildSelect.displayName = 'AsyncTreeCheckedShowChildSelect';
+
+export default AsyncTreeCheckedShowChildSelect;

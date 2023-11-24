@@ -1,4 +1,4 @@
 import React from 'react';
-import type { TagSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<TagSelectProps>;
-export default _default;
+import type { DisplayNameInternal, TagSelectProps } from '../types';
+declare const TagSelect: DisplayNameInternal<React.NamedExoticComponent<TagSelectProps>>;
+export default TagSelect;

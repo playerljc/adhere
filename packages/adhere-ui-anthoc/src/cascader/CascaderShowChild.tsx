@@ -1,12 +1,17 @@
 import type { CascaderProps } from 'antd';
-import React from 'react';
-import type { FC } from 'react';
+import React, { memo } from 'react';
 
+import type { DisplayNameInternal } from '../types';
 import Cascader from './Cascader';
 import CascaderMulti from './CascaderMulti';
 
-const CascaderShowChild: FC<CascaderProps> = (props) => (
+const InternalCascaderShowChild = memo<CascaderProps>((props) => (
   <CascaderMulti {...props} showCheckedStrategy={Cascader.SHOW_CHILD} />
-);
+));
+
+const CascaderShowChild = InternalCascaderShowChild as DisplayNameInternal<
+  typeof InternalCascaderShowChild
+>;
+CascaderShowChild.displayName = 'CascaderShowChild';
 
 export default CascaderShowChild;

@@ -7,4 +7,6 @@ const AvatarHOC: typeof Avatar & {
   defaultProps?: Partial<AvatarProps>;
 } = createFactory<AvatarProps>(Avatar, {});
 
+AvatarHOC.displayName = 'Avatar';
+
 export default AvatarHOC;

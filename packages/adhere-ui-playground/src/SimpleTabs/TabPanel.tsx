@@ -21,4 +21,6 @@ const TabPanel = memo<TabPanelProps>(({ className = '', style, children, index =
   );
 });
 
+TabPanel.displayName = 'TabPanel';
+
 export default TabPanel;

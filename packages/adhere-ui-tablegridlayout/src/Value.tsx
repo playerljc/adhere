@@ -3,7 +3,7 @@ import React from 'react';
 
 import { selectorPrefix } from './TableGridLayout';
 
-export default (props) => {
+const Value = (props) => {
   const { className, ..._props } = props;
 
   return (
@@ -12,3 +12,7 @@ export default (props) => {
     </td>
   );
 };
+
+Value.displayName = 'Value';
+
+export default Value;

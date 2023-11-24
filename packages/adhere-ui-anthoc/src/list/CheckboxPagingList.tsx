@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { CheckboxPagingListProps } from '../types';
+import type { CheckboxPagingListProps, DisplayNameInternal } from '../types';
 import CheckboxList from './CheckboxList';
 import usePaging from './usePaging';
 
@@ -16,23 +15,23 @@ import usePaging from './usePaging';
  * @param props
  * @constructor
  */
-const CheckboxPagingList: FC<CheckboxPagingListProps> = ({
-  totalCount,
-  paging,
-  onPagingChange,
-  onPagingShowSizeChange,
-  defaultLimit,
-  ...props
-}) => {
-  const pagingProps = usePaging({
-    defaultLimit: defaultLimit ?? 10,
-    paging,
-    totalCount,
-    onPagingShowSizeChange,
-    onPagingChange,
-  });
+const InternalCheckboxPagingList = memo<CheckboxPagingListProps>(
+  ({ totalCount, paging, onPagingChange, onPagingShowSizeChange, defaultLimit, ...props }) => {
+    const pagingProps = usePaging({
+      defaultLimit: defaultLimit ?? 10,
+      paging,
+      totalCount,
+      onPagingShowSizeChange,
+      onPagingChange,
+    });
 
-  return <CheckboxList pagination={pagingProps} {...props} />;
-};
+    return <CheckboxList pagination={pagingProps} {...props} />;
+  },
+);
 
-export default memo(CheckboxPagingList);
+const CheckboxPagingList = InternalCheckboxPagingList as DisplayNameInternal<
+  typeof InternalCheckboxPagingList
+>;
+CheckboxPagingList.displayName = 'CheckboxPagingList';
+
+export default CheckboxPagingList;

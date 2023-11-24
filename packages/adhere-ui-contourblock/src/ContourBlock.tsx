@@ -20,4 +20,6 @@ const ContourBlock = memo<ContourBlockProps>((props) => {
   );
 });
 
+ContourBlock.displayName = 'ContourBlock';
+
 export default ContourBlock;

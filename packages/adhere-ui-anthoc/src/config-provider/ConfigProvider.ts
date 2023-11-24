@@ -7,4 +7,6 @@ const ConfigProviderHOC: typeof ConfigProvider & {
   defaultProps?: Partial<ConfigProviderProps>;
 } = createFactory<ConfigProviderProps>(ConfigProvider, {});
 
+ConfigProviderHOC.displayName = 'ConfigProvider';
+
 export default ConfigProviderHOC;

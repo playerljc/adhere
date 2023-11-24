@@ -126,4 +126,6 @@ const LTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
   ),
 );
 
+LTCBLayout.displayName = 'LTCBLayout';
+
 export default LTCBLayout;

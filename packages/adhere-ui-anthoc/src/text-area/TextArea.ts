@@ -14,4 +14,6 @@ const TextAreaHOC: typeof TextArea & {
   autoSize: false,
 });
 
+TextAreaHOC.displayName = 'TextArea';
+
 export default TextAreaHOC;

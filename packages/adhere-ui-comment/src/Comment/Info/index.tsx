@@ -15,4 +15,6 @@ const CommentInfo = memo<NodeProps>((props) => (
   </Node>
 ));
 
+CommentInfo.displayName = 'CommentInfo';
+
 export default CommentInfo;

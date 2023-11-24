@@ -1,8 +1,7 @@
-import type { FC } from 'react';
 import React, { memo } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { CheckAllSelectProps } from '../types';
+import type { CheckAllSelectProps, DisplayNameInternal } from '../types';
 import useCheckAllMultiple from './useCheckAllMultiple';
 
 /**
@@ -16,38 +15,43 @@ import useCheckAllMultiple from './useCheckAllMultiple';
  * @param props
  * @constructor
  */
-const CheckAllSelect: FC<CheckAllSelectProps> = ({
-  children,
-  checkAllWrapperClassName,
-  checkAllWrapperStyle,
-  dropdownWrapperClassName,
-  dropdownWrapperStyle,
-  ...props
-}) => {
-  const { renderProps, currentOriginNode, dropdownRenderElement } = useCheckAllMultiple({
+const InternalCheckAllSelect = memo<CheckAllSelectProps>(
+  ({
     children,
     checkAllWrapperClassName,
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
-  });
+    ...props
+  }) => {
+    const { renderProps, currentOriginNode, dropdownRenderElement } = useCheckAllMultiple({
+      children,
+      checkAllWrapperClassName,
+      checkAllWrapperStyle,
+      dropdownWrapperClassName,
+      dropdownWrapperStyle,
+    });
 
-  return (
-    <DropdownRenderSelect
-      {...props}
-      mode="multiple"
-      filterOption={() => dropdownRenderElement === currentOriginNode}
-    >
-      {(arg) =>
-        renderProps({
-          ...arg,
-          onChange: (_values) => {
-            arg.onChange?.(_values, []);
-          },
-        })
-      }
-    </DropdownRenderSelect>
-  );
-};
+    return (
+      <DropdownRenderSelect
+        {...props}
+        mode="multiple"
+        filterOption={() => dropdownRenderElement === currentOriginNode}
+      >
+        {(arg) =>
+          renderProps({
+            ...arg,
+            onChange: (_values) => {
+              arg.onChange?.(_values, []);
+            },
+          })
+        }
+      </DropdownRenderSelect>
+    );
+  },
+);
 
-export default memo(CheckAllSelect);
+const CheckAllSelect = InternalCheckAllSelect as DisplayNameInternal<typeof InternalCheckAllSelect>;
+CheckAllSelect.displayName = 'CheckAllSelect';
+
+export default CheckAllSelect;

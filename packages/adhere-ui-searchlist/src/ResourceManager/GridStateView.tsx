@@ -14,6 +14,8 @@ class GridStateView<
   S extends SearchListImplementState,
 > extends GridViewFactory<SearchListStateImplementProps, SearchListImplementState>(
   SearchListStateImplement,
-) {}
+) {
+  static displayName = 'GridStateView';
+}
 
 export default GridStateView;

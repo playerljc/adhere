@@ -194,4 +194,6 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
   }),
 );
 
+Overlay.displayName = 'Overlay';
+
 export default Overlay;

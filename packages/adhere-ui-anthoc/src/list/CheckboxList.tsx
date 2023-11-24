@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import Checkbox from '../checkbox';
-import { CheckboxListProps } from '../types';
+import { CheckboxListProps, DisplayNameInternal } from '../types';
 import List from './List';
 
 const selectorPrefix = 'adhere-ui-ant-hoc-checkbox-list';
@@ -16,7 +15,7 @@ const selectorPrefix = 'adhere-ui-ant-hoc-checkbox-list';
  * @param props
  * @constructor
  */
-const CheckboxList: FC<CheckboxListProps> = ({ value, onChange, options, ...props }) => (
+const InternalCheckboxList = memo<CheckboxListProps>(({ value, onChange, options, ...props }) => (
   <List
     dataSource={options}
     {...props}
@@ -46,6 +45,9 @@ const CheckboxList: FC<CheckboxListProps> = ({ value, onChange, options, ...prop
       </div>
     )}
   />
-);
+));
 
-export default memo(CheckboxList);
+const CheckboxList = InternalCheckboxList as DisplayNameInternal<typeof InternalCheckboxList>;
+CheckboxList.displayName = 'CheckboxList';
+
+export default CheckboxList;

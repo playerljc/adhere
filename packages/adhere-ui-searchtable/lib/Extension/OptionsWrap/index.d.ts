@@ -9,11 +9,14 @@ import React from 'react';
  * @param isEllipsesShowOnlyOneAfterCollapsing
  * @return {JSX.Element}
  */
-declare const _default: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
-    className?: string | undefined;
-    style?: {} | undefined;
-    ellipsisCount?: number | undefined;
-    isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
-    children: any;
-}) => React.JSX.Element;
-export default _default;
+declare const OptionsWrap: {
+    ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+        className?: string | undefined;
+        style?: {} | undefined;
+        ellipsisCount?: number | undefined;
+        isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+        children: any;
+    }): React.JSX.Element;
+    displayName: string;
+};
+export default OptionsWrap;

@@ -7,4 +7,6 @@ const FloatButtonHOC: typeof FloatButton & {
   defaultProps?: Partial<FloatButtonProps>;
 } = createFactory<FloatButtonProps>(FloatButton, {});
 
+FloatButtonHOC.displayName = 'FloatButton';
+
 export default FloatButtonHOC;

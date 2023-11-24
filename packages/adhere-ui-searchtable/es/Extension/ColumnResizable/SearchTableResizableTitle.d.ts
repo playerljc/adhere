@@ -13,5 +13,6 @@ declare namespace SearchTableResizableTitle {
         onResize: PropTypes.Requireable<(...args: any[]) => any>;
         column: PropTypes.Requireable<object>;
     };
+    var displayName: string;
 }
 export default SearchTableResizableTitle;

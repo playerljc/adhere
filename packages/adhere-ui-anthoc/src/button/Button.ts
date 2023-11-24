@@ -7,4 +7,6 @@ const ButtonHOC: typeof Button & {
   defaultProps?: Partial<ButtonProps>;
 } = createFactory<ButtonProps>(Button, {});
 
+ButtonHOC.displayName = 'Button';
+
 export default ButtonHOC;

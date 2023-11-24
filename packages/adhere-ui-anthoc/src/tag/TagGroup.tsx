@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import Space from '../space';
-import type { TagGroupProps } from '../types';
+import type { DisplayNameInternal, TagGroupProps } from '../types';
 import Tag from './Tag';
 
 /**
@@ -13,12 +12,15 @@ import Tag from './Tag';
  * @param options
  * @param props
  */
-const TagGroup: FC<TagGroupProps> = ({ direction, options, ...props }) => (
+const InternalTagGroup = memo<TagGroupProps>(({ direction, options, ...props }) => (
   <Space direction={direction} {...props}>
     {options?.map?.(({ value, ...tagProps }) => (
       <Tag key={value} {...tagProps} />
     ))}
   </Space>
-);
+));
 
-export default memo(TagGroup);
+const TagGroup = InternalTagGroup as DisplayNameInternal<typeof InternalTagGroup>;
+TagGroup.displayName = 'TagGroup';
+
+export default TagGroup;

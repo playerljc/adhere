@@ -98,4 +98,6 @@ const MenuItem = memo<MenuItemProps>((props) => {
   );
 });
 
+MenuItem.displayName = 'MenuItem';
+
 export default MenuItem;

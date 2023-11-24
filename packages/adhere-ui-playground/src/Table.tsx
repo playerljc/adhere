@@ -94,6 +94,8 @@ const Table = memo<TableProps>((props) => {
   );
 });
 
+Table.displayName = 'Table';
+
 // /**
 //  * Table
 //  * @class Table

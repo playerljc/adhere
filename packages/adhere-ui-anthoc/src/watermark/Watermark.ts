@@ -7,4 +7,6 @@ const WatermarkHOC: typeof Watermark & {
   defaultProps?: Partial<WatermarkProps>;
 } = createFactory<WatermarkProps>(Watermark, {});
 
+WatermarkHOC.displayName = 'Watermark';
+
 export default WatermarkHOC;

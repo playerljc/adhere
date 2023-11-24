@@ -2,7 +2,7 @@ export default Wrap;
 export const Section: React.NamedExoticComponent<import("../../types").SectionProps>;
 export const CodeBoxSection: React.NamedExoticComponent<import("../../types").CodeBoxProps>;
 export const PropsSection: React.NamedExoticComponent<import("../../types").PropsSectionProps>;
-export const FunctionPropsSection: React.MemoExoticComponent<React.NamedExoticComponent<import("../../types").FunctionPropsSectionProps>>;
+export const FunctionPropsSection: React.NamedExoticComponent<import("../../types").FunctionPropsSectionProps>;
 /**
  * Wrap
  * @param children

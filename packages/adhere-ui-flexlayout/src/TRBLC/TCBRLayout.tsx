@@ -119,4 +119,6 @@ const TCBRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
   ),
 );
 
+TCBRLayout.displayName = 'TCBRLayout';
+
 export default TCBRLayout;

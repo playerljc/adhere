@@ -67,5 +67,6 @@ declare const _default: {
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     [x: string]: any;
+    displayName: string;
 };
 export default _default;

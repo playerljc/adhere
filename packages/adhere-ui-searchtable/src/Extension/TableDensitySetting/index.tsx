@@ -6,7 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../SearchTable';
 import { TableDensity, TableDensitySettingProps } from '../../types';
-import Setting from './setting';
+import Setting from './Setting';
 
 /**
  * TableDensitySetting
@@ -31,5 +31,7 @@ const TableDensitySetting: FC<TableDensitySettingProps> = (props) => {
     </Popover>
   );
 };
+
+TableDensitySetting.displayName = 'TableDensitySetting';
 
 export default TableDensitySetting;

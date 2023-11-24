@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { CustomRadioSelectProps } from '../types';
+import type { CustomRadioSelectProps, DisplayNameInternal } from '../types';
 import CustomRadio from './CustomRadio';
 import useRenderProps from './useRenderProps';
 
@@ -13,14 +12,21 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const CustomRadioSelect: FC<CustomRadioSelectProps> = ({ radioProps, children, ...props }) => {
-  const renderProps = useRenderProps(radioProps);
+const InternalCustomRadioSelect = memo<CustomRadioSelectProps>(
+  ({ radioProps, children, ...props }) => {
+    const renderProps = useRenderProps(radioProps);
 
-  return (
-    <DropdownRenderSelect {...props}>
-      {({ originNode, ...rest }) => <CustomRadio {...renderProps(rest)}>{children}</CustomRadio>}
-    </DropdownRenderSelect>
-  );
-};
+    return (
+      <DropdownRenderSelect {...props}>
+        {({ originNode, ...rest }) => <CustomRadio {...renderProps(rest)}>{children}</CustomRadio>}
+      </DropdownRenderSelect>
+    );
+  },
+);
 
-export default memo(CustomRadioSelect);
+const CustomRadioSelect = InternalCustomRadioSelect as DisplayNameInternal<
+  typeof InternalCustomRadioSelect
+>;
+CustomRadioSelect.displayName = 'CustomRadio';
+
+export default CustomRadioSelect;

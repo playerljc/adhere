@@ -34,6 +34,8 @@ const InternalDelConform = memo<DelConfirmProps>((props) => {
 
 const DelConform = InternalDelConform as DelConfirmComponent;
 
+DelConform.displayName = 'DelConform';
+
 DelConform.open = ({ success, ...params }: OpenFunction) => {
   MessageDialog.Confirm({
     ...params,

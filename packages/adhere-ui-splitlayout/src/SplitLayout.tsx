@@ -443,6 +443,8 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
 
 const SplitLayout = InternalSplitLayout as SplitLayoutComponent;
 
+SplitLayout.displayName = 'SplitLayout';
+
 SplitLayout.TRBLC = TRBLC;
 
 export default SplitLayout;

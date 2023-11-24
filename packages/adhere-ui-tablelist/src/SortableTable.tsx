@@ -20,6 +20,8 @@ class SortableTable<RecordType extends object = any> extends React.Component<
   TSortTableProps<RecordType>,
   any
 > {
+  static displayName = 'SortableTable';
+
   state = {
     dataSource: this.props.dataSource || [],
     isSort: false,

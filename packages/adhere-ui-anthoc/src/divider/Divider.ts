@@ -7,4 +7,6 @@ const DividerHOC: typeof Divider & {
   defaultProps?: Partial<DividerProps>;
 } = createFactory<DividerProps>(Divider, {});
 
+DividerHOC.displayName = 'Divider';
+
 export default DividerHOC;

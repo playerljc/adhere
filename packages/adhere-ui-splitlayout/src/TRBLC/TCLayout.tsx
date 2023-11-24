@@ -21,4 +21,6 @@ const TCLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HTM
   )),
 );
 
+TCLayout.displayName = 'TCLayout';
+
 export default TCLayout;

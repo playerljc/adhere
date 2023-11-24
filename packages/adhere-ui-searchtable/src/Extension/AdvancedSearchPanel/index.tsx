@@ -1,7 +1,6 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
-import type { FC } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import {
@@ -33,7 +32,7 @@ const _selectorPrefix = `${selectorPrefix}-advanced-search-panel`;
  * @return {React.ReactPortal}
  * @constructor
  */
-const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
+const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
   const {
     advancedSearchConfig: {
       advancedSearch: { getPopupContainer, ...overlayProps },
@@ -149,8 +148,9 @@ const AdvancedSearchPanel: FC<AdvancedSearchPanelProps> = (props) => {
     </Overlay>,
     getPopupContainer(),
   );
-};
+});
 
+// @ts-ignore
 AdvancedSearchPanel.defaultProps = {
   groupData: [],
   tableGridLayoutConfig: {
@@ -194,4 +194,6 @@ AdvancedSearchPanel.defaultProps = {
   },
 };
 
-export default React.memo(AdvancedSearchPanel);
+AdvancedSearchPanel.displayName = 'AdvancedSearchPanel';
+
+export default AdvancedSearchPanel;

@@ -60,4 +60,6 @@ const CRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
   ),
 );
 
+CRLayout.displayName = 'CRLayout';
+
 export default CRLayout;

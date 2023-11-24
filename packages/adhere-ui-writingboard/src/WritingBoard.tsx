@@ -736,6 +736,8 @@ const InternalWritingBoard = memo<
 
 const WritingBoard = InternalWritingBoard as WritingBoardComponent;
 
+WritingBoard.displayName = 'WritingBoard';
+
 WritingBoard.Signature = Signature;
 
 export default WritingBoard;

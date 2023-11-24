@@ -1,11 +1,5 @@
 import type { RadioGroupProps } from 'antd/es/radio';
-import type { FC } from 'react';
-/**
- * VerticalRadio
- * @description 竖向的RadioGroup
- * @param options
- * @param props
- * @constructor
- */
-declare const VerticalRadio: FC<RadioGroupProps>;
+import React from 'react';
+import type { DisplayNameInternal } from '../types';
+declare const VerticalRadio: DisplayNameInternal<React.NamedExoticComponent<RadioGroupProps>>;
 export default VerticalRadio;

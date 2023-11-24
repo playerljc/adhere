@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import CheckAllMultipleSelect from '../multiple-select/CheckAllMultipleSelect';
-import type { CheckAllTagSelectProps } from '../types';
+import type { CheckAllTagSelectProps, DisplayNameInternal } from '../types';
 import VerticalCheckableTagGroup from './VerticalCheckableTagGroup';
 import useRenderProps from './useRenderProps';
 
@@ -12,7 +11,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const CheckAllTagSelect: FC<CheckAllTagSelectProps> = ({ tagProps, ...props }) => {
+const IntlanlCheckAllTagSelect = memo<CheckAllTagSelectProps>(({ tagProps, ...props }) => {
   const renderProps = useRenderProps(tagProps, 'multiple');
 
   return (
@@ -28,6 +27,11 @@ const CheckAllTagSelect: FC<CheckAllTagSelectProps> = ({ tagProps, ...props }) =
       )}
     </CheckAllMultipleSelect>
   );
-};
+});
 
-export default memo(CheckAllTagSelect);
+const CheckAllTagSelect = IntlanlCheckAllTagSelect as DisplayNameInternal<
+  typeof IntlanlCheckAllTagSelect
+>;
+CheckAllTagSelect.displayName = 'CheckAllTagSelect';
+
+export default CheckAllTagSelect;

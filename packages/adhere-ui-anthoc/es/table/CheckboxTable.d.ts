@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CheckboxTableProps } from '../types';
-declare const _default: React.NamedExoticComponent<CheckboxTableProps>;
-export default _default;
+import type { CheckboxTableProps, DisplayNameInternal } from '../types';
+declare const CheckboxTable: DisplayNameInternal<React.NamedExoticComponent<CheckboxTableProps>>;
+export default CheckboxTable;

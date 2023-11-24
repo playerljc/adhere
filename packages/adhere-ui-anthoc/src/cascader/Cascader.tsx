@@ -12,4 +12,6 @@ const CascaderHOC: CascaderHOCComponent = createFactory<CascaderProps>(Cascader,
   placement: 'bottomLeft',
 });
 
+CascaderHOC.displayName = 'Cascader';
+
 export default CascaderHOC;

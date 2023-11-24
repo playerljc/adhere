@@ -1,4 +1,4 @@
 import React from 'react';
-import type { RadioTableProps } from '../types';
-declare const _default: React.NamedExoticComponent<RadioTableProps>;
-export default _default;
+import type { DisplayNameInternal, RadioTableProps } from '../types';
+declare const RadioTable: DisplayNameInternal<React.NamedExoticComponent<RadioTableProps>>;
+export default RadioTable;

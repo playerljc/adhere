@@ -12,6 +12,8 @@ import CodePanel, { CodePanelDefaultProps, CodePanelPropTypes } from './CodePane
  * @classdesc PlayGround
  */
 class PlayGround extends APlayGround {
+  static displayName = 'PlayGround';
+
   /**
    * renderCodeView - 代码展示视图
    * @return {*}

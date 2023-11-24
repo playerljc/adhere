@@ -7,4 +7,6 @@ const TooltipHOC: typeof Tooltip & {
   defaultProps?: Partial<TooltipProps>;
 } = createFactory<TooltipProps>(Tooltip, {});
 
+TooltipHOC.displayName = 'Tooltip';
+
 export default TooltipHOC;

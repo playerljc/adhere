@@ -32,4 +32,6 @@ const TriggerPrompt: FC<TriggerPromptProps> = ({ onSubmit, modalConfig, okText, 
   );
 };
 
+TriggerPrompt.displayName = 'TriggerPrompt';
+
 export default TriggerPrompt;

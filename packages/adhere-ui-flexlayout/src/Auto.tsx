@@ -57,4 +57,6 @@ const Auto = memo<AutoProps>(
   }),
 );
 
+Auto.displayName = 'Auto';
+
 export default Auto;

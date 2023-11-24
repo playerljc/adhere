@@ -25,4 +25,6 @@ const CBRLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HT
   ),
 );
 
+CBRLayout.displayName = 'CBRLayout';
+
 export default CBRLayout;

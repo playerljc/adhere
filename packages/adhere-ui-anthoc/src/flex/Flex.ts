@@ -7,4 +7,6 @@ const FlexHOC: typeof Flex & {
   defaultProps?: Partial<FlexProps>;
 } = createFactory<FlexProps>(Flex, {});
 
+FlexHOC.displayName = 'Flex';
+
 export default FlexHOC;

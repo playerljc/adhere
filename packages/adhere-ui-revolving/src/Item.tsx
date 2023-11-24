@@ -18,4 +18,6 @@ const RevolvingItem: FC<RevolvingItemProps> = (props) => {
   );
 };
 
+RevolvingItem.displayName = 'RevolvingItem';
+
 export default RevolvingItem;

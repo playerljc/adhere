@@ -120,4 +120,6 @@ const LCRBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
   ),
 );
 
+LCRBLayout.displayName = 'LCRBLayout';
+
 export default LCRBLayout;

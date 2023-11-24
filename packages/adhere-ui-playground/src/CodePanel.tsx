@@ -27,6 +27,8 @@ const CodePanel = memo<CodePanelProps>((props) => {
   );
 });
 
+CodePanel.displayName = 'CodePanel';
+
 export const CodePanelDefaultProps = {
   codeText: '',
   theme: 'monokai',

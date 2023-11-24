@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CheckAllTagSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<CheckAllTagSelectProps>;
-export default _default;
+import type { CheckAllTagSelectProps, DisplayNameInternal } from '../types';
+declare const CheckAllTagSelect: DisplayNameInternal<React.NamedExoticComponent<CheckAllTagSelectProps>>;
+export default CheckAllTagSelect;

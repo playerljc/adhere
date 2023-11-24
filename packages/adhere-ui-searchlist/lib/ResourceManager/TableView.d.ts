@@ -32,5 +32,6 @@ declare const TableView_base: {
  * @classdesc TableView
  */
 declare class TableView<P extends SearchTableImplementProps, S extends SearchTableImplementState> extends TableView_base {
+    static displayName: string;
 }
 export default TableView;

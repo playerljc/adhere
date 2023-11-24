@@ -53,6 +53,8 @@ const InternalSimpleTabs = memo<SimpleTabsProps>((props) => {
 
 const SimpleTabs = InternalSimpleTabs as SimpleTabsComponent;
 
+SimpleTabs.displayName = 'SimpleTabs';
+
 SimpleTabs.TabPanel = TabPanel;
 
 export default SimpleTabs;

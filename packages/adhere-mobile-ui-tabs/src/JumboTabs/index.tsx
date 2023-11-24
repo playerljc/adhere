@@ -25,4 +25,6 @@ const SystemJumboTabs = InternalSystemJumboTabs as SystemJumboTabsComponent;
 
 SystemJumboTabs.Tab = JumboTabs.Tab;
 
+SystemJumboTabs.displayName = 'SystemJumboTabs';
+
 export default SystemJumboTabs;

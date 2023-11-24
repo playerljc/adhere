@@ -16,4 +16,6 @@ const Tab: FC<SystemSideTabProps> = (props) => {
   );
 };
 
+Tab.displayName = 'Tab';
+
 export default Tab;

@@ -1,9 +1,5 @@
-import type { FC } from 'react';
+import React from 'react';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
-/**
- * AutoCompleteMultipleSelect
- * @param props
- * @constructor
- */
-declare const AutoCompleteMultipleSelect: FC<AutoCompleteProps>;
+import type { DisplayNameInternal } from '../types';
+declare const AutoCompleteMultipleSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteProps>>;
 export default AutoCompleteMultipleSelect;

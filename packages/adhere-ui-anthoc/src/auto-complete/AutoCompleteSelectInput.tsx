@@ -70,4 +70,6 @@ const AutoCompleteSelectInput = memo<AutoCompleteSelectInputProps>(
   },
 );
 
+AutoCompleteSelectInput.displayName = 'AutoCompleteSelectInput';
+
 export default AutoCompleteSelectInput;

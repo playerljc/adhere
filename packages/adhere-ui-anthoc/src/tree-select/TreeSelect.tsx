@@ -10,4 +10,6 @@ const TreeSelectHOC: TreeSelectHOCComponent = createFactory<TreeSelectProps>(Tre
   placement: 'bottomLeft',
 });
 
+TreeSelectHOC.displayName = 'TreeSelect';
+
 export default TreeSelectHOC;

@@ -1,8 +1,7 @@
 import type { CheckboxOptionType } from 'antd/es/checkbox';
-import type { FC } from 'react';
 import React, { memo } from 'react';
 
-import type { CustomCheckboxProps } from '../types';
+import type { CustomCheckboxProps, DisplayNameInternal } from '../types';
 import CheckboxGroup from './CheckboxGroup';
 import Checkbox from './index';
 
@@ -11,7 +10,7 @@ import Checkbox from './index';
  * @param props
  * @constructor
  */
-const CustomCheckbox: FC<CustomCheckboxProps> = (props) => {
+const InternalCustomCheckbox = memo<CustomCheckboxProps>((props) => {
   const { children, options, value, disabled = false } = props;
 
   return (
@@ -45,6 +44,9 @@ const CustomCheckbox: FC<CustomCheckboxProps> = (props) => {
       }
     </CheckboxGroup>
   );
-};
+});
 
-export default memo(CustomCheckbox);
+const CustomCheckbox = InternalCustomCheckbox as DisplayNameInternal<typeof InternalCustomCheckbox>;
+CustomCheckbox.displayName = 'CustomCheckbox';
+
+export default CustomCheckbox;

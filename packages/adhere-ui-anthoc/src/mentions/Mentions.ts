@@ -7,4 +7,6 @@ const MentionsHOC: typeof Mentions & {
   defaultProps?: Partial<MentionProps>;
 } = createFactory<MentionProps>(Mentions, {});
 
+MentionsHOC.displayName = 'Mentions';
+
 export default MentionsHOC;

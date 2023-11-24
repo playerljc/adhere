@@ -13,6 +13,8 @@ class SuspenseImpl<
   P extends SuspenseProps = SuspenseProps,
   S extends SuspenseState = SuspenseState,
 > extends Suspense {
+  static displayName = 'SuspenseImpl';
+
   static Sync = SuspenseSync;
   static ASync = SuspenseAsync;
 

@@ -124,6 +124,8 @@ const InternalRevolving = memo<PropsWithoutRef<RevolvingProps> & RefAttributes<R
 
 const Revolving = InternalRevolving as RevolvingComponent;
 
+Revolving.displayName = 'Revolving';
+
 Revolving.Item = RevolvingItem;
 
 export default Revolving;

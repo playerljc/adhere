@@ -5,4 +5,6 @@ import { createFactory } from '../util';
 
 const RadioHOC: RadioHOCComponent = createFactory<RadioProps>(Radio, {});
 
+RadioHOC.displayName = 'Radio';
+
 export default RadioHOC;

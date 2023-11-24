@@ -6,6 +6,7 @@ import SearchList from './SearchList';
 import type { ISearchListImplement, ListExpandable, SearchListImplementFactoryFunction, SearchListImplementProps, SearchListImplementState, SearchListProps, SearchListState } from './types';
 export declare const selectorPrefix = "adhere-ui-search-table-implement";
 export declare class SearchListImplement<P extends SearchListProps, S extends SearchListState> extends SearchList<SearchListImplementProps, SearchListImplementState> implements ISearchListImplement {
+    static displayName: string;
     innerWrapRef: RefObject<HTMLDivElement>;
     constructor(props: any);
     componentDidMount(): void;

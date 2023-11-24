@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CheckableTagGroupProps } from '../types';
-declare const _default: React.NamedExoticComponent<CheckableTagGroupProps>;
-export default _default;
+import type { CheckableTagGroupProps, DisplayNameInternal } from '../types';
+declare const CheckableTagGroup: DisplayNameInternal<React.NamedExoticComponent<CheckableTagGroupProps>>;
+export default CheckableTagGroup;

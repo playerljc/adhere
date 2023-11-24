@@ -115,4 +115,6 @@ const ListPaging = memo<ListPagingProps<any>>(
   },
 );
 
+ListPaging.displayName = 'ListPaging';
+
 export default ListPaging;

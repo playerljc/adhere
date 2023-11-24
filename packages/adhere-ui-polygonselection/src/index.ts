@@ -1,4 +1,5 @@
 import PolygonSelection from './PolygonSelection';
+import Util from './Util';
 import DefaultAnchorStyle from './defaultAnchorStyle';
 import DefaultMoveGemStyle from './defaultMoveGemStyle';
 import DefaultStyle from './defaultStyle';
@@ -18,7 +19,6 @@ import RectangleModifyAction from './modify/RectangleModifyAction';
 import StartModifyAction from './modify/StartModifyAction';
 import TriangleModifyAction from './modify/TriangleModifyAction';
 import * as Types from './types';
-import Util from './util';
 
 export default {
   PolygonSelection,

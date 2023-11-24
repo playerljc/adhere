@@ -26,4 +26,6 @@ const LCRBLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<H
   ),
 );
 
+LCRBLayout.displayName = 'LCRBLayout';
+
 export default LCRBLayout;

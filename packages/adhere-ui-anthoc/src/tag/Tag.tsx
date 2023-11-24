@@ -5,4 +5,6 @@ import { createFactory } from '../util';
 
 const TagHOC: TagHOCComponent = createFactory<TagProps>(Tag, {});
 
+TagHOC.displayName = 'Tag';
+
 export default TagHOC;

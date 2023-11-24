@@ -53,6 +53,8 @@ const CodeTabPanel = memo<CodeTabPanelProps>((props) => {
   );
 });
 
+CodeTabPanel.displayName = 'CodeTabPanel';
+
 export const CodeTabPanelDefaultProps = {
   active: '',
   config: [],

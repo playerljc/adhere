@@ -305,6 +305,8 @@ const InternalReactQuillSandbox = memo<
 
 const ReactQuillSandbox = InternalReactQuillSandbox as ReactQuillSandboxComponent;
 
+ReactQuillSandbox.displayName = 'ReactQuillSandbox';
+
 ReactQuillSandbox.AntdFormRequireValidator = (editor, tip) => ({
   validator: (rule, value, callback) => {
     if (editor?.()?.getLength?.() > 1) {

@@ -9,6 +9,7 @@ import type { SearchProps, SearchState } from './types';
  * @classdesc 查询
  */
 declare abstract class Search<P extends SearchProps = SearchProps, S extends SearchState = SearchState> extends Suspense<P, S> {
+    static displayName: string;
     static defaultProps: any;
     static propTypes: any;
     props: any;

@@ -7,4 +7,6 @@ const TabsHOC: typeof Tabs & {
   defaultProps?: Partial<TabsProps>;
 } = createFactory<TabsProps>(Tabs, {});
 
+TabsHOC.displayName = 'Tabs';
+
 export default TabsHOC;

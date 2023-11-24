@@ -4,7 +4,7 @@ export declare const SearchAndPaginParamsMemo: any;
  * ProSearchList
  * @classdesc 高级查询列表
  */
-declare const _default: {
+declare const ProSearchList: {
     new (props: any): {
         [x: string]: any;
         getParams(): {};
@@ -66,5 +66,6 @@ declare const _default: {
         renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
+    displayName: string;
 };
-export default _default;
+export default ProSearchList;

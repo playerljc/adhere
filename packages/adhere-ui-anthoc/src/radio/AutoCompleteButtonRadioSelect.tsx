@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import AutoComplete from '../select/AutoCompleteSelect';
-import type { AutoCompleteButtonRadioSelectProps } from '../types';
+import type { AutoCompleteButtonRadioSelectProps, DisplayNameInternal } from '../types';
 import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import ButtonRadio from './ButtonRadio';
 import useRenderProps from './useRenderProps';
@@ -13,23 +12,27 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const AutoCompleteButtonRadioSelect: FC<AutoCompleteButtonRadioSelectProps> = ({
-  radioProps,
-  ...props
-}) => {
-  const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
-  const renderProps = useRenderProps(radioProps);
+const InternalAutoCompleteButtonRadioSelect = memo<AutoCompleteButtonRadioSelectProps>(
+  ({ radioProps, ...props }) => {
+    const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
+    const renderProps = useRenderProps(radioProps);
 
-  return (
-    <AutoComplete {...props}>
-      {({ originNode, loading, ...rest }) => (
-        <>
-          {loading && fetchLoading}
-          {!loading && <ButtonRadio {...renderProps(rest)} />}
-        </>
-      )}
-    </AutoComplete>
-  );
-};
+    return (
+      <AutoComplete {...props}>
+        {({ originNode, loading, ...rest }) => (
+          <>
+            {loading && fetchLoading}
+            {!loading && <ButtonRadio {...renderProps(rest)} />}
+          </>
+        )}
+      </AutoComplete>
+    );
+  },
+);
 
-export default memo(AutoCompleteButtonRadioSelect);
+const AutoCompleteButtonRadioSelect = InternalAutoCompleteButtonRadioSelect as DisplayNameInternal<
+  typeof InternalAutoCompleteButtonRadioSelect
+>;
+AutoCompleteButtonRadioSelect.displayName = 'AutoCompleteButtonRadioSelect';
+
+export default AutoCompleteButtonRadioSelect;

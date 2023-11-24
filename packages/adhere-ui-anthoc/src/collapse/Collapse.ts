@@ -7,4 +7,6 @@ const CollapseHOC: typeof Collapse & {
   defaultProps?: Partial<CollapseProps>;
 } = createFactory<CollapseProps>(Collapse, {});
 
+CollapseHOC.displayName = 'Collapse';
+
 export default CollapseHOC;

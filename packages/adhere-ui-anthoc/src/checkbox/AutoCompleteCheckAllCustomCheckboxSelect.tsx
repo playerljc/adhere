@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import AutoCompleteCheckAllMultipleSelect from '../multiple-select/AutoCompleteCheckAllMultipleSelect';
-import { AutoCompleteCheckAllCustomCheckboxSelectProps } from '../types';
+import { AutoCompleteCheckAllCustomCheckboxSelectProps, DisplayNameInternal } from '../types';
 import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import CustomCheckbox from './CustomCheckbox';
 import useRenderProps from './useRenderProps';
@@ -14,31 +13,36 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const AutoCompleteCheckAllCustomCheckboxSelect: FC<
-  AutoCompleteCheckAllCustomCheckboxSelectProps
-> = ({ checkboxProps, children, ...props }) => {
-  const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
-  const renderProps = useRenderProps(checkboxProps);
+const InternalAutoCompleteCheckAllCustomCheckboxSelect =
+  memo<AutoCompleteCheckAllCustomCheckboxSelectProps>(({ checkboxProps, children, ...props }) => {
+    const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
+    const renderProps = useRenderProps(checkboxProps);
 
-  return (
-    <AutoCompleteCheckAllMultipleSelect {...props}>
-      {({ originNode, loading, ...rest }) => (
-        <>
-          {loading && fetchLoading}
-          {!loading && (
-            <CustomCheckbox
-              {...renderProps({
-                ...rest,
-                onChange: (_value) => rest.onChange?.(_value, []),
-              })}
-            >
-              {children}
-            </CustomCheckbox>
-          )}
-        </>
-      )}
-    </AutoCompleteCheckAllMultipleSelect>
-  );
-};
+    return (
+      <AutoCompleteCheckAllMultipleSelect {...props}>
+        {({ originNode, loading, ...rest }) => (
+          <>
+            {loading && fetchLoading}
+            {!loading && (
+              <CustomCheckbox
+                {...renderProps({
+                  ...rest,
+                  onChange: (_value) => rest.onChange?.(_value, []),
+                })}
+              >
+                {children}
+              </CustomCheckbox>
+            )}
+          </>
+        )}
+      </AutoCompleteCheckAllMultipleSelect>
+    );
+  });
 
-export default memo(AutoCompleteCheckAllCustomCheckboxSelect);
+const AutoCompleteCheckAllCustomCheckboxSelect =
+  InternalAutoCompleteCheckAllCustomCheckboxSelect as DisplayNameInternal<
+    typeof InternalAutoCompleteCheckAllCustomCheckboxSelect
+  >;
+AutoCompleteCheckAllCustomCheckboxSelect.displayName = 'AutoCompleteCheckAllCustomCheckboxSelect';
+
+export default AutoCompleteCheckAllCustomCheckboxSelect;

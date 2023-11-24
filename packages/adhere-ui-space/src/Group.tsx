@@ -51,4 +51,6 @@ const SpaceGroup: FC<SpaceGroupProps> = ({ children, ...props }) => {
   });
 };
 
+SpaceGroup.displayName = 'SpaceGroup';
+
 export default SpaceGroup;

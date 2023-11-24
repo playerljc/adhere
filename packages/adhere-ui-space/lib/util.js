@@ -1,2 +1,2 @@
 "use strict";function getValue(e,t,r){return e?createPxReplace(t,r,5,0):"".concat(r,"px")}function createPxReplace(e,t,r,o){return t<o?t:0===(o=toFixed(t/e,r))?"0":o+"rem"}function toFixed(e,t){t=Math.pow(10,t+1),e=Math.floor(e*t);return 10*Math.round(e/10)/t}Object.defineProperty(exports,"__esModule",{value:!0}),exports.toFixed=exports.createPxReplace=exports.getValue=void 0,exports.getValue=getValue,exports.createPxReplace=createPxReplace,exports.toFixed=toFixed;
-//# sourceMappingURL=util.js.map
+//# sourceMappingURL=Util.js.map

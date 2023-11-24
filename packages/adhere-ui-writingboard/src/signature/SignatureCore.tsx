@@ -193,4 +193,6 @@ const Signature = memo<PropsWithoutRef<SignatureCoreProps> & RefAttributes<Signa
   ),
 );
 
+Signature.displayName = 'Signature';
+
 export default Signature;

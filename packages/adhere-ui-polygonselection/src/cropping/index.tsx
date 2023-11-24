@@ -92,6 +92,8 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
   ),
 );
 
+InternalCropping.displayName = 'InternalCropping';
+
 const Cropping = InternalCropping as CroppingComponent;
 
 Cropping.CroppingCore = CroppingCore;

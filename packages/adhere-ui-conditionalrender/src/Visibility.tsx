@@ -30,4 +30,6 @@ const ConditionalRenderVisibility: FC<ConditionalRenderShowProps> = ({
   </>
 );
 
+ConditionalRenderVisibility.displayName = 'ConditionalRenderVisibility';
+
 export default ConditionalRenderVisibility;

@@ -117,4 +117,6 @@ const TRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
   ),
 );
 
+TRCLayout.displayName = 'TRCLayout';
+
 export default TRCLayout;

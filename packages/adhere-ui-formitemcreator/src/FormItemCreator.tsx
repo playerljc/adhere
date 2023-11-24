@@ -132,6 +132,8 @@ const InternalFormItemCreator = memo<FormItemCreatorProps>((props) => {
 
 const FormItemCreator = InternalFormItemCreator as FormItemCreatorComponent;
 
+FormItemCreator.displayName = 'FormItemCreator';
+
 FormItemCreator.TEXT = TEXT;
 FormItemCreator.INPUT = INPUT;
 FormItemCreator.SEARCH = SEARCH;

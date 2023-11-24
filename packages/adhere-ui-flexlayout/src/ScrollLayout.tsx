@@ -50,4 +50,6 @@ const ScrollLayout = memo<ScrollLayoutProps>((props) => {
   );
 });
 
+ScrollLayout.displayName = 'ScrollLayout';
+
 export default ScrollLayout;

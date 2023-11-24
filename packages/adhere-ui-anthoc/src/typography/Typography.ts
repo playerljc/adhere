@@ -7,4 +7,6 @@ const TypographyHOC: typeof Typography & {
   defaultProps?: Partial<TypographyProps>;
 } = createFactory<TypographyProps>(Typography, {});
 
+TypographyHOC.displayName = 'Typography';
+
 export default TypographyHOC;

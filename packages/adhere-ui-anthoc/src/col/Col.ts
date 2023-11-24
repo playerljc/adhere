@@ -7,4 +7,6 @@ const ColHOC: typeof Col & {
   defaultProps?: Partial<ColProps>;
 } = createFactory<ColProps>(Col, {});
 
+ColHOC.displayName = 'Col';
+
 export default ColHOC;

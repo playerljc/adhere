@@ -26,6 +26,7 @@ declare const ResourceStateManager_base: {
  * @classdesc 可编辑单元格的表格
  */
 declare class ResourceStateManager<P extends ResourceManagerProps, S extends ResourceManagerState> extends ResourceStateManager_base {
+    static displayName: string;
     renderThumbnailView(): React.JSX.Element;
     renderInfoView(): React.JSX.Element;
 }

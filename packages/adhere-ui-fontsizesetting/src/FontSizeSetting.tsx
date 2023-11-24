@@ -59,4 +59,6 @@ const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
   );
 });
 
+FontSizeSetting.displayName = 'FontSizeSetting';
+
 export default FontSizeSetting;

@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { TransferSelectProps } from '../types';
+import type { DisplayNameInternal, TransferSelectProps } from '../types';
 import Transfer from './Transfer';
 import useRenderProps from './useRenderProps';
 
@@ -12,7 +11,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const TransferSelect: FC<TransferSelectProps> = ({ transferProps, ...props }) => {
+const InternalTransferSelect = memo<TransferSelectProps>(({ transferProps, ...props }) => {
   const renderProps = useRenderProps(transferProps);
 
   return (
@@ -20,6 +19,9 @@ const TransferSelect: FC<TransferSelectProps> = ({ transferProps, ...props }) =>
       {({ originNode, ...rest }) => <Transfer {...renderProps(rest)} />}
     </DropdownRenderSelect>
   );
-};
+});
 
-export default memo(TransferSelect);
+const TransferSelect = InternalTransferSelect as DisplayNameInternal<typeof InternalTransferSelect>;
+TransferSelect.displayName = 'TransferSelect';
+
+export default TransferSelect;

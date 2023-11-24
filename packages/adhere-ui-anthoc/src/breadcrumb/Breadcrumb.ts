@@ -7,4 +7,6 @@ const BreadcrumbHOC: typeof Breadcrumb & {
   defaultProps?: Partial<BreadcrumbProps>;
 } = createFactory<BreadcrumbProps>(Breadcrumb, {});
 
+BreadcrumbHOC.displayName = 'Breadcrumb';
+
 export default BreadcrumbHOC;

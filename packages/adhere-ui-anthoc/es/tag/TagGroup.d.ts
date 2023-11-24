@@ -1,4 +1,4 @@
 import React from 'react';
-import type { TagGroupProps } from '../types';
-declare const _default: React.NamedExoticComponent<TagGroupProps>;
-export default _default;
+import type { DisplayNameInternal, TagGroupProps } from '../types';
+declare const TagGroup: DisplayNameInternal<React.NamedExoticComponent<TagGroupProps>>;
+export default TagGroup;

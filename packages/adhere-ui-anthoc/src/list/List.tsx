@@ -5,4 +5,6 @@ import { createFactory } from '../util';
 
 const ListHOC: ListHOCComponent = createFactory<ListProps<any>>(List, {});
 
+ListHOC.displayName = 'List';
+
 export default ListHOC;

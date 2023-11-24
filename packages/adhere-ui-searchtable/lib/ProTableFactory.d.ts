@@ -236,5 +236,6 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     [x: string]: any;
+    displayName: string;
 };
 export default _default;

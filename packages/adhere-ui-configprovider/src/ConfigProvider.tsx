@@ -82,4 +82,6 @@ const ConfigProvider = InternalConfigProvider as ConfigProviderComponent;
 
 ConfigProvider.Context = Context;
 
+ConfigProvider.displayName = 'ConfigProvider';
+
 export default ConfigProvider;

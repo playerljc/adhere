@@ -21,9 +21,14 @@ abstract class Search<
   P extends SearchProps = SearchProps,
   S extends SearchState = SearchState,
 > extends Suspense<P, S> {
+  static displayName = 'Search';
+
   static defaultProps: any;
+
   static propTypes: any;
+
   props: any;
+
   state: any;
 
   protected searchFormRef: RefObject<HTMLElement> = createRef();

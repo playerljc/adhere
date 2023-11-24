@@ -8,4 +8,6 @@ const SliderHOC: typeof Slider & {
   defaultProps?: Partial<SliderSingleProps | SliderRangeProps>;
 } = createFactory<SliderSingleProps | SliderRangeProps>(Slider, {});
 
+SliderHOC.displayName = 'Slider';
+
 export default SliderHOC;

@@ -7,4 +7,6 @@ const LayoutHOC: typeof Layout & {
   defaultProps?: Partial<LayoutProps>;
 } = createFactory<LayoutProps>(Layout, {});
 
+LayoutHOC.displayName = 'Layout';
+
 export default LayoutHOC;

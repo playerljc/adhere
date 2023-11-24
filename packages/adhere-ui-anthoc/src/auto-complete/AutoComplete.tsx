@@ -9,4 +9,6 @@ const AutoCompleteHOC: AutoCompleteHOCComponent = createFactory<AutoCompleteProp
     (option?.value as string)?.toUpperCase?.()?.indexOf?.(input?.toUpperCase?.()) >= 0,
 });
 
+AutoCompleteHOC.displayName = 'AutoComplete';
+
 export default AutoCompleteHOC;

@@ -354,6 +354,8 @@ const InternalTableGridLayout = memo<TableGridLayoutProps>(
 
 const TableGridLayout = InternalTableGridLayout as TableGridLayoutComponent;
 
+TableGridLayout.displayName = 'TableGridLayout';
+
 /**
  * Label
  * @description 左侧Label

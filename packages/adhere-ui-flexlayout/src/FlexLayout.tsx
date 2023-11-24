@@ -115,6 +115,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
 
 const FlexLayout = InternalFlexLayout as FlexLayoutComponent;
 
+FlexLayout.displayName = 'FlexLayout';
 FlexLayout.selectorPrefix = selectorPrefix;
 FlexLayout.Context = FlexContext;
 FlexLayout.Fixed = Fixed;

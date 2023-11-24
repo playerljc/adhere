@@ -204,4 +204,6 @@ const ListStandard = memo<ListStandardProps>((props) => {
   );
 });
 
+ListStandard.displayName = 'ListStandard';
+
 export default ListStandard;

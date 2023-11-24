@@ -11,6 +11,7 @@ export declare const SearchListContext: React.Context<{
  * SearchList
  */
 declare abstract class SearchList<P extends SearchListProps = SearchListProps, S extends SearchListState = SearchListState> extends Search<P, S> {
+    static displayName: string;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static defaultProps: any;
@@ -138,11 +139,7 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     getPagination(...params: any[]): {
         showTotal: (total: any) => string;
-        total: number; /**
-         * getTableDensity
-         * @description 表格密度
-         * @return {ListSize}
-         */
+        total: number;
         current: any;
         pageSize: any;
         pageSizeOptions: number[];

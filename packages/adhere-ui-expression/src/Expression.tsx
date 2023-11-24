@@ -914,4 +914,6 @@ Expression.validator = () => ({
   },
 });
 
+Expression.displayName = 'Expression';
+
 export default Expression;

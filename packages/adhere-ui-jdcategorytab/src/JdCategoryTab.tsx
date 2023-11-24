@@ -189,6 +189,8 @@ const InternalJdCategoryTab = memo<
 
 const JdCategoryTab = InternalJdCategoryTab as JdCategoryTabComponent;
 
+JdCategoryTab.displayName = 'JdCategoryTab';
+
 JdCategoryTab.Item = JdCategoryTabItem;
 
 export default JdCategoryTab;

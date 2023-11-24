@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CheckAllListSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<CheckAllListSelectProps>;
-export default _default;
+import type { CheckAllListSelectProps, DisplayNameInternal } from '../types';
+declare const CheckAllListSelect: DisplayNameInternal<React.NamedExoticComponent<CheckAllListSelectProps>>;
+export default CheckAllListSelect;

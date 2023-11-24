@@ -330,6 +330,8 @@ const InternalStickupLayout = memo<
 
 const StickupLayout = InternalStickupLayout as StickupLayoutComponent;
 
+StickupLayout.displayName = 'StickupLayout';
+
 StickupLayout.Item = StickupLayoutItem;
 
 export default StickupLayout;

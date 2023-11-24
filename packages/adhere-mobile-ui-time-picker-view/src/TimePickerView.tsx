@@ -103,4 +103,6 @@ const TimePickerView = memo<TimePickerViewProps>(
   },
 );
 
+TimePickerView.displayName = 'TimePickerView';
+
 export default TimePickerView;

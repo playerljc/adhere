@@ -17,6 +17,8 @@ class ResourceStateManager<
 > extends ResourceManagerFactory<ResourceManagerProps, ResourceManagerState>(
   SearchListStateImplement,
 ) {
+  static displayName = 'ResourceStateManager';
+
   renderThumbnailView() {
     return (
       // @ts-ignore

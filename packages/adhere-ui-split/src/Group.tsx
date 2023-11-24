@@ -51,4 +51,6 @@ const SplitGroup: FC<SplitGroupProps> = ({ children, ...props }) => {
   });
 };
 
+SplitGroup.displayName = 'SplitGroup';
+
 export default SplitGroup;

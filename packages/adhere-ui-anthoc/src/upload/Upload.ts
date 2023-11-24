@@ -7,4 +7,6 @@ const UploadHOC: typeof Upload & {
   defaultProps?: Partial<UploadProps>;
 } = createFactory<UploadProps>(Upload, { name: 'file', withCredentials: true });
 
+UploadHOC.displayName = 'Upload';
+
 export default UploadHOC;

@@ -1,8 +1,7 @@
 import type { CheckboxOptionType } from 'antd/es/checkbox';
-import type { FC } from 'react';
 import React, { memo } from 'react';
 
-import type { CustomRadioProps } from '../types';
+import type { CustomRadioProps, DisplayNameInternal } from '../types';
 import Radio from './index';
 
 /**
@@ -12,7 +11,7 @@ import Radio from './index';
  * @param props
  * @constructor
  */
-const CustomRadio: FC<CustomRadioProps> = ({ children, options, ...props }) => (
+const InternalCustomRadio = memo<CustomRadioProps>(({ children, options, ...props }) => (
   <Radio.Group {...props}>
     {children?.(
       options?.map?.((t) => {
@@ -29,6 +28,9 @@ const CustomRadio: FC<CustomRadioProps> = ({ children, options, ...props }) => (
       }) ?? [],
     )}
   </Radio.Group>
-);
+));
 
-export default memo(CustomRadio);
+const CustomRadio = InternalCustomRadio as DisplayNameInternal<typeof InternalCustomRadio>;
+CustomRadio.displayName = 'CustomRadio';
+
+export default CustomRadio;

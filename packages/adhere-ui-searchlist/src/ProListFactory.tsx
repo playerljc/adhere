@@ -11,6 +11,8 @@ const { ProTableFactory } = SearchTable;
  */
 export default (SuperClass, searchAndPaginParamsMemo) =>
   class extends ProTableFactory(SuperClass, searchAndPaginParamsMemo) {
+    static displayName = '';
+
     getParams() {
       const params = {};
 

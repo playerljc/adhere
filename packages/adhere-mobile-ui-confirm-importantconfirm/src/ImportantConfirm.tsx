@@ -53,4 +53,6 @@ ImportantConform.open = (props) =>
     ),
   });
 
+ImportantConform.displayName = 'ImportantConform';
+
 export default ImportantConform;

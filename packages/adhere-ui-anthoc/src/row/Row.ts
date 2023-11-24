@@ -7,4 +7,6 @@ const RowHOC: typeof Row & {
   defaultProps?: Partial<RowProps>;
 } = createFactory<RowProps>(Row, {});
 
+RowHOC.displayName = 'Row';
+
 export default RowHOC;

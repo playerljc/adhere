@@ -42,4 +42,6 @@ const ImageLazy = memo<ImageLazyProps>(({ className, style, imgArgs }) => {
   );
 });
 
+ImageLazy.displayName = 'ImageLazy';
+
 export default ImageLazy;

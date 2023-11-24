@@ -93,6 +93,8 @@ const Card = memo<CardProps>((props) => {
   );
 });
 
+Card.displayName = 'Card';
+
 // /**
 //  * Card
 //  * @class Card

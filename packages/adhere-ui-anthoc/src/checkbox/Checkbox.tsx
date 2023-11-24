@@ -5,4 +5,6 @@ import { createFactory } from '../util';
 
 const CheckboxHOC: CheckboxHOCComponent = createFactory<CheckboxProps>(Checkbox, {});
 
+CheckboxHOC.displayName = 'Checkbox';
+
 export default CheckboxHOC;

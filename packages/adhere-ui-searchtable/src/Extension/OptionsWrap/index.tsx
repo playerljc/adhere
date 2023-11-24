@@ -19,7 +19,7 @@ const _selectorPrefix = `${selectorPrefix}-options-wrap`;
  * @param isEllipsesShowOnlyOneAfterCollapsing
  * @return {JSX.Element}
  */
-export default ({
+const OptionsWrap = ({
   className = '',
   style = {},
   ellipsisCount = 3,
@@ -95,3 +95,7 @@ export default ({
     </div>
   );
 };
+
+OptionsWrap.displayName = 'OptionsWrap';
+
+export default OptionsWrap;

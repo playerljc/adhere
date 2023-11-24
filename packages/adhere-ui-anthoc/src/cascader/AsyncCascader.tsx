@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { AsyncCascaderProps } from '../types';
+import type { AsyncCascaderProps, DisplayNameInternal } from '../types';
 import Cascader from './CascaderTreeSelect';
 import useAsyncCascader from './useAsyncCascader';
 
@@ -17,38 +16,43 @@ import useAsyncCascader from './useAsyncCascader';
  * @param props
  * @constructor
  */
-const AsyncCascader: FC<AsyncCascaderProps> = ({
-  cascadeParams,
-  onDataSourceChange,
-  fetchBranch,
-  fetchData,
-  defaultId,
-  onChange,
-  ...props
-}) => {
-  const {
-    treeData,
-    onLoadData,
-    onChange: onHookChange,
-  } = useAsyncCascader({
+const InternalAsyncCascader = memo<AsyncCascaderProps>(
+  ({
     cascadeParams,
     onDataSourceChange,
     fetchBranch,
     fetchData,
     defaultId,
-    value: props.value,
-    treeDataSimpleMode: props.treeDataSimpleMode,
-  });
+    onChange,
+    ...props
+  }) => {
+    const {
+      treeData,
+      onLoadData,
+      onChange: onHookChange,
+    } = useAsyncCascader({
+      cascadeParams,
+      onDataSourceChange,
+      fetchBranch,
+      fetchData,
+      defaultId,
+      value: props.value,
+      treeDataSimpleMode: props.treeDataSimpleMode,
+    });
 
-  return (
-    // @ts-ignore
-    <Cascader
-      {...props}
-      options={treeData}
-      loadData={onLoadData}
-      onChange={(...params) => onHookChange(onChange, params)}
-    />
-  );
-};
+    return (
+      // @ts-ignore
+      <Cascader
+        {...props}
+        options={treeData}
+        loadData={onLoadData}
+        onChange={(...params) => onHookChange(onChange, params)}
+      />
+    );
+  },
+);
 
-export default memo(AsyncCascader);
+const AsyncCascader = InternalAsyncCascader as DisplayNameInternal<typeof InternalAsyncCascader>;
+AsyncCascader.displayName = 'AsyncCascader';
+
+export default AsyncCascader;

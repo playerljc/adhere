@@ -100,4 +100,5 @@ export default function <P, S>(SuperClass: any): {
         }): ReactNode;
     };
     [x: string]: any;
+    displayName: string;
 };

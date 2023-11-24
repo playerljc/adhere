@@ -1,10 +1,5 @@
 import type { RadioGroupProps } from 'antd/es/radio';
-import type { FC } from 'react';
-/**
- * HorizontalRadio
- * @description 横向的RadioGroup
- * @param props
- * @constructor
- */
-declare const HorizontalRadio: FC<RadioGroupProps>;
+import React from 'react';
+import type { DisplayNameInternal } from '../types';
+declare const HorizontalRadio: DisplayNameInternal<React.NamedExoticComponent<RadioGroupProps>>;
 export default HorizontalRadio;

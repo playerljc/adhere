@@ -80,4 +80,6 @@ const EditableCellView: FC<EditableCellViewProps> = (props) => {
   );
 };
 
+EditableCellView.displayName = 'EditableCellView';
+
 export default EditableCellView;

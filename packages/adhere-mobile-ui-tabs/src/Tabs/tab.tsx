@@ -9,6 +9,8 @@ const Tab: FC<SystemTabProps> = (props) => {
   return <Tabs.Tab {...props}>{props.children}</Tabs.Tab>;
 };
 
+Tab.displayName = 'Tab';
+
 Tab.defaultProps = {
   forceRender: false,
   disabled: false,

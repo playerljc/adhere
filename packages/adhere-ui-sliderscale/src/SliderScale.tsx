@@ -133,4 +133,6 @@ const SliderScale = memo<SliderScaleProps>((props) => {
   );
 });
 
+SliderScale.displayName = 'SliderScale';
+
 export default SliderScale;

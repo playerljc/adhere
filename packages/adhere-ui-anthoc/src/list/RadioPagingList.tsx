@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { RadioPagingListProps } from '../types';
+import type { DisplayNameInternal, RadioPagingListProps } from '../types';
 import RadioList from './RadioList';
 import usePaging from './usePaging';
 
@@ -16,23 +15,23 @@ import usePaging from './usePaging';
  * @param props
  * @constructor
  */
-const RadioPagingList: FC<RadioPagingListProps> = ({
-  totalCount,
-  paging,
-  onPagingChange,
-  onPagingShowSizeChange,
-  defaultLimit,
-  ...props
-}) => {
-  const pagingProps = usePaging({
-    defaultLimit: defaultLimit ?? 10,
-    paging,
-    totalCount,
-    onPagingShowSizeChange,
-    onPagingChange,
-  });
+const InternalRadioPagingList = memo<RadioPagingListProps>(
+  ({ totalCount, paging, onPagingChange, onPagingShowSizeChange, defaultLimit, ...props }) => {
+    const pagingProps = usePaging({
+      defaultLimit: defaultLimit ?? 10,
+      paging,
+      totalCount,
+      onPagingShowSizeChange,
+      onPagingChange,
+    });
 
-  return <RadioList pagination={pagingProps} {...props} />;
-};
+    return <RadioList pagination={pagingProps} {...props} />;
+  },
+);
 
-export default memo(RadioPagingList);
+const RadioPagingList = InternalRadioPagingList as DisplayNameInternal<
+  typeof InternalRadioPagingList
+>;
+RadioPagingList.displayName = 'RadioPagingList';
+
+export default RadioPagingList;

@@ -79,6 +79,7 @@ declare const _default: {
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
+        displayName: string;
     };
     ProSearchStateList: {
         new (props: any): {
@@ -142,6 +143,7 @@ declare const _default: {
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
+        displayName: string;
     };
     ResourceStateManager: typeof ResourceStateManager;
     ResourceManager: typeof ResourceManager;
@@ -229,6 +231,7 @@ declare const _default: {
             }): import("react").ReactNode;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProResourceStateManager: {
         new (props: any): {
@@ -314,6 +317,7 @@ declare const _default: {
             }): import("react").ReactNode;
         };
         [x: string]: any;
+        displayName: string;
     };
     OptionsWrap: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
         className?: string | undefined;

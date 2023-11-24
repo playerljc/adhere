@@ -1,4 +1,4 @@
 import React from 'react';
-import type { HorizontalCheckableTagGroupProps } from '../types';
-declare const _default: React.NamedExoticComponent<HorizontalCheckableTagGroupProps>;
-export default _default;
+import type { DisplayNameInternal, HorizontalCheckableTagGroupProps } from '../types';
+declare const HorizontalCheckAllCheckableTagGroup: DisplayNameInternal<React.NamedExoticComponent<HorizontalCheckableTagGroupProps>>;
+export default HorizontalCheckAllCheckableTagGroup;

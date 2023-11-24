@@ -145,4 +145,6 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
   );
 });
 
+BackTopAnimation.displayName = 'BackTopAnimation';
+
 export default BackTopAnimation;

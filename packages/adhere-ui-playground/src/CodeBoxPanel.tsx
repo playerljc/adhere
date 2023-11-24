@@ -236,4 +236,6 @@ const CodeBoxPanel = memo<CodeBoxProps>((props) => {
   );
 });
 
+CodeBoxPanel.displayName = 'CodeBoxPanel';
+
 export default CodeBoxPanel;

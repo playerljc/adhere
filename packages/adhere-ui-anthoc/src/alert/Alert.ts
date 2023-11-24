@@ -7,4 +7,6 @@ const AlertHOC: typeof Alert & {
   defaultProps?: Partial<AlertProps>;
 } = createFactory<AlertProps>(Alert, {});
 
+AlertHOC.displayName = 'Alert';
+
 export default AlertHOC;

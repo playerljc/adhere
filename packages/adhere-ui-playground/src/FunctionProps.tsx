@@ -162,6 +162,8 @@ const FunctionProps = memo<FunctionProps>((props) => {
   );
 });
 
+FunctionProps.displayName = 'FunctionProps';
+
 // /**
 //  * FunctionProps
 //  * @class FunctionProps

@@ -1,2 +1,2 @@
-declare const ButtonRadio: any;
-export default ButtonRadio;
+declare const ButtonRadioHOC: any;
+export default ButtonRadioHOC;

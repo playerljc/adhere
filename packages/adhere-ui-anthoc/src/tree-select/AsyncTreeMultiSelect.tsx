@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { AsyncTreeMultiSelectProps } from '../types';
+import type { AsyncTreeMultiSelectProps, DisplayNameInternal } from '../types';
 import AsyncTreeSelect from './AsyncTreeSelect';
 import useTreeSelectMulti from './useTreeSelectMulti';
 
@@ -11,10 +10,15 @@ import useTreeSelectMulti from './useTreeSelectMulti';
  * @param props
  * @constructor
  */
-const AsyncTreeMultiSelect: FC<AsyncTreeMultiSelectProps> = (props) => {
+const InternalAsyncTreeMultiSelect = memo<AsyncTreeMultiSelectProps>((props) => {
   const multiProps = useTreeSelectMulti();
 
   return <AsyncTreeSelect {...multiProps} {...props} />;
-};
+});
 
-export default memo(AsyncTreeMultiSelect);
+const AsyncTreeMultiSelect = InternalAsyncTreeMultiSelect as DisplayNameInternal<
+  typeof InternalAsyncTreeMultiSelect
+>;
+AsyncTreeMultiSelect.displayName = 'AsyncTreeMultiSelect';
+
+export default AsyncTreeMultiSelect;

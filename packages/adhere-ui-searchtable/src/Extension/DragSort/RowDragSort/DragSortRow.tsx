@@ -5,8 +5,8 @@ import { useDrag, useDrop } from 'react-dnd';
 
 import type SearchTable from '../../../SearchTable';
 import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
+import { isSameLevel } from '../../../Util';
 import type { TableRowComponentReducer } from '../../../types';
-import { isSameLevel } from '../../../util';
 
 const type = 'DraggableBodyRow';
 

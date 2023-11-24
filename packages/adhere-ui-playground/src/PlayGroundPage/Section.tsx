@@ -24,4 +24,6 @@ const Section = memo<SectionProps>((props) => {
   );
 });
 
+Section.displayName = 'Section';
+
 export default Section;

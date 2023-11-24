@@ -7,4 +7,6 @@ const AnchorHOC: typeof Anchor & {
   defaultProps?: Partial<AnchorProps>;
 } = createFactory<AnchorProps>(Anchor, {});
 
+AnchorHOC.displayName = 'Anchor';
+
 export default AnchorHOC;

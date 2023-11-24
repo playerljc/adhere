@@ -1,9 +1,16 @@
 import type { CascaderProps } from 'antd';
-import React from 'react';
-import type { FC } from 'react';
+import React, { memo } from 'react';
 
+import type { DisplayNameInternal } from '../types';
 import Cascader from './CascaderTreeSelect';
 
-const CascaderChangeOnSelect: FC<CascaderProps> = (props) => <Cascader {...props} changeOnSelect />;
+const InternalCascaderChangeOnSelect = memo<CascaderProps>((props) => (
+  <Cascader {...props} changeOnSelect />
+));
+
+const CascaderChangeOnSelect = InternalCascaderChangeOnSelect as DisplayNameInternal<
+  typeof InternalCascaderChangeOnSelect
+>;
+CascaderChangeOnSelect.displayName = 'CascaderChangeOnSelect';
 
 export default CascaderChangeOnSelect;

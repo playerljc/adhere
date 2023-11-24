@@ -7,4 +7,6 @@ const CarouselHOC: typeof Carousel & {
   defaultProps?: Partial<CarouselProps>;
 } = createFactory<CarouselProps>(Carousel, {});
 
+CarouselHOC.displayName = 'Carousel';
+
 export default CarouselHOC;

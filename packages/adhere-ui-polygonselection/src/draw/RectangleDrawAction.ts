@@ -10,7 +10,7 @@ import {
   IStyle,
   SelectType
 } from '../types';
-import Util from '../util';
+import Util from '../Util';
 import DrawAction from './DrawAction';
 
 /**

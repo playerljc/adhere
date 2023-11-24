@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import React, { memo, useCallback, useMemo } from 'react';
 
 import SplitGroup from './Group';
+import { getValue } from './Util';
 import type { SplitComponent, SplitProps } from './types';
-import { getValue } from './util';
 
 const selectorPrefix = 'adhere-ui-split';
 
@@ -50,6 +50,8 @@ const InternalSplit = memo<SplitProps>((props) => {
 });
 
 const Split = InternalSplit as SplitComponent;
+
+Split.displayName = 'Split';
 
 Split.Group = SplitGroup;
 

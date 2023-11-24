@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { VerticalTagGroupProps } from '../types';
+import type { DisplayNameInternal, VerticalTagGroupProps } from '../types';
 import TagGroup from './TagGroup';
 
 /**
@@ -9,8 +8,13 @@ import TagGroup from './TagGroup';
  * @description 纵向的Tag
  * @constructor
  */
-const VerticalTagGroup: FC<VerticalTagGroupProps> = (props) => (
+const InternalVerticalTagGroup = memo<VerticalTagGroupProps>((props) => (
   <TagGroup {...props} direction="vertical" />
-);
+));
 
-export default memo(VerticalTagGroup);
+const VerticalTagGroup = InternalVerticalTagGroup as DisplayNameInternal<
+  typeof InternalVerticalTagGroup
+>;
+VerticalTagGroup.displayName = 'VerticalTagGroup';
+
+export default VerticalTagGroup;

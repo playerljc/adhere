@@ -27,6 +27,8 @@ abstract class SearchList<
   P extends SearchListProps = SearchListProps,
   S extends SearchListState = SearchListState,
 > extends Search<P, S> {
+  static displayName = 'SearchList';
+
   // 序号生成的规则 - 单独模式
   static NUMBER_GENERATOR_RULE_ALONE = Symbol();
   // 序号生成的规则 - 连续模式

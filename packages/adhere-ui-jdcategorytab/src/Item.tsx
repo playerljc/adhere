@@ -15,4 +15,6 @@ const JdCategoryTabItem = memo<JdCategoryTabItemProps>((props) => {
   );
 });
 
+JdCategoryTabItem.displayName = 'JdCategoryTabItem';
+
 export default JdCategoryTabItem;

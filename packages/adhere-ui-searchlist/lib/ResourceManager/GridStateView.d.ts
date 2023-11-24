@@ -32,5 +32,6 @@ declare const GridStateView_base: {
  * @classdesc GridStateView
  */
 declare class GridStateView<P extends SearchListStateImplementProps, S extends SearchListImplementState> extends GridStateView_base {
+    static displayName: string;
 }
 export default GridStateView;

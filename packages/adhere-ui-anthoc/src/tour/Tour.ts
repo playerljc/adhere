@@ -7,4 +7,6 @@ const TourHOC: typeof Tour & {
   defaultProps?: Partial<TourProps>;
 } = createFactory<TourProps>(Tour, {});
 
+TourHOC.displayName = 'Tour';
+
 export default TourHOC;

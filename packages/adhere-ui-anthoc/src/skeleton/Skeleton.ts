@@ -7,4 +7,6 @@ const SkeletonHOC: typeof Skeleton & {
   defaultProps?: Partial<SkeletonProps>;
 } = createFactory<SkeletonProps>(Skeleton, {});
 
+SkeletonHOC.displayName = 'Skeleton';
+
 export default SkeletonHOC;

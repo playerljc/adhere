@@ -61,4 +61,6 @@ const Fixed = memo<FixedProps>(
   }),
 );
 
+Fixed.displayName = 'Fixed';
+
 export default Fixed;

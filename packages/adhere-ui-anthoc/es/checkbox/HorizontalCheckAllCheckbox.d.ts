@@ -1,4 +1,4 @@
 import React from 'react';
-import type { HorizontalCheckAllCheckboxProps } from '../types';
-declare const _default: React.NamedExoticComponent<HorizontalCheckAllCheckboxProps>;
-export default _default;
+import type { DisplayNameInternal, HorizontalCheckAllCheckboxProps } from '../types';
+declare const HorizontalCheckAllCheckbox: DisplayNameInternal<React.NamedExoticComponent<HorizontalCheckAllCheckboxProps>>;
+export default HorizontalCheckAllCheckbox;

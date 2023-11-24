@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CustomCheckAllCheckboxProps } from '../types';
-declare const _default: React.NamedExoticComponent<CustomCheckAllCheckboxProps>;
-export default _default;
+import type { CustomCheckAllCheckboxProps, DisplayNameInternal } from '../types';
+declare const CustomCheckAllCheckbox: DisplayNameInternal<React.NamedExoticComponent<CustomCheckAllCheckboxProps>>;
+export default CustomCheckAllCheckbox;

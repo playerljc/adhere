@@ -58,4 +58,6 @@ ConditionalRender.conditionalNotEmptyArr = function (arr: any[]): any[] {
   return arr.filter((t) => !(t === null || t === undefined));
 };
 
+ConditionalRender.displayName = 'ConditionalRender';
+
 export default ConditionalRender;

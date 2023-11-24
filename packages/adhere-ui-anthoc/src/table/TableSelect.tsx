@@ -1,8 +1,7 @@
 import React, { memo, useMemo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { TableSelectProps } from '../types';
+import type { DisplayNameInternal, TableSelectProps } from '../types';
 import CheckboxTable from './CheckboxTable';
 import RadioTable from './RadioTable';
 import useRenderProps from './useRenderProps';
@@ -14,7 +13,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const TableSelect: FC<TableSelectProps> = ({ tableProps, ...props }) => {
+const InternalTableSelect = memo<TableSelectProps>(({ tableProps, ...props }) => {
   const isMultiple = useMemo(() => 'mode' in props && props.mode === 'multiple', [props.mode]);
   const renderProps = useRenderProps(tableProps);
 
@@ -30,6 +29,9 @@ const TableSelect: FC<TableSelectProps> = ({ tableProps, ...props }) => {
       )}
     </DropdownRenderSelect>
   );
-};
+});
 
-export default memo(TableSelect);
+const TableSelect = InternalTableSelect as DisplayNameInternal<typeof InternalTableSelect>;
+TableSelect.displayName = 'TablePaging';
+
+export default TableSelect;

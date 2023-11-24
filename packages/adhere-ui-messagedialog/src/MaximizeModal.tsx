@@ -16,7 +16,7 @@ export const selectorPrefix = 'adhere-ui-message-dialog-maximize-modal';
  * @param props
  * @constructor
  */
-const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
+const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
   const {
     config: { title, closeIcon, ...resetConfig },
     ...resetProps
@@ -43,11 +43,10 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
     [isMaximize],
   );
 
-  const modalRender = useCallback((_modal) => renderDraggableModal(_modal), [
-    isMaximize,
-    bounds,
-    draggableDisabled,
-  ]);
+  const modalRender = useCallback(
+    (_modal) => renderDraggableModal(_modal),
+    [isMaximize, bounds, draggableDisabled],
+  );
 
   /**
    * renderDraggableModal
@@ -185,6 +184,8 @@ const MaximizeModalDialog: FC<ModalDialogProps> = (props) => {
       }}
     />
   );
-};
+});
 
-export default memo(MaximizeModalDialog);
+MaximizeModalDialog.displayName = 'MaximizeModalDialog';
+
+export default MaximizeModalDialog;

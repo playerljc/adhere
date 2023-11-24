@@ -1,3 +1,6 @@
 import React from 'react';
-declare const _default: (props: any) => React.JSX.Element;
-export default _default;
+declare const Value: {
+    (props: any): React.JSX.Element;
+    displayName: string;
+};
+export default Value;

@@ -7,7 +7,7 @@ import { ModalDialogProps } from './types';
 
 export const selectorPrefix = 'adhere-ui-message-dialog';
 
-const ModalDialog: FC<ModalDialogProps> = (props) => {
+const ModalDialog = memo<ModalDialogProps>((props) => {
   const { config, closeBtn, close, open, children } = props;
 
   const { footer = [], centered = true, ...other } = config;
@@ -70,6 +70,8 @@ const ModalDialog: FC<ModalDialogProps> = (props) => {
       {children}
     </Modal>
   );
-};
+});
 
-export default memo(ModalDialog);
+ModalDialog.displayName = 'ModalDialog';
+
+export default ModalDialog;

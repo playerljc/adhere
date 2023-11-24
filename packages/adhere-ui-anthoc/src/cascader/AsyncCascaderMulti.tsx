@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { AsyncCascaderProps } from '../types';
+import type { AsyncCascaderProps, DisplayNameInternal } from '../types';
 import AsyncCascader from './AsyncCascader';
 
 /**
@@ -9,8 +8,13 @@ import AsyncCascader from './AsyncCascader';
  * @param props
  * @constructor
  */
-const AsyncCascaderMulti: FC<AsyncCascaderProps> = (props) => (
+const InternalAsyncCascaderMulti = memo<AsyncCascaderProps>((props) => (
   <AsyncCascader multiple maxTagCount="responsive" {...props} />
-);
+));
 
-export default memo(AsyncCascaderMulti);
+const AsyncCascaderMulti = InternalAsyncCascaderMulti as DisplayNameInternal<
+  typeof InternalAsyncCascaderMulti
+>;
+AsyncCascaderMulti.displayName = 'AsyncCascaderMulti';
+
+export default AsyncCascaderMulti;

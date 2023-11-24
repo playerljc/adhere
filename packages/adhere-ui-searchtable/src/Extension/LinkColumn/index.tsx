@@ -14,10 +14,14 @@ import { Link } from '@ctsj/router';
  * @param children
  * @returns {JSX.Element}
  */
-export default ({ className, style, record, rowIndex, dataIndex, to, children }) => {
+const LinkColumn = ({ className, style, record, rowIndex, dataIndex, to, children }) => {
   return (
     <Link className={className ?? ''} style={style ?? {}} to={to}>
       {children ? children({ record, rowIndex, dataIndex }) : record[dataIndex]}
     </Link>
   );
 };
+
+LinkColumn.displayName = 'LinkColumn';
+
+export default LinkColumn;

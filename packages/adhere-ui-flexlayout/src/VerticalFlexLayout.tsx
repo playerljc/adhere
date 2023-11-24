@@ -173,4 +173,6 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
   );
 });
 
+VerticalFlexLayout.displayName = 'VerticalFlexLayout';
+
 export default VerticalFlexLayout;

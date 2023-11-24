@@ -13,6 +13,8 @@ import { PlayGroundTabProps, PlayGroundTabState } from './types';
  * @classdesc PlayGroundTab
  */
 class PlayGroundTab extends APlayGround<PlayGroundTabProps, PlayGroundTabState> {
+  static displayName = 'PlayGroundTab';
+
   constructor(props) {
     super(props);
 

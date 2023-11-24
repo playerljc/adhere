@@ -1,4 +1,4 @@
 import React from 'react';
-import type { RadioPagingTableProps } from '../types';
-declare const _default: React.NamedExoticComponent<RadioPagingTableProps>;
-export default _default;
+import type { DisplayNameInternal, RadioPagingTableProps } from '../types';
+declare const RadioPagingTable: DisplayNameInternal<React.NamedExoticComponent<RadioPagingTableProps>>;
+export default RadioPagingTable;

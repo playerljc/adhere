@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { FC, ReactElement, memo } from 'react';
+import React, { ReactElement, memo } from 'react';
 
 import { StickupLayoutItemProps } from './types';
 
 const selectorPrefix = 'adhere-ui-stickup-layout-item';
 
-const StickupLayoutItem: FC<StickupLayoutItemProps> = (props): ReactElement => {
+const StickupLayoutItem = memo<StickupLayoutItemProps>((props): ReactElement => {
   const { className, style, title, content } = props;
 
   return (
@@ -14,6 +14,8 @@ const StickupLayoutItem: FC<StickupLayoutItemProps> = (props): ReactElement => {
       <div className={`${selectorPrefix}-content`}>{content}</div>
     </div>
   );
-};
+});
 
-export default memo(StickupLayoutItem);
+StickupLayoutItem.displayName = 'StickupLayoutItem';
+
+export default StickupLayoutItem;

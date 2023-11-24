@@ -10,4 +10,6 @@ const SegmentedHOC: typeof Segmented & {
   defaultProps?: Partial<SegmentedProps>;
 } = createFactory<SegmentedProps>(Segmented, {});
 
+SegmentedHOC.displayName = 'Segmented';
+
 export default SegmentedHOC;

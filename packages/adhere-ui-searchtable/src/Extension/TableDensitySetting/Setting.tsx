@@ -62,4 +62,6 @@ TableDensitySetting.propTypes = {
   onChange: PropTypes.func,
 };
 
+TableDensitySetting.displayName = 'TableDensitySetting';
+
 export default TableDensitySetting;

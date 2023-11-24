@@ -18,4 +18,6 @@ const ForceUpdate = forwardRef<ForceUpdateRefHandle, ForceUpdateProps>((props, r
   return display ? children : null;
 });
 
+ForceUpdate.displayName = 'ForceUpdate';
+
 export default ForceUpdate;

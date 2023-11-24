@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CustomRadioSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<CustomRadioSelectProps>;
-export default _default;
+import type { CustomRadioSelectProps, DisplayNameInternal } from '../types';
+declare const CustomRadioSelect: DisplayNameInternal<React.NamedExoticComponent<CustomRadioSelectProps>>;
+export default CustomRadioSelect;

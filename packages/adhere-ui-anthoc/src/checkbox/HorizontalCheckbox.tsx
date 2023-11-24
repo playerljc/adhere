@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { CheckboxGroupExtProps } from '../types';
+import type { CheckboxGroupExtProps, DisplayNameInternal } from '../types';
 import CheckboxGroup from './CheckboxGroup';
 
 /**
@@ -10,8 +9,13 @@ import CheckboxGroup from './CheckboxGroup';
  * @param props
  * @constructor
  */
-const HorizontalCheckbox: FC<CheckboxGroupExtProps> = (props) => (
+const InternalHorizontalCheckbox = memo<CheckboxGroupExtProps>((props) => (
   <CheckboxGroup {...props} direction="horizontal" />
-);
+));
 
-export default memo(HorizontalCheckbox);
+const HorizontalCheckbox = InternalHorizontalCheckbox as DisplayNameInternal<
+  typeof InternalHorizontalCheckbox
+>;
+HorizontalCheckbox.displayName = 'HorizontalCheckbox';
+
+export default HorizontalCheckbox;

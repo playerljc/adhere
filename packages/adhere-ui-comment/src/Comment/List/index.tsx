@@ -139,4 +139,6 @@ const CommentList = memo<ListProps>((props) => {
   );
 });
 
+CommentList.displayName = 'CommentList';
+
 export default CommentList;

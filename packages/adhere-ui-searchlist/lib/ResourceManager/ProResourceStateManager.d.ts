@@ -4,7 +4,7 @@ export declare const SearchAndPaginParamsMemo: any;
  * ProResourceStateManager
  * @classdesc 高级查询列表
  */
-declare const _default: {
+declare const ProResourceStateManager: {
     new (props: any): {
         [x: string]: any;
         getParams(): any;
@@ -88,5 +88,6 @@ declare const _default: {
         }): React.ReactNode;
     };
     [x: string]: any;
+    displayName: string;
 };
-export default _default;
+export default ProResourceStateManager;

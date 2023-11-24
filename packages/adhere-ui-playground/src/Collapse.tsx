@@ -84,6 +84,8 @@ const Collapse = memo<CollapseProps>((props) => {
   );
 });
 
+Collapse.displayName = 'Collapse';
+
 // /**
 //  * Collapse
 //  * @class Collapse

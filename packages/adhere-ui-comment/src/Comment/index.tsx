@@ -190,4 +190,6 @@ const Comment = memo<CommentProps>((props) => {
   );
 });
 
+Comment.displayName = 'Comment';
+
 export default Comment;

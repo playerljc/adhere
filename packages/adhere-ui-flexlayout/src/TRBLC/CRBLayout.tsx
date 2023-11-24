@@ -112,4 +112,6 @@ const CRBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
   ),
 );
 
+CRBLayout.displayName = 'CRBLayout';
+
 export default CRBLayout;

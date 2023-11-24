@@ -515,4 +515,6 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
   }),
 );
 
+PullRefresh.displayName = 'PullRefresh';
+
 export default PullRefresh;

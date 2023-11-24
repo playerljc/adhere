@@ -7,4 +7,6 @@ const InputNumberDecimal2HOC: typeof InputNumber & {
   defaultProps?: Partial<InputNumberProps>;
 } = createFactory<InputNumberProps>(InputNumber, { precision: 2 });
 
+InputNumberDecimal2HOC.displayName = 'InputNumberDecimal2';
+
 export default InputNumberDecimal2HOC;

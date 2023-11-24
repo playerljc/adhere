@@ -63,4 +63,6 @@ const CBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
   ),
 );
 
+CBLayout.displayName = 'CBLayout';
+
 export default CBLayout;

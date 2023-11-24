@@ -8,4 +8,6 @@ const MultipleSelectHOC: MultipleSelectHOCComponent = createFactory<SelectProps>
   mode: 'multiple',
 });
 
+MultipleSelectHOC.displayName = 'MultipleSelect';
+
 export default MultipleSelectHOC;

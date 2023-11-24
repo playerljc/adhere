@@ -420,6 +420,8 @@ const InternalWangEditorSandbox = memo<
 
 const WangEditorSandbox = InternalWangEditorSandbox as WangEditorSandboxComponent;
 
+WangEditorSandbox.displayName = 'WangEditorSandbox';
+
 WangEditorSandbox.AntdFormRequireValidator = (editor, tip) => ({
   validator: (rule, value, callback) => {
     if (editor?.()?.isEmpty?.()) {

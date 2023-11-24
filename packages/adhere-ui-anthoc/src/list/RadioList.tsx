@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import Radio from '../radio';
-import type { RadioListProps } from '../types';
+import type { DisplayNameInternal, RadioListProps } from '../types';
 import List from './List';
 
 const selectorPrefix = 'adhere-ui-ant-hoc-radio-list';
@@ -16,7 +15,7 @@ const selectorPrefix = 'adhere-ui-ant-hoc-radio-list';
  * @param props
  * @constructor
  */
-const RadioList: FC<RadioListProps> = ({ value, onChange, options, ...props }) => (
+const InternalRadioList = memo<RadioListProps>(({ value, onChange, options, ...props }) => (
   <List
     dataSource={options}
     {...props}
@@ -41,6 +40,9 @@ const RadioList: FC<RadioListProps> = ({ value, onChange, options, ...props }) =
       </div>
     )}
   />
-);
+));
 
-export default memo(RadioList);
+const RadioList = InternalRadioList as DisplayNameInternal<typeof InternalRadioList>;
+RadioList.displayName = 'RadioList';
+
+export default RadioList;

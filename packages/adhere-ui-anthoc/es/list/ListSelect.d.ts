@@ -1,4 +1,4 @@
 import React from 'react';
-import type { ListSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<ListSelectProps>;
-export default _default;
+import type { DisplayNameInternal, ListSelectProps } from '../types';
+declare const ListSelect: DisplayNameInternal<React.NamedExoticComponent<ListSelectProps>>;
+export default ListSelect;

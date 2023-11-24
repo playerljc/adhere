@@ -11,4 +11,6 @@ const InputHOC: typeof Input & {
   showCount: true,
 });
 
+InputHOC.displayName = 'Input';
+
 export default InputHOC;

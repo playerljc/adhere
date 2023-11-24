@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { CheckboxTableProps } from '../types';
+import type { CheckboxTableProps, DisplayNameInternal } from '../types';
 import Table from './Table';
 
 /**
@@ -13,7 +12,7 @@ import Table from './Table';
  * @param props
  * @constructor
  */
-const CheckboxTable: FC<CheckboxTableProps> = ({ value, onChange, options, ...props }) => (
+const InternalCheckboxTable = memo<CheckboxTableProps>(({ value, onChange, options, ...props }) => (
   <Table
     dataSource={options}
     // pagination={false}
@@ -47,6 +46,9 @@ const CheckboxTable: FC<CheckboxTableProps> = ({ value, onChange, options, ...pr
     }}
     {...props}
   />
-);
+));
 
-export default memo(CheckboxTable);
+const CheckboxTable = InternalCheckboxTable as DisplayNameInternal<typeof InternalCheckboxTable>;
+CheckboxTable.displayName = 'CheckboxTable';
+
+export default CheckboxTable;

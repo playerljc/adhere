@@ -377,4 +377,6 @@ const Push = memo<PropsWithoutRef<PushProps> & RefAttributes<SlideLayoutHandle>>
 //   master: PropTypes.node,
 // };
 
+Push.displayName = 'Push';
+
 export default Push;

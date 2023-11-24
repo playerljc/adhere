@@ -26,4 +26,6 @@ const TCBRLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<H
   ),
 );
 
+TCBRLayout.displayName = 'TCBRLayout';
+
 export default TCBRLayout;

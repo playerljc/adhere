@@ -32,5 +32,6 @@ declare const TableStateView_base: {
  * @classdesc TableStateView
  */
 declare class TableStateView<P extends SearchTableStateImplementProps, S extends SearchTableImplementState> extends TableStateView_base {
+    static displayName: string;
 }
 export default TableStateView;

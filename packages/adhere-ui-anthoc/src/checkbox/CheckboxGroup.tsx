@@ -2,10 +2,9 @@ import { useUpdateEffect } from 'ahooks';
 import { CheckboxOptionType } from 'antd/es/checkbox';
 import classNames from 'classnames';
 import React, { memo, useState } from 'react';
-import type { FC } from 'react';
 
 import Space from '../space';
-import type { CheckboxGroupExtProps } from '../types';
+import type { CheckboxGroupExtProps, DisplayNameInternal } from '../types';
 import Checkbox from './Checkbox';
 
 const selectorPrefix = 'adhere-ui-ant-hoc-checkbox-group-ext';
@@ -23,64 +22,71 @@ const selectorPrefix = 'adhere-ui-ant-hoc-checkbox-group-ext';
  * @param disabled
  * @constructor
  */
-const CheckboxGroupExt: FC<CheckboxGroupExtProps> = ({
-  className,
-  style,
-  direction,
-  options,
-  onChange,
-  value,
-  children,
-  defaultValue,
-  disabled = false,
-}) => {
-  const [currentValue, setCurrentValue] = useState(value || defaultValue);
+const InternalCheckboxGroupExt = memo<CheckboxGroupExtProps>(
+  ({
+    className,
+    style,
+    direction,
+    options,
+    onChange,
+    value,
+    children,
+    defaultValue,
+    disabled = false,
+  }) => {
+    const [currentValue, setCurrentValue] = useState(value || defaultValue);
 
-  function onCheckboxChange(e, itemValue) {
-    if (e.target.checked) {
-      const changeValue = [...(currentValue ?? []), itemValue];
+    function onCheckboxChange(e, itemValue) {
+      if (e.target.checked) {
+        const changeValue = [...(currentValue ?? []), itemValue];
 
-      setCurrentValue(changeValue);
+        setCurrentValue(changeValue);
 
-      onChange?.(changeValue, true, [itemValue]);
-    } else {
-      const changeValue = (currentValue ?? []).filter((_value) => _value !== itemValue);
+        onChange?.(changeValue, true, [itemValue]);
+      } else {
+        const changeValue = (currentValue ?? []).filter((_value) => _value !== itemValue);
 
-      setCurrentValue(changeValue);
+        setCurrentValue(changeValue);
 
-      onChange?.(changeValue, false, [itemValue]);
+        onChange?.(changeValue, false, [itemValue]);
+      }
     }
-  }
 
-  useUpdateEffect(() => {
-    setCurrentValue(value);
-  }, [value]);
+    useUpdateEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
 
-  return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-      {children && children(onCheckboxChange)}
+    return (
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        {children && children(onCheckboxChange)}
 
-      {!children && (
-        <Space direction={direction ?? 'horizontal'}>
-          {options?.map?.((t, _index) => {
-            const { value: itemValue, disabled: itemDisabled, label } = t as CheckboxOptionType;
+        {!children && (
+          <Space direction={direction ?? 'horizontal'}>
+            {options?.map?.((t, _index) => {
+              const { value: itemValue, disabled: itemDisabled, label } = t as CheckboxOptionType;
 
-            return (
-              <Checkbox
-                key={itemValue}
-                value={currentValue}
-                disabled={itemDisabled ?? disabled}
-                checked={(currentValue ?? []).includes(itemValue)}
-                onChange={(e) => onCheckboxChange(e, itemValue)}
-              >
-                {label}
-              </Checkbox>
-            );
-          })}
-        </Space>
-      )}
-    </div>
-  );
-};
+              return (
+                <Checkbox
+                  key={itemValue}
+                  value={currentValue}
+                  disabled={itemDisabled ?? disabled}
+                  checked={(currentValue ?? []).includes(itemValue)}
+                  onChange={(e) => onCheckboxChange(e, itemValue)}
+                >
+                  {label}
+                </Checkbox>
+              );
+            })}
+          </Space>
+        )}
+      </div>
+    );
+  },
+);
 
-export default memo(CheckboxGroupExt);
+const CheckboxGroupExt = InternalCheckboxGroupExt as DisplayNameInternal<
+  typeof InternalCheckboxGroupExt
+>;
+CheckboxGroupExt.displayName = 'CheckboxGroupExt';
+
+export default CheckboxGroupExt;

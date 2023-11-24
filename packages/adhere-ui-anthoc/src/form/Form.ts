@@ -69,4 +69,6 @@ let ValidatorRules: FormValidatorRulesType;
 
 FormHOC.ValidatorRules = ValidatorRules;
 
+FormHOC.displayName = 'Form';
+
 export default FormHOC;

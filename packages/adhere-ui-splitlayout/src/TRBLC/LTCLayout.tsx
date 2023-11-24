@@ -25,4 +25,6 @@ const LTCLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HT
   ),
 );
 
+LTCLayout.displayName = 'LTCLayout';
+
 export default LTCLayout;

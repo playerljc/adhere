@@ -19,4 +19,6 @@ const ColumnTipTitle: FC<ColumnTipTitleProps> = ({ tip, title }) => {
   );
 };
 
+ColumnTipTitle.displayName = 'ColumnTipTitle';
+
 export default ColumnTipTitle;

@@ -127,4 +127,6 @@ const TLRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
   ),
 );
 
+TLRCLayout.displayName = 'TLRCLayout';
+
 export default TLRCLayout;

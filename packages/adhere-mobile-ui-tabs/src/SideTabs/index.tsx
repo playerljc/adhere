@@ -73,4 +73,6 @@ const SystemSideTabs = InternalSystemSideTabs as SystemSideTabsComponent;
 
 SystemSideTabs.Tab = Tab;
 
+SystemSideTabs.displayName = 'SystemSideTabs';
+
 export default SystemSideTabs;

@@ -48,7 +48,7 @@ import {
   drawTriangle,
   getClipDataUrl,
   sort,
-} from './util';
+} from './Util';
 
 const selectorPrefix = 'adhere-ui-cropping-core';
 
@@ -774,5 +774,7 @@ const CroppingCore = forwardRef<CroppingCoreHandle, CroppingCoreProps>(
     );
   },
 );
+
+CroppingCore.displayName = 'CroppingCore';
 
 export default CroppingCore;

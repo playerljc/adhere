@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CheckboxGroupExtProps } from '../types';
-declare const _default: React.NamedExoticComponent<CheckboxGroupExtProps>;
-export default _default;
+import type { CheckboxGroupExtProps, DisplayNameInternal } from '../types';
+declare const CheckboxGroupExt: DisplayNameInternal<React.NamedExoticComponent<CheckboxGroupExtProps>>;
+export default CheckboxGroupExt;

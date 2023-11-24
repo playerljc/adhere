@@ -1,9 +1,9 @@
 import { CheckboxOptionType } from 'antd/es/checkbox';
 import type { RadioGroupProps } from 'antd/es/radio';
-import React from 'react';
-import type { FC } from 'react';
+import React, { memo } from 'react';
 
 import Space from '../space';
+import type { DisplayNameInternal } from '../types';
 import Radio from './index';
 
 /**
@@ -13,7 +13,7 @@ import Radio from './index';
  * @param props
  * @constructor
  */
-const VerticalRadio: FC<RadioGroupProps> = ({ options, ...props }) => (
+const InternalVerticalRadio = memo<RadioGroupProps>(({ options, ...props }) => (
   <Radio.Group {...props}>
     <Space direction="vertical">
       {options?.map?.((t) => {
@@ -27,6 +27,9 @@ const VerticalRadio: FC<RadioGroupProps> = ({ options, ...props }) => (
       })}
     </Space>
   </Radio.Group>
-);
+));
+
+const VerticalRadio = InternalVerticalRadio as DisplayNameInternal<typeof InternalVerticalRadio>;
+VerticalRadio.displayName = 'VerticalRadio';
 
 export default VerticalRadio;

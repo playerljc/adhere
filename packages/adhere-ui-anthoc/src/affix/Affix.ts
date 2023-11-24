@@ -7,4 +7,6 @@ const AffixHOC: typeof Affix & {
   defaultProps?: Partial<AffixProps>;
 } = createFactory<AffixProps>(Affix, {});
 
+AffixHOC.displayName = 'Affix';
+
 export default AffixHOC;

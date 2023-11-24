@@ -170,4 +170,6 @@ const SystemTabs = InternalSystemTabs as SystemTabsComponent;
 
 SystemTabs.Tab = Tab;
 
+SystemTabs.displayName = 'SystemTabs';
+
 export default SystemTabs;

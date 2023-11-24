@@ -24,4 +24,6 @@ const CRLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HTM
   ),
 );
 
+CRLayout.displayName = 'CRLayout';
+
 export default CRLayout;

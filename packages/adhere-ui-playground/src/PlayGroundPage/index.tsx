@@ -81,6 +81,8 @@ const InternalPlayGroundPage = memo<
 
 const PlayGroundPage = InternalPlayGroundPage as PlayGroundPageComponent;
 
+PlayGroundPage.displayName = 'PlayGroundPage';
+
 PlayGroundPage.Section = Section;
 PlayGroundPage.CodeBoxSection = CodeBoxSection;
 PlayGroundPage.PropsSection = PropsSection;

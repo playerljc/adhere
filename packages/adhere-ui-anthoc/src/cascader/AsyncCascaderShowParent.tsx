@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { AsyncCascaderProps } from '../types';
+import type { AsyncCascaderProps, DisplayNameInternal } from '../types';
 import AsyncCascaderMulti from './AsyncCascaderMulti';
 import Cascader from './Cascader';
 
@@ -10,8 +9,13 @@ import Cascader from './Cascader';
  * @param props
  * @constructor
  */
-const AsyncCascaderShowParent: FC<AsyncCascaderProps> = (props) => (
+const InternalAsyncCascaderShowParent = memo<AsyncCascaderProps>((props) => (
   <AsyncCascaderMulti {...props} showCheckedStrategy={Cascader.SHOW_PARENT} />
-);
+));
 
-export default memo(AsyncCascaderShowParent);
+const AsyncCascaderShowParent = InternalAsyncCascaderShowParent as DisplayNameInternal<
+  typeof InternalAsyncCascaderShowParent
+>;
+AsyncCascaderShowParent.displayName = 'AsyncCascaderShowParent';
+
+export default AsyncCascaderShowParent;

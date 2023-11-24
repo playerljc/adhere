@@ -4,7 +4,7 @@ export declare const SearchAndPaginParamsMemo: any;
  * ProSearchStateTable
  * @classdesc 高级查询表格
  */
-declare const _default: {
+declare const ProSearchStateTable: {
     new (props: any): {
         [x: string]: any;
         componentWillUnmount(): void;
@@ -67,5 +67,6 @@ declare const _default: {
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     [x: string]: any;
+    displayName: string;
 };
-export default _default;
+export default ProSearchStateTable;

@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import CheckAllMultipleSelect from '../multiple-select/CheckAllMultipleSelect';
-import type { CheckAllCheckboxSelectProps } from '../types';
+import type { CheckAllCheckboxSelectProps, DisplayNameInternal } from '../types';
 import VerticalCheckbox from './VerticalCheckbox';
 import useRenderProps from './useRenderProps';
 
@@ -12,21 +11,28 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const CheckAllCheckboxSelect: FC<CheckAllCheckboxSelectProps> = ({ checkboxProps, ...props }) => {
-  const renderProps = useRenderProps(checkboxProps);
+const InternalCheckAllCheckboxSelect = memo<CheckAllCheckboxSelectProps>(
+  ({ checkboxProps, ...props }) => {
+    const renderProps = useRenderProps(checkboxProps);
 
-  return (
-    <CheckAllMultipleSelect {...props}>
-      {({ originNode, onChange, ...rest }) => (
-        <VerticalCheckbox
-          {...renderProps({
-            ...rest,
-            onChange: (_value) => onChange?.(_value, []),
-          })}
-        />
-      )}
-    </CheckAllMultipleSelect>
-  );
-};
+    return (
+      <CheckAllMultipleSelect {...props}>
+        {({ originNode, onChange, ...rest }) => (
+          <VerticalCheckbox
+            {...renderProps({
+              ...rest,
+              onChange: (_value) => onChange?.(_value, []),
+            })}
+          />
+        )}
+      </CheckAllMultipleSelect>
+    );
+  },
+);
 
-export default memo(CheckAllCheckboxSelect);
+const CheckAllCheckboxSelect = InternalCheckAllCheckboxSelect as DisplayNameInternal<
+  typeof InternalCheckAllCheckboxSelect
+>;
+CheckAllCheckboxSelect.displayName = 'CheckAllCheckboxSelect';
+
+export default CheckAllCheckboxSelect;

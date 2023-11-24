@@ -10,6 +10,7 @@ export declare const selectorPrefix = "adhere-ui-search-table-implement";
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
 export declare class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState> extends SearchTable<SearchTableImplementProps, SearchTableImplementState> implements ISearchTableImplement {
+    static displayName: string;
     innerWrapRef: RefObject<HTMLDivElement>;
     constructor(props: any);
     componentDidMount(): void;

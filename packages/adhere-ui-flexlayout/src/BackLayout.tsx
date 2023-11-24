@@ -58,4 +58,6 @@ const BackLayout = memo<BackLayoutProps>((props) => {
   );
 });
 
+BackLayout.displayName = 'BackLayout';
+
 export default BackLayout;

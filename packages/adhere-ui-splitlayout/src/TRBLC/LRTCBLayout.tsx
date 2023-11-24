@@ -27,4 +27,6 @@ const LRTCBLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<
   ),
 );
 
+LRTCBLayout.displayName = 'LRTCBLayout';
+
 export default LRTCBLayout;

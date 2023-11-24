@@ -265,4 +265,6 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
   );
 };
 
+EditableCellEdit.displayName = 'EditableCellEdit';
+
 export default EditableCellEdit;

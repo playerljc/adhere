@@ -7,4 +7,6 @@ const RateHOC: typeof Rate & {
   defaultProps?: Partial<RateProps>;
 } = createFactory<RateProps>(Rate, {});
 
+RateHOC.displayName = 'Rate';
+
 export default RateHOC;

@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import usePaging from '../list/usePaging';
-import type { RadioPagingTableProps } from '../types';
+import type { DisplayNameInternal, RadioPagingTableProps } from '../types';
 import RadioTable from './RadioTable';
 
 /**
@@ -16,23 +15,23 @@ import RadioTable from './RadioTable';
  * @param props
  * @constructor
  */
-const RadioPagingTable: FC<RadioPagingTableProps> = ({
-  totalCount,
-  paging,
-  onPagingChange,
-  onPagingShowSizeChange,
-  defaultLimit,
-  ...props
-}) => {
-  const pagingProps = usePaging({
-    defaultLimit: defaultLimit ?? 10,
-    paging,
-    totalCount,
-    onPagingShowSizeChange,
-    onPagingChange,
-  });
+const InternalRadioPagingTable = memo<RadioPagingTableProps>(
+  ({ totalCount, paging, onPagingChange, onPagingShowSizeChange, defaultLimit, ...props }) => {
+    const pagingProps = usePaging({
+      defaultLimit: defaultLimit ?? 10,
+      paging,
+      totalCount,
+      onPagingShowSizeChange,
+      onPagingChange,
+    });
 
-  return <RadioTable pagination={pagingProps} {...props} />;
-};
+    return <RadioTable pagination={pagingProps} {...props} />;
+  },
+);
 
-export default memo(RadioPagingTable);
+const RadioPagingTable = InternalRadioPagingTable as DisplayNameInternal<
+  typeof InternalRadioPagingTable
+>;
+RadioPagingTable.displayName = 'RadioPagingTable';
+
+export default RadioPagingTable;

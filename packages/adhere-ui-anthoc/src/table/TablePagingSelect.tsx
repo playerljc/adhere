@@ -1,9 +1,8 @@
 import { useMount } from 'ahooks';
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { TablePagingSelectProps } from '../types';
+import type { DisplayNameInternal, TablePagingSelectProps } from '../types';
 import CheckboxPagingTable from './CheckboxPagingTable';
 import RadioPagingTable from './RadioPagingTable';
 import usePagingRenderProps from './usePagingRenderProps';
@@ -15,52 +14,55 @@ import usePagingRenderProps from './usePagingRenderProps';
  * @param props
  * @constructor
  */
-const TablePagingSelect: FC<TablePagingSelectProps<any>> = ({
-  pagingProps,
-  tablePagingProps,
-  ...props
-}) => {
-  const {
-    isMultiple,
-    inputValue,
-    options,
-    setInputValue,
-    defaultCurrentPage,
-    defaultPageSize,
-    setPaging,
-    fetchData,
-    renderProps,
-  } = usePagingRenderProps({
-    tablePagingProps,
-    mode: props.mode,
-    ...pagingProps,
-  });
+const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
+  ({ pagingProps, tablePagingProps, ...props }) => {
+    const {
+      isMultiple,
+      inputValue,
+      options,
+      setInputValue,
+      defaultCurrentPage,
+      defaultPageSize,
+      setPaging,
+      fetchData,
+      renderProps,
+    } = usePagingRenderProps({
+      tablePagingProps,
+      mode: props.mode,
+      ...pagingProps,
+    });
 
-  useMount(() => {
-    fetchData();
-  });
+    useMount(() => {
+      fetchData();
+    });
 
-  return (
-    <DropdownRenderSelect
-      {...props}
-      defaultInputValue={inputValue}
-      options={options}
-      onSearch={setInputValue}
-      onClear={() => {
-        setPaging({
-          page: defaultCurrentPage,
-          limit: defaultPageSize,
-        });
-      }}
-    >
-      {({ originNode, ...rest }) => (
-        <>
-          {isMultiple && <CheckboxPagingTable {...renderProps(rest)} />}
-          {!isMultiple && <RadioPagingTable {...renderProps(rest)} />}
-        </>
-      )}
-    </DropdownRenderSelect>
-  );
-};
+    return (
+      <DropdownRenderSelect
+        {...props}
+        defaultInputValue={inputValue}
+        options={options}
+        onSearch={setInputValue}
+        onClear={() => {
+          setPaging({
+            page: defaultCurrentPage,
+            limit: defaultPageSize,
+          });
+        }}
+      >
+        {({ originNode, ...rest }) => (
+          <>
+            {isMultiple && <CheckboxPagingTable {...renderProps(rest)} />}
+            {!isMultiple && <RadioPagingTable {...renderProps(rest)} />}
+          </>
+        )}
+      </DropdownRenderSelect>
+    );
+  },
+);
 
-export default memo(TablePagingSelect);
+const TablePagingSelect = InternalTablePagingSelect as DisplayNameInternal<
+  typeof InternalTablePagingSelect
+>;
+TablePagingSelect.displayName = 'TablePagingSelect';
+
+export default TablePagingSelect;

@@ -7,4 +7,6 @@ const DrawerHOC: typeof Drawer & {
   defaultProps?: Partial<DrawerProps>;
 } = createFactory<DrawerProps>(Drawer, {});
 
+DrawerHOC.displayName = 'Drawer';
+
 export default DrawerHOC;

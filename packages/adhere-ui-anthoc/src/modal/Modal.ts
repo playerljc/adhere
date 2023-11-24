@@ -13,4 +13,6 @@ const ModalHOC: typeof Modal & {
   zIndex: 999,
 });
 
+ModalHOC.displayName = 'Modal';
+
 export default ModalHOC;

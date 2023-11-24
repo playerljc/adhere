@@ -20,5 +20,6 @@ declare namespace TableDensitySetting {
         onReset: PropTypes.Requireable<(...args: any[]) => any>;
         onChange: PropTypes.Requireable<(...args: any[]) => any>;
     };
+    var displayName: string;
 }
 export default TableDensitySetting;

@@ -6,6 +6,7 @@ import APlayGround from './APlayGround';
  * @classdesc PlayGround
  */
 declare class PlayGround extends APlayGround {
+    static displayName: string;
     /**
      * renderCodeView - 代码展示视图
      * @return {*}

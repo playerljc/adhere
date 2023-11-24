@@ -19,6 +19,8 @@ const { DateDisplay18 } = DateDisplay;
  */
 export default function <P, S>(SuperClass) {
   return class extends SuperClass<P, S> {
+    static displayName = '';
+
     constructor(props) {
       super(props);
 

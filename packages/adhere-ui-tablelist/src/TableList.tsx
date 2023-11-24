@@ -29,6 +29,8 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   TableListProps<RecordType>,
   any
 > {
+  static displayName = 'TableList';
+
   static defaultProps: any;
   static propTypes: any;
 

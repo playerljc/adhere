@@ -1,4 +1,4 @@
 import React from 'react';
-import type { TransferSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<TransferSelectProps>;
-export default _default;
+import type { DisplayNameInternal, TransferSelectProps } from '../types';
+declare const TransferSelect: DisplayNameInternal<React.NamedExoticComponent<TransferSelectProps>>;
+export default TransferSelect;

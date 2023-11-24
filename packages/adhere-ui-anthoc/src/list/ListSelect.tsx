@@ -1,8 +1,7 @@
 import React, { memo, useMemo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { ListSelectProps } from '../types';
+import type { DisplayNameInternal, ListSelectProps } from '../types';
 import CheckboxList from './CheckboxList';
 import RadioList from './RadioList';
 import useRenderProps from './useRenderProps';
@@ -14,7 +13,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const ListSelect: FC<ListSelectProps> = ({ listProps, ...props }) => {
+const InternalListSelect = memo<ListSelectProps>(({ listProps, ...props }) => {
   const isMultiple = useMemo(() => 'mode' in props && props.mode === 'multiple', [props.mode]);
   const renderProps = useRenderProps(listProps);
 
@@ -28,6 +27,9 @@ const ListSelect: FC<ListSelectProps> = ({ listProps, ...props }) => {
       )}
     </DropdownRenderSelect>
   );
-};
+});
 
-export default memo(ListSelect);
+const ListSelect = InternalListSelect as DisplayNameInternal<typeof InternalListSelect>;
+ListSelect.displayName = 'ListSelect';
+
+export default ListSelect;

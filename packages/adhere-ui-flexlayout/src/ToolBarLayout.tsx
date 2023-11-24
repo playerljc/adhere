@@ -84,4 +84,6 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
   );
 });
 
+ToolBarLayout.displayName = 'ToolBarLayout';
+
 export default ToolBarLayout;

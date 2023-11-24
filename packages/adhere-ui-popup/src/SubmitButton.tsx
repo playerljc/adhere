@@ -34,4 +34,6 @@ const SubmitButton: FC<SubmitButtonProps> = (props) => {
   );
 };
 
+SubmitButton.displayName = 'SubmitButton';
+
 export default SubmitButton;

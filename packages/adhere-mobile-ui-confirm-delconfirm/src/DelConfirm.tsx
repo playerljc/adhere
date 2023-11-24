@@ -46,4 +46,6 @@ DelConform.open = (props) =>
     ...(props ?? {}),
   });
 
+DelConform.displayName = 'DelConform';
+
 export default DelConform;

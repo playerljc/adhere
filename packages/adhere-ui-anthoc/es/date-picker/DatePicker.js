@@ -1,2 +1,2 @@
-import _DatePicker from"antd/es/date-picker";import{createFactory}from"../util";var DatePickerHOC=createFactory(_DatePicker,{allowClear:!0,placement:"bottomLeft"});export default DatePickerHOC;
+import _DatePicker from"antd/es/date-picker";import{createFactory}from"../util";var DatePickerHOC=createFactory(_DatePicker,{allowClear:!0,placement:"bottomLeft"});DatePickerHOC.displayName="DatePicker";export default DatePickerHOC;
 //# sourceMappingURL=DatePicker.js.map

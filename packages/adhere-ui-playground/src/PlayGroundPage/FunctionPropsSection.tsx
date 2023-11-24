@@ -25,6 +25,8 @@ const FunctionPropsSection = memo<FunctionPropsSectionProps>((props) => {
   );
 });
 
+FunctionPropsSection.displayName = 'FunctionPropsSection';
+
 // FunctionPropsSection.defaultProps = {
 //   ...SectionDefaultProps,
 //   config: [],
@@ -35,4 +37,4 @@ const FunctionPropsSection = memo<FunctionPropsSectionProps>((props) => {
 //   config: PropTypes.arrayOf(FunctionPropsPropTypes),
 // };
 
-export default memo(FunctionPropsSection);
+export default FunctionPropsSection;

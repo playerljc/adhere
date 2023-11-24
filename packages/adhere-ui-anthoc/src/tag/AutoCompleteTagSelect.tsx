@@ -1,9 +1,8 @@
 import React, { memo, useMemo } from 'react';
-import type { FC } from 'react';
 
 import AutoCompleteMultipleSelect from '../multiple-select/AutoCompleteMultipleSelect';
 import AutoComplete from '../select/AutoCompleteSelect';
-import type { AutoCompleteTagSelectProps } from '../types';
+import type { AutoCompleteTagSelectProps, DisplayNameInternal } from '../types';
 import useAutoCompleteFetchLoading from '../useAutoCompleteFetchLoading';
 import VerticalCheckableTagGroup from './VerticalCheckableTagGroup';
 import useRenderProps from './useRenderProps';
@@ -14,7 +13,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const AutoCompleteTagSelect: FC<AutoCompleteTagSelectProps> = ({ tagProps, ...props }) => {
+const InternalAutoCompleteTagSelect = memo<AutoCompleteTagSelectProps>(({ tagProps, ...props }) => {
   const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
   const renderProps = useRenderProps(tagProps);
 
@@ -42,6 +41,11 @@ const AutoCompleteTagSelect: FC<AutoCompleteTagSelectProps> = ({ tagProps, ...pr
       )}
     </Component>
   );
-};
+});
 
-export default memo(AutoCompleteTagSelect);
+const AutoCompleteTagSelect = InternalAutoCompleteTagSelect as DisplayNameInternal<
+  typeof InternalAutoCompleteTagSelect
+>;
+AutoCompleteTagSelect.displayName = 'AutoCompleteTagSelect';
+
+export default AutoCompleteTagSelect;

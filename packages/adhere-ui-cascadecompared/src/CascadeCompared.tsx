@@ -407,4 +407,6 @@ const CascadeCompared = memo<
   }),
 );
 
+CascadeCompared.displayName = 'CascadeCompared';
+
 export default CascadeCompared;

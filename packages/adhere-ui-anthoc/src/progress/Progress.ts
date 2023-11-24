@@ -7,4 +7,6 @@ const ProgressHOC: typeof Progress & {
   defaultProps?: Partial<ProgressProps>;
 } = createFactory<ProgressProps>(Progress, {});
 
+ProgressHOC.displayName = 'Progress';
+
 export default ProgressHOC;

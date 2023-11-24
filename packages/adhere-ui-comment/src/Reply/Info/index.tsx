@@ -11,4 +11,6 @@ import type { NodeProps } from '../../types';
  */
 const ReplyInfo = memo<NodeProps>((props) => <Node {...props} isReply />);
 
+ReplyInfo.displayName = 'Node';
+
 export default ReplyInfo;

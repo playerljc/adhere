@@ -1,8 +1,7 @@
-import type { FC } from 'react';
 import React, { memo } from 'react';
 
 import AutoComplete from '../select/AutoCompleteSelect';
-import type { AutoCompleteCheckAllMultipleSelectProps } from '../types';
+import type { AutoCompleteCheckAllMultipleSelectProps, DisplayNameInternal } from '../types';
 import useCheckAllMultiple from './useCheckAllMultiple';
 
 /**
@@ -16,35 +15,43 @@ import useCheckAllMultiple from './useCheckAllMultiple';
  * @param props
  * @constructor
  */
-const AutoCompleteCheckAllMultipleSelect: FC<AutoCompleteCheckAllMultipleSelectProps> = ({
-  children,
-  checkAllWrapperClassName,
-  checkAllWrapperStyle,
-  dropdownWrapperClassName,
-  dropdownWrapperStyle,
-  ...props
-}) => {
-  const { renderProps } = useCheckAllMultiple({
+const InternalAutoCompleteCheckAllMultipleSelect = memo<AutoCompleteCheckAllMultipleSelectProps>(
+  ({
     children,
     checkAllWrapperClassName,
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
-    renderLoading: props.renderLoading,
-  });
+    ...props
+  }) => {
+    const { renderProps } = useCheckAllMultiple({
+      children,
+      checkAllWrapperClassName,
+      checkAllWrapperStyle,
+      dropdownWrapperClassName,
+      dropdownWrapperStyle,
+      renderLoading: props.renderLoading,
+    });
 
-  return (
-    <AutoComplete {...props} mode="multiple">
-      {(arg) =>
-        renderProps({
-          ...arg,
-          onChange: (_values) => {
-            arg.onChange?.(_values, []);
-          },
-        })
-      }
-    </AutoComplete>
-  );
-};
+    return (
+      <AutoComplete {...props} mode="multiple">
+        {(arg) =>
+          renderProps({
+            ...arg,
+            onChange: (_values) => {
+              arg.onChange?.(_values, []);
+            },
+          })
+        }
+      </AutoComplete>
+    );
+  },
+);
 
-export default memo(AutoCompleteCheckAllMultipleSelect);
+const AutoCompleteCheckAllMultipleSelect =
+  InternalAutoCompleteCheckAllMultipleSelect as DisplayNameInternal<
+    typeof InternalAutoCompleteCheckAllMultipleSelect
+  >;
+AutoCompleteCheckAllMultipleSelect.displayName = 'AutoCompleteCheckAllMultipleSelect';
+
+export default AutoCompleteCheckAllMultipleSelect;

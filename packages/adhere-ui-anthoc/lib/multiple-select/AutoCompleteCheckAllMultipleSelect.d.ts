@@ -1,4 +1,4 @@
 import React from 'react';
-import type { AutoCompleteCheckAllMultipleSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<AutoCompleteCheckAllMultipleSelectProps>;
-export default _default;
+import type { AutoCompleteCheckAllMultipleSelectProps, DisplayNameInternal } from '../types';
+declare const AutoCompleteCheckAllMultipleSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteCheckAllMultipleSelectProps>>;
+export default AutoCompleteCheckAllMultipleSelect;

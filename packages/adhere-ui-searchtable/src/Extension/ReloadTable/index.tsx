@@ -22,4 +22,6 @@ const ReloadTable: FC<ReloadTableProps> = ({ onReload, showLoading, renderReload
   );
 };
 
+ReloadTable.displayName = 'ReloadTable';
+
 export default ReloadTable;

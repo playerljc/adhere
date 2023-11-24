@@ -8,6 +8,7 @@ import { PlayGroundMultiProps, PlayGroundMultiState } from './types';
  * @classdesc PlayGroundMulti
  */
 declare class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiState> {
+    static displayName: string;
     configMap: Map<string, {
         render: (config: any, index: number) => React.ReactElement;
         getCodeText: (config: any) => string;

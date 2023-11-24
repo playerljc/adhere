@@ -119,4 +119,6 @@ const LBCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
   ),
 );
 
+LBCLayout.displayName = 'LBCLayout';
+
 export default LBCLayout;

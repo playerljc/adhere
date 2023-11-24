@@ -169,4 +169,6 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
   );
 });
 
+HorizontalFlexLayout.displayName = 'HorizontalFlexLayout';
+
 export default HorizontalFlexLayout;

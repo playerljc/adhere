@@ -30,6 +30,7 @@ export declare const SearchTableContext: React.Context<{
  * @classdesc SearchTable
  */
 declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps, S extends SearchTableState = SearchTableState> extends Search<P, S> {
+    static displayName: string;
     static NUMBER_GENERATOR_RULE_ALONE: symbol;
     static NUMBER_GENERATOR_RULE_CONTINUITY: symbol;
     static ROW_SELECTION_NORMAL_MODE: symbol;

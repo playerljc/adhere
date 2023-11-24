@@ -390,4 +390,6 @@ const Node = memo<NodeProps>((props) => {
   );
 });
 
+Node.displayName = 'Node';
+
 export default Node;

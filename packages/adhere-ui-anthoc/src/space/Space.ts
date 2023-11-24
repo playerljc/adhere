@@ -7,4 +7,6 @@ const SpaceHOC: typeof Space & {
   defaultProps?: Partial<SpaceProps>;
 } = createFactory<SpaceProps>(Space, {});
 
+SpaceHOC.displayName = 'Space';
+
 export default SpaceHOC;

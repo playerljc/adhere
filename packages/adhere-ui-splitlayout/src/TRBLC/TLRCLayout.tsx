@@ -26,4 +26,6 @@ const TLRCLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<H
   ),
 );
 
+TLRCLayout.displayName = 'TLRCLayout';
+
 export default TLRCLayout;

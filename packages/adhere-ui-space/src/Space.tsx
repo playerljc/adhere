@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import React, { memo, useCallback, useMemo } from 'react';
 
 import SpaceGroup from './Group';
+import { getValue } from './Util';
 import type { SpaceComponent, SpaceProps } from './types';
-import { getValue } from './util';
 
 const selectorPrefix = 'adhere-ui-space';
 
@@ -48,6 +48,8 @@ const InternalSpace = memo<SpaceProps>((props) => {
 });
 
 const Space = InternalSpace as SpaceComponent;
+
+Space.displayName = 'Space';
 
 Space.Group = SpaceGroup;
 

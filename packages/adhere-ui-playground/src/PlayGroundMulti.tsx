@@ -18,6 +18,8 @@ const selectPrefix = 'adhere-ui-playground-multi';
  * @classdesc PlayGroundMulti
  */
 class PlayGroundMulti extends APlayGround<PlayGroundMultiProps, PlayGroundMultiState> {
+  static displayName = 'PlayGroundMulti';
+
   configMap = new Map<
     string,
     {

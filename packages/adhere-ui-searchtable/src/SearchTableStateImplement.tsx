@@ -22,6 +22,8 @@ export class SearchTableStateImplement<
   P extends SearchTableStateImplementProps,
   S extends SearchTableImplementState,
 > extends SearchTableImplement<SearchTableStateImplementProps, SearchTableImplementState> {
+  static displayName = 'SearchTableStateImplement';
+
   private unsubscribe: Function;
 
   constructor(props) {

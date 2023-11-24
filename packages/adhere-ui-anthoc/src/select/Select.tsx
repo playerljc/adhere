@@ -12,4 +12,6 @@ const SelectHOC: SelectHOCComponent = createFactory<SelectProps>(Select, {
     (option?.label as any)?.toLowerCase?.()?.indexOf?.(input.toLowerCase()) >= 0,
 });
 
+SelectHOC.displayName = 'Select';
+
 export default SelectHOC;

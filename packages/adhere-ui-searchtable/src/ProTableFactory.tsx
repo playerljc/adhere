@@ -44,6 +44,8 @@ const _selectorPrefix = `${selectorPrefix}-protable`;
 
 export default (SuperClass, searchAndPaginParamsMemo) =>
   class extends SuperClass {
+    static displayName = '';
+
     constructor(props) {
       super(props);
 

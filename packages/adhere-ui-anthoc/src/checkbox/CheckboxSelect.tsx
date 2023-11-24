@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { CheckboxSelectProps } from '../types';
+import type { CheckboxSelectProps, DisplayNameInternal } from '../types';
 import VerticalCheckbox from './VerticalCheckbox';
 import useRenderProps from './useRenderProps';
 
@@ -12,7 +11,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const CheckboxSelect: FC<CheckboxSelectProps> = ({ checkboxProps, ...props }) => {
+const InternalCheckboxSelect = memo<CheckboxSelectProps>(({ checkboxProps, ...props }) => {
   const renderProps = useRenderProps(checkboxProps);
 
   return (
@@ -27,6 +26,9 @@ const CheckboxSelect: FC<CheckboxSelectProps> = ({ checkboxProps, ...props }) =>
       )}
     </DropdownRenderSelect>
   );
-};
+});
 
-export default memo(CheckboxSelect);
+const CheckboxSelect = InternalCheckboxSelect as DisplayNameInternal<typeof InternalCheckboxSelect>;
+CheckboxSelect.displayName = 'CheckboxSelect';
+
+export default CheckboxSelect;

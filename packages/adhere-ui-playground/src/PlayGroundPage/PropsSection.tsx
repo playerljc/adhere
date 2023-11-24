@@ -25,4 +25,6 @@ const PropsSection = memo<PropsSectionProps>((props) => {
   );
 });
 
+PropsSection.displayName = 'PropsSection';
+
 export default PropsSection;

@@ -113,4 +113,6 @@ const LCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
   ),
 );
 
+LCBLayout.displayName = 'LCBLayout';
+
 export default LCBLayout;

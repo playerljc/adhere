@@ -96,4 +96,6 @@ const Trigger: FC<TriggerProps> = ({
   );
 };
 
+Trigger.displayName = 'Trigger';
+
 export default Trigger;

@@ -80,4 +80,6 @@ const TableRow: FC<TableRowComponentProps> = ({
   ).value as any;
 };
 
+TableRow.displayName = 'TableRow';
+
 export default TableRow;

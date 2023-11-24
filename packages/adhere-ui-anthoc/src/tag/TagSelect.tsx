@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
 import DropdownRenderSelect from '../select/DropdownRenderSelect';
-import type { TagSelectProps } from '../types';
+import type { DisplayNameInternal, TagSelectProps } from '../types';
 import VerticalCheckableTagGroup from './VerticalCheckableTagGroup';
 import useRenderProps from './useRenderProps';
 
@@ -12,7 +11,7 @@ import useRenderProps from './useRenderProps';
  * @param props
  * @constructor
  */
-const TagSelect: FC<TagSelectProps> = ({ tagProps, ...props }) => {
+const InternalTagSelect = memo<TagSelectProps>(({ tagProps, ...props }) => {
   const renderProps = useRenderProps(tagProps);
 
   return (
@@ -28,6 +27,9 @@ const TagSelect: FC<TagSelectProps> = ({ tagProps, ...props }) => {
       )}
     </DropdownRenderSelect>
   );
-};
+});
 
-export default memo(TagSelect);
+const TagSelect = InternalTagSelect as DisplayNameInternal<typeof InternalTagSelect>;
+TagSelect.displayName = 'TagSelect';
+
+export default TagSelect;

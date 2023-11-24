@@ -72,4 +72,6 @@ const Menu = memo<PropsWithoutRef<MenuProps> & RefAttributes<MenuRefHandle>>(
   }),
 );
 
+Menu.displayName = 'Menu';
+
 export default Menu;

@@ -291,4 +291,6 @@ const ExportExcel: FC<ExportExcelProps> = ({
   );
 };
 
+ExportExcel.displayName = 'ExportExcel';
+
 export default ExportExcel;

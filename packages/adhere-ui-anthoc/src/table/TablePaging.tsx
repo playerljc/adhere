@@ -1,12 +1,11 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import type { SelectProps } from 'antd';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
-import type { FC } from 'react';
 
 import Suspense from '@baifendian/adhere-ui-suspense';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 
-import type { TablePagingProps } from '../types';
+import type { DisplayNameInternal, TablePagingProps } from '../types';
 import CheckboxPagingTable from './CheckboxPagingTable';
 import RadioPagingTable from './RadioPagingTable';
 import usePagingRenderProps from './usePagingRenderProps';
@@ -22,95 +21,100 @@ import usePagingRenderProps from './usePagingRenderProps';
  * @param suspenseProps
  * @constructor
  */
-const TablePaging: FC<TablePagingProps<any>> = ({
-  mode,
-  value,
-  onChange,
-  pagingProps,
-  tablePagingProps,
-  isSuspenseAsync = true,
-  suspenseProps,
-}) => {
-  const [currentValue, setCurrentValue] = useState(value);
-
-  const suspenseRef = useRef<ASync | null>(null);
-
-  const { isMultiple, options, fetchData, renderProps, paging } = usePagingRenderProps({
-    tablePagingProps,
+const InternalTablePaging = memo<TablePagingProps<any>>(
+  ({
     mode,
-    ...pagingProps,
-    suspenseRef: suspenseRef.current,
-  });
+    value,
+    onChange,
+    pagingProps,
+    tablePagingProps,
+    isSuspenseAsync = true,
+    suspenseProps,
+  }) => {
+    const [currentValue, setCurrentValue] = useState(value);
 
-  const onTablePagingChange = useMemo<SelectProps['onChange']>(
-    () => (_value, option) => {
-      setCurrentValue(_value);
-      onChange?.(_value, option);
-    },
-    [onChange],
-  );
+    const suspenseRef = useRef<ASync | null>(null);
 
-  const isEmpty = useCallback(() => paging.page === 1 && !options.length, [paging, options]);
+    const { isMultiple, options, fetchData, renderProps, paging } = usePagingRenderProps({
+      tablePagingProps,
+      mode,
+      ...pagingProps,
+      suspenseRef: suspenseRef.current,
+    });
 
-  useMount(() => {
-    if (!isSuspenseAsync) {
-      fetchData();
-    }
-  });
+    const onTablePagingChange = useMemo<SelectProps['onChange']>(
+      () => (_value, option) => {
+        setCurrentValue(_value);
+        onChange?.(_value, option);
+      },
+      [onChange],
+    );
 
-  useUpdateEffect(() => {
-    if (!isSuspenseAsync) {
-      fetchData();
-    } else {
-      suspenseRef?.current?.reset?.();
-    }
-  }, [isSuspenseAsync, suspenseRef.current]);
+    const isEmpty = useCallback(() => paging.page === 1 && !options.length, [paging, options]);
 
-  useUpdateEffect(() => {
-    setCurrentValue(value);
-  }, [value]);
+    useMount(() => {
+      if (!isSuspenseAsync) {
+        fetchData();
+      }
+    });
 
-  const render = useCallback(
-    (children) => {
-      if (isSuspenseAsync)
-        return (
-          // @ts-ignore
-          <Suspense.ASync
+    useUpdateEffect(() => {
+      if (!isSuspenseAsync) {
+        fetchData();
+      } else {
+        suspenseRef?.current?.reset?.();
+      }
+    }, [isSuspenseAsync, suspenseRef.current]);
+
+    useUpdateEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
+
+    const render = useCallback(
+      (children) => {
+        if (isSuspenseAsync)
+          return (
             // @ts-ignore
-            ref={suspenseRef}
-            {...(suspenseProps ?? {})}
-            fetchData={fetchData}
-            isEmpty={isEmpty}
-          >
-            {children}
-          </Suspense.ASync>
-        );
+            <Suspense.ASync
+              // @ts-ignore
+              ref={suspenseRef}
+              {...(suspenseProps ?? {})}
+              fetchData={fetchData}
+              isEmpty={isEmpty}
+            >
+              {children}
+            </Suspense.ASync>
+          );
 
-      return <>{children}</>;
-    },
-    [isSuspenseAsync, suspenseProps, paging, options],
-  );
+        return <>{children}</>;
+      },
+      [isSuspenseAsync, suspenseProps, paging, options],
+    );
 
-  return render([
-    isMultiple && (
-      <CheckboxPagingTable
-        {...renderProps({
-          value: currentValue,
-          onChange: onTablePagingChange,
-          options,
-        })}
-      />
-    ),
-    !isMultiple && (
-      <RadioPagingTable
-        {...renderProps({
-          value: currentValue,
-          onChange: onTablePagingChange,
-          options,
-        })}
-      />
-    ),
-  ]);
-};
+    return render([
+      isMultiple && (
+        <CheckboxPagingTable
+          {...renderProps({
+            value: currentValue,
+            onChange: onTablePagingChange,
+            options,
+          })}
+        />
+      ),
+      !isMultiple && (
+        <RadioPagingTable
+          {...renderProps({
+            value: currentValue,
+            onChange: onTablePagingChange,
+            options,
+          })}
+        />
+      ),
+    ]);
+  },
+);
 
-export default memo(TablePaging);
+const TablePaging = InternalTablePaging as DisplayNameInternal<typeof InternalTablePaging>;
+TablePaging.displayName = 'TablePaging';
+
+export default TablePaging;

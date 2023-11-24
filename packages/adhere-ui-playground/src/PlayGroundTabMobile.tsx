@@ -17,6 +17,8 @@ import { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
  * @classdesc PlayGroundTabMobile
  */
 class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGroundTabMobileState> {
+  static displayName = 'PlayGroundTabMobile';
+
   constructor(props) {
     super(props);
 

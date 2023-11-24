@@ -7,4 +7,6 @@ const CalendarHOC: typeof Calendar & {
   defaultProps?: Partial<CalendarProps<any>>;
 } = createFactory<CalendarProps<any>>(Calendar, {});
 
+CalendarHOC.displayName = 'Calendar';
+
 export default CalendarHOC;

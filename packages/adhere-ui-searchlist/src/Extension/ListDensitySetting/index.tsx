@@ -6,7 +6,7 @@ import Intl from '@baifendian/adhere-util-intl';
 
 import { selectorPrefix } from '../../SearchList';
 import { ListDensitySettingProps } from '../../types';
-import Setting from './setting';
+import Setting from './Setting';
 
 /**
  * ListDensitySetting

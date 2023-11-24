@@ -27,4 +27,6 @@ const TBLCRLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<
   ),
 );
 
+TBLCRLayout.displayName = 'TBLCRLayout';
+
 export default TBLCRLayout;

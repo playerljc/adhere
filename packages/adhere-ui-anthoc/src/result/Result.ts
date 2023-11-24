@@ -7,4 +7,6 @@ const ResultHOC: typeof Result & {
   defaultProps?: Partial<ResultProps>;
 } = createFactory<ResultProps>(Result, {});
 
+ResultHOC.displayName = 'Result';
+
 export default ResultHOC;

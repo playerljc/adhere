@@ -326,4 +326,6 @@ const SwipeOut = memo<SwipeOutProps>((props) => {
 //   slideChangeTransitionEnd: PropTypes.func,
 // };
 
+SwipeOut.displayName = 'SwipeOut';
+
 export default SwipeOut;

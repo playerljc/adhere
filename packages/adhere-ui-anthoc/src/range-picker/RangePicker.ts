@@ -12,4 +12,6 @@ const RangePickerHOC: typeof RangePicker & {
   placement: 'bottomLeft',
 });
 
+RangePickerHOC.displayName = 'RangePicker';
+
 export default RangePickerHOC;

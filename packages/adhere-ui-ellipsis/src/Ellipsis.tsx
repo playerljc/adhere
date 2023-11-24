@@ -310,4 +310,6 @@ const Ellipsis = memo<EllipsisProps>((props) => {
   );
 });
 
+Ellipsis.displayName = 'Ellipsis';
+
 export default Ellipsis;

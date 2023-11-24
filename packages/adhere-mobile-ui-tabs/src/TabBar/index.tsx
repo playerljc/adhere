@@ -76,4 +76,6 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
   );
 });
 
+SystemTabBar.displayName = 'SystemTabBar';
+
 export default SystemTabBar;

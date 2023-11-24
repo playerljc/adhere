@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { HorizontalTagGroupProps } from '../types';
+import type { DisplayNameInternal, HorizontalTagGroupProps } from '../types';
 import TagGroup from './TagGroup';
 
 /**
@@ -9,8 +8,13 @@ import TagGroup from './TagGroup';
  * @description 横向的Tag
  * @constructor
  */
-const HorizontalTagGroup: FC<HorizontalTagGroupProps> = (props) => (
+const InternalHorizontalTagGroup = memo<HorizontalTagGroupProps>((props) => (
   <TagGroup {...props} direction="horizontal" />
-);
+));
 
-export default memo(HorizontalTagGroup);
+const HorizontalTagGroup = InternalHorizontalTagGroup as DisplayNameInternal<
+  typeof InternalHorizontalTagGroup
+>;
+HorizontalTagGroup.displayName = 'HorizontalTagGroup';
+
+export default HorizontalTagGroup;

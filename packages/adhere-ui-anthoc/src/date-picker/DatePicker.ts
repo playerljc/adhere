@@ -10,4 +10,6 @@ const DatePickerHOC: typeof DatePicker & {
   placement: 'bottomLeft',
 });
 
+DatePickerHOC.displayName = 'DatePicker';
+
 export default DatePickerHOC;

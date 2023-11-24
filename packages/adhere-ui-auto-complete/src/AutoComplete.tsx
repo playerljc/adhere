@@ -196,4 +196,6 @@ const AutoComplete = memo<AutoCompleteProps>(
   },
 );
 
+AutoComplete.displayName = 'AutoComplete';
+
 export default AutoComplete;

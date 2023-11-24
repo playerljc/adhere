@@ -7,4 +7,6 @@ const BadgeHoc: typeof Badge & {
   defaultProps?: Partial<BadgeProps>;
 } = createFactory<BadgeProps>(Badge, {});
 
+BadgeHoc.displayName = 'Badge';
+
 export default BadgeHoc;

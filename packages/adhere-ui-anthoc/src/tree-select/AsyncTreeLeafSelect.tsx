@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { AsyncTreeLeafSelectProps } from '../types';
+import type { AsyncTreeLeafSelectProps, DisplayNameInternal } from '../types';
 import TreeSelect from './TreeSelect';
 import useAsyncTreeSelect from './useAsyncTreeSelect';
 import useTreeSelectLeaf from './useTreeSelectLeaf';
@@ -17,35 +16,35 @@ import useTreeSelectLeaf from './useTreeSelectLeaf';
  * @param props
  * @constructor
  */
-const AsyncTreeLeafSelect: FC<AsyncTreeLeafSelectProps> = ({
-  cascadeParams,
-  onDataSourceChange,
-  fetchBranch,
-  fetchData,
-  defaultId,
-  ...props
-}) => {
-  const { treeData, onLoadData, onChange } = useAsyncTreeSelect({
-    cascadeParams,
-    onDataSourceChange,
-    fetchBranch,
-    fetchData,
-    defaultId,
-    value: props.value,
-    treeDataSimpleMode: props.treeDataSimpleMode,
-  });
+const InternalAsyncTreeLeafSelect = memo<AsyncTreeLeafSelectProps>(
+  ({ cascadeParams, onDataSourceChange, fetchBranch, fetchData, defaultId, ...props }) => {
+    const { treeData, onLoadData, onChange } = useAsyncTreeSelect({
+      cascadeParams,
+      onDataSourceChange,
+      fetchBranch,
+      fetchData,
+      defaultId,
+      value: props.value,
+      treeDataSimpleMode: props.treeDataSimpleMode,
+    });
 
-  const targetTreeData = useTreeSelectLeaf(treeData);
+    const targetTreeData = useTreeSelectLeaf(treeData);
 
-  return (
-    <TreeSelect
-      {...props}
-      virtual={false}
-      treeData={targetTreeData}
-      loadData={onLoadData}
-      onChange={(...params) => onChange(props.onChange, params)}
-    />
-  );
-};
+    return (
+      <TreeSelect
+        {...props}
+        virtual={false}
+        treeData={targetTreeData}
+        loadData={onLoadData}
+        onChange={(...params) => onChange(props.onChange, params)}
+      />
+    );
+  },
+);
 
-export default memo(AsyncTreeLeafSelect);
+const AsyncTreeLeafSelect = InternalAsyncTreeLeafSelect as DisplayNameInternal<
+  typeof InternalAsyncTreeLeafSelect
+>;
+AsyncTreeLeafSelect.displayName = 'AsyncTreeLeafSelect';
+
+export default AsyncTreeLeafSelect;

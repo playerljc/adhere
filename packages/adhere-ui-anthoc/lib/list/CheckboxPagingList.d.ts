@@ -1,4 +1,4 @@
 import React from 'react';
-import type { CheckboxPagingListProps } from '../types';
-declare const _default: React.NamedExoticComponent<CheckboxPagingListProps>;
-export default _default;
+import type { CheckboxPagingListProps, DisplayNameInternal } from '../types';
+declare const CheckboxPagingList: DisplayNameInternal<React.NamedExoticComponent<CheckboxPagingListProps>>;
+export default CheckboxPagingList;

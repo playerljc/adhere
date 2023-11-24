@@ -7,4 +7,6 @@ const ColorPickerHOC: typeof ColorPicker & {
   defaultProps?: Partial<ColorPickerProps>;
 } = createFactory<ColorPickerProps>(ColorPicker, {});
 
+ColorPickerHOC.displayName = 'ColorPicker';
+
 export default ColorPickerHOC;

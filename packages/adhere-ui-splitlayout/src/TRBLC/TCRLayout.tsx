@@ -25,4 +25,6 @@ const TCRLayout = memo<PropsWithoutRef<TBLRCSplitLayoutProps> & RefAttributes<HT
   ),
 );
 
+TCRLayout.displayName = 'TCRLayout';
+
 export default TCRLayout;

@@ -395,4 +395,6 @@ const Reveal = memo<PropsWithoutRef<RevealProps> & RefAttributes<SlideLayoutHand
 //   master: PropTypes.node,
 // };
 
+Reveal.displayName = 'Reveal';
+
 export default Reveal;

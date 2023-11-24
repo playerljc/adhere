@@ -1,4 +1,4 @@
 import React from 'react';
-import { AutoCompleteCheckboxSelectProps } from '../types';
-declare const _default: React.NamedExoticComponent<AutoCompleteCheckboxSelectProps>;
-export default _default;
+import { AutoCompleteCheckboxSelectProps, DisplayNameInternal } from '../types';
+declare const AutoCompleteCheckboxSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteCheckboxSelectProps>>;
+export default AutoCompleteCheckboxSelect;

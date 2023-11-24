@@ -13,6 +13,8 @@ import { SuspenseASyncProps, SuspenseASyncState } from './types';
  * @classdesc 调用接口
  */
 class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
+  static displayName = 'SuspenseAsync';
+
   state = {
     loading: false,
   };

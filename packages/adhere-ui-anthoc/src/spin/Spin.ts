@@ -7,4 +7,6 @@ const SpinHOC: typeof Spin & {
   defaultProps?: Partial<SpinProps>;
 } = createFactory<SpinProps>(Spin, {});
 
+SpinHOC.displayName = 'Spin';
+
 export default SpinHOC;

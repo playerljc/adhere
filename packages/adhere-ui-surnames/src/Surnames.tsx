@@ -476,4 +476,6 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
   }),
 );
 
+Surnames.displayName = 'Surnames';
+
 export default Surnames;

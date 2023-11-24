@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { RadioTableProps } from '../types';
+import type { DisplayNameInternal, RadioTableProps } from '../types';
 import Table from './Table';
 
 /**
@@ -13,7 +12,7 @@ import Table from './Table';
  * @param props
  * @constructor
  */
-const RadioTable: FC<RadioTableProps> = ({ value, onChange, options, ...props }) => (
+const InternalRadioTable = memo<RadioTableProps>(({ value, onChange, options, ...props }) => (
   <Table
     dataSource={options}
     // pagination={false}
@@ -27,6 +26,9 @@ const RadioTable: FC<RadioTableProps> = ({ value, onChange, options, ...props })
     }}
     {...props}
   />
-);
+));
 
-export default memo(RadioTable);
+const RadioTable = InternalRadioTable as DisplayNameInternal<typeof InternalRadioTable>;
+RadioTable.displayName = 'RadioTable';
+
+export default RadioTable;

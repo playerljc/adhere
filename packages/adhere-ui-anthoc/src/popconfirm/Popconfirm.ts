@@ -7,4 +7,6 @@ const PopconfirmHOC: typeof Popconfirm & {
   defaultProps?: Partial<PopconfirmProps>;
 } = createFactory<PopconfirmProps>(Popconfirm, {});
 
+PopconfirmHOC.displayName = 'Popconfirm';
+
 export default PopconfirmHOC;

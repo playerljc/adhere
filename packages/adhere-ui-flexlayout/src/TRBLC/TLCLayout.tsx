@@ -117,4 +117,6 @@ const TLCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
   ),
 );
 
+TLCLayout.displayName = 'TLCLayout';
+
 export default TLCLayout;

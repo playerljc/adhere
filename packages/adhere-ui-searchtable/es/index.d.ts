@@ -115,6 +115,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchStateTable: {
         new (props: any): {
@@ -179,6 +180,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProEditableCellSearchStateTable: {
         new (props: any): {
@@ -243,6 +245,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProEditableCellSearchTable: {
         new (props: any): {
@@ -307,6 +310,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProEditableRowSearchStateTable: {
         new (props: any): {
@@ -371,6 +375,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProEditableRowSearchTable: {
         new (props: any): {
@@ -435,6 +440,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProEditableSearchStateTable: {
         new (props: any): {
@@ -499,6 +505,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProEditableSearchTable: {
         new (props: any): {
@@ -563,6 +570,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchRowDragSortStateTable: {
         new (props: any): {
@@ -627,6 +635,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchRowDragSortTable: {
         new (props: any): {
@@ -691,6 +700,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchEditableCellRowDragSortStateTable: {
         new (props: any): {
@@ -755,6 +765,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchEditableCellRowDragSortTable: {
         new (props: any): {
@@ -819,6 +830,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchEditableRowDragSortTable: {
         new (props: any): {
@@ -883,6 +895,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchEditableRowDragSortStateTable: {
         new (props: any): {
@@ -947,6 +960,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchEditableTableRowDragSortTable: {
         new (props: any): {
@@ -1011,6 +1025,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProSearchEditableTableRowDragSortStateTable: {
         new (props: any): {
@@ -1075,6 +1090,7 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
     ProTableFactory: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         new (props: any): {
@@ -1139,28 +1155,38 @@ declare const _default: {
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
+        displayName: string;
     };
-    DisabledOption: ({ className, style, children }: {
-        className: any;
-        style: any;
-        children: any;
-    }) => import("react").JSX.Element;
-    LinkColumn: ({ className, style, record, rowIndex, dataIndex, to, children }: {
-        className: any;
-        style: any;
-        record: any;
-        rowIndex: any;
-        dataIndex: any;
-        to: any;
-        children: any;
-    }) => import("react").JSX.Element;
-    OptionsWrap: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
-        className?: string | undefined;
-        style?: {} | undefined;
-        ellipsisCount?: number | undefined;
-        isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
-        children: any;
-    }) => import("react").JSX.Element;
+    DisabledOption: {
+        ({ className, style, children }: {
+            className: any;
+            style: any;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
+    LinkColumn: {
+        ({ className, style, record, rowIndex, dataIndex, to, children }: {
+            className: any;
+            style: any;
+            record: any;
+            rowIndex: any;
+            dataIndex: any;
+            to: any;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
+    OptionsWrap: {
+        ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+            className?: string | undefined;
+            style?: {} | undefined;
+            ellipsisCount?: number | undefined;
+            isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
     EditableContext: import("react").Context<import("antd").FormInstance<any> | null>;
     EditableRowControl: import("react").FC<import("./types").EditorRowControlProps>;
     EditableTableControl: import("react").FC<import("./types").EditorTableControlProps>;

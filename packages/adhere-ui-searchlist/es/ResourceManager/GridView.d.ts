@@ -32,5 +32,6 @@ declare const GridView_base: {
  * @classdesc GridView
  */
 declare class GridView<P extends SearchListImplementProps, S extends SearchListImplementState> extends GridView_base {
+    static displayName: string;
 }
 export default GridView;

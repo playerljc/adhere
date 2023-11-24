@@ -10,4 +10,6 @@ const TimePickerHOC: typeof TimePicker & {
   placement: 'bottomLeft',
 });
 
+TimePickerHOC.displayName = 'TimePicker';
+
 export default TimePickerHOC;

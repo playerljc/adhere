@@ -30,4 +30,6 @@ const ConditionalRenderShow: FC<ConditionalRenderShowProps> = ({
   </>
 );
 
+ConditionalRenderShow.displayName = 'ConditionalRenderShow';
+
 export default ConditionalRenderShow;

@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
-import type { CheckboxGroupExtProps } from '../types';
+import type { CheckboxGroupExtProps, DisplayNameInternal } from '../types';
 import CheckboxGroup from './CheckboxGroup';
 
 /**
@@ -10,8 +9,13 @@ import CheckboxGroup from './CheckboxGroup';
  * @param props
  * @constructor
  */
-const VerticalCheckbox: FC<CheckboxGroupExtProps> = (props) => (
+const InternalVerticalCheckbox = memo<CheckboxGroupExtProps>((props) => (
   <CheckboxGroup {...props} direction="vertical" />
-);
+));
 
-export default memo(VerticalCheckbox);
+const VerticalCheckbox = InternalVerticalCheckbox as DisplayNameInternal<
+  typeof InternalVerticalCheckbox
+>;
+VerticalCheckbox.displayName = 'VerticalCheckbox';
+
+export default VerticalCheckbox;

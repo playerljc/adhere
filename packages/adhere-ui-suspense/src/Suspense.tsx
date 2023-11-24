@@ -26,6 +26,8 @@ abstract class Suspense<
   extends React.PureComponent<P, S>
   implements ISuspense
 {
+  static displayName = 'Suspense';
+
   // 第一次
   isFirst = true;
 

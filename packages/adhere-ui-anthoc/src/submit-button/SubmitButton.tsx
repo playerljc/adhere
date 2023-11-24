@@ -39,4 +39,7 @@ const SubmitButtonHOC: typeof Button & {
   })(),
   {},
 );
+
+SubmitButtonHOC.displayName = 'SubmitButton';
+
 export default SubmitButtonHOC;

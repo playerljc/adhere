@@ -31,6 +31,8 @@ const InternalImportantConfirm = memo<ImportantConfirmProps>((props) => {
 
 const ImportantConfirm = InternalImportantConfirm as ImportantConfirmComponent;
 
+ImportantConfirm.displayName = 'ImportantConfirm';
+
 ImportantConfirm.open = ({ success, ...params }: OpenFunction) => {
   MessageDialog.Confirm({
     ...params,

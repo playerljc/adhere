@@ -1,3 +1,4 @@
 import React from 'react';
-declare const _default: React.NamedExoticComponent<import("../types").HorizontalTagGroupProps>;
-export default _default;
+import type { DisplayNameInternal } from '../types';
+declare const VerticalTagGroup: DisplayNameInternal<React.NamedExoticComponent<import("../types").HorizontalTagGroupProps>>;
+export default VerticalTagGroup;

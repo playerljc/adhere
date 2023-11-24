@@ -7,4 +7,6 @@ const TimelineHOC: typeof Timeline & {
   defaultProps?: Partial<TimelineProps>;
 } = createFactory<TimelineProps>(Timeline, {});
 
+TimelineHOC.displayName = 'Timeline';
+
 export default TimelineHOC;

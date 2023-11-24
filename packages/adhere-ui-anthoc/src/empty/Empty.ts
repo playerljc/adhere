@@ -7,4 +7,6 @@ const EmptyHOC: typeof Empty & {
   defaultProps?: Partial<EmptyProps>;
 } = createFactory<EmptyProps>(Empty, {});
 
+EmptyHOC.displayName = 'Empty';
+
 export default EmptyHOC;

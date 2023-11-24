@@ -10,4 +10,6 @@ import type { CodeBoxProps } from '../types';
  */
 const CodeBoxSection = memo<CodeBoxProps>((props) => <CodeBoxPanel {...props} />);
 
+CodeBoxSection.displayName = 'CodeBoxSection';
+
 export default CodeBoxSection;

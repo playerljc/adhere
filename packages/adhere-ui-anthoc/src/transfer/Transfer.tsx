@@ -5,4 +5,6 @@ import { createFactory } from '../util';
 
 const TransferHOC: TransferHOCComponent = createFactory<TransferProps<any>>(Transfer, {});
 
+TransferHOC.displayName = 'Transfer';
+
 export default TransferHOC;

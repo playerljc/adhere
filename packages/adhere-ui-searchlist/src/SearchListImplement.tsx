@@ -57,6 +57,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   extends SearchList<SearchListImplementProps, SearchListImplementState>
   implements ISearchListImplement
 {
+  static displayName = 'SearchListImplement';
+
   innerWrapRef: RefObject<HTMLDivElement> = createRef();
 
   constructor(props) {

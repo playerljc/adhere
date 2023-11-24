@@ -7,4 +7,6 @@ const QRCodeHOC: typeof QRCode & {
   defaultProps?: Partial<QRCodeProps>;
 } = createFactory<QRCodeProps>(QRCode, {});
 
+QRCodeHOC.displayName = 'QRCode';
+
 export default QRCodeHOC;

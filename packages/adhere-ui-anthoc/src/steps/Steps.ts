@@ -7,4 +7,6 @@ const StepsHOC: typeof Steps & {
   defaultProps?: Partial<StepsProps>;
 } = createFactory<StepsProps>(Steps, {});
 
+StepsHOC.displayName = 'Steps';
+
 export default StepsHOC;

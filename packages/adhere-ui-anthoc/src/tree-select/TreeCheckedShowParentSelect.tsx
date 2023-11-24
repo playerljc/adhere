@@ -1,7 +1,7 @@
 import type { TreeSelectProps } from 'antd';
 import React, { memo } from 'react';
-import type { FC } from 'react';
 
+import type { DisplayNameInternal } from '../types';
 import TreeSelect from './TreeSelect';
 
 /**
@@ -10,8 +10,13 @@ import TreeSelect from './TreeSelect';
  * @param props
  * @constructor
  */
-const TreeCheckedShowParentSelect: FC<TreeSelectProps> = (props) => {
+const InternalTreeCheckedShowParentSelect = memo<TreeSelectProps>((props) => {
   return <TreeSelect {...props} treeCheckable showCheckedStrategy={TreeSelect.SHOW_PARENT} />;
-};
+});
 
-export default memo(TreeCheckedShowParentSelect);
+const TreeCheckedShowParentSelect = InternalTreeCheckedShowParentSelect as DisplayNameInternal<
+  typeof InternalTreeCheckedShowParentSelect
+>;
+TreeCheckedShowParentSelect.displayName = 'TreeCheckedShowParentSelect';
+
+export default TreeCheckedShowParentSelect;

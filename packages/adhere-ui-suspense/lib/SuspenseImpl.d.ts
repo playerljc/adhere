@@ -7,6 +7,7 @@ import { SuspenseProps, SuspenseState } from './types';
  * SuspenseImpl
  */
 declare class SuspenseImpl<P extends SuspenseProps = SuspenseProps, S extends SuspenseState = SuspenseState> extends Suspense {
+    static displayName: string;
     static Sync: typeof SuspenseSync;
     static ASync: typeof SuspenseAsync;
     constructor(props: any);

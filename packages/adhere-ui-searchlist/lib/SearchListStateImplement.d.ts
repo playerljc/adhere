@@ -7,6 +7,7 @@ export declare const selectorPrefix = "adhere-ui-search-state-table-implement";
  * @classdesc - SearchList的state实现
  */
 export declare class SearchListStateImplement<P extends SearchListStateImplementProps, S extends SearchListImplementState> extends SearchListImplement<SearchListStateImplementProps, SearchListImplementState> {
+    static displayName: string;
     private unsubscribe;
     constructor(props: any);
     componentWillUnmount(): void;

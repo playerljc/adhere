@@ -16,4 +16,11 @@ export const SearchAndPaginParamsMemo: any = MemoManager.create();
  * ProResourceManager
  * @classdesc 高级查询列表
  */
-export default ProResourceManagerFactory(ProListFactory(ResourceManager, SearchAndPaginParamsMemo));
+
+const ProResourceManager = ProResourceManagerFactory(
+  ProListFactory(ResourceManager, SearchAndPaginParamsMemo),
+);
+
+ProResourceManager.displayName = 'ProResourceManager';
+
+export default ProResourceManager;

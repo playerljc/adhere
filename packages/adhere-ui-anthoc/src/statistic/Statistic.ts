@@ -7,4 +7,6 @@ const StatisticHOC: typeof Statistic & {
   defaultProps?: Partial<StatisticProps>;
 } = createFactory<StatisticProps>(Statistic, {});
 
+StatisticHOC.displayName = 'Statistic';
+
 export default StatisticHOC;
