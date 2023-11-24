@@ -9,6 +9,7 @@ import type { CSSProperties, ReactNode } from 'react';
 export interface AutoCompleteProps {
   className?: string;
   style?: CSSProperties;
+  placeholder?: string;
   searchBarProps?: SearchBarProps;
   // checkListProps?: Omit<CheckListProps, 'value' | 'onChange'>;
   loadData?: (kw?: string) => Promise<Record<any, any>>;

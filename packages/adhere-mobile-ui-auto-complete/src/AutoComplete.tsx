@@ -31,6 +31,7 @@ const AutoComplete = memo<AutoCompleteProps>(
   ({
     className,
     style,
+    placeholder,
     searchBarProps,
     loadData,
     searchDataSource,
@@ -108,7 +109,7 @@ const AutoComplete = memo<AutoCompleteProps>(
       <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
         <div className={`${selectorPrefix}-search-bar`}>
           <SearchBar
-            placeholder={Intl.v('输入文字过滤选项')}
+            placeholder={placeholder ?? Intl.v('输入文字过滤选项')}
             value={kw}
             onChange={onSearchChange}
             onSearch={onSearch}
