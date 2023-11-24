@@ -1,12 +1,40 @@
+import { Input } from 'antd';
 import React, { useState } from 'react';
+import reactElementToJsxString from 'react-element-to-jsx-string';
 
+/**
+ * input
+ * text-area
+ * input-number-decimal1
+ * input-number-decimal2
+ * input-number-integer
+ * modal
+ * range-picker
+ * time-picker
+ * upload
+ * pagination
+ * submit-button
+ * form
+ *
+ * transfer
+ * select
+ * multiple-select
+ * radio
+ * checkbox
+ * tag
+ * list
+ * table
+ * tree-select
+ * cascader
+ * auto-complete
+ */
 import { UploadOutlined } from '@ant-design/icons';
 import { FlexLayout, Space } from '@baifendian/adhere';
 import {
   Button,
   DatePicker,
   Form,
-  Input,
+  Input as InputHOC,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,
@@ -20,6 +48,7 @@ import {
 } from '@baifendian/adhere-ui-anthoc';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+import Util from '@/util';
 
 import AutoComplete from './examples/AutoComplete/AutoComplete';
 import AutoCompleteSelectInput from './examples/AutoComplete/AutoCompleteSelectInput';
@@ -125,39 +154,632 @@ import TreeMultiLeafSelect from './examples/TreeSelect/TreeMultiLeafSelect';
 import TreeMultiSelect from './examples/TreeSelect/TreeMultiSelect';
 import TreeSelect from './examples/TreeSelect/TreeSelect';
 
-/**
- * input
- * text-area
- * input-number-decimal1
- * input-number-decimal2
- * input-number-integer
- * modal
- * range-picker
- * time-picker
- * upload
- * pagination
- * submit-button
- * form
- *
- * transfer
- * select
- * multiple-select
- * radio
- * checkbox
- * tag
- * list
- * table
- * tree-select
- * cascader
- * auto-complete
- */
-
-Input.defaultProps.maxLength = 2000;
+// Input.defaultProps.maxLength = 2000;
 
 const { ScrollLayout } = FlexLayout;
 
 export default () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log('a======', reactElementToJsxString(<FlexLayout />));
+  // console.log('a======', reactElementToJsxString(<Input type="primary" />));
+
+  <Input type="primary" />;
+
+  console.log('b======', <FlexLayout type="primary" />);
+
+  const basicHOCConfig = [
+    {
+      id: `Input`,
+      name: `Input`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'Input',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <Input
+            placeholder="请输入"
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'Input',
+      }),
+      renderChildren: () => (
+        <Input
+          placeholder="请输入"
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `TextArea`,
+      name: `TextArea`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'TextArea',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <TextArea
+            placeholder="请输入"
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'TextArea',
+      }),
+      renderChildren: () => (
+        <TextArea
+          placeholder="请输入"
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `InputNumberDecimal1`,
+      name: `InputNumberDecimal1`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'InputNumberDecimal1',
+          info: '只能输入一位小数',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <InputNumberDecimal1
+            placeholder="请输入"
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'InputNumberDecimal1',
+      }),
+      renderChildren: () => (
+        <InputNumberDecimal1
+          placeholder="请输入"
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `InputNumberDecimal2`,
+      name: `InputNumberDecimal2`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'InputNumberDecimal2',
+          info: '只能输入两位小鼠',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <InputNumberDecimal2
+            placeholder="请输入"
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'InputNumberDecimal2',
+      }),
+      renderChildren: () => (
+        <InputNumberDecimal2
+          placeholder="请输入"
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `InputNumberInteger`,
+      name: `InputNumberInteger`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'InputNumberInteger',
+          info: '只能输入整数',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <InputNumberInteger
+            placeholder="请输入"
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'InputNumberInteger',
+      }),
+      renderChildren: () => (
+        <InputNumberInteger
+          placeholder="请输入"
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `Modal`,
+      name: `Modal`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'Modal',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <div>
+            <Button
+              type="primary"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              Open Modal
+            </Button>
+            <Modal
+              title="Basic Modal"
+              open={isModalOpen}
+              onOk={() => {
+                setIsModalOpen(false);
+              }}
+              onCancel={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+              <p>Some contents...</p>
+            </Modal>
+          </div>
+        ),
+        displayName: '',
+      }),
+      renderChildren: () => (
+        <div>
+          <Button
+            type="primary"
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
+            Open Modal
+          </Button>
+          <Modal
+            title="Basic Modal"
+            open={isModalOpen}
+            onOk={() => {
+              setIsModalOpen(false);
+            }}
+            onCancel={() => {
+              setIsModalOpen(false);
+            }}
+          >
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </Modal>
+        </div>
+      ),
+    },
+    {
+      id: `DatePicker`,
+      name: `DatePicker`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'DatePicker',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <DatePicker
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'DatePicker',
+      }),
+      renderChildren: () => (
+        <DatePicker
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `RangePicker`,
+      name: `RangePicker`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'RangePicker',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <RangePicker
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'RangePicker',
+      }),
+      renderChildren: () => (
+        <RangePicker
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `TimePicker`,
+      name: `TimePicker`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'TimePicker',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <TimePicker
+            style={{
+              width: 200,
+            }}
+          />
+        ),
+        displayName: 'TimePicker',
+      }),
+      renderChildren: () => (
+        <TimePicker
+          style={{
+            width: 200,
+          }}
+        />
+      ),
+    },
+    {
+      id: `Upload`,
+      name: `Upload`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'Upload',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <Upload
+            {...{
+              name: 'file',
+              action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+              headers: {
+                authorization: 'authorization-text',
+              },
+              onChange(info) {
+                if (info.file.status !== 'uploading') {
+                  console.log(info.file, info.fileList);
+                }
+                if (info.file.status === 'done') {
+                  message.success(`${info.file.name} file uploaded successfully`);
+                } else if (info.file.status === 'error') {
+                  message.error(`${info.file.name} file upload failed.`);
+                }
+              },
+            }}
+          >
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+        ),
+        displayName: 'Upload',
+      }),
+      renderChildren: () => (
+        <Upload
+          {...{
+            name: 'file',
+            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            headers: {
+              authorization: 'authorization-text',
+            },
+            onChange(info) {
+              if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+              }
+              if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+              } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+              }
+            },
+          }}
+        >
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
+      ),
+    },
+    {
+      id: `Pagination`,
+      name: `Pagination`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'Pagination',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: <Pagination defaultCurrent={1} total={50} />,
+        displayName: 'Pagination',
+      }),
+      renderChildren: () => <Pagination defaultCurrent={1} total={50} />,
+    },
+    {
+      id: `SubmitButton`,
+      name: `SubmitButton`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'SubmitButton',
+          info: '提交按钮',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <SubmitButton
+            style={{
+              width: 200,
+            }}
+            type="primary"
+            onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
+          >
+            提交
+          </SubmitButton>
+        ),
+        displayName: 'SubmitButton',
+      }),
+      renderChildren: () => (
+        <SubmitButton
+          style={{
+            width: 200,
+          }}
+          type="primary"
+          onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
+        >
+          提交
+        </SubmitButton>
+      ),
+    },
+    {
+      id: `Form`,
+      name: `Form`,
+      mode: 'code',
+      scope: { React },
+      cardProps: {
+        description: {
+          title: 'Form',
+          info: '使用了默认配置',
+        },
+      },
+      type: 'PlayGround',
+      codeText: Util.reactElementToJsxStringById({
+        element: (
+          <div>
+            <p>
+              对Form的Rules进行增强(
+              <a target="_blank" href="/adhere/component/util/validator">
+                使用adhere-util-validator
+              </a>
+              )
+            </p>
+
+            <Form labelCol={{ span: 3 }} wrapperCol={{ span: 21 }}>
+              <ul>
+                <Space.Group direction="vertical">
+                  <li>
+                    <Form.Item
+                      name="email"
+                      label="email"
+                      rules={[Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' })]}
+                    >
+                      <Input placeholder="email" />
+                    </Form.Item>
+                  </li>
+                  <li>
+                    <Form.Item
+                      name="mime"
+                      label="mime"
+                      rules={[
+                        Form.ValidatorRules.isMimeType({
+                          invalidMessage: 'MimeType格式错误',
+                        }),
+                      ]}
+                    >
+                      <Input placeholder="mime" />
+                    </Form.Item>
+                  </li>
+                  <li>
+                    <Form.Item
+                      name="hex"
+                      label="hex"
+                      rules={[
+                        Form.ValidatorRules.isHexColor({
+                          invalidMessage: 'hex值格式错误',
+                        }),
+                      ]}
+                    >
+                      <Input placeholder="hex" />
+                    </Form.Item>
+                  </li>
+                  <li>
+                    <Form.Item
+                      name="ip"
+                      label="ip"
+                      rules={[
+                        Form.ValidatorRules.isIP({
+                          invalidMessage: 'ip地址格式错误',
+                        }),
+                      ]}
+                    >
+                      <Input placeholder="ip" />
+                    </Form.Item>
+                  </li>
+                  <li>
+                    <Form.Item
+                      name="chinaPhoneNumber"
+                      label="手机卡 + 数据卡 + 上网卡"
+                      rules={[
+                        Form.ValidatorRules.isAllChinaPhoneNumber({
+                          invalidMessage: '手机卡或数据卡或上网卡格式错误',
+                        }),
+                      ]}
+                    >
+                      <Input placeholder="手机卡 + 数据卡 + 上网卡" />
+                    </Form.Item>
+                  </li>
+                </Space.Group>
+              </ul>
+            </Form>
+          </div>
+        ),
+        displayName: '',
+      }),
+      renderChildren: () => (
+        <div>
+          <p>
+            对Form的Rules进行增强(
+            <a target="_blank" href="/adhere/component/util/validator">
+              使用adhere-util-validator
+            </a>
+            )
+          </p>
+
+          <Form labelCol={{ span: 3 }} wrapperCol={{ span: 21 }}>
+            <ul>
+              <Space.Group direction="vertical">
+                <li>
+                  <Form.Item
+                    name="email"
+                    label="email"
+                    rules={[Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' })]}
+                  >
+                    <Input placeholder="email" />
+                  </Form.Item>
+                </li>
+                <li>
+                  <Form.Item
+                    name="mime"
+                    label="mime"
+                    rules={[
+                      Form.ValidatorRules.isMimeType({
+                        invalidMessage: 'MimeType格式错误',
+                      }),
+                    ]}
+                  >
+                    <Input placeholder="mime" />
+                  </Form.Item>
+                </li>
+                <li>
+                  <Form.Item
+                    name="hex"
+                    label="hex"
+                    rules={[
+                      Form.ValidatorRules.isHexColor({
+                        invalidMessage: 'hex值格式错误',
+                      }),
+                    ]}
+                  >
+                    <Input placeholder="hex" />
+                  </Form.Item>
+                </li>
+                <li>
+                  <Form.Item
+                    name="ip"
+                    label="ip"
+                    rules={[
+                      Form.ValidatorRules.isIP({
+                        invalidMessage: 'ip地址格式错误',
+                      }),
+                    ]}
+                  >
+                    <Input placeholder="ip" />
+                  </Form.Item>
+                </li>
+                <li>
+                  <Form.Item
+                    name="chinaPhoneNumber"
+                    label="手机卡 + 数据卡 + 上网卡"
+                    rules={[
+                      Form.ValidatorRules.isAllChinaPhoneNumber({
+                        invalidMessage: '手机卡或数据卡或上网卡格式错误',
+                      }),
+                    ]}
+                  >
+                    <Input placeholder="手机卡 + 数据卡 + 上网卡" />
+                  </Form.Item>
+                </li>
+              </Space.Group>
+            </ul>
+          </Form>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <PlayGroundPage>
@@ -168,381 +790,7 @@ export default () => {
         </ul>
       </Section>
 
-      <CodeBoxSection
-        title="BasicHOC"
-        config={[
-          {
-            id: `Input`,
-            name: `Input`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'Input',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <Input
-                placeholder="请输入"
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `TextArea`,
-            name: `TextArea`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'TextArea',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <TextArea
-                placeholder="请输入"
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `InputNumberDecimal1`,
-            name: `InputNumberDecimal1`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'InputNumberDecimal1',
-                info: '只能输入一位小数',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <InputNumberDecimal1
-                placeholder="请输入"
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `InputNumberDecimal2`,
-            name: `InputNumberDecimal2`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'InputNumberDecimal2',
-                info: '只能输入两位小鼠',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <InputNumberDecimal2
-                placeholder="请输入"
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `InputNumberInteger`,
-            name: `InputNumberInteger`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'InputNumberInteger',
-                info: '只能输入整数',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <InputNumberInteger
-                placeholder="请输入"
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `Modal`,
-            name: `Modal`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'Modal',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  Open Modal
-                </Button>
-                <Modal
-                  title="Basic Modal"
-                  open={isModalOpen}
-                  onOk={() => {
-                    setIsModalOpen(false);
-                  }}
-                  onCancel={() => {
-                    setIsModalOpen(false);
-                  }}
-                >
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                </Modal>
-              </div>
-            ),
-          },
-          {
-            id: `DatePicker`,
-            name: `DatePicker`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'DatePicker',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <DatePicker
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `RangePicker`,
-            name: `RangePicker`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'RangePicker',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <RangePicker
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `TimePicker`,
-            name: `TimePicker`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'TimePicker',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <TimePicker
-                style={{
-                  width: 200,
-                }}
-              />
-            ),
-          },
-          {
-            id: `Upload`,
-            name: `Upload`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'Upload',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <Upload
-                {...{
-                  name: 'file',
-                  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-                  headers: {
-                    authorization: 'authorization-text',
-                  },
-                  onChange(info) {
-                    if (info.file.status !== 'uploading') {
-                      console.log(info.file, info.fileList);
-                    }
-                    if (info.file.status === 'done') {
-                      message.success(`${info.file.name} file uploaded successfully`);
-                    } else if (info.file.status === 'error') {
-                      message.error(`${info.file.name} file upload failed.`);
-                    }
-                  },
-                }}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
-            ),
-          },
-          {
-            id: `Pagination`,
-            name: `Pagination`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'Pagination',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => <Pagination defaultCurrent={1} total={50} />,
-          },
-          {
-            id: `SubmitButton`,
-            name: `SubmitButton`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'SubmitButton',
-                info: '提交按钮',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <SubmitButton
-                style={{
-                  width: 200,
-                }}
-                type="primary"
-                onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
-              >
-                提交
-              </SubmitButton>
-            ),
-          },
-          {
-            id: `Form`,
-            name: `Form`,
-            mode: 'code',
-            scope: { React },
-            cardProps: {
-              description: {
-                title: 'Form',
-                info: '使用了默认配置',
-              },
-            },
-            type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <p>
-                  对Form的Rules进行增强(
-                  <a target="_blank" href="/adhere/component/util/validator">
-                    使用adhere-util-validator
-                  </a>
-                  )
-                </p>
-
-                <Form labelCol={{ span: 3 }} wrapperCol={{ span: 21 }}>
-                  <ul>
-                    <Space.Group direction="vertical">
-                      <li>
-                        <Form.Item
-                          name="email"
-                          label="email"
-                          rules={[Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' })]}
-                        >
-                          <Input placeholder="email" />
-                        </Form.Item>
-                      </li>
-                      <li>
-                        <Form.Item
-                          name="mime"
-                          label="mime"
-                          rules={[
-                            Form.ValidatorRules.isMimeType({
-                              invalidMessage: 'MimeType格式错误',
-                            }),
-                          ]}
-                        >
-                          <Input placeholder="mime" />
-                        </Form.Item>
-                      </li>
-                      <li>
-                        <Form.Item
-                          name="hex"
-                          label="hex"
-                          rules={[
-                            Form.ValidatorRules.isHexColor({
-                              invalidMessage: 'hex值格式错误',
-                            }),
-                          ]}
-                        >
-                          <Input placeholder="hex" />
-                        </Form.Item>
-                      </li>
-                      <li>
-                        <Form.Item
-                          name="ip"
-                          label="ip"
-                          rules={[
-                            Form.ValidatorRules.isIP({
-                              invalidMessage: 'ip地址格式错误',
-                            }),
-                          ]}
-                        >
-                          <Input placeholder="ip" />
-                        </Form.Item>
-                      </li>
-                      <li>
-                        <Form.Item
-                          name="chinaPhoneNumber"
-                          label="手机卡 + 数据卡 + 上网卡"
-                          rules={[
-                            Form.ValidatorRules.isAllChinaPhoneNumber({
-                              invalidMessage: '手机卡或数据卡或上网卡格式错误',
-                            }),
-                          ]}
-                        >
-                          <Input placeholder="手机卡 + 数据卡 + 上网卡" />
-                        </Form.Item>
-                      </li>
-                    </Space.Group>
-                  </ul>
-                </Form>
-              </div>
-            ),
-          },
-        ]}
-      />
+      <CodeBoxSection title="BasicHOC" config={basicHOCConfig} />
 
       <CodeBoxSection
         title="TransferHOC"
@@ -559,6 +807,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Transfer />,
           },
           {
@@ -573,6 +822,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TransferSelect />,
           },
           {
@@ -587,6 +837,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteTransferSelect />,
           },
         ]}
@@ -607,6 +858,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Select />,
           },
           {
@@ -621,6 +873,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <MultipleSelect />,
           },
           {
@@ -635,6 +888,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckAllMultipleSelect />,
           },
           {
@@ -649,6 +903,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <DropdownRenderSelect />,
           },
           {
@@ -663,6 +918,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteSelect />,
           },
           {
@@ -677,6 +933,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteMultipleSelect />,
           },
           {
@@ -691,6 +948,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCheckAllMultipleSelect />,
           },
         ]}
@@ -711,6 +969,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Radio />,
           },
           {
@@ -725,6 +984,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <VerticalRadio />,
           },
           {
@@ -739,6 +999,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <HorizontalRadio />,
           },
           {
@@ -753,6 +1014,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CustomRadio />,
           },
           {
@@ -767,6 +1029,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <ButtonRadio />,
           },
           {
@@ -781,6 +1044,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioSelect />,
           },
           {
@@ -795,6 +1059,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CustomRadioSelect />,
           },
           {
@@ -809,6 +1074,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <ButtonRadioSelect />,
           },
           {
@@ -823,6 +1089,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteRadioSelect />,
           },
           {
@@ -837,6 +1104,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCustomRadioSelect />,
           },
           {
@@ -851,6 +1119,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteButtonRadioSelect />,
           },
         ]}
@@ -871,6 +1140,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Checkbox />,
           },
           {
@@ -885,6 +1155,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxSelect />,
           },
           {
@@ -899,6 +1170,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CustomCheckbox />,
           },
           {
@@ -913,6 +1185,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CustomCheckAllCheckbox />,
           },
           {
@@ -927,6 +1200,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CustomCheckboxSelect />,
           },
           {
@@ -941,6 +1215,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <HorizontalCheckbox />,
           },
           {
@@ -955,6 +1230,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <HorizontalCheckAllCheckbox />,
           },
           {
@@ -969,6 +1245,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <VerticalCheckbox />,
           },
           {
@@ -983,6 +1260,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <VerticalCheckAllCheckbox />,
           },
           {
@@ -997,6 +1275,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCheckAllCheckboxSelect />,
           },
           {
@@ -1011,6 +1290,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCheckAllCustomCheckboxSelect />,
           },
           {
@@ -1025,6 +1305,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCheckboxSelect />,
           },
           {
@@ -1039,6 +1320,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCustomCheckboxSelect />,
           },
           {
@@ -1053,6 +1335,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckAllCheckboxSelect />,
           },
           {
@@ -1067,6 +1350,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckAllCustomCheckboxSelect />,
           },
         ]}
@@ -1087,6 +1371,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Tag />,
           },
           {
@@ -1101,6 +1386,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <VerticalTagGroup />,
           },
           {
@@ -1115,6 +1401,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <VerticalCheckableTagGroup />,
           },
           {
@@ -1129,6 +1416,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <VerticalCheckAllCheckableTagGroup />,
           },
           {
@@ -1143,6 +1431,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <HorizontalTagGroup />,
           },
           {
@@ -1157,6 +1446,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <HorizontalCheckableTagGroup />,
           },
           {
@@ -1171,6 +1461,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <HorizontalCheckAllCheckableTagGroup />,
           },
           {
@@ -1185,6 +1476,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TagSelect />,
           },
           {
@@ -1199,6 +1491,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckAllTagSelect />,
           },
           {
@@ -1213,6 +1506,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteTagSelect />,
           },
           {
@@ -1227,6 +1521,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCheckAllTagSelect />,
           },
         ]}
@@ -1247,6 +1542,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <List />,
           },
           {
@@ -1261,6 +1557,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioListSelect />,
           },
           {
@@ -1275,6 +1572,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioListPaging />,
           },
           {
@@ -1289,6 +1587,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioListPagingSelect />,
           },
           {
@@ -1303,6 +1602,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <SuspenseListPaging />,
           },
           {
@@ -1317,6 +1617,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxListSelect />,
           },
           {
@@ -1331,6 +1632,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckAllListSelect />,
           },
           {
@@ -1345,6 +1647,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxListPaging />,
           },
           {
@@ -1359,6 +1662,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxListPagingSelect />,
           },
           {
@@ -1373,6 +1677,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteCheckAllListSelect />,
           },
           {
@@ -1387,6 +1692,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteListPagingSelect />,
           },
           {
@@ -1401,6 +1707,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteListSelect />,
           },
         ]}
@@ -1421,6 +1728,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Table />,
           },
           {
@@ -1435,6 +1743,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <SuspenseTablePaging />,
           },
           {
@@ -1449,6 +1758,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioTableSelect />,
           },
           {
@@ -1463,6 +1773,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioTablePagingSelect />,
           },
           {
@@ -1477,6 +1788,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioTablePaging />,
           },
           {
@@ -1491,6 +1803,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <RadioTablePaging />,
           },
           {
@@ -1505,6 +1818,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxTableSelect />,
           },
           {
@@ -1519,6 +1833,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxTablePagingSelect />,
           },
           {
@@ -1533,6 +1848,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CheckboxTablePaging />,
           },
           {
@@ -1547,6 +1863,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteTableSelect />,
           },
           {
@@ -1561,6 +1878,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteTablePagingSelect />,
           },
         ]}
@@ -1581,6 +1899,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeSelect />,
           },
           {
@@ -1595,6 +1914,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeMultiSelect />,
           },
           {
@@ -1609,6 +1929,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeMultiLeafSelect />,
           },
           {
@@ -1623,6 +1944,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeLeafSelect />,
           },
           {
@@ -1637,6 +1959,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeCheckedShowParentSelect />,
           },
           {
@@ -1651,6 +1974,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeCheckedShowChildSelect />,
           },
           {
@@ -1665,6 +1989,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <TreeCheckedShowAllSelect />,
           },
           {
@@ -1679,6 +2004,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <FlatTreeSelect />,
           },
           {
@@ -1693,6 +2019,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <FlatAsyncTreeSelect />,
           },
           {
@@ -1707,6 +2034,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <FlatAsyncTreeMultiSelectEcho />,
           },
           {
@@ -1721,6 +2049,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeSelectEcho />,
           },
           {
@@ -1735,6 +2064,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeSelect />,
           },
           {
@@ -1749,6 +2079,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeMultiSelectEcho />,
           },
           {
@@ -1763,6 +2094,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeMultiSelect />,
           },
           {
@@ -1777,6 +2109,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeMultiLeafSelectEcho />,
           },
           {
@@ -1791,6 +2124,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeMultiLeafSelect />,
           },
           {
@@ -1805,6 +2139,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeLeafSelect />,
           },
           {
@@ -1819,6 +2154,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeCheckedShowParentSelect />,
           },
           {
@@ -1833,6 +2169,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeCheckedShowChildSelect />,
           },
           {
@@ -1847,6 +2184,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncTreeCheckedShowAllSelect />,
           },
         ]}
@@ -1867,6 +2205,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <Cascader />,
           },
           {
@@ -1881,6 +2220,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncCascader />,
           },
           {
@@ -1895,6 +2235,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncCascaderChangeOnSelect />,
           },
           {
@@ -1909,6 +2250,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncCascaderEcho />,
           },
           {
@@ -1923,6 +2265,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncCascaderMulti />,
           },
           {
@@ -1937,6 +2280,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncCascaderMultiEcho />,
           },
           {
@@ -1951,6 +2295,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AsyncCascaderShowChild />,
           },
           {
@@ -1965,6 +2310,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CascaderChangeOnSelect />,
           },
           {
@@ -1979,6 +2325,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CascaderMulti />,
           },
           {
@@ -1993,6 +2340,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <CascaderShowChild />,
           },
           {
@@ -2007,6 +2355,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <FlatAsyncCascader />,
           },
           {
@@ -2021,6 +2370,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <FlatCascader />,
           },
         ]}
@@ -2041,6 +2391,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoComplete />,
           },
           {
@@ -2055,6 +2406,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
+            codeText: ``,
             renderChildren: () => <AutoCompleteSelectInput />,
           },
         ]}
@@ -2069,15 +2421,13 @@ export default () => {
             mode: 'code',
             scope: { React },
             type: 'PlayGround',
+            codeText: ``,
             cardProps: {
               description: {
                 title: '使用ScrollLayout做容器',
                 info: '自动设置组件的getPopupContainer，浮层跟随滚动`',
               },
             },
-            codeText: `
-
-            `,
             renderChildren: () => (
               <div style={{ height: 500 }}>
                 <ScrollLayout scrollY>

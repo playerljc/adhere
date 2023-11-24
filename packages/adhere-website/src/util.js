@@ -1,4 +1,5 @@
 import qs from 'qs';
+import reactElementToJsxString from 'react-element-to-jsx-string';
 
 import { Dict, Preferences, Util } from '@baifendian/adhere';
 
@@ -59,5 +60,16 @@ export default {
    * @return {object}
    */ getEvnVars() {
     return CustomEvnVars;
+  },
+  /**
+   * reactElementToJsxStringById
+   * @param config
+   * @param id
+   * @return {string}
+   */
+  reactElementToJsxStringById({ element, displayName }) {
+    return reactElementToJsxString(element, {
+      displayName: () => displayName,
+    });
   },
 };

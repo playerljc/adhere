@@ -7,6 +7,7 @@ import { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
  * @classdesc 传数据
  */
 declare class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implements ISuspenseSync {
+    static displayName: string;
     state: {
         loading: boolean;
     };

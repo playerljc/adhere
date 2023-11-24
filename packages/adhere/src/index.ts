@@ -1,3 +1,4 @@
+import MobileAutoComplete from '@baifendian/adhere-mobile-ui-auto-complete';
 import MobileDelConfirm from '@baifendian/adhere-mobile-ui-confirm-delconfirm';
 import MobileImportantConfirm from '@baifendian/adhere-mobile-ui-confirm-importantconfirm';
 import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
@@ -6,7 +7,6 @@ import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprom
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
 import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
-import MobileAutoComplete from '@baifendian/adhere-mobile-ui-auto-complete';
 import AutoComplete from '@baifendian/adhere-ui-auto-complete';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
@@ -78,6 +78,7 @@ import Validator from '@baifendian/adhere-util-validator';
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
 export { 
+  MobileAutoComplete,
   MobileDelConfirm,
   MobileImportantConfirm,
   MobileGlobalIndicator,
@@ -86,7 +87,6 @@ export {
   MobileWarnPrompt,
   MobileTabs,
   MobileTimePickerView,
-  MobileAutoComplete,
   AutoComplete,
   BackTopAnimation,
   BMap,

@@ -35,7 +35,7 @@
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {
-    "@ant-design/icons":"^5.2.6",
+    "@ant-design/icons": "^5.2.6",
     "@baifendian/adhere": "^2.10.28",
     "@baifendian/adhere-ui-anthoc": "^2.10.28",
     "@baifendian/adhere-ui-bmap": "^2.10.28",
@@ -63,6 +63,7 @@
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-element-to-jsx-string": "^15.0.0",
     "react-markdown": "^8.0.4",
     "remark-gfm": "^3.0.1",
     "tinycolor2": "^1.6.0",
