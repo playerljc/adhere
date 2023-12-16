@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["react-quill-sandbox/index.js"],"sourcesContent":["import ReactQuillSandbox from './reactQuillSandbox';\nexport default ReactQuillSandbox;\n"],"names":["ReactQuillSandbox"],"mappings":"OAAOA,sBAAuB,qCACfA"}
+{"version":3,"file":"index.js","sources":["react-quill-sandbox/index.js"],"sourcesContent":["import ReactQuillSandbox from './ReactQuillSandbox';\nexport default ReactQuillSandbox;\n"],"names":["ReactQuillSandbox"],"mappings":"OAAOA,sBAAuB,qCACfA"}

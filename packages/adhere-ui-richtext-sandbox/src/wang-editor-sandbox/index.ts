@@ -1,3 +1,3 @@
-import WangEditorSandbox from './wangEditorSandbox';
+import WangEditorSandbox from './WangEditorSandbox';
 
 export default WangEditorSandbox;

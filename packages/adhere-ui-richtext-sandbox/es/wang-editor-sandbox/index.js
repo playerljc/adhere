@@ -1,2 +1,2 @@
-import WangEditorSandbox from"./wangEditorSandbox";export default WangEditorSandbox;
+import WangEditorSandbox from"./WangEditorSandbox";export default WangEditorSandbox;
 //# sourceMappingURL=index.js.map
