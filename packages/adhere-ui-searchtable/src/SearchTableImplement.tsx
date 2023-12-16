@@ -6,6 +6,7 @@ import type {
   TablePaginationConfig,
   TableRowSelection,
 } from 'antd/lib/table/interface';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
@@ -30,7 +31,6 @@ export const selectorPrefix = 'adhere-ui-search-table-implement';
  * @class SearchTableImplement
  * @classdesc SearchTableImplement - SearchTable的默认实现
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class SearchTableImplement<P extends SearchTableProps, S extends SearchTableState>
   extends SearchTable<SearchTableImplementProps, SearchTableImplementState>
   implements ISearchTableImplement
@@ -622,13 +622,9 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @param {TableCurrentDataSource<object> | undefined} extra
    */
   onSubTableChange(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     pagination: TablePaginationConfig,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     filters: Record<string, FilterValue | null>,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sorter: SorterResult<object> | SorterResult<object>[],
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     extra?: TableCurrentDataSource<object> | undefined,
   ): void {}
 
@@ -740,12 +736,13 @@ const SearchTableImplementFactory: SearchTableImplementFactoryFunction<any, any>
         // @ts-ignore
         <Component
           ref={ref}
-          className={`${selectorPrefix}-wrap`}
           isShowExpandSearch
           defaultExpandSearchCollapse={false}
           fixedHeaderAutoTable
           fixedTableSpaceBetween
           {...props}
+          className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+          style={props.style ?? {}}
         />
       )),
     );

@@ -51,7 +51,8 @@ declare const ProSearchStateTable: {
             value: React.ReactNode;
         }[];
         assignSearchConfig(searchConfig: any, column: any): any;
-        renderSearchForm(): React.JSX.Element;
+        renderSearchBarCollapseControl(): any;
+        renderSearchForm(): React.JSX.Element | null;
         renderSearchFormToolBarItems(_defaultItems: any): any[];
         renderSearchFormToolBarDefaultPanel(): React.JSX.Element | null;
         renderSearchFooterItems(_defaultItems: any): any[];

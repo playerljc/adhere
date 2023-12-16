@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 import { v1 } from 'uuid';
 
+import Util from '@baifendian/adhere-util';
+
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
-import { IConfig } from './types';
+import type { IConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
 
@@ -78,6 +80,13 @@ class Popup {
       React.cloneElement(children, {
         ref: () => {
           (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+
+          const configProviderEL = Util.getTopDom(this.popupEl, 'adhere-ui-config-provider');
+
+          if (configProviderEL) {
+            (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
+          }
+
           this.trigger('onCreate');
         },
       }),

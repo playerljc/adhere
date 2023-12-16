@@ -99,7 +99,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -164,7 +165,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -229,7 +231,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -294,7 +297,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -359,7 +363,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -424,7 +429,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -489,7 +495,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -554,7 +561,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -619,7 +627,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -684,7 +693,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -749,7 +759,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -814,7 +825,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -879,7 +891,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -944,7 +957,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -1009,7 +1023,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -1074,7 +1089,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -1139,7 +1155,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];

@@ -1,3 +1,5 @@
+@import '~@baifendian/adhere-ui-css/es/mixin';
+
 .adhere-ui-popup-trigger-inner {
   display: flex;
   flex-direction: column;
@@ -30,7 +32,8 @@
       color: var(--adhere-color-text);
       font-weight: 700;
       font-size: var(--adhere-font-size-xl);
-      text-align: center;
+      text-align: left;
+      .adhere-text-inline-overflow();
     }
 
     > .adhere-ui-popup-trigger-inner-extra {

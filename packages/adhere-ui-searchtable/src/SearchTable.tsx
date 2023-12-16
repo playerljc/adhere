@@ -882,6 +882,56 @@ abstract class SearchTable<
   }
 
   /**
+   * renderSearchBarCollapseControl
+   */
+  renderSearchBarCollapseControl() {
+    return (
+      <ConditionalRender
+        conditional={this.state.expand as boolean}
+        noMatch={() => (
+          <a
+            key="expand"
+            className={`${selectorPrefix}-search-footer-item-expand-search-down-btn`}
+            onClick={() => {
+              this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+              // @ts-ignore
+              this.setState(
+                {
+                  expand: true,
+                },
+                () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+              );
+            }}
+          >
+            <span>{Intl.v('展开')}</span>
+            <DownOutlined />
+          </a>
+        )}
+      >
+        {() => (
+          <a
+            key="hide"
+            className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
+            onClick={() => {
+              this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
+              // @ts-ignore
+              this.setState(
+                {
+                  expand: false,
+                },
+                () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
+              );
+            }}
+          >
+            <span>{Intl.v('收起')}</span>
+            <UpOutlined />
+          </a>
+        )}
+      </ConditionalRender>
+    );
+  }
+
+  /**
    * renderSearchFormToolBar
    * @description 渲染查询表单的工具栏
    * @return {ReactNode}
@@ -903,50 +953,7 @@ abstract class SearchTable<
       <Button className={`${selectorPrefix}-search-footer-item`} key="reset" onClick={this.onClear}>
         {Intl.v('重置')}
       </Button>,
-      isShowExpandSearch && (
-        <ConditionalRender
-          conditional={this.state.expand as boolean}
-          noMatch={() => (
-            <a
-              key="expand"
-              className={`${selectorPrefix}-search-footer-item-expand-search-down-btn`}
-              onClick={() => {
-                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-                // @ts-ignore
-                this.setState(
-                  {
-                    expand: true,
-                  },
-                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
-                );
-              }}
-            >
-              <span>{Intl.v('展开')}</span>
-              <DownOutlined />
-            </a>
-          )}
-        >
-          {() => (
-            <a
-              key="hide"
-              className={`${selectorPrefix}-search-footer-item-expand-search-up-btn`}
-              onClick={() => {
-                this.onSearchPanelCollapseBefore && this.onSearchPanelCollapseBefore();
-                // @ts-ignore
-                this.setState(
-                  {
-                    expand: false,
-                  },
-                  () => this.onSearchPanelCollapseAfter && this.onSearchPanelCollapseAfter(),
-                );
-              }}
-            >
-              <span>{Intl.v('收起')}</span>
-              <UpOutlined />
-            </a>
-          )}
-        </ConditionalRender>
-      ),
+      isShowExpandSearch && this.renderSearchBarCollapseControl(),
     ].filter((t) => !!t);
 
     const items = this.renderSearchFormToolBarItems(defaultItems) || defaultItems;

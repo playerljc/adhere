@@ -64,7 +64,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -128,7 +129,8 @@ declare const _default: {
                 value: import("react").ReactNode;
             }[];
             assignSearchConfig(searchConfig: any, column: any): any;
-            renderSearchForm(): import("react").JSX.Element;
+            renderSearchBarCollapseControl(): any;
+            renderSearchForm(): import("react").JSX.Element | null;
             renderSearchFormToolBarItems(_defaultItems: any): any[];
             renderSearchFormToolBarDefaultPanel(): import("react").JSX.Element | null;
             renderSearchFooterItems(_defaultItems: any): any[];
@@ -319,18 +321,24 @@ declare const _default: {
         [x: string]: any;
         displayName: string;
     };
-    OptionsWrap: ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
-        className?: string | undefined;
-        style?: {} | undefined;
-        ellipsisCount?: number | undefined;
-        isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
-        children: any;
-    }) => import("react").JSX.Element;
-    DisabledOption: ({ className, style, children }: {
-        className: any;
-        style: any;
-        children: any;
-    }) => import("react").JSX.Element;
+    OptionsWrap: {
+        ({ className, style, ellipsisCount, isEllipsesShowOnlyOneAfterCollapsing, children, }: {
+            className?: string | undefined;
+            style?: {} | undefined;
+            ellipsisCount?: number | undefined;
+            isEllipsesShowOnlyOneAfterCollapsing?: boolean | undefined;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
+    DisabledOption: {
+        ({ className, style, children }: {
+            className: any;
+            style: any;
+            children: any;
+        }): import("react").JSX.Element;
+        displayName: string;
+    };
     SearchAndPaginParams: typeof import("@baifendian/adhere-ui-searchtable/es/Extension/SearchAndPaginParams");
 };
 export default _default;

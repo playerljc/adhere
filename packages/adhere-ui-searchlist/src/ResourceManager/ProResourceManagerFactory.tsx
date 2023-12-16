@@ -5,6 +5,7 @@ import React, { ReactNode, createRef } from 'react';
 import { CreditCardOutlined, InsertRowAboveOutlined } from '@ant-design/icons';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
+import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 import Intl from '@baifendian/adhere-util-intl';
@@ -139,7 +140,7 @@ export default function <P, S>(SuperClass) {
           $search: {
             type: 'dict',
             visible: true,
-            dictName: 'AdhereSearchListResourceManagerLabelValueSelect',
+            dictName: `AdhereSearchListResourceManagerLabelValue${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
           },
           render: (value) => (
             <span>

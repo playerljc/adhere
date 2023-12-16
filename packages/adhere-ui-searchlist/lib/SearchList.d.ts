@@ -122,6 +122,10 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     renderExportExcel(): ReactElement;
     /**
+     * renderSearchBarCollapseControl
+     */
+    renderSearchBarCollapseControl(): React.JSX.Element;
+    /**
      * renderSearchFormToolBar
      * @description 渲染查询表单的工具栏
      * @return {ReactNode}

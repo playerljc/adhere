@@ -1,4 +1,4 @@
-import { InputNumber } from 'antd';
+import { Button, Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import dayjs from 'dayjs';
 import merge from 'lodash.merge';
 import omit from 'omit.js';
@@ -8,18 +8,12 @@ import React from 'react';
 
 import { EllipsisOutlined, FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import {
-  Button,
   DatePicker,
   Dropdown,
-  Input,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,
   RangePicker,
-  Rate,
-  Slider,
-  Switch,
-  TextArea,
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -38,7 +32,7 @@ import { selectorPrefix } from './SearchTable';
 import type { AdvancedSearchPanelGroupData, ColumnTypeExt } from './types';
 
 // const { FormItemGeneratorToDict } = FieldGeneratorToDict;
-
+const { TextArea } = Input;
 const { renderGridSearchFormGroup, Label, Value } = TableGridLayout;
 const _selectorPrefix = `${selectorPrefix}-protable`;
 
@@ -808,13 +802,42 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
+     * renderSearchBarCollapseControl
+     */
+    renderSearchBarCollapseControl() {
+      const gridSearchFormGroupParams: any[] = [...this.getGridSearchFormGroupParams()];
+
+      // 如果查询项 > 列数
+      if (
+        gridSearchFormGroupParams[0][0].data.length > gridSearchFormGroupParams[0][0].columnCount
+      ) {
+        return super.renderSearchBarCollapseControl();
+      }
+
+      return null;
+    }
+
+    /**
      * renderSearchForm
      * 渲染Table查询的表单
      * @override
      */
     renderSearchForm() {
-      // @ts-ignore
-      return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
+      let hasSearch = true;
+
+      if (this.getTableColumnsAll) {
+        hasSearch = this.getTableColumnsAll().some((_column) => {
+          return (
+            '$search' in _column && 'visible' in _column.$search && _column.$search.visible
+            // || !('visible' in _column.$search)
+          );
+        });
+      }
+
+      if (hasSearch) {
+        // @ts-ignore
+        return this.renderGridSearchFormGroup(...this.getGridSearchFormGroupParams());
+      } else return null;
     }
 
     /**
@@ -884,17 +907,22 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
       const gridSearchFormGroupParams: any[] = [...this.getGridSearchFormGroupParams()];
 
-      gridSearchFormGroupParams[0][0].columnCount = 2;
+      // 如果查询项 > 列数
+      if (
+        gridSearchFormGroupParams[0][0].data.length > gridSearchFormGroupParams[0][0].columnCount
+      ) {
+        gridSearchFormGroupParams[0][0].columnCount = 2;
 
-      const layout = gridSearchFormGroupParams[1].layout;
+        const layout = gridSearchFormGroupParams[1].layout;
 
-      if (layout === 'horizontal') {
-        gridSearchFormGroupParams[0][0].colgroup = [, 'auto', , 'auto'];
-      } else if (layout === 'vertical') {
-        gridSearchFormGroupParams[0][0].colgroup = ['auto', 'auto'];
+        if (layout === 'horizontal') {
+          gridSearchFormGroupParams[0][0].colgroup = [, 'auto', , 'auto'];
+        } else if (layout === 'vertical') {
+          gridSearchFormGroupParams[0][0].colgroup = ['auto', 'auto'];
+        }
+
+        gridSearchFormGroupParams[2].rowCount = 1;
       }
-
-      gridSearchFormGroupParams[2].rowCount = 1;
 
       // @ts-ignore
       return this.renderGridSearchFormGroup(...gridSearchFormGroupParams);
@@ -1005,7 +1033,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Input
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1014,7 +1045,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <TextArea
             value={this.state[dataIndex]}
             onChange={(e) => this.onInputChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1023,7 +1057,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumber
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1032,7 +1069,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberDecimal1
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1041,7 +1081,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberDecimal2
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1050,7 +1093,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <InputNumberInteger
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              placeholder: searchConfig.title ?? column.title,
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1063,7 +1109,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 [dataIndex]: dayjs ? dayjs : null,
               });
             }}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1076,7 +1124,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                 [dataIndex]: dayjs ? dayjs : null,
               });
             }}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1089,7 +1139,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             onChange={(dayjs) => {
               this.onDateTimeRangeChange([startName, endName], dayjs);
             }}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1098,7 +1150,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Slider
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1108,7 +1162,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             range
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1117,7 +1173,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Rate
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1126,7 +1184,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Switch
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...(searchConfig.props ?? {})}
+            {...{
+              ...(searchConfig.props ?? {}),
+            }}
           />
         );
       };
@@ -1162,7 +1222,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           <Component
             value={this.state[dataIndex]}
             onChange={(e) => this.onSelectChange(dataIndex, e)}
-            {...Object.assign(popUpDefaultProps, searchConfig.props ?? {})}
+            {...Object.assign(
+              {
+                placeholder: searchConfig.title ?? column.title,
+              },
+              popUpDefaultProps,
+              searchConfig.props ?? {},
+            )}
           />
         );
       };

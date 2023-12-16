@@ -7,7 +7,7 @@ const data = require('../mock.js').default;
 export const fetchList = (() => {
   return {
     call: (params) => {
-      debugger;
+      console.log('params', params);
 
       return request.get({
         path: JSON.parse(JSON.stringify(data)),

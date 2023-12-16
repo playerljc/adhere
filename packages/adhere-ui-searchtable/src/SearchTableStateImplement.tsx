@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { forwardRef } from 'react';
 
 import ServiceRegister from '@ctsj/state/lib/middleware/saga/serviceregister';
@@ -130,13 +131,14 @@ const SearchTableStateImplementFactory: SearchTableStateImplementFactoryFunction
       // @ts-ignore
       <Component
         ref={ref}
-        className={`${selectorPrefix}-wrap`}
         isShowExpandSearch
         defaultExpandSearchCollapse={false}
         openSearchParamsMemory={false}
         fixedHeaderAutoTable
         fixedTableSpaceBetween
         {...props}
+        className={classNames(`${selectorPrefix}-wrap`, props.className ?? '')}
+        style={props.style ?? {}}
         $state={{
           serviceNames,
           middleWares,

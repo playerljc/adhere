@@ -1,18 +1,13 @@
-import { InputNumber } from 'antd';
+import { Input, InputNumber, Rate, Slider, Switch } from 'antd';
 import type { ReactNode } from 'react';
 import React from 'react';
 
 import {
   DatePicker,
-  Input,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,
   RangePicker,
-  Rate,
-  Slider,
-  Switch,
-  TextArea,
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
@@ -20,6 +15,7 @@ import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import type { FormItemGeneratorConfig } from '../../../types';
 
 // const { FormItemGeneratorToDict } = FieldGeneratorToDict;
+const { TextArea } = Input;
 
 export default {
   /**

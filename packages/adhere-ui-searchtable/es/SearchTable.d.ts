@@ -330,6 +330,10 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderExportExcel(): ReactElement;
     /**
+     * renderSearchBarCollapseControl
+     */
+    renderSearchBarCollapseControl(): React.JSX.Element;
+    /**
      * renderSearchFormToolBar
      * @description 渲染查询表单的工具栏
      * @return {ReactNode}

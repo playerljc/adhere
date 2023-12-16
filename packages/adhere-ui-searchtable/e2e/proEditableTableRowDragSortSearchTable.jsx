@@ -387,13 +387,22 @@ const List = SearchTableImplementFactory({
     getColumns() {
       return super.getColumns([
         {
+          title: 'hide',
+          dataIndex: 'hide',
+          key: 'hide',
+          $hide: true,
+          $search: {
+            visible: true,
+          },
+        },
+        {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
           width: 400,
           $tip: 'Name',
           $search: {
-            visible: true,
+            showColumnHeader: false,
           },
         },
         {

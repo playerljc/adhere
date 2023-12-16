@@ -1,5 +1,5 @@
 import React from 'react';
-import { IConfig } from './types';
+import type { IConfig } from './types';
 /**
  * Popup
  * @class Popup

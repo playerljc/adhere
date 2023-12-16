@@ -163,11 +163,15 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         assignSearchConfig(searchConfig: any, column: any): any;
         /**
+         * renderSearchBarCollapseControl
+         */
+        renderSearchBarCollapseControl(): any;
+        /**
          * renderSearchForm
          * 渲染Table查询的表单
          * @override
          */
-        renderSearchForm(): React.JSX.Element;
+        renderSearchForm(): React.JSX.Element | null;
         /**
          * renderSearchFormToolBarItems
          * @description 渲染查询表单的工具栏项
