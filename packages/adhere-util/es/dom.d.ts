@@ -25,12 +25,12 @@ declare const DomUtil: {
      */
     createElement(htmlStr: string): HTMLElement;
     /**
-     * getTopDom - 已target为开始向上查找元素
-     * @param {HtmlElement} target
+     * getTopDom - 已source为开始向上查找元素
+     * @param {HtmlElement} source
      * @param {string} selector
      * @return {HtmlElement}
      */
-    getTopDom(target: any, selector: string): HTMLElement | null;
+    getTopDom(source: any, selector: string): HTMLElement | null;
     /**
      * on - 注册事件
      * @param el

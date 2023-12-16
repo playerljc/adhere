@@ -39,19 +39,19 @@ const DomUtil = {
     return el.firstElementChild as HTMLElement;
   },
   /**
-   * getTopDom - 已target为开始向上查找元素
-   * @param {HtmlElement} target
+   * getTopDom - 已source为开始向上查找元素
+   * @param {HtmlElement} source
    * @param {string} selector
    * @return {HtmlElement}
    */
-  getTopDom(target, selector: string): HTMLElement | null {
-    if (!target || !selector) return null;
+  getTopDom(source, selector: string): HTMLElement | null {
+    if (!source || !selector) return null;
 
-    if (target.className.indexOf(selector) !== -1) {
-      return target;
+    if (source.className.indexOf(selector) !== -1) {
+      return source;
     }
 
-    let parentDom = target;
+    let parentDom = source;
     while ((parentDom = parentDom.parentNode)) {
       if (parentDom.className.indexOf(selector) !== -1) {
         break;
