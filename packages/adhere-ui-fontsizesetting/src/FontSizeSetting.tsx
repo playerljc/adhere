@@ -12,9 +12,9 @@ const selectorPrefix = 'adhere-ui-font-size-setting';
 const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
   const { className, style, onChange } = props;
 
-  const [value, setValue] = useState<number>(props.value);
+  const [value, setValue] = useState<number>(props.value ?? 0);
 
-  const el = useRef<HTMLDivElement | null>(null);
+  const rootELRef = useRef<HTMLDivElement | null>(null);
 
   const onSliderChange = useCallback(
     (v) => {
@@ -25,11 +25,15 @@ const FontSizeSetting = memo<FontSizeSettingProps>((props) => {
   );
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.value ?? 0);
   }, [props.value]);
 
   return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={el}>
+    <div
+      className={classNames(selectorPrefix, className ?? '')}
+      style={style ?? {}}
+      ref={rootELRef}
+    >
       <div className={`${selectorPrefix}-range-wrap`}>
         <div className={`${selectorPrefix}-separated-tool`}>
           <div className={`${selectorPrefix}-separated`}>
