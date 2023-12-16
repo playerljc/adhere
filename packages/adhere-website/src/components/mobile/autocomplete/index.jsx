@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+import Util from '@/util';
 
 export default () => {
+  const [indexCodeText, setIndexCodeText] = useState('');
+  const [p1CodeText, setP1CodeText] = useState('');
+  const [p2CodeText, setP2CodeText] = useState('');
+  const [p3CodeText, setP3CodeText] = useState('');
+
+  useEffect(() => {
+    Util.getMobileCodeText('autocomplete/index.jsx').then(setIndexCodeText);
+    Util.getMobileCodeText('autocomplete/examples/p1.jsx').then(setP1CodeText);
+    Util.getMobileCodeText('autocomplete/examples/p2.jsx').then(setP2CodeText);
+    Util.getMobileCodeText('autocomplete/examples/p3.jsx').then(setP3CodeText);
+  }, []);
+
   function boxPanelConfig() {
     return [
       {
@@ -15,228 +28,41 @@ export default () => {
           },
         },
         active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
         config: [
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            codeText: `
-  import React from 'react';
-
-  import DemoBlock from '@/lib/DemoBlock';
-
-  import Demo1 from './Demo1';
-  import Demo2 from './Demo2';
-  import Demo3 from './Demo3';
-
-  export default () => (
-    <DemoBlock>
-      <DemoBlock.Item title="基本使用">
-        <Demo1 />
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="自定义渲染查询项">
-        <Demo2 />
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="自定义渲染选择项">
-        <Demo3 />
-      </DemoBlock.Item>
-    </DemoBlock>
-  );
-      `,
             style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: indexCodeText,
           },
           {
-            key: 'Demo1.jsx',
-            title: 'Demo1.jsx',
-            codeText: `
-  import React, { useState } from 'react';
-
-  import { MobileAutoComplete, MobileGlobalIndicator } from '@baifendian/adhere';
-
-  import Book from '@/data';
-
-  export default () => {
-    const [searchDataSource, setSearchDataSource] = useState([]);
-
-    const [value, setValue] = useState([]);
-
-    return (
-      <MobileAutoComplete
-        style={{ height: 500 }}
-        onChange={(_value) => {
-          setValue(_value);
-        }}
-        value={value}
-        loadData={(_kw) => {
-          if (!_kw) {
-            setSearchDataSource([]);
-            return;
-          }
-
-          const handler = MobileGlobalIndicator.show();
-
-          setTimeout(() => {
-            setSearchDataSource(Book.filter((_book) => _book.t.indexOf(_kw) !== -1));
-
-            MobileGlobalIndicator.hide(handler);
-          }, 500);
-        }}
-        checkListProps={{
-          multiple: true,
-        }}
-        searchDataSource={searchDataSource}
-      />
-    );
-  };
-      `,
+            key: 'p1.jsx',
+            title: 'p1.jsx',
             style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: p1CodeText,
           },
           {
-            key: 'Demo2.jsx',
-            title: 'Demo2.jsx',
-            codeText: `
-  import { Image } from 'antd-mobile';
-  import React, { useState } from 'react';
-
-  import { MobileAutoComplete, MobileGlobalIndicator } from '@baifendian/adhere';
-
-  import Book from '@/data';
-
-  export default () => {
-    const [searchDataSource, setSearchDataSource] = useState([]);
-
-    const [value, setValue] = useState([]);
-
-    return (
-      <MobileAutoComplete
-        style={{ height: 500 }}
-        value={value}
-        loadData={(_kw) => {
-          if (!_kw) {
-            setSearchDataSource([]);
-            return;
-          }
-
-          const handler = MobileGlobalIndicator.show();
-
-          setTimeout(() => {
-            setSearchDataSource(Book.filter((_book) => _book.t.indexOf(_kw) !== -1));
-
-            MobileGlobalIndicator.hide(handler);
-          }, 500);
-        }}
-        onChange={(_value) => {
-          setValue(_value);
-        }}
-        checkListProps={{
-          multiple: true,
-        }}
-        searchDataSource={searchDataSource}
-        renderItem={(record) => ({
-          description: record.label,
-          prefix: (
-            <Image
-              src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-              style={{ borderRadius: 20 }}
-              fit="cover"
-              width={40}
-              height={40}
-            />
-          ),
-          children: record.t,
-        })}
-      />
-    );
-  };
-      `,
+            key: 'p2.jsx',
+            title: 'p2.jsx',
             style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: p2CodeText,
           },
           {
-            key: 'Demo3.jsx',
-            title: 'Demo3.jsx',
-            codeText: `
-  import { CheckList, Image } from 'antd-mobile';
-  import React, { useState } from 'react';
-
-  import { MobileAutoComplete, MobileGlobalIndicator } from '@baifendian/adhere';
-
-  import Book from '@/data';
-
-  export default () => {
-    const [searchDataSource, setSearchDataSource] = useState([]);
-
-    const [value, setValue] = useState([]);
-
-    return (
-      <MobileAutoComplete
-        style={{ height: 500 }}
-        value={value}
-        loadData={(_kw) => {
-          if (!_kw) {
-            setSearchDataSource([]);
-            return;
-          }
-
-          const handler = MobileGlobalIndicator.show();
-
-          setTimeout(() => {
-            setSearchDataSource(Book.filter((_book) => _book.t.indexOf(_kw) !== -1));
-
-            MobileGlobalIndicator.hide(handler);
-          }, 500);
-        }}
-        onChange={(_value) => {
-          setValue(_value);
-        }}
-        checkListProps={{
-          multiple: true,
-        }}
-        searchDataSource={searchDataSource}
-        renderItem={(record) => ({
-          description: record.label,
-          prefix: (
-            <Image
-              src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-              style={{ borderRadius: 20 }}
-              fit="cover"
-              width={40}
-              height={40}
-            />
-          ),
-          children: record.t,
-        })}
-        renderResultItem={(record) => (
-          <CheckList>
-            <CheckList.Item
-              prefix={
-                <Image
-                  src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                  style={{ borderRadius: 20 }}
-                  fit="cover"
-                  width={40}
-                  height={40}
-                />
-              }
-              description={record.label}
-            >
-              {record.t}
-            </CheckList.Item>
-          </CheckList>
-        )}
-      />
-    );
-  };
-      `,
+            key: 'p3.jsx',
+            title: 'p3.jsx',
             style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: p3CodeText,
           },
         ],
         type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/autocomplete`,
       },
     ];
   }

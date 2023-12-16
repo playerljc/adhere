@@ -1,3 +1,5 @@
+const path = require('path');
+
 function isDev(mode) {
   return mode === 'development';
 }
@@ -38,6 +40,14 @@ module.exports = {
           index: `/${publicPath}/index.html`,
         };
       }
+
+      // 固定端口9099
+      webpackConfig.devServer.port = 9099;
+
+      // 处理CORS问题
+      webpackConfig.devServer.headers = {
+        'Access-Control-Allow-Origin': '*',
+      };
     }
 
     if (publicPath !== '/') {
@@ -48,6 +58,10 @@ module.exports = {
 
     webpackConfig.output.chunkFilename = webpackConfig.output.filename;
 
+    webpackConfig.externals = {
+      '@/constent': 'Constent',
+    };
+
     // 这块只有需要主题切换的时候才能用到
     const MiniCssExtractPluginIndex = isProd(webpackConfig.mode) ? 3 : 2;
     webpackConfig.plugins[MiniCssExtractPluginIndex] = new plugins.MiniCssExtractPlugin({
@@ -55,6 +69,19 @@ module.exports = {
       chunkFilename: chunkNameCSS,
       ignoreOrder: true,
     });
+
+    // 将src拷贝到assets中
+    webpackConfig.plugins.push(
+      new plugins.CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, 'src/components/ui'),
+            to: 'codeText',
+            toType: 'dir',
+          },
+        ],
+      }),
+    );
 
     // 这个文件不在src里也不在node_modules里，只在link的时候才会遇到这个问题(原因是node_modules里的包是link过来的)
     webpackConfig.module.rules[webpackConfig.module.rules.length - 1].exclude = [

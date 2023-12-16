@@ -1,6 +1,121 @@
-import { Input } from 'antd';
-import React, { useState } from 'react';
-import reactElementToJsxString from 'react-element-to-jsx-string';
+import AutoCompleteCodeText from '!!raw-loader!./examples/AutoComplete/AutoComplete';
+import AutoCompleteSelectInputCodeText from '!!raw-loader!./examples/AutoComplete/AutoCompleteSelectInput';
+import BasicHOCDatePickerCodeText from '!!raw-loader!./examples/BasicHOC/DatePicker';
+import BasicHOCFormCodeText from '!!raw-loader!./examples/BasicHOC/Form';
+import BasicHOCInputCodeText from '!!raw-loader!./examples/BasicHOC/Input';
+import BasicHOCInputNumberDecimal11CodeText from '!!raw-loader!./examples/BasicHOC/InputNumberDecimal1';
+import BasicHOCInputNumberDecimal2CodeText from '!!raw-loader!./examples/BasicHOC/InputNumberDecimal2';
+import BasicHOCInputNumberIntegerCodeText from '!!raw-loader!./examples/BasicHOC/InputNumberInteger';
+import BasicHOCModalCodeText from '!!raw-loader!./examples/BasicHOC/Modal';
+import BasicHOCPaginationCodeText from '!!raw-loader!./examples/BasicHOC/Pagination';
+import BasicHOCRangePickerCodeText from '!!raw-loader!./examples/BasicHOC/RangePicker';
+import BasicHOCSubmitButtonCodeText from '!!raw-loader!./examples/BasicHOC/SubmitButton';
+import BasicHOCTextAreaCodeText from '!!raw-loader!./examples/BasicHOC/TextArea';
+import BasicHOCTimePickerCodeText from '!!raw-loader!./examples/BasicHOC/TimePicker';
+import BasicHOCUploadCodeText from '!!raw-loader!./examples/BasicHOC/Upload';
+import AsyncCascaderCodeText from '!!raw-loader!./examples/Cascader/AsyncCascader';
+import AsyncCascaderChangeOnSelectCodeText from '!!raw-loader!./examples/Cascader/AsyncCascaderChangeOnSelect';
+import AsyncCascaderEchoCodeText from '!!raw-loader!./examples/Cascader/AsyncCascaderEcho';
+import AsyncCascaderMultiCodeText from '!!raw-loader!./examples/Cascader/AsyncCascaderMulti';
+import AsyncCascaderMultiEchoCodeText from '!!raw-loader!./examples/Cascader/AsyncCascaderMultiEcho';
+import AsyncCascaderShowChildCodeText from '!!raw-loader!./examples/Cascader/AsyncCascaderShowChild';
+import CascaderCodeText from '!!raw-loader!./examples/Cascader/Cascader';
+import CascaderChangeOnSelectCodeText from '!!raw-loader!./examples/Cascader/CascaderChangeOnSelect';
+import CascaderMultiCodeText from '!!raw-loader!./examples/Cascader/CascaderMulti';
+import CascaderShowChildCodeText from '!!raw-loader!./examples/Cascader/CascaderShowChild';
+import FlatAsyncCascaderCodeText from '!!raw-loader!./examples/Cascader/FlatAsyncCascader';
+import FlatCascaderCodeText from '!!raw-loader!./examples/Cascader/FlatCascader';
+import AutoCompleteCheckAllCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/AutoCompleteCheckAllCheckboxSelect';
+import AutoCompleteCheckAllCustomCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/AutoCompleteCheckAllCustomCheckboxSelect';
+import AutoCompleteCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/AutoCompleteCheckboxSelect';
+import AutoCompleteCustomCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/AutoCompleteCustomCheckboxSelect';
+import CheckAllCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/CheckAllCheckboxSelect';
+import CheckAllCustomCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/CheckAllCustomCheckboxSelect';
+import CheckboxCodeText from '!!raw-loader!./examples/Checkbox/Checkbox';
+import CheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/CheckboxSelect';
+import CustomCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/CustomCheckAllCheckbox';
+import CustomCheckboxCodeText from '!!raw-loader!./examples/Checkbox/CustomCheckbox';
+import CustomCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/CustomCheckboxSelect';
+import HorizontalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/HorizontalCheckAllCheckbox';
+import HorizontalCheckboxCodeText from '!!raw-loader!./examples/Checkbox/HorizontalCheckbox';
+import VerticalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/VerticalCheckAllCheckbox';
+import VerticalCheckboxCodeText from '!!raw-loader!./examples/Checkbox/VerticalCheckbox';
+import AutoCompleteCheckAllListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteCheckAllListSelect';
+import AutoCompleteListPagingSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListPagingSelect';
+import AutoCompleteListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListSelect';
+import CheckAllListSelectCodeText from '!!raw-loader!./examples/List/CheckAllListSelect';
+import CheckboxListPagingCodeText from '!!raw-loader!./examples/List/CheckboxListPaging';
+import CheckboxListPagingSelectCodeText from '!!raw-loader!./examples/List/CheckboxListPagingSelect';
+import CheckboxListSelectCodeText from '!!raw-loader!./examples/List/CheckboxListSelect';
+import ListCodeText from '!!raw-loader!./examples/List/List';
+import RadioListPagingCodeText from '!!raw-loader!./examples/List/RadioListPaging';
+import RadioListPagingSelectCodeText from '!!raw-loader!./examples/List/RadioListPagingSelect';
+import RadioListSelectCodeText from '!!raw-loader!./examples/List/RadioListSelect';
+import SuspenseListPagingCodeText from '!!raw-loader!./examples/List/SuspenseListPaging';
+import AutoCompleteButtonRadioSelectCodeText from '!!raw-loader!./examples/Radio/AutoCompleteButtonRadioSelect';
+import AutoCompleteCustomRadioSelectCodeText from '!!raw-loader!./examples/Radio/AutoCompleteCustomRadioSelect';
+import AutoCompleteRadioSelectCodeText from '!!raw-loader!./examples/Radio/AutoCompleteRadioSelect';
+import ButtonRadioCodeText from '!!raw-loader!./examples/Radio/ButtonRadio';
+import ButtonRadioSelectCodeText from '!!raw-loader!./examples/Radio/ButtonRadioSelect';
+import CustomRadioCodeText from '!!raw-loader!./examples/Radio/CustomRadio';
+import CustomRadioSelectCodeText from '!!raw-loader!./examples/Radio/CustomRadioSelect';
+import HorizontalRadioCodeText from '!!raw-loader!./examples/Radio/HorizontalRadio';
+import RadioCodeText from '!!raw-loader!./examples/Radio/Radio';
+import RadioSelectCodeText from '!!raw-loader!./examples/Radio/RadioSelect';
+import VerticalRadioCodeText from '!!raw-loader!./examples/Radio/VerticalRadio';
+import AutoCompleteCheckAllMultipleSelectCodeText from '!!raw-loader!./examples/Select/AutoCompleteCheckAllMultipleSelect';
+import AutoCompleteMultipleSelectCodeText from '!!raw-loader!./examples/Select/AutoCompleteMultipleSelect';
+import AutoCompleteSelectCodeText from '!!raw-loader!./examples/Select/AutoCompleteSelect';
+import CheckAllMultipleSelectCodeText from '!!raw-loader!./examples/Select/CheckAllMultipleSelect';
+import DropdownRenderSelectCodeText from '!!raw-loader!./examples/Select/DropdownRenderSelect';
+import MultipleSelectCodeText from '!!raw-loader!./examples/Select/MultipleSelect';
+import SelectCodeText from '!!raw-loader!./examples/Select/Select';
+import AutoCompleteTablePagingSelectCodeText from '!!raw-loader!./examples/Table/AutoCompleteTablePagingSelect';
+import AutoCompleteTableSelectCodeText from '!!raw-loader!./examples/Table/AutoCompleteTableSelect';
+import CheckboxTablePagingCodeText from '!!raw-loader!./examples/Table/CheckboxTablePaging';
+import CheckboxTablePagingSelectCodeText from '!!raw-loader!./examples/Table/CheckboxTablePagingSelect';
+import CheckboxTableSelectCodeText from '!!raw-loader!./examples/Table/CheckboxTablePagingSelect';
+import RadioTablePagingCodeText from '!!raw-loader!./examples/Table/RadioTablePaging';
+import RadioTablePagingSelectCodeText from '!!raw-loader!./examples/Table/RadioTablePagingSelect';
+import RadioTableSelectCodeText from '!!raw-loader!./examples/Table/RadioTableSelect';
+import SuspenseTablePagingCodeText from '!!raw-loader!./examples/Table/SuspenseTablePaging';
+import TableCodeText from '!!raw-loader!./examples/Table/Table';
+import AutoCompleteCheckAllTagSelectCodeText from '!!raw-loader!./examples/Tag/AutoCompleteCheckAllTagSelect';
+import AutoCompleteTagSelectCodeText from '!!raw-loader!./examples/Tag/AutoCompleteTagSelect';
+import CheckAllTagSelectCodeText from '!!raw-loader!./examples/Tag/CheckAllTagSelect';
+import HorizontalCheckAllCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/HorizontalCheckAllCheckableTagGroup';
+import HorizontalCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/HorizontalCheckableTagGroup';
+import HorizontalTagGroupCodeText from '!!raw-loader!./examples/Tag/HorizontalTagGroup';
+import TagCodeText from '!!raw-loader!./examples/Tag/Tag';
+import TagSelectCodeText from '!!raw-loader!./examples/Tag/TagSelect';
+import VerticalCheckAllCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalCheckAllCheckableTagGroup';
+import VerticalCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalCheckableTagGroup';
+import VerticalTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalTagGroup';
+import AutoCompleteTransferSelectCodeText from '!!raw-loader!./examples/Transfer/AutoCompleteTransferSelect';
+import TransferCodeText from '!!raw-loader!./examples/Transfer/Transfer';
+import TransferSelectCodeText from '!!raw-loader!./examples/Transfer/TransferSelect';
+import AsyncTreeCheckedShowAllSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowAllSelect';
+import AsyncTreeCheckedShowChildSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowChildSelect';
+import AsyncTreeCheckedShowParentSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowParentSelect';
+import AsyncTreeLeafSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeLeafSelect';
+import AsyncTreeMultiLeafSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeMultiLeafSelect';
+import AsyncTreeMultiLeafSelectEchoCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeMultiLeafSelectEcho';
+import AsyncTreeMultiSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeMultiSelect';
+import AsyncTreeMultiSelectEchoCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeMultiSelectEcho';
+import AsyncTreeSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeSelect';
+import AsyncTreeSelectEchoCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeSelectEcho';
+import FlatAsyncTreeMultiSelectEchoCodeText from '!!raw-loader!./examples/TreeSelect/FlatAsyncTreeMultiSelectEcho';
+import FlatAsyncTreeSelectCodeText from '!!raw-loader!./examples/TreeSelect/FlatAsyncTreeSelect';
+import FlatTreeSelectCodeText from '!!raw-loader!./examples/TreeSelect/FlatTreeSelect';
+import TreeCheckedShowAllSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeCheckedShowAllSelect';
+import TreeCheckedShowChildSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeCheckedShowChildSelect';
+import TreeCheckedShowParentSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeCheckedShowParentSelect';
+import TreeLeafSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeLeafSelect';
+import TreeMultiLeafSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeMultiLeafSelect';
+import TreeMultiSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeMultiSelect';
+import TreeSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeSelect';
+
+import React from 'react';
 
 /**
  * input
@@ -28,30 +143,26 @@ import reactElementToJsxString from 'react-element-to-jsx-string';
  * cascader
  * auto-complete
  */
-import { UploadOutlined } from '@ant-design/icons';
 import { FlexLayout, Space } from '@baifendian/adhere';
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input as InputHOC,
-  InputNumberDecimal1,
-  InputNumberDecimal2,
-  InputNumberInteger,
-  Modal,
-  Pagination,
-  RangePicker,
-  SubmitButton,
-  TextArea,
-  TimePicker,
-  Upload,
-} from '@baifendian/adhere-ui-anthoc';
+import { DatePicker, RangePicker, TimePicker } from '@baifendian/adhere-ui-anthoc';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
-import Util from '@/util';
 
 import AutoComplete from './examples/AutoComplete/AutoComplete';
 import AutoCompleteSelectInput from './examples/AutoComplete/AutoCompleteSelectInput';
+import BasicHOCDatePicker from './examples/BasicHOC/DatePicker';
+import BasicHOCForm from './examples/BasicHOC/Form';
+import BasicHOCInput from './examples/BasicHOC/Input';
+import BasicHOCInputNumberDecimal11 from './examples/BasicHOC/InputNumberDecimal1';
+import BasicHOCInputNumberDecimal2 from './examples/BasicHOC/InputNumberDecimal2';
+import BasicHOCInputNumberInteger from './examples/BasicHOC/InputNumberInteger';
+import BasicHOCModal from './examples/BasicHOC/Modal';
+import BasicHOCPagination from './examples/BasicHOC/Pagination';
+import BasicHOCRangePicker from './examples/BasicHOC/RangePicker';
+import BasicHOCSubmitButton from './examples/BasicHOC/SubmitButton';
+import BasicHOCTextArea from './examples/BasicHOC/TextArea';
+import BasicHOCTimePicker from './examples/BasicHOC/TimePicker';
+import BasicHOCUpload from './examples/BasicHOC/Upload';
 import AsyncCascader from './examples/Cascader/AsyncCascader';
 import AsyncCascaderChangeOnSelect from './examples/Cascader/AsyncCascaderChangeOnSelect';
 import AsyncCascaderEcho from './examples/Cascader/AsyncCascaderEcho';
@@ -159,627 +270,9 @@ import TreeSelect from './examples/TreeSelect/TreeSelect';
 const { ScrollLayout } = FlexLayout;
 
 export default () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  console.log('a======', reactElementToJsxString(<FlexLayout />));
+  // console.log('a======', reactElementToJsxString(<FlexLayout />));
   // console.log('a======', reactElementToJsxString(<Input type="primary" />));
-
-  <Input type="primary" />;
-
-  console.log('b======', <FlexLayout type="primary" />);
-
-  const basicHOCConfig = [
-    {
-      id: `Input`,
-      name: `Input`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'Input',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <Input
-            placeholder="请输入"
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'Input',
-      }),
-      renderChildren: () => (
-        <Input
-          placeholder="请输入"
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `TextArea`,
-      name: `TextArea`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'TextArea',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <TextArea
-            placeholder="请输入"
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'TextArea',
-      }),
-      renderChildren: () => (
-        <TextArea
-          placeholder="请输入"
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `InputNumberDecimal1`,
-      name: `InputNumberDecimal1`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'InputNumberDecimal1',
-          info: '只能输入一位小数',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <InputNumberDecimal1
-            placeholder="请输入"
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'InputNumberDecimal1',
-      }),
-      renderChildren: () => (
-        <InputNumberDecimal1
-          placeholder="请输入"
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `InputNumberDecimal2`,
-      name: `InputNumberDecimal2`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'InputNumberDecimal2',
-          info: '只能输入两位小鼠',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <InputNumberDecimal2
-            placeholder="请输入"
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'InputNumberDecimal2',
-      }),
-      renderChildren: () => (
-        <InputNumberDecimal2
-          placeholder="请输入"
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `InputNumberInteger`,
-      name: `InputNumberInteger`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'InputNumberInteger',
-          info: '只能输入整数',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <InputNumberInteger
-            placeholder="请输入"
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'InputNumberInteger',
-      }),
-      renderChildren: () => (
-        <InputNumberInteger
-          placeholder="请输入"
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `Modal`,
-      name: `Modal`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'Modal',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <div>
-            <Button
-              type="primary"
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-            >
-              Open Modal
-            </Button>
-            <Modal
-              title="Basic Modal"
-              open={isModalOpen}
-              onOk={() => {
-                setIsModalOpen(false);
-              }}
-              onCancel={() => {
-                setIsModalOpen(false);
-              }}
-            >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-            </Modal>
-          </div>
-        ),
-        displayName: '',
-      }),
-      renderChildren: () => (
-        <div>
-          <Button
-            type="primary"
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
-          >
-            Open Modal
-          </Button>
-          <Modal
-            title="Basic Modal"
-            open={isModalOpen}
-            onOk={() => {
-              setIsModalOpen(false);
-            }}
-            onCancel={() => {
-              setIsModalOpen(false);
-            }}
-          >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </Modal>
-        </div>
-      ),
-    },
-    {
-      id: `DatePicker`,
-      name: `DatePicker`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'DatePicker',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <DatePicker
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'DatePicker',
-      }),
-      renderChildren: () => (
-        <DatePicker
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `RangePicker`,
-      name: `RangePicker`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'RangePicker',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <RangePicker
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'RangePicker',
-      }),
-      renderChildren: () => (
-        <RangePicker
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `TimePicker`,
-      name: `TimePicker`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'TimePicker',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <TimePicker
-            style={{
-              width: 200,
-            }}
-          />
-        ),
-        displayName: 'TimePicker',
-      }),
-      renderChildren: () => (
-        <TimePicker
-          style={{
-            width: 200,
-          }}
-        />
-      ),
-    },
-    {
-      id: `Upload`,
-      name: `Upload`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'Upload',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <Upload
-            {...{
-              name: 'file',
-              action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-              headers: {
-                authorization: 'authorization-text',
-              },
-              onChange(info) {
-                if (info.file.status !== 'uploading') {
-                  console.log(info.file, info.fileList);
-                }
-                if (info.file.status === 'done') {
-                  message.success(`${info.file.name} file uploaded successfully`);
-                } else if (info.file.status === 'error') {
-                  message.error(`${info.file.name} file upload failed.`);
-                }
-              },
-            }}
-          >
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
-        ),
-        displayName: 'Upload',
-      }),
-      renderChildren: () => (
-        <Upload
-          {...{
-            name: 'file',
-            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-            headers: {
-              authorization: 'authorization-text',
-            },
-            onChange(info) {
-              if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
-              }
-              if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`);
-              } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-              }
-            },
-          }}
-        >
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload>
-      ),
-    },
-    {
-      id: `Pagination`,
-      name: `Pagination`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'Pagination',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: <Pagination defaultCurrent={1} total={50} />,
-        displayName: 'Pagination',
-      }),
-      renderChildren: () => <Pagination defaultCurrent={1} total={50} />,
-    },
-    {
-      id: `SubmitButton`,
-      name: `SubmitButton`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'SubmitButton',
-          info: '提交按钮',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <SubmitButton
-            style={{
-              width: 200,
-            }}
-            type="primary"
-            onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
-          >
-            提交
-          </SubmitButton>
-        ),
-        displayName: 'SubmitButton',
-      }),
-      renderChildren: () => (
-        <SubmitButton
-          style={{
-            width: 200,
-          }}
-          type="primary"
-          onClick={() => new Promise((resolve) => setTimeout(resolve, 3000))}
-        >
-          提交
-        </SubmitButton>
-      ),
-    },
-    {
-      id: `Form`,
-      name: `Form`,
-      mode: 'code',
-      scope: { React },
-      cardProps: {
-        description: {
-          title: 'Form',
-          info: '使用了默认配置',
-        },
-      },
-      type: 'PlayGround',
-      codeText: Util.reactElementToJsxStringById({
-        element: (
-          <div>
-            <p>
-              对Form的Rules进行增强(
-              <a target="_blank" href="/adhere/component/util/validator">
-                使用adhere-util-validator
-              </a>
-              )
-            </p>
-
-            <Form labelCol={{ span: 3 }} wrapperCol={{ span: 21 }}>
-              <ul>
-                <Space.Group direction="vertical">
-                  <li>
-                    <Form.Item
-                      name="email"
-                      label="email"
-                      rules={[Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' })]}
-                    >
-                      <Input placeholder="email" />
-                    </Form.Item>
-                  </li>
-                  <li>
-                    <Form.Item
-                      name="mime"
-                      label="mime"
-                      rules={[
-                        Form.ValidatorRules.isMimeType({
-                          invalidMessage: 'MimeType格式错误',
-                        }),
-                      ]}
-                    >
-                      <Input placeholder="mime" />
-                    </Form.Item>
-                  </li>
-                  <li>
-                    <Form.Item
-                      name="hex"
-                      label="hex"
-                      rules={[
-                        Form.ValidatorRules.isHexColor({
-                          invalidMessage: 'hex值格式错误',
-                        }),
-                      ]}
-                    >
-                      <Input placeholder="hex" />
-                    </Form.Item>
-                  </li>
-                  <li>
-                    <Form.Item
-                      name="ip"
-                      label="ip"
-                      rules={[
-                        Form.ValidatorRules.isIP({
-                          invalidMessage: 'ip地址格式错误',
-                        }),
-                      ]}
-                    >
-                      <Input placeholder="ip" />
-                    </Form.Item>
-                  </li>
-                  <li>
-                    <Form.Item
-                      name="chinaPhoneNumber"
-                      label="手机卡 + 数据卡 + 上网卡"
-                      rules={[
-                        Form.ValidatorRules.isAllChinaPhoneNumber({
-                          invalidMessage: '手机卡或数据卡或上网卡格式错误',
-                        }),
-                      ]}
-                    >
-                      <Input placeholder="手机卡 + 数据卡 + 上网卡" />
-                    </Form.Item>
-                  </li>
-                </Space.Group>
-              </ul>
-            </Form>
-          </div>
-        ),
-        displayName: '',
-      }),
-      renderChildren: () => (
-        <div>
-          <p>
-            对Form的Rules进行增强(
-            <a target="_blank" href="/adhere/component/util/validator">
-              使用adhere-util-validator
-            </a>
-            )
-          </p>
-
-          <Form labelCol={{ span: 3 }} wrapperCol={{ span: 21 }}>
-            <ul>
-              <Space.Group direction="vertical">
-                <li>
-                  <Form.Item
-                    name="email"
-                    label="email"
-                    rules={[Form.ValidatorRules.isEmail({ invalidMessage: 'email格式错误' })]}
-                  >
-                    <Input placeholder="email" />
-                  </Form.Item>
-                </li>
-                <li>
-                  <Form.Item
-                    name="mime"
-                    label="mime"
-                    rules={[
-                      Form.ValidatorRules.isMimeType({
-                        invalidMessage: 'MimeType格式错误',
-                      }),
-                    ]}
-                  >
-                    <Input placeholder="mime" />
-                  </Form.Item>
-                </li>
-                <li>
-                  <Form.Item
-                    name="hex"
-                    label="hex"
-                    rules={[
-                      Form.ValidatorRules.isHexColor({
-                        invalidMessage: 'hex值格式错误',
-                      }),
-                    ]}
-                  >
-                    <Input placeholder="hex" />
-                  </Form.Item>
-                </li>
-                <li>
-                  <Form.Item
-                    name="ip"
-                    label="ip"
-                    rules={[
-                      Form.ValidatorRules.isIP({
-                        invalidMessage: 'ip地址格式错误',
-                      }),
-                    ]}
-                  >
-                    <Input placeholder="ip" />
-                  </Form.Item>
-                </li>
-                <li>
-                  <Form.Item
-                    name="chinaPhoneNumber"
-                    label="手机卡 + 数据卡 + 上网卡"
-                    rules={[
-                      Form.ValidatorRules.isAllChinaPhoneNumber({
-                        invalidMessage: '手机卡或数据卡或上网卡格式错误',
-                      }),
-                    ]}
-                  >
-                    <Input placeholder="手机卡 + 数据卡 + 上网卡" />
-                  </Form.Item>
-                </li>
-              </Space.Group>
-            </ul>
-          </Form>
-        </div>
-      ),
-    },
-  ];
+  // console.log('b======', <FlexLayout type="primary" />);
 
   return (
     <PlayGroundPage>
@@ -790,7 +283,206 @@ export default () => {
         </ul>
       </Section>
 
-      <CodeBoxSection title="BasicHOC" config={basicHOCConfig} />
+      <CodeBoxSection
+        title="BasicHOC"
+        config={[
+          {
+            id: `Input`,
+            name: `Input`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Input',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCInputCodeText,
+            renderChildren: () => <BasicHOCInput />,
+          },
+          {
+            id: `TextArea`,
+            name: `TextArea`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TextArea',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCTextAreaCodeText,
+            renderChildren: () => <BasicHOCTextArea />,
+          },
+          {
+            id: `InputNumberDecimal1`,
+            name: `InputNumberDecimal1`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'InputNumberDecimal1',
+                info: '只能输入一位小数',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCInputNumberDecimal11CodeText,
+            renderChildren: () => <BasicHOCInputNumberDecimal11 />,
+          },
+          {
+            id: `InputNumberDecimal2`,
+            name: `InputNumberDecimal2`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'InputNumberDecimal2',
+                info: '只能输入两位小鼠',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCInputNumberDecimal2CodeText,
+            renderChildren: () => <BasicHOCInputNumberDecimal2 />,
+          },
+          {
+            id: `InputNumberInteger`,
+            name: `InputNumberInteger`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'InputNumberInteger',
+                info: '只能输入整数',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCInputNumberIntegerCodeText,
+            renderChildren: () => <BasicHOCInputNumberInteger />,
+          },
+          {
+            id: `Modal`,
+            name: `Modal`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Modal',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCModalCodeText,
+            renderChildren: () => <BasicHOCModal />,
+          },
+          {
+            id: `DatePicker`,
+            name: `DatePicker`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'DatePicker',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCDatePickerCodeText,
+            renderChildren: () => <BasicHOCDatePicker />,
+          },
+          {
+            id: `RangePicker`,
+            name: `RangePicker`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RangePicker',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCRangePickerCodeText,
+            renderChildren: () => <BasicHOCRangePicker />,
+          },
+          {
+            id: `TimePicker`,
+            name: `TimePicker`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TimePicker',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCTimePickerCodeText,
+            renderChildren: () => <BasicHOCTimePicker />,
+          },
+          {
+            id: `Upload`,
+            name: `Upload`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Upload',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCUploadCodeText,
+            renderChildren: () => <BasicHOCUpload />,
+          },
+          {
+            id: `Pagination`,
+            name: `Pagination`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Pagination',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCPaginationCodeText,
+            renderChildren: () => <BasicHOCPagination />,
+          },
+          {
+            id: `SubmitButton`,
+            name: `SubmitButton`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SubmitButton',
+                info: '提交按钮',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCSubmitButtonCodeText,
+            renderChildren: () => <BasicHOCSubmitButton />,
+          },
+          {
+            id: `Form`,
+            name: `Form`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'Form',
+                info: '使用了默认配置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: BasicHOCFormCodeText,
+            renderChildren: () => <BasicHOCForm />,
+          },
+        ]}
+      />
 
       <CodeBoxSection
         title="TransferHOC"
@@ -807,7 +499,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TransferCodeText,
             renderChildren: () => <Transfer />,
           },
           {
@@ -822,7 +514,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TransferSelectCodeText,
             renderChildren: () => <TransferSelect />,
           },
           {
@@ -837,7 +529,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteTransferSelectCodeText,
             renderChildren: () => <AutoCompleteTransferSelect />,
           },
         ]}
@@ -858,7 +550,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: SelectCodeText,
             renderChildren: () => <Select />,
           },
           {
@@ -873,7 +565,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: MultipleSelectCodeText,
             renderChildren: () => <MultipleSelect />,
           },
           {
@@ -888,7 +580,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckAllMultipleSelectCodeText,
             renderChildren: () => <CheckAllMultipleSelect />,
           },
           {
@@ -903,7 +595,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: DropdownRenderSelectCodeText,
             renderChildren: () => <DropdownRenderSelect />,
           },
           {
@@ -918,7 +610,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteSelectCodeText,
             renderChildren: () => <AutoCompleteSelect />,
           },
           {
@@ -933,7 +625,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteMultipleSelectCodeText,
             renderChildren: () => <AutoCompleteMultipleSelect />,
           },
           {
@@ -948,7 +640,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCheckAllMultipleSelectCodeText,
             renderChildren: () => <AutoCompleteCheckAllMultipleSelect />,
           },
         ]}
@@ -969,7 +661,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioCodeText,
             renderChildren: () => <Radio />,
           },
           {
@@ -984,7 +676,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: VerticalRadioCodeText,
             renderChildren: () => <VerticalRadio />,
           },
           {
@@ -999,7 +691,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: HorizontalRadioCodeText,
             renderChildren: () => <HorizontalRadio />,
           },
           {
@@ -1014,7 +706,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CustomRadioCodeText,
             renderChildren: () => <CustomRadio />,
           },
           {
@@ -1029,7 +721,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: ButtonRadioCodeText,
             renderChildren: () => <ButtonRadio />,
           },
           {
@@ -1044,7 +736,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioSelectCodeText,
             renderChildren: () => <RadioSelect />,
           },
           {
@@ -1059,7 +751,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CustomRadioSelectCodeText,
             renderChildren: () => <CustomRadioSelect />,
           },
           {
@@ -1074,7 +766,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: ButtonRadioSelectCodeText,
             renderChildren: () => <ButtonRadioSelect />,
           },
           {
@@ -1089,7 +781,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteRadioSelectCodeText,
             renderChildren: () => <AutoCompleteRadioSelect />,
           },
           {
@@ -1104,7 +796,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCustomRadioSelectCodeText,
             renderChildren: () => <AutoCompleteCustomRadioSelect />,
           },
           {
@@ -1119,7 +811,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteButtonRadioSelectCodeText,
             renderChildren: () => <AutoCompleteButtonRadioSelect />,
           },
         ]}
@@ -1140,7 +832,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxCodeText,
             renderChildren: () => <Checkbox />,
           },
           {
@@ -1155,7 +847,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxSelectCodeText,
             renderChildren: () => <CheckboxSelect />,
           },
           {
@@ -1170,7 +862,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CustomCheckboxCodeText,
             renderChildren: () => <CustomCheckbox />,
           },
           {
@@ -1185,7 +877,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CustomCheckAllCheckboxCodeText,
             renderChildren: () => <CustomCheckAllCheckbox />,
           },
           {
@@ -1200,7 +892,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CustomCheckboxSelectCodeText,
             renderChildren: () => <CustomCheckboxSelect />,
           },
           {
@@ -1215,7 +907,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: HorizontalCheckboxCodeText,
             renderChildren: () => <HorizontalCheckbox />,
           },
           {
@@ -1230,7 +922,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: HorizontalCheckAllCheckboxCodeText,
             renderChildren: () => <HorizontalCheckAllCheckbox />,
           },
           {
@@ -1245,7 +937,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: VerticalCheckboxCodeText,
             renderChildren: () => <VerticalCheckbox />,
           },
           {
@@ -1260,7 +952,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: VerticalCheckAllCheckboxCodeText,
             renderChildren: () => <VerticalCheckAllCheckbox />,
           },
           {
@@ -1275,7 +967,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCheckAllCheckboxSelectCodeText,
             renderChildren: () => <AutoCompleteCheckAllCheckboxSelect />,
           },
           {
@@ -1290,7 +982,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCheckAllCustomCheckboxSelectCodeText,
             renderChildren: () => <AutoCompleteCheckAllCustomCheckboxSelect />,
           },
           {
@@ -1305,7 +997,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCheckboxSelectCodeText,
             renderChildren: () => <AutoCompleteCheckboxSelect />,
           },
           {
@@ -1320,7 +1012,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCustomCheckboxSelectCodeText,
             renderChildren: () => <AutoCompleteCustomCheckboxSelect />,
           },
           {
@@ -1335,7 +1027,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckAllCheckboxSelectCodeText,
             renderChildren: () => <CheckAllCheckboxSelect />,
           },
           {
@@ -1350,7 +1042,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckAllCustomCheckboxSelectCodeText,
             renderChildren: () => <CheckAllCustomCheckboxSelect />,
           },
         ]}
@@ -1371,7 +1063,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TagCodeText,
             renderChildren: () => <Tag />,
           },
           {
@@ -1386,7 +1078,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: VerticalTagGroupCodeText,
             renderChildren: () => <VerticalTagGroup />,
           },
           {
@@ -1401,7 +1093,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: VerticalCheckableTagGroupCodeText,
             renderChildren: () => <VerticalCheckableTagGroup />,
           },
           {
@@ -1416,7 +1108,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: VerticalCheckAllCheckableTagGroupCodeText,
             renderChildren: () => <VerticalCheckAllCheckableTagGroup />,
           },
           {
@@ -1431,7 +1123,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: HorizontalTagGroupCodeText,
             renderChildren: () => <HorizontalTagGroup />,
           },
           {
@@ -1446,7 +1138,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: HorizontalCheckableTagGroupCodeText,
             renderChildren: () => <HorizontalCheckableTagGroup />,
           },
           {
@@ -1461,7 +1153,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: HorizontalCheckAllCheckableTagGroupCodeText,
             renderChildren: () => <HorizontalCheckAllCheckableTagGroup />,
           },
           {
@@ -1476,7 +1168,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TagSelectCodeText,
             renderChildren: () => <TagSelect />,
           },
           {
@@ -1491,7 +1183,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckAllTagSelectCodeText,
             renderChildren: () => <CheckAllTagSelect />,
           },
           {
@@ -1506,7 +1198,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteTagSelectCodeText,
             renderChildren: () => <AutoCompleteTagSelect />,
           },
           {
@@ -1521,7 +1213,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCheckAllTagSelectCodeText,
             renderChildren: () => <AutoCompleteCheckAllTagSelect />,
           },
         ]}
@@ -1542,7 +1234,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: ListCodeText,
             renderChildren: () => <List />,
           },
           {
@@ -1557,7 +1249,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioListSelectCodeText,
             renderChildren: () => <RadioListSelect />,
           },
           {
@@ -1572,7 +1264,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioListPagingCodeText,
             renderChildren: () => <RadioListPaging />,
           },
           {
@@ -1587,7 +1279,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioListPagingSelectCodeText,
             renderChildren: () => <RadioListPagingSelect />,
           },
           {
@@ -1602,7 +1294,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: SuspenseListPagingCodeText,
             renderChildren: () => <SuspenseListPaging />,
           },
           {
@@ -1617,7 +1309,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxListSelectCodeText,
             renderChildren: () => <CheckboxListSelect />,
           },
           {
@@ -1632,7 +1324,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckAllListSelectCodeText,
             renderChildren: () => <CheckAllListSelect />,
           },
           {
@@ -1647,7 +1339,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxListPagingCodeText,
             renderChildren: () => <CheckboxListPaging />,
           },
           {
@@ -1662,7 +1354,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxListPagingSelectCodeText,
             renderChildren: () => <CheckboxListPagingSelect />,
           },
           {
@@ -1677,7 +1369,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCheckAllListSelectCodeText,
             renderChildren: () => <AutoCompleteCheckAllListSelect />,
           },
           {
@@ -1692,7 +1384,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteListPagingSelectCodeText,
             renderChildren: () => <AutoCompleteListPagingSelect />,
           },
           {
@@ -1707,7 +1399,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteListSelectCodeText,
             renderChildren: () => <AutoCompleteListSelect />,
           },
         ]}
@@ -1728,7 +1420,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TableCodeText,
             renderChildren: () => <Table />,
           },
           {
@@ -1743,7 +1435,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: SuspenseTablePagingCodeText,
             renderChildren: () => <SuspenseTablePaging />,
           },
           {
@@ -1758,7 +1450,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioTableSelectCodeText,
             renderChildren: () => <RadioTableSelect />,
           },
           {
@@ -1773,7 +1465,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioTablePagingSelectCodeText,
             renderChildren: () => <RadioTablePagingSelect />,
           },
           {
@@ -1788,7 +1480,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioTablePagingCodeText,
             renderChildren: () => <RadioTablePaging />,
           },
           {
@@ -1803,7 +1495,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: RadioTablePagingCodeText,
             renderChildren: () => <RadioTablePaging />,
           },
           {
@@ -1818,7 +1510,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxTableSelectCodeText,
             renderChildren: () => <CheckboxTableSelect />,
           },
           {
@@ -1833,7 +1525,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxTablePagingSelectCodeText,
             renderChildren: () => <CheckboxTablePagingSelect />,
           },
           {
@@ -1848,7 +1540,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CheckboxTablePagingCodeText,
             renderChildren: () => <CheckboxTablePaging />,
           },
           {
@@ -1863,7 +1555,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteTableSelectCodeText,
             renderChildren: () => <AutoCompleteTableSelect />,
           },
           {
@@ -1878,7 +1570,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteTablePagingSelectCodeText,
             renderChildren: () => <AutoCompleteTablePagingSelect />,
           },
         ]}
@@ -1899,7 +1591,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeSelectCodeText,
             renderChildren: () => <TreeSelect />,
           },
           {
@@ -1914,7 +1606,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeMultiSelectCodeText,
             renderChildren: () => <TreeMultiSelect />,
           },
           {
@@ -1929,7 +1621,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeMultiLeafSelectCodeText,
             renderChildren: () => <TreeMultiLeafSelect />,
           },
           {
@@ -1944,7 +1636,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeLeafSelectCodeText,
             renderChildren: () => <TreeLeafSelect />,
           },
           {
@@ -1959,7 +1651,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeCheckedShowParentSelectCodeText,
             renderChildren: () => <TreeCheckedShowParentSelect />,
           },
           {
@@ -1974,7 +1666,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeCheckedShowChildSelectCodeText,
             renderChildren: () => <TreeCheckedShowChildSelect />,
           },
           {
@@ -1989,7 +1681,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: TreeCheckedShowAllSelectCodeText,
             renderChildren: () => <TreeCheckedShowAllSelect />,
           },
           {
@@ -2004,7 +1696,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: FlatTreeSelectCodeText,
             renderChildren: () => <FlatTreeSelect />,
           },
           {
@@ -2019,7 +1711,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: FlatAsyncTreeSelectCodeText,
             renderChildren: () => <FlatAsyncTreeSelect />,
           },
           {
@@ -2034,7 +1726,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: FlatAsyncTreeMultiSelectEchoCodeText,
             renderChildren: () => <FlatAsyncTreeMultiSelectEcho />,
           },
           {
@@ -2049,7 +1741,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeSelectEchoCodeText,
             renderChildren: () => <AsyncTreeSelectEcho />,
           },
           {
@@ -2064,7 +1756,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeSelectCodeText,
             renderChildren: () => <AsyncTreeSelect />,
           },
           {
@@ -2079,7 +1771,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeMultiSelectEchoCodeText,
             renderChildren: () => <AsyncTreeMultiSelectEcho />,
           },
           {
@@ -2094,7 +1786,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeMultiSelectCodeText,
             renderChildren: () => <AsyncTreeMultiSelect />,
           },
           {
@@ -2109,7 +1801,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeMultiLeafSelectEchoCodeText,
             renderChildren: () => <AsyncTreeMultiLeafSelectEcho />,
           },
           {
@@ -2124,7 +1816,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeMultiLeafSelectCodeText,
             renderChildren: () => <AsyncTreeMultiLeafSelect />,
           },
           {
@@ -2139,7 +1831,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeLeafSelectCodeText,
             renderChildren: () => <AsyncTreeLeafSelect />,
           },
           {
@@ -2154,7 +1846,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeCheckedShowParentSelectCodeText,
             renderChildren: () => <AsyncTreeCheckedShowParentSelect />,
           },
           {
@@ -2169,7 +1861,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeCheckedShowChildSelectCodeText,
             renderChildren: () => <AsyncTreeCheckedShowChildSelect />,
           },
           {
@@ -2184,7 +1876,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncTreeCheckedShowAllSelectCodeText,
             renderChildren: () => <AsyncTreeCheckedShowAllSelect />,
           },
         ]}
@@ -2205,7 +1897,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CascaderCodeText,
             renderChildren: () => <Cascader />,
           },
           {
@@ -2220,7 +1912,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncCascaderCodeText,
             renderChildren: () => <AsyncCascader />,
           },
           {
@@ -2235,7 +1927,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncCascaderChangeOnSelectCodeText,
             renderChildren: () => <AsyncCascaderChangeOnSelect />,
           },
           {
@@ -2250,7 +1942,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncCascaderEchoCodeText,
             renderChildren: () => <AsyncCascaderEcho />,
           },
           {
@@ -2265,7 +1957,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncCascaderMultiCodeText,
             renderChildren: () => <AsyncCascaderMulti />,
           },
           {
@@ -2280,7 +1972,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncCascaderMultiEchoCodeText,
             renderChildren: () => <AsyncCascaderMultiEcho />,
           },
           {
@@ -2295,7 +1987,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AsyncCascaderShowChildCodeText,
             renderChildren: () => <AsyncCascaderShowChild />,
           },
           {
@@ -2310,7 +2002,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CascaderChangeOnSelectCodeText,
             renderChildren: () => <CascaderChangeOnSelect />,
           },
           {
@@ -2325,7 +2017,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CascaderMultiCodeText,
             renderChildren: () => <CascaderMulti />,
           },
           {
@@ -2340,7 +2032,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: CascaderShowChildCodeText,
             renderChildren: () => <CascaderShowChild />,
           },
           {
@@ -2355,7 +2047,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: FlatAsyncCascaderCodeText,
             renderChildren: () => <FlatAsyncCascader />,
           },
           {
@@ -2370,7 +2062,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: FlatCascaderCodeText,
             renderChildren: () => <FlatCascader />,
           },
         ]}
@@ -2391,7 +2083,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteCodeText,
             renderChildren: () => <AutoComplete />,
           },
           {
@@ -2406,7 +2098,7 @@ export default () => {
               },
             },
             type: 'PlayGround',
-            codeText: ``,
+            codeText: AutoCompleteSelectInputCodeText,
             renderChildren: () => <AutoCompleteSelectInput />,
           },
         ]}

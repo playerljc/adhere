@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
-
-import { MobileTimePickerView } from '@baifendian/adhere';
+import React from 'react';
 
 import DemoBlock from '@/lib/DemoBlock';
 
-export default () => {
-  const [value, setValue] = useState();
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
 
+export default () => {
   return (
     <DemoBlock>
       <DemoBlock.Item title="HH:mm:ss">
-        <MobileTimePickerView format="HH:mm:ss" />
+        <P1 />
       </DemoBlock.Item>
 
       <DemoBlock.Item title="HH:mm">
-        <MobileTimePickerView format="HH:mm" />
+        <P2 />
       </DemoBlock.Item>
 
       <DemoBlock.Item title="HH">
-        <MobileTimePickerView format="HH" />
+        <P3 />
       </DemoBlock.Item>
 
       <DemoBlock.Item title="mm:ss">
-        <MobileTimePickerView format="mm:ss" />
+        <P4 />
       </DemoBlock.Item>
 
       <DemoBlock.Item title="ss">
-        <MobileTimePickerView format="ss" />
+        <P5 />
       </DemoBlock.Item>
 
       <DemoBlock.Item title="onChange">
-        <MobileTimePickerView
-          value={value}
-          onChange={(_value) => {
-            setValue(_value);
-            console.log(_value, _value.format('YYYY-MM-DD HH:mm:ss'));
-          }}
-        />
+        <P6 />
       </DemoBlock.Item>
     </DemoBlock>
   );

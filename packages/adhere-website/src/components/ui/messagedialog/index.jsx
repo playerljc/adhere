@@ -1,7 +1,20 @@
-import { Button, Form, Result } from 'antd';
-import React, { useRef, useState } from 'react';
+import SelectPersonCodeText from '!!raw-loader!./SelectPerson';
+import TaskCodeText from '!!raw-loader!./Task';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
+import P8CodeText from '!!raw-loader!./examples/p8';
+import P9CodeText from '!!raw-loader!./examples/p9';
+import P10CodeText from '!!raw-loader!./examples/p10';
+import P11CodeText from '!!raw-loader!./examples/p11';
+import P12CodeText from '!!raw-loader!./examples/p12';
+import P13CodeText from '!!raw-loader!./examples/p13';
 
-import { FormItemCreator, GlobalIndicator, MessageDialog, SuccessPrompt } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,18 +23,21 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import SelectPerson from './SelectPerson';
-import Task from './Task';
-import icon from './icon.svg';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
+import P8 from './examples/p8';
+import P9 from './examples/p9';
+import P10 from './examples/p10';
+import P11 from './examples/p11';
+import P12 from './examples/p12';
+import P13 from './examples/p13';
 
 export default () => {
-  const [persons, setPersons] = useState([]);
-  const personSelectRef = useRef();
-  const [form] = Form.useForm();
-  const watchPerson = Form.useWatch('person', form);
-
-  const taskSelectRef = useRef();
-
   function boxPanelConfig() {
     return [
       {
@@ -35,59 +51,9 @@ export default () => {
             info: '使用Confirm',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.Confirm({
-        title: '提示',
-        text: '确认要进行此操作码？',
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        icon: <img src={icon} alt="" width={30} />,
-        onSuccess: () => {
-          return new Promise((resolve) => {
-            alert('点击了确认');
-
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open Confirm
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.Confirm({
-                title: '提示',
-                text: '确认要进行此操作码？',
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                icon: <img src={icon} alt="" width={30} />,
-                onSuccess: () => {
-                  return new Promise((resolve) => {
-                    alert('点击了确认');
-
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open Confirm
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -100,45 +66,9 @@ export default () => {
             info: '使用Alert',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.Alert({
-        title: '提示',
-        text: '操作失败！',
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        icon: <img src={icon} alt="" width={30} />,
-      });
-    }}
-  >
-    Open Alert
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.Alert({
-                title: '提示',
-                text: '操作失败！',
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                icon: <img src={icon} alt="" width={30} />,
-              });
-            }}
-          >
-            Open Alert
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -151,63 +81,9 @@ export default () => {
             info: '使用Prompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog,FormItemCreator } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.Prompt({
-        title: '提示',
-        config: {
-          type: FormItemCreator.SLIDER,
-          label: '大小',
-          initialValue: 10,
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open Prompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.Prompt({
-                title: '提示',
-                config: {
-                  type: FormItemCreator.SLIDER,
-                  label: '大小',
-                  initialValue: 10,
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open Prompt
-          </Button>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -220,61 +96,9 @@ export default () => {
             info: '使用InputPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.InputPrompt({
-        title: '提示',
-        config: {
-          label: '姓名',
-          initialValue: '张三',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open InputPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.InputPrompt({
-                title: '提示',
-                config: {
-                  label: '姓名',
-                  initialValue: '张三',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open InputPrompt
-          </Button>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -287,61 +111,9 @@ export default () => {
             info: '使用TextAreaPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.TextAreaPrompt({
-        title: '提示',
-        config: {
-          label: '地址',
-          initialValue: '',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open InputPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.TextAreaPrompt({
-                title: '提示',
-                config: {
-                  label: '地址',
-                  initialValue: '',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open TextAreaPrompt
-          </Button>
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -354,61 +126,9 @@ export default () => {
             info: '使用PassWordPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.PassWordPrompt({
-        title: '提示',
-        config: {
-          label: '密码',
-          initialValue: '',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open PassWordPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.PassWordPrompt({
-                title: '提示',
-                config: {
-                  label: '密码',
-                  initialValue: '',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open PassWordPrompt
-          </Button>
-        ),
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -421,61 +141,9 @@ export default () => {
             info: '使用NumberPrompt',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      MessageDialog.NumberPrompt({
-        title: '提示',
-        config: {
-          label: '数字',
-          initialValue: '',
-        },
-        width: 300,
-        zIndex: 1000,
-        local: 'zh_CN',
-        onSuccess: (value) => {
-          return new Promise((resolve) => {
-            alert(value);
-            resolve();
-          });
-        },
-      });
-    }}
-  >
-    Open NumberPrompt
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              MessageDialog.NumberPrompt({
-                title: '提示',
-                config: {
-                  label: '数字',
-                  initialValue: '',
-                },
-                width: 300,
-                zIndex: 1000,
-                local: 'zh_CN',
-                onSuccess: (value) => {
-                  return new Promise((resolve) => {
-                    alert(value);
-                    resolve();
-                  });
-                },
-              });
-            }}
-          >
-            Open NumberPrompt
-          </Button>
-        ),
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
       {
         id: `p8`,
@@ -488,75 +156,9 @@ export default () => {
             info: '使用Modal',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Result, Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const {close} = MessageDialog.Modal({
-        config: {
-          title: '提示',
-        },
-        defaultCloseBtn: false,
-        children: (
-          <Result
-            title="Your operation has been executed"
-            extra={
-              <Button
-                type="primary"
-                key="console"
-                onClick={() => {
-                  // MessageDialog.close(el);
-                  close();
-                }}
-              >
-                Close
-              </Button>
-            }
-          />
-        ),
-      });
-    }}
-  >
-    Open Modal
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const { close } = MessageDialog.Modal({
-                config: {
-                  title: '提示',
-                },
-                defaultCloseBtn: false,
-                children: (
-                  <Result
-                    title="Your operation has been executed"
-                    extra={
-                      <Button
-                        type="primary"
-                        key="console"
-                        onClick={() => {
-                          // MessageDialog.close(el);
-                          close();
-                        }}
-                      >
-                        Close
-                      </Button>
-                    }
-                  />
-                ),
-              });
-            }}
-          >
-            Open Modal
-          </Button>
-        ),
+        codeText: P8CodeText,
+        renderChildren: () => <P8 />,
       },
       {
         id: `p9`,
@@ -569,75 +171,9 @@ export default () => {
             info: '使用MaximizeModal',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Result, Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const {close} = MessageDialog.Modal({
-        config: {
-          title: '提示',
-        },
-        defaultCloseBtn: false,
-        children: (
-          <Result
-            title="Your operation has been executed"
-            extra={
-              <Button
-                type="primary"
-                key="console"
-                onClick={() => {
-                  // MessageDialog.close(el);
-                  close();
-                }}
-              >
-                Close
-              </Button>
-            }
-          />
-        ),
-      });
-    }}
-  >
-    Open Modal
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const { close } = MessageDialog.MaximizeModal({
-                config: {
-                  title: '提示',
-                },
-                defaultCloseBtn: false,
-                children: (
-                  <Result
-                    title="Your operation has been executed"
-                    extra={
-                      <Button
-                        type="primary"
-                        key="console"
-                        onClick={() => {
-                          // MessageDialog.close(el);
-                          close();
-                        }}
-                      >
-                        Close
-                      </Button>
-                    }
-                  />
-                ),
-              });
-            }}
-          >
-            Open MaximizeModal
-          </Button>
-        ),
+        codeText: P9CodeText,
+        renderChildren: () => <P9 />,
       },
       {
         id: `p10`,
@@ -650,61 +186,9 @@ export default () => {
             info: '基本的显示 - 只显示内容',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button, Result } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-
-  export default () => (
-    <MessageDialog.TriggerPrompt
-      okText="确认"
-      renderTrigger={() => <Button type="primary">触发</Button>}
-      modalConfig={{
-        config: {
-          title: '提示',
-        },
-      }}
-      onSubmit={() =>
-        new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(123);
-          }, 2000);
-        })
-      }
-    >
-      <Result
-        status="success"
-        title="Successfully Purchased Cloud Server ECS!"
-        subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
-      />
-    </MessageDialog.TriggerPrompt>
-  )
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <MessageDialog.TriggerPrompt
-            okText="确认"
-            renderTrigger={() => <Button type="primary">触发</Button>}
-            modalConfig={{
-              config: {
-                title: '提示',
-              },
-            }}
-            onSubmit={() =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(123);
-                }, 2000);
-              })
-            }
-          >
-            <Result
-              status="success"
-              title="Successfully Purchased Cloud Server ECS!"
-              subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
-            />
-          </MessageDialog.TriggerPrompt>
-        ),
+        codeText: P10CodeText,
+        renderChildren: () => <P10 />,
       },
       {
         id: `p11`,
@@ -715,112 +199,21 @@ export default () => {
             info: '在弹出的穿梭框中选取指定的人员',
           },
         },
-        active: 'index.jsx',
+        active: 'p11.jsx',
         config: [
           {
-            key: 'index.jsx',
-            title: 'index.jsx',
-            codeText: `
-  import React, { useState, useRef } from 'react';
-  import { MessageDialog } from '@baifendian/adhere';
-  import { Button } from 'antd';
-  import SelectPerson from './SelectPerson';
-
-  export default () => {
-    const [persons, setPersons] = useState([]);
-    const personSelectRef = useRef();
-
-    return (
-      <MessageDialog.TriggerPrompt
-        okText="确认"
-        renderTrigger={() => <Button type="primary">选取({persons.length})</Button>}
-        modalConfig={{
-          config: {
-            title: '人员选择',
-          },
-        }}
-        onSubmit={() =>
-          new Promise((resolve) => {
-            resolve(personSelectRef.current.getValues());
-          })
-        }
-        value={persons}
-        onChange={(_values) => {
-          setPersons(_values);
-        }}
-      >
-        <SelectPerson ref={personSelectRef} />
-      </MessageDialog.TriggerPrompt>
-    );
-  }
-      `,
+            key: 'p11.jsx',
+            title: 'p11.jsx',
+            codeText: P11CodeText,
           },
           {
             key: 'SelectPerson.jsx',
             title: 'SelectPerson.jsx',
-            codeText: `
-  import { Transfer } from 'antd';
-  import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-
-  const mockData = Array.from({
-    length: 20,
-  }).map((_, i) => ({
-    key: i.toString(),
-    title: \`content\${i + 1}\`,
-    description: \`description of content\${i + 1}\`,
-  }));
-
-  function SelectPerson(props, ref) {
-    const [targetKeys, setTargetKeys] = useState(props.value);
-
-    useEffect(() => {
-      setTargetKeys(props.value);
-    }, [props.value]);
-
-    useImperativeHandle(ref, () => ({
-      getValues: () => targetKeys,
-    }));
-
-    return (
-      <Transfer
-        dataSource={mockData}
-        targetKeys={targetKeys}
-        render={(item) => item.title}
-        onChange={(sourceSelectedKeys) => {
-          setTargetKeys(sourceSelectedKeys);
-        }}
-        {...props}
-      />
-    );
-  }
-
-  export default forwardRef(SelectPerson);
-      `,
+            codeText: SelectPersonCodeText,
           },
         ],
         type: 'PlayGroundTab',
-        renderChildren: () => (
-          <MessageDialog.TriggerPrompt
-            okText="确认"
-            renderTrigger={() => <Button type="primary">选取({persons.length})</Button>}
-            modalConfig={{
-              config: {
-                title: '人员选择',
-              },
-            }}
-            onSubmit={() =>
-              new Promise((resolve) => {
-                resolve(personSelectRef.current.getValues());
-              })
-            }
-            value={persons}
-            onChange={(_values) => {
-              setPersons(_values);
-            }}
-          >
-            <SelectPerson ref={personSelectRef} />
-          </MessageDialog.TriggerPrompt>
-        ),
+        renderChildren: () => <P11 />,
       },
       {
         id: `p12`,
@@ -832,164 +225,20 @@ export default () => {
           },
         },
         type: 'PlayGroundTab',
-        active: 'index.jsx',
+        active: 'p12.jsx',
         config: [
           {
-            key: 'index.jsx',
-            title: 'index.jsx',
-            codeText: `
-  import React, { useRef } from 'react';
-  import { Form, Button } from 'antd';
-  import { MessageDialog } from '@baifendian/adhere';
-  import SelectPerson from './SelectPerson';
-
-  export default () => {
-    const [form] = Form.useForm();
-    const watchPerson = Form.useWatch('person', form);
-    const personSelectRef = useRef();
-
-    return (
-      <Form
-        name="PersonForm"
-        form={form}
-        onFinish={(values) => {
-          alert(values);
-        }}
-      >
-        <Form.Item
-          label="人员选择"
-          name="person"
-          rules={[
-            {
-              required: true,
-              message: '请选择人员',
-            },
-          ]}
-        >
-          <MessageDialog.TriggerPrompt
-            okText="确认"
-            renderTrigger={() => <Button type="primary">选取({watchPerson?.length})</Button>}
-            modalConfig={{
-              config: {
-                title: '人员选择',
-              },
-            }}
-            onSubmit={() =>
-              new Promise((resolve) => {
-                resolve(personSelectRef.current.getValues());
-              })
-            }
-          >
-            <SelectPerson ref={personSelectRef} />
-          </MessageDialog.TriggerPrompt>
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            提交
-          </Button>
-        </Form.Item>
-      </Form>
-    );
-  }
-      `,
+            key: 'p12.jsx',
+            title: 'p12.jsx',
+            codeText: P12CodeText,
           },
           {
             key: 'SelectPerson.jsx',
             title: 'SelectPerson.jsx',
-            codeText: `
-  import { Transfer } from 'antd';
-  import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-
-  const mockData = Array.from({
-    length: 20,
-  }).map((_, i) => ({
-    key: i.toString(),
-    title: \`content\${i + 1}\`,
-    description: \`description of content\${i + 1}\`,
-  }));
-
-  function SelectPerson(props, ref) {
-    const [targetKeys, setTargetKeys] = useState(props.value);
-
-    useEffect(() => {
-      setTargetKeys(props.value);
-    }, [props.value]);
-
-    useImperativeHandle(ref, () => ({
-      getValues: () => targetKeys,
-    }));
-
-    return (
-      <Transfer
-        dataSource={mockData}
-        targetKeys={targetKeys}
-        render={(item) => item.title}
-        onChange={(sourceSelectedKeys) => {
-          setTargetKeys(sourceSelectedKeys);
-        }}
-        {...props}
-      />
-    );
-  }
-
-  export default forwardRef(SelectPerson);
-      `,
+            codeText: SelectPersonCodeText,
           },
         ],
-        renderChildren: () => (
-          <Form
-            name="PersonForm"
-            form={form}
-            onFinish={(values) => {
-              alert(values);
-            }}
-          >
-            <Form.Item
-              label="人员选择"
-              name="person"
-              rules={[
-                {
-                  required: true,
-                  message: '请选择人员',
-                },
-              ]}
-            >
-              <MessageDialog.TriggerPrompt
-                okText="确认"
-                renderTrigger={() => <Button type="primary">选取({watchPerson?.length})</Button>}
-                modalConfig={{
-                  config: {
-                    title: '人员选择',
-                  },
-                }}
-                onSubmit={() =>
-                  new Promise((resolve) => {
-                    resolve(personSelectRef.current.getValues());
-                  })
-                }
-              >
-                <SelectPerson ref={personSelectRef} />
-              </MessageDialog.TriggerPrompt>
-            </Form.Item>
-
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
-              <Button type="primary" htmlType="submit">
-                提交
-              </Button>
-            </Form.Item>
-          </Form>
-        ),
+        renderChildren: () => <P12 />,
       },
       {
         id: `p13`,
@@ -1001,211 +250,20 @@ export default () => {
           },
         },
         type: 'PlayGroundTab',
-        active: 'index.jsx',
+        active: 'p13.jsx',
         config: [
           {
-            key: 'index.jsx',
-            title: 'index.jsx',
-            codeText: `
-  import React from 'react';
-  import { MessageDialog, GlobalIndicator, SuccessPrompt } from '@baifendian/adhere';
-  import { Button } from 'antd';
-  import Task from './Task';
-
-  export default () => {
-
-    return (
-      <MessageDialog.Trigger
-        okText="确认"
-        renderTrigger={() => <Button type="primary">添加任务</Button>}
-        modalConfig={{
-          config: {
-            title: '任务',
-          },
-        }}
-        actions={[
-          {
-            key: 'submit',
-            type: 'primary',
-            children: <span>提交</span>,
-            onClick: () =>
-              new Promise((resolve, reject) => {
-                taskSelectRef.current
-                  .getValues()
-                  .then((values) => {
-                    console.log('values', values);
-                    const indicator = GlobalIndicator.show();
-
-                    setTimeout(() => {
-                      GlobalIndicator.hide(indicator);
-                      resolve();
-
-                      setTimeout(() => {
-                        SuccessPrompt.openSuccessDialog({});
-                      }, 500);
-                    }, 1500);
-                  })
-                  .catch((error) => reject(error));
-              }),
-          },
-          {
-            key: 'save',
-            children: <span>暂存</span>,
-            onClick: () =>
-              new Promise((resolve, reject) => {
-                taskSelectRef.current
-                  .getValues()
-                  .then((values) => {
-                    console.log('values', values);
-                    const indicator = GlobalIndicator.show();
-
-                    setTimeout(() => {
-                      GlobalIndicator.hide(indicator);
-                      resolve();
-
-                      setTimeout(() => {
-                        SuccessPrompt.openSuccessDialog({});
-                      }, 500);
-                    }, 1500);
-                  })
-                  .catch((error) => reject(error));
-              }),
-          },
-        ]}
-      >
-        <Task ref={taskSelectRef} />
-      </MessageDialog.Trigger>
-    );
-  }
-      `,
+            key: 'p13.jsx',
+            title: 'p13.jsx',
+            codeText: P13CodeText,
           },
           {
             key: 'Task.jsx',
             title: 'Task.jsx',
-            codeText: `
-  import { Form, Input, Select } from 'antd';
-  import React, { forwardRef, useImperativeHandle } from 'react';
-
-  function Task(props, ref) {
-    const [form] = Form.useForm();
-
-    useImperativeHandle(ref, () => ({
-      getValues: () => form.validateFields(),
-    }));
-
-    return (
-      <Form
-        name="userForm"
-        form={form}
-        labelCol={{
-          span: 3,
-        }}
-        wrapperCol={{
-          span: 21,
-        }}
-      >
-        <Form.Item
-          name="name"
-          label="姓名"
-          rules={[
-            {
-              required: true,
-              message: '请输入姓名',
-            },
-          ]}
-        >
-          <Input placeholder="姓名" />
-        </Form.Item>
-
-        <Form.Item
-          name="sex"
-          label="性别"
-          rules={[
-            {
-              required: true,
-              message: '请选择姓名',
-            },
-          ]}
-        >
-          <Select>
-            <Select.Option value="1">男</Select.Option>
-            <Select.Option value="2">女</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item name="address" label="地址">
-          <Input placeholder="地址" />
-        </Form.Item>
-      </Form>
-    );
-  }
-
-  export default forwardRef(Task);
-      `,
+            codeText: TaskCodeText,
           },
         ],
-        renderChildren: () => (
-          <MessageDialog.Trigger
-            okText="确认"
-            renderTrigger={() => <Button type="primary">添加任务</Button>}
-            modalConfig={{
-              config: {
-                title: '任务',
-              },
-            }}
-            actions={[
-              {
-                key: 'submit',
-                type: 'primary',
-                children: <span>提交</span>,
-                onClick: () =>
-                  new Promise((resolve, reject) => {
-                    taskSelectRef.current
-                      .getValues()
-                      .then((values) => {
-                        console.log('values', values);
-                        const indicator = GlobalIndicator.show();
-
-                        setTimeout(() => {
-                          GlobalIndicator.hide(indicator);
-                          resolve();
-
-                          setTimeout(() => {
-                            SuccessPrompt.openSuccessDialog({});
-                          }, 500);
-                        }, 1500);
-                      })
-                      .catch((error) => reject(error));
-                  }),
-              },
-              {
-                key: 'save',
-                children: <span>暂存</span>,
-                onClick: () =>
-                  new Promise((resolve, reject) => {
-                    taskSelectRef.current
-                      .getValues()
-                      .then((values) => {
-                        console.log('values', values);
-                        const indicator = GlobalIndicator.show();
-
-                        setTimeout(() => {
-                          GlobalIndicator.hide(indicator);
-                          resolve();
-
-                          setTimeout(() => {
-                            SuccessPrompt.openSuccessDialog({});
-                          }, 500);
-                        }, 1500);
-                      })
-                      .catch((error) => reject(error));
-                  }),
-              },
-            ]}
-          >
-            <Task ref={taskSelectRef} />
-          </MessageDialog.Trigger>
-        ),
+        renderChildren: () => <P13 />,
       },
     ];
   }

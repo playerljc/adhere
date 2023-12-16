@@ -1,82 +1,79 @@
-import { Button, Card, Select, Slider } from 'antd';
-import React, { useState } from 'react';
+import FormItemWrapCodeText from '!!raw-loader!./FormItemWrap';
+import P1CodeText from '!!raw-loader!./examples/Basic/p1';
+import P2CodeText from '!!raw-loader!./examples/Basic/p2';
+import P3CodeText from '!!raw-loader!./examples/Basic/p3';
+import P4CodeText from '!!raw-loader!./examples/Basic/p4';
+import P5CodeText from '!!raw-loader!./examples/Basic/p5';
+import P6CodeText from '!!raw-loader!./examples/Basic/p6';
+import P7CodeText from '!!raw-loader!./examples/Basic/p7';
+import P8CodeText from '!!raw-loader!./examples/Basic/p8';
+import P9CodeText from '!!raw-loader!./examples/Basic/p9';
+import P10CodeText from '!!raw-loader!./examples/Basic/p10';
+import P11CodeText from '!!raw-loader!./examples/Basic/p11';
+import P12CodeText from '!!raw-loader!./examples/Basic/p12';
+import CBCodeText from '!!raw-loader!./examples/TRBLC/CB';
+import CBRCodeText from '!!raw-loader!./examples/TRBLC/CBR';
+import CRCodeText from '!!raw-loader!./examples/TRBLC/CR';
+import CRBCodeText from '!!raw-loader!./examples/TRBLC/CRB';
+import LBCCodeText from '!!raw-loader!./examples/TRBLC/LBC';
+import LCCodeText from '!!raw-loader!./examples/TRBLC/LC';
+import LCBCodeText from '!!raw-loader!./examples/TRBLC/LCB';
+import LCRBCodeText from '!!raw-loader!./examples/TRBLC/LCRB';
+import LRTCBCodeText from '!!raw-loader!./examples/TRBLC/LRTCB';
+import LRTCBScrollCodeText from '!!raw-loader!./examples/TRBLC/LRTCBScroll';
+import LTCCodeText from '!!raw-loader!./examples/TRBLC/LTC';
+import LTCBCodeText from '!!raw-loader!./examples/TRBLC/LTCB';
+import TBLCRCodeText from '!!raw-loader!./examples/TRBLC/TBLCR';
+import TBLCRScrollCodeText from '!!raw-loader!./examples/TRBLC/TBLCRScroll';
+import TCCodeText from '!!raw-loader!./examples/TRBLC/TC';
+import TCBRCodeText from '!!raw-loader!./examples/TRBLC/TCBR';
+import TCRCodeText from '!!raw-loader!./examples/TRBLC/TCR';
+import TLCCodeText from '!!raw-loader!./examples/TRBLC/TLC';
+import TLRCCodeText from '!!raw-loader!./examples/TRBLC/TLRC';
+import TRCCodeText from '!!raw-loader!./examples/TRBLC/TRC';
 
-import { FlexLayout, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 import TRBLCIcon from './TRBLC.png';
+import P1 from './examples/Basic/p1';
+import P2 from './examples/Basic/p2';
+import P3 from './examples/Basic/p3';
+import P4 from './examples/Basic/p4';
+import P5 from './examples/Basic/p5';
+import P6 from './examples/Basic/p6';
+import P7 from './examples/Basic/p7';
+import P8 from './examples/Basic/p8';
+import P9 from './examples/Basic/p9';
+import P10 from './examples/Basic/p10';
+import P11 from './examples/Basic/p11';
+import P12 from './examples/Basic/p12';
+import CB from './examples/TRBLC/CB';
+import CBR from './examples/TRBLC/CBR';
+import CR from './examples/TRBLC/CR';
+import CRB from './examples/TRBLC/CRB';
+import LBC from './examples/TRBLC/LBC';
+import LC from './examples/TRBLC/LC';
+import LCB from './examples/TRBLC/LCB';
+import LCRB from './examples/TRBLC/LCRB';
+import LRTCB from './examples/TRBLC/LRTCB';
+import LRTCBScroll from './examples/TRBLC/LRTCBScroll';
+import LTC from './examples/TRBLC/LTC';
+import LTCB from './examples/TRBLC/LTCB';
+import TBLCR from './examples/TRBLC/TBLCR';
+import TBLCRScroll from './examples/TRBLC/TBLCRScroll';
+import TC from './examples/TRBLC/TC';
+import TCBR from './examples/TRBLC/TCBR';
+import TCR from './examples/TRBLC/TCR';
+import TLC from './examples/TRBLC/TLC';
+import TLRC from './examples/TRBLC/TLRC';
+import TRC from './examples/TRBLC/TRC';
 
+import IndexLessCodeText from '!!raw-loader!./index.less';
 import style from './index.less';
 
-const {
-  Fixed,
-  Auto,
-  HorizontalFlexLayout,
-  VerticalFlexLayout,
-  ToolBarLayout,
-  BackLayout,
-  ScrollLayout,
-  useScrollLayout,
-} = FlexLayout;
-
-const { Option } = Select;
-
-function FormItemWrap() {
-  const { getEl } = useScrollLayout();
-
-  const data = Array.from({ length: 10 }).fill(1);
-
-  return (
-    <Select style={{ width: 200 }} getPopupContainer={() => getEl()}>
-      {data.map((t, _index) => (
-        <Option key={`${_index + 1}`} value={_index + 1}>
-          {_index + 1}
-        </Option>
-      ))}
-    </Select>
-  );
-}
-
-export default (props) => {
-  const [hGutterKey, setHGutterKey] = useState(1);
-  const [hVgutterKey, setHVgutterKey] = useState(1);
-  const [hColCountKey, setHColCountKey] = useState(2);
-
-  const hGutters = {};
-  const hVgutters = {};
-  const hColCounts = {};
-
-  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    hGutters[i] = value;
-  });
-  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    hVgutters[i] = value;
-  });
-  [2, 3, 4, 6, 8, 12].forEach((value, i) => {
-    hColCounts[i] = value;
-  });
-
-  // --------------------------------------------------------------------------------------------
-
-  const [vGutterKey, setVGutterKey] = useState(1);
-  const [vVgutterKey, setVVgutterKey] = useState(1);
-  const [vColCountKey, setVColCountKey] = useState(2);
-
-  const vGutters = {};
-  const vVgutters = {};
-  const vColCounts = {};
-
-  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    vGutters[i] = value;
-  });
-  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    vVgutters[i] = value;
-  });
-  [2, 3, 4, 6, 8, 12].forEach((value, i) => {
-    vColCounts[i] = value;
-  });
-
+export default () => {
   function boxPanelConfig() {
     return [
       {
@@ -90,283 +87,9 @@ export default (props) => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import { FlexLayout, Space } from '@baifendian/adhere';
-
-  <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
-    <Fixed>
-      <div
-        style={{
-          padding: '15px 20px',
-          borderBottom: '1px solid #ccc',
-          textAlign: 'center',
-        }}
-      >
-        Top
-      </div>
-    </Fixed>
-    <Auto style={{ justifyContent: 'center', alignItems: 'center' }}>Center</Auto>
-    <Fixed>
-      <div
-        style={{
-          padding: '15px 20px',
-          borderTop: '1px solid #ccc',
-          textAlign: 'center',
-        }}
-      >
-        Bottom
-      </div>
-    </Fixed>
-  </FlexLayout>
-
-  <Space direction="vertical" />
-
-  <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
-    <Fixed>
-      <div
-        style={{
-          padding: '15px 20px',
-          borderBottom: '1px solid #ccc',
-          textAlign: 'center',
-        }}
-      >
-        Top
-      </div>
-    </Fixed>
-    <Auto>
-      <FlexLayout direction="horizontal">
-        <Fixed
-          style={{
-            padding: '0 20px',
-            borderRight: '1px solid #ccc',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          Left
-        </Fixed>
-        <Auto
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          Center
-        </Auto>
-        <Fixed
-          style={{
-            padding: '0 20px',
-            borderLeft: '1px solid #ccc',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          Right
-        </Fixed>
-      </FlexLayout>
-    </Auto>
-    <Fixed>
-      <div
-        style={{
-          padding: '15px 20px',
-          borderTop: '1px solid #ccc',
-          textAlign: 'center',
-        }}
-      >
-        Bottom
-      </div>
-    </Fixed>
-  </FlexLayout>
-
-  <Space direction="vertical" />
-
-  <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
-    <Fixed
-      style={{
-        borderRight: '1px solid #ccc',
-        padding: '0 15px',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      Left
-    </Fixed>
-    <Auto>
-      <FlexLayout>
-        <Fixed
-          style={{
-            padding: '15px 0',
-            borderBottom: '1px solid #ccc',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          Top
-        </Fixed>
-        <Auto style={{ justifyContent: 'center', alignItems: 'center' }}>Center</Auto>
-        <Fixed
-          style={{
-            padding: '15px 0',
-            borderTop: '1px solid #ccc',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          Bottom
-        </Fixed>
-      </FlexLayout>
-    </Auto>
-    <Fixed
-      style={{
-        borderLeft: '1px solid #ccc',
-        padding: '0 15px',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      Right
-    </Fixed>
-  </FlexLayout>
-      `,
+        codeText: P1CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
-              <Fixed>
-                <div
-                  style={{
-                    padding: '15px 20px',
-                    borderBottom: '1px solid #ccc',
-                    textAlign: 'center',
-                  }}
-                >
-                  Top
-                </div>
-              </Fixed>
-              <Auto style={{ justifyContent: 'center', alignItems: 'center' }}>Center</Auto>
-              <Fixed>
-                <div
-                  style={{
-                    padding: '15px 20px',
-                    borderTop: '1px solid #ccc',
-                    textAlign: 'center',
-                  }}
-                >
-                  Bottom
-                </div>
-              </Fixed>
-            </FlexLayout>
-
-            <Space direction="vertical" />
-
-            <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
-              <Fixed>
-                <div
-                  style={{
-                    padding: '15px 20px',
-                    borderBottom: '1px solid #ccc',
-                    textAlign: 'center',
-                  }}
-                >
-                  Top
-                </div>
-              </Fixed>
-              <Auto>
-                <FlexLayout direction="horizontal">
-                  <Fixed
-                    style={{
-                      padding: '0 20px',
-                      borderRight: '1px solid #ccc',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    Left
-                  </Fixed>
-                  <Auto
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    Center
-                  </Auto>
-                  <Fixed
-                    style={{
-                      padding: '0 20px',
-                      borderLeft: '1px solid #ccc',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    Right
-                  </Fixed>
-                </FlexLayout>
-              </Auto>
-              <Fixed>
-                <div
-                  style={{
-                    padding: '15px 20px',
-                    borderTop: '1px solid #ccc',
-                    textAlign: 'center',
-                  }}
-                >
-                  Bottom
-                </div>
-              </Fixed>
-            </FlexLayout>
-
-            <Space direction="vertical" />
-
-            <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
-              <Fixed
-                style={{
-                  borderRight: '1px solid #ccc',
-                  padding: '0 15px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Left
-              </Fixed>
-              <Auto>
-                <FlexLayout>
-                  <Fixed
-                    style={{
-                      padding: '15px 0',
-                      borderBottom: '1px solid #ccc',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    Top
-                  </Fixed>
-                  <Auto style={{ justifyContent: 'center', alignItems: 'center' }}>Center</Auto>
-                  <Fixed
-                    style={{
-                      padding: '15px 0',
-                      borderTop: '1px solid #ccc',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    Bottom
-                  </Fixed>
-                </FlexLayout>
-              </Auto>
-              <Fixed
-                style={{
-                  borderLeft: '1px solid #ccc',
-                  padding: '0 15px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Right
-              </Fixed>
-            </FlexLayout>
-          </>
-        ),
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -379,53 +102,9 @@ export default (props) => {
             info: '嵌套',
           },
         },
-        codeText: `
-  import { FlexLayout, Space } from '@baifendian/adhere';
-
-  <FlexLayout style={{ height: 500, border: '1px solid #ccc' }}>
-    <Fixed>fixed1</Fixed>
-    <Fixed>fixed2</Fixed>
-    <Auto>auto1</Auto>
-    <Fixed>fixed3</Fixed>
-    <Auto>auto2</Auto>
-    <Fixed>fixed4</Fixed>
-  </FlexLayout>
-
-  <Space direction="vertical" />
-
-  <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
-    <Fixed>fixed1</Fixed>
-    <Fixed>fixed2</Fixed>
-    <Auto>auto1</Auto>
-    <Fixed>fixed3</Fixed>
-    <Auto>auto2</Auto>
-    <Fixed>fixed4</Fixed>
-  </FlexLayout>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <FlexLayout style={{ height: 500, border: '1px solid #ccc' }}>
-              <Fixed>fixed1</Fixed>
-              <Fixed>fixed2</Fixed>
-              <Auto>auto1</Auto>
-              <Fixed>fixed3</Fixed>
-              <Auto>auto2</Auto>
-              <Fixed>fixed4</Fixed>
-            </FlexLayout>
-
-            <Space direction="vertical" />
-
-            <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
-              <Fixed>fixed1</Fixed>
-              <Fixed>fixed2</Fixed>
-              <Auto>auto1</Auto>
-              <Fixed>fixed3</Fixed>
-              <Auto>auto2</Auto>
-              <Fixed>fixed4</Fixed>
-            </FlexLayout>
-          </>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -438,69 +117,9 @@ export default (props) => {
             info: 'auto内容超出高度或宽度',
           },
         },
-        codeText: `
-  import { FlexLayout, Space } from '@baifendian/adhere';
-
-  <FlexLayout style={{ height: 100, border: '1px solid #ccc' }}>
-    <Fixed>Top</Fixed>
-    <Auto fit={false} autoFixed={false} style={{ overflowY: 'auto' }}>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-      <p>今天是个好日子</p>
-    </Auto>
-  </FlexLayout>
-
-  <Space direction="vertical" />
-
-  <FlexLayout
-    direction="horizontal"
-    style={{ overflow: 'auto', height: 100, border: '1px solid #ccc' }}
-  >
-    <Fixed>Left</Fixed>
-    <Auto fit={false} autoFixed={false}>
-      111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    </Auto>
-  </FlexLayout>
-      `,
+        codeText: P3CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <FlexLayout style={{ height: 100, border: '1px solid #ccc' }}>
-              <Fixed>Top</Fixed>
-              <Auto fit={false} autoFixed={false} style={{ overflowY: 'auto' }}>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-                <p>今天是个好日子</p>
-              </Auto>
-            </FlexLayout>
-
-            <Space direction="vertical" />
-
-            <FlexLayout
-              direction="horizontal"
-              style={{ overflow: 'auto', height: 100, border: '1px solid #ccc' }}
-            >
-              <Fixed>Left</Fixed>
-              <Auto fit={false} autoFixed={false}>
-                111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-              </Auto>
-            </FlexLayout>
-          </>
-        ),
+        renderChildren: () => <P3 />,
       },
       {
         id: 'p4',
@@ -514,35 +133,8 @@ export default (props) => {
             info: '分为Left、Main和Right',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  const {
-    HorizontalFlexLayout,
-  } = FlexLayout;
-
-  export default () => (
-    <HorizontalFlexLayout
-      style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
-      leftStyle={{ borderRight: '1px solid #ccc', width: 100 }}
-      rightStyle={{ borderLeft: '1px solid #ccc', width: 100 }}
-      renderLeft={<div>Left</div>}
-      renderMain={<div>Main</div>}
-      renderRight={<div>Right</div>}
-    />
-  )
-        `,
-        renderChildren: () => (
-          <HorizontalFlexLayout
-            style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
-            leftStyle={{ borderRight: '1px solid #ccc', width: 100 }}
-            rightStyle={{ borderLeft: '1px solid #ccc', width: 100 }}
-            renderLeft={<div>Left</div>}
-            renderMain={<div>Main</div>}
-            renderRight={<div>Right</div>}
-          />
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: 'p5',
@@ -556,35 +148,8 @@ export default (props) => {
             info: '分为Top、Main和Bottom',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  const {
-    VerticalFlexLayout,
-  } = FlexLayout;
-
-  export default () => (
-    <VerticalFlexLayout
-      style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
-      topStyle={{ borderBottom: '1px solid #ccc', height: 80 }}
-      bottomStyle={{ borderTop: '1px solid #ccc', height: 80 }}
-      renderTop={<div>Top</div>}
-      renderMain={<div>Main</div>}
-      renderBottom={<div>Bottom</div>}
-    />
-  )
-        `,
-        renderChildren: () => (
-          <VerticalFlexLayout
-            style={{ width: '100%', height: 300, border: '1px solid #ccc' }}
-            topStyle={{ borderBottom: '1px solid #ccc', height: 80 }}
-            bottomStyle={{ borderTop: '1px solid #ccc', height: 80 }}
-            renderTop={<div>Top</div>}
-            renderMain={<div>Main</div>}
-            renderBottom={<div>Bottom</div>}
-          />
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: 'p6',
@@ -598,54 +163,8 @@ export default (props) => {
             info: '组合嵌套',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  const {
-    VerticalFlexLayout,
-    HorizontalFlexLayout
-  } = FlexLayout;
-
-  export default () => (
-    <HorizontalFlexLayout
-      style={{ width: '100%', border: '1px solid #ccc' }}
-      leftStyle={{ borderRight: '1px solid #ccc', width: 100 }}
-      rightStyle={{ borderLeft: '1px solid #ccc', width: 100 }}
-      renderLeft={<div>Left</div>}
-      renderMain={
-        <VerticalFlexLayout
-          style={{ width: '100%', height: 300 }}
-          topStyle={{ borderBottom: '1px solid #ccc', height: 80 }}
-          bottomStyle={{ borderTop: '1px solid #ccc', height: 80 }}
-          renderTop={<div>Top</div>}
-          renderMain={<div>Main</div>}
-          renderBottom={<div>Bottom</div>}
-        />
-      }
-      renderRight={<div>Right</div>}
-    />
-  )
-        `,
-        renderChildren: () => (
-          <HorizontalFlexLayout
-            style={{ width: '100%', border: '1px solid #ccc' }}
-            leftStyle={{ borderRight: '1px solid #ccc', width: 100 }}
-            rightStyle={{ borderLeft: '1px solid #ccc', width: 100 }}
-            renderLeft={<div>Left</div>}
-            renderMain={
-              <VerticalFlexLayout
-                style={{ width: '100%', height: 300 }}
-                topStyle={{ borderBottom: '1px solid #ccc', height: 80 }}
-                bottomStyle={{ borderTop: '1px solid #ccc', height: 80 }}
-                renderTop={<div>Top</div>}
-                renderMain={<div>Main</div>}
-                renderBottom={<div>Bottom</div>}
-              />
-            }
-            renderRight={<div>Right</div>}
-          />
-        ),
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: 'p7',
@@ -659,72 +178,8 @@ export default (props) => {
             info: '包含上下的工具栏',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  const {
-    ToolBarLayout
-  } = FlexLayout;
-
-  export default () => (
-    <ToolBarLayout
-      topToolBarItems={[
-        <Button type="primary" key="add">
-          添加
-        </Button>,
-        <Button type="primary" key="remove">
-          删除
-        </Button>,
-        <Button type="primary" key="update">
-          修改
-        </Button>,
-      ]}
-      bottomToolBarItems={[
-        <Button type="primary" key="add">
-          添加
-        </Button>,
-        <Button type="primary" key="remove">
-          删除
-        </Button>,
-        <Button type="primary" key="update">
-          修改
-        </Button>,
-      ]}
-    >
-      Main
-    </ToolBarLayout>
-  )
-        `,
-        renderChildren: () => (
-          <ToolBarLayout
-            topToolBarItems={[
-              <Button type="primary" key="add">
-                添加
-              </Button>,
-              <Button type="primary" key="remove">
-                删除
-              </Button>,
-              <Button type="primary" key="update">
-                修改
-              </Button>,
-            ]}
-            bottomToolBarItems={[
-              <Button type="primary" key="add">
-                添加
-              </Button>,
-              <Button type="primary" key="remove">
-                删除
-              </Button>,
-              <Button type="primary" key="update">
-                修改
-              </Button>,
-            ]}
-          >
-            Main
-          </ToolBarLayout>
-        ),
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
       {
         id: 'p8',
@@ -738,535 +193,117 @@ export default (props) => {
             info: '带有返回操作的布局',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  const {
-    BackLayout
-  } = FlexLayout;
-
-  export default () => (
-    <BackLayout
-      topToolBarItems={[<Button key="add">新增</Button>]}
-      bottomToolBarItems={[
-        <Button type="primary" key="add">
-          添加
-        </Button>,
-        <Button type="primary" key="remove">
-          删除
-        </Button>,
-        <Button type="primary" key="update">
-          修改
-        </Button>,
-      ]}
-      history={props.history}
-      backTitle="返回"
-    >
-      Main
-    </BackLayout>
-  )
-        `,
-        renderChildren: () => (
-          <BackLayout
-            topToolBarItems={[<Button key="add">新增</Button>]}
-            bottomToolBarItems={[
-              <Button type="primary" key="add">
-                添加
-              </Button>,
-              <Button type="primary" key="remove">
-                删除
-              </Button>,
-              <Button type="primary" key="update">
-                修改
-              </Button>,
-            ]}
-            history={props.history}
-            backTitle="返回"
-          >
-            Main
-          </BackLayout>
-        ),
+        codeText: P8CodeText,
+        renderChildren: () => <P8 />,
       },
       {
         id: 'p9',
         name: `ScrollLayout`,
         mode: 'code',
         scope: { React },
-        type: 'PlayGround',
+        type: 'PlayGroundTab',
         cardProps: {
           description: {
             title: '可以滚动的布局',
             info: '一般用在路由组件的外层，作为带有getPopupContainer的FormItem的parent',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Select } from 'antd';
-  import { FlexLayout, Space } from '@baifendian/adhere';
+        active: 'p9.jsx',
+        config: [
+          {
+            key: 'p9.jsx',
+            title: 'p9.jsx',
+            codeText: P9CodeText,
+          },
+          {
+            key: 'FormItemWrap.jsx',
+            title: 'FormItemWrap.jsx',
+            codeText: FormItemWrapCodeText,
+          },
+        ],
 
-  const {
-    ScrollLayout,
-    useScrollLayout,
-  } = FlexLayout;
-
-  const { Option } = Select;
-
-  export default () => {
-    function FormItemWrap() {
-      const { getEl } = useScrollLayout();
-
-      const data = Array.from({ length: 10 }).fill(1);
-
-      return (
-        <Select style={{ width: 200 }} getPopupContainer={() => getEl()}>
-          {data.map((t, _index) => (
-            <Option key={\`\${_index + 1}\`} value={_index + 1}>
-              {_index + 1}
-            </Option>
-          ))}
-        </Select>
-      );
-    }
-
-    return (
-      <div style={{ height: 500 }}>
-        <ScrollLayout scrollY>
-          <Space.Group direction="vertical">
-            {Array.from({ length: 20 })
-              .fill(1)
-              .map((t, _index) => (
-                <FormItemWrap key={\`\${_index + 1}\`} />
-              ))}
-          </Space.Group>
-        </ScrollLayout>
-      </div>
-    )
-  }        `,
-        renderChildren: () => (
-          <div style={{ height: 500 }}>
-            <ScrollLayout scrollY>
-              <Space.Group direction="vertical">
-                {Array.from({ length: 20 })
-                  .fill(1)
-                  .map((t, _index) => (
-                    <FormItemWrap key={`${_index + 1}`} />
-                  ))}
-              </Space.Group>
-            </ScrollLayout>
-          </div>
-        ),
+        renderChildren: () => <P9 />,
       },
       {
         id: 'p10',
         name: `栅格`,
         mode: 'code',
         scope: { React },
-        type: 'PlayGround',
-        codeText: `
-  import React from 'react';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  const {
-    Fixed
-  } = FlexLayout;
-
-  export default () => (
-    <FlexLayout direction="horizontal" gutter={[20, 0]}>
-      <Fixed span={24} className={style.col}>
-        col
-      </Fixed>
-
-      <Fixed span={12} className={style.col}>
-        col-12
-      </Fixed>
-      <Fixed span={12} className={style.col}>
-        col-12
-      </Fixed>
-
-      <Fixed span={8} className={style.col}>
-        col-8
-      </Fixed>
-      <Fixed span={8} className={style.col}>
-        col-8
-      </Fixed>
-      <Fixed span={8} className={style.col}>
-        col-8
-      </Fixed>
-
-      <Fixed span={6} className={style.col}>
-        col-6
-      </Fixed>
-      <Fixed span={6} className={style.col}>
-        col-6
-      </Fixed>
-      <Fixed span={6} className={style.col}>
-        col-6
-      </Fixed>
-      <Fixed span={6} className={style.col}>
-        col-6
-      </Fixed>
-    </FlexLayout>
-  )
-        `,
+        type: 'PlayGroundTab',
         cardProps: {
           description: {
             title: '栅格',
             info: '栅格',
           },
         },
-        renderChildren: () => (
-          <FlexLayout direction="horizontal" gutter={[20, 0]}>
-            <Fixed span={24} className={style.col}>
-              <div className={style.inner}>col</div>
-            </Fixed>
-
-            <Fixed span={12} className={style.col}>
-              <div className={style.inner}>col-12</div>
-            </Fixed>
-            <Fixed span={12} className={style.col}>
-              <div className={style.inner}>col-12</div>
-            </Fixed>
-
-            <Fixed span={8} className={style.col}>
-              <div className={style.inner}>col-8</div>
-            </Fixed>
-            <Fixed span={8} className={style.col}>
-              <div className={style.inner}>col-8</div>
-            </Fixed>
-            <Fixed span={8} className={style.col}>
-              <div className={style.inner}>col-8</div>
-            </Fixed>
-
-            <Fixed span={6} className={style.col}>
-              <div className={style.inner}>col-6</div>
-            </Fixed>
-            <Fixed span={6} className={style.col}>
-              <div className={style.inner}>col-6</div>
-            </Fixed>
-            <Fixed span={6} className={style.col}>
-              <div className={style.inner}>col-6</div>
-            </Fixed>
-            <Fixed span={6} className={style.col}>
-              <div className={style.inner}>col-6</div>
-            </Fixed>
-          </FlexLayout>
-        ),
+        active: 'p10.jsx',
+        config: [
+          {
+            key: 'p10.jsx',
+            title: 'p10.jsx',
+            codeText: P10CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P10 />,
       },
       {
         id: 'p11',
         name: `纵向栅格`,
         mode: 'code',
         scope: { React },
-        type: 'PlayGround',
-        codeText: `
- import { Slider } from 'antd';
- import React, { useState } from 'react';
-
- import { FlexLayout, Space } from '@baifendian/adhere';
-
- const {
-  Fixed,
- } = FlexLayout;
-
- export default () => {
-  const [vGutterKey, setVGutterKey] = useState(1);
-  const [vVgutterKey, setVVgutterKey] = useState(1);
-  const [vColCountKey, setVColCountKey] = useState(2);
-
-  const vGutters = {};
-  const vVgutters = {};
-  const vColCounts = {};
-
-  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    vGutters[i] = value;
-  });
-  [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-    vVgutters[i] = value;
-  });
-  [2, 3, 4, 6, 8, 12].forEach((value, i) => {
-    vColCounts[i] = value;
-  });
-
-  return (
-    <Space.Group direction="vertical" size={20}>
-      <p>Horizontal Gutter (px):</p>
-      <div>
-        <Slider
-          min={0}
-          max={Object.keys(vGutters).length - 1}
-          value={vGutterKey}
-          onChange={setVGutterKey}
-          marks={vGutters}
-          step={null}
-          tooltip={{ formatter: (value) => vGutters[value] }}
-        />
-      </div>
-
-      <p>Vertical Gutter (px):</p>
-      <div>
-        <Slider
-          min={0}
-          max={Object.keys(vVgutters).length - 1}
-          value={vVgutterKey}
-          onChange={setVVgutterKey}
-          marks={vVgutters}
-          step={null}
-          tooltip={{ formatter: (value) => vVgutters[value] }}
-        />
-      </div>
-
-      <p>Column Count:</p>
-      <div>
-        <Slider
-          min={0}
-          max={Object.keys(vColCounts).length - 1}
-          value={vColCountKey}
-          onChange={setVColCountKey}
-          marks={vColCounts}
-          step={null}
-          tooltip={{ formatter: (value) => vColCounts[value] }}
-        />
-      </div>
-
-      <div style={{ height: 600 }}>
-        <FlexLayout
-          style={{ height: '100%' }}
-          gutter={[vVgutters[vVgutterKey], vGutters[vGutterKey]]}
-          direction="vertical"
-        >
-          {Array.from({ length: vColCounts[vColCountKey] }).map(() => (
-            <Fixed className={style.vcol} span={24 / vColCounts[vColCountKey]}>
-              <div className={style.inner}>{\`col-${24 / vColCounts[vColCountKey]}\`}</div>
-            </Fixed>
-          ))}
-        </FlexLayout>
-      </div>
-    </Space.Group>
-  )
- }
-        `,
+        type: 'PlayGroundTab',
         cardProps: {
           description: {
             title: '',
             info: '纵向栅格',
           },
         },
-        renderChildren: () => (
-          <Space.Group direction="vertical" size={20}>
-            <p>Horizontal Gutter (px):</p>
-            <div>
-              <Slider
-                min={0}
-                max={Object.keys(vGutters).length - 1}
-                value={vGutterKey}
-                onChange={setVGutterKey}
-                marks={vGutters}
-                step={null}
-                tooltip={{ formatter: (value) => vGutters[value] }}
-              />
-            </div>
-
-            <p>Vertical Gutter (px):</p>
-            <div>
-              <Slider
-                min={0}
-                max={Object.keys(vVgutters).length - 1}
-                value={vVgutterKey}
-                onChange={setVVgutterKey}
-                marks={vVgutters}
-                step={null}
-                tooltip={{ formatter: (value) => vVgutters[value] }}
-              />
-            </div>
-
-            <p>Column Count:</p>
-            <div>
-              <Slider
-                min={0}
-                max={Object.keys(vColCounts).length - 1}
-                value={vColCountKey}
-                onChange={setVColCountKey}
-                marks={vColCounts}
-                step={null}
-                tooltip={{ formatter: (value) => vColCounts[value] }}
-              />
-            </div>
-
-            <div style={{ height: 600 }}>
-              <FlexLayout
-                style={{ height: '100%' }}
-                gutter={[vVgutters[vVgutterKey], vGutters[vGutterKey]]}
-                direction="vertical"
-              >
-                {Array.from({ length: vColCounts[vColCountKey] }).map(() => (
-                  <Fixed className={style.vcol} span={24 / vColCounts[vColCountKey]}>
-                    <div className={style.inner}>{`col-${24 / vColCounts[vColCountKey]}`}</div>
-                  </Fixed>
-                ))}
-              </FlexLayout>
-            </div>
-          </Space.Group>
-        ),
+        active: 'p11.jsx',
+        config: [
+          {
+            key: 'p11.jsx',
+            title: 'p11.jsx',
+            codeText: P11CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P11 />,
       },
       {
         id: 'p12',
         name: `栅格配置器`,
         mode: 'code',
         scope: { React },
-        type: 'PlayGround',
-        codeText: `
-  import { Button, Select, Slider } from 'antd';
-  import React, { useState } from 'react';
-
-  import { FlexLayout, Space } from '@baifendian/adhere';
-
-  const {
-    Fixed
-  } = FlexLayout;
-
-  export default () => {
-    const [gutterKey, setGutterKey] = useState(1);
-    const [vgutterKey, setVgutterKey] = useState(1);
-    const [colCountKey, setColCountKey] = useState(2);
-
-    const gutters = {};
-    const vgutters = {};
-    const colCounts = {};
-
-    [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-      gutters[i] = value;
-    });
-    [8, 16, 24, 32, 40, 48].forEach((value, i) => {
-      vgutters[i] = value;
-    });
-    [2, 3, 4, 6, 8, 12].forEach((value, i) => {
-      colCounts[i] = value;
-    });
-
-    return (
-      <Space.Group direction="vertical" size={20}>
-        <p>Horizontal Gutter (px):</p>
-        <div>
-          <Slider
-            min={0}
-            max={Object.keys(gutters).length - 1}
-            value={gutterKey}
-            onChange={setGutterKey}
-            marks={gutters}
-            step={null}
-            tooltip={{ formatter: (value) => gutters[value] }}
-          />
-        </div>
-
-        <p>Vertical Gutter (px):</p>
-        <div>
-          <Slider
-            min={0}
-            max={Object.keys(vgutters).length - 1}
-            value={vgutterKey}
-            onChange={setVgutterKey}
-            marks={vgutters}
-            step={null}
-            tooltip={{ formatter: (value) => vgutters[value] }}
-          />
-        </div>
-
-        <p>Column Count:</p>
-        <div>
-          <Slider
-            min={0}
-            max={Object.keys(colCounts).length - 1}
-            value={colCountKey}
-            onChange={setColCountKey}
-            marks={colCounts}
-            step={null}
-            tooltip={{ formatter: (value) => colCounts[value] }}
-          />
-        </div>
-
-        <div>
-          <FlexLayout
-            gutter={[vgutters[vgutterKey], gutters[gutterKey]]}
-            direction="horizontal"
-          >
-            {Array.from({ length: 3 }).map(() => {
-              return Array.from({ length: colCounts[colCountKey] }).map(() => (
-                <Fixed span={24 / colCounts[colCountKey]} className={style.col}>
-                  <div className={style.inner}>{\`col-${24 / hColCounts[hColCountKey]}\`}</div>
-                </Fixed>
-              ));
-            })}
-          </FlexLayout>
-        </div>
-      </Space.Group>
-    )
-  }
-        `,
+        type: 'PlayGroundTab',
         cardProps: {
           description: {
             title: '栅格配置器',
             info: '栅格配置器',
           },
         },
-        renderChildren: () => (
-          <Space.Group direction="vertical" size={20}>
-            <p>Horizontal Gutter (px):</p>
-            <div>
-              <Slider
-                min={0}
-                max={Object.keys(hGutters).length - 1}
-                value={hGutterKey}
-                onChange={setHGutterKey}
-                marks={hGutters}
-                step={null}
-                tooltip={{ formatter: (value) => hGutters[value] }}
-              />
-            </div>
-
-            <p>Vertical Gutter (px):</p>
-            <div>
-              <Slider
-                min={0}
-                max={Object.keys(hVgutters).length - 1}
-                value={hVgutterKey}
-                onChange={setHVgutterKey}
-                marks={hVgutters}
-                step={null}
-                tooltip={{ formatter: (value) => hVgutters[value] }}
-              />
-            </div>
-
-            <p>Column Count:</p>
-            <div>
-              <Slider
-                min={0}
-                max={Object.keys(hColCounts).length - 1}
-                value={hColCountKey}
-                onChange={setHColCountKey}
-                marks={hColCounts}
-                step={null}
-                tooltip={{ formatter: (value) => hColCounts[value] }}
-              />
-            </div>
-
-            <div>
-              <FlexLayout
-                gutter={[hVgutters[hVgutterKey], hGutters[hGutterKey]]}
-                direction="horizontal"
-              >
-                {Array.from({ length: 3 }).map(() => {
-                  return Array.from({ length: hColCounts[hColCountKey] }).map(() => (
-                    <Fixed span={24 / hColCounts[hColCountKey]} className={style.col}>
-                      <div className={style.inner}>{`col-${24 / hColCounts[hColCountKey]}`}</div>
-                    </Fixed>
-                  ));
-                })}
-              </FlexLayout>
-            </div>
-          </Space.Group>
-        ),
+        active: 'p12.jsx',
+        config: [
+          {
+            key: 'p12.jsx',
+            title: 'p12.jsx',
+            codeText: P12CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P12 />,
       },
     ];
   }
@@ -1284,41 +321,9 @@ export default (props) => {
             info: 'TC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        tProps={{
-          children: <Card>top</Card>,
-        }}
-        cProps={{
-          children: <Card>center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              tProps={{
-                children: <Card>top</Card>,
-              }}
-              cProps={{
-                children: <Card>center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TCCodeText,
+        renderChildren: () => <TC />,
       },
       {
         id: `CB`,
@@ -1331,45 +336,9 @@ export default (props) => {
             info: 'CB',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.CBLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        bProps={{
-          span: 12,
-          fit: true,
-          children: <Card>bottom</Card>,
-        }}
-        cProps={{
-          children: <Card>center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.CBLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              bProps={{
-                span: 12,
-                fit: true,
-                children: <Card>bottom</Card>,
-              }}
-              cProps={{
-                children: <Card>center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: CBCodeText,
+        renderChildren: () => <CB />,
       },
       {
         id: `TLC`,
@@ -1382,57 +351,9 @@ export default (props) => {
             info: 'TLC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TLCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 8,
-          children: <Card>Top</Card>,
-        }}
-        lProps={{
-          fit: true,
-          span: 8,
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          children: <Card>center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TLCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 8,
-                children: <Card>Top</Card>,
-              }}
-              lProps={{
-                fit: true,
-                span: 8,
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                children: <Card>center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TLCCodeText,
+        renderChildren: () => <TLC />,
       },
       {
         id: `TRC`,
@@ -1445,57 +366,9 @@ export default (props) => {
             info: 'TRC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TRCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 8,
-          children: <Card>Top</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 8,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TRCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 8,
-                children: <Card>Top</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 8,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TRCCodeText,
+        renderChildren: () => <TRC />,
       },
       {
         id: `TLRC`,
@@ -1508,67 +381,9 @@ export default (props) => {
             info: 'TLRC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TLRCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TLRCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TLRCCodeText,
+        renderChildren: () => <TLRC />,
       },
       {
         id: `LCB`,
@@ -1581,57 +396,9 @@ export default (props) => {
             info: 'LCB',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LCBLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LCBLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LCBCodeText,
+        renderChildren: () => <LCB />,
       },
       {
         id: `CRB`,
@@ -1644,57 +411,9 @@ export default (props) => {
             info: 'CRB',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.CRBLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.CRBLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: CRBCodeText,
+        renderChildren: () => <CRB />,
       },
       {
         id: `LCRB`,
@@ -1707,67 +426,9 @@ export default (props) => {
             info: 'LCRB',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LCRBLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LCRBLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LCRBCodeText,
+        renderChildren: () => <LCRB />,
       },
       {
         id: `LC`,
@@ -1780,45 +441,9 @@ export default (props) => {
             info: 'LC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LCCodeText,
+        renderChildren: () => <LC />,
       },
       {
         id: `CR`,
@@ -1831,45 +456,9 @@ export default (props) => {
             info: 'CR',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.CRLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
+        codeText: CRCodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.CRLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        renderChildren: () => <CR />,
       },
       {
         id: `LTC`,
@@ -1882,57 +471,9 @@ export default (props) => {
             info: 'LTC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LTCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LTCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LTCCodeText,
+        renderChildren: () => <LTC />,
       },
       {
         id: `LBC`,
@@ -1945,57 +486,9 @@ export default (props) => {
             info: 'LBC',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LBCLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LBCLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LBCCodeText,
+        renderChildren: () => <LBC />,
       },
       {
         id: `LTCB`,
@@ -2008,67 +501,9 @@ export default (props) => {
             info: 'LTCB',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LTCBLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LTCBLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LTCBCodeText,
+        renderChildren: () => <LTCB />,
       },
       {
         id: `TCR`,
@@ -2081,57 +516,9 @@ export default (props) => {
             info: 'TCR',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TCRLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TCRLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TCRCodeText,
+        renderChildren: () => <TCR />,
       },
       {
         id: `CBR`,
@@ -2144,57 +531,9 @@ export default (props) => {
             info: 'CBR',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.CBRLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.CBRLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: CBRCodeText,
+        renderChildren: () => <CBR />,
       },
       {
         id: `TCBR`,
@@ -2207,67 +546,9 @@ export default (props) => {
             info: 'TCBR',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TCBRLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TCBRLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TCBRCodeText,
+        renderChildren: () => <TCBR />,
       },
       {
         id: `TBLCR`,
@@ -2280,77 +561,9 @@ export default (props) => {
             info: 'TBLCR',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.TBLCRLayout
-        style={{ height: '100%' }}
-        gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.TBLCRLayout
-              style={{ height: '100%' }}
-              gutter={20}
-              autoInnerProps={{ gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: TBLCRCodeText,
+        renderChildren: () => <TBLCR />,
       },
       {
         id: `LRTCB`,
@@ -2363,79 +576,10 @@ export default (props) => {
             info: 'LRTCB',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-      <FlexLayout.TRBLC.LRTCBLayout
-        style={{ height: '100%' }}
-        gutter={50}
-        autoInnerProps={{ gutter: [0, 30] }}
-        tProps={{
-          fit: true,
-          span: 4,
-          children: <Card>Top</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        lProps={{
-          fit: true,
-          style: { width: '50%' },
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          children: <Card>Center</Card>,
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, padding: 20, background: '#ccc' }}>
-            <FlexLayout.TRBLC.LRTCBLayout
-              style={{ height: '100%' }}
-              gutter={50}
-              autoInnerProps={{ gutter: [0, 30] }}
-              tProps={{
-                fit: true,
-                span: 4,
-                children: <Card>Top</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              lProps={{
-                fit: true,
-                style: { width: '50%' },
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                children: <Card>Center</Card>,
-              }}
-            />
-          </div>
-        ),
+        codeText: LRTCBCodeText,
+        renderChildren: () => <LRTCB />,
       },
-
       {
         id: `TBLCRScroll`,
         name: `TBLCR可滚动`,
@@ -2447,95 +591,9 @@ export default (props) => {
             info: 'TBLCR可滚动',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, background: '#ccc', padding: 20 }}>
-      <FlexLayout.TRBLC.TBLCRLayout
-        gutter={20}
-        autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          autoFixed: false,
-          children: (
-            <Card>
-              {Array.from({ length: 100 }).map((t) => (
-                <p>
-                  111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-                </p>
-              ))}
-            </Card>
-          ),
-        }}
-      />
-    </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, background: '#ccc', padding: 20 }}>
-            <FlexLayout.TRBLC.TBLCRLayout
-              gutter={20}
-              autoWrapProps={{ autoFixed: false }}
-              autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                autoFixed: false,
-                children: (
-                  <Card>
-                    {Array.from({ length: 100 }).map((t) => (
-                      <p>
-                        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-                      </p>
-                    ))}
-                  </Card>
-                ),
-              }}
-            />
-          </div>
-        ),
+        codeText: TBLCRScrollCodeText,
+        renderChildren: () => <TBLCRScroll />,
       },
       {
         id: `LRTCBScroll`,
@@ -2548,95 +606,9 @@ export default (props) => {
             info: 'LRTCB可滚动',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Card } from 'antd';
-  import { FlexLayout } from '@baifendian/adhere';
-
-  export default () => (
-    <div style={{ height: 500, background: '#ccc', padding: 20 }}>
-      <FlexLayout.TRBLC.LRTCBLayout
-        gutter={20}
-        autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
-        tProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Top</Card>,
-        }}
-        rProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Right</Card>,
-        }}
-        bProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Bottom</Card>,
-        }}
-        lProps={{
-          fit: true,
-          span: 3,
-          children: <Card>Left</Card>,
-        }}
-        cProps={{
-          autoFixed: false,
-          children: (
-            <Card>
-              {Array.from({ length: 100 }).map((t) => (
-                <p>
-                  111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-                </p>
-              ))}
-            </Card>
-          ),
-        }}
-      />
-          </div>
-  )
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ height: 500, background: '#ccc', padding: 20 }}>
-            <FlexLayout.TRBLC.LRTCBLayout
-              gutter={20}
-              autoWrapProps={{ autoFixed: false }}
-              autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
-              tProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Top</Card>,
-              }}
-              rProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Right</Card>,
-              }}
-              bProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Bottom</Card>,
-              }}
-              lProps={{
-                fit: true,
-                span: 3,
-                children: <Card>Left</Card>,
-              }}
-              cProps={{
-                autoFixed: false,
-                children: (
-                  <Card>
-                    {Array.from({ length: 100 }).map((t) => (
-                      <p>
-                        111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-                      </p>
-                    ))}
-                  </Card>
-                ),
-              }}
-            />
-          </div>
-        ),
+        codeText: LRTCBScrollCodeText,
+        renderChildren: () => <LRTCBScroll />,
       },
     ];
   }

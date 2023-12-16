@@ -1,0 +1,61 @@
+/**
+  这里是对antd样式的normalize
+ */
+
+// Spin
+.ant-spin-nested-loading {
+  display: flex;
+  width: 100%;
+  //min-height: 100%;
+  height: 100%;
+
+  > .ant-spin-container {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// .ant-select-dropdown
+.ant-select-dropdown {
+  z-index: calc(var(--adhere-z-index-max-base) + 1);
+}
+
+// .ant-notification
+.ant-notification {
+  z-index: calc(var(--adhere-z-index-max-base) + 2);
+}
+
+// .ant-message
+.ant-message {
+  z-index: calc(var(--adhere-z-index-max-base) + 2);
+}
+
+// .ant-card
+.ant-card {
+  > .ant-card-body {
+    height: 100%;
+  }
+}
+
+.ant-select-tree {
+  .ant-select-tree-node-content-wrapper {
+    white-space: nowrap;
+  }
+}
+
+.ant-tree-title {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ant-picker-dropdown {
+  z-index: calc(var(--adhere-z-index-max-base) + 2);
+}
+
+.ant-tabs-content {
+  width: 100%;
+  height: 100%;
+}

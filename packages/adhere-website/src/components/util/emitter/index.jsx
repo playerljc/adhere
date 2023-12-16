@@ -1,13 +1,26 @@
-import { Button } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
 
-import { Emitter } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,77 +36,9 @@ export default () => {
             info: '基本的使用',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-    style={{ marginRight: 20 }}
-    onClick={() => {
-      if (handler1.current) {
-        Emitter.remove('type1', handler1.current);
-      }
-
-      handler1.current = () => {
-        alert('接到了通知');
-      };
-
-      Emitter.on('type1', handler1.current);
-
-      alert('注册成功');
-    }}
-  >
-    注册通知
-  </Button>
-  <Button
-    onClick={() => {
-      if (!handler1.current) {
-        alert('还没有注册事件');
-
-        return;
-      }
-
-      Emitter.trigger('type1');
-    }}
-  >
-    发出通知
-  </Button>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                if (handler1.current) {
-                  Emitter.remove('type1', handler1.current);
-                }
-
-                handler1.current = () => {
-                  alert('接到了通知');
-                };
-
-                Emitter.on('type1', handler1.current);
-
-                alert('注册成功');
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                if (!handler1.current) {
-                  alert('还没有注册事件');
-
-                  return;
-                }
-
-                Emitter.trigger('type1');
-              }}
-            >
-              发出通知
-            </Button>
-          </>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -106,53 +51,9 @@ export default () => {
             info: '注册多次，并且传递参数',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-    style={{ marginRight: 20 }}
-    onClick={() => {
-      Emitter.on('type2', (params) => {
-        alert(params);
-      });
-
-      alert('注册成功');
-    }}
-  >
-    注册通知
-  </Button>
-  <Button
-    onClick={() => {
-      Emitter.trigger('type2', 'Hello World');
-    }}
-  >
-    发出通知
-  </Button>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                Emitter.on('type2', (params) => {
-                  alert(params);
-                });
-
-                alert('注册成功');
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                Emitter.trigger('type2', 'Hello World');
-              }}
-            >
-              发出通知
-            </Button>
-          </>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -165,61 +66,9 @@ export default () => {
             info: '触发HtmlElement的自定义事件',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-    style={{ marginRight: 20 }}
-    onClick={() => {
-      document.addEventListener('customType', (e) => {
-        alert(JSON.stringify(e.detail));
-      });
-
-      alert('注册成功');
-    }}
-  >
-    注册通知
-  </Button>
-  <Button
-    onClick={() => {
-      Emitter.dispatchEvent(document, 'customType', {
-        detail: {
-          hazcheeseburger: true,
-        },
-      });
-    }}
-  >
-    发出通知
-  </Button>
-        `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                document.addEventListener('customType', (e) => {
-                  alert(JSON.stringify(e.detail));
-                });
-
-                alert('注册成功');
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                Emitter.dispatchEvent(document, 'customType', {
-                  detail: {
-                    hazcheeseburger: true,
-                  },
-                });
-              }}
-            >
-              发出通知
-            </Button>
-          </>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -232,57 +81,9 @@ export default () => {
             info: '只执行一次',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-    style={{ marginRight: 20 }}
-    onClick={() => {
-      Emitter.once('type3', () => {
-        alert('type3');
-      });
-
-      Emitter.once('type3', () => {
-        alert('type3');
-      });
-    }}
-  >
-    注册通知
-  </Button>
-  <Button
-    onClick={() => {
-      Emitter.trigger('type3');
-    }}
-  >
-    发出通知
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                Emitter.once('type3', () => {
-                  alert('type3');
-                });
-
-                Emitter.once('type3', () => {
-                  alert('type3');
-                });
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                Emitter.trigger('type3');
-              }}
-            >
-              发出通知
-            </Button>
-          </>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -295,77 +96,9 @@ export default () => {
             info: 'all',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-      style={{ marginRight: 20 }}
-      onClick={() => {
-        Emitter.once('type4', () => {
-          alert('type4');
-        });
-
-        Emitter.once('type5', () => {
-          alert('type5');
-        });
-
-        Emitter.once('type6', () => {
-          alert('type6');
-        });
-      }}
-    >
-      注册通知
-    </Button>
-    <Button
-      onClick={() => {
-        const fun = Emitter.all(['type4', 'type5', 'type6'], () => {
-          alert('type4,type5,type6 - changed');
-        });
-
-        Emitter.trigger('type4');
-        Emitter.trigger('type5');
-        Emitter.trigger('type6');
-      }}
-    >
-      发出通知并监控
-    </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                Emitter.once('type4', () => {
-                  alert('type4');
-                });
-
-                Emitter.once('type5', () => {
-                  alert('type5');
-                });
-
-                Emitter.once('type6', () => {
-                  alert('type6');
-                });
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                const fun = Emitter.all(['type4', 'type5', 'type6'], () => {
-                  alert('type4,type5,type6 - changed');
-                });
-
-                Emitter.trigger('type4');
-                Emitter.trigger('type5');
-                Emitter.trigger('type6');
-              }}
-            >
-              发出通知并监控
-            </Button>
-          </>
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -378,77 +111,9 @@ export default () => {
             info: 'race',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-    style={{ marginRight: 20 }}
-    onClick={() => {
-      Emitter.once('type7', () => {
-        alert('type7');
-      });
-
-      Emitter.once('type8', () => {
-        alert('type8');
-      });
-
-      Emitter.once('type9', () => {
-        alert('type9');
-      });
-    }}
-  >
-    注册通知
-  </Button>
-  <Button
-    onClick={() => {
-      const fun = Emitter.race(['type7', 'type8', 'type9'], () => {
-        alert('type7,type8,type9 - changed');
-      });
-
-      Emitter.trigger('type7');
-      Emitter.trigger('type8');
-      Emitter.trigger('type9');
-    }}
-  >
-    发出通知并监控
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                Emitter.once('type7', () => {
-                  alert('type7');
-                });
-
-                Emitter.once('type8', () => {
-                  alert('type8');
-                });
-
-                Emitter.once('type9', () => {
-                  alert('type9');
-                });
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                const fun = Emitter.race(['type7', 'type8', 'type9'], () => {
-                  alert('type7,type8,type9 - changed');
-                });
-
-                Emitter.trigger('type7');
-                Emitter.trigger('type8');
-                Emitter.trigger('type9');
-              }}
-            >
-              发出通知并监控
-            </Button>
-          </>
-        ),
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -461,64 +126,12 @@ export default () => {
             info: 'count',
           },
         },
-        codeText: `
-  import { Emitter } from '@baifendian/adhere';
-
-  <Button
-    style={{ marginRight: 20 }}
-    onClick={() => {
-      Emitter.on('type10', () => {
-        alert('type10');
-      });
-    }}
-  >
-    注册通知
-  </Button>
-  <Button
-    onClick={() => {
-      const fun = Emitter.count('type10', 2, () => {
-        alert('type10 - called 2');
-      });
-
-      Emitter.trigger('type10');
-      Emitter.trigger('type10');
-    }}
-  >
-    发出通知并监控
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <Button
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                Emitter.on('type10', () => {
-                  alert('type10');
-                });
-              }}
-            >
-              注册通知
-            </Button>
-            <Button
-              onClick={() => {
-                const fun = Emitter.count('type10', 2, () => {
-                  alert('type10 - called 2');
-                });
-
-                Emitter.trigger('type10');
-                Emitter.trigger('type10');
-              }}
-            >
-              发出通知并监控
-            </Button>
-          </>
-        ),
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
     ];
   }
-
-  const handler1 = useRef();
 
   return (
     <PlayGroundPage>

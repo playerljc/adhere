@@ -1,8 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+import Util from '@/util';
 
 export default () => {
+  const [indexCodeText, setIndexCodeText] = useState('');
+  const [p1CodeText, setP1CodeText] = useState('');
+  const [p2CodeText, setP2CodeText] = useState('');
+  const [p3CodeText, setP3CodeText] = useState('');
+  const [p4CodeText, setP4CodeText] = useState('');
+  const [p5CodeText, setP5CodeText] = useState('');
+  const [p6CodeText, setP6CodeText] = useState('');
+  const [p7CodeText, setP7CodeText] = useState('');
+  const [p8CodeText, setP8CodeText] = useState('');
+  const [p9CodeText, setP9CodeText] = useState('');
+  const [p10CodeText, setP10CodeText] = useState('');
+  const [homeCodeText, setHomeCodeText] = useState('');
+  const [messageCodeText, setMessageCodeText] = useState('');
+  const [todoCodeText, setTodoCodeText] = useState('');
+  const [personalCenterCodeText, setPersonalCenterCodeText] = useState('');
+
+  useEffect(() => {
+    Util.getMobileCodeText('tabs/index.jsx').then(setIndexCodeText);
+    Util.getMobileCodeText('tabs/examples/p1.jsx').then(setP1CodeText);
+    Util.getMobileCodeText('tabs/examples/p2.jsx').then(setP2CodeText);
+    Util.getMobileCodeText('tabs/examples/p3.jsx').then(setP3CodeText);
+    Util.getMobileCodeText('tabs/examples/p4.jsx').then(setP4CodeText);
+    Util.getMobileCodeText('tabs/examples/p5.jsx').then(setP5CodeText);
+    Util.getMobileCodeText('tabs/examples/p6.jsx').then(setP6CodeText);
+    Util.getMobileCodeText('tabs/examples/p7.jsx').then(setP7CodeText);
+    Util.getMobileCodeText('tabs/examples/p8.jsx').then(setP8CodeText);
+    Util.getMobileCodeText('tabs/examples/p9.jsx').then(setP9CodeText);
+    Util.getMobileCodeText('tabs/examples/p10.jsx').then(setP10CodeText);
+    Util.getMobileCodeText('tabs/Home.jsx').then(setHomeCodeText);
+    Util.getMobileCodeText('tabs/Message.jsx').then(setMessageCodeText);
+    Util.getMobileCodeText('tabs/PersonalCenter.jsx').then(setPersonalCenterCodeText);
+    Util.getMobileCodeText('tabs/Todo.jsx').then(setTodoCodeText);
+  }, []);
+
   function boxPanelConfig() {
     return [
       {
@@ -15,290 +50,119 @@ export default () => {
           },
         },
         active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
         config: [
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            codeText: `
-  import { Badge } from 'antd-mobile';
-  import { AppOutline, MessageFill, UnorderedListOutline, UserOutline } from 'antd-mobile-icons';
-  import React from 'react';
-
-  import { MobileTabs } from '@baifendian/adhere';
-
-  import DemoBlock from '@/lib/DemoBlock';
-
-  import styles from './index.less';
-
-  const { CapsuleTabs, JumboTabs, SideTabs, Tabs, TabBar } = MobileTabs;
-
-  export default ({ children }) => (
-    <DemoBlock>
-      <DemoBlock.Item title="CapsuleTabs">
-        <CapsuleTabs>
-          <CapsuleTabs.Tab title="水果" key="fruits">
-            菠萝
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="蔬菜" key="vegetables">
-            西红柿
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="动物" key="animals">
-            蚂蚁
-          </CapsuleTabs.Tab>
-        </CapsuleTabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="CapsuleTabs - 超长自动滑动">
-        <CapsuleTabs defaultActiveKey="1">
-          <CapsuleTabs.Tab title="Espresso" key="1">
-            1
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="Coffee Latte" key="2">
-            2
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="Cappuccino" key="3">
-            3
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="Americano" key="4">
-            4
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="Flat White" key="5">
-            5
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="Caramel Macchiato" key="6">
-            6
-          </CapsuleTabs.Tab>
-          <CapsuleTabs.Tab title="Cafe Mocha" key="7">
-            7
-          </CapsuleTabs.Tab>
-        </CapsuleTabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="JumboTabs">
-        <JumboTabs>
-          <JumboTabs.Tab title="水果" description="描述文案" key="fruits">
-            菠萝
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="蔬菜" description="描述文案" key="vegetables">
-            西红柿
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="动物" description="描述文案" key="animals">
-            蚂蚁
-          </JumboTabs.Tab>
-        </JumboTabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="JumboTabs - 超长自动滑动">
-        <JumboTabs defaultActiveKey="1">
-          <JumboTabs.Tab title="Espresso" description="描述文案" key="1">
-            1
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="Coffee Latte" description="描述文案" key="2">
-            2
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="Cappuccino" description="描述文案" key="3">
-            3
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="Americano" description="描述文案" key="4">
-            4
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="Flat White" description="描述文案" key="5">
-            5
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="Caramel Macchiato" description="描述文案" key="6">
-            6
-          </JumboTabs.Tab>
-          <JumboTabs.Tab title="Cafe Mocha" description="描述文案" key="7">
-            7
-          </JumboTabs.Tab>
-        </JumboTabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="SideTabs">
-        <SideTabs activeKey="1">
-          {Array.from({ length: 6 })
-            .fill(0)
-            .map((item, _index) => (
-              <SideTabs.Tab key={\`${_index + 1}\`} title={\`选项卡${_index + 1}\`}>
-                {_index + 1}
-              </SideTabs.Tab>
-            ))}
-        </SideTabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="Tabs">
-        <Tabs>
-          <Tabs.Tab title="水果" key="fruits">
-            菠萝
-          </Tabs.Tab>
-          <Tabs.Tab title="蔬菜" key="vegetables">
-            西红柿
-          </Tabs.Tab>
-          <Tabs.Tab title="动物" key="animals">
-            蚂蚁
-          </Tabs.Tab>
-        </Tabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="Tabs - 超长">
-        <Tabs defaultActiveKey="1">
-          <Tabs.Tab title="Espresso" key="1">
-            1
-          </Tabs.Tab>
-          <Tabs.Tab title="Coffee Latte" key="2">
-            2
-          </Tabs.Tab>
-          <Tabs.Tab title="Cappuccino" key="3">
-            3
-          </Tabs.Tab>
-          <Tabs.Tab title="Americano" key="4">
-            4
-          </Tabs.Tab>
-          <Tabs.Tab title="Flat White" key="5">
-            5
-          </Tabs.Tab>
-          <Tabs.Tab title="Caramel Macchiato" key="6">
-            6
-          </Tabs.Tab>
-          <Tabs.Tab title="Cafe Mocha" key="7">
-            7
-          </Tabs.Tab>
-        </Tabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="Tabs - swiper">
-        <Tabs defaultActiveKey="1" swiper>
-          <Tabs.Tab title="Espresso" key="1">
-            1
-          </Tabs.Tab>
-          <Tabs.Tab title="Coffee Latte" key="2">
-            2
-          </Tabs.Tab>
-          <Tabs.Tab title="Cappuccino" key="3">
-            3
-          </Tabs.Tab>
-          <Tabs.Tab title="Americano" key="4">
-            4
-          </Tabs.Tab>
-          <Tabs.Tab title="Flat White" key="5">
-            5
-          </Tabs.Tab>
-          <Tabs.Tab title="Caramel Macchiato" key="6">
-            6
-          </Tabs.Tab>
-          <Tabs.Tab title="Cafe Mocha" key="7">
-            7
-          </Tabs.Tab>
-        </Tabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="Tabs - noShowArrowMore">
-        <Tabs defaultActiveKey="1" showArrowMore={false}>
-          <Tabs.Tab title="Espresso" key="1">
-            1
-          </Tabs.Tab>
-          <Tabs.Tab title="Coffee Latte" key="2">
-            2
-          </Tabs.Tab>
-          <Tabs.Tab title="Cappuccino" key="3">
-            3
-          </Tabs.Tab>
-          <Tabs.Tab title="Americano" key="4">
-            4
-          </Tabs.Tab>
-          <Tabs.Tab title="Flat White" key="5">
-            5
-          </Tabs.Tab>
-          <Tabs.Tab title="Caramel Macchiato" key="6">
-            6
-          </Tabs.Tab>
-          <Tabs.Tab title="Cafe Mocha" key="7">
-            7
-          </Tabs.Tab>
-        </Tabs>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="TabBar">
-        <TabBar
-          className={styles.TabBarWrap}
-          data={[
-            {
-              key: '/adhere/component/ui/tabs/home',
-              title: '首页',
-              icon: <AppOutline />,
-              badge: Badge.dot,
-            },
-            {
-              key: '/adhere/component/ui/tabs/todo',
-              title: '待办',
-              icon: <UnorderedListOutline />,
-              badge: '5',
-            },
-            {
-              key: '/adhere/component/ui/tabs/message',
-              title: '消息',
-              icon: <MessageFill />,
-              badge: '99+',
-            },
-            {
-              key: '/adhere/component/ui/tabs/personalcenter',
-              title: '我的',
-              icon: <UserOutline />,
-            },
-          ]}
-        >
-          {children}
-        </TabBar>
-      </DemoBlock.Item>
-    </DemoBlock>
-  );
-      `,
             style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: indexCodeText,
           },
+          {
+            key: 'p1.jsx',
+            title: 'p1.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p1CodeText,
+          },
+          {
+            key: 'p2.jsx',
+            title: 'p2.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p2CodeText,
+          },
+          {
+            key: 'p3.jsx',
+            title: 'p3.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p3CodeText,
+          },
+          {
+            key: 'p4.jsx',
+            title: 'p4.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p4CodeText,
+          },
+          {
+            key: 'p5.jsx',
+            title: 'p5.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p5CodeText,
+          },
+          {
+            key: 'p6.jsx',
+            title: 'p6.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p6CodeText,
+          },
+          {
+            key: 'p7.jsx',
+            title: 'p7.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p7CodeText,
+          },
+          {
+            key: 'p8.jsx',
+            title: 'p8.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p8CodeText,
+          },
+          {
+            key: 'p9.jsx',
+            title: 'p9.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p9CodeText,
+          },
+          {
+            key: 'p10.jsx',
+            title: 'p10.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p10CodeText,
+          },
+
           {
             key: 'Home.jsx',
             title: 'Home.jsx',
-            codeText: `
-  import React from 'react';
-
-  export default () => <div>Home</div>;
-            `,
+            style: { maxHeight: 500 },
             theme: 'eclipse',
-          },
-          {
-            key: 'Todo.jsx',
-            title: 'Todo.jsx',
-            codeText: `
-  import React from 'react';
-
-  export default () => <div>Todo</div>;
-            `,
-            theme: 'eclipse',
-          },
-          {
-            key: 'Message.jsx',
-            title: 'Message.jsx',
-            codeText: `
-  import React from 'react';
-
-  export default () => <div>Message</div>;
-            `,
-            theme: 'eclipse',
+            codeText: homeCodeText,
           },
           {
             key: 'PersonalCenter.jsx',
             title: 'PersonalCenter.jsx',
-            codeText: `
-  import React from 'react';
-
-  export default () => <div>PersonalCenter</div>;
-            `,
+            style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: personalCenterCodeText,
+          },
+          {
+            key: 'Todo.jsx',
+            title: 'Todo.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: todoCodeText,
+          },
+          {
+            key: 'Message.jsx',
+            title: 'Message.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: messageCodeText,
           },
         ],
         type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/tabs`,
       },
     ];
   }

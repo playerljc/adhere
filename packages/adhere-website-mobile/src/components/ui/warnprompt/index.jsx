@@ -1,34 +1,18 @@
-import { Button } from 'antd-mobile';
 import React from 'react';
 
-import { MobileWarnPrompt } from '@baifendian/adhere';
-
 import DemoBlock from '@/lib/DemoBlock';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => (
   <DemoBlock>
     <DemoBlock.Item title="openWarnMessage">
-      <Button
-        onClick={() => {
-          MobileWarnPrompt.openWarnMessage({
-            content: '操作异常',
-          });
-        }}
-      >
-        openWarnMessage
-      </Button>
+      <P1 />
     </DemoBlock.Item>
 
     <DemoBlock.Item title="openWarnDialog">
-      <Button
-        onClick={() => {
-          MobileWarnPrompt.openWarnDialog({
-            content: '操作异常',
-          });
-        }}
-      >
-        openWarnDialog
-      </Button>
+      <P2 />
     </DemoBlock.Item>
   </DemoBlock>
 );

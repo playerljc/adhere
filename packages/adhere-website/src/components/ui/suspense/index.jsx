@@ -1,7 +1,13 @@
-import { Button } from 'antd';
-import React, { useRef, useState } from 'react';
+import ASyncCodeText from '!!raw-loader!./async';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import SyncCodeText from '!!raw-loader!./sync';
+import TableCodeText from '!!raw-loader!./table';
 
-import { ForceUpdate, Spin } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,738 +16,139 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import ASync from './async';
-import Sync from './sync';
-import Table from './table';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
 
 export default () => {
-  const t1 = useRef();
-
-  const t2 = useRef();
-
   function boxPanelConfig() {
     return [
       {
         id: `p1`,
         name: `基本使用`,
-        mode: 'code',
-        scope: { React },
         cardProps: {
           description: {
             title: '基本使用',
             info: '基本使用',
           },
         },
+        active: 'p1.jsx',
         config: [
           {
+            title: 'p1.jsx',
+            key: 'p1.jsx',
+            codeText: P1CodeText,
+          },
+          {
             title: 'table.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import { Table } from 'antd';
-  import React from 'react';
-
-  import { Suspense } from '@baifendian/adhere';
-
-  class TableWrap extends Suspense {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        dataSource: [],
-        loading: false,
-        pagination: {
-          current: 1,
-          pageSize: 2,
-        },
-      };
-    }
-
-    componentWillReceiveProps(nextProps) {
-      super.componentWillReceiveProps(nextProps);
-
-      if (nextProps.reset) {
-        this.setState(
-          {
-            pagination: {
-              current: 1,
-              pageSize: 2,
-            },
-          },
-          () => {
-            this.fetchData();
-          },
-        );
-      }
-    }
-
-    getColumns() {
-      return [
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '性别',
-          key: 'sex',
-          dataIndex: 'sex',
-        },
-        {
-          title: '年龄',
-          key: 'age',
-          dataIndex: 'age',
-        },
-        {
-          title: '身高',
-          key: 'height',
-          dataIndex: 'height',
-        },
-        {
-          title: '体重',
-          key: 'width',
-          dataIndex: 'width',
-        },
-      ];
-    }
-
-    fetchData() {
-      const list = [];
-      list.length = 10;
-      list.fill(0);
-
-      this.setState(
-        {
-          loading: true,
-        },
-        () => {
-          setTimeout(() => {
-            const dataSource = list.map((t, index) => ({
-              id: index + 1,
-              name: \`人\${index + 1}\`,
-              sex: '男',
-              age: 66,
-              height: 180,
-              width: 180,
-            }));
-
-            this.setState(
-              {
-                dataSource,
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({
-                    loading: false,
-                  });
-                }, 200);
-              },
-            );
-          }, 2000);
-        },
-      );
-    }
-
-    showLoading() {
-      return this.state.loading;
-    }
-
-    handleTableChange = (pagination) => {
-      this.setState(
-        {
-          pagination,
-        },
-        () => {
-          this.fetchData();
-        },
-      );
-    };
-
-    renderInner() {
-      return (
-        <div style={{ position: 'relative' }}>
-          <Table
-            rowKey="id"
-            columns={this.getColumns()}
-            dataSource={this.state.dataSource}
-            pagination={this.state.pagination}
-            onChange={this.handleTableChange}
-          />
-        </div>
-      );
-    }
-  }
-
-  export default TableWrap;
-                  `,
-          },
-          {
-            title: 'test.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React,{ useRef } from 'react';
-  import { ForceUpdate } from '@baifendian/adhere';
-  import { Button } from 'antd';
-  import Table from './table.jsx';
-
-  export default () => {
-    const t1 = useRef();
-
-    return (
-      <>
-        <Button
-          type="primary"
-          onClick={() => {
-            t1.current.reMount();
-          }}
-        >
-          重置
-        </Button>
-
-        <ForceUpdate ref={t1}>
-          <Table />
-        </ForceUpdate>
-      </>
-    );
-  }
-                  `,
+            key: 'table.jsx',
+            codeText: TableCodeText,
           },
         ],
-        type: 'PlayGroundMulti',
-        renderChildren: () => (
-          <>
-            <Button
-              type="primary"
-              onClick={() => {
-                t1.current.reMount();
-              }}
-            >
-              重置
-            </Button>
-
-            <ForceUpdate ref={t1}>
-              <Table />
-            </ForceUpdate>
-          </>
-        ),
+        type: 'PlayGroundTab',
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
         name: `自定义firstLoading的UI`,
-        mode: 'code',
-        scope: { React },
         cardProps: {
           description: {
             title: '自定义firstLoading的UI',
             info: '自定义firstLoading的UI',
           },
         },
+        active: 'p2.jsx',
         config: [
           {
+            title: 'p2.jsx',
+            key: 'p2.jsx',
+            codeText: P2CodeText,
+          },
+          {
             title: 'table.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import { Table } from 'antd';
-  import React from 'react';
-
-  import { Suspense } from '@baifendian/adhere';
-
-  class TableWrap extends Suspense {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        dataSource: [],
-        loading: false,
-        pagination: {
-          current: 1,
-          pageSize: 2,
-        },
-      };
-    }
-
-    componentWillReceiveProps(nextProps) {
-      super.componentWillReceiveProps(nextProps);
-
-      if (nextProps.reset) {
-        this.setState(
-          {
-            pagination: {
-              current: 1,
-              pageSize: 2,
-            },
-          },
-          () => {
-            this.fetchData();
-          },
-        );
-      }
-    }
-
-    getColumns() {
-      return [
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '性别',
-          key: 'sex',
-          dataIndex: 'sex',
-        },
-        {
-          title: '年龄',
-          key: 'age',
-          dataIndex: 'age',
-        },
-        {
-          title: '身高',
-          key: 'height',
-          dataIndex: 'height',
-        },
-        {
-          title: '体重',
-          key: 'width',
-          dataIndex: 'width',
-        },
-      ];
-    }
-
-    fetchData() {
-      const list = [];
-      list.length = 10;
-      list.fill(0);
-
-      this.setState(
-        {
-          loading: true,
-        },
-        () => {
-          setTimeout(() => {
-            const dataSource = list.map((t, index) => ({
-              id: index + 1,
-              name: \`人\${index + 1}\`,
-              sex: '男',
-              age: 66,
-              height: 180,
-              width: 180,
-            }));
-
-            this.setState(
-              {
-                dataSource,
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({
-                    loading: false,
-                  });
-                }, 200);
-              },
-            );
-          }, 2000);
-        },
-      );
-    }
-
-    showLoading() {
-      return this.state.loading;
-    }
-
-    handleTableChange = (pagination) => {
-      this.setState(
-        {
-          pagination,
-        },
-        () => {
-          this.fetchData();
-        },
-      );
-    };
-
-    renderInner() {
-      return (
-        <div style={{ position: 'relative' }}>
-          <Table
-            rowKey="id"
-            columns={this.getColumns()}
-            dataSource={this.state.dataSource}
-            // loading={this.showLoading()}
-            pagination={this.state.pagination}
-            onChange={this.handleTableChange}
-          />
-        </div>
-      );
-    }
-  }
-
-  export default TableWrap;
-                  `,
-          },
-          {
-            title: 'test.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React,{ useRef } from 'react';
-  import { ForceUpdate, Spin } from '@baifendian/adhere';
-  import { Button } from 'antd';
-  import Table from './table.jsx';
-
-  export default () => {
-    const t2 = useRef();
-
-    return (
-      <>
-        <Button
-          type="primary"
-          onClick={() => {
-            t2.current.reMount();
-          }}
-        >
-          重置
-        </Button>
-
-        <ForceUpdate ref={t2}>
-          <Table
-            firstLoading={
-              <div style={{ position: 'relative' }}>
-                <Spin spinning />
-              </div>
-            }
-          />
-        </ForceUpdate>
-      </>
-    );
-  }
-                  `,
+            key: 'table.jsx',
+            codeText: TableCodeText,
           },
         ],
-        type: 'PlayGroundMulti',
-        renderChildren: () => (
-          <>
-            <Button
-              type="primary"
-              onClick={() => {
-                t2.current.reMount();
-              }}
-            >
-              重置
-            </Button>
-
-            <ForceUpdate ref={t2}>
-              <Table
-                firstLoading={
-                  <div style={{ position: 'relative' }}>
-                    <Spin spinning />
-                  </div>
-                }
-              />
-            </ForceUpdate>
-          </>
-        ),
+        type: 'PlayGroundTab',
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
         name: `不调用接口值传递数据`,
-        mode: 'code',
-        scope: { React },
-        codeText: `
-  import React, { useEffect, useRef, useState } from 'react';
-  import { Space, Suspense } from '@baifendian/adhere';
-  import { Button, Table } from 'antd';
-  import faker from 'faker';
-
-  export default () => {
-    const [data, setData] = useState([]);
-
-    const ref = useRef();
-
-    function fetchData() {
-      setTimeout(() => {
-        const list = [];
-        list.length = 10;
-        list.fill(0);
-
-        const dataSource = list.map((t, index) => ({
-          id: index + 1,
-          name: faker.internet.userName(),
-          sex: index % 2 === 0 ? '男' : '女',
-          age: faker.random.number(),
-          height: faker.random.number(),
-          width: faker.random.number(),
-        }));
-
-        setData(dataSource);
-      }, 1000 * 5);
-    }
-
-    function getColumns() {
-      return [
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '性别',
-          key: 'sex',
-          dataIndex: 'sex',
-        },
-        {
-          title: '年龄',
-          key: 'age',
-          dataIndex: 'age',
-        },
-        {
-          title: '身高',
-          key: 'height',
-          dataIndex: 'height',
-        },
-        {
-          title: '体重',
-          key: 'width',
-          dataIndex: 'width',
-        },
-      ];
-    }
-
-    useEffect(() => {
-      fetchData();
-    }, []);
-
-    return (
-      <Suspense.Sync ref={ref} data={data} isEmpty={() => data.length === 0}>
-        <Space.Group direction="horizontal">
-          <Button type="primary" onClick={() => ref.current.reset().then(() => fetchData())}>
-            重置
-          </Button>
-          <Button type="primary" onClick={fetchData}>
-            加载数据
-          </Button>
-        </Space.Group>
-        <Table rowKey="id" columns={getColumns()} dataSource={data} pagination={false} />
-      </Suspense.Sync>
-    );
-  };
-        `,
         cardProps: {
           description: {
             title: '不调用接口值传递数据',
             info: '不调用接口值传递数据',
           },
         },
-        type: 'PlayGround',
-        renderChildren: () => <Sync />,
+        active: 'p3.jsx',
+        config: [
+          {
+            title: 'p3.jsx',
+            key: 'p3.jsx',
+            codeText: P3CodeText,
+          },
+          {
+            title: 'Sync.jsx',
+            key: 'Sync.jsx',
+            codeText: SyncCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
         name: `调用接口传递数据`,
-        mode: 'code',
-        scope: { React },
-        codeText: `
-  import React, { useRef } from 'react';
-  import { Space, Suspense, Hooks } from '@baifendian/adhere';
-  import { Button, Table } from 'antd';
-  import faker from 'faker';
-
-  const { useSetState } = Hooks;
-
-  export default () => {
-    const [data, setData] = useSetState([]);
-
-    const ref = useRef();
-
-    function fetchData() {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const list = [];
-          list.length = 10;
-          list.fill(0);
-
-          const dataSource = list.map((t, index) => ({
-            id: index + 1,
-            name: faker.internet.userName(),
-            sex: index % 2 === 0 ? '男' : '女',
-            age: faker.random.number(),
-            height: faker.random.number(),
-            width: faker.random.number(),
-          }));
-
-          setData(dataSource, () => resolve());
-        }, 1000 * 5);
-      });
-    }
-
-    function getColumns() {
-      return [
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '性别',
-          key: 'sex',
-          dataIndex: 'sex',
-        },
-        {
-          title: '年龄',
-          key: 'age',
-          dataIndex: 'age',
-        },
-        {
-          title: '身高',
-          key: 'height',
-          dataIndex: 'height',
-        },
-        {
-          title: '体重',
-          key: 'width',
-          dataIndex: 'width',
-        },
-      ];
-    }
-
-    return (
-      <Suspense.ASync ref={ref} fetchData={fetchData} isEmpty={() => data.length === 0}>
-        <Space.Group direction="horizontal">
-          <Button type="primary" onClick={() => ref.current.reset().then(() => fetchData())}>
-            重置
-          </Button>
-          <Button type="primary" onClick={() => ref.current.fetchData()}>
-            加载数据
-          </Button>
-        </Space.Group>
-        <Table rowKey="id" columns={getColumns()} dataSource={data} pagination={false} />
-      </Suspense.ASync>
-    );
-  };
-        `,
         cardProps: {
           description: {
             title: '调用接口传递数据',
             info: '调用接口传递数据',
           },
         },
-        type: 'PlayGround',
-        renderChildren: () => <ASync />,
+        active: 'p4.jsx',
+        config: [
+          {
+            title: 'p4.jsx',
+            key: 'p4.jsx',
+            codeText: P4CodeText,
+          },
+          {
+            title: 'ASync.jsx',
+            key: 'ASync.jsx',
+            codeText: ASyncCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
         name: `自定义renderNormalLoading`,
-        mode: 'code',
-        scope: { React },
-        codeText: `
-  import React, { useRef } from 'react';
-  import { Space, Suspense, Hooks, Spin } from '@baifendian/adhere';
-  import { Button, Table } from 'antd';
-  import faker from 'faker';
-
-  const { useSetState } = Hooks;
-
-  export default () => {
-    const [data, setData] = useSetState([]);
-
-    const ref = useRef();
-
-    function fetchData() {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const list = [];
-          list.length = 10;
-          list.fill(0);
-
-          const dataSource = list.map((t, index) => ({
-            id: index + 1,
-            name: faker.internet.userName(),
-            sex: index % 2 === 0 ? '男' : '女',
-            age: faker.random.number(),
-            height: faker.random.number(),
-            width: faker.random.number(),
-          }));
-
-          setData(dataSource, () => resolve());
-        }, 1000 * 5);
-      });
-    }
-
-    function getColumns() {
-      return [
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '性别',
-          key: 'sex',
-          dataIndex: 'sex',
-        },
-        {
-          title: '年龄',
-          key: 'age',
-          dataIndex: 'age',
-        },
-        {
-          title: '身高',
-          key: 'height',
-          dataIndex: 'height',
-        },
-        {
-          title: '体重',
-          key: 'width',
-          dataIndex: 'width',
-        },
-      ];
-    }
-
-    return (
-      <Suspense.ASync ref={ref} fetchData={fetchData} isEmpty={() => data.length === 0}
-        renderNormalLoading={({ children, loading }) => {
-          return (
-            <div style={{ position: 'relative' }}>
-              {children}
-              <Spin text="处理中..." spinning={loading} />
-            </div>
-          );
-        }}
-      >
-        <Space.Group direction="horizontal">
-          <Button type="primary" onClick={() => ref.current.reset().then(() => fetchData())}>
-            重置
-          </Button>
-          <Button type="primary" onClick={() => ref.current.fetchData()}>
-            加载数据
-          </Button>
-        </Space.Group>
-        <Table rowKey="id" columns={getColumns()} dataSource={data} pagination={false} />
-      </Suspense.ASync>
-    );
-  };
-        `,
         cardProps: {
           description: {
             title: '自定义renderNormalLoading',
             info: '自定义renderNormalLoading',
           },
         },
-        type: 'PlayGround',
-        renderChildren: () => (
-          <ASync
-            renderNormalLoading={({ children, loading }) => {
-              return (
-                <div style={{ position: 'relative' }}>
-                  {children}
-                  <Spin text="处理中..." spinning={loading} />
-                </div>
-              );
-            }}
-          />
-        ),
+        active: 'p5.jsx',
+        config: [
+          {
+            title: 'p5.jsx',
+            key: 'p5.jsx',
+            codeText: P5CodeText,
+          },
+          {
+            title: 'ASync.jsx',
+            key: 'ASync.jsx',
+            codeText: ASyncCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P5 />,
       },
     ];
   }

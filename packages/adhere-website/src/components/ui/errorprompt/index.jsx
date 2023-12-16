@@ -1,13 +1,16 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { ErrorPrompt } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,31 +26,9 @@ export default () => {
             info: 'openErrorMessage',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { ErrorPrompt } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      ErrorPrompt.openErrorMessage('操作失败');
-    }}
-  >
-    显示错误提示
-  </Button>
-    `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              ErrorPrompt.openErrorMessage('操作失败');
-            }}
-          >
-            显示错误提示
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -60,37 +41,9 @@ export default () => {
             info: 'openErrorDialog',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { ErrorPrompt } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      ErrorPrompt.openErrorDialog({
-        title: '提示',
-        content: '操作失败',
-      });
-    }}
-  >
-    显示错误提示
-  </Button>
-    `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              ErrorPrompt.openErrorDialog({
-                title: '提示',
-                content: '操作失败',
-              });
-            }}
-          >
-            显示错误提示
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
     ];
   }

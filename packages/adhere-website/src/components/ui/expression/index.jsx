@@ -1,10 +1,11 @@
-import debounce from 'lodash.debounce';
-import React, { useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
 
-import { Expression } from '@baifendian/adhere';
-import ElasticSearch from '@baifendian/adhere-ui-expression/es/operators/ElasticSearch';
-import Math from '@baifendian/adhere-ui-expression/es/operators/Math';
-import Sql from '@baifendian/adhere-ui-expression/es/operators/Sql';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -13,28 +14,16 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import styles from './index.less';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+
+import P5LessCodeText from '!!raw-loader!./index.less';
 
 export default () => {
-  const [quickTipDataSource, setQuickTipDataSource] = useState([]);
-
-  const onContinuousTextChange = debounce((text) => {
-    const kws = ['java', 'c++', 'javascript', 'react', 'vue', 'spring'];
-
-    if (!text) {
-      setQuickTipDataSource([]);
-    } else {
-      setQuickTipDataSource(
-        kws
-          .filter((kw) => kw.includes(text))
-          .map((t) => ({
-            label: t,
-            value: t,
-          })),
-      );
-    }
-  }, 150);
-
   return (
     <PlayGroundPage>
       <Section title="Expression">
@@ -55,20 +44,9 @@ export default () => {
                 info: '数学表达式',
               },
             },
-            codeText: `
- import { Expression } from '@baifendian/adhere';
- import Math from '@baifendian/adhere-ui-expression/es/operators/Math';
-
- <div>
-   <Expression operators={Math} />
- </div>
-      `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Expression operators={Math} />
-              </div>
-            ),
+            codeText: P1CodeText,
+            renderChildren: () => <P1 />,
           },
           {
             id: `p2`,
@@ -81,20 +59,9 @@ export default () => {
                 info: 'ElasticSearch查询表达式',
               },
             },
-            codeText: `
- import { Expression } from '@baifendian/adhere';
- import ElasticSearch from '@baifendian/adhere-ui-expression/es/operators/ElasticSearch';
-
- <div>
-   <Expression operators={ElasticSearch} />
- </div>
-      `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Expression operators={ElasticSearch} />
-              </div>
-            ),
+            codeText: P2CodeText,
+            renderChildren: () => <P2 />,
           },
           {
             id: `p3`,
@@ -107,20 +74,9 @@ export default () => {
                 info: 'Sql查询表达式',
               },
             },
-            codeText: `
- import { Expression } from '@baifendian/adhere';
- import Sql from '@baifendian/adhere-ui-expression/es/operators/Sql';
-
- <div>
-   <Expression operators={Sql} />
- </div>
-      `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Expression operators={Sql} />
-              </div>
-            ),
+            codeText: P3CodeText,
+            renderChildren: () => <P3 />,
           },
           {
             id: `p4`,
@@ -133,39 +89,9 @@ export default () => {
                 info: '支持html code',
               },
             },
-            codeText: `
- import { Expression } from '@baifendian/adhere';
-
- <div>
-  <Expression
-    operators={[
-      { label: '===', value: '===', type: 'binary' },
-      { label: '++', value: '++', type: 'binary' },
-      { label: '--', value: '--', type: 'binary' },
-      { label: '&#43;', value: '&#43;', type: 'binary' },
-      { label: '+=', value: '+=', type: 'binary' },
-      { label: '[]', value: '[]', type: 'brackets' },
-      { label: '{}', value: '{}', type: 'brackets' },
-    ]}
-  />
- </div>
-      `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Expression
-                  operators={[
-                    { label: '===', value: '===', type: 'binary' },
-                    { label: '++', value: '++', type: 'binary' },
-                    { label: '--', value: '--', type: 'binary' },
-                    { label: '&#43;', value: '&#43;', type: 'binary' },
-                    { label: '+=', value: '+=', type: 'binary' },
-                    { label: '[]', value: '[]', type: 'brackets' },
-                    { label: '{}', value: '{}', type: 'brackets' },
-                  ]}
-                />
-              </div>
-            ),
+            codeText: P4CodeText,
+            renderChildren: () => <P4 />,
           },
           {
             id: `p5`,
@@ -178,30 +104,22 @@ export default () => {
                 info: '自定义运算符和文本的样式',
               },
             },
-            codeText: `
-  import { Expression } from '@baifendian/adhere';
-  import Sql from '@baifendian/adhere-ui-expression/es/operators/Sql';
+            active: 'p5.jsx',
+            config: [
+              {
+                key: 'p5.jsx',
+                title: 'p5.jsx',
+                codeText: P5CodeText,
+              },
+              {
+                key: 'index.less',
+                title: 'index.less',
+                codeText: P5LessCodeText,
+              },
+            ],
+            type: 'PlayGroundTab',
 
-  <div>
-    <Expression
-      placeholder="请输入表达式"
-      operators={Sql}
-      operatorClassName={styles.operatorClassName}
-      textClassName={styles.textClassName}
-    />
-  </div>
-      `,
-            type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Expression
-                  placeholder="请输入表达式"
-                  operators={Sql}
-                  operatorClassName={styles.operatorClassName}
-                  textClassName={styles.textClassName}
-                />
-              </div>
-            ),
+            renderChildren: () => <P5 />,
           },
           {
             id: `p6`,
@@ -214,57 +132,9 @@ export default () => {
                 info: '补全输入信息',
               },
             },
-            codeText: `
-  import { Expression } from '@baifendian/adhere';
-  import Sql from '@baifendian/adhere-ui-expression/es/operators/Sql';
-  import debounce from 'lodash.debounce';
-  import React, { useState } from 'react';
-
-  export default () => {
-    const [quickTipDataSource, setQuickTipDataSource] = useState([]);
-
-    const onContinuousTextChange = debounce((text) => {
-      const kws = ['java', 'c++', 'javascript', 'react', 'vue', 'spring'];
-
-      if (!text) {
-        setQuickTipDataSource([]);
-      } else {
-        setQuickTipDataSource(
-          kws
-            .filter((kw) => kw.includes(text))
-            .map((t) => ({
-              label: t,
-              value: t,
-            })),
-        );
-      }
-    }, 150);
-
-    return (
-      <div>
-        <Expression
-          placeholder="请输入表达式"
-          operators={Sql}
-          allowClear
-          onContinuousTextChange={onContinuousTextChange}
-          quickTipDataSource={quickTipDataSource}
-        />
-      </div>
-    )
-  }
-      `,
             type: 'PlayGround',
-            renderChildren: () => (
-              <div>
-                <Expression
-                  placeholder="请输入表达式"
-                  operators={Sql}
-                  allowClear
-                  onContinuousTextChange={onContinuousTextChange}
-                  quickTipDataSource={quickTipDataSource}
-                />
-              </div>
-            ),
+            codeText: P6CodeText,
+            renderChildren: () => <P6 />,
           },
         ]}
       />

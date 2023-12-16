@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { DateDisplay, DelConfirm, Resource, SearchTable } from '@baifendian/adhere';
+import {
+  DateDisplay,
+  DelConfirm,
+  FieldGeneratorToDict,
+  Resource,
+  SearchTable,
+} from '@baifendian/adhere';
 
 import './serviceRegister';
 
@@ -108,12 +114,12 @@ class EditableCellStateSearchTable extends ProEditableCellSearchStateTable {
         $search: {
           type: 'dict',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
         },
         $editable: {
           editable: true,
-          type: 'select',
-          dictName: 'SystemTestSexSelect',
+          type: 'dict',
+          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
           rules: [
             {
               required: true,

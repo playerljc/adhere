@@ -223,7 +223,7 @@ export default function () {
           name="server"
           ref={iframeRef}
           className={styles.Iframe}
-          src="/iframeServer"
+          src="/#/iframeServer"
           onLoad={onIframeLoad}
         />
       </div>

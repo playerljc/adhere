@@ -1,13 +1,14 @@
-import { Table } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
 
-import { Browsersniff } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,103 +24,9 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Table } from 'antd';
-  import { Browsersniff } from '@baifendian/adhere';
-
-  <Table
-    columns={[
-      {
-        title: '浏览器',
-        dataIndex: 'browser',
-        key: 'browser',
-      },
-      {
-        title: '版本',
-        dataIndex: 'version',
-        key: 'version',
-      },
-      {
-        title: '内核',
-        dataIndex: 'engine',
-        key: 'engine',
-      },
-      {
-        title: '操作系统',
-        dataIndex: 'os',
-        key: 'os',
-      },
-      {
-        title: '设备',
-        dataIndex: 'device',
-        key: 'device',
-      },
-      {
-        title: '语言',
-        dataIndex: 'language',
-        key: 'language',
-      },
-    ]}
-    dataSource={[
-      {
-        browser: Browsersniff.browser(),
-        device: Browsersniff.device(),
-        engine: Browsersniff.engine(),
-        language: Browsersniff.language(),
-        os: Browsersniff.os(),
-        version: Browsersniff.version(),
-      },
-    ]}
-  />
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Table
-            columns={[
-              {
-                title: '浏览器',
-                dataIndex: 'browser',
-                key: 'browser',
-              },
-              {
-                title: '版本',
-                dataIndex: 'version',
-                key: 'version',
-              },
-              {
-                title: '内核',
-                dataIndex: 'engine',
-                key: 'engine',
-              },
-              {
-                title: '操作系统',
-                dataIndex: 'os',
-                key: 'os',
-              },
-              {
-                title: '设备',
-                dataIndex: 'device',
-                key: 'device',
-              },
-              {
-                title: '语言',
-                dataIndex: 'language',
-                key: 'language',
-              },
-            ]}
-            dataSource={[
-              {
-                browser: Browsersniff.browser(),
-                device: Browsersniff.device(),
-                engine: Browsersniff.engine(),
-                language: Browsersniff.language(),
-                os: Browsersniff.os(),
-                version: Browsersniff.version(),
-              },
-            ]}
-          />
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
     ];
   }
@@ -130,7 +37,12 @@ export default () => {
         <p>浏览器嗅探的库</p>
         <p>
           选用
-          <a style={{ margin: '0 10px' }} href="https://github.com/mumuy/browser" target="_blank">
+          <a
+            style={{ margin: '0 10px' }}
+            href="https://github.com/mumuy/browser"
+            target="_blank"
+            rel="noreferrer"
+          >
             https://github.com/mumuy/browser
           </a>
           库来实现 - 用来嗅探用户浏览器的型号，版本，内核等信息

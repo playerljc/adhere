@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -6,8 +6,19 @@ import PlayGroundPage, {
   PropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+import Util from '@/util';
 
 export default () => {
+  const [indexCodeText, setIndexCodeText] = useState('');
+  const [p1CodeText, setP1CodeText] = useState('');
+  const [p2CodeText, setP2CodeText] = useState('');
+
+  useEffect(() => {
+    Util.getMobileCodeText('delconfirm/index.jsx').then(setIndexCodeText);
+    Util.getMobileCodeText('delconfirm/examples/p1.jsx').then(setP1CodeText);
+    Util.getMobileCodeText('delconfirm/examples/p2.jsx').then(setP2CodeText);
+  }, []);
+
   function boxPanelConfig() {
     return [
       {
@@ -19,57 +30,35 @@ export default () => {
             info: '基本使用',
           },
         },
-        active: 'Javascript',
+        active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
         config: [
           {
-            key: 'Javascript',
-            title: 'Javascript',
+            key: 'index.jsx',
+            title: 'index.jsx',
             style: { maxHeight: 500 },
-            codeText: `
-  import { Button } from 'antd-mobile';
-  import React from 'react';
-
-  import { MobileDelConfirm } from '@baifendian/adhere';
-
-  import DemoBlock from '@/lib/DemoBlock';
-
-  export default () => (
-    <DemoBlock>
-      <DemoBlock.Item title="api方式">
-        <Button
-          block
-          color="primary"
-          onClick={() => {
-            MobileDelConfirm.open({
-              onConfirm: () => {
-                alert('confirm');
-              },
-            });
-          }}
-        >
-          删除
-        </Button>
-      </DemoBlock.Item>
-
-      <DemoBlock.Item title="组件方式">
-        <MobileDelConfirm
-          onConfirm={() => {
-            alert('confirm');
-          }}
-        >
-          <Button block color="primary">
-            删除
-          </Button>
-        </MobileDelConfirm>
-      </DemoBlock.Item>
-    </DemoBlock>
-  );
-      `,
             theme: 'eclipse',
+            codeText: indexCodeText,
+          },
+          {
+            key: 'p1.jsx',
+            title: 'p1.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p1CodeText,
+          },
+          {
+            key: 'p2.jsx',
+            title: 'p2.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p2CodeText,
           },
         ],
         type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/delconfirm`,
       },
     ];
   }

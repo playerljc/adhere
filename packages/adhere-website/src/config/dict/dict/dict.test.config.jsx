@@ -114,6 +114,18 @@ const UserData = Array.from({ length: 100 }).map(() => {
 
 export default {
   initStatic() {
+    // sex
+    Dict.handlers.SystemTestSex = () => [
+      {
+        label: '男',
+        value: '1',
+      },
+      {
+        label: '女',
+        value: '0',
+      },
+    ];
+
     Dict.handlers.SystemBookCatalog = () =>
       [
         {

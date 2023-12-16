@@ -162,5 +162,5 @@ export const Expression = lazy(() =>
 );
 
 export const AutoComplete = lazy(() =>
-  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/AutoComplete'),
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
 );

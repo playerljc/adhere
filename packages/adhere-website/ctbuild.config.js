@@ -50,6 +50,10 @@ module.exports = {
 
     webpackConfig.output.chunkFilename = webpackConfig.output.filename;
 
+    webpackConfig.externals = {
+      '@/constent': 'Constent',
+    };
+
     // 这块只有需要主题切换的时候才能用到
     const MiniCssExtractPluginIndex = isProd(webpackConfig.mode) ? 3 : 2;
     webpackConfig.plugins[MiniCssExtractPluginIndex] = new plugins.MiniCssExtractPlugin({

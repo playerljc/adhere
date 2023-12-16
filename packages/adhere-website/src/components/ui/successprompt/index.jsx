@@ -1,13 +1,16 @@
-import { Button } from 'antd';
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { SuccessPrompt } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,31 +26,9 @@ export default () => {
             info: 'openSuccessMessage',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { SuccessPrompt } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      SuccessPrompt.openSuccessMessage('操作成功');
-    }}
-  >
-    显示成功提示
-  </Button>
-    `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              SuccessPrompt.openSuccessMessage('操作成功');
-            }}
-          >
-            显示成功提示
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -60,37 +41,9 @@ export default () => {
             info: 'openSuccessDialog',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { SuccessPrompt } from '@baifendian/adhere';
-
-  <Button
-    type="primary"
-    onClick={() => {
-      SuccessPrompt.openSuccessDialog({
-        title: '提示',
-        content: '操作成功',
-      });
-    }}
-  >
-    显示成功提示
-  </Button>
-    `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              SuccessPrompt.openSuccessDialog({
-                title: '提示',
-                content: '操作成功',
-              });
-            }}
-          >
-            显示成功提示
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
     ];
   }

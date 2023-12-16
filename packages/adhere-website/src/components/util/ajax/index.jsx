@@ -1,7 +1,9 @@
-import { Avatar, Button, Progress } from 'antd';
-import React, { useRef, useState } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
 
-import { Ajax, GlobalIndicator, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,7 +12,10 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-const k007Ajax = new Ajax('http://k007-pe.baifendian.com');
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
 
 export default () => {
   function boxPanelConfig() {
@@ -26,55 +31,9 @@ export default () => {
             info: 'get',
           },
         },
-        codeText: `
-  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-
-  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-
-  k007Ajax
-    .get({
-      path:
-        '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
-      loading: {
-        show: true,
-      },
-    })
-    .promise.then((res) => {
-      if (res) {
-        if (res.data.code === 200) {
-          alert(JSON.stringify(res.data.data));
-        }
-
-        res.hideIndicator();
-      }
-    });
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              k007Ajax
-                .get({
-                  path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
-                  loading: {
-                    show: true,
-                  },
-                })
-                .promise.then((res) => {
-                  if (res) {
-                    if (res.data.code === 200) {
-                      alert(JSON.stringify(res.data.data));
-                    }
-
-                    res.hideIndicator();
-                  }
-                });
-            }}
-          >
-            call
-          </Button>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -87,73 +46,9 @@ export default () => {
             info: 'post',
           },
         },
-        codeText: `
-  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-
-  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-
-  k007Ajax
-    .post({
-      path: '/api/controlledObject/facade/fq/queryList',
-      data: [
-        {
-          resource: '12345678',
-          type: '101',
-          uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
-        },
-        { resource: '', type: '103', uuid: '562096255732281344' },
-      ],
-      loading: {
-        show: true,
-      },
-    })
-    .promise.then((res) => {
-      if (res) {
-        if (res.data.code === 200) {
-          alert(JSON.stringify(res.data.data));
-        }
-
-        res.hideIndicator();
-      }
-    });
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              k007Ajax
-                .post({
-                  path: '/api/controlledObject/facade/fq/queryList',
-                  data: [
-                    {
-                      resource: '12345678',
-                      type: '101',
-                      uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
-                    },
-                    { resource: '', type: '103', uuid: '562096255732281344' },
-                  ],
-                  loading: {
-                    show: true,
-                  },
-                  // customSendJSONStringify: (self, key, value) => {
-                  //   return value;
-                  // },
-                })
-                .promise.then((res) => {
-                  if (res) {
-                    if (res.data.code === 200) {
-                      alert(JSON.stringify(res.data.data));
-                    }
-
-                    res.hideIndicator();
-                  }
-                });
-            }}
-          >
-            call
-          </Button>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -166,133 +61,9 @@ export default () => {
             info: 'upload',
           },
         },
-        codeText: `
-  import { Ajax, Space, GlobalIndicator } from '@baifendian/adhere';
-
-  const k007Ajax = new Ajax('http://k007-dev.baifendian.com');
-
-  <form encType="multipart/form-data" method="post" ref={uploadFormFef}>
-    <div>
-      <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
-
-      <Space direction="vertical" />
-
-      <input
-        type="file"
-        ref={uploadRef}
-        onChange={() => {
-          const file = uploadRef.current.files[0];
-
-          const { size } = file;
-
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            setImg(e.target.result);
-          };
-
-          reader.readAsDataURL(file);
-
-          k007Ajax
-            .post({
-              path: '/api/personControl/monitorPerson/image/upload',
-              data: {
-                form: uploadFormFef.current,
-                data: {
-                  file,
-                },
-              },
-              loading: {
-                show: true,
-              },
-              onProgress: (e) => {
-                setPercent((e.loaded / size) * 100);
-              },
-              onLoadend: () => {
-                setPercent(100);
-              },
-            })
-            .promise.then((res) => {
-              setPercent(100);
-
-              if (res) {
-                if (res.data.code === 200) {
-                  alert(JSON.stringify(res.data.data));
-                }
-
-                res.hideIndicator();
-              }
-            });
-        }}
-      />
-
-      <Space direction="vertical" />
-
-      <Progress percent={percent} />
-    </div>
-  </form>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <form encType="multipart/form-data" method="post" ref={uploadFormFef}>
-            <div>
-              <Avatar shape="square" size="large" icon={img ? <img src={img} alt="" /> : null} />
-
-              <Space direction="vertical" />
-
-              <input
-                type="file"
-                ref={uploadRef}
-                onChange={() => {
-                  const file = uploadRef.current.files[0];
-
-                  const { size } = file;
-
-                  const reader = new FileReader();
-                  reader.onload = (e) => {
-                    setImg(e.target.result);
-                  };
-
-                  reader.readAsDataURL(file);
-
-                  k007Ajax
-                    .post({
-                      path: '/api/personControl/monitorPerson/image/upload',
-                      data: {
-                        form: uploadFormFef.current,
-                        data: {
-                          file,
-                        },
-                      },
-                      loading: {
-                        show: true,
-                      },
-                      onProgress: (e) => {
-                        setPercent((e.loaded / size) * 100);
-                      },
-                      onLoadend: () => {
-                        setPercent(100);
-                      },
-                    })
-                    .promise.then((res) => {
-                      setPercent(100);
-
-                      if (res) {
-                        if (res.data.code === 200) {
-                          alert(JSON.stringify(res.data.data));
-                        }
-
-                        res.hideIndicator();
-                      }
-                    });
-                }}
-              />
-
-              <Space direction="vertical" />
-
-              <Progress percent={percent} />
-            </div>
-          </form>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -305,96 +76,12 @@ export default () => {
             info: 'PromiseAll',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Button } from 'antd';
-  import { GlobalIndicator, Ajax } from '@baifendian/adhere';
-
-  const k007Ajax = new Ajax('http://k007-pe.baifendian.com');
-
-  <Button
-    type="primary"
-    onClick={() => {
-      const globalIndicator = GlobalIndicator.show();
-
-      Promise.all([
-        k007Ajax.get({
-          path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
-        }).promise,
-        k007Ajax.get({
-          path: '/api/SystemManager/system/role/login/list?state=&kw=&pageNum=1&pageSize=10',
-        }).promise,
-        k007Ajax.post({
-          path: '/api/controlledObject/facade/fq/queryList',
-          data: [
-            {
-              resource: '12345678',
-              type: '101',
-              uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
-            },
-            { resource: '', type: '103', uuid: '562096255732281344' },
-          ],
-        }).promise,
-      ])
-        .then((res) => {
-          GlobalIndicator.hide(globalIndicator);
-          alert(JSON.stringify(res));
-        })
-        .catch(() => {
-          GlobalIndicator.hide(globalIndicator);
-        });
-    }}
-  >
-    call
-  </Button>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <Button
-            type="primary"
-            onClick={() => {
-              const globalIndicator = GlobalIndicator.show();
-
-              Promise.all([
-                k007Ajax.get({
-                  path: '/api/securitypolice/frontend/config/namespace?kw=k007.service_address@@resource@@gis@@application',
-                }).promise,
-                k007Ajax.get({
-                  path: '/api/SystemManager/system/role/login/list?state=&kw=&pageNum=1&pageSize=10',
-                }).promise,
-                k007Ajax.post({
-                  path: '/api/controlledObject/facade/fq/queryList',
-                  data: [
-                    {
-                      resource: '12345678',
-                      type: '101',
-                      uuid: '7419d8b2-76f8-11eb-ada5-b76f62efdb0c',
-                    },
-                    { resource: '', type: '103', uuid: '562096255732281344' },
-                  ],
-                }).promise,
-              ])
-                .then((res) => {
-                  GlobalIndicator.hide(globalIndicator);
-                  alert(JSON.stringify(res));
-                })
-                .catch(() => {
-                  GlobalIndicator.hide(globalIndicator);
-                });
-            }}
-          >
-            call
-          </Button>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
     ];
   }
-
-  const uploadFormFef = useRef();
-  const uploadRef = useRef();
-
-  const [img, setImg] = useState(null);
-  const [percent, setPercent] = useState(0);
 
   return (
     <PlayGroundPage>

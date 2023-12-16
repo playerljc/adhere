@@ -1,6 +1,7 @@
-import React from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
 
-import { DelConfirm } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -8,6 +9,9 @@ import PlayGroundPage, {
   PropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => {
   function boxPanelConfig() {
@@ -23,36 +27,9 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
-
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
-
-        resolve();
-      });
-    }}
-  >
-    <a>删除</a>
-  </DelConfirm>
-      `,
+        codeText: P1CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <DelConfirm
-            success={() => {
-              return new Promise((resolve) => {
-                alert('点击了确认');
-
-                resolve();
-              });
-            }}
-          >
-            <a>删除</a>
-          </DelConfirm>
-        ),
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -65,39 +42,9 @@ export default () => {
             info: 'Confirm.open',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { DelConfirm } from '@baifendian/adhere';
-
-  <DelConfirm
-    success={() => {
-      return new Promise((resolve) => {
-        alert('点击了确认');
-
-        resolve();
-      });
-    }}
-  >
-    <a>删除</a>
-  </DelConfirm>
-      `,
+        codeText: P2CodeText,
         type: 'PlayGround',
-        renderChildren: () => (
-          <a
-            onClick={() => {
-              DelConfirm.open({
-                success: () =>
-                  new Promise((resolve) => {
-                    alert('点击了确认');
-
-                    resolve();
-                  }),
-              });
-            }}
-          >
-            删除
-          </a>
-        ),
+        renderChildren: () => <P2 />,
       },
     ];
   }

@@ -6,6 +6,7 @@ import {
   ConditionalRender,
   DateDisplay,
   DelConfirm,
+  FieldGeneratorToDict,
   Resource,
   SearchTable,
   WarnPrompt,
@@ -126,7 +127,7 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         $search: {
           type: 'dict',
           visible: true,
-          dictName: 'SystemTestSexSelect',
+          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
         },
       },
       {

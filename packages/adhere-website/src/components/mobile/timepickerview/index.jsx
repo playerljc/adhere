@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+import Util from '@/util';
 
 export default () => {
+  const [indexCodeText, setIndexCodeText] = useState('');
+  const [p1CodeText, setP1CodeText] = useState('');
+  const [p2CodeText, setP2CodeText] = useState('');
+  const [p3CodeText, setP3CodeText] = useState('');
+  const [p4CodeText, setP4CodeText] = useState('');
+  const [p5CodeText, setP5CodeText] = useState('');
+  const [p6CodeText, setP6CodeText] = useState('');
+
+  useEffect(() => {
+    Util.getMobileCodeText('tabs/index.jsx').then(setIndexCodeText);
+    Util.getMobileCodeText('tabs/timepickerview/p1.jsx').then(setP1CodeText);
+    Util.getMobileCodeText('tabs/timepickerview/p2.jsx').then(setP2CodeText);
+    Util.getMobileCodeText('tabs/timepickerview/p3.jsx').then(setP3CodeText);
+    Util.getMobileCodeText('tabs/timepickerview/p4.jsx').then(setP4CodeText);
+    Util.getMobileCodeText('tabs/timepickerview/p5.jsx').then(setP5CodeText);
+    Util.getMobileCodeText('tabs/timepickerview/p6.jsx').then(setP6CodeText);
+  }, []);
+
   function boxPanelConfig() {
     return [
       {
@@ -14,61 +33,63 @@ export default () => {
             info: '基本使用',
           },
         },
-        active: 'Javascript',
+        active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
         config: [
           {
-            key: 'Javascript',
-            title: 'Javascript',
-            codeText: `
-  import React, { useState } from 'react';
-
-  import { MobileTimePickerView } from '@baifendian/adhere';
-
-  import DemoBlock from '@/lib/DemoBlock';
-
-  export default () => {
-    const [value, setValue] = useState();
-
-    return (
-      <DemoBlock>
-        <DemoBlock.Item title="HH:mm:ss">
-          <MobileTimePickerView format="HH:mm:ss" />
-        </DemoBlock.Item>
-
-        <DemoBlock.Item title="HH:mm">
-          <MobileTimePickerView format="HH:mm" />
-        </DemoBlock.Item>
-
-        <DemoBlock.Item title="HH">
-          <MobileTimePickerView format="HH" />
-        </DemoBlock.Item>
-
-        <DemoBlock.Item title="mm:ss">
-          <MobileTimePickerView format="mm:ss" />
-        </DemoBlock.Item>
-
-        <DemoBlock.Item title="ss">
-          <MobileTimePickerView format="ss" />
-        </DemoBlock.Item>
-
-        <DemoBlock.Item title="onChange">
-          <MobileTimePickerView
-            value={value}
-            onChange={(_value) => {
-              setValue(_value);
-              console.log(_value, _value.format('YYYY-MM-DD HH:mm:ss'));
-            }}
-          />
-        </DemoBlock.Item>
-      </DemoBlock>
-    );
-  };
-      `,
+            key: 'index.jsx',
+            title: 'index.jsx',
+            style: { maxHeight: 500 },
             theme: 'eclipse',
+            codeText: indexCodeText,
+          },
+          {
+            key: 'p1.jsx',
+            title: 'p1.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p1CodeText,
+          },
+          {
+            key: 'p2.jsx',
+            title: 'p2.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p2CodeText,
+          },
+          {
+            key: 'p3.jsx',
+            title: 'p3.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p3CodeText,
+          },
+          {
+            key: 'p4.jsx',
+            title: 'p4.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p4CodeText,
+          },
+          {
+            key: 'p5.jsx',
+            title: 'p5.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p5CodeText,
+          },
+          {
+            key: 'p6.jsx',
+            title: 'p6.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p6CodeText,
           },
         ],
         type: 'PlayGroundTabMobile',
-        url: 'http://www.baidu.com',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/timepickerview`,
       },
     ];
   }

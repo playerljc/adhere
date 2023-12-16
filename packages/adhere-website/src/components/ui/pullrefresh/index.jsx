@@ -1,7 +1,8 @@
-import { Avatar, Button, List } from 'antd';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
 
-import { PullRefresh, Space } from '@baifendian/adhere';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -10,20 +11,13 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import refreshIcon from './refresh.svg';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
 
-import styles from './index.less';
-
-let data = [];
-data.length = 100;
-data.fill(0);
-data = data.map((t, index) => `Ant Design Title ${index + 1}`);
+import IndexLessCodeText from '!!raw-loader!./index.less';
 
 export default () => {
-  const ref1 = useRef();
-  const ref2 = useRef();
-  const ref3 = useRef();
-
   function boxPanelConfig() {
     return [
       {
@@ -37,71 +31,21 @@ export default () => {
             info: '基本使用',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { List, Avatar } from 'antd';
-  import { PullRefresh  } from '@baifendian/adhere';
-
-  import styles from './index.less';
-
-  let data = [];
-  data.length = 100;
-  data.fill(0);
-  data = data.map((t, index) => "Ant Design Title" + (index + 1));
-
-  <PullRefresh
-    className={styles.Wrap}
-    onPullRefresh={(ins) => {
-      setTimeout(() => {
-        ins.reset();
-      }, 1000 * 3);
-    }}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={[].concat(data)}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </PullRefresh>
-    `,
-        type: 'PlayGround',
-        renderChildren: () => (
-          <PullRefresh
-            ref={ref1}
-            className={styles.Wrap}
-            onPullRefresh={() => {
-              setTimeout(() => {
-                ref1.current.reset();
-              }, 1000 * 3);
-            }}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={[].concat(data)}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </PullRefresh>
-        ),
+        active: 'p1.jsx',
+        config: [
+          {
+            title: 'p1.jsx',
+            key: 'p1.jsx',
+            codeText: P1CodeText,
+          },
+          {
+            title: 'index.less',
+            key: 'index.jsx',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -114,96 +58,21 @@ export default () => {
             info: 'Api触发刷新',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { List, Avatar, Button } from 'antd';
-  import { PullRefresh, Space } from '@baifendian/adhere';
-
-  import styles from './index.less';
-
-  let data = [];
-  data.length = 100;
-  data.fill(0);
-  data = data.map((t, index) => "Ant Design Title" + (index + 1));
-
-  const ref = React.createRef();
-
-  <PullRefresh
-    className={styles.Wrap}
-    ref={ref}
-    onPullRefresh={(ins) => {
-      setTimeout(() => {
-        ins.reset();
-      }, 1000 * 3);
-    }}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={[].concat(data)}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </PullRefresh>
-  <Space direction="vertical" />
-
-  <Button
-    type="primary"
-    onClick={() => {
-      ref.current.refresh();
-    }}
-  >
-    触发下拉刷新
-  </Button>
-    `,
-        type: 'PlayGround',
-        renderChildren: () => (
-          <>
-            <PullRefresh
-              className={styles.Wrap}
-              ref={ref2}
-              onPullRefresh={() => {
-                setTimeout(() => {
-                  ref2.current.reset();
-                }, 1000 * 3);
-              }}
-            >
-              <List
-                itemLayout="horizontal"
-                dataSource={[].concat(data)}
-                renderItem={(item) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                      }
-                      title={<a href="https://ant.design">{item.title}</a>}
-                      description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                    />
-                  </List.Item>
-                )}
-              />
-            </PullRefresh>
-            <Space direction="vertical" />
-
-            <Button
-              type="primary"
-              onClick={() => {
-                ref2.current.refresh();
-              }}
-            >
-              触发下拉刷新
-            </Button>
-          </>
-        ),
+        active: 'p2.jsx',
+        config: [
+          {
+            title: 'p2.jsx',
+            key: 'p2.jsx',
+            codeText: P2CodeText,
+          },
+          {
+            title: 'index.less',
+            key: 'index.jsx',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -214,139 +83,21 @@ export default () => {
             info: '自定义图标和文本',
           },
         },
+        active: 'p3.jsx',
         config: [
           {
-            title: 'index.jsx',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  import React from 'react';
-  import { List, Avatar } from 'antd';
-  import { PullRefresh } from '@baifendian/adhere';
-
-  import refreshIcon from './refresh.svg';
-
-  import styles from './index.less';
-
-  let data = [];
-  data.length = 100;
-  data.fill(0);
-  data = data.map((t, index) => "Ant Design Title" + (index + 1));
-
-  <PullRefresh
-    className={styles.Wrap}
-    isShowUpdateTime={false}
-    renderIcon={() => (
-      <div>
-        <img src={refreshIcon} alt="" />
-      </div>
-    )}
-    renderLabel={() => '下拉可刷新'}
-    renderCanLabel={() => '释放可刷新'}
-    renderLoadingAnimation={() => (
-      <div className={styles.RefreshCustom1}>
-        <img src={refreshIcon} alt="" />
-        <div>刷新中...</div>
-      </div>
-    )}
-    onPullRefresh={(ins) => {
-      setTimeout(() => {
-        ins.reset();
-      }, 1000 * 3);
-    }}
-  >
-    <List
-      itemLayout="horizontal"
-      dataSource={[].concat(data)}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title={<a href="https://ant.design">{item.title}</a>}
-            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-          />
-        </List.Item>
-      )}
-    />
-  </PullRefresh>
-          `,
+            title: 'p3.jsx',
+            key: 'p3.jsx',
+            codeText: P3CodeText,
           },
           {
             title: 'index.less',
-            mode: 'code',
-            scope: { React },
-            codeText: `
-  .Wrap {
-    height: 300px;
-  }
-
-  .RefreshCustom1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-
-    img {
-      margin-right: 15px;
-      :local {
-        animation: RefreshCustom1 1.2s infinite linear;
-      }
-    }
-  }
-
-  @keyframes RefreshCustom1 {
-    to {
-      transform: rotate(405deg);
-      transform-origin: center center;
-    }
-  }
-          `,
+            key: 'index.jsx',
+            codeText: IndexLessCodeText,
           },
         ],
-        type: 'PlayGroundMulti',
-        renderChildren: () => (
-          <PullRefresh
-            ref={ref3}
-            className={styles.Wrap}
-            isShowUpdateTime={false}
-            renderIcon={() => (
-              <div>
-                <img src={refreshIcon} alt="" />
-              </div>
-            )}
-            renderLabel={() => '下拉可刷新'}
-            renderCanLabel={() => '释放可刷新'}
-            renderLoadingAnimation={() => (
-              <div className={styles.RefreshCustom1}>
-                <img src={refreshIcon} alt="" />
-                <div>刷新中...</div>
-              </div>
-            )}
-            onPullRefresh={() => {
-              setTimeout(() => {
-                ref3.current.reset();
-              }, 1000 * 3);
-            }}
-          >
-            <List
-              itemLayout="horizontal"
-              dataSource={[].concat(data)}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                  />
-                </List.Item>
-              )}
-            />
-          </PullRefresh>
-        ),
+        type: 'PlayGroundTab',
+        renderChildren: () => <P3 />,
       },
     ];
   }

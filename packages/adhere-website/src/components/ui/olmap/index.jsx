@@ -1,11 +1,12 @@
-import { Button, Radio } from 'antd';
-import GeoJSON from 'ol/format/GeoJSON';
-import { fromLonLat } from 'ol/proj.js';
-import { Vector as VectorSource } from 'ol/source';
-import React, { useRef } from 'react';
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
+import P7CodeText from '!!raw-loader!./examples/p7';
 
-import { OLMap, Resource } from '@baifendian/adhere';
-import XinBei from '@baifendian/adhere-util-resource/resource/gis/geoJson/China/320000/320400.json';
+import React from 'react';
 
 import PlayGroundPage, {
   CodeBoxSection,
@@ -14,18 +15,15 @@ import PlayGroundPage, {
   Section,
 } from '@/lib/PlaygroundPage';
 
-import icon from './区控-图例.svg';
-
-const { TitleLayer, OLMap: OLMapComponent, HeatMap, Util, AnimationManager } = OLMap;
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
+import P5 from './examples/p5';
+import P6 from './examples/p6';
+import P7 from './examples/p7';
 
 export default () => {
-  const xbqRef = useRef();
-  const changeRef = useRef();
-  const heatRef = useRef();
-  const fRef = useRef();
-  const animationRef = useRef();
-  const windRef = useRef();
-
   function boxPanelConfig() {
     return [
       {
@@ -39,24 +37,9 @@ export default () => {
             info: 'OLMap使用',
           },
         },
-        codeText: `
-  import { OLMap } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    OLMap: OLMapComponent,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <OLMapComponent  />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <OLMapComponent />
-          </div>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -69,78 +52,9 @@ export default () => {
             info: '添加新北区的GeoJSONLayer',
           },
         },
-        codeText: `
-  import { OLMap, Resource } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    OLMap: OLMapComponent,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <Button
-      type="primary"
-      style={{ marginBottom: 20 }}
-      onClick={() => {
-        xbqRef.current.addMainGeoJSONLayer({
-          geoJSONStyle: {
-            stroke: {
-              color: 'rgb(30,144,255)',
-              width: 3,
-              lineDash: [1, 2, 3, 4, 5, 6],
-            },
-            fill: {
-              color: 'rgba(30,144,255,0.1)',
-            },
-            text: {
-              textAlign: 'center',
-              color: '#000',
-              font: '26px sans-serif',
-              text: '新北区',
-            },
-          },
-          geoJSONData: XinBei.features[2],
-        });
-      }}
-    >
-      添加新北区的GeoJSONLayer
-    </Button>
-    <OLMapComponent  ref={xbqRef} />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <Button
-              type="primary"
-              style={{ marginBottom: 20 }}
-              onClick={() => {
-                xbqRef.current.addMainGeoJSONLayer({
-                  geoJSONStyle: {
-                    stroke: {
-                      color: 'rgb(30,144,255)',
-                      width: 3,
-                      lineDash: [1, 2, 3, 4, 5, 6],
-                    },
-                    fill: {
-                      color: 'rgba(30,144,255,0.1)',
-                    },
-                    text: {
-                      textAlign: 'center',
-                      color: '#000',
-                      font: '26px sans-serif',
-                      text: '新北区',
-                    },
-                  },
-                  geoJSONData: XinBei.features[2],
-                });
-              }}
-            >
-              添加新北区的GeoJSONLayer
-            </Button>
-            <OLMapComponent ref={xbqRef} />
-          </div>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -153,108 +67,9 @@ export default () => {
             info: '使用不同的source',
           },
         },
-        codeText: `
-  import { OLMap } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    OLMap: OLMapComponent,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <Radio.Group
-      defaultValue="OSM"
-      size="large"
-      onChange={(e) => {
-        const v = e.target.value;
-        const tileLayer = changeRef.current.getMap().getLayers().item(0);
-
-        if (v === 'OSM') {
-          tileLayer.setSource(TitleLayer.getOSM());
-        } else if (v === 'SatGoogleXYZ') {
-          tileLayer.setSource(
-            TitleLayer.getXYZ({
-              minZoom: 11,
-              maxZoom: 17,
-              url: 'http://172.26.250.43:80/mapservice/sat_google/{z}/{x}/{y}.png',
-            }),
-          );
-        } else if (v === 'DixingGoogleXYZ') {
-          tileLayer.setSource(
-            TitleLayer.getXYZ({
-              minZoom: 11,
-              maxZoom: 17,
-              url: 'http://172.26.250.43:80/mapservice/dixing_google/{z}/{x}/{y}.png',
-            }),
-          );
-        } else if (v === 'DianziGaodeXYZ') {
-          tileLayer.setSource(
-            TitleLayer.getXYZ({
-              minZoom: 11,
-              maxZoom: 17,
-              url: 'http://172.26.250.43:80/mapservice/dianzi_gaode/{z}/{x}/{y}.png',
-            }),
-          );
-        }
-      }}
-    >
-      <Radio.Button value="OSM">OSM</Radio.Button>
-      <Radio.Button value="SatGoogleXYZ">谷歌卫星图</Radio.Button>
-      <Radio.Button value="DixingGoogleXYZ">谷歌地形</Radio.Button>
-      <Radio.Button value="DianziGaodeXYZ">高德电子地图</Radio.Button>
-    </Radio.Group>
-
-    <OLMapComponent  ref={changeRef} />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <Radio.Group
-              defaultValue="OSM"
-              size="large"
-              onChange={(e) => {
-                const v = e.target.value;
-                const tileLayer = changeRef.current.getMap().getLayers().item(0);
-
-                if (v === 'OSM') {
-                  tileLayer.setSource(TitleLayer.getOSM());
-                } else if (v === 'SatGoogleXYZ') {
-                  tileLayer.setSource(
-                    TitleLayer.getXYZ({
-                      minZoom: 11,
-                      maxZoom: 17,
-                      url: 'http://172.26.250.43:80/mapservice/sat_google/{z}/{x}/{y}.png',
-                    }),
-                  );
-                } else if (v === 'DixingGoogleXYZ') {
-                  tileLayer.setSource(
-                    TitleLayer.getXYZ({
-                      minZoom: 11,
-                      maxZoom: 17,
-                      url: 'http://172.26.250.43:80/mapservice/dixing_google/{z}/{x}/{y}.png',
-                    }),
-                  );
-                } else if (v === 'DianziGaodeXYZ') {
-                  tileLayer.setSource(
-                    TitleLayer.getXYZ({
-                      minZoom: 11,
-                      maxZoom: 17,
-                      url: 'http://172.26.250.43:80/mapservice/dianzi_gaode/{z}/{x}/{y}.png',
-                    }),
-                  );
-                }
-              }}
-            >
-              <Radio.Button value="OSM">OSM</Radio.Button>
-              <Radio.Button value="SatGoogleXYZ">谷歌卫星图</Radio.Button>
-              <Radio.Button value="DixingGoogleXYZ">谷歌地形</Radio.Button>
-              <Radio.Button value="DianziGaodeXYZ">高德电子地图</Radio.Button>
-            </Radio.Group>
-
-            <OLMapComponent ref={changeRef} />
-          </div>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -267,130 +82,9 @@ export default () => {
             info: '热力图(HeatMap)',
           },
         },
-        codeText: `
-  import { OLMap } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    HeatMap,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <Button
-      type="primary"
-      style={{ marginBottom: 20 }}
-      onClick={() => {
-        const dataSource = [
-          [119.7493459, 31.8885404],
-          [119.7497556, 31.8847773],
-          [119.7550551, 31.8790072],
-          [119.7612496, 31.8736603],
-          [119.761142, 31.8647861],
-          [119.7586592, 31.861709],
-          [119.762329, 31.8558587],
-          [119.7641014, 31.8555412],
-          [119.7636422, 31.8544483],
-          [119.7660109, 31.8504396],
-          [119.7701492, 31.8512531],
-          [119.7730089, 31.8507856],
-        ];
-
-        const feas = [];
-        for (let i = 0, len = dataSource.length; i < len; i++) {
-          const provinceInfo = dataSource[i];
-          const fea = {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'Point',
-              coordinates: fromLonLat(provinceInfo),
-            },
-          };
-          feas.push(fea);
-        }
-
-        const heatData = {
-          type: 'FeatureCollection',
-          features: feas,
-        };
-
-        const vectorSource = new VectorSource({
-          features: new GeoJSON().readFeatures(heatData, {
-            dataProjection: 'EPSG:3857',
-            featureProjection: 'EPSG:3857',
-          }),
-        });
-
-        heatRef.current.addLayer();
-
-        const layer = heatRef.current.getHeatmapLayer();
-        layer.setSource(vectorSource);
-      }}
-    >
-      添加新北区的GeoJSON数据
-    </Button>
-    <HeatMap  ref={heatRef} />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <Button
-              type="primary"
-              style={{ marginBottom: 20 }}
-              onClick={() => {
-                const dataSource = [
-                  [119.7493459, 31.8885404],
-                  [119.7497556, 31.8847773],
-                  [119.7550551, 31.8790072],
-                  [119.7612496, 31.8736603],
-                  [119.761142, 31.8647861],
-                  [119.7586592, 31.861709],
-                  [119.762329, 31.8558587],
-                  [119.7641014, 31.8555412],
-                  [119.7636422, 31.8544483],
-                  [119.7660109, 31.8504396],
-                  [119.7701492, 31.8512531],
-                  [119.7730089, 31.8507856],
-                ];
-
-                const feas = [];
-                for (let i = 0, len = dataSource.length; i < len; i++) {
-                  const provinceInfo = dataSource[i];
-                  const fea = {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: {
-                      type: 'Point',
-                      coordinates: fromLonLat(provinceInfo),
-                    },
-                  };
-                  feas.push(fea);
-                }
-
-                const heatData = {
-                  type: 'FeatureCollection',
-                  features: feas,
-                };
-
-                const vectorSource = new VectorSource({
-                  features: new GeoJSON().readFeatures(heatData, {
-                    dataProjection: 'EPSG:3857',
-                    featureProjection: 'EPSG:3857',
-                  }),
-                });
-
-                heatRef.current.addLayer();
-
-                const layer = heatRef.current.getHeatMapLayer();
-                layer.setSource(vectorSource);
-              }}
-            >
-              添加新北区的GeoJSON数据
-            </Button>
-            <HeatMap ref={heatRef} />
-          </div>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
       {
         id: `p5`,
@@ -403,313 +97,9 @@ export default () => {
             info: 'Features',
           },
         },
-        codeText: `
-  import { OLMap } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    OLMap: OLMapComponent,
-    Util,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <Button
-      type="primary"
-      style={{ marginBottom: 20 }}
-      onClick={() => {
-        const { /* vectorLayer, */ vectorSource } = fRef.current.addDataLayer();
-
-        vectorSource.addFeature(
-          Util.drawCircle({
-            center: fromLonLat([119.7493459, 31.8885404]),
-            radius: 1250,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawCirclePoint({
-            id: 1,
-            pos: fromLonLat([119.7497556, 31.8847773]),
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawImagePoint({
-            id: 2,
-            pos: fromLonLat([119.879673, 31.933156]),
-            src: icon,
-            scale: 2,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            id: 3,
-            pos: fromLonLat([119.7730089, 31.8507856]),
-            points: 3,
-            radius: 10,
-            radius2: 0,
-            rotation: Math.PI / 4,
-            angle: 0,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7641014, 31.8555412]),
-            points: 4,
-            radius: 10,
-            angle: Math.PI / 4,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7660109, 31.8504396]),
-            radius: 10 / Math.SQRT2,
-            radius2: 10,
-            points: 4,
-            angle: 0,
-            scale: [1, 0.5],
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7660109, 31.8504396]),
-            points: 3,
-            radius: 10,
-            rotation: Math.PI / 4,
-            angle: 0,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7660109, 31.8504396]),
-            points: 5,
-            radius: 10,
-            radius2: 4,
-            angle: 0,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7660109, 31.8504396]),
-            points: 4,
-            radius: 10,
-            radius2: 0,
-            angle: 0,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7660109, 31.8504396]),
-            points: 4,
-            radius: 10,
-            radius2: 0,
-            angle: Math.PI / 4,
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawRegularShapePoint({
-            pos: fromLonLat([119.7660109, 31.8504396]),
-            points: 4,
-            radius: 5,
-            angle: Math.PI / 4,
-            displacement: [0, 10],
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawPolygon({
-            points: [
-              [
-                fromLonLat([119.7493459, 31.8885404]),
-                fromLonLat([119.7497556, 31.8847773]),
-                fromLonLat([119.7550551, 31.8790072]),
-                fromLonLat([119.7612496, 31.8736603]),
-                fromLonLat([119.761142, 31.8647861]),
-                fromLonLat([119.7493459, 31.8885404]),
-              ],
-            ],
-          }),
-        );
-
-        vectorSource.addFeature(
-          Util.drawLine({
-            points: [
-              fromLonLat([119.7493459, 31.8885404]),
-              fromLonLat([119.7497556, 31.8847773]),
-              fromLonLat([119.7550551, 31.8790072]),
-              fromLonLat([119.7612496, 31.8736603]),
-              fromLonLat([119.761142, 31.8647861]),
-              fromLonLat([119.7493459, 31.8885404]),
-            ],
-            width: 6,
-            color: 'red',
-          }),
-        );
-      }}
-    >
-      显示Features
-    </Button>
-    <OLMapComponent  ref={fRef} />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <Button
-              type="primary"
-              style={{ marginBottom: 20 }}
-              onClick={() => {
-                const { /* vectorLayer, */ vectorSource } = fRef.current.addDataLayer();
-
-                vectorSource.addFeature(
-                  Util.drawCircle({
-                    center: fromLonLat([119.7493459, 31.8885404]),
-                    radius: 1250,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawCirclePoint({
-                    id: 1,
-                    pos: fromLonLat([119.7497556, 31.8847773]),
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawImagePoint({
-                    id: 2,
-                    pos: fromLonLat([119.879673, 31.933156]),
-                    src: icon,
-                    scale: 2,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    id: 3,
-                    pos: fromLonLat([119.7730089, 31.8507856]),
-                    points: 3,
-                    radius: 10,
-                    radius2: 0,
-                    rotation: Math.PI / 4,
-                    angle: 0,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7641014, 31.8555412]),
-                    points: 4,
-                    radius: 10,
-                    angle: Math.PI / 4,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7660109, 31.8504396]),
-                    radius: 10 / Math.SQRT2,
-                    radius2: 10,
-                    points: 4,
-                    angle: 0,
-                    scale: [1, 0.5],
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7660109, 31.8504396]),
-                    points: 3,
-                    radius: 10,
-                    rotation: Math.PI / 4,
-                    angle: 0,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7660109, 31.8504396]),
-                    points: 5,
-                    radius: 10,
-                    radius2: 4,
-                    angle: 0,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7660109, 31.8504396]),
-                    points: 4,
-                    radius: 10,
-                    radius2: 0,
-                    angle: 0,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7660109, 31.8504396]),
-                    points: 4,
-                    radius: 10,
-                    radius2: 0,
-                    angle: Math.PI / 4,
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawRegularShapePoint({
-                    pos: fromLonLat([119.7660109, 31.8504396]),
-                    points: 4,
-                    radius: 5,
-                    angle: Math.PI / 4,
-                    displacement: [0, 10],
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawPolygon({
-                    points: [
-                      [
-                        fromLonLat([119.7493459, 31.8885404]),
-                        fromLonLat([119.7497556, 31.8847773]),
-                        fromLonLat([119.7550551, 31.8790072]),
-                        fromLonLat([119.7612496, 31.8736603]),
-                        fromLonLat([119.761142, 31.8647861]),
-                        fromLonLat([119.7493459, 31.8885404]),
-                      ],
-                    ],
-                  }),
-                );
-
-                vectorSource.addFeature(
-                  Util.drawLine({
-                    points: [
-                      fromLonLat([119.7493459, 31.8885404]),
-                      fromLonLat([119.7497556, 31.8847773]),
-                      fromLonLat([119.7550551, 31.8790072]),
-                      fromLonLat([119.7612496, 31.8736603]),
-                      fromLonLat([119.761142, 31.8647861]),
-                      fromLonLat([119.7493459, 31.8885404]),
-                    ],
-                    width: 6,
-                    color: 'red',
-                  }),
-                );
-              }}
-            >
-              显示Features
-            </Button>
-            <OLMapComponent ref={fRef} />
-          </div>
-        ),
+        codeText: P5CodeText,
+        renderChildren: () => <P5 />,
       },
       {
         id: `p6`,
@@ -722,133 +112,9 @@ export default () => {
             info: '轨迹播放',
           },
         },
-        codeText: `
-  import { OLMap, Resource } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    OLMap: OLMapComponent,
-    Util,
-    AnimationManager,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <Button
-      type="primary"
-      style={{ marginBottom: 20 }}
-      onClick={() => {
-        const { vectorSource } = animationRef.current.addDataLayer();
-
-        const lineData = new Map();
-        const lines = [];
-
-        const ps =
-          XinBei.features[2].geometry
-            .coordinates[0][0];
-
-        const lineCount = 100;
-
-        const count = Math.floor(ps.length / lineCount);
-
-        for (let i = 0; i < lineCount; i++) {
-          lines.push(ps.slice(i * count, count * (i + 1)));
-        }
-
-        if (ps.length % lineCount !== 0) {
-          lines.push(ps.slice(ps.length - (ps.length % lineCount)));
-        }
-
-        lines.forEach((line, index) => {
-          const points = line.map((t) => fromLonLat(t));
-
-          // 画线
-          vectorSource.addFeature(
-            Util.drawLine({
-              points,
-              width: 6,
-              color: 'red',
-            }),
-          );
-
-          lineData.set(index, line);
-        });
-
-        const animationManager = new AnimationManager(vectorSource, {
-          // eslint-disable-next-line global-require
-          arrowImg: require('./Triangle.png'),
-          // eslint-disable-next-line global-require
-          pointImg: require('./selected.png'),
-          lineWidth: 8,
-          lineColor: '#ff5d00',
-        });
-
-        // 播放
-        animationManager.run(lineData, []);
-      }}
-    >
-      轨迹播放
-    </Button>
-    <OLMapComponent  ref={animationRef} />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <Button
-              type="primary"
-              style={{ marginBottom: 20 }}
-              onClick={() => {
-                const { vectorSource } = animationRef.current.addDataLayer();
-
-                const lineData = new Map();
-                const lines = [];
-                const ps = XinBei.features[2].geometry.coordinates[0][0];
-
-                const lineCount = 100;
-
-                const count = Math.floor(ps.length / lineCount);
-
-                for (let i = 0; i < lineCount; i++) {
-                  lines.push(ps.slice(i * count, count * (i + 1)));
-                }
-
-                if (ps.length % lineCount !== 0) {
-                  lines.push(ps.slice(ps.length - (ps.length % lineCount)));
-                }
-
-                lines.forEach((line, index) => {
-                  const points = line.map((t) => fromLonLat(t));
-
-                  // 画线
-                  vectorSource.addFeature(
-                    Util.drawLine({
-                      points,
-                      width: 6,
-                      color: 'red',
-                    }),
-                  );
-
-                  lineData.set(index, line);
-                });
-
-                const animationManager = new AnimationManager(vectorSource, {
-                  // eslint-disable-next-line global-require
-                  arrowImg: require('./Triangle.png'),
-                  // eslint-disable-next-line global-require
-                  pointImg: require('./selected.png'),
-                  lineWidth: 8,
-                  lineColor: '#ff5d00',
-                });
-
-                // 播放
-                animationManager.run(lineData, []);
-              }}
-            >
-              轨迹播放
-            </Button>
-            <OLMapComponent ref={animationRef} />
-          </div>
-        ),
+        codeText: P6CodeText,
+        renderChildren: () => <P6 />,
       },
       {
         id: `p7`,
@@ -861,42 +127,9 @@ export default () => {
             info: '风场',
           },
         },
-        codeText: `
-  import { OLMap } from '@baifendian/adhere';
-  import 'ol/ol.css';
-
-  const {
-    OLMap: OLMapComponent,
-  } = OLMap;
-
-  <div style={{ width: '100%', height: 500 }}>
-    <Button
-      type="primary"
-      style={{ marginBottom: 20 }}
-      onClick={() => {
-        windRef.current.addWindLayer();
-      }}
-    >
-      添加风场Layer
-    </Button>
-    <OLMapComponent zoom={5} ref={windRef} />
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ width: '100%', height: 500 }}>
-            <Button
-              type="primary"
-              style={{ marginBottom: 20 }}
-              onClick={() => {
-                windRef.current.addWindLayer();
-              }}
-            >
-              添加风场Layer
-            </Button>
-            <OLMapComponent zoom={5} ref={windRef} />
-          </div>
-        ),
+        codeText: P7CodeText,
+        renderChildren: () => <P7 />,
       },
     ];
   }

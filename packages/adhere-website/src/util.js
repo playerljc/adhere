@@ -3,6 +3,8 @@ import reactElementToJsxString from 'react-element-to-jsx-string';
 
 import { Dict, Preferences, Util } from '@baifendian/adhere';
 
+import Constent from '@/constent';
+
 export default {
   /**
    * initDirection
@@ -70,6 +72,20 @@ export default {
   reactElementToJsxStringById({ element, displayName }) {
     return reactElementToJsxString(element, {
       displayName: () => displayName,
+    });
+  },
+  /**
+   * getMobileCodeText
+   * @param path
+   * @return {Promise<string>}
+   */
+  getMobileCodeText(path) {
+    return new Promise((resolve) => {
+      fetch(`${Constent(CustomEvnVars).mobileOrigin}/codeText/${path}`).then((res) => {
+        res.text().then((text) => {
+          resolve(text);
+        });
+      });
     });
   },
 };

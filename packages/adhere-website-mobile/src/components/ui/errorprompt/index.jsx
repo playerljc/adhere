@@ -1,34 +1,18 @@
-import { Button } from 'antd-mobile';
 import React from 'react';
 
-import { MobileErrorPrompt } from '@baifendian/adhere';
-
 import DemoBlock from '@/lib/DemoBlock';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
 
 export default () => (
   <DemoBlock>
     <DemoBlock.Item title="openErrorMessage">
-      <Button
-        onClick={() => {
-          MobileErrorPrompt.openErrorMessage({
-            content: '操作失败',
-          });
-        }}
-      >
-        openErrorMessage
-      </Button>
+      <P1 />
     </DemoBlock.Item>
 
     <DemoBlock.Item title="openErrorDialog">
-      <Button
-        onClick={() => {
-          MobileErrorPrompt.openErrorDialog({
-            content: '操作失败',
-          });
-        }}
-      >
-        openErrorDialog
-      </Button>
+      <P2 />
     </DemoBlock.Item>
   </DemoBlock>
 );

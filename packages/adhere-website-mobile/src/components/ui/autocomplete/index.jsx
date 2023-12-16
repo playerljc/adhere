@@ -2,22 +2,22 @@ import React from 'react';
 
 import DemoBlock from '@/lib/DemoBlock';
 
-import CheckBox from './CheckBox';
-import CheckList from './CheckList';
-import Selector from './Selector';
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
 
 export default () => (
   <DemoBlock>
     <DemoBlock.Item title="CheckList的AutoComplete">
-      <CheckList />
+      <P1 />
     </DemoBlock.Item>
 
     <DemoBlock.Item title="Selector的AutoComplete">
-      <Selector />
+      <P2 />
     </DemoBlock.Item>
 
     <DemoBlock.Item title="CheckBox的AutoComplete">
-      <CheckBox />
+      <P3 />
     </DemoBlock.Item>
   </DemoBlock>
 );

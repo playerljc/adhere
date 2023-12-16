@@ -1,8 +1,16 @@
+import P1CodeText from '!!raw-loader!./examples/p1';
+import P2CodeText from '!!raw-loader!./examples/p2';
+import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
+
 import React from 'react';
 
-import { Space } from '@baifendian/adhere';
-
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
+
+import P1 from './examples/p1';
+import P2 from './examples/p2';
+import P3 from './examples/p3';
+import P4 from './examples/p4';
 
 export default () => {
   function boxPanelConfig() {
@@ -18,28 +26,9 @@ export default () => {
             info: '横向',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Space } from '@baifendian/adhere';
-
-  <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-    <a>编辑</a>
-    <Space direction="horizontal" />
-    <a>查看</a>
-    <Space direction="horizontal" />
-    <a>删除</a>
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-            <a>编辑</a>
-            <Space direction="horizontal" />
-            <a>查看</a>
-            <Space direction="horizontal" />
-            <a>删除</a>
-          </div>
-        ),
+        codeText: P1CodeText,
+        renderChildren: () => <P1 />,
       },
       {
         id: `p2`,
@@ -52,24 +41,9 @@ export default () => {
             info: '纵向',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Space } from '@baifendian/adhere';
-
-  <div>
-    <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
-    <Space direction="vertical" />
-    <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div>
-            <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
-            <Space direction="vertical" />
-            <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
-          </div>
-        ),
+        codeText: P2CodeText,
+        renderChildren: () => <P2 />,
       },
       {
         id: `p3`,
@@ -82,41 +56,9 @@ export default () => {
             info: '间距',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Space } from '@baifendian/adhere';
-
-  <div>
-    <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-      <a>编辑</a>
-      <Space direction="horizontal" size={10} />
-      <a>查看</a>
-      <Space direction="horizontal" size={10} />
-      <a>删除</a>
-    </div>
-
-    <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
-    <Space direction="vertical" size={10} />
-    <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
-  </div>
-      `,
         type: 'PlayGround',
-
-        renderChildren: () => (
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-              <a>编辑</a>
-              <Space direction="horizontal" size={10} />
-              <a>查看</a>
-              <Space direction="horizontal" size={10} />
-              <a>删除</a>
-            </div>
-
-            <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
-            <Space direction="vertical" size={10} />
-            <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
-          </div>
-        ),
+        codeText: P3CodeText,
+        renderChildren: () => <P3 />,
       },
       {
         id: `p4`,
@@ -129,42 +71,9 @@ export default () => {
             info: 'SpaceGroup',
           },
         },
-        codeText: `
-  import React from 'react';
-  import { Space } from '@baifendian/adhere';
-
-  <div>
-    <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-      <Space.Group direction="horizontal" >
-        <a>编辑</a>
-        <a>查看</a>
-        <a>删除</a>
-      </Space.Group>
-    </div>
-
-    <Space.Group direction="vertical">
-      <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
-      <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
-    </Space.Group>
-  </div>
-      `,
         type: 'PlayGround',
-        renderChildren: () => (
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
-              <Space.Group direction="horizontal">
-                <a>编辑</a>
-                <a>查看</a>
-                <a>删除</a>
-              </Space.Group>
-            </div>
-
-            <Space.Group direction="vertical">
-              <p>段落1段落1段落1段落1段落1段落1段落1段落1</p>
-              <p>段落2段落2段落2段落2段落2段落2段落2段落2</p>
-            </Space.Group>
-          </div>
-        ),
+        codeText: P4CodeText,
+        renderChildren: () => <P4 />,
       },
     ];
   }
