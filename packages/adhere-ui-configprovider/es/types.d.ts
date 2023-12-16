@@ -1,4 +1,5 @@
 import type { NamedExoticComponent } from 'react';
+import type { CSSProperties } from 'react';
 import { Context } from './ConfigProvider';
 /**
  * IntlType
@@ -13,6 +14,8 @@ export type IntlType = {
  * @interface ConfigProviderProps
  */
 export interface ConfigProviderProps {
+    className?: string;
+    style?: CSSProperties;
     intl: IntlType & {
         mainLanguage: string;
     };
