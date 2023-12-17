@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, memo, useContext, useLayoutEffect, useRef } from 'react';
+import React, { memo, useContext, useLayoutEffect, useRef } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 

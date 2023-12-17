@@ -15,10 +15,12 @@ import LBCLayout from './TRBLC/LBCLayout';
 import LCBLayout from './TRBLC/LCBLayout';
 import LCLayout from './TRBLC/LCLayout';
 import LCRBLayout from './TRBLC/LCRBLayout';
+import LCRLayout from './TRBLC/LCRLayout';
 import LRTCBLayout from './TRBLC/LRTCBLayout';
 import LTCBLayout from './TRBLC/LTCBLayout';
 import LTCLayout from './TRBLC/LTCLayout';
 import TBLCRLayout from './TRBLC/TBLCRLayout';
+import TCBLayout from './TRBLC/TCBLayout';
 import TCBRLayout from './TRBLC/TCBRLayout';
 import TCLayout from './TRBLC/TCLayout';
 import TCRLayout from './TRBLC/TCRLayout';
@@ -277,6 +279,7 @@ export type FlexLayoutComponent = NamedExoticComponent<
     LBCLayout: typeof LBCLayout;
     LCBLayout: typeof LCBLayout;
     LCLayout: typeof LCLayout;
+    LCRLayout: typeof LCRLayout;
     LCRBLayout: typeof LCRBLayout;
     LRTCBLayout: typeof LRTCBLayout;
     LTCBLayout: typeof LTCBLayout;
@@ -288,5 +291,6 @@ export type FlexLayoutComponent = NamedExoticComponent<
     TLCLayout: typeof TLCLayout;
     TLRCLayout: typeof TLRCLayout;
     TRCLayout: typeof TRCLayout;
+    TCBLayout: typeof TCBLayout;
   };
 };

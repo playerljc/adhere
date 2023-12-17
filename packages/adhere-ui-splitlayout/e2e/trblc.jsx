@@ -10,7 +10,7 @@ import './index.less';
 
 export default () => {
   return (
-    <div style={{ height: '100%', padding: 20, background: '#ccc' }}>
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
       {/*<SplitLayout.TRBLC.TCSplitLayout
         gutter={20}
         tProps={{
@@ -25,6 +25,40 @@ export default () => {
               ))}
             </Card>
           ),
+        }}
+      />*/}
+
+      <SplitLayout.TRBLC.TCBSplitLayout
+        gutter={20}
+        tProps={{
+          children: <Card style={{ height: '100%' }}>top</Card>,
+        }}
+        cProps={{
+          autoFixed: false,
+          children: <Card>Center</Card>,
+        }}
+        bProps={{
+          children: <Card style={{ height: '100%' }}>bottom</Card>,
+        }}
+      />
+
+      {/*<SplitLayout.TRBLC.TCRSplitLayout
+        gutter={20}
+        tProps={{
+          children: <Card style={{ height: '100%' }}>top</Card>,
+        }}
+        cProps={{
+          autoFixed: false,
+          children: (
+            <Card>
+              {Array.from({ length: 100 }).map((t) => (
+                <p>111111</p>
+              ))}
+            </Card>
+          ),
+        }}
+        bProps={{
+          children: <Card style={{ height: '100%' }}>bottom</Card>,
         }}
       />*/}
 
@@ -184,6 +218,24 @@ export default () => {
               ))}
             </Card>
           ),
+        }}
+      />*/}
+
+      {/*<SplitLayout.TRBLC.LCRSplitLayout
+        gutter={20}
+        lProps={{
+          fit: true,
+          span: 3,
+          children: <Card>Left</Card>,
+        }}
+        cProps={{
+          autoFixed: true,
+          children: <Card>Center</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          children: <Card>Right</Card>,
         }}
       />*/}
 
