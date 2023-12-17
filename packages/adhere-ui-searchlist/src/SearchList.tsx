@@ -360,11 +360,11 @@ abstract class SearchList<
   }
 
   /**
-   * renderSearchToolBar
+   * renderSearchBarActions
    * @description 渲染查询工具栏
    * @return {ReactElement}
    */
-  renderSearchToolBar(): ReactElement {
+  renderSearchBarActions(): ReactNode {
     const items = this.renderSearchFooterItems([]) || [];
 
     return (

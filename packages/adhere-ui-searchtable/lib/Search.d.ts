@@ -72,11 +72,23 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      */
     abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactNode[];
     /**
+     * renderSearchBarActions
+     */
+    abstract renderSearchBarActions(): ReactNode;
+    /**
+     * renderTitle
+     */
+    renderTitle(): ReactElement;
+    /**
+     * renderSearchBarExtra
+     */
+    renderSearchBarExtra(): ReactNode;
+    /**
      * renderSearchToolBar
      * @description 渲染查询工具栏
      * @return {ReactNode}
      */
-    abstract renderSearchToolBar(): ReactNode;
+    renderSearchToolBar(): ReactNode;
     /**
      * renderBody
      * @description 渲染查询主体

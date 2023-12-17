@@ -340,11 +340,11 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     renderSearchFormToolBar(): ReactNode;
     /**
-     * renderSearchToolBar
+     * renderSearchBarActions
      * @description 渲染查询工具栏
-     * @return {ReactElement}
+     * @return {ReactNode}
      */
-    renderSearchToolBar(): ReactElement;
+    renderSearchBarActions(): ReactNode;
     /**
      * renderTable
      * @description - 认选表格体

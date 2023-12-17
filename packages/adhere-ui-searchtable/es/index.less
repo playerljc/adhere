@@ -259,3 +259,49 @@
     }
   }
 }
+
+.adhere-ui-search-table-search-tool-bar {
+  display: flex;
+
+  > .adhere-ui-search-table-search-tool-bar-title {
+    display: flex;
+    flex-shrink: 1;
+
+    > .adhere-ui-search-table-search-tool-bar-title-inner {
+      display: flex;
+      align-items: center;
+
+      > .adhere-ui-search-table-search-tool-bar-title-content {
+        margin: 0 5px;
+        color: var(--adhere-color-text-secondary);
+        font-weight: 500;
+        font-size: 16px;
+      }
+
+      > .adhere-ui-search-table-search-tool-bar-title-info {
+        font-size: 16px;
+
+        &:hover {
+          color: var(--adhere-color-primary);
+          cursor: help;
+        }
+      }
+    }
+  }
+
+  > .adhere-ui-search-table-search-tool-bar-auto {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
+
+    > .adhere-ui-search-table-search-tool-bar-extra {
+      flex: 1;
+      min-width: 0;
+    }
+
+    > .adhere-ui-search-table-search-tool-bar-actions {
+      flex-shrink: 1;
+    }
+  }
+}

@@ -978,11 +978,11 @@ abstract class SearchTable<
   }
 
   /**
-   * renderSearchToolBar
+   * renderSearchBarActions
    * @description 渲染查询工具栏
-   * @return {ReactElement}
+   * @return {ReactNode}
    */
-  renderSearchToolBar(): ReactElement {
+  renderSearchBarActions(): ReactNode {
     const items = this.renderSearchFooterItems([]) || [];
 
     return (

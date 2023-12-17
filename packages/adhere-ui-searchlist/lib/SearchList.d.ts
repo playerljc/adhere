@@ -132,11 +132,11 @@ declare abstract class SearchList<P extends SearchListProps = SearchListProps, S
      */
     renderSearchFormToolBar(): ReactNode;
     /**
-     * renderSearchToolBar
+     * renderSearchBarActions
      * @description 渲染查询工具栏
      * @return {ReactElement}
      */
-    renderSearchToolBar(): ReactElement;
+    renderSearchBarActions(): ReactNode;
     /**
      * getPagination
      * @param params

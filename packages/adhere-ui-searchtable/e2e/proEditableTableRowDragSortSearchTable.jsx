@@ -316,6 +316,7 @@
 //
 // export default Wrap;
 // ------------------------------------------------------------------
+import { Input, Typography } from 'antd';
 import React from 'react';
 
 import { DateDisplay, Resource } from '@baifendian/adhere';
@@ -332,6 +333,8 @@ const {
 } = SearchTable;
 
 const serviceName = 'user';
+
+const { Paragraph } = Typography;
 
 const List = SearchTableImplementFactory({
   serviceNames: [serviceName],
@@ -404,6 +407,9 @@ const List = SearchTableImplementFactory({
           $search: {
             showColumnHeader: false,
           },
+          render: (val) => (
+            <Paragraph copyable={{ tooltips: false }}>Hide Copy tooltips.</Paragraph>
+          ),
         },
         {
           title: 'Other',
@@ -791,6 +797,15 @@ const List = SearchTableImplementFactory({
      * onRowSelectionSelectAll
      */
     onRowSelectionSelectAll() {}
+
+    renderSearchBarExtra() {
+      return (
+        <div style={{ display: 'flex' }}>
+          <Input placeholder="姓名" />
+          <Input placeholder="姓名" />
+        </div>
+      );
+    }
   },
 );
 
@@ -799,6 +814,7 @@ export default (props) => (
     antdTableProps={{
       bordered: true,
     }}
+    title="高级表格"
     {...props}
   />
 );

@@ -1,8 +1,10 @@
+import { Tooltip } from 'antd';
 import { TablePaginationConfig, TableRowSelection } from 'antd/es/table/interface';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactElement, ReactNode, RefObject, createRef } from 'react';
 
+import { InfoCircleOutlined } from '@ant-design/icons';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import Suspense from '@baifendian/adhere-ui-suspense';
 import Intl from '@baifendian/adhere-util-intl';
@@ -102,11 +104,68 @@ abstract class Search<
   abstract renderSearchFooterItems(defaultItems: ReactElement[]): ReactNode[];
 
   /**
+   * renderSearchBarActions
+   */
+  abstract renderSearchBarActions(): ReactNode;
+
+  /**
+   * renderTitle
+   */
+  renderTitle(): ReactElement {
+    const { title } = this.props;
+
+    return (
+      <div className={`${selectorPrefix}-search-tool-bar-title-inner`}>
+        <div className={`${selectorPrefix}-search-tool-bar-title-content`}>{title}</div>
+        <div className={`${selectorPrefix}-search-tool-bar-title-info`}>
+          <Tooltip title={title}>
+            <InfoCircleOutlined />
+          </Tooltip>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * renderSearchBarExtra
+   */
+  renderSearchBarExtra(): ReactNode {
+    return null;
+  }
+
+  /**
    * renderSearchToolBar
    * @description 渲染查询工具栏
    * @return {ReactNode}
    */
-  abstract renderSearchToolBar(): ReactNode;
+  renderSearchToolBar(): ReactNode {
+    return (
+      <>
+        {this.props.title && !!this.renderTitle && !!this.renderTitle?.() && (
+          <div className={classNames(`${selectorPrefix}-search-tool-bar-title`)}>
+            {this.renderTitle()}
+          </div>
+        )}
+
+        {((!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.()) ||
+          (!!this.renderSearchBarActions && !!this.renderSearchBarActions?.())) && (
+          <div className={classNames(`${selectorPrefix}-search-tool-bar-auto`)}>
+            {!!this.renderSearchBarExtra && !!this.renderSearchBarExtra?.() && (
+              <div className={classNames(`${selectorPrefix}-search-tool-bar-extra`)}>
+                {this.renderSearchBarExtra()}
+              </div>
+            )}
+
+            {!!this.renderSearchBarActions && !!this.renderSearchBarActions?.() && (
+              <div className={classNames(`${selectorPrefix}-search-tool-bar-actions`)}>
+                {this.renderSearchBarActions()}
+              </div>
+            )}
+          </div>
+        )}
+      </>
+    );
+  }
 
   /**
    * renderBody
@@ -269,6 +328,14 @@ abstract class Search<
 
     const { expand = false } = this.state;
 
+    // SearchFormBefore
+    // SearchForm
+    // SearchFormToolBar
+    // SearchToolBar
+    // SearchFormAfter
+    // SearchHeader
+    // SearchBody
+    // SearchFooter
     return (
       <FlexLayout
         direction="vertical"
