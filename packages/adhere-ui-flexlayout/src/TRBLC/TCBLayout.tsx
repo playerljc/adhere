@@ -9,19 +9,21 @@ import { selectorPrefix } from '../FlexLayout';
 import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
- * TCLayout
+ * TCBLayout
  * @constructor
  * @param _props
  * @param ref
  */
-const TCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
+const TCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
   forwardRef<HTMLDivElement, TBLRCLayoutProps>((_props, ref) => {
-    const { wrapClassName, wrapStyle, tProps, tSplit, cProps, ...props } = _props;
+    const { wrapClassName, wrapStyle, tProps, tSplit, cProps, bProps, bSplit, ...props } = _props;
 
     // @ts-ignore
     const TProps = omit<TBLRProps, string>(tProps, ['children']);
     // @ts-ignore
     const CProps = omit<CenterProps, string>(cProps, ['children']);
+    // @ts-ignore
+    const BProps = omit<TBLRProps, string>(bProps, ['children']);
 
     const classList = useMemo(
       () =>
@@ -48,12 +50,16 @@ const TCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
           {tSplit}
 
           <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
+
+          {bSplit}
+
+          <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
         </FlexLayout>
       </div>
     );
   }),
 );
 
-TCLayout.displayName = 'TCLayout';
+TCBLayout.displayName = 'TCBLayout';
 
-export default TCLayout;
+export default TCBLayout;

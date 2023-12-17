@@ -4,24 +4,25 @@ import React, { PropsWithoutRef, RefAttributes, forwardRef, memo, useMemo } from
 
 import Auto from '../Auto';
 import Fixed from '../Fixed';
-import FlexLayout from '../FlexLayout';
-import { selectorPrefix } from '../FlexLayout';
+import FlexLayout, { selectorPrefix } from '../FlexLayout';
 import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
 
 /**
- * TCLayout
+ * LCRLayout
  * @constructor
  * @param _props
  * @param ref
  */
-const TCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
+const LCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
   forwardRef<HTMLDivElement, TBLRCLayoutProps>((_props, ref) => {
-    const { wrapClassName, wrapStyle, tProps, tSplit, cProps, ...props } = _props;
+    const { wrapClassName, wrapStyle, lProps, lSplit, cProps, rProps, rSplit, ...props } = _props;
 
     // @ts-ignore
-    const TProps = omit<TBLRProps, string>(tProps, ['children']);
+    const LProps = omit<TBLRProps, string>(lProps, ['children']);
     // @ts-ignore
     const CProps = omit<CenterProps, string>(cProps, ['children']);
+    // @ts-ignore
+    const RProps = omit<TBLRProps, string>(rProps, ['children']);
 
     const classList = useMemo(
       () =>
@@ -40,20 +41,24 @@ const TCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
       <div ref={ref} className={classList} style={wrapStyle ?? {}}>
         <FlexLayout
           {...(props ?? {})}
-          className={classNames(`${selectorPrefix}-tc-layout`, props?.className ?? '')}
-          direction="vertical"
+          className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
+          direction="horizontal"
         >
-          <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+          <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
 
-          {tSplit}
+          {lSplit}
 
           <Auto {...(CProps ?? {})}>{cProps?.children}</Auto>
+
+          {rSplit}
+
+          <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
         </FlexLayout>
       </div>
     );
   }),
 );
 
-TCLayout.displayName = 'TCLayout';
+LCRLayout.displayName = 'LCRLayout';
 
-export default TCLayout;
+export default LCRLayout;

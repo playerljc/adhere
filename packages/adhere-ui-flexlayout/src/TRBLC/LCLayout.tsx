@@ -15,16 +15,7 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  */
 const LCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
   forwardRef<HTMLDivElement, TBLRCLayoutProps>((_props, ref) => {
-    const {
-      wrapClassName,
-      wrapStyle,
-      autoWrapProps,
-      autoInnerProps,
-      lProps,
-      lSplit,
-      cProps,
-      ...props
-    } = _props;
+    const { wrapClassName, wrapStyle, lProps, lSplit, cProps, ...props } = _props;
 
     // @ts-ignore
     const LProps = omit<TBLRProps, string>(lProps, ['children']);

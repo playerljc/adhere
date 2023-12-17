@@ -10,7 +10,7 @@ import './index.less';
 
 export default () => {
   return (
-    <div style={{ height: '100%', padding: 20, background: '#ccc' }}>
+    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
       {/*<FlexLayout.TRBLC.TCLayout
         gutter={20}
         tProps={{
@@ -27,6 +27,20 @@ export default () => {
               ))}
             </Card>
           ),
+        }}
+      />*/}
+
+      {/*<FlexLayout.TRBLC.TCBLayout
+        gutter={20}
+        tProps={{
+          children: <Card>top</Card>,
+        }}
+        cProps={{
+          autoFixed: false,
+          children: <Card>Center</Card>,
+        }}
+        bProps={{
+          children: <Card>bottom</Card>,
         }}
       />*/}
 
@@ -189,6 +203,24 @@ export default () => {
         }}
       />*/}
 
+      <FlexLayout.TRBLC.LCRLayout
+        gutter={20}
+        lProps={{
+          fit: true,
+          span: 3,
+          children: <Card>Left</Card>,
+        }}
+        cProps={{
+          autoFixed: true,
+          children: <Card>Center</Card>,
+        }}
+        rProps={{
+          fit: true,
+          span: 3,
+          children: <Card>Right</Card>,
+        }}
+      />
+
       {/*<FlexLayout.TRBLC.CRLayout
         gutter={20}
         rProps={{
@@ -216,6 +248,24 @@ export default () => {
         }}
         cProps={{
           children:<Card>Center</Card>,
+        }}
+      />*/}
+
+      {/*<FlexLayout.TRBLC.LTCLayout
+        gutter={20}
+        autoInnerProps={{ gutter: [0, 20] }}
+        lProps={{
+          fit: true,
+          span: 3,
+          children: <Card>Left</Card>,
+        }}
+        tProps={{
+          fit: true,
+          span: 3,
+          children: <Card>Top</Card>,
+        }}
+        cProps={{
+          children: <Card>Center</Card>,
         }}
       />*/}
 
@@ -339,7 +389,7 @@ export default () => {
         }}
       />*/}
 
-      <FlexLayout.TRBLC.TBLCRLayout
+      {/*<FlexLayout.TRBLC.TBLCRLayout
         gutter={20}
         autoWrapProps={{ autoFixed: false }}
         autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
@@ -375,7 +425,7 @@ export default () => {
             </Card>
           ),
         }}
-      />
+      />*/}
 
       {/*<FlexLayout.TRBLC.LRTCBLayout
         gutter={20}
