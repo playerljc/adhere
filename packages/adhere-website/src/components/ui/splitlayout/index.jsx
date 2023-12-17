@@ -9,6 +9,7 @@ import CRBCodeText from '!!raw-loader!./examples/TRBLC/CRB';
 import LBCCodeText from '!!raw-loader!./examples/TRBLC/LBC';
 import LCCodeText from '!!raw-loader!./examples/TRBLC/LC';
 import LCBCodeText from '!!raw-loader!./examples/TRBLC/LCB';
+import LCRCodeText from '!!raw-loader!./examples/TRBLC/LCR';
 import LCRBCodeText from '!!raw-loader!./examples/TRBLC/LCRB';
 import LRTCBCodeText from '!!raw-loader!./examples/TRBLC/LRTCB';
 import LRTCBScrollCodeText from '!!raw-loader!./examples/TRBLC/LRTCBScroll';
@@ -17,6 +18,7 @@ import LTCBCodeText from '!!raw-loader!./examples/TRBLC/LTCB';
 import TBLCRCodeText from '!!raw-loader!./examples/TRBLC/TBLCR';
 import TBLCRScrollCodeText from '!!raw-loader!./examples/TRBLC/TBLCRScroll';
 import TCCodeText from '!!raw-loader!./examples/TRBLC/TC';
+import TCBCodeText from '!!raw-loader!./examples/TRBLC/TCB';
 import TCBRCodeText from '!!raw-loader!./examples/TRBLC/TCBR';
 import TCRCodeText from '!!raw-loader!./examples/TRBLC/TCR';
 import TLCCodeText from '!!raw-loader!./examples/TRBLC/TLC';
@@ -38,6 +40,7 @@ import CRB from './examples/TRBLC/CRB';
 import LBC from './examples/TRBLC/LBC';
 import LC from './examples/TRBLC/LC';
 import LCB from './examples/TRBLC/LCB';
+import LCR from './examples/TRBLC/LCR';
 import LCRB from './examples/TRBLC/LCRB';
 import LRTCB from './examples/TRBLC/LRTCB';
 import LRTCBScroll from './examples/TRBLC/LRTCBScroll';
@@ -46,6 +49,7 @@ import LTCB from './examples/TRBLC/LTCB';
 import TBLCR from './examples/TRBLC/TBLCR';
 import TBLCRScroll from './examples/TRBLC/TBLCRScroll';
 import TC from './examples/TRBLC/TC';
+import TCB from './examples/TRBLC/TCB';
 import TCBR from './examples/TRBLC/TCBR';
 import TCR from './examples/TRBLC/TCR';
 import TLC from './examples/TRBLC/TLC';
@@ -389,6 +393,37 @@ export default () => {
         type: 'PlayGround',
         codeText: LRTCBCodeText,
         renderChildren: () => <LRTCB />,
+      },
+
+      {
+        id: `LCR`,
+        name: `LCR`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LCR',
+            info: 'LCR',
+          },
+        },
+        type: 'PlayGround',
+        codeText: LCRCodeText,
+        renderChildren: () => <LCR />,
+      },
+      {
+        id: `TCB`,
+        name: `TCB`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'TCB',
+            info: 'TCB',
+          },
+        },
+        type: 'PlayGround',
+        codeText: TCBCodeText,
+        renderChildren: () => <TCB />,
       },
       {
         id: `TBLCRScroll`,
