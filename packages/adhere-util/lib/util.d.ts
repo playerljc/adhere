@@ -1,4 +1,22 @@
 declare const _default: {
+    CRSTypes: typeof import("gcoord").CRSTypes;
+    transform: <T extends import("gcoord").GeoJSON | import("gcoord").Position>(input: string | T, crsFrom: import("gcoord").CRSTypes, crsTo: import("gcoord").CRSTypes) => T;
+    WGS84: import("gcoord").CRSTypes.WGS84;
+    WGS1984: import("gcoord").CRSTypes.WGS84;
+    EPSG4326: import("gcoord").CRSTypes.WGS84;
+    GCJ02: import("gcoord").CRSTypes.GCJ02;
+    AMap: import("gcoord").CRSTypes.GCJ02;
+    BD09: import("gcoord").CRSTypes.BD09;
+    BD09LL: import("gcoord").CRSTypes.BD09;
+    Baidu: import("gcoord").CRSTypes.BD09;
+    BMap: import("gcoord").CRSTypes.BD09;
+    BD09MC: import("gcoord").CRSTypes.BD09MC;
+    BD09Meter: import("gcoord").CRSTypes.BD09MC;
+    EPSG3857: import("gcoord").CRSTypes.EPSG3857;
+    EPSG900913: import("gcoord").CRSTypes.EPSG3857;
+    EPSG102100: import("gcoord").CRSTypes.EPSG3857;
+    WebMercator: import("gcoord").CRSTypes.EPSG3857;
+    WM: import("gcoord").CRSTypes.EPSG3857;
     prettyBytes(number: any, options?: import("./types").PrettyBytesOptions | undefined): string;
     prettierJSON(_jsonStr?: string): string;
     compressJSON(_jsonStr?: string): string;
@@ -40,9 +58,6 @@ declare const _default: {
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
     dataUrlToBlob(dataUrl: string): Blob | null;
     toTimestampByFormatStrAndTimeZone(str: string, timezone: string): number;
-    /**
-     * 函数节流
-     */
     toStrByTimestampAndTimeZone(_timestamp: string, timezone: string): string;
     getCurrentTimestamp(): number;
     getTimezone(): number;
@@ -64,7 +79,9 @@ declare const _default: {
     }[];
     arrayToAntdTree: (arr: {
         [props: string]: any;
-        children?: any[] | undefined;
+        children?: any[] | undefined; /**
+         * 函数节流
+         */
         isLeaf?: boolean | undefined;
         properties?: any;
     }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];

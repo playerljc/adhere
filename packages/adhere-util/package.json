@@ -32,6 +32,7 @@
   "dependencies": {
     "@baifendian/adhere-util-preferences": "^2.10.28",
     "crypto-js": "^4.1.1",
+    "gcoord": "^1.0.5",
     "vkbeautify": "^0.99.3",
     "xml-objtree": "^0.24.2"
   },

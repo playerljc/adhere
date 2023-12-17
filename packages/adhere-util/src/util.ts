@@ -5,6 +5,7 @@ import Date from './date';
 import Dom from './dom';
 import Encrypt from './encrypt';
 import Format from './format';
+import Gcoord from './gcoord';
 import Geometry from './geometry';
 import Math from './math';
 import Size from './size';
@@ -29,4 +30,5 @@ export default {
   ...Encrypt,
   ...Format,
   ...Size,
+  ...Gcoord,
 };

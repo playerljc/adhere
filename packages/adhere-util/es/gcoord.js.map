@@ -1,0 +1,1 @@
+{"version":3,"file":"gcoord.js","sources":["gcoord.js"],"sourcesContent":["import gcoord from 'gcoord';\nexport default gcoord;\n"],"names":["gcoord"],"mappings":"OAAOA,WAAY,wBACJA"}
