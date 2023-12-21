@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useContext, useMemo } from 'react';
+import React, { forwardRef, memo, useContext, useImperativeHandle, useMemo, useRef } from 'react';
 
 import { FlexContext } from './Context';
-import { useGap, useGrid } from './Hooks';
+import { useGap, useGrid, useTrigger } from './Hooks';
 import { getGridStyle } from './Util';
 import { ContextType, FixedProps } from './types';
 
@@ -18,7 +18,19 @@ export const gridCount = 24;
  */
 const Fixed = memo<FixedProps>(
   forwardRef<any, FixedProps>((props, ref) => {
-    const { className, children, style, fit, span, ...attrs } = props;
+    const {
+      className,
+      children,
+      style,
+      fit,
+      span,
+      trigger,
+      collapseDirection = 'L',
+      collapsedSize = 80,
+      defaultCollapsible = false,
+      onCollapse,
+      ...attrs
+    } = props;
 
     const {
       gutter = 0,
@@ -26,9 +38,21 @@ const Fixed = memo<FixedProps>(
       children: contextChildren,
     } = useContext<ContextType>(FlexContext);
 
+    const elRef = useRef<HTMLDivElement | null>(null);
+
     const isUseGrid = useGrid(props);
 
     const isUseGap = useGap(gutter);
+
+    const renderTrigger = useTrigger({
+      trigger,
+      collapseDirection,
+      collapsedSize,
+      defaultCollapsible,
+      onCollapse,
+      selectorPrefix,
+      elRef,
+    });
 
     const classList = useMemo(
       () =>
@@ -53,9 +77,14 @@ const Fixed = memo<FixedProps>(
       };
     }, [style, gutter]);
 
+    useImperativeHandle(ref, () => ({
+      getEl: () => elRef.current,
+    }));
+
     return (
-      <div ref={ref} {...attrs} className={classList} style={styleList}>
+      <div ref={elRef} {...attrs} className={classNames(classList)} style={styleList}>
         {children}
+        {renderTrigger()}
       </div>
     );
   }),

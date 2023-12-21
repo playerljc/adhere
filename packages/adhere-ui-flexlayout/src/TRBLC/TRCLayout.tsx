@@ -93,7 +93,9 @@ const TRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
             className={classNames(`${selectorPrefix}-trc-layout`, props?.className ?? '')}
             direction="vertical"
           >
-            <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+            <Fixed collapseDirection="T" {...(TProps ?? {})}>
+              {tProps?.children}
+            </Fixed>
 
             {tSplit}
 
@@ -107,7 +109,9 @@ const TRCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
 
                 {rSplit}
 
-                <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+                <Fixed collapseDirection="R" {...(RProps ?? {})}>
+                  {rProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
           </FlexLayout>

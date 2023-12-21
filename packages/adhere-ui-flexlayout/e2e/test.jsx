@@ -1,4 +1,4 @@
-import { Slider } from 'antd';
+import { Card, Slider } from 'antd';
 import React, { useState } from 'react';
 
 import { Space } from '@baifendian/adhere';
@@ -10,7 +10,7 @@ import 'antd/dist/reset.css';
 import '../src/index.less';
 import './index.less';
 
-const { Fixed, Auto } = FlexLayout;
+const { Fixed } = FlexLayout;
 
 export default () => {
   const [gutterKey, setGutterKey] = useState(1);
@@ -54,7 +54,6 @@ export default () => {
           tooltip={{ formatter: (value) => gutters[value] }}
         />
       </div>
-
       <p>Vertical Gutter (px):</p>
       <div>
         <Slider
@@ -67,7 +66,6 @@ export default () => {
           tooltip={{ formatter: (value) => vgutters[value] }}
         />
       </div>
-
       <p>Column Count:</p>
       <div>
         <Slider
@@ -84,12 +82,13 @@ export default () => {
       <div style={{ height: 500 }}>
         <FlexLayout
           gutter={[vgutters[vgutterKey], gutters[gutterKey]]}
-          direction="vertical"
+          direction="horizontal"
           style={{ height: '100%' }}
         >
           {Array.from({ length: colCounts[colCountKey] }).map(() => (
             <Fixed span={24 / colCounts[colCountKey]} className="col">
-              <div className="inner">{`col-${24 / colCounts[colCountKey]}`}</div>
+              {/*<div className="inner">{`col-${24 / colCounts[colCountKey]}`}</div>*/}
+              <Card>{`col-${24 / colCounts[colCountKey]}`}</Card>
             </Fixed>
           ))}
         </FlexLayout>

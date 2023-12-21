@@ -84,6 +84,16 @@ export interface FixedProps {
   fit?: boolean;
   children?: any;
   span?: number;
+  // 展开收起的方向
+  collapseDirection?: 'L' | 'R' | 'T' | 'B';
+  // 展开收起的宽度
+  collapsedSize?: number | string;
+  // 收起和展开的开关
+  defaultCollapsible?: boolean;
+  // 自定义渲染trigger
+  trigger?: (collapsed: boolean, defaultTrigger: ReactNode) => ReactNode;
+  // 展开收起的事件
+  onCollapse?: (collapsed: boolean) => void;
 }
 
 export interface AutoProps {

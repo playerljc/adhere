@@ -44,7 +44,9 @@ const LCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
           className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
           direction="horizontal"
         >
-          <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+          <Fixed collapseDirection="L" {...(LProps ?? {})}>
+            {lProps?.children}
+          </Fixed>
 
           {lSplit}
 
@@ -52,7 +54,9 @@ const LCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
 
           {rSplit}
 
-          <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+          <Fixed collapseDirection="R" {...(RProps ?? {})}>
+            {rProps?.children}
+          </Fixed>
         </FlexLayout>
       </div>
     );

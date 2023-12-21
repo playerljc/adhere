@@ -105,7 +105,9 @@ const TBLCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLD
             className={classNames(`${selectorPrefix}-tblcr-layout`, props?.className ?? '')}
             direction="vertical"
           >
-            <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+            <Fixed collapseDirection="T" {...(TProps ?? {})}>
+              {tProps?.children}
+            </Fixed>
 
             {tSplit}
 
@@ -115,7 +117,9 @@ const TBLCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLD
                 className={autoInnerClassList}
                 direction="horizontal"
               >
-                <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+                <Fixed collapseDirection="L" {...(LProps ?? {})}>
+                  {lProps?.children}
+                </Fixed>
 
                 {lSplit}
 
@@ -123,7 +127,9 @@ const TBLCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLD
 
                 {rSplit}
 
-                <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+                <Fixed collapseDirection="R" {...(RProps ?? {})}>
+                  {rProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
 

@@ -98,7 +98,9 @@ const LTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
             className={classNames(`${selectorPrefix}-ltcb-layout`, props?.className ?? '')}
             direction="horizontal"
           >
-            <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+            <Fixed collapseDirection="L" {...(LProps ?? {})}>
+              {lProps?.children}
+            </Fixed>
 
             {lSplit}
 
@@ -108,7 +110,9 @@ const LTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
                 className={autoInnerClassList}
                 direction="vertical"
               >
-                <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+                <Fixed collapseDirection="T" {...(TProps ?? {})}>
+                  {tProps?.children}
+                </Fixed>
 
                 {tSplit}
 
@@ -116,7 +120,9 @@ const LTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
 
                 {bSplit}
 
-                <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
+                <Fixed collapseDirection="B" {...(BProps ?? {})}>
+                  {bProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
           </FlexLayout>

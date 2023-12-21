@@ -19,10 +19,7 @@ import type { CenterProps, TBLRCLayoutProps, TBLRProps } from '../types';
  */
 const CRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivElement>>(
   forwardRef<HTMLDivElement, TBLRCLayoutProps>(
-    (
-      { wrapClassName, wrapStyle, rProps, rSplit, cProps, autoWrapProps, autoInnerProps, ...props },
-      ref,
-    ) => {
+    ({ wrapClassName, wrapStyle, rProps, rSplit, cProps, ...props }, ref) => {
       // @ts-ignore
       const RProps = omit<TBLRProps, string>(rProps, ['children']);
       // @ts-ignore
@@ -52,7 +49,9 @@ const CRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
 
             {rSplit}
 
-            <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+            <Fixed collapseDirection="R" {...(RProps ?? {})}>
+              {rProps?.children}
+            </Fixed>
           </FlexLayout>
         </div>
       );

@@ -1,13 +1,6 @@
 import classNames from 'classnames';
 import omit from 'omit.js';
-import React, {
-  ForwardRefRenderFunction,
-  PropsWithoutRef,
-  RefAttributes,
-  forwardRef,
-  memo,
-  useMemo,
-} from 'react';
+import React, { PropsWithoutRef, RefAttributes, forwardRef, memo, useMemo } from 'react';
 
 import Auto from '../Auto';
 import Fixed from '../Fixed';
@@ -95,7 +88,9 @@ const LBCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
             className={classNames(`${selectorPrefix}-lbc-layout`, props?.className ?? '')}
             direction="horizontal"
           >
-            <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+            <Fixed collapseDirection="L" {...(LProps ?? {})}>
+              {lProps?.children}
+            </Fixed>
 
             {lSplit}
 
@@ -109,7 +104,9 @@ const LBCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
 
                 {bSplit}
 
-                <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
+                <Fixed collapseDirection="B" {...(BProps ?? {})}>
+                  {bProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
           </FlexLayout>

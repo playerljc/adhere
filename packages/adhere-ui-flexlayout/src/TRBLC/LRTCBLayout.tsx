@@ -104,7 +104,9 @@ const LRTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLD
             className={classNames(`${selectorPrefix}-lrtcb-layout`, props?.className ?? '')}
             direction="horizontal"
           >
-            <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+            <Fixed collapseDirection="L" {...(LProps ?? {})}>
+              {lProps?.children}
+            </Fixed>
 
             {lSplit}
 
@@ -114,7 +116,9 @@ const LRTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLD
                 className={autoInnerClassList}
                 direction="vertical"
               >
-                <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+                <Fixed collapseDirection="T" {...(TProps ?? {})}>
+                  {tProps?.children}
+                </Fixed>
 
                 {tSplit}
 
@@ -122,13 +126,17 @@ const LRTCBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLD
 
                 {bSplit}
 
-                <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
+                <Fixed collapseDirection="B" {...(BProps ?? {})}>
+                  {bProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
 
             {rSplit}
 
-            <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+            <Fixed collapseDirection="R" {...(RProps ?? {})}>
+              {rProps?.children}
+            </Fixed>
           </FlexLayout>
         </div>
       );

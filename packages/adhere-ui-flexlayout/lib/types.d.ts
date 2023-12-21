@@ -79,6 +79,11 @@ export interface FixedProps {
     fit?: boolean;
     children?: any;
     span?: number;
+    collapseDirection?: 'L' | 'R' | 'T' | 'B';
+    collapsedSize?: number | string;
+    defaultCollapsible?: boolean;
+    trigger?: (collapsed: boolean, defaultTrigger: ReactNode) => ReactNode;
+    onCollapse?: (collapsed: boolean) => void;
 }
 export interface AutoProps {
     className?: string;

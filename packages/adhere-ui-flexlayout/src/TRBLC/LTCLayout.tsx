@@ -92,7 +92,9 @@ const LTCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
             className={classNames(`${selectorPrefix}-ltc-layout`, props?.className ?? '')}
             direction="horizontal"
           >
-            <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+            <Fixed collapseDirection="L" {...(LProps ?? {})}>
+              {lProps?.children}
+            </Fixed>
 
             {lSplit}
 
@@ -102,7 +104,9 @@ const LTCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
                 className={autoInnerClassList}
                 direction="vertical"
               >
-                <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+                <Fixed collapseDirection="T" {...(TProps ?? {})}>
+                  {tProps?.children}
+                </Fixed>
 
                 {tSplit}
 

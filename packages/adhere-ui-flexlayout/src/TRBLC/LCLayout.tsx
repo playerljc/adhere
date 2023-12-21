@@ -42,7 +42,9 @@ const LCLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDivE
           className={classNames(`${selectorPrefix}-lc-layout`, props?.className ?? '')}
           direction="horizontal"
         >
-          <Fixed {...(LProps ?? {})}>{lProps?.children}</Fixed>
+          <Fixed collapseDirection="L" {...(LProps ?? {})}>
+            {lProps?.children}
+          </Fixed>
 
           {lSplit}
 

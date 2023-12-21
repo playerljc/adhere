@@ -209,6 +209,7 @@ export default () => {
           fit: true,
           span: 3,
           children: <Card>Left</Card>,
+          trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
         cProps={{
           autoFixed: true,
@@ -218,6 +219,7 @@ export default () => {
           fit: true,
           span: 3,
           children: <Card>Right</Card>,
+          trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
       />
 

@@ -96,7 +96,12 @@
   }
 
   > .adhere-ui-flex-layout-fixed {
+    position: relative;
     flex-shrink: 0;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    transition: all 0.2s;
 
     &.adhere-ui-flex-layout-fixed-fit {
       display: flex;
@@ -109,10 +114,49 @@
         width: 100%;
       }
     }
+
+    > .adhere-ui-flex-layout-fixed-trigger {
+      position: absolute;
+      z-index: 999;
+      width: auto;
+      color: var(--adhere-color-text-tertiary);
+      font-size: 18px;
+
+      &.adhere-ui-flex-layout-fixed-trigger-l,
+      &.adhere-ui-flex-layout-fixed-trigger-r {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-l {
+        right: 0;
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-r {
+        left: 0;
+      }
+
+      &.adhere-ui-flex-layout-fixed-trigger-t,
+      &.adhere-ui-flex-layout-fixed-trigger-b {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-t {
+        bottom: 0;
+      }
+      &.adhere-ui-flex-layout-fixed-trigger-b {
+        top: 0;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   > .adhere-ui-flex-layout-auto {
     flex: 1;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
 
     &.adhere-ui-flex-layout-trblc-auto {
       overflow: hidden;

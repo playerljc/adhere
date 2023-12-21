@@ -94,7 +94,9 @@ const TCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
                 className={autoInnerClassList}
                 direction="vertical"
               >
-                <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+                <Fixed collapseDirection="T" {...(TProps ?? {})}>
+                  {tProps?.children}
+                </Fixed>
 
                 {tSplit}
 
@@ -104,7 +106,9 @@ const TCRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
 
             {tSplit}
 
-            <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+            <Fixed collapseDirection="R" {...(RProps ?? {})}>
+              {rProps?.children}
+            </Fixed>
           </FlexLayout>
         </div>
       );

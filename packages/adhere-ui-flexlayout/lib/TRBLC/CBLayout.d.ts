@@ -4,8 +4,6 @@ import type { TBLRCLayoutProps } from '../types';
  * CBLayout
  * @param wrapClassName
  * @param wrapStyle
- * @param autoWrapProps
- * @param autoInnerProps
  * @param bProps
  * @param bSplit
  * @param cProps

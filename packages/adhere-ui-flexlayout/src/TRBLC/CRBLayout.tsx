@@ -98,13 +98,17 @@ const CRBLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDiv
 
                 {rSplit}
 
-                <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+                <Fixed collapseDirection="R" {...(RProps ?? {})}>
+                  {rProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
 
             {bSplit}
 
-            <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
+            <Fixed collapseDirection="B" {...(BProps ?? {})}>
+              {bProps?.children}
+            </Fixed>
           </FlexLayout>
         </div>
       );

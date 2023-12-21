@@ -97,7 +97,9 @@ const TCBRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
                 className={autoInnerClassList}
                 direction="vertical"
               >
-                <Fixed {...(TProps ?? {})}>{tProps?.children}</Fixed>
+                <Fixed collapseDirection="T" {...(TProps ?? {})}>
+                  {tProps?.children}
+                </Fixed>
 
                 {tSplit}
 
@@ -105,13 +107,17 @@ const TCBRLayout = memo<PropsWithoutRef<TBLRCLayoutProps> & RefAttributes<HTMLDi
 
                 {bSplit}
 
-                <Fixed {...(BProps ?? {})}>{bProps?.children}</Fixed>
+                <Fixed collapseDirection="B" {...(BProps ?? {})}>
+                  {bProps?.children}
+                </Fixed>
               </FlexLayout>
             </Auto>
 
             {rSplit}
 
-            <Fixed {...(RProps ?? {})}>{rProps?.children}</Fixed>
+            <Fixed collapseDirection="R" {...(RProps ?? {})}>
+              {rProps?.children}
+            </Fixed>
           </FlexLayout>
         </div>
       );
