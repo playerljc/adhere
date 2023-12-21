@@ -11,6 +11,10 @@ import P9CodeText from '!!raw-loader!./examples/Basic/p9';
 import P10CodeText from '!!raw-loader!./examples/Basic/p10';
 import P11CodeText from '!!raw-loader!./examples/Basic/p11';
 import P12CodeText from '!!raw-loader!./examples/Basic/p12';
+import P13CodeText from '!!raw-loader!./examples/Basic/p13';
+import P14CodeText from '!!raw-loader!./examples/Basic/p14';
+import P15CodeText from '!!raw-loader!./examples/Basic/p15';
+import P16CodeText from '!!raw-loader!./examples/Basic/p16';
 import CBCodeText from '!!raw-loader!./examples/TRBLC/CB';
 import CBRCodeText from '!!raw-loader!./examples/TRBLC/CBR';
 import CRCodeText from '!!raw-loader!./examples/TRBLC/CR';
@@ -20,6 +24,7 @@ import LCCodeText from '!!raw-loader!./examples/TRBLC/LC';
 import LCBCodeText from '!!raw-loader!./examples/TRBLC/LCB';
 import LCRCodeText from '!!raw-loader!./examples/TRBLC/LCR';
 import LCRBCodeText from '!!raw-loader!./examples/TRBLC/LCRB';
+import LCTriggerCodeText from '!!raw-loader!./examples/TRBLC/LCTrigger';
 import LRTCBCodeText from '!!raw-loader!./examples/TRBLC/LRTCB';
 import LRTCBScrollCodeText from '!!raw-loader!./examples/TRBLC/LRTCBScroll';
 import LTCCodeText from '!!raw-loader!./examples/TRBLC/LTC';
@@ -51,6 +56,10 @@ import P9 from './examples/Basic/p9';
 import P10 from './examples/Basic/p10';
 import P11 from './examples/Basic/p11';
 import P12 from './examples/Basic/p12';
+import P13 from './examples/Basic/p13';
+import P14 from './examples/Basic/p14';
+import P15 from './examples/Basic/p15';
+import P16 from './examples/Basic/p16';
 import CB from './examples/TRBLC/CB';
 import CBR from './examples/TRBLC/CBR';
 import CR from './examples/TRBLC/CR';
@@ -60,6 +69,7 @@ import LC from './examples/TRBLC/LC';
 import LCB from './examples/TRBLC/LCB';
 import LCR from './examples/TRBLC/LCR';
 import LCRB from './examples/TRBLC/LCRB';
+import LCTrigger from './examples/TRBLC/LCTrigger';
 import LRTCB from './examples/TRBLC/LRTCB';
 import LRTCBScroll from './examples/TRBLC/LRTCBScroll';
 import LTC from './examples/TRBLC/LTC';
@@ -308,6 +318,114 @@ export default () => {
           },
         ],
         renderChildren: () => <P12 />,
+      },
+      {
+        id: 'p13',
+        name: `收起和展开`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGroundTab',
+        cardProps: {
+          description: {
+            title: '收起和展开',
+            info: '收起和展开',
+          },
+        },
+        active: 'p13.jsx',
+        config: [
+          {
+            key: 'p13.jsx',
+            title: 'p13.jsx',
+            codeText: P13CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P13 />,
+      },
+      {
+        id: 'p14',
+        name: `自定义折叠和收起的UI`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGroundTab',
+        cardProps: {
+          description: {
+            title: '自定义折叠和收起的UI',
+            info: '自定义折叠和收起的UI',
+          },
+        },
+        active: 'p14.jsx',
+        config: [
+          {
+            key: 'p14.jsx',
+            title: 'p14.jsx',
+            codeText: P14CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P14 />,
+      },
+      {
+        id: 'p15',
+        name: `使用collapsed控制展开和收起`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGroundTab',
+        cardProps: {
+          description: {
+            title: '使用collapsed控制展开和收起',
+            info: '使用collapsed控制展开和收起',
+          },
+        },
+        active: 'p15.jsx',
+        config: [
+          {
+            key: 'p15.jsx',
+            title: 'p15.jsx',
+            codeText: P15CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P15 />,
+      },
+      {
+        id: 'p16',
+        name: `自定义收起的最小尺寸`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGroundTab',
+        cardProps: {
+          description: {
+            title: '自定义收起的最小尺寸',
+            info: '自定义收起的最小尺寸',
+          },
+        },
+        active: 'p16.jsx',
+        config: [
+          {
+            key: 'p16.jsx',
+            title: 'p16.jsx',
+            codeText: P16CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P16 />,
       },
     ];
   }
@@ -643,6 +761,21 @@ export default () => {
         type: 'PlayGround',
         codeText: LRTCBScrollCodeText,
         renderChildren: () => <LRTCBScroll />,
+      },
+      {
+        id: `LCTrigger`,
+        name: `LCTrigger`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'LCTrigger',
+            info: 'LCTrigger',
+          },
+        },
+        type: 'PlayGround',
+        codeText: LCCodeText,
+        renderChildren: () => <LCTrigger />,
       },
     ];
   }
