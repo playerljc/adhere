@@ -12,6 +12,7 @@ import { antdThemeToCssVariable } from './theme';
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
 
+import '@baifendian/adhere-ui-configprovider/es/index.less';
 import '@baifendian/adhere/lib/css.less';
 
 export default ({
