@@ -41,19 +41,21 @@ const DomUtil = {
   /**
    * getTopDom - 已source为开始向上查找元素
    * @param {HtmlElement} source
-   * @param {string} selector
+   * @param {string | string[]} selector
    * @return {HtmlElement}
    */
-  getTopDom(source, selector: string): HTMLElement | null {
-    if (!source || !selector) return null;
+  getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null {
+    if (!source || !selector || (Array.isArray(selector) && !selector.length)) return null;
 
-    if (source.className.indexOf(selector) !== -1) {
+    const classNames = typeof selector === 'string' ? [selector] : selector;
+
+    if (classNames.every((name) => source.classList.contains(name))) {
       return source;
     }
 
-    let parentDom = source;
-    while ((parentDom = parentDom.parentNode)) {
-      if (parentDom.className.indexOf(selector) !== -1) {
+    let parentDom: HTMLElement | null = source;
+    while ((parentDom = parentDom?.parentElement)) {
+      if (classNames.every((name) => parentDom?.classList?.contains?.(name))) {
         break;
       } else if (parentDom === document.body) break;
     }

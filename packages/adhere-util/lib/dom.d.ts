@@ -27,10 +27,10 @@ declare const DomUtil: {
     /**
      * getTopDom - 已source为开始向上查找元素
      * @param {HtmlElement} source
-     * @param {string} selector
+     * @param {string | string[]} selector
      * @return {HtmlElement}
      */
-    getTopDom(source: any, selector: string): HTMLElement | null;
+    getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     /**
      * on - 注册事件
      * @param el

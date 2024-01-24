@@ -208,7 +208,7 @@ declare const _default: {
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
     createElement(htmlStr: string): HTMLElement;
-    getTopDom(source: any, selector: string): HTMLElement | null;
+    getTopDom(source: HTMLElement, selector: string | string[]): HTMLElement | null;
     on(el: any, tag: string, type: string, handler: Function, capture?: boolean): void;
     off(el: HTMLElement, tag: string, type: string, handler: Function): void;
     addClass(el: any, classes?: string): void;
