@@ -1,5 +1,8 @@
 import FieldGeneratorToDict, {
+  ArrayEntityValueHOC,
+  AsyncTreeEntityValueHOC,
   Components,
+  TreeEntityValueHOC,
   genDictComponentName,
   getDictComponent,
   validatorMulti,
@@ -13,4 +16,7 @@ export default {
   getDictComponent,
   validatorMulti,
   validatorNormal,
+  ArrayEntityValueHOC,
+  TreeEntityValueHOC,
+  AsyncTreeEntityValueHOC,
 };

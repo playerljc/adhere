@@ -1,3 +1,13 @@
+# 1.0.17
+
+***
+
+2024-01-24
+
+* 加入ArrayEntityValueHOC
+* 加入AsyncTreeEntityValueHOC
+* 加入TreeEntityValueHOC
+
 # 1.0.16
 
 ***

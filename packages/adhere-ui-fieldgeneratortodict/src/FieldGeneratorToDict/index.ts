@@ -1,8 +1,11 @@
 import type { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 
 import type { DictRefreshWrapperFunction } from '../types';
+import ArrayEntityValueHOC from './ArrayEntityValueHOC';
+import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
 import Components from './Components';
 import ItemFactory from './ItemFactory';
+import TreeEntityValueHOC from './TreeEntityValueHOC';
 import './fields/AutoComplete';
 import './fields/Breadcrumb';
 import './fields/Cascader';
@@ -86,7 +89,15 @@ const getDictComponent = <P>(dictName: string, componentName: string) => {
   return ItemFactory<P>({ dictName, itemName, functionName });
 };
 
-export { Components, ItemNames, getDictComponent, genDictComponentName };
+export {
+  Components,
+  ItemNames,
+  getDictComponent,
+  genDictComponentName,
+  ArrayEntityValueHOC,
+  TreeEntityValueHOC,
+  AsyncTreeEntityValueHOC,
+};
 
 const ProxyComponent = new Proxy<{
   [prop in string]: ForwardRefExoticComponent<
@@ -116,10 +127,6 @@ const ProxyComponent = new Proxy<{
       // console.log('p', 'SystemFilterBookListAutoCompleteSelectStandard');
 
       for (let i = 0; i < itemNames.length; i++) {
-        if (p === 'SystemFilterBookListAutoCompleteSelectStandard') {
-          debugger;
-        }
-
         // Components的key
         const _itemName = itemNames[i];
         // key的值
@@ -137,17 +144,12 @@ const ProxyComponent = new Proxy<{
         }
       }
 
-      console.log('itemName', itemName);
-      console.log('functionName', functionName);
-
       if (!itemName || !functionName) return;
 
       // 字典名
       const dictName = p.substring(0, p.lastIndexOf(functionName));
 
-      receiver[p] = ItemFactory<{
-        a: 1;
-      }>({ itemName, functionName, dictName });
+      receiver[p] = ItemFactory({ itemName, functionName, dictName });
 
       return Reflect.get(target, p, receiver);
     },

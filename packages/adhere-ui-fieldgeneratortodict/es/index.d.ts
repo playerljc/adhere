@@ -365,5 +365,10 @@ declare const _default: {
     validatorNormal: (message: any) => {
         validator(_: any, value: any): Promise<void>;
     };
+    ArrayEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").ArrayEntityValueHOCProps & {
+        getOptionsByDataSource?: ((dataSource?: any) => any) | undefined;
+    }>;
+    TreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").TreeEntityValueHOCProps>;
+    AsyncTreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").AsyncTreeEntityValueHOCProps>;
 };
 export default _default;

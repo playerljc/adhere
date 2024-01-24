@@ -1,0 +1,2 @@
+import _AsyncTreeEntityValueHOC from"@baifendian/adhere-ui-anthoc/es/async-tree-entity-value-hoc";var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(e){for(var t,n=1,r=arguments.length;n<r;n++)for(var a in t=arguments[n])Object.prototype.hasOwnProperty.call(t,a)&&(e[a]=t[a]);return e}).apply(this,arguments)};import React,{memo}from"react";var AsyncTreeEntityValueHOC=memo(function(e){return React.createElement(_AsyncTreeEntityValueHOC,__assign({},e))});export default AsyncTreeEntityValueHOC;
+//# sourceMappingURL=AsyncTreeEntityValueHOC.js.map

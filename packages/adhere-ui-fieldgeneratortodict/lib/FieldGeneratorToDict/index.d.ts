@@ -1,6 +1,9 @@
 import type { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { DictRefreshWrapperFunction } from '../types';
+import ArrayEntityValueHOC from './ArrayEntityValueHOC';
+import AsyncTreeEntityValueHOC from './AsyncTreeEntityValueHOC';
 import Components from './Components';
+import TreeEntityValueHOC from './TreeEntityValueHOC';
 import './fields/AutoComplete';
 import './fields/Breadcrumb';
 import './fields/Cascader';
@@ -42,7 +45,7 @@ declare const genDictComponentName: (dictName: string, componentName: string) =>
  * @returns
  */
 declare const getDictComponent: <P>(dictName: string, componentName: string) => ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<DictRefreshWrapperFunction>> | null;
-export { Components, ItemNames, getDictComponent, genDictComponentName };
+export { Components, ItemNames, getDictComponent, genDictComponentName, ArrayEntityValueHOC, TreeEntityValueHOC, AsyncTreeEntityValueHOC, };
 declare const ProxyComponent: {
     [x: string]: ForwardRefExoticComponent<Omit<any, "ref"> & RefAttributes<DictRefreshWrapperFunction>>;
 };

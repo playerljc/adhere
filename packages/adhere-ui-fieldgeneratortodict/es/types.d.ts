@@ -5,11 +5,27 @@ export interface DictRefreshWrapperFunction {
 export type UseDictParams<D> = {
     dictName: string;
     cascadeParams?: object;
-    onDataSourceChange?: (dataSource: D) => void;
+    onDataSourceChange?: (dataSource: D, extra?: {
+        type: 'paging';
+        info: {
+            page: number;
+            limit: number;
+        } | {
+            pid: number | string | symbol;
+        };
+    }) => void;
 };
 export type DictComponentProps<T, D> = Omit<T, 'options' | 'dataSource' | 'treeData' | 'items'> & {
     cascadeParams?: object;
-    onDataSourceChange?: (dataSource: D) => void;
+    onDataSourceChange?: (dataSource: D, extra?: {
+        type: 'paging';
+        info: {
+            page: number;
+            limit: number;
+        } | {
+            pid: number | string | symbol;
+        };
+    }) => void;
 };
 export type SuspenseProps = Omit<SuspenseSyncProps, 'isEmpty'> & {
     isEmpty: (data: any) => boolean;

@@ -1,7 +1,7 @@
 import type { PagingWrapperProps } from '@baifendian/adhere-ui-anthoc/es/types';
 import { AsyncCascaderProps, AsyncTreeSelectProps } from '@baifendian/adhere-ui-anthoc/src/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
-import { UseDictParams } from '../types';
+import type { UseDictParams } from '../types';
 /**
  * useDict
  * @description 静态字典处理
