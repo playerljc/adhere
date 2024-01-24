@@ -1,5 +1,8 @@
+import CascaderSaerchProTableCodeText from '!!raw-loader!./cascaderSaerchProTable';
+import ColumnHideProSearchTableCodeText from '!!raw-loader!./columnHideProSearchTable';
 import ColumnResizeTableCodeText from '!!raw-loader!./columnResizeTable';
 import ColumnSettingTableCodeText from '!!raw-loader!./columnSettingTable';
+import CustomAdvancedSearchPanelCodeText from '!!raw-loader!./customAdvancedSearchPanel';
 import EditableCellRenderTriggerStateSearchTableCodeText from '!!raw-loader!./editorCellRenderTriggerStateSearchTable';
 import EditorCellStateSearchTableCodeText from '!!raw-loader!./editorCellStateSearchTable';
 import EditorCellUseKeepEditStateSearchTableCodeText from '!!raw-loader!./editorCellUseKeepEditStateSearchTable';
@@ -22,6 +25,9 @@ import p17CodeText from '!!raw-loader!./examples/p17';
 import p18CodeText from '!!raw-loader!./examples/p18';
 import p19CodeText from '!!raw-loader!./examples/p19';
 import p20CodeText from '!!raw-loader!./examples/p20';
+import p21CodeText from '!!raw-loader!./examples/p21';
+import p22CodeText from '!!raw-loader!./examples/p22';
+import p23CodeText from '!!raw-loader!./examples/p23';
 import FixedTableSpaceBetweenTableCodeText from '!!raw-loader!./fixedTableSpaceBetweenTable';
 import UserModelCodeText from '!!raw-loader!./model/user';
 import ProRowDragSortSearchTableCodeText from '!!raw-loader!./proRowDragSortSearchTable';
@@ -65,6 +71,9 @@ import P17 from './examples/p17';
 import P18 from './examples/p18';
 import P19 from './examples/p19';
 import P20 from './examples/p20';
+import P21 from './examples/p21';
+import P22 from './examples/p22';
+import P23 from './examples/p23';
 
 import FixedTableSpaceBetweenTableLessCodeText from '!!raw-loader!./fixedTableSpaceBetweenTable.less';
 
@@ -925,6 +934,171 @@ export default () => {
         ],
         type: 'PlayGroundTab',
         renderChildren: () => <P20 />,
+      },
+      {
+        id: `p21`,
+        name: `自定义高级搜索面板`,
+        cardProps: {
+          description: {
+            title: '自定义高级搜索面板',
+            info: '自定义高级搜索面板',
+          },
+        },
+        active: 'p21.jsx',
+        config: [
+          {
+            title: 'p21.jsx',
+            key: 'p21.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p21CodeText,
+          },
+          {
+            title: 'CustomAdvancedSearchPanelCodeText.jsx',
+            key: 'CustomAdvancedSearchPanelCodeText.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: CustomAdvancedSearchPanelCodeText,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P21 />,
+      },
+      {
+        id: `p22`,
+        name: `级联的查询条件`,
+        cardProps: {
+          description: {
+            title: '级联的查询条件',
+            info: '级联的查询条件',
+          },
+        },
+        active: 'p22.jsx',
+        config: [
+          {
+            title: 'p22.jsx',
+            key: 'p22.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p22CodeText,
+          },
+          {
+            title: 'CascaderSaerchProTableCodeText.jsx',
+            key: 'CascaderSaerchProTableCodeText.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: CascaderSaerchProTableCodeText,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P22 />,
+      },
+      {
+        id: `p23`,
+        name: `列隐藏的查询条件`,
+        cardProps: {
+          description: {
+            title: '列隐藏的查询条件',
+            info: '列隐藏的查询条件',
+          },
+        },
+        active: 'p23.jsx',
+        config: [
+          {
+            title: 'p23.jsx',
+            key: 'p23.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: p23CodeText,
+          },
+          {
+            title: 'ColumnHideProSearchTableCodeText.jsx',
+            key: 'ColumnHideProSearchTableCodeText.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: ColumnHideProSearchTableCodeText,
+          },
+          {
+            title: 'serviceRegister.jsx',
+            key: 'serviceRegister.jsx',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: serviceRegisterCodeText,
+          },
+          {
+            title: 'model/user.js',
+            key: 'model/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserModelCodeText,
+          },
+          {
+            title: 'service/user.js',
+            key: 'service/user.js',
+            mode: 'code',
+            theme: 'eclipse',
+            scope: { React },
+            codeText: UserServiceCodeText,
+          },
+        ],
+        type: 'PlayGroundTab',
+        renderChildren: () => <P23 />,
       },
     ];
   }

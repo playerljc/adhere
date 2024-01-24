@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Card } from 'antd';
 import React from 'react';
 
 import { DeleteOutlined, UserAddOutlined } from '@ant-design/icons';
@@ -9,6 +9,7 @@ import {
   FieldGeneratorToDict,
   Resource,
   SearchTable,
+  TableGridLayout,
   WarnPrompt,
 } from '@baifendian/adhere';
 
@@ -99,6 +100,64 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
   //     },
   //   ];
   // }
+
+  renderAdvancedSearchPanel({
+    advancedSearchConfig,
+    tableGridLayoutConfig,
+    groupData,
+    remainingGroupData,
+  }) {
+    const data = groupData[0].data;
+
+    return (
+      <div>
+        <Card title="法人及实际经营者信息">
+          <TableGridLayout
+            layout="horizontal"
+            data={[
+              {
+                name: 'g1',
+                width: '100%',
+                columnCount: 1,
+                colgroup: [120, 'auto'],
+                data: data.slice(0, 3),
+              },
+            ]}
+          />
+        </Card>
+
+        <Card title="从业人员信息">
+          <TableGridLayout
+            layout="horizontal"
+            data={[
+              {
+                name: 'g1',
+                width: '100%',
+                columnCount: 1,
+                colgroup: [120, 'auto'],
+                data: data.slice(3, 5),
+              },
+            ]}
+          />
+        </Card>
+
+        <Card title="九小场所">
+          <TableGridLayout
+            data={[
+              {
+                name: 'g1',
+                width: '100%',
+                columnCount: 1,
+                colgroup: [120, 'auto'],
+                data: data.slice(5),
+              },
+            ]}
+            layout="horizontal"
+          />
+        </Card>
+      </div>
+    );
+  }
 
   /**
    * Table的列

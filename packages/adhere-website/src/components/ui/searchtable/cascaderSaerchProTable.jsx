@@ -64,41 +64,41 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
    * @description 是否有高级搜索按钮
    * @returns {boolean}
    */
-  // hasAdvancedSearch() {
-  //   return false;
-  // }
+  hasAdvancedSearch() {
+    return false;
+  }
 
   /**
    * getGridSearchFormGroupParams
    * @description 获取GridSearchFormGroup的参数
    * @return {Array}
    */
-  // getGridSearchFormGroupParams() {
-  //   return [
-  //     [
-  //       {
-  //         name: 'g1',
-  //         // 一行显示的列数
-  //         columnCount: 3,
-  //         // 各个列的宽度
-  //         colgroup: [, 'auto', , 'auto', , 'auto'],
-  //         data: this.getGridSearchFormGroupDataByColumnConfig(),
-  //       },
-  //     ],
-  //     {},
-  //     {
-  //       // 一共多少行
-  //       rowCount: Number.MAX_VALUE,
-  //       // renderTitleLabel: () => <div>搜索</div>,
-  //       // // 渲染高级查询面板的Collapse
-  //       // renderCollapse: (collapse) => <div>收起</div>,
-  //       // // 渲染高级查询面板显示的按钮
-  //       // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
-  //       // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
-  //       // insertSearchButton: null,
-  //     },
-  //   ];
-  // }
+  getGridSearchFormGroupParams() {
+    return [
+      [
+        {
+          name: 'g1',
+          // 一行显示的列数
+          columnCount: 3,
+          // 各个列的宽度
+          colgroup: [, 'auto', , 'auto', , 'auto'],
+          data: this.getGridSearchFormGroupDataByColumnConfig(),
+        },
+      ],
+      {},
+      {
+        // 一共多少行
+        rowCount: Number.MAX_VALUE,
+        // renderTitleLabel: () => <div>搜索</div>,
+        // // 渲染高级查询面板的Collapse
+        // renderCollapse: (collapse) => <div>收起</div>,
+        // // 渲染高级查询面板显示的按钮
+        // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
+        // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
+        // insertSearchButton: null,
+      },
+    ];
+  }
 
   /**
    * Table的列
@@ -118,18 +118,52 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         },
       },
       {
-        title: '性别',
+        title: '省',
         dataIndex: 'sex',
         key: 'sex',
         align: 'center',
         width: 150,
-        render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         $search: {
           type: 'dict',
           visible: true,
-          dictName: `SystemTestSex${FieldGeneratorToDict.ComponentNames.Select.Standard}`,
+          dictName: `SystemProvince${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`,
         },
       },
+      {
+        title: '市',
+        dataIndex: 'height',
+        key: 'height',
+        align: 'center',
+        width: 150,
+        sorter: true,
+        sortOrder: this.sortOrder('height'),
+        $search: {
+          type: 'dict',
+          visible: true,
+          dictName: `SystemCity${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`,
+          props: {
+            cascadeParams: this.state.sex,
+          },
+        },
+      },
+      {
+        title: '区',
+        dataIndex: 'width',
+        key: 'width',
+        align: 'center',
+        width: 150,
+        sorter: true,
+        sortOrder: this.sortOrder('width'),
+        $search: {
+          type: 'dict',
+          visible: true,
+          dictName: `SystemCounty${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`,
+          props: {
+            cascadeParams: this.state.height,
+          },
+        },
+      },
+
       {
         title: '出生年月',
         dataIndex: 'birthday',
@@ -147,39 +181,14 @@ class ProSearchStateTableImpl extends ProSearchStateTable {
         },
       },
       {
-        title: '身高',
-        dataIndex: 'height',
-        key: 'height',
-        align: 'center',
-        width: 150,
-        sorter: true,
-        sortOrder: this.sortOrder('height'),
-        $search: {
-          type: 'inputNumberDecimal2',
-          visible: true,
-        },
-      },
-      {
-        title: '体重',
-        dataIndex: 'width',
-        key: 'width',
-        align: 'center',
-        width: 150,
-        sorter: true,
-        sortOrder: this.sortOrder('width'),
-        $search: {
-          type: 'inputNumberDecimal2',
-          visible: true,
-        },
-      },
-      {
         title: '籍贯',
         dataIndex: 'homeTown',
         key: 'homeTown',
         width: 200,
         $search: {
-          type: 'input',
+          type: 'dict',
           visible: true,
+          dictName: `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.SelectDynamic.Multi}`,
         },
       },
       {
