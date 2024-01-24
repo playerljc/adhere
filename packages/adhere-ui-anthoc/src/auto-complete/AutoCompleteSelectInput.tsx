@@ -57,7 +57,7 @@ const AutoCompleteSelectInput = memo<AutoCompleteSelectInputProps>(
         {_options.map(({ label: itemLabel, value: itemValue }) => (
           <Option
             className={classNames({
-              'ant-select-item-option-selected': value?.selectValue === itemValue,
+              'ant-select-item-option-selected': Object.is(value?.selectValue, itemValue),
             })}
             key={itemValue}
             value={itemValue}

@@ -19,7 +19,7 @@ const InternalRadioTable = memo<RadioTableProps>(({ value, onChange, options, ..
     rowKey="id"
     rowSelection={{
       type: 'radio',
-      selectedRowKeys: [value],
+      selectedRowKeys: value ? [value] : [],
       onChange: (selectedRowKeys) => {
         onChange?.(!!selectedRowKeys.length ? selectedRowKeys[0] : '', []);
       },

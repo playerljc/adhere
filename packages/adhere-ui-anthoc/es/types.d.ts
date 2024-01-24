@@ -1,9 +1,11 @@
 import type { AutoCompleteProps as AntdAutoCompleteProps, CascaderProps, CheckboxProps, FormProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TransferProps, TreeSelectProps } from 'antd';
-import { FormRule } from 'antd';
+import { DatePickerProps, FormRule, TimePickerProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { RangePickerProps } from 'antd/es/date-picker';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
+import dayjs from 'dayjs';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
@@ -29,12 +31,13 @@ export type PagingProps = {
     onPagingChange: PaginationProps['onChange'];
 };
 export type PagingWrapperProps<T> = {
-    loadData: (page: number, limit: number) => Promise<{
+    loadData: (page: number, limit: number, kw?: string) => Promise<{
         totalCount: number;
         data: T[];
     }>;
     defaultPage?: number;
     defaultLimit?: number;
+    onDataSourceChange?: (page: number, dataSource: T[]) => void;
 };
 export type CheckAllWrapperStyleProps = {
     checkAllWrapperClassName?: string;
@@ -214,13 +217,7 @@ export type UseListRenderProps = (listProps: ListSelectProps['listProps']) => (a
     options?: SelectProps['options'];
     loading?: boolean;
 }) => CheckboxListProps | RadioListProps;
-export type UsePagingTableRenderProps = (arg: {
-    loadData: (page: number, limit: number, kw?: string) => Promise<{
-        totalCount: number;
-        data: any[];
-    }>;
-    defaultPage?: number;
-    defaultLimit?: number;
+export type UsePagingTableRenderProps = (arg: PagingWrapperProps<any> & {
     tablePagingProps?: Omit<CheckboxPagingTableProps, 'value' | 'onChange'> | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
     mode?: SelectProps['mode'];
     suspenseRef?: ASync | null;
@@ -255,13 +252,7 @@ export type UsePagingTableRenderProps = (arg: {
         options?: TableProps<any>['dataSource'];
     };
 };
-export type UsePagingListRenderProps = (arg: {
-    loadData: (page: number, limit: number, kw?: string) => Promise<{
-        totalCount: number;
-        data: any[];
-    }>;
-    defaultPage?: number;
-    defaultLimit?: number;
+export type UsePagingListRenderProps = (arg: PagingWrapperProps<any> & {
     listPagingProps?: Omit<CheckboxPagingListProps, 'value' | 'onChange'> | Omit<RadioPagingListProps, 'value' | 'onChange'>;
     mode?: SelectProps['mode'];
     suspenseRef?: ASync | null;
@@ -356,25 +347,11 @@ export type AutoCompleteTableSelectProps = AutoCompleteProps & {
     tableProps?: TableSelectProps['tableProps'];
 };
 export type AutoCompleteListPagingSelectProps = AutoCompleteProps & {
-    pagingProps: {
-        loadData: (page: number, limit: number) => Promise<{
-            totalCount: number;
-            data: any[];
-        }>;
-        defaultPage?: number;
-        defaultLimit?: number;
-    };
+    pagingProps: PagingWrapperProps<any>;
     listPagingProps?: ListPagingSelectProps<any>['listPagingProps'];
 };
 export type AutoCompleteTablePagingSelectProps = AutoCompleteProps & {
-    pagingProps: {
-        loadData: (page: number, limit: number) => Promise<{
-            totalCount: number;
-            data: any[];
-        }>;
-        defaultPage?: number;
-        defaultLimit?: number;
-    };
+    pagingProps: PagingWrapperProps<any>;
     tablePagingProps?: TablePagingSelectProps<any>['tablePagingProps'];
 };
 export type AutoCompleteTagSelectProps = AutoCompleteProps & {
@@ -584,4 +561,105 @@ export type AutoCompleteHOCComponent = ReturnType<typeof createFactory<AutoCompl
 };
 export type DisplayNameInternal<T> = T & {
     displayName: string;
+};
+export type DatePickerFormatValueHOCProps = Omit<DatePickerProps, 'value' | 'onChange' | 'defaultValue'> & {
+    defaultValue?: string | null;
+    value?: string | null;
+    onChange?: (data: string | null | undefined, dateString: string, datejs: dayjs.Dayjs, extra: {
+        year?: number;
+        quarter?: number;
+        month?: number;
+        week?: number;
+        day?: number;
+        date?: number;
+        hour?: number;
+        minute?: number;
+        second?: number;
+    }) => void;
+};
+export type DatePickerTimestampValueHOCProps = Omit<DatePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
+    defaultValue?: number | null;
+    value?: number | null;
+    onChange?: (data: number | null | undefined, dateString: string, datejs: dayjs.Dayjs | null, extra: {
+        year?: number;
+        quarter?: number;
+        month?: number;
+        week?: number;
+        day?: number;
+        date?: number;
+        hour?: number;
+        minute?: number;
+        second?: number;
+    }) => void;
+    type?: 'milliseconds' | 'seconds';
+};
+export type DateTimePickerExtra = {
+    year?: number;
+    quarter?: number;
+    month?: number;
+    week?: number;
+    day?: number;
+    date?: number;
+    hour?: number;
+    minute?: number;
+    second?: number;
+};
+export type RangePickerFormatValueHOCProps = Omit<RangePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
+    defaultValue?: string[] | null;
+    value?: string[] | null;
+    onChange?: (data: [string, string] | null | undefined, dateStrings: [string, string], datejs: [dayjs.Dayjs, dayjs.Dayjs] | null, extra: [DateTimePickerExtra, DateTimePickerExtra] | null) => void;
+};
+export type RangePickerTimestampValueHOCProps = Omit<RangePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
+    defaultValue?: number[] | null;
+    value?: number[] | null;
+    onChange?: (data: [number, number] | null | undefined, dateStrings: [string, string], datejs: [dayjs.Dayjs, dayjs.Dayjs] | null, extra: [DateTimePickerExtra, DateTimePickerExtra] | null) => void;
+    type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'];
+};
+export type TimePickerFormatValueHOCProps = Omit<TimePickerProps, 'value' | 'onChange' | 'defaultValue'> & {
+    defaultValue?: string | null;
+    value?: string | null;
+    onChange?: (data: string | null | undefined, dateString: string, datejs: dayjs.Dayjs, extra: {
+        hour?: number;
+        minute?: number;
+        second?: number;
+    }) => void;
+};
+export type TimePickerTimestampValueHOCProps = Omit<TimePickerProps, 'defaultValue' | 'value' | 'onChange'> & {
+    defaultValue?: number | null;
+    value?: number | null;
+    onChange?: (data: number, timeString: string, datejs: dayjs.Dayjs | null, extra: {
+        hour?: number;
+        minute?: number;
+        second?: number;
+    }) => void;
+    type?: 'milliseconds' | 'seconds';
+};
+export type ArrayEntityValueHOCProps = {
+    value?: any;
+    onChange?: (...argv: any[]) => any;
+    optionsProp?: string;
+    valueProp?: string;
+    options?: any[];
+    [prop: string]: any;
+};
+export type TreeEntityValueHOCProps = {
+    value?: any;
+    onChange?: (...argv: any[]) => any;
+    treeDataProp?: string;
+    valueProp?: string;
+    childrenProp?: string;
+    treeData?: TreeSelectProps['treeData'];
+    [prop: string]: any;
+};
+export type PagingEntityValueHOCProps = {
+    value?: any;
+    onChange?: (...argv: any[]) => any;
+    valueProp?: string;
+    [prop: string]: any;
+};
+export type AsyncTreeEntityValueHOCProps = {
+    value?: any;
+    onChange?: (...argv: any[]) => any;
+    valueProp?: string;
+    [prop: string]: any;
 };

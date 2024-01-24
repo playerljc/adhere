@@ -1,6 +1,8 @@
 import Affix from './affix';
 import Alert from './alert';
 import Anchor from './anchor';
+import ArrayEntityValueHOC from './array-entity-value-hoc';
+import AsyncTreeEntityValueHOC from './async-tree-entity-value-hoc';
 import AutoComplete from './auto-complete';
 import Avatar from './avatar';
 import BackTop from './back-top';
@@ -17,6 +19,9 @@ import Collapse from './collapse';
 import ColorPicker from './color-picker';
 import ConfigProvider from './config-provider';
 import DatePicker from './date-picker';
+import DatePickerFormatValueHOC from './date-picker-format-value-hoc';
+import TimeDatePickerFormatValueHOC from './date-picker-format-value-hoc';
+import DatePickerTimestampValueHOC from './date-picker-timestamp-value-hoc';
 import Descriptions from './descriptions';
 import Divider from './divider';
 import Drawer from './drawer';
@@ -37,12 +42,15 @@ import Menu from './menu';
 import Modal from './modal';
 import MultipleSelect from './multiple-select';
 import Pagination from './pagination';
+import PagingEntityValueHOC from './paging-entity-value-hoc';
 import Popconfirm from './popconfirm';
 import Popover from './popover';
 import Progress from './progress';
 import QRCode from './qrcode';
 import Radio from './radio';
 import RangePicker from './range-picker';
+import RangePickerFormatValueHOC from './range-picker-format-value-hoc';
+import RangePickerTimestampValueHOC from './range-picker-timestamp-value-hoc';
 import Rate from './rate';
 import Result from './result';
 import Row from './row';
@@ -61,14 +69,17 @@ import Tabs from './tabs';
 import Tag from './tag';
 import TextArea from './text-area';
 import TimePicker from './time-picker';
+import TimePickerTimestampValueHOC from './time-picker-timestamp-value-hoc';
 import Timeline from './timeline';
 import Tooltip from './tooltip';
 import Tour from './tour';
 import Transfer from './transfer';
 import Tree from './tree';
+import TreeEntityValueHOC from './tree-entity-value-hoc';
 import TreeSelect from './tree-select';
 import Typography from './typography';
 import Upload from './upload';
+import useArrayEntityValueHOC from './useArrayEntityValueHOC';
 import Watermark from './watermark';
 
 export {
@@ -91,6 +102,10 @@ export {
   ColorPicker,
   ConfigProvider,
   DatePicker,
+  DatePickerTimestampValueHOC,
+  DatePickerFormatValueHOC,
+  TimePickerTimestampValueHOC,
+  TimeDatePickerFormatValueHOC,
   Descriptions,
   Divider,
   Drawer,
@@ -117,6 +132,8 @@ export {
   QRCode,
   Radio,
   RangePicker,
+  RangePickerTimestampValueHOC,
+  RangePickerFormatValueHOC,
   Rate,
   Result,
   Row,
@@ -144,4 +161,9 @@ export {
   Typography,
   Upload,
   Watermark,
+  ArrayEntityValueHOC,
+  PagingEntityValueHOC,
+  useArrayEntityValueHOC,
+  TreeEntityValueHOC,
+  AsyncTreeEntityValueHOC,
 };

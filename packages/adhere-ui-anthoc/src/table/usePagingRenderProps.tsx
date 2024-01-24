@@ -1,7 +1,7 @@
 import { useUpdateEffect } from 'ahooks';
 import { useMemo, useRef, useState } from 'react';
 
-import { UsePagingTableRenderProps } from '../types';
+import type { UsePagingTableRenderProps } from '../types';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
@@ -16,6 +16,7 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
   tablePagingProps,
   mode,
   suspenseRef,
+  onDataSourceChange,
 }) => {
   const kw = useRef<string | undefined>(undefined);
   const defaultPageSize = defaultLimit ?? DEFAULT_LIMIT;
@@ -43,6 +44,8 @@ const usePagingTableRenderProps: UsePagingTableRenderProps = ({
 
             setTotalCount(totalCount);
             setOptions(data);
+
+            onDataSourceChange?.(_currentPage, data);
 
             resolve(res);
           })

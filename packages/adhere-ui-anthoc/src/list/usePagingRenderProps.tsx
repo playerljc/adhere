@@ -16,6 +16,7 @@ const usePagingListRenderProps: UsePagingListRenderProps = ({
   listPagingProps,
   mode,
   suspenseRef,
+  onDataSourceChange,
 }) => {
   const kw = useRef<string | undefined>(undefined);
   const defaultPageSize = defaultLimit ?? DEFAULT_LIMIT;
@@ -43,6 +44,8 @@ const usePagingListRenderProps: UsePagingListRenderProps = ({
 
             setTotalCount(totalCount);
             setOptions(data);
+
+            onDataSourceChange?.(_currentPage, data);
 
             resolve(res);
           })

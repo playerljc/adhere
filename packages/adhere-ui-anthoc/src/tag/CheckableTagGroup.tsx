@@ -18,14 +18,14 @@ const { CheckableTag } = Tag;
  * @param props
  */
 const InternalCheckableTagGroup = memo<CheckableTagGroupProps>(
-  ({ direction = 'horizontal', mode = 'single', options, value, onChange, ...props }) => {
+  ({ direction = 'horizontal', mode = 'single', options = [], value = [], onChange, ...props }) => {
     return (
       <Space direction={direction} {...props}>
         {options?.map?.(({ value: _value, ...tagProps }) => {
           let checked = false;
 
           if (mode === 'single') {
-            checked = _value === value;
+            checked = Object.is(_value, value);
           } else if (mode === 'multiple') {
             checked = value?.includes(_value);
           }
@@ -38,11 +38,11 @@ const InternalCheckableTagGroup = memo<CheckableTagGroupProps>(
                 if (mode === 'single') {
                   onChange?.(_value as any, _checked, _value as any);
                 } else if (mode === 'multiple') {
-                  let values = [...value];
+                  let values = [...(value ?? [])];
 
                   if (_checked) {
                     values = [...values, _value];
-                    onChange?.(values, checked, value);
+                    onChange?.(values, checked, value ?? []);
                   } else {
                     values = values.filter((_v) => _v !== _value);
                     onChange?.(values, false, values);

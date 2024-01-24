@@ -79,7 +79,7 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
     return (
       <Select
         options={filterOptions}
-        filterOption={() => dropdownRenderElement.current === currentOriginNode.current}
+        filterOption={() => Object.is(dropdownRenderElement.current, currentOriginNode.current)}
         dropdownRender={onDropdownRender}
         open={open}
         onDropdownVisibleChange={setOpen}

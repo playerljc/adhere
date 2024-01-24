@@ -26,5 +26,4 @@ TreeSelect.TreeMultiLeafSelect = TreeMultiLeafSelect;
 TreeSelect.TreeCheckedShowAllSelect = TreeCheckedShowAllSelect;
 TreeSelect.TreeCheckedShowChildSelect = TreeCheckedShowChildSelect;
 TreeSelect.TreeCheckedShowParentSelect = TreeCheckedShowParentSelect;
-
 export default TreeSelect;

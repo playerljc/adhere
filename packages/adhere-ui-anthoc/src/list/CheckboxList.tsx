@@ -15,37 +15,39 @@ const selectorPrefix = 'adhere-ui-ant-hoc-checkbox-list';
  * @param props
  * @constructor
  */
-const InternalCheckboxList = memo<CheckboxListProps>(({ value, onChange, options, ...props }) => (
-  <List
-    dataSource={options}
-    {...props}
-    renderItem={(item, index) => (
-      <div className={`${selectorPrefix}`}>
-        <div className={`${selectorPrefix}-extra`}>
-          <Checkbox
-            onChange={(e, rest) => {
-              e.stopPropagation();
+const InternalCheckboxList = memo<CheckboxListProps>(
+  ({ value = [], onChange, options, ...props }) => (
+    <List
+      dataSource={options}
+      {...props}
+      renderItem={(item, index) => (
+        <div className={`${selectorPrefix}`}>
+          <div className={`${selectorPrefix}-extra`}>
+            <Checkbox
+              onChange={(e, rest) => {
+                e.stopPropagation();
 
-              const checked = e.target.checked;
+                const checked = e.target.checked;
 
-              if (checked) {
-                onChange?.([...value, item.value], rest);
-              } else {
-                onChange?.(
-                  value.filter((_v) => _v !== item.value),
-                  rest,
-                );
-              }
-            }}
-            checked={value.includes(item.value)}
-          />
+                if (checked) {
+                  onChange?.([...(value ?? []), item.value], rest);
+                } else {
+                  onChange?.(
+                    (value ?? []).filter((_v) => _v !== item.value),
+                    rest,
+                  );
+                }
+              }}
+              checked={(value ?? []).includes(item.value)}
+            />
+          </div>
+
+          <div className={`${selectorPrefix}-body`}>{props?.renderItem?.(item, index)}</div>
         </div>
-
-        <div className={`${selectorPrefix}-body`}>{props?.renderItem?.(item, index)}</div>
-      </div>
-    )}
-  />
-));
+      )}
+    />
+  ),
+);
 
 const CheckboxList = InternalCheckboxList as DisplayNameInternal<typeof InternalCheckboxList>;
 CheckboxList.displayName = 'CheckboxList';

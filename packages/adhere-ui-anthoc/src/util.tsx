@@ -9,18 +9,21 @@ const { useScrollLayout } = FlexLayout;
  * @description - 创建一个组件的包装
  * @param Component
  * @param defaultProps
+ * @param override
  * @return {function(*)}
  */
 export function createFactory<P>(
   Component: any,
   defaultProps: Partial<P>,
+  override?: (props: Partial<P>) => Partial<P>,
+  // value: _props.realValue ?? _props.value
 ): typeof Component & {
   defaultProps?: Partial<P>;
 } /*{ [key in keyof typeof Component]?: T[key] }*/ {
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
-    const props = { ...defaultProps, ..._props };
+    const props = { ...defaultProps, ..._props, ...(override?.(_props) ?? {}) };
 
     if (!('getPopupContainer' in props)) {
       props.getPopupContainer = (el) => {

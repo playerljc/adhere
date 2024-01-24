@@ -9,6 +9,9 @@ import { createFactory } from '../util';
 // Form对象
 const FormHOC: FormHOCComponent = createFactory<FormProps>(Form, {});
 
+// entityInValue
+// dataSourceProp 数据源属性
+
 let ValidatorRules: FormValidatorRulesType;
 
 (() => {
@@ -68,7 +71,6 @@ let ValidatorRules: FormValidatorRulesType;
 })();
 
 FormHOC.ValidatorRules = ValidatorRules;
-
 FormHOC.displayName = 'Form';
 
 export default FormHOC;

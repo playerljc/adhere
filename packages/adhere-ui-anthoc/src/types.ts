@@ -13,15 +13,16 @@ import type {
   TransferProps,
   TreeSelectProps,
 } from 'antd';
-import { FormRule } from 'antd';
+import { DatePickerProps, FormRule, TimePickerProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { RangePickerProps } from 'antd/es/date-picker';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
+import dayjs from 'dayjs';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
 
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
-import Suspense from '@baifendian/adhere-ui-suspense';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
@@ -49,12 +50,14 @@ export type PagingWrapperProps<T> = {
   loadData: (
     page: number,
     limit: number,
+    kw?: string,
   ) => Promise<{
     totalCount: number;
     data: T[];
   }>;
   defaultPage?: number;
   defaultLimit?: number;
+  onDataSourceChange?: (page: number, dataSource: T[]) => void;
 };
 
 export type CheckAllWrapperStyleProps = {
@@ -324,23 +327,15 @@ export type UseListRenderProps = (
   loading?: boolean;
 }) => CheckboxListProps | RadioListProps;
 
-export type UsePagingTableRenderProps = (arg: {
-  loadData: (
-    page: number,
-    limit: number,
-    kw?: string,
-  ) => Promise<{
-    totalCount: number;
-    data: any[];
-  }>;
-  defaultPage?: number;
-  defaultLimit?: number;
-  tablePagingProps?:
-    | Omit<CheckboxPagingTableProps, 'value' | 'onChange'>
-    | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
-  mode?: SelectProps['mode'];
-  suspenseRef?: ASync | null;
-}) => {
+export type UsePagingTableRenderProps = (
+  arg: PagingWrapperProps<any> & {
+    tablePagingProps?:
+      | Omit<CheckboxPagingTableProps, 'value' | 'onChange'>
+      | Omit<RadioPagingTableProps, 'value' | 'onChange'>;
+    mode?: SelectProps['mode'];
+    suspenseRef?: ASync | null;
+  },
+) => {
   inputValue: string;
   options: any[];
   paging: PagingProps['paging'];
@@ -368,23 +363,15 @@ export type UsePagingTableRenderProps = (arg: {
     };
 };
 
-export type UsePagingListRenderProps = (arg: {
-  loadData: (
-    page: number,
-    limit: number,
-    kw?: string,
-  ) => Promise<{
-    totalCount: number;
-    data: any[];
-  }>;
-  defaultPage?: number;
-  defaultLimit?: number;
-  listPagingProps?:
-    | Omit<CheckboxPagingListProps, 'value' | 'onChange'>
-    | Omit<RadioPagingListProps, 'value' | 'onChange'>;
-  mode?: SelectProps['mode'];
-  suspenseRef?: ASync | null;
-}) => {
+export type UsePagingListRenderProps = (
+  arg: PagingWrapperProps<any> & {
+    listPagingProps?:
+      | Omit<CheckboxPagingListProps, 'value' | 'onChange'>
+      | Omit<RadioPagingListProps, 'value' | 'onChange'>;
+    mode?: SelectProps['mode'];
+    suspenseRef?: ASync | null;
+  },
+) => {
   inputValue: string;
   options: any[];
   paging: PagingProps['paging'];
@@ -537,32 +524,12 @@ export type AutoCompleteTableSelectProps = AutoCompleteProps & {
 };
 
 export type AutoCompleteListPagingSelectProps = AutoCompleteProps & {
-  pagingProps: {
-    loadData: (
-      page: number,
-      limit: number,
-    ) => Promise<{
-      totalCount: number;
-      data: any[];
-    }>;
-    defaultPage?: number;
-    defaultLimit?: number;
-  };
+  pagingProps: PagingWrapperProps<any>;
   listPagingProps?: ListPagingSelectProps<any>['listPagingProps'];
 };
 
 export type AutoCompleteTablePagingSelectProps = AutoCompleteProps & {
-  pagingProps: {
-    loadData: (
-      page: number,
-      limit: number,
-    ) => Promise<{
-      totalCount: number;
-      data: any[];
-    }>;
-    defaultPage?: number;
-    defaultLimit?: number;
-  };
+  pagingProps: PagingWrapperProps<any>;
   tablePagingProps?: TablePagingSelectProps<any>['tablePagingProps'];
 };
 
@@ -833,4 +800,202 @@ export type AutoCompleteHOCComponent = ReturnType<typeof createFactory<AutoCompl
 
 export type DisplayNameInternal<T> = T & {
   displayName: string;
+};
+
+export type DatePickerFormatValueHOCProps = Omit<
+  DatePickerProps,
+  'value' | 'onChange' | 'defaultValue'
+> & {
+  defaultValue?: string | null;
+  value?: string | null;
+  onChange?: (
+    data: string | null | undefined,
+    dateString: string,
+    datejs: dayjs.Dayjs,
+    extra: {
+      // 年
+      year?: number;
+      // 季度
+      quarter?: number;
+      // 月
+      month?: number;
+      // 周
+      week?: number;
+      // 星期
+      day?: number;
+      // 日
+      date?: number;
+      // 小时
+      hour?: number;
+      // 分钟
+      minute?: number;
+      // 秒
+      second?: number;
+    },
+  ) => void;
+};
+
+export type DatePickerTimestampValueHOCProps = Omit<
+  DatePickerProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number | null;
+  value?: number | null;
+  onChange?: (
+    data: number | null | undefined,
+    dateString: string,
+    datejs: dayjs.Dayjs | null,
+    extra: {
+      // 年
+      year?: number;
+      // 季度
+      quarter?: number;
+      // 月
+      month?: number;
+      // 周
+      week?: number;
+      // 星期
+      day?: number;
+      // 日
+      date?: number;
+      // 小时
+      hour?: number;
+      // 分钟
+      minute?: number;
+      // 秒
+      second?: number;
+    },
+  ) => void;
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
+};
+
+export type DateTimePickerExtra = {
+  // 年
+  year?: number;
+  // 季度
+  quarter?: number;
+  // 月
+  month?: number;
+  // 周
+  week?: number;
+  // 星期
+  day?: number;
+  // 日
+  date?: number;
+  // 小时
+  hour?: number;
+  // 分钟
+  minute?: number;
+  // 秒
+  second?: number;
+};
+
+export type RangePickerFormatValueHOCProps = Omit<
+  RangePickerProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: string[] | null;
+  value?: string[] | null;
+  onChange?: (
+    data: [string, string] | null | undefined,
+    dateStrings: [string, string],
+    datejs: [dayjs.Dayjs, dayjs.Dayjs] | null,
+    extra: [DateTimePickerExtra, DateTimePickerExtra] | null,
+  ) => void;
+};
+
+export type RangePickerTimestampValueHOCProps = Omit<
+  RangePickerProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number[] | null;
+  value?: number[] | null;
+  onChange?: (
+    data: [number, number] | null | undefined,
+    dateStrings: [string, string],
+    datejs: [dayjs.Dayjs, dayjs.Dayjs] | null,
+    extra: [DateTimePickerExtra, DateTimePickerExtra] | null,
+  ) => void;
+  // value的类型
+  type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'];
+};
+
+export type TimePickerFormatValueHOCProps = Omit<
+  TimePickerProps,
+  'value' | 'onChange' | 'defaultValue'
+> & {
+  defaultValue?: string | null;
+  value?: string | null;
+  onChange?: (
+    data: string | null | undefined,
+    dateString: string,
+    datejs: dayjs.Dayjs,
+    extra: {
+      // 小时
+      hour?: number;
+      // 分钟
+      minute?: number;
+      // 秒
+      second?: number;
+    },
+  ) => void;
+};
+
+export type TimePickerTimestampValueHOCProps = Omit<
+  TimePickerProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number | null;
+  value?: number | null;
+  onChange?: (
+    data: number,
+    timeString: string,
+    datejs: dayjs.Dayjs | null,
+    extra: {
+      // 小时
+      hour?: number;
+      // 分钟
+      minute?: number;
+      // 秒
+      second?: number;
+    },
+  ) => void;
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
+};
+
+// type RestTuple<T extends any[]> = T extends [infer First, ...infer Rest] ? Rest : never;
+
+export type ArrayEntityValueHOCProps = {
+  value?: any;
+  onChange?: (...argv: any[]) => any;
+  optionsProp?: string;
+  valueProp?: string;
+  options?: any[];
+  [prop: string]: any;
+};
+
+export type TreeEntityValueHOCProps = {
+  value?: any;
+  onChange?: (...argv: any[]) => any;
+  treeDataProp?: string;
+  valueProp?: string;
+  childrenProp?: string;
+  treeData?: TreeSelectProps['treeData'];
+  [prop: string]: any;
+};
+
+export type PagingEntityValueHOCProps = {
+  value?: any;
+  onChange?: (...argv: any[]) => any;
+  valueProp?: string;
+  [prop: string]: any;
+};
+
+export type AsyncTreeEntityValueHOCProps = {
+  value?: any;
+  onChange?: (...argv: any[]) => any;
+  valueProp?: string;
+  [prop: string]: any;
 };

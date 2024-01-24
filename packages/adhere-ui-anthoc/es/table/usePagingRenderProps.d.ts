@@ -1,4 +1,4 @@
-import { UsePagingTableRenderProps } from '../types';
+import type { UsePagingTableRenderProps } from '../types';
 /**
  * usePagingTableRenderProps
  */

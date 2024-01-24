@@ -1,3 +1,20 @@
+# 1.0.5
+
+***
+
+2024-01-24
+
+* 加入array-entity-value-hoc
+* 加入async-tree-entity-value-hoc
+* 加入date-picker-timestamp-value-hoc
+* 加入date-picker-format-value-hoc
+* 加入paging-entity-value-hoc
+* 加入range-picker-timestamp-value-hoc
+* 加入range-picker-format-value-hoc
+* 加入time-picker-timestamp-value-hoc
+* 加入time-picker-format-value-hoc
+* 加入tree-entity-value-hoc
+
 # 1.0.4
 
 ***

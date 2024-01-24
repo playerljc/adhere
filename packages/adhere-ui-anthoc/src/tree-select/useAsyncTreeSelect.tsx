@@ -38,7 +38,7 @@ const useAsyncTreeSelect: UseAsyncTreeSelect = ({
     function loop(_treeData) {
       let result;
       for (let i = 0; i < _treeData.length; i++) {
-        if (_treeData[i].value === id) {
+        if (Object.is(_treeData[i].value, id)) {
           result = _treeData[i];
           break;
         } else {

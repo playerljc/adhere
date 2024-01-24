@@ -1,5 +1,5 @@
 import Mock from 'mockjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Table from '../../src/table';
 
@@ -21,6 +21,10 @@ const dataSource = Array.from({ length: 100 }).map(() => {
 
 export default () => {
   const [value, setValue] = useState([]);
+
+  useEffect(() => {
+    setValue([dataSource[0], dataSource[6]]);
+  }, []);
 
   function loadData(page, limit) {
     console.log('paging', page, limit);

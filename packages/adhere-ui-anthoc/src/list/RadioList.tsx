@@ -32,7 +32,7 @@ const InternalRadioList = memo<RadioListProps>(({ value, onChange, options, ...p
                 onChange?.(item.value, []);
               }
             }}
-            checked={item.value === value}
+            checked={Object.is(item.value, value)}
           />
         </div>
 
