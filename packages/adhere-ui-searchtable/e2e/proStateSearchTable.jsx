@@ -58,7 +58,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
   getColumns() {
     return super.getColumns([
       {
-        title: '姓名',
+        title: () => <div style={{ color: 'red' }}>姓名</div>,
         dataIndex: 'name',
         key: 'name',
         width: 150,
@@ -67,6 +67,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         $search: {
           type: 'input',
           visible: true,
+          title: () => <div style={{ color: 'red' }}>姓名111</div>,
         },
         $editable: {
           editable: true,
@@ -93,6 +94,7 @@ class ProSearchStateTableImpl extends ProEditableCellSearchStateTable {
         title: '性别',
         dataIndex: 'sex',
         key: 'sex',
+        $tip: '性别',
         width: 150,
         render: (v) => Resource.Dict.value.ResourceNormalSexMap.value.get(v).label,
         $search: {

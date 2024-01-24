@@ -127,23 +127,26 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          */
         getPagination(): any;
         /**
-         * getGridSearchFormGroupParams
+         * getGridSearchFormColgroup
          */
-        getGridSearchFormGroupParams(): ({
-            name: string;
+        getGridSearchFormColgroup(): {
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: {
-                key: number;
-                sort?: number | undefined;
-                label: ReactNode;
-                value: ReactNode | null;
-            }[];
-        }[] | {
-            rowCount?: undefined;
-        } | {
+        };
+        /**
+         * getGridSearchFormRowCount
+         */
+        getGridSearchFormRowCount(): number;
+        /**
+         * getGridSearchFormProps
+         */
+        getGridSearchFormProps(): {
             rowCount: number;
-        })[];
+        };
+        /**
+         * getGridSearchFormGroupParams
+         */
+        getGridSearchFormGroupParams(): {}[];
         /**
          * getGridSearchFormGroupDataByColumnConfig
          * @description 通过列设置获取gridSearchFormGroup的Data数据
@@ -230,6 +233,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @return {JSX.Element}
          */
         renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
+        renderAdvancedSearchPanel(params: any): null;
         /**
          * renderOptionColumn
          * @description 渲染配置列

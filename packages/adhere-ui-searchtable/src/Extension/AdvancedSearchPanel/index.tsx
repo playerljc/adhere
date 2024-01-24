@@ -114,11 +114,15 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
           <div className={`${_selectorPrefix}-main`}>
             <div className={`${_selectorPrefix}-scroll`}>
               <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-innner`}>
-                {renderGridSearchFormGroup(
+                {
                   // @ts-ignore
-                  showStrategy === 'all' ? groupData : remainingGroupData,
-                  tableGridLayoutConfig,
-                )}
+                  props?.children?.({ ...props }) ??
+                    renderGridSearchFormGroup(
+                      // @ts-ignore
+                      showStrategy === 'all' ? groupData : remainingGroupData,
+                      tableGridLayoutConfig,
+                    )
+                }
               </ScrollLayout>
             </div>
 

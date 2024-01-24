@@ -77,21 +77,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -113,6 +107,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -143,21 +138,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -179,6 +168,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -209,21 +199,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -245,6 +229,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -275,21 +260,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -311,6 +290,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -341,21 +321,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -377,6 +351,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -407,21 +382,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -443,6 +412,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -473,21 +443,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -509,6 +473,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -539,21 +504,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -575,6 +534,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -605,21 +565,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -641,6 +595,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -671,21 +626,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -707,6 +656,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -737,21 +687,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -773,6 +717,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -803,21 +748,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -839,6 +778,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -869,21 +809,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -905,6 +839,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -935,21 +870,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -971,6 +900,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -1001,21 +931,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -1037,6 +961,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -1067,21 +992,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -1103,6 +1022,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;
@@ -1133,21 +1053,15 @@ declare const _default: {
             getOptionsColumnDataIndex(): string;
             getLinkColumnDataIndex(): string;
             getPagination(): any;
-            getGridSearchFormGroupParams(): ({
-                name: string;
+            getGridSearchFormColgroup(): {
                 columnCount: number;
                 colgroup: (string | undefined)[];
-                data: {
-                    key: number;
-                    sort?: number | undefined;
-                    label: import("react").ReactNode;
-                    value: import("react").ReactNode;
-                }[];
-            }[] | {
-                rowCount?: undefined;
-            } | {
+            };
+            getGridSearchFormRowCount(): number;
+            getGridSearchFormProps(): {
                 rowCount: number;
-            })[];
+            };
+            getGridSearchFormGroupParams(): {}[];
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -1169,6 +1083,7 @@ declare const _default: {
                 dataIndex: any;
             }): import("react").ReactNode;
             renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): import("react").JSX.Element;
+            renderAdvancedSearchPanel(params: any): null;
             renderOptionColumn(defaultItems: any, params: any): any;
         };
         [x: string]: any;

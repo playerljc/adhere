@@ -20,6 +20,7 @@ import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
 import Validator from '@baifendian/adhere-util-validator';
@@ -407,7 +408,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       });
 
       const dateKeys = Object.keys(searchParams).filter(
-        (key) => !(key in dateSearchParams) && searchParams[key] instanceof dayjs,
+        (key) => !(key in dateSearchParams) && dayjs.isDayjs(searchParams[key]),
       );
 
       dateKeys.forEach((key) => {
@@ -650,6 +651,39 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     }
 
     /**
+     * getGridSearchFormColgroup
+     */
+    getGridSearchFormColgroup() {
+      return {
+        columnCount: 3,
+        colgroup: [, 'auto', , 'auto', , 'auto'],
+      };
+    }
+
+    /**
+     * getGridSearchFormRowCount
+     */
+    getGridSearchFormRowCount() {
+      return 1; // Number.MAX_VALUE;
+    }
+
+    /**
+     * getGridSearchFormProps
+     */
+    getGridSearchFormProps() {
+      return {
+        rowCount: this.getGridSearchFormRowCount(),
+        // renderTitleLabel: () => <div>搜索</div>,
+        // // 渲染高级查询面板的Collapse
+        // renderCollapse: (collapse) => <div>收起</div>,
+        // // 渲染高级查询面板显示的按钮
+        // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
+        // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
+        // insertSearchButton: null,
+      };
+    }
+
+    /**
      * getGridSearchFormGroupParams
      */
     getGridSearchFormGroupParams() {
@@ -657,22 +691,12 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         [
           {
             name: 'g1',
-            columnCount: 3,
-            colgroup: [, 'auto', , 'auto', , 'auto'],
+            ...this.getGridSearchFormColgroup(),
             data: this.getGridSearchFormGroupDataByColumnConfig(),
           },
         ],
         {},
-        {
-          rowCount: 1,
-          // renderTitleLabel: () => <div>搜索</div>,
-          // // 渲染高级查询面板的Collapse
-          // renderCollapse: (collapse) => <div>收起</div>,
-          // // 渲染高级查询面板显示的按钮
-          // renderSearchButton: (callback) => <div onClick={() => callback()}>高级搜索</div>,
-          // // 高级查询面板查询按钮的插入位置 (defaultItems) => {}
-          // insertSearchButton: null,
-        },
+        this.getGridSearchFormProps(),
       ];
     }
 
@@ -709,7 +733,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             searchFormGroupData.push({
               key: dataIndex,
               sort: $search.sort,
-              label: <Label {...($search.labelAttrs ?? {})}>{currentTitle}：</Label>,
+              label: (
+                <Label {...($search.labelAttrs ?? {})}>
+                  {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}：
+                </Label>
+              ),
               value: ConditionalRender.conditionalRender({
                 conditional: this.hasAuthority ? this.hasAuthority?.(searchConfig.authority) : true,
                 /*Dict.value.SystemAuthoritySwitch.value
@@ -1472,7 +1500,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
                     advancedSearchPanelCollapse: collapse,
                   })
                 }
-              />
+              >
+                {(args) => this.renderAdvancedSearchPanel(args)}
+              </AdvancedSearchPanel>
             </div>
           );
         }
@@ -1484,6 +1514,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>{StandardSearchPanel}</div>
       );
     }
+
+    renderAdvancedSearchPanel(params) {
+      return null;
+    }
+    // showStrategy
 
     /**
      * renderOptionColumn

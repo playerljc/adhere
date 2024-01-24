@@ -393,6 +393,15 @@ export interface AdvancedSearchPanelProps {
     onSearch: Function;
     onReset: Function;
     onCollapse: Function;
+    children?: (params: {
+        groupData: AdvancedSearchPanelGroupData[];
+        tableGridLayoutConfig: AdvancedSearchPanelTableGridLayoutConfig;
+        remainingGroupData: AdvancedSearchPanelGroupData[];
+        advancedSearchConfig: AdvancedSearchPanelSearchConfig;
+        onSearch: Function;
+        onReset: Function;
+        onCollapse: Function;
+    }) => ReactNode;
 }
 export interface SearchTableImplementFactoryFunction<T, P> {
     (params: {
