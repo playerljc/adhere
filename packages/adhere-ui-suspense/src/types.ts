@@ -22,13 +22,13 @@ export interface SuspenseState {}
 
 export interface ISuspenseSync {
   isLoading: boolean;
-  reset: Function;
+  reset: () => Promise<any>;
 }
 
 export interface SuspenseSyncProps extends SuspenseProps {
   data: any;
   isEmpty: () => boolean;
-  renderEmpty?: Function;
+  renderEmpty?: () => ReactNode;
   children?: any;
 }
 
@@ -38,9 +38,9 @@ export interface SuspenseSyncState extends SuspenseState {
 
 export interface SuspenseASyncProps extends SuspenseProps {
   isEmpty: () => boolean;
-  renderEmpty?: Function;
+  renderEmpty?: () => ReactNode;
   children?: ReactNode;
-  fetchData?: Function;
+  fetchData?: (params?: any) => Promise<any>;
 }
 
 export interface SuspenseASyncState extends SuspenseState {

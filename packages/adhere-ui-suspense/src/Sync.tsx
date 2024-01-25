@@ -5,7 +5,7 @@ import React from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import Suspense from './Suspense';
-import { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
+import type { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
 
 /**
  * SuspenseSync
@@ -37,19 +37,6 @@ class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implem
   }
 
   isDataDirty(data, nextData) {
-    // if (typeof data !== typeof nextData) return true;
-    //
-    // if (Util.isObject(data) && Util.isObject(nextData)) {
-    //   return !Object.is(data, nextData);
-    // }
-    //
-    // if (Util.isArray(data) && Util.isArray(nextData)) {
-    //   if (data.length !== nextData.length) return true;
-    //
-    //   return data.some((t1, index) => !Object.is(t1, nextData[index]));
-    // }
-    //
-    // return false;
     return !Object.is(data, nextData);
   }
 
@@ -89,7 +76,9 @@ class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implem
     );
   }
 
-  fetchData(): void {}
+  fetchData(): Promise<any> {
+    return Promise.resolve();
+  }
 }
 
 SuspenseSync.defaultProps = {};

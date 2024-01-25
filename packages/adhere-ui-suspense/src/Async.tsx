@@ -5,7 +5,7 @@ import React from 'react';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 
 import Suspense from './Suspense';
-import { SuspenseASyncProps, SuspenseASyncState } from './types';
+import type { SuspenseASyncProps, SuspenseASyncState } from './types';
 
 /**
  * SuspenseAsync
@@ -23,7 +23,7 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
     return this.state.loading;
   }
 
-  renderInner(): React.ReactElement | null {
+  renderInner(): React.ReactNode {
     const { isEmpty, renderEmpty, children } = this.props;
 
     return (

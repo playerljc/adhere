@@ -40,7 +40,7 @@ abstract class Suspense<
   /**
    * fetchData - 加载数据
    */
-  abstract fetchData(): void;
+  abstract fetchData(params?: any): Promise<any>;
 
   /**
    * renderInner - 渲染实际内容
@@ -60,8 +60,6 @@ abstract class Suspense<
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.reset) {
-      // console.log('suspense componentWillReceiveProps', nextProps.reset);
-
       // 第一次
       this.isFirst = true;
 
@@ -73,7 +71,6 @@ abstract class Suspense<
   }
 
   componentDidMount() {
-    // console.log('suspense mount');
     this?.fetchData?.();
   }
 
@@ -99,7 +96,6 @@ abstract class Suspense<
     const { firstLoading } = this.props;
 
     if (firstLoading !== undefined && firstLoading !== null) {
-      // console.log('renderFirstLoading');
       return firstLoading;
     }
 
