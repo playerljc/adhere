@@ -81,7 +81,10 @@ class Popup {
         ref: () => {
           (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
 
-          const configProviderEL = Util.getTopDom(this.popupEl, 'adhere-ui-config-provider');
+          const configProviderEL = Util.getTopDom(
+            this.popupEl as HTMLElement,
+            'adhere-ui-config-provider',
+          );
 
           if (configProviderEL) {
             (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
@@ -178,7 +181,11 @@ class Popup {
 
     if (promise && 'then' in promise && promise.then instanceof Function) {
       promise.then(() => {
-        (this.popupEl as HTMLElement).classList.remove('modal-in');
+        try {
+          (this.popupEl as HTMLElement).classList.remove('modal-in');
+        } catch (e) {
+          throw e;
+        }
 
         maskEl.classList.remove('modal-in');
       });
@@ -310,11 +317,15 @@ const PopupFactory = {
    * @return boolean
    */
   close(popup: Popup) {
-    if (!popup) return false;
+    try {
+      if (!popup) return false;
 
-    if (popup.isDestroy()) return false;
+      if (popup.isDestroy()) return false;
 
-    return popup.close();
+      return popup.close();
+    } catch (e) {
+      throw e;
+    }
   },
 
   /**
