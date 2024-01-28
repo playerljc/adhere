@@ -10,7 +10,7 @@ import './index.less';
 
 export default () => {
   return (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+    <div style={{ height: 800, padding: 20, background: '#ccc' }}>
       {/*<SplitLayout.TRBLC.TCSplitLayout
         gutter={20}
         tProps={{
@@ -31,13 +31,16 @@ export default () => {
       <SplitLayout.TRBLC.TCBSplitLayout
         gutter={20}
         tProps={{
+          span: 7,
           children: <Card style={{ height: '100%' }}>top</Card>,
+          trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
         cProps={{
           autoFixed: false,
           children: <Card>Center</Card>,
         }}
         bProps={{
+          span: 7,
           children: <Card style={{ height: '100%' }}>bottom</Card>,
         }}
       />
