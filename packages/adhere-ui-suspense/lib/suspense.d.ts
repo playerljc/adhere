@@ -19,7 +19,7 @@ declare abstract class Suspense<P extends SuspenseProps = SuspenseProps, S exten
     /**
      * fetchData - 加载数据
      */
-    abstract fetchData(): void;
+    abstract fetchData(params?: any): Promise<any>;
     /**
      * renderInner - 渲染实际内容
      * @return React.ReactElement

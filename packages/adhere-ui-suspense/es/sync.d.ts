@@ -1,6 +1,6 @@
 import React from 'react';
 import Suspense from './Suspense';
-import { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
+import type { ISuspenseSync, SuspenseSyncProps, SuspenseSyncState } from './types';
 /**
  * SuspenseSync
  * @class
@@ -17,6 +17,6 @@ declare class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState
     reset(): Promise<void>;
     showLoading(): boolean;
     renderInner(): React.ReactElement | null;
-    fetchData(): void;
+    fetchData(): Promise<any>;
 }
 export default SuspenseSync;
