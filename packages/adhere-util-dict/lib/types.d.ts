@@ -19,7 +19,7 @@ export interface IConfig {
 export interface DictNoPromiseComponentProps {
     children?: (params?: any) => ReactNode;
     isEmpty?: (params?: any) => boolean;
-    renderEmpty?: Function;
+    renderEmpty?: () => ReactNode;
 }
 export interface DictPromiseComponentProps extends DictNoPromiseComponentProps {
     firstLoading?: ReactElement;
