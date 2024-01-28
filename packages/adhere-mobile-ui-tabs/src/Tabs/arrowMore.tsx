@@ -2,7 +2,7 @@ import { Grid, Popup } from 'antd-mobile';
 import classNames from 'classnames';
 import type { FC } from 'react';
 import React, { memo, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import type { SystemTabArrowMoreProps } from '../types';
 
@@ -46,7 +46,7 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
   return (
     <>
       {wrapRef?.current &&
-        ReactDOM.createPortal(
+        createPortal(
           <img
             className={classNames(`${selectorPrefix}-icon`, {
               [`${selectorPrefix}-open`]: collapse,
