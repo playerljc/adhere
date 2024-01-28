@@ -1,6 +1,6 @@
 import { ErrorBlock, SearchBar } from 'antd-mobile';
 import { CloseCircleFill } from 'antd-mobile-icons';
-import { CheckListValue } from 'antd-mobile/es/components/check-list/check-list';
+import type { CheckListValue } from 'antd-mobile/es/components/check-list/check-list';
 import classNames from 'classnames';
 import React, { memo, useEffect, useState } from 'react';
 
