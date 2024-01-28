@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd';
 import classnames from 'classnames';
 import React, { ReactElement, memo, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
@@ -115,7 +115,7 @@ const CommentList = memo<ListProps>((props) => {
               )}
             >
               {() =>
-                ReactDOM.createPortal(
+                createPortal(
                   <BackTopAnimation
                     getContainer={() =>
                       getScrollWrapContainer?.()?.firstElementChild as HTMLElement
