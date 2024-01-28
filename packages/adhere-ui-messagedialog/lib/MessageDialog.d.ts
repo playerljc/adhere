@@ -94,7 +94,7 @@ declare const MessageDialogFactory: {
     Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
         el: HTMLDivElement;
         close: () => void;
-    };
+    } | undefined;
     /**
      * MaximizeModal
      * @param config
@@ -106,7 +106,7 @@ declare const MessageDialogFactory: {
     MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
         el: HTMLDivElement;
         close: () => void;
-    };
+    } | undefined;
     /**
      * close
      * @param el

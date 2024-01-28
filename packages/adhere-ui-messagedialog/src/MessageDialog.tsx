@@ -1,5 +1,5 @@
 import { Button, ConfigProvider, Form } from 'antd';
-import { ConfigProviderProps } from 'antd/lib/config-provider';
+import type { ConfigProviderProps } from 'antd/lib/config-provider';
 import type { FormInstance } from 'antd/lib/form';
 import React from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
@@ -7,14 +7,19 @@ import ReactDOM, { Root } from 'react-dom/client';
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './Constent';
+import {
+  DEFAULT_LOCAL,
+  DEFAULT_WIDTH,
+  DEFAULT_ZINDEX,
+  LOCAL,
+  PROMPT_LAYOUT,
+  THROTTLE_TIME,
+} from './Constent';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
 import Trigger from './Trigger';
 import TriggerPrompt from './TriggerPrompt';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
-
-let antdConfigProviderProps: ConfigProviderProps = {};
 
 /**
  * renderByIcon
@@ -30,6 +35,10 @@ function renderByIcon(icon, text) {
     </div>
   );
 }
+
+let lock;
+
+let antdConfigProviderProps: ConfigProviderProps = {};
 
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
 
@@ -60,7 +69,7 @@ const MessageDialogFactory = {
     icon = null,
     onSuccess,
   }: ConfirmArgv) {
-    const { close } = this.Modal({
+    const result = this.Modal({
       config: {
         title,
         centered: true,
@@ -74,9 +83,9 @@ const MessageDialogFactory = {
             title={Intl.v('确定')}
             onClick={() => {
               if (onSuccess) {
-                onSuccess().then(() => close());
+                onSuccess().then(() => result?.close?.());
               } else {
-                close();
+                result?.close?.();
               }
             }}
           >
@@ -139,7 +148,7 @@ const MessageDialogFactory = {
   }: PromptArgv) {
     const ref = React.createRef<FormInstance>();
 
-    const { close } = this.Modal({
+    const result = this.Modal({
       config: {
         title,
         centered: true,
@@ -154,10 +163,10 @@ const MessageDialogFactory = {
             onClick={() => {
               if (onSuccess) {
                 ref.current!.validateFields().then((values) => {
-                  onSuccess(values?.value).then(() => close());
+                  onSuccess(values?.value).then(() => result?.close?.());
                 });
               } else {
-                close();
+                result?.close?.();
               }
             }}
           >
@@ -266,8 +275,6 @@ const MessageDialogFactory = {
     defaultCloseBtn = true,
     local = DEFAULT_LOCAL,
   }: ModalArgv) {
-    let open = true;
-
     function render() {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
@@ -278,15 +285,6 @@ const MessageDialogFactory = {
       );
     }
 
-    const modalConfig = Object.assign(
-      {
-        maskClosable: false,
-      },
-      config,
-    );
-
-    const el = document.createElement('div');
-
     function close() {
       open = false;
 
@@ -294,8 +292,29 @@ const MessageDialogFactory = {
 
       setTimeout(() => {
         root.unmount();
+        lock = false;
       }, 300);
     }
+
+    if (lock) return;
+
+    lock = true;
+
+    let open = true;
+
+    const modalConfig = {
+      maskClosable: false,
+      ...config,
+      afterClose: () => {
+        lock = false;
+
+        if (config?.afterClose) {
+          config?.afterClose?.();
+        }
+      },
+    };
+
+    const el = document.createElement('div');
 
     const root = ReactDOM.createRoot(el);
 
@@ -324,8 +343,6 @@ const MessageDialogFactory = {
     defaultCloseBtn = true,
     local = DEFAULT_LOCAL,
   }: ModalArgv) {
-    let open = true;
-
     function render() {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
@@ -341,12 +358,23 @@ const MessageDialogFactory = {
       );
     }
 
-    const modalConfig = Object.assign(
-      {
-        maskClosable: false,
+    if (lock) return;
+
+    lock = true;
+
+    let open = true;
+
+    const modalConfig = {
+      maskClosable: false,
+      ...config,
+      afterClose: () => {
+        lock = false;
+
+        if (config?.afterClose) {
+          config?.afterClose?.();
+        }
       },
-      config,
-    );
+    };
 
     const el = document.createElement('div');
 
@@ -357,6 +385,7 @@ const MessageDialogFactory = {
 
       setTimeout(() => {
         root.unmount();
+        lock = false;
       }, 300);
     }
 
@@ -379,9 +408,12 @@ const MessageDialogFactory = {
    */
   close(el: HTMLElement) {
     const root = MessageDialogHandlers.get(el);
+
     if (root) {
       root.unmount();
     }
+
+    lock = false;
     // const flag = ReactDOM.unmountComponentAtNode(el);
     // if (flag) {
     //   el?.parentElement?.removeChild?.(el);

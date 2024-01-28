@@ -1,4 +1,4 @@
-import { ModalProps } from 'antd/lib/modal/interface';
+import type { ModalProps } from 'antd/lib/modal/interface';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import type { FC } from 'react';
@@ -48,16 +48,15 @@ const Trigger: FC<TriggerProps> = ({
 
   const Children = useMemo(
     () =>
-      children
-        ? React.cloneElement(
-            children,
-            {
-              ...children.props,
-              value,
-            },
-            children.props.children,
-          )
-        : null,
+      children &&
+      React.cloneElement(
+        children,
+        {
+          ...children.props,
+          value,
+        },
+        children.props.children,
+      ),
     [children],
   );
 
