@@ -27,8 +27,7 @@
     "prebuildpackage:esm": "node script/build.js module=es",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --serial buildpackage:cjs buildpackage:esm",
-    "buildumd": "node script/buildumd.js",
-    "buildumd:core": "ctbuild buildumd --packagename adhere --define alias=@,evnVars=true",
+    "buildumd": "ctbuild buildumd --packagename adhere --config ctbuild.config.umd.js --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "mergegenchangelog": "node script/changelog.js"
   },

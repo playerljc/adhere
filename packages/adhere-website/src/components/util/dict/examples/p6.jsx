@@ -5,6 +5,8 @@ import { Dict, Space } from '@baifendian/adhere';
 
 import pca from '@/components/util/dict/pca.json';
 
+const { Option } = Select;
+
 export default () => {
   function Test() {
     const [p, setP] = useState();

@@ -1,3 +1,12 @@
+import CheckboxEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/CheckboxEntityValueHOC';
+import ListEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/ListEntityValueHOC';
+import RadioEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/RadioEntityValueHOC';
+import SelectEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/SelectEntityValueHOC';
+import TableEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/TableEntityValueHOC';
+import TagEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/TagEntityValueHOC';
+import TransferEntityValueHOCCodeText from '!!raw-loader!./examples/ArrayEntityValueHOC/TransferEntityValueHOC';
+import AsyncCascaderEntityValueHOCCodeText from '!!raw-loader!./examples/AsyncTreeEntityValueHOC/AsyncCascaderiEntityValueHOC';
+import AsyncTreeEntityValueHOCCodeText from '!!raw-loader!./examples/AsyncTreeEntityValueHOC/AsyncTreeEntityValueHOC';
 import AutoCompleteCodeText from '!!raw-loader!./examples/AutoComplete/AutoComplete';
 import AutoCompleteSelectInputCodeText from '!!raw-loader!./examples/AutoComplete/AutoCompleteSelectInput';
 import BasicHOCDatePickerCodeText from '!!raw-loader!./examples/BasicHOC/DatePicker';
@@ -40,6 +49,8 @@ import HorizontalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox
 import HorizontalCheckboxCodeText from '!!raw-loader!./examples/Checkbox/HorizontalCheckbox';
 import VerticalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/VerticalCheckAllCheckbox';
 import VerticalCheckboxCodeText from '!!raw-loader!./examples/Checkbox/VerticalCheckbox';
+import DatePickerFormatValueHOCCodeText from '!!raw-loader!./examples/DatePickerValueHOC/DatePickerFormatValueHOC';
+import DatePickerTimestampValueHOCCodeText from '!!raw-loader!./examples/DatePickerValueHOC/DatePickerTimestampValueHOC';
 import AutoCompleteCheckAllListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListSelect';
@@ -52,6 +63,8 @@ import RadioListPagingCodeText from '!!raw-loader!./examples/List/RadioListPagin
 import RadioListPagingSelectCodeText from '!!raw-loader!./examples/List/RadioListPagingSelect';
 import RadioListSelectCodeText from '!!raw-loader!./examples/List/RadioListSelect';
 import SuspenseListPagingCodeText from '!!raw-loader!./examples/List/SuspenseListPaging';
+import ListPagingEntityValueHOCCodeText from '!!raw-loader!./examples/PagingEntityValueHOC/ListPagingEntityValueHOC';
+import TablePagingEntityValueHOCCodeText from '!!raw-loader!./examples/PagingEntityValueHOC/TablePagingEntityValueHOC';
 import AutoCompleteButtonRadioSelectCodeText from '!!raw-loader!./examples/Radio/AutoCompleteButtonRadioSelect';
 import AutoCompleteCustomRadioSelectCodeText from '!!raw-loader!./examples/Radio/AutoCompleteCustomRadioSelect';
 import AutoCompleteRadioSelectCodeText from '!!raw-loader!./examples/Radio/AutoCompleteRadioSelect';
@@ -63,6 +76,8 @@ import HorizontalRadioCodeText from '!!raw-loader!./examples/Radio/HorizontalRad
 import RadioCodeText from '!!raw-loader!./examples/Radio/Radio';
 import RadioSelectCodeText from '!!raw-loader!./examples/Radio/RadioSelect';
 import VerticalRadioCodeText from '!!raw-loader!./examples/Radio/VerticalRadio';
+import RangePickerFormatValueHOCCodeText from '!!raw-loader!./examples/RangePickerValueHOC/RangePickerFormatValueHOC';
+import RangePickerTimestampValueHOCCodeText from '!!raw-loader!./examples/RangePickerValueHOC/RangePickerTimestampValueHOC';
 import AutoCompleteCheckAllMultipleSelectCodeText from '!!raw-loader!./examples/Select/AutoCompleteCheckAllMultipleSelect';
 import AutoCompleteMultipleSelectCodeText from '!!raw-loader!./examples/Select/AutoCompleteMultipleSelect';
 import AutoCompleteSelectCodeText from '!!raw-loader!./examples/Select/AutoCompleteSelect';
@@ -91,9 +106,13 @@ import TagSelectCodeText from '!!raw-loader!./examples/Tag/TagSelect';
 import VerticalCheckAllCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalCheckAllCheckableTagGroup';
 import VerticalCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalCheckableTagGroup';
 import VerticalTagGroupCodeText from '!!raw-loader!./examples/Tag/VerticalTagGroup';
+import TimePickerFormatValueHOCCodeText from '!!raw-loader!./examples/TimePickerValueHOC/TimePickerFormatValueHOC';
+import TimePickerTimestampValueHOCCodeText from '!!raw-loader!./examples/TimePickerValueHOC/TimePickerTimestampValueHOC';
 import AutoCompleteTransferSelectCodeText from '!!raw-loader!./examples/Transfer/AutoCompleteTransferSelect';
 import TransferCodeText from '!!raw-loader!./examples/Transfer/Transfer';
 import TransferSelectCodeText from '!!raw-loader!./examples/Transfer/TransferSelect';
+import CascaderEntityValueHOCCodeText from '!!raw-loader!./examples/TreeEntityValueHOC/CascaderEntityValueHOC';
+import TreeEntityValueHOCCodeText from '!!raw-loader!./examples/TreeEntityValueHOC/TreeEntityValueHOC';
 import AsyncTreeCheckedShowAllSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowAllSelect';
 import AsyncTreeCheckedShowChildSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowChildSelect';
 import AsyncTreeCheckedShowParentSelectCodeText from '!!raw-loader!./examples/TreeSelect/AsyncTreeCheckedShowParentSelect';
@@ -148,6 +167,15 @@ import { DatePicker, RangePicker, TimePicker } from '@baifendian/adhere-ui-antho
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
+import CheckboxEntityValueHOC from './examples/ArrayEntityValueHOC/CheckboxEntityValueHOC';
+import ListEntityValueHOC from './examples/ArrayEntityValueHOC/ListEntityValueHOC';
+import RadioEntityValueHOC from './examples/ArrayEntityValueHOC/RadioEntityValueHOC';
+import SelectEntityValueHOC from './examples/ArrayEntityValueHOC/SelectEntityValueHOC';
+import TableEntityValueHOC from './examples/ArrayEntityValueHOC/TableEntityValueHOC';
+import TagEntityValueHOC from './examples/ArrayEntityValueHOC/TagEntityValueHOC';
+import TransferEntityValueHOC from './examples/ArrayEntityValueHOC/TransferEntityValueHOC';
+import AsyncCascaderEntityValueHOC from './examples/AsyncTreeEntityValueHOC/AsyncCascaderiEntityValueHOC';
+import AsyncTreeEntityValueHOC from './examples/AsyncTreeEntityValueHOC/AsyncTreeEntityValueHOC';
 import AutoComplete from './examples/AutoComplete/AutoComplete';
 import AutoCompleteSelectInput from './examples/AutoComplete/AutoCompleteSelectInput';
 import BasicHOCDatePicker from './examples/BasicHOC/DatePicker';
@@ -190,6 +218,8 @@ import HorizontalCheckAllCheckbox from './examples/Checkbox/HorizontalCheckAllCh
 import HorizontalCheckbox from './examples/Checkbox/HorizontalCheckbox';
 import VerticalCheckAllCheckbox from './examples/Checkbox/VerticalCheckAllCheckbox';
 import VerticalCheckbox from './examples/Checkbox/VerticalCheckbox';
+import DatePickerFormatValueHOC from './examples/DatePickerValueHOC/DatePickerFormatValueHOC';
+import DatePickerTimestampValueHOC from './examples/DatePickerValueHOC/DatePickerTimestampValueHOC';
 import AutoCompleteCheckAllListSelect from './examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelect from './examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelect from './examples/List/AutoCompleteListSelect';
@@ -202,6 +232,8 @@ import RadioListPaging from './examples/List/RadioListPaging';
 import RadioListPagingSelect from './examples/List/RadioListPagingSelect';
 import RadioListSelect from './examples/List/RadioListSelect';
 import SuspenseListPaging from './examples/List/SuspenseListPaging';
+import ListPagingEntityValueHOC from './examples/PagingEntityValueHOC/ListPagingEntityValueHOC';
+import TablePagingEntityValueHOC from './examples/PagingEntityValueHOC/TablePagingEntityValueHOC';
 import AutoCompleteButtonRadioSelect from './examples/Radio/AutoCompleteButtonRadioSelect';
 import AutoCompleteCustomRadioSelect from './examples/Radio/AutoCompleteCustomRadioSelect';
 import AutoCompleteRadioSelect from './examples/Radio/AutoCompleteRadioSelect';
@@ -213,6 +245,8 @@ import HorizontalRadio from './examples/Radio/HorizontalRadio';
 import Radio from './examples/Radio/Radio';
 import RadioSelect from './examples/Radio/RadioSelect';
 import VerticalRadio from './examples/Radio/VerticalRadio';
+import RangePickerFormatValueHOC from './examples/RangePickerValueHOC/RangePickerFormatValueHOC';
+import RangePickerTimestampValueHOC from './examples/RangePickerValueHOC/RangePickerTimestampValueHOC';
 import AutoCompleteCheckAllMultipleSelect from './examples/Select/AutoCompleteCheckAllMultipleSelect';
 import AutoCompleteMultipleSelect from './examples/Select/AutoCompleteMultipleSelect';
 import AutoCompleteSelect from './examples/Select/AutoCompleteSelect';
@@ -241,9 +275,13 @@ import TagSelect from './examples/Tag/TagSelect';
 import VerticalCheckAllCheckableTagGroup from './examples/Tag/VerticalCheckAllCheckableTagGroup';
 import VerticalCheckableTagGroup from './examples/Tag/VerticalCheckableTagGroup';
 import VerticalTagGroup from './examples/Tag/VerticalTagGroup';
+import TimePickerFormatValueHOC from './examples/TimePickerValueHOC/TimePickerFormatValueHOC';
+import TimePickerTimestampValueHOC from './examples/TimePickerValueHOC/TimePickerTimestampValueHOC';
 import AutoCompleteTransferSelect from './examples/Transfer/AutoCompleteTransferSelect';
 import Transfer from './examples/Transfer/Transfer';
 import TransferSelect from './examples/Transfer/TransferSelect';
+import CascaderEntityValueHOC from './examples/TreeEntityValueHOC/CascaderEntityValueHOC';
+import TreeEntityValueHOC from './examples/TreeEntityValueHOC/TreeEntityValueHOC';
 import AsyncTreeCheckedShowAllSelect from './examples/TreeSelect/AsyncTreeCheckedShowAllSelect';
 import AsyncTreeCheckedShowChildSelect from './examples/TreeSelect/AsyncTreeCheckedShowChildSelect';
 import AsyncTreeCheckedShowParentSelect from './examples/TreeSelect/AsyncTreeCheckedShowParentSelect';
@@ -2103,6 +2141,337 @@ export default () => {
           },
         ]}
       />
+
+      {/*加入EntityValueHOC*/}
+      <CodeBoxSection
+        title="ArrayEntityValueHOC"
+        config={[
+          {
+            id: `SelectEntityValueHOC`,
+            name: `SelectEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'SelectEntityValueHOC',
+                info: 'Select获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: SelectEntityValueHOCCodeText,
+            renderChildren: () => <SelectEntityValueHOC />,
+          },
+          {
+            id: `RadioEntityValueHOC`,
+            name: `RadioEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RadioEntityValueHOC',
+                info: 'Radio获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: RadioEntityValueHOCCodeText,
+            renderChildren: () => <RadioEntityValueHOC />,
+          },
+          {
+            id: `CheckboxEntityValueHOC`,
+            name: `CheckboxEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CheckboxEntityValueHOC',
+                info: 'Checkbox获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: CheckboxEntityValueHOCCodeText,
+            renderChildren: () => <CheckboxEntityValueHOC />,
+          },
+          {
+            id: `TransferEntityValueHOC`,
+            name: `TransferEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TransferEntityValueHOC',
+                info: 'Transfer获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TransferEntityValueHOCCodeText,
+            renderChildren: () => <TransferEntityValueHOC />,
+          },
+          {
+            id: `TagEntityValueHOC`,
+            name: `TagEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TagEntityValueHOC',
+                info: 'Tag获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TagEntityValueHOCCodeText,
+            renderChildren: () => <TagEntityValueHOC />,
+          },
+          {
+            id: `ListEntityValueHOC`,
+            name: `ListEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ListEntityValueHOC',
+                info: 'List获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ListEntityValueHOCCodeText,
+            renderChildren: () => <ListEntityValueHOC />,
+          },
+          {
+            id: `TableEntityValueHOC`,
+            name: `TableEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TableEntityValueHOC',
+                info: 'Table获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TableEntityValueHOCCodeText,
+            renderChildren: () => <TableEntityValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="PagingEntityValueHOC"
+        config={[
+          {
+            id: `ListPagingEntityValueHOC`,
+            name: `ListPagingEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'ListPagingEntityValueHOC',
+                info: 'List分页获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ListPagingEntityValueHOCCodeText,
+            renderChildren: () => <ListPagingEntityValueHOC />,
+          },
+
+          {
+            id: `TablePagingEntityValueHOC`,
+            name: `TablePagingEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TablePagingEntityValueHOC',
+                info: 'Table分页获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TablePagingEntityValueHOCCodeText,
+            renderChildren: () => <TablePagingEntityValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="TreeEntityValueHOC"
+        config={[
+          {
+            id: `TreeEntityValueHOC`,
+            name: `TreeEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TreeEntityValueHOC',
+                info: 'TreeSelect获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TreeEntityValueHOCCodeText,
+            renderChildren: () => <TreeEntityValueHOC />,
+          },
+          {
+            id: `CascaderEntityValueHOC`,
+            name: `CascaderEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CascaderEntityValueHOC',
+                info: 'Cascader获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: CascaderEntityValueHOCCodeText,
+            renderChildren: () => <CascaderEntityValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="AsyncTreeEntityValueHOC"
+        config={[
+          {
+            id: `AsyncTreeEntityValueHOC`,
+            name: `AsyncTreeEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AsyncTreeEntityValueHOC',
+                info: 'AsyncTreeSelect获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: AsyncTreeEntityValueHOCCodeText,
+            renderChildren: () => <AsyncTreeEntityValueHOC />,
+          },
+          {
+            id: `AsyncCascaderEntityValueHOC`,
+            name: `AsyncCascaderEntityValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'AsyncCascaderEntityValueHOC',
+                info: 'AsyncCascader获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: AsyncCascaderEntityValueHOCCodeText,
+            renderChildren: () => <AsyncCascaderEntityValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="DatePickerValueHOC"
+        config={[
+          {
+            id: `DatePickerTimestampValueHOC`,
+            name: `DatePickerTimestampValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'DatePickerTimestampValueHOC',
+                info: 'DatePickerTimestamp获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: DatePickerTimestampValueHOCCodeText,
+            renderChildren: () => <DatePickerTimestampValueHOC />,
+          },
+          {
+            id: `DatePickerFormatValueHOC`,
+            name: `DatePickerFormatValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'DatePickerFormatValueHOC',
+                info: 'DatePickerFormat获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: DatePickerFormatValueHOCCodeText,
+            renderChildren: () => <DatePickerFormatValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="RangePickerValueHOC"
+        config={[
+          {
+            id: `RangePickerTimestampValueHOC`,
+            name: `RangePickerTimestampValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RangePickerTimestampValueHOC',
+                info: 'RangePickerTimestamp获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: RangePickerTimestampValueHOCCodeText,
+            renderChildren: () => <RangePickerTimestampValueHOC />,
+          },
+          {
+            id: `RangePickerFormatValueHOC`,
+            name: `RangePickerFormatValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RangePickerFormatValueHOC',
+                info: 'RangePickerFormat获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: RangePickerFormatValueHOCCodeText,
+            renderChildren: () => <RangePickerFormatValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="TimePickerValueHOC"
+        config={[
+          {
+            id: `TimePickerTimestampValueHOC`,
+            name: `TimePickerTimestampValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TimePickerTimestampValueHOC',
+                info: 'TimePickerTimestamp获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TimePickerTimestampValueHOCCodeText,
+            renderChildren: () => <TimePickerTimestampValueHOC />,
+          },
+          {
+            id: `TimePickerFormatValueHOC`,
+            name: `TimePickerFormatValueHOC`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'TimePickerFormatValueHOC',
+                info: 'TimePickerFormat获取实体数据',
+              },
+            },
+            type: 'PlayGround',
+            codeText: TimePickerFormatValueHOCCodeText,
+            renderChildren: () => <TimePickerFormatValueHOC />,
+          },
+        ]}
+      />
+
+      {/*end*/}
 
       <CodeBoxSection
         title="配合ScrollLayout使用"
