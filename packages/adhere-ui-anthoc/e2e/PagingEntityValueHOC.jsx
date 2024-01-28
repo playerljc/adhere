@@ -68,7 +68,7 @@ export default () => {
         // initialValue={[]}
       >
         <PagingEntityValueHOC>
-          <Table.TablePaging
+          {/*<Table.TablePaging
             mode="multiple"
             isSuspenseAsync={false}
             pagingProps={{
@@ -105,9 +105,9 @@ export default () => {
                 },
               ],
             }}
-          />
+          />*/}
 
-          {/*<Table.TablePagingSelect
+          <Table.TablePagingSelect
             mode="multiple"
             style={{ width: 600 }}
             placeholder="RadioPagingList"
@@ -145,7 +145,7 @@ export default () => {
                 },
               ],
             }}
-          />*/}
+          />
         </PagingEntityValueHOC>
       </Form.Item>
 

@@ -20,7 +20,6 @@ import ColorPicker from './color-picker';
 import ConfigProvider from './config-provider';
 import DatePicker from './date-picker';
 import DatePickerFormatValueHOC from './date-picker-format-value-hoc';
-import TimeDatePickerFormatValueHOC from './date-picker-format-value-hoc';
 import DatePickerTimestampValueHOC from './date-picker-timestamp-value-hoc';
 import Descriptions from './descriptions';
 import Divider from './divider';
@@ -69,6 +68,7 @@ import Tabs from './tabs';
 import Tag from './tag';
 import TextArea from './text-area';
 import TimePicker from './time-picker';
+import TimePickerFormatValueHOC from './time-picker-format-value-hoc';
 import TimePickerTimestampValueHOC from './time-picker-timestamp-value-hoc';
 import Timeline from './timeline';
 import Tooltip from './tooltip';
@@ -105,7 +105,7 @@ export {
   DatePickerTimestampValueHOC,
   DatePickerFormatValueHOC,
   TimePickerTimestampValueHOC,
-  TimeDatePickerFormatValueHOC,
+  TimePickerFormatValueHOC,
   Descriptions,
   Divider,
   Drawer,

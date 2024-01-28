@@ -9,7 +9,7 @@ import CascaderTest from './Cascader/FlatAsyncCascader.tsx';
 import CheckboxTest from './Checkbox/AutoCompleteCheckAllCheckboxSelect.tsx';
 import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
-import ListTest from './List/RadioListPagingSelect';
+import ListTest from './List/CheckboxListPaging';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteCustomRadioSelect.tsx';
 import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
@@ -29,5 +29,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <PagingEntityValueHOC />,
+  children: <ListTest />,
 });
