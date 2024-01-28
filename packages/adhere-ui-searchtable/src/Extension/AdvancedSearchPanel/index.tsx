@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import {
   FilterOutlined,
@@ -58,7 +58,7 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
     setCollapse(overlayProps.collapse);
   }, [overlayProps.collapse]);
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <Overlay
       ref={overlayRef}
       {...(overlayProps as any)}
