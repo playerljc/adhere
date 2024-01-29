@@ -10,7 +10,7 @@ import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import { selectorPrefix } from './TableList';
-import { TSortTableProps } from './types';
+import type { TSortTableProps } from './types';
 
 const SortableItem = SortableElement((props) => <tr {...props} />);
 
@@ -98,11 +98,11 @@ class SortableTable<RecordType extends object = any> extends React.Component<
   };
 
   render() {
-    const { sortable, ...others } = this.props;
+    const { sortable, ...rest } = this.props;
 
     return (
       <Table
-        {...others}
+        {...rest}
         dataSource={this.state.dataSource}
         components={{
           body: {

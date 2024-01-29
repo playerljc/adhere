@@ -270,7 +270,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   private renderList = () => {
     if (!this.props.list) return;
 
-    const { rowKey, pagination, loading, renderItem, ...others } = this.getModeProps();
+    const { rowKey, pagination, loading, renderItem, ...rest } = this.getModeProps();
     const rowSelection = this.getRowSelection();
 
     return (
@@ -308,7 +308,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
             </List.Item>
           );
         }}
-        {...others}
+        {...rest}
       />
     );
   };
@@ -319,7 +319,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
   private renderTable = () => {
     if (!this.props.table) return;
     const { selectedColumnKeys, tableColumns } = this.state;
-    const { sortable, pagination, loading, dataSource, columns, rowKey, rowSelection, ...others } =
+    const { sortable, pagination, loading, dataSource, columns, rowKey, rowSelection, ...rest } =
       this.getModeProps();
 
     const tableProps = {
@@ -329,7 +329,7 @@ class TableList<RecordType extends object = any> extends React.PureComponent<
       columns: tableColumns.filter((v) => selectedColumnKeys.includes(v.key)),
       dataSource: dataSource,
       onChange: this.onTableChange,
-      ...others,
+      ...rest,
     };
 
     return sortable ? (

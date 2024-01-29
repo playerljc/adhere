@@ -43,84 +43,84 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 // 只读文本
-const renderText = memo<InputProps>(({ ...others }) => <Input {...others} readOnly />);
+const renderText = memo<InputProps>(({ ...rest }) => <Input {...rest} readOnly />);
 
 // 输入框
 const renderInput = memo<InputProps>(
-  ({ type, maxLength = 100, placeholder = Intl.v('请输入'), ...others }) => (
+  ({ type, maxLength = 100, placeholder = Intl.v('请输入'), ...rest }) => (
     <Input
       autoComplete="off"
       type={type}
       maxLength={maxLength || 100}
       placeholder={placeholder}
-      {...others}
+      {...rest}
     />
   ),
 );
 
 // 搜索框
 const renderSearch = memo<InputProps>(
-  ({ maxLength = 800, placeholder = Intl.v('请输入'), ...others }) => (
+  ({ maxLength = 800, placeholder = Intl.v('请输入'), ...rest }) => (
     <Input.Search
       autoComplete="off"
       maxLength={maxLength || 800}
       placeholder={placeholder}
-      {...others}
+      {...rest}
     />
   ),
 );
 
 // 多行输入框
 const renderInputArea = memo<TextAreaProps>(
-  ({ maxLength = 500, rows = 4, placeholder = Intl.v('请输入'), ...others }) => (
+  ({ maxLength = 500, rows = 4, placeholder = Intl.v('请输入'), ...rest }) => (
     <TextArea
       autoComplete="off"
       maxLength={maxLength || 500}
       rows={rows}
       placeholder={placeholder}
-      {...others}
+      {...rest}
     />
   ),
 );
 
 // 密码输入框
 const renderPassword = memo<InputProps>(
-  ({ type, maxLength = 800, placeholder = Intl.v('请输入'), ...others }) => (
+  ({ type, maxLength = 800, placeholder = Intl.v('请输入'), ...rest }) => (
     <Input.Password
       autoComplete="off"
       type={type}
       maxLength={maxLength || 800}
       placeholder={placeholder}
-      {...others}
+      {...rest}
     />
   ),
 );
 
 // 数字输入框
 const renderInputNumber = memo<InputNumberProps>(
-  ({ placeholder = '请输入', max = Infinity, min = -Infinity, ...others }) => (
+  ({ placeholder = '请输入', max = Infinity, min = -Infinity, ...rest }) => (
     <InputNumber
       autoComplete="off"
       placeholder={placeholder}
       max={max || Infinity}
       min={min || -Infinity}
-      {...others}
+      {...rest}
     />
   ),
 );
 
 // 单选
-const renderRadio = memo<RadioGroupProps>(({ ...others }) => <RadioGroup {...others} />);
+const renderRadio = memo<RadioGroupProps>(({ ...rest }) => <RadioGroup {...rest} />);
 
 // 多选
 // @ts-ignore
-const renderCheckbox = memo<CheckboxProps | CheckboxGroupProps>(({ options, ...others }) =>
+const renderCheckbox = memo<CheckboxProps | CheckboxGroupProps>(({ options, ...rest }) =>
   options.length && options.length === 1 ? (
     // @ts-ignore
-    <Checkbox {...others}>{options[0].label}</Checkbox>
+    <Checkbox {...rest}>{options[0].label}</Checkbox>
   ) : (
     // @ts-ignore
-    <CheckboxGroup options={options} {...others} />
+    <CheckboxGroup options={options} {...rest} />
   ),
 );
 
@@ -131,11 +131,11 @@ const renderSelect = memo<
     renderOption: (v: OptionProps) => ReactElement;
     autoComplete: boolean; // 非多选模式自动填充
   }
->(({ optGroup, options, placeholder = Intl.v('请选择'), renderOption, autoComplete, ...others }) => {
+>(({ optGroup, options, placeholder = Intl.v('请选择'), renderOption, autoComplete, ...rest }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const getOptions = (arr) => {
-    if (arr?.length && autoComplete && searchValue && !others.mode) {
+    if (arr?.length && autoComplete && searchValue && !rest.mode) {
       if (arr?.find(v => (v.value && v.value.toString() === searchValue) || (v.label && v.label.toString() === searchValue))) {
         return arr;
       }
@@ -155,8 +155,8 @@ const renderSelect = memo<
       placeholder={placeholder}
       optionFilterProp="children"
       onSearch={v => setSearchValue(v)}
-      {...others}
-      showSearch={others.showSearch || autoComplete}
+      {...rest}
+      showSearch={rest.showSearch || autoComplete}
     >
       {optGroup && optGroup.length
         ? optGroup.map((e) => renderOptionItem(e))
@@ -166,37 +166,37 @@ const renderSelect = memo<
 });
 
 // 日期范围选择框
-const renderRangePicker = memo<RangePickerProps>(({ ...others }) => (
+const renderRangePicker = memo<RangePickerProps>(({ ...rest }) => (
   // @ts-ignore
-  <RangePicker {...others} />
+  <RangePicker {...rest} />
 ));
 
 // 日期选择框
-const renderDatePicker = memo<DatePickerProps>(({...others }) => (
+const renderDatePicker = memo<DatePickerProps>(({...rest }) => (
   // @ts-ignore
-  <DatePicker {...others} />
+  <DatePicker {...rest} />
 ));
 
 // 时间选择框
-const renderTimePicker = memo<TimePickerProps>(({ ...others }) => <TimePicker {...others} />);
+const renderTimePicker = memo<TimePickerProps>(({ ...rest }) => <TimePicker {...rest} />);
 
 // 开关
 const renderSwitch = memo<SwitchProps>((item) => <Switch {...item} />);
 
 // 树形选择框
-const renderTreeSelect = memo<TreeSelectProps>(({ ...others }) => (
+const renderTreeSelect = memo<TreeSelectProps>(({ ...rest }) => (
   // @ts-ignore
-  <TreeSelect {...others} />
+  <TreeSelect {...rest} />
 ));
 
 // 滑动输入条
-const renderSlider = memo<SliderSingleProps>(({ ...others }) => <Slider {...others} />);
+const renderSlider = memo<SliderSingleProps>(({ ...rest }) => <Slider {...rest} />);
 
 // 评分
-const renderRate = memo<RateProps>(({ ...others }) => <Rate {...others} />);
+const renderRate = memo<RateProps>(({ ...rest }) => <Rate {...rest} />);
 
 // 上传
-const renderUpload = memo<UploadProps>(({ ...others }) => <Upload {...others} />);
+const renderUpload = memo<UploadProps>(({ ...rest }) => <Upload {...rest} />);
 
 // 标签
 const Tags: FC<TagItemProps> = (props) => {
@@ -251,7 +251,7 @@ const Tags: FC<TagItemProps> = (props) => {
     const newTags = tags.filter(tag => tag !== removedTag);
     setTags(newTags);
   };
-  
+
   const renderTagInput = (val: string, isedit:boolean = false) => (
     <Input
       type="text"
