@@ -14,5 +14,7 @@ declare class SuspenseImpl<P extends SuspenseProps = SuspenseProps, S extends Su
     fetchData(): Promise<void>;
     renderInner(): ReactNode;
     showLoading(): boolean;
+    onFirstFetchDataAfter(res: any): Promise<any>;
+    onFirstFetchDataBefore(): Promise<any>;
 }
 export default SuspenseImpl;

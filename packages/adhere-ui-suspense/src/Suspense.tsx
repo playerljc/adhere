@@ -38,21 +38,41 @@ abstract class Suspense<
   static propTypes: any;
 
   /**
-   * fetchData - 加载数据
+   * fetchData
+   * @description 加载数据
+   * @param params?: any
+   * @return Promise<any>
    */
   abstract fetchData(params?: any): Promise<any>;
 
   /**
-   * renderInner - 渲染实际内容
+   * renderInner
+   * @description 渲染实际内容
    * @return React.ReactElement
    */
   abstract renderInner(): React.ReactNode;
 
   /**
-   * showLoading - 是否显示遮罩
+   * showLoading
+   * @description 是否显示遮罩
    * @return boolean
    */
   abstract showLoading(): boolean;
+
+  /**
+   * onFirstFetchDataBefore
+   * @description 第一次调用接口之前
+   * @return Promise<any>
+   */
+  abstract onFirstFetchDataBefore(): Promise<any>;
+
+  /**
+   * onFirstFetchDataAfter
+   * @description 第一次调用接口之后
+   * @param res any
+   * @return Promise<any>
+   */
+  abstract onFirstFetchDataAfter(res?: any): Promise<any>;
 
   constructor(props) {
     super(props);
@@ -71,7 +91,17 @@ abstract class Suspense<
   }
 
   componentDidMount() {
-    this?.fetchData?.();
+    if (this.onFirstFetchDataBefore) {
+      this.onFirstFetchDataBefore().then(() => {
+        this?.fetchData?.().then((res) => {
+          this?.onFirstFetchDataAfter?.(res);
+        });
+      });
+    } else {
+      this?.fetchData?.().then?.((res) => {
+        this?.onFirstFetchDataAfter?.(res);
+      });
+    }
   }
 
   /**

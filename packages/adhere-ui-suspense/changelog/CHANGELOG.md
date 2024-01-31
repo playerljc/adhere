@@ -1,3 +1,12 @@
+# 1.0.7
+
+***
+
+2024-01-31
+
+* 加入onFirstFetchDataBefore方法
+* 加入onFirstFetchDataAfter方法
+
 # 1.0.6
 
 ***

@@ -8,6 +8,8 @@ export interface ISuspense {
   isFirst: boolean;
   // 第一次加载
   isFirstLoading: boolean;
+  onFirstFetchDataBefore?: () => Promise<any>;
+  onFirstFetchDataAfter?: (res?: any) => Promise<any>;
 }
 
 export interface SuspenseProps {

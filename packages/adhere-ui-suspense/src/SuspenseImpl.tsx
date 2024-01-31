@@ -33,6 +33,14 @@ class SuspenseImpl<
   showLoading() {
     return true;
   }
+
+  onFirstFetchDataAfter(res: any): Promise<any> {
+    return Promise.resolve(undefined);
+  }
+
+  onFirstFetchDataBefore(): Promise<any> {
+    return Promise.resolve(undefined);
+  }
 }
 
 export default SuspenseImpl;

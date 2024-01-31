@@ -5,6 +5,8 @@ export interface ISuspense {
     renderInner: renderInner;
     isFirst: boolean;
     isFirstLoading: boolean;
+    onFirstFetchDataBefore?: () => Promise<any>;
+    onFirstFetchDataAfter?: (res?: any) => Promise<any>;
 }
 export interface SuspenseProps {
     className?: string;

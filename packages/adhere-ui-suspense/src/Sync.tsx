@@ -79,6 +79,14 @@ class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState> implem
   fetchData(): Promise<any> {
     return Promise.resolve();
   }
+
+  onFirstFetchDataAfter(res: any): Promise<any> {
+    return Promise.resolve(undefined);
+  }
+
+  onFirstFetchDataBefore(): Promise<any> {
+    return Promise.resolve(undefined);
+  }
 }
 
 SuspenseSync.defaultProps = {};

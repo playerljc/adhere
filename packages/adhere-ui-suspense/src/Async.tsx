@@ -94,6 +94,14 @@ class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncState> {
       );
     });
   }
+
+  onFirstFetchDataAfter(res: any): Promise<any> {
+    return Promise.resolve(undefined);
+  }
+
+  onFirstFetchDataBefore(): Promise<any> {
+    return Promise.resolve(undefined);
+  }
 }
 
 SuspenseAsync.defaultProps = {};
