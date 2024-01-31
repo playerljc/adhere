@@ -15,5 +15,7 @@ declare class SuspenseAsync extends Suspense<SuspenseASyncProps, SuspenseASyncSt
     renderInner(): React.ReactNode;
     reset(): Promise<any>;
     fetchData(): Promise<any>;
+    onFirstFetchDataAfter(res: any): Promise<any>;
+    onFirstFetchDataBefore(): Promise<any>;
 }
 export default SuspenseAsync;

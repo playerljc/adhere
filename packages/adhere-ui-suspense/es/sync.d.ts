@@ -18,5 +18,7 @@ declare class SuspenseSync extends Suspense<SuspenseSyncProps, SuspenseSyncState
     showLoading(): boolean;
     renderInner(): React.ReactElement | null;
     fetchData(): Promise<any>;
+    onFirstFetchDataAfter(res: any): Promise<any>;
+    onFirstFetchDataBefore(): Promise<any>;
 }
 export default SuspenseSync;
