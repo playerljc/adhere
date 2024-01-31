@@ -1,5 +1,5 @@
 import React from 'react';
-import { TSortTableProps } from './types';
+import type { TSortTableProps } from './types';
 declare class SortableTable<RecordType extends object = any> extends React.Component<TSortTableProps<RecordType>, any> {
     static displayName: string;
     state: {

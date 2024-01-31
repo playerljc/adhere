@@ -45,7 +45,8 @@ class SortableTable<RecordType extends object = any> extends React.Component<
   }
 
   /**
-   * 覆盖antdTable的tr
+   * DraggableBodyRow
+   * @description 覆盖antdTable的tr
    */
   DraggableBodyRow = ({ className, style, ...restProps }) => {
     const { dataSource } = this.state;
