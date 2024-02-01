@@ -1,0 +1,2 @@
+import Creator from"./Creator/index";import extend from"./extend";var defaultConfig={totalAngle:360,spaceDeg:0,background:"#323232",backgroundHover:"#515151",pageBackground:"transparent",percent:.32,diameter:300,position:"top",horizontal:!0,animation:"into",hideAfterClick:!0};export default function(e){return e=extend(defaultConfig,e),this._creator=new Creator(this,e),this._creator.createMenu(),this}
+//# sourceMappingURL=config.js.map

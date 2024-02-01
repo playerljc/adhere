@@ -1,0 +1,2 @@
+import classed from"./../classed";import style from"./../style";import{hasIcon}from"./createIcon";var withIconMarginTop="3px",withIconTop="-3px";export default function(t,o,e){var n=document.createElement("span");n.textContent=o.title,classed(n,"text",!0),style(n,"margin-top",hasIcon(o.icon)?withIconMarginTop:this._calc.textTop),style(n,"top",hasIcon(o.icon)?withIconTop:0),t.appendChild(n)}
+//# sourceMappingURL=createText.js.map

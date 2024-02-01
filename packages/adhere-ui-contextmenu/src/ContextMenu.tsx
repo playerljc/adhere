@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
+import CircularMenuFactory from './CircularMenu/factory';
 import { ProviderContext } from './ContextMenuContext';
 import Menu from './Menu';
 import type {
@@ -147,6 +148,30 @@ const ContextMenu: ContextMenuComponent = {
     // if (flag) {
     //   el.parentElement.removeChild(el);
     // }
+  },
+  /**
+   * openCircular
+   * @description 打开扇形菜单
+   * @param point
+   * @param config
+   */
+  openCircular(config, point) {
+    CircularMenuFactory.open(config, point);
+  },
+  /**
+   * hideCircular
+   * @description 关闭扇形菜单
+   */
+  hideCircular() {
+    CircularMenuFactory.hide();
+  },
+  /**
+   * stylesCircular
+   * @description 设置样式
+   * @param properties
+   */
+  stylesCircular(properties) {
+    CircularMenuFactory.styles(properties);
   },
 };
 

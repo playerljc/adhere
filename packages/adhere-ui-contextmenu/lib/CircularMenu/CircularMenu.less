@@ -1,0 +1,100 @@
+/* line 3, ../../sass/circular-menu.scss */
+.circular-menu {
+  position: fixed;
+  z-index: 1040;
+  display: none;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', 'STHeitiSC-Light', 'Microsoft YaHei',
+    Arial, sans-serif;
+  background: transparent;
+  border-radius: 50%;
+  transform: scale(0.1);
+  cursor: default;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.circular-menu.circular-sub-menu {
+  transition: all 0s ease 0s;
+}
+.circular-menu.circular-sub-menu:after {
+  display: none;
+}
+.circular-menu:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  display: block;
+  box-sizing: border-box;
+  color: transparent;
+  border-radius: 50%;
+  content: '.';
+}
+.circular-menu.opened-nav {
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+}
+.circular-menu.opened-nav li {
+  transition: all 0.3s ease 0.3s;
+  pointer-events: none;
+}
+.circular-menu.opened-nav li a {
+  pointer-events: auto;
+}
+.circular-menu.opened-nav li a .horizontal {
+  pointer-events: none;
+}
+.circular-menu ul {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.circular-menu ul li {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transform-origin: 100% 100%;
+  transition: all 0.3s ease;
+}
+.circular-menu ul li a {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  padding-top: 10px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  cursor: pointer;
+}
+.circular-menu ul li a span.cm-icon {
+  display: inline-block;
+  background-size: cover;
+}
+.circular-menu ul li a span.text {
+  position: relative;
+  display: block;
+  font-size: 13px;
+  font-family: 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', 'STHeitiSC-Light', 'Microsoft YaHei',
+    Arial, sans-serif;
+  line-height: 1;
+}
+.circular-menu ul li a .cn-icon:before {
+  display: table;
+}
+.circular-menu ul li a.disabled {
+  cursor: default;
+  -webkit-filter: grayscale(100%);
+  pointer-events: none !important;
+}
+.circular-menu ul li a:focus {
+  position: fixed;
+}
