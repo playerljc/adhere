@@ -5,6 +5,7 @@
 2024-01-24
 
 * 修改getTopDom方法
+* 加入isPromise方法
 
 # 1.0.36
 

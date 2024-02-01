@@ -275,6 +275,7 @@ declare const _default: {
     isFunction(obj: any): boolean;
     isObject(obj: any): boolean;
     isRef(obj: any): boolean;
+    isPromise(obj: any): any;
     chainCallAssignment({ obj, chainStr, value }: {
         obj: any;
         chainStr: any;

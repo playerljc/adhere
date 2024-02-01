@@ -84,9 +84,18 @@ export default {
   /**
    * isRef - 是否是引用类型
    * @param obj
+   * @return {boolean}
    */
   isRef(obj) {
     return this.isArray(obj) || this.isObject(obj);
+  },
+  /**
+   * isPromise - 是否是Promise
+   * @param obj
+   * @return {boolean}
+   */
+  isPromise(obj) {
+    return obj && typeof obj.then === 'function';
   },
   /**
    * chainCallAssignment - 对象的链式赋值

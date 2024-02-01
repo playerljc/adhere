@@ -55,8 +55,15 @@ declare const _default: {
     /**
      * isRef - 是否是引用类型
      * @param obj
+     * @return {boolean}
      */
     isRef(obj: any): boolean;
+    /**
+     * isPromise - 是否是Promise
+     * @param obj
+     * @return {boolean}
+     */
+    isPromise(obj: any): any;
     /**
      * chainCallAssignment - 对象的链式赋值
      * obj.a.b.c.d.x.x.x = value
