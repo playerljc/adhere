@@ -125,7 +125,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @description 进行查询
      * @return {Promise<void>}
      */
-    abstract onSearch(): Promise<void>;
+    abstract onSearch(): Promise<any>;
     /**
      * getDerivedStateFromProps
      * @description getDerivedStateFromProps
@@ -170,7 +170,7 @@ declare abstract class Search<P extends SearchProps = SearchProps, S extends Sea
      * @description - 清除操作
      * @return {Promise<void>}
      */
-    onClear(): Promise<void>;
+    onClear(): Promise<any>;
     /**
      * renderInner
      * @description

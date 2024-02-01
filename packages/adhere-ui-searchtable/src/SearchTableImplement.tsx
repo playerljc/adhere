@@ -535,25 +535,26 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
       const page = this.state?.page as number;
 
       if (page === 1) {
-        resolve(this.fetchData());
-        return;
+        this.fetchData().then((res) => resolve(res));
+      } else {
+        const res = this.fetchData().then((_res) => {
+          const data = _res?.data?.[this.getDataKey()] || [];
+
+          if (data.length) {
+            resolve(res);
+          } else {
+            // @ts-ignore
+            this.setState(
+              {
+                page: page - 1,
+              },
+              () => {
+                this.fetchData().then((res) => resolve(res));
+              },
+            );
+          }
+        });
       }
-
-      const res = this.fetchData().then((_res) => {
-        const data = _res?.data?.[this.getDataKey()] || [];
-
-        if (data.length) {
-          resolve(res);
-        } else {
-          // @ts-ignore
-          this.setState(
-            {
-              page: page - 1,
-            },
-            () => resolve(this.fetchData()),
-          );
-        }
-      });
     });
   }
 
@@ -578,14 +579,14 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
    * @override
    * @return {Promise<void>}
    */
-  onSearch(): Promise<void> {
+  onSearch(): Promise<any> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
       params[key] = this.state?.[key];
     });
 
-    return new Promise<void>((resolve) => {
+    return new Promise<any>((resolve) => {
       // @ts-ignore
       this.setState(
         {
@@ -598,8 +599,8 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
           },
         },
         () => {
-          this.fetchData().then(() => {
-            resolve();
+          this.fetchData().then((res) => {
+            resolve(res);
           });
         },
       );

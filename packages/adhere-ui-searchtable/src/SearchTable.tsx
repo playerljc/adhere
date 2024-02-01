@@ -428,28 +428,45 @@ abstract class SearchTable<
     const prePage = this.state.page;
     const preLimit = this.state.limit;
 
-    // @ts-ignore
-    this.setState(
-      {
-        page: pagination.current,
-        limit: pagination.pageSize,
-        [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
-        [this.getOrderProp()]: sorter.order /* || this.getOrderPropValue()*/,
-      },
-      () => {
-        const { order } = sorter;
+    return new Promise((resolve) => {
+      this.setState(
+        {
+          page: pagination.current,
+          limit: pagination.pageSize,
+          [this.getOrderFieldProp()]: sorter.field || this.getOrderFieldValue(),
+          [this.getOrderProp()]: sorter.order /* || this.getOrderPropValue()*/,
+        },
+        () => {
+          const { order } = sorter;
 
-        if (!order) {
-          if (this.state.page !== prePage || this.state.limit !== preLimit) {
-            this.fetchData();
+          if (!order) {
+            if (this.state.page !== prePage || this.state.limit !== preLimit) {
+              this.fetchData().then((res) => resolve(res));
+            }
+          } else {
+            this.fetchData().then((res) => resolve(res));
           }
-        } else {
-          this.fetchData();
-        }
 
-        this.onSubTableChange(pagination, filters, sorter);
-      },
-    );
+          this.onSubTableChange(pagination, filters, sorter);
+        },
+      );
+    });
+  };
+
+  onTableRow = (columns, record, rowIndex) => {
+    // 这块可能以后会有很多操作
+    // 行的所有操作都可以在这里处理
+    return {
+      record,
+      rowIndex,
+      columns,
+      rowKey: this.getRowKey(),
+      rowConfig: this.onRowConfigReducers({
+        rowIndex: Number(rowIndex),
+        record,
+        columns,
+      }),
+    };
   };
 
   /**
@@ -552,14 +569,14 @@ abstract class SearchTable<
    * search
    */
   search() {
-    return new Promise<void>((resolve) => {
+    return new Promise<any>((resolve) => {
       // @ts-ignore
       this.setState(
         {
           page: 1,
         },
         () => {
-          this.onSearch().then(() => resolve());
+          this.onSearch().then((res) => resolve(res));
         },
       );
     });
@@ -1032,22 +1049,7 @@ abstract class SearchTable<
       components: this.components, // this.onComponents(columns, this.components),
       // onRow
       // 给TableRow的props参数
-      // @ts-ignore
-      onRow: (record, rowIndex) => {
-        // 这块可能以后会有很多操作
-        // 行的所有操作都可以在这里处理
-        return {
-          record,
-          rowIndex,
-          columns,
-          rowKey: this.getRowKey(),
-          rowConfig: this.onRowConfigReducers({
-            rowIndex: Number(rowIndex),
-            record,
-            columns,
-          }),
-        };
-      },
+      onRow: (...params) => this.onTableRow(columns, ...params),
       ...(antdTableProps ?? {}),
       expandable: {
         ...(antdTableProps ?? {}).expandable,

@@ -192,7 +192,14 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any} filters
      * @param {any} sorter
      */
-    onTableChange: (pagination: any, filters: any, sorter: any) => void;
+    onTableChange: (pagination: any, filters: any, sorter: any) => Promise<unknown>;
+    onTableRow: (columns: any, record: any, rowIndex: any) => {
+        record: any;
+        rowIndex: any;
+        columns: any;
+        rowKey: string;
+        rowConfig: RowConfig;
+    };
     /**
      * sortOrder
      * @description table的column中加入
@@ -240,7 +247,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
     /**
      * search
      */
-    search(): Promise<void>;
+    search(): Promise<any>;
     /**
      * getTableDensity
      * @description 表格密度

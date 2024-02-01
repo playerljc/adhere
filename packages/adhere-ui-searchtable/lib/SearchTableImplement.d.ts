@@ -260,7 +260,7 @@ export declare class SearchTableImplement<P extends SearchTableProps, S extends 
      * @override
      * @return {Promise<void>}
      */
-    onSearch(): Promise<void>;
+    onSearch(): Promise<any>;
     /**
      * getColumns
      * @return {ColumnType<object>[]}

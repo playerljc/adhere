@@ -208,7 +208,7 @@ abstract class Search<
    * @description 进行查询
    * @return {Promise<void>}
    */
-  abstract onSearch(): Promise<void>;
+  abstract onSearch(): Promise<any>;
 
   /**
    * getDerivedStateFromProps
@@ -303,9 +303,10 @@ abstract class Search<
    * @description - 清除操作
    * @return {Promise<void>}
    */
-  onClear(): Promise<void> {
-    // @ts-ignore
-    return this.clearAll().then(() => this.fetchData());
+  onClear(): Promise<any> {
+    return new Promise((resolve) => {
+      this.clearAll().then(() => this.fetchData().then((res) => resolve(res)));
+    });
   }
 
   /**
