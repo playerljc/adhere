@@ -192,7 +192,7 @@ export declare class SearchListImplement<P extends SearchListProps, S extends Se
      * @description - 点击查询
      * @override
      */
-    onSearch(): Promise<void>;
+    onSearch(): Promise<any>;
     /**
      * selectCheckBoxChange
      * @description 选择的CheckBox改变

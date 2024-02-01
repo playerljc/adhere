@@ -29,21 +29,15 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
         getOptionsColumnDataIndex(): string;
         getLinkColumnDataIndex(): string;
         getPagination(): any;
-        getGridSearchFormGroupParams(): ({
-            name: string;
+        getGridSearchFormColgroup(): {
             columnCount: number;
             colgroup: (string | undefined)[];
-            data: {
-                key: number;
-                sort?: number | undefined;
-                label: React.ReactNode;
-                value: React.ReactNode;
-            }[];
-        }[] | {
-            rowCount?: undefined;
-        } | {
+        };
+        getGridSearchFormRowCount(): number;
+        getGridSearchFormProps(): {
             rowCount: number;
-        })[];
+        };
+        getGridSearchFormGroupParams(): {}[];
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
             sort?: number | undefined;
@@ -65,6 +59,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             dataIndex: any;
         }): React.ReactNode;
         renderGridSearchFormGroup(group: any, props: any, advancedSearchConfig: any): React.JSX.Element;
+        renderAdvancedSearchPanel(params: any): null;
         renderOptionColumn(defaultItems: any, params: any): any;
     };
     displayName: string;

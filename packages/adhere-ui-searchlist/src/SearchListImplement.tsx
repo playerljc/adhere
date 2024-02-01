@@ -446,25 +446,26 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
       const page = this.state.page as number;
 
       if (page === 1) {
-        resolve(this.fetchData());
-        return;
+        this.fetchData().then((res) => resolve(res));
+      } else {
+        const res = this.fetchData().then(() => {
+          const data = this.getData();
+
+          if (data.length) {
+            resolve(res);
+          } else {
+            // @ts-ignore
+            this.setState(
+              {
+                page: page - 1,
+              },
+              () => {
+                this.fetchData().then((res) => resolve(res));
+              },
+            );
+          }
+        });
       }
-
-      const res = this.fetchData().then(() => {
-        const data = this.getData();
-
-        if (data.length) {
-          resolve(res);
-        } else {
-          // @ts-ignore
-          this.setState(
-            {
-              page: page - 1,
-            },
-            () => resolve(this.fetchData()),
-          );
-        }
-      });
     });
   }
 
@@ -486,7 +487,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
    * @description - 点击查询
    * @override
    */
-  onSearch(): Promise<void> {
+  onSearch(): Promise<any> {
     const keys = Object.keys(this.getParams());
     const params = {};
     keys.forEach((key) => {
@@ -503,8 +504,8 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
           },
         },
         () => {
-          this.fetchData().then(() => {
-            resolve();
+          this.fetchData().then((res) => {
+            resolve(res);
           });
         },
       );
