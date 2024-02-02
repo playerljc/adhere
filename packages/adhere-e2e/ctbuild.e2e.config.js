@@ -1,6 +1,7 @@
 const modifyVars = require('./themes/default/vars');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const commandArgs = require('@ctsj/build/src/commandArgs');
 
 function isDev(mode) {
   return mode === 'development';
@@ -302,15 +303,23 @@ module.exports = {
   getTheme() {
     return getTheme();
   },
-  getConfig({ config, e2ePath, srcPath }) {
+  getConfig(config) {
     getConfig(config);
 
     const { webpackConfig } = config;
+
+    const cwd = commandArgs.toCommandArgs(process.argv[8]).get('runtimepath');
+
+    const e2ePath = path.join(cwd, 'e2e');
+
+    const srcPath = path.join(cwd, 'src');
 
     webpackConfig.entry.index = path.join(e2ePath, 'index.jsx');
 
     webpackConfig.module.rules[0].include = [e2ePath, srcPath];
     webpackConfig.module.rules[1].include = [e2ePath, srcPath];
+    webpackConfig.module.rules[1].use.find((l) => l.loader === 'ts-loader').options.configFile =
+      path.join(__dirname, 'tsconfig.e2e.json');
 
     webpackConfig.module.rules[3].include.push(e2ePath);
 
