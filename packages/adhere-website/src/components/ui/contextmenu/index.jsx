@@ -251,6 +251,104 @@ export default () => {
               },
             ],
           },
+          {
+            border: true,
+            title: 'Point',
+            data: [
+              {
+                params: 'x',
+                desc: '菜单显示的x坐标，现对于视口',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'y',
+                desc: '菜单显示的y坐标，现对于视口',
+                type: 'number',
+                defaultVal: '',
+              },
+            ],
+          },
+          {
+            border: true,
+            title: 'CircularMenuConfig',
+            data: [
+              {
+                params: 'totalAngle',
+                desc: '角度',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'spaceDeg',
+                desc: '菜单项之间的间距',
+                type: '0 | 1 | 2 | 3 | 4 | 5',
+                defaultVal: '',
+              },
+              {
+                params: 'background',
+                desc: '背景颜色',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'backgroundHover',
+                desc: 'hover颜色',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'pageBackground',
+                desc: '页面颜色',
+                type: 'string',
+                defaultVal: '',
+              },
+              {
+                params: 'diameter',
+                desc: '',
+                type: 'number',
+                defaultVal: '',
+              },
+              {
+                params: 'position',
+                desc: '',
+                type: `'top' | 'left' | 'right' | 'bottom'`,
+                defaultVal: '',
+              },
+              {
+                params: 'start',
+                desc: '',
+                type: `number`,
+                defaultVal: '',
+              },
+              {
+                params: 'horizontal',
+                desc: '',
+                type: `boolean`,
+                defaultVal: '',
+              },
+              {
+                params: 'hideAfterClick',
+                desc: '',
+                type: `boolean`,
+                defaultVal: '',
+              },
+              {
+                params: 'menus',
+                desc: '菜单的数据',
+                type: `
+                Array<{
+                  title?: string;
+                  icon?: string;
+                  href?: { url: string; blank: boolean } | string;
+                  click?: Function;
+                  disabled?: boolean;
+                }>
+                `,
+                defaultVal: '[]',
+              },
+            ],
+          },
         ]}
       />
 
@@ -299,6 +397,47 @@ export default () => {
                 ],
                 returnType: '',
                 returnDesc: '',
+              },
+              {
+                name: 'openCircular',
+                desc: '打开扇形菜单',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'config',
+                    desc: '配置',
+                    type: 'CircularMenuConfig',
+                    defaultVal: '',
+                    required: '',
+                  },
+                  {
+                    name: 'point',
+                    desc: '触发位置',
+                    type: 'Point',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
+              },
+              {
+                name: 'hideCircular',
+                desc: '关闭扇形菜单',
+                modifier: 'public',
+                params: [],
+              },
+              {
+                name: 'stylesCircular',
+                desc: '设置扇形菜单的样式',
+                modifier: 'public',
+                params: [
+                  {
+                    name: 'properties',
+                    desc: '样式的属性集合',
+                    type: 'object',
+                    defaultVal: '',
+                    required: '',
+                  },
+                ],
               },
             ],
           },
