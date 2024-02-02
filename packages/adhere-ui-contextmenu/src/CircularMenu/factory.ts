@@ -7,22 +7,24 @@ let mask: HTMLDivElement | null = null;
 
 const selectorPrefix = 'adhere-ui-context-circular-menu';
 
+function close() {
+  menuContainer?.parentElement?.removeChild?.(menuContainer as HTMLElement);
+  closeMask();
+  menuContainer = null;
+  contextMenu = null;
+}
+
 function createMask() {
   mask = document.createElement('div');
 
   mask.addEventListener('click', () => {
-    menuContainer?.parentElement?.removeChild?.(menuContainer as HTMLElement);
-    closeMask();
-    menuContainer = null;
-    contextMenu = null;
+    close();
   });
 
   mask.addEventListener('contextmenu', (e) => {
     e.preventDefault();
-    menuContainer?.parentElement?.removeChild?.(menuContainer as HTMLElement);
-    closeMask();
-    menuContainer = null;
-    contextMenu = null;
+
+    close();
   });
 
   mask.className = selectorPrefix;
