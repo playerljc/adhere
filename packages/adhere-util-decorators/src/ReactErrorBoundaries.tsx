@@ -4,7 +4,7 @@ import React from 'react';
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
 
-import { IReactErrorBoundariesState } from './types';
+import type { IReactErrorBoundariesState } from './types';
 
 // import errorIcon from './component_error.svg';
 

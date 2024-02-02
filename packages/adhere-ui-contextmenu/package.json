@@ -27,7 +27,7 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereContextMenu --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
-    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true"
+    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c ../adhere-e2e/ctbuild.e2e.config.js --define alias=@,evnVars=true"
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.10.28",

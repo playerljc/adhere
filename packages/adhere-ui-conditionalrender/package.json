@@ -26,7 +26,7 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereConditionalRender --define alias=@,evnVars=true",
-    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c e2e/ctbuild.config.js --define alias=@,evnVars=true",
+    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c ../adhere-e2e/ctbuild.e2e.config.js --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
