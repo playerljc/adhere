@@ -2,6 +2,7 @@ import MenuDataCodeText from '!!raw-loader!./MenuData';
 import P1CodeText from '!!raw-loader!./examples/p1';
 import P2CodeText from '!!raw-loader!./examples/p2';
 import P3CodeText from '!!raw-loader!./examples/p3';
+import P4CodeText from '!!raw-loader!./examples/p4';
 
 import React from 'react';
 
@@ -15,6 +16,7 @@ import PlayGroundPage, {
 import P1 from './examples/p1';
 import P2 from './examples/p2';
 import P3 from './examples/p3';
+import P4 from './examples/p4';
 
 export default () => {
   function boxPanelConfig() {
@@ -99,6 +101,21 @@ export default () => {
         ],
         type: 'PlayGroundTab',
         renderChildren: () => <P3 />,
+      },
+      {
+        id: 'p4',
+        name: '扇形菜单',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '扇形菜单',
+            info: '扇形菜单',
+          },
+        },
+        codeText: P4CodeText,
+        type: 'PlayGround',
+        renderChildren: () => <P4 />,
       },
     ];
   }
