@@ -1,16 +1,11 @@
 import { useUpdateEffect } from 'ahooks';
-import { Empty, Select, Spin } from 'antd';
+import { Select } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
-import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
-
 import type { AutoCompleteProps } from './types';
-
-const { memoized } = WatchMemoized;
-
-const selectorPrefix = 'adhere-ui-auto-complete';
+import useCommon from './useCommon';
 
 /**
  * AutoComplete
@@ -31,7 +26,7 @@ const AutoComplete = memo<AutoCompleteProps>(
     classNameWrap,
     styleWrap,
     renderLoading,
-    debounceTimeout = 300,
+    debounceTimeout,
     options,
     loadData,
     defaultOptions,
@@ -39,36 +34,34 @@ const AutoComplete = memo<AutoCompleteProps>(
     children,
     ...props
   }) => {
-    // const lock = useRef(false);
-
-    const [fetching, setFetching] = useState(false);
-
-    const [open, setOpen] = useState(false);
-
     const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
 
     const onSelectChangeStartTime = useRef<number>(0);
 
     const isMultiple = 'mode' in props && props.mode === 'multiple';
 
-    const FetchLoading = useMemo(
-      () =>
-        renderLoading?.() ?? (
-          <div className={`${selectorPrefix}-loading`}>
-            <Spin size="large" />
-          </div>
-        ),
-      [renderLoading],
-    );
+    const {
+      defaultDebounceTimeout,
+      selectorPrefix,
+      fetchLoading,
+      empty,
+      fetching,
+      open,
+      setOpen,
+      onClear,
+      onInputMemo,
+    } = useCommon({
+      renderLoading,
+      emptyContent,
+      loadData,
+    });
 
     /**
      * onSelectChange
      * @description 从下方组件触发的
      * @param _values
      */
-    const onSelectChange = (_values) => {
-      // console.log('onSelectChange ~ _value', _values);
-
+    function onSelectChange(_values) {
       if (Array.isArray(_values)) {
         setSelectedRows(
           _values
@@ -90,25 +83,7 @@ const AutoComplete = memo<AutoCompleteProps>(
         // 单选
         setOpen(false);
       }
-    };
-
-    const onClear = () => {
-      loadData?.('').then(() => {
-        setFetching(false);
-      });
-    };
-
-    const onInputMemo = useCallback(
-      memoized.createMemoFun((_kw) => {
-        setFetching(true);
-
-        // 输入的不是空
-        loadData?.(_kw).then(() => {
-          setFetching(false);
-        });
-      }),
-      [loadData],
-    );
+    }
 
     const onInput = useCallback(
       debounce((e) => {
@@ -134,11 +109,11 @@ const AutoComplete = memo<AutoCompleteProps>(
         const _kw = e.target.value.trim();
 
         onInputMemo(_kw);
-      }, debounceTimeout ?? 300),
+      }, debounceTimeout ?? defaultDebounceTimeout),
       [debounceTimeout],
     );
 
-    const selectOptions = useMemo<any[]>(() => {
+    const containerOptions = useMemo<any[]>(() => {
       const allOptions = [...(options ?? []), ...(selectedRows ?? [])];
 
       const allOptionKeys = allOptions.map(({ value }) => value);
@@ -148,41 +123,43 @@ const AutoComplete = memo<AutoCompleteProps>(
       return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
     }, [selectedRows, options]);
 
-    const empty = useMemo(
-      () => emptyContent ?? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />,
-      [emptyContent],
-    );
+    const dropdownOptions = useMemo<any[]>(() => {
+      const allOptions = [
+        ...(options ?? []),
+        ...(defaultOptions ?? []).filter((t) => props.value.includes(t.value)),
+      ];
+
+      const allOptionKeys = allOptions.map(({ value }) => value);
+
+      const distinctKeys = Array.from(new Set(allOptionKeys));
+
+      return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
+    }, [options, defaultOptions, props.value]);
 
     useUpdateEffect(() => {
-      // console.log('defaultOptions', defaultOptions);
       setSelectedRows(defaultOptions ?? []);
     }, [defaultOptions]);
-
-    // console.log('options', options);
-    // console.log('selectedRows', selectedRows);
-    // console.log('selectOptions', selectOptions);
 
     return (
       <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
         <Select
           showSearch
           allowClear
-          // notFoundContent={fetching ? FetchLoading : <div>notFoundContent</div>}
           filterOption={false}
           open={open}
-          options={selectOptions ?? []}
+          options={containerOptions ?? []}
           // @ts-ignore
           onInput={onInput}
           onClear={onClear}
           dropdownRender={(originNode) => {
-            if (fetching) return FetchLoading;
+            if (fetching) return fetchLoading;
 
-            return !!options?.length
+            return !!dropdownOptions?.length
               ? children?.({
                   originNode,
                   value: props.value,
                   onChange: (_value) => onSelectChange(_value),
-                  options: options ?? [],
+                  options: dropdownOptions ?? [],
                   loading: fetching,
                 }) ?? originNode
               : empty;
