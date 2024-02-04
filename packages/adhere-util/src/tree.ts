@@ -187,7 +187,7 @@ const TreeUtil: TreeUtilType = {
 
     loop(result, treeData, rootParentId);
 
-    return result.filter(({ children, ...rest }) => rest);
+    return result.map(({ children, ...rest }) => rest) as any[];
   },
   /**
    * arrayToAntdTree - array转换成Tree
