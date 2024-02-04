@@ -1,4 +1,4 @@
 import React from 'react';
-import type { AutoCompleteCheckAllListSelectProps, DisplayNameInternal } from '../types';
-declare const AutoCompleteCheckAllListSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteCheckAllListSelectProps>>;
+import type { DisplayNameInternal } from '../types';
+declare const AutoCompleteCheckAllListSelect: DisplayNameInternal<React.MemoExoticComponent<any>>;
 export default AutoCompleteCheckAllListSelect;

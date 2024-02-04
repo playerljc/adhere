@@ -28,6 +28,5 @@ const InternalPagingEntityValueHOC = memo<PagingEntityValueHOCProps>((props) => 
 const PagingEntityValueHOC = InternalPagingEntityValueHOC as DisplayNameInternal<
   typeof InternalPagingEntityValueHOC
 >;
-PagingEntityValueHOC.displayName = 'PagingEntityValueHOC';
 
 export default PagingEntityValueHOC;

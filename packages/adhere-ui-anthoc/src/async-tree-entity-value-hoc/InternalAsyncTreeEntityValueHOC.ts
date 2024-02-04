@@ -19,6 +19,5 @@ const InternalAsyncTreeEntityValueHOC = memo<AsyncTreeEntityValueHOCProps>((prop
 const AsyncTreeEntityValueHOC = InternalAsyncTreeEntityValueHOC as DisplayNameInternal<
   typeof InternalAsyncTreeEntityValueHOC
 >;
-AsyncTreeEntityValueHOC.displayName = 'AsyncTreeEntityValueHOC';
 
 export default AsyncTreeEntityValueHOC;

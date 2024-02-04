@@ -33,6 +33,5 @@ const InternalTreeEntityValueHOC = memo<TreeEntityValueHOCProps>((props) => {
 const TreeEntityValueHOC = InternalTreeEntityValueHOC as DisplayNameInternal<
   typeof InternalTreeEntityValueHOC
 >;
-TreeEntityValueHOC.displayName = 'TreeEntityValueHOC';
 
 export default TreeEntityValueHOC;

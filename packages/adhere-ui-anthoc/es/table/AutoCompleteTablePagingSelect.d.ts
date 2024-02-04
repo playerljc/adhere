@@ -1,4 +1,4 @@
 import React from 'react';
-import type { AutoCompleteTablePagingSelectProps, DisplayNameInternal } from '../types';
-declare const AutoCompleteTablePagingSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteTablePagingSelectProps>>;
+import type { DisplayNameInternal } from '../types';
+declare const AutoCompleteTablePagingSelect: DisplayNameInternal<React.MemoExoticComponent<any>>;
 export default AutoCompleteTablePagingSelect;

@@ -33,6 +33,5 @@ const InternalArrayEntityValueHOC = memo<ArrayEntityValueHOCProps>((props) => {
 const ArrayEntityValueHOC = InternalArrayEntityValueHOC as DisplayNameInternal<
   typeof InternalArrayEntityValueHOC
 >;
-ArrayEntityValueHOC.displayName = 'ArrayEntityValueHOC';
 
 export default ArrayEntityValueHOC;

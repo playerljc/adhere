@@ -1,4 +1,2 @@
-/// <reference types="react" />
-import type { DisplayNameInternal, PagingEntityValueHOCProps } from '../types';
-declare const PagingEntityValueHOC: DisplayNameInternal<import("react").NamedExoticComponent<PagingEntityValueHOCProps>>;
+import PagingEntityValueHOC from './PagingEntityValueHOC';
 export default PagingEntityValueHOC;

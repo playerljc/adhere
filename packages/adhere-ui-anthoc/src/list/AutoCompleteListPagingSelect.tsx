@@ -58,7 +58,7 @@ const InternalAutoCompleteListPagingSelect = memo<AutoCompleteListPagingSelectPr
           });
 
           return new Promise((resolve) => {
-            setTimeout(() => resolve(), 300);
+            setTimeout(() => resolve(null), 300);
           });
         }}
       >
