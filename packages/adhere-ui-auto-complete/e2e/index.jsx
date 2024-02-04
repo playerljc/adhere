@@ -9,5 +9,5 @@ import Test from './Test.jsx';
 import TreeTest from './TreeTest';
 
 e2e.PC({
-  children: <TablePaginMultiple />,
+  children: <TreeTest />,
 });

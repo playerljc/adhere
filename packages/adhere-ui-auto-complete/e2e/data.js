@@ -1,5 +1,3 @@
-import Mock from 'mockjs';
-
 export default [
   {
     label: '机工出版',

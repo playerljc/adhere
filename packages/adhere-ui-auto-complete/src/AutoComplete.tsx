@@ -65,12 +65,14 @@ const AutoComplete = memo<AutoCompleteProps>(
       if (Array.isArray(_values)) {
         setSelectedRows(
           _values
-            .map((_value) => options?.find((_option) => _option.value === _value))
+            .map((_value) => allOptions?.find((_option) => _option.value === _value))
             .filter((t) => !!t),
         );
       } else {
         setSelectedRows(
-          [(options ?? []).find((option) => option.value === _values)].filter((_value) => !!_value),
+          [(allOptions ?? []).find((option) => option.value === _values)].filter(
+            (_value) => !!_value,
+          ),
         );
       }
 
@@ -113,28 +115,22 @@ const AutoComplete = memo<AutoCompleteProps>(
       [debounceTimeout],
     );
 
-    const containerOptions = useMemo<any[]>(() => {
-      const allOptions = [...(options ?? []), ...(selectedRows ?? [])];
-
-      const allOptionKeys = allOptions.map(({ value }) => value);
-
-      const distinctKeys = Array.from(new Set(allOptionKeys));
-
-      return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
-    }, [selectedRows, options]);
-
-    const dropdownOptions = useMemo<any[]>(() => {
-      const allOptions = [
+    const allOptions = useMemo(
+      () => [
         ...(options ?? []),
         ...(defaultOptions ?? []).filter((t) => props.value.includes(t.value)),
-      ];
+        ...selectedRows,
+      ],
+      [options, defaultOptions, selectedRows, props.value],
+    );
 
+    const targetOptions = useMemo<any[]>(() => {
       const allOptionKeys = allOptions.map(({ value }) => value);
 
       const distinctKeys = Array.from(new Set(allOptionKeys));
 
       return distinctKeys.map((_value) => allOptions.find((_option) => _option.value === _value));
-    }, [options, defaultOptions, props.value]);
+    }, [allOptions]);
 
     useUpdateEffect(() => {
       setSelectedRows(defaultOptions ?? []);
@@ -147,19 +143,19 @@ const AutoComplete = memo<AutoCompleteProps>(
           allowClear
           filterOption={false}
           open={open}
-          options={containerOptions ?? []}
+          options={targetOptions}
           // @ts-ignore
           onInput={onInput}
           onClear={onClear}
           dropdownRender={(originNode) => {
             if (fetching) return fetchLoading;
 
-            return !!dropdownOptions?.length
+            return !!targetOptions?.length
               ? children?.({
                   originNode,
                   value: props.value,
                   onChange: (_value) => onSelectChange(_value),
-                  options: dropdownOptions ?? [],
+                  options: targetOptions ?? [],
                   loading: fetching,
                 }) ?? originNode
               : empty;
