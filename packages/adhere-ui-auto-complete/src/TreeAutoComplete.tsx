@@ -290,7 +290,8 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           showSearch
           allowClear
           // @ts-ignore
-          filterOption={false}
+          // filterOption={false}
+          filterTreeNode={false}
           open={open}
           treeData={targetTreeData}
           // onSearch={onInput}

@@ -131,16 +131,18 @@ const flatDefaultTreeData = {
 export default () => {
   const [treeData, setTreeData] = useState([]);
 
-  const [value, setValue] = useState(['leaf2']);
+  const [value, setValue] = useState([
+    /*'leaf2'*/
+  ]);
 
   return (
     <TreeAutoComplete
       value={value}
       style={{ width: 200 }}
       // defaultTreeData={flatDefaultTreeData}
-      defaultTreeData={defaultTreeData}
+      // defaultTreeData={defaultTreeData}
       treeCheckable
-      // showCheckedStrategy={TreeSelect.SHOW_ALL}
+      showCheckedStrategy={TreeSelect.SHOW_ALL}
       // multiple
       // treeDataSimpleMode
       loadData={(_kw) => {
