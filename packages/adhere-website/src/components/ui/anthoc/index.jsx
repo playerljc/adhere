@@ -45,6 +45,7 @@ import CheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/CheckboxSel
 import CustomCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/CustomCheckAllCheckbox';
 import CustomCheckboxCodeText from '!!raw-loader!./examples/Checkbox/CustomCheckbox';
 import CustomCheckboxSelectCodeText from '!!raw-loader!./examples/Checkbox/CustomCheckboxSelect';
+import CustomRenderCheckboxCheckAllPositionCodeText from '!!raw-loader!./examples/Checkbox/CustomRenderCheckboxCheckAllPosition';
 import HorizontalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/HorizontalCheckAllCheckbox';
 import HorizontalCheckboxCodeText from '!!raw-loader!./examples/Checkbox/HorizontalCheckbox';
 import VerticalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/VerticalCheckAllCheckbox';
@@ -84,6 +85,7 @@ import AutoCompleteSelectCodeText from '!!raw-loader!./examples/Select/AutoCompl
 import CheckAllMultipleSelectCodeText from '!!raw-loader!./examples/Select/CheckAllMultipleSelect';
 import DropdownRenderSelectCodeText from '!!raw-loader!./examples/Select/DropdownRenderSelect';
 import MultipleSelectCodeText from '!!raw-loader!./examples/Select/MultipleSelect';
+import RenderCheckAllMultipleSelectCodeText from '!!raw-loader!./examples/Select/RenderCheckAllMultipleSelect';
 import SelectCodeText from '!!raw-loader!./examples/Select/Select';
 import AutoCompleteTablePagingSelectCodeText from '!!raw-loader!./examples/Table/AutoCompleteTablePagingSelect';
 import AutoCompleteTableSelectCodeText from '!!raw-loader!./examples/Table/AutoCompleteTableSelect';
@@ -98,6 +100,7 @@ import TableCodeText from '!!raw-loader!./examples/Table/Table';
 import AutoCompleteCheckAllTagSelectCodeText from '!!raw-loader!./examples/Tag/AutoCompleteCheckAllTagSelect';
 import AutoCompleteTagSelectCodeText from '!!raw-loader!./examples/Tag/AutoCompleteTagSelect';
 import CheckAllTagSelectCodeText from '!!raw-loader!./examples/Tag/CheckAllTagSelect';
+import CustomRenderTagCheckAllPositionCodeText from '!!raw-loader!./examples/Tag/CustomRenderTagCheckAllPosition';
 import HorizontalCheckAllCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/HorizontalCheckAllCheckableTagGroup';
 import HorizontalCheckableTagGroupCodeText from '!!raw-loader!./examples/Tag/HorizontalCheckableTagGroup';
 import HorizontalTagGroupCodeText from '!!raw-loader!./examples/Tag/HorizontalTagGroup';
@@ -136,32 +139,6 @@ import TreeSelectCodeText from '!!raw-loader!./examples/TreeSelect/TreeSelect';
 
 import React from 'react';
 
-/**
- * input
- * text-area
- * input-number-decimal1
- * input-number-decimal2
- * input-number-integer
- * modal
- * range-picker
- * time-picker
- * upload
- * pagination
- * submit-button
- * form
- *
- * transfer
- * select
- * multiple-select
- * radio
- * checkbox
- * tag
- * list
- * table
- * tree-select
- * cascader
- * auto-complete
- */
 import { FlexLayout, Space } from '@baifendian/adhere';
 import { DatePicker, RangePicker, TimePicker } from '@baifendian/adhere-ui-anthoc';
 
@@ -214,6 +191,7 @@ import CheckboxSelect from './examples/Checkbox/CheckboxSelect';
 import CustomCheckAllCheckbox from './examples/Checkbox/CustomCheckAllCheckbox';
 import CustomCheckbox from './examples/Checkbox/CustomCheckbox';
 import CustomCheckboxSelect from './examples/Checkbox/CustomCheckboxSelect';
+import CustomRenderCheckboxCheckAllPosition from './examples/Checkbox/CustomRenderCheckboxCheckAllPosition';
 import HorizontalCheckAllCheckbox from './examples/Checkbox/HorizontalCheckAllCheckbox';
 import HorizontalCheckbox from './examples/Checkbox/HorizontalCheckbox';
 import VerticalCheckAllCheckbox from './examples/Checkbox/VerticalCheckAllCheckbox';
@@ -253,6 +231,7 @@ import AutoCompleteSelect from './examples/Select/AutoCompleteSelect';
 import CheckAllMultipleSelect from './examples/Select/CheckAllMultipleSelect';
 import DropdownRenderSelect from './examples/Select/DropdownRenderSelect';
 import MultipleSelect from './examples/Select/MultipleSelect';
+import RenderCheckAllMultipleSelect from './examples/Select/RenderCheckAllMultipleSelect';
 import Select from './examples/Select/Select';
 import AutoCompleteTablePagingSelect from './examples/Table/AutoCompleteTablePagingSelect';
 import AutoCompleteTableSelect from './examples/Table/AutoCompleteTableSelect';
@@ -267,6 +246,7 @@ import Table from './examples/Table/Table';
 import AutoCompleteCheckAllTagSelect from './examples/Tag/AutoCompleteCheckAllTagSelect';
 import AutoCompleteTagSelect from './examples/Tag/AutoCompleteTagSelect';
 import CheckAllTagSelect from './examples/Tag/CheckAllTagSelect';
+import CustomRenderTagCheckAllPosition from './examples/Tag/CustomRenderTagCheckAllPosition';
 import HorizontalCheckAllCheckableTagGroup from './examples/Tag/HorizontalCheckAllCheckableTagGroup';
 import HorizontalCheckableTagGroup from './examples/Tag/HorizontalCheckableTagGroup';
 import HorizontalTagGroup from './examples/Tag/HorizontalTagGroup';
@@ -308,10 +288,6 @@ import TreeSelect from './examples/TreeSelect/TreeSelect';
 const { ScrollLayout } = FlexLayout;
 
 export default () => {
-  // console.log('a======', reactElementToJsxString(<FlexLayout />));
-  // console.log('a======', reactElementToJsxString(<Input type="primary" />));
-  // console.log('b======', <FlexLayout type="primary" />);
-
   return (
     <PlayGroundPage>
       <Section title="AntHOC">
@@ -620,6 +596,21 @@ export default () => {
             type: 'PlayGround',
             codeText: CheckAllMultipleSelectCodeText,
             renderChildren: () => <CheckAllMultipleSelect />,
+          },
+          {
+            id: 'RenderCheckAllMultipleSelect',
+            name: `RenderCheckAllMultipleSelect`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'RenderCheckAllMultipleSelect',
+                info: '可以自定义全选按钮的位置',
+              },
+            },
+            type: 'PlayGround',
+            codeText: RenderCheckAllMultipleSelectCodeText,
+            renderChildren: () => <RenderCheckAllMultipleSelect />,
           },
           {
             id: `DropdownRenderSelect`,
@@ -1083,6 +1074,21 @@ export default () => {
             codeText: CheckAllCustomCheckboxSelectCodeText,
             renderChildren: () => <CheckAllCustomCheckboxSelect />,
           },
+          {
+            id: 'CustomRenderCheckboxCheckAllPosition',
+            name: `CustomRenderCheckboxCheckAllPosition`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CustomRenderCheckboxCheckAllPosition',
+                info: '自定义全选的位置，所有CheckAll都有render属性',
+              },
+            },
+            type: 'PlayGround',
+            codeText: CustomRenderCheckboxCheckAllPositionCodeText,
+            renderChildren: () => <CustomRenderCheckboxCheckAllPosition />,
+          },
         ]}
       />
 
@@ -1253,6 +1259,21 @@ export default () => {
             type: 'PlayGround',
             codeText: AutoCompleteCheckAllTagSelectCodeText,
             renderChildren: () => <AutoCompleteCheckAllTagSelect />,
+          },
+          {
+            id: 'CustomRenderTagCheckAllPosition',
+            name: `CustomRenderTagCheckAllPosition`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: 'CustomRenderTagCheckAllPosition',
+                info: '自定义全选的位置，所有CheckAll都有render属性',
+              },
+            },
+            type: 'PlayGround',
+            codeText: CustomRenderTagCheckAllPositionCodeText,
+            renderChildren: () => <CustomRenderTagCheckAllPosition />,
           },
         ]}
       />
