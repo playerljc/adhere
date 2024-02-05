@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
-import type { AutoCompleteProps } from './types';
+import TreeAutoComplete from './TreeAutoComplete';
+import type { AutoCompleteComponent, AutoCompleteProps } from './types';
 import useCommon from './useCommon';
 
 /**
@@ -21,7 +22,7 @@ import useCommon from './useCommon';
  * @param props
  * @constructor
  */
-const AutoComplete = memo<AutoCompleteProps>(
+const InternalAutoComplete = memo<AutoCompleteProps>(
   ({
     classNameWrap,
     styleWrap,
@@ -168,6 +169,10 @@ const AutoComplete = memo<AutoCompleteProps>(
     );
   },
 );
+
+const AutoComplete = InternalAutoComplete as AutoCompleteComponent;
+
+AutoComplete.TreeAutoComplete = TreeAutoComplete;
 
 AutoComplete.displayName = 'AutoComplete';
 

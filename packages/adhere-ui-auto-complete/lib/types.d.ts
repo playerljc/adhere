@@ -1,5 +1,10 @@
 import { SelectProps, TreeSelectProps } from 'antd';
+import { NamedExoticComponent } from 'react';
 import type { CSSProperties, ReactElement } from 'react';
+import TreeAutoComplete from './TreeAutoComplete';
+export type AutoCompleteComponent = NamedExoticComponent<AutoCompleteProps> & {
+    TreeAutoComplete: typeof TreeAutoComplete;
+};
 export interface IAutoComplete {
     classNameWrap?: string;
     styleWrap?: CSSProperties;
