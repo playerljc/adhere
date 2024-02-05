@@ -22,6 +22,7 @@ const InternalAutoCompleteCheckAllMultipleSelect = memo<AutoCompleteCheckAllMult
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
+    render,
     ...props
   }) => {
     const { renderProps } = useCheckAllMultiple({
@@ -30,6 +31,7 @@ const InternalAutoCompleteCheckAllMultipleSelect = memo<AutoCompleteCheckAllMult
       checkAllWrapperStyle,
       dropdownWrapperClassName,
       dropdownWrapperStyle,
+      render,
       renderLoading: props.renderLoading,
     });
 

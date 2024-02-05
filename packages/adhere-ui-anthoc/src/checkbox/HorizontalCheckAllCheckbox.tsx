@@ -1,6 +1,6 @@
 import { CheckboxOptionType } from 'antd/es/checkbox';
 import classNames from 'classnames';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import CheckAllWrapper from '../CheckAllWrapper';
 import type { DisplayNameInternal, HorizontalCheckAllCheckboxProps } from '../types';
@@ -24,13 +24,11 @@ const InternalHorizontalCheckAllCheckbox = memo<HorizontalCheckAllCheckboxProps>
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
+    render,
     ...props
-  }) => (
-    <div className={selectorPrefix}>
-      <div
-        className={classNames(`${selectorPrefix}-check-all`, checkAllWrapperClassName ?? '')}
-        style={checkAllWrapperStyle ?? {}}
-      >
+  }) => {
+    const CheckAllOrigin = useMemo(
+      () => (
         <CheckAllWrapper
           value={props.value}
           onChange={(...arg) => {
@@ -47,16 +45,34 @@ const InternalHorizontalCheckAllCheckbox = memo<HorizontalCheckAllCheckboxProps>
             }) ?? []
           }
         />
-      </div>
+      ),
+      [props.value, props.options, props.onChange],
+    );
 
-      <div
-        className={classNames(`${selectorPrefix}-body`, dropdownWrapperClassName ?? '')}
-        style={dropdownWrapperStyle ?? {}}
-      >
-        <HorizontalCheckbox {...props} />
+    const ChildrenOrigin = useMemo(() => <HorizontalCheckbox {...props} />, [props]);
+
+    return (
+      <div className={selectorPrefix}>
+        {render?.(CheckAllOrigin, ChildrenOrigin) ?? (
+          <>
+            <div
+              className={classNames(`${selectorPrefix}-check-all`, checkAllWrapperClassName ?? '')}
+              style={checkAllWrapperStyle ?? {}}
+            >
+              {CheckAllOrigin}
+            </div>
+
+            <div
+              className={classNames(`${selectorPrefix}-body`, dropdownWrapperClassName ?? '')}
+              style={dropdownWrapperStyle ?? {}}
+            >
+              {ChildrenOrigin}
+            </div>
+          </>
+        )}
       </div>
-    </div>
-  ),
+    );
+  },
 );
 
 const HorizontalCheckAllCheckbox = InternalHorizontalCheckAllCheckbox as DisplayNameInternal<

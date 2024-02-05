@@ -68,6 +68,8 @@ export type CheckAllWrapperStyleProps = {
 export type DropdownWrapperStyleProps = {
   dropdownWrapperClassName?: string;
   dropdownWrapperStyle?: CSSProperties;
+  // 自定义渲染
+  render?: (checkAllOrigin: ReactElement, childrenOrigin: ReactNode) => ReactElement;
 };
 
 export type CheckAllWrapperProps = Pick<SelectProps, 'value' | 'options'> & {

@@ -1,4 +1,4 @@
 import React from 'react';
-import type { DisplayNameInternal } from '../types';
-declare const AutoCompleteListSelect: DisplayNameInternal<React.MemoExoticComponent<any>>;
+import type { AutoCompleteListSelectProps, DisplayNameInternal } from '../types';
+declare const AutoCompleteListSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteListSelectProps>>;
 export default AutoCompleteListSelect;

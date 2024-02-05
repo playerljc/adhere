@@ -46,6 +46,7 @@ export type CheckAllWrapperStyleProps = {
 export type DropdownWrapperStyleProps = {
     dropdownWrapperClassName?: string;
     dropdownWrapperStyle?: CSSProperties;
+    render?: (checkAllOrigin: ReactElement, childrenOrigin: ReactNode) => ReactElement;
 };
 export type CheckAllWrapperProps = Pick<SelectProps, 'value' | 'options'> & {
     onChange?: (checkedValue: CheckboxValueType[], checked: boolean, changeValue: CheckboxValueType[]) => void;

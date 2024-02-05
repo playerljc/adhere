@@ -1,6 +1,6 @@
 import type { CheckboxOptionType } from 'antd/es/checkbox';
 import classNames from 'classnames';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import CheckAllWrapper from '../CheckAllWrapper';
 import type { DisplayNameInternal, HorizontalCheckableTagGroupProps } from '../types';
@@ -24,13 +24,11 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
+    render,
     ...props
-  }) => (
-    <div className={selectorPrefix}>
-      <div
-        className={classNames(`${selectorPrefix}-check-all`, checkAllWrapperClassName ?? '')}
-        style={checkAllWrapperStyle ?? {}}
-      >
+  }) => {
+    const CheckAllOrigin = useMemo(
+      () => (
         <CheckAllWrapper
           value={props.value}
           onChange={(...arg) => props.onChange?.(...arg)}
@@ -45,16 +43,37 @@ const InternalHorizontalCheckAllCheckableTagGroup = memo<HorizontalCheckableTagG
             }) ?? []
           }
         />
-      </div>
+      ),
+      [props.value, props.onChange, props.options],
+    );
 
-      <div
-        className={classNames(`${selectorPrefix}-body`, dropdownWrapperClassName ?? '')}
-        style={dropdownWrapperStyle ?? {}}
-      >
-        <HorizontalCheckableTagGroup {...props} mode="multiple" />
+    const ChildrenOrigin = useMemo(
+      () => <HorizontalCheckableTagGroup {...props} mode="multiple" />,
+      [props],
+    );
+
+    return (
+      <div className={selectorPrefix}>
+        {render?.(CheckAllOrigin, ChildrenOrigin) ?? (
+          <>
+            <div
+              className={classNames(`${selectorPrefix}-check-all`, checkAllWrapperClassName ?? '')}
+              style={checkAllWrapperStyle ?? {}}
+            >
+              {CheckAllOrigin}
+            </div>
+
+            <div
+              className={classNames(`${selectorPrefix}-body`, dropdownWrapperClassName ?? '')}
+              style={dropdownWrapperStyle ?? {}}
+            >
+              {ChildrenOrigin}
+            </div>
+          </>
+        )}
       </div>
-    </div>
-  ),
+    );
+  },
 );
 
 const HorizontalCheckAllCheckableTagGroup =

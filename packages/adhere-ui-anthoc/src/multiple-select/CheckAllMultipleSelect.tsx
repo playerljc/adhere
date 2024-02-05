@@ -22,6 +22,7 @@ const InternalCheckAllSelect = memo<CheckAllSelectProps>(
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
+    render,
     ...props
   }) => {
     const { renderProps, currentOriginNode, dropdownRenderElement } = useCheckAllMultiple({
@@ -30,6 +31,7 @@ const InternalCheckAllSelect = memo<CheckAllSelectProps>(
       checkAllWrapperStyle,
       dropdownWrapperClassName,
       dropdownWrapperStyle,
+      render,
     });
 
     return (

@@ -1,6 +1,6 @@
 import { CheckboxOptionType } from 'antd/es/checkbox';
 import classNames from 'classnames';
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import CheckAllWrapper from '../CheckAllWrapper';
 import type { CustomCheckAllCheckboxProps, DisplayNameInternal } from '../types';
@@ -23,38 +23,52 @@ const InternalCustomCheckAllCheckbox = memo<CustomCheckAllCheckboxProps>(
     checkAllWrapperStyle,
     dropdownWrapperClassName,
     dropdownWrapperStyle,
+    render,
     ...props
   }) => {
+    const CheckAllOrigin = useMemo(
+      () => (
+        <CheckAllWrapper
+          value={props.value}
+          onChange={(...arg) => {
+            props.onChange?.(...arg);
+          }}
+          options={
+            props?.options?.map((t) => {
+              const option = t as CheckboxOptionType;
+
+              return {
+                label: option.label,
+                value: option.value as string,
+              };
+            }) ?? []
+          }
+        />
+      ),
+      [props.value, props.onChange, props.options],
+    );
+
+    const ChildrenOrigin = useMemo(() => <CustomCheckbox {...props} />, [props]);
+
     return (
       <div className={selectorPrefix}>
-        <div
-          className={classNames(`${selectorPrefix}-check-all`, checkAllWrapperClassName ?? '')}
-          style={checkAllWrapperStyle ?? {}}
-        >
-          <CheckAllWrapper
-            value={props.value}
-            onChange={(...arg) => {
-              props.onChange?.(...arg);
-            }}
-            options={
-              props?.options?.map((t) => {
-                const option = t as CheckboxOptionType;
+        {render?.(CheckAllOrigin, ChildrenOrigin) ?? (
+          <>
+            <div
+              className={classNames(`${selectorPrefix}-check-all`, checkAllWrapperClassName ?? '')}
+              style={checkAllWrapperStyle ?? {}}
+            >
+              {CheckAllOrigin}
+            </div>
 
-                return {
-                  label: option.label,
-                  value: option.value as string,
-                };
-              }) ?? []
-            }
-          />
-        </div>
-
-        <div
-          className={classNames(`${selectorPrefix}-body`, dropdownWrapperClassName ?? '')}
-          style={dropdownWrapperStyle ?? {}}
-        >
-          <CustomCheckbox {...props} />
-        </div>
+            <div
+              className={classNames(`${selectorPrefix}-body`, dropdownWrapperClassName ?? '')}
+              style={dropdownWrapperStyle ?? {}}
+            >
+              {ChildrenOrigin}
+            </div>
+          </>
+        )}
       </div>
     );
   },

@@ -1,4 +1,4 @@
 import React from 'react';
-import type { DisplayNameInternal } from '../types';
-declare const AutoCompleteListPagingSelect: DisplayNameInternal<React.MemoExoticComponent<any>>;
+import type { AutoCompleteListPagingSelectProps, DisplayNameInternal } from '../types';
+declare const AutoCompleteListPagingSelect: DisplayNameInternal<React.NamedExoticComponent<AutoCompleteListPagingSelectProps>>;
 export default AutoCompleteListPagingSelect;

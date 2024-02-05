@@ -9,6 +9,7 @@ export default () => {
     <Checkbox.CheckAllCheckboxSelect
       placeholder="A-Z"
       style={{ width: 200 }}
+      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
       value={value}
       onChange={setValue}
       options={Array.from({ length: 26 }).map((t, _index) => {
@@ -19,6 +20,14 @@ export default () => {
           value: letter,
         };
       })}
+      // render={(origin, children) => {
+      //   return (
+      //     <div>
+      //       <div>{children}</div>
+      //       <div>{origin}</div>
+      //     </div>
+      //   );
+      // }}
     />
   );
 };

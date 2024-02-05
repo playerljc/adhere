@@ -23,6 +23,7 @@ const useCheckAllMultiple: UseCheckAllMultiple = ({
   checkAllWrapperStyle,
   dropdownWrapperClassName,
   dropdownWrapperStyle,
+  render,
   renderLoading,
 }) => {
   const currentOriginNode = useRef<ReactNode>();
@@ -43,28 +44,39 @@ const useCheckAllMultiple: UseCheckAllMultiple = ({
         ..._renderProps,
       });
 
+      const CheckAllOrigin = <CheckAllWrapper {..._renderProps} />;
+
+      const ChildrenOrigin = dropdownRenderElement.current;
+
       return (
         <>
           {_renderProps.loading && fetchLoading}
 
           {!_renderProps.loading && (
             <div className={`${selectorPrefix}`}>
-              <div
-                className={classNames(
-                  `${selectorPrefix}-check-all`,
-                  checkAllWrapperClassName ?? '',
-                )}
-                style={checkAllWrapperStyle ?? {}}
-              >
-                <CheckAllWrapper {..._renderProps} />
-              </div>
+              {render?.(CheckAllOrigin, ChildrenOrigin) ?? (
+                <>
+                  <div
+                    className={classNames(
+                      `${selectorPrefix}-check-all`,
+                      checkAllWrapperClassName ?? '',
+                    )}
+                    style={checkAllWrapperStyle ?? {}}
+                  >
+                    {CheckAllOrigin}
+                  </div>
 
-              <div
-                className={classNames(`${selectorPrefix}-dropdown`, dropdownWrapperClassName ?? '')}
-                style={dropdownWrapperStyle ?? {}}
-              >
-                {dropdownRenderElement.current}
-              </div>
+                  <div
+                    className={classNames(
+                      `${selectorPrefix}-dropdown`,
+                      dropdownWrapperClassName ?? '',
+                    )}
+                    style={dropdownWrapperStyle ?? {}}
+                  >
+                    {ChildrenOrigin}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </>

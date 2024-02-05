@@ -21,6 +21,14 @@ export default () => {
           value: letter,
         };
       })}
+      // render={(origin, children) => {
+      //   return (
+      //     <div>
+      //       <div>{children}</div>
+      //       <div>{origin}</div>
+      //     </div>
+      //   );
+      // }}
     >
       {(options) => (
         <Row gutter={[16, 24]}>
