@@ -1,4 +1,4 @@
-// import { TreeSelect } from 'antd';
+import { TreeSelect } from 'antd';
 import React, { useState } from 'react';
 
 import Util from '@baifendian/adhere-util';
@@ -56,36 +56,42 @@ const FLAT_TREE_DATA = Util.treeToArray(
   'id',
 );
 
-const defaultTreeData = [
-  {
-    value: 'parent 1',
-    title: 'parent 1',
-    id: 'parent 1',
-    children: [
-      {
-        value: 'parent 1-0',
-        title: 'parent 1-0',
-        id: 'parent 1-0',
-        children: [
-          {
-            value: 'leaf2',
-            title: 'leaf2',
-            id: 'leaf2',
-          },
-        ],
-      },
-    ],
-  },
-];
+const defaultTreeData = {
+  key: 'leaf2',
+  value: [
+    {
+      value: 'parent 1',
+      title: 'parent 1',
+      id: 'parent 1',
+      children: [
+        {
+          value: 'parent 1-0',
+          title: 'parent 1-0',
+          id: 'parent 1-0',
+          children: [
+            {
+              value: 'leaf2',
+              title: 'leaf2',
+              id: 'leaf2',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
 
-const flatDefaultTreeData = Util.treeToArray(
-  defaultTreeData,
-  {
-    parentIdAttr: 'pId',
-    rootParentId: 0,
-  },
-  'id',
-);
+const flatDefaultTreeData = {
+  key: 'leaf2',
+  value: Util.treeToArray(
+    defaultTreeData.value,
+    {
+      parentIdAttr: 'pId',
+      rootParentId: 0,
+    },
+    'id',
+  ),
+};
 
 // const treeData = [
 //   ...Province.map((t) => ({
@@ -125,7 +131,7 @@ const flatDefaultTreeData = Util.treeToArray(
 export default () => {
   const [treeData, setTreeData] = useState([]);
 
-  const [value, setValue] = useState('leaf2');
+  const [value, setValue] = useState(['leaf2']);
 
   return (
     <TreeAutoComplete
@@ -133,6 +139,9 @@ export default () => {
       style={{ width: 200 }}
       // defaultTreeData={flatDefaultTreeData}
       defaultTreeData={defaultTreeData}
+      treeCheckable
+      // showCheckedStrategy={TreeSelect.SHOW_ALL}
+      // multiple
       // treeDataSimpleMode
       loadData={(_kw) => {
         return new Promise((resolve) => {
@@ -143,6 +152,8 @@ export default () => {
           }
 
           setTimeout(() => {
+            // 正常
+
             const flatTreeData = Util.treeToArray(
               TREE_DATA,
               { parentIdAttr: 'pId', rootParentId: '' },
