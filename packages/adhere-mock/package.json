@@ -1,0 +1,37 @@
+{
+  "name": "@baifendian/adhere-mock",
+  "version": "2.10.28",
+  "private": true,
+  "description": "adhere的mock",
+  "homepage": "https://github.com/playerljc/adhere",
+  "bugs": {
+    "url": "https://github.com/playerljc/adhere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playerljc/adhere"
+  },
+  "license": "ISC",
+  "author": "playerljc",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "umd"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
+    "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
+    "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.23.1",
+    "@ctsj/build": "^6.3.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.0.4"
+  }
+}
