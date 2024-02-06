@@ -281,10 +281,10 @@ const MessageDialogFactory = {
 
     lock = true;
 
-    function render(_modalConfig: typeof modalConfig) {
+    function render() {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-          <ModalDialog open={open} close={close} config={_modalConfig} closeBtn={defaultCloseBtn}>
+          <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
             {children}
           </ModalDialog>
         </ConfigProvider>,
@@ -294,7 +294,7 @@ const MessageDialogFactory = {
     function close() {
       open = false;
 
-      render(modalConfig);
+      render();
 
       setTimeout(() => {
         root.unmount();
@@ -304,7 +304,7 @@ const MessageDialogFactory = {
 
     let open = true;
 
-    const modalConfig = {
+    let modalConfig = {
       maskClosable: false,
       ...config,
       afterClose: () => {
@@ -320,7 +320,7 @@ const MessageDialogFactory = {
 
     const root = ReactDOM.createRoot(el);
 
-    render(modalConfig);
+    render();
 
     MessageDialogHandlers.set(el, root);
 
@@ -330,8 +330,8 @@ const MessageDialogFactory = {
       el,
       close,
       setConfig: (callback: any) => {
-        const nextConfig: any = produce(config, callback);
-        render(nextConfig);
+        modalConfig = produce(modalConfig, callback);
+        render();
       },
     };
   },
@@ -357,13 +357,13 @@ const MessageDialogFactory = {
 
     lock = true;
 
-    function render(_modalConfig: typeof modalConfig) {
+    function render() {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
           <MaximizeModalDialog
             close={close}
             open={open}
-            config={_modalConfig}
+            config={modalConfig}
             closeBtn={defaultCloseBtn}
           >
             {children}
@@ -374,7 +374,7 @@ const MessageDialogFactory = {
 
     let open = true;
 
-    const modalConfig = {
+    let modalConfig = {
       maskClosable: false,
       ...config,
       afterClose: () => {
@@ -391,7 +391,7 @@ const MessageDialogFactory = {
     function close() {
       open = false;
 
-      render(modalConfig);
+      render();
 
       setTimeout(() => {
         root.unmount();
@@ -401,7 +401,7 @@ const MessageDialogFactory = {
 
     const root = ReactDOM.createRoot(el);
 
-    render(modalConfig);
+    render();
 
     MessageDialogHandlers.set(el, root);
 
@@ -411,8 +411,8 @@ const MessageDialogFactory = {
       el,
       close,
       setConfig: (callback: any) => {
-        const nextConfig: any = produce(config, callback);
-        render(nextConfig);
+        modalConfig = produce(modalConfig, callback);
+        render();
       },
     };
   },

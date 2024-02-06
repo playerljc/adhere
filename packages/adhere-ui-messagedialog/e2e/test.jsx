@@ -60,7 +60,20 @@ export default () => {
         width: '50%',
         maskClosable: false,
       },
-      children: <div>222</div>,
+      children: (
+        <div>
+          <button
+            onClick={() => {
+              dialog.setConfig((draft) => {
+                draft.title = '查看1';
+                draft.width = '30%';
+              });
+            }}
+          >
+            修改标题为查看1，宽度变成30%
+          </button>
+        </div>
+      ),
     });
   };
 
