@@ -16,7 +16,11 @@ declare const MessageDialogFactory: {
      * @param icon {React.ReactElement}
      * @param {Function} - onSuccess
      */
-    Confirm({ title, text, width, zIndex, local, icon, onSuccess, }: ConfirmArgv): void;
+    Confirm({ title, text, width, zIndex, local, icon, onSuccess, }: ConfirmArgv): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      * Alert
      * @param title - {String | ReactNode}
@@ -26,7 +30,11 @@ declare const MessageDialogFactory: {
      * @param zIndex
      * @param icon - {React.ReactElement | null}
      */
-    Alert({ title, text, width, zIndex, local, icon, }: AlertArgv): void;
+    Alert({ title, text, width, zIndex, local, icon, }: AlertArgv): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      * Prompt
      * @param title
@@ -38,14 +46,22 @@ declare const MessageDialogFactory: {
      * @param onSuccess
      * @constructor
      */
-    Prompt({ title, config, layout, width, zIndex, local, onSuccess, }: PromptArgv): void;
+    Prompt({ title, config, layout, width, zIndex, local, onSuccess, }: PromptArgv): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      * InputPrompt
      * @param config
      * @param params
      * @constructor
      */
-    InputPrompt({ config, ...params }: PromptArgv): void;
+    InputPrompt({ config, ...params }: PromptArgv): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      * TextAreaPrompt
      * @param config
@@ -55,7 +71,11 @@ declare const MessageDialogFactory: {
     TextAreaPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
-    }): void;
+    }): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      * PassWordPrompt
      * @param config
@@ -65,7 +85,11 @@ declare const MessageDialogFactory: {
     PassWordPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
-    }): void;
+    }): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      * NumberPrompt
      * @param config
@@ -75,7 +99,11 @@ declare const MessageDialogFactory: {
     NumberPrompt({ config, ...params }: {
         [x: string]: any;
         config: any;
-    }): void;
+    }): void | {
+        el: HTMLElement;
+        close: () => void;
+        setConfig: (callback: any) => void;
+    };
     /**
      *  Modal
      *  @param {Object} - config
@@ -91,10 +119,11 @@ declare const MessageDialogFactory: {
      *  @param {ReactNode} - children
      *  @param defaultCloseBtn
      */
-    Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
-        el: HTMLDivElement;
+    Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): void | {
+        el: HTMLElement;
         close: () => void;
-    } | undefined;
+        setConfig: (callback: any) => void;
+    };
     /**
      * MaximizeModal
      * @param config
@@ -103,10 +132,11 @@ declare const MessageDialogFactory: {
      * @param local
      * @constructor
      */
-    MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
-        el: HTMLDivElement;
+    MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): void | {
+        el: HTMLElement;
         close: () => void;
-    } | undefined;
+        setConfig: (callback: any) => void;
+    };
     /**
      * close
      * @param el

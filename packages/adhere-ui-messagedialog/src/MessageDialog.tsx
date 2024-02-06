@@ -1,20 +1,14 @@
 import { Button, ConfigProvider, Form } from 'antd';
 import type { ConfigProviderProps } from 'antd/lib/config-provider';
 import type { FormInstance } from 'antd/lib/form';
+import { produce } from 'immer';
 import React from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 
-import {
-  DEFAULT_LOCAL,
-  DEFAULT_WIDTH,
-  DEFAULT_ZINDEX,
-  LOCAL,
-  PROMPT_LAYOUT,
-  THROTTLE_TIME,
-} from './Constent';
+import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './Constent';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
 import Trigger from './Trigger';
@@ -96,6 +90,8 @@ const MessageDialogFactory = {
       local,
       children: icon ? renderByIcon(icon, text) : text,
     });
+
+    return result;
   },
   /**
    * Alert
@@ -114,7 +110,7 @@ const MessageDialogFactory = {
     local,
     icon,
   }: AlertArgv) {
-    this.Modal({
+    return this.Modal({
       config: {
         title,
         centered: true,
@@ -193,6 +189,8 @@ const MessageDialogFactory = {
         </Form>
       ),
     });
+
+    return result;
   },
   /**
    * InputPrompt
@@ -201,7 +199,7 @@ const MessageDialogFactory = {
    * @constructor
    */
   InputPrompt({ config, ...params }: PromptArgv) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -216,7 +214,7 @@ const MessageDialogFactory = {
    * @constructor
    */
   TextAreaPrompt({ config, ...params }) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -231,7 +229,7 @@ const MessageDialogFactory = {
    * @constructor
    */
   PassWordPrompt({ config, ...params }) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -246,7 +244,7 @@ const MessageDialogFactory = {
    * @constructor
    */
   NumberPrompt({ config, ...params }) {
-    MessageDialogFactory.Prompt({
+    return MessageDialogFactory.Prompt({
       ...params,
       config: {
         ...config,
@@ -274,11 +272,19 @@ const MessageDialogFactory = {
     children = null,
     defaultCloseBtn = true,
     local = DEFAULT_LOCAL,
-  }: ModalArgv) {
-    function render() {
+  }: ModalArgv): {
+    el: HTMLElement;
+    close: () => void;
+    setConfig: (callback: any) => void;
+  } | void {
+    if (lock) return;
+
+    lock = true;
+
+    function render(_modalConfig: typeof modalConfig) {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-          <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
+          <ModalDialog open={open} close={close} config={_modalConfig} closeBtn={defaultCloseBtn}>
             {children}
           </ModalDialog>
         </ConfigProvider>,
@@ -288,17 +294,13 @@ const MessageDialogFactory = {
     function close() {
       open = false;
 
-      render();
+      render(modalConfig);
 
       setTimeout(() => {
         root.unmount();
         lock = false;
       }, 300);
     }
-
-    if (lock) return;
-
-    lock = true;
 
     let open = true;
 
@@ -318,7 +320,7 @@ const MessageDialogFactory = {
 
     const root = ReactDOM.createRoot(el);
 
-    render();
+    render(modalConfig);
 
     MessageDialogHandlers.set(el, root);
 
@@ -327,6 +329,10 @@ const MessageDialogFactory = {
     return {
       el,
       close,
+      setConfig: (callback: any) => {
+        const nextConfig: any = produce(config, callback);
+        render(nextConfig);
+      },
     };
   },
   /**
@@ -342,14 +348,22 @@ const MessageDialogFactory = {
     children = null,
     defaultCloseBtn = true,
     local = DEFAULT_LOCAL,
-  }: ModalArgv) {
-    function render() {
+  }: ModalArgv): {
+    el: HTMLElement;
+    close: () => void;
+    setConfig: (callback: any) => void;
+  } | void {
+    if (lock) return;
+
+    lock = true;
+
+    function render(_modalConfig: typeof modalConfig) {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
           <MaximizeModalDialog
             close={close}
             open={open}
-            config={modalConfig}
+            config={_modalConfig}
             closeBtn={defaultCloseBtn}
           >
             {children}
@@ -357,10 +371,6 @@ const MessageDialogFactory = {
         </ConfigProvider>,
       );
     }
-
-    if (lock) return;
-
-    lock = true;
 
     let open = true;
 
@@ -381,7 +391,7 @@ const MessageDialogFactory = {
     function close() {
       open = false;
 
-      render();
+      render(modalConfig);
 
       setTimeout(() => {
         root.unmount();
@@ -391,7 +401,7 @@ const MessageDialogFactory = {
 
     const root = ReactDOM.createRoot(el);
 
-    render();
+    render(modalConfig);
 
     MessageDialogHandlers.set(el, root);
 
@@ -400,6 +410,10 @@ const MessageDialogFactory = {
     return {
       el,
       close,
+      setConfig: (callback: any) => {
+        const nextConfig: any = produce(config, callback);
+        render(nextConfig);
+      },
     };
   },
   /**
