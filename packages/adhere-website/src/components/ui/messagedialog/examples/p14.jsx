@@ -1,4 +1,4 @@
-import { Button, Result } from 'antd';
+import { Button } from 'antd';
 import React from 'react';
 
 import { MessageDialog } from '@baifendian/adhere';
