@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 
-import TreeAutoComplete from './TreeAutoComplete';
 import type { AutoCompleteComponent, AutoCompleteProps } from './types';
 import useCommon from './useCommon';
 
@@ -171,8 +170,6 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
 );
 
 const AutoComplete = InternalAutoComplete as AutoCompleteComponent;
-
-AutoComplete.TreeAutoComplete = TreeAutoComplete;
 
 AutoComplete.displayName = 'AutoComplete';
 

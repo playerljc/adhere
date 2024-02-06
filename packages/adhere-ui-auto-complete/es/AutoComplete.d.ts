@@ -1,3 +1,4 @@
-import type { AutoCompleteComponent } from './types';
-declare const AutoComplete: AutoCompleteComponent;
+import React from 'react';
+import type { AutoCompleteProps } from './types';
+declare const AutoComplete: React.NamedExoticComponent<AutoCompleteProps>;
 export default AutoComplete;

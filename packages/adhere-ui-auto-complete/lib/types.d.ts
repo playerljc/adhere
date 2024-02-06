@@ -1,10 +1,7 @@
-import { SelectProps, TreeSelectProps } from 'antd';
+import { SelectProps } from 'antd';
 import { NamedExoticComponent } from 'react';
 import type { CSSProperties, ReactElement } from 'react';
-import TreeAutoComplete from './TreeAutoComplete';
-export type AutoCompleteComponent = NamedExoticComponent<AutoCompleteProps> & {
-    TreeAutoComplete: typeof TreeAutoComplete;
-};
+export type AutoCompleteComponent = NamedExoticComponent<AutoCompleteProps> & {};
 export interface IAutoComplete {
     classNameWrap?: string;
     styleWrap?: CSSProperties;
@@ -20,20 +17,6 @@ export type AutoCompleteProps = IAutoComplete & Omit<SelectProps, 'children'> & 
         value?: SelectProps['value'];
         onChange?: SelectProps['onChange'];
         options?: SelectProps['options'];
-        loading?: boolean;
-    }) => ReactElement;
-};
-export type TreeAutoCompleteProps = IAutoComplete & Omit<TreeSelectProps, 'children'> & {
-    defaultTreeData?: {
-        key: any;
-        value: TreeSelectProps['treeData'];
-    };
-    children?: (arg: {
-        originNode?: ReactElement;
-        value?: TreeSelectProps['value'];
-        treeDataSimpleMode: TreeSelectProps['treeDataSimpleMode'];
-        onChange?: TreeSelectProps['onChange'];
-        treeData?: TreeSelectProps['treeData'];
         loading?: boolean;
     }) => ReactElement;
 };
