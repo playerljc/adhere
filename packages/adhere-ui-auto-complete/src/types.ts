@@ -45,7 +45,7 @@ export type TreeAutoCompleteProps = IAutoComplete &
     }) => ReactElement;
   };
 
-export type UseMemo = (
+export type UseCommon = (
   params: Pick<AutoCompleteProps, 'renderLoading' | 'emptyContent' | 'loadData'>,
 ) => {
   defaultDebounceTimeout: number;
