@@ -38,6 +38,7 @@
   "dependencies": {
     "@ant-design/icons":"^5.2.6",
     "@baifendian/adhere": "^2.10.28",
+    "@baifendian/adhere-mock": "^2.10.28",
     "@ctsj/router": "^1.0.5",
     "antd": "^5.13.3",
     "antd-mobile": "^5.34.0",

@@ -73,6 +73,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.23.1",
+    "@baifendian/adhere-mock": "^2.10.28",
     "@ctsj/build": "^6.4.0",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/react": "^18.0.26",

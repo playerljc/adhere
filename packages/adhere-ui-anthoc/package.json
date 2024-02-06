@@ -32,6 +32,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-mock": "^2.10.28",
     "@baifendian/adhere-ui-auto-complete": "^2.10.28",
     "@baifendian/adhere-ui-flexlayout": "^2.10.28",
     "@baifendian/adhere-ui-suspense": "^2.10.28",

@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.23.1",
     "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-mock": "^2.10.28",
     "@baifendian/adhere-mobile-ui-globalindicator": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "babel-plugin-import": "^1.13.6",

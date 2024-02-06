@@ -11,7 +11,7 @@ import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
 import ListTest from './List/CheckboxListPaging';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
-import RadioTest from './Radio/AutoCompleteCustomRadioSelect.tsx';
+import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
 import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
@@ -29,5 +29,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <TagTest />,
+  children: <RadioTest />,
 });
