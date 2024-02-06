@@ -1,17 +1,31 @@
 import DataCodeText from '!!raw-loader!./data';
+import CheckableTableTreeAutoCompleteCodeText from '!!raw-loader!./examples/CheckableTableTreeAutoComplete';
+import CheckableTreeSelectAutoCompleteCodeText from '!!raw-loader!./examples/CheckableTreeSelectAutoComplete';
+import FlatTreeSelectAutoCompleteCodeText from '!!raw-loader!./examples/FlatTreeSelectAutoComplete';
+import MultiTreeSelectAutoCompleteCodeText from '!!raw-loader!./examples/MultiTreeSelectAutoComplete';
 import SelectAutoCompleteCodeText from '!!raw-loader!./examples/SelectAutoComplete';
 import TableAutoCompleteCodeText from '!!raw-loader!./examples/TableAutoComplete';
 import TablePaginMultipleAutoCompleteCodeText from '!!raw-loader!./examples/TablePaginMultipleAutoComplete';
 import TablePaginRadioAutoCompleteCodeText from '!!raw-loader!./examples/TablePaginRadioAutoComplete';
+import TableTreeAutoCompleteCodeText from '!!raw-loader!./examples/TableTreeAutoComplete';
+import TreeSelectAutoCompleteCodeText from '!!raw-loader!./examples/TreeSelectAutoComplete';
 
 import React from 'react';
 
+import { DelConfirm } from '@baifendian/adhere';
+
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
+import CheckableTableTreeAutoComplete from './examples/CheckableTableTreeAutoComplete';
+import CheckableTreeSelectAutoComplete from './examples/CheckableTreeSelectAutoComplete';
+import FlatTreeSelectAutoComplete from './examples/FlatTreeSelectAutoComplete';
+import MultiTreeSelectAutoComplete from './examples/MultiTreeSelectAutoComplete';
 import SelectAutoComplete from './examples/SelectAutoComplete';
 import TableAutoComplete from './examples/TableAutoComplete';
 import TablePaginMultipleAutoComplete from './examples/TablePaginMultipleAutoComplete';
 import TablePaginRadioAutoComplete from './examples/TablePaginRadioAutoComplete';
+import TableTreeAutoComplete from './examples/TableTreeAutoComplete';
+import TreeSelectAutoComplete from './examples/TreeSelectAutoComplete';
 
 export default () => {
   return (
@@ -122,6 +136,84 @@ export default () => {
             ],
             type: 'PlayGroundTab',
             renderChildren: () => <TablePaginMultipleAutoComplete />,
+          },
+          {
+            id: 'p5',
+            name: 'TreeSelect的AutoComplete',
+            cardProps: {
+              description: {
+                title: 'TreeSelect的AutoComplete',
+                info: 'TreeSelect的AutoComplete',
+              },
+            },
+            codeText: TreeSelectAutoCompleteCodeText,
+            type: 'PlayGround',
+            renderChildren: () => <TreeSelectAutoComplete />,
+          },
+          {
+            id: 'p6',
+            name: 'TreeSelect的AutoComplete拉平的数据',
+            cardProps: {
+              description: {
+                title: 'TreeSelect的AutoComplete拉平的数据',
+                info: 'TreeSelect的AutoComplete拉平的数据',
+              },
+            },
+            codeText: FlatTreeSelectAutoCompleteCodeText,
+            type: 'PlayGround',
+            renderChildren: () => <FlatTreeSelectAutoComplete />,
+          },
+          {
+            id: 'p7',
+            name: 'TreeSelect的AutoComplete多选',
+            cardProps: {
+              description: {
+                title: 'TreeSelect的AutoComplete多选',
+                info: 'TreeSelect的AutoComplete多选',
+              },
+            },
+            codeText: MultiTreeSelectAutoCompleteCodeText,
+            type: 'PlayGround',
+            renderChildren: () => <MultiTreeSelectAutoComplete />,
+          },
+          {
+            id: 'p8',
+            name: 'TreeSelect的AutoComplete支持checkable',
+            cardProps: {
+              description: {
+                title: 'TreeSelect的AutoComplete支持checkable',
+                info: 'TreeSelect的AutoComplete支持checkable',
+              },
+            },
+            codeText: CheckableTreeSelectAutoCompleteCodeText,
+            type: 'PlayGround',
+            renderChildren: () => <CheckableTreeSelectAutoComplete />,
+          },
+          {
+            id: 'p9',
+            name: 'TreeSelect的AutoComplete自定义TableTree渲染',
+            cardProps: {
+              description: {
+                title: 'TreeSelect的AutoComplete自定义TableTree渲染',
+                info: 'TreeSelect的AutoComplete自定义TableTree渲染',
+              },
+            },
+            codeText: TableTreeAutoCompleteCodeText,
+            type: 'PlayGround',
+            renderChildren: () => <TableTreeAutoComplete />,
+          },
+          {
+            id: 'p10',
+            name: 'TreeSelect的AutoComplete自定义TableTree渲染支持checkable',
+            cardProps: {
+              description: {
+                title: 'TreeSelect的AutoComplete自定义TableTree渲染支持checkable',
+                info: 'TreeSelect的AutoComplete自定义TableTree渲染支持checkable',
+              },
+            },
+            codeText: CheckableTableTreeAutoCompleteCodeText,
+            type: 'PlayGround',
+            renderChildren: () => <CheckableTableTreeAutoComplete />,
           },
         ]}
       />
