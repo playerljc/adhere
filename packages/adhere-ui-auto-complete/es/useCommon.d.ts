@@ -1,3 +1,3 @@
-import type { UseMemo } from './types';
-declare const useMemoInternal: UseMemo;
-export default useMemoInternal;
+import type { UseCommon } from './types';
+declare const useCommonInternal: UseCommon;
+export default useCommonInternal;

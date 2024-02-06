@@ -20,7 +20,7 @@ export type AutoCompleteProps = IAutoComplete & Omit<SelectProps, 'children'> & 
         loading?: boolean;
     }) => ReactElement;
 };
-export type UseMemo = (params: Pick<AutoCompleteProps, 'renderLoading' | 'emptyContent' | 'loadData'>) => {
+export type UseCommon = (params: Pick<AutoCompleteProps, 'renderLoading' | 'emptyContent' | 'loadData'>) => {
     defaultDebounceTimeout: number;
     fetchLoading: ReactElement;
     empty: ReactElement;

@@ -1,4 +1,4 @@
-import { SelectProps, TreeSelectProps } from 'antd';
+import { SelectProps } from 'antd';
 import { NamedExoticComponent } from 'react';
 import type { CSSProperties, ReactElement } from 'react';
 
@@ -25,7 +25,7 @@ export type AutoCompleteProps = IAutoComplete &
     }) => ReactElement;
   };
 
-export type UseMemo = (
+export type UseCommon = (
   params: Pick<AutoCompleteProps, 'renderLoading' | 'emptyContent' | 'loadData'>,
 ) => {
   defaultDebounceTimeout: number;

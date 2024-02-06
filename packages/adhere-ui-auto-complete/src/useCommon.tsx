@@ -3,12 +3,12 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import WatchMemoized from '@baifendian/adhere-util-watchmemoized';
 
-import type { UseMemo } from './types';
+import type { UseCommon } from './types';
 
 const { memoized } = WatchMemoized;
 const selectorPrefix = 'adhere-ui-auto-complete';
 
-const useMemoInternal: UseMemo = ({ renderLoading, emptyContent, loadData }) => {
+const useCommonInternal: UseCommon = ({ renderLoading, emptyContent, loadData }) => {
   const [fetching, setFetching] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -62,4 +62,4 @@ const useMemoInternal: UseMemo = ({ renderLoading, emptyContent, loadData }) => 
   };
 };
 
-export default useMemoInternal;
+export default useCommonInternal;
