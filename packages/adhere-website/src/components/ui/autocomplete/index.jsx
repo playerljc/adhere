@@ -12,8 +12,6 @@ import TreeSelectAutoCompleteCodeText from '!!raw-loader!./examples/TreeSelectAu
 
 import React from 'react';
 
-import { DelConfirm } from '@baifendian/adhere';
-
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
 import CheckableTableTreeAutoComplete from './examples/CheckableTableTreeAutoComplete';
