@@ -23,9 +23,9 @@ import { v4 } from 'uuid';
 
 import Resource from '@baifendian/adhere-util-resource';
 
-import GeoLayer from './geolayer';
-import * as TitleLayer from './titlelayer';
-import WindLayer from './windlayer';
+import GeoLayer from './GeoLayer';
+import * as TitleLayer from './TitleLayer';
+import WindLayer from './WindLayer';
 
 const EARTH_RADIUS = Resource.Dict.value.ResourceGisEarthRadius.value; // 单位M
 

@@ -1,8 +1,8 @@
-import AnimationManager from './animationmanager';
-import GeoLayer from './geolayer';
-import HeatMap from './heatmap';
-import OLMap from './olmap';
-import * as TitleLayer from './titlelayer';
+import AnimationManager from './AnimationManager';
+import GeoLayer from './GeoLayer';
+import HeatMap from './HeatMap';
+import OLMap from './OLMap';
+import * as TitleLayer from './TitleLayer';
 declare const _default: {
     AnimationManager: typeof AnimationManager;
     GeoLayer: typeof GeoLayer;
@@ -16,7 +16,7 @@ declare const _default: {
         addClickListener: (mapInstance: any, listeningLayer: any, hitCallback: ((feature: any) => void) | undefined, unHitCallback: ((feature: any) => void) | undefined, setCursor: any) => void;
         addHoverListener: (mapInstance: any, listeningLayer: any, hitCallback: any, unHitCallback: any) => void;
         addGeoLayer: (mapInstance: any, geojsonData: any, getStyleConfig?: () => void, zIndex?: number) => GeoLayer;
-        addWindLayer: (mapInstance: any, data: any, config: any, zIndex?: number) => import("./windlayer").default;
+        addWindLayer: (mapInstance: any, data: any, config: any, zIndex?: number) => import("./WindLayer").default;
         addVectorLayer(map: any, zIndex: any): {
             vectorLayer: import("ol/layer/Vector").default<import("ol/source/Vector").default<import("ol/geom/Geometry").default>>;
             vectorSource: import("ol/source/Vector").default<import("ol/geom/Geometry").default>;

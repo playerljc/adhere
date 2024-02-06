@@ -1,6 +1,6 @@
 import React from 'react';
-import GeoLayer from './geolayer';
-import { OLMapProps } from './types';
+import GeoLayer from './GeoLayer';
+import type { OLMapProps } from './types';
 /**
  * OlMap
  * @class OlMap
@@ -38,7 +38,7 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * @param config
      * @param zIndex
      */
-    addWindLayer(data: any, config: any, zIndex?: number): import("./windlayer").default;
+    addWindLayer(data: any, config: any, zIndex?: number): import("./WindLayer").default;
     /**
      * 添加数据层
      * @return {*|{vectorLayer, vectorSource}}

@@ -2,8 +2,8 @@ import { Heatmap as HeatMapLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source.js';
 import React from 'react';
 
-import OlMap from './olmap';
-import Util from './util';
+import OlMap from './OLMap';
+import Util from './Util';
 
 /**
  * HeatMap

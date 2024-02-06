@@ -4,12 +4,12 @@ import React, { createRef } from 'react';
 
 import Resource from '@baifendian/adhere-util-resource';
 
-import Constent from './constent';
+import Constent from './Constent';
 // import intl from '@baifendian/adhere-util-intl';
-import GeoLayer from './geolayer';
+import GeoLayer from './GeoLayer';
+import Util from './Util';
 // import * as TitleLayer from './titlelayer';
-import { OLMapProps } from './types';
-import Util from './util';
+import type { OLMapProps } from './types';
 
 // import 'ol/ol.css';
 // import './olmap.less';

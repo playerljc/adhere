@@ -8,8 +8,8 @@ import Draw from 'ol/interaction/Draw.js';
 import Modify from 'ol/interaction/Modify';
 import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
-import GeoLayer from './geolayer';
-import WindLayer from './windlayer';
+import GeoLayer from './GeoLayer';
+import WindLayer from './WindLayer';
 declare const _default: {
     SHOWBASESTATION_MINZOOM: number;
     /**
