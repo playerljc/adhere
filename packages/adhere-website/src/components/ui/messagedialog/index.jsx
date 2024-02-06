@@ -13,6 +13,7 @@ import P10CodeText from '!!raw-loader!./examples/p10';
 import P11CodeText from '!!raw-loader!./examples/p11';
 import P12CodeText from '!!raw-loader!./examples/p12';
 import P13CodeText from '!!raw-loader!./examples/p13';
+import P14CodeText from '!!raw-loader!./examples/p14';
 
 import React from 'react';
 
@@ -36,6 +37,7 @@ import P10 from './examples/p10';
 import P11 from './examples/p11';
 import P12 from './examples/p12';
 import P13 from './examples/p13';
+import P14 from './examples/p14';
 
 export default () => {
   function boxPanelConfig() {
@@ -264,6 +266,21 @@ export default () => {
           },
         ],
         renderChildren: () => <P13 />,
+      },
+      {
+        id: `p14`,
+        name: '动态设置Modal的参数',
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: '动态设置Modal的参数',
+            info: '动态设置Modal的参数',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P14CodeText,
+        renderChildren: () => <P14 />,
       },
     ];
   }
