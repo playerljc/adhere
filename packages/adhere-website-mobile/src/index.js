@@ -1,4 +1,4 @@
-import { ConfigProvider as AntdConfigProvider, App } from 'antd';
+import { App } from 'antd';
 import { ConfigProvider as AntdMobileConfigProvider } from 'antd-mobile';
 import 'antd-mobile/es/global';
 import zhCN from 'antd-mobile/es/locales/zh-CN';
@@ -11,6 +11,7 @@ import {
   Dict,
   Util,
 } from '@baifendian/adhere';
+import { ConfigProvider as AntdConfigProvider } from '@baifendian/adhere-ui-anthoc';
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';

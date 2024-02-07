@@ -1,5 +1,5 @@
 import { useUpdateEffect } from 'ahooks';
-import { App, ConfigProvider } from 'antd';
+import { App } from 'antd';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -13,6 +13,7 @@ import {
   Resource,
   Util,
 } from '@baifendian/adhere';
+import { ConfigProvider } from '@baifendian/adhere-ui-anthoc';
 
 import DictConfig from '@/config/dict/dict.config';
 import Router from '@/lib/Router';
@@ -153,3 +154,66 @@ function render() {
 })();
 
 export { render };
+
+// import { ConfigProvider, DatePicker, Space, Typography } from 'antd';
+// import en from 'antd/es/date-picker/locale/en_US';
+// import enUS from 'antd/es/locale/en_US';
+// import dayjs from 'dayjs';
+// import buddhistEra from 'dayjs/plugin/buddhistEra';
+// import React from 'react';
+// import { createRoot } from 'react-dom/client';
+//
+// dayjs.extend(buddhistEra);
+//
+// const { Title } = Typography;
+//
+// const buddhistLocale = {
+//   ...en,
+//   lang: {
+//     ...en.lang,
+//     fieldDateFormat: 'YYYY/MM/DD',
+//     fieldDateTimeFormat: 'YYYY/MM/DD HH:mm:ss',
+//     yearFormat: 'BBBB',
+//     cellYearFormat: 'BBBB',
+//   },
+// };
+//
+// // ConfigProvider level locale
+// const globalBuddhistLocale = {
+//   ...enUS,
+//   DatePicker: {
+//     ...enUS.DatePicker,
+//     lang: buddhistLocale.lang,
+//   },
+// };
+//
+// const defaultValue = dayjs('2024-01-01');
+//
+// const App = () => {
+//   const onChange = (_, dateStr) => {
+//     console.log('onChange:', dateStr);
+//   };
+//
+//   return (
+//     <Space direction="vertical">
+//       <Title level={4}>By locale props</Title>
+//       <DatePicker defaultValue={defaultValue} locale={buddhistLocale} onChange={onChange} />
+//       <DatePicker
+//         defaultValue={defaultValue}
+//         showTime
+//         locale={buddhistLocale}
+//         onChange={onChange}
+//       />
+//
+//       <Title level={4}>By ConfigProvider</Title>
+//       <ConfigProvider locale={globalBuddhistLocale}>
+//         <Space direction="vertical">
+//           <DatePicker defaultValue={defaultValue} onChange={onChange} />
+//           <DatePicker defaultValue={defaultValue} showTime onChange={onChange} />
+//         </Space>
+//       </ConfigProvider>
+//     </Space>
+//   );
+// };
+//
+// createRoot(document.getElementById('app')).render(<App />);
