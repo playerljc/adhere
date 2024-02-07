@@ -18,11 +18,13 @@ declare const _default: {
      * @param {String} - prefix
      * @param reload 是否是重新载入
      */
-    init({ prefix, currentLocale, locales, mainLanguage, ...other }: {
+    init({ prefix, currentLocale, locales, mainLanguage, ...rest }: {
         prefix: string;
-        currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG';
-        locales: any;
-        mainLanguage: string;
+        currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+        locales: {
+            [key: string]: string[];
+        };
+        mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
     }, reload?: boolean): Promise<any>;
     /**
      * isInit

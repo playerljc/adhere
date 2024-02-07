@@ -86,12 +86,14 @@ export default {
       currentLocale = 'zh_CN',
       locales = {},
       mainLanguage = 'zh_CN',
-      ...other
+      ...rest
     }: {
       prefix: string;
-      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG';
-      locales: any;
-      mainLanguage: string;
+      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+      locales: {
+        [key: string]: string[];
+      };
+      mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
     },
     reload: boolean = false,
   ): Promise<any> {
@@ -140,7 +142,7 @@ export default {
       const local = targetLocales[_libLocalKey];
 
       const stringItems: string[] = [];
-      const objEntry: any = [];
+      const objEntry: any[] = [];
 
       local.forEach((_item) => {
         if (typeof _item === 'string') stringItems.push(_item);
@@ -160,7 +162,7 @@ export default {
       .init({
         currentLocale,
         locales: mainLocales,
-        ...other,
+        ...rest,
       })
       .then(() => {
         // @ts-ignore
