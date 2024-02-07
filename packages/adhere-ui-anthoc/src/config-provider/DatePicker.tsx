@@ -30,9 +30,14 @@ export default (props, draft) => {
   const locale = dayjsLocalesMap.get(localeKey);
 
   if (draft?.locale?.DatePicker?.lang) {
-    // @ts-ignore
-    draft.locale.DatePicker.lang.fieldDateTimeFormat = `${locale.formats.L} ${locale.formats.LTS}`;
-    // @ts-ignore
-    draft.locale.DatePicker.lang.fieldDateFormat = locale.formats.L;
+    if (!draft.locale.DatePicker.lang.fieldDateTimeFormat) {
+      // @ts-ignore
+      draft.locale.DatePicker.lang.fieldDateTimeFormat = `${locale.formats.L} ${locale.formats.LTS}`;
+    }
+
+    if (!draft.locale.DatePicker.lang.fieldDateFormat) {
+      // @ts-ignore
+      draft.locale.DatePicker.lang.fieldDateFormat = locale.formats.L;
+    }
   }
 };

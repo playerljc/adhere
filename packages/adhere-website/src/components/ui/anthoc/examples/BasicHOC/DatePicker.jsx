@@ -7,5 +7,9 @@ export default () => (
     style={{
       width: 200,
     }}
+    showTime
+    onChange={(value, dateString) => {
+      console.log(value, dateString);
+    }}
   />
 );
