@@ -4,12 +4,10 @@ import ptPT from 'antd/locale/pt_PT';
 import zhCN from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
-import 'dayjs/locale/en-ca';
+import 'dayjs/locale/en';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/zh-cn';
 
-// import enUS from 'antd/locale/en_US';
-// import zhCN from 'antd/locale/zh_CN';
 import Dict from '@baifendian/adhere-util-dict';
 
 export default {
@@ -36,7 +34,7 @@ export default {
         dayjs.locale('zh-cn');
       },
       en_US: () => {
-        dayjs.locale('en-ca');
+        dayjs.locale('en');
       },
       pt_PT: () => {
         dayjs.locale('pt');

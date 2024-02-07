@@ -1,3 +1,11 @@
+# 1.0.24
+
+***
+
+2024-02-07
+
+* dict.moment.config.js中加入时间国际化formats和本地化formats
+
 # 1.0.23
 
 ***
