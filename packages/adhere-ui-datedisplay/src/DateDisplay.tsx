@@ -20,29 +20,28 @@ dayjs.extend(timezone);
 dayjs.extend(advancedFormat);
 dayjs.extend(isoWeek);
 dayjs.extend(weekOfYear);
-// let customLocaleFormats = {
-//   zh: {
-//     Q: 'MM/DD',
-//     q: 'M/D',
-//   },
-//   en: {
-//     Q: 'DD/MM',
-//     q: 'D/M',
-//   },
-//   pt: {
-//     Q: 'DD/MM',
-//     q: 'D/M',
-//   },
-//   ar: {
-//     Q: 'MMMM/D',
-//   },
-// };
-
 // dayjs中formats和locale的文档地址
 // https://day.js.org/docs/zh-CN/display/format#list-of-localized-formats
 // https://day.js.org/docs/zh-CN/plugin/advanced-format
 
 let globalLocal = 'zh';
+
+const localization = [
+  'LT',
+  'LTS',
+  'L',
+  'LL',
+  'LLL',
+  'LLLL',
+  'l',
+  'll',
+  'lll',
+  'llll',
+  'L LTS',
+  'L LT',
+  'l LTS',
+  'l LT',
+];
 
 const Components = {
   dayjs,
@@ -54,18 +53,6 @@ const Components = {
   setGlobalLocal: (_local) => {
     globalLocal = dayjs.locale(_local);
   },
-  // /**
-  //  * setCustomLocaleFormats
-  //  * @description 设置自定义本地化显示
-  //  * @param {object} formats
-  //  */
-  // setCustomLocaleFormats: (formats) => {
-  //   // customLocaleFormats = formats;
-  //   // return {
-  //   //   ...customLocaleFormats,
-  //   //   ...(formats ?? {}),
-  //   // };
-  // },
 };
 
 /**
@@ -178,5 +165,15 @@ Components[`DateDisplay`].toString = ({ value, locale, format }) => {
 
   return !!value ? dayjs(value).locale(targetLocale).format(format) : '';
 };
+
+///////////////////////////////////////////////////////////////////////////////////////
+localization.reduce((result, local) => {
+  result[`DateDisplay${local.replace(' ', '')}`] = memo<{
+    value: any;
+    locale?: string;
+  }>((props) => <Components.DateDisplay {...props} format={local} />);
+
+  return result;
+}, Components);
 
 export default Components;
