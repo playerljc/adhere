@@ -34,7 +34,7 @@
     "@baifendian/adhere": "^2.10.28",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
-    "antd": "^5.13.3",
+    "antd": "^5.14.0",
     "antd-mobile": "^5.34.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
