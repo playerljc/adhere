@@ -11,11 +11,5 @@ declare const Components: {
      * @param {string} _local 国际化
      */
     setGlobalLocal: (_local: any) => void;
-    /**
-     * setCustomLocaleFormats
-     * @description 设置自定义本地化显示
-     * @param {object} formats
-     */
-    setCustomLocaleFormats: (formats: any) => any;
 };
 export default Components;

@@ -9,6 +9,6 @@ console.log(DateDisplay.dayjs);
 export default () => {
   // DateDisplay.setGlobalLocal('en');
 
-  return <DateDisplay.DateDisplay format="Q" value={Date.now()} />;
+  return <DateDisplay.DateDisplay format="L LTS" value={Date.now()} />;
   // return <div>{DateDisplay.dayjs(Date.now()).format('L')}</div>;
 };
