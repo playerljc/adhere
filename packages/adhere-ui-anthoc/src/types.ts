@@ -1,5 +1,6 @@
 import type {
   AutoCompleteProps as AntdAutoCompleteProps,
+  CalendarProps,
   CascaderProps,
   CheckboxProps,
   FormProps,
@@ -1000,4 +1001,11 @@ export type AsyncTreeEntityValueHOCProps = {
   onChange?: (...argv: any[]) => any;
   valueProp?: string;
   [prop: string]: any;
+};
+
+export type CalendarFormatValueHOCProps = CalendarProps<dayjs.Dayjs>;
+
+export type CalendarTimestampValueHOC = CalendarProps<dayjs.Dayjs> & {
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
 };

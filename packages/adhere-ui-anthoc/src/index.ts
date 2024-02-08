@@ -10,6 +10,8 @@ import Badge from './badge';
 import Breadcrumb from './breadcrumb';
 import Button from './button';
 import Calendar from './calendar';
+import CalendarFormatValueHOC from './calendar-format-value-hoc';
+import CalendarTimestampValueHOC from './calendar-timestamp-value-hoc';
 import Card from './card';
 import Carousel from './carousel';
 import Cascader from './cascader';
@@ -101,6 +103,8 @@ export {
   Collapse,
   ColorPicker,
   ConfigProvider,
+  CalendarFormatValueHOC,
+  CalendarTimestampValueHOC,
   DatePicker,
   DatePickerTimestampValueHOC,
   DatePickerFormatValueHOC,

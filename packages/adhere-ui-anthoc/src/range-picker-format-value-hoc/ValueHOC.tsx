@@ -55,10 +55,7 @@ const ValueHOC: FC<RangePickerFormatValueHOCProps> = ({
   const _onChange = (_value, dateString) => {
     onChange?.(
       _value && !!_value.length
-        ? [
-            _value[0].format(props.format ?? 'YYYY-MM-DD HH:mm:ss'),
-            _value[1].format(props.format ?? 'YYYY-MM-DD HH:mm:ss'),
-          ]
+        ? [_value[0].format(props.format ?? 'L LTS'), _value[1].format(props.format ?? 'L LTS')]
         : _value,
       dateString,
       _value,

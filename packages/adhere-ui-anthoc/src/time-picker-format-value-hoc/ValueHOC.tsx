@@ -27,7 +27,7 @@ const ValueHOC: FC<TimePickerFormatValueHOCProps> = ({
   function originValueToDateJSObject(_value) {
     if (_value === null || _value === undefined) return _value;
 
-    const ymd = dayjs().format('YYYY-MM-DD');
+    const ymd = dayjs().format('L');
     return dayjs(`${ymd} ${_value}`);
   }
 
@@ -36,7 +36,7 @@ const ValueHOC: FC<TimePickerFormatValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   function _onChange(_value, dateString) {
-    onChange?.(_value.format(props.format ?? 'HH:mm:ss'), dateString, _value, {
+    onChange?.(_value.format(props.format ?? 'LTS'), dateString, _value, {
       hour: _value.hour(),
       minute: _value.minute(),
       second: _value.second(),

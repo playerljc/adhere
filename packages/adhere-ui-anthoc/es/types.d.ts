@@ -1,4 +1,4 @@
-import type { AutoCompleteProps as AntdAutoCompleteProps, CascaderProps, CheckboxProps, FormProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TransferProps, TreeSelectProps } from 'antd';
+import type { AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, FormProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TransferProps, TreeSelectProps } from 'antd';
 import { DatePickerProps, FormRule, TimePickerProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
@@ -663,4 +663,8 @@ export type AsyncTreeEntityValueHOCProps = {
     onChange?: (...argv: any[]) => any;
     valueProp?: string;
     [prop: string]: any;
+};
+export type CalendarFormatValueHOCProps = CalendarProps<dayjs.Dayjs>;
+export type CalendarTimestampValueHOC = CalendarProps<dayjs.Dayjs> & {
+    type?: 'milliseconds' | 'seconds';
 };

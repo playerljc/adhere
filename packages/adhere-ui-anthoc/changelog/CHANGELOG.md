@@ -5,6 +5,8 @@
 2024-02-07
 
 * config-provider加入日期国际化的统一处理
+* 加入calendar-format-value-hoc
+* 加入calendar-timestamp-value-hoc
 
 # 1.0.6
 
