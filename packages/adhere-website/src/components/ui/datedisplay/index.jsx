@@ -3,6 +3,7 @@ import P2CodeText from '!!raw-loader!./examples/p2';
 import P3CodeText from '!!raw-loader!./examples/p3';
 import P4CodeText from '!!raw-loader!./examples/p4';
 import P5CodeText from '!!raw-loader!./examples/p5';
+import P6CodeText from '!!raw-loader!./examples/p6';
 
 import React from 'react';
 
@@ -13,6 +14,7 @@ import P2 from './examples/p2';
 import P3 from './examples/p3';
 import P4 from './examples/p4';
 import P5 from './examples/p5';
+import P6 from './examples/p6';
 
 export default () => {
   return (
@@ -98,6 +100,21 @@ export default () => {
             codeText: P5CodeText,
             type: 'PlayGround',
             renderChildren: () => <P5 />,
+          },
+          {
+            id: `p6`,
+            name: `本地化组件`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '本地化组件',
+                info: '本地化组件',
+              },
+            },
+            codeText: P6CodeText,
+            type: 'PlayGround',
+            renderChildren: () => <P6 />,
           },
         ]}
       />
