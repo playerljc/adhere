@@ -1,5 +1,3 @@
-import { Ellipsis } from 'antd-mobile';
+import Ellipsis from './Ellipsis';
 
-import { createFactory } from '../util';
-
-export default createFactory(Ellipsis, {});
+export default Ellipsis;

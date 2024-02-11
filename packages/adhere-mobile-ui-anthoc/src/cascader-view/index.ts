@@ -1,5 +1,3 @@
-import { CascaderView } from 'antd-mobile';
+import CascaderView from './CascaderView';
 
-import { createFactory } from '../util';
-
-export default createFactory(CascaderView, {});
+export default CascaderView;

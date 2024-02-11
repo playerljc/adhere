@@ -1,5 +1,3 @@
-import { AutoCenter } from 'antd-mobile';
+import AutoCenter from './AutoCenter';
 
-import { createFactory } from '../util';
-
-export default createFactory(AutoCenter, {});
+export default AutoCenter;

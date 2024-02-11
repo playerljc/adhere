@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import CheckList from './CheckList';
+export default CheckList;

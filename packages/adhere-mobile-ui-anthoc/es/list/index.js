@@ -1,2 +1,2 @@
-import{List}from"antd-mobile";import{createFactory}from"../util";export default createFactory(List,{});
+import List from"./List";export default List;
 //# sourceMappingURL=index.js.map

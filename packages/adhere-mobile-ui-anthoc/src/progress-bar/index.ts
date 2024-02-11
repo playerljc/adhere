@@ -1,5 +1,3 @@
-import { ProgressBar } from 'antd-mobile';
+import ProgressBar from './ProgressBar';
 
-import { createFactory } from '../util';
-
-export default createFactory(ProgressBar, {});
+export default ProgressBar;

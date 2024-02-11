@@ -1,2 +1,2 @@
-import{VirtualInput}from"antd-mobile";import{createFactory}from"../util";export default createFactory(VirtualInput,{});
+import VirtualInput from"./VirtualInput";export default VirtualInput;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-import{DatePicker}from"antd-mobile";import{createFactory}from"../util";export default createFactory(DatePicker,{});
+import DatePicker from"./DatePicker";export default DatePicker;
 //# sourceMappingURL=index.js.map

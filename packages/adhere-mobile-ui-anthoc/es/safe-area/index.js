@@ -1,2 +1,2 @@
-import{SafeArea}from"antd-mobile";import{createFactory}from"../util";export default createFactory(SafeArea,{});
+import SafeArea from"./SafeArea";export default SafeArea;
 //# sourceMappingURL=index.js.map

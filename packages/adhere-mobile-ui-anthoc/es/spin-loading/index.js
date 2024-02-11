@@ -1,2 +1,2 @@
-import{SpinLoading}from"antd-mobile";import{createFactory}from"../util";export default createFactory(SpinLoading,{});
+import SpinLoading from"./SpinLoading";export default SpinLoading;
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,3 @@
-import { ErrorBlock } from 'antd-mobile';
+import ErrorBlock from './ErrorBlock';
 
-import { createFactory } from '../util';
-
-export default createFactory(ErrorBlock, {});
+export default ErrorBlock;

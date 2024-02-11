@@ -1,5 +1,3 @@
-import { Footer } from 'antd-mobile';
+import Footer from './Footer';
 
-import { createFactory } from '../util';
-
-export default createFactory(Footer, {});
+export default Footer;

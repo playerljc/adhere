@@ -1,2 +1,2 @@
-import{ImageViewer}from"antd-mobile";import{createFactory}from"../util";export default createFactory(ImageViewer,{});
+import ImageViewer from"./ImageViewer";export default ImageViewer;
 //# sourceMappingURL=index.js.map

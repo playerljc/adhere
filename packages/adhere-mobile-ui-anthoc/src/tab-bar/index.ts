@@ -1,5 +1,3 @@
-import { TabBar } from 'antd-mobile';
+import TabBar from './TabBar';
 
-import { createFactory } from '../util';
-
-export default createFactory(TabBar, {});
+export default TabBar;

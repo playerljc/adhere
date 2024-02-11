@@ -1,5 +1,3 @@
-import { Card } from 'antd-mobile';
+import Card from './Card';
 
-import { createFactory } from '../util';
-
-export default createFactory(Card, {});
+export default Card;

@@ -1,2 +1,2 @@
-import{WaterMark}from"antd-mobile";import{createFactory}from"../util";export default createFactory(WaterMark,{});
+import WaterMark from"./WaterMark";export default WaterMark;
 //# sourceMappingURL=index.js.map

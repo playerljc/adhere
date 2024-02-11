@@ -1,5 +1,3 @@
-import { Empty } from 'antd-mobile';
+import Empty from './Empty';
 
-import { createFactory } from '../util';
-
-export default createFactory(Empty, {});
+export default Empty;

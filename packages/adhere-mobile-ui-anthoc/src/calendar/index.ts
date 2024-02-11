@@ -1,5 +1,3 @@
-import { Calendar } from 'antd-mobile';
+import Calendar from './Calendar';
 
-import { createFactory } from '../util';
-
-export default createFactory(Calendar, {});
+export default Calendar;

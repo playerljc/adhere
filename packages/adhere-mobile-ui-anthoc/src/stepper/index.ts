@@ -1,5 +1,3 @@
-import { Stepper } from 'antd-mobile';
+import Stepper from './Stepper';
 
-import { createFactory } from '../util';
-
-export default createFactory(Stepper, {});
+export default Stepper;

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["cascader-view/index.js"],"sourcesContent":["import { CascaderView } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(CascaderView, {});"],"names":["CascaderView","createFactory"],"mappings":"OAASA,YAAiC,KAAb,qBACpBC,aAA8B,KAAT,yBACfA,cAAcD,aAAc,EAAE"}
+{"version":3,"file":"index.js","sources":["cascader-view/index.js"],"sourcesContent":["import CascaderView from './CascaderView';\nexport default CascaderView;"],"names":["CascaderView"],"mappings":"OAAOA,iBAAkB,gCACVA"}

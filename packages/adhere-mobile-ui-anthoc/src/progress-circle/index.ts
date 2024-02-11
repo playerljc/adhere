@@ -1,5 +1,3 @@
-import { ProgressCircle } from 'antd-mobile';
+import ProgressCircle from './ProgressCircle';
 
-import { createFactory } from '../util';
-
-export default createFactory(ProgressCircle, {});
+export default ProgressCircle;

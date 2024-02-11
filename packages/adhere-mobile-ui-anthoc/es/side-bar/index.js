@@ -1,2 +1,2 @@
-import{SideBar}from"antd-mobile";import{createFactory}from"../util";export default createFactory(SideBar,{});
+import SideBar from"./SideBar";export default SideBar;
 //# sourceMappingURL=index.js.map

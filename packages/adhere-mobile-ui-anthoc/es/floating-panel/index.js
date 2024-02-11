@@ -1,2 +1,2 @@
-import{FloatingPanel}from"antd-mobile";import{createFactory}from"../util";export default createFactory(FloatingPanel,{});
+import FloatingPanel from"./FloatingPanel";export default FloatingPanel;
 //# sourceMappingURL=index.js.map

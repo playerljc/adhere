@@ -1,5 +1,3 @@
-import { SwipeAction } from 'antd-mobile';
+import SwipeAction from './SwipeAction';
 
-import { createFactory } from '../util';
-
-export default createFactory(SwipeAction, {});
+export default SwipeAction;

@@ -1,5 +1,3 @@
-import { CheckList } from 'antd-mobile';
+import CheckList from './CheckList';
 
-import { createFactory } from '../util';
-
-export default createFactory(CheckList, {});
+export default CheckList;

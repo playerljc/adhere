@@ -1,2 +1,2 @@
-import{ErrorBlock}from"antd-mobile";import{createFactory}from"../util";export default createFactory(ErrorBlock,{});
+import ErrorBlock from"./ErrorBlock";export default ErrorBlock;
 //# sourceMappingURL=index.js.map

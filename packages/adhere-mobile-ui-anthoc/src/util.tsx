@@ -9,13 +9,20 @@ const { useScrollLayout } = FlexLayout;
  * @description - 创建一个组件的包装
  * @param Component
  * @param defaultProps
+ * @param override
  * @return {function(*)}
  */
-export function createFactory(Component, defaultProps): any {
-  function fn(_props) {
+export function createFactory<P>(
+  Component: any,
+  defaultProps: Partial<P>,
+  override?: (props: Partial<P>) => Partial<P>,
+): typeof Component & {
+  defaultProps?: Partial<P>;
+} {
+  const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
-    const props = { ...defaultProps, ..._props };
+    const props = { ...defaultProps, ..._props, ...(override?.(_props) ?? {}) };
 
     if (!('getPopupContainer' in props)) {
       props.getPopupContainer = (el) => {
@@ -23,10 +30,10 @@ export function createFactory(Component, defaultProps): any {
       };
     }
 
-    const { children, ...reset } = props;
+    const { children, ...rest } = props;
 
-    return <Component {...reset}>{children}</Component>;
-  }
+    return <Component {...rest}>{children}</Component>;
+  };
 
   Object.assign(fn, Component);
 

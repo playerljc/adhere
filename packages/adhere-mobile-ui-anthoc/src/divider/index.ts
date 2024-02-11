@@ -1,5 +1,3 @@
-import { Divider } from 'antd-mobile';
+import Divider from './Divider';
 
-import { createFactory } from '../util';
-
-export default createFactory(Divider, {});
+export default Divider;

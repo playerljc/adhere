@@ -1,2 +1,2 @@
-import{Tag}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Tag,{});
+import Tag from"./Tag";export default Tag;
 //# sourceMappingURL=index.js.map

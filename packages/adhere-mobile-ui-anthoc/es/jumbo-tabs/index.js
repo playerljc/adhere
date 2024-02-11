@@ -1,2 +1,2 @@
-import{JumboTabs}from"antd-mobile";import{createFactory}from"../util";export default createFactory(JumboTabs,{});
+import JumboTabs from"./JumboTabs";export default JumboTabs;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-import{CheckList}from"antd-mobile";import{createFactory}from"../util";export default createFactory(CheckList,{});
+import CheckList from"./CheckList";export default CheckList;
 //# sourceMappingURL=index.js.map

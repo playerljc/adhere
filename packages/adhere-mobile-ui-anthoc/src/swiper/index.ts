@@ -1,5 +1,3 @@
-import { Swiper } from 'antd-mobile';
+import Swiper from './Swiper';
 
-import { createFactory } from '../util';
-
-export default createFactory(Swiper, {});
+export default Swiper;

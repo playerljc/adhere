@@ -1,2 +1,2 @@
-import{Input}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Input,{clearable:!0,maxLength:1e3});
+import Input from"./Input";export default Input;
 //# sourceMappingURL=index.js.map

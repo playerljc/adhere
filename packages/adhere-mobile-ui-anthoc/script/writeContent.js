@@ -6,10 +6,23 @@ const srcPath = path.join(__dirname, '../src');
 
 const template = `
   import { <%= Module %> } from 'antd-mobile';
-
+  import type { <%= Module %>Props } from 'antd-mobile';
+  
   import { createFactory } from '../util';
+  
+  const <%= Module %>HOC: typeof <%= Module %> & {
+    defaultProps?: Partial<<%= Module %>Props>;
+  } = createFactory<<%= Module %>Props>(<%= Module %>, {});
+  
+  <%= Module %>HOC.displayName = '<%= Module %>';
+  
+  export default <%= Module %>HOC;
+`;
 
-  export default createFactory(<%= Module %>, {});
+const indexTemplate = `
+import <%= Module %> from './<%= Module %>';
+
+export default <%= Module %>;
 `;
 
 /**
@@ -39,12 +52,18 @@ function toCamelCase(str, toUpperCase = false) {
         rimrafSync(path.join(__dirname, `../src/${_name}/${_delName}`));
       });
 
+      // 帕斯卡名称
       const camelCase = toCamelCase(_name, true);
 
       const content = ejs.render(template, {
         Module: camelCase,
       });
 
-      fs.writeFileSync(path.join(__dirname, `../src/${_name}/index.ts`), content, 'utf-8');
+      const indexContent = ejs.render(indexTemplate, {
+        Module: camelCase,
+      });
+
+      fs.writeFileSync(path.join(__dirname, `../src/${_name}/index.ts`), indexContent, 'utf-8');
+      fs.writeFileSync(path.join(__dirname, `../src/${_name}/${camelCase}.ts`), content, 'utf-8');
     });
 })();

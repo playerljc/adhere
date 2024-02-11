@@ -1,2 +1,2 @@
-import{Rate}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Rate,{});
+import Rate from"./Rate";export default Rate;
 //# sourceMappingURL=index.js.map

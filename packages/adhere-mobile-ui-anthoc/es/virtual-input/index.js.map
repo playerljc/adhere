@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["virtual-input/index.js"],"sourcesContent":["import { VirtualInput } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(VirtualInput, {});"],"names":["VirtualInput","createFactory"],"mappings":"OAASA,YAAiC,KAAb,qBACpBC,aAA8B,KAAT,yBACfA,cAAcD,aAAc,EAAE"}
+{"version":3,"file":"index.js","sources":["virtual-input/index.js"],"sourcesContent":["import VirtualInput from './VirtualInput';\nexport default VirtualInput;"],"names":["VirtualInput"],"mappings":"OAAOA,iBAAkB,gCACVA"}

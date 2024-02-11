@@ -1,5 +1,3 @@
-import { WaterMark } from 'antd-mobile';
+import WaterMark from './WaterMark';
 
-import { createFactory } from '../util';
-
-export default createFactory(WaterMark, {});
+export default WaterMark;

@@ -1,2 +1,2 @@
-import{PullToRefresh}from"antd-mobile";import{createFactory}from"../util";export default createFactory(PullToRefresh,{});
+import PullToRefresh from"./PullToRefresh";export default PullToRefresh;
 //# sourceMappingURL=index.js.map

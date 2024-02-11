@@ -1,5 +1,3 @@
-import { Result } from 'antd-mobile';
+import Result from './Result';
 
-import { createFactory } from '../util';
-
-export default createFactory(Result, {});
+export default Result;

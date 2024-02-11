@@ -1,5 +1,3 @@
-import { ImageUploader } from 'antd-mobile';
+import ImageUploader from './ImageUploader';
 
-import { createFactory } from '../util';
-
-export default createFactory(ImageUploader, {});
+export default ImageUploader;

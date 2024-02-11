@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["list/index.js"],"sourcesContent":["import { List } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(List, {});"],"names":["List","createFactory"],"mappings":"OAASA,IAAyB,KAAb,qBACZC,aAA8B,KAAT,yBACfA,cAAcD,KAAM,EAAE"}
+{"version":3,"file":"index.js","sources":["list/index.js"],"sourcesContent":["import List from './List';\nexport default List;"],"names":["List"],"mappings":"OAAOA,SAAU,wBACFA"}

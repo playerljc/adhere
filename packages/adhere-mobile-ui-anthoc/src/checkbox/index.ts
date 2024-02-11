@@ -1,5 +1,3 @@
-import { Checkbox } from 'antd-mobile';
+import Checkbox from './Checkbox';
 
-import { createFactory } from '../util';
-
-export default createFactory(Checkbox, {});
+export default Checkbox;

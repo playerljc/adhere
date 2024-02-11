@@ -1,5 +1,3 @@
-import { PullToRefresh } from 'antd-mobile';
+import PullToRefresh from './PullToRefresh';
 
-import { createFactory } from '../util';
-
-export default createFactory(PullToRefresh, {});
+export default PullToRefresh;

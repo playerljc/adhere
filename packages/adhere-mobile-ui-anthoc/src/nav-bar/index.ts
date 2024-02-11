@@ -1,5 +1,3 @@
-import { NavBar } from 'antd-mobile';
+import NavBar from './NavBar';
 
-import { createFactory } from '../util';
-
-export default createFactory(NavBar, {});
+export default NavBar;

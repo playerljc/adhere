@@ -1,2 +1,2 @@
-import{PickerView}from"antd-mobile";import{createFactory}from"../util";export default createFactory(PickerView,{});
+import PickerView from"./PickerView";export default PickerView;
 //# sourceMappingURL=index.js.map

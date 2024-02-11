@@ -1,5 +1,3 @@
-import { Modal } from 'antd-mobile';
+import Modal from './Modal';
 
-import { createFactory } from '../util';
-
-export default createFactory(Modal, {});
+export default Modal;

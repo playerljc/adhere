@@ -1,5 +1,3 @@
-import { Tag } from 'antd-mobile';
+import Tag from './Tag';
 
-import { createFactory } from '../util';
-
-export default createFactory(Tag, {});
+export default Tag;

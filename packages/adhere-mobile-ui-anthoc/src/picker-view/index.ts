@@ -1,5 +1,3 @@
-import { PickerView } from 'antd-mobile';
+import PickerView from './PickerView';
 
-import { createFactory } from '../util';
-
-export default createFactory(PickerView, {});
+export default PickerView;

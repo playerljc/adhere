@@ -1,2 +1,2 @@
-import{Swiper}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Swiper,{});
+import Swiper from"./Swiper";export default Swiper;
 //# sourceMappingURL=index.js.map

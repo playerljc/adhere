@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["safe-area/index.js"],"sourcesContent":["import { SafeArea } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(SafeArea, {});"],"names":["SafeArea","createFactory"],"mappings":"OAASA,QAA6B,KAAb,qBAChBC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}
+{"version":3,"file":"index.js","sources":["safe-area/index.js"],"sourcesContent":["import SafeArea from './SafeArea';\nexport default SafeArea;"],"names":["SafeArea"],"mappings":"OAAOA,aAAc,4BACNA"}

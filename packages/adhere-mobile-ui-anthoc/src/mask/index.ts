@@ -1,5 +1,3 @@
-import { Mask } from 'antd-mobile';
+import Mask from './Mask';
 
-import { createFactory } from '../util';
-
-export default createFactory(Mask, {});
+export default Mask;

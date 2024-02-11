@@ -1,5 +1,3 @@
-import { ActionSheet } from 'antd-mobile';
+import ActionSheet from './ActionSheet';
 
-import { createFactory } from '../util';
-
-export default createFactory(ActionSheet, {});
+export default ActionSheet;

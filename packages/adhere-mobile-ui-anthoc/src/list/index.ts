@@ -1,5 +1,3 @@
-import { List } from 'antd-mobile';
+import List from './List';
 
-import { createFactory } from '../util';
-
-export default createFactory(List, {});
+export default List;

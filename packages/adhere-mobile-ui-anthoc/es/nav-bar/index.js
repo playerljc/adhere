@@ -1,2 +1,2 @@
-import{NavBar}from"antd-mobile";import{createFactory}from"../util";export default createFactory(NavBar,{});
+import NavBar from"./NavBar";export default NavBar;
 //# sourceMappingURL=index.js.map

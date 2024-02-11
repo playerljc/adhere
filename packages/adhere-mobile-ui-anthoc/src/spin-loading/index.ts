@@ -1,5 +1,3 @@
-import { SpinLoading } from 'antd-mobile';
+import SpinLoading from './SpinLoading';
 
-import { createFactory } from '../util';
-
-export default createFactory(SpinLoading, {});
+export default SpinLoading;

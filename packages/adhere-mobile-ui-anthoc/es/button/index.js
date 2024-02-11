@@ -1,2 +1,2 @@
-import{Button}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Button,{});
+import Button from"./Button";export default Button;
 //# sourceMappingURL=index.js.map

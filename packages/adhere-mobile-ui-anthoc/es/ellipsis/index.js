@@ -1,2 +1,2 @@
-import{Ellipsis}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Ellipsis,{});
+import Ellipsis from"./Ellipsis";export default Ellipsis;
 //# sourceMappingURL=index.js.map

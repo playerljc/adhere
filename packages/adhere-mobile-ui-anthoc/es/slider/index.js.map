@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["slider/index.js"],"sourcesContent":["import { Slider } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Slider, {});"],"names":["Slider","createFactory"],"mappings":"OAASA,MAA2B,KAAb,qBACdC,aAA8B,KAAT,yBACfA,cAAcD,OAAQ,EAAE"}
+{"version":3,"file":"index.js","sources":["slider/index.js"],"sourcesContent":["import Slider from './Slider';\nexport default Slider;"],"names":["Slider"],"mappings":"OAAOA,WAAY,0BACJA"}

@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import CapsuleTabs from './CapsuleTabs';
+export default CapsuleTabs;

@@ -1,5 +1,3 @@
-import { Button } from 'antd-mobile';
+import Button from './Button';
 
-import { createFactory } from '../util';
-
-export default createFactory(Button, {});
+export default Button;

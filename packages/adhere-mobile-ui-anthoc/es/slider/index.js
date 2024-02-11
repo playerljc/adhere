@@ -1,2 +1,2 @@
-import{Slider}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Slider,{});
+import Slider from"./Slider";export default Slider;
 //# sourceMappingURL=index.js.map

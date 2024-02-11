@@ -1,2 +1,2 @@
-import{IndexBar}from"antd-mobile";import{createFactory}from"../util";export default createFactory(IndexBar,{});
+import IndexBar from"./IndexBar";export default IndexBar;
 //# sourceMappingURL=index.js.map

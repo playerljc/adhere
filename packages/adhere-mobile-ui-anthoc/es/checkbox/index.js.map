@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["checkbox/index.js"],"sourcesContent":["import { Checkbox } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Checkbox, {});"],"names":["Checkbox","createFactory"],"mappings":"OAASA,QAA6B,KAAb,qBAChBC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}
+{"version":3,"file":"index.js","sources":["checkbox/index.js"],"sourcesContent":["import Checkbox from './Checkbox';\nexport default Checkbox;"],"names":["Checkbox"],"mappings":"OAAOA,aAAc,4BACNA"}

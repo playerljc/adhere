@@ -1,2 +1,2 @@
-import{Tabs}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Tabs,{});
+import Tabs from"./Tabs";export default Tabs;
 //# sourceMappingURL=index.js.map

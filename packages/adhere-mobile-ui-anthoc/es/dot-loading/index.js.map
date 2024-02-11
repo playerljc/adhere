@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["dot-loading/index.js"],"sourcesContent":["import { DotLoading } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(DotLoading, {});"],"names":["DotLoading","createFactory"],"mappings":"OAASA,UAA+B,KAAb,qBAClBC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}
+{"version":3,"file":"index.js","sources":["dot-loading/index.js"],"sourcesContent":["import DotLoading from './DotLoading';\nexport default DotLoading;"],"names":["DotLoading"],"mappings":"OAAOA,eAAgB,8BACRA"}

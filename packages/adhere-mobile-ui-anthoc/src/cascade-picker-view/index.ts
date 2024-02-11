@@ -1,5 +1,3 @@
-import { CascadePickerView } from 'antd-mobile';
+import CascadePickerView from './CascadePickerView';
 
-import { createFactory } from '../util';
-
-export default createFactory(CascadePickerView, {});
+export default CascadePickerView;

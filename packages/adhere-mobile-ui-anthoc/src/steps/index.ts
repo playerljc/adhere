@@ -1,5 +1,3 @@
-import { Steps } from 'antd-mobile';
+import Steps from './Steps';
 
-import { createFactory } from '../util';
-
-export default createFactory(Steps, {});
+export default Steps;

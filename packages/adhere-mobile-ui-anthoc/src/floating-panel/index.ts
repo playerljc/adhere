@@ -1,5 +1,3 @@
-import { FloatingPanel } from 'antd-mobile';
+import FloatingPanel from './FloatingPanel';
 
-import { createFactory } from '../util';
-
-export default createFactory(FloatingPanel, {});
+export default FloatingPanel;

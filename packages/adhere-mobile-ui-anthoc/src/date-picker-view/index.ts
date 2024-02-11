@@ -1,5 +1,3 @@
-import { DatePickerView } from 'antd-mobile';
+import DatePickerView from './DatePickerView';
 
-import { createFactory } from '../util';
-
-export default createFactory(DatePickerView, {});
+export default DatePickerView;

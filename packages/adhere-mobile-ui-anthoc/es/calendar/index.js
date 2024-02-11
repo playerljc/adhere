@@ -1,2 +1,2 @@
-import{Calendar}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Calendar,{});
+import Calendar from"./Calendar";export default Calendar;
 //# sourceMappingURL=index.js.map

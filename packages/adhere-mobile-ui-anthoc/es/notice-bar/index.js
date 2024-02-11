@@ -1,2 +1,2 @@
-import{NoticeBar}from"antd-mobile";import{createFactory}from"../util";export default createFactory(NoticeBar,{});
+import NoticeBar from"./NoticeBar";export default NoticeBar;
 //# sourceMappingURL=index.js.map

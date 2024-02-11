@@ -1,2 +1,2 @@
-import{Dropdown}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Dropdown,{});
+import Dropdown from"./Dropdown";export default Dropdown;
 //# sourceMappingURL=index.js.map

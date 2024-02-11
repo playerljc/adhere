@@ -1,5 +1,3 @@
-import { ResultPage } from 'antd-mobile';
+import ResultPage from './ResultPage';
 
-import { createFactory } from '../util';
-
-export default createFactory(ResultPage, {});
+export default ResultPage;

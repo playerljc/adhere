@@ -1,5 +1,3 @@
-import { Popover } from 'antd-mobile';
+import Popover from './Popover';
 
-import { createFactory } from '../util';
-
-export default createFactory(Popover, {});
+export default Popover;

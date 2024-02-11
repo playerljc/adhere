@@ -1,5 +1,3 @@
-import { ScrollMask } from 'antd-mobile';
+import ScrollMask from './ScrollMask';
 
-import { createFactory } from '../util';
-
-export default createFactory(ScrollMask, {});
+export default ScrollMask;

@@ -1,2 +1,2 @@
-import{ImageUploader}from"antd-mobile";import{createFactory}from"../util";export default createFactory(ImageUploader,{});
+import ImageUploader from"./ImageUploader";export default ImageUploader;
 //# sourceMappingURL=index.js.map

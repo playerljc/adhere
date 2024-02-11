@@ -1,2 +1,2 @@
-import{Dialog}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Dialog,{});
+import Dialog from"./Dialog";export default Dialog;
 //# sourceMappingURL=index.js.map

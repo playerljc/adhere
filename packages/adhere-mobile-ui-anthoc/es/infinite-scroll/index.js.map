@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["infinite-scroll/index.js"],"sourcesContent":["import { InfiniteScroll } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(InfiniteScroll, {});"],"names":["InfiniteScroll","createFactory"],"mappings":"OAASA,cAAmC,KAAb,qBACtBC,aAA8B,KAAT,yBACfA,cAAcD,eAAgB,EAAE"}
+{"version":3,"file":"index.js","sources":["infinite-scroll/index.js"],"sourcesContent":["import InfiniteScroll from './InfiniteScroll';\nexport default InfiniteScroll;"],"names":["InfiniteScroll"],"mappings":"OAAOA,mBAAoB,kCACZA"}

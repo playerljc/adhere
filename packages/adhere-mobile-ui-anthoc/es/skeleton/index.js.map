@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["skeleton/index.js"],"sourcesContent":["import { Skeleton } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Skeleton, {});"],"names":["Skeleton","createFactory"],"mappings":"OAASA,QAA6B,KAAb,qBAChBC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}
+{"version":3,"file":"index.js","sources":["skeleton/index.js"],"sourcesContent":["import Skeleton from './Skeleton';\nexport default Skeleton;"],"names":["Skeleton"],"mappings":"OAAOA,aAAc,4BACNA"}

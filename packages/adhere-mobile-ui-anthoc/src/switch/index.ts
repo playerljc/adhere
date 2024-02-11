@@ -1,5 +1,3 @@
-import { Switch } from 'antd-mobile';
+import Switch from './Switch';
 
-import { createFactory } from '../util';
-
-export default createFactory(Switch, {});
+export default Switch;

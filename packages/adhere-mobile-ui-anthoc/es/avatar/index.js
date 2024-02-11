@@ -1,2 +1,2 @@
-import{Avatar}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Avatar,{});
+import Avatar from"./Avatar";export default Avatar;
 //# sourceMappingURL=index.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["action-sheet/index.js"],"sourcesContent":["import { ActionSheet } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(ActionSheet, {});"],"names":["ActionSheet","createFactory"],"mappings":"OAASA,WAAgC,KAAb,qBACnBC,aAA8B,KAAT,yBACfA,cAAcD,YAAa,EAAE"}
+{"version":3,"file":"index.js","sources":["action-sheet/index.js"],"sourcesContent":["import ActionSheet from './ActionSheet';\nexport default ActionSheet;"],"names":["ActionSheet"],"mappings":"OAAOA,gBAAiB,+BACTA"}

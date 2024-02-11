@@ -1,5 +1,3 @@
-import { CenterPopup } from 'antd-mobile';
+import CenterPopup from './CenterPopup';
 
-import { createFactory } from '../util';
-
-export default createFactory(CenterPopup, {});
+export default CenterPopup;
