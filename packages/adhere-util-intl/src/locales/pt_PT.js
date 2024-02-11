@@ -107,4 +107,5 @@ export default [
   'Exportar Excel',
   'fechar',
   'Exportador',
+  'Insira opções de filtro de texto',
 ];

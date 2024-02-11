@@ -1,2 +1,2 @@
-import{InfiniteScroll}from"antd-mobile";import{createFactory}from"../util";export default createFactory(InfiniteScroll,{});
+import InfiniteScroll from"./InfiniteScroll";export default InfiniteScroll;
 //# sourceMappingURL=index.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["date-picker-view/index.js"],"sourcesContent":["import { DatePickerView } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(DatePickerView, {});"],"names":["DatePickerView","createFactory"],"mappings":"OAASA,cAAmC,KAAb,qBACtBC,aAA8B,KAAT,yBACfA,cAAcD,eAAgB,EAAE"}
+{"version":3,"file":"index.js","sources":["date-picker-view/index.js"],"sourcesContent":["import DatePickerView from './DatePickerView';\nexport default DatePickerView;"],"names":["DatePickerView"],"mappings":"OAAOA,mBAAoB,kCACZA"}

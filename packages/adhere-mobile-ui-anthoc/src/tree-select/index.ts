@@ -1,5 +1,3 @@
-import { TreeSelect } from 'antd-mobile';
+import TreeSelect from './TreeSelect';
 
-import { createFactory } from '../util';
-
-export default createFactory(TreeSelect, {});
+export default TreeSelect;

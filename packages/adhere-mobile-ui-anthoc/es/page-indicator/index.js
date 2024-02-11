@@ -1,2 +1,2 @@
-import{PageIndicator}from"antd-mobile";import{createFactory}from"../util";export default createFactory(PageIndicator,{});
+import PageIndicator from"./PageIndicator";export default PageIndicator;
 //# sourceMappingURL=index.js.map

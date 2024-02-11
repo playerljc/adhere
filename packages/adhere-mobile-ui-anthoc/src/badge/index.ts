@@ -1,5 +1,3 @@
-import { Badge } from 'antd-mobile';
+import Badge from './Badge';
 
-import { createFactory } from '../util';
-
-export default createFactory(Badge, {});
+export default Badge;

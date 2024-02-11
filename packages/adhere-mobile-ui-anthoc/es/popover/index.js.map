@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["popover/index.js"],"sourcesContent":["import { Popover } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Popover, {});"],"names":["Popover","createFactory"],"mappings":"OAASA,OAA4B,KAAb,qBACfC,aAA8B,KAAT,yBACfA,cAAcD,QAAS,EAAE"}
+{"version":3,"file":"index.js","sources":["popover/index.js"],"sourcesContent":["import Popover from './Popover';\nexport default Popover;"],"names":["Popover"],"mappings":"OAAOA,YAAa,2BACLA"}

@@ -1,2 +1,2 @@
-import{ActionSheet}from"antd-mobile";import{createFactory}from"../util";export default createFactory(ActionSheet,{});
+import ActionSheet from"./ActionSheet";export default ActionSheet;
 //# sourceMappingURL=index.js.map

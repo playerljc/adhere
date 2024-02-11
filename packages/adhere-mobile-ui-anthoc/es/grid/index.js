@@ -1,2 +1,2 @@
-import{Grid}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Grid,{});
+import Grid from"./Grid";export default Grid;
 //# sourceMappingURL=index.js.map

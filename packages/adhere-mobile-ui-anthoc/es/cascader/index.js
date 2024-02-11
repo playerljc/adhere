@@ -1,2 +1,2 @@
-import{Cascader}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Cascader,{});
+import Cascader from"./Cascader";export default Cascader;
 //# sourceMappingURL=index.js.map

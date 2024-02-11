@@ -1,5 +1,3 @@
-import { CapsuleTabs } from 'antd-mobile';
+import CapsuleTabs from './CapsuleTabs';
 
-import { createFactory } from '../util';
-
-export default createFactory(CapsuleTabs, {});
+export default CapsuleTabs;

@@ -1,2 +1,2 @@
-declare const FormWrap: any;
-export default FormWrap;
+import Form from './Form';
+export default Form;

@@ -1,5 +1,3 @@
-import { JumboTabs } from 'antd-mobile';
+import JumboTabs from './JumboTabs';
 
-import { createFactory } from '../util';
-
-export default createFactory(JumboTabs, {});
+export default JumboTabs;

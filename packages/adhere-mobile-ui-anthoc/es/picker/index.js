@@ -1,2 +1,2 @@
-import{Picker}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Picker,{});
+import Picker from"./Picker";export default Picker;
 //# sourceMappingURL=index.js.map

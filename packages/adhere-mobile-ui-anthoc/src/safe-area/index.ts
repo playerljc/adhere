@@ -1,5 +1,3 @@
-import { SafeArea } from 'antd-mobile';
+import SafeArea from './SafeArea';
 
-import { createFactory } from '../util';
-
-export default createFactory(SafeArea, {});
+export default SafeArea;

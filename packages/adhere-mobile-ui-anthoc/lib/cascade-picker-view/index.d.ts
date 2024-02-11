@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import CascadePickerView from './CascadePickerView';
+export default CascadePickerView;

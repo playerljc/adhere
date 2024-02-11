@@ -1,5 +1,3 @@
-import { NumberKeyboard } from 'antd-mobile';
+import NumberKeyboard from './NumberKeyboard';
 
-import { createFactory } from '../util';
-
-export default createFactory(NumberKeyboard, {});
+export default NumberKeyboard;

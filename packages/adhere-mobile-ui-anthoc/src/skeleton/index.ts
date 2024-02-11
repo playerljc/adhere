@@ -1,5 +1,3 @@
-import { Skeleton } from 'antd-mobile';
+import Skeleton from './Skeleton';
 
-import { createFactory } from '../util';
-
-export default createFactory(Skeleton, {});
+export default Skeleton;

@@ -1,5 +1,3 @@
-import { Collapse } from 'antd-mobile';
+import Collapse from './Collapse';
 
-import { createFactory } from '../util';
-
-export default createFactory(Collapse, {});
+export default Collapse;

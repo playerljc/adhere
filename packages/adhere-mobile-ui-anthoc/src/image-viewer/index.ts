@@ -1,5 +1,3 @@
-import { ImageViewer } from 'antd-mobile';
+import ImageViewer from './ImageViewer';
 
-import { createFactory } from '../util';
-
-export default createFactory(ImageViewer, {});
+export default ImageViewer;

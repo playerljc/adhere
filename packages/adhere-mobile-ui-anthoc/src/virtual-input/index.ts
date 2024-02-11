@@ -1,5 +1,3 @@
-import { VirtualInput } from 'antd-mobile';
+import VirtualInput from './VirtualInput';
 
-import { createFactory } from '../util';
-
-export default createFactory(VirtualInput, {});
+export default VirtualInput;

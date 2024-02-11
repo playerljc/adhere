@@ -1,5 +1,3 @@
-import { Rate } from 'antd-mobile';
+import Rate from './Rate';
 
-import { createFactory } from '../util';
-
-export default createFactory(Rate, {});
+export default Rate;

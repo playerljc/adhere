@@ -1,5 +1,3 @@
-import { Avatar } from 'antd-mobile';
+import Avatar from './Avatar';
 
-import { createFactory } from '../util';
-
-export default createFactory(Avatar, {});
+export default Avatar;

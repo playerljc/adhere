@@ -1,5 +1,3 @@
-import { Grid } from 'antd-mobile';
+import Grid from './Grid';
 
-import { createFactory } from '../util';
-
-export default createFactory(Grid, {});
+export default Grid;

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import { Space } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Space, {});"],"names":["Space","createFactory"],"mappings":"OAASA,KAA0B,KAAb,qBACbC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["space/index.js"],"sourcesContent":["import Space from './Space';\nexport default Space;"],"names":["Space"],"mappings":"OAAOA,UAAW,yBACHA"}

@@ -1,2 +1,2 @@
-import{TextArea}from"antd-mobile";import{createFactory}from"../util";export default createFactory(TextArea,{maxLength:1e3,showCount:!0,autoSize:!1});
+import TextArea from"./TextArea";export default TextArea;
 //# sourceMappingURL=index.js.map

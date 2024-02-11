@@ -1,2 +1,2 @@
-import{Steps}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Steps,{});
+import Steps from"./Steps";export default Steps;
 //# sourceMappingURL=index.js.map

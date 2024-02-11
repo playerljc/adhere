@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import CascaderView from './CascaderView';
+export default CascaderView;

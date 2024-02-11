@@ -1,5 +1,3 @@
-import { SideBar } from 'antd-mobile';
+import SideBar from './SideBar';
 
-import { createFactory } from '../util';
-
-export default createFactory(SideBar, {});
+export default SideBar;

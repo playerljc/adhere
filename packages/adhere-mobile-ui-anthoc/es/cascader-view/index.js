@@ -1,2 +1,2 @@
-import{CascaderView}from"antd-mobile";import{createFactory}from"../util";export default createFactory(CascaderView,{});
+import CascaderView from"./CascaderView";export default CascaderView;
 //# sourceMappingURL=index.js.map

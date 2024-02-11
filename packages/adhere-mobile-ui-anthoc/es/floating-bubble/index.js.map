@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["floating-bubble/index.js"],"sourcesContent":["import { FloatingBubble } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(FloatingBubble, {});"],"names":["FloatingBubble","createFactory"],"mappings":"OAASA,cAAmC,KAAb,qBACtBC,aAA8B,KAAT,yBACfA,cAAcD,eAAgB,EAAE"}
+{"version":3,"file":"index.js","sources":["floating-bubble/index.js"],"sourcesContent":["import FloatingBubble from './FloatingBubble';\nexport default FloatingBubble;"],"names":["FloatingBubble"],"mappings":"OAAOA,mBAAoB,kCACZA"}

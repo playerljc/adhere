@@ -1,5 +1,3 @@
-import { Image } from 'antd-mobile';
+import Image from './Image';
 
-import { createFactory } from '../util';
-
-export default createFactory(Image, {});
+export default Image;

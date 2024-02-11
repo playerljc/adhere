@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["radio/index.js"],"sourcesContent":["import { Radio } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Radio, {});"],"names":["Radio","createFactory"],"mappings":"OAASA,KAA0B,KAAb,qBACbC,aAA8B,KAAT,yBACfA,cAAcD,MAAO,EAAE"}
+{"version":3,"file":"index.js","sources":["radio/index.js"],"sourcesContent":["import Radio from './Radio';\nexport default Radio;"],"names":["Radio"],"mappings":"OAAOA,UAAW,yBACHA"}

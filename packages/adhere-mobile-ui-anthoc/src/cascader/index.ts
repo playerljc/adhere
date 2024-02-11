@@ -1,5 +1,3 @@
-import { Cascader } from 'antd-mobile';
+import Cascader from './Cascader';
 
-import { createFactory } from '../util';
-
-export default createFactory(Cascader, {});
+export default Cascader;

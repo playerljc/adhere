@@ -1,2 +1,2 @@
-import{Card}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Card,{});
+import Card from"./Card";export default Card;
 //# sourceMappingURL=index.js.map

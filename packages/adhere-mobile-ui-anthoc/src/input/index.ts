@@ -1,5 +1,3 @@
-import { Input } from 'antd-mobile';
+import Input from './Input';
 
-import { createFactory } from '../util';
-
-export default createFactory(Input, { clearable: true, maxLength: 1000 });
+export default Input;

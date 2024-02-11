@@ -1,2 +1,2 @@
-import{Divider}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Divider,{});
+import Divider from"./Divider";export default Divider;
 //# sourceMappingURL=index.js.map

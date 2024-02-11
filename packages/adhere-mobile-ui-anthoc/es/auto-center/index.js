@@ -1,2 +1,2 @@
-import{AutoCenter}from"antd-mobile";import{createFactory}from"../util";export default createFactory(AutoCenter,{});
+import AutoCenter from"./AutoCenter";export default AutoCenter;
 //# sourceMappingURL=index.js.map

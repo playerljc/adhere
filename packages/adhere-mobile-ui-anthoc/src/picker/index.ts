@@ -1,5 +1,3 @@
-import { Picker } from 'antd-mobile';
+import Picker from './Picker';
 
-import { createFactory } from '../util';
-
-export default createFactory(Picker, {});
+export default Picker;

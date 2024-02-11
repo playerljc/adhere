@@ -1,2 +1,2 @@
-import{Footer}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Footer,{});
+import Footer from"./Footer";export default Footer;
 //# sourceMappingURL=index.js.map

@@ -35,6 +35,7 @@ import ImageViewer from './image-viewer';
 import IndexBar from './index-bar';
 import InfiniteScroll from './infinite-scroll';
 import Input from './input';
+import InputNumber from './input-number';
 import JumboTabs from './jumbo-tabs';
 import List from './list';
 import Loading from './loading';
@@ -75,7 +76,6 @@ import TabBar from './tab-bar';
 import Tabs from './tabs';
 import Tag from './tag';
 import TextArea from './text-area';
-import Toast from './toast';
 import TreeSelect from './tree-select';
 import VirtualInput from './virtual-input';
 import WaterMark from './water-mark';
@@ -118,6 +118,7 @@ export {
   IndexBar,
   InfiniteScroll,
   Input,
+  InputNumber,
   JumboTabs,
   List,
   Loading,
@@ -157,7 +158,6 @@ export {
   Tabs,
   Tag,
   TextArea,
-  Toast,
   TreeSelect,
   VirtualInput,
   WaterMark,

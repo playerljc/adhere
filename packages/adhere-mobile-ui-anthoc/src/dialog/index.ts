@@ -1,5 +1,3 @@
-import { Dialog } from 'antd-mobile';
+import Dialog from './Dialog';
 
-import { createFactory } from '../util';
-
-export default createFactory(Dialog, {});
+export default Dialog;

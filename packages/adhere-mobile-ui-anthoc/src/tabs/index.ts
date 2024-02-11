@@ -1,5 +1,3 @@
-import { Tabs } from 'antd-mobile';
+import Tabs from './Tabs';
 
-import { createFactory } from '../util';
-
-export default createFactory(Tabs, {});
+export default Tabs;

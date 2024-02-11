@@ -1,2 +1,2 @@
-import{PasscodeInput}from"antd-mobile";import{createFactory}from"../util";export default createFactory(PasscodeInput,{});
+import PasscodeInput from"./PasscodeInput";export default PasscodeInput;
 //# sourceMappingURL=index.js.map

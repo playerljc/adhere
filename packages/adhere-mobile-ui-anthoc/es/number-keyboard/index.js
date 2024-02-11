@@ -1,2 +1,2 @@
-import{NumberKeyboard}from"antd-mobile";import{createFactory}from"../util";export default createFactory(NumberKeyboard,{});
+import NumberKeyboard from"./NumberKeyboard";export default NumberKeyboard;
 //# sourceMappingURL=index.js.map

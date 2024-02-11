@@ -1,5 +1,3 @@
-import { Slider } from 'antd-mobile';
+import Slider from './Slider';
 
-import { createFactory } from '../util';
-
-export default createFactory(Slider, {});
+export default Slider;

@@ -1,2 +1,2 @@
-import{SwipeAction}from"antd-mobile";import{createFactory}from"../util";export default createFactory(SwipeAction,{});
+import SwipeAction from"./SwipeAction";export default SwipeAction;
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,3 @@
-import { Selector } from 'antd-mobile';
+import Selector from './Selector';
 
-import { createFactory } from '../util';
-
-export default createFactory(Selector, {});
+export default Selector;

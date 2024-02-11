@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["pull-to-refresh/index.js"],"sourcesContent":["import { PullToRefresh } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(PullToRefresh, {});"],"names":["PullToRefresh","createFactory"],"mappings":"OAASA,aAAkC,KAAb,qBACrBC,aAA8B,KAAT,yBACfA,cAAcD,cAAe,EAAE"}
+{"version":3,"file":"index.js","sources":["pull-to-refresh/index.js"],"sourcesContent":["import PullToRefresh from './PullToRefresh';\nexport default PullToRefresh;"],"names":["PullToRefresh"],"mappings":"OAAOA,kBAAmB,iCACXA"}

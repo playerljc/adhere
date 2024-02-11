@@ -1,5 +1,3 @@
-import { FloatingBubble } from 'antd-mobile';
+import FloatingBubble from './FloatingBubble';
 
-import { createFactory } from '../util';
-
-export default createFactory(FloatingBubble, {});
+export default FloatingBubble;

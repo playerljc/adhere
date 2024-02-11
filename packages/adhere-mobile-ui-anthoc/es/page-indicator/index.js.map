@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["page-indicator/index.js"],"sourcesContent":["import { PageIndicator } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(PageIndicator, {});"],"names":["PageIndicator","createFactory"],"mappings":"OAASA,aAAkC,KAAb,qBACrBC,aAA8B,KAAT,yBACfA,cAAcD,cAAe,EAAE"}
+{"version":3,"file":"index.js","sources":["page-indicator/index.js"],"sourcesContent":["import PageIndicator from './PageIndicator';\nexport default PageIndicator;"],"names":["PageIndicator"],"mappings":"OAAOA,kBAAmB,iCACXA"}

@@ -1,2 +1,2 @@
-import{Radio}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Radio,{});
+import Radio from"./Radio";export default Radio;
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,3 @@
-import { Loading } from 'antd-mobile';
+import Loading from './Loading';
 
-import { createFactory } from '../util';
-
-export default createFactory(Loading, {});
+export default Loading;

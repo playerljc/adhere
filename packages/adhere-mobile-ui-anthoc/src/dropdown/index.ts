@@ -1,5 +1,3 @@
-import { Dropdown } from 'antd-mobile';
+import Dropdown from './Dropdown';
 
-import { createFactory } from '../util';
-
-export default createFactory(Dropdown, {});
+export default Dropdown;

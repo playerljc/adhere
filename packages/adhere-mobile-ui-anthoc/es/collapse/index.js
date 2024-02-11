@@ -1,2 +1,2 @@
-import{Collapse}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Collapse,{});
+import Collapse from"./Collapse";export default Collapse;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-import{CascadePicker}from"antd-mobile";import{createFactory}from"../util";export default createFactory(CascadePicker,{});
+import CascadePicker from"./CascadePicker";export default CascadePicker;
 //# sourceMappingURL=index.js.map

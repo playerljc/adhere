@@ -1,5 +1,3 @@
-import { Radio } from 'antd-mobile';
+import Radio from './Radio';
 
-import { createFactory } from '../util';
-
-export default createFactory(Radio, {});
+export default Radio;

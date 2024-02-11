@@ -1,2 +1,2 @@
-import{ProgressCircle}from"antd-mobile";import{createFactory}from"../util";export default createFactory(ProgressCircle,{});
+import ProgressCircle from"./ProgressCircle";export default ProgressCircle;
 //# sourceMappingURL=index.js.map

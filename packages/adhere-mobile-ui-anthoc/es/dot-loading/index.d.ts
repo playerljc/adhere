@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import DotLoading from './DotLoading';
+export default DotLoading;

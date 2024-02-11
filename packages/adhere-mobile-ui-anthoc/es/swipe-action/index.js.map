@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["swipe-action/index.js"],"sourcesContent":["import { SwipeAction } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(SwipeAction, {});"],"names":["SwipeAction","createFactory"],"mappings":"OAASA,WAAgC,KAAb,qBACnBC,aAA8B,KAAT,yBACfA,cAAcD,YAAa,EAAE"}
+{"version":3,"file":"index.js","sources":["swipe-action/index.js"],"sourcesContent":["import SwipeAction from './SwipeAction';\nexport default SwipeAction;"],"names":["SwipeAction"],"mappings":"OAAOA,gBAAiB,+BACTA"}

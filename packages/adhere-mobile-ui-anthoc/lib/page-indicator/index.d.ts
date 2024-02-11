@@ -1,2 +1,2 @@
-declare const _default: any;
-export default _default;
+import PageIndicator from './PageIndicator';
+export default PageIndicator;

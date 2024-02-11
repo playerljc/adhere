@@ -1,5 +1,3 @@
-import { IndexBar } from 'antd-mobile';
+import IndexBar from './IndexBar';
 
-import { createFactory } from '../util';
-
-export default createFactory(IndexBar, {});
+export default IndexBar;

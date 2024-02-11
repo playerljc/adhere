@@ -1,2 +1,2 @@
-import{Skeleton}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Skeleton,{});
+import Skeleton from"./Skeleton";export default Skeleton;
 //# sourceMappingURL=index.js.map

@@ -1,2 +1,2 @@
-import{FloatingBubble}from"antd-mobile";import{createFactory}from"../util";export default createFactory(FloatingBubble,{});
+import FloatingBubble from"./FloatingBubble";export default FloatingBubble;
 //# sourceMappingURL=index.js.map

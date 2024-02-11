@@ -1,2 +1,2 @@
-import{CenterPopup}from"antd-mobile";import{createFactory}from"../util";export default createFactory(CenterPopup,{});
+import CenterPopup from"./CenterPopup";export default CenterPopup;
 //# sourceMappingURL=index.js.map

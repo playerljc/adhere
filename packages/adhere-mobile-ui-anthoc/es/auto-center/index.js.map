@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["auto-center/index.js"],"sourcesContent":["import { AutoCenter } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(AutoCenter, {});"],"names":["AutoCenter","createFactory"],"mappings":"OAASA,UAA+B,KAAb,qBAClBC,aAA8B,KAAT,yBACfA,cAAcD,WAAY,EAAE"}
+{"version":3,"file":"index.js","sources":["auto-center/index.js"],"sourcesContent":["import AutoCenter from './AutoCenter';\nexport default AutoCenter;"],"names":["AutoCenter"],"mappings":"OAAOA,eAAgB,8BACRA"}

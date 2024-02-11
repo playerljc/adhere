@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["index-bar/index.js"],"sourcesContent":["import { IndexBar } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(IndexBar, {});"],"names":["IndexBar","createFactory"],"mappings":"OAASA,QAA6B,KAAb,qBAChBC,aAA8B,KAAT,yBACfA,cAAcD,SAAU,EAAE"}
+{"version":3,"file":"index.js","sources":["index-bar/index.js"],"sourcesContent":["import IndexBar from './IndexBar';\nexport default IndexBar;"],"names":["IndexBar"],"mappings":"OAAOA,aAAc,4BACNA"}

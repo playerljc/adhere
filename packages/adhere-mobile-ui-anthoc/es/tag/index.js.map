@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["tag/index.js"],"sourcesContent":["import { Tag } from 'antd-mobile';\nimport { createFactory } from '../util';\nexport default createFactory(Tag, {});"],"names":["Tag","createFactory"],"mappings":"OAASA,GAAwB,KAAb,qBACXC,aAA8B,KAAT,yBACfA,cAAcD,IAAK,EAAE"}
+{"version":3,"file":"index.js","sources":["tag/index.js"],"sourcesContent":["import Tag from './Tag';\nexport default Tag;"],"names":["Tag"],"mappings":"OAAOA,QAAS,uBACDA"}

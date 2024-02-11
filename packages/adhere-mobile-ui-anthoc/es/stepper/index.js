@@ -1,2 +1,2 @@
-import{Stepper}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Stepper,{});
+import Stepper from"./Stepper";export default Stepper;
 //# sourceMappingURL=index.js.map

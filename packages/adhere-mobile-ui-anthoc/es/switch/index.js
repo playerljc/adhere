@@ -1,2 +1,2 @@
-import{Switch}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Switch,{});
+import Switch from"./Switch";export default Switch;
 //# sourceMappingURL=index.js.map

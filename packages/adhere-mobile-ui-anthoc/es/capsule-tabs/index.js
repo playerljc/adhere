@@ -1,2 +1,2 @@
-import{CapsuleTabs}from"antd-mobile";import{createFactory}from"../util";export default createFactory(CapsuleTabs,{});
+import CapsuleTabs from"./CapsuleTabs";export default CapsuleTabs;
 //# sourceMappingURL=index.js.map

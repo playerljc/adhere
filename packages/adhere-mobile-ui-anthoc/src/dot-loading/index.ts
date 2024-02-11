@@ -1,5 +1,3 @@
-import { DotLoading } from 'antd-mobile';
+import DotLoading from './DotLoading';
 
-import { createFactory } from '../util';
-
-export default createFactory(DotLoading, {});
+export default DotLoading;

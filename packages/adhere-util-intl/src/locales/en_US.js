@@ -107,4 +107,5 @@ export default [
   'Export excel',
   'Close',
   'Exporting',
+  'Enter text filter options',
 ];

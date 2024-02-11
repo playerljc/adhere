@@ -1,5 +1,3 @@
-import { PageIndicator } from 'antd-mobile';
+import PageIndicator from './PageIndicator';
 
-import { createFactory } from '../util';
-
-export default createFactory(PageIndicator, {});
+export default PageIndicator;

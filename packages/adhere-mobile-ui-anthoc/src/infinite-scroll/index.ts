@@ -1,5 +1,3 @@
-import { InfiniteScroll } from 'antd-mobile';
+import InfiniteScroll from './InfiniteScroll';
 
-import { createFactory } from '../util';
-
-export default createFactory(InfiniteScroll, {});
+export default InfiniteScroll;

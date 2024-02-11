@@ -1,5 +1,3 @@
-import { NoticeBar } from 'antd-mobile';
+import NoticeBar from './NoticeBar';
 
-import { createFactory } from '../util';
-
-export default createFactory(NoticeBar, {});
+export default NoticeBar;

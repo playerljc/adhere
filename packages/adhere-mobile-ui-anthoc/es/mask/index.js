@@ -1,2 +1,2 @@
-import{Mask}from"antd-mobile";import{createFactory}from"../util";export default createFactory(Mask,{});
+import Mask from"./Mask";export default Mask;
 //# sourceMappingURL=index.js.map
