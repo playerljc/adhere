@@ -1,6 +1,3 @@
-import { CheckList } from 'antd-mobile';
-import type { CheckListProps } from 'antd-mobile';
-declare const CheckListHOC: typeof CheckList & {
-    defaultProps?: Partial<CheckListProps>;
-};
+import type { CheckListHOCComponent } from '../types';
+declare const CheckListHOC: CheckListHOCComponent;
 export default CheckListHOC;

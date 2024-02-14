@@ -1,6 +1,3 @@
-import { Selector } from 'antd-mobile';
-import type { SelectorProps } from 'antd-mobile';
-declare const SelectorHOC: typeof Selector & {
-    defaultProps?: Partial<SelectorProps<any>>;
-};
+import type { SelectorHOCComponent } from '../types';
+declare const SelectorHOC: SelectorHOCComponent;
 export default SelectorHOC;

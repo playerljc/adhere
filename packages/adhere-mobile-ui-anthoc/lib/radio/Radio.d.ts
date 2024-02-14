@@ -1,6 +1,3 @@
-import { Radio } from 'antd-mobile';
-import type { RadioProps } from 'antd-mobile';
-declare const RadioHOC: typeof Radio & {
-    defaultProps?: Partial<RadioProps>;
-};
+import type { RadioHOCComponent } from '../types';
+declare const RadioHOC: RadioHOCComponent;
 export default RadioHOC;

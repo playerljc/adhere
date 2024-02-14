@@ -6,6 +6,12 @@ import type { CheckListProps } from '../types';
 
 const { Item } = CheckList;
 
+/**
+ * InternalCheckList
+ * @param options
+ * @param props
+ * @constructor
+ */
 const InternalCheckList: FC<CheckListProps> = ({ options, ...props }) => (
   <CheckList {...props}>
     {options?.map?.((t) => (

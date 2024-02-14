@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},stepper_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("../stepper"))),util_1=require("../util"),StepperIntegerHOC=(0,util_1.createFactory)(stepper_1.default,{digits:0});StepperIntegerHOC.displayName="StepperIntegerHOC",exports.default=StepperIntegerHOC;
+//# sourceMappingURL=StepperInteger.js.map

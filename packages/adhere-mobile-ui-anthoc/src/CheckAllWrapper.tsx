@@ -1,7 +1,5 @@
 import React, { FC, useMemo } from 'react';
 
-import Intl from '@baifendian/adhere-util-intl';
-
 import Checkbox from './checkbox';
 import type { CheckAllWrapperProps } from './types';
 
@@ -12,7 +10,12 @@ import type { CheckAllWrapperProps } from './types';
  * @param options
  * @constructor
  */
-const CheckAllWrapper: FC<CheckAllWrapperProps> = ({ value, onChange, options }) => {
+const CheckAllWrapper: FC<CheckAllWrapperProps> = ({
+  value,
+  onCheckAllChange,
+  options,
+  children,
+}) => {
   const checkAll = useMemo(() => {
     if (!options?.length) return false;
 
@@ -20,7 +23,7 @@ const CheckAllWrapper: FC<CheckAllWrapperProps> = ({ value, onChange, options })
   }, [value, options]);
 
   const indeterminate = useMemo(
-    () => value?.length > 0 && value?.length < (options ?? []).length,
+    () => (value ?? []).length > 0 && (value ?? []).length < (options ?? []).length,
     [value, options],
   );
 
@@ -28,18 +31,18 @@ const CheckAllWrapper: FC<CheckAllWrapperProps> = ({ value, onChange, options })
     <Checkbox
       indeterminate={indeterminate}
       checked={checkAll}
-      onChange={(e) => {
-        if (e.target.checked) {
+      onChange={(checked) => {
+        if (checked) {
           const values = Array.from(new Set([...(options ?? []), ...(value ?? [])]));
-          onChange?.(values, true, values);
+          onCheckAllChange?.(values, true, values);
         } else {
           const values = options ?? [];
           const changeValues = value?.filter((_value) => !values.includes(_value)) ?? [];
-          onChange?.(changeValues, false, changeValues);
+          onCheckAllChange?.(changeValues, false, changeValues);
         }
       }}
     >
-      {Intl.v('全选')}
+      {children}
     </Checkbox>
   );
 };

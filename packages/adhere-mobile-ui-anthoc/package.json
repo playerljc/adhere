@@ -32,7 +32,9 @@
     "e2e": "cross-env environment=dev mode=development ctbuild startapp -c ../adhere-e2e/ctbuild.e2e.config.js --define alias=@,evnVars=true"
   },
   "dependencies": {
+    "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",
     "@baifendian/adhere-ui-flexlayout": "^2.10.28",
+    "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-validator": "^2.10.28",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
@@ -43,6 +45,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.23.1",
     "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-mock": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "babel-plugin-import": "^1.13.6",
     "ejs": "^3.1.9",

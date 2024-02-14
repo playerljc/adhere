@@ -67,6 +67,9 @@ import Slider from './slider';
 import Space from './space';
 import SpinLoading from './spin-loading';
 import Stepper from './stepper';
+import StepperDecimal1 from './stepper-decimal1';
+import StepperDecimal2 from './stepper-decimal2';
+import StepperInteger from './stepper-integer';
 import Steps from './steps';
 import SubmitButton from './submit-button';
 import SwipeAction from './swipe-action';
@@ -150,6 +153,9 @@ export {
   Space,
   SpinLoading,
   Stepper,
+  StepperInteger,
+  StepperDecimal1,
+  StepperDecimal2,
   Steps,
   SwipeAction,
   Swiper,

@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},stepper_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("../stepper"))),util_1=require("../util"),StepperDecimal1=(0,util_1.createFactory)(stepper_1.default,{digits:1});StepperDecimal1.displayName="StepperDecimal1",exports.default=StepperDecimal1;
+//# sourceMappingURL=StepperDecimal1.js.map

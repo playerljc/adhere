@@ -1,6 +1,3 @@
-import { Checkbox } from 'antd-mobile';
-import type { CheckboxProps } from 'antd-mobile';
-declare const CheckboxHOC: typeof Checkbox & {
-    defaultProps?: Partial<CheckboxProps>;
-};
+import type { CheckboxHOCComponent } from '../types';
+declare const CheckboxHOC: CheckboxHOCComponent;
 export default CheckboxHOC;
