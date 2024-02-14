@@ -1,4 +1,4 @@
-import { CheckList, Image } from 'antd-mobile';
+import { CheckList, Image, List } from 'antd-mobile';
 import React, { useState } from 'react';
 
 import { MobileGlobalIndicator } from '@baifendian/adhere';
@@ -15,6 +15,7 @@ export default () => {
 
   return (
     <MobileAutoComplete
+      placeholder="请输入关键字"
       style={{ height: '100%' }}
       value={value}
       loadData={(_kw) => {
@@ -36,8 +37,8 @@ export default () => {
       }}
       searchDataSource={searchDataSource}
       renderResultItem={(record) => (
-        <CheckList>
-          <CheckList.Item
+        <List>
+          <List.Item
             prefix={
               <Image
                 src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
@@ -50,8 +51,8 @@ export default () => {
             description={record.label}
           >
             {record.t}
-          </CheckList.Item>
-        </CheckList>
+          </List.Item>
+        </List>
       )}
     >
       {({ value: _value, onChange: _onChange, searchDataSource: _searchDataSource }) => (

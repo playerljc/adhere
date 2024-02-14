@@ -18,7 +18,6 @@ const selectorPrefix = 'adhere-mobile-ui-auto-complete';
  * @param checkListProps
  * @param loadData
  * @param rowKey
- // * @param renderItem
  * @param labelProp
  * @param valueProp
  * @param value
