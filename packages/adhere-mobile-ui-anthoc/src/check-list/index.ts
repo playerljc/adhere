@@ -1,3 +1,5 @@
+import AutoCompleteCheckList from './AutoCompleteCheckList';
+import AutoCompleteCheckboxCheckList from './AutoCompleteCheckboxCheckList';
 import CheckAllCheckList from './CheckAllCheckList';
 import CheckList from './CheckList';
 import CheckboxCheckAllCheckList from './CheckboxCheckAllCheckList';
@@ -7,10 +9,11 @@ import FilterCheckList from './FilterCheckList';
 import FilterCheckboxCheckAllCheckList from './FilterCheckboxCheckAllCheckList';
 import FilterCheckboxCheckList from './FilterCheckboxCheckList';
 
+CheckList.AutoCompleteCheckboxCheckList = AutoCompleteCheckboxCheckList;
+CheckList.AutoCompleteCheckList = AutoCompleteCheckList;
 CheckList.CheckAllCheckList = CheckAllCheckList;
 CheckList.FilterCheckList = FilterCheckList;
 CheckList.FilterCheckAllCheckList = FilterCheckAllCheckList;
-
 CheckList.CheckboxCheckAllCheckList = CheckboxCheckAllCheckList;
 CheckList.CheckboxCheckList = CheckboxCheckList;
 CheckList.FilterCheckboxCheckAllCheckList = FilterCheckboxCheckAllCheckList;

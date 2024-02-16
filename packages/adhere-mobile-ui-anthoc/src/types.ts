@@ -14,6 +14,8 @@ import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { FC } from 'react';
 
+import type { AutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+
 import { createFactory } from './util';
 
 type BaseType = {
@@ -168,6 +170,8 @@ export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListPro
   CheckboxCheckList: FC<CheckboxCheckListProps>;
   FilterCheckboxCheckAllCheckList: FC<FilterCheckboxCheckAllCheckListProps>;
   FilterCheckboxCheckList: FC<FilterCheckboxCheckListProps>;
+  AutoCompleteCheckList: FC<AutoCompleteCheckListProps>;
+  AutoCompleteCheckboxCheckList: FC<AutoCompleteCheckboxCheckListProps>;
 };
 
 export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroupProps>> & {
@@ -175,17 +179,20 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroup
   FilterCheckbox: FC<FilterCheckboxProps>;
   FilterCheckAllCheckbox: FC<FilterCheckAllCheckboxProps>;
   CheckboxGroup: FC<CheckboxGroupProps>;
+  AutoCompleteCheckbox: FC<AutoCompleteCheckboxProps>;
 };
 
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
   CheckAllSelector: FC<CheckAllSelectorProps>;
   FilterSelector: FC<FilterSelectorProps>;
   FilterCheckAllSelector: FC<FilterCheckAllSelectorProps>;
+  AutoCompleteSelector: FC<AutoCompleteSelectorProps>;
 };
 
 export type RadioHOCComponent = ReturnType<typeof createFactory<RadioGroupProps>> & {
   FilterRadio: FC<FilterRadioProps>;
   RadioGroup: FC<RadioGroupProps>;
+  AutoCompleteRadio: FC<AutoCompleteRadioProps>;
 };
 
 export type CheckboxCheckListProps = BaseType &
@@ -200,3 +207,28 @@ export type FilterCheckboxCheckListProps = CheckboxCheckListProps & FilterCheckL
 
 export type FilterCheckboxCheckAllCheckListProps = CheckboxCheckListProps &
   FilterCheckAllCheckListProps;
+
+export type AutoCompleteCheckListProps = AutoCompleteProps & {
+  checkListProps?: CheckListProps;
+};
+
+export type AutoCompleteCheckboxCheckListProps = AutoCompleteProps & {
+  checkListProps?: CheckboxCheckListProps;
+};
+
+export type AutoCompleteCheckboxProps = AutoCompleteProps & {
+  checkboxGroupProps?: CheckboxGroupProps;
+};
+
+export type AutoCompleteRadioProps = AutoCompleteProps & {
+  radioGroupProps?: RadioGroupProps;
+};
+
+export type AutoCompleteSelectorProps = AutoCompleteProps & {
+  selectorProps?: SelectorProps<any>;
+};
+
+export type UseAutoComplete = (
+  autoCompleteProps: AutoCompleteProps,
+  children: AutoCompleteProps['children'],
+) => ReactElement;
