@@ -41,6 +41,7 @@ const AutoComplete = memo<AutoCompleteProps>(
     onChange,
     renderResultItem,
     renderEmpty,
+    showResult = true,
     children,
   }) => {
     const [kw, setKw] = useState<string>('');
@@ -127,7 +128,7 @@ const AutoComplete = memo<AutoCompleteProps>(
             })}
         </div>
 
-        {!!value?.length && (
+        {showResult && !!value?.length && (
           <div className={`${selectorPrefix}-result`}>
             {dataSource?.map((_record, _index) => (
               <div key={getKey(_record)} className={`${selectorPrefix}-result-item`}>

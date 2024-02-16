@@ -17,7 +17,8 @@ export interface AutoCompleteProps {
     onChange?: (val: CheckListValue[]) => void;
     children?: (arg: {
         value?: CheckListValue[];
-        onChange?: (_values: CheckListValue[]) => void;
+        onChange?: (_values: CheckListValue[] | CheckListValue) => void;
         searchDataSource?: any[];
     }) => ReactNode;
+    showResult?: boolean;
 }
