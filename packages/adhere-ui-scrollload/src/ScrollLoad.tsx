@@ -27,21 +27,21 @@ const InternalScrollLoad = memo<
     const {
       className = '',
       style = {},
-      children,
+      loadClassName = '',
+      loadStyle = {},
+      emptyClassName = '',
+      emptyStyle = {},
+      errorClassName = '',
+      errorStyle = {},
       getScrollContainer,
       distance = 50,
+      renderLoading,
+      renderEmpty,
+      renderError,
       onScrollBottom,
       onEmptyClick,
       onErrorClick,
-      renderLoading,
-      loadClassName = '',
-      loadStyle = {},
-      renderEmpty,
-      emptyClassName = '',
-      emptyStyle = {},
-      renderError,
-      errorClassName = '',
-      errorStyle = {},
+      children,
       ...attrs
     } = props;
 
@@ -193,6 +193,7 @@ const InternalScrollLoad = memo<
 
     useImperativeHandle(ref, () => ({
       hideAll,
+      getScrollContainer: () => _getScrollContainer(),
     }));
 
     useLayoutEffect(() => {

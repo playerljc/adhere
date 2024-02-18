@@ -11,6 +11,7 @@ export type ScrollLoadComponent = NamedExoticComponent<
 
 export interface ScrollLoadRefHandle {
   hideAll: () => void;
+  getScrollContainer: () => HTMLElement | null;
 }
 
 /**
