@@ -7,8 +7,8 @@ import CheckboxCheckList from './CheckboxCheckList';
 
 const InternalPagingCheckboxCheckList = memo<PagingCheckboxCheckListProps>(
   ({ options, pagingProps, ...checkboxCheckListProps }) => (
-    <StaticPaging<CheckListItemProps> options={options} {...pagingProps}>
-      <CheckboxCheckList options={options} {...checkboxCheckListProps} />
+    <StaticPaging<CheckListItemProps> {...pagingProps} options={options}>
+      <CheckboxCheckList {...checkboxCheckListProps} />
     </StaticPaging>
   ),
 );

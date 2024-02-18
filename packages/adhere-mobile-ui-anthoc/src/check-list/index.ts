@@ -9,6 +9,7 @@ import FilterCheckList from './FilterCheckList';
 import FilterCheckboxCheckAllCheckList from './FilterCheckboxCheckAllCheckList';
 import FilterCheckboxCheckList from './FilterCheckboxCheckList';
 import FilterPagingCheckList from './FilterPagingCheckList';
+import FilterPagingCheckboxCheckList from './FilterPagingCheckboxCheckList';
 import PagingCheckList from './PagingCheckList';
 import PagingCheckboxCheckList from './PagingCheckboxCheckList';
 
@@ -24,5 +25,6 @@ CheckList.FilterCheckboxCheckList = FilterCheckboxCheckList;
 CheckList.PagingCheckList = PagingCheckList;
 CheckList.PagingCheckboxCheckList = PagingCheckboxCheckList;
 CheckList.FilterPagingCheckList = FilterPagingCheckList;
+CheckList.FilterPagingCheckboxCheckList = FilterPagingCheckboxCheckList;
 
 export default CheckList;

@@ -104,6 +104,7 @@ const Paging = memo<PropsWithoutRef<PagingProps> & RefAttributes<PagingHandle>>(
             }}
           >
             <ScrollLoad
+              // @ts-ignore
               ref={scrollLoadRef}
               renderLoading={renderLoading}
               onScrollBottom={onLoadMore}
@@ -128,7 +129,7 @@ const Paging = memo<PropsWithoutRef<PagingProps> & RefAttributes<PagingHandle>>(
 
       useImperativeHandle(ref, () => ({
         getScrollEl,
-        hideAll: () => scrollLoadRef.current.hideAll(),
+        hideAll: () => scrollLoadRef?.current?.hideAll?.(),
       }));
 
       return (

@@ -13,6 +13,7 @@ import FilterCheckList from './CheckList/FilterCheckList';
 import FilterCheckboxCheckAllCheckList from './CheckList/FilterCheckboxCheckAllCheckList';
 import FilterCheckboxCheckList from './CheckList/FilterCheckboxCheckList';
 import FilterPagingCheckList from './CheckList/FilterPagingCheckList';
+import FilterPagingCheckboxCheckList from './CheckList/FilterPagingCheckboxCheckList';
 import PagingCheckList from './CheckList/PagingCheckList';
 import PagingCheckboxCheckList from './CheckList/PagingCheckboxCheckList';
 import AutoCompleteCheckbox from './Checkbox/AutoCompleteCheckbox';
@@ -20,15 +21,21 @@ import CheckAllCheckbox from './Checkbox/CheckAllCheckbox';
 import CheckboxGroup from './Checkbox/CheckboxGrooup';
 import FilterCheckAllCheckbox from './Checkbox/FilterCheckAllCheckbox';
 import FilterCheckbox from './Checkbox/FilterCheckbox';
+import FilterPagingCheckbox from './Checkbox/FilterPagingCheckbox';
+import PagingCheckbox from './Checkbox/PagingCheckbox';
 import AutoCompleteRadio from './Radio/AutoCompleteRadio';
+import FilterPagingRadio from './Radio/FilterPagingRadio';
 import FilterRadio from './Radio/FilterRadio';
+import PagingRadio from './Radio/PagingRadio';
 import RadioGroup from './Radio/RadioGroup';
 import AutoCompleteSelector from './Selector/AutoCompleteSelector';
 import CheckAllSelector from './Selector/CheckAllSelector';
 import FilterCheckAllSelector from './Selector/FilterCheckAllSelector';
+import FilterPagingSelector from './Selector/FilterPagingSelector';
 import FilterSelector from './Selector/FilterSelector';
+import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 
 e2e.Mobile({
-  children: <FilterPagingCheckList />,
+  children: <AutoCompleteCheckboxCheckList />,
 });

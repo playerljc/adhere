@@ -2,9 +2,9 @@ import type { CheckListItemProps } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
+import ListFilter from '../ListFilter';
 import type { FilterCheckListProps } from '../types';
 import { DisplayNameInternal } from '../types';
-import useListFilter from '../useListFilter';
 import CheckList from './CheckList';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-filter-check-list';
@@ -18,19 +18,22 @@ const InternalFilterCheckList = memo<FilterCheckListProps>(
     bodyWrapperClassName,
     bodyWrapperStyle,
     filterProps,
+    renderEmpty,
     ...checkListProps
-  }) =>
-    useListFilter<CheckListItemProps>({
-      options: checkListProps?.options ?? [],
-      filterProps,
-      wrapperClassName: classNames(selectorPrefix, className ?? ''),
-      wrapperStyle: style,
-      filterWrapperClassName: classNames(`${selectorPrefix}-filter`, filterWrapperClassName ?? ''),
-      bodyWrapperClassName: classNames(`${selectorPrefix}-body`, bodyWrapperClassName ?? ''),
-      filterWrapperStyle,
-      bodyWrapperStyle,
-      children: (options) => <CheckList {...checkListProps} options={options} />,
-    }),
+  }) => (
+    <ListFilter<CheckListItemProps>
+      options={checkListProps?.options ?? []}
+      filterProps={filterProps}
+      wrapperClassName={classNames(selectorPrefix, className ?? '')}
+      wrapperStyle={style ?? {}}
+      filterWrapperClassName={classNames(`${selectorPrefix}-filter`, filterWrapperClassName ?? '')}
+      bodyWrapperClassName={classNames(`${selectorPrefix}-body`, bodyWrapperClassName ?? '')}
+      filterWrapperStyle={filterWrapperStyle ?? {}}
+      bodyWrapperStyle={bodyWrapperStyle ?? {}}
+      renderEmpty={renderEmpty}
+      children={(options) => <CheckList {...checkListProps} options={options} />}
+    />
+  ),
 );
 
 const FilterCheckList = InternalFilterCheckList as DisplayNameInternal<

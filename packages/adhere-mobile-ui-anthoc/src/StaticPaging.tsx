@@ -1,6 +1,6 @@
 import { useMount, useUpdateEffect, useUpdateLayoutEffect } from 'ahooks';
-import React, { cloneElement, useEffect, useMemo, useRef, useState } from 'react';
-import type { FC } from 'react';
+import type { Draft } from 'immer';
+import React, { cloneElement, useMemo, useRef, useState } from 'react';
 import { useImmer } from 'use-immer';
 
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
@@ -24,12 +24,16 @@ function StaticPaging<Option>({
   ...pagingProps
 }: StaticPagingProps<Option>) {
   const pagingRef = useRef<PagingHandle>();
-  const callbackHandler = useRef(null);
+  const callbackHandler = useRef<Function | null>(null);
   const status = useRef(ScrollLoad.NORMAL);
 
   const [loading, setLoading] = useState(true);
 
-  const [paging, setPaging] = useImmer({
+  const [paging, setPaging] = useImmer<{
+    page: number;
+    limit: number;
+    data: Option[];
+  }>({
     page: 1,
     limit: DEFAULT_LIMIT,
     data: [],
@@ -37,9 +41,8 @@ function StaticPaging<Option>({
   });
 
   const pages = useMemo(() => {
-    return (
-      Math.floor(options.length / paging.limit) + (options.length % paging.limit === 0 ? 0 : 1)
-    );
+    const length = (options ?? []).length;
+    return Math.floor(length / paging.limit) + (length % paging.limit === 0 ? 0 : 1);
   }, [paging.limit, options]);
 
   const pagingChildren = useMemo(
@@ -52,22 +55,7 @@ function StaticPaging<Option>({
   );
 
   function onRefresh() {
-    const scrollEl = pagingRef.current.getScrollEl();
-
-    if (scrollEl) {
-      scrollEl.scrollTop = 0;
-    }
-
-    pagingRef.current.hideAll();
-
-    callbackHandler.current = null;
-    status.current = ScrollLoad.NORMAL;
-
-    setPaging((draft) => {
-      draft.page = 1;
-      draft.limit = (defaultPaging ?? {}).limit ?? DEFAULT_LIMIT;
-      draft.data = [];
-    });
+    reset();
   }
 
   function onLoadMore(callback) {
@@ -77,12 +65,56 @@ function StaticPaging<Option>({
       return;
     }
 
-    console.log('draft.page', paging.page, pages);
-
     callbackHandler.current = callback;
 
+    appendData();
+  }
+
+  function resetScrollLoad() {
+    const scrollEl = pagingRef?.current?.getScrollEl?.();
+
+    if (scrollEl) {
+      scrollEl.scrollTop = 0;
+    }
+
+    pagingRef?.current?.hideAll?.();
+
+    callbackHandler.current = null;
+    status.current = ScrollLoad.NORMAL;
+  }
+
+  function resetPaging() {
+    setPaging((draft) => {
+      const newPaging: typeof defaultPaging = defaultPaging ?? {
+        page: 1,
+        limit: DEFAULT_LIMIT,
+      };
+
+      const page = newPaging.page;
+      const limit = newPaging.limit;
+
+      draft.page = page;
+      draft.limit = limit;
+      draft.data = (options ?? []).slice(
+        (draft.page - 1) * draft.limit,
+        draft.page * draft.limit,
+      ) as Draft<Option>[];
+    });
+  }
+
+  function reset() {
+    resetScrollLoad();
+    resetPaging();
+  }
+
+  function appendData() {
     setPaging((draft) => {
       draft.page = draft.page + 1;
+
+      draft.data = [
+        ...draft.data,
+        ...(options ?? []).slice((draft.page - 1) * draft.limit, draft.page * draft.limit),
+      ] as Draft<Option>[];
     });
   }
 
@@ -95,29 +127,17 @@ function StaticPaging<Option>({
   }, [paging.data]);
 
   useUpdateEffect(() => {
-    setPaging((draft) => {
-      const newPaging = defaultPaging ?? {};
-
-      draft.page = newPaging.page ?? 1;
-      draft.limit = (defaultPaging ?? {}).limit ?? DEFAULT_LIMIT;
-    });
+    reset();
   }, [options, defaultPaging]);
-
-  useEffect(() => {
-    setPaging((draft) => {
-      draft.data = [
-        ...draft.data,
-        ...options.slice((draft.page - 1) * draft.limit, draft.page * draft.limit),
-      ];
-    });
-  }, [paging.page, paging.limit]);
 
   useMount(() => {
     setLoading(false);
+    resetPaging();
   });
 
   return (
     <Paging
+      // @ts-ignore
       ref={pagingRef}
       isLoading={loading}
       onRefresh={onRefresh}

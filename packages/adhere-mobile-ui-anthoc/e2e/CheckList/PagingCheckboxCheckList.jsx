@@ -6,7 +6,7 @@ import { CheckList } from '../../src/index';
 
 import '../../src/index.less';
 
-const options = Array.from({ length: 1000 }).map((t, _index) => {
+const options = Array.from({ length: 100 }).map((t, _index) => {
   return {
     title: `${_index + 1}`,
     value: _index + 1,

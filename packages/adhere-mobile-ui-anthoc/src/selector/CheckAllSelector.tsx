@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 
+import ListCheckAll from '../ListCheckAll';
 import type { CheckAllSelectorProps, DisplayNameInternal } from '../types';
-import useListCheckAll from '../useListCheckAll';
 import Selector from './Selector';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-check-all-selector';
@@ -24,19 +24,23 @@ const InternalCheckAllSelector = memo<CheckAllSelectorProps>(
   }) => {
     const childrenOrigin = useMemo(() => <Selector multiple {...selectorProps} />, [selectorProps]);
 
-    return useListCheckAll({
-      checkAllWrapperClassName,
-      checkAllWrapperStyle,
-      checkAllBodyWrapperClassName,
-      checkAllBodyWrapperStyle,
-      renderCheckAll,
-      checkAllLabel,
-      onCheckAllChange,
-      value: selectorProps.value ?? [],
-      options: selectorProps?.options?.map((t) => t.value as any) ?? [],
-      selectorPrefix,
-      childrenOrigin,
-    });
+    return (
+      <ListCheckAll
+        {...{
+          checkAllWrapperClassName,
+          checkAllWrapperStyle,
+          checkAllBodyWrapperClassName,
+          checkAllBodyWrapperStyle,
+          renderCheckAll,
+          checkAllLabel,
+          onCheckAllChange,
+          value: selectorProps.value ?? [],
+          options: selectorProps?.options?.map((t) => t.value as any) ?? [],
+          selectorPrefix,
+          childrenOrigin,
+        }}
+      />
+    );
   },
 );
 

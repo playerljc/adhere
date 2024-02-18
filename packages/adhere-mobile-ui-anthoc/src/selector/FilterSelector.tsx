@@ -2,8 +2,8 @@ import type { SelectorOption } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
+import ListFilter from '../ListFilter';
 import type { DisplayNameInternal, FilterSelectorProps } from '../types';
-import useListFilter from '../useListFilter';
 import Selector from './Selector';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-filter-selector';
@@ -19,26 +19,29 @@ const InternalFilterSelector = memo<FilterSelectorProps>(
     bodyWrapperStyle,
     selectorClassName,
     selectorStyle,
+    renderEmpty,
     ...selectorProps
-  }) =>
-    useListFilter<SelectorOption<any>>({
-      options: selectorProps?.options ?? [],
-      filterProps,
-      wrapperClassName: classNames(selectorPrefix, className ?? ''),
-      wrapperStyle: style,
-      filterWrapperClassName: classNames(`${selectorPrefix}-filter`, filterWrapperClassName ?? ''),
-      bodyWrapperClassName: classNames(`${selectorPrefix}-body`, bodyWrapperClassName ?? ''),
-      filterWrapperStyle,
-      bodyWrapperStyle,
-      children: (options) => (
+  }) => (
+    <ListFilter<SelectorOption<any>>
+      options={selectorProps?.options ?? []}
+      filterProps={filterProps}
+      wrapperClassName={classNames(selectorPrefix, className ?? '')}
+      wrapperStyle={style ?? {}}
+      filterWrapperClassName={classNames(`${selectorPrefix}-filter`, filterWrapperClassName ?? '')}
+      bodyWrapperClassName={classNames(`${selectorPrefix}-body`, bodyWrapperClassName ?? '')}
+      filterWrapperStyle={filterWrapperStyle ?? {}}
+      bodyWrapperStyle={bodyWrapperStyle ?? {}}
+      renderEmpty={renderEmpty}
+      children={(options) => (
         <Selector
           className={selectorClassName ?? ''}
           style={selectorStyle ?? {}}
           {...selectorProps}
           options={options}
         />
-      ),
-    }),
+      )}
+    />
+  ),
 );
 
 const FilterSelector = InternalFilterSelector as DisplayNameInternal<typeof InternalFilterSelector>;

@@ -2,8 +2,8 @@ import type { CheckListItemProps } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
+import ListFilter from '../ListFilter';
 import type { DisplayNameInternal, FilterCheckAllCheckListProps } from '../types';
-import useListFilter from '../useListFilter';
 import CheckAllCheckList from './CheckAllCheckList';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-filter-check-all-check-list';
@@ -19,26 +19,29 @@ const InternalFilterCheckAllCheckList = memo<FilterCheckAllCheckListProps>(
     bodyWrapperStyle,
     checkListClassName,
     checkListStyle,
+    renderEmpty,
     ...checkAllCheckListProps
-  }) =>
-    useListFilter<CheckListItemProps>({
-      options: checkAllCheckListProps?.options ?? [],
-      filterProps,
-      wrapperClassName: classNames(selectorPrefix, className ?? ''),
-      wrapperStyle: style,
-      filterWrapperClassName: classNames(`${selectorPrefix}-filter`, filterWrapperClassName ?? ''),
-      bodyWrapperClassName: classNames(`${selectorPrefix}-body`, bodyWrapperClassName ?? ''),
-      filterWrapperStyle,
-      bodyWrapperStyle,
-      children: (options) => (
+  }) => (
+    <ListFilter<CheckListItemProps>
+      options={checkAllCheckListProps?.options ?? []}
+      filterProps={filterProps}
+      wrapperClassName={classNames(selectorPrefix, className ?? '')}
+      wrapperStyle={style ?? {}}
+      filterWrapperClassName={classNames(`${selectorPrefix}-filter`, filterWrapperClassName ?? '')}
+      bodyWrapperClassName={classNames(`${selectorPrefix}-body`, bodyWrapperClassName ?? '')}
+      filterWrapperStyle={filterWrapperStyle ?? {}}
+      bodyWrapperStyle={bodyWrapperStyle ?? {}}
+      renderEmpty={renderEmpty}
+      children={(options) => (
         <CheckAllCheckList
           className={checkListClassName ?? ''}
           style={checkListStyle ?? {}}
           {...checkAllCheckListProps}
           options={options}
         />
-      ),
-    }),
+      )}
+    />
+  ),
 );
 
 const FilterCheckAllCheckList = InternalFilterCheckAllCheckList as DisplayNameInternal<

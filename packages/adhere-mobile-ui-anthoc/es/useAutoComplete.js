@@ -1,2 +1,0 @@
-var __assign=this&&this.__assign||function(){return(__assign=Object.assign||function(t){for(var e,o=1,r=arguments.length;o<r;o++)for(var n in e=arguments[o])Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n]);return t}).apply(this,arguments)};import React from"react";import AutoComplete from"@baifendian/adhere-mobile-ui-auto-complete";var useAutoComplete=function(t,e){return React.createElement(AutoComplete,__assign({},t),function(t){return null==e?void 0:e(t)})};export default useAutoComplete;
-//# sourceMappingURL=useAutoComplete.js.map

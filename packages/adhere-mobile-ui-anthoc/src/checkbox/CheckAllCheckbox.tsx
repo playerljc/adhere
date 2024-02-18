@@ -1,8 +1,8 @@
 import { CheckListValue } from 'antd-mobile/es/components/check-list';
 import React, { memo, useMemo } from 'react';
 
+import ListCheckAll from '../ListCheckAll';
 import type { CheckAllCheckboxProps, DisplayNameInternal } from '../types';
-import useListCheckAll from '../useListCheckAll';
 import CheckboxGroup from './CheckboxGroup';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-check-all-check-box';
@@ -28,19 +28,23 @@ const InternalCheckAllCheckBox = memo<CheckAllCheckboxProps>(
       [checkboxGroupProps],
     );
 
-    return useListCheckAll({
-      checkAllWrapperClassName,
-      checkAllWrapperStyle,
-      checkAllBodyWrapperClassName,
-      checkAllBodyWrapperStyle,
-      renderCheckAll,
-      checkAllLabel,
-      onCheckAllChange,
-      value: checkboxGroupProps.value ?? [],
-      options: checkboxGroupProps?.options?.map((t) => t.value as CheckListValue) ?? [],
-      selectorPrefix,
-      childrenOrigin,
-    });
+    return (
+      <ListCheckAll
+        {...{
+          checkAllWrapperClassName,
+          checkAllWrapperStyle,
+          checkAllBodyWrapperClassName,
+          checkAllBodyWrapperStyle,
+          renderCheckAll,
+          checkAllLabel,
+          onCheckAllChange,
+          value: checkboxGroupProps.value ?? [],
+          options: checkboxGroupProps?.options?.map((t) => t.value as CheckListValue) ?? [],
+          selectorPrefix,
+          childrenOrigin,
+        }}
+      />
+    );
   },
 );
 

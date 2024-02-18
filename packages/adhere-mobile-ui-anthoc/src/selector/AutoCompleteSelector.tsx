@@ -1,26 +1,28 @@
 import { List } from 'antd-mobile';
 import React, { memo } from 'react';
 
+import AutoComplete from '../AutoComplete';
 import type { AutoCompleteSelectorProps, DisplayNameInternal } from '../types';
-import useAutoComplete from '../useAutoComplete';
 import Selector from './Selector';
 
 const InternalAutoCompleteSelector = memo<AutoCompleteSelectorProps>(
-  ({ selectorProps, ...autoCompleteProps }) =>
-    useAutoComplete(
-      {
+  ({ selectorProps, ...autoCompleteProps }) => (
+    <AutoComplete
+      autoCompleteProps={{
         renderResultItem: (record) => <List.Item {...record} />,
-        ...autoCompleteProps,
-      },
-      ({ value, onChange, searchDataSource }) => (
+        ...(autoCompleteProps ?? {}),
+      }}
+    >
+      {({ value, onChange, searchDataSource }) => (
         <Selector
           value={value}
           onChange={onChange}
           {...(selectorProps ?? {})}
           options={searchDataSource}
         />
-      ),
-    ),
+      )}
+    </AutoComplete>
+  ),
 );
 
 const AutoCompleteSelector = InternalAutoCompleteSelector as DisplayNameInternal<
