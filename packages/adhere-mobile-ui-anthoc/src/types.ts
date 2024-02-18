@@ -5,6 +5,7 @@ import type {
   RadioGroupProps as AntMobileRadioGroupProps,
   RadioProps as AntMobileRadioProps,
   CheckListItemProps,
+  PullToRefreshProps,
   SearchBarProps,
   SelectorOption,
   SelectorProps,
@@ -15,6 +16,10 @@ import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { FC } from 'react';
 
 import type { AutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+import type {
+  ScrollLoadProps,
+  ScrollLoadRefHandle,
+} from '@baifendian/adhere-ui-scrollload/es/types';
 
 import { createFactory } from './util';
 
@@ -172,6 +177,9 @@ export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListPro
   FilterCheckboxCheckList: FC<FilterCheckboxCheckListProps>;
   AutoCompleteCheckList: FC<AutoCompleteCheckListProps>;
   AutoCompleteCheckboxCheckList: FC<AutoCompleteCheckboxCheckListProps>;
+  PagingCheckList: FC<PagingCheckListProps>;
+  PagingCheckboxCheckList: FC<PagingCheckboxCheckListProps>;
+  FilterPagingCheckList: FC<FilterPagingCheckListProps>;
 };
 
 export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroupProps>> & {
@@ -232,3 +240,44 @@ export type UseAutoComplete = (
   autoCompleteProps: AutoCompleteProps,
   children: AutoCompleteProps['children'],
 ) => ReactElement;
+
+export type PagingProps = {
+  className?: string;
+  style?: CSSProperties;
+  scrollLoadProps?: ScrollLoadProps;
+  pullToRefreshProps?: PullToRefreshProps;
+  isLoading: boolean;
+  firstLoading?: () => ReactNode;
+  loading?: () => ReactNode;
+  onRefreshBefore?: () => Promise<void>;
+  onRefresh: () => void;
+  onLoadMore: ScrollLoadProps['onScrollBottom'];
+  children?: any;
+};
+
+export type PagingHandle = {
+  getScrollEl: () => HTMLElement;
+  hideAll: ScrollLoadRefHandle['hideAll'];
+};
+
+export type StaticPagingProps<Option> = Omit<
+  PagingProps,
+  'hasMore' | 'isLoading' | 'onLoadMore' | 'onRefresh'
+> & {
+  options: Option[];
+  defaultPaging?: {
+    page: number;
+    limit: number;
+  };
+  children?: any;
+};
+
+export type PagingCheckListProps = CheckListProps & {
+  pagingProps: StaticPagingProps<CheckListItemProps>;
+};
+
+export type PagingCheckboxCheckListProps = CheckboxCheckListProps & {
+  pagingProps: StaticPagingProps<CheckListItemProps>;
+};
+
+export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;

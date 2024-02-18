@@ -12,6 +12,9 @@ import FilterCheckAllCheckList from './CheckList/FilterCheckAllCheckList';
 import FilterCheckList from './CheckList/FilterCheckList';
 import FilterCheckboxCheckAllCheckList from './CheckList/FilterCheckboxCheckAllCheckList';
 import FilterCheckboxCheckList from './CheckList/FilterCheckboxCheckList';
+import FilterPagingCheckList from './CheckList/FilterPagingCheckList';
+import PagingCheckList from './CheckList/PagingCheckList';
+import PagingCheckboxCheckList from './CheckList/PagingCheckboxCheckList';
 import AutoCompleteCheckbox from './Checkbox/AutoCompleteCheckbox';
 import CheckAllCheckbox from './Checkbox/CheckAllCheckbox';
 import CheckboxGroup from './Checkbox/CheckboxGrooup';
@@ -27,5 +30,5 @@ import FilterSelector from './Selector/FilterSelector';
 import Selector from './Selector/Selector';
 
 e2e.Mobile({
-  children: <AutoCompleteSelector />,
+  children: <FilterPagingCheckList />,
 });
