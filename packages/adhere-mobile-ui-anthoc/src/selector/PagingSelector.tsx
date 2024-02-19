@@ -6,11 +6,13 @@ import type { DisplayNameInternal, PagingSelectorProps } from '../types';
 import Selector from './Selector';
 
 const InternalPagingSelector = memo<PagingSelectorProps>(
-  ({ options, pagingProps, ...selectorProps }) => (
-    <StaticPaging<SelectorOption<any>> options={options} {...pagingProps}>
-      <Selector {...selectorProps} />
-    </StaticPaging>
-  ),
+  ({ options, pagingProps, ...selectorProps }) => {
+    return (
+      <StaticPaging<SelectorOption<any>> options={options} {...pagingProps}>
+        <Selector {...selectorProps} />
+      </StaticPaging>
+    );
+  },
 );
 
 const PagingSelector = InternalPagingSelector as DisplayNameInternal<typeof InternalPagingSelector>;

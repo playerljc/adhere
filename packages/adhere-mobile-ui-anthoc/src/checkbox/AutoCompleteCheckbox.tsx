@@ -1,4 +1,3 @@
-import { List } from 'antd-mobile';
 import React, { memo } from 'react';
 
 import AutoComplete from '../AutoComplete';
@@ -7,12 +6,7 @@ import CheckboxGroup from './CheckboxGroup';
 
 const InternalAutoCompleteCheckbox = memo<AutoCompleteCheckboxProps>(
   ({ checkboxGroupProps, ...autoCompleteProps }) => (
-    <AutoComplete
-      autoCompleteProps={{
-        renderResultItem: (record) => <List.Item {...record} />,
-        ...(autoCompleteProps ?? {}),
-      }}
-    >
+    <AutoComplete labelProp="title" {...(autoCompleteProps ?? {})}>
       {({ value, onChange, searchDataSource }) => (
         <CheckboxGroup
           value={value}

@@ -1,4 +1,3 @@
-import { List } from 'antd-mobile';
 import type { RadioValue } from 'antd-mobile/es/components/radio';
 import React, { memo } from 'react';
 
@@ -8,12 +7,7 @@ import RadioGroup from './RadioGroup';
 
 const InternalAutoCompleteRadio = memo<AutoCompleteRadioProps>(
   ({ radioGroupProps, ...autoCompleteProps }) => (
-    <AutoComplete
-      autoCompleteProps={{
-        renderResultItem: (record) => <List.Item {...record} />,
-        ...(autoCompleteProps ?? {}),
-      }}
-    >
+    <AutoComplete labelProp="title" {...(autoCompleteProps ?? {})}>
       {({ value, onChange, searchDataSource }) => (
         <RadioGroup
           value={value && value.length ? (value[0] as RadioValue) : null}

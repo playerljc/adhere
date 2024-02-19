@@ -1,5 +1,7 @@
 import AutoCompleteCheckList from './AutoCompleteCheckList';
 import AutoCompleteCheckboxCheckList from './AutoCompleteCheckboxCheckList';
+import AutoCompletePagingCheckList from './AutoCompletePagingCheckList';
+import AutoCompletePagingCheckboxCheckList from './AutoCompletePagingCheckboxCheckList';
 import CheckAllCheckList from './CheckAllCheckList';
 import CheckList from './CheckList';
 import CheckboxCheckAllCheckList from './CheckboxCheckAllCheckList';
@@ -26,5 +28,7 @@ CheckList.PagingCheckList = PagingCheckList;
 CheckList.PagingCheckboxCheckList = PagingCheckboxCheckList;
 CheckList.FilterPagingCheckList = FilterPagingCheckList;
 CheckList.FilterPagingCheckboxCheckList = FilterPagingCheckboxCheckList;
+CheckList.AutoCompletePagingCheckList = AutoCompletePagingCheckList;
+CheckList.AutoCompletePagingCheckboxCheckList = AutoCompletePagingCheckboxCheckList;
 
 export default CheckList;

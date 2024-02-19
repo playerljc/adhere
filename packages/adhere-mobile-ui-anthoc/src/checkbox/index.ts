@@ -1,4 +1,5 @@
 import AutoCompleteCheckbox from './AutoCompleteCheckbox';
+import AutoCompletePagingCheckbox from './AutoCompletePagingCheckbox';
 import CheckAllCheckbox from './CheckAllCheckbox';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
@@ -14,5 +15,6 @@ Checkbox.FilterCheckbox = FilterCheckbox;
 Checkbox.FilterCheckAllCheckbox = FilterCheckAllCheckbox;
 Checkbox.PagingCheckbox = PagingCheckbox;
 Checkbox.FilterPagingCheckbox = FilterPagingCheckbox;
+Checkbox.AutoCompletePagingCheckbox = AutoCompletePagingCheckbox;
 
 export default Checkbox;

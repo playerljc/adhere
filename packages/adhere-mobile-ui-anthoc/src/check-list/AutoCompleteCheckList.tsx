@@ -1,4 +1,3 @@
-import { List } from 'antd-mobile';
 import React, { memo } from 'react';
 
 import AutoComplete from '../AutoComplete';
@@ -7,12 +6,7 @@ import CheckList from './CheckList';
 
 const InternalAutoCompleteCheckList = memo<AutoCompleteCheckListProps>(
   ({ checkListProps, ...autoCompleteProps }) => (
-    <AutoComplete
-      autoCompleteProps={{
-        renderResultItem: (record) => <List.Item {...record} />,
-        ...(autoCompleteProps ?? {}),
-      }}
-    >
+    <AutoComplete labelProp="title" {...(autoCompleteProps ?? {})}>
       {({ value, onChange, searchDataSource }) => (
         <CheckList
           value={value}

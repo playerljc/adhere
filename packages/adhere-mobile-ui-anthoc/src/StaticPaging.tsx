@@ -45,14 +45,12 @@ function StaticPaging<Option>({
     return Math.floor(length / paging.limit) + (length % paging.limit === 0 ? 0 : 1);
   }, [paging.limit, options]);
 
-  const pagingChildren = useMemo(
-    () =>
-      cloneElement(children, {
-        ...children.props,
-        options: paging.data,
-      }),
-    [paging.data, children],
-  );
+  const pagingChildren = useMemo(() => {
+    return cloneElement(children, {
+      ...children.props,
+      options: paging.data,
+    });
+  }, [paging.data, children]);
 
   function onRefresh() {
     reset();
@@ -90,8 +88,8 @@ function StaticPaging<Option>({
         limit: DEFAULT_LIMIT,
       };
 
-      const page = newPaging.page;
-      const limit = newPaging.limit;
+      const page = newPaging.page ?? 1;
+      const limit = newPaging.limit ?? DEFAULT_LIMIT;
 
       draft.page = page;
       draft.limit = limit;

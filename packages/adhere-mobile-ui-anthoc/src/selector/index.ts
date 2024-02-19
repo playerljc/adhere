@@ -1,3 +1,4 @@
+import AutoCompletePagingSelector from './AutoCompletePagingSelector';
 import AutoCompleteSelector from './AutoCompleteSelector';
 import CheckAllSelector from './CheckAllSelector';
 import FilterCheckAllSelector from './FilterCheckAllSelector';
@@ -12,5 +13,6 @@ Selector.FilterSelector = FilterSelector;
 Selector.FilterCheckAllSelector = FilterCheckAllSelector;
 Selector.PagingSelector = PagingSelector;
 Selector.FilterPagingSelector = FilterPagingSelector;
+Selector.AutoCompletePagingSelector = AutoCompletePagingSelector;
 
 export default Selector;

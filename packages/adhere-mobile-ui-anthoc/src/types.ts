@@ -15,7 +15,7 @@ import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { FC } from 'react';
 
-import type { AutoCompleteProps as AdhereAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
 import type {
   ScrollLoadProps,
   ScrollLoadRefHandle,
@@ -181,6 +181,8 @@ export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListPro
   PagingCheckboxCheckList: FC<PagingCheckboxCheckListProps>;
   FilterPagingCheckList: FC<FilterPagingCheckListProps>;
   FilterPagingCheckboxCheckList: FC<FilterPagingCheckboxCheckListProps>;
+  AutoCompletePagingCheckList: FC<AutoCompletePagingCheckListProps>;
+  AutoCompletePagingCheckboxCheckList: FC<AutoCompletePagingCheckboxCheckListProps>;
 };
 
 export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroupProps>> & {
@@ -191,6 +193,7 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroup
   AutoCompleteCheckbox: FC<AutoCompleteCheckboxProps>;
   PagingCheckbox: FC<PagingCheckboxProps>;
   FilterPagingCheckbox: FC<FilterPagingCheckboxProps>;
+  AutoCompletePagingCheckbox: FC<AutoCompletePagingCheckboxProps>;
 };
 
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
@@ -200,6 +203,7 @@ export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps
   AutoCompleteSelector: FC<AutoCompleteSelectorProps>;
   PagingSelector: FC<PagingSelectorProps>;
   FilterPagingSelector: FC<FilterPagingSelectorProps>;
+  AutoCompletePagingSelector: FC<AutoCompletePagingSelectorProps>;
 };
 
 export type RadioHOCComponent = ReturnType<typeof createFactory<RadioGroupProps>> & {
@@ -208,6 +212,7 @@ export type RadioHOCComponent = ReturnType<typeof createFactory<RadioGroupProps>
   AutoCompleteRadio: FC<AutoCompleteRadioProps>;
   PagingRadio: FC<PagingRadioProps>;
   FilterPagingRadio: FC<FilterPagingRadioProps>;
+  AutoCompletePagingRadio: FC<AutoCompletePagingRadioProps>;
 };
 
 export type CheckboxCheckListProps = BaseType &
@@ -223,30 +228,27 @@ export type FilterCheckboxCheckListProps = CheckboxCheckListProps & FilterCheckL
 export type FilterCheckboxCheckAllCheckListProps = CheckboxCheckListProps &
   FilterCheckAllCheckListProps;
 
-export type AutoCompleteCheckListProps = AdhereAutoCompleteProps & {
+export type AutoCompleteCheckListProps = AdhereMobileAutoCompleteProps & {
   checkListProps?: CheckListProps;
 };
 
-export type AutoCompleteCheckboxCheckListProps = AdhereAutoCompleteProps & {
+export type AutoCompleteCheckboxCheckListProps = AdhereMobileAutoCompleteProps & {
   checkListProps?: CheckboxCheckListProps;
 };
 
-export type AutoCompleteCheckboxProps = AdhereAutoCompleteProps & {
+export type AutoCompleteCheckboxProps = AdhereMobileAutoCompleteProps & {
   checkboxGroupProps?: CheckboxGroupProps;
 };
 
-export type AutoCompleteRadioProps = AdhereAutoCompleteProps & {
+export type AutoCompleteRadioProps = AdhereMobileAutoCompleteProps & {
   radioGroupProps?: RadioGroupProps;
 };
 
-export type AutoCompleteSelectorProps = AdhereAutoCompleteProps & {
+export type AutoCompleteSelectorProps = AdhereMobileAutoCompleteProps & {
   selectorProps?: SelectorProps<any>;
 };
 
-export type AutoCompleteProps = {
-  autoCompleteProps: AdhereAutoCompleteProps;
-  children: AdhereAutoCompleteProps['children'];
-};
+export type AutoCompleteProps = AdhereMobileAutoCompleteProps;
 
 export type PagingProps = {
   className?: string;
@@ -309,3 +311,27 @@ export type PagingSelectorProps = SelectorProps<any> & {
 };
 
 export type FilterPagingSelectorProps = FilterSelectorProps & PagingSelectorProps;
+
+export type AutoCompletePagingCheckListProps = AutoCompleteProps & {
+  pagingCheckListProps: Omit<PagingCheckListProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type AutoCompletePagingCheckboxCheckListProps = AutoCompleteProps & {
+  pagingCheckboxCheckListProps: Omit<
+    PagingCheckboxCheckListProps,
+    'value' | 'onChange' | 'options'
+  >;
+};
+
+export type AutoCompletePagingCheckboxProps = AutoCompleteProps & {
+  pagingCheckboxProps: Omit<PagingCheckboxProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type AutoCompletePagingRadioProps = Omit<AutoCompleteProps, 'value'> & {
+  pagingRadioProps: Omit<PagingRadioProps, 'value' | 'onChange' | 'options'>;
+  value?: CheckListValue;
+};
+
+export type AutoCompletePagingSelectorProps = AutoCompleteProps & {
+  pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;
+};

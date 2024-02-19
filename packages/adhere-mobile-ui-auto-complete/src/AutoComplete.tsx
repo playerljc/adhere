@@ -33,6 +33,10 @@ const AutoComplete = memo<AutoCompleteProps>(
   ({
     className,
     style,
+    searchBarClassName,
+    searchBarStyle,
+    bodyClassName,
+    bodyStyle,
     placeholder,
     searchBarProps,
     loadData,
@@ -53,35 +57,46 @@ const AutoComplete = memo<AutoCompleteProps>(
 
     const [dataSource, setDataSource] = useState<any[]>([]);
 
-    const isEmpty = () => !searchDataSource?.length;
+    function isEmpty() {
+      return !searchDataSource?.length;
+    }
 
-    const empty = () => renderEmpty?.() ?? <ErrorBlock status="empty" />;
+    function empty() {
+      return renderEmpty?.() ?? <ErrorBlock status="empty" />;
+    }
 
-    const getKey = (record) => {
+    function getKey(record) {
       return record[rowKey ?? 'id'];
-    };
+    }
 
-    const getValue = (record) => record[valueProp ?? 'value'];
+    function getValue(record) {
+      return record[valueProp ?? 'value'];
+    }
 
-    const getLabel = (record) => record[labelProp ?? 'label'] ?? null;
+    function getLabel(record) {
+      return record[labelProp ?? 'label'] ?? null;
+    }
 
-    const excludeVal = (_value: CheckListValue): CheckListValue[] =>
-      value?.filter?.((_v) => _v !== _value) ?? [];
+    function excludeVal(_value: CheckListValue): CheckListValue[] {
+      return value?.filter?.((_v) => _v !== _value) ?? [];
+    }
 
-    const onSearchChange = (_v) => {
+    function onSearchChange(_v) {
       if (!_v) {
         loadData?.('');
       }
       setKw(_v);
-    };
+    }
 
-    const onSearch = () => {
+    function onSearch() {
       loadData?.(kw);
-    };
+    }
 
-    const onCheckListChange = (_values) => {
+    function onCheckListChange(_values) {
+      const targetValues = Array.isArray(_values) ? _values : [_values];
+
       setDataSource((_dataSource) =>
-        _values.map((_value) =>
+        targetValues.map((_value) =>
           [...(searchDataSource ?? []), ..._dataSource]?.find?.(
             (_r) => (getValue(_r) ?? getKey(_r)) === _value,
           ),
@@ -89,15 +104,15 @@ const AutoComplete = memo<AutoCompleteProps>(
       );
 
       onChange?.(_values);
-    };
+    }
 
-    const remove = (_id) => {
+    function remove(_id) {
       setDataSource((_dataSource) =>
         _dataSource.filter((_r) => (getValue(_r) ?? getKey(_r)) !== _id),
       );
 
       onChange?.(excludeVal(_id));
-    };
+    }
 
     useEffect(() => {
       setDataSource(
@@ -117,7 +132,10 @@ const AutoComplete = memo<AutoCompleteProps>(
         // @ts-ignore
         ref={wrapperRef}
       >
-        <div className={`${selectorPrefix}-search-bar`}>
+        <div
+          className={classNames(`${selectorPrefix}-search-bar`, searchBarClassName ?? '')}
+          style={searchBarStyle ?? {}}
+        >
           <SearchBar
             placeholder={placeholder ?? Intl.v('输入文字过滤选项')}
             value={kw}
@@ -127,14 +145,17 @@ const AutoComplete = memo<AutoCompleteProps>(
           />
         </div>
 
-        <div className={`${selectorPrefix}-body`}>
+        <div
+          className={classNames(`${selectorPrefix}-body`, bodyClassName ?? '')}
+          style={bodyStyle ?? {}}
+        >
           {isEmpty() && empty()}
 
           {!isEmpty() &&
             children?.({
               value,
               onChange: onCheckListChange,
-              searchDataSource: [...(searchDataSource ?? [])],
+              searchDataSource: searchDataSource ?? [],
             })}
         </div>
 
@@ -149,27 +170,35 @@ const AutoComplete = memo<AutoCompleteProps>(
               />
 
               <List>
-                {dataSource?.map((_record, _index) => (
-                  <List.Item key={getKey(_record)}>
-                    <div
-                      className={`${selectorPrefix}-result-item-close`}
-                      onClick={() => remove(value?.[_index])}
-                    >
-                      <CloseCircleFill />
-                    </div>
+                {dataSource?.map((_record, _index) => {
+                  const key = getKey(_record);
+                  const label = getLabel(_record);
 
-                    {renderResultItem?.(_record) ?? (
-                      <>
-                        <Title level={5} ellipsis>
-                          {getLabel(_record)}
-                        </Title>
-                        <Text type="secondary" ellipsis>
-                          {getLabel(_record)}
-                        </Text>
-                      </>
-                    )}
-                  </List.Item>
-                ))}
+                  const defaultItem = (
+                    <>
+                      <Title level={5} ellipsis>
+                        {label}
+                      </Title>
+
+                      <Text type="secondary" ellipsis>
+                        {label}
+                      </Text>
+                    </>
+                  );
+
+                  return (
+                    <List.Item key={key}>
+                      <div
+                        className={`${selectorPrefix}-result-item-close`}
+                        onClick={() => remove(value?.[_index])}
+                      >
+                        <CloseCircleFill />
+                      </div>
+
+                      {renderResultItem?.(_record, defaultItem) ?? defaultItem}
+                    </List.Item>
+                  );
+                })}
               </List>
             </div>
           </FloatingPanel>
