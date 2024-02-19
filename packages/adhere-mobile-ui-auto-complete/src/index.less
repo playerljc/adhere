@@ -4,6 +4,7 @@
 @import '~antd-mobile/es/components/error-block/error-block.patch.css';
 
 .adhere-mobile-ui-auto-complete {
+  position: relative;
   display: flex;
   flex-direction: column;
 
@@ -19,35 +20,40 @@
     overflow-y: auto;
   }
 
-  > .adhere-mobile-ui-auto-complete-result {
-    flex-shrink: 0;
-    padding: 15px;
-    overflow-x: auto;
-    white-space: nowrap;
-    border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+  .adm-floating-panel {
+    position: absolute;
 
-    > .adhere-mobile-ui-auto-complete-result-item {
-      position: relative;
-      display: inline-block;
-      padding: 0 10px;
-      color: var(--adhere-color-text);
-      font-size: var(--adhere-font-size-base);
-      border: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
-      border-radius: 15px;
+    .adhere-mobile-ui-auto-complete-result {
+      flex-shrink: 0;
+      height: 100%;
+      padding: 15px;
+      overflow-y: auto;
+      white-space: nowrap;
+      border-top: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
-      &:not(:last-child) {
-        margin-right: 15px;
-      }
+      > .adm-list {
+        > .adm-list-body {
+          > .adm-list-body-inner {
+            > .adm-list-item {
+              > .adm-list-item-content {
+                > .adm-list-item-content-main {
+                  position: relative;
+                  width: 100%;
 
-      > .adhere-mobile-ui-auto-complete-result-item-close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 9999;
-        color: red;
-        font-weight: bold;
-        font-size: 20px;
-        transform: translate3d(0, -50%, 0);
+                  > .adhere-mobile-ui-auto-complete-result-item-close {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    z-index: 9999;
+                    color: red;
+                    font-weight: bold;
+                    font-size: 20px;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -1,14 +1,17 @@
-import { ErrorBlock, SearchBar } from 'antd-mobile';
+import { Typography } from 'antd';
+import { ErrorBlock, FloatingPanel, List, NoticeBar, SearchBar } from 'antd-mobile';
 import { CloseCircleFill } from 'antd-mobile-icons';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list/check-list';
 import classNames from 'classnames';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { AutoCompleteProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-auto-complete';
+
+const { Title, Text } = Typography;
 
 /**
  * AutoComplete
@@ -44,6 +47,8 @@ const AutoComplete = memo<AutoCompleteProps>(
     showResult = true,
     children,
   }) => {
+    const wrapperRef = useRef<HTMLDivElement | null>();
+
     const [kw, setKw] = useState<string>('');
 
     const [dataSource, setDataSource] = useState<any[]>([]);
@@ -106,7 +111,12 @@ const AutoComplete = memo<AutoCompleteProps>(
     }, [searchDataSource, value]);
 
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+      <div
+        className={classNames(selectorPrefix, className ?? '')}
+        style={style ?? {}}
+        // @ts-ignore
+        ref={wrapperRef}
+      >
         <div className={`${selectorPrefix}-search-bar`}>
           <SearchBar
             placeholder={placeholder ?? Intl.v('输入文字过滤选项')}
@@ -129,20 +139,40 @@ const AutoComplete = memo<AutoCompleteProps>(
         </div>
 
         {showResult && !!value?.length && (
-          <div className={`${selectorPrefix}-result`}>
-            {dataSource?.map((_record, _index) => (
-              <div key={getKey(_record)} className={`${selectorPrefix}-result-item`}>
-                <div
-                  className={`${selectorPrefix}-result-item-close`}
-                  onClick={() => remove(value?.[_index])}
-                >
-                  <CloseCircleFill />
-                </div>
+          <FloatingPanel
+            anchors={[28, (wrapperRef?.current?.offsetHeight ?? 0) - 200].filter((t) => t >= 0)}
+          >
+            <div className={`${selectorPrefix}-result`}>
+              <NoticeBar
+                content={Intl.vHtml('共 <em>{n}</em> 条', { n: dataSource.length })}
+                color="info"
+              />
 
-                {renderResultItem?.(_record) ?? <span>{getLabel(_record)}</span>}
-              </div>
-            ))}
-          </div>
+              <List>
+                {dataSource?.map((_record, _index) => (
+                  <List.Item key={getKey(_record)}>
+                    <div
+                      className={`${selectorPrefix}-result-item-close`}
+                      onClick={() => remove(value?.[_index])}
+                    >
+                      <CloseCircleFill />
+                    </div>
+
+                    {renderResultItem?.(_record) ?? (
+                      <>
+                        <Title level={5} ellipsis>
+                          {getLabel(_record)}
+                        </Title>
+                        <Text type="secondary" ellipsis>
+                          {getLabel(_record)}
+                        </Text>
+                      </>
+                    )}
+                  </List.Item>
+                ))}
+              </List>
+            </div>
+          </FloatingPanel>
         )}
       </div>
     );
