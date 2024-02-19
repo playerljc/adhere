@@ -20,7 +20,7 @@ export default () => {
       filterProps={{ placeholder: '请输入关键字', optionFilterProp: 'label' }}
       style={{ height: '100%' }}
       bodyWrapperStyle={{ overflowY: 'auto', padding: 20, paddingTop: 0 }}
-      showCheckMark={false}
+      // showCheckMark={false}
       multiple
       columns={2}
       options={options}

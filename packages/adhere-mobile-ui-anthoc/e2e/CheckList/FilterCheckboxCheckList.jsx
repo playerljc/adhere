@@ -21,6 +21,7 @@ export default () => {
       filterProps={{ placeholder: '请输入关键字' }}
       style={{ height: '100%' }}
       bodyWrapperStyle={{ overflowY: 'auto' }}
+      multiple
       value={value}
       options={options}
       onChange={setValue}

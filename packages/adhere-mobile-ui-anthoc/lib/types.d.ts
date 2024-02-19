@@ -224,9 +224,8 @@ export type AutoCompletePagingCheckboxCheckListProps = AutoCompleteProps & {
 export type AutoCompletePagingCheckboxProps = AutoCompleteProps & {
     pagingCheckboxProps: Omit<PagingCheckboxProps, 'value' | 'onChange' | 'options'>;
 };
-export type AutoCompletePagingRadioProps = Omit<AutoCompleteProps, 'value'> & {
+export type AutoCompletePagingRadioProps = AutoCompleteProps & {
     pagingRadioProps: Omit<PagingRadioProps, 'value' | 'onChange' | 'options'>;
-    value?: CheckListValue;
 };
 export type AutoCompletePagingSelectorProps = AutoCompleteProps & {
     pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;

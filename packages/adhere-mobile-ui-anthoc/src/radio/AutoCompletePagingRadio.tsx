@@ -8,15 +8,13 @@ import PagingRadio from './PagingRadio';
 const InternalAutoCompletePagingRadio = memo<AutoCompletePagingRadioProps>(
   ({ pagingRadioProps, ...autoCompleteProps }) => {
     return (
-      <AutoComplete
-        labelProp="title"
-        {...(autoCompleteProps ?? {})}
-        value={autoCompleteProps.value ? [autoCompleteProps.value] : []}
-      >
+      <AutoComplete labelProp="title" {...(autoCompleteProps ?? {})}>
         {({ value, onChange, searchDataSource }) => (
           <PagingRadio
             value={value && value.length ? (value[0] as RadioValue) : null}
-            onChange={onChange}
+            onChange={(_value) => {
+              onChange?.([_value]);
+            }}
             options={searchDataSource}
             {...(pagingRadioProps ?? {})}
           />

@@ -42,5 +42,5 @@ import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 
 e2e.Mobile({
-  children: <PagingSelector />,
+  children: <AutoCompletePagingRadio />,
 });
