@@ -26,6 +26,8 @@ import FilterCheckAllCheckbox from './Checkbox/FilterCheckAllCheckbox';
 import FilterCheckbox from './Checkbox/FilterCheckbox';
 import FilterPagingCheckbox from './Checkbox/FilterPagingCheckbox';
 import PagingCheckbox from './Checkbox/PagingCheckbox';
+import Trigger from './Modal/Trigger';
+import TriggerPrompt from './Modal/TriggerPrompt';
 import AutoCompletePagingRadio from './Radio/AutoCompletePagingRadio';
 import AutoCompleteRadio from './Radio/AutoCompleteRadio';
 import FilterPagingRadio from './Radio/FilterPagingRadio';
@@ -42,5 +44,5 @@ import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 
 e2e.Mobile({
-  children: <AutoCompletePagingRadio />,
+  children: <Trigger />,
 });

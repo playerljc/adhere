@@ -1,11 +1,13 @@
 import { Modal } from 'antd-mobile';
 import type { ModalProps } from 'antd-mobile';
 
+import type { ModalHOCComponent } from '../types';
 import { createFactory } from '../util';
 
-const ModalHOC: typeof Modal & {
-  defaultProps?: Partial<ModalProps>;
-} = createFactory<ModalProps>(Modal, {});
+const ModalHOC: ModalHOCComponent = createFactory<ModalProps>(Modal, {
+  closeOnMaskClick: true,
+  showCloseButton: true,
+});
 
 ModalHOC.displayName = 'Modal';
 

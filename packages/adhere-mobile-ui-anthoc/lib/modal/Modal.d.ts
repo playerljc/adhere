@@ -1,6 +1,3 @@
-import { Modal } from 'antd-mobile';
-import type { ModalProps } from 'antd-mobile';
-declare const ModalHOC: typeof Modal & {
-    defaultProps?: Partial<ModalProps>;
-};
+import type { ModalHOCComponent } from '../types';
+declare const ModalHOC: ModalHOCComponent;
 export default ModalHOC;

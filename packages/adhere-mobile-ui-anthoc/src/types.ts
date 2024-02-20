@@ -5,6 +5,7 @@ import type {
   RadioGroupProps as AntMobileRadioGroupProps,
   RadioProps as AntMobileRadioProps,
   CheckListItemProps,
+  ModalProps,
   PullToRefreshProps,
   SearchBarProps,
   SelectorOption,
@@ -12,6 +13,7 @@ import type {
   SpaceProps,
 } from 'antd-mobile';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
+import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { FC } from 'react';
 
@@ -196,6 +198,11 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroup
   AutoCompletePagingCheckbox: FC<AutoCompletePagingCheckboxProps>;
 };
 
+export type ModalHOCComponent = ReturnType<typeof createFactory<ModalProps>> & {
+  Trigger: FC<ModalTriggerProps<any>>;
+  TriggerPrompt: FC<ModalTriggerPromptProps<any>>;
+};
+
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
   CheckAllSelector: FC<CheckAllSelectorProps>;
   FilterSelector: FC<FilterSelectorProps>;
@@ -333,4 +340,25 @@ export type AutoCompletePagingRadioProps = AutoCompleteProps & {
 
 export type AutoCompletePagingSelectorProps = AutoCompleteProps & {
   pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;
+};
+
+export type PopoverTriggerProps = BaseType & {
+  renderTrigger?: () => ReactNode;
+  renderPopover?: () => void;
+};
+
+export type ModalTriggerProps<Value> = Omit<ModalProps, 'content' | 'actions'> & {
+  value?: Value;
+  onChange?: (_value: Value) => void;
+  actions?: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  children?: ReactElement;
+  popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+
+export type ModalTriggerPromptProps<Value> = Omit<ModalTriggerProps<Value>, 'actions'> & {
+  submitAction?: Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  };
 };
