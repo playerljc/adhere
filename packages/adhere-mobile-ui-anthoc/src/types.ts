@@ -5,6 +5,7 @@ import type {
   RadioGroupProps as AntMobileRadioGroupProps,
   RadioProps as AntMobileRadioProps,
   CheckListItemProps,
+  DialogProps,
   ModalProps,
   PullToRefreshProps,
   SearchBarProps,
@@ -203,6 +204,11 @@ export type ModalHOCComponent = ReturnType<typeof createFactory<ModalProps>> & {
   TriggerPrompt: FC<ModalTriggerPromptProps<any>>;
 };
 
+export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> & {
+  Trigger: FC<DialogTriggerProps<any>>;
+  TriggerPrompt: FC<DialogTriggerPromptProps<any>>;
+};
+
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
   CheckAllSelector: FC<CheckAllSelectorProps>;
   FilterSelector: FC<FilterSelectorProps>;
@@ -358,6 +364,25 @@ export type ModalTriggerProps<Value> = Omit<ModalProps, 'content' | 'actions'> &
 };
 
 export type ModalTriggerPromptProps<Value> = Omit<ModalTriggerProps<Value>, 'actions'> & {
+  submitAction?: Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  };
+};
+
+export type DialogTriggerProps<Value> = Omit<DialogProps, 'content' | 'actions'> & {
+  showCloseButton?: boolean;
+  closeActionText?: ReactNode;
+  closeActionKey?: string;
+  value?: Value;
+  onChange?: (_value: Value) => void;
+  actions?: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  children?: ReactElement;
+  popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+
+export type DialogTriggerPromptProps<Value> = Omit<DialogTriggerProps<Value>, 'actions'> & {
   submitAction?: Omit<Action, 'onClick'> & {
     onClick?: () => Promise<Value>;
   };
