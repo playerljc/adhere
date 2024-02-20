@@ -32,20 +32,6 @@ const Trigger: FC<TriggerProps> = ({
   actions,
   maximized = true,
 }) => {
-  const onConfirm = (onClick, close) =>
-    new Promise((resolve, reject) => {
-      onClick?.()
-        ?.then((result) => {
-          onChange?.(result);
-
-          setTimeout(() => {
-            resolve(result);
-            close?.();
-          }, 300);
-        })
-        .catch((error) => reject(error));
-    });
-
   const Children = useMemo(
     () =>
       children &&
@@ -60,7 +46,22 @@ const Trigger: FC<TriggerProps> = ({
     [children],
   );
 
-  const onTrigger = () => {
+  function onConfirm(onClick, close) {
+    return new Promise((resolve, reject) => {
+      onClick?.()
+        ?.then((result) => {
+          onChange?.(result);
+
+          setTimeout(() => {
+            resolve(result);
+            close?.();
+          }, 300);
+        })
+        .catch((error) => reject(error));
+    });
+  }
+
+  function onTrigger() {
     let dialog;
 
     const _modalConfig: ModalProps = modalConfig?.config ?? {};
@@ -82,7 +83,7 @@ const Trigger: FC<TriggerProps> = ({
       defaultCloseBtn: true,
       children: Children,
     });
-  };
+  }
 
   return (
     <div
