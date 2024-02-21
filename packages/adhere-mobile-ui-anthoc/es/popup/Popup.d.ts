@@ -1,6 +1,3 @@
-import { Popup } from 'antd-mobile';
-import type { PopupProps } from 'antd-mobile';
-declare const PopupHOC: typeof Popup & {
-    defaultProps?: Partial<PopupProps>;
-};
+import type { PopupHOCComponent } from '../types';
+declare const PopupHOC: PopupHOCComponent;
 export default PopupHOC;

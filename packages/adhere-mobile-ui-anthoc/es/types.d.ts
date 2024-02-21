@@ -1,4 +1,4 @@
-import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CheckListItemProps, DialogProps, ModalProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
+import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CheckListItemProps, DialogProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
@@ -139,6 +139,21 @@ export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> &
     Trigger: FC<DialogTriggerProps<any>>;
     TriggerPrompt: FC<DialogTriggerPromptProps<any>>;
 };
+export type PopupShowProps = Omit<PopupProps, 'visible' | 'destroyOnClose' | 'forceRender'> & {
+    title?: ReactNode;
+    actions?: ModalProps['actions'];
+    closeOnAction?: boolean;
+};
+export type PopupShowHandler = {
+    close: () => void;
+    setConfig: (callback: (originProps: PopupShowProps) => PopupShowProps) => void;
+} | undefined;
+export type PopupHOCComponent = ReturnType<typeof createFactory<PopupProps>> & {
+    show: (props: PopupShowProps) => PopupShowHandler;
+    clear: () => void;
+    Trigger: FC<PopupTriggerProps<any>>;
+    TriggerPrompt: FC<PopupTriggerPromptProps<any>>;
+};
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
     CheckAllSelector: FC<CheckAllSelectorProps>;
     FilterSelector: FC<FilterSelectorProps>;
@@ -270,6 +285,22 @@ export type DialogTriggerProps<Value> = Omit<DialogProps, 'content' | 'actions'>
     popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
 };
 export type DialogTriggerPromptProps<Value> = Omit<DialogTriggerProps<Value>, 'actions'> & {
+    submitAction?: Omit<Action, 'onClick'> & {
+        onClick?: () => Promise<Value>;
+    };
+};
+export type PopupTriggerProps<Value> = Omit<PopupShowProps, 'children' | 'actions'> & {
+    popupClassName?: string;
+    popupStyle?: CSSProperties;
+    value?: Value;
+    onChange?: (_value: Value) => void;
+    actions?: (Omit<Action, 'onClick'> & {
+        onClick?: () => Promise<Value>;
+    })[];
+    children?: ReactElement;
+    popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+export type PopupTriggerPromptProps<Value> = Omit<PopupTriggerProps<Value>, 'actions'> & {
     submitAction?: Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
     };

@@ -7,6 +7,7 @@ import type {
   CheckListItemProps,
   DialogProps,
   ModalProps,
+  PopupProps,
   PullToRefreshProps,
   SearchBarProps,
   SelectorOption,
@@ -209,6 +210,26 @@ export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> &
   TriggerPrompt: FC<DialogTriggerPromptProps<any>>;
 };
 
+export type PopupShowProps = Omit<PopupProps, 'visible' | 'destroyOnClose' | 'forceRender'> & {
+  title?: ReactNode;
+  actions?: ModalProps['actions'];
+  closeOnAction?: boolean;
+};
+
+export type PopupShowHandler =
+  | {
+      close: () => void;
+      setConfig: (callback: (originProps: PopupShowProps) => PopupShowProps) => void;
+    }
+  | undefined;
+
+export type PopupHOCComponent = ReturnType<typeof createFactory<PopupProps>> & {
+  show: (props: PopupShowProps) => PopupShowHandler;
+  clear: () => void;
+  Trigger: FC<PopupTriggerProps<any>>;
+  TriggerPrompt: FC<PopupTriggerPromptProps<any>>;
+};
+
 export type SelectorHOCComponent = ReturnType<typeof createFactory<SelectorProps<any>>> & {
   CheckAllSelector: FC<CheckAllSelectorProps>;
   FilterSelector: FC<FilterSelectorProps>;
@@ -383,6 +404,24 @@ export type DialogTriggerProps<Value> = Omit<DialogProps, 'content' | 'actions'>
 };
 
 export type DialogTriggerPromptProps<Value> = Omit<DialogTriggerProps<Value>, 'actions'> & {
+  submitAction?: Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  };
+};
+
+export type PopupTriggerProps<Value> = Omit<PopupShowProps, 'children' | 'actions'> & {
+  popupClassName?: string;
+  popupStyle?: CSSProperties;
+  value?: Value;
+  onChange?: (_value: Value) => void;
+  actions?: (Omit<Action, 'onClick'> & {
+    onClick?: () => Promise<Value>;
+  })[];
+  children?: ReactElement;
+  popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+
+export type PopupTriggerPromptProps<Value> = Omit<PopupTriggerProps<Value>, 'actions'> & {
   submitAction?: Omit<Action, 'onClick'> & {
     onClick?: () => Promise<Value>;
   };

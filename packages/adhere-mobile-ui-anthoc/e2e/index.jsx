@@ -30,6 +30,8 @@ import DialogTrigger from './Dialog/Trigger';
 import DialogTriggerPrompt from './Dialog/TriggerPrompt';
 import ModalTrigger from './Modal/Trigger';
 import ModalTriggerPrompt from './Modal/TriggerPrompt';
+import PopupTrigger from './Popup/Trigger';
+import PopupTriggerPrompt from './Popup/TriggerPrompt';
 import AutoCompletePagingRadio from './Radio/AutoCompletePagingRadio';
 import AutoCompleteRadio from './Radio/AutoCompleteRadio';
 import FilterPagingRadio from './Radio/FilterPagingRadio';
@@ -46,5 +48,5 @@ import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 
 e2e.Mobile({
-  children: <DialogTriggerPrompt />,
+  children: <PopupTriggerPrompt />,
 });

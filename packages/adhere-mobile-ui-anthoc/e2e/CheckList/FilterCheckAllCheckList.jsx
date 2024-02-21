@@ -39,7 +39,7 @@ export default forwardRef((props, ref) => {
   return (
     <CheckList.FilterCheckAllCheckList
       filterProps={{ placeholder: '请输入关键字' }}
-      style={{ height: '100%' }}
+      style={{ height: '100%', ...(props.style ?? {}) }}
       bodyWrapperStyle={{ overflowY: 'auto' }}
       value={value}
       options={options}

@@ -1,0 +1,63 @@
+.adhere-mobile-ui-ant-hoc-modal-trigger-popup {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  > .adm-mask {
+    position: absolute;
+  }
+
+  > .adm-popup-body {
+    position: absolute;
+
+    > .adm-popup-close-icon {
+      top: 10px;
+    }
+
+    > .adhere-mobile-ui-ant-hoc-show-popup-inner {
+      display: flex;
+      flex-direction: column;
+
+      > .adhere-mobile-ui-ant-hoc-show-popup-inner-header {
+        height: 35px;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 35px;
+        text-align: center;
+      }
+
+      > .adhere-mobile-ui-ant-hoc-show-popup-inner-body {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+      }
+
+      > .adhere-mobile-ui-ant-hoc-show-popup-inner-actions {
+        flex-shrink: 0;
+        padding: 10px;
+
+        > .adhere-mobile-ui-ant-hoc-show-popup-inner-action {
+          &:not(:last-child) {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  > .adm-popup-body-position-bottom,
+  > .adm-popup-body-position-top {
+    > .adhere-mobile-ui-ant-hoc-show-popup-inner {
+      max-height: 80vh;
+    }
+  }
+
+  > .adm-popup-body-position-left,
+  > .adm-popup-body-position-right {
+    > .adhere-mobile-ui-ant-hoc-show-popup-inner {
+      max-width: 80vw;
+      height: 100%;
+    }
+  }
+}
