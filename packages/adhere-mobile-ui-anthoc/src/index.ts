@@ -15,8 +15,11 @@ import CheckList from './check-list';
 import Checkbox from './checkbox';
 import Collapse from './collapse';
 import ConfigProvider from './config-provider';
+import DateDialog from './date-dialog';
+import DateModal from './date-modal';
 import DatePicker from './date-picker';
 import DatePickerView from './date-picker-view';
+import DatePopup from './date-popup';
 import Dialog from './dialog';
 import Divider from './divider';
 import DotLoading from './dot-loading';
@@ -101,8 +104,11 @@ export {
   Checkbox,
   Collapse,
   ConfigProvider,
+  DateDialog,
+  DateModal,
   DatePicker,
   DatePickerView,
+  DatePopup,
   Dialog,
   Divider,
   DotLoading,

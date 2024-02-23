@@ -1,4 +1,4 @@
-import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CheckListItemProps, DialogProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
+import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CheckListItemProps, DatePickerViewProps, DialogProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
@@ -141,6 +141,7 @@ export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> &
 };
 export type PopupShowProps = Omit<PopupProps, 'visible' | 'destroyOnClose' | 'forceRender'> & {
     title?: ReactNode;
+    header?: ReactNode;
     actions?: ModalProps['actions'];
     closeOnAction?: boolean;
 };
@@ -304,5 +305,35 @@ export type PopupTriggerPromptProps<Value> = Omit<PopupTriggerProps<Value>, 'act
     submitAction?: Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
     };
+};
+export type DatePopoverProps = DatePickerViewProps & {
+    placeholder?: string;
+    okLabel?: ReactNode;
+    cancelLabel?: ReactNode;
+    locale?: string;
+    renderDisplay?: (value: DatePickerViewProps['value'], locale: string) => ReactNode;
+};
+export type DateModalProps = DatePopoverProps & {
+    modalTriggerProps?: Omit<ModalTriggerProps<DatePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type DateDialogProps = DatePopoverProps & {
+    dialogTriggerProps?: Omit<DialogTriggerProps<DatePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type DatePopupProps = DatePopoverProps & {
+    popupTriggerProps?: Omit<PopupTriggerProps<DatePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type UseDatePopover<Value> = (props: Omit<DateModalProps, 'modalTriggerProps'> & {
+    popoverTriggerClassName?: string;
+    popoverTriggerStyle?: CSSProperties;
+}) => {
+    actions: (Omit<Action, 'onClick'> & {
+        onClick?: () => Promise<Value>;
+    })[];
+    popoverTriggerProps: {
+        className: string;
+        style: CSSProperties;
+        renderTrigger: PopoverTriggerProps['renderTrigger'];
+    };
+    children: ReactElement<DatePickerViewProps>;
 };
 export {};

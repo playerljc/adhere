@@ -26,6 +26,9 @@ import FilterCheckAllCheckbox from './Checkbox/FilterCheckAllCheckbox';
 import FilterCheckbox from './Checkbox/FilterCheckbox';
 import FilterPagingCheckbox from './Checkbox/FilterPagingCheckbox';
 import PagingCheckbox from './Checkbox/PagingCheckbox';
+import DateDialog from './DateDialog/DateDialog';
+import DateModal from './DateModal/DateModal';
+import DatePopup from './DatePopup/DatePopup';
 import DialogTrigger from './Dialog/Trigger';
 import DialogTriggerPrompt from './Dialog/TriggerPrompt';
 import ModalTrigger from './Modal/Trigger';
@@ -48,5 +51,5 @@ import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 
 e2e.Mobile({
-  children: <PopupTriggerPrompt />,
+  children: <DatePopup />,
 });

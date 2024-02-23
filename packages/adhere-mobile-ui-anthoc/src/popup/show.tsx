@@ -28,6 +28,7 @@ function PopupWrapper({
   actions,
   closeOnAction = false,
   title,
+  header,
   close,
   children,
   ...popupProps
@@ -65,7 +66,10 @@ function PopupWrapper({
       }}
     >
       <div className={selectorPrefix}>
-        {(showCloseButton || !!title) && <div className={`${selectorPrefix}-header`}>{title}</div>}
+        {(showCloseButton || !!title) && <div className={`${selectorPrefix}-title`}>{title}</div>}
+
+        {!!header && <div className={`${selectorPrefix}-header`}>{header}</div>}
+
         <div className={`${selectorPrefix}-body`}>{children}</div>
 
         {!!actions?.length && (

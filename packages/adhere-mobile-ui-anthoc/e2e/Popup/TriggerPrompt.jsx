@@ -37,6 +37,7 @@ export default () => {
       <Form.Item name="person" label="人员" rules={[{ required: true, message: '人员不能为空' }]}>
         <Popup.TriggerPrompt
           title="人员选择"
+          header={<div>header</div>}
           submitAction={{
             key: 'submit',
             primary: true,
