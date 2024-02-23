@@ -1,5 +1,5 @@
 # 简介
-&ensp;&ensp;时间选择
+&ensp;&ensp;移动端时分秒选择
 
 # ✨ 特性
 - 支持 react(18.x)
