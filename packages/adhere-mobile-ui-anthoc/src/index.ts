@@ -4,6 +4,9 @@ import Avatar from './avatar';
 import Badge from './badge';
 import Button from './button';
 import Calendar from './calendar';
+import CalendarDialog from './calendar-dialog';
+import CalendarModal from './calendar-modal';
+import CalendarPopup from './calendar-popup';
 import CapsuleTabs from './capsule-tabs';
 import Card from './card';
 import CascadePicker from './cascade-picker';
@@ -82,6 +85,9 @@ import TabBar from './tab-bar';
 import Tabs from './tabs';
 import Tag from './tag';
 import TextArea from './text-area';
+import TimeDialog from './time-dialog';
+import TimeModal from './time-modal';
+import TimePopup from './time-popup';
 import TreeSelect from './tree-select';
 import VirtualInput from './virtual-input';
 import WaterMark from './water-mark';
@@ -93,6 +99,9 @@ export {
   Badge,
   Button,
   Calendar,
+  CalendarDialog,
+  CalendarModal,
+  CalendarPopup,
   CapsuleTabs,
   Card,
   CascadePicker,
@@ -170,6 +179,9 @@ export {
   Tabs,
   Tag,
   TextArea,
+  TimeDialog,
+  TimeModal,
+  TimePopup,
   TreeSelect,
   VirtualInput,
   WaterMark,

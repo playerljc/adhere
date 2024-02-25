@@ -2,6 +2,9 @@ import React from 'react';
 
 import e2e from '@baifendian/adhere-e2e';
 
+import CalendarDialog from './CalendarDialog/CalendarDialog';
+import CalendarModal from './CalendarModal/CalendarModal';
+import CalendarPopup from './CalendarPopup/CalendarPopup';
 import AutoCompleteCheckList from './CheckList/AutoCompleteCheckList';
 import AutoCompleteCheckboxCheckList from './CheckList/AutoCompleteCheckboxCheckList';
 import AutoCompletePagingCheckList from './CheckList/AutoCompletePagingCheckList';
@@ -49,7 +52,10 @@ import FilterPagingSelector from './Selector/FilterPagingSelector';
 import FilterSelector from './Selector/FilterSelector';
 import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
+import TimeDialog from './TimeDialog/TimeDialog';
+import TimeModal from './TimeModal/TimeModal';
+import TimePopup from './TimePopup/TimePopup';
 
 e2e.Mobile({
-  children: <DatePopup />,
+  children: <CalendarPopup />,
 });

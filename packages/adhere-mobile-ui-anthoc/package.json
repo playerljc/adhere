@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",
+    "@baifendian/adhere-mobile-ui-time-picker-view": "^2.10.28",
     "@baifendian/adhere-ui-backtopanimation": "^2.10.28",
     "@baifendian/adhere-ui-flexlayout": "^2.10.28",
     "@baifendian/adhere-ui-scrollload": "^2.10.28",

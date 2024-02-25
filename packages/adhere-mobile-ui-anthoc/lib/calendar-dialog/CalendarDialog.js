@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(a){return a&&a.__esModule?a:{default:a}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalCalendarDialog_1=__importDefault(require("./InternalCalendarDialog")),CalendarDialogHOC=(0,util_1.createFactory)(InternalCalendarDialog_1.default,{});CalendarDialogHOC.displayName="CalendarDialog",exports.default=CalendarDialogHOC;
+//# sourceMappingURL=CalendarDialog.js.map

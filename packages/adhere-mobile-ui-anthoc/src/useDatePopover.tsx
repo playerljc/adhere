@@ -1,15 +1,15 @@
-import { useUpdateEffect } from 'ahooks';
+import { DatePickerViewProps } from 'antd-mobile';
 import { useConfig } from 'antd-mobile/es/components/config-provider/config-provider';
-import React, { useMemo, useRef } from 'react';
-
-import Intl from '@baifendian/adhere-util-intl';
+import classNames from 'classnames';
+import React, { useMemo } from 'react';
 
 import DatePickerView from './date-picker-view';
 import type { UseDatePopover } from './types';
+import useDateTimePopover from './useDateTimePopover';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-date-popover';
 
-const useDatePopover: UseDatePopover<any> = ({
+function useDatePopover({
   popoverTriggerClassName,
   popoverTriggerStyle,
   placeholder,
@@ -19,9 +19,7 @@ const useDatePopover: UseDatePopover<any> = ({
   renderDisplay,
   locale,
   ...datePickerViewProps
-}) => {
-  const targetValue = useRef<typeof value>(value ?? datePickerViewProps.defaultValue ?? new Date());
-
+}: UseDatePopover<typeof value>) {
   const config = useConfig();
 
   const formatValue = useMemo(() => {
@@ -33,13 +31,11 @@ const useDatePopover: UseDatePopover<any> = ({
       return renderDisplay(value, targetLocale);
     }
 
-    const { precision = 'day' } = datePickerViewProps;
-
     const ymd = value.toLocaleDateString(targetLocale).split(/[-/]/gim);
 
     let result = '';
 
-    switch (precision) {
+    switch (datePickerViewProps.precision) {
       case 'year':
         result = `${value.getFullYear()}`;
         break;
@@ -71,51 +67,30 @@ const useDatePopover: UseDatePopover<any> = ({
     return result;
   }, [value]);
 
-  const actions = useMemo(
-    () => [
-      {
-        key: 'submit',
-        text: okLabel ?? Intl.v('确定'),
-        primary: true,
-        onClick: () => Promise.resolve(targetValue.current),
-      },
-      {
-        key: 'close',
-        text: cancelLabel ?? Intl.v('关闭'),
-        onClick: () => Promise.resolve(value),
-      },
-    ],
-    [okLabel, cancelLabel, targetValue.current],
-  );
-
-  useUpdateEffect(() => {
-    targetValue.current = value;
-  }, [value]);
+  const { actions, popoverTriggerProps, setTargetValue } = useDateTimePopover<DatePickerViewProps>({
+    popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
+    popoverTriggerStyle,
+    placeholder,
+    value,
+    okLabel,
+    cancelLabel,
+    defaultValue: datePickerViewProps?.defaultValue,
+    formatValue,
+  });
 
   return {
     actions,
-    popoverTriggerProps: {
-      className: popoverTriggerClassName ?? '',
-      style: popoverTriggerStyle ?? {},
-      renderTrigger: () => (
-        <div className={`${selectorPrefix}-trigger`}>
-          {!!value && formatValue}
-          {!value && (
-            <div className={`${selectorPrefix}-placeholder`}>{placeholder ?? Intl.v('请选择')}</div>
-          )}
-        </div>
-      ),
-    },
+    popoverTriggerProps,
     children: (
       <DatePickerView
         defaultValue={new Date()}
         {...datePickerViewProps}
         onChange={(_value) => {
-          targetValue.current = _value;
+          setTargetValue(_value);
         }}
       />
     ),
   };
-};
+}
 
 export default useDatePopover;

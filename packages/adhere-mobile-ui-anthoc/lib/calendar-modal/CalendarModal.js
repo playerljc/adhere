@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(a){return a&&a.__esModule?a:{default:a}},util_1=(Object.defineProperty(exports,"__esModule",{value:!0}),require("../util")),InternalCalendarModal_1=__importDefault(require("./InternalCalendarModal")),CalendarModalHOC=(0,util_1.createFactory)(InternalCalendarModal_1.default,{});CalendarModalHOC.displayName="CalendarModal",exports.default=CalendarModalHOC;
+//# sourceMappingURL=CalendarModal.js.map

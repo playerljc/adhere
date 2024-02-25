@@ -1,3 +1,4 @@
+import { DatePickerViewProps } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
@@ -31,8 +32,7 @@ const InternalDateModal = memo<DateModalProps>(
       cancelLabel,
       renderDisplay,
       locale,
-      // @ts-ignore
-      datePickerViewProps,
+      ...datePickerViewProps,
     });
 
     return (

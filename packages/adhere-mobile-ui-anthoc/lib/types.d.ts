@@ -1,9 +1,10 @@
-import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CheckListItemProps, DatePickerViewProps, DialogProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
+import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { FC } from 'react';
 import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
+import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
 import type { ScrollLoadProps, ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 import { createFactory } from './util';
 type BaseType = {
@@ -306,26 +307,49 @@ export type PopupTriggerPromptProps<Value> = Omit<PopupTriggerProps<Value>, 'act
         onClick?: () => Promise<Value>;
     };
 };
-export type DatePopoverProps = DatePickerViewProps & {
+export type DateTimeViewProps = DatePickerViewProps | TimePickerViewProps | CalendarPickerViewProps;
+export type DateTimePopoverProps<T extends DateTimeViewProps> = T & {
     placeholder?: string;
     okLabel?: ReactNode;
     cancelLabel?: ReactNode;
     locale?: string;
-    renderDisplay?: (value: DatePickerViewProps['value'], locale: string) => ReactNode;
+    renderDisplay?: (value: T['value'], locale: string) => ReactNode;
 };
-export type DateModalProps = DatePopoverProps & {
+export type DateModalProps = DateTimePopoverProps<DatePickerViewProps> & {
     modalTriggerProps?: Omit<ModalTriggerProps<DatePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
 };
-export type DateDialogProps = DatePopoverProps & {
+export type TimeModalProps = DateTimePopoverProps<TimePickerViewProps> & {
+    modalTriggerProps?: Omit<ModalTriggerProps<TimePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type CalendarModalProps = DateTimePopoverProps<CalendarPickerViewProps> & {
+    modalTriggerProps?: Omit<ModalTriggerProps<CalendarPickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type TimeDialogProps = DateTimePopoverProps<TimePickerViewProps> & {
+    dialogTriggerProps?: Omit<DialogTriggerProps<TimePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type DateDialogProps = DateTimePopoverProps<DatePickerViewProps> & {
     dialogTriggerProps?: Omit<DialogTriggerProps<DatePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
 };
-export type DatePopupProps = DatePopoverProps & {
+export type CalendarDialogProps = DateTimePopoverProps<CalendarPickerViewProps> & {
+    dialogTriggerProps?: Omit<DialogTriggerProps<CalendarPickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type DatePopupProps = DateTimePopoverProps<DatePickerViewProps> & {
     popupTriggerProps?: Omit<PopupTriggerProps<DatePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
 };
-export type UseDatePopover<Value> = (props: Omit<DateModalProps, 'modalTriggerProps'> & {
+export type CalendarPopupProps = DateTimePopoverProps<CalendarPickerViewProps> & {
+    popupTriggerProps?: Omit<PopupTriggerProps<CalendarPickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type TimePopupProps = DateTimePopoverProps<TimePickerViewProps> & {
+    popupTriggerProps?: Omit<PopupTriggerProps<TimePickerViewProps['value']>, 'value' | 'onChange' | 'actions'>;
+};
+export type UseDateTimerPopover<T extends DateTimeViewProps, Value> = (props: Pick<DateTimePopoverProps<T>, 'placeholder' | 'okLabel' | 'cancelLabel'> & {
     popoverTriggerClassName?: string;
     popoverTriggerStyle?: CSSProperties;
+    value?: Value;
+    defaultValue?: Value;
+    formatValue: ReactNode;
 }) => {
+    setTargetValue: (value: DateTimePopoverProps<T>['value']) => void;
     actions: (Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
     })[];
@@ -334,6 +358,20 @@ export type UseDatePopover<Value> = (props: Omit<DateModalProps, 'modalTriggerPr
         style: CSSProperties;
         renderTrigger: PopoverTriggerProps['renderTrigger'];
     };
-    children: ReactElement<DatePickerViewProps>;
+};
+export type UseDatePopover<Value> = DateTimePopoverProps<DatePickerViewProps> & Omit<Parameters<UseDateTimerPopover<DatePickerViewProps, Value>>[0], 'formatValue'>;
+export type UseTimePopover<Value> = DateTimePopoverProps<TimePickerViewProps> & Omit<Parameters<UseDateTimerPopover<TimePickerViewProps, Value>>[0], 'formatValue'>;
+export type UseCalendarPopover<Value> = DateTimePopoverProps<CalendarPickerViewProps> & Omit<Parameters<UseDateTimerPopover<CalendarPickerViewProps, Value>>[0], 'formatValue'>;
+export type RangeCalendarModalProps = Omit<CalendarModalProps, 'selectionMode'>;
+export type RangeCalendarDialogProps = Omit<CalendarDialogProps, 'selectionMode'>;
+export type RangeCalendarPopupProps = Omit<CalendarPopupProps, 'selectionMode'>;
+export type CalendarModalHOCComponent = ReturnType<typeof createFactory<CalendarModalProps>> & {
+    RangeCalendarModal: FC<RangeCalendarModalProps>;
+};
+export type CalendarDialogHOCComponent = ReturnType<typeof createFactory<CalendarDialogProps>> & {
+    RangeCalendarModal: FC<RangeCalendarDialogProps>;
+};
+export type CalendarPopupHOCComponent = ReturnType<typeof createFactory<CalendarPopupProps>> & {
+    RangeCalendarModal: FC<RangeCalendarPopupProps>;
 };
 export {};

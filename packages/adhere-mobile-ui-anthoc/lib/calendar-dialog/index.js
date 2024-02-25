@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(a){return a&&a.__esModule?a:{default:a}},CalendarDialog_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./CalendarDialog"))),RangeCalendarDialog_1=__importDefault(require("./RangeCalendarDialog"));CalendarDialog_1.default.RangeCalendarDialog=RangeCalendarDialog_1.default,exports.default=CalendarDialog_1.default;
+//# sourceMappingURL=index.js.map
