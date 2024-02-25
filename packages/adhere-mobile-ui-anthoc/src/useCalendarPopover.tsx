@@ -37,6 +37,10 @@ function useCalendarPopover({
     ) {
       return (value as Date).toLocaleDateString(targetLocale);
     } else if (calendarPickerViewProps?.selectionMode === 'range') {
+      if (!value || !Array.isArray(value) || (Array.isArray(value) && value.length <= 1)) {
+        return '';
+      }
+
       return [
         (value as Date[])[0].toLocaleDateString(targetLocale),
         (value as Date[])[1].toLocaleDateString(targetLocale),
@@ -46,7 +50,7 @@ function useCalendarPopover({
     return '';
   }, [value]);
 
-  const { actions, popoverTriggerProps, setTargetValue } =
+  const { key, actions, popoverTriggerProps, setInternalValue } =
     useDateTimePopover<CalendarPickerViewProps>({
       popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
       popoverTriggerStyle,
@@ -64,9 +68,10 @@ function useCalendarPopover({
     children: (
       // @ts-ignore
       <CalendarPickerView
+        key={key}
         {...calendarPickerViewProps}
         onChange={(_value) => {
-          setTargetValue(_value);
+          setInternalValue(_value);
         }}
       />
     ),

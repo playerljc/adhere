@@ -71,8 +71,8 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
           cloneElement(
             children,
             {
+              defaultValue: value,
               ...children.props,
-              value,
             },
             children.props.children,
           ),

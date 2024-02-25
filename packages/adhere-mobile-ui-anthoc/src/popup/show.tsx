@@ -19,6 +19,7 @@ const selectorPrefix = 'adhere-mobile-ui-ant-hoc-show-popup-inner';
  * @param actions
  * @param closeOnAction
  * @param title
+ * @param header
  * @param close
  * @param children
  * @param popupProps
@@ -93,7 +94,8 @@ function PopupWrapper({
                   <Button
                     block
                     loading="auto"
-                    color={primary ? 'primary' : danger ? 'danger' : 'default'}
+                    color={danger ? 'danger' : 'primary'}
+                    fill={primary ? 'solid' : 'none'}
                     disabled={disabled}
                     onClick={() => {
                       const result = onClick?.();

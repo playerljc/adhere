@@ -1,4 +1,3 @@
-import { CalendarPickerViewProps } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
@@ -9,30 +8,15 @@ import useCalendarPopover from '../useCalendarPopover';
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-calendar-popup';
 
 const InternalCalendarPopup = memo<CalendarPopupProps>(
-  ({
-    placeholder,
-    okLabel,
-    cancelLabel,
-    locale,
-    renderDisplay,
-    value,
-    onChange,
-    popupTriggerProps,
-    ...calendarPickerViewProps
-  }) => {
+  ({ value, onChange, popupTriggerProps, ...useDatePopoverProps }) => {
     const { actions, popoverTriggerProps, children } = useCalendarPopover({
       popoverTriggerClassName: classNames(
         selectorPrefix,
         popupTriggerProps?.popoverTriggerProps?.className ?? '',
       ),
       popoverTriggerStyle: popupTriggerProps?.popoverTriggerProps?.style ?? {},
-      placeholder,
       value,
-      okLabel,
-      cancelLabel,
-      renderDisplay,
-      locale,
-      ...calendarPickerViewProps,
+      ...useDatePopoverProps,
     });
 
     return (

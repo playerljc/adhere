@@ -437,8 +437,10 @@ export type DateTimePopoverProps<T extends DateTimeViewProps> = T & {
   placeholder?: string;
   okLabel?: ReactNode;
   cancelLabel?: ReactNode;
+  clearLabel?: ReactNode;
   locale?: string;
   renderDisplay?: (value: T['value'], locale: string) => ReactNode;
+  allowClearValue?: boolean;
 };
 
 export type DateModalProps = DateTimePopoverProps<DatePickerViewProps> & {
@@ -505,7 +507,10 @@ export type TimePopupProps = DateTimePopoverProps<TimePickerViewProps> & {
 };
 
 export type UseDateTimerPopover<T extends DateTimeViewProps, Value> = (
-  props: Pick<DateTimePopoverProps<T>, 'placeholder' | 'okLabel' | 'cancelLabel'> & {
+  props: Pick<
+    DateTimePopoverProps<T>,
+    'allowClearValue' | 'placeholder' | 'okLabel' | 'cancelLabel' | 'clearLabel'
+  > & {
     popoverTriggerClassName?: string;
     popoverTriggerStyle?: CSSProperties;
     value?: Value;
@@ -513,7 +518,8 @@ export type UseDateTimerPopover<T extends DateTimeViewProps, Value> = (
     formatValue: ReactNode;
   },
 ) => {
-  setTargetValue: (value: DateTimePopoverProps<T>['value']) => void;
+  key: Symbol;
+  setInternalValue: (value: DateTimePopoverProps<T>['value']) => void;
   actions: (Omit<Action, 'onClick'> & {
     onClick?: () => Promise<Value>;
   })[];

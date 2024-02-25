@@ -1,11 +1,16 @@
 import React from 'react';
 import type { UseCalendarPopover } from './types';
 declare function useCalendarPopover({ popoverTriggerClassName, popoverTriggerStyle, placeholder, value, okLabel, cancelLabel, renderDisplay, locale, ...calendarPickerViewProps }: UseCalendarPopover<typeof value>): {
-    actions: ({
+    actions: (false | {
         key: string;
         text: NonNullable<React.ReactNode>;
         primary: boolean;
         onClick: () => Promise<any>;
+    } | {
+        key: string;
+        text: NonNullable<React.ReactNode>;
+        onClick: () => Promise<undefined>;
+        primary?: undefined;
     } | {
         key: string;
         text: NonNullable<React.ReactNode>;

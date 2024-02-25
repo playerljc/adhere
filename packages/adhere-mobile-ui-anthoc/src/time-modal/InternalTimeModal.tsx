@@ -1,8 +1,6 @@
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
-import { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
-
 import Modal from '../modal';
 import type { TimeModalProps } from '../types';
 import useTimePopover from '../useTimePopover';
@@ -10,30 +8,15 @@ import useTimePopover from '../useTimePopover';
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-time-modal';
 
 const InternalTimeModal = memo<TimeModalProps>(
-  ({
-    placeholder,
-    okLabel,
-    cancelLabel,
-    locale,
-    renderDisplay,
-    value,
-    onChange,
-    modalTriggerProps,
-    ...timePickerViewProps
-  }) => {
+  ({ value, onChange, modalTriggerProps, ...useDatePopoverProps }) => {
     const { actions, popoverTriggerProps, children } = useTimePopover({
       popoverTriggerClassName: classNames(
         selectorPrefix,
         modalTriggerProps?.popoverTriggerProps?.className ?? '',
       ),
       popoverTriggerStyle: modalTriggerProps?.popoverTriggerProps?.style ?? {},
-      placeholder,
       value,
-      okLabel,
-      cancelLabel,
-      renderDisplay,
-      locale,
-      ...timePickerViewProps,
+      ...useDatePopoverProps,
     });
 
     return (

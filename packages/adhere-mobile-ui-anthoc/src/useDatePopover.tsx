@@ -61,32 +61,34 @@ function useDatePopover({
         result = value.toLocaleDateString(targetLocale);
         break;
       default:
-        result = '';
+        result = value.toLocaleDateString(targetLocale);
     }
 
     return result;
   }, [value]);
 
-  const { actions, popoverTriggerProps, setTargetValue } = useDateTimePopover<DatePickerViewProps>({
-    popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
-    popoverTriggerStyle,
-    placeholder,
-    value,
-    okLabel,
-    cancelLabel,
-    defaultValue: datePickerViewProps?.defaultValue,
-    formatValue,
-  });
+  const { key, actions, popoverTriggerProps, setInternalValue } =
+    useDateTimePopover<DatePickerViewProps>({
+      popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
+      popoverTriggerStyle,
+      placeholder,
+      value,
+      okLabel,
+      cancelLabel,
+      defaultValue: datePickerViewProps?.defaultValue,
+      formatValue,
+    });
 
   return {
     actions,
     popoverTriggerProps,
     children: (
       <DatePickerView
-        defaultValue={new Date()}
+        key={key}
         {...datePickerViewProps}
+        defaultValue={value ?? datePickerViewProps?.defaultValue ?? new Date()}
         onChange={(_value) => {
-          setTargetValue(_value);
+          setInternalValue(_value);
         }}
       />
     ),

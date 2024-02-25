@@ -1,4 +1,3 @@
-import { DatePickerViewProps } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 
@@ -9,30 +8,15 @@ import useDatePopover from '../useDatePopover';
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-date-modal';
 
 const InternalDateModal = memo<DateModalProps>(
-  ({
-    placeholder,
-    okLabel,
-    cancelLabel,
-    locale,
-    renderDisplay,
-    value,
-    onChange,
-    modalTriggerProps,
-    ...datePickerViewProps
-  }) => {
+  ({ value, onChange, modalTriggerProps, ...useDatePopoverProps }) => {
     const { actions, popoverTriggerProps, children } = useDatePopover({
       popoverTriggerClassName: classNames(
         selectorPrefix,
         modalTriggerProps?.popoverTriggerProps?.className ?? '',
       ),
       popoverTriggerStyle: modalTriggerProps?.popoverTriggerProps?.style ?? {},
-      placeholder,
       value,
-      okLabel,
-      cancelLabel,
-      renderDisplay,
-      locale,
-      ...datePickerViewProps,
+      ...useDatePopoverProps,
     });
 
     return (

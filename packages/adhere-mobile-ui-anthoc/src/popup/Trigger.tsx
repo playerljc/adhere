@@ -46,8 +46,8 @@ const InternalPopupTrigger = memo<PopupTriggerProps<any>>(
           cloneElement(
             children,
             {
+              defaultValue: value,
               ...children.props,
-              value,
             },
             children.props.children,
           ),

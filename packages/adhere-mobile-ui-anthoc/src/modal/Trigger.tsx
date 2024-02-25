@@ -45,8 +45,8 @@ const InternalModalTrigger = memo<ModalTriggerProps<any>>(
           cloneElement(
             children,
             {
+              defaultValue: value,
               ...children.props,
-              value,
             },
             children.props.children,
           ),

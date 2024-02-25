@@ -40,30 +40,32 @@ function useTimePopover({
     return value.toLocaleTimeString(targetLocale);
   }, [value]);
 
-  const { actions, popoverTriggerProps, setTargetValue } = useDateTimePopover<TimePickerViewProps>({
-    popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
-    popoverTriggerStyle,
-    placeholder,
-    value,
-    okLabel,
-    cancelLabel,
-    defaultValue: timePickerViewProps?.defaultValue,
-    formatValue,
-  });
+  const { key, actions, popoverTriggerProps, setInternalValue } =
+    useDateTimePopover<TimePickerViewProps>({
+      popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
+      popoverTriggerStyle,
+      placeholder,
+      value,
+      okLabel,
+      cancelLabel,
+      defaultValue: timePickerViewProps?.defaultValue,
+      formatValue,
+    });
 
   return {
     actions,
     popoverTriggerProps,
     children: (
       <TimePickerView
-        defaultValue={new Date()}
+        key={key}
         {...timePickerViewProps}
+        defaultValue={value ?? timePickerViewProps?.defaultValue ?? new Date()}
         className={classNames(
           timePickerViewProps?.className ?? '',
           `${selectorPrefix}-time-picker-view`,
         )}
         onChange={(_value) => {
-          setTargetValue(_value);
+          setInternalValue(_value);
         }}
       />
     ),

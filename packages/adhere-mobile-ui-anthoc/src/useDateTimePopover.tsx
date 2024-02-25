@@ -1,5 +1,5 @@
 import { useUpdateEffect } from 'ahooks';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -14,49 +14,73 @@ function useDateTimePopover<T extends DateTimeViewProps>({
   value,
   okLabel,
   cancelLabel,
-  defaultValue,
+  clearLabel,
+  allowClearValue = true,
+  // defaultValue,
   formatValue,
 }: Parameters<UseDateTimerPopover<T, typeof value>>[0]) {
-  const targetValue = useRef<typeof value>(value ?? defaultValue ?? new Date());
+  const [key, setKey] = useState(`${Date.now()}`);
+
+  const internalValue = useRef(value);
+
+  function setInternalValue(_value) {
+    internalValue.current = _value;
+  }
+
+  const placeholderElement = useMemo(() => {
+    const defaultFormat = (
+      <div className={`${selectorPrefix}-placeholder`}>{placeholder ?? Intl.v('请选择')}</div>
+    );
+
+    return (
+      <>
+        {!!value && (formatValue || defaultFormat)}
+        {!value && defaultFormat}
+      </>
+    );
+  }, [value, placeholder, formatValue]);
 
   const actions = useMemo(
-    () => [
-      {
-        key: 'submit',
-        text: okLabel ?? Intl.v('确定'),
-        primary: true,
-        onClick: () => Promise.resolve(targetValue.current),
-      },
-      {
-        key: 'close',
-        text: cancelLabel ?? Intl.v('关闭'),
-        onClick: () => Promise.resolve(value),
-      },
-    ],
-    [okLabel, cancelLabel, targetValue.current],
+    () =>
+      [
+        {
+          key: 'submit',
+          text: okLabel ?? Intl.v('确定'),
+          primary: true,
+          onClick: () => Promise.resolve(internalValue.current ?? new Date()),
+        },
+        allowClearValue && {
+          key: 'clear',
+          text: clearLabel ?? Intl.v('清除'),
+          onClick: () => {
+            setKey(`${Date.now()}`);
+            return Promise.resolve(undefined);
+          },
+        },
+        {
+          key: 'close',
+          text: cancelLabel ?? Intl.v('关闭'),
+          onClick: () => {
+            return Promise.resolve(value);
+          },
+        },
+      ].filter((t) => !!t),
+    [allowClearValue, clearLabel, okLabel, cancelLabel, value, internalValue.current],
   );
 
   useUpdateEffect(() => {
-    targetValue.current = value;
+    setInternalValue(value);
   }, [value]);
 
   return {
+    key,
     actions,
     popoverTriggerProps: {
       className: popoverTriggerClassName ?? '',
       style: popoverTriggerStyle ?? {},
-      renderTrigger: () => (
-        <div className={`${selectorPrefix}-trigger`}>
-          {!!value && formatValue}
-          {!value && (
-            <div className={`${selectorPrefix}-placeholder`}>{placeholder ?? Intl.v('请选择')}</div>
-          )}
-        </div>
-      ),
+      renderTrigger: () => <div className={`${selectorPrefix}-trigger`}>{placeholderElement}</div>,
     },
-    setTargetValue: (_value) => {
-      targetValue.current = _value;
-    },
+    setInternalValue,
   };
 }
 
