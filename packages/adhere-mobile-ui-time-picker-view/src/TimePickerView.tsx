@@ -1,11 +1,10 @@
-import { useMount, useUpdateEffect } from 'ahooks';
-import { PickerView } from 'antd-mobile';
-import { PickerColumnItem, PickerValue } from 'antd-mobile/es/components/picker-view/picker-view';
+import { PickerView, PickerViewProps } from 'antd-mobile';
+import type { PickerColumnItem } from 'antd-mobile/es/components/picker-view/picker-view';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useMemo } from 'react';
 
-import { Format, TimePickerViewProps } from './types';
+import type { Format, TimePickerViewProps } from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-time-picker-view';
 
@@ -39,65 +38,99 @@ const timeMap = new Map<Format, PickerColumnItem[][] | undefined>([
  * @param props
  */
 const TimePickerView = memo<TimePickerViewProps>(
-  ({ className, style, format = 'HH:mm:ss', onChange, value, ...props }) => {
-    const columns = useMemo<PickerColumnItem[][] | undefined>(() => timeMap.get(format), [format]);
+  ({
+    className,
+    style,
+    defaultValue,
+    value,
+    onChange,
+    format = 'HH:mm:ss',
+    ...pickerViewProps
+  }) => {
+    function dataToPickerViewValue(
+      date: Date | undefined | null,
+    ): PickerViewProps['value'] | undefined {
+      if (!date) return undefined;
 
-    const [stateValues, setStateValues] = useState<PickerValue[] | undefined>(undefined);
+      const hour = date.getHours();
+      const minute = date.getMinutes();
+      const second = date.getSeconds();
 
-    function changeValues() {
-      let hour;
-      let minute;
-      let second;
-
-      let dayIns = dayjs();
-
-      if (value) {
-        dayIns = value;
-      }
-
-      hour = dayIns.hour();
-      minute = dayIns.minute();
-      second = dayIns.second();
-
-      const _values = [hour, minute, second];
-
-      const map = new Map<Format, PickerValue[]>([
-        ['HH:mm:ss', _values],
-        ['HH:mm', [_values[0], _values[1]]],
-        ['HH', [_values[0]]],
-        ['mm:ss', [_values[1], _values[2]]],
-        ['ss', [_values[2]]],
+      const map = new Map<Format, PickerViewProps['value']>([
+        ['HH:mm:ss', [hour, minute, second]],
+        ['HH:mm', [hour, minute]],
+        ['HH', [hour]],
+        ['mm:ss', [minute, second]],
+        ['ss', [second]],
       ]);
 
-      setStateValues(map.get(format) ?? []);
+      return map.get(format);
     }
 
-    useMount(() => {
-      changeValues();
-    });
+    function pickerViewValueToData(values: PickerViewProps['value']): Date {
+      const map = new Map<Format, Date>([
+        [
+          'HH:mm:ss',
+          dayjs()
+            .hour(values?.[0] as number)
+            .minute(values?.[1] as number)
+            .second(values?.[2] as number)
+            .toDate(),
+        ],
+        [
+          'HH:mm',
+          dayjs()
+            .hour(values?.[0] as number)
+            .minute(values?.[1] as number)
+            .toDate(),
+        ],
+        [
+          'HH',
+          dayjs()
+            .hour(values?.[0] as number)
+            .toDate(),
+        ],
+        [
+          'mm:ss',
+          dayjs()
+            .minute(values?.[1] as number)
+            .second(values?.[2] as number)
+            .toDate(),
+        ],
+        [
+          'ss',
+          dayjs()
+            .second(values?.[2] as number)
+            .toDate(),
+        ],
+      ]);
 
-    useUpdateEffect(() => {
-      changeValues();
-    }, [value]);
-
-    function valueToDayjs(values) {
-      return dayjs().hour(values[0]).minute(values[1]).second(values[2]);
+      return map.get(format) as Date;
     }
+
+    const targetDefaultValue = useMemo<PickerViewProps['defaultValue']>(
+      () => dataToPickerViewValue(defaultValue ?? new Date()),
+      [defaultValue],
+    );
+
+    const targetValue = useMemo<PickerViewProps['value']>(
+      () => dataToPickerViewValue(value),
+      [value],
+    );
+
+    const columns = useMemo<PickerColumnItem[][] | undefined>(() => timeMap.get(format), [format]);
 
     return (
       <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-        {stateValues && (
-          <PickerView
-            columns={columns ?? []}
-            onChange={(_values) => {
-              setStateValues(_values);
-
-              onChange?.(valueToDayjs(_values));
-            }}
-            {...props}
-            value={stateValues as PickerValue[]}
-          />
-        )}
+        <PickerView
+          {...pickerViewProps}
+          columns={columns ?? []}
+          defaultValue={targetDefaultValue}
+          value={targetValue}
+          onChange={(_values) => {
+            onChange?.(pickerViewValueToData(_values));
+          }}
+        />
       </div>
     );
   },

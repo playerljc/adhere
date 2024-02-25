@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimePickerViewProps } from './types';
+import type { TimePickerViewProps } from './types';
 /**
  * TimePickerView
  * @param className

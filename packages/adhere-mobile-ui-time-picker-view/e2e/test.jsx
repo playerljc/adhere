@@ -21,7 +21,7 @@ export default () => {
         value={value}
         onChange={(_value) => {
           setValue(_value);
-          console.log(_value, _value.format('YYYY-MM-DD HH:mm:ss'));
+          console.log(_value);
         }}
       />
     </div>
