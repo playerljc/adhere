@@ -18,6 +18,7 @@ const en = {
     llll: 'ddd, MMM D, YYYY h:mm A',
   },
 };
+
 const dayjsLocalesMap = [ar, en, pt, zhCN].reduce((result, locale) => {
   result.set(locale.name, locale);
 

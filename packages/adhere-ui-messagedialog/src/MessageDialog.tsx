@@ -372,6 +372,17 @@ const MessageDialogFactory = {
       );
     }
 
+    function close() {
+      open = false;
+
+      render();
+
+      setTimeout(() => {
+        root.unmount();
+        lock = false;
+      }, 300);
+    }
+
     let open = true;
 
     let modalConfig = {
@@ -387,17 +398,6 @@ const MessageDialogFactory = {
     };
 
     const el = document.createElement('div');
-
-    function close() {
-      open = false;
-
-      render();
-
-      setTimeout(() => {
-        root.unmount();
-        lock = false;
-      }, 300);
-    }
 
     const root = ReactDOM.createRoot(el);
 
