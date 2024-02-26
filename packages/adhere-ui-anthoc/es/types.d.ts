@@ -7,6 +7,7 @@ import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
 import dayjs from 'dayjs';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
+import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
@@ -487,6 +488,13 @@ export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectP
     AsyncTreeMultiLeafSelect: FC<AsyncTreeMultiLeafSelectProps>;
     AsyncTreeMultiSelect: FC<AsyncTreeMultiSelectProps>;
     AsyncTreeSelect: FC<AsyncTreeSelectProps>;
+    AutoCompleteTreeCheckedShowAllSelect: FC<TreeAutoCompleteProps>;
+    AutoCompleteTreeCheckedShowChildSelect: FC<TreeAutoCompleteProps>;
+    AutoCompleteTreeCheckedShowParentSelect: FC<TreeAutoCompleteProps>;
+    AutoCompleteTreeLeafSelect: FC<AutoCompleteTreeLeafSelectProps>;
+    AutoCompleteTreeMultiLeafSelect: FC<AutoCompleteTreeMultiLeafSelectProps>;
+    AutoCompleteTreeMultiSelect: FC<TreeAutoCompleteProps>;
+    AutoCompleteTreeSelect: FC<TreeAutoCompleteProps>;
 };
 export type CascaderHOCComponent = ReturnType<typeof createFactory<CascaderProps>> & {
     AsyncCascader: FC<AsyncCascaderProps>;
@@ -667,4 +675,10 @@ export type AsyncTreeEntityValueHOCProps = {
 export type CalendarFormatValueHOCProps = CalendarProps<dayjs.Dayjs>;
 export type CalendarTimestampValueHOC = CalendarProps<dayjs.Dayjs> & {
     type?: 'milliseconds' | 'seconds';
+};
+export type AutoCompleteTreeLeafSelectProps = TreeAutoCompleteProps & {
+    treeSelectProps?: TreeSelectProps;
+};
+export type AutoCompleteTreeMultiLeafSelectProps = TreeAutoCompleteProps & {
+    treeSelectProps?: TreeSelectProps;
 };

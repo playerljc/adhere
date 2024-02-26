@@ -21,7 +21,7 @@ import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
 import TransferTest from './Transfer/AutoCompleteTransferSelect.tsx';
 import TreeEntityValueHOC from './TreeEntityValueHOC';
-import TreeSelectTest from './TreeSelect/AsyncTreeSelect';
+import TreeSelectTest from './TreeSelect/AutoCompleteTreeCheckedShowParentSelect';
 import Anchor from './anchor';
 import FormRulesTest from './formRulesTest';
 import AntHOC from './test';
@@ -29,5 +29,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <RadioTest />,
+  children: <TreeSelectTest />,
 });

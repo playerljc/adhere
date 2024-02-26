@@ -23,6 +23,7 @@ import type { CheckableTagProps } from 'antd/es/tag';
 import dayjs from 'dayjs';
 import type { CSSProperties, FC, ReactElement, ReactNode } from 'react';
 
+import type { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import ASync from '@baifendian/adhere-ui-suspense/es/Async';
 import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types';
@@ -30,6 +31,14 @@ import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 
 import ButtonRadio from './radio/ButtonRadio';
+import AutoCompleteTreeCheckedShowAllSelect from './tree-select/AutoCompleteTreeCheckedShowAllSelect';
+import AutoCompleteTreeCheckedShowChildSelect from './tree-select/AutoCompleteTreeCheckedShowChildSelect';
+import AutoCompleteTreeCheckedShowParentSelect from './tree-select/AutoCompleteTreeCheckedShowParentSelect';
+import AutoCompleteTreeLeafSelect from './tree-select/AutoCompleteTreeLeafSelect';
+import AutoCompleteTreeMultiLeafSelect from './tree-select/AutoCompleteTreeMultiLeafSelect';
+import AutoCompleteTreeMultiSelect from './tree-select/AutoCompleteTreeMultiSelect';
+import AutoCompleteTreeSelect from './tree-select/AutoCompleteTreeSelect';
+import TreeSelect from './tree-select/TreeSelect';
 import { createFactory } from './util';
 
 export type FormValidatorRulesType = {
@@ -701,6 +710,13 @@ export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectP
   AsyncTreeMultiLeafSelect: FC<AsyncTreeMultiLeafSelectProps>;
   AsyncTreeMultiSelect: FC<AsyncTreeMultiSelectProps>;
   AsyncTreeSelect: FC<AsyncTreeSelectProps>;
+  AutoCompleteTreeCheckedShowAllSelect: FC<TreeAutoCompleteProps>;
+  AutoCompleteTreeCheckedShowChildSelect: FC<TreeAutoCompleteProps>;
+  AutoCompleteTreeCheckedShowParentSelect: FC<TreeAutoCompleteProps>;
+  AutoCompleteTreeLeafSelect: FC<AutoCompleteTreeLeafSelectProps>;
+  AutoCompleteTreeMultiLeafSelect: FC<AutoCompleteTreeMultiLeafSelectProps>;
+  AutoCompleteTreeMultiSelect: FC<TreeAutoCompleteProps>;
+  AutoCompleteTreeSelect: FC<TreeAutoCompleteProps>;
 };
 
 export type CascaderHOCComponent = ReturnType<typeof createFactory<CascaderProps>> & {
@@ -1008,4 +1024,12 @@ export type CalendarFormatValueHOCProps = CalendarProps<dayjs.Dayjs>;
 export type CalendarTimestampValueHOC = CalendarProps<dayjs.Dayjs> & {
   // value的类型
   type?: 'milliseconds' | 'seconds';
+};
+
+export type AutoCompleteTreeLeafSelectProps = TreeAutoCompleteProps & {
+  treeSelectProps?: TreeSelectProps;
+};
+
+export type AutoCompleteTreeMultiLeafSelectProps = TreeAutoCompleteProps & {
+  treeSelectProps?: TreeSelectProps;
 };
