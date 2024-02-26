@@ -144,7 +144,7 @@ export default () => {
       treeCheckable
       showCheckedStrategy={TreeSelect.SHOW_ALL}
       // multiple
-      // treeDataSimpleMode
+      treeDataSimpleMode
       loadData={(_kw) => {
         return new Promise((resolve) => {
           if (!_kw) {
@@ -156,38 +156,38 @@ export default () => {
           setTimeout(() => {
             // 正常
 
-            const flatTreeData = Util.treeToArray(
-              TREE_DATA,
-              { parentIdAttr: 'pId', rootParentId: '' },
-              'value',
-            );
-
-            const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
-
-            const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
-              keyAttr: 'value',
-              titleAttr: 'title',
-              parentIdAttr: 'pId',
-              rootParentId: '',
-            });
+            // const flatTreeData = Util.treeToArray(
+            //   TREE_DATA,
+            //   { parentIdAttr: 'pId', rootParentId: '' },
+            //   'value',
+            // );
+            //
+            // const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+            //
+            // const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            //   keyAttr: 'value',
+            //   titleAttr: 'title',
+            //   parentIdAttr: 'pId',
+            //   rootParentId: '',
+            // });
 
             // flat
-            // const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
-            //
-            // const targetTreeData = Util.treeToArray(
-            //   Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
-            //     keyAttr: 'id',
-            //     titleAttr: 'title',
-            //     parentIdAttr: 'pId',
-            //     rootParentId: 0,
-            //   }),
-            //   {
-            //     keyAttr: 'id',
-            //     titleAttr: 'title',
-            //     parentIdAttr: 'pId',
-            //     rootParentId: 0,
-            //   },
-            // );
+            const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+            const targetTreeData = Util.treeToArray(
+              Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
+                keyAttr: 'id',
+                titleAttr: 'title',
+                parentIdAttr: 'pId',
+                rootParentId: 0,
+              }),
+              {
+                keyAttr: 'id',
+                titleAttr: 'title',
+                parentIdAttr: 'pId',
+                rootParentId: 0,
+              },
+            );
 
             setTreeData(targetTreeData);
 

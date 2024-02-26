@@ -201,11 +201,11 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       if (!treeDataSimpleMode) {
         let allFlatTreeData = [
           // 查出来的结果
-          ...flatTreeData,
+          ...(flatTreeData ?? []),
           // 初始化的结果
-          ...flatDefaultTreeDataFilter,
+          ...(flatDefaultTreeDataFilter ?? []),
           // 选择的结果
-          ...flatSelectTreeData,
+          ...(flatSelectTreeData ?? []),
         ];
 
         const allFlatTreeDataKeys = allFlatTreeData.map(({ value }) => value);
@@ -217,7 +217,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         );
 
         return Util.completionIncompleteFlatArr(
-          [...flatTreeData, ...flatDefaultTreeData, ...flatSelectTreeData],
+          [...(flatTreeData ?? []), ...(flatDefaultTreeData ?? []), ...(flatSelectTreeData ?? [])],
           allFlatTreeData,
           treeTransformConfig,
         );
@@ -225,9 +225,9 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       //
       else {
         let allFlatTreeData = [
-          ...(treeData as any[]),
-          ...flatDefaultTreeDataFilter,
-          ...flatSelectTreeData,
+          ...(treeData ?? []),
+          ...(flatDefaultTreeDataFilter ?? []),
+          ...(flatSelectTreeData ?? []),
         ];
 
         const allFlatTreeDataKeys = allFlatTreeData.map(({ value }) => value);
@@ -236,7 +236,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
         return Util.treeToArray(
           Util.completionIncompleteFlatArr(
-            [...(treeData as any[]), ...(defaultTreeData?.value as any[]), ...flatSelectTreeData],
+            [...(treeData ?? []), ...(defaultTreeData?.value ?? []), ...(flatSelectTreeData ?? [])],
             distinctKeys.map((_value) =>
               allFlatTreeData.find((_option) => _option.value === _value),
             ),
