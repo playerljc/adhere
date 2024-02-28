@@ -31,7 +31,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     emptyContent,
     children,
     treeDataSimpleMode,
-    ...props
+    ...treeSelectProps
   }) => {
     const [selectTreeData, setSelectTreeData] = useState<object>(
       defaultTreeData
@@ -69,7 +69,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     function onSelectChange(_values, label, extra) {
       if (!extra.triggerNode) {
         setSelectTreeData({});
-        props.onChange?.(_values, label, extra);
+        treeSelectProps.onChange?.(_values, label, extra);
         return;
       }
 
@@ -86,7 +86,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       });
 
       // @ts-ignore
-      props.onChange?.(_values);
+      treeSelectProps.onChange?.(_values);
 
       if (isMultiple) {
         onSelectChangeStartTime.current = Date.now();
@@ -125,13 +125,13 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     );
 
     const isChecked = useMemo(
-      () => ('treeCheckable' in props ? !!props.treeCheckable : false),
-      [props.treeCheckable],
+      () => ('treeCheckable' in treeSelectProps ? !!treeSelectProps.treeCheckable : false),
+      [treeSelectProps.treeCheckable],
     );
 
     const isMultiple = useMemo(() => {
-      return isChecked || ('multiple' in props ? !!props.multiple : false);
-    }, [isChecked, props.multiple]);
+      return isChecked || ('multiple' in treeSelectProps ? !!treeSelectProps.multiple : false);
+    }, [isChecked, treeSelectProps.multiple]);
 
     const flatTreeData = useMemo(
       () =>
@@ -162,14 +162,14 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     const flatDefaultTreeDataFilter = useMemo(() => {
       if (!treeDataSimpleMode) {
         return flatDefaultTreeData.filter((t) =>
-          (isMultiple ? props.value : [props.value]).includes(t.value),
+          (isMultiple ? treeSelectProps.value : [treeSelectProps.value]).includes(t.value),
         );
       } else {
         return (defaultTreeData?.value ?? []).filter((t) =>
-          (isMultiple ? props.value : [props.value]).includes(t.value),
+          (isMultiple ? treeSelectProps.value : [treeSelectProps.value]).includes(t.value),
         );
       }
-    }, [treeDataSimpleMode, defaultTreeData, props.value, flatDefaultTreeData]);
+    }, [treeDataSimpleMode, defaultTreeData, treeSelectProps.value, flatDefaultTreeData]);
 
     const flatSelectTreeData = useMemo(
       () =>
@@ -198,6 +198,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
        *     treeData + defaultTreeData 去重
        *  }
        * */
+      // treeData
       if (!treeDataSimpleMode) {
         let allFlatTreeData = [
           // 查出来的结果
@@ -222,7 +223,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           treeTransformConfig,
         );
       }
-      //
+      // flatTreeData
       else {
         let allFlatTreeData = [
           ...(treeData ?? []),
@@ -256,7 +257,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       flatDefaultTreeData,
       flatTreeData,
       selectTreeData,
-      props.value,
+      treeSelectProps.value,
     ]);
 
     const flatTargetTreeData = useMemo(() => {
@@ -282,8 +283,6 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       );
     }, [defaultTreeData]);
 
-    // console.log('props.value', props.value);
-
     return (
       <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
         <TreeSelect
@@ -305,7 +304,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
               ? children?.({
                   originNode,
                   treeDataSimpleMode,
-                  value: props.value,
+                  value: treeSelectProps.value,
                   onChange: (...params) => onSelectChange(...params),
                   treeData: targetTreeData ?? [],
                   loading: fetching,
@@ -313,7 +312,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
               : empty;
           }}
           onDropdownVisibleChange={setOpen}
-          {...props}
+          {...treeSelectProps}
           treeDataSimpleMode={!!treeDataSimpleMode}
           onChange={(...params) => onSelectChange(...params)}
         />

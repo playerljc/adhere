@@ -33,13 +33,13 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     defaultOptions,
     emptyContent,
     children,
-    ...props
+    ...selectProps
   }) => {
     const [selectedRows, setSelectedRows] = useState<any[]>(defaultOptions ?? []);
 
     const onSelectChangeStartTime = useRef<number>(0);
 
-    const isMultiple = 'mode' in props && props.mode === 'multiple';
+    const isMultiple = 'mode' in selectProps && selectProps.mode === 'multiple';
 
     const {
       defaultDebounceTimeout,
@@ -78,7 +78,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
       }
 
       // @ts-ignore
-      props.onChange?.(_values);
+      selectProps.onChange?.(_values);
 
       if (isMultiple) {
         onSelectChangeStartTime.current = Date.now();
@@ -119,10 +119,10 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
     const allOptions = useMemo(
       () => [
         ...(options ?? []),
-        ...(defaultOptions ?? []).filter((t) => props.value.includes(t.value)),
+        ...(defaultOptions ?? []).filter((t) => selectProps.value.includes(t.value)),
         ...selectedRows,
       ],
-      [options, defaultOptions, selectedRows, props.value],
+      [options, defaultOptions, selectedRows, selectProps.value],
     );
 
     const targetOptions = useMemo<any[]>(() => {
@@ -154,7 +154,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
             return !!targetOptions?.length
               ? children?.({
                   originNode,
-                  value: props.value,
+                  value: selectProps.value,
                   onChange: (_value) => onSelectChange(_value),
                   options: targetOptions ?? [],
                   loading: fetching,
@@ -162,7 +162,7 @@ const InternalAutoComplete = memo<AutoCompleteProps>(
               : empty;
           }}
           onDropdownVisibleChange={setOpen}
-          {...props}
+          {...selectProps}
           onChange={(_value) => onSelectChange(_value)}
         />
       </div>
