@@ -16,7 +16,14 @@ import RadioTable from './RadioTable';
  * @constructor
  */
 const InternalRadioPagingTable = memo<RadioPagingTableProps>(
-  ({ totalCount, paging, onPagingChange, onPagingShowSizeChange, defaultLimit, ...props }) => {
+  ({
+    totalCount,
+    paging,
+    onPagingChange,
+    onPagingShowSizeChange,
+    defaultLimit,
+    ...radioTableProps
+  }) => {
     const pagingProps = usePaging({
       defaultLimit: defaultLimit ?? 10,
       paging,
@@ -25,7 +32,7 @@ const InternalRadioPagingTable = memo<RadioPagingTableProps>(
       onPagingChange,
     });
 
-    return <RadioTable pagination={pagingProps} {...props} />;
+    return <RadioTable pagination={pagingProps} {...(radioTableProps ?? {})} />;
   },
 );
 

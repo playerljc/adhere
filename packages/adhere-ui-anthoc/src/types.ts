@@ -31,14 +31,7 @@ import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 
 import ButtonRadio from './radio/ButtonRadio';
-import AutoCompleteTreeCheckedShowAllSelect from './tree-select/AutoCompleteTreeCheckedShowAllSelect';
-import AutoCompleteTreeCheckedShowChildSelect from './tree-select/AutoCompleteTreeCheckedShowChildSelect';
-import AutoCompleteTreeCheckedShowParentSelect from './tree-select/AutoCompleteTreeCheckedShowParentSelect';
-import AutoCompleteTreeLeafSelect from './tree-select/AutoCompleteTreeLeafSelect';
-import AutoCompleteTreeMultiLeafSelect from './tree-select/AutoCompleteTreeMultiLeafSelect';
-import AutoCompleteTreeMultiSelect from './tree-select/AutoCompleteTreeMultiSelect';
-import AutoCompleteTreeSelect from './tree-select/AutoCompleteTreeSelect';
-import TreeSelect from './tree-select/TreeSelect';
+import AutoCompleteTreeTablePagingSelect from './table/AutoCompleteTreeTablePagingSelect';
 import { createFactory } from './util';
 
 export type FormValidatorRulesType = {
@@ -219,19 +212,35 @@ export type TablePagingSelectProps<T> = Omit<DropdownRenderSelectProps, 'childre
 
 export type RadioTableProps = Omit<TableProps<any>, 'onChange'> & {
   value?: SelectProps['value'];
-  onChange?: SelectProps['onChange'];
   options?: TableProps<any>['dataSource'];
+  onChange?: SelectProps['onChange'];
+};
+
+export type RadioTreeTableProps = Omit<TableProps<any>, 'onChange'> & {
+  value?: RadioTableProps['value'];
+  options?: RadioTableProps['dataSource'];
+  onChange?: TreeSelectProps['onChange'];
 };
 
 export type CheckboxTableProps = Omit<TableProps<any>, 'onChange'> & {
   value?: SelectProps['value'];
-  onChange?: SelectProps['onChange'];
   options?: TableProps<any>['dataSource'];
+  onChange?: SelectProps['onChange'];
+};
+
+export type CheckboxTreeTableProps = Omit<TableProps<any>, 'onChange'> & {
+  value?: CheckboxTableProps['value'];
+  options?: CheckboxTableProps['dataSource'];
+  onChange?: TreeSelectProps['onChange'];
 };
 
 export type RadioPagingTableProps = RadioTableProps & PagingProps;
 
 export type CheckboxPagingTableProps = CheckboxTableProps & PagingProps;
+
+export type RadioPagingTreeTableProps = RadioTreeTableProps & PagingProps;
+
+export type CheckboxPagingTreeTableProps = CheckboxTreeTableProps & PagingProps;
 
 // export type TreeNodeProps = Pick<
 //   AntTreeNodeProps,
@@ -326,9 +335,18 @@ export type UseTableRenderProps = (
 ) => (arg: {
   value?: SelectProps['value'];
   onChange?: SelectProps['onChange'];
-  options?: SelectProps['options'];
+  options?: TableProps['dataSource'];
   loading?: boolean;
 }) => CheckboxTableProps | RadioTableProps;
+
+export type UseTreeTableRenderProps = (
+  tableProps: TableSelectProps['tableProps'],
+) => (arg: {
+  value?: SelectProps['value'];
+  onChange?: TreeSelectProps['onChange'];
+  options?: TableProps['dataSource'];
+  loading?: boolean;
+}) => CheckboxTreeTableProps | RadioTreeTableProps;
 
 export type UseListRenderProps = (
   listProps: ListSelectProps['listProps'],
@@ -371,6 +389,34 @@ export type UsePagingTableRenderProps = (
     PagingProps & {
       value?: SelectProps['value'];
       onChange?: SelectProps['onChange'];
+      options?: TableProps<any>['dataSource'];
+    };
+};
+
+export type UsePagingTreeTableRenderProps = (
+  arg: PagingWrapperProps<any> & {
+    tablePagingProps?:
+      | Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'>
+      | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>;
+    multiple?: TreeSelectProps['multiple'];
+    treeDataSimpleMode?: TreeSelectProps['treeDataSimpleMode'];
+    suspenseRef?: ASync | null;
+  },
+) => Omit<ReturnType<UsePagingTableRenderProps>, 'renderProps' | 'options'> & {
+  isTreeDataSimpleMode: boolean;
+  treeData: TreeSelectProps['treeData'];
+  renderProps: (arg: {
+    value?: SelectProps['value'];
+    onChange?: TreeSelectProps['onChange'];
+    options?: TableProps['dataSource'];
+    loading?: boolean;
+  }) => PagingProps &
+    (
+      | Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'>
+      | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>
+    ) & {
+      value?: SelectProps['value'];
+      onChange?: TreeSelectProps['onChange'];
       options?: TableProps<any>['dataSource'];
     };
 };
@@ -535,6 +581,11 @@ export type AutoCompleteTableSelectProps = AutoCompleteProps & {
   tableProps?: TableSelectProps['tableProps'];
 };
 
+export type AutoCompleteTreeTableSelectProps = TreeAutoCompleteProps & {
+  treeDataSimpleModeConfig?: IFlatTreeArrNode;
+  tableProps?: TableSelectProps['tableProps'];
+};
+
 export type AutoCompleteListPagingSelectProps = AutoCompleteProps & {
   pagingProps: PagingWrapperProps<any>;
   listPagingProps?: ListPagingSelectProps<any>['listPagingProps'];
@@ -543,6 +594,14 @@ export type AutoCompleteListPagingSelectProps = AutoCompleteProps & {
 export type AutoCompleteTablePagingSelectProps = AutoCompleteProps & {
   pagingProps: PagingWrapperProps<any>;
   tablePagingProps?: TablePagingSelectProps<any>['tablePagingProps'];
+};
+
+export type AutoCompleteTreeTablePagingSelectProps = TreeAutoCompleteProps & {
+  treeDataSimpleModeConfig?: IFlatTreeArrNode;
+  pagingProps: PagingWrapperProps<any>;
+  tablePagingProps?:
+    | Omit<CheckboxPagingTreeTableProps, 'value' | 'onChange'>
+    | Omit<RadioPagingTreeTableProps, 'value' | 'onChange'>;
 };
 
 export type AutoCompleteTagSelectProps = AutoCompleteProps & {
@@ -670,12 +729,16 @@ export type RadioHOCComponent = ReturnType<typeof createFactory<RadioProps>> & {
 
 export type TableHOCComponent = ReturnType<typeof createFactory<TableProps<any>>> & {
   AutoCompleteTablePagingSelect: FC<AutoCompleteTablePagingSelectProps>;
+  AutoCompleteTreeTablePagingSelect: FC<AutoCompleteTreeTablePagingSelectProps>;
   AutoCompleteTableSelect: FC<AutoCompleteTableSelectProps>;
+  AutoCompleteTreeTableSelect: FC<AutoCompleteTreeTableSelectProps>;
   TableSelect: FC<TableSelectProps>;
   TablePagingSelect: FC<TablePagingSelectProps<any>>;
   TablePaging: FC<TablePagingProps<any>>;
   RadioTable: FC<RadioTableProps>;
+  RadioTreeTable: FC<RadioTreeTableProps>;
   CheckboxTable: FC<CheckboxTableProps>;
+  CheckboxTreeTable: FC<CheckboxTreeTableProps>;
 };
 
 export type TagHOCComponent = ReturnType<typeof createFactory<TagProps>> & {

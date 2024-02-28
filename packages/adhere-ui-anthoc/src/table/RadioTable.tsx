@@ -12,10 +12,9 @@ import Table from './Table';
  * @param props
  * @constructor
  */
-const InternalRadioTable = memo<RadioTableProps>(({ value, onChange, options, ...props }) => (
+const InternalRadioTable = memo<RadioTableProps>(({ value, onChange, options, ...tableProps }) => (
   <Table
     dataSource={options}
-    // pagination={false}
     rowKey="id"
     rowSelection={{
       type: 'radio',
@@ -24,7 +23,7 @@ const InternalRadioTable = memo<RadioTableProps>(({ value, onChange, options, ..
         onChange?.(!!selectedRowKeys.length ? selectedRowKeys[0] : '', []);
       },
     }}
-    {...props}
+    {...(tableProps ?? {})}
   />
 ));
 

@@ -19,14 +19,16 @@ const InternalTableSelect = memo<TableSelectProps>(({ tableProps, ...props }) =>
 
   return (
     <DropdownRenderSelect {...props}>
-      {({ originNode, ...rest }) => (
-        <>
+      {({ originNode, ...rest }) => {
+        const tableProps = renderProps(rest);
+
+        return (
           <>
-            {isMultiple && <CheckboxTable {...renderProps(rest)} />}
-            {!isMultiple && <RadioTable {...renderProps(rest)} />}
+            {isMultiple && <CheckboxTable {...tableProps} />}
+            {!isMultiple && <RadioTable {...tableProps} />}
           </>
-        </>
-      )}
+        );
+      }}
     </DropdownRenderSelect>
   );
 });

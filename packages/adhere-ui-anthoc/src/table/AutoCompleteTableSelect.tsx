@@ -18,8 +18,11 @@ import useRenderProps from './useRenderProps';
 const InternalAutoCompleteTableSelect = memo<AutoCompleteTableSelectProps>(
   ({ tableProps, ...props }) => {
     const isMultiple = useMemo(() => 'mode' in props && props.mode === 'multiple', [props.mode]);
+
     const renderProps = useRenderProps(tableProps);
+
     const fetchLoading = useAutoCompleteFetchLoading(props.renderLoading);
+
     const Component = useMemo(
       () => (isMultiple ? AutoCompleteMultipleSelect : AutoCompleteSelect),
       [isMultiple],
@@ -27,13 +30,17 @@ const InternalAutoCompleteTableSelect = memo<AutoCompleteTableSelectProps>(
 
     return (
       <Component {...props}>
-        {({ originNode, loading, ...rest }) => (
-          <>
-            {loading && fetchLoading}
-            {!loading && isMultiple && <CheckboxTable {...renderProps(rest)} />}
-            {!loading && !isMultiple && <RadioTable {...renderProps(rest)} />}
-          </>
-        )}
+        {({ originNode, loading, ...rest }) => {
+          const tableProps = renderProps(rest);
+
+          return (
+            <>
+              {loading && fetchLoading}
+              {!loading && isMultiple && <CheckboxTable {...tableProps} />}
+              {!loading && !isMultiple && <RadioTable {...tableProps} />}
+            </>
+          );
+        }}
       </Component>
     );
   },

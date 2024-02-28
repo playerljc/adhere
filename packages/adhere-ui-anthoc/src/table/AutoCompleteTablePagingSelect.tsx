@@ -62,13 +62,20 @@ const InternalAutoCompleteTablePagingSelect = memo<AutoCompleteTablePagingSelect
           });
         }}
       >
-        {({ originNode, loading, ...rest }) => (
-          <>
-            {loading && fetchLoading}
-            {!loading && isMultiple && <CheckboxPagingTable {...renderProps(rest)} />}
-            {!loading && !isMultiple && <RadioPagingTable {...renderProps(rest)} />}
-          </>
-        )}
+        {({ originNode, loading, ...rest }) => {
+          const tableProps = renderProps({
+            ...rest,
+            options,
+          });
+
+          return (
+            <>
+              {loading && fetchLoading}
+              {!loading && isMultiple && <CheckboxPagingTable {...tableProps} />}
+              {!loading && !isMultiple && <RadioPagingTable {...tableProps} />}
+            </>
+          );
+        }}
       </Component>
     );
   },

@@ -23,7 +23,9 @@ export default () => {
   const [value, setValue] = useState([]);
 
   function loadData(page, limit, _kw) {
+    debugger;
     console.log(page, limit, _kw);
+
     return new Promise((resolve) => {
       const result = !_kw ? [] : dataSource.filter(({ label }) => label.indexOf(_kw) !== -1);
 
@@ -36,10 +38,10 @@ export default () => {
 
   return (
     <Table.AutoCompleteTablePagingSelect
-      mode="multiple"
       placeholder="AutoCompleteTablePagingSelect"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      mode="multiple"
       value={value}
       onChange={setValue}
       pagingProps={{

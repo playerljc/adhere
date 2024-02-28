@@ -15,7 +15,7 @@ import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
 import RangePickerValueHOCInFormTest from './RangePickerValueHOCInFormTest';
 import RangePickerValueHOCTest from './RangePickerValueHOCTest';
 import SelectTest from './Select/AutoCompleteCheckAllMultipleSelect';
-import TableTest from './Table/CheckboxTablePagingSelect';
+import TableTest from './Table/AutoCompleteTreeTablePagingSelect';
 import TagTest from './Tag/VerticalCheckAllCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
@@ -29,5 +29,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <TreeSelectTest />,
+  children: <TableTest />,
 });

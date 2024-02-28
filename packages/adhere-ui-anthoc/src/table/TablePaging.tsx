@@ -91,25 +91,15 @@ const InternalTablePaging = memo<TablePagingProps<any>>(
       [isSuspenseAsync, suspenseProps, paging, options],
     );
 
+    const tableProps = renderProps({
+      value: currentValue,
+      onChange: onTablePagingChange,
+      options,
+    });
+
     return render([
-      isMultiple && (
-        <CheckboxPagingTable
-          {...renderProps({
-            value: currentValue,
-            onChange: onTablePagingChange,
-            options,
-          })}
-        />
-      ),
-      !isMultiple && (
-        <RadioPagingTable
-          {...renderProps({
-            value: currentValue,
-            onChange: onTablePagingChange,
-            options,
-          })}
-        />
-      ),
+      isMultiple && <CheckboxPagingTable {...tableProps} />,
+      !isMultiple && <RadioPagingTable {...tableProps} />,
     ]);
   },
 );

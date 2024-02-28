@@ -10,7 +10,7 @@ const useCascaderData: UseCascaderData = ({ options, treeDataSimpleMode, config 
       // @ts-ignore
       Util.arrayToAntdTreeSelect(options, {
         keyAttr: config?.keyAttr ?? 'value',
-        titleAttr: config?.titleAttr ?? 'value',
+        titleAttr: config?.titleAttr ?? 'title',
         rootParentId: config?.rootParentId ?? 0,
         parentIdAttr: config?.parentIdAttr ?? 'pId',
       }),

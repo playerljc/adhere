@@ -49,12 +49,16 @@ const InternalTablePagingSelect = memo<TablePagingSelectProps<any>>(
           });
         }}
       >
-        {({ originNode, ...rest }) => (
-          <>
-            {isMultiple && <CheckboxPagingTable {...renderProps(rest)} />}
-            {!isMultiple && <RadioPagingTable {...renderProps(rest)} />}
-          </>
-        )}
+        {({ originNode, ...rest }) => {
+          const tableProps = renderProps(rest);
+
+          return (
+            <>
+              {isMultiple && <CheckboxPagingTable {...tableProps} />}
+              {!isMultiple && <RadioPagingTable {...tableProps} />}
+            </>
+          );
+        }}
       </DropdownRenderSelect>
     );
   },

@@ -26,10 +26,10 @@ export default () => {
 
   return (
     <Table.AutoCompleteTableSelect
-      // mode="multiple"
       placeholder="AutoCompleteTableSelect"
       style={{ width: 600 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      mode="multiple"
       value={value}
       options={options}
       onChange={setValue}

@@ -16,7 +16,14 @@ import CheckboxTable from './CheckboxTable';
  * @constructor
  */
 const InternalCheckboxPagingTable = memo<CheckboxPagingTableProps>(
-  ({ totalCount, paging, onPagingChange, onPagingShowSizeChange, defaultLimit, ...props }) => {
+  ({
+    totalCount,
+    paging,
+    onPagingChange,
+    onPagingShowSizeChange,
+    defaultLimit,
+    ...checkboxTableProps
+  }) => {
     const pagingProps = usePaging({
       defaultLimit: defaultLimit ?? 10,
       paging,
@@ -25,7 +32,7 @@ const InternalCheckboxPagingTable = memo<CheckboxPagingTableProps>(
       onPagingChange,
     });
 
-    return <CheckboxTable pagination={pagingProps} {...props} />;
+    return <CheckboxTable pagination={pagingProps} {...(checkboxTableProps ?? {})} />;
   },
 );
 

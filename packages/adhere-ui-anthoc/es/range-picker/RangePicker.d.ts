@@ -3,7 +3,7 @@ import { RangePickerProps } from 'antd/es/date-picker';
 declare const RangePicker: import("react").ForwardRefExoticComponent<Omit<import("rc-picker").RangePickerProps<import("dayjs").Dayjs>, "locale" | "generateConfig" | "hideHeader"> & {
     locale?: import("antd/es/date-picker/generatePicker").PickerLocale | undefined;
     size?: import("antd/es/button").ButtonSize;
-    placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topRight" | undefined;
+    placement?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight" | undefined;
     bordered?: boolean | undefined;
     status?: "" | "warning" | "error" | undefined;
     variant?: "outlined" | "borderless" | "filled" | undefined;
