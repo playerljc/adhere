@@ -23,7 +23,6 @@ export default () => {
   const [value, setValue] = useState([]);
 
   function loadData(page, limit, _kw) {
-    debugger;
     console.log(page, limit, _kw);
 
     return new Promise((resolve) => {

@@ -43,8 +43,6 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
       [isMultiple],
     );
 
-    console.log('treeData1', treeData);
-
     return (
       <Component
         {...props}
@@ -70,8 +68,6 @@ const InternalAutoCompleteTreeTablePagingSelect = memo<AutoCompleteTreeTablePagi
       >
         {({ originNode, loading, ...rest }) => {
           const { treeData: _omitTreeData, ...tablePropsRest } = rest;
-
-          console.log('treeData2', _omitTreeData);
 
           const options = isTreeDataSimpleMode
             ? Util.arrayToAntdTreeSelect(treeData ?? [], {

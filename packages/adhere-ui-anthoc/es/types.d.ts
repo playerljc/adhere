@@ -538,9 +538,6 @@ export type TreeSelectHOCComponent = ReturnType<typeof createFactory<TreeSelectP
     AsyncTreeMultiLeafSelect: FC<AsyncTreeMultiLeafSelectProps>;
     AsyncTreeMultiSelect: FC<AsyncTreeMultiSelectProps>;
     AsyncTreeSelect: FC<AsyncTreeSelectProps>;
-    AutoCompleteTreeCheckedShowAllSelect: FC<TreeAutoCompleteProps>;
-    AutoCompleteTreeCheckedShowChildSelect: FC<TreeAutoCompleteProps>;
-    AutoCompleteTreeCheckedShowParentSelect: FC<TreeAutoCompleteProps>;
     AutoCompleteTreeLeafSelect: FC<AutoCompleteTreeLeafSelectProps>;
     AutoCompleteTreeMultiLeafSelect: FC<AutoCompleteTreeMultiLeafSelectProps>;
     AutoCompleteTreeMultiSelect: FC<TreeAutoCompleteProps>;

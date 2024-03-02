@@ -1,6 +1,6 @@
 import { TreeSelect, TreeSelectProps } from 'antd';
 
-import { TreeSelectHOCComponent } from '../types';
+import type { TreeSelectHOCComponent } from '../types';
 import { createFactory } from '../util';
 
 const TreeSelectHOC: TreeSelectHOCComponent = createFactory<TreeSelectProps>(

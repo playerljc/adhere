@@ -130,7 +130,7 @@ export default () => {
       placeholder="AutoCompleteTreeTableSelect"
       style={{ width: 800 }}
       dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-      mode="multiple"
+      multiple
       treeDataSimpleMode
       value={value}
       onChange={setValue}
