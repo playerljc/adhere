@@ -3,7 +3,10 @@ import { useCallback, useState } from 'react';
 
 import type { PagingWrapperProps } from '@baifendian/adhere-ui-anthoc/es/types';
 import { AsyncCascaderProps, AsyncTreeSelectProps } from '@baifendian/adhere-ui-anthoc/src/types';
-import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import type {
+  AutoCompleteProps,
+  TreeAutoCompleteProps,
+} from '@baifendian/adhere-ui-auto-complete/es/types';
 import Dict from '@baifendian/adhere-util-dict';
 
 import type { UseDictParams } from '../types';
@@ -115,6 +118,43 @@ export function useAutoCompleteDict<D>({
     options: [...((dataSource as any) ?? [])],
     loadData: (_kw) =>
       new Promise((resolve, reject) => {
+        dictValue(_kw, cascadeParams)
+          .then((res) => {
+            setDataSource(res);
+            resolve();
+          })
+          .catch((error) => reject(error));
+      }),
+  };
+}
+
+/**
+ * useTreeAutoCompleteDict
+ * @param dictName
+ * @param cascadeParams
+ * @param onDataSourceChange
+ */
+export function useTreeAutoCompleteDict<D>({
+  dictName,
+  cascadeParams,
+  onDataSourceChange,
+}: UseDictParams<D>): {
+  treeData: TreeAutoCompleteProps['treeData'];
+  loadData: TreeAutoCompleteProps['loadData'];
+} {
+  const dictValue = Dict.value[dictName].value;
+
+  // @ts-ignore
+  const [dataSource, setDataSource] = useState<D>([]);
+
+  useUpdateEffect(() => {
+    onDataSourceChange?.(dataSource);
+  }, [dataSource]);
+
+  return {
+    treeData: [...((dataSource as any) ?? [])],
+    loadData: (_kw) =>
+      new Promise<void>((resolve, reject) => {
         dictValue(_kw, cascadeParams)
           .then((res) => {
             setDataSource(res);

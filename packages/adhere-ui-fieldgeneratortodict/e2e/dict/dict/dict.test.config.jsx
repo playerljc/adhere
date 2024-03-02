@@ -11,6 +11,7 @@ import {
   SmileOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
 import { City, County, Province, books } from './data';
@@ -110,6 +111,82 @@ const UserData = Array.from({ length: 100 }).map(() => {
     avatar: `https://xsgames.co/randomusers/avatar.php?g=pixel&key=${value}`,
   };
 });
+
+function genChildren(length) {
+  return Array.from({ length: length }).map(() => {
+    const title = Mock.mock('@name');
+    const value = Mock.mock('@guid');
+
+    return {
+      value,
+      title,
+      id: value,
+      name: title,
+      address: Mock.mock('@region'),
+      height: Mock.mock('@integer(60, 100)'),
+      width: Mock.mock('@integer(60, 100)'),
+      nativePlace: Mock.mock('@city'),
+    };
+  });
+}
+
+const TREE_DATA = Array.from({ length: 100 }).map(() => {
+  const title = Mock.mock('@name');
+  const value = Mock.mock('@guid');
+
+  return {
+    value,
+    title,
+    id: value,
+    name: title,
+    address: Mock.mock('@region'),
+    height: Mock.mock('@integer(60, 100)'),
+    width: Mock.mock('@integer(60, 100)'),
+    nativePlace: Mock.mock('@city'),
+    children: genChildren(5).map((t) => ({
+      ...t,
+      children: genChildren(5),
+    })),
+  };
+});
+
+const FLAT_TREE_DATA = Util.treeToArray(
+  TREE_DATA,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'id',
+);
+
+const TABLE_TREE_DATA = Array.from({ length: 5 }).map(() => {
+  const title = Mock.mock('@name');
+  const value = Mock.mock('@guid');
+
+  return {
+    value,
+    title,
+    id: value,
+    name: title,
+    address: Mock.mock('@region'),
+    height: Mock.mock('@integer(60, 100)'),
+    width: Mock.mock('@integer(60, 100)'),
+    nativePlace: Mock.mock('@city'),
+    children: genChildren(5).map((t) => ({
+      ...t,
+      children: genChildren(5),
+    })),
+  };
+});
+
+const FLAT_TABLE_TREE_DATA = Util.treeToArray(
+  TABLE_TREE_DATA,
+  {
+    parentIdAttr: 'pId',
+    rootParentId: 0,
+  },
+  'id',
+);
 
 export default {
   initStatic() {
@@ -798,6 +875,158 @@ export default {
 
           resolve(result);
         }, 500);
+      });
+    };
+
+    Dict.handlers.SystemTreeAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve();
+          return;
+        }
+
+        setTimeout(() => {
+          // 正常
+          const flatTreeData = Util.treeToArray(
+            TREE_DATA,
+            { parentIdAttr: 'pId', rootParentId: '' },
+            'value',
+          );
+
+          const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            keyAttr: 'value',
+            titleAttr: 'title',
+            parentIdAttr: 'pId',
+            rootParentId: '',
+          });
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTreeACFlat = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+          return;
+        }
+
+        setTimeout(() => {
+          const result = FLAT_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.treeToArray(
+            Util.completionIncompleteFlatArr(FLAT_TREE_DATA, result, {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            }),
+            {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            },
+          );
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTableTreeAC = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve();
+          return;
+        }
+
+        setTimeout(() => {
+          // 正常
+          const flatTreeData = Util.treeToArray(
+            TABLE_TREE_DATA,
+            { parentIdAttr: 'pId', rootParentId: '' },
+            'value',
+          );
+
+          const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            keyAttr: 'value',
+            titleAttr: 'title',
+            parentIdAttr: 'pId',
+            rootParentId: '',
+          });
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTableTreeACFlat = () => (_kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve([]);
+          return;
+        }
+
+        setTimeout(() => {
+          const result = FLAT_TABLE_TREE_DATA.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.treeToArray(
+            Util.completionIncompleteFlatArr(FLAT_TABLE_TREE_DATA, result, {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            }),
+            {
+              keyAttr: 'id',
+              titleAttr: 'title',
+              parentIdAttr: 'pId',
+              rootParentId: 0,
+            },
+          );
+
+          resolve(targetTreeData);
+        }, 100);
+      });
+    };
+
+    Dict.handlers.SystemTableTreeACPaging = () => (page, limit, _kw) => {
+      return new Promise((resolve) => {
+        if (!_kw) {
+          resolve({
+            totalCount: 0,
+            data: [],
+          });
+          return;
+        }
+
+        setTimeout(() => {
+          const flatTreeData = Util.treeToArray(
+            TREE_DATA,
+            { parentIdAttr: 'pId', rootParentId: '' },
+            'value',
+          );
+
+          const result = flatTreeData.filter((_node) => _node.title.indexOf(_kw) !== -1);
+
+          const targetTreeData = Util.completionIncompleteFlatArr(flatTreeData, result, {
+            keyAttr: 'value',
+            titleAttr: 'title',
+            parentIdAttr: 'pId',
+            rootParentId: '',
+          });
+
+          resolve({
+            totalCount: targetTreeData.length,
+            data: targetTreeData.slice((page - 1) * limit, page * limit),
+          });
+        }, 100);
       });
     };
   },

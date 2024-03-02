@@ -20,10 +20,13 @@ import MentionsTest from './Mentions/Standard';
 import MenuTest from './Menu/Standard';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect';
 import SegmentedTest from './Segmented/SuspenseStandard';
-// import Test from './test';
 import SelectTest from './Select/ArrayEntityValueHOC';
 import StepsTest from './Steps/SuspenseStandard';
 import TableTest from './Table/AutoCompleteCheckboxPagin';
+import AutoCompleteTableTreeMulti from './Table/AutoCompleteTableTreeMulti';
+import AutoCompleteTableTreeMultiPaging from './Table/AutoCompleteTableTreeMultiPaging';
+import AutoCompleteTableTreePaging from './Table/AutoCompleteTableTreePaging';
+import AutoCompleteTableTreeStandard from './Table/AutoCompleteTableTreeStandard';
 import CheckboxTablePagingEntityValueHOC from './Table/CheckboxTablePagingEntityValueHOC';
 import CheckboxTablePagingSelectEntityValueHOC from './Table/CheckboxTablePagingSelectEntityValueHOC';
 import RadioTablePagingEntityValueHOC from './Table/RadioTablePagingEntityValueHOC';
@@ -36,6 +39,13 @@ import TreeTest from './Tree/TreeAsyncFlatCheckedShowParent';
 import TreeAsyncFlatEntityValueHOC from './Tree/TreeAsyncFlatEntityValueHOC';
 import TreeAsyncFlatMulitEntityValueHOC from './Tree/TreeAsyncFlatMulitEntityValueHOC';
 import TreeAsyncMulitEntityValueHOC from './Tree/TreeAsyncMulitEntityValueHOC';
+import TreeAutoCompleteLeaf from './Tree/TreeAutoCompleteLeaf.jsx';
+import TreeAutoCompleteMulti from './Tree/TreeAutoCompleteMulti.jsx';
+import TreeAutoCompleteMultiLeaf from './Tree/TreeAutoCompleteMultiLeaf';
+import TreeAutoCompleteShowAll from './Tree/TreeAutoCompleteShowAll';
+import TreeAutoCompleteShowChild from './Tree/TreeAutoCompleteShowChild';
+import TreeAutoCompleteShowParent from './Tree/TreeAutoCompleteShowParent';
+import TreeAutoCompleteStandard from './Tree/TreeAutoCompleteStandard';
 import TreeEntityValueHOC from './Tree/TreeEntityValueHOC';
 import TreeFlatCheckedShowAllEntityValueHOC from './Tree/TreeFlatCheckedShowAllEntityValueHOC';
 import TreeFlatEntityValueHOC from './Tree/TreeFlatEntityValueHOC';
@@ -49,5 +59,5 @@ import '../src/index.less';
 DictConfig();
 
 e2e.PC({
-  children: <CascaderAsyncFlatEntityValueHOC />,
+  children: <AutoCompleteTableTreeMultiPaging />,
 });

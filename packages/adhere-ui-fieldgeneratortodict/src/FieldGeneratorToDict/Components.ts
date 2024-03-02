@@ -223,6 +223,12 @@ const Components = {
     Paging: 'TableACPaging',
     MultiPaging: 'TableACMultiPaging',
   },
+  TableTreeAC: {
+    Standard: 'TableTreeACStandard',
+    Multi: 'TableTreeACMulti',
+    Paging: 'TableTreeACPaging',
+    MultiPaging: 'TableTreeACMultiPaging',
+  },
   /* ------ Table end ------ */
 
   /* ------ Transfer start ------ */
@@ -289,6 +295,15 @@ const Components = {
     FlatCheckedShowAll: 'TreeAsyncFlatCheckedShowAll',
     FlatCheckedShowChild: 'TreeAsyncFlatCheckedShowChild',
     FlatCheckedShowParent: 'TreeAsyncFlatCheckedShowParent',
+  },
+  TreeAC: {
+    Standard: 'TreeACStandard',
+    Multi: 'TreeACMulti',
+    Leaf: 'TreeACLeaf',
+    MultiLeaf: 'TreeACMultiLeaf',
+    // ShowAll: 'TreeACShowAll',
+    // ShowChild: 'TreeACShowChild',
+    // ShowParent: 'TreeACShowParent',
   },
   /* ------ TreeSelect end ------ */
 

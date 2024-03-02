@@ -5,6 +5,8 @@ import { Table } from '@baifendian/adhere-ui-anthoc';
 import type {
   AutoCompleteTablePagingSelectProps,
   AutoCompleteTableSelectProps,
+  AutoCompleteTreeTablePagingSelectProps,
+  AutoCompleteTreeTableSelectProps,
   TablePagingProps,
   TablePagingSelectProps,
   TableSelectProps,
@@ -17,6 +19,7 @@ import {
   useDict,
   useDynamicDict,
   usePaging,
+  useTreeAutoCompleteDict,
 } from '../Hooks';
 import { setItem } from '../ItemFactory';
 import Suspense from '../Suspense';
@@ -405,6 +408,105 @@ setItem<AutoCompleteTablePagingSelectProps, AutoCompleteTablePagingSelectProps['
 
       return (
         <Table.AutoCompleteTablePagingSelect {...props} pagingProps={pagingProps} mode="multiple" />
+      );
+    },
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * TableTreeACStandard
+ */
+setItem<AutoCompleteTreeTableSelectProps, AutoCompleteTreeTableSelectProps['treeData']>(
+  'TableTreeAC',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const { treeData, loadData } = useTreeAutoCompleteDict<
+        AutoCompleteTreeTableSelectProps['treeData']
+      >({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Table.AutoCompleteTreeTableSelect {...props} treeData={treeData} loadData={loadData} />
+      );
+    },
+);
+
+/**
+ * TableTreeACMulti
+ */
+setItem<AutoCompleteTreeTableSelectProps, AutoCompleteTreeTableSelectProps['treeData']>(
+  'TableTreeAC',
+  'Multi',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const { treeData, loadData } = useTreeAutoCompleteDict<
+        AutoCompleteTreeTableSelectProps['treeData']
+      >({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <Table.AutoCompleteTreeTableSelect
+          {...props}
+          multiple
+          treeData={treeData}
+          loadData={loadData}
+        />
+      );
+    },
+);
+
+/**
+ * TableTreeACPaging
+ */
+setItem<AutoCompleteTreeTablePagingSelectProps, AutoCompleteTreeTablePagingSelectProps['treeData']>(
+  'TableTreeAC',
+  'Paging',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const loadData = useAutoCompletePaging<AutoCompleteTreeTablePagingSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return <Table.AutoCompleteTreeTablePagingSelect {...props} pagingProps={pagingProps} />;
+    },
+);
+
+/**
+ * TableTreeACMultiPaging
+ */
+setItem<AutoCompleteTreeTablePagingSelectProps, AutoCompleteTreeTablePagingSelectProps['treeData']>(
+  'TableTreeAC',
+  'MultiPaging',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const loadData = useAutoCompletePaging<AutoCompleteTreeTablePagingSelectProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      const pagingProps = {
+        ...(props.pagingProps ?? {}),
+        loadData,
+      };
+
+      return (
+        <Table.AutoCompleteTreeTablePagingSelect {...props} pagingProps={pagingProps} multiple />
       );
     },
 );

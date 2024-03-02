@@ -1,6 +1,6 @@
 import type { PagingWrapperProps } from '@baifendian/adhere-ui-anthoc/es/types';
 import { AsyncCascaderProps, AsyncTreeSelectProps } from '@baifendian/adhere-ui-anthoc/src/types';
-import type { AutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
+import type { AutoCompleteProps, TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 import type { UseDictParams } from '../types';
 /**
  * useDict
@@ -28,6 +28,16 @@ export declare function useDynamicDict<D>({ dictName, cascadeParams, onDataSourc
 export declare function useAutoCompleteDict<D>({ dictName, cascadeParams, onDataSourceChange, }: UseDictParams<D>): {
     options: any[];
     loadData: AutoCompleteProps['loadData'];
+};
+/**
+ * useTreeAutoCompleteDict
+ * @param dictName
+ * @param cascadeParams
+ * @param onDataSourceChange
+ */
+export declare function useTreeAutoCompleteDict<D>({ dictName, cascadeParams, onDataSourceChange, }: UseDictParams<D>): {
+    treeData: TreeAutoCompleteProps['treeData'];
+    loadData: TreeAutoCompleteProps['loadData'];
 };
 /**
  * usePaging

@@ -192,6 +192,12 @@ declare const _default: {
             readonly Paging: "TableACPaging";
             readonly MultiPaging: "TableACMultiPaging";
         };
+        readonly TableTreeAC: {
+            readonly Standard: "TableTreeACStandard";
+            readonly Multi: "TableTreeACMulti";
+            readonly Paging: "TableTreeACPaging";
+            readonly MultiPaging: "TableTreeACMultiPaging";
+        };
         readonly Transfer: {
             readonly Standard: "TransferStandard";
             readonly SuspenseStandard: "TransferSuspenseStandard";
@@ -252,6 +258,12 @@ declare const _default: {
             readonly FlatCheckedShowAll: "TreeAsyncFlatCheckedShowAll";
             readonly FlatCheckedShowChild: "TreeAsyncFlatCheckedShowChild";
             readonly FlatCheckedShowParent: "TreeAsyncFlatCheckedShowParent";
+        };
+        readonly TreeAC: {
+            readonly Standard: "TreeACStandard";
+            readonly Multi: "TreeACMulti";
+            readonly Leaf: "TreeACLeaf";
+            readonly MultiLeaf: "TreeACMultiLeaf";
         };
         readonly Cascader: {
             readonly Standard: "CascaderStandard";

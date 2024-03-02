@@ -8,8 +8,9 @@ import type {
   AsyncTreeMultiSelectProps,
   AsyncTreeSelectProps,
 } from '@baifendian/adhere-ui-anthoc/es/types';
+import { TreeAutoCompleteProps } from '@baifendian/adhere-ui-auto-complete/es/types';
 
-import { useAsyncTree, useDict, useDynamicDict } from '../Hooks';
+import { useAsyncTree, useDict, useDynamicDict, useTreeAutoCompleteDict } from '../Hooks';
 import { setItem } from '../ItemFactory';
 
 /**
@@ -757,3 +758,142 @@ setItem<AsyncTreeSelectProps, AsyncTreeSelectProps['treeData']>(
     );
   },
 );
+
+setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+  'TreeAC',
+  'Standard',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <TreeSelect.AutoCompleteTreeSelect {...props} treeData={treeData} loadData={loadData} />
+      );
+    },
+);
+
+setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+  'TreeAC',
+  'Multi',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <TreeSelect.AutoCompleteTreeMultiSelect
+          {...props}
+          treeData={treeData}
+          loadData={loadData}
+        />
+      );
+    },
+);
+
+setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+  'TreeAC',
+  'Leaf',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <TreeSelect.AutoCompleteTreeLeafSelect {...props} treeData={treeData} loadData={loadData} />
+      );
+    },
+);
+
+setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+  'TreeAC',
+  'MultiLeaf',
+  (dictName) =>
+    ({ cascadeParams, onDataSourceChange, ...props }) => {
+      const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+        dictName,
+        cascadeParams,
+        onDataSourceChange,
+      });
+
+      return (
+        <TreeSelect.AutoCompleteTreeMultiLeafSelect
+          {...props}
+          treeData={treeData}
+          loadData={loadData}
+        />
+      );
+    },
+);
+
+// setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+//   'TreeAC',
+//   'ShowAll',
+//   (dictName) =>
+//     ({ cascadeParams, onDataSourceChange, ...props }) => {
+//       const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+//         dictName,
+//         cascadeParams,
+//         onDataSourceChange,
+//       });
+//
+//       return (
+//         <TreeSelect.AutoCompleteTreeCheckedShowAllSelect
+//           {...props}
+//           treeData={treeData}
+//           loadData={loadData}
+//         />
+//       );
+//     },
+// );
+//
+// setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+//   'TreeAC',
+//   'ShowChild',
+//   (dictName) =>
+//     ({ cascadeParams, onDataSourceChange, ...props }) => {
+//       const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+//         dictName,
+//         cascadeParams,
+//         onDataSourceChange,
+//       });
+//
+//       return (
+//         <TreeSelect.AutoCompleteTreeCheckedShowChildSelect
+//           {...props}
+//           treeData={treeData}
+//           loadData={loadData}
+//         />
+//       );
+//     },
+// );
+//
+// setItem<TreeAutoCompleteProps, TreeAutoCompleteProps['treeData']>(
+//   'TreeAC',
+//   'ShowParent',
+//   (dictName) =>
+//     ({ cascadeParams, onDataSourceChange, ...props }) => {
+//       const { treeData, loadData } = useTreeAutoCompleteDict<TreeAutoCompleteProps['treeData']>({
+//         dictName,
+//         cascadeParams,
+//         onDataSourceChange,
+//       });
+//
+//       return (
+//         <TreeSelect.AutoCompleteTreeCheckedShowParentSelect
+//           {...props}
+//           treeData={treeData}
+//           loadData={loadData}
+//         />
+//       );
+//     },
+// );
