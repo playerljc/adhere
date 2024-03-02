@@ -16,6 +16,29 @@ const localKeys = new Map();
 
 let mainLocales = {};
 
+export class IntlResult {
+  intl: string | undefined = '';
+
+  constructor(intl?: string) {
+    this.intl = intl;
+  }
+
+  /**
+   * d - 生成描述
+   * @param description
+   */
+  d(description?: string) {
+    return this.toString();
+  }
+
+  /**
+   * toSting - 转换为字符串
+   */
+  toString() {
+    return this.intl ?? '';
+  }
+}
+
 /**
  * initIntlMap - 初始化以中文为key,intl.get()为值的Map
  * @param zh_CN
@@ -185,18 +208,18 @@ export default {
    * @param key
    * @param variables
    */
-  v(key: string, variables?: object | null): string {
-    if (!isInit) return '';
+  v(key: string, variables?: object | null): IntlResult {
+    if (!isInit) return new IntlResult('');
 
     // p:local1
     // intlMap.姓名 = '姓名'
     // intlKey.姓名 = local1
 
     if (variables) {
-      return intl.get(intlKey[key], variables);
+      return new IntlResult(intl.get(intlKey[key], variables));
     }
 
-    return intlMap[key];
+    return new IntlResult(intlMap[key]);
   },
 
   /**
@@ -204,14 +227,14 @@ export default {
    * @param key
    * @param options
    */
-  vHtml(key: string, options?: object | null) {
-    if (!isInit) return '';
+  vHtml(key: string, options?: object | null): IntlResult {
+    if (!isInit) return new IntlResult('');
 
     if (options) {
-      return intl.getHTML(intlKey[key], options);
+      return new IntlResult(intl.getHTML(intlKey[key], options));
     }
 
-    return intlMap[key];
+    return new IntlResult(intlMap[key]);
   },
 
   /**
@@ -219,8 +242,8 @@ export default {
    * @param key
    * @param variables
    */
-  get(key: string, variables?: object | null): string {
-    return intl.get(key, variables);
+  get(key: string, variables?: object | null): IntlResult {
+    return new IntlResult(intl.get(key, variables));
   },
 
   /**
@@ -228,8 +251,26 @@ export default {
    * @param key
    * @param options
    */
-  getHTML(key: string, options?: object | null): string {
-    return intl.getHTML(key, options);
+  getHTML(key: string, options?: object | null): IntlResult {
+    return new IntlResult(intl.getHTML(key, options));
+  },
+
+  /**
+   * formatMessage
+   * @param options
+   * @param variables
+   */
+  formatMessage(options, variables?: object | null): IntlResult {
+    return new IntlResult(intl.formatMessage(options, variables));
+  },
+
+  /**
+   * formatHTMLMessage
+   * @param options
+   * @param variables
+   */
+  formatHTMLMessage(options, variables?: object | null): IntlResult {
+    return new IntlResult(intl.formatHTMLMessage(options, variables));
   },
 
   /**
@@ -240,27 +281,9 @@ export default {
   },
 
   /**
-   * formatMessage
-   * @param options
-   * @param variables
-   */
-  formatMessage(options, variables?: object | null) {
-    return intl.formatMessage(options, variables);
-  },
-
-  /**
-   * formatHTMLMessage
-   * @param options
-   * @param variables
-   */
-  formatHTMLMessage(options, variables?: object | null) {
-    return intl.formatHTMLMessage(options, variables);
-  },
-  /**
    * load - Load more locales after init
    * @param locales
    */
-
   load(locales: { [key: string]: any }) {
     intl.load(locales);
   },
