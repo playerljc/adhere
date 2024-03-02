@@ -142,8 +142,8 @@ export default () => {
       // defaultTreeData={flatDefaultTreeData}
       // defaultTreeData={defaultTreeData}
       treeCheckable
-      showCheckedStrategy={TreeSelect.SHOW_ALL}
-      // multiple
+      // showCheckedStrategy={TreeSelect.SHOW_PARENT}
+      multiple
       treeDataSimpleMode
       loadData={(_kw) => {
         return new Promise((resolve) => {

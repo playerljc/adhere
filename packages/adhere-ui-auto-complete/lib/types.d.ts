@@ -24,10 +24,6 @@ export type AutoCompleteProps = IAutoComplete & Omit<SelectProps, 'children'> & 
     }) => ReactElement;
 };
 export type TreeAutoCompleteProps = IAutoComplete & Omit<TreeSelectProps, 'children'> & {
-    defaultTreeData?: {
-        key: any;
-        value: TreeSelectProps['treeData'];
-    };
     children?: (arg: {
         originNode?: ReactElement;
         value?: TreeSelectProps['value'];

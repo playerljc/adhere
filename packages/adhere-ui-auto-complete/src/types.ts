@@ -31,10 +31,10 @@ export type AutoCompleteProps = IAutoComplete &
 
 export type TreeAutoCompleteProps = IAutoComplete &
   Omit<TreeSelectProps, 'children'> & {
-    defaultTreeData?: {
-      key: any;
-      value: TreeSelectProps['treeData'];
-    };
+    // defaultTreeData?: {
+    //   key: any;
+    //   value: TreeSelectProps['treeData'];
+    // };
     children?: (arg: {
       originNode?: ReactElement;
       value?: TreeSelectProps['value'];
