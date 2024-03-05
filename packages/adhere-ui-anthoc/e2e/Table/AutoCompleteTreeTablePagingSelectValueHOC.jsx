@@ -1,8 +1,11 @@
+import { Button } from 'antd';
 import Mock from 'mockjs';
 import React, { useState } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
+import Form from '../../src/form';
+import { PagingEntityValueHOC } from '../../src/index';
 import Table from '../../src/table';
 
 function genChildren(length) {
@@ -55,6 +58,8 @@ const FLAT_TREE_DATA = Util.treeToArray(
 export default () => {
   const [value, setValue] = useState([]);
 
+  const [form] = Form.useForm();
+
   function loadData(page, limit, _kw) {
     console.log(page, limit, _kw);
     return new Promise((resolve) => {
@@ -98,47 +103,74 @@ export default () => {
   }
 
   return (
-    <Table.AutoCompleteTreeTablePagingSelect
-      placeholder="AutoCompleteTreeTablePagingSelect"
-      style={{ width: 800 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
-      multiple
-      value={value}
-      onChange={setValue}
-      pagingProps={{
-        loadData,
-        defaultLimit: 5,
+    <Form
+      form={form}
+      onFinish={(values) => {
+        debugger;
       }}
-      tablePagingProps={{
-        rowKey: 'id',
-        columns: [
+    >
+      <Form.Item
+        name="sex"
+        label="性别"
+        rules={[
           {
-            title: '名称',
-            key: 'name',
-            dataIndex: 'name',
+            required: true,
+            message: '请选择性别',
           },
-          {
-            title: '地址',
-            key: 'address',
-            dataIndex: 'address',
-          },
-          {
-            title: '籍贯',
-            key: 'nativePlace',
-            dataIndex: 'nativePlace',
-          },
-          {
-            title: '身高',
-            key: 'height',
-            dataIndex: 'height',
-          },
-          {
-            title: '体重',
-            key: 'width',
-            dataIndex: 'width',
-          },
-        ],
-      }}
-    />
+        ]}
+        // initialValue={[]}
+      >
+        <PagingEntityValueHOC>
+          <Table.AutoCompleteTreeTablePagingSelect
+            placeholder="AutoCompleteTreeTablePagingSelect"
+            style={{ width: 800 }}
+            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            multiple
+            value={value}
+            onChange={setValue}
+            pagingProps={{
+              loadData,
+              defaultLimit: 5,
+            }}
+            tablePagingProps={{
+              rowKey: 'id',
+              columns: [
+                {
+                  title: '名称',
+                  key: 'name',
+                  dataIndex: 'name',
+                },
+                {
+                  title: '地址',
+                  key: 'address',
+                  dataIndex: 'address',
+                },
+                {
+                  title: '籍贯',
+                  key: 'nativePlace',
+                  dataIndex: 'nativePlace',
+                },
+                {
+                  title: '身高',
+                  key: 'height',
+                  dataIndex: 'height',
+                },
+                {
+                  title: '体重',
+                  key: 'width',
+                  dataIndex: 'width',
+                },
+              ],
+            }}
+          />
+        </PagingEntityValueHOC>
+      </Form.Item>
+
+      <Form.Item>
+        <Button htmlType="submit" block type="primary">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
