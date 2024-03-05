@@ -6,7 +6,9 @@ import TableTest from './Table';
 import TablePaginMultiple from './TablePaginMultiple';
 import TablePaginRadio from './TablePaginRadio';
 import Test from './Test.jsx';
+import TreeTest from './TreeTest';
 
 e2e.PC({
-  children: <TableTest />,
+  // children: <Test />,
+  children: <TreeTest />,
 });
