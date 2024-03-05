@@ -1,25 +1,16 @@
 import { Button, Form } from 'antd';
-// import Mock from 'mockjs';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
 
-const { AsyncTreeEntityValueHOC } = FieldGeneratorToDict;
+const { TreeEntityValueHOC } = FieldGeneratorToDict;
 
 export default () => {
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    // form.setFieldValue('sex', [
-    //   {
-    //     label: 'A',
-    //     value: 'A',
-    //   },
-    //   'B',
-    // ]);
-  }, []);
+  const [value, setValue] = useState(undefined);
 
-  const DictComponentName = `SystemDepartment${FieldGeneratorToDict.ComponentNames.CascaderAsync.FlatStandard}`;
+  const DictComponentName = `SystemTreeACFlat${FieldGeneratorToDict.ComponentNames.TreeAC.Multi}`;
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
   return (
@@ -40,9 +31,16 @@ export default () => {
         ]}
         // initialValue={[]}
       >
-        <AsyncTreeEntityValueHOC>
-          <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />
-        </AsyncTreeEntityValueHOC>
+        <TreeEntityValueHOC>
+          <DictComponent
+            placeholder={DictComponentName}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            style={{ width: 300 }}
+            treeDataSimpleMode
+            value={value}
+            onChange={setValue}
+          />
+        </TreeEntityValueHOC>
       </Form.Item>
 
       <Form.Item>

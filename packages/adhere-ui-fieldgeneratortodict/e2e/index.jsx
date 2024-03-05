@@ -25,6 +25,8 @@ import StepsTest from './Steps/SuspenseStandard';
 import TableTest from './Table/AutoCompleteCheckboxPagin';
 import AutoCompleteTableTreeMulti from './Table/AutoCompleteTableTreeMulti';
 import AutoCompleteTableTreeMultiPaging from './Table/AutoCompleteTableTreeMultiPaging';
+import AutoCompleteTableTreeMultiPagingValueHOC from './Table/AutoCompleteTableTreeMultiPagingValueHOC';
+import AutoCompleteTableTreeMultiValueHOC from './Table/AutoCompleteTableTreeMultiValueHOC';
 import AutoCompleteTableTreePaging from './Table/AutoCompleteTableTreePaging';
 import AutoCompleteTableTreeStandard from './Table/AutoCompleteTableTreeStandard';
 import CheckboxTablePagingEntityValueHOC from './Table/CheckboxTablePagingEntityValueHOC';
@@ -42,6 +44,7 @@ import TreeAsyncMulitEntityValueHOC from './Tree/TreeAsyncMulitEntityValueHOC';
 import TreeAutoCompleteLeaf from './Tree/TreeAutoCompleteLeaf.jsx';
 import TreeAutoCompleteMulti from './Tree/TreeAutoCompleteMulti.jsx';
 import TreeAutoCompleteMultiLeaf from './Tree/TreeAutoCompleteMultiLeaf';
+import TreeAutoCompleteMultiValueHOC from './Tree/TreeAutoCompleteMultiValueHOC';
 import TreeAutoCompleteShowAll from './Tree/TreeAutoCompleteShowAll';
 import TreeAutoCompleteShowChild from './Tree/TreeAutoCompleteShowChild';
 import TreeAutoCompleteShowParent from './Tree/TreeAutoCompleteShowParent';
@@ -59,5 +62,5 @@ import '../src/index.less';
 DictConfig();
 
 e2e.PC({
-  children: <AutoCompleteTableTreeMultiPaging />,
+  children: <AutoCompleteTableTreeMultiPagingValueHOC />,
 });

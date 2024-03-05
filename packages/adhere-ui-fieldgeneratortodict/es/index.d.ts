@@ -380,7 +380,9 @@ declare const _default: {
     ArrayEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").ArrayEntityValueHOCProps & {
         getOptionsByDataSource?: ((dataSource?: any) => any) | undefined;
     }>;
-    TreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").TreeEntityValueHOCProps>;
+    TreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").TreeEntityValueHOCProps & {
+        getTreeDataByDataSource?: ((dataSource?: any) => any) | undefined;
+    }>;
     AsyncTreeEntityValueHOC: import("react").NamedExoticComponent<import("@baifendian/adhere-ui-anthoc/es/types").AsyncTreeEntityValueHOCProps>;
 };
 export default _default;

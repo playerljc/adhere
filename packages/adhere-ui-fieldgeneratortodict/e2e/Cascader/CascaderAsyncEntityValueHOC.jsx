@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 
 import FieldGeneratorToDict from '../../src/index';
 
-const { TreeEntityValueHOC } = FieldGeneratorToDict;
+const { AsyncTreeEntityValueHOC } = FieldGeneratorToDict;
 
 export default () => {
   const [form] = Form.useForm();
@@ -40,9 +40,9 @@ export default () => {
         ]}
         // initialValue={[]}
       >
-        <TreeEntityValueHOC>
+        <AsyncTreeEntityValueHOC>
           <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />
-        </TreeEntityValueHOC>
+        </AsyncTreeEntityValueHOC>
       </Form.Item>
 
       <Form.Item>
