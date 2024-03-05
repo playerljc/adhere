@@ -1,17 +1,4 @@
 /// <reference types="react-intl-universal" />
-export declare class IntlResult {
-    intl: string | undefined;
-    constructor(intl?: string);
-    /**
-     * d - 生成描述
-     * @param description
-     */
-    d(description?: string): string;
-    /**
-     * toSting - 转换为字符串
-     */
-    toString(): string;
-}
 /**
  * getLocal
  * @description 生成k,v的对象
@@ -50,37 +37,37 @@ declare const _default: {
      * @param key
      * @param variables
      */
-    v(key: string, variables?: object | null): IntlResult;
+    v(key: string, variables?: object | null): string;
     /**
      * v - 以中文获取国际化后的html
      * @param key
      * @param options
      */
-    vHtml(key: string, options?: object | null): IntlResult;
+    vHtml(key: string, options?: object | null): string;
     /**
      * get
      * @param key
      * @param variables
      */
-    get(key: string, variables?: object | null): IntlResult;
+    get(key: string, variables?: object | null): string;
     /**
      * getHTML
      * @param key
      * @param options
      */
-    getHTML(key: string, options?: object | null): IntlResult;
+    getHTML(key: string, options?: object | null): string;
     /**
      * formatMessage
      * @param options
      * @param variables
      */
-    formatMessage(options: any, variables?: object | null): IntlResult;
+    formatMessage(options: any, variables?: object | null): string;
     /**
      * formatHTMLMessage
      * @param options
      * @param variables
      */
-    formatHTMLMessage(options: any, variables?: object | null): IntlResult;
+    formatHTMLMessage(options: any, variables?: object | null): string;
     /**
      * getInitOptions
      */
