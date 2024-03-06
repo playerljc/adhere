@@ -215,10 +215,12 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     useUpdateEffect(() => {
       const pathsKeys = Object.keys(paths);
 
+      const targetValue = treeSelectProps.value ?? treeSelectProps.defaultValue;
+
       // 不在paths里的values，才需要进行路径设置
-      const values = (
-        Array.isArray(treeSelectProps.value) ? treeSelectProps.value : [treeSelectProps.value]
-      ).filter((_value) => !pathsKeys.includes(_value));
+      const values = (Array.isArray(targetValue) ? targetValue : [targetValue]).filter(
+        (_value) => !pathsKeys.includes(_value),
+      );
 
       if (values.length) {
         setPaths({
