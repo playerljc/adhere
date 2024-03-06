@@ -39,22 +39,6 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     // 是否是简单格式
     const isTreeDataSimpleMode: boolean = !!treeSelectProps.treeDataSimpleMode;
 
-    // 主键属性
-    const keyAttr: string =
-      isTreeDataSimpleMode && typeof treeSelectProps.treeDataSimpleMode === 'object'
-        ? (treeSelectProps.treeDataSimpleMode?.id as string) ?? 'value'
-        : 'value';
-    // parentId属性
-    const parentIdAttr: string =
-      isTreeDataSimpleMode && typeof treeSelectProps.treeDataSimpleMode === 'object'
-        ? (treeSelectProps.treeDataSimpleMode?.pId as string) ?? 'pid'
-        : 'pid';
-    // root的parentId的值
-    const rootParentId: string | number =
-      isTreeDataSimpleMode && typeof treeSelectProps.treeDataSimpleMode === 'object'
-        ? (treeSelectProps.treeDataSimpleMode?.rootPId as string | number) ?? -1
-        : -1;
-
     const onSelectChangeStartTime = useRef<number>(0);
 
     // 已选择数据路径
@@ -116,37 +100,31 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
      * @returns
      */
     function getPathsByValue(_value) {
-      const pathsResult = {};
-
       function getAncestorConcatCurrent(val) {
-        const flat = isTreeDataSimpleMode
-          ? targetTreeData ?? []
-          : Util.treeToArray(
-              targetTreeData ?? [],
-              {
-                parentIdAttr,
-                rootParentId,
-              },
-              keyAttr,
-            );
+        const currentData = allFlatTreeData.find((item) => item[keyAttr] === val);
 
-        const currentData = flat.find((item) => item[keyAttr] === val);
-
-        return Util.getAncestor(flat, currentData, {
+        return Util.getAncestor(allFlatTreeData, currentData, {
           keyAttr,
           parentIdAttr,
           rootParentId,
         }).concat([currentData]);
       }
 
+      let pathsResult = {};
+
       if (Array.isArray(_value)) {
-        for (let i = 0; i < _value.length; i++) {
-          if (paths[_value[i]]) {
-            pathsResult[_value[i]] = paths[_value[i]];
-          } else {
-            pathsResult[_value[i]] = getAncestorConcatCurrent(_value[i]);
+        pathsResult = _value.reduce((_pathsResult, _key) => {
+          if (paths[_key]) {
+            return {
+              ..._pathsResult,
+              [_key]: paths[_key],
+            };
           }
-        }
+          return {
+            ..._pathsResult,
+            [_key]: getAncestorConcatCurrent(_key),
+          };
+        }, {});
       } else {
         pathsResult[_value] = getAncestorConcatCurrent(_value);
       }
@@ -165,8 +143,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       if (!_value || _value.length === 0) {
         setPaths({});
         // @ts-ignore
-        treeSelectProps?.onChange?.(_value, _label, _extra);
-        return;
+        return treeSelectProps?.onChange?.(_value, _label, _extra);
       }
 
       setPaths(getPathsByValue(_value));
@@ -209,9 +186,36 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       [debounceTimeout],
     );
 
+    // 主键属性
+    const keyAttr = useMemo(
+      () =>
+        isTreeDataSimpleMode && typeof treeSelectProps.treeDataSimpleMode === 'object'
+          ? (treeSelectProps.treeDataSimpleMode?.id as string) ?? 'value'
+          : 'value',
+      [isTreeDataSimpleMode, treeSelectProps.treeDataSimpleMode],
+    );
+
+    // parentId属性
+    const parentIdAttr = useMemo(
+      () =>
+        isTreeDataSimpleMode && typeof treeSelectProps.treeDataSimpleMode === 'object'
+          ? (treeSelectProps.treeDataSimpleMode?.pId as string) ?? 'pid'
+          : 'pid',
+      [isTreeDataSimpleMode, treeSelectProps.treeDataSimpleMode],
+    );
+
+    // root的parentId的值
+    const rootParentId = useMemo(
+      () =>
+        isTreeDataSimpleMode && typeof treeSelectProps.treeDataSimpleMode === 'object'
+          ? (treeSelectProps.treeDataSimpleMode?.rootPId as string | number) ?? -1
+          : -1,
+      [isTreeDataSimpleMode, treeSelectProps.treeDataSimpleMode],
+    );
+
     // 总数据
     const allFlatTreeData = useMemo(() => {
-      let flat = isTreeDataSimpleMode
+      const searchFlatData = isTreeDataSimpleMode
         ? treeData ?? []
         : Util.treeToArray(
             (treeData as any[]) ?? [],
@@ -222,26 +226,21 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
             keyAttr,
           );
 
-      for (let key in paths) {
-        if (paths[key]) {
-          flat = flat.concat(paths[key]);
-        }
-      }
+      const pathData = (Object.keys(paths) || [])?.reduce((_pathData: any[], _key) => {
+        return [...(_pathData || []), ...(paths[_key] || [])];
+      }, []);
 
-      return flat;
-    }, [treeData, paths]);
+      return [...searchFlatData, ...pathData];
+    }, [treeData, paths, isTreeDataSimpleMode, keyAttr, rootParentId, parentIdAttr]);
 
     // 处理后数据
     const targetTreeData = useMemo(() => {
       let result: any[] = [];
 
       if (allFlatTreeData.length) {
-        for (let i = 0; i < allFlatTreeData.length; i++) {
-          let index = result.findIndex((val) => val?.[keyAttr] === allFlatTreeData?.[i]?.[keyAttr]);
-          if (index === -1) {
-            result.push(allFlatTreeData?.[i]);
-          }
-        }
+        result = Array.from(new Set(allFlatTreeData?.map((item) => JSON.stringify(item))))?.map(
+          (item) => JSON.parse(item),
+        );
       }
 
       if (result.length && !isTreeDataSimpleMode) {
@@ -258,7 +257,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       }
 
       return result;
-    }, [allFlatTreeData]);
+    }, [allFlatTreeData, isTreeDataSimpleMode, keyAttr, rootParentId, parentIdAttr]);
 
     // 根据默认值设置路径
     useEffect(() => {
@@ -270,10 +269,8 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
       if (isMultiple) {
         currentValue = Array.isArray(treeSelectValue) ? treeSelectValue : [treeSelectValue];
-        if (currentValue.every((val) => Object.keys(paths).includes(val))) return;
       } else {
         currentValue = Array.isArray(treeSelectValue) ? treeSelectValue[0] : treeSelectValue;
-        if (Object.keys(paths).includes(currentValue)) return;
       }
       setPaths(getPathsByValue(currentValue));
     }, [treeSelectProps.defaultValue, treeSelectProps.value]);

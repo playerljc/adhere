@@ -160,11 +160,11 @@ export default () => {
         onChange={(_value) => {
           setValue(_value);
         }}
-        // treeDataSimpleMode={{
-        //   id: 'value',
-        //   pId: 'pid',
-        //   rootPId: -1,
-        // }}
+        treeDataSimpleMode={{
+          id: 'value',
+          pId: 'pid',
+          rootPId: -1,
+        }}
         treeCheckable
         showCheckedStrategy={TreeSelect.SHOW_ALL}
       />
