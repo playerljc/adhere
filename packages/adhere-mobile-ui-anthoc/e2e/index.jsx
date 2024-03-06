@@ -6,10 +6,13 @@ import CalendarDialog from './CalendarDialog/CalendarDialog';
 import CalendarModal from './CalendarModal/CalendarModal';
 import CalendarPopup from './CalendarPopup/CalendarPopup';
 import AutoCompleteCheckList from './CheckList/AutoCompleteCheckList';
+import AutoCompleteCheckListValueHOC from './CheckList/AutoCompleteCheckListValueHOC';
 import AutoCompleteCheckboxCheckList from './CheckList/AutoCompleteCheckboxCheckList';
 import AutoCompletePagingCheckList from './CheckList/AutoCompletePagingCheckList';
+import AutoCompletePagingCheckListValueHOC from './CheckList/AutoCompletePagingCheckListValueHOC';
 import AutoCompletePagingCheckboxCheckList from './CheckList/AutoCompletePagingCheckboxCheckList';
 import CheckAllCheckList from './CheckList/CheckAllCheckList';
+import CheckAllCheckListValueHOC from './CheckList/CheckAllCheckListValueHOC';
 import CheckList from './CheckList/CheckList';
 import CheckboxCheckAllCheckList from './CheckList/CheckboxCheckAllCheckList';
 import CheckboxCheckList from './CheckList/CheckboxCheckList';
@@ -20,6 +23,7 @@ import FilterCheckboxCheckList from './CheckList/FilterCheckboxCheckList';
 import FilterPagingCheckList from './CheckList/FilterPagingCheckList';
 import FilterPagingCheckboxCheckList from './CheckList/FilterPagingCheckboxCheckList';
 import PagingCheckList from './CheckList/PagingCheckList';
+import PagingCheckListValueHOC from './CheckList/PagingCheckListValueHOC';
 import PagingCheckboxCheckList from './CheckList/PagingCheckboxCheckList';
 import AutoCompleteCheckbox from './Checkbox/AutoCompleteCheckbox';
 import AutoCompletePagingCheckbox from './Checkbox/AutoCompletePagingCheckbox';
@@ -57,5 +61,5 @@ import TimeModal from './TimeModal/TimeModal';
 import TimePopup from './TimePopup/TimePopup';
 
 e2e.Mobile({
-  children: <CalendarPopup />,
+  children: <AutoCompletePagingCheckListValueHOC />,
 });
