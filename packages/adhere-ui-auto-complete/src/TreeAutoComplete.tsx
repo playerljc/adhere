@@ -1,4 +1,4 @@
-// import { useUpdateEffect } from 'ahooks';
+import { useUpdateEffect } from 'ahooks';
 import { TreeSelect } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
@@ -27,19 +27,12 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
     debounceTimeout,
     loadData,
     treeData,
-    // defaultTreeData,
     emptyContent,
     children,
     treeDataSimpleMode,
     ...treeSelectProps
   }) => {
-    const [paths, setPaths] = useState<object>(
-      /*defaultTreeData
-        ? {
-            [defaultTreeData.key]: defaultTreeData.value,
-          }
-        :*/ {},
-    );
+    const [paths, setPaths] = useState<object>({});
 
     const onSelectChangeStartTime = useRef<number>(0);
 
@@ -59,6 +52,18 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       loadData,
     });
 
+    function getPathsByValues(_values) {
+      const _targetValues = Array.isArray(_values) ? _values : [_values];
+
+      return _targetValues.reduce((result, _id) => {
+        const node = targetFlatTreeData.find((t) => t.value === _id);
+
+        result[_id] = [...Util.getAncestor(targetFlatTreeData, node, treeTransformConfig), node];
+
+        return result;
+      }, {});
+    }
+
     /**
      * onSelectChange
      * @description 从下方组件触发的
@@ -73,17 +78,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         return;
       }
 
-      setPaths(() => {
-        const _targetValues = Array.isArray(_values) ? _values : [_values];
-
-        return _targetValues.reduce((result, _id) => {
-          const node = targetFlatTreeData.find((t) => t.value === _id);
-
-          result[_id] = [...Util.getAncestor(targetFlatTreeData, node, treeTransformConfig), node];
-
-          return result;
-        }, {});
-      });
+      setPaths(getPathsByValues(_values));
 
       // @ts-ignore
       treeSelectProps.onChange?.(_values);
@@ -133,31 +128,6 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
       return isChecked || ('multiple' in treeSelectProps ? !!treeSelectProps.multiple : false);
     }, [isChecked, treeSelectProps.multiple]);
 
-    // const flatDefaultTreeData = useMemo(
-    //   () =>
-    //     Util.treeToArray(
-    //       (defaultTreeData?.value ?? []) as any[],
-    //       {
-    //         parentIdAttr: treeTransformConfig.parentIdAttr,
-    //         rootParentId: treeTransformConfig.rootParentId,
-    //       },
-    //       treeTransformConfig.keyAttr,
-    //     ),
-    //   [defaultTreeData],
-    // );
-
-    // const flatDefaultTreeDataFilter = useMemo(() => {
-    //   if (!treeDataSimpleMode) {
-    //     return flatDefaultTreeData.filter((t) =>
-    //       (isMultiple ? treeSelectProps.value : [treeSelectProps.value]).includes(t.value),
-    //     );
-    //   } else {
-    //     return (defaultTreeData?.value ?? []).filter((t) =>
-    //       (isMultiple ? treeSelectProps.value : [treeSelectProps.value]).includes(t.value),
-    //     );
-    //   }
-    // }, [treeDataSimpleMode, defaultTreeData, treeSelectProps.value, flatDefaultTreeData]);
-
     const flatTreeData = useMemo(
       () =>
         treeDataSimpleMode
@@ -186,30 +156,9 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
      * @description 最终的数据
      */
     const targetTreeData = useMemo<any[]>(() => {
-      /*
-       *  if(正常) {
-       *    treeData需要拉平
-       *    defaultTreeData获取拉平后的路径，且在props.value中
-       *
-       *    treeData + defaultTreeData 去重
-       *
-       *    转换成正常
-       *  } else {
-       *     defaultTreeData过滤出在props.value中
-       *
-       *     treeData + defaultTreeData 去重
-       *  }
-       * */
       // treeData
       if (!treeDataSimpleMode) {
-        let _allFlatTreeData = [
-          // 查出来的结果
-          ...(flatTreeData ?? []),
-          // 初始化的结果
-          // ...(flatDefaultTreeDataFilter ?? []),
-          // 选择的结果
-          ...(flatPathData ?? []),
-        ];
+        let _allFlatTreeData = [...(flatTreeData ?? []), ...(flatPathData ?? [])];
 
         const allFlatTreeDataKeys = _allFlatTreeData.map(({ value }) => value);
 
@@ -220,18 +169,14 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
         );
 
         return Util.completionIncompleteFlatArr(
-          [...(flatTreeData ?? []), /*...(flatDefaultTreeData ?? []),*/ ...(flatPathData ?? [])],
+          [...(flatTreeData ?? []), ...(flatPathData ?? [])],
           _allFlatTreeData,
           treeTransformConfig,
         );
       }
       // flatTreeData
       else {
-        let _allFlatTreeData = [
-          ...(treeData ?? []),
-          // ...(flatDefaultTreeDataFilter ?? []),
-          ...(flatPathData ?? []),
-        ];
+        let _allFlatTreeData = [...(treeData ?? []), ...(flatPathData ?? [])];
 
         const allFlatTreeDataKeys = _allFlatTreeData.map(({ value }) => value);
 
@@ -239,7 +184,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
 
         return Util.treeToArray(
           Util.completionIncompleteFlatArr(
-            [...(treeData ?? []), /*...(defaultTreeData?.value ?? []),*/ ...(flatPathData ?? [])],
+            [...(treeData ?? []), ...(flatPathData ?? [])],
             distinctKeys.map((_value) =>
               _allFlatTreeData.find((_option) => _option.value === _value),
             ),
@@ -252,15 +197,7 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           treeTransformConfig.keyAttr,
         );
       }
-    }, [
-      treeData,
-      // defaultTreeData,
-      // flatDefaultTreeDataFilter,
-      // flatDefaultTreeData,
-      flatTreeData,
-      paths,
-      treeSelectProps.value,
-    ]);
+    }, [treeData, flatTreeData, paths, treeSelectProps.value]);
 
     const targetFlatTreeData = useMemo(() => {
       return !!treeDataSimpleMode
@@ -275,23 +212,21 @@ const TreeAutoComplete = memo<TreeAutoCompleteProps>(
           );
     }, [treeDataSimpleMode, targetTreeData]);
 
-    // const targetTreeData = useMemo<any[]>(() => {
-    //   if (!treeDataSimpleMode) {
-    //     return treeData;
-    //   } else {
-    //     return flatTreeData;
-    //   }
-    // }, [treeDataSimpleMode, treeData, flatTreeData]);
+    useUpdateEffect(() => {
+      const pathsKeys = Object.keys(paths);
 
-    // useUpdateEffect(() => {
-    //   setPaths(
-    //     defaultTreeData
-    //       ? {
-    //           [defaultTreeData.key]: defaultTreeData.value,
-    //         }
-    //       : {},
-    //   );
-    // }, [defaultTreeData]);
+      // 不在paths里的values，才需要进行路径设置
+      const values = (
+        Array.isArray(treeSelectProps.value) ? treeSelectProps.value : [treeSelectProps.value]
+      ).filter((_value) => !pathsKeys.includes(_value));
+
+      if (values.length) {
+        setPaths({
+          ...paths,
+          ...getPathsByValues(values),
+        });
+      }
+    }, [treeSelectProps.defaultValue, treeSelectProps.value, paths, targetFlatTreeData]);
 
     return (
       <div className={classNames(selectorPrefix, classNameWrap ?? '')} style={styleWrap ?? {}}>
