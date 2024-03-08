@@ -34,10 +34,6 @@ const ValueHOC: FC<RangePickerFormatValueHOCProps> = ({
     return [dayjs(_value[0]), dayjs(_value[1])];
   }
 
-  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
-
-  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
-
   function dateJSObjectToExtra(_dateJSObject) {
     return {
       year: _dateJSObject.year(),
@@ -51,6 +47,10 @@ const ValueHOC: FC<RangePickerFormatValueHOCProps> = ({
       second: _dateJSObject.second(),
     };
   }
+
+  const targetValue = useMemo(() => originValueToDateJSObject(value), [value]);
+
+  const targetDefaultValue = useMemo(() => originValueToDateJSObject(defaultValue), [defaultValue]);
 
   const _onChange = (_value, dateString) => {
     onChange?.(
