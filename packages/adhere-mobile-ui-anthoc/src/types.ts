@@ -552,3 +552,72 @@ export type CalendarDialogHOCComponent = ReturnType<typeof createFactory<Calenda
 export type CalendarPopupHOCComponent = ReturnType<typeof createFactory<CalendarPopupProps>> & {
   RangeCalendarModal: FC<RangeCalendarPopupProps>;
 };
+
+export type DateTimestampValueHOCProps = Omit<
+  DatePickerViewProps | DateModalProps | DateDialogProps | DatePopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number | null;
+  value?: number | null;
+  onChange?: (data: number | null | undefined) => void;
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
+  children: ReactElement;
+};
+
+export type DateFormatValueHOCProps = Omit<
+  DatePickerViewProps | DateModalProps | DateDialogProps | DatePopupProps,
+  'value' | 'onChange' | 'defaultValue'
+> & {
+  defaultValue?: string | null;
+  value?: string | null;
+  onChange?: (data: string | null | undefined) => void;
+  children: ReactElement;
+  format?: string;
+};
+
+export type TimeTimestampValueHOCProps = Omit<
+  TimePickerViewProps | TimeModalProps | TimeDialogProps | TimePopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number | null;
+  value?: number | null;
+  onChange?: (data: number | null | undefined) => void;
+  // value的类型
+  type?: 'milliseconds' | 'seconds';
+  children: ReactElement;
+};
+
+export type TimeFormatValueHOCProps = Omit<
+  TimePickerViewProps | TimeModalProps | TimeDialogProps | TimePopupProps,
+  'value' | 'onChange' | 'defaultValue'
+> & {
+  defaultValue?: string | null;
+  value?: string | null;
+  onChange?: (data: string | null | undefined) => void;
+  children: ReactElement;
+  format?: string;
+};
+
+export type CalendarFormatValueHOCProps = Omit<
+  CalendarPickerViewProps | CalendarModalProps | CalendarDialogProps | CalendarPopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: string[] | string | null;
+  value?: string[] | string | null;
+  onChange?: (data: [string, string] | string | null | undefined) => void;
+  children: ReactElement;
+  format?: string;
+};
+
+export type CalendarTimestampValueHOCProps = Omit<
+  CalendarPickerViewProps | CalendarModalProps | CalendarDialogProps | CalendarPopupProps,
+  'defaultValue' | 'value' | 'onChange'
+> & {
+  defaultValue?: number[] | number | null;
+  value?: number[] | number | null;
+  onChange?: (data: [number, number] | number | null | undefined) => void;
+  // value的类型
+  type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'] | 'milliseconds' | 'seconds';
+  children: ReactElement;
+};

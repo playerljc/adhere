@@ -5,8 +5,10 @@ import Badge from './badge';
 import Button from './button';
 import Calendar from './calendar';
 import CalendarDialog from './calendar-dialog';
+import CalendarFormatValueHOC from './calendar-format-value-hoc';
 import CalendarModal from './calendar-modal';
 import CalendarPopup from './calendar-popup';
+import CalendarTimestampValueHOC from './calendar-timestamp-value-hoc';
 import CapsuleTabs from './capsule-tabs';
 import Card from './card';
 import CascadePicker from './cascade-picker';
@@ -19,10 +21,12 @@ import Checkbox from './checkbox';
 import Collapse from './collapse';
 import ConfigProvider from './config-provider';
 import DateDialog from './date-dialog';
+import DateFormatValueHOC from './date-format-value-hoc';
 import DateModal from './date-modal';
 import DatePicker from './date-picker';
 import DatePickerView from './date-picker-view';
 import DatePopup from './date-popup';
+import DateTimestampValueHOC from './date-timestamp-value-hoc';
 import Dialog from './dialog';
 import Divider from './divider';
 import DotLoading from './dot-loading';
@@ -86,8 +90,10 @@ import Tabs from './tabs';
 import Tag from './tag';
 import TextArea from './text-area';
 import TimeDialog from './time-dialog';
+import TimeFormatValueHOC from './time-format-value-hoc';
 import TimeModal from './time-modal';
 import TimePopup from './time-popup';
+import TimeTimestampValueHOC from './time-timestamp-value-hoc';
 import TreeSelect from './tree-select';
 import VirtualInput from './virtual-input';
 import WaterMark from './water-mark';
@@ -113,6 +119,8 @@ export {
   Checkbox,
   Collapse,
   ConfigProvider,
+  DateFormatValueHOC,
+  DateTimestampValueHOC,
   DateDialog,
   DateModal,
   DatePicker,
@@ -179,6 +187,8 @@ export {
   Tabs,
   Tag,
   TextArea,
+  TimeTimestampValueHOC,
+  TimeFormatValueHOC,
   TimeDialog,
   TimeModal,
   TimePopup,
@@ -186,4 +196,6 @@ export {
   VirtualInput,
   WaterMark,
   SubmitButton,
+  CalendarTimestampValueHOC,
+  CalendarFormatValueHOC,
 };

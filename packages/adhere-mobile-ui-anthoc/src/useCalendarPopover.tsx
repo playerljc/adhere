@@ -50,6 +50,8 @@ function useCalendarPopover({
     return '';
   }, [value]);
 
+  const isRangeMode = calendarPickerViewProps.selectionMode === 'range';
+
   const { key, actions, popoverTriggerProps, setInternalValue } =
     useDateTimePopover<CalendarPickerViewProps>({
       popoverTriggerClassName: classNames(popoverTriggerClassName ?? '', selectorPrefix),
@@ -70,6 +72,9 @@ function useCalendarPopover({
       <CalendarPickerView
         key={key}
         {...calendarPickerViewProps}
+        defaultValue={
+          value ?? calendarPickerViewProps?.defaultValue ?? (isRangeMode ? undefined : new Date())
+        }
         onChange={(_value) => {
           setInternalValue(_value);
         }}

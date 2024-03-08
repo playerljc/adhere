@@ -4,6 +4,8 @@ import e2e from '@baifendian/adhere-e2e';
 
 import CalendarDialog from './CalendarDialog/CalendarDialog';
 import CalendarModal from './CalendarModal/CalendarModal';
+import CalendarFormatValueHOC from './CalendarModal/FormatValueHOC';
+import CalendarTimestampValueHOC from './CalendarModal/TimestampValueHoc';
 import CalendarPopup from './CalendarPopup/CalendarPopup';
 import AutoCompleteCheckList from './CheckList/AutoCompleteCheckList';
 import AutoCompleteCheckListValueHOC from './CheckList/AutoCompleteCheckListValueHOC';
@@ -34,8 +36,12 @@ import FilterCheckbox from './Checkbox/FilterCheckbox';
 import FilterPagingCheckbox from './Checkbox/FilterPagingCheckbox';
 import PagingCheckbox from './Checkbox/PagingCheckbox';
 import DateDialog from './DateDialog/DateDialog';
+import DateDialogTimestampValueHoc from './DateDialog/TimestampValueHoc';
 import DateModal from './DateModal/DateModal';
+import DateModalFormatValueHOC from './DateModal/FormatValueHOC';
+import DateModalTimestampValueHoc from './DateModal/TimestampValueHoc';
 import DatePopup from './DatePopup/DatePopup';
+import DatePopupTimestampValueHoc from './DatePopup/TimestampValueHoc';
 import DialogTrigger from './Dialog/Trigger';
 import DialogTriggerPrompt from './Dialog/TriggerPrompt';
 import ModalTrigger from './Modal/Trigger';
@@ -57,9 +63,11 @@ import FilterSelector from './Selector/FilterSelector';
 import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 import TimeDialog from './TimeDialog/TimeDialog';
+import TimeModalFormatValueHOCx from './TimeModal/FormatValueHOC';
 import TimeModal from './TimeModal/TimeModal';
+import TimeModalTimestampValueHOC from './TimeModal/TimestampValueHoc';
 import TimePopup from './TimePopup/TimePopup';
 
 e2e.Mobile({
-  children: <AutoCompletePagingCheckListValueHOC />,
+  children: <CalendarFormatValueHOC />,
 });
