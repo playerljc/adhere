@@ -67,7 +67,7 @@ function ListFilter<Option>({
         style={bodyWrapperStyle ?? {}}
       >
         {isEmpty() && (renderEmpty?.() ?? <ErrorBlock status="empty" />)}
-        {children?.(targetOptions)}
+        {children?.(targetOptions, filterValue)}
       </div>
     </div>
   );

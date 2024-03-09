@@ -5,6 +5,7 @@ import type {
   RadioGroupProps as AntMobileRadioGroupProps,
   RadioProps as AntMobileRadioProps,
   CalendarPickerViewProps,
+  CascaderViewProps,
   CheckListItemProps,
   DatePickerViewProps,
   DialogProps,
@@ -16,6 +17,7 @@ import type {
   SelectorProps,
   SpaceProps,
 } from 'antd-mobile';
+import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
@@ -106,11 +108,11 @@ export type CheckAllWrapperProps = {
   children?: ReactNode;
 };
 
-export type ListFilterOption<Option> = (inputValue: string, option: Option) => boolean;
+export type FilterOption<Option> = (inputValue: string, option: Option) => boolean;
 
 type filterProps<Option> = SearchBarProps & {
   optionFilterProp?: string;
-  filterOption?: ListFilterOption<Option> | boolean;
+  filterOption?: FilterOption<Option> | boolean;
 };
 
 type FilterProps<Option> = {
@@ -164,7 +166,7 @@ export type ListCheckAllProps = CheckAllWrapperStyleProps &
 export type ListFilterProps<Option> = {
   options: Option[];
   filterProps: filterProps<Option>;
-  children: (options: Option[]) => ReactElement;
+  children: (options: Option[], filterValue: string) => ReactElement;
   wrapperClassName?: string;
   filterWrapperClassName?: string;
   bodyWrapperClassName?: string;
@@ -172,6 +174,15 @@ export type ListFilterProps<Option> = {
   filterWrapperStyle?: CSSProperties;
   bodyWrapperStyle?: CSSProperties;
   renderEmpty?: FilterProps<Option>['renderEmpty'];
+};
+
+export type TreeFilterProps = Omit<ListFilterProps<any>, 'options'> & {
+  treeData?:
+    | CascaderOption[]
+    | (Omit<CascaderOption, 'children'> & {
+        pId: string | number;
+      })[];
+  treeDataSimpleMode?: boolean;
 };
 
 export type CheckListHOCComponent = ReturnType<typeof createFactory<CheckListProps>> & {
@@ -620,4 +631,32 @@ export type CalendarTimestampValueHOCProps = Omit<
   // value的类型
   type?: ['milliseconds' | 'seconds', 'milliseconds' | 'seconds'] | 'milliseconds' | 'seconds';
   children: ReactElement;
+};
+
+export type InternalCascaderViewProps = CascaderViewProps & {
+  treeDataSimpleMode?: boolean;
+};
+
+export type FilterCascaderViewProps = BaseType &
+  InternalCascaderViewProps & {
+    treeDataSimpleMode?: boolean;
+    renderLabel?: (
+      option:
+        | CascaderOption
+        | (Omit<CascaderOption, 'children'> & {
+            pId: string | number;
+          }),
+      filterValue: string,
+    ) => ReactNode;
+  } & FilterProps<
+    | CascaderOption
+    | (Omit<CascaderOption, 'children'> & {
+        pId: string | number;
+      })
+  >;
+
+export type CascaderViewHOCComponent = ReturnType<
+  typeof createFactory<InternalCascaderViewProps>
+> & {
+  FilterCascaderView: FC<FilterCascaderViewProps>;
 };

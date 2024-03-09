@@ -31,7 +31,6 @@ import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 
 import ButtonRadio from './radio/ButtonRadio';
-import AutoCompleteTreeTablePagingSelect from './table/AutoCompleteTreeTablePagingSelect';
 import { createFactory } from './util';
 
 export type FormValidatorRulesType = {

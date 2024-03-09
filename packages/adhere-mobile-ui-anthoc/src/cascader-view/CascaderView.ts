@@ -1,11 +1,13 @@
-import { CascaderView } from 'antd-mobile';
-import type { CascaderViewProps } from 'antd-mobile';
-
+import type { CascaderViewHOCComponent, InternalCascaderViewProps } from '../types';
 import { createFactory } from '../util';
+import InternalCascaderView from './InternalCascaderView';
 
-const CascaderViewHOC: typeof CascaderView & {
-  defaultProps?: Partial<CascaderViewProps>;
-} = createFactory<CascaderViewProps>(CascaderView, {});
+const CascaderViewHOC: CascaderViewHOCComponent = createFactory<InternalCascaderViewProps>(
+  InternalCascaderView,
+  {
+    loading: true,
+  },
+);
 
 CascaderViewHOC.displayName = 'CascaderView';
 

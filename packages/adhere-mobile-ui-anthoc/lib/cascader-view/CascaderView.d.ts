@@ -1,6 +1,3 @@
-import { CascaderView } from 'antd-mobile';
-import type { CascaderViewProps } from 'antd-mobile';
-declare const CascaderViewHOC: typeof CascaderView & {
-    defaultProps?: Partial<CascaderViewProps>;
-};
+import type { CascaderViewHOCComponent } from '../types';
+declare const CascaderViewHOC: CascaderViewHOCComponent;
 export default CascaderViewHOC;

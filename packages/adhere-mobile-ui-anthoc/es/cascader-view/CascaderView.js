@@ -1,2 +1,2 @@
-import{CascaderView}from"antd-mobile";import{createFactory}from"../util";var CascaderViewHOC=createFactory(CascaderView,{});CascaderViewHOC.displayName="CascaderView";export default CascaderViewHOC;
+import{createFactory}from"../util";import InternalCascaderView from"./InternalCascaderView";var CascaderViewHOC=createFactory(InternalCascaderView,{loading:!0});CascaderViewHOC.displayName="CascaderView";export default CascaderViewHOC;
 //# sourceMappingURL=CascaderView.js.map
