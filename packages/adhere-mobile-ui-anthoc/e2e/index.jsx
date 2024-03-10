@@ -7,6 +7,7 @@ import CalendarModal from './CalendarModal/CalendarModal';
 import CalendarFormatValueHOC from './CalendarModal/FormatValueHOC';
 import CalendarTimestampValueHOC from './CalendarModal/TimestampValueHoc';
 import CalendarPopup from './CalendarPopup/CalendarPopup';
+import AsycnCascaderView from './CascaderView/AsyncCascaderView';
 import CascaderView from './CascaderView/CascaderView';
 import FilterCascaderView from './CascaderView/FilterCascaderView';
 import AutoCompleteCheckList from './CheckList/AutoCompleteCheckList';
@@ -71,5 +72,5 @@ import TimeModalTimestampValueHOC from './TimeModal/TimestampValueHoc';
 import TimePopup from './TimePopup/TimePopup';
 
 e2e.Mobile({
-  children: <FilterCascaderView />,
+  children: <AsycnCascaderView />,
 });

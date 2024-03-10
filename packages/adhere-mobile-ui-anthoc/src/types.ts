@@ -633,8 +633,14 @@ export type CalendarTimestampValueHOCProps = Omit<
   children: ReactElement;
 };
 
-export type InternalCascaderViewProps = CascaderViewProps & {
+export type InternalCascaderViewProps = Omit<CascaderViewProps, 'options'> & {
   treeDataSimpleMode?: boolean;
+  options: (
+    | CascaderOption
+    | (Omit<CascaderOption, 'children'> & {
+        pId: string | number;
+      })
+  )[];
 };
 
 export type FilterCascaderViewProps = BaseType &
@@ -659,4 +665,18 @@ export type CascaderViewHOCComponent = ReturnType<
   typeof createFactory<InternalCascaderViewProps>
 > & {
   FilterCascaderView: FC<FilterCascaderViewProps>;
+  AsyncCascaderView: FC<AsyncCascaderViewProps>;
+};
+
+export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> & {
+  options: InternalCascaderViewProps['options'] & {
+    isLoaded?: boolean;
+  };
+  // 是否每次都异步加载数据
+  isEveryAsync?: boolean;
+  // 异步加载数据的函数
+  loadData?: (
+    defaultId: string | number,
+    cascadeParams?: any,
+  ) => Promise<InternalCascaderViewProps['options']>;
 };

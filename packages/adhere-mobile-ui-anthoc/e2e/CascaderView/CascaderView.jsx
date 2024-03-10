@@ -242,6 +242,9 @@ export default () => {
     <CascaderView
       options={options}
       value={value}
+      onSelect={(value) => {
+        debugger;
+      }}
       onChange={(_value) => {
         debugger;
         setValue(_value);

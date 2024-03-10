@@ -4,9 +4,7 @@ import InternalCascaderView from './InternalCascaderView';
 
 const CascaderViewHOC: CascaderViewHOCComponent = createFactory<InternalCascaderViewProps>(
   InternalCascaderView,
-  {
-    loading: true,
-  },
+  {},
 );
 
 CascaderViewHOC.displayName = 'CascaderView';
