@@ -450,5 +450,6 @@ export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> 
     };
     isEveryAsync?: boolean;
     loadData?: (defaultId: string | number, cascadeParams?: any) => Promise<InternalCascaderViewProps['options']>;
+    onDataSourceChange?: (treeData: InternalCascaderViewProps['options']) => void;
 };
 export {};

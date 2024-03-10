@@ -1,3 +1,4 @@
+import { CascaderProps } from 'antd';
 import type {
   CheckListProps as AntMobileCheckListProps,
   CheckboxProps as AntMobileCheckbox,
@@ -679,4 +680,5 @@ export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> 
     defaultId: string | number,
     cascadeParams?: any,
   ) => Promise<InternalCascaderViewProps['options']>;
+  onDataSourceChange?: (treeData: InternalCascaderViewProps['options']) => void;
 };

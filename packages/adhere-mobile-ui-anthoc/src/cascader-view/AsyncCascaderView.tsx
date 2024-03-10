@@ -13,7 +13,7 @@ import InternalCascaderView from './InternalCascaderView';
  * InternalAsyncCascader
  */
 const InternalAsyncCascader = memo<AsyncCascaderViewProps>(
-  ({ loadData, isEveryAsync = false, ...internalCascaderViewProps }) => {
+  ({ loadData, onDataSourceChange, isEveryAsync = false, ...internalCascaderViewProps }) => {
     const [options, setOptions] = useImmer<AsyncCascaderViewProps['options']>(
       internalCascaderViewProps.options,
     );
@@ -192,6 +192,10 @@ const InternalAsyncCascader = memo<AsyncCascaderViewProps>(
     useUpdateEffect(() => {
       preValue.current = internalCascaderViewProps.value ?? internalCascaderViewProps.defaultValue;
     }, [internalCascaderViewProps.defaultValue, internalCascaderViewProps.value]);
+
+    useUpdateEffect(() => {
+      onDataSourceChange?.(options);
+    }, [options]);
 
     return (
       <InternalCascaderView
