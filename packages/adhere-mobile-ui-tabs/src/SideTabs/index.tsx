@@ -1,15 +1,11 @@
 import { SideBar } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { memo, useEffect } from 'react';
-
-import Hooks from '@baifendian/adhere-ui-hooks';
+import React, { memo } from 'react';
 
 import type { SystemSideTabsComponent, SystemSideTabsProps } from '../types';
 import Tab from './tab';
 
 const selectorPrefix = 'adhere-ui-tabs-side-tabs';
-
-const { useSetState } = Hooks;
 
 /**
  * SystemSideTabs
@@ -17,57 +13,51 @@ const { useSetState } = Hooks;
  * @return {JSX.Element}
  * @constructor
  */
-const InternalSystemSideTabs = memo<SystemSideTabsProps>((props) => {
-  const { className = '', style = {}, children, defaultActiveKey, onChange } = props;
-
-  const [activeKey, setActiveKey] = useSetState(props.defaultActiveKey ?? props.activeKey ?? '');
-
-  function renderHeader() {
-    return (
-      <SideBar
-        activeKey={activeKey}
-        defaultActiveKey={defaultActiveKey}
-        onChange={(key) => setActiveKey(key, () => onChange?.(key))}
-      >
-        {children?.map?.((_rElement) => (
-          <SideBar.Item {..._rElement.props} key={_rElement.key} />
-        ))}
-      </SideBar>
-    );
-  }
-
-  function renderBody() {
-    return children?.map?.((_rElement) => {
-      const itemStyle: any = {
-        ...(_rElement.props.style || {}),
-      };
-
-      if (_rElement.key === (activeKey || defaultActiveKey)) {
-        itemStyle.display = '';
-      } else {
-        itemStyle.display = 'none';
-      }
-
-      return React.cloneElement(
-        _rElement,
-        {
-          ..._rElement.props,
-          style: itemStyle,
-        },
-        _rElement.props.children,
+const InternalSystemSideTabs = memo<SystemSideTabsProps>(
+  ({ className, style, items, ...props }) => {
+    function renderHeader() {
+      return (
+        <SideBar {...props}>
+          {items?.map?.((_item) => (
+            <SideBar.Item {..._item} />
+          ))}
+        </SideBar>
       );
-    });
-  }
+    }
 
-  useEffect(() => setActiveKey(props.activeKey ?? ''), [props.activeKey]);
+    function renderBody() {
+      return items?.map?.(({ children }) => {
+        if (!children) return null;
 
-  return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-      <div className={`${selectorPrefix}-fixed`}>{renderHeader()}</div>
-      <div className={`${selectorPrefix}-auto`}>{renderBody()}</div>
-    </div>
-  );
-});
+        const itemStyle: any = {
+          ...(children?.props?.style || {}),
+        };
+
+        if (children?.key === (props.activeKey || props.defaultActiveKey)) {
+          itemStyle.display = '';
+        } else {
+          itemStyle.display = 'none';
+        }
+
+        return React.cloneElement(
+          children,
+          {
+            ...children.props,
+            style: itemStyle,
+          },
+          children.props.children,
+        );
+      });
+    }
+
+    return (
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <div className={`${selectorPrefix}-fixed`}>{renderHeader()}</div>
+        <div className={`${selectorPrefix}-auto`}>{renderBody()}</div>
+      </div>
+    );
+  },
+);
 
 const SystemSideTabs = InternalSystemSideTabs as SystemSideTabsComponent;
 

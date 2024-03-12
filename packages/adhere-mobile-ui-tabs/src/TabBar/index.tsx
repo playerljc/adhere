@@ -14,7 +14,7 @@ const { VerticalFlexLayout } = FlexLayout;
 const selectorPrefix = 'adhere-ui-tabs-tab-bar';
 
 const TabBarNav: FC<SystemTabBarNavProps> = (props) => {
-  const { data = [], onChange } = props;
+  const { items = [], onChange } = props;
 
   const history = useHistory();
 
@@ -31,7 +31,7 @@ const TabBarNav: FC<SystemTabBarNavProps> = (props) => {
         onChange?.(key);
       }}
     >
-      {(data ?? []).map((_item) => (
+      {(items ?? []).map((_item) => (
         <TabBar.Item {..._item} />
       ))}
     </TabBar>
@@ -46,10 +46,9 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
     mainStyle = {},
     bottomClassName = '',
     bottomStyle = {},
-    data = [],
-    activeKey,
-    onChange,
     children,
+    activeKey,
+    ...tabBarNavProps
   } = props;
 
   const history = useHistory();
@@ -65,11 +64,10 @@ const SystemTabBar = memo<SystemTabBarProps>((props) => {
       renderMain={children}
       renderBottom={
         <TabBarNav
-          data={data}
+          {...tabBarNavProps}
           activeKey={
             activeKey !== history.location.pathname ? history.location.pathname : activeKey
           }
-          onChange={onChange}
         />
       }
     />

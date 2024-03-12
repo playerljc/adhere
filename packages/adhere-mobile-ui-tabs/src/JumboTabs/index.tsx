@@ -11,15 +11,19 @@ const selectorPrefix = 'adhere-ui-tabs-jumbo-tabs';
  * @param props
  * @constructor
  */
-const InternalSystemJumboTabs = memo<SystemJumboTabsProps>((props) => {
-  const { className = '', style = {}, innerClassName = '', innerStyle = {} } = props;
-
-  return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-      <JumboTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}} />
-    </div>
-  );
-});
+const InternalSystemJumboTabs = memo<SystemJumboTabsProps>(
+  ({ className = '', style = {}, innerClassName = '', innerStyle = {}, items, ...props }) => {
+    return (
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <JumboTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}}>
+          {items?.map((_item) => (
+            <JumboTabs.Tab {..._item} />
+          ))}
+        </JumboTabs>
+      </div>
+    );
+  },
+);
 
 const SystemJumboTabs = InternalSystemJumboTabs as SystemJumboTabsComponent;
 

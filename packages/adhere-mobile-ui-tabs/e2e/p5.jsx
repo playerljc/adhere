@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { MobileTabs } from '@baifendian/adhere';
+import MobileTabs from '../src';
+
+import '../src/index.less';
 
 const { SideTabs } = MobileTabs;
 
@@ -12,7 +14,7 @@ export default () => (
       .map((item, _index) => ({
         key: `${_index + 1}`,
         title: `选项卡${_index + 1}`,
-        children: `${_index + 1}`,
+        children: <div>{_index + 1}</div>,
       }))}
   />
 );

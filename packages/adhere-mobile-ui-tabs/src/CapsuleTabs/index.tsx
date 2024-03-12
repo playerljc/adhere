@@ -11,15 +11,19 @@ const selectorPrefix = 'adhere-ui-tabs-capsule-tabs';
  * @param props
  * @constructor
  */
-const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>((props) => {
-  const { className = '', style = {}, innerClassName = '', innerStyle = {} } = props;
-
-  return (
-    <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-      <CapsuleTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}} />
-    </div>
-  );
-});
+const InternalSystemCapsuleTabs = memo<SystemCapsuleTabsProps>(
+  ({ className = '', style = {}, innerClassName = '', innerStyle = {}, items, ...props }) => {
+    return (
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        <CapsuleTabs {...props} className={innerClassName ?? ''} style={innerStyle ?? {}}>
+          {items?.map?.((_item) => (
+            <CapsuleTabs.Tab {..._item} />
+          ))}
+        </CapsuleTabs>
+      </div>
+    );
+  },
+);
 
 const SystemCapsuleTabs = InternalSystemCapsuleTabs as SystemCapsuleTabsComponent;
 

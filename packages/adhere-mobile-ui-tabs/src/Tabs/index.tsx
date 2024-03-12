@@ -110,58 +110,54 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
         })}
       </Tabs>
 
-      <ConditionalRender conditional={showArrowMore}>
-        {() => (
-          <ArrowMore
-            data={props?.children?.map?.((_rElement) => ({
-              key: _rElement.key,
-              title: _rElement.props.title,
-            }))}
-            activeKey={activeKey as string}
-            onChange={(key) => {
-              keyChange(key);
-            }}
-            swiper={swiper}
-            getActiveIndexByKey={getActiveIndexByKey}
-            wrapRef={wrapRef}
-          />
-        )}
-      </ConditionalRender>
+      {showArrowMore && (
+        <ArrowMore
+          wrapRef={wrapRef}
+          data={props?.children?.map?.((_rElement) => ({
+            key: _rElement.key,
+            title: _rElement.props.title,
+          }))}
+          activeKey={activeKey as string}
+          swiper={swiper}
+          getActiveIndexByKey={getActiveIndexByKey}
+          onChange={(key) => {
+            keyChange(key);
+          }}
+        />
+      )}
 
-      <ConditionalRender conditional={swiper}>
-        {() => (
-          <Swiper
-            direction="horizontal"
-            indicator={() => null}
-            ref={swiperRef}
-            defaultIndex={getActiveIndexByKey(activeKey)}
-            onIndexChange={(index) => setActiveKey(props?.children?.[index]?.key as string)}
-            loop={false}
-            {...(swiperProps || {})}
-          >
-            {children?.map?.((_rElement) => {
-              const {
-                key,
-                props: { children: _children },
-              } = _rElement;
+      {swiper && (
+        <Swiper
+          ref={swiperRef}
+          direction="horizontal"
+          indicator={() => null}
+          defaultIndex={getActiveIndexByKey(activeKey)}
+          onIndexChange={(index) => setActiveKey(props?.children?.[index]?.key as string)}
+          loop={false}
+          {...(swiperProps || {})}
+        >
+          {children?.map?.((_rElement) => {
+            const {
+              key,
+              props: { children: _children },
+            } = _rElement;
 
-              if (key === activeKey) {
-                swiperLoad.current.set(key, true);
-              }
+            if (key === activeKey) {
+              swiperLoad.current.set(key, true);
+            }
 
-              return (
-                <Swiper.Item key={key}>
-                  <ConditionalRender
-                    conditional={!!(key === activeKey || swiperLoad.current.get(key))}
-                  >
-                    {() => _children}
-                  </ConditionalRender>
-                </Swiper.Item>
-              );
-            })}
-          </Swiper>
-        )}
-      </ConditionalRender>
+            return (
+              <Swiper.Item key={key}>
+                <ConditionalRender
+                  conditional={!!(key === activeKey || swiperLoad.current.get(key))}
+                >
+                  {() => _children}
+                </ConditionalRender>
+              </Swiper.Item>
+            );
+          })}
+        </Swiper>
+      )}
     </div>
   );
 });

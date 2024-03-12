@@ -1,7 +1,7 @@
 import FieldGeneratorToDict, {
+  Components,
   ArrayEntityValueHOC,
   AsyncTreeEntityValueHOC,
-  Components,
   TreeEntityValueHOC,
   genDictComponentName,
   getDictComponent,

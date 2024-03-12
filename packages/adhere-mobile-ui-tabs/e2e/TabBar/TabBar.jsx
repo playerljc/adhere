@@ -2,36 +2,36 @@ import { Badge } from 'antd-mobile';
 import { AppOutline, MessageFill, UnorderedListOutline, UserOutline } from 'antd-mobile-icons';
 import React from 'react';
 
-import { MobileTabs } from '@baifendian/adhere';
+import MobileTabs from '../../src';
 
-import styles from '../index.less';
+import '../../src/index.less';
 
 const { TabBar } = MobileTabs;
 
 export default ({ children }) => (
   <TabBar
-    className={styles.TabBarWrap}
+    className="TabBarWrap"
     items={[
       {
-        key: '/adhere/component/ui/tabs/home',
+        key: '/home',
         title: '首页',
         icon: <AppOutline />,
         badge: Badge.dot,
       },
       {
-        key: '/adhere/component/ui/tabs/todo',
+        key: '/todo',
         title: '待办',
         icon: <UnorderedListOutline />,
         badge: '5',
       },
       {
-        key: '/adhere/component/ui/tabs/message',
+        key: '/message',
         title: '消息',
         icon: <MessageFill />,
         badge: '99+',
       },
       {
-        key: '/adhere/component/ui/tabs/personalcenter',
+        key: '/personalcenter',
         title: '我的',
         icon: <UserOutline />,
       },

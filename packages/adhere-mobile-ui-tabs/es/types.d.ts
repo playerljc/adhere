@@ -1,4 +1,5 @@
 import { CapsuleTabs, JumboTabs } from 'antd-mobile';
+import type { CapsuleTabProps, JumboTabProps, SideBarItemProps, SideBarProps } from 'antd-mobile';
 import type { SwiperProps } from 'antd-mobile/es/components/swiper/swiper';
 import type { TabBarItemProps } from 'antd-mobile/es/components/tab-bar/tab-bar';
 import type { TabProps, TabsProps } from 'antd-mobile/es/components/tabs/tabs';
@@ -14,6 +15,9 @@ export interface SystemCapsuleTabsProps {
     style?: CSSProperties;
     innerClassName?: string;
     innerStyle?: CSSProperties;
+    items?: (CapsuleTabProps & {
+        key?: string | number;
+    })[];
     children?: ReactElement[];
 }
 export type SystemCapsuleTabsComponent = NamedExoticComponent<SystemCapsuleTabsProps> & {
@@ -24,18 +28,21 @@ export interface SystemJumboTabsProps {
     style?: CSSProperties;
     innerClassName?: string;
     innerStyle?: CSSProperties;
+    items?: (JumboTabProps & {
+        key?: string | number;
+    })[];
     children?: ReactElement[];
 }
 export type SystemJumboTabsComponent = NamedExoticComponent<SystemJumboTabsProps> & {
     Tab: typeof JumboTabs.Tab;
 };
-export interface SystemSideTabsProps {
+export interface SystemSideTabsProps extends SideBarProps {
     className?: string;
     style?: CSSProperties;
-    activeKey?: string;
-    defaultActiveKey?: string;
-    onChange?: (params?: any) => void;
-    children?: ReactElement[];
+    items?: (SideBarItemProps & {
+        key?: string;
+        children?: ReactElement<SystemSideTabProps>;
+    })[];
 }
 export type SystemSideTabsComponent = NamedExoticComponent<SystemSideTabsProps> & {
     Tab: FC<SystemSideTabProps>;
@@ -54,13 +61,17 @@ export interface SystemTabBarProps {
     bottomStyle?: CSSProperties;
     activeKey?: string;
     onChange?: (params?: any) => void;
-    data?: TabBarItemProps[];
+    items?: (TabBarItemProps & {
+        key?: string;
+    })[];
     children?: ReactNode;
 }
 export interface SystemTabBarNavProps {
     activeKey?: string;
     onChange?: (params?: any) => void;
-    data?: TabBarItemProps[];
+    items?: (TabBarItemProps & {
+        key?: string;
+    })[];
 }
 export interface SystemTabsProps extends TabsProps {
     className?: string;
