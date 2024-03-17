@@ -18,6 +18,62 @@ import DropdownTest from './Dropdown/Standard';
 import ListTest from './List/AutoCompleteCheckboxPagin';
 import MentionsTest from './Mentions/Standard';
 import MenuTest from './Menu/Standard';
+import MobileCascaderViewAsyncStandard from './MobileCascaderView/MobileCascaderViewAsyncStandard';
+import MobileCascaderViewDynamicFilter from './MobileCascaderView/MobileCascaderViewDynamicFilter';
+import MobileCascaderViewDynamicStandard from './MobileCascaderView/MobileCascaderViewDynamicStandard';
+import MobileCascaderViewFilter from './MobileCascaderView/MobileCascaderViewFilter';
+import MobileCascaderViewStandard from './MobileCascaderView/MobileCascaderViewStandard';
+import MobileCheckListACPaging from './MobileCheckList/MobileCheckListACPaging';
+import MobileCheckListACStandard from './MobileCheckList/MobileCheckListACStandard';
+import MobileCheckListDynamicCheckAll from './MobileCheckList/MobileCheckListDynamicCheckAll';
+import MobileCheckListDynamicFilter from './MobileCheckList/MobileCheckListDynamicFilter';
+import MobileCheckListDynamicFilterCheckAll from './MobileCheckList/MobileCheckListDynamicFilterCheckAll';
+import MobileCheckListDynamicStandard from './MobileCheckList/MobileCheckListDynamicStandard';
+import MobileCheckListPaginationFilter from './MobileCheckList/MobileCheckListPaginationFilter';
+import MobileCheckListPaginationStandard from './MobileCheckList/MobileCheckListPaginationStandard';
+import MobileCheckboxCheckListDynamicCheckAll from './MobileCheckList/MobileCheckboxCheckListDynamicCheckAll';
+import MobileCheckboxCheckListDynamicFilter from './MobileCheckList/MobileCheckboxCheckListDynamicFilter';
+import MobileCheckboxCheckListDynamicFilterCheckAll from './MobileCheckList/MobileCheckboxCheckListDynamicFilterCheckAll';
+import MobileCheckboxCheckListDynamicStandard from './MobileCheckList/MobileCheckboxCheckListDynamicStandard';
+import MobileCheckboxCheckListPaginationDynamicFilter from './MobileCheckList/MobileCheckboxCheckListPaginationDynamicFilter';
+import MobileCheckboxCheckListPaginationStandard from './MobileCheckList/MobileCheckboxCheckListPaginationStandard';
+import MobileCheckboxACPaging from './MobileCheckbox/MobileCheckboxACPaging';
+import MobileCheckboxACStandard from './MobileCheckbox/MobileCheckboxACStandard';
+import MobileCheckboxCheckAll from './MobileCheckbox/MobileCheckboxCheckAll';
+import MobileCheckboxDynamicCheckAll from './MobileCheckbox/MobileCheckboxDynamicCheckAll';
+import MobileCheckboxDynamicFilter from './MobileCheckbox/MobileCheckboxDynamicFilter';
+import MobileCheckboxDynamicFilterCheckAll from './MobileCheckbox/MobileCheckboxDynamicFilterCheckAll';
+import MobileCheckboxDynamicStandard from './MobileCheckbox/MobileCheckboxDynamicStandard';
+import MobileCheckboxFilter from './MobileCheckbox/MobileCheckboxFilter';
+import MobileCheckboxFilterCheckAll from './MobileCheckbox/MobileCheckboxFilterCheckAll';
+import MobileCheckboxPaginationDynamicFilter from './MobileCheckbox/MobileCheckboxPaginationDynamicFilter';
+import MobileCheckboxPaginationFilter from './MobileCheckbox/MobileCheckboxPaginationFilter';
+import MobileCheckboxPaginationStandard from './MobileCheckbox/MobileCheckboxPaginationStandard';
+import MobileCheckboxStandard from './MobileCheckbox/MobileCheckboxStandard';
+import MobileListDynamicStandard from './MobileList/MobileListDynamicStandard';
+import MobileListStandard from './MobileList/MobileListStandard';
+import MobileRadioACPaging from './MobileRadio/MobileRadioACPaging';
+import MobileRadioACStandard from './MobileRadio/MobileRadioACStandard';
+import MobileRadioDynamicFilter from './MobileRadio/MobileRadioDynamicFilter';
+import MobileRadioDynamicStandard from './MobileRadio/MobileRadioDynamicStandard';
+import MobileRadioFilter from './MobileRadio/MobileRadioFilter';
+import MobileRadioPaginationDynamicFilter from './MobileRadio/MobileRadioPaginationDynamicFilter';
+import MobileRadioPaginationFilter from './MobileRadio/MobileRadioPaginationFilter';
+import MobileRadioPaginationStandard from './MobileRadio/MobileRadioPaginationStandard';
+import MobileRadioStandard from './MobileRadio/MobileRadioStandard';
+import MobileSelectorACPaging from './MobileSelector/MobileSelectorACPaging';
+import MobileSelectorACStandard from './MobileSelector/MobileSelectorACStandard';
+import MobileSelectorCheckAll from './MobileSelector/MobileSelectorCheckAll';
+import MobileSelectorDynamicCheckAll from './MobileSelector/MobileSelectorDynamicCheckAll';
+import MobileSelectorDynamicFilter from './MobileSelector/MobileSelectorDynamicFilter';
+import MobileSelectorDynamicFilterCheckAll from './MobileSelector/MobileSelectorDynamicFilterCheckAll';
+import MobileSelectorDynamicStandard from './MobileSelector/MobileSelectorDynamicStandard';
+import MobileSelectorFilter from './MobileSelector/MobileSelectorFilter';
+import MobileSelectorFilterCheckAll from './MobileSelector/MobileSelectorFilterCheckAll';
+import MobileSelectorPaginationDynamicFilter from './MobileSelector/MobileSelectorPaginationDynamicFilter';
+import MobileSelectorPaginationFilter from './MobileSelector/MobileSelectorPaginationFilter';
+import MobileSelectorPaginationStandard from './MobileSelector/MobileSelectorPaginationStandard';
+import MobileSelectorStandard from './MobileSelector/MobileSelectorStandard';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect';
 import SegmentedTest from './Segmented/SuspenseStandard';
 import SelectTest from './Select/ArrayEntityValueHOC';
@@ -58,9 +114,12 @@ import TreeMultiEntityValueHOC from './Tree/TreeMultiEntityValueHOC';
 
 import '../src/index.less';
 
-// 配置字典
 DictConfig();
 
-e2e.PC({
-  children: <AutoCompleteTableTreeMultiPagingValueHOC />,
+// e2e.PC({
+//   children: <MobileCheckListACPaging />,
+// });
+
+e2e.Mobile({
+  children: <MobileCascaderViewAsyncStandard />,
 });

@@ -14,6 +14,12 @@ import './fields/Dropdown';
 import './fields/List';
 import './fields/Mentions';
 import './fields/Menu';
+import './fields/MobileCascaderView';
+import './fields/MobileCheckList';
+import './fields/MobileCheckbox';
+import './fields/MobileList';
+import './fields/MobileRadio';
+import './fields/MobileSelector';
 import './fields/Radio';
 import './fields/Segmented';
 import './fields/Select';
@@ -118,14 +124,20 @@ const ProxyComponent = new Proxy<{
       if (p in target && !!target[p]) return Reflect.get(target, p, receiver);
 
       // 组件名
-      let itemName;
+      let itemName: string;
       // 功能名
-      let functionName;
+      let functionName: string;
 
+      // 根据 p 进行匹配的结果
+      const matches: {
+        itemName: string;
+        functionName: string;
+      }[] = [];
+
+      // 所有组件名称
       const itemNames = Array.from(ItemNames.keys());
 
-      // console.log('p', 'SystemFilterBookListAutoCompleteSelectStandard');
-
+      // loop start
       for (let i = 0; i < itemNames.length; i++) {
         // Components的key
         const _itemName = itemNames[i];
@@ -134,17 +146,37 @@ const ProxyComponent = new Proxy<{
 
         const _functionNameIndex = _functionNames.findIndex((_functionName) => {
           const concatName = `${_itemName}${_functionName}`;
+
           return p.endsWith(concatName);
         });
 
         if (_functionNameIndex !== -1) {
           itemName = _itemName;
           functionName = _functionNames[_functionNameIndex];
-          break;
+          matches.push({ itemName, functionName });
         }
       }
+      // loop end
 
-      if (!itemName || !functionName) return;
+      // 没有匹配到
+      if (matches.length === 0) {
+        return;
+      }
+
+      // 匹配大于1，进行合并后的长度从大到小排序，找出最精确的匹配值
+      if (matches.length > 1) {
+        matches.sort((t1, t2) => {
+          const str1 = `${t1.itemName}${t1.functionName}`;
+          const str2 = `${t2.itemName}${t2.functionName}`;
+
+          if (str1.length > str2.length) return -1;
+          else if (str1.length < str2.length) return 1;
+          else return 0;
+        });
+      }
+
+      itemName = matches[0].itemName;
+      functionName = matches[0].functionName;
 
       // 字典名
       const dictName = p.substring(0, p.lastIndexOf(functionName));

@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-ui-anthoc": "^2.10.28",
+    "@baifendian/adhere-mobile-ui-anthoc": "^2.10.28",
     "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
     "@baifendian/adhere-ui-forceupdate": "^2.10.28",
     "@baifendian/adhere-ui-hooks": "^2.10.28",
