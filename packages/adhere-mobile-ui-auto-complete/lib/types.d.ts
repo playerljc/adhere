@@ -10,7 +10,7 @@ export interface AutoCompleteProps {
     bodyStyle?: CSSProperties;
     placeholder?: string;
     searchBarProps?: SearchBarProps;
-    loadData?: (kw?: string) => Promise<Record<any, any>>;
+    loadData?: (kw?: string) => Promise<any>;
     rowKey?: string;
     labelProp?: string;
     valueProp?: string;
