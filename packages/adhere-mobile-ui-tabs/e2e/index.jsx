@@ -14,5 +14,5 @@ import P8 from './p8';
 import P9 from './p9';
 
 e2e.Mobile({
-  children: <P3 />,
+  children: <P10 />,
 });
