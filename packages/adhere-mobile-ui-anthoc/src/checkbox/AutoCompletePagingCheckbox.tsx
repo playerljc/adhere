@@ -1,22 +1,42 @@
 import React, { memo } from 'react';
 
 import AutoComplete from '../AutoComplete';
-import type { AutoCompletePagingCheckboxProps, DisplayNameInternal } from '../types';
+import {
+  AntMobileCheckboxItem,
+  AutoCompletePagingCheckboxProps,
+  DisplayNameInternal,
+} from '../types';
+import useAutoCompletePaging from '../useAutoCompletePaging';
 import PagingCheckbox from './PagingCheckbox';
 
 const InternalAutoCompletePagingCheckbox = memo<AutoCompletePagingCheckboxProps>(
-  ({ pagingCheckboxProps, ...autoCompleteProps }) => (
-    <AutoComplete labelProp="title" {...(autoCompleteProps ?? {})}>
-      {({ value, onChange, searchDataSource }) => (
-        <PagingCheckbox
-          value={value}
-          onChange={onChange}
-          options={searchDataSource}
-          {...(pagingCheckboxProps ?? {})}
-        />
-      )}
-    </AutoComplete>
-  ),
+  ({ pagingCheckboxProps, loadData, onDataSourceChange, ...autoCompleteProps }) => {
+    const { searchDataSource, targetPagingComponentProps, autoCompleteLoadData } =
+      useAutoCompletePaging<AntMobileCheckboxItem>({
+        defaultSearchDataSource: autoCompleteProps.searchDataSource,
+        pagingComponentProps: pagingCheckboxProps,
+        loadData,
+        onDataSourceChange,
+      });
+
+    return (
+      <AutoComplete
+        labelProp="title"
+        {...(autoCompleteProps ?? {})}
+        searchDataSource={searchDataSource.data}
+        loadData={autoCompleteLoadData}
+      >
+        {({ value, onChange, searchDataSource }) => (
+          <PagingCheckbox
+            value={value}
+            onChange={onChange}
+            options={searchDataSource}
+            {...(targetPagingComponentProps ?? {})}
+          />
+        )}
+      </AutoComplete>
+    );
+  },
 );
 
 const AutoCompletePagingCheckbox = InternalAutoCompletePagingCheckbox as DisplayNameInternal<

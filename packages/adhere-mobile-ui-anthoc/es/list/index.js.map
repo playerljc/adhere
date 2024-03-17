@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["list/index.js"],"sourcesContent":["import List from './List';\nexport default List;"],"names":["List"],"mappings":"OAAOA,SAAU,wBACFA"}
+{"version":3,"file":"index.js","sources":["list/index.js"],"sourcesContent":["import DataSourceList from './DataSourceList';\nimport List from './List';\nList.DataSourceList = DataSourceList;\nexport default List;"],"names":["DataSourceList","List"],"mappings":"OAAOA,mBAAoB,0BACpBC,SAAU,SACjBA,KAAKD,eAAiBA,8BACPC"}

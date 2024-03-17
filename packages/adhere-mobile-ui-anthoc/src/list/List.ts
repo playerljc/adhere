@@ -1,11 +1,10 @@
 import { List } from 'antd-mobile';
 import type { ListProps } from 'antd-mobile';
 
+import type { ListHOCComponent } from '../types';
 import { createFactory } from '../util';
 
-const ListHOC: typeof List & {
-  defaultProps?: Partial<ListProps>;
-} = createFactory<ListProps>(List, {});
+const ListHOC: ListHOCComponent = createFactory<ListProps>(List, {});
 
 ListHOC.displayName = 'List';
 

@@ -1,4 +1,4 @@
-import { useUpdateEffect } from 'ahooks';
+import { useMount, useUpdateEffect } from 'ahooks';
 import difference from 'lodash/difference';
 import React, { memo, useMemo, useRef, useState } from 'react';
 import { useImmer } from 'use-immer';
@@ -15,7 +15,8 @@ import InternalCascaderView from './InternalCascaderView';
 const InternalAsyncCascader = memo<AsyncCascaderViewProps>(
   ({ loadData, onDataSourceChange, isEveryAsync = false, ...internalCascaderViewProps }) => {
     const [options, setOptions] = useImmer<AsyncCascaderViewProps['options']>(
-      internalCascaderViewProps.options,
+      // internalCascaderViewProps.options,
+      [],
     );
 
     // 加载状态
@@ -196,6 +197,12 @@ const InternalAsyncCascader = memo<AsyncCascaderViewProps>(
     useUpdateEffect(() => {
       onDataSourceChange?.(options);
     }, [options]);
+
+    useMount(() => {
+      loadData?.(undefined)?.then((_options) => {
+        setOptions(_options);
+      });
+    });
 
     return (
       <InternalCascaderView

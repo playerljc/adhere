@@ -10,6 +10,8 @@ import type {
   CheckListItemProps,
   DatePickerViewProps,
   DialogProps,
+  ListItemProps,
+  ListProps,
   ModalProps,
   PopupProps,
   PullToRefreshProps,
@@ -300,7 +302,7 @@ export type AutoCompleteSelectorProps = AdhereMobileAutoCompleteProps & {
 
 export type AutoCompleteProps = AdhereMobileAutoCompleteProps;
 
-export type PagingProps = {
+export type PRSLProps = {
   className?: string;
   style?: CSSProperties;
   scrollLoadProps?: ScrollLoadProps;
@@ -314,29 +316,45 @@ export type PagingProps = {
   children?: any;
 };
 
-export type PagingHandle = {
+export type PRSLHandle = {
   getScrollEl: () => HTMLElement;
   hideAll: ScrollLoadRefHandle['hideAll'];
 };
 
-export type StaticPagingProps<Option> = Omit<
-  PagingProps,
+export type PagingProps<Option> = Omit<
+  PRSLProps,
   'hasMore' | 'isLoading' | 'onLoadMore' | 'onRefresh'
 > & {
+  // 本地数据
   options?: Option[];
+  // 默认分页
   defaultPaging?: {
     page: number;
     limit: number;
+    // 数据总数(只有在远程加载数据时才需要)
+    total?: number;
   };
   children?: any;
+  // 是否本地加载数据
+  isLocal?: boolean;
+  // 异步加载数据的函数
+  onLoad?: (
+    page: number,
+    limit: number,
+  ) => Promise<{
+    total: number;
+    data: Option[];
+  }>;
+  // 数据源变化时的回调
+  onDataSourceChange?: (page: number, dataSource: Option[]) => void;
 };
 
 export type PagingCheckListProps = CheckListProps & {
-  pagingProps: StaticPagingProps<CheckListItemProps>;
+  pagingProps: PagingProps<CheckListItemProps>;
 };
 
 export type PagingCheckboxCheckListProps = CheckboxCheckListProps & {
-  pagingProps: StaticPagingProps<CheckListItemProps>;
+  pagingProps: PagingProps<CheckListItemProps>;
 };
 
 export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
@@ -345,43 +363,55 @@ export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps &
   PagingCheckboxCheckListProps;
 
 export type PagingCheckboxProps = CheckboxGroupProps & {
-  pagingProps: StaticPagingProps<AntMobileCheckboxItem>;
+  pagingProps: PagingProps<AntMobileCheckboxItem>;
 };
 
 export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
 
 export type PagingRadioProps = RadioGroupProps & {
-  pagingProps: StaticPagingProps<AntMobileRadioItem>;
+  pagingProps: PagingProps<AntMobileRadioItem>;
 };
 
 export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
 
 export type PagingSelectorProps = SelectorProps<any> & {
-  pagingProps: StaticPagingProps<SelectorOption<any>>;
+  pagingProps: PagingProps<SelectorOption<any>>;
 };
 
 export type FilterPagingSelectorProps = FilterSelectorProps & PagingSelectorProps;
 
-export type AutoCompletePagingCheckListProps = AutoCompleteProps & {
+export type AutoCompletePagingProps = Omit<AutoCompleteProps, 'loadData'> & {
+  loadData?: (
+    kw: string | undefined,
+    page?: number,
+    limit?: number,
+  ) => Promise<{
+    total: number;
+    data: any[];
+  }>;
+  onDataSourceChange?: (page: number, dataSource: any[]) => void;
+};
+
+export type AutoCompletePagingCheckListProps = AutoCompletePagingProps & {
   pagingCheckListProps: Omit<PagingCheckListProps, 'value' | 'onChange' | 'options'>;
 };
 
-export type AutoCompletePagingCheckboxCheckListProps = AutoCompleteProps & {
+export type AutoCompletePagingCheckboxCheckListProps = AutoCompletePagingProps & {
   pagingCheckboxCheckListProps: Omit<
     PagingCheckboxCheckListProps,
     'value' | 'onChange' | 'options'
   >;
 };
 
-export type AutoCompletePagingCheckboxProps = AutoCompleteProps & {
+export type AutoCompletePagingCheckboxProps = AutoCompletePagingProps & {
   pagingCheckboxProps: Omit<PagingCheckboxProps, 'value' | 'onChange' | 'options'>;
 };
 
-export type AutoCompletePagingRadioProps = AutoCompleteProps & {
+export type AutoCompletePagingRadioProps = AutoCompletePagingProps & {
   pagingRadioProps: Omit<PagingRadioProps, 'value' | 'onChange' | 'options'>;
 };
 
-export type AutoCompletePagingSelectorProps = AutoCompleteProps & {
+export type AutoCompletePagingSelectorProps = AutoCompletePagingProps & {
   pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;
 };
 
@@ -677,8 +707,22 @@ export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> 
   isEveryAsync?: boolean;
   // 异步加载数据的函数
   loadData?: (
-    defaultId: string | number,
+    defaultId: string | number | undefined,
     cascadeParams?: any,
   ) => Promise<InternalCascaderViewProps['options']>;
   onDataSourceChange?: (treeData: InternalCascaderViewProps['options']) => void;
+};
+
+export type DataSourceListProps = ListProps & {
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
+  dataSource?: (Omit<ListItemProps, 'onClick' | 'children'> & {
+    key: string | number;
+  })[];
+  renderItem?: (item: Omit<ListItemProps, 'onClick' | 'children'>) => ReactNode;
+  onClick?: (item: Omit<ListItemProps, 'onClick' | 'children'>) => void;
+};
+
+export type ListHOCComponent = ReturnType<typeof createFactory<ListProps>> & {
+  DataSourceList: FC<DataSourceListProps>;
 };

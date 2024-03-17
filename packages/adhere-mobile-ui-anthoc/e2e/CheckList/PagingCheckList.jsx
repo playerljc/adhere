@@ -20,11 +20,21 @@ const defaultPaging = {
 export default () => {
   return (
     <CheckList.PagingCheckList
-      options={options}
       multiple
       pagingProps={{
         style: { height: '100%' },
         defaultPaging,
+        isLocal: false,
+        onLoad: (page, limit) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                data: options.slice((page - 1) * limit, page * limit),
+                total: options.length,
+              });
+            }, 1000);
+          });
+        },
       }}
     />
   );

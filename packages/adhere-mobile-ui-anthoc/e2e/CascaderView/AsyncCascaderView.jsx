@@ -29,7 +29,7 @@ export default () => {
 
   return (
     <CascaderView.AsyncCascaderView
-      options={options}
+      // options={options}
       isEveryAsync
       value={value}
       treeDataSimpleMode
@@ -52,7 +52,9 @@ export default () => {
           //   }, 1000);
           // }
           // 拉平
-          if (!objs[defaultId]) {
+          if (!defaultId) {
+            resolve(options);
+          } else if (!objs[defaultId]) {
             reject();
           } else {
             setTimeout(() => {

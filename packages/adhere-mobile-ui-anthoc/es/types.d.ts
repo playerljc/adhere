@@ -1,4 +1,4 @@
-import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CascaderViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
+import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CascaderViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, ListItemProps, ListProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
 import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
@@ -203,7 +203,7 @@ export type AutoCompleteSelectorProps = AdhereMobileAutoCompleteProps & {
     selectorProps?: SelectorProps<any>;
 };
 export type AutoCompleteProps = AdhereMobileAutoCompleteProps;
-export type PagingProps = {
+export type PRSLProps = {
     className?: string;
     style?: CSSProperties;
     scrollLoadProps?: ScrollLoadProps;
@@ -216,51 +216,65 @@ export type PagingProps = {
     onLoadMore: ScrollLoadProps['onScrollBottom'];
     children?: any;
 };
-export type PagingHandle = {
+export type PRSLHandle = {
     getScrollEl: () => HTMLElement;
     hideAll: ScrollLoadRefHandle['hideAll'];
 };
-export type StaticPagingProps<Option> = Omit<PagingProps, 'hasMore' | 'isLoading' | 'onLoadMore' | 'onRefresh'> & {
+export type PagingProps<Option> = Omit<PRSLProps, 'hasMore' | 'isLoading' | 'onLoadMore' | 'onRefresh'> & {
     options?: Option[];
     defaultPaging?: {
         page: number;
         limit: number;
+        total?: number;
     };
     children?: any;
+    isLocal?: boolean;
+    onLoad?: (page: number, limit: number) => Promise<{
+        total: number;
+        data: Option[];
+    }>;
+    onDataSourceChange?: (page: number, dataSource: Option[]) => void;
 };
 export type PagingCheckListProps = CheckListProps & {
-    pagingProps: StaticPagingProps<CheckListItemProps>;
+    pagingProps: PagingProps<CheckListItemProps>;
 };
 export type PagingCheckboxCheckListProps = CheckboxCheckListProps & {
-    pagingProps: StaticPagingProps<CheckListItemProps>;
+    pagingProps: PagingProps<CheckListItemProps>;
 };
 export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
 export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps & PagingCheckboxCheckListProps;
 export type PagingCheckboxProps = CheckboxGroupProps & {
-    pagingProps: StaticPagingProps<AntMobileCheckboxItem>;
+    pagingProps: PagingProps<AntMobileCheckboxItem>;
 };
 export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
 export type PagingRadioProps = RadioGroupProps & {
-    pagingProps: StaticPagingProps<AntMobileRadioItem>;
+    pagingProps: PagingProps<AntMobileRadioItem>;
 };
 export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
 export type PagingSelectorProps = SelectorProps<any> & {
-    pagingProps: StaticPagingProps<SelectorOption<any>>;
+    pagingProps: PagingProps<SelectorOption<any>>;
 };
 export type FilterPagingSelectorProps = FilterSelectorProps & PagingSelectorProps;
-export type AutoCompletePagingCheckListProps = AutoCompleteProps & {
+export type AutoCompletePagingProps = Omit<AutoCompleteProps, 'loadData'> & {
+    loadData?: (kw: string | undefined, page?: number, limit?: number) => Promise<{
+        total: number;
+        data: any[];
+    }>;
+    onDataSourceChange?: (page: number, dataSource: any[]) => void;
+};
+export type AutoCompletePagingCheckListProps = AutoCompletePagingProps & {
     pagingCheckListProps: Omit<PagingCheckListProps, 'value' | 'onChange' | 'options'>;
 };
-export type AutoCompletePagingCheckboxCheckListProps = AutoCompleteProps & {
+export type AutoCompletePagingCheckboxCheckListProps = AutoCompletePagingProps & {
     pagingCheckboxCheckListProps: Omit<PagingCheckboxCheckListProps, 'value' | 'onChange' | 'options'>;
 };
-export type AutoCompletePagingCheckboxProps = AutoCompleteProps & {
+export type AutoCompletePagingCheckboxProps = AutoCompletePagingProps & {
     pagingCheckboxProps: Omit<PagingCheckboxProps, 'value' | 'onChange' | 'options'>;
 };
-export type AutoCompletePagingRadioProps = AutoCompleteProps & {
+export type AutoCompletePagingRadioProps = AutoCompletePagingProps & {
     pagingRadioProps: Omit<PagingRadioProps, 'value' | 'onChange' | 'options'>;
 };
-export type AutoCompletePagingSelectorProps = AutoCompleteProps & {
+export type AutoCompletePagingSelectorProps = AutoCompletePagingProps & {
     pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;
 };
 export type PopoverTriggerProps = BaseType & {
@@ -449,7 +463,19 @@ export type AsyncCascaderViewProps = Omit<InternalCascaderViewProps, 'options'> 
         isLoaded?: boolean;
     };
     isEveryAsync?: boolean;
-    loadData?: (defaultId: string | number, cascadeParams?: any) => Promise<InternalCascaderViewProps['options']>;
+    loadData?: (defaultId: string | number | undefined, cascadeParams?: any) => Promise<InternalCascaderViewProps['options']>;
     onDataSourceChange?: (treeData: InternalCascaderViewProps['options']) => void;
+};
+export type DataSourceListProps = ListProps & {
+    wrapperClassName?: string;
+    wrapperStyle?: CSSProperties;
+    dataSource?: (Omit<ListItemProps, 'onClick' | 'children'> & {
+        key: string | number;
+    })[];
+    renderItem?: (item: Omit<ListItemProps, 'onClick' | 'children'>) => ReactNode;
+    onClick?: (item: Omit<ListItemProps, 'onClick' | 'children'>) => void;
+};
+export type ListHOCComponent = ReturnType<typeof createFactory<ListProps>> & {
+    DataSourceList: FC<DataSourceListProps>;
 };
 export {};

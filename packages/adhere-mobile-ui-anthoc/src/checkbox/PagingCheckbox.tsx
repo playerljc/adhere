@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
 
-import StaticPaging from '../StaticPaging';
+import Paging from '../Paging';
 import type { AntMobileCheckboxItem, DisplayNameInternal, PagingCheckboxProps } from '../types';
 import CheckboxGroup from './CheckboxGroup';
 
 const InternalPagingCheckbox = memo<PagingCheckboxProps>(
   ({ options, pagingProps, ...checkboxGroupProps }) => (
-    <StaticPaging<AntMobileCheckboxItem> options={options} {...pagingProps}>
+    <Paging<AntMobileCheckboxItem> options={options} {...pagingProps}>
       <CheckboxGroup {...checkboxGroupProps} />
-    </StaticPaging>
+    </Paging>
   ),
 );
 

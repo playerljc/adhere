@@ -20,7 +20,7 @@ const options = Array.from({ length: 1000 }).map((t, _index) => {
 });
 
 export default () => {
-  const [searchDataSource, setSearchDataSource] = useState([]);
+  // const [searchDataSource, setSearchDataSource] = useState([]);
 
   const [value, setValue] = useState();
 
@@ -30,28 +30,44 @@ export default () => {
       style={{ height: '100%' }}
       bodyStyle={{ overflowY: 'hidden' }}
       value={value}
-      loadData={(_kw) => {
-        if (!_kw) {
-          setSearchDataSource([]);
-          return;
-        }
+      loadData={(_kw, page, limit) => {
+        return new Promise((resolve) => {
+          if (!_kw) {
+            resolve({
+              total: 0,
+              data: [],
+            });
 
-        const handler = MobileGlobalIndicator.show();
+            // setSearchDataSource([]);
 
-        setTimeout(() => {
-          setSearchDataSource(options.filter((_option) => _option.title.indexOf(_kw) !== -1));
+            return;
+          }
 
-          MobileGlobalIndicator.hide(handler);
-        }, 500);
+          const handler = MobileGlobalIndicator.show();
+
+          setTimeout(() => {
+            const data = options.filter((t) => t.title.indexOf(_kw) > -1);
+
+            MobileGlobalIndicator.hide(handler);
+
+            resolve({
+              total: data.length,
+              data: data.slice((page - 1) * limit, page * limit),
+            });
+
+            // setSearchDataSource(data);
+          }, 500);
+        });
       }}
       onChange={(_value) => {
         setValue(_value);
       }}
-      searchDataSource={searchDataSource}
+      // searchDataSource={searchDataSource}
       pagingRadioProps={{
         spaceStyle: { '--gap': '23px' },
         pagingProps: {
           style: { height: '100%' },
+          isLocal: false,
         },
       }}
     />

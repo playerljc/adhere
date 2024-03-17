@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { memo } from 'react';
 
 import ListFilter from '../ListFilter';
-import StaticPaging from '../StaticPaging';
+import Paging from '../Paging';
 import type { AntMobileCheckboxItem, FilterPagingCheckboxProps } from '../types';
 import { DisplayNameInternal } from '../types';
 import CheckboxGroup from './CheckboxGroup';
@@ -38,9 +38,9 @@ const InternalFilterPagingCheckbox = memo<FilterPagingCheckboxProps>(
         bodyWrapperStyle={bodyWrapperStyle ?? {}}
         renderEmpty={renderEmpty}
         children={(_options) => (
-          <StaticPaging<AntMobileCheckboxItem> options={_options} {...pagingProps}>
+          <Paging<AntMobileCheckboxItem> options={_options} {...pagingProps} isLocal>
             <CheckboxGroup {...checkboxGroupProps} />
-          </StaticPaging>
+          </Paging>
         )}
       />
     );

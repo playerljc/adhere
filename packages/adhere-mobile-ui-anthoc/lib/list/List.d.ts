@@ -1,6 +1,3 @@
-import { List } from 'antd-mobile';
-import type { ListProps } from 'antd-mobile';
-declare const ListHOC: typeof List & {
-    defaultProps?: Partial<ListProps>;
-};
+import type { ListHOCComponent } from '../types';
+declare const ListHOC: ListHOCComponent;
 export default ListHOC;

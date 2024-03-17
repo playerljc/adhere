@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { memo } from 'react';
 
 import ListFilter from '../ListFilter';
-import StaticPaging from '../StaticPaging';
+import Paging from '../Paging';
 import type { FilterPagingCheckListProps } from '../types';
 import { DisplayNameInternal } from '../types';
 import CheckList from './CheckList';
@@ -35,9 +35,9 @@ const InternalFilterPagingCheckList = memo<FilterPagingCheckListProps>(
       bodyWrapperStyle={bodyWrapperStyle ?? {}}
       renderEmpty={renderEmpty}
       children={(_options) => (
-        <StaticPaging<CheckListItemProps> {...pagingProps} options={_options}>
+        <Paging<CheckListItemProps> {...pagingProps} options={_options} isLocal>
           <CheckList {...checkListProps} />
-        </StaticPaging>
+        </Paging>
       )}
     />
   ),

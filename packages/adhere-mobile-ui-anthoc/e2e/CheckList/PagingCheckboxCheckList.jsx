@@ -22,13 +22,23 @@ export default () => {
 
   return (
     <CheckList.PagingCheckboxCheckList
-      options={options}
       multiple
       value={value}
       onChange={setValue}
       pagingProps={{
         style: { height: '100%' },
         defaultPaging,
+        isLocal: false,
+        onLoad: (page, limit) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                data: options.slice((page - 1) * limit, page * limit),
+                total: options.length,
+              });
+            }, 1000);
+          });
+        },
       }}
     />
   );

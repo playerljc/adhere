@@ -20,7 +20,7 @@ export default () => {
   return (
     <Checkbox.CheckAllCheckbox
       spaceStyle={{ '--gap': '24px' }}
-      bodyWrapperStyle={{ padding: 15, paddingTop: 0 }}
+      checkAllBodyWrapperStyle={{ padding: 15, paddingTop: 0 }}
       value={value}
       onChange={setValue}
       onCheckAllChange={setValue}

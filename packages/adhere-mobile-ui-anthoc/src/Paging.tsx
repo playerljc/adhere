@@ -1,144 +1,227 @@
-import { Skeleton } from 'antd';
-import { DotLoading, PullToRefresh } from 'antd-mobile';
-import classNames from 'classnames';
-import React, {
-  PropsWithoutRef,
-  RefAttributes,
-  forwardRef,
-  memo,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-} from 'react';
-import type { ReactElement } from 'react';
+import { useMount, useUpdateEffect, useUpdateLayoutEffect } from 'ahooks';
+import type { Draft } from 'immer';
+import React, { cloneElement, useMemo, useRef, useState } from 'react';
+import { useImmer } from 'use-immer';
 
-import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
-import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
-import Intl from '@baifendian/adhere-util-intl';
 
-import type { PagingHandle, PagingProps } from './types';
+import PRSL from './PRSL';
+import type { PRSLHandle, PagingProps } from './types';
 
-const selectorPrefix = 'adhere-mobile-ui-ant-hoc-paging';
+export const DEFAULT_LIMIT = 20;
 
-const Paging = memo<PropsWithoutRef<PagingProps> & RefAttributes<PagingHandle>>(
-  forwardRef<PagingHandle, PagingProps>(
-    (
-      {
-        className,
-        style,
-        scrollLoadProps,
-        pullToRefreshProps,
-        isLoading,
-        firstLoading,
-        loading,
-        onRefreshBefore,
-        onRefresh,
-        onLoadMore,
-        children,
-      },
-      ref,
-    ) => {
-      function getScrollEl() {
-        return scrollLoadRef.current?.getScrollContainer() ?? document.body;
-      }
+/**
+ * Paging
+ * @param options
+ * @param children
+ * @param defaultPaging
+ * @param isLocal
+ * @param onLoad
+ * @param onDataSourceChange
+ * @param prslProps
+ */
+function Paging<Option>({
+  options,
+  children,
+  defaultPaging,
+  isLocal = true,
+  onLoad,
+  onDataSourceChange,
+  ...prslProps
+}: PagingProps<Option>) {
+  const pagingRef = useRef<PRSLHandle>();
+  const callbackHandler = useRef<Function | null>(null);
+  const status = useRef(ScrollLoad.NORMAL);
 
-      function renderChildren() {
-        if (isFirst.current && !isFirstLoading.current && isLoading) {
-          isFirstLoading.current = true;
-        }
+  const [loading, setLoading] = useState(true);
 
-        if (isFirst.current && isFirstLoading.current && !isLoading) {
-          isFirst.current = false;
-          isFirstLoading.current = false;
-        }
+  const [paging, setPaging] = useImmer<{
+    page: number;
+    limit: number;
+    total?: number;
+    data: Option[];
+  }>({
+    page: 1,
+    limit: DEFAULT_LIMIT,
+    data: [],
+    ...(defaultPaging ?? {}),
+  });
 
-        if (isFirst.current) {
-          return renderFirstLoading();
-        }
+  function onRefresh() {
+    reset();
+  }
 
-        return renderNormal();
-      }
+  function onLoadMore(callback) {
+    if (status.current === ScrollLoad.EMPTY) {
+      status.current = ScrollLoad.EMPTY;
+      callback(ScrollLoad.EMPTY);
+      return;
+    }
 
-      const scrollLoadRef = useRef<ScrollLoadRefHandle>();
+    callbackHandler.current = callback;
 
-      const isFirst = useRef(true);
+    appendData();
+  }
 
-      const isFirstLoading = useRef(false);
+  function resetScrollLoad() {
+    const scrollEl = pagingRef?.current?.getScrollEl?.();
 
-      const renderFirstLoading = useCallback(() => {
-        if (firstLoading) {
-          return firstLoading();
-        }
+    if (scrollEl) {
+      scrollEl.scrollTop = 0;
+    }
 
-        const result: ReactElement[] = [];
+    pagingRef?.current?.hideAll?.();
 
-        for (let i = 0; i < 15; i++) {
-          result.push(<Skeleton key={i + 1} loading active avatar />);
-        }
+    callbackHandler.current = null;
+    status.current = ScrollLoad.NORMAL;
+  }
 
-        return <div className={`${selectorPrefix}-first-loading`}>{result}</div>;
-      }, [firstLoading]);
+  function resetPagingToLocal() {
+    setPaging((draft) => {
+      const newPaging: typeof defaultPaging = defaultPaging ?? {
+        page: 1,
+        limit: DEFAULT_LIMIT,
+      };
 
-      const renderLoading = useCallback(() => {
-        if (loading) return loading();
+      const page = newPaging.page ?? 1;
+      const limit = newPaging.limit ?? DEFAULT_LIMIT;
 
-        return (
-          <div className={`${selectorPrefix}-loading`}>
-            <div className={`${selectorPrefix}-loading-dot`}>
-              <DotLoading color="primary" />
-            </div>
-            <div>{`${Intl.v('数据加载中')}`}...</div>
-          </div>
-        );
-      }, [loading]);
+      draft.page = page;
+      draft.limit = limit;
+      draft.data = (options ?? []).slice(
+        (draft.page - 1) * draft.limit,
+        draft.page * draft.limit,
+      ) as Draft<Option>[];
+    });
+  }
 
-      const renderNormal = useCallback(
-        () => (
-          <PullToRefresh
-            {...(pullToRefreshProps ?? {})}
-            onRefresh={() => {
-              const resolve = onRefreshBefore ? onRefreshBefore() : Promise.resolve();
+  function resetPagingToRemote() {
+    if (onLoad) {
+      onLoad?.(1, paging.limit).then(({ total, data }) => {
+        onDataSourceChange?.(1, data);
 
-              return resolve.then(() => onRefresh?.());
-            }}
-          >
-            <ScrollLoad
-              // @ts-ignore
-              ref={scrollLoadRef}
-              renderLoading={renderLoading}
-              onScrollBottom={onLoadMore}
-              distance={scrollLoadProps?.distance || 50}
-              {...(scrollLoadProps || {})}
-              className={classNames(
-                scrollLoadProps?.className ?? '',
-                `${selectorPrefix}-scroll-load`,
-              )}
-            >
-              {children}
-            </ScrollLoad>
+        setPaging((draft) => {
+          const newPaging: typeof defaultPaging = defaultPaging ?? {
+            page: 1,
+            limit: DEFAULT_LIMIT,
+          };
 
-            <BackTopAnimation
-              getContainer={() => getScrollEl()}
-              onTrigger={() => Promise.resolve()}
-            />
-          </PullToRefresh>
-        ),
-        [onRefreshBefore, onRefresh, onLoadMore, scrollLoadProps, pullToRefreshProps, children],
-      );
+          const page = newPaging.page ?? 1;
+          const limit = newPaging.limit ?? DEFAULT_LIMIT;
 
-      useImperativeHandle(ref, () => ({
-        getScrollEl,
-        hideAll: () => scrollLoadRef?.current?.hideAll?.(),
-      }));
+          draft.page = page;
+          draft.limit = limit;
+          draft.total = total;
+          draft.data = data as Draft<Option>[];
+        });
+      });
+    }
+  }
 
-      return (
-        <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-          {renderChildren()}
-        </div>
-      );
-    },
-  ),
-);
+  function resetPaging() {
+    if (isLocal) {
+      resetPagingToLocal();
+    }
+
+    resetPagingToRemote();
+  }
+
+  function reset() {
+    resetScrollLoad();
+    resetPaging();
+  }
+
+  function appendDataToLocal() {
+    setPaging((draft) => {
+      draft.page = draft.page + 1;
+
+      draft.data = [
+        ...draft.data,
+        ...(options ?? []).slice((draft.page - 1) * draft.limit, draft.page * draft.limit),
+      ] as Draft<Option>[];
+    });
+  }
+
+  function appendDataToRemote() {
+    if (onLoad) {
+      onLoad?.(paging.page + 1, paging.limit).then(({ total, data = [] }) => {
+        onDataSourceChange?.(paging.page + 1, data);
+
+        setPaging((draft) => {
+          draft.page = draft.page + 1;
+          draft.total = total;
+          draft.data = [...draft.data, ...data] as Draft<Option>[];
+        });
+      });
+    }
+  }
+
+  /**
+   * appendData
+   * @description 追加数据
+   */
+  function appendData() {
+    if (isLocal) {
+      appendDataToLocal();
+    }
+
+    appendDataToRemote();
+  }
+  function getPagesByOptions() {
+    const length = (options ?? []).length;
+
+    return Math.floor(length / paging.limit) + (length % paging.limit === 0 ? 0 : 1);
+  }
+  function getPagesByPaging() {
+    return (paging?.total ?? 0) / paging.limit;
+  }
+
+  // 总页数
+  const pages = useMemo(() => {
+    if (isLocal) {
+      return getPagesByOptions();
+    }
+
+    return getPagesByPaging();
+  }, [paging.limit, paging?.total, options, isLocal]);
+
+  // 子组件
+  const pagingChildren = useMemo(() => {
+    return cloneElement(children, {
+      ...children.props,
+      options: paging.data,
+    });
+  }, [paging.data, children]);
+
+  useUpdateLayoutEffect(() => {
+    if (callbackHandler.current) {
+      status.current = paging.page < pages ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
+
+      callbackHandler.current(status.current);
+    }
+  }, [paging.data, pages]);
+
+  useUpdateEffect(() => {
+    reset();
+  }, [options, defaultPaging]);
+
+  useMount(() => {
+    setLoading(false);
+    resetPaging();
+  });
+
+  return (
+    <PRSL
+      // @ts-ignore
+      ref={pagingRef}
+      isLoading={loading}
+      onRefresh={onRefresh}
+      onLoadMore={onLoadMore}
+      {...prslProps}
+    >
+      {pagingChildren}
+    </PRSL>
+  );
+}
 
 export default Paging;

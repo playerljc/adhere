@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { memo } from 'react';
 
 import ListFilter from '../ListFilter';
-import StaticPaging from '../StaticPaging';
+import Paging from '../Paging';
 import type { FilterPagingSelectorProps } from '../types';
 import { DisplayNameInternal } from '../types';
 import Selector from './Selector';
@@ -35,9 +35,9 @@ const InternalFilterPagingSelector = memo<FilterPagingSelectorProps>(
       bodyWrapperStyle={bodyWrapperStyle ?? {}}
       renderEmpty={renderEmpty}
       children={(_options) => (
-        <StaticPaging<SelectorOption<any>> options={_options} {...pagingProps}>
+        <Paging<SelectorOption<any>> options={_options} {...pagingProps} isLocal>
           <Selector {...selectorProps} />
-        </StaticPaging>
+        </Paging>
       )}
     />
   ),

@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
 
-import StaticPaging from '../StaticPaging';
+import Paging from '../Paging';
 import type { AntMobileRadioItem, DisplayNameInternal, PagingRadioProps } from '../types';
 import RadioGroup from './RadioGroup';
 
 const InternalPagingRadio = memo<PagingRadioProps>(
   ({ options, pagingProps, ...radioGroupProps }) => (
-    <StaticPaging<AntMobileRadioItem> options={options} {...pagingProps}>
+    <Paging<AntMobileRadioItem> options={options} {...pagingProps}>
       <RadioGroup {...radioGroupProps} />
-    </StaticPaging>
+    </Paging>
   ),
 );
 

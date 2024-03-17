@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { memo } from 'react';
 
 import ListFilter from '../ListFilter';
-import StaticPaging from '../StaticPaging';
+import Paging from '../Paging';
 import type { AntMobileRadioItem, FilterPagingRadioProps } from '../types';
 import { DisplayNameInternal } from '../types';
 import RadioGroup from './RadioGroup';
@@ -34,9 +34,9 @@ const InternalFilterPagingRadio = memo<FilterPagingRadioProps>(
       bodyWrapperStyle={bodyWrapperStyle ?? {}}
       renderEmpty={renderEmpty}
       children={(_options) => (
-        <StaticPaging<AntMobileRadioItem> options={_options} {...pagingProps}>
+        <Paging<AntMobileRadioItem> options={_options} {...pagingProps} isLocal>
           <RadioGroup {...radioGroupProps} />
-        </StaticPaging>
+        </Paging>
       )}
     />
   ),
