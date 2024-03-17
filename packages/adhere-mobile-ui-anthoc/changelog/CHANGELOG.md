@@ -24,6 +24,7 @@
 * 对radio进行增强
 * 对selector进行增强
 * 对CascaderView进行增强
+* 对List进行增强
 
 # 1.0.0
 
