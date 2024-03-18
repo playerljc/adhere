@@ -42,7 +42,10 @@ const InternalPlayGroundPage = memo<
     const { scrollEl } = useContext(PlayGroundPageContext);
 
     function getAnchors() {
+      console.log('children', children);
+
       return children
+        .flat()
         .filter(
           (c) =>
             'type' in c &&

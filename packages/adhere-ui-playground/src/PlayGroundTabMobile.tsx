@@ -9,7 +9,7 @@ import APlayGround, { APlayGroundDefaultProps, APlayGroundPropTypes } from './AP
 import { selectPrefix } from './APlayGround';
 import Card from './Card';
 import CodeTabPanel, { CodeTabPanelDefaultProps, CodeTabPanelPropTypes } from './CodeTabPanel';
-import { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
+import type { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
 
 /**
  * PlayGroundTabMobile
@@ -136,7 +136,6 @@ class PlayGroundTabMobile extends APlayGround<PlayGroundTabMobileProps, PlayGrou
           <div
             className={`${selectPrefix}-mobile-display-qr-code-mask`}
             onClick={() => {
-              console.log('click qr mask');
               this.setState({
                 qrcode: undefined,
               });

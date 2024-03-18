@@ -1,6 +1,6 @@
 import React from 'react';
 import APlayGround from './APlayGround';
-import { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
+import type { PlayGroundTabMobileProps, PlayGroundTabMobileState } from './types';
 /**
  * PlayGroundTabMobile
  * @class PlayGroundTabMobile
