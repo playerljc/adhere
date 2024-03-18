@@ -97,9 +97,7 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="MobileTimePickerView">
-        <p>
-          <p>时间选择</p>
-        </p>
+        <p>时间选择</p>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />

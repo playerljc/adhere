@@ -93,6 +93,7 @@ const {
   MobileTabs,
   MobileTimePickerView,
   MobileAutoComplete,
+  MobileAntHOC,
 } = Components;
 
 export default () => [
@@ -599,6 +600,11 @@ export default () => [
                 path: '/adhere/component/mobile/autocomplete',
                 name: 'AutoComplete',
                 component: MobileAutoComplete,
+              },
+              {
+                path: '/adhere/component/mobile/anthoc',
+                name: 'AntHOC',
+                component: MobileAntHOC,
               },
             ],
           },

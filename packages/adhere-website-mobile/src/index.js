@@ -18,6 +18,8 @@ import Router from '@/lib/Router';
 
 import SelfUtil from './util';
 
+import '@baifendian/adhere-mobile-ui-anthoc/lib/index.less';
+import '@baifendian/adhere-ui-anthoc/lib/index.less';
 import '@baifendian/adhere/lib/css.less';
 
 import styles from './index.less';

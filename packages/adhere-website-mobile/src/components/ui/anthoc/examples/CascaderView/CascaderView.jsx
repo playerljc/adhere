@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import CascaderView from '../../src/cascader-view';
+import { CascaderView } from '@baifendian/adhere-mobile-ui-anthoc';
 
 const options = [
   {

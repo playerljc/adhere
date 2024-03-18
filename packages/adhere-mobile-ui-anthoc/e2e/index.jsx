@@ -74,5 +74,5 @@ import TimeModalTimestampValueHOC from './TimeModal/TimestampValueHoc';
 import TimePopup from './TimePopup/TimePopup';
 
 e2e.Mobile({
-  children: <AsyncCascaderView />,
+  children: <PagingCheckbox />,
 });

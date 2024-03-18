@@ -124,9 +124,7 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="MobileAutoComplete">
-        <p>
-          <p>自动补全</p>
-        </p>
+        <p>自动补全</p>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />

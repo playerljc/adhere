@@ -65,9 +65,7 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="MobileSuccessPrompt">
-        <p>
-          <p>成功的提示(就是为了全局统一)</p>
-        </p>
+        <p>成功的提示(就是为了全局统一)</p>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />

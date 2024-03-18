@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
+import { CascaderView } from '@baifendian/adhere-mobile-ui-anthoc';
 import Mock from '@baifendian/adhere-mock';
-
-import CascaderView from '../../src/cascader-view';
 
 import './index.less';
 

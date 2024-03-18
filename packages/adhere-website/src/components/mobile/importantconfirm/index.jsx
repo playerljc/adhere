@@ -66,9 +66,7 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="MobileImportantConfirm">
-        <p>
-          <p>重要操作确认提示</p>
-        </p>
+        <p>重要操作确认提示</p>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />

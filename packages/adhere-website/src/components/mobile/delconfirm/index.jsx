@@ -66,9 +66,7 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="MobileDelConfirm">
-        <p>
-          <p>删除确认提示</p>
-        </p>
+        <p>删除确认提示</p>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />

@@ -1,10 +1,9 @@
 import { Button, Form } from 'antd-mobile';
 import React from 'react';
 
+import { CascaderView } from '@baifendian/adhere-mobile-ui-anthoc';
 import Mock from '@baifendian/adhere-mock';
 import { AsyncTreeEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
-
-import CascaderView from '../../src/cascader-view';
 
 import './index.less';
 
@@ -81,7 +80,7 @@ export default () => {
                 // }
                 // 拉平
                 if (!objs[defaultId]) {
-                  reject();
+                  resolve(options);
                 } else {
                   setTimeout(() => {
                     resolve(

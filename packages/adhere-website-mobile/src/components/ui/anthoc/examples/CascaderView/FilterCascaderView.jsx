@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
-import CascaderView from '../../src/cascader-view';
+import { CascaderView } from '@baifendian/adhere-mobile-ui-anthoc';
 
 import './index.less';
 

@@ -161,6 +161,15 @@ module.exports = {
         [
           'import',
           {
+            libraryName: '@baifendian/adhere-mobile-ui-anthoc',
+            libraryDirectory: 'es',
+            style: false,
+          },
+          'adhere-mobile-ui-anthoc',
+        ],
+        [
+          'import',
+          {
             libraryName: 'antd-mobile',
             libraryDirectory: 'es/components',
             style: false,

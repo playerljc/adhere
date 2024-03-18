@@ -2,9 +2,8 @@ import { Button, Form } from 'antd-mobile';
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 
+import { CascaderView } from '@baifendian/adhere-mobile-ui-anthoc';
 import { TreeEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
-
-import CascaderView from '../../src/cascader-view';
 
 import './index.less';
 

@@ -23,6 +23,7 @@ import SelfUtil from './util';
 
 import 'nprogress/nprogress.css';
 
+import '@baifendian/adhere-ui-anthoc/lib/index.less';
 import '@baifendian/adhere/lib/css.less';
 
 // import '@baifendian/adhere/lib/index.less';
