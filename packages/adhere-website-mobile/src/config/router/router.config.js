@@ -1,7 +1,7 @@
-import TabsHome from '@/components/ui/tabs/Home';
-import TabsMessage from '@/components/ui/tabs/Message';
-import TabsPersonalCenter from '@/components/ui/tabs/PersonalCenter';
-import TabsTodo from '@/components/ui/tabs/Todo';
+import TabsHome from '@/components/ui/tabs/examples/p10/Home';
+import TabsMessage from '@/components/ui/tabs/examples/p10/Message';
+import TabsPersonalCenter from '@/components/ui/tabs/examples/p10/PersonalCenter';
+import TabsTodo from '@/components/ui/tabs/examples/p10/Todo';
 import Components from '@/config/router/routerComponentRegister';
 
 const {
@@ -11,9 +11,12 @@ const {
   GlobalIndicator,
   DelConfirm,
   ImportantConfirm,
-  Tabs,
+  TabsP1,
+  TabsP2,
   TimePickerView,
-  AutoComplete,
+  AutoCompleteP1,
+  AutoCompleteP2,
+  AutoCompleteP3,
   Popup,
 } = Components;
 
@@ -50,27 +53,31 @@ export default () => [
         component: ImportantConfirm,
       },
       {
-        path: '/adhere/component/ui/tabs',
-        component: Tabs,
+        path: '/adhere/component/ui/tabs/p1',
+        component: TabsP1,
+      },
+      {
+        path: '/adhere/component/ui/tabs/p2',
+        component: TabsP2,
         routes: [
           {
             path: '/',
-            redirect: '/adhere/component/ui/tabs/home',
+            redirect: '/adhere/component/ui/tabs/p2/home',
           },
           {
-            path: '/adhere/component/ui/tabs/home',
+            path: '/adhere/component/ui/tabs/p2/home',
             component: TabsHome,
           },
           {
-            path: '/adhere/component/ui/tabs/todo',
+            path: '/adhere/component/ui/tabs/p2/todo',
             component: TabsTodo,
           },
           {
-            path: '/adhere/component/ui/tabs/message',
+            path: '/adhere/component/ui/tabs/p2/message',
             component: TabsMessage,
           },
           {
-            path: '/adhere/component/ui/tabs/personalcenter',
+            path: '/adhere/component/ui/tabs/p2/personalcenter',
             component: TabsPersonalCenter,
           },
         ],
@@ -80,8 +87,16 @@ export default () => [
         component: TimePickerView,
       },
       {
-        path: '/adhere/component/ui/autocomplete',
-        component: AutoComplete,
+        path: '/adhere/component/ui/autocomplete/p1',
+        component: AutoCompleteP1,
+      },
+      {
+        path: '/adhere/component/ui/autocomplete/p2',
+        component: AutoCompleteP2,
+      },
+      {
+        path: '/adhere/component/ui/autocomplete/p3',
+        component: AutoCompleteP3,
       },
       {
         path: '/adhere/component/ui/popup',

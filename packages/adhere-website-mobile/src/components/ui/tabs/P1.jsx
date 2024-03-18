@@ -11,9 +11,8 @@ import P6 from './examples/p6';
 import P7 from './examples/p7';
 import P8 from './examples/p8';
 import P9 from './examples/p9';
-import P10 from './examples/p10';
 
-export default ({ children }) => (
+export default () => (
   <DemoBlock>
     <DemoBlock.Item title="CapsuleTabs">
       <P1 />
@@ -49,10 +48,6 @@ export default ({ children }) => (
 
     <DemoBlock.Item title="Tabs - noShowArrowMore">
       <P9 />
-    </DemoBlock.Item>
-
-    <DemoBlock.Item title="TabBar">
-      <P10 children={children} />
     </DemoBlock.Item>
   </DemoBlock>
 );

@@ -4,7 +4,8 @@ import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/Pla
 import Util from '@/util';
 
 export default () => {
-  const [indexCodeText, setIndexCodeText] = useState('');
+  const [p1IndexCodeText, setP1IndexCodeText] = useState('');
+  const [p2IndexCodeText, setP2IndexCodeText] = useState('');
   const [p1CodeText, setP1CodeText] = useState('');
   const [p2CodeText, setP2CodeText] = useState('');
   const [p3CodeText, setP3CodeText] = useState('');
@@ -21,7 +22,8 @@ export default () => {
   const [personalCenterCodeText, setPersonalCenterCodeText] = useState('');
 
   useEffect(() => {
-    Util.getMobileCodeText('tabs/index.jsx').then(setIndexCodeText);
+    Util.getMobileCodeText('tabs/P1.jsx').then(setP1IndexCodeText);
+    Util.getMobileCodeText('tabs/P2.jsx').then(setP2IndexCodeText);
     Util.getMobileCodeText('tabs/examples/p1.jsx').then(setP1CodeText);
     Util.getMobileCodeText('tabs/examples/p2.jsx').then(setP2CodeText);
     Util.getMobileCodeText('tabs/examples/p3.jsx').then(setP3CodeText);
@@ -31,11 +33,11 @@ export default () => {
     Util.getMobileCodeText('tabs/examples/p7.jsx').then(setP7CodeText);
     Util.getMobileCodeText('tabs/examples/p8.jsx').then(setP8CodeText);
     Util.getMobileCodeText('tabs/examples/p9.jsx').then(setP9CodeText);
-    Util.getMobileCodeText('tabs/examples/p10.jsx').then(setP10CodeText);
-    Util.getMobileCodeText('tabs/Home.jsx').then(setHomeCodeText);
-    Util.getMobileCodeText('tabs/Message.jsx').then(setMessageCodeText);
-    Util.getMobileCodeText('tabs/PersonalCenter.jsx').then(setPersonalCenterCodeText);
-    Util.getMobileCodeText('tabs/Todo.jsx').then(setTodoCodeText);
+    Util.getMobileCodeText('tabs/examples/p10/index.jsx').then(setP10CodeText);
+    Util.getMobileCodeText('tabs/examples/p10/Home.jsx').then(setHomeCodeText);
+    Util.getMobileCodeText('tabs/examples/p10/Message.jsx').then(setMessageCodeText);
+    Util.getMobileCodeText('tabs/examples/p10/PersonalCenter.jsx').then(setPersonalCenterCodeText);
+    Util.getMobileCodeText('tabs/examples/p10/Todo.jsx').then(setTodoCodeText);
   }, []);
 
   function boxPanelConfig() {
@@ -59,7 +61,7 @@ export default () => {
             title: 'index.jsx',
             style: { maxHeight: 500 },
             theme: 'eclipse',
-            codeText: indexCodeText,
+            codeText: p1IndexCodeText,
           },
           {
             key: 'p1.jsx',
@@ -124,6 +126,31 @@ export default () => {
             theme: 'eclipse',
             codeText: p9CodeText,
           },
+        ],
+        type: 'PlayGroundTabMobile',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/tabs/p1`,
+      },
+      {
+        id: `p2`,
+        name: `基本使用`,
+        cardProps: {
+          description: {
+            title: '基本使用',
+            info: '基本使用',
+          },
+        },
+        active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
+        config: [
+          {
+            key: 'index.jsx',
+            title: 'index.jsx',
+            style: { maxHeight: 500 },
+            theme: 'eclipse',
+            codeText: p2IndexCodeText,
+          },
           {
             key: 'p10.jsx',
             title: 'p10.jsx',
@@ -162,7 +189,7 @@ export default () => {
           },
         ],
         type: 'PlayGroundTabMobile',
-        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/tabs`,
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/tabs/p2`,
       },
     ];
   }
@@ -170,9 +197,7 @@ export default () => {
   return (
     <PlayGroundPage>
       <Section title="MobileTabs">
-        <p>
-          <p>Tabs</p>
-        </p>
+        <p>Tabs</p>
       </Section>
 
       <CodeBoxSection title="代码演示" columnCount={1} config={boxPanelConfig()} />

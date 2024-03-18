@@ -24,14 +24,22 @@ export const ImportantConfirm = lazy(() =>
   import(/* webpackChunkName: "importantconfirm" */ '@/components/ui/importantconfirm'),
 );
 
-export const Tabs = lazy(() => import(/* webpackChunkName: "tabs" */ '@/components/ui/tabs'));
+export const TabsP1 = lazy(() => import(/* webpackChunkName: "tabs" */ '@/components/ui/tabs/P1'));
+
+export const TabsP2 = lazy(() => import(/* webpackChunkName: "tabs" */ '@/components/ui/tabs/P2'));
 
 export const TimePickerView = lazy(() =>
   import(/* webpackChunkName: "timepickerview" */ '@/components/ui/timepickerview'),
 );
 
-export const AutoComplete = lazy(() =>
-  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
+export const AutoCompleteP1 = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete/P1'),
+);
+export const AutoCompleteP2 = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete/P2'),
+);
+export const AutoCompleteP3 = lazy(() =>
+  import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete/P3'),
 );
 
 export const Popup = lazy(() => import(/* webpackChunkName: "popup" */ '@/components/ui/popup'));

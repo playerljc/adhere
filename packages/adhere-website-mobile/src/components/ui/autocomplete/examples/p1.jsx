@@ -37,7 +37,7 @@ export default () => {
 
   return (
     <MobileAutoComplete
-      style={{ height: 500 }}
+      style={{ height: '100%' }}
       onChange={(_value) => {
         setValue(_value);
       }}

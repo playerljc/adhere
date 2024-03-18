@@ -11,19 +11,19 @@ export default () => (
         key: 'fruits',
         description: '描述文案',
         title: '水果',
-        children: '菠萝',
+        children: <div>菠萝</div>,
       },
       {
         key: 'vegetables',
         title: '蔬菜',
         description: '描述文案',
-        children: '西红柿',
+        children: <div>西红柿</div>,
       },
       {
         key: 'animals',
         title: '动物',
         description: '描述文案',
-        children: '蚂蚁',
+        children: <div>蚂蚁</div>,
       },
     ]}
   />

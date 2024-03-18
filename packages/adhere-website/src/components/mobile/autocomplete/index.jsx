@@ -4,16 +4,20 @@ import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/Pla
 import Util from '@/util';
 
 export default () => {
-  const [indexCodeText, setIndexCodeText] = useState('');
-  const [p1CodeText, setP1CodeText] = useState('');
-  const [p2CodeText, setP2CodeText] = useState('');
-  const [p3CodeText, setP3CodeText] = useState('');
+  const [P1CodeText, setP1CodeText] = useState('');
+  const [P2CodeText, setP2CodeText] = useState('');
+  const [P3CodeText, setP3CodeText] = useState('');
+  const [p1ComCodeText, setP1ComCodeText] = useState('');
+  const [p2ComCodeText, setP2ComCodeText] = useState('');
+  const [p3ComCodeText, setP3ComCodeText] = useState('');
 
   useEffect(() => {
-    Util.getMobileCodeText('autocomplete/index.jsx').then(setIndexCodeText);
-    Util.getMobileCodeText('autocomplete/examples/p1.jsx').then(setP1CodeText);
-    Util.getMobileCodeText('autocomplete/examples/p2.jsx').then(setP2CodeText);
-    Util.getMobileCodeText('autocomplete/examples/p3.jsx').then(setP3CodeText);
+    Util.getMobileCodeText('autocomplete/P1.jsx').then(setP1CodeText);
+    Util.getMobileCodeText('autocomplete/P2.jsx').then(setP2CodeText);
+    Util.getMobileCodeText('autocomplete/P3.jsx').then(setP3CodeText);
+    Util.getMobileCodeText('autocomplete/examples/p1.jsx').then(setP1ComCodeText);
+    Util.getMobileCodeText('autocomplete/examples/p2.jsx').then(setP2ComCodeText);
+    Util.getMobileCodeText('autocomplete/examples/p3.jsx').then(setP3ComCodeText);
   }, []);
 
   function boxPanelConfig() {
@@ -35,34 +39,84 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: indexCodeText,
+            codeText: P1CodeText,
           },
           {
             key: 'p1.jsx',
             title: 'p1.jsx',
-            style: { maxHeight: 500 },
+            style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: p1CodeText,
+            codeText: p1ComCodeText,
+          },
+        ],
+        type: 'PlayGroundTabMobile',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/autocomplete/p1`,
+      },
+      {
+        id: `p2`,
+        name: `基本使用`,
+        cardProps: {
+          description: {
+            title: '基本使用',
+            info: '基本使用',
+          },
+        },
+        active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
+        config: [
+          {
+            key: 'index.jsx',
+            title: 'index.jsx',
+            style: { position: 'relative', height: 500 },
+            theme: 'eclipse',
+            codeText: P2CodeText,
           },
           {
             key: 'p2.jsx',
             title: 'p2.jsx',
-            style: { maxHeight: 500 },
+            style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: p2CodeText,
+            codeText: p2ComCodeText,
+          },
+        ],
+        type: 'PlayGroundTabMobile',
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/autocomplete/p2`,
+      },
+      {
+        id: `p3`,
+        name: `基本使用`,
+        cardProps: {
+          description: {
+            title: '基本使用',
+            info: '基本使用',
+          },
+        },
+        active: 'index.jsx',
+        displayBodyStyle: {
+          width: 450,
+        },
+        config: [
+          {
+            key: 'index.jsx',
+            title: 'index.jsx',
+            style: { position: 'relative', height: 500 },
+            theme: 'eclipse',
+            codeText: P3CodeText,
           },
           {
             key: 'p3.jsx',
             title: 'p3.jsx',
-            style: { maxHeight: 500 },
+            style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: p3CodeText,
+            codeText: p3ComCodeText,
           },
         ],
         type: 'PlayGroundTabMobile',
-        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/autocomplete`,
+        url: `${Constent(CustomEvnVars).mobileOrigin}/#/adhere/component/ui/autocomplete/p3`,
       },
     ];
   }

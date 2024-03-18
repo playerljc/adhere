@@ -11,37 +11,37 @@ export default () => (
       {
         key: '1',
         title: 'Espresso',
-        children: '1',
+        children: <div>1</div>,
       },
       {
         key: '2',
         title: 'Coffee Latte',
-        children: '2',
+        children: <div>2</div>,
       },
       {
         key: '3',
         title: 'Cappuccino',
-        children: '3',
+        children: <div>3</div>,
       },
       {
         key: '4',
         title: 'Americano',
-        children: '4',
+        children: <div>4</div>,
       },
       {
         key: '5',
         title: 'Flat White',
-        children: '5',
+        children: <div>5</div>,
       },
       {
         key: '6',
         title: 'Caramel Macchiato',
-        children: '6',
+        children: <div>6</div>,
       },
       {
         key: '7',
         title: 'Cafe Mocha',
-        children: '7',
+        children: <div>7</div>,
       },
     ]}
   />

@@ -3,8 +3,6 @@ import IframeServer from '@/components/util/iframeio/server';
 import Components from '@/config/router/routerComponentRegister';
 import BasicLayout from '@/lib/BasicLayout';
 
-import Login from '../../login';
-
 const {
   App,
   Introduction,
@@ -607,10 +605,6 @@ export default () => [
         ],
       },
     ],
-  },
-  {
-    path: '/login',
-    component: Login,
   },
   {
     path: '/iframeServer',

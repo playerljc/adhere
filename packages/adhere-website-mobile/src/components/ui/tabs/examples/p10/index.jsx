@@ -4,7 +4,7 @@ import React from 'react';
 
 import { MobileTabs } from '@baifendian/adhere';
 
-import styles from '../index.less';
+import styles from '../../index.less';
 
 const { TabBar } = MobileTabs;
 
@@ -13,25 +13,25 @@ export default ({ children }) => (
     className={styles.TabBarWrap}
     items={[
       {
-        key: '/adhere/component/ui/tabs/home',
+        key: '/adhere/component/ui/tabs/p2/home',
         title: '首页',
         icon: <AppOutline />,
         badge: Badge.dot,
       },
       {
-        key: '/adhere/component/ui/tabs/todo',
+        key: '/adhere/component/ui/tabs/p2/todo',
         title: '待办',
         icon: <UnorderedListOutline />,
         badge: '5',
       },
       {
-        key: '/adhere/component/ui/tabs/message',
+        key: '/adhere/component/ui/tabs/p2/message',
         title: '消息',
         icon: <MessageFill />,
         badge: '99+',
       },
       {
-        key: '/adhere/component/ui/tabs/personalcenter',
+        key: '/adhere/component/ui/tabs/p2/personalcenter',
         title: '我的',
         icon: <UserOutline />,
       },

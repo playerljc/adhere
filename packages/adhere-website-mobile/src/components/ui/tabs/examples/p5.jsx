@@ -12,7 +12,7 @@ export default () => (
       .map((item, _index) => ({
         key: `${_index + 1}`,
         title: `选项卡${_index + 1}`,
-        children: `${_index + 1}`,
+        children: <div>{_index + 1}</div>,
       }))}
   />
 );

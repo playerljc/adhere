@@ -8,7 +8,7 @@ import P3 from './examples/p3';
 
 export default () => (
   <DemoBlock>
-    <DemoBlock.Item title="CheckList的AutoComplete">
+    <DemoBlock.Item title="CalendarDialog">
       <P1 />
     </DemoBlock.Item>
 
