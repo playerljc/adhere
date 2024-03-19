@@ -1,3 +1,4 @@
+import type { SelectorProps } from 'antd-mobile';
 import React from 'react';
 
 import { Selector } from '@baifendian/adhere-mobile-ui-anthoc';
@@ -9,8 +10,7 @@ import {
   FilterPagingSelectorProps,
   FilterSelectorProps,
   PagingSelectorProps,
-  SelectorProps,
-} from '@baifendian/adhere-mobile-ui-anthoc/src/types';
+} from '@baifendian/adhere-mobile-ui-anthoc/es/types';
 
 import {
   useAutoCompleteDict,
@@ -24,12 +24,12 @@ import { setItem } from '../ItemFactory';
 /**
  * MobileSelectorStandard
  */
-setItem<SelectorProps, SelectorProps['options']>(
+setItem<SelectorProps<string>, SelectorProps<string>['options']>(
   'MobileSelector',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const options = useDict<SelectorProps['options']>({
+      const options = useDict<SelectorProps<string>['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
@@ -97,12 +97,12 @@ setItem<FilterCheckAllSelectorProps, FilterCheckAllSelectorProps['options']>(
 /**
  * MobileSelectorDynamicStandard
  */
-setItem<SelectorProps, SelectorProps['options']>(
+setItem<SelectorProps<string>, SelectorProps<string>['options']>(
   'MobileSelectorDynamic',
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      const options = useDynamicDict<SelectorProps['options']>({
+      const options = useDynamicDict<SelectorProps<string>['options']>({
         dictName,
         cascadeParams,
         onDataSourceChange,
