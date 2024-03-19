@@ -78,18 +78,22 @@ export default withRouter((props) => {
 
       <div className={styles.Auto}>
         <div className={styles.Inner}>
-          <SearchBar />
+          <div className={styles.Fixed}>
+            <SearchBar />
+          </div>
 
-          <Menu
-            selectedKeys={menuSelectKeys}
-            mode="horizontal"
-            className={styles.Menu}
-            onClick={onMenuChange}
-          >
-            {MenuItemsConfig.map((menuItemConfig) => (
-              <Menu.Item key={menuItemConfig.key}>{menuItemConfig.name}</Menu.Item>
-            ))}
-          </Menu>
+          <div className={styles.Auto}>
+            <Menu
+              selectedKeys={menuSelectKeys}
+              mode="horizontal"
+              className={styles.Menu}
+              onClick={onMenuChange}
+            >
+              {MenuItemsConfig.map((menuItemConfig) => (
+                <Menu.Item key={menuItemConfig.key}>{menuItemConfig.name}</Menu.Item>
+              ))}
+            </Menu>
+          </div>
         </div>
       </div>
 

@@ -25,10 +25,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 0 200px 0 150px;
+      margin: 0 50px 0 50px;
 
-      > .Menu {
-        font-size: 17px;
+      > .Fixed {
+        flex-shrink: 0;
+      }
+
+      > .Auto {
+        flex: 1;
+        min-width: auto;
+
+        > .Menu {
+          font-size: 17px;
+        }
       }
     }
   }
