@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@baifendian/adhere-util-watchmemoized": "^2.10.28",
-    "antd": "^5.14.0",
+    "antd": "^5.15.3",
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
