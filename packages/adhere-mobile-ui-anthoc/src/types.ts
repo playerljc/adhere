@@ -1,4 +1,3 @@
-import { CascaderProps } from 'antd';
 import type {
   CheckListProps as AntMobileCheckListProps,
   CheckboxProps as AntMobileCheckbox,
