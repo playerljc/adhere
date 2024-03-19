@@ -91,6 +91,62 @@ const {
   AntHOCTimeModal,
   AntHOCTimestampValueHoc,
   AntHOCTimePopup,
+  FGTDMobileCascaderViewAsyncStandard,
+  FGTDMobileCascaderViewDynamicFilter,
+  FGTDMobileCascaderViewDynamicStandard,
+  FGTDMobileCascaderViewFilter,
+  FGTDMobileCascaderViewStandard,
+  FGTDMobileCheckboxACPaging,
+  FGTDMobileCheckboxACStandard,
+  FGTDMobileCheckboxCheckAll,
+  FGTDMobileCheckboxDynamicCheckAll,
+  FGTDMobileCheckboxDynamicFilter,
+  FGTDMobileCheckboxDynamicFilterCheckAll,
+  FGTDMobileCheckboxDynamicStandard,
+  FGTDMobileCheckboxFilter,
+  FGTDMobileCheckboxFilterCheckAll,
+  FGTDMobileCheckboxPaginationDynamicFilter,
+  FGTDMobileCheckboxPaginationFilter,
+  FGTDMobileCheckboxPaginationStandard,
+  FGTDMobileCheckboxStandard,
+  FGTDMobileCheckboxCheckListDynamicCheckAll,
+  FGTDMobileCheckboxCheckListDynamicFilter,
+  FGTDMobileCheckboxCheckListDynamicFilterCheckAll,
+  FGTDMobileCheckboxCheckListDynamicStandard,
+  FGTDMobileCheckboxCheckListPaginationDynamicFilter,
+  FGTDMobileCheckboxCheckListPaginationStandard,
+  FGTDMobileCheckListACPaging,
+  FGTDMobileCheckListACStandard,
+  FGTDMobileCheckListDynamicCheckAll,
+  FGTDMobileCheckListDynamicFilter,
+  FGTDMobileCheckListDynamicFilterCheckAll,
+  FGTDMobileCheckListDynamicStandard,
+  FGTDMobileCheckListPaginationFilter,
+  FGTDMobileCheckListPaginationStandard,
+  FGTDMobileListDynamicStandard,
+  FGTDMobileListStandard,
+  FGTDMobileRadioACPaging,
+  FGTDMobileRadioACStandard,
+  FGTDMobileRadioDynamicFilter,
+  FGTDMobileRadioDynamicStandard,
+  FGTDMobileRadioFilter,
+  FGTDMobileRadioPaginationDynamicFilter,
+  FGTDMobileRadioPaginationFilter,
+  FGTDMobileRadioPaginationStandard,
+  FGTDMobileRadioStandard,
+  FGTDMobileSelectorACPaging,
+  FGTDMobileSelectorACStandard,
+  FGTDMobileSelectorCheckAll,
+  FGTDMobileSelectorDynamicCheckAll,
+  FGTDMobileSelectorDynamicFilter,
+  FGTDMobileSelectorDynamicFilterCheckAll,
+  FGTDMobileSelectorDynamicStandard,
+  FGTDMobileSelectorFilter,
+  FGTDMobileSelectorFilterCheckAll,
+  FGTDMobileSelectorPaginationDynamicFilter,
+  FGTDMobileSelectorPaginationFilter,
+  FGTDMobileSelectorPaginationStandard,
+  FGTDMobileSelectorStandard,
 } = Components;
 
 export default () => [
@@ -539,6 +595,288 @@ export default () => [
       {
         path: '/adhere/component/ui/anthoc/timepopup/timepopup',
         component: AntHOCTimePopup,
+      },
+
+      // -----------
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecascaderview/mobilecascaderviewasyncstandard',
+        component: FGTDMobileCascaderViewAsyncStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecascaderview/mobilecascaderviewdynamicfilter',
+        component: FGTDMobileCascaderViewDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecascaderview/mobilecascaderviewdynamicstandard',
+        component: FGTDMobileCascaderViewDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecascaderview/mobilecascaderviewfilter',
+        component: FGTDMobileCascaderViewFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecascaderview/mobilecascaderviewstandard',
+        component: FGTDMobileCascaderViewStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxacpaging',
+        component: FGTDMobileCheckboxACPaging,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxacstandard',
+        component: FGTDMobileCheckboxACStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxcheckall',
+        component: FGTDMobileCheckboxCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxdynamiccheckall',
+        component: FGTDMobileCheckboxDynamicCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxdynamicfilter',
+        component: FGTDMobileCheckboxDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxdynamicfiltercheckall',
+        component: FGTDMobileCheckboxDynamicFilterCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxdynamicstandard',
+        component: FGTDMobileCheckboxDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxfilter',
+        component: FGTDMobileCheckboxFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxfiltercheckall',
+        component: FGTDMobileCheckboxFilterCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxpaginationdynamicfilter',
+        component: FGTDMobileCheckboxPaginationDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxpaginationfilter',
+        component: FGTDMobileCheckboxPaginationFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxpaginationstandard',
+        component: FGTDMobileCheckboxPaginationStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilecheckbox/mobilecheckboxstandard',
+        component: FGTDMobileCheckboxStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilecheckboxchecklistdynamiccheckall',
+        component: FGTDMobileCheckboxCheckListDynamicCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilecheckboxchecklistdynamicfilter',
+        component: FGTDMobileCheckboxCheckListDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilecheckboxchecklistdynamicfiltercheckall',
+        component: FGTDMobileCheckboxCheckListDynamicFilterCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilecheckboxchecklistdynamicstandard',
+        component: FGTDMobileCheckboxCheckListDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilecheckboxchecklistpaginationdynamicfilter',
+        component: FGTDMobileCheckboxCheckListPaginationDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilecheckboxchecklistpaginationstandard',
+        component: FGTDMobileCheckboxCheckListPaginationStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistacpaging',
+        component: FGTDMobileCheckListACPaging,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistacstandard',
+        component: FGTDMobileCheckListACStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistdynamiccheckall',
+        component: FGTDMobileCheckListDynamicCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistdynamicfilter',
+        component: FGTDMobileCheckListDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistdynamicfiltercheckall',
+        component: FGTDMobileCheckListDynamicFilterCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistdynamicstandard',
+        component: FGTDMobileCheckListDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistpaginationfilter',
+        component: FGTDMobileCheckListPaginationFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilechecklist/mobilechecklistpaginationstandard',
+        component: FGTDMobileCheckListPaginationStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilelist/mobilelistdynamicstandard',
+        component: FGTDMobileListDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobilelist/mobileliststandard',
+        component: FGTDMobileListStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradioacpaging',
+        component: FGTDMobileRadioACPaging,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradioacstandard',
+        component: FGTDMobileRadioACStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiodynamicfilter',
+        component: FGTDMobileRadioDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiodynamicstandard',
+        component: FGTDMobileRadioDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiofilter',
+        component: FGTDMobileRadioFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiopaginationdynamicfilter',
+        component: FGTDMobileRadioPaginationDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiopaginationfilter',
+        component: FGTDMobileRadioPaginationFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiopaginationstandard',
+        component: FGTDMobileRadioPaginationStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileradio/mobileradiostandard',
+        component: FGTDMobileRadioStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectoracpaging',
+        component: FGTDMobileSelectorACPaging,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectoracstandard',
+        component: FGTDMobileSelectorACStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorcheckall',
+        component: FGTDMobileSelectorCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectordynamiccheckall',
+        component: FGTDMobileSelectorDynamicCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectordynamicfilter',
+        component: FGTDMobileSelectorDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectordynamicfiltercheckall',
+        component: FGTDMobileSelectorDynamicFilterCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectordynamicstandard',
+        component: FGTDMobileSelectorDynamicStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorfilter',
+        component: FGTDMobileSelectorFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorfiltercheckall',
+        component: FGTDMobileSelectorFilterCheckAll,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorpaginationdynamicfilter',
+        component: FGTDMobileSelectorPaginationDynamicFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorpaginationfilter',
+        component: FGTDMobileSelectorPaginationFilter,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorpaginationstandard',
+        component: FGTDMobileSelectorPaginationStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorstandard',
+        component: FGTDMobileSelectorStandard,
       },
     ],
   },

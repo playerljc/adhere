@@ -31,3 +31,9 @@ export const MobileAutoComplete = lazy(() =>
 export const MobileAntHOC = lazy(() =>
   import(/* webpackChunkName: "mobileanthoc" */ '@/components/mobile/anthoc'),
 );
+
+export const MobileFieldGeneratorToDict = lazy(() =>
+  import(
+    /* webpackChunkName: "mobilefieldgeneratortodict" */ '@/components/mobile/fieldgeneratortodict'
+  ),
+);

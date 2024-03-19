@@ -20,7 +20,7 @@ const FUN_NAMES = [
   'TimeDialog',
   'TimeModal',
   'TimePopup',
-  'PropsSection',
+  '_PropsSection',
 ];
 
 export default () => {
@@ -256,7 +256,7 @@ export default () => {
     <CodeBoxSection title="TimePopup" columnCount={1} config={TimePopupCodeBoxPanelConfig} />
   );
 
-  const PropsSection = () => (
+  const _PropsSection = () => (
     <PropsSection
       title="Props"
       config={[
@@ -2669,8 +2669,8 @@ export default () => {
 
   return (
     <PlayGroundPage onScrollBottom={onScrollBottom}>
-      <Section title="MobileAutoComplete">
-        <p>自动补全</p>
+      <Section title="AntMobileHOC">
+        <p>AntdMobile组件HOC和增强</p>
       </Section>
 
       <CodeBoxSection

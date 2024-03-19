@@ -94,6 +94,7 @@ const {
   MobileTimePickerView,
   MobileAutoComplete,
   MobileAntHOC,
+  MobileFieldGeneratorToDict,
 } = Components;
 
 export default () => [
@@ -605,6 +606,11 @@ export default () => [
                 path: '/adhere/component/mobile/anthoc',
                 name: 'AntHOC',
                 component: MobileAntHOC,
+              },
+              {
+                path: '/adhere/component/mobile/fieldgeneratortodict',
+                name: 'FieldGeneratorToDict',
+                component: MobileFieldGeneratorToDict,
               },
             ],
           },
