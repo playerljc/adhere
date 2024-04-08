@@ -1,2 +1,2 @@
-import{CascadePickerView}from"antd-mobile";import{createFactory}from"../util";var CascadePickerViewHOC=createFactory(CascadePickerView,{});CascadePickerViewHOC.displayName="CascadePickerView";export default CascadePickerViewHOC;
+import _CascadePickerView from"antd-mobile/es/components/cascade-picker-view";import{createFactory}from"../util";var CascadePickerViewHOC=createFactory(_CascadePickerView,{});CascadePickerViewHOC.displayName="CascadePickerView";export default CascadePickerViewHOC;
 //# sourceMappingURL=CascadePickerView.js.map

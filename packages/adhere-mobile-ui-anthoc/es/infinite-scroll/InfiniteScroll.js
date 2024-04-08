@@ -1,2 +1,2 @@
-import{InfiniteScroll}from"antd-mobile";import{createFactory}from"../util";var InfiniteScrollHOC=createFactory(InfiniteScroll,{});InfiniteScrollHOC.displayName="InfiniteScroll";export default InfiniteScrollHOC;
+import _InfiniteScroll from"antd-mobile/es/components/infinite-scroll";import{createFactory}from"../util";var InfiniteScrollHOC=createFactory(_InfiniteScroll,{});InfiniteScrollHOC.displayName="InfiniteScroll";export default InfiniteScrollHOC;
 //# sourceMappingURL=InfiniteScroll.js.map

@@ -18,6 +18,15 @@ const es = [
     },
     'antd-mobile-icons',
   ],
+  [
+    'import',
+    {
+      libraryName: '@baifendian/adhere-mobile-ui-anthoc',
+      libraryDirectory: 'es',
+      style: false,
+    },
+    'adhere-mobile-ui-anthoc',
+  ],
 ];
 
 const lib = [
@@ -39,6 +48,15 @@ const lib = [
       style: false,
     },
     'antd-mobile-icons',
+  ],
+  [
+    'import',
+    {
+      libraryName: '@baifendian/adhere-mobile-ui-anthoc',
+      libraryDirectory: 'lib',
+      style: false,
+    },
+    'adhere-mobile-ui-anthoc',
   ],
 ];
 

@@ -87,7 +87,7 @@ class EditableCellUseKeepEditStateSearchTable extends ProEditableCellSearchState
           ],
           useKeepEdit: true,
           props: {
-            onBlur: (e, { updateEditorCellData }) => {
+            onBlur: (e, { updateEditorCellData, form, dataIndex, rowIndex }) => {
               updateEditorCellData();
             },
           },

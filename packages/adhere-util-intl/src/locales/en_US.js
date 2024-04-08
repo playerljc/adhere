@@ -108,4 +108,8 @@ export default [
   'Close',
   'Exporting',
   'Enter text filter options',
+  'Filter',
+  'Sort',
+  'View',
+  '{total} results in total',
 ];

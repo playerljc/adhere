@@ -1,2 +1,2 @@
-import{AutoCenter}from"antd-mobile";import{createFactory}from"../util";var AutoCenterHOC=createFactory(AutoCenter,{});AutoCenterHOC.displayName="AutoCenter";export default AutoCenterHOC;
+import _AutoCenter from"antd-mobile/es/components/auto-center";import{createFactory}from"../util";var AutoCenterHOC=createFactory(_AutoCenter,{});AutoCenterHOC.displayName="AutoCenter";export default AutoCenterHOC;
 //# sourceMappingURL=AutoCenter.js.map

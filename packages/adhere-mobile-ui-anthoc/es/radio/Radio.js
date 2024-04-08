@@ -1,2 +1,2 @@
-import{Radio}from"antd-mobile";import{createFactory}from"../util";var RadioHOC=createFactory(Radio,{});RadioHOC.displayName="Radio";export default RadioHOC;
+import _Radio from"antd-mobile/es/components/radio";import{createFactory}from"../util";var RadioHOC=createFactory(_Radio,{});RadioHOC.displayName="Radio";export default RadioHOC;
 //# sourceMappingURL=Radio.js.map

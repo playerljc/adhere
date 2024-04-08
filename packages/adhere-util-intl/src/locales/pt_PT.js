@@ -108,4 +108,8 @@ export default [
   'fechar',
   'Exportador',
   'Insira opções de filtro de texto',
+  'filtro',
+  'Organizar',
+  'visualizar',
+  'Total {total} resultados',
 ];

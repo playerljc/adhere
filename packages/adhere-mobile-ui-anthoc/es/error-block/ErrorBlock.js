@@ -1,2 +1,2 @@
-import{ErrorBlock}from"antd-mobile";import{createFactory}from"../util";var ErrorBlockHOC=createFactory(ErrorBlock,{});ErrorBlockHOC.displayName="ErrorBlock";export default ErrorBlockHOC;
+import _ErrorBlock from"antd-mobile/es/components/error-block";import{createFactory}from"../util";var ErrorBlockHOC=createFactory(_ErrorBlock,{});ErrorBlockHOC.displayName="ErrorBlock";export default ErrorBlockHOC;
 //# sourceMappingURL=ErrorBlock.js.map

@@ -1,2 +1,2 @@
-import{PasscodeInput}from"antd-mobile";import{createFactory}from"../util";var PasscodeInputHOC=createFactory(PasscodeInput,{});PasscodeInputHOC.displayName="PasscodeInput";export default PasscodeInputHOC;
+import _PasscodeInput from"antd-mobile/es/components/passcode-input";import{createFactory}from"../util";var PasscodeInputHOC=createFactory(_PasscodeInput,{});PasscodeInputHOC.displayName="PasscodeInput";export default PasscodeInputHOC;
 //# sourceMappingURL=PasscodeInput.js.map

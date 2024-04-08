@@ -1,2 +1,2 @@
-import{Picker}from"antd-mobile";import{createFactory}from"../util";var PickerHOC=createFactory(Picker,{});PickerHOC.displayName="Picker";export default PickerHOC;
+import _Picker from"antd-mobile/es/components/picker";import{createFactory}from"../util";var PickerHOC=createFactory(_Picker,{});PickerHOC.displayName="Picker";export default PickerHOC;
 //# sourceMappingURL=Picker.js.map

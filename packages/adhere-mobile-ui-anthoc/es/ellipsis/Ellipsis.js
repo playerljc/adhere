@@ -1,2 +1,2 @@
-import{Ellipsis}from"antd-mobile";import{createFactory}from"../util";var EllipsisHOC=createFactory(Ellipsis,{});EllipsisHOC.displayName="Ellipsis";export default EllipsisHOC;
+import _Ellipsis from"antd-mobile/es/components/ellipsis";import{createFactory}from"../util";var EllipsisHOC=createFactory(_Ellipsis,{});EllipsisHOC.displayName="Ellipsis";export default EllipsisHOC;
 //# sourceMappingURL=Ellipsis.js.map

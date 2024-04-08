@@ -8,7 +8,7 @@ module.exports = {
     defaultBabelConfig.presets[0].push({
       modules: false,
     });
-    defaultBabelConfig.plugins.push(require('../../babel-plugin-import-antd.js').es);
+    defaultBabelConfig.plugins.push(...require('../../babel-plugin-import-antd.js').es);
 
     defaultBabelConfig.plugins.push([
       'import',
