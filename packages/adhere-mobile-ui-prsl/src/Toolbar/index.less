@@ -1,0 +1,38 @@
+@import './Items/NormalItem/index';
+@import './Items/SortItem/index';
+
+.adhere-mobile-ui-prsl-toolbar-wrapper {
+  flex-shrink: 0;
+
+  > .adhere-mobile-ui-prsl-toolbar-inner {
+    display: flex;
+    padding: 5px 10px;
+
+    > .adhere-mobile-ui-prsl-toolbar-show-total {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+    }
+
+    > .adhere-mobile-ui-prsl-toolbar-tool-items {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      min-width: 0;
+
+      > .adhere-mobile-ui-prsl-toolbar-tool-item {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    > .adhere-mobile-ui-prsl-toolbar-tool-menu-trigger {
+      flex-shrink: 0;
+      margin-left: 10px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+}

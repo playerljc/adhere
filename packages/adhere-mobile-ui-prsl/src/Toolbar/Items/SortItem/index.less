@@ -1,0 +1,23 @@
+.adhere-mobile-ui-prsl-toolbar-sort-item-list {
+  width: 100%;
+  padding: 5px 10px;
+
+  .adhere-mobile-ui-prsl-toolbar-sort-item-list-item {
+    .adhere-mobile-ui-prsl-toolbar-sort-item-list-item-label {
+    }
+
+    .adhere-mobile-ui-prsl-toolbar-sort-item-list-item-order {
+      display: flex;
+
+      > .adhere-mobile-ui-prsl-toolbar-sort-item-list-order-item {
+        &:not(:last-child) {
+          margin-right: 5px;
+        }
+
+        &.adhere-mobile-ui-prsl-toolbar-sort-item-active {
+          color: var(--adhere-color-primary);
+        }
+      }
+    }
+  }
+}
