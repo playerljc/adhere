@@ -18,7 +18,7 @@ export interface AutoCompleteProps {
   renderResultItem?: (record: Record<string, any>, defaultItem: ReactNode) => ReactNode;
   renderEmpty?: () => ReactNode;
   searchDataSource?: any[];
-  value?: CheckListValue[];
+  value?: (CheckListValue | object)[];
   onChange?: (val: CheckListValue[]) => void;
   children?: (arg: {
     value?: CheckListValue[];

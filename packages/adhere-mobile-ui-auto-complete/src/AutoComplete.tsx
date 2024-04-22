@@ -3,8 +3,9 @@ import { ErrorBlock, FloatingPanel, List, NoticeBar, SearchBar } from 'antd-mobi
 import { CloseCircleFill } from 'antd-mobile-icons';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list/check-list';
 import classNames from 'classnames';
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
+import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
 import type { AutoCompleteProps } from './types';
@@ -57,6 +58,18 @@ const AutoComplete = memo<AutoCompleteProps>(
 
     const [dataSource, setDataSource] = useState<any[]>([]);
 
+    const valueToIds = useMemo(
+      () =>
+        (value ?? []).map((_value) => {
+          if (Util.isObject(_value)) {
+            return getValue(_value) ?? getKey(_value);
+          }
+
+          return _value;
+        }),
+      [value],
+    );
+
     function isEmpty() {
       return !searchDataSource?.length;
     }
@@ -66,19 +79,19 @@ const AutoComplete = memo<AutoCompleteProps>(
     }
 
     function getKey(record) {
-      return record[rowKey ?? 'id'];
+      return record?.[rowKey ?? 'id'];
     }
 
     function getValue(record) {
-      return record[valueProp ?? 'value'];
+      return record?.[valueProp ?? 'value'];
     }
 
     function getLabel(record) {
-      return record[labelProp ?? 'label'] ?? null;
+      return record?.[labelProp ?? 'label'] ?? null;
     }
 
     function excludeVal(_value: CheckListValue): CheckListValue[] {
-      return value?.filter?.((_v) => _v !== _value) ?? [];
+      return valueToIds?.filter?.((_v) => _v !== _value) ?? [];
     }
 
     function onSearchChange(_v) {
@@ -115,14 +128,19 @@ const AutoComplete = memo<AutoCompleteProps>(
     }
 
     useEffect(() => {
-      setDataSource(
-        (_dataSource) =>
-          value?.map?.((_value) =>
-            [...(searchDataSource ?? []), ..._dataSource]?.find?.(
-              (_r) => (getValue(_r) ?? getKey(_r)) === _value,
-            ),
-          ) ?? [],
-      );
+      setDataSource((_dataSource) => {
+        const allDataSource = [...(searchDataSource ?? []), ..._dataSource];
+
+        return (
+          value?.map?.((_value) => {
+            if (Util.isObject(_value)) {
+              return _value;
+            }
+
+            return allDataSource.find((_r) => (getValue(_r) ?? getKey(_r)) === _value);
+          }) ?? []
+        );
+      });
     }, [searchDataSource, value]);
 
     return (
@@ -153,7 +171,7 @@ const AutoComplete = memo<AutoCompleteProps>(
 
           {!isEmpty() &&
             children?.({
-              value,
+              value: valueToIds,
               onChange: onCheckListChange,
               searchDataSource: searchDataSource ?? [],
             })}
@@ -190,7 +208,7 @@ const AutoComplete = memo<AutoCompleteProps>(
                     <List.Item key={key}>
                       <div
                         className={`${selectorPrefix}-result-item-close`}
-                        onClick={() => remove(value?.[_index])}
+                        onClick={() => remove(valueToIds?.[_index])}
                       >
                         <CloseCircleFill />
                       </div>

@@ -11,7 +11,7 @@ import '../src/index.less';
 export default () => {
   const [searchDataSource, setSearchDataSource] = useState([]);
 
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState([Book[0]]);
 
   return (
     <MobileAutoComplete
