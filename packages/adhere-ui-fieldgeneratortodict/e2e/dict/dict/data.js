@@ -1,4 +1,5 @@
 import Mockjs from 'mockjs';
+import MockJS from 'mockjs';
 
 import Mock from '@baifendian/adhere-mock';
 
@@ -14,4 +15,18 @@ export const books = Book.map((t) => ({
   key: t.itemid,
 }));
 
-export { Province, City, County };
+const options = Array.from({ length: 1000 }).map((t, _index) => {
+  const value = MockJS.mock('@guid');
+  const title = `${MockJS.mock('@name')}1`;
+
+  return {
+    value,
+    title,
+    label: title,
+    children: title,
+    id: value,
+    description: title,
+  };
+});
+
+export { Province, City, County, options };

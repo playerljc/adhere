@@ -31,7 +31,6 @@ setItem<VerticalTagGroupProps, VerticalTagGroupProps['options']>(
         onDataSourceChange,
       });
 
-      console.log('options', options);
       return <Tag.VerticalTagGroup {...props} options={options} />;
     },
 );
@@ -139,8 +138,6 @@ setItem<SuspenseComponentProps<VerticalTagGroupProps>, VerticalTagGroupProps['op
         cascadeParams,
         onDataSourceChange,
       });
-
-      console.log('options', options);
 
       return (
         <Suspense {...(suspenseProps ?? {})} data={options}>
@@ -609,8 +606,6 @@ setItem<TagSelectProps, TagSelectProps['options']>(
         cascadeParams,
         onDataSourceChange,
       });
-
-      console.log('TagDynamicMultiSelect', props.value);
 
       return <Tag.TagSelect {...props} mode="multiple" options={options} />;
     },

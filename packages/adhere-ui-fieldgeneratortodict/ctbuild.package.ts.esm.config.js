@@ -10,25 +10,14 @@ module.exports = {
     });
     defaultBabelConfig.plugins.push(...require('../../babel-plugin-import-antd.js').es);
 
-    defaultBabelConfig.plugins.push(
-      [
-        'import',
-        {
-          libraryName: '@baifendian/adhere-ui-anthoc',
-          libraryDirectory: 'es',
-          style: false,
-        },
-        'adhere-ui-anthoc',
-      ],
-      [
-        'import',
-        {
-          libraryName: '@baifendian/adhere-mobile-ui-anthoc',
-          libraryDirectory: 'es',
-          style: false,
-        },
-        'adhere-mobile-ui-anthoc',
-      ],
-    );
+    defaultBabelConfig.plugins.push([
+      'import',
+      {
+        libraryName: '@baifendian/adhere-mobile-ui-anthoc',
+        libraryDirectory: 'es',
+        style: false,
+      },
+      'adhere-mobile-ui-anthoc',
+    ]);
   },
 };

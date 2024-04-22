@@ -14,7 +14,8 @@ declare class SortableTable<RecordType extends object = any> extends React.Compo
         dataSource?: undefined;
     } | null;
     /**
-     * 覆盖antdTable的tr
+     * DraggableBodyRow
+     * @description 覆盖antdTable的tr
      */
     DraggableBodyRow: ({ className, style, ...restProps }: {
         [x: string]: any;

@@ -16,7 +16,7 @@ import { MobileGlobalIndicator } from '@baifendian/adhere';
 import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
-import { City, County, Province, books } from './data';
+import { City, County, Province, options } from './data';
 
 const PCCFlat = [
   ...Province.map((t) => ({
@@ -1069,20 +1069,6 @@ export default {
 
     Dict.handlers.SystemUserByKw = () => (_kw) => {
       return new Promise((resolve) => {
-        const options = Array.from({ length: 1000 }).map((t, _index) => {
-          const value = Mock.mock('@guid');
-          const title = `${Mock.mock('@name')}1`;
-
-          return {
-            value,
-            title,
-            label: title,
-            children: title,
-            id: value,
-            description: title,
-          };
-        });
-
         if (!_kw) {
           resolve([]);
           return;

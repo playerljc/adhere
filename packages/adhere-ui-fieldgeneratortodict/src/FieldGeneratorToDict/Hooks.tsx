@@ -89,8 +89,7 @@ export function useDynamicDict<D>({
     onDataSourceChange?.(dataSource);
   }, [dataSource]);
 
-  // @ts-ignore
-  return [...dataSource];
+  return dataSource;
 }
 
 /**
@@ -114,10 +113,9 @@ export function useAutoCompleteDict<D>({
     onDataSourceChange?.(dataSource);
   }, [dataSource]);
 
-  return {
-    options: [...((dataSource as any) ?? [])],
-    loadData: (_kw) =>
-      new Promise((resolve, reject) => {
+  const loadData = useCallback(
+    (_kw) =>
+      new Promise<void>((resolve, reject) => {
         dictValue(_kw, cascadeParams)
           .then((res) => {
             setDataSource(res);
@@ -125,6 +123,13 @@ export function useAutoCompleteDict<D>({
           })
           .catch((error) => reject(error));
       }),
+    [cascadeParams],
+  );
+
+  return {
+    // @ts-ignore
+    options: dataSource /*[...((dataSource as any) ?? [])]*/,
+    loadData,
   };
 }
 
@@ -151,9 +156,8 @@ export function useTreeAutoCompleteDict<D>({
     onDataSourceChange?.(dataSource);
   }, [dataSource]);
 
-  return {
-    treeData: [...((dataSource as any) ?? [])],
-    loadData: (_kw) =>
+  const loadData = useCallback(
+    (_kw) =>
       new Promise<void>((resolve, reject) => {
         dictValue(_kw, cascadeParams)
           .then((res) => {
@@ -162,6 +166,13 @@ export function useTreeAutoCompleteDict<D>({
           })
           .catch((error) => reject(error));
       }),
+    [cascadeParams],
+  );
+
+  return {
+    // @ts-ignore
+    treeData: dataSource,
+    loadData,
   };
 }
 

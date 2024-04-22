@@ -121,5 +121,5 @@ DictConfig();
 // });
 
 e2e.Mobile({
-  children: <MobileCascaderViewAsyncStandard />,
+  children: <MobileCheckListACStandard />,
 });

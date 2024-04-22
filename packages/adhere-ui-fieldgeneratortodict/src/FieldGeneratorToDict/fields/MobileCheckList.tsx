@@ -1,3 +1,4 @@
+import { useUpdateEffect } from 'ahooks';
 import React from 'react';
 
 import { CheckList } from '@baifendian/adhere-mobile-ui-anthoc';
@@ -254,7 +255,6 @@ setItem<CheckboxCheckListProps, CheckboxCheckListProps['options']>(
   'Standard',
   (dictName) =>
     ({ cascadeParams, onDataSourceChange, ...props }) => {
-      debugger;
       const options = useDynamicDict<CheckboxCheckListProps['options']>({
         dictName,
         cascadeParams,
