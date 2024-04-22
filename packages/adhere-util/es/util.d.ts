@@ -79,9 +79,7 @@ declare const _default: {
     }[];
     arrayToAntdTree: (arr: {
         [props: string]: any;
-        children?: any[] | undefined; /**
-         * 函数节流
-         */
+        children?: any[] | undefined;
         isLeaf?: boolean | undefined;
         properties?: any;
     }[], config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
@@ -125,7 +123,9 @@ declare const _default: {
     completionIncompleteFlatArr: (treeFlatNodes: any[], incompleteTreeFlatNodes: any, config: import("./types").IFlatTreeArrNode) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode, "value">)[];
     excludeAntdTreeNodes: (nodes: import("./types").IAntdTreeNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeNode, "value">)[];
     excludeAntdSelectTreeNodes: (nodes: import("./types").IAntdTreeSelectNode[], excludeKeys: string[], keyAttr?: string | undefined) => (import("./types").IFlatTreeArrNode & Omit<import("./types").IAntdTreeSelectNode, "value">)[];
-    getLang(defaultLocal?: string | undefined): string;
+    getLang(defaultLocal?: string | undefined): string; /**
+     * 函数节流
+     */
     setLang(lang?: string): void;
     getDatePickerFormat(): string;
     casUrl({ baseUrl, enterUrl, defaultLocal }: {
@@ -261,6 +261,13 @@ declare const _default: {
     getCurrentParentElementWithCursor(): Node | null;
     getCursorIndex(): number;
     getCursorRectByDocument(): DOMRect | null;
+    getTransformValues(element: HTMLElement): {
+        translateX: number;
+        translateY: number;
+        scaleX: number;
+        scaleY: number;
+        rotate: number;
+    };
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

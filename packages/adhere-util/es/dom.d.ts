@@ -246,5 +246,20 @@ declare const DomUtil: {
      * @return {DOMRect | null}
      */
     getCursorRectByDocument(): DOMRect | null;
+    /**
+     * getTransformValues
+     * @description
+     * @param {HTMLElement} element
+     * @return {
+     *
+     * }
+     */
+    getTransformValues(element: HTMLElement): {
+        translateX: number;
+        translateY: number;
+        scaleX: number;
+        scaleY: number;
+        rotate: number;
+    };
 };
 export default DomUtil;

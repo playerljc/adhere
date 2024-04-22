@@ -678,6 +678,40 @@ const DomUtil = {
 
     return null;
   },
+  /**
+   * getTransformValues
+   * @description
+   * @param {HTMLElement} element
+   * @return {
+   *
+   * }
+   */
+  getTransformValues(element: HTMLElement) {
+    const style = window.getComputedStyle(element);
+    const transform = style.transform;
+
+    // 矩阵解析
+    const mat = transform.match(/^matrix\((.+)\)$/);
+    if (mat) {
+      const values = mat[1].split(', ').map(parseFloat);
+      return {
+        translateX: values[4],
+        translateY: values[5],
+        scaleX: Math.sqrt(values[0] * values[0] + values[1] * values[1]),
+        scaleY: Math.sqrt(values[2] * values[2] + values[3] * values[3]),
+        rotate: Math.atan2(values[1], values[0]) * (180 / Math.PI),
+        // 这里的旋转角度是以度数返回的
+      };
+    }
+    // 如果没有应用 transform 或格式不是 matrix，可以返回一个默认或空对象
+    return {
+      translateX: 0,
+      translateY: 0,
+      scaleX: 1,
+      scaleY: 1,
+      rotate: 0,
+    };
+  },
   /**--------------------------dom-end-------------------------**/
 };
 
