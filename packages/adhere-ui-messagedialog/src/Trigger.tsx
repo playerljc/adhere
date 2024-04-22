@@ -2,7 +2,7 @@ import type { ModalProps } from 'antd/lib/modal/interface';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import type { FC } from 'react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import MessageDialog from './MessageDialog';
 import { selectorPrefix } from './Modal';
@@ -25,6 +25,7 @@ const Trigger: FC<TriggerProps> = ({
   className,
   style,
   value,
+  disabled = false,
   onChange,
   children,
   renderTrigger,
@@ -32,7 +33,11 @@ const Trigger: FC<TriggerProps> = ({
   actions,
   maximized = true,
 }) => {
-  const Children = useMemo(
+  const dialog = useRef<
+    ReturnType<typeof MessageDialog.MaximizeModal> | ReturnType<typeof MessageDialog.Modal> | null
+  >(null);
+
+  const bodyChildren = useMemo(
     () =>
       children &&
       React.cloneElement(
@@ -43,7 +48,7 @@ const Trigger: FC<TriggerProps> = ({
         },
         children.props.children,
       ),
-    [children],
+    [children, value],
   );
 
   function onConfirm(onClick, close) {
@@ -62,14 +67,15 @@ const Trigger: FC<TriggerProps> = ({
   }
 
   function onTrigger() {
-    let dialog;
+    if (disabled) return;
 
     const _modalConfig: ModalProps = modalConfig?.config ?? {};
+
     _modalConfig.footer =
       (actions ?? []).map?.((_actionConfig) => (
         <SubmitButton
           {...(_actionConfig ?? {})}
-          onClick={() => onConfirm(_actionConfig.onClick, dialog?.close)}
+          onClick={() => onConfirm(_actionConfig.onClick, (dialog.current as any).close)}
         />
       )) ?? [];
 
@@ -78,12 +84,16 @@ const Trigger: FC<TriggerProps> = ({
       [false, MessageDialog.Modal],
     ]);
 
-    dialog = modalMap.get(maximized as boolean)?.({
+    dialog.current = modalMap.get(maximized as boolean)?.({
       config: _modalConfig,
       defaultCloseBtn: true,
-      children: Children,
+      children: bodyChildren,
     });
   }
+
+  useEffect(() => {
+    dialog.current?.update(bodyChildren);
+  });
 
   return (
     <div

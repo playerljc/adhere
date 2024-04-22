@@ -276,16 +276,17 @@ const MessageDialogFactory = {
     el: HTMLElement;
     close: () => void;
     setConfig: (callback: any) => void;
+    update: (children?: any) => void;
   } | void {
     if (lock) return;
 
     lock = true;
 
-    function render() {
+    function render(_children?: any) {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
           <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
-            {children}
+            {_children ?? children}
           </ModalDialog>
         </ConfigProvider>,
       );
@@ -333,6 +334,9 @@ const MessageDialogFactory = {
         modalConfig = produce(modalConfig, callback);
         render();
       },
+      update: (_children) => {
+        render(_children);
+      },
     };
   },
   /**
@@ -352,12 +356,13 @@ const MessageDialogFactory = {
     el: HTMLElement;
     close: () => void;
     setConfig: (callback: any) => void;
+    update: (children?: any) => void;
   } | void {
     if (lock) return;
 
     lock = true;
 
-    function render() {
+    function render(_children?: any) {
       root.render(
         <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
           <MaximizeModalDialog
@@ -366,7 +371,7 @@ const MessageDialogFactory = {
             config={modalConfig}
             closeBtn={defaultCloseBtn}
           >
-            {children}
+            {_children ?? children}
           </MaximizeModalDialog>
         </ConfigProvider>,
       );
@@ -413,6 +418,9 @@ const MessageDialogFactory = {
       setConfig: (callback: any) => {
         modalConfig = produce(modalConfig, callback);
         render();
+      },
+      update: (_children) => {
+        render(_children);
       },
     };
   },

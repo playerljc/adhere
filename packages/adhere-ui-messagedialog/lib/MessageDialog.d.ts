@@ -20,6 +20,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * Alert
@@ -34,6 +35,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * Prompt
@@ -50,6 +52,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * InputPrompt
@@ -61,6 +64,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * TextAreaPrompt
@@ -75,6 +79,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * PassWordPrompt
@@ -89,6 +94,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * NumberPrompt
@@ -103,6 +109,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      *  Modal
@@ -123,6 +130,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * MaximizeModal
@@ -136,6 +144,7 @@ declare const MessageDialogFactory: {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
+        update: (children?: any) => void;
     };
     /**
      * close

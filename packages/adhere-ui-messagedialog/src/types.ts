@@ -80,6 +80,7 @@ export interface TriggerProps {
   onChange?: (params?: any) => void;
   renderTrigger?: () => ReactNode;
   maximized?: boolean;
+  disabled?: boolean;
   actions?: Omit<ButtonProps, 'onClick'> &
     {
       key: any;
