@@ -12,6 +12,7 @@ import type { TriggerProps } from './types';
  * @param actions
  * @param children
  * @param value
+ * @param disabled
  * @param onChange
  * @constructor
  */

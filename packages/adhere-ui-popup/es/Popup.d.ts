@@ -5,12 +5,13 @@ import type { IConfig } from './types';
  * @class Popup
  * @classdesc Popup
  */
-declare class Popup {
+export declare class Popup {
     private readonly id;
     private readonly config;
     private isShow;
     private el;
     private popupEl;
+    private root;
     private popupHandlers;
     /**
      * constructor
@@ -30,6 +31,7 @@ declare class Popup {
      * @param hookName
      */
     private trigger;
+    update(_children: any): void;
     /**
      * show - 显示一个popup
      * @return boolean

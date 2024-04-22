@@ -12,6 +12,7 @@ export interface IConfig {
   onCreate?: (arg?: any) => any;
   onBeforeShow?: (arg?: any) => any;
   onAfterShow?: (arg?: any) => any;
+  onUpdate?: () => any;
   onBeforeClose?: () => Promise<void>;
   onAfterClose?: (arg?: any) => any;
   onDestroy?: (arg?: any) => any;
@@ -32,6 +33,7 @@ export interface TriggerProps {
   title?: ReactNode;
   closeIcon?: ReactNode;
   extra?: ReactNode;
+  disabled?: boolean;
   actions?: Omit<AntdButtonProps | AntdMobileButtonProps, 'onClick'> &
     {
       key: any;

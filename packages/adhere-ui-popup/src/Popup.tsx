@@ -20,13 +20,15 @@ let el = null;
  * @class Popup
  * @classdesc Popup
  */
-class Popup {
+export class Popup {
   private readonly id: string = '';
   private readonly config: IConfig | null = null;
 
   private isShow: boolean = false;
   private el: HTMLElement | null = null;
   private popupEl: HTMLDivElement | null = null;
+
+  private root: Root | null = null;
 
   private popupHandlers = new WeakMap<HTMLElement, Root>();
 
@@ -74,9 +76,9 @@ class Popup {
 
     this.popupEl.style.zIndex = String(zIndex || 11000);
 
-    const root = ReactDOM.createRoot(this.popupEl);
+    this.root = ReactDOM.createRoot(this.popupEl);
 
-    root.render(
+    this.root.render(
       React.cloneElement(children, {
         ref: () => {
           (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
@@ -95,7 +97,7 @@ class Popup {
       }),
     );
 
-    this.popupHandlers.set(this.popupEl, root);
+    this.popupHandlers.set(this.popupEl, this.root);
   }
 
   /**
@@ -106,6 +108,31 @@ class Popup {
     if (this.config?.[hookName]) {
       return this?.config?.[hookName]?.();
     }
+  }
+
+  update(_children) {
+    const { children } = this.config!;
+
+    console.log('update');
+
+    this.root?.render(
+      React.cloneElement(_children ?? children, {
+        ref: () => {
+          (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+
+          const configProviderEL = Util.getTopDom(
+            this.popupEl as HTMLElement,
+            'adhere-ui-config-provider',
+          );
+
+          if (configProviderEL) {
+            (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
+          }
+
+          this.trigger('onUpdate');
+        },
+      }),
+    );
   }
 
   /**

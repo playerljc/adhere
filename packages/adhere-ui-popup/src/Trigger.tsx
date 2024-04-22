@@ -2,11 +2,11 @@ import { LeftOutline } from 'antd-mobile-icons';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import type { FC } from 'react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
-import Popup from './Popup';
+import Popup, { Popup as PopupInner } from './Popup';
 import SubmitButton from './SubmitButton';
 import type { TriggerProps } from './types';
 
@@ -26,6 +26,7 @@ const triggerSelectorInnerPrefix = `${triggerSelectorPrefix}-inner`;
  * @param actions
  * @param children
  * @param value
+ * @param disabled
  * @param onChange
  * @constructor
  */
@@ -40,8 +41,11 @@ const Trigger: FC<TriggerProps> = ({
   actions,
   children,
   value,
+  disabled = false,
   onChange,
 }) => {
+  const popup = useRef<PopupInner | null>();
+
   const onConfirm = (onClick, close) =>
     new Promise<void>((resolve, reject) => {
       onClick?.()
@@ -56,7 +60,7 @@ const Trigger: FC<TriggerProps> = ({
         .catch((error) => reject(error));
     });
 
-  const Children = useMemo(
+  const bodyChildren = useMemo(
     () =>
       children
         ? React.cloneElement(
@@ -68,74 +72,83 @@ const Trigger: FC<TriggerProps> = ({
             children.props.children,
           )
         : null,
-    [children],
+    [children, value],
+  );
+
+  const popupChildren = useMemo(
+    () => (
+      <div className={classNames(triggerSelectorInnerPrefix)}>
+        <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
+          <div
+            className={`${triggerSelectorInnerPrefix}-close`}
+            onClick={() => {
+              popup.current?.close();
+            }}
+          >
+            {closeIcon && (
+              <span className={`${triggerSelectorInnerPrefix}-close-inner`}>{<LeftOutline />}</span>
+            )}
+          </div>
+
+          {title && <div className={`${triggerSelectorInnerPrefix}-title`}>{title}</div>}
+
+          {extra && <div className={`${triggerSelectorInnerPrefix}-extra`}>{extra}</div>}
+        </div>
+
+        <div className={classNames(`${triggerSelectorInnerPrefix}-body`)}>{bodyChildren}</div>
+
+        <div className={classNames(`${triggerSelectorInnerPrefix}-actions`)}>
+          {[
+            <div key="close" className={classNames(`${triggerSelectorInnerPrefix}-action`)}>
+              <SubmitButton
+                key="close"
+                onClick={() =>
+                  new Promise((resolve) => {
+                    setTimeout(() => {
+                      popup.current?.close();
+                    }, 100);
+
+                    resolve();
+                  })
+                }
+              >
+                {Intl.v('关闭')}
+              </SubmitButton>
+            </div>,
+            ...((actions ?? []).map?.((_actionConfig) => (
+              <div
+                key={_actionConfig.key}
+                className={classNames(`${triggerSelectorInnerPrefix}-action`)}
+              >
+                <SubmitButton
+                  {...(_actionConfig ?? {})}
+                  onClick={() => onConfirm(_actionConfig.onClick, () => popup?.current?.close())}
+                />
+              </div>
+            )) ?? []),
+          ]}
+        </div>
+      </div>
+    ),
+    [bodyChildren, title, actions, extra, closeIcon],
   );
 
   const onTrigger = () => {
-    const popup = Popup.create({
+    if (disabled) return;
+
+    popup.current = Popup.create({
       ...(popupConfig ?? {}),
       onBeforeClose: () => (popupConfig ?? {})?.onBeforeClose?.() ?? Promise.resolve(),
-      onAfterClose: () => (popupConfig ?? {})?.onAfterClose?.() ?? Popup.destroy(popup),
-      children: (
-        <div className={classNames(triggerSelectorInnerPrefix)}>
-          <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
-            <div
-              className={`${triggerSelectorInnerPrefix}-close`}
-              onClick={() => {
-                popup.close();
-              }}
-            >
-              {closeIcon && (
-                <span className={`${triggerSelectorInnerPrefix}-close-inner`}>
-                  {<LeftOutline />}
-                </span>
-              )}
-            </div>
-
-            {title && <div className={`${triggerSelectorInnerPrefix}-title`}>{title}</div>}
-
-            {extra && <div className={`${triggerSelectorInnerPrefix}-extra`}>{extra}</div>}
-          </div>
-
-          <div className={classNames(`${triggerSelectorInnerPrefix}-body`)}>{Children}</div>
-
-          <div className={classNames(`${triggerSelectorInnerPrefix}-actions`)}>
-            {[
-              <div key="close" className={classNames(`${triggerSelectorInnerPrefix}-action`)}>
-                <SubmitButton
-                  key="close"
-                  onClick={() =>
-                    new Promise((resolve) => {
-                      setTimeout(() => {
-                        popup?.close();
-                      }, 100);
-
-                      resolve();
-                    })
-                  }
-                >
-                  {Intl.v('关闭')}
-                </SubmitButton>
-              </div>,
-              ...((actions ?? []).map?.((_actionConfig) => (
-                <div
-                  key={_actionConfig.key}
-                  className={classNames(`${triggerSelectorInnerPrefix}-action`)}
-                >
-                  <SubmitButton
-                    {...(_actionConfig ?? {})}
-                    onClick={() => onConfirm(_actionConfig.onClick, () => popup?.close())}
-                  />
-                </div>
-              )) ?? []),
-            ]}
-          </div>
-        </div>
-      ),
+      onAfterClose: () => (popupConfig ?? {})?.onAfterClose?.() ?? Popup.destroy(popup.current),
+      children: popupChildren,
     });
 
-    popup.show();
+    popup.current?.show();
   };
+
+  useEffect(() => {
+    popup.current?.update(popupChildren);
+  });
 
   return (
     <div
