@@ -1,5 +1,5 @@
 import omit from 'omit.js';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
@@ -11,6 +11,14 @@ const DEFAULT_VALUE_PROP = 'value';
 
 export default (props: TreeEntityValueHOCProps) => {
   const { value, onChange, children, treeData } = props;
+
+  const _isUsePrimaryValue = useMemo(() => {
+    if ('isUsePrimaryValue' in props) {
+      return props.isUsePrimaryValue;
+    }
+
+    return true;
+  }, [props.isUsePrimaryValue]);
 
   function getEntityValue(entity) {
     if (props.valueProp ?? DEFAULT_VALUE_PROP in entity) {
@@ -105,14 +113,28 @@ export default (props: TreeEntityValueHOCProps) => {
       return entity;
     }
 
+    const targetTreeData = [...(treeData ?? [])];
+
+    if (Array.isArray(props.value)) {
+      props.value.forEach((_value) => {
+        if (Util.isObject(_value)) {
+          targetTreeData.push(_value);
+        }
+      });
+    } else {
+      if (Util.isObject(props.value)) {
+        targetTreeData.push(props.value);
+      }
+    }
+
     if (isSimpleMode()) {
       return (
-        (treeData ?? []).find((t) => {
+        (targetTreeData ?? []).find((t) => {
           return Object.is(getEntityValue(t), _value);
         }) ?? _value
       );
     } else {
-      return loop(treeData ?? []) ?? _value;
+      return loop(targetTreeData ?? []) ?? _value;
     }
   }
 
@@ -158,7 +180,7 @@ export default (props: TreeEntityValueHOCProps) => {
   return React.cloneElement(children, {
     ...omit(props, ['children']),
     ...children.props,
-    value: getInternalValue(),
+    value: _isUsePrimaryValue ? getInternalValue() : value,
     realValue: value,
     onChange: (val, ...rest) => {
       if (isPrimitive(val)) {

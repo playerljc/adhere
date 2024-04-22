@@ -696,6 +696,7 @@ export type ArrayEntityValueHOCProps = {
     optionsProp?: string;
     valueProp?: string;
     options?: any[];
+    isUsePrimaryValue?: boolean;
     [prop: string]: any;
 };
 export type TreeEntityValueHOCProps = {
@@ -705,6 +706,7 @@ export type TreeEntityValueHOCProps = {
     valueProp?: string;
     childrenProp?: string;
     treeData?: TreeSelectProps['treeData'];
+    isUsePrimaryValue?: boolean;
     [prop: string]: any;
 };
 export type PagingEntityValueHOCProps = {

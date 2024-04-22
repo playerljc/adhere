@@ -1,5 +1,5 @@
 import omit from 'omit.js';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Util from '@baifendian/adhere-util';
 
@@ -11,6 +11,14 @@ const DEFAULT_VALUE_PROP = 'value';
 
 export default (props: ArrayEntityValueHOCProps) => {
   const { value, onChange, children, options } = props;
+
+  const _isUsePrimaryValue = useMemo(() => {
+    if ('isUsePrimaryValue' in props) {
+      return props.isUsePrimaryValue;
+    }
+
+    return true;
+  }, [props.isUsePrimaryValue]);
 
   function getEntityValue(entity) {
     if (props.valueProp ?? DEFAULT_VALUE_PROP in entity) {
@@ -82,8 +90,22 @@ export default (props: ArrayEntityValueHOCProps) => {
   }
 
   function valueToEntity(_value) {
+    const targetOptions = [...(options ?? [])];
+
+    if (Array.isArray(props.value)) {
+      props.value.forEach((_value) => {
+        if (Util.isObject(_value)) {
+          targetOptions.push(_value);
+        }
+      });
+    } else {
+      if (Util.isObject(props.value)) {
+        targetOptions.push(props.value);
+      }
+    }
+
     return (
-      (options ?? []).find((t) => {
+      (targetOptions ?? []).find((t) => {
         return Object.is(getEntityValue(t), _value);
       }) ?? _value
     );
@@ -121,18 +143,18 @@ export default (props: ArrayEntityValueHOCProps) => {
   return React.cloneElement(children, {
     ...omit(props, ['children']),
     ...children.props,
-    value: getInternalValue(),
+    value: _isUsePrimaryValue ? getInternalValue() : value,
     realValue: value,
-    onChange: (val, ...rest) => {
-      if (isPrimitive(val)) {
-        onChange?.(valueToEntity(val), ...rest);
-      } else if (isMultiplePrimitive(val)) {
-        onChange?.(valuesToEntities(val), ...rest);
+    onChange: (_selectValue, ...rest) => {
+      if (isPrimitive(_selectValue)) {
+        onChange?.(valueToEntity(_selectValue), ...rest);
+      } else if (isMultiplePrimitive(_selectValue)) {
+        onChange?.(valuesToEntities(_selectValue), ...rest);
       } else {
-        onChange?.(val, ...rest);
+        onChange?.(_selectValue, ...rest);
       }
 
-      children.props?.onChange?.(val, ...rest);
+      children.props?.onChange?.(_selectValue, ...rest);
     },
   });
 };
