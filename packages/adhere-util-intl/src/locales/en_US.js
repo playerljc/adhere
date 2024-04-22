@@ -112,4 +112,9 @@ export default [
   'Sort',
   'View',
   '{total} results in total',
+  'Click to try again',
+  'Please enter key search keywords',
+  'Query history',
+  'Manage',
+  'Finish',
 ];

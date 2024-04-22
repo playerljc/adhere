@@ -112,4 +112,9 @@ export default [
   'Organizar',
   'visualizar',
   'Total {total} resultados',
+  'Clique para tentar novamente',
+  'Por favor, insira as principais palavras-chave de pesquisa',
+  'Histórico de consultas',
+  'gerenciar',
+  'Terminar',
 ];
