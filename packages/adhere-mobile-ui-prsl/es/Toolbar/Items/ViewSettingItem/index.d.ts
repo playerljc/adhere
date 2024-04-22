@@ -1,7 +1,4 @@
-declare const ViewSettingItem: {
-    ({ children }: {
-        children: any;
-    }): any;
-    displayName: string;
-};
+import type { FC } from 'react';
+import type { ViewSettingProps } from '../../../types';
+declare const ViewSettingItem: FC<ViewSettingProps>;
 export default ViewSettingItem;

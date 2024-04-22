@@ -2,12 +2,12 @@ import { useUpdateEffect } from 'ahooks';
 import { List } from 'antd-mobile';
 import { TransportQRcodeOutline } from 'antd-mobile-icons';
 import classNames from 'classnames';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import type { FC } from 'react';
 
 import { SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 import { Dialog, Modal, Popup } from '@baifendian/adhere-mobile-ui-anthoc';
-import {
+import type {
   DialogTriggerProps,
   ModalTriggerProps,
   PopupTriggerProps,
@@ -34,11 +34,12 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-toolbar-sort-item';
  */
 const SortItem: FC<SortItemProps> = ({
   children,
+  disabled,
   sortTriggerMode = 'popup-bottom',
   sortTriggerProps,
   renderSort,
   sortConfig,
-  defaultSortValues = [],
+  defaultSortValues,
   onSort,
   onSortReset,
 }) => {
@@ -79,45 +80,68 @@ const SortItem: FC<SortItemProps> = ({
     ];
   }, [sortTriggerMode]);
 
-  const sortElement = useMemo(() => {
-    if (renderSort) {
-      return renderSort?.(sortValues ?? []);
-    }
+  const renderSortElement = useCallback(
+    ({ close }) => {
+      if (renderSort) {
+        return renderSort?.(sortValues ?? []);
+      }
 
-    return (
-      <List className={`${selectorPrefix}-list`}>
-        {sortConfig?.map((sortValue) => (
-          <List.Item
-            key={sortValue.name}
-            className={`${selectorPrefix}-list-item`}
-            onClick={() => {
-              sort(sortValue);
-            }}
-            extra={
-              <div className={`${selectorPrefix}-list-item-order`}>
-                <SortDescendingOutlined
-                  className={classNames(`${selectorPrefix}-list-order-item`, {
-                    [`${selectorPrefix}-active`]: sortValues?.some(
-                      (t) => t.name === sortValue.name && t.order === 'asc',
-                    ),
-                  })}
-                />
-                <SortAscendingOutlined
-                  className={classNames(`${selectorPrefix}-list-order-item`, {
-                    [`${selectorPrefix}-active`]: sortValues?.some(
-                      (t) => t.name === sortValue.name && t.order === 'desc',
-                    ),
-                  })}
-                />
-              </div>
-            }
-          >
-            <div className={`${selectorPrefix}-list-item-label`}>{sortValue.label}</div>
-          </List.Item>
-        ))}
-      </List>
-    );
-  }, [renderSort, sortConfig, sortValues]);
+      return (
+        <List className={`${selectorPrefix}-list`}>
+          {sortConfig?.map((sortValue) => (
+            <List.Item
+              key={sortValue.name}
+              className={`${selectorPrefix}-list-item`}
+              onClick={() => {
+                sort(sortValue);
+
+                if (sortTriggerMode === 'adhere-popup') {
+                  AdherePopup.closeAll();
+                } else {
+                  close?.();
+                }
+              }}
+              extra={
+                <div className={`${selectorPrefix}-list-item-order`}>
+                  <SortDescendingOutlined
+                    className={classNames(`${selectorPrefix}-list-order-item`, {
+                      [`${selectorPrefix}-active`]: sortValues?.some(
+                        (t) => t.name === sortValue.name && t.order === 'asc',
+                      ),
+                    })}
+                  />
+                  <SortAscendingOutlined
+                    className={classNames(`${selectorPrefix}-list-order-item`, {
+                      [`${selectorPrefix}-active`]: sortValues?.some(
+                        (t) => t.name === sortValue.name && t.order === 'desc',
+                      ),
+                    })}
+                  />
+                </div>
+              }
+            >
+              <div className={`${selectorPrefix}-list-item-label`}>{sortValue.label}</div>
+            </List.Item>
+          ))}
+        </List>
+      );
+    },
+    [renderSort, sortConfig, sortTriggerMode, sortValues],
+  );
+
+  const triggerContext = useMemo(() => {
+    if (sortTriggerMode === 'modal') {
+      return <Modal.Context.Consumer>{(value) => renderSortElement(value)}</Modal.Context.Consumer>;
+    } else if (sortTriggerMode === 'dialog') {
+      return (
+        <Dialog.Context.Consumer>{(value) => renderSortElement(value)}</Dialog.Context.Consumer>
+      );
+    } else if (sortTriggerMode === 'popup-bottom') {
+      return <Popup.Context.Consumer>{(value) => renderSortElement(value)}</Popup.Context.Consumer>;
+    } else {
+      return renderSortElement;
+    }
+  }, [sortTriggerMode, renderSortElement]);
 
   const childrenElement = useMemo(() => {
     const commonProps = {
@@ -152,15 +176,27 @@ const SortItem: FC<SortItemProps> = ({
           position: position.get(sortTriggerMode ?? ''),
         };
 
-        return <Popup.Trigger {...popupProps}>{sortElement}</Popup.Trigger>;
+        return (
+          <Popup.Trigger disabled={disabled} {...popupProps}>
+            {triggerContext}
+          </Popup.Trigger>
+        );
       }
       // Modal
       else if (sortTriggerMode === 'modal') {
-        return <Modal.TriggerPrompt {...hocProps}>{sortElement}</Modal.TriggerPrompt>;
+        return (
+          <Modal.TriggerPrompt disabled={disabled} {...hocProps}>
+            {triggerContext}
+          </Modal.TriggerPrompt>
+        );
       }
       // Dialog
       else if (sortTriggerMode === 'dialog') {
-        return <Dialog.TriggerPrompt {...hocProps}>{sortElement}</Dialog.TriggerPrompt>;
+        return (
+          <Dialog.TriggerPrompt disabled={disabled} {...hocProps}>
+            {triggerContext}
+          </Dialog.TriggerPrompt>
+        );
       }
     }
     // adhere-popup
@@ -168,18 +204,21 @@ const SortItem: FC<SortItemProps> = ({
       return (
         <AdherePopup.Trigger
           {...commonProps}
+          disabled={disabled}
           renderTrigger={() => triggerElement}
           actions={actions}
         >
-          {sortElement}
+          {triggerContext}
         </AdherePopup.Trigger>
       );
     }
-  }, [sortTriggerMode, sortTriggerProps, triggerElement, sortElement, actions]);
+  }, [sortTriggerMode, sortTriggerProps, triggerElement, triggerContext, actions]);
 
   function sort(sortItemConfig: SortConfigItem) {
-    const draft = [...sortValues];
+    const draft = [...(sortValues ?? [])];
+
     const sortValueIndex = draft.findIndex((t) => t.name === sortItemConfig.name);
+
     if (sortValueIndex === -1) {
       draft.push({
         name: sortItemConfig.name,

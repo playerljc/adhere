@@ -7,7 +7,13 @@ import { isElement } from 'react-is';
 import { HolderOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { ToolBarProps, ToolbarConfigItem } from '../types';
+import {
+  ToolBarProps,
+  ToolbarConfigItem,
+  TriggerMode,
+  TriggerProps,
+  ViewSettingConfigItem,
+} from '../types';
 import FilterItem from './Items/FilterItem';
 import NormalItem from './Items/NormalItem';
 import SortItem from './Items/SortItem';
@@ -49,6 +55,13 @@ const ToolBar = memo<ToolBarProps>(
     renderSortTrigger,
     isShowViewSettingTrigger = true,
     renderViewSettingTrigger,
+    viewSettingTriggerMode,
+    viewSettingTriggerProps,
+    renderViewSetting,
+    viewSettingConfig,
+    defaultViewSettingValue,
+    onViewSetting,
+    onViewSettingReset,
     toolbarCollapseCount,
     toolbarConfig,
     filterTriggerMode,
@@ -67,6 +80,7 @@ const ToolBar = memo<ToolBarProps>(
     onSort,
     onSortReset,
     total = 0,
+    disabled,
   }) => {
     // 显示Total的UI
     const showTotalElement = useMemo(() => {
@@ -88,6 +102,7 @@ const ToolBar = memo<ToolBarProps>(
     const filterItemElement = useMemo(() => {
       return isShowFilterTrigger ? (
         <FilterItem
+          disabled={disabled}
           filterTriggerMode={filterTriggerMode}
           filterTriggerProps={filterTriggerProps}
           renderFilter={renderFilter}
@@ -101,6 +116,7 @@ const ToolBar = memo<ToolBarProps>(
         </FilterItem>
       ) : null;
     }, [
+      disabled,
       isShowFilterTrigger,
       renderFilterTrigger,
       filterTriggerMode,
@@ -117,6 +133,7 @@ const ToolBar = memo<ToolBarProps>(
     const sortItemElement = useMemo(() => {
       return isShowSortTrigger ? (
         <SortItem
+          disabled={disabled}
           sortTriggerMode={sortTriggerMode}
           sortTriggerProps={sortTriggerProps}
           renderSort={renderSort}
@@ -129,6 +146,7 @@ const ToolBar = memo<ToolBarProps>(
         </SortItem>
       ) : null;
     }, [
+      disabled,
       isShowSortTrigger,
       renderSortTrigger,
       sortTriggerMode,
@@ -143,9 +161,31 @@ const ToolBar = memo<ToolBarProps>(
     // 视图设置按钮UI
     const viewSettingItemElement = useMemo(() => {
       return isShowViewSettingTrigger ? (
-        <ViewSettingItem>{(defaultUI) => renderViewSettingTrigger?.(defaultUI)}</ViewSettingItem>
+        <ViewSettingItem
+          disabled={disabled}
+          viewSettingTriggerMode={viewSettingTriggerMode}
+          viewSettingTriggerProps={viewSettingTriggerProps}
+          renderViewSetting={renderViewSetting}
+          viewSettingConfig={viewSettingConfig}
+          defaultViewSettingValue={defaultViewSettingValue}
+          onViewSetting={onViewSetting}
+          onViewSettingReset={onViewSettingReset}
+        >
+          {(defaultUI) => renderViewSettingTrigger?.(defaultUI)}
+        </ViewSettingItem>
       ) : null;
-    }, [isShowViewSettingTrigger, renderViewSettingTrigger]);
+    }, [
+      disabled,
+      isShowViewSettingTrigger,
+      renderViewSettingTrigger,
+      viewSettingTriggerMode,
+      viewSettingTriggerProps,
+      renderViewSetting,
+      viewSettingConfig,
+      defaultViewSettingValue,
+      onViewSetting,
+      onViewSettingReset,
+    ]);
 
     // 工具栏的按钮组
     const toolbarItemElements = useMemo(() => {
@@ -159,10 +199,10 @@ const ToolBar = memo<ToolBarProps>(
         .map((el) => {
           if (isElement(el)) return el;
 
-          return <NormalItem {...(el as ToolbarConfigItem)} />;
+          return <NormalItem disabled={disabled} {...(el as ToolbarConfigItem)} />;
         })
         .filter((t) => !!t) as ReactElement[];
-    }, [toolbarConfig, filterItemElement, sortItemElement, viewSettingItemElement]);
+    }, [toolbarConfig, filterItemElement, sortItemElement, viewSettingItemElement, disabled]);
 
     // 工具栏可显示的按钮
     const displayItemElements = useMemo(() => {
@@ -258,7 +298,7 @@ const ToolBar = memo<ToolBarProps>(
 
         {/* inner */}
         <div className={`${selectorPrefix}-inner`}>
-          {renderToolBar?.(toolbarItemElements, showTotalElement) ?? renderChildren()}
+          {renderToolBar?.(toolbarItemElements, showTotalElement, disabled) ?? renderChildren()}
         </div>
 
         {/* after */}

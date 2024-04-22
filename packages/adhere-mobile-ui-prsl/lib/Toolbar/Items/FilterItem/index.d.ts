@@ -3,6 +3,7 @@ import { FilterItemProps } from '../../../types';
 /**
  * FilterItem
  * @param children
+ * @param disabled
  * @param filterTriggerMode
  * @param filterTriggerProps
  * @param renderFilter

@@ -6,12 +6,23 @@ import type { ToolbarItemProps } from '../../../types';
 
 const selectorPrefix = 'adhere-mobile-ui-prsl-toolbar-item';
 
-const NormalItem: FC<ToolbarItemProps> = ({ className, style, icon, label, onClick }) => {
+const NormalItem: FC<ToolbarItemProps> = ({
+  className,
+  style,
+  icon,
+  label,
+  onClick,
+  disabled = false,
+}) => {
   return (
     <div
       className={classNames(selectorPrefix, className ?? '')}
       style={style ?? {}}
-      onClick={onClick}
+      onClick={() => {
+        if (!disabled) {
+          onClick?.();
+        }
+      }}
     >
       <div className={classNames(`${selectorPrefix}-icon`)}>{icon}</div>
       <div className={classNames(`${selectorPrefix}-label`)}>{label}</div>

@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},react_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("react")));exports.default=react_1.default.createContext({isUseSelectionMode:function(){return!1},getRowKey:function(){return"id"},getOptionSelectedRowKeys:function(){return[]},selectionChange:function(e){},selectionAllChange:function(e){},getDatasourceLength:function(){return 0},getSelectionMultiple:function(){return!0}});
+//# sourceMappingURL=Context.js.map

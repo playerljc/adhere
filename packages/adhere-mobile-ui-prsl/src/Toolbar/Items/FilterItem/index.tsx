@@ -1,6 +1,7 @@
 import { useMount, useUpdateEffect } from 'ahooks';
 import { Form } from 'antd-mobile';
 import { FilterOutline } from 'antd-mobile-icons';
+import isPrimaryEmpty from 'lodash.isempty';
 import React, { useMemo } from 'react';
 import type { FC } from 'react';
 
@@ -21,6 +22,7 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-toolbar-filter-item';
 /**
  * FilterItem
  * @param children
+ * @param disabled
  * @param filterTriggerMode
  * @param filterTriggerProps
  * @param renderFilter
@@ -33,6 +35,7 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-toolbar-filter-item';
  */
 const FilterItem: FC<FilterItemProps> = ({
   children,
+  disabled,
   filterTriggerMode = 'popup-bottom',
   filterTriggerProps = {},
   renderFilter,
@@ -100,7 +103,7 @@ const FilterItem: FC<FilterItemProps> = ({
       <Form form={form} layout="horizontal" {...filterFormProps}>
         {filterConfig?.map(({ key, name, label, formItemProps, render }) => (
           <Form.Item key={key} name={name} label={label} {...(formItemProps ?? {})}>
-            {render?.()}
+            {render?.(form)}
           </Form.Item>
         ))}
       </Form>
@@ -140,15 +143,27 @@ const FilterItem: FC<FilterItemProps> = ({
           position: position.get(filterTriggerMode ?? ''),
         };
 
-        return <Popup.Trigger {...popupProps}>{searchElement}</Popup.Trigger>;
+        return (
+          <Popup.Trigger disabled={disabled} {...popupProps}>
+            {searchElement}
+          </Popup.Trigger>
+        );
       }
       // Modal
       else if (filterTriggerMode === 'modal') {
-        return <Modal.TriggerPrompt {...hocProps}>{searchElement}</Modal.TriggerPrompt>;
+        return (
+          <Modal.TriggerPrompt disabled={disabled} {...hocProps}>
+            {searchElement}
+          </Modal.TriggerPrompt>
+        );
       }
       // Dialog
       else if (filterTriggerMode === 'dialog') {
-        return <Dialog.TriggerPrompt {...hocProps}>{searchElement}</Dialog.TriggerPrompt>;
+        return (
+          <Dialog.TriggerPrompt disabled={disabled} {...hocProps}>
+            {searchElement}
+          </Dialog.TriggerPrompt>
+        );
       }
     }
     // adhere-popup
@@ -156,6 +171,7 @@ const FilterItem: FC<FilterItemProps> = ({
       return (
         <AdherePopup.Trigger
           {...commonProps}
+          disabled={disabled}
           renderTrigger={() => triggerElement}
           actions={actions}
         >
@@ -163,17 +179,19 @@ const FilterItem: FC<FilterItemProps> = ({
         </AdherePopup.Trigger>
       );
     }
-  }, [filterTriggerMode, filterTriggerProps, triggerElement, searchElement, actions]);
+  }, [filterTriggerMode, filterTriggerProps, triggerElement, searchElement, actions, disabled]);
 
   function search() {
     if (!onFilter) return Promise.resolve();
 
-    return onFilter?.(form?.getFieldsValue?.() ?? {});
+    const filterData = form ? form.getFieldsValue() : defaultFilterValues;
+
+    return onFilter?.(filterData);
   }
 
   function reset() {
     // @ts-ignore
-    form?.resetFields(defaultFilterValues);
+    form?.resetFields(isPrimaryEmpty(defaultFilterValues) ? undefined : defaultFilterValues);
 
     if (!onFilterReset) {
       return Promise.resolve();
@@ -189,7 +207,12 @@ const FilterItem: FC<FilterItemProps> = ({
 
   useUpdateEffect(() => {
     if (!form) return;
-    form.setFieldsValue(defaultFilterValues);
+
+    if (!defaultFilterValues) {
+      form.resetFields();
+    } else {
+      form.setFieldsValue(defaultFilterValues);
+    }
   }, [defaultFilterValues]);
 
   return childrenElement;

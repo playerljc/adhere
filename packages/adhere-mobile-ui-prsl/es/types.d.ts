@@ -1,51 +1,58 @@
 import type { FormItemProps, FormProps, PullToRefreshProps, SearchBarProps } from 'antd-mobile';
 import type { Action as SheetAction } from 'antd-mobile/es/components/action-sheet';
 import type { Action as SwiperAction } from 'antd-mobile/es/components/swipe-action';
+import type { FormInstance } from 'rc-field-form/es/interface';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { DialogTriggerProps, ModalTriggerProps, PopupTriggerProps } from '@baifendian/adhere-mobile-ui-anthoc/es/types';
-import { BackTopAnimationProps } from '@baifendian/adhere-ui-backtopanimation/es/types';
-import { TriggerProps as AdherePopupTriggerProps } from '@baifendian/adhere-ui-popup/es/types';
+import type { BackTopAnimationProps } from '@baifendian/adhere-ui-backtopanimation/es/types';
+import type { TriggerProps as AdherePopupTriggerProps } from '@baifendian/adhere-ui-popup/es/types';
 import type { ScrollLoadProps, ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
+import PRSLItem from './PRSLItem';
 /**
  * FilterConfigItem
  * @description 筛选配置项
  */
-export type FilterConfigItem = {
+export interface FilterConfigItem {
     key: string;
     name: string;
     label?: string | ReactElement;
     formItemProps?: FormItemProps;
-    render: () => ReactElement;
-};
+    render: (formIns: FormInstance<any>) => ReactElement;
+}
 /**
  * SortConfigItem
  * @description 排序配置项
  */
-export type SortConfigItem = {
+export interface SortConfigItem {
     name: string;
     label: ReactNode;
-};
+}
 /**
  * DefaultSortValue
  * @description 缺省排序值
  */
-export type DefaultSortValue = {
+export interface DefaultSortValue {
     name: string;
     order: 'asc' | 'desc' | '' | undefined | null;
-};
+}
 /**
  * ViewSettingConfigItem
  * @description 视图设置配置项
  */
-export type ViewSettingConfigItem = {
-    name: 'normal' | 'multi' | 'waterfal';
+export interface ViewSettingConfigItem {
+    name: 'normal' | 'multi' | 'waterfal' | string;
     label: string | ReactElement;
-};
+}
 /**
  * ActionConfigItem
  * @description 操作配置项
  */
 export type ActionConfigItem = SheetAction | SwiperAction;
+/**
+ * TriggerMode
+ * @description Trigger的弹出方式
+ */
 export type TriggerMode = 'popup-top' | 'popup-bottom' | 'modal' | 'dialog' | 'adhere-popup';
 export type TriggerProps = PopupTriggerProps<any> | ModalTriggerProps<any> | DialogTriggerProps<any> | AdherePopupTriggerProps;
 export interface SearchKeyWordProps {
@@ -53,7 +60,10 @@ export interface SearchKeyWordProps {
     style?: CSSProperties;
     searchKeyWordBarProps?: SearchBarProps;
     searchKeyWordMode?: 'normal' | 'history';
-    searchKeyWordHistoryMaxSize?: number;
+    searchKeyWordHistoryMaxSize: number;
+    isSearchKeyWordHistoryIntoStore?: boolean;
+    searchKeyWordHistoryStoreType?: 'session' | 'local';
+    disabled?: boolean;
     defaultSearchKeyWord?: string;
     onSearch?: (value: string) => void;
     onSearchClear?: () => void;
@@ -63,6 +73,7 @@ export interface ToolbarConfigItem {
     label?: ReactNode;
     icon?: ReactNode;
     onClick?: () => void;
+    disabled?: boolean;
 }
 export interface ToolbarItemProps extends ToolbarConfigItem {
     className?: string;
@@ -74,7 +85,7 @@ export interface ToolBarProps extends Omit<FilterItemProps, 'children'>, Omit<So
     showTotal?: boolean;
     toolbarWrapperClassName?: string;
     toolbarWrapperStyle?: CSSProperties;
-    renderToolBar?: (defaultToolItems: ReactElement[], defaultShowTotalElement?: ReactNode) => ReactNode;
+    renderToolBar?: (defaultToolItems: ReactElement[], defaultShowTotalElement?: ReactNode, disabled?: boolean) => ReactNode;
     afterToolBarRender?: () => ReactNode;
     beforeToolBarRender?: () => ReactNode;
     beforeToolBarRenderClassName?: string;
@@ -90,8 +101,10 @@ export interface ToolBarProps extends Omit<FilterItemProps, 'children'>, Omit<So
     isShowViewSettingTrigger?: boolean;
     renderViewSettingTrigger: (defaultUI: ReactElement) => ReactElement;
     total?: number;
+    disabled?: boolean;
 }
 export interface FilterItemProps {
+    disabled?: boolean;
     children?: (defaultUI: ReactElement) => ReactElement;
     filterTriggerMode?: TriggerMode;
     filterTriggerProps?: TriggerProps;
@@ -103,6 +116,7 @@ export interface FilterItemProps {
     onFilterReset?: () => Promise<DataSource> | Promise<void>;
 }
 export interface SortItemProps {
+    disabled?: boolean;
     children?: (defaultUI: ReactElement) => ReactElement;
     sortTriggerMode?: TriggerMode;
     sortTriggerProps?: TriggerProps;
@@ -113,18 +127,22 @@ export interface SortItemProps {
     onSortReset?: () => Promise<DataSource> | Promise<void>;
 }
 export interface ViewSettingProps {
+    disabled?: boolean;
     children?: (defaultUI: ReactElement) => ReactElement;
     viewSettingTriggerMode?: TriggerMode;
     viewSettingTriggerProps?: TriggerProps;
-    renderViewSetting?: (viewSettingDefaultValue: string) => ReactElement;
+    renderViewSetting?: (defaultViewSettingValue: string) => ReactElement;
     viewSettingConfig?: ViewSettingConfigItem[];
-    viewSettingDefaultValue?: string;
-    onViewSettingChange?: (value: string) => Promise<void>;
+    defaultViewSettingValue?: string;
+    onViewSetting?: (value: string) => Promise<void>;
     onViewSettingReset?: () => Promise<void>;
 }
 export interface PRSLItemProps {
+    className?: string;
+    style?: CSSProperties;
     actions?: ActionConfigItem[];
-    children?: (record: Record<string, any>, rowIndex: number, actionTrigger?: ReactElement) => ReactNode;
+    record?: Record<string, any>;
+    children?: ReactNode;
 }
 export interface DataSource {
     data: Record<string, any>[];
@@ -137,6 +155,26 @@ export interface LoadDataSourceParams {
     filterValues: FilterItemProps['defaultFilterValues'];
     sortValues: SortItemProps['defaultSortValues'];
 }
+export type SearchHistoryData = {
+    id: string;
+    kw: string;
+}[];
+export type SearchHistoryAction = {
+    type: 'add' | 'remove' | 'list';
+    addKw?: string;
+    removeId?: string;
+    list?: SearchHistoryData;
+};
+export type SearchHistoryProps = Pick<SearchKeyWordProps, 'defaultSearchKeyWord' | 'onSearch' | 'onSearchClear' | 'searchKeyWordBarProps'> & {
+    className?: string;
+    style?: CSSProperties;
+    historyData?: SearchHistoryData;
+    addHistory?: (kw: string) => void;
+    removeHistory?: (id: string) => void;
+    clearHistory?: () => void;
+    closeSelf?: () => void;
+    title?: ReactNode;
+};
 export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style' | 'onSearch' | 'onSearchClear'>, Omit<ToolBarProps, 'onFilter' | 'onFilterReset' | 'onSort' | 'onSortReset'> {
     className?: string;
     style?: CSSProperties;
@@ -177,7 +215,6 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     actionTriggerMode?: 'ActionSheet' | 'Swipe';
     selectedRowKeys?: (string | number)[];
     selectionMultiple?: boolean;
-    renderSelectionTrigger?: (defaultUI: ReactElement) => ReactElement;
     onSelectChange?: (selectedRowKeys: (string | number)[], selectedRows: Record<string, any>[], changeRowKeys: (string | number)[], info: {
         type: 'select' | 'unselect';
     }) => void;
@@ -194,7 +231,23 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
  * PRSLHandle
  * @description 暴漏的方法
  */
-export type PRSLHandle = {
+export interface PRSLHandle {
     getScrollEl: () => HTMLElement;
     hideAll: ScrollLoadRefHandle['hideAll'];
+}
+export interface PRSLContext {
+    isUseSelectionMode: () => boolean;
+    getRowKey: () => string;
+    getOptionSelectedRowKeys: () => (string | number)[];
+    selectionChange: (_checked: boolean, id: string) => void;
+    selectionAllChange: (_checkAll: boolean) => void;
+    getDatasourceLength: () => number;
+    getSelectionMultiple: () => boolean;
+}
+/**
+ * PRSLComponent
+ */
+export type PRSLComponent = NamedExoticComponent<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>> & {
+    Item: typeof PRSLItem;
 };
+export type ModeType = 'normal' | 'selection' | 'drag';

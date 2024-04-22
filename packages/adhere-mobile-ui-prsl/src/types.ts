@@ -1,58 +1,62 @@
 import type { FormItemProps, FormProps, PullToRefreshProps, SearchBarProps } from 'antd-mobile';
 import type { Action as SheetAction } from 'antd-mobile/es/components/action-sheet';
 import type { Action as SwiperAction } from 'antd-mobile/es/components/swipe-action';
+import type { FormInstance } from 'rc-field-form/es/interface';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import { NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 
 import type {
   DialogTriggerProps,
   ModalTriggerProps,
   PopupTriggerProps,
 } from '@baifendian/adhere-mobile-ui-anthoc/es/types';
-import { BackTopAnimationProps } from '@baifendian/adhere-ui-backtopanimation/es/types';
-import { TriggerProps as AdherePopupTriggerProps } from '@baifendian/adhere-ui-popup/es/types';
+import type { BackTopAnimationProps } from '@baifendian/adhere-ui-backtopanimation/es/types';
+import type { TriggerProps as AdherePopupTriggerProps } from '@baifendian/adhere-ui-popup/es/types';
 import type {
   ScrollLoadProps,
   ScrollLoadRefHandle,
 } from '@baifendian/adhere-ui-scrollload/es/types';
 
+import PRSLItem from './PRSLItem';
+
 /**
  * FilterConfigItem
  * @description 筛选配置项
  */
-export type FilterConfigItem = {
+export interface FilterConfigItem {
   key: string;
   name: string;
   label?: string | ReactElement;
   formItemProps?: FormItemProps;
-  render: () => ReactElement;
-};
+  render: (formIns: FormInstance<any>) => ReactElement;
+}
 
 /**
  * SortConfigItem
  * @description 排序配置项
  */
-export type SortConfigItem = {
+export interface SortConfigItem {
   name: string;
   label: ReactNode;
-};
+}
 
 /**
  * DefaultSortValue
  * @description 缺省排序值
  */
-export type DefaultSortValue = {
+export interface DefaultSortValue {
   name: string;
   order: 'asc' | 'desc' | '' | undefined | null;
-};
+}
 
 /**
  * ViewSettingConfigItem
  * @description 视图设置配置项
  */
-export type ViewSettingConfigItem = {
-  name: 'normal' | 'multi' | 'waterfal';
+export interface ViewSettingConfigItem {
+  name: 'normal' | 'multi' | 'waterfal' | string;
   label: string | ReactElement;
-};
+}
 
 /**
  * ActionConfigItem
@@ -60,6 +64,10 @@ export type ViewSettingConfigItem = {
  */
 export type ActionConfigItem = SheetAction | SwiperAction;
 
+/**
+ * TriggerMode
+ * @description Trigger的弹出方式
+ */
 export type TriggerMode = 'popup-top' | 'popup-bottom' | 'modal' | 'dialog' | 'adhere-popup';
 
 export type TriggerProps =
@@ -75,7 +83,12 @@ export interface SearchKeyWordProps {
   // 关键字搜索模式
   searchKeyWordMode?: 'normal' | 'history';
   // 搜索历史最大历史数量，超过则替换最早的
-  searchKeyWordHistoryMaxSize?: number;
+  searchKeyWordHistoryMaxSize: number;
+  // 是否将搜索历史放入store
+  isSearchKeyWordHistoryIntoStore?: boolean;
+  // 存入store的类型
+  searchKeyWordHistoryStoreType?: 'session' | 'local';
+  disabled?: boolean;
   defaultSearchKeyWord?: string;
   onSearch?: (value: string) => void;
   onSearchClear?: () => void;
@@ -86,6 +99,7 @@ export interface ToolbarConfigItem {
   label?: ReactNode;
   icon?: ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 export interface ToolbarItemProps extends ToolbarConfigItem {
@@ -107,6 +121,7 @@ export interface ToolBarProps
   renderToolBar?: (
     defaultToolItems: ReactElement[],
     defaultShowTotalElement?: ReactNode,
+    disabled?: boolean,
   ) => ReactNode;
   // 工具栏之前的渲染
   afterToolBarRender?: () => ReactNode;
@@ -130,9 +145,11 @@ export interface ToolBarProps
   // 渲染视图设置按钮
   renderViewSettingTrigger: (defaultUI: ReactElement) => ReactElement;
   total?: number;
+  disabled?: boolean;
 }
 
 export interface FilterItemProps {
+  disabled?: boolean;
   children?: (defaultUI: ReactElement) => ReactElement;
   // Trigger的弹出方式(ok)
   filterTriggerMode?: TriggerMode;
@@ -153,6 +170,7 @@ export interface FilterItemProps {
 }
 
 export interface SortItemProps {
+  disabled?: boolean;
   children?: (defaultUI: ReactElement) => ReactElement;
   // 排序UI的弹出方式
   sortTriggerMode?: TriggerMode;
@@ -171,30 +189,30 @@ export interface SortItemProps {
 }
 
 export interface ViewSettingProps {
+  disabled?: boolean;
   children?: (defaultUI: ReactElement) => ReactElement;
   // 视图设置UI的弹出方式
   viewSettingTriggerMode?: TriggerMode;
   // Trigger的配置
   viewSettingTriggerProps?: TriggerProps;
   // 渲染视图设置UI
-  renderViewSetting?: (viewSettingDefaultValue: string) => ReactElement;
+  renderViewSetting?: (defaultViewSettingValue: string) => ReactElement;
   // 视图设置配置
   viewSettingConfig?: ViewSettingConfigItem[];
   // 缺省的视图设置数据
-  viewSettingDefaultValue?: string;
+  defaultViewSettingValue?: string;
   // 视图设置切换的hook
-  onViewSettingChange?: (value: string) => Promise<void>;
+  onViewSetting?: (value: string) => Promise<void>;
   // 视图设置重置的hook
   onViewSettingReset?: () => Promise<void>;
 }
 
 export interface PRSLItemProps {
+  className?: string;
+  style?: CSSProperties;
   actions?: ActionConfigItem[];
-  children?: (
-    record: Record<string, any>,
-    rowIndex: number,
-    actionTrigger?: ReactElement,
-  ) => ReactNode;
+  record?: Record<string, any>;
+  children?: ReactNode;
 }
 
 export interface DataSource {
@@ -210,6 +228,32 @@ export interface LoadDataSourceParams {
   sortValues: SortItemProps['defaultSortValues'];
 }
 
+export type SearchHistoryData = {
+  id: string;
+  kw: string;
+}[];
+
+export type SearchHistoryAction = {
+  type: 'add' | 'remove' | 'list';
+  addKw?: string;
+  removeId?: string;
+  list?: SearchHistoryData;
+};
+
+export type SearchHistoryProps = Pick<
+  SearchKeyWordProps,
+  'defaultSearchKeyWord' | 'onSearch' | 'onSearchClear' | 'searchKeyWordBarProps'
+> & {
+  className?: string;
+  style?: CSSProperties;
+  historyData?: SearchHistoryData;
+  addHistory?: (kw: string) => void;
+  removeHistory?: (id: string) => void;
+  clearHistory?: () => void;
+  closeSelf?: () => void;
+  title?: ReactNode;
+};
+
 export interface PRSLProps
   extends Omit<SearchKeyWordProps, 'className' | 'style' | 'onSearch' | 'onSearchClear'>,
     Omit<ToolBarProps, 'onFilter' | 'onFilterReset' | 'onSort' | 'onSortReset'> {
@@ -222,11 +266,6 @@ export interface PRSLProps
   // ------------------------------ 数据 ----------------------
   // dataSource中的primary key
   rowKey?: string;
-  // // 数据源
-  // dataSource?: {
-  //   data: Record<string, any>[];
-  //   total: number;
-  // };
   // 是否是本数据
   isUseLocal?: boolean;
   // 首次加载数据
@@ -284,16 +323,9 @@ export interface PRSLProps
 
   showToolBar?: boolean;
   // --------------------------- 工具栏设置 -----------------
-  // 是否显示工具栏
-
   // ----------------------------- 筛选工具 ---------------------------
-  // 是否显示筛选按(ok)
-
   // ------------------------------ 排序按钮 ----------------------------
-  // 是否显示排序按钮
-
   // ------------------------------ 视图设置按钮 -------------------------------
-  // 是否显示视图设置按钮
 
   // ------------------------------ 操作项(Action) -------------------------------
   // 操作项弹出模式
@@ -308,8 +340,6 @@ export interface PRSLProps
   selectedRowKeys?: (string | number)[];
   // 是否是多选模式
   selectionMultiple?: boolean;
-  // 自定义选择模式按钮
-  renderSelectionTrigger?: (defaultUI: ReactElement) => ReactElement;
   // 选择发生改变的hook
   onSelectChange?: (
     // 选择的keys
@@ -344,7 +374,29 @@ export interface PRSLProps
  * PRSLHandle
  * @description 暴漏的方法
  */
-export type PRSLHandle = {
+export interface PRSLHandle {
   getScrollEl: () => HTMLElement;
   hideAll: ScrollLoadRefHandle['hideAll'];
+}
+
+export interface PRSLContext {
+  isUseSelectionMode: () => boolean;
+  getRowKey: () => string;
+  getOptionSelectedRowKeys: () => (string | number)[];
+  selectionChange: (_checked: boolean, id: string) => void;
+  selectionAllChange: (_checkAll: boolean) => void;
+  getDatasourceLength: () => number;
+  getSelectionMultiple: () => boolean;
+}
+
+/**
+ * PRSLComponent
+ */
+export type PRSLComponent = NamedExoticComponent<
+  PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
+> & {
+  Item: typeof PRSLItem;
 };
+
+// 模式
+export type ModeType = 'normal' | 'selection' | 'drag';

@@ -3,12 +3,31 @@
 @import '~@baifendian/adhere-ui-popup/es/index.less';
 @import '~@baifendian/adhere-ui-split/es/index.less';
 
-@import './SearchKeyWord/index';
-@import './Toolbar/index';
+@import './SearchKeyWord';
+@import './Toolbar';
+@import './PRSLItem';
+@import './Selection';
 
 .adhere-mobile-ui-prsl {
   display: flex;
   flex-direction: column;
+
+  > .adhere-mobile-ui-prsl-header {
+    display: flex;
+    flex-shrink: 0;
+
+    > .adhere-mobile-ui-prsl-header-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    > .adhere-mobile-ui-prsl-header-extra {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      padding-right: 15px;
+    }
+  }
 
   > .adhere-mobile-ui-prsl-inner {
     display: flex;
@@ -38,6 +57,12 @@
         > .adhere-mobile-ui-prsl-scroll-load {
           flex: 1;
           min-height: 0;
+        }
+
+        > .adhere-mobile-ui-prsl-scroll {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
         }
 
         > .adhere-mobile-ui-prsl-scroll-after {
