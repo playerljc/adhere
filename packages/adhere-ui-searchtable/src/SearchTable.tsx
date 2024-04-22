@@ -778,6 +778,15 @@ abstract class SearchTable<
   }
 
   /**
+   * getDataSource
+   * @description 获取Table的数据
+   * @return Record<string, any>[]
+   */
+  getDataSource() {
+    return this.getData();
+  }
+
+  /**
    * renderTableNumberColumn
    * @description - 渲染序号列
    * @param {string} number
@@ -1039,7 +1048,7 @@ abstract class SearchTable<
     // Table的antdProps配置
     const tableProps: TableProps<any> = {
       rowKey: this.getRowKey(),
-      dataSource: this.getData(),
+      dataSource: this.getDataSource(),
       columns,
       onChange: this.onTableChange,
       pagination: this.getPagination(),

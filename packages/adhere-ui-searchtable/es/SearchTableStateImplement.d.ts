@@ -24,18 +24,18 @@ export declare class SearchTableStateImplement<P extends SearchTableStateImpleme
      */
     getTotal(): number;
     /**
-     * showLoading
-     * @description loading
-     * @return {boolean}
-     */
-    showLoading(): boolean;
-    /**
      * fetchDataExecute
      * @description 调用列表数据接口
      * @param {any} searchParams
      * @return {Promise<any>}
      */
     fetchDataExecute(searchParams?: any): Promise<any>;
+    /**
+     * showLoading
+     * @description loading
+     * @return {boolean}
+     */
+    showLoading(): boolean;
 }
 /**
  * SearchTableStateImplementFactory

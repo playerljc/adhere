@@ -304,7 +304,7 @@ export interface ColumnEditableConfig {
   // formItem的Props
   formItemProps?: any;
   // 组件的props定义
-  props?: any;
+  props?: ((params: ColumnParams) => any) | object;
   // 是否使用句柄来切换状态 view的时候有一个句柄点击后变成编辑状态，编辑的时候有2个句柄，save和cancel，如果设置为false，则关于句柄的事件将不会触发
   useTrigger?: boolean;
   // 渲染查看的句柄
@@ -314,7 +314,7 @@ export interface ColumnEditableConfig {
   // 渲染取消的句柄
   renderCancelTrigger?: (params: ColumnParams) => ReactNode;
   // FormItem的rules
-  rules?: Rule[];
+  rules?: ((params: ColumnParams) => Rule[]) | Rule[];
   // 如果有此属性，则不用column的dataIndex
   dataIndex?: DataIndex;
   // dist渲染的组件的字典名称(适用于FormItemGeneratorToDict)

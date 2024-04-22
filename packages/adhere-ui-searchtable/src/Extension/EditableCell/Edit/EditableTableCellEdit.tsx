@@ -1,10 +1,11 @@
 import { Form } from 'antd';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import type { FC, ReactNode } from 'react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Util from '@baifendian/adhere-util';
 
 import type SearchTable from '../../../SearchTable';
 import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
@@ -116,9 +117,13 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
   }
 
   function renderFormItem() {
+    const childrenProps = Util.isFunction(props.editableConfig.props)
+      ? (props.editableConfig.props as Function)({ record, dataIndex, rowIndex }) ?? {}
+      : props.editableConfig.props ?? {};
+
     return FormItemGenerator.render({
       type,
-      props: { autoFocus: !useKeepEdit, ...props.editableConfig.props },
+      props: { autoFocus: !useKeepEdit, ...childrenProps },
       dictName: props.editableConfig.dictName,
       // renderChildren: props.editableConfig.renderChildren,
       form: context?.editable?.tableEditable?.form,
@@ -135,6 +140,19 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
         })
       : formItemNode;*/
   }
+
+  const targetRules = useMemo(() => {
+    if (Util.isFunction(rules)) {
+      return (rules as Function)({
+        record,
+        value,
+        rowIndex,
+        dataIndex,
+      });
+    }
+
+    return rules;
+  }, [rules, record, value, rowIndex, dataIndex]);
 
   useEffect(() => {
     context?.editable?.tableEditable?.form?.setFieldValue(
@@ -166,7 +184,7 @@ const EditableTableCellEdit: FC<EditableCellEditProps> = (props) => {
         <Form.Item
           // initialValue={record[dataIndex as string]}
           name={nameItemPath}
-          rules={rules}
+          rules={targetRules}
           {...(formItemProps ?? {})}
         >
           {type !== 'custom'

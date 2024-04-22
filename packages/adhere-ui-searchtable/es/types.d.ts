@@ -215,12 +215,12 @@ export interface ColumnEditableConfig {
     }) => Promise<void>;
     onBeforeCancel?: (params: ColumnParams) => Promise<void>;
     formItemProps?: any;
-    props?: any;
+    props?: ((params: ColumnParams) => any) | object;
     useTrigger?: boolean;
     renderToEditTrigger?: (params: ColumnParams) => ReactNode;
     renderSaveTrigger?: (params: ColumnParams) => ReactNode;
     renderCancelTrigger?: (params: ColumnParams) => ReactNode;
-    rules?: Rule[];
+    rules?: ((params: ColumnParams) => Rule[]) | Rule[];
     dataIndex?: DataIndex;
     dictName?: string;
     renderChildren?: (params?: any) => ReactNode | null;

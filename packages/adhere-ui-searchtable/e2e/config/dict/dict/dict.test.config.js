@@ -358,6 +358,18 @@ export default {
     };
 
     // sex
+    Dict.handlers.SystemTestSex = () => [
+      {
+        label: '男',
+        value: '1',
+      },
+      {
+        label: '女',
+        value: '0',
+      },
+    ];
+
+    // sex
     Dict.handlers.SystemTestSexSelect = () => [
       {
         label: '男',

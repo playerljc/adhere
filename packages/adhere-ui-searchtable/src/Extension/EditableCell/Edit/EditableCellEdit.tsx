@@ -2,10 +2,11 @@ import { Form } from 'antd';
 import type { FormInstance, FormListFieldData, FormListOperation } from 'antd/es/form';
 import dayjs from 'dayjs';
 import type { FC, ReactNode } from 'react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import Util from '@baifendian/adhere-util';
 
 import type SearchTable from '../../../SearchTable';
 import { SearchTableContext, selectorPrefix } from '../../../SearchTable';
@@ -139,13 +140,17 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
    * renderFormItem
    */
   function renderFormItem() {
+    const childrenProps = Util.isFunction(props.editableConfig.props)
+      ? (props.editableConfig.props as Function)({ record, dataIndex, rowIndex }) ?? {}
+      : props.editableConfig.props ?? {};
+
     const formItemNodeProps = {
       autoFocus: !useKeepEdit,
-      ...props.editableConfig.props,
+      ...childrenProps,
       ...EventTypes.reduce<Record<string, Function>>((eventCombination, eventType) => {
         eventCombination[eventType] = (e: any) => {
-          if (props.editableConfig.props[eventType]) {
-            props.editableConfig.props[eventType](e, {
+          if (childrenProps[eventType]) {
+            childrenProps[eventType](e, {
               form,
               dataIndex,
               rowIndex,
@@ -180,6 +185,19 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
       : formItemNode;
   }
 
+  const targetRules = useMemo(() => {
+    if (Util.isFunction(rules)) {
+      return (rules as Function)({
+        record,
+        value,
+        rowIndex,
+        dataIndex,
+      });
+    }
+
+    return rules;
+  }, [rules, record, value, rowIndex, dataIndex]);
+
   useEffect(() => {
     form?.setFieldValue(
       dataIndex as string,
@@ -210,7 +228,7 @@ const EditableCellEdit: FC<EditableCellEditProps> = (props) => {
         <Form.Item
           // initialValue={record[dataIndex as string]}
           name={dataIndex as string}
-          rules={rules}
+          rules={targetRules ?? []}
           {...(formItemProps ?? {})}
         >
           {type !== 'custom'

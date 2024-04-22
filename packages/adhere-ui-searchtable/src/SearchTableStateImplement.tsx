@@ -85,15 +85,6 @@ export class SearchTableStateImplement<
   }
 
   /**
-   * showLoading
-   * @description loading
-   * @return {boolean}
-   */
-  showLoading(): boolean {
-    return this.state?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
-  }
-
-  /**
    * fetchDataExecute
    * @description 调用列表数据接口
    * @param {any} searchParams
@@ -103,6 +94,15 @@ export class SearchTableStateImplement<
     return this.state?.[`${this.getServiceName()}${this.getFetchListPropNameToFirstUpper()}`](
       searchParams,
     );
+  }
+
+  /**
+   * showLoading
+   * @description loading
+   * @return {boolean}
+   */
+  showLoading(): boolean {
+    return this.state?.loading?.[`${this.getServiceName()}/${this.getFetchListPropName()}`];
   }
 }
 

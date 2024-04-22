@@ -301,6 +301,12 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      */
     getExportExcelData(): object[];
     /**
+     * getDataSource
+     * @description 获取Table的数据
+     * @return Record<string, any>[]
+     */
+    getDataSource(): object[];
+    /**
      * renderTableNumberColumn
      * @description - 渲染序号列
      * @param {string} number

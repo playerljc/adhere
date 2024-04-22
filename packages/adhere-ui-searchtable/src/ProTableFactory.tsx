@@ -55,8 +55,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       };
 
       if (
-        !('openSearchParamsMemory' in this.props) ||
-        ('openSearchParamsMemory' in this.props && this.props.openSearchParamsMemory)
+        !('openSearchParamsMemory' in (this.props ?? {})) ||
+        ('openSearchParamsMemory' in (this.props ?? {}) && this.props.openSearchParamsMemory)
       ) {
         defaultSearchAndPaginParams = this.initSearchAndPaginParams();
       }
