@@ -3,7 +3,7 @@ import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
 import type { CSSProperties, ReactElement, ReactNode } from 'react';
-import { FC } from 'react';
+import { Context, FC } from 'react';
 import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
 import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
 import type { ScrollLoadProps, ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
@@ -52,9 +52,7 @@ export type CheckAllCheckListProps = CheckAllWrapperStyleProps & CheckListProps 
 export type CheckAllCheckboxProps = CheckAllWrapperStyleProps & CheckboxGroupProps & {
     onCheckAllChange?: CheckAllChangeFun;
 };
-export type CheckAllSelectorProps = CheckAllWrapperStyleProps & SelectorProps<any> & {
-    onCheckAllChange?: CheckAllChangeFun;
-};
+export type CheckAllSelectorProps = CheckAllWrapperStyleProps & SelectorProps<any>;
 export type CheckAllWrapperProps = {
     value?: CheckListValue[];
     options?: CheckListValue[];
@@ -140,10 +138,12 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxGroup
     AutoCompletePagingCheckbox: FC<AutoCompletePagingCheckboxProps>;
 };
 export type ModalHOCComponent = ReturnType<typeof createFactory<ModalProps>> & {
+    ModalTriggerContext: Context<ModalTriggerContext>;
     Trigger: FC<ModalTriggerProps<any>>;
     TriggerPrompt: FC<ModalTriggerPromptProps<any>>;
 };
 export type DialogHOCComponent = ReturnType<typeof createFactory<DialogProps>> & {
+    Context: Context<DialogTriggerContext>;
     Trigger: FC<DialogTriggerProps<any>>;
     TriggerPrompt: FC<DialogTriggerPromptProps<any>>;
 };
@@ -160,6 +160,7 @@ export type PopupShowHandler = {
 export type PopupHOCComponent = ReturnType<typeof createFactory<PopupProps>> & {
     show: (props: PopupShowProps) => PopupShowHandler;
     clear: () => void;
+    Context: Context<PopupTriggerContext>;
     Trigger: FC<PopupTriggerProps<any>>;
     TriggerPrompt: FC<PopupTriggerPromptProps<any>>;
 };
@@ -278,7 +279,9 @@ export type AutoCompletePagingSelectorProps = AutoCompletePagingProps & {
     pagingSelectorProps: Omit<PagingSelectorProps, 'value' | 'onChange' | 'options'>;
 };
 export type PopoverTriggerProps = BaseType & {
-    renderTrigger?: () => ReactNode;
+    value?: any;
+    disabled?: boolean;
+    renderTrigger?: (changeValue: any) => ReactNode;
     renderPopover?: () => void;
 };
 export type ModalTriggerProps<Value> = Omit<ModalProps, 'content' | 'actions'> & {
@@ -287,8 +290,12 @@ export type ModalTriggerProps<Value> = Omit<ModalProps, 'content' | 'actions'> &
     actions?: (Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
     })[];
+    disabled?: boolean;
     children?: ReactElement;
     popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+export type ModalTriggerContext = {
+    close: () => void;
 };
 export type ModalTriggerPromptProps<Value> = Omit<ModalTriggerProps<Value>, 'actions'> & {
     submitAction?: Omit<Action, 'onClick'> & {
@@ -304,8 +311,12 @@ export type DialogTriggerProps<Value> = Omit<DialogProps, 'content' | 'actions'>
     actions?: (Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
     })[];
+    disabled?: boolean;
     children?: ReactElement;
     popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+export type DialogTriggerContext = {
+    close: () => void;
 };
 export type DialogTriggerPromptProps<Value> = Omit<DialogTriggerProps<Value>, 'actions'> & {
     submitAction?: Omit<Action, 'onClick'> & {
@@ -320,8 +331,12 @@ export type PopupTriggerProps<Value> = Omit<PopupShowProps, 'children' | 'action
     actions?: (Omit<Action, 'onClick'> & {
         onClick?: () => Promise<Value>;
     })[];
+    disabled?: boolean;
     children?: ReactElement;
     popoverTriggerProps?: Omit<PopoverTriggerProps, 'renderPopover'>;
+};
+export type PopupTriggerContext = {
+    close: () => void;
 };
 export type PopupTriggerPromptProps<Value> = Omit<PopupTriggerProps<Value>, 'actions'> & {
     submitAction?: Omit<Action, 'onClick'> & {
@@ -477,5 +492,15 @@ export type DataSourceListProps = ListProps & {
 };
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps>> & {
     DataSourceList: FC<DataSourceListProps>;
+};
+export type ValueHOCProps = BaseType & {
+    defaultFormItemValue?: any;
+    value?: any;
+    onChange?: (...params: any[]) => any;
+    children?: any;
+    [key: string]: any;
+};
+export type ValueHOCHandle = {
+    getValue: () => any;
 };
 export {};

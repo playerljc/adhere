@@ -68,11 +68,11 @@ import FilterSelector from './Selector/FilterSelector';
 import PagingSelector from './Selector/PagingSelector';
 import Selector from './Selector/Selector';
 import TimeDialog from './TimeDialog/TimeDialog';
-import TimeModalFormatValueHOCx from './TimeModal/FormatValueHOC';
+import TimeModalFormatValueHOC from './TimeModal/FormatValueHOC';
 import TimeModal from './TimeModal/TimeModal';
 import TimeModalTimestampValueHOC from './TimeModal/TimestampValueHoc';
 import TimePopup from './TimePopup/TimePopup';
 
 e2e.Mobile({
-  children: <PagingCheckbox />,
+  children: <ModalTrigger />,
 });

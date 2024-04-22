@@ -39,7 +39,7 @@ const ListCheckAll: FC<ListCheckAllProps> = ({
     () => (
       <CheckAllWrapper
         value={value ?? []}
-        onCheckAllChange={onCheckAllChange}
+        onCheckAllChange={onCheckAllChange as any}
         options={options ?? []}
       >
         {CheckAllLabel}

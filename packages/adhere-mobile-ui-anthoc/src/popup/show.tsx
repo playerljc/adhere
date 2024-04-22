@@ -1,7 +1,6 @@
-import { useMount, useUpdateEffect } from 'ahooks';
 import { Button, Popup } from 'antd-mobile';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 import type { ReactElement } from 'react';
 import ReactDOM from 'react-dom/client';
 import type { Root } from 'react-dom/client';
@@ -25,7 +24,7 @@ const selectorPrefix = 'adhere-mobile-ui-ant-hoc-show-popup-inner';
  * @param popupProps
  * @constructor
  */
-function PopupWrapper({
+export function PopupWrapper({
   actions,
   closeOnAction = false,
   title,
@@ -35,37 +34,12 @@ function PopupWrapper({
   ...popupProps
 }: PopupShowProps & {
   visible: boolean;
-  close: () => void;
+  close?: () => void;
 }): ReactElement {
   const { showCloseButton = true } = popupProps;
 
-  const [visible, setVisible] = useState(popupProps.visible);
-
-  useMount(() => {
-    setVisible(true);
-  });
-
-  useUpdateEffect(() => {
-    setVisible(false);
-  }, [popupProps.visible]);
-
   return (
-    <Popup
-      {...popupProps}
-      visible={visible}
-      onMaskClick={(argv) => {
-        setVisible(false);
-        popupProps?.onMaskClick?.(argv);
-      }}
-      onClose={() => {
-        setVisible(false);
-        popupProps?.onClose?.();
-      }}
-      afterClose={() => {
-        close();
-        popupProps?.afterClose?.();
-      }}
-    >
+    <Popup {...popupProps}>
       <div className={selectorPrefix}>
         {(showCloseButton || !!title) && <div className={`${selectorPrefix}-title`}>{title}</div>}
 
@@ -103,12 +77,14 @@ function PopupWrapper({
                       if (result && result.then) {
                         result.then(() => {
                           if (closeOnAction) {
-                            setVisible(false);
+                            // @ts-ignore
+                            popupProps?.onClose();
                           }
                         });
                       } else {
                         if (closeOnAction) {
-                          setVisible(false);
+                          // @ts-ignore
+                          popupProps?.onClose();
                         }
                       }
                     }}

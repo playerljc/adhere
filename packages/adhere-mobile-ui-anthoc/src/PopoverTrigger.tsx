@@ -14,6 +14,7 @@ const DEFAULT_TRIGGER_ICON =
  * PopoverTrigger
  * @param className
  * @param style
+ * @param changeValue
  * @param renderTrigger
  * @param renderPopover
  * @constructor
@@ -21,10 +22,14 @@ const DEFAULT_TRIGGER_ICON =
 const PopoverTrigger: FC<PopoverTriggerProps> = ({
   className,
   style,
+  value,
   renderTrigger,
   renderPopover,
+  disabled = false,
 }) => {
   function onTrigger() {
+    if (disabled) return;
+
     renderPopover?.();
   }
 
@@ -34,7 +39,7 @@ const PopoverTrigger: FC<PopoverTriggerProps> = ({
       style={style ?? {}}
       onClick={debounce(onTrigger, 200)}
     >
-      {renderTrigger?.() ?? <img src={DEFAULT_TRIGGER_ICON} alt="" />}
+      {renderTrigger?.(value) ?? <img src={DEFAULT_TRIGGER_ICON} alt="" />}
     </div>
   );
 };

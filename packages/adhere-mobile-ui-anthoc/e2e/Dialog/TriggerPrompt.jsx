@@ -1,17 +1,28 @@
 import { Button, Form } from 'antd-mobile';
-import React, { useRef } from 'react';
+import Mockjs from 'mockjs';
+import React from 'react';
 
-import { Dialog } from '../../src/index';
-import FilterCheckAllCheckList from '../CheckList/FilterCheckAllCheckList';
+import { CheckList, Dialog } from '../../src/index';
 
+// import FilterCheckAllCheckList from '../CheckList/FilterCheckAllCheckList';
 import '../../src/index.less';
+
+const options = Array.from({ length: 100 }).map((t, _index) => {
+  const value = Mockjs.mock('@guid');
+  const title = `${Mockjs.mock('@name')}`;
+
+  return {
+    title,
+    value,
+  };
+});
 
 export default () => {
   const [form] = Form.useForm();
 
-  const person = Form.useWatch('person', form) ?? [];
+  // const person = Form.useWatch('person', form) ?? [];
 
-  const filterCheckAllCheckListRef = useRef();
+  // const filterCheckAllCheckListRef = useRef();
 
   return (
     <Form
@@ -40,20 +51,35 @@ export default () => {
           submitAction={{
             key: 'submit',
             primary: true,
+            // onClick: () => {
+            //   const value = filterCheckAllCheckListRef.current.getValue();
+            //   return Promise.resolve(value);
+            // },
             onClick: () => {
-              const value = filterCheckAllCheckListRef.current.getValue();
-              return Promise.resolve(value);
+              return Promise.resolve();
             },
           }}
           popoverTriggerProps={{
-            renderTrigger: () => (
+            renderTrigger: (changeValue) => (
               <Button color="primary" size="mini">
-                人员选择({person.length})
+                人员选择({changeValue?.length})
               </Button>
             ),
           }}
         >
-          <FilterCheckAllCheckList ref={filterCheckAllCheckListRef} />
+          {/*<FilterCheckAllCheckList ref={filterCheckAllCheckListRef} />*/}
+          <CheckList.FilterCheckAllCheckList
+            filterProps={{ placeholder: '请输入关键字' }}
+            style={{ height: '100%' }}
+            bodyWrapperStyle={{ overflowY: 'auto' }}
+            // value={value}
+            options={options}
+            // onChange={(val) => {
+            //   setValue(val);
+            //   props.onChange(val);
+            // }}
+            // onCheckAllChange={setValue}
+          />
         </Dialog.TriggerPrompt>
       </Form.Item>
     </Form>

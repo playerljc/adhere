@@ -54,7 +54,7 @@ function useDateTimePopover<T extends DateTimeViewProps>({
           text: clearLabel ?? Intl.v('清除'),
           onClick: () => {
             setKey(`${Date.now()}`);
-            return Promise.resolve(undefined);
+            return Promise.resolve(null);
           },
         },
         {

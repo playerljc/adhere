@@ -167,11 +167,13 @@ function Paging<Option>({
 
     appendDataToRemote();
   }
+
   function getPagesByOptions() {
     const length = (options ?? []).length;
 
     return Math.floor(length / paging.limit) + (length % paging.limit === 0 ? 0 : 1);
   }
+
   function getPagesByPaging() {
     return (paging?.total ?? 0) / paging.limit;
   }

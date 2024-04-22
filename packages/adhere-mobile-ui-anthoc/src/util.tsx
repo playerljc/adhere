@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { cloneElement, forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
+
+import type { ValueHOCHandle, ValueHOCProps } from './types';
 
 const { useScrollLayout } = FlexLayout;
 
@@ -41,3 +43,33 @@ export function createFactory<P>(
 
   return fn;
 }
+
+export const ValueHOC = forwardRef<ValueHOCHandle, ValueHOCProps>(
+  ({ defaultFormItemValue, children, className, style, ...props }, ref) => {
+    const [value, setValue] = useState(defaultFormItemValue);
+
+    function onChange(...params) {
+      setValue(params[0]);
+
+      children?.props?.onChange?.(...params);
+    }
+
+    useImperativeHandle(ref, () => ({
+      getValue: () => value,
+    }));
+
+    return (
+      <div className={className ?? ''} style={style ?? {}}>
+        {cloneElement(
+          children,
+          {
+            ...children.props,
+            value,
+            onChange,
+          },
+          children.props.children,
+        )}
+      </div>
+    );
+  },
+);

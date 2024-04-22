@@ -1,13 +1,15 @@
-import { useUpdateEffect } from 'ahooks';
 import { Dialog } from 'antd-mobile';
-import type { DialogShowHandler } from 'antd-mobile/es/components/dialog';
 import classNames from 'classnames';
-import React, { cloneElement, memo, useCallback, useMemo, useRef } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import PopoverTrigger from '../PopoverTrigger';
 import type { DialogTriggerProps, DisplayNameInternal } from '../types';
+import { ValueHOCHandle } from '../types';
+import { ValueHOC } from '../util';
+import Context from './Context';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-dialog-trigger';
 
@@ -20,33 +22,38 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
     closeActionText,
     closeActionKey,
     value,
+    disabled = false,
     onChange,
     actions,
     children,
     popoverTriggerProps,
     ...dialogProps
   }) => {
-    const handler = useRef<DialogShowHandler | null>(null);
+    const [visible, setVisible] = useState(false);
+
+    const valueHOCRef = useRef<ValueHOCHandle>();
 
     /**
      * onConfirm
      * @param onClick
-     * @param close
      */
-    function onConfirm(onClick, close) {
+    function onConfirm(onClick) {
       onClick?.()?.then((result) => {
-        onChange?.(result);
-
-        setTimeout(() => {
-          close();
-        }, 300);
+        close();
+        onChange?.(
+          result !== undefined
+            ? result === null
+              ? undefined
+              : result
+            : valueHOCRef.current?.getValue(),
+        );
       });
     }
 
     const targetActions = useMemo(() => {
       const result = (actions ?? []).map((_action) => ({
         ..._action,
-        onClick: () => onConfirm(_action.onClick, handler.current?.close),
+        onClick: () => onConfirm(_action.onClick),
       }));
 
       if (showCloseButton) {
@@ -62,47 +69,69 @@ const InternalDialogTrigger = memo<DialogTriggerProps<any>>(
 
     const targetDialogProps = useMemo(() => {
       return {
+        visible,
+        destroyOnClose: true,
         closeOnMaskClick: true,
         closeOnAction: showCloseButton,
         ...dialogProps,
         actions: targetActions,
-        content:
-          children &&
-          cloneElement(
-            children,
-            {
-              defaultValue: value,
-              ...children.props,
-            },
-            children.props.children,
-          ),
+        content: children && (
+          <ValueHOC
+            className={`${selectorPrefix}-value-hoc`}
+            // @ts-ignore
+            ref={valueHOCRef}
+            defaultFormItemValue={value}
+          >
+            {children}
+          </ValueHOC>
+        ),
         afterClose: () => {
-          handler.current = null;
           dialogProps?.afterClose?.();
         },
+        onClose: () => {
+          close();
+          dialogProps?.onClose?.();
+        },
       };
-    }, [dialogProps, targetActions, children, value]);
+    }, [dialogProps, targetActions, children, value, onChange, visible]);
 
     /**
      * renderPopover
      */
     const renderPopover = useCallback(() => {
-      handler.current = Dialog.show(targetDialogProps);
+      setVisible(true);
     }, [targetDialogProps]);
 
-    useUpdateEffect(() => {
-      if (handler.current) {
-        // @ts-ignore
-        handler.current.replace(<Dialog {...targetDialogProps} />);
-      }
-    }, [dialogProps]);
+    function close() {
+      setVisible(false);
+    }
 
     return (
-      <PopoverTrigger
-        className={classNames(selectorPrefix, popoverTriggerProps?.className ?? '')}
-        renderPopover={renderPopover}
-        {...(popoverTriggerProps ?? {})}
-      />
+      <Context.Provider
+        value={{
+          close,
+        }}
+      >
+        {createPortal(
+          <Dialog
+            {...targetDialogProps}
+            bodyClassName={classNames(
+              `${selectorPrefix}-modal-body`,
+              targetDialogProps.bodyClassName,
+            )}
+          />,
+          // @ts-ignore
+          targetDialogProps?.getContainer?.() ?? document.body,
+        )}
+
+        <PopoverTrigger
+          className={classNames(selectorPrefix, popoverTriggerProps?.className ?? '')}
+          value={value}
+          renderPopover={renderPopover}
+          disabled={disabled ?? false}
+          {...(popoverTriggerProps ?? {})}
+        />
+      </Context.Provider>
     );
   },
 );

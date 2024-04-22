@@ -19,12 +19,13 @@ const InternalCheckAllSelector = memo<CheckAllSelectorProps>(
     checkAllBodyWrapperStyle,
     renderCheckAll,
     checkAllLabel,
-    onCheckAllChange,
+    // onCheckAllChange,
     ...selectorProps
   }) => {
     const childrenOrigin = useMemo(() => <Selector multiple {...selectorProps} />, [selectorProps]);
 
     return (
+      // @ts-ignore
       <ListCheckAll
         {...{
           checkAllWrapperClassName,
@@ -33,7 +34,7 @@ const InternalCheckAllSelector = memo<CheckAllSelectorProps>(
           checkAllBodyWrapperStyle,
           renderCheckAll,
           checkAllLabel,
-          onCheckAllChange,
+          onCheckAllChange: selectorProps.onChange,
           value: selectorProps.value ?? [],
           options: selectorProps?.options?.map((t) => t.value as any) ?? [],
           selectorPrefix,

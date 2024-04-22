@@ -43,8 +43,11 @@ export default forwardRef((props, ref) => {
       bodyWrapperStyle={{ overflowY: 'auto' }}
       value={value}
       options={options}
-      onChange={setValue}
-      onCheckAllChange={setValue}
+      onChange={(val) => {
+        setValue(val);
+        // props.onChange(val);
+      }}
+      // onCheckAllChange={setValue}
     />
   );
 });

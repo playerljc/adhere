@@ -1,5 +1,5 @@
 import { Button, Form } from 'antd-mobile';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import { Modal } from '../../src/index';
 import FilterCheckAllCheckList from '../CheckList/FilterCheckAllCheckList';
@@ -7,6 +7,8 @@ import FilterCheckAllCheckList from '../CheckList/FilterCheckAllCheckList';
 import '../../src/index.less';
 
 export default () => {
+  const [count, setCount] = useState(0);
+
   const [form] = Form.useForm();
 
   const person = Form.useWatch('person', form) ?? [];
@@ -68,7 +70,17 @@ export default () => {
             ),
           }}
         >
-          <FilterCheckAllCheckList ref={filterCheckAllCheckListRef} />
+          {/*<FilterCheckAllCheckList ref={filterCheckAllCheckListRef} />*/}
+          <>
+            <div>{count}</div>
+            <div
+              onClick={() => {
+                setCount(count + 1);
+              }}
+            >
+              111
+            </div>
+          </>
         </Modal.TriggerPrompt>
       </Form.Item>
     </Form>

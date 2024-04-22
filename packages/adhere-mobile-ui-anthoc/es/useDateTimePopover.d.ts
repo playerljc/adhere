@@ -10,7 +10,7 @@ declare function useDateTimePopover<T extends DateTimeViewProps>({ popoverTrigge
     } | {
         key: string;
         text: string | NonNullable<import("./types").DateTimePopoverProps<T>["clearLabel"]>;
-        onClick: () => Promise<undefined>;
+        onClick: () => Promise<null>;
         primary?: undefined;
     } | {
         key: string;

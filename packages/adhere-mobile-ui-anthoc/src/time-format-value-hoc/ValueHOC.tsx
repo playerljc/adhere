@@ -37,7 +37,12 @@ const ValueHOC: FC<TimeFormatValueHOCProps> = ({
   const targetDefaultValue = useMemo(() => originValueToDateObject(defaultValue), [defaultValue]);
 
   function _onChange(_date) {
-    onChange?.(dayjs(_date).format(props.format ?? 'LTS'));
+    if (_date) {
+      onChange?.(dayjs(_date).format(props.format ?? 'LTS'));
+      return;
+    }
+
+    onChange?.(_date);
   }
 
   return useMemo(

@@ -49,8 +49,13 @@ const ValueHOC: FC<DateTimestampValueHOCProps> = ({
 
   const targetDefaultValue = useMemo(() => originValueToDateObject(defaultValue), [defaultValue]);
 
-  const _onChange = (date) => {
-    onChange?.(changeValueMillisecondsToTargetValue((date as Date).getTime()));
+  const _onChange = (_date) => {
+    if (_date) {
+      onChange?.(changeValueMillisecondsToTargetValue((_date as Date).getTime()));
+      return;
+    }
+
+    onChange?.(_date);
   };
 
   return useMemo(

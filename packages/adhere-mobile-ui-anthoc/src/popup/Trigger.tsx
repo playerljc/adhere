@@ -1,10 +1,13 @@
-import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { cloneElement, memo, useCallback, useMemo, useRef } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import PopoverTrigger from '../PopoverTrigger';
-import type { DisplayNameInternal, PopupShowHandler, PopupTriggerProps } from '../types';
-import { show } from './show';
+import type { DisplayNameInternal, PopupTriggerProps } from '../types';
+import { ValueHOCHandle } from '../types';
+import { ValueHOC } from '../util';
+import Context from './Context';
+import { PopupWrapper } from './show';
 
 const selectorPrefix = 'adhere-mobile-ui-ant-hoc-modal-trigger';
 
@@ -12,25 +15,42 @@ const selectorPrefix = 'adhere-mobile-ui-ant-hoc-modal-trigger';
  * InternalPopupTrigger
  */
 const InternalPopupTrigger = memo<PopupTriggerProps<any>>(
-  ({ value, onChange, actions, children, popoverTriggerProps, className, ...popupProps }) => {
-    const handler = useRef<PopupShowHandler | null>(null);
+  ({
+    className,
+    value,
+    onChange,
+    actions,
+    popoverTriggerProps,
+    disabled = false,
+    children,
+    ...popupProps
+  }) => {
+    const [visible, setVisible] = useState(false);
+
+    const valueHOCRef = useRef<ValueHOCHandle>();
 
     /**
      * onConfirm
      * @param onClick
      */
     function onConfirm(onClick) {
-      if (onClick) {
-        return onClick?.()?.then((result) => {
-          onChange?.(result);
-        });
-      }
+      return onClick?.()?.then((result) => {
+        close();
 
-      return Promise.resolve();
+        onChange?.(
+          result !== undefined
+            ? result === null
+              ? undefined
+              : result
+            : valueHOCRef.current?.getValue(),
+        );
+      });
     }
 
     const targetPopupProps = useMemo(
       () => ({
+        visible,
+        destroyOnClose: true,
         closeOnMaskClick: true,
         showCloseButton: true,
         closeOnAction: true,
@@ -41,46 +61,64 @@ const InternalPopupTrigger = memo<PopupTriggerProps<any>>(
           ..._action,
           onClick: () => onConfirm(_action.onClick),
         })),
-        children:
-          children &&
-          cloneElement(
-            children,
-            {
-              defaultValue: value,
-              ...children.props,
-            },
-            children.props.children,
-          ),
+        children: children && (
+          <ValueHOC
+            className={`${selectorPrefix}-value-hoc`}
+            // @ts-ignore
+            ref={valueHOCRef}
+            defaultFormItemValue={value}
+          >
+            {children}
+          </ValueHOC>
+        ),
         afterClose: () => {
-          handler.current = null;
           popupProps?.afterClose?.();
         },
+        onClose: () => {
+          close();
+          popupProps?.onClose?.();
+        },
       }),
-      [popupProps, actions, children, value],
+      [popupProps, actions, children, value, onChange, visible],
     );
 
     /**
      * renderPopover
      */
     const renderPopover = useCallback(() => {
-      handler.current = show(targetPopupProps);
+      setVisible(true);
     }, [targetPopupProps]);
 
-    useUpdateEffect(() => {
-      if (handler.current) {
-        handler.current?.setConfig((originProps) => ({
-          ...originProps,
-          ...popupProps,
-        }));
-      }
-    }, [popupProps]);
+    function close() {
+      setVisible(false);
+    }
 
     return (
-      <PopoverTrigger
-        className={classNames(selectorPrefix, className ?? '')}
-        renderPopover={renderPopover}
-        {...(popoverTriggerProps ?? {})}
-      />
+      <Context.Provider
+        value={{
+          close,
+        }}
+      >
+        {createPortal(
+          <PopupWrapper
+            {...targetPopupProps}
+            bodyClassName={classNames(
+              `${selectorPrefix}-modal-body`,
+              targetPopupProps.bodyClassName,
+            )}
+          />,
+          // @ts-ignore
+          targetPopupProps?.getContainer?.() ?? document.body,
+        )}
+
+        <PopoverTrigger
+          className={classNames(selectorPrefix, className ?? '')}
+          value={value}
+          renderPopover={renderPopover}
+          disabled={disabled ?? false}
+          {...(popoverTriggerProps ?? {})}
+        />
+      </Context.Provider>
     );
   },
 );

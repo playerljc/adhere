@@ -9,7 +9,7 @@ declare function useCalendarPopover({ popoverTriggerClassName, popoverTriggerSty
     } | {
         key: string;
         text: NonNullable<React.ReactNode>;
-        onClick: () => Promise<undefined>;
+        onClick: () => Promise<null>;
         primary?: undefined;
     } | {
         key: string;

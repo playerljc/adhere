@@ -9,7 +9,7 @@ declare function useDatePopover({ popoverTriggerClassName, popoverTriggerStyle, 
     } | {
         key: string;
         text: NonNullable<React.ReactNode>;
-        onClick: () => Promise<undefined>;
+        onClick: () => Promise<null>;
         primary?: undefined;
     } | {
         key: string;

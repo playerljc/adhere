@@ -19,7 +19,7 @@ const InternalCheckAllCheckList = memo<CheckAllCheckListProps>(
     checkAllBodyWrapperStyle,
     renderCheckAll,
     checkAllLabel,
-    onCheckAllChange,
+    // onCheckAllChange,
     ...checkListProps
   }) => {
     const childrenOrigin = useMemo(
@@ -36,7 +36,7 @@ const InternalCheckAllCheckList = memo<CheckAllCheckListProps>(
           checkAllBodyWrapperStyle,
           renderCheckAll,
           checkAllLabel,
-          onCheckAllChange,
+          onCheckAllChange: checkListProps.onChange,
           value: checkListProps.value ?? [],
           options: checkListProps?.options?.map((t) => t.value) ?? [],
           selectorPrefix,

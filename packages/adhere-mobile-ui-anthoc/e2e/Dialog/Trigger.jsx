@@ -24,13 +24,6 @@ export default () => {
           return Promise.resolve(value);
         },
       },
-      {
-        key: 'close',
-        text: '关闭',
-        onClick: () => {
-          return Promise.resolve();
-        },
-      },
     ],
     [],
   );

@@ -20,7 +20,7 @@ const InternalCheckAllCheckBox = memo<CheckAllCheckboxProps>(
     checkAllBodyWrapperStyle,
     renderCheckAll,
     checkAllLabel,
-    onCheckAllChange,
+    // onCheckAllChange,
     ...checkboxGroupProps
   }) => {
     const childrenOrigin = useMemo(
@@ -37,7 +37,7 @@ const InternalCheckAllCheckBox = memo<CheckAllCheckboxProps>(
           checkAllBodyWrapperStyle,
           renderCheckAll,
           checkAllLabel,
-          onCheckAllChange,
+          onCheckAllChange: checkboxGroupProps.onChange,
           value: checkboxGroupProps.value ?? [],
           options: checkboxGroupProps?.options?.map((t) => t.value as CheckListValue) ?? [],
           selectorPrefix,
