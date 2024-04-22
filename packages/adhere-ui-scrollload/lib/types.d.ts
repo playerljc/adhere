@@ -23,6 +23,7 @@ export interface ScrollLoadProps {
     emptyStyle?: CSSProperties;
     errorClassName?: string;
     errorStyle?: CSSProperties;
+    disabled?: boolean;
     distance?: number;
     onScrollBottom?: (handle?: (status?: string) => void) => void;
     onEmptyClick?: () => void;

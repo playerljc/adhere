@@ -1,3 +1,4 @@
+import { useUpdateEffect } from 'ahooks';
 import classNames from 'classnames';
 import React, {
   PropsWithoutRef,
@@ -41,28 +42,34 @@ const InternalScrollLoad = memo<
       onScrollBottom,
       onEmptyClick,
       onErrorClick,
+      disabled = false,
       children,
       ...attrs
     } = props;
 
     const lock = useRef(false); // 锁
-    const el = useRef<HTMLDivElement>(null);
-    const loadEl = useRef<HTMLDivElement>(null);
-    const emptyEl = useRef<HTMLDivElement>(null);
-    const errorEl = useRef<HTMLDivElement>(null);
+    const el = useRef<HTMLDivElement | null>(null);
+    const loadEl = useRef<HTMLDivElement | null>(null);
+    const emptyEl = useRef<HTMLDivElement | null>(null);
+    const errorEl = useRef<HTMLDivElement | null>(null);
 
     function _getScrollContainer() {
       return getScrollContainer ? getScrollContainer() : el.current;
     }
 
     function initEvents() {
-      _getScrollContainer()?.addEventListener('scroll', _onScroll);
+      if (!disabled) {
+        _getScrollContainer()?.addEventListener('scroll', _onScroll);
+      }
+
       emptyEl.current?.addEventListener('click', _onEmptyClick);
       errorEl.current?.addEventListener('click', _onErrorClick);
     }
 
     function removeEvents() {
-      _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+      if (!disabled) {
+        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+      }
       emptyEl.current?.removeEventListener('click', _onEmptyClick);
       errorEl.current?.removeEventListener('click', _onErrorClick);
     }
@@ -201,6 +208,19 @@ const InternalScrollLoad = memo<
 
       return () => removeEvents();
     });
+
+    useUpdateEffect(() => {
+      if (disabled) {
+        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+      } else {
+        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+        _getScrollContainer()?.addEventListener('scroll', _onScroll);
+      }
+
+      return () => {
+        _getScrollContainer()?.removeEventListener('scroll', _onScroll);
+      };
+    }, [disabled]);
 
     return (
       <div
