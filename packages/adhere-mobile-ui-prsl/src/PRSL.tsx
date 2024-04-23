@@ -12,6 +12,7 @@ import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/ty
 import Intl from '@baifendian/adhere-util-intl';
 
 import Context from './Context';
+import { DNDManageButton, SortableContainer, useDND } from './DND';
 import PRSLItem from './PRSLItem';
 import SearchKeyWord from './SearchKeyWord';
 import { SelectionCheckAllManage, SelectionManageButton, useSelection } from './Selection';
@@ -31,6 +32,14 @@ const DEFAULT_TOOLBAR_COLLAPSE_COUNT = 3;
 const DEFAULT_SEARCH_KEY_WORD_HISTORY_STORE_TYPE = 'session';
 
 const DEFAULT_ROW_KEY = 'id';
+
+const DEFAULT_MODE = 'normal';
+
+const DEFAULT_SEARCH_KEY_WORD_MODE = 'normal';
+
+const DEFAULT_IS_USE_DND = true;
+
+const DEFAULT_IS_USE_SELECTION = true;
 
 /**
  * InternalPRSL
@@ -128,10 +137,14 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       sortConfig,
       defaultSortValues,
       isUseLocal,
+      isUseSelection,
       // 选择模式开始
       selectedRowKeys,
       selectionMultiple,
       onSelectChange,
+      isUseDND,
+      dndDragHandle,
+      onDNDChange,
       // 选择模式结束
       children,
     }) => {
@@ -144,7 +157,17 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         total: 0,
       });
 
-      const [mode, setMode] = useState<ModeType>('normal');
+      const [mode, setMode] = useState<ModeType>(DEFAULT_MODE);
+
+      const isUseNormalMode = useMemo(() => mode === 'normal', [mode]);
+
+      const isTargetUseDND = useMemo(() => {
+        return isUseDND ?? DEFAULT_IS_USE_DND;
+      }, [isUseDND]);
+
+      const isTargetUseSelection = useMemo(() => {
+        return isUseSelection ?? DEFAULT_IS_USE_SELECTION;
+      }, [isUseSelection]);
 
       const targetRowKey = useMemo(() => rowKey ?? DEFAULT_ROW_KEY, [rowKey]);
 
@@ -152,8 +175,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         optionSelectedRowKeys,
         isUseSelectionMode,
         isSelectionMultiple,
-        finish,
-        cancel,
+        finish: selectionFinish,
+        cancel: selectionCancel,
         selectionChange,
         selectionAllChange,
       } = useSelection({
@@ -162,6 +185,21 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         mode,
         dataSource: dataSource.data,
         rowKey: targetRowKey,
+      });
+
+      const {
+        optionDataSource,
+        isUseDNDMode,
+        finish: dndFinish,
+        cancel: dndCancel,
+        move: dndMove,
+      } = useDND({
+        mode,
+        dataSource: dataSource.data,
+        rowKey: targetRowKey,
+        reset: () => {
+          setDataSource({ ...dataSource });
+        },
       });
 
       const [combinationParams, setCombinationParams] = useImmer<{
@@ -173,10 +211,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         filterValues: defaultFilterValues ?? {},
         sortValues: defaultSortValues ?? [],
       });
-
-      // const [targetSelectedRowKeys, setTargetSelectedRowKeys] = useState(selectedRowKeys ?? []);
-
-      // const [optionSelectedRowKeys, setOptionSelectedRowKeys] = useState(selectedRowKeys ?? []);
 
       const isFirstRef = useRef(true);
 
@@ -241,6 +275,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
         let targetData = dataSource.data ?? [];
 
+        if (isUseDNDMode) {
+          targetData = optionDataSource.data;
+        }
+
         // sort
         if ((sortValues ?? []).length) {
           targetData = sortValues.reduce((_dataSource, sortValue) => {
@@ -279,10 +317,16 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         }
 
         return targetData;
-      }, [combinationParams, dataSource]);
+      }, [combinationParams, dataSource, isUseDNDMode, optionDataSource]);
 
       const targetDataSource = useMemo(() => {
-        if (!isLocal) return dataSource;
+        if (!isLocal) {
+          if (isUseDNDMode) {
+            return optionDataSource;
+          }
+
+          return dataSource;
+        }
 
         let currentData = sortAndFilterData;
 
@@ -306,6 +350,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }, [
         dataSource,
         sortAndFilterData,
+        optionDataSource,
+        isUseDNDMode,
         isLocal,
         isUsePaging,
         pagingRef.current.page,
@@ -362,13 +408,13 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             className={searchKeyWordWrapperClassName ?? ''}
             style={searchKeyWordWrapperStyle ?? {}}
             searchKeyWordBarProps={searchKeyWordBarProps}
-            searchKeyWordMode={searchKeyWordMode ?? 'normal'}
+            searchKeyWordMode={searchKeyWordMode ?? DEFAULT_SEARCH_KEY_WORD_MODE}
             searchKeyWordHistoryMaxSize={searchKeyWordHistoryMaxSize ?? DEFAULT_DISTANCE}
             isSearchKeyWordHistoryIntoStore={isSearchKeyWordHistoryIntoStore ?? true}
             searchKeyWordHistoryStoreType={
               searchKeyWordHistoryStoreType ?? DEFAULT_SEARCH_KEY_WORD_HISTORY_STORE_TYPE
             }
-            disabled={isUseSelectionMode}
+            disabled={!isUseNormalMode}
             defaultSearchKeyWord={combinationParams.searchKeyWord ?? ''}
             onSearch={onSearch}
             onSearchClear={onSearchClear}
@@ -381,7 +427,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         searchKeyWordMode,
         searchKeyWordHistoryMaxSize,
         combinationParams.searchKeyWord,
-        isUseSelectionMode,
+        isUseNormalMode,
       ]);
 
       const toolBarElement = (
@@ -425,7 +471,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           renderSort={renderSort}
           sortConfig={sortConfig}
           defaultSortValues={combinationParams.sortValues}
-          disabled={isUseSelectionMode}
+          disabled={!isUseNormalMode}
           onSort={onSort}
           onSortReset={onSortReset}
         />
@@ -506,21 +552,24 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             distance={scrollLoadProps?.distance || 50}
             onScrollBottom={onScrollBottom}
             {...(scrollLoadProps || {})}
-            disabled={isUseSelectionMode}
+            disabled={!isUseNormalMode}
             className={classNames(
               `${selectorPrefix}-scroll-load`,
               scrollLoadProps?.className ?? '',
             )}
           >
-            {renderSelectionWrapper(children?.(targetDataSource.data))}
+            {renderScrollChildren()}
           </ScrollLoad>
         );
       }, [
+        isUseDNDMode,
+        isUseSelectionMode,
+        isSelectionMultiple,
+        isUseNormalMode,
+        targetDataSource.data,
         renderLoadMoreLoading,
         scrollLoadProps,
         children,
-        isUseSelectionMode,
-        targetDataSource.data,
       ]);
 
       const normalListElement = useMemo(() => {
@@ -550,7 +599,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           <PullToRefresh
             {...(pullToRefreshProps ?? {})}
             onRefresh={onPullToRefresh}
-            disabled={isUseSelectionMode}
+            disabled={!isUseNormalMode}
           >
             {scrollLoadBeforeInnerElement}
 
@@ -572,7 +621,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         normalListElement,
         showBackTopAnimation,
         backTopAnimationElement,
-        isUseSelectionMode,
+        isUseNormalMode,
         renderEmpty,
         isUsePaging,
       ]);
@@ -590,27 +639,54 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
               </div>
 
               <div className={`${selectorPrefix}-header-extra`}>
-                <SelectionManageButton
-                  isUseSelectionMode={isUseSelectionMode}
-                  onChange={(_isUseSelectionMode) => {
-                    if (_isUseSelectionMode) {
-                      setSelectionMode();
-                    } else {
-                      setNormalMode();
-                    }
-                  }}
-                  onFinish={() => {
-                    const { selectedRows, selectedRowKeys, changeRowKeys, info } = finish();
-                    onSelectChange?.(
-                      selectedRowKeys,
-                      selectedRows,
-                      changeRowKeys,
-                      // @ts-ignore
-                      info,
-                    );
-                  }}
-                  onCancel={cancel}
-                />
+                {isTargetUseDND && (
+                  <DNDManageButton
+                    isUseDNDMode={isUseDNDMode}
+                    isUseNormalMode={isUseNormalMode}
+                    onChange={(_isUseDNDMode) => {
+                      if (_isUseDNDMode) {
+                        setDNDMode();
+                      } else {
+                        setNormalMode();
+                      }
+                    }}
+                    onFinish={() => {
+                      setDataSource(optionDataSource);
+
+                      const changeResult = dndFinish();
+
+                      onDNDChange?.(changeResult);
+                    }}
+                    onCancel={dndCancel}
+                  />
+                )}
+
+                {isTargetUseSelection && (
+                  <SelectionManageButton
+                    isUseSelection={isUseSelection}
+                    isUseSelectionMode={isUseSelectionMode}
+                    isUseNormalMode={isUseNormalMode}
+                    onChange={(_isUseSelectionMode) => {
+                      if (_isUseSelectionMode) {
+                        setSelectionMode();
+                      } else {
+                        setNormalMode();
+                      }
+                    }}
+                    onFinish={() => {
+                      const { selectedRows, selectedRowKeys, changeRowKeys, info } =
+                        selectionFinish();
+                      onSelectChange?.(
+                        selectedRowKeys,
+                        selectedRows,
+                        changeRowKeys,
+                        // @ts-ignore
+                        info,
+                      );
+                    }}
+                    onCancel={selectionCancel}
+                  />
+                )}
               </div>
             </div>
 
@@ -641,7 +717,38 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         pullToRefreshElement,
         afterInnerElement,
         isUseSelectionMode,
+        isSelectionMultiple,
+        isUseNormalMode,
+        isUseDNDMode,
+        isTargetUseDND,
+        isTargetUseSelection,
       ]);
+
+      function renderScrollChildren() {
+        const _childrenMemo = children?.(targetDataSource.data);
+
+        // 如果是选择模式 && 是单选的时候
+        if (isUseSelectionMode && !isSelectionMultiple) {
+          return renderSelectionWrapper(_childrenMemo);
+        }
+
+        // 如果是DND模式
+        if (isUseDNDMode) {
+          return (
+            <SortableContainer
+              onSortEnd={(...params) => {
+                // @ts-ignore
+                dndMove(...params);
+              }}
+              useDragHandle
+            >
+              {_childrenMemo}
+            </SortableContainer>
+          );
+        }
+
+        return _childrenMemo;
+      }
 
       function setNormalMode() {
         setMode('normal');
@@ -651,8 +758,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         setMode('selection');
       }
 
-      function setDragMode() {
-        setMode('drag');
+      function setDNDMode() {
+        setMode('dnd');
       }
 
       function renderSelectionWrapper(_children) {
@@ -972,12 +1079,18 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       const expose = {
         isUseSelectionMode: () => isUseSelectionMode,
+        isUseDNDMode: () => isUseDNDMode,
+        isUseNormalMode: () => isUseNormalMode,
         getRowKey: () => targetRowKey,
         getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
         selectionChange,
         selectionAllChange,
         getDatasourceLength: () => dataSource.data.length,
         getSelectionMultiple: () => isSelectionMultiple,
+        getIndexByIdFormOptionDataSource: (id) => {
+          return optionDataSource.data.findIndex((t) => t[targetRowKey] === id);
+        },
+        getDndDragHandle: () => dndDragHandle,
       };
 
       return (

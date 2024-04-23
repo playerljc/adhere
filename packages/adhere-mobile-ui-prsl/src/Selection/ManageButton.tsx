@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
@@ -11,10 +11,16 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-selection';
  * @param onChange
  * @constructor
  */
-const SelectionManageButton = ({ isUseSelectionMode, onChange, onFinish, onCancel }) => {
+const SelectionManageButton = ({
+  isUseSelectionMode,
+  isUseNormalMode,
+  onChange,
+  onFinish,
+  onCancel,
+}) => {
   return (
     <div className={`${selectorPrefix}-manager-wrapper`}>
-      {!isUseSelectionMode && (
+      {isUseNormalMode && (
         <div
           className={`${selectorPrefix}-manager-item`}
           onClick={() => {

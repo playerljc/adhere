@@ -240,6 +240,10 @@ export type SearchHistoryAction = {
   list?: SearchHistoryData;
 };
 
+/**
+ * SearchHistoryProps
+ * @description 查询历史props
+ */
 export type SearchHistoryProps = Pick<
   SearchKeyWordProps,
   'defaultSearchKeyWord' | 'onSearch' | 'onSearchClear' | 'searchKeyWordBarProps'
@@ -254,6 +258,19 @@ export type SearchHistoryProps = Pick<
   title?: ReactNode;
 };
 
+/**
+ * DNDChangeValue
+ * @description 拖拽排序后的结果
+ */
+export type DNDChangeValue = {
+  preValue: string;
+  currentValue: string;
+}[];
+
+/**
+ * PRSL
+ * @description PRSLProps
+ */
 export interface PRSLProps
   extends Omit<SearchKeyWordProps, 'className' | 'style' | 'onSearch' | 'onSearchClear'>,
     Omit<ToolBarProps, 'onFilter' | 'onFilterReset' | 'onSort' | 'onSortReset'> {
@@ -336,6 +353,8 @@ export interface PRSLProps
   // renderAction?: (record: Record<string, any>, rowIndex: number) => ActionConfigItem[];
 
   // ----------------------------- 选择模式 ------------------------------
+  // 是否有选择的功能
+  isUseSelection?: boolean;
   // 选择的数据
   selectedRowKeys?: (string | number)[];
   // 是否是多选模式
@@ -354,8 +373,12 @@ export interface PRSLProps
   ) => void;
 
   // --------------------------- DND操作(元素互换) -------------------------
-  // 是否显示拖拽控制按钮
-  isShowDNDTrigger?: boolean;
+  // 是否有DND的功能
+  isUseDND?: boolean;
+  // 自定义dragHandle
+  dndDragHandle?: ReactNode;
+  // 排序的改变
+  onDNDChange?: (sortChangeValue: DNDChangeValue) => void;
 
   // ------------------------------ 内容体 -------------------------------
   // 内容体
@@ -379,14 +402,22 @@ export interface PRSLHandle {
   hideAll: ScrollLoadRefHandle['hideAll'];
 }
 
+/**
+ * PRSLContext
+ * @description PRSL上下文
+ */
 export interface PRSLContext {
   isUseSelectionMode: () => boolean;
+  isUseDNDMode: () => boolean;
+  isUseNormalMode: () => boolean;
   getRowKey: () => string;
   getOptionSelectedRowKeys: () => (string | number)[];
   selectionChange: (_checked: boolean, id: string) => void;
   selectionAllChange: (_checkAll: boolean) => void;
   getDatasourceLength: () => number;
   getSelectionMultiple: () => boolean;
+  getIndexByIdFormOptionDataSource: (id: string) => number;
+  getDndDragHandle: () => ReactNode;
 }
 
 /**
@@ -398,5 +429,16 @@ export type PRSLComponent = NamedExoticComponent<
   Item: typeof PRSLItem;
 };
 
-// 模式
-export type ModeType = 'normal' | 'selection' | 'drag';
+/**
+ * Mode
+ * @description 模式
+ */
+export type ModeType = 'normal' | 'selection' | 'dnd';
+
+export interface SortableContainerProps {
+  children?: ReactNode;
+}
+
+export interface SortableElementProps {
+  children?: ReactNode;
+}

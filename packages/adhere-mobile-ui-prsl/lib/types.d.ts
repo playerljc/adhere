@@ -165,6 +165,10 @@ export type SearchHistoryAction = {
     removeId?: string;
     list?: SearchHistoryData;
 };
+/**
+ * SearchHistoryProps
+ * @description 查询历史props
+ */
 export type SearchHistoryProps = Pick<SearchKeyWordProps, 'defaultSearchKeyWord' | 'onSearch' | 'onSearchClear' | 'searchKeyWordBarProps'> & {
     className?: string;
     style?: CSSProperties;
@@ -175,6 +179,18 @@ export type SearchHistoryProps = Pick<SearchKeyWordProps, 'defaultSearchKeyWord'
     closeSelf?: () => void;
     title?: ReactNode;
 };
+/**
+ * DNDChangeValue
+ * @description 拖拽排序后的结果
+ */
+export type DNDChangeValue = {
+    preValue: string;
+    currentValue: string;
+}[];
+/**
+ * PRSL
+ * @description PRSLProps
+ */
 export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style' | 'onSearch' | 'onSearchClear'>, Omit<ToolBarProps, 'onFilter' | 'onFilterReset' | 'onSort' | 'onSortReset'> {
     className?: string;
     style?: CSSProperties;
@@ -213,12 +229,15 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     searchKeyWordWrapperStyle?: CSSProperties;
     showToolBar?: boolean;
     actionTriggerMode?: 'ActionSheet' | 'Swipe';
+    isUseSelection?: boolean;
     selectedRowKeys?: (string | number)[];
     selectionMultiple?: boolean;
     onSelectChange?: (selectedRowKeys: (string | number)[], selectedRows: Record<string, any>[], changeRowKeys: (string | number)[], info: {
         type: 'select' | 'unselect';
     }) => void;
-    isShowDNDTrigger?: boolean;
+    isUseDND?: boolean;
+    dndDragHandle?: ReactNode;
+    onDNDChange?: (sortChangeValue: DNDChangeValue) => void;
     children?: (dataSource?: Record<string, any>[]) => ReactNode;
     beforeRenderClassName?: string;
     beforeRenderStyle?: CSSProperties;
@@ -235,14 +254,21 @@ export interface PRSLHandle {
     getScrollEl: () => HTMLElement;
     hideAll: ScrollLoadRefHandle['hideAll'];
 }
+/**
+ * PRSLContext
+ * @description PRSL上下文
+ */
 export interface PRSLContext {
     isUseSelectionMode: () => boolean;
+    isUseDNDMode: () => boolean;
+    isUseNormalMode: () => boolean;
     getRowKey: () => string;
     getOptionSelectedRowKeys: () => (string | number)[];
     selectionChange: (_checked: boolean, id: string) => void;
     selectionAllChange: (_checkAll: boolean) => void;
     getDatasourceLength: () => number;
     getSelectionMultiple: () => boolean;
+    getIndexByIdFormOptionDataSource: (id: string) => number;
 }
 /**
  * PRSLComponent
@@ -250,4 +276,14 @@ export interface PRSLContext {
 export type PRSLComponent = NamedExoticComponent<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>> & {
     Item: typeof PRSLItem;
 };
-export type ModeType = 'normal' | 'selection' | 'drag';
+/**
+ * Mode
+ * @description 模式
+ */
+export type ModeType = 'normal' | 'selection' | 'dnd';
+export interface SortableContainerProps {
+    children?: ReactNode;
+}
+export interface SortableElementProps {
+    children?: ReactNode;
+}
