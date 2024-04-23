@@ -142,7 +142,9 @@ export interface PRSLItemProps {
     style?: CSSProperties;
     actions?: ActionConfigItem[];
     record?: Record<string, any>;
-    children?: ReactNode;
+    children?: (params: {
+        actionSheetTrigger?: ReactNode;
+    }) => ReactNode;
 }
 export interface DataSource {
     data: Record<string, any>[];
@@ -194,6 +196,13 @@ export type ActionConfig = {
     onClick: () => void;
 };
 export type ActionsConfig = ActionConfig[];
+export interface ActionSheetTriggerProps {
+    config: ActionsConfig;
+}
+export interface ActionSwiperProps {
+    children?: ReactNode;
+    config: ActionsConfig;
+}
 /**
  * PRSL
  * @description PRSLProps
@@ -248,7 +257,6 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     onDNDChange?: (sortChangeValue: DNDChangeValue) => void;
     children?: (params: {
         dataSource: Record<string, any>[];
-        actionSheetTrigger?: ReactNode;
     }) => ReactNode;
     beforeRenderClassName?: string;
     beforeRenderStyle?: CSSProperties;
@@ -281,6 +289,7 @@ export interface PRSLContext {
     getSelectionMultiple: () => boolean;
     getIndexByIdFormOptionDataSource: (id: string) => number;
     getDndDragHandle: () => ReactNode;
+    getActionTriggerMode: () => string;
     onAction: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
 }
 /**

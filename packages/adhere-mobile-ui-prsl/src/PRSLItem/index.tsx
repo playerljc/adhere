@@ -45,7 +45,7 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
   const actionTriggerMode = getActionTriggerMode();
 
   // 每一行Action的配置
-  const actionsConfig = onAction(record, rowIndex);
+  const actionsConfig = onAction(record as Record<string, any>, rowIndex);
 
   // 是否使用ActionSheet显示Action
   const isActionSheetTriggerMode = useMemo(

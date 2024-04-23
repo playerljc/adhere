@@ -1093,10 +1093,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         isUseSelectionMode: () => isUseSelectionMode,
         isUseDNDMode: () => isUseDNDMode,
         isUseNormalMode: () => isUseNormalMode,
-        getRowKey: () => targetRowKey,
-        getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
         selectionChange,
         selectionAllChange,
+        getRowKey: () => targetRowKey,
+        getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
         getDatasourceLength: () => dataSource.data.length,
         getSelectionMultiple: () => isSelectionMultiple,
         getIndexByIdFormOptionDataSource: (id) => {
