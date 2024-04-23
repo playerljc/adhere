@@ -4,6 +4,7 @@ import e2e from '@baifendian/adhere-e2e';
 
 import DictConfig from '@/dict/dict.config';
 
+import Action from './Action';
 import GridView from './GridView';
 import LocalNoPaging from './Local/noPaging';
 import LocalPaging from './Local/paging';
@@ -14,5 +15,5 @@ import Selection from './Selection';
 DictConfig();
 
 e2e.Mobile({
-  children: <Selection />,
+  children: <Action />,
 });

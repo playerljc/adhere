@@ -187,6 +187,13 @@ export type DNDChangeValue = {
     preValue: string;
     currentValue: string;
 }[];
+export type ActionConfig = {
+    key: string;
+    disabled?: boolean;
+    text: ReactNode;
+    onClick: () => void;
+};
+export type ActionsConfig = ActionConfig[];
 /**
  * PRSL
  * @description PRSLProps
@@ -229,6 +236,7 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     searchKeyWordWrapperStyle?: CSSProperties;
     showToolBar?: boolean;
     actionTriggerMode?: 'ActionSheet' | 'Swipe';
+    onAction?: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
     isUseSelection?: boolean;
     selectedRowKeys?: (string | number)[];
     selectionMultiple?: boolean;
@@ -238,7 +246,10 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     isUseDND?: boolean;
     dndDragHandle?: ReactNode;
     onDNDChange?: (sortChangeValue: DNDChangeValue) => void;
-    children?: (dataSource?: Record<string, any>[]) => ReactNode;
+    children?: (params: {
+        dataSource: Record<string, any>[];
+        actionSheetTrigger?: ReactNode;
+    }) => ReactNode;
     beforeRenderClassName?: string;
     beforeRenderStyle?: CSSProperties;
     afterRenderClassName?: string;
@@ -269,6 +280,8 @@ export interface PRSLContext {
     getDatasourceLength: () => number;
     getSelectionMultiple: () => boolean;
     getIndexByIdFormOptionDataSource: (id: string) => number;
+    getDndDragHandle: () => ReactNode;
+    onAction: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
 }
 /**
  * PRSLComponent

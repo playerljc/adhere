@@ -212,7 +212,7 @@ export interface PRSLItemProps {
   style?: CSSProperties;
   actions?: ActionConfigItem[];
   record?: Record<string, any>;
-  children?: ReactNode;
+  children?: (params: { actionSheetTrigger?: ReactNode }) => ReactNode;
 }
 
 export interface DataSource {
@@ -266,6 +266,24 @@ export type DNDChangeValue = {
   preValue: string;
   currentValue: string;
 }[];
+
+export type ActionConfig = {
+  key: string;
+  disabled?: boolean;
+  text: ReactNode;
+  onClick: () => void;
+};
+
+export type ActionsConfig = ActionConfig[];
+
+export interface ActionSheetTriggerProps {
+  config: ActionsConfig;
+}
+
+export interface ActionSwiperProps {
+  children?: ReactNode;
+  config: ActionsConfig;
+}
 
 /**
  * PRSL
@@ -347,6 +365,7 @@ export interface PRSLProps
   // ------------------------------ 操作项(Action) -------------------------------
   // 操作项弹出模式
   actionTriggerMode?: 'ActionSheet' | 'Swipe';
+  onAction?: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
   // actionSheetProps?: ActionSheetProps;
   // swiperActionProps?: SwipeActionProps;
   // 操作配置
@@ -382,7 +401,7 @@ export interface PRSLProps
 
   // ------------------------------ 内容体 -------------------------------
   // 内容体
-  children?: (dataSource?: Record<string, any>[]) => ReactNode;
+  children?: (params: { dataSource: Record<string, any>[] }) => ReactNode;
   beforeRenderClassName?: string;
   beforeRenderStyle?: CSSProperties;
   afterRenderClassName?: string;
@@ -418,6 +437,8 @@ export interface PRSLContext {
   getSelectionMultiple: () => boolean;
   getIndexByIdFormOptionDataSource: (id: string) => number;
   getDndDragHandle: () => ReactNode;
+  getActionTriggerMode: () => string;
+  onAction: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
 }
 
 /**

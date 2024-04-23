@@ -1,4 +1,12 @@
 import type { DNDChangeValue } from '../types';
+/**
+ * UseDND
+ * @param mode
+ * @param dataSource
+ * @param reset
+ * @param rowKey
+ * @constructor
+ */
 export default function UseDND({ mode, dataSource, reset, rowKey }: {
     mode: any;
     dataSource: any;

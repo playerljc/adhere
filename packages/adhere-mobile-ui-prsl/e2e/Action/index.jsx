@@ -1,7 +1,8 @@
 import { Button, Image, List } from 'antd-mobile';
 import _ from 'lodash';
+import Masonry from 'masonry-layout';
 import Mockjs, { Random } from 'mockjs';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
 import { ShareAltOutlined, UserAddOutlined } from '@ant-design/icons';
@@ -32,11 +33,46 @@ const dataSource = Array.from({ length: 100 })
     avatar: Random.image(),
   }));
 
-function getData() {
+function getData({ page, pageSize, searchKeyWord, filterValues = {}, sortValues = [] }) {
+  console.log(page, pageSize, searchKeyWord, filterValues, sortValues);
   return new Promise((resolve) => {
+    let filterData;
+
+    // filter
+    if (!searchKeyWord && _.isEmpty(filterValues) && !sortValues.length) {
+      filterData = dataSource;
+    } else {
+      filterData = dataSource.filter(
+        (record) =>
+          (!searchKeyWord
+            ? true
+            : record.name.indexOf(searchKeyWord) !== -1 ||
+              record.describe.indexOf(searchKeyWord) !== -1) &&
+          (_.isEmpty(filterValues) ? true : record.name.indexOf(filterValues.name) !== -1),
+      );
+    }
+
+    // sort
+    if (sortValues.length) {
+      filterData = sortValues.reduce((res, sortValue) => {
+        res = res.sort((r1, r2) => {
+          if (sortValue.order === 'asc') {
+            if (r1[sortValue.name] > r2[sortValue.name]) return 1;
+            else if (r1[sortValue.name] < r2[sortValue.name]) return -1;
+            else return 0;
+          } else {
+            if (r1[sortValue.name] < r2[sortValue.name]) return 1;
+            else if (r1[sortValue.name] > r2[sortValue.name]) return -1;
+            else return 0;
+          }
+        });
+        return [...res];
+      }, filterData);
+    }
+
     resolve({
-      total: dataSource.length,
-      data: dataSource,
+      total: filterData.length,
+      data: filterData.slice((page - 1) * pageSize, page * pageSize),
     });
   });
 }
@@ -92,6 +128,8 @@ const BirthPlaceComponent2 =
   ];
 
 export default () => {
+  const ref = useRef();
+
   const [loading, setLoading] = useState(true);
 
   const filterConfig = useMemo(
@@ -503,9 +541,16 @@ export default () => {
   return (
     <div className="Wrapper">
       <PRSL
+        // selectionMultiple={false}
+        // isUseDND={false}
+        // isUseSelection={false}
+        searchKeyWordHistoryStoreType="local"
+        isUseFirstLoading
+        isUseLocal={false}
         className="PRSLWrapper"
-        paging={false}
-        isUseLocal
+        paging={{
+          defaultPageSize: 30,
+        }}
         toolbarConfig={(defaultElements) => {
           return [
             {
@@ -543,28 +588,71 @@ export default () => {
             return res;
           });
         }}
+        onLoadMore={(params) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              getData(params).then((res) => {
+                resolve(res);
+              });
+            }, 1500);
+          });
+        }}
+        onRefresh={(params) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              getData(params).then((res) => {
+                resolve(res);
+              });
+            }, 1500);
+          });
+        }}
         searchKeyWordBarProps={{
           placeholder: '请输入查询关键字',
+        }}
+        searchKeyWordMode="history"
+        actionTriggerMode="Swipe"
+        onAction={(record, rowIndex) => {
+          return [
+            {
+              key: 'add',
+              text: '新增',
+              disabled: true,
+              onClick: () => {},
+            },
+            {
+              key: 'remove',
+              text: '删除',
+              // disabled: true,
+              onClick: () => {
+                console.log('id', record.id, rowIndex);
+              },
+            },
+          ];
         }}
       >
         {({ dataSource }) => (
           <List header="用户列表">
             {dataSource.map((user) => (
-              <List.Item
-                key={user.id}
-                prefix={
-                  <Image
-                    src={user.avatar}
-                    style={{ borderRadius: 20 }}
-                    fit="cover"
-                    width={40}
-                    height={40}
-                  />
-                }
-                description={user.describe}
-              >
-                {user.name}
-              </List.Item>
+              <PRSL.Item key={user.id} record={user}>
+                {({ actionSheetTrigger }) => (
+                  <List.Item
+                    className="grid-item"
+                    prefix={
+                      <Image
+                        src={user.avatar}
+                        style={{ borderRadius: 20 }}
+                        fit="cover"
+                        width={40}
+                        height={40}
+                      />
+                    }
+                    extra={actionSheetTrigger}
+                    description={user.describe}
+                  >
+                    {user.name}
+                  </List.Item>
+                )}
+              </PRSL.Item>
             ))}
           </List>
         )}

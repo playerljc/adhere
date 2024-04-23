@@ -41,6 +41,8 @@ const DEFAULT_IS_USE_DND = true;
 
 const DEFAULT_IS_USE_SELECTION = true;
 
+const DEFAULT_ACTION_TRIGGER_MODE = 'ActionSheet';
+
 /**
  * InternalPRSL
  * @description
@@ -145,6 +147,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       isUseDND,
       dndDragHandle,
       onDNDChange,
+      actionTriggerMode,
+      onAction,
       // 选择模式结束
       children,
     }) => {
@@ -160,6 +164,11 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       const [mode, setMode] = useState<ModeType>(DEFAULT_MODE);
 
       const isUseNormalMode = useMemo(() => mode === 'normal', [mode]);
+
+      const targetActionTriggerMode = useMemo(
+        () => actionTriggerMode ?? DEFAULT_ACTION_TRIGGER_MODE,
+        [actionTriggerMode],
+      );
 
       const isTargetUseDND = useMemo(() => {
         return isUseDND ?? DEFAULT_IS_USE_DND;
@@ -357,6 +366,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         pagingRef.current.page,
         pagingRef.current.pageSize,
       ]);
+
+      const targetChildren = useMemo(() => {
+        return children?.({
+          dataSource: targetDataSource.data,
+        });
+      }, [children, targetDataSource.data]);
 
       const isEmpty = useCallback(() => !targetDataSource.data.length, [targetDataSource.data]);
 
@@ -569,7 +584,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         targetDataSource.data,
         renderLoadMoreLoading,
         scrollLoadProps,
-        children,
+        targetChildren,
       ]);
 
       const normalListElement = useMemo(() => {
@@ -579,10 +594,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             // @ts-ignore
             ref={scrollRef}
           >
-            {children?.(targetDataSource.data)}
+            {targetChildren}
           </div>
         );
-      }, [children, targetDataSource.data]);
+      }, [targetChildren]);
 
       const backTopAnimationElement = useMemo(() => {
         return (
@@ -663,7 +678,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
                 {isTargetUseSelection && (
                   <SelectionManageButton
-                    isUseSelection={isUseSelection}
                     isUseSelectionMode={isUseSelectionMode}
                     isUseNormalMode={isUseNormalMode}
                     onChange={(_isUseSelectionMode) => {
@@ -725,11 +739,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       ]);
 
       function renderScrollChildren() {
-        const _childrenMemo = children?.(targetDataSource.data);
-
         // 如果是选择模式 && 是单选的时候
         if (isUseSelectionMode && !isSelectionMultiple) {
-          return renderSelectionWrapper(_childrenMemo);
+          return renderSelectionWrapper(targetChildren);
         }
 
         // 如果是DND模式
@@ -742,12 +754,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
               }}
               useDragHandle
             >
-              {_childrenMemo}
+              {targetChildren}
             </SortableContainer>
           );
         }
 
-        return _childrenMemo;
+        return targetChildren;
       }
 
       function setNormalMode() {
@@ -1091,6 +1103,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           return optionDataSource.data.findIndex((t) => t[targetRowKey] === id);
         },
         getDndDragHandle: () => dndDragHandle,
+        getActionTriggerMode: () => targetActionTriggerMode,
+        onAction: (record, rowIndex) => onAction?.(record, rowIndex) ?? [],
       };
 
       return (

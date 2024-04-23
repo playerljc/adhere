@@ -602,7 +602,7 @@ export default () => {
           placeholder: '请输入查询关键字',
         }}
       >
-        {(dataSource) => (
+        {({ dataSource }) => (
           <List header="用户列表">
             {dataSource.map((user) => (
               <List.Item

@@ -608,7 +608,7 @@ export default () => {
         }}
         searchKeyWordMode="history"
       >
-        {(dataSource) => (
+        {({ dataSource }) => (
           <List header="用户列表">
             {dataSource.map((user) => (
               <List.Item

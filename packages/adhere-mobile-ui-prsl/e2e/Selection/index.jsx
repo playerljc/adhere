@@ -542,6 +542,8 @@ export default () => {
     <div className="Wrapper">
       <PRSL
         // selectionMultiple={false}
+        // isUseDND={false}
+        // isUseSelection={false}
         searchKeyWordHistoryStoreType="local"
         isUseFirstLoading
         isUseLocal={false}
@@ -609,25 +611,27 @@ export default () => {
         }}
         searchKeyWordMode="history"
       >
-        {(dataSource) => (
+        {({ dataSource }) => (
           <List header="用户列表">
             {dataSource.map((user) => (
               <PRSL.Item key={user.id} record={user}>
-                <List.Item
-                  className="grid-item"
-                  prefix={
-                    <Image
-                      src={user.avatar}
-                      style={{ borderRadius: 20 }}
-                      fit="cover"
-                      width={40}
-                      height={40}
-                    />
-                  }
-                  description={user.describe}
-                >
-                  {user.name}
-                </List.Item>
+                {({ actionSheetTrigger }) => (
+                  <List.Item
+                    className="grid-item"
+                    prefix={
+                      <Image
+                        src={user.avatar}
+                        style={{ borderRadius: 20 }}
+                        fit="cover"
+                        width={40}
+                        height={40}
+                      />
+                    }
+                    description={user.describe}
+                  >
+                    {user.name}
+                  </List.Item>
+                )}
               </PRSL.Item>
             ))}
           </List>

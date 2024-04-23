@@ -1,25 +1,23 @@
-import { Checkbox, Radio } from 'antd-mobile';
-import { MoreOutline } from 'antd-mobile-icons';
+import { Checkbox, Radio, SwipeAction } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { useCallback, useContext, useMemo } from 'react';
 import type { FC } from 'react';
-import { SortableHandle } from 'react-sortable-hoc';
 
+import { ActionSheetTrigger, ActionSwiper } from '../Action';
 import Context from '../Context';
-import { SortableItem } from '../DND';
+import { DragHandle, SortableItem } from '../DND';
 import type { PRSLItemProps } from '../types';
 
 const selectorPrefix = 'adhere-mobile-ui-prsl-item';
 
-const DragHandle = SortableHandle(
-  ({ children }) =>
-    children ?? (
-      <span>
-        <MoreOutline />
-      </span>
-    ),
-);
-
+/**
+ * PRSLItem
+ * @param className
+ * @param style
+ * @param children
+ * @param record
+ * @constructor
+ */
 const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => {
   const {
     isUseSelectionMode,
@@ -30,32 +28,60 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
     getSelectionMultiple,
     getIndexByIdFormOptionDataSource,
     getDndDragHandle,
+    getActionTriggerMode,
+    onAction,
   } = useContext(Context);
 
   const rowKey = getRowKey();
 
   const id = record?.[rowKey];
 
-  const index = getIndexByIdFormOptionDataSource(id);
+  const rowIndex = getIndexByIdFormOptionDataSource(id);
 
   const selectionMultiple = getSelectionMultiple();
 
   const optionSelectedRowKeys = getOptionSelectedRowKeys();
 
+  const actionTriggerMode = getActionTriggerMode();
+
+  // 每一行Action的配置
+  const actionsConfig = onAction(record, rowIndex);
+
+  // 是否使用ActionSheet显示Action
+  const isActionSheetTriggerMode = useMemo(
+    () => actionTriggerMode === 'ActionSheet',
+    [actionTriggerMode],
+  );
+
   const wrapper = useCallback(
     (_children) => {
-      return (
+      const wrapperMemo = (
         <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
           {_children}
         </div>
       );
+
+      if (!isActionSheetTriggerMode) {
+        return <ActionSwiper config={actionsConfig}>{wrapperMemo}</ActionSwiper>;
+      }
+
+      return wrapperMemo;
     },
-    [className, style],
+    [className, style, isActionSheetTriggerMode, actionsConfig],
   );
 
   const childrenWrapper = useMemo(
-    () => <div className={`${selectorPrefix}-main`}>{children}</div>,
-    [children],
+    () => (
+      <div className={`${selectorPrefix}-main`}>
+        {children?.({
+          actionSheetTrigger:
+            isActionSheetTriggerMode && actionsConfig.length ? (
+              <ActionSheetTrigger config={actionsConfig} />
+            ) : null,
+        })}
+      </div>
+    ),
+    [children, isActionSheetTriggerMode, actionsConfig],
   );
 
   function renderChildren() {
@@ -89,7 +115,7 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
     // DND模式
     else if (isUseDNDMode()) {
       return (
-        <SortableItem index={index}>
+        <SortableItem index={rowIndex}>
           {wrapper(
             <>
               <div className={`${selectorPrefix}-extra`}>

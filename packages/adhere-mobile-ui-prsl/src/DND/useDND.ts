@@ -4,6 +4,14 @@ import { useMemo, useState } from 'react';
 
 import type { DNDChangeValue } from '../types';
 
+/**
+ * UseDND
+ * @param mode
+ * @param dataSource
+ * @param reset
+ * @param rowKey
+ * @constructor
+ */
 export default function UseDND({ mode, dataSource, reset, rowKey }) {
   const [optionDataSource, setOptionDataSource] = useState([...(dataSource ?? [])]);
 
