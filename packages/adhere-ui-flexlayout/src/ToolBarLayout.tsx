@@ -27,7 +27,7 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
     ...otherProps
   } = props;
 
-  const _renderTop = useMemo(
+  const topElement = useMemo(
     () => (
       <ConditionalRender conditional={!!(topToolBarItems || []).length}>
         {() =>
@@ -42,7 +42,7 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
     [topToolBarItems],
   );
 
-  const _renderBottom = useMemo(
+  const bottomElement = useMemo(
     () => (
       <ConditionalRender conditional={!!(bottomToolBarItems || []).length}>
         {() =>
@@ -57,9 +57,9 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
     [bottomToolBarItems],
   );
 
-  const _topProps = useMemo(() => ({ fit: false, ...(topProps ?? {}) }), [topProps]);
+  const targetTopProps = useMemo(() => ({ fit: false, ...(topProps ?? {}) }), [topProps]);
 
-  const _bottomProps = useMemo(() => ({ fit: false, ...(bottomProps ?? {}) }), [bottomProps]);
+  const targetBottomProps = useMemo(() => ({ fit: false, ...(bottomProps ?? {}) }), [bottomProps]);
 
   return (
     <VerticalFlexLayout
@@ -74,12 +74,12 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
         `${selectorPrefix}-main-auto-wrap`,
         mainAutoWrapClassName ?? '',
       )}
-      topProps={_topProps}
-      bottomProps={_bottomProps}
+      topProps={targetTopProps}
+      bottomProps={targetBottomProps}
       {...otherProps}
-      renderTop={_renderTop}
+      renderTop={topElement}
       renderMain={children}
-      renderBottom={_renderBottom}
+      renderBottom={bottomElement}
     />
   );
 });

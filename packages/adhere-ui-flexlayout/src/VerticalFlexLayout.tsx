@@ -46,7 +46,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
     ...attrs
   } = props;
 
-  const _renderTop = useMemo(
+  const topElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderTop}>
         {() => (
@@ -64,7 +64,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
     [renderTop, topClassName, topStyle, topProps],
   );
 
-  const _renderMain = useMemo(
+  const mainElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderMain}>
         {() => (
@@ -141,7 +141,7 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
     ],
   );
 
-  const _renderBottom = useMemo(
+  const bottomElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderBottom}>
         {() => (
@@ -166,9 +166,9 @@ const VerticalFlexLayout = memo<VerticalFlexLayoutProps>((props) => {
       style={style ?? {}}
       direction="vertical"
     >
-      {_renderTop}
-      {_renderMain}
-      {_renderBottom}
+      {topElement}
+      {mainElement}
+      {bottomElement}
     </FlexLayout>
   );
 });

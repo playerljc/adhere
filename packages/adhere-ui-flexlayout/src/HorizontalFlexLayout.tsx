@@ -47,7 +47,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
     ...attrs
   } = props;
 
-  const _renderLeft = useMemo(
+  const leftElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderLeft}>
         {() => (
@@ -60,7 +60,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
     [renderLeft, leftClassName, leftStyle, leftProps],
   );
 
-  const _renderMain = useMemo(
+  const mainElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderMain}>
         {() => (
@@ -137,7 +137,7 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
     ],
   );
 
-  const _renderRight = useMemo(
+  const rightElement = useMemo(
     () => (
       <ConditionalRender conditional={!!renderRight}>
         {() => (
@@ -162,9 +162,9 @@ const HorizontalFlexLayout = memo<HorizontalFlexLayoutProps>((props) => {
       style={style ?? {}}
       direction="horizontal"
     >
-      {_renderLeft}
-      {_renderMain}
-      {_renderRight}
+      {leftElement}
+      {mainElement}
+      {rightElement}
     </FlexLayout>
   );
 });
