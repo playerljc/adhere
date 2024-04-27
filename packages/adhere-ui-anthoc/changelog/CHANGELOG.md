@@ -2,6 +2,14 @@
 
 ***
 
+2024-04-22
+
+* ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断
+
+# 1.0.7
+
+***
+
 2024-02-07
 
 * config-provider加入日期国际化的统一处理
