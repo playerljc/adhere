@@ -5,17 +5,19 @@ import type { DNDChangeValue } from '../types';
  * @param dataSource
  * @param reset
  * @param rowKey
+ * @param total
  * @constructor
  */
-export default function UseDND({ mode, dataSource, reset, rowKey }: {
+export default function UseDND({ mode, dataSource, reset, rowKey, total }: {
     mode: any;
     dataSource: any;
     reset: any;
     rowKey: any;
+    total: any;
 }): {
     optionDataSource: {
         data: any[];
-        total: number;
+        total: any;
     };
     isUseDNDMode: boolean;
     finish: () => DNDChangeValue;

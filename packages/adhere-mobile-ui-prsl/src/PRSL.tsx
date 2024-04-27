@@ -2,8 +2,16 @@ import { useMount, useNetwork, useUpdate, useUpdateEffect } from 'ahooks';
 import { Button, DotLoading, ErrorBlock, PullToRefresh, Radio, Skeleton } from 'antd-mobile';
 import classNames from 'classnames';
 import isPrimaryEmpty from 'lodash.isempty';
-import React, { forwardRef, memo, useCallback, useMemo, useRef, useState } from 'react';
-import type { PropsWithoutRef, RefAttributes } from 'react';
+import React, {
+  forwardRef,
+  memo,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 import { useImmer } from 'use-immer';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
@@ -59,102 +67,140 @@ const DEFAULT_ACTION_TRIGGER_MODE = 'ActionSheet';
  */
 const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
   forwardRef<PRSLHandle, PRSLProps>(
-    ({
-      className = '',
-      style,
-      innerClassName = '',
-      innerStyle,
-      isLoading = true,
-      isUseFirstLoading = true,
-      firstLoading,
-      pullToRefreshProps,
-      onRefreshBefore,
-      paging,
-      onRefresh,
-      rowKey,
-      showKeyWordSearchBar = true,
-      searchKeyWordBarProps,
-      searchKeyWordWrapperClassName = '',
-      searchKeyWordWrapperStyle,
-      searchKeyWordMode,
-      searchKeyWordHistoryMaxSize,
-      isSearchKeyWordHistoryIntoStore,
-      searchKeyWordHistoryStoreType,
-      defaultSearchKeyWord,
-      showToolBar = true,
-      showTotal,
-      renderToolBar,
-      afterToolBarRender,
-      beforeToolBarRender,
-      beforeToolBarRenderClassName = '',
-      beforeToolBarRenderStyle,
-      afterToolBarRenderClassName = '',
-      afterToolBarRenderStyle,
-      toolbarWrapperClassName = '',
-      toolbarWrapperStyle,
-      toolbarCollapseCount = DEFAULT_TOOLBAR_COLLAPSE_COUNT,
-      toolbarConfig,
-      scrollLoadProps,
-      onLoadMore,
-      loadMoreLoading,
-      showBackTopAnimation = true,
-      backTopAnimationProps,
-      scrollLoadBeforeRender,
-      scrollLoadAfterRender,
-      scrollLoadBeforeRenderClassName = '',
-      scrollLoadBeforeRenderStyle,
-      scrollLoadAfterRenderClassName = '',
-      scrollLoadAfterRenderStyle,
-      beforeRender,
-      afterRender,
-      beforeRenderClassName = '',
-      beforeRenderStyle,
-      afterRenderClassName = '',
-      afterRenderStyle,
-      isShowFilterTrigger,
-      renderFilterTrigger,
-      isShowSortTrigger,
-      renderSortTrigger,
-      isShowViewSettingTrigger,
-      renderViewSettingTrigger,
-      viewSettingTriggerMode,
-      viewSettingTriggerProps,
-      renderViewSetting,
-      viewSettingConfig,
-      defaultViewSettingValue,
-      onViewSetting,
-      onViewSettingReset,
-      loadData,
-      renderEmpty,
-      renderOffLine,
-      filterTriggerMode,
-      filterTriggerProps,
-      renderFilter,
-      filterFormProps,
-      filterConfig,
-      defaultFilterValues,
-      sortTriggerMode,
-      sortTriggerProps,
-      renderSort,
-      sortConfig,
-      defaultSortValues,
-      isUseLocal,
-      isUseSelection,
-      // 选择模式开始
-      selectedRowKeys,
-      selectionMultiple,
-      onSelectChange,
-      isUseDND,
-      dndDragHandle,
-      onDNDChange,
-      actionTriggerMode,
-      onAction,
-      // 选择模式结束
-      children,
-    }) => {
-      const networkState = useNetwork();
+    (
+      {
+        className = '',
+        style,
+        innerClassName = '',
+        innerStyle,
+        isLoading = true,
+        isUseFirstLoading = true,
+        firstLoading,
+        pullToRefreshProps,
+        onRefreshBefore,
+        paging,
+        onRefresh,
+        rowKey,
+        showKeyWordSearchBar = true,
+        searchKeyWordBarProps,
+        searchKeyWordWrapperClassName = '',
+        searchKeyWordWrapperStyle,
+        searchKeyWordMode,
+        searchKeyWordHistoryMaxSize,
+        isSearchKeyWordHistoryIntoStore,
+        searchKeyWordHistoryStoreType,
+        defaultSearchKeyWord,
+        showToolBar = true,
+        showTotal,
+        renderToolBar,
+        afterToolBarRender,
+        beforeToolBarRender,
+        beforeToolBarRenderClassName = '',
+        beforeToolBarRenderStyle,
+        afterToolBarRenderClassName = '',
+        afterToolBarRenderStyle,
+        toolbarWrapperClassName = '',
+        toolbarWrapperStyle,
+        toolbarCollapseCount = DEFAULT_TOOLBAR_COLLAPSE_COUNT,
+        toolbarConfig,
+        scrollLoadProps,
+        onLoadMore,
+        loadMoreLoading,
+        showBackTopAnimation = true,
+        backTopAnimationProps,
+        scrollLoadBeforeRender,
+        scrollLoadAfterRender,
+        scrollLoadBeforeRenderClassName = '',
+        scrollLoadBeforeRenderStyle,
+        scrollLoadAfterRenderClassName = '',
+        scrollLoadAfterRenderStyle,
+        beforeRender,
+        afterRender,
+        beforeRenderClassName = '',
+        beforeRenderStyle,
+        afterRenderClassName = '',
+        afterRenderStyle,
+        isShowFilterTrigger,
+        renderFilterTrigger,
+        isShowSortTrigger,
+        renderSortTrigger,
+        isShowViewSettingTrigger,
+        renderViewSettingTrigger,
+        viewSettingTriggerMode,
+        viewSettingTriggerProps,
+        renderViewSetting,
+        viewSettingConfig,
+        defaultViewSettingValue,
+        onViewSetting,
+        onViewSettingReset,
+        loadData,
+        renderEmpty,
+        renderOffLine,
+        filterTriggerMode,
+        filterTriggerProps,
+        renderFilter,
+        filterFormProps,
+        filterConfig,
+        defaultFilterValues,
+        sortTriggerMode,
+        sortTriggerProps,
+        renderSort,
+        sortConfig,
+        defaultSortValues,
+        isUseLocal,
+        selectionLabel,
+        selectionFinishLabel,
+        selectionCancelLabel,
+        isUseSelection,
+        // 选择模式开始
+        selectedRowKeys,
+        selectionMultiple,
+        onSelectChange,
+        isUseDND,
+        dndDragHandle,
+        dndLabel,
+        dndFinishLabel,
+        dndCancelLabel,
+        onDNDChange,
+        actionTriggerMode,
+        renderActionSheetTrigger,
+        onAction,
+        // 选择模式结束
+        headerExtra,
+        children,
+      },
+      ref,
+    ) => {
+      const isFirstRef = useRef(true);
 
-      const forceUpdate = useUpdate();
+      const isFirstLoadingRef = useRef(false);
+
+      const scrollRef = useRef<HTMLElement | undefined>(undefined);
+
+      const callbackHandler = useRef<Function | null>(null);
+
+      const status = useRef(ScrollLoad.NORMAL);
+
+      const scrollLoadRef = useRef<ScrollLoadRefHandle>();
+
+      const pagingRef = useRef({
+        page:
+          typeof paging !== 'undefined' && typeof paging === 'object'
+            ? (
+                paging as {
+                  page: number;
+                }
+              ).page ?? DEFAULT_PAGING_PAGE
+            : DEFAULT_PAGING_PAGE,
+        pageSize:
+          typeof paging !== 'undefined' && typeof paging === 'object'
+            ? (
+                paging as {
+                  defaultPageSize: number;
+                }
+              ).defaultPageSize ?? DEFAULT_PAGING_SIZE
+            : DEFAULT_PAGING_SIZE,
+      });
 
       const [dataSource, setDataSource] = useState<DataSource>({
         data: [],
@@ -162,6 +208,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       });
 
       const [mode, setMode] = useState<ModeType>(DEFAULT_MODE);
+
+      const networkState = useNetwork();
+
+      const forceUpdate = useUpdate();
 
       const isUseNormalMode = useMemo(() => mode === 'normal', [mode]);
 
@@ -205,6 +255,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       } = useDND({
         mode,
         dataSource: dataSource.data,
+        total: dataSource.total,
         rowKey: targetRowKey,
         reset: () => {
           setDataSource({ ...dataSource });
@@ -221,57 +272,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         sortValues: defaultSortValues ?? [],
       });
 
-      const isFirstRef = useRef(true);
-
-      const isFirstLoadingRef = useRef(false);
-
-      const pagingRef = useRef({
-        page:
-          typeof paging !== 'undefined' && typeof paging === 'object'
-            ? (
-                paging as {
-                  page: number;
-                }
-              ).page ?? DEFAULT_PAGING_PAGE
-            : DEFAULT_PAGING_PAGE,
-        pageSize:
-          typeof paging !== 'undefined' && typeof paging === 'object'
-            ? (
-                paging as {
-                  defaultPageSize: number;
-                }
-              ).defaultPageSize ?? DEFAULT_PAGING_SIZE
-            : DEFAULT_PAGING_SIZE,
-      });
-
       const isUsePaging = useMemo(() => {
         if (typeof paging === 'boolean') return paging;
         else return true;
       }, [paging]);
-
-      const scrollLoadRef = useRef<ScrollLoadRefHandle>();
-
-      const scrollRef = useRef<HTMLElement | undefined>(undefined);
-
-      const callbackHandler = useRef<Function | null>(null);
-
-      const status = useRef(ScrollLoad.NORMAL);
-
-      /**
-       * renderFirstLoading
-       * @description 渲染First的Loading
-       */
-      const renderFirstLoading = useCallback(() => {
-        return firstLoading?.() ?? defaultFirstLoading;
-      }, [firstLoading]);
-
-      /**
-       * renderLoadMoreLoading
-       * @description 渲染加载更多的Loading
-       */
-      const renderLoadMoreLoading = useCallback(() => {
-        return loadMoreLoading?.() ?? defaultLoadMoreLoading;
-      }, [loadMoreLoading]);
 
       // 是否使用本地模式
       const isLocal = useMemo(() => {
@@ -363,8 +367,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         isUseDNDMode,
         isLocal,
         isUsePaging,
-        pagingRef.current.page,
-        pagingRef.current.pageSize,
+        // pagingRef.current.page,
+        // pagingRef.current.pageSize,
       ]);
 
       const targetChildren = useMemo(() => {
@@ -373,12 +377,57 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         });
       }, [children, targetDataSource.data]);
 
-      const isEmpty = useCallback(() => !targetDataSource.data.length, [targetDataSource.data]);
+      const toolBarElement = (
+        <ToolBar
+          className={toolbarWrapperClassName}
+          style={toolbarWrapperStyle}
+          showTotal={showTotal}
+          renderToolBar={renderToolBar}
+          afterToolBarRender={afterToolBarRender}
+          beforeToolBarRender={beforeToolBarRender}
+          beforeToolBarRenderClassName={beforeToolBarRenderClassName}
+          beforeToolBarRenderStyle={beforeToolBarRenderStyle}
+          afterToolBarRenderClassName={afterToolBarRenderClassName}
+          afterToolBarRenderStyle={afterToolBarRenderStyle}
+          isShowFilterTrigger={isShowFilterTrigger}
+          renderFilterTrigger={renderFilterTrigger}
+          isShowSortTrigger={isShowSortTrigger}
+          renderSortTrigger={renderSortTrigger}
+          isShowViewSettingTrigger={isShowViewSettingTrigger}
+          renderViewSettingTrigger={renderViewSettingTrigger}
+          viewSettingTriggerMode={viewSettingTriggerMode}
+          viewSettingTriggerProps={viewSettingTriggerProps}
+          renderViewSetting={renderViewSetting}
+          viewSettingConfig={viewSettingConfig}
+          defaultViewSettingValue={defaultViewSettingValue}
+          onViewSetting={onViewSetting}
+          onViewSettingReset={onViewSettingReset}
+          toolbarCollapseCount={toolbarCollapseCount}
+          toolbarConfig={toolbarConfig}
+          total={targetDataSource?.total ?? 0}
+          filterTriggerMode={filterTriggerMode}
+          filterTriggerProps={filterTriggerProps}
+          renderFilter={renderFilter}
+          filterFormProps={filterFormProps}
+          filterConfig={filterConfig}
+          defaultFilterValues={combinationParams.filterValues}
+          onFilter={onFilter}
+          onFilterReset={onFilterReset}
+          sortTriggerMode={sortTriggerMode}
+          sortTriggerProps={sortTriggerProps}
+          renderSort={renderSort}
+          sortConfig={sortConfig}
+          defaultSortValues={combinationParams.sortValues}
+          disabled={!isUseNormalMode}
+          onSort={onSort}
+          onSortReset={onSortReset}
+        />
+      );
 
       // 总页数
       const pages = useMemo(() => {
         return (targetDataSource?.total ?? 0) / pagingRef.current.pageSize;
-      }, [pagingRef.current.pageSize, targetDataSource.total]);
+      }, [/*pagingRef.current.pageSize,*/ targetDataSource.total]);
 
       const defaultFirstLoading = useMemo(() => {
         return (
@@ -444,53 +493,6 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         combinationParams.searchKeyWord,
         isUseNormalMode,
       ]);
-
-      const toolBarElement = (
-        <ToolBar
-          className={toolbarWrapperClassName}
-          style={toolbarWrapperStyle}
-          showTotal={showTotal}
-          renderToolBar={renderToolBar}
-          afterToolBarRender={afterToolBarRender}
-          beforeToolBarRender={beforeToolBarRender}
-          beforeToolBarRenderClassName={beforeToolBarRenderClassName}
-          beforeToolBarRenderStyle={beforeToolBarRenderStyle}
-          afterToolBarRenderClassName={afterToolBarRenderClassName}
-          afterToolBarRenderStyle={afterToolBarRenderStyle}
-          isShowFilterTrigger={isShowFilterTrigger}
-          renderFilterTrigger={renderFilterTrigger}
-          isShowSortTrigger={isShowSortTrigger}
-          renderSortTrigger={renderSortTrigger}
-          isShowViewSettingTrigger={isShowViewSettingTrigger}
-          renderViewSettingTrigger={renderViewSettingTrigger}
-          viewSettingTriggerMode={viewSettingTriggerMode}
-          viewSettingTriggerProps={viewSettingTriggerProps}
-          renderViewSetting={renderViewSetting}
-          viewSettingConfig={viewSettingConfig}
-          defaultViewSettingValue={defaultViewSettingValue}
-          onViewSetting={onViewSetting}
-          onViewSettingReset={onViewSettingReset}
-          toolbarCollapseCount={toolbarCollapseCount}
-          toolbarConfig={toolbarConfig}
-          total={targetDataSource?.total ?? 0}
-          filterTriggerMode={filterTriggerMode}
-          filterTriggerProps={filterTriggerProps}
-          renderFilter={renderFilter}
-          filterFormProps={filterFormProps}
-          filterConfig={filterConfig}
-          defaultFilterValues={combinationParams.filterValues}
-          onFilter={onFilter}
-          onFilterReset={onFilterReset}
-          sortTriggerMode={sortTriggerMode}
-          sortTriggerProps={sortTriggerProps}
-          renderSort={renderSort}
-          sortConfig={sortConfig}
-          defaultSortValues={combinationParams.sortValues}
-          disabled={!isUseNormalMode}
-          onSort={onSort}
-          onSortReset={onSortReset}
-        />
-      );
 
       const beforeInnerElement = useMemo(() => {
         const element = beforeRender?.();
@@ -558,6 +560,24 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         );
       }, [scrollLoadAfterRender, scrollLoadAfterRenderClassName, scrollLoadAfterRenderStyle]);
 
+      const isEmpty = useCallback(() => !targetDataSource.data.length, [targetDataSource.data]);
+
+      /**
+       * renderFirstLoading
+       * @description 渲染First的Loading
+       */
+      const renderFirstLoading = useCallback(() => {
+        return firstLoading?.() ?? defaultFirstLoading;
+      }, [firstLoading]);
+
+      /**
+       * renderLoadMoreLoading
+       * @description 渲染加载更多的Loading
+       */
+      const renderLoadMoreLoading = useCallback(() => {
+        return loadMoreLoading?.() ?? defaultLoadMoreLoading;
+      }, [loadMoreLoading]);
+
       const scrollLoadElement = useMemo(() => {
         return (
           <ScrollLoad
@@ -609,6 +629,82 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         );
       }, [backTopAnimationProps]);
 
+      const dndManageButton = useMemo(() => {
+        return (
+          isTargetUseDND && (
+            <DNDManageButton
+              dndLabel={dndLabel}
+              dndFinishLabel={dndFinishLabel}
+              dndCancelLabel={dndCancelLabel}
+              isUseDNDMode={isUseDNDMode}
+              isUseNormalMode={isUseNormalMode}
+              onChange={(_isUseDNDMode) => {
+                if (_isUseDNDMode) {
+                  setDNDMode();
+                } else {
+                  setNormalMode();
+                }
+              }}
+              onFinish={() => {
+                setDataSource(optionDataSource);
+
+                const changeResult = dndFinish();
+
+                onDNDChange?.(changeResult);
+              }}
+              onCancel={dndCancel}
+            />
+          )
+        );
+      }, [
+        isTargetUseDND,
+        isUseDNDMode,
+        isUseNormalMode,
+        optionDataSource,
+        dndLabel,
+        dndFinishLabel,
+        dndCancelLabel,
+      ]);
+
+      const selectionManageButton = useMemo(() => {
+        return (
+          isTargetUseSelection && (
+            <SelectionManageButton
+              selectionLabel={selectionLabel}
+              selectionFinishLabel={selectionFinishLabel}
+              selectionCancelLabel={selectionCancelLabel}
+              isUseSelectionMode={isUseSelectionMode}
+              isUseNormalMode={isUseNormalMode}
+              onChange={(_isUseSelectionMode) => {
+                if (_isUseSelectionMode) {
+                  setSelectionMode();
+                } else {
+                  setNormalMode();
+                }
+              }}
+              onFinish={() => {
+                const { selectedRows, selectedRowKeys, changeRowKeys, info } = selectionFinish();
+                onSelectChange?.(
+                  selectedRowKeys,
+                  selectedRows,
+                  changeRowKeys,
+                  // @ts-ignore
+                  info,
+                );
+              }}
+              onCancel={selectionCancel}
+            />
+          )
+        );
+      }, [
+        isTargetUseSelection,
+        selectionLabel,
+        selectionFinishLabel,
+        selectionCancelLabel,
+        isUseSelectionMode,
+        isUseNormalMode,
+      ]);
+
       const pullToRefreshElement = useMemo(() => {
         return (
           <PullToRefresh
@@ -654,53 +750,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
               </div>
 
               <div className={`${selectorPrefix}-header-extra`}>
-                {isTargetUseDND && (
-                  <DNDManageButton
-                    isUseDNDMode={isUseDNDMode}
-                    isUseNormalMode={isUseNormalMode}
-                    onChange={(_isUseDNDMode) => {
-                      if (_isUseDNDMode) {
-                        setDNDMode();
-                      } else {
-                        setNormalMode();
-                      }
-                    }}
-                    onFinish={() => {
-                      setDataSource(optionDataSource);
-
-                      const changeResult = dndFinish();
-
-                      onDNDChange?.(changeResult);
-                    }}
-                    onCancel={dndCancel}
-                  />
-                )}
-
-                {isTargetUseSelection && (
-                  <SelectionManageButton
-                    isUseSelectionMode={isUseSelectionMode}
-                    isUseNormalMode={isUseNormalMode}
-                    onChange={(_isUseSelectionMode) => {
-                      if (_isUseSelectionMode) {
-                        setSelectionMode();
-                      } else {
-                        setNormalMode();
-                      }
-                    }}
-                    onFinish={() => {
-                      const { selectedRows, selectedRowKeys, changeRowKeys, info } =
-                        selectionFinish();
-                      onSelectChange?.(
-                        selectedRowKeys,
-                        selectedRows,
-                        changeRowKeys,
-                        // @ts-ignore
-                        info,
-                      );
-                    }}
-                    onCancel={selectionCancel}
-                  />
-                )}
+                {headerExtra?.(
+                  [dndManageButton, selectionManageButton].filter((t) => !!t) as ReactElement[],
+                  mode,
+                ) ?? [dndManageButton, selectionManageButton].filter((t) => !!t)}
               </div>
             </div>
 
@@ -732,10 +785,10 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         afterInnerElement,
         isUseSelectionMode,
         isSelectionMultiple,
-        isUseNormalMode,
-        isUseDNDMode,
-        isTargetUseDND,
-        isTargetUseSelection,
+        dndManageButton,
+        selectionManageButton,
+        headerExtra,
+        mode,
       ]);
 
       function renderScrollChildren() {
@@ -983,11 +1036,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         return scrollLoadRef.current?.getScrollContainer() ?? scrollRef.current ?? document.body;
       }
 
-      /**
-       * onPullToRefresh
-       * @description 完全重置
-       */
-      function onPullToRefresh() {
+      function pullToRefresh(_resetCallback) {
         const params = {
           searchKeyWord: defaultSearchKeyWord,
           filterValues: defaultFilterValues,
@@ -1003,7 +1052,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
         if (onRefresh) {
           return resolve.then(() => {
-            reset();
+            _resetCallback();
 
             if (isLocal) {
               return;
@@ -1019,6 +1068,22 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         } else {
           return Promise.resolve(dataSource);
         }
+      }
+
+      function pullToRefreshAll() {
+        return pullToRefresh(reset);
+      }
+
+      function pullToRefreshPagination() {
+        return pullToRefresh(resetScrollLoadOrPaging);
+      }
+
+      /**
+       * onPullToRefresh
+       * @description 完全重置
+       */
+      function onPullToRefresh() {
+        return pullToRefreshAll();
       }
 
       /**
@@ -1077,7 +1142,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
           callbackHandler.current(status.current);
         }
-      }, [dataSource.data, pages, pagingRef.current.page]);
+      }, [dataSource.data, pages /*pagingRef.current.page*/]);
 
       useUpdateEffect(() => {
         reset();
@@ -1089,7 +1154,14 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         });
       }, [defaultSearchKeyWord, defaultSortValues, defaultFilterValues, isLocal]);
 
-      const expose = {
+      useImperativeHandle(ref, () => ({
+        getScrollEl,
+        scrollLoadHideAll: () => scrollLoadRef?.current?.hideAll?.(),
+        resetPagination: () => pullToRefreshAll(),
+        resetAll: () => pullToRefreshPagination(),
+      }));
+
+      const contextExpose = {
         isUseSelectionMode: () => isUseSelectionMode,
         isUseDNDMode: () => isUseDNDMode,
         isUseNormalMode: () => isUseNormalMode,
@@ -1104,11 +1176,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         },
         getDndDragHandle: () => dndDragHandle,
         getActionTriggerMode: () => targetActionTriggerMode,
+        getRenderActionSheetTrigger: () => renderActionSheetTrigger?.(),
         onAction: (record, rowIndex) => onAction?.(record, rowIndex) ?? [],
       };
 
       return (
-        <Context.Provider value={expose}>
+        <Context.Provider value={contextExpose}>
           <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
             {networkState.online && renderChildren()}
             {!networkState.online && offlineElement}

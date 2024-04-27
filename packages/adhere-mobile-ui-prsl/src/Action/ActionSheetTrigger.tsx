@@ -10,9 +10,10 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-action-sheet-trigger';
 /**
  * ActionSheetTrigger
  * @param config
+ * @param actionSheetTrigger
  * @constructor
  */
-const ActionSheetTrigger: FC<ActionSheetTriggerProps> = ({ config }) => {
+const ActionSheetTrigger: FC<ActionSheetTriggerProps> = ({ config, actionSheetTrigger }) => {
   return (
     <span
       className={selectorPrefix}
@@ -28,7 +29,7 @@ const ActionSheetTrigger: FC<ActionSheetTriggerProps> = ({ config }) => {
         });
       }}
     >
-      <MoreOutline />
+      {actionSheetTrigger ?? <MoreOutline />}
     </span>
   );
 };

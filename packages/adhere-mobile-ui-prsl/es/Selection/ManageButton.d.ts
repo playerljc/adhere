@@ -6,7 +6,10 @@ import React from 'react';
  * @param onChange
  * @constructor
  */
-declare const SelectionManageButton: ({ isUseSelectionMode, isUseNormalMode, onChange, onFinish, onCancel, }: {
+declare const SelectionManageButton: ({ selectionLabel, selectionFinishLabel, selectionCancelLabel, isUseSelectionMode, isUseNormalMode, onChange, onFinish, onCancel, }: {
+    selectionLabel: any;
+    selectionFinishLabel: any;
+    selectionCancelLabel: any;
     isUseSelectionMode: any;
     isUseNormalMode: any;
     onChange: any;

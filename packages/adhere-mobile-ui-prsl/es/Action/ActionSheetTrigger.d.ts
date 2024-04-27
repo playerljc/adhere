@@ -3,6 +3,7 @@ import type { ActionSheetTriggerProps } from '../types';
 /**
  * ActionSheetTrigger
  * @param config
+ * @param actionSheetTrigger
  * @constructor
  */
 declare const ActionSheetTrigger: FC<ActionSheetTriggerProps>;

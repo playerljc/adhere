@@ -15,5 +15,6 @@ export default React.createContext<PRSLContext>({
   getIndexByIdFormOptionDataSource: () => -1,
   getDndDragHandle: () => null,
   getActionTriggerMode: () => 'ActionSheet',
+  getRenderActionSheetTrigger: () => null,
   onAction: () => [],
 });

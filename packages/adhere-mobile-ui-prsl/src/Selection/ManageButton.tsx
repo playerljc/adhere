@@ -12,6 +12,9 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-selection';
  * @constructor
  */
 const SelectionManageButton = ({
+  selectionLabel,
+  selectionFinishLabel,
+  selectionCancelLabel,
   isUseSelectionMode,
   isUseNormalMode,
   onChange,
@@ -27,7 +30,7 @@ const SelectionManageButton = ({
             onChange(true);
           }}
         >
-          {Intl.v('管理')}
+          {selectionLabel ?? Intl.v('管理')}
         </div>
       )}
 
@@ -40,7 +43,7 @@ const SelectionManageButton = ({
               onFinish();
             }}
           >
-            {Intl.v('完成')}
+            {selectionFinishLabel ?? Intl.v('完成')}
           </div>
           <div
             className={`${selectorPrefix}-manager-item`}
@@ -49,7 +52,7 @@ const SelectionManageButton = ({
               onCancel();
             }}
           >
-            {Intl.v('取消')}
+            {selectionCancelLabel ?? Intl.v('取消')}
           </div>
         </>
       )}

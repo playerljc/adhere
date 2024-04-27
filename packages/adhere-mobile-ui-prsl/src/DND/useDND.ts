@@ -10,9 +10,10 @@ import type { DNDChangeValue } from '../types';
  * @param dataSource
  * @param reset
  * @param rowKey
+ * @param total
  * @constructor
  */
-export default function UseDND({ mode, dataSource, reset, rowKey }) {
+export default function UseDND({ mode, dataSource, reset, rowKey, total }) {
   const [optionDataSource, setOptionDataSource] = useState([...(dataSource ?? [])]);
 
   const isUseDNDMode = useMemo(() => mode === 'dnd', [mode]);
@@ -51,7 +52,7 @@ export default function UseDND({ mode, dataSource, reset, rowKey }) {
   return {
     optionDataSource: {
       data: optionDataSource,
-      total: optionDataSource.length,
+      total,
     },
     isUseDNDMode,
     finish,

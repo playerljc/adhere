@@ -6,7 +6,10 @@ import React from 'react';
  * @param onChange
  * @constructor
  */
-declare const DNDManageButton: ({ isUseDNDMode, isUseNormalMode, onChange, onFinish, onCancel }: {
+declare const DNDManageButton: ({ dndLabel, dndFinishLabel, dndCancelLabel, isUseDNDMode, isUseNormalMode, onChange, onFinish, onCancel, }: {
+    dndLabel: any;
+    dndFinishLabel: any;
+    dndCancelLabel: any;
     isUseDNDMode: any;
     isUseNormalMode: any;
     onChange: any;

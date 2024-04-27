@@ -198,6 +198,7 @@ export type ActionConfig = {
 export type ActionsConfig = ActionConfig[];
 export interface ActionSheetTriggerProps {
     config: ActionsConfig;
+    actionSheetTrigger?: ReactNode;
 }
 export interface ActionSwiperProps {
     children?: ReactNode;
@@ -245,16 +246,24 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     searchKeyWordWrapperStyle?: CSSProperties;
     showToolBar?: boolean;
     actionTriggerMode?: 'ActionSheet' | 'Swipe';
+    renderActionSheetTrigger?: () => ReactNode;
     onAction?: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
+    selectionLabel?: ReactNode;
+    selectionFinishLabel?: ReactNode;
+    selectionCancelLabel?: ReactNode;
     isUseSelection?: boolean;
     selectedRowKeys?: (string | number)[];
     selectionMultiple?: boolean;
     onSelectChange?: (selectedRowKeys: (string | number)[], selectedRows: Record<string, any>[], changeRowKeys: (string | number)[], info: {
         type: 'select' | 'unselect';
     }) => void;
+    dndLabel?: ReactNode;
+    dndFinishLabel?: ReactNode;
+    dndCancelLabel?: ReactNode;
     isUseDND?: boolean;
     dndDragHandle?: ReactNode;
     onDNDChange?: (sortChangeValue: DNDChangeValue) => void;
+    headerExtra?: (defaultUI: ReactElement[], mode: ModeType) => ReactNode;
     children?: (params: {
         dataSource: Record<string, any>[];
     }) => ReactNode;
@@ -271,7 +280,9 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
  */
 export interface PRSLHandle {
     getScrollEl: () => HTMLElement;
-    hideAll: ScrollLoadRefHandle['hideAll'];
+    scrollLoadHideAll: ScrollLoadRefHandle['hideAll'];
+    resetAll: () => any;
+    resetPagination: () => any;
 }
 /**
  * PRSLContext
@@ -290,6 +301,7 @@ export interface PRSLContext {
     getIndexByIdFormOptionDataSource: (id: string) => number;
     getDndDragHandle: () => ReactNode;
     getActionTriggerMode: () => string;
+    getRenderActionSheetTrigger: () => ReactNode;
     onAction: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
 }
 /**

@@ -6,7 +6,11 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
 import { ShareAltOutlined, UserAddOutlined } from '@ant-design/icons';
-import { FieldGeneratorToDict, Popup } from '@baifendian/adhere';
+import {
+  FieldGeneratorToDict,
+  MobileGlobalIndicator,
+  MobileSuccessPrompt,
+} from '@baifendian/adhere';
 import {
   CalendarDialog,
   CalendarModal,
@@ -541,13 +545,14 @@ export default () => {
   return (
     <div className="Wrapper">
       <PRSL
+        ref={ref}
         // selectionMultiple={false}
         // isUseDND={false}
         // isUseSelection={false}
+        className="PRSLWrapper"
         searchKeyWordHistoryStoreType="local"
         isUseFirstLoading
         isUseLocal={false}
-        className="PRSLWrapper"
         paging={{
           defaultPageSize: 30,
         }}
@@ -610,14 +615,23 @@ export default () => {
           placeholder: '请输入查询关键字',
         }}
         searchKeyWordMode="history"
-        actionTriggerMode="Swipe"
+        actionTriggerMode="ActionSheet"
         onAction={(record, rowIndex) => {
           return [
             {
-              key: 'add',
-              text: '新增',
-              disabled: true,
-              onClick: () => {},
+              key: 'edit',
+              text: '编辑',
+              disabled: false,
+              onClick: () => {
+                const handle = MobileGlobalIndicator.show();
+
+                ref.current.resetAll().then(() => {
+                  MobileGlobalIndicator.hide(handle);
+                  MobileSuccessPrompt.openSuccessMessage({
+                    content: '操作成功!',
+                  });
+                });
+              },
             },
             {
               key: 'remove',
@@ -625,6 +639,13 @@ export default () => {
               // disabled: true,
               onClick: () => {
                 console.log('id', record.id, rowIndex);
+                const handle = MobileGlobalIndicator.show();
+                ref.current.resetPagination().then(() => {
+                  MobileGlobalIndicator.hide(handle);
+                  MobileSuccessPrompt.openSuccessMessage({
+                    content: '删除成功!',
+                  });
+                });
               },
             },
           ];

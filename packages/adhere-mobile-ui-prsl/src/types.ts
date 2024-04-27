@@ -278,6 +278,7 @@ export type ActionsConfig = ActionConfig[];
 
 export interface ActionSheetTriggerProps {
   config: ActionsConfig;
+  actionSheetTrigger?: ReactNode;
 }
 
 export interface ActionSwiperProps {
@@ -365,6 +366,7 @@ export interface PRSLProps
   // ------------------------------ 操作项(Action) -------------------------------
   // 操作项弹出模式
   actionTriggerMode?: 'ActionSheet' | 'Swipe';
+  renderActionSheetTrigger?: () => ReactNode;
   onAction?: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
   // actionSheetProps?: ActionSheetProps;
   // swiperActionProps?: SwipeActionProps;
@@ -372,6 +374,10 @@ export interface PRSLProps
   // renderAction?: (record: Record<string, any>, rowIndex: number) => ActionConfigItem[];
 
   // ----------------------------- 选择模式 ------------------------------
+  // 控制选择的名称
+  selectionLabel?: ReactNode;
+  selectionFinishLabel?: ReactNode;
+  selectionCancelLabel?: ReactNode;
   // 是否有选择的功能
   isUseSelection?: boolean;
   // 选择的数据
@@ -392,12 +398,18 @@ export interface PRSLProps
   ) => void;
 
   // --------------------------- DND操作(元素互换) -------------------------
+  dndLabel?: ReactNode;
+  dndFinishLabel?: ReactNode;
+  dndCancelLabel?: ReactNode;
   // 是否有DND的功能
   isUseDND?: boolean;
   // 自定义dragHandle
   dndDragHandle?: ReactNode;
   // 排序的改变
   onDNDChange?: (sortChangeValue: DNDChangeValue) => void;
+
+  // 头的扩展
+  headerExtra?: (defaultUI: ReactElement[], mode: ModeType) => ReactNode;
 
   // ------------------------------ 内容体 -------------------------------
   // 内容体
@@ -418,7 +430,19 @@ export interface PRSLProps
  */
 export interface PRSLHandle {
   getScrollEl: () => HTMLElement;
-  hideAll: ScrollLoadRefHandle['hideAll'];
+  scrollLoadHideAll: ScrollLoadRefHandle['hideAll'];
+  resetAll: () => any;
+  resetPagination: () => any;
+  // 11
+  // 12
+  // 13
+
+  //  21
+  //  23
+
+  //  31
+  //  32
+  //  33
 }
 
 /**
@@ -438,6 +462,7 @@ export interface PRSLContext {
   getIndexByIdFormOptionDataSource: (id: string) => number;
   getDndDragHandle: () => ReactNode;
   getActionTriggerMode: () => string;
+  getRenderActionSheetTrigger: () => ReactNode;
   onAction: (record: Record<string, any>, rowIndex: number) => ActionsConfig;
 }
 

@@ -1,4 +1,4 @@
-import { Checkbox, Radio, SwipeAction } from 'antd-mobile';
+import { Checkbox, Radio } from 'antd-mobile';
 import classNames from 'classnames';
 import React, { useCallback, useContext, useMemo } from 'react';
 import type { FC } from 'react';
@@ -29,6 +29,7 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
     getIndexByIdFormOptionDataSource,
     getDndDragHandle,
     getActionTriggerMode,
+    getRenderActionSheetTrigger,
     onAction,
   } = useContext(Context);
 
@@ -43,6 +44,8 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
   const optionSelectedRowKeys = getOptionSelectedRowKeys();
 
   const actionTriggerMode = getActionTriggerMode();
+
+  const actionSheetTrigger = getRenderActionSheetTrigger?.();
 
   // 每一行Action的配置
   const actionsConfig = onAction(record as Record<string, any>, rowIndex);
@@ -76,7 +79,7 @@ const PRSLItem: FC<PRSLItemProps> = ({ className, style, children, record }) => 
         {children?.({
           actionSheetTrigger:
             isActionSheetTriggerMode && actionsConfig.length ? (
-              <ActionSheetTrigger config={actionsConfig} />
+              <ActionSheetTrigger config={actionsConfig} actionSheetTrigger={actionSheetTrigger} />
             ) : null,
         })}
       </div>

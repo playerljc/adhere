@@ -11,7 +11,16 @@ const selectorPrefix = 'adhere-mobile-ui-prsl-dnd';
  * @param onChange
  * @constructor
  */
-const DNDManageButton = ({ isUseDNDMode, isUseNormalMode, onChange, onFinish, onCancel }) => {
+const DNDManageButton = ({
+  dndLabel,
+  dndFinishLabel,
+  dndCancelLabel,
+  isUseDNDMode,
+  isUseNormalMode,
+  onChange,
+  onFinish,
+  onCancel,
+}) => {
   return (
     <div className={`${selectorPrefix}-manager-wrapper`}>
       {isUseNormalMode && (
@@ -21,7 +30,7 @@ const DNDManageButton = ({ isUseDNDMode, isUseNormalMode, onChange, onFinish, on
             onChange(true);
           }}
         >
-          {Intl.v('排序')}
+          {dndLabel ?? Intl.v('排序')}
         </div>
       )}
 
@@ -34,7 +43,7 @@ const DNDManageButton = ({ isUseDNDMode, isUseNormalMode, onChange, onFinish, on
               onFinish();
             }}
           >
-            {Intl.v('完成')}
+            {dndFinishLabel ?? Intl.v('完成')}
           </div>
           <div
             className={`${selectorPrefix}-manager-item`}
@@ -43,7 +52,7 @@ const DNDManageButton = ({ isUseDNDMode, isUseNormalMode, onChange, onFinish, on
               onCancel();
             }}
           >
-            {Intl.v('取消')}
+            {dndCancelLabel ?? Intl.v('取消')}
           </div>
         </>
       )}
