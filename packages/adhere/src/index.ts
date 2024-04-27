@@ -5,6 +5,7 @@ import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator'
 import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
 import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
+import MobilePRSL from '@baifendian/adhere-mobile-ui-prsl';
 import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
 import AutoComplete from '@baifendian/adhere-ui-auto-complete';
@@ -85,6 +86,7 @@ export {
   MobileErrorPrompt,
   MobileSuccessPrompt,
   MobileWarnPrompt,
+  MobilePRSL,
   MobileTabs,
   MobileTimePickerView,
   AutoComplete,

@@ -87,15 +87,16 @@ const namedMap = new Map([
   ['@baifendian/adhere-util-validator', 'Validator'],
   ['@baifendian/adhere-util-reactutil', 'ReactUtil'],
   ['@baifendian/adhere-util-iframeio', 'IframeIO'],
+  ['@baifendian/adhere-mobile-ui-auto-complete', 'MobileAutoComplete'],
+  ['@baifendian/adhere-mobile-ui-confirm-delconfirm', 'MobileDelConfirm'],
+  ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],
+  ['@baifendian/adhere-mobile-ui-globalindicator', 'MobileGlobalIndicator'],
   ['@baifendian/adhere-mobile-ui-prompt-errorprompt', 'MobileErrorPrompt'],
   ['@baifendian/adhere-mobile-ui-prompt-successprompt', 'MobileSuccessPrompt'],
   ['@baifendian/adhere-mobile-ui-prompt-warnprompt', 'MobileWarnPrompt'],
-  ['@baifendian/adhere-mobile-ui-globalindicator', 'MobileGlobalIndicator'],
-  ['@baifendian/adhere-mobile-ui-confirm-delconfirm', 'MobileDelConfirm'],
-  ['@baifendian/adhere-mobile-ui-confirm-importantconfirm', 'MobileImportantConfirm'],
   ['@baifendian/adhere-mobile-ui-tabs', 'MobileTabs'],
   ['@baifendian/adhere-mobile-ui-time-picker-view', 'MobileTimePickerView'],
-  ['@baifendian/adhere-mobile-ui-auto-complete', 'MobileAutoComplete'],
+  ['@baifendian/adhere-mobile-ui-prsl', 'MobilePRSL'],
 ]);
 
 /**

@@ -40,6 +40,7 @@
     "@baifendian/adhere-mobile-ui-prompt-errorprompt": "^2.10.28",
     "@baifendian/adhere-mobile-ui-prompt-successprompt": "^2.10.28",
     "@baifendian/adhere-mobile-ui-prompt-warnprompt": "^2.10.28",
+    "@baifendian/adhere-mobile-ui-prsl": "^2.10.28",
     "@baifendian/adhere-mobile-ui-tabs": "^2.10.28",
     "@baifendian/adhere-mobile-ui-time-picker-view": "^2.10.28",
     "@baifendian/adhere-ui-auto-complete": "^2.10.28",
