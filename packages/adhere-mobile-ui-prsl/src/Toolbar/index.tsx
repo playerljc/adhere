@@ -7,13 +7,7 @@ import { isElement } from 'react-is';
 import { HolderOutlined } from '@ant-design/icons';
 import Intl from '@baifendian/adhere-util-intl';
 
-import {
-  ToolBarProps,
-  ToolbarConfigItem,
-  TriggerMode,
-  TriggerProps,
-  ViewSettingConfigItem,
-} from '../types';
+import { ToolBarProps, ToolbarConfigItem } from '../types';
 import FilterItem from './Items/FilterItem';
 import NormalItem from './Items/NormalItem';
 import SortItem from './Items/SortItem';
