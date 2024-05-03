@@ -1,11 +1,19 @@
+import { Typography } from 'antd';
 import { Button, Image, List } from 'antd-mobile';
 import _ from 'lodash';
+import Masonry from 'masonry-layout';
 import Mockjs, { Random } from 'mockjs';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
 import { ShareAltOutlined, UserAddOutlined } from '@ant-design/icons';
-import { FieldGeneratorToDict, Popup } from '@baifendian/adhere';
+import {
+  FieldGeneratorToDict,
+  FlexLayout,
+  MobileGlobalIndicator,
+  MobileSuccessPrompt,
+  Space,
+} from '@baifendian/adhere';
 import {
   CalendarDialog,
   CalendarModal,
@@ -23,7 +31,10 @@ import PRSL from '../../src/index';
 import '../../src/index.less';
 import './index.less';
 
-// console.log(FieldGeneratorToDict.TreeEntityValueHOC);
+const { Title, Paragraph, Text } = Typography;
+
+const { Fixed, Auto } = FlexLayout;
+
 const dataSource = Array.from({ length: 100 })
   .fill(0)
   .map(() => ({
@@ -33,54 +44,46 @@ const dataSource = Array.from({ length: 100 })
     avatar: Random.image(),
   }));
 
-// function getData({ page, pageSize, searchKeyWord, filterValues = {}, sortValues = [] }) {
-//   return new Promise((resolve) => {
-//     let filterData;
-//
-//     // filter
-//     if (!searchKeyWord && _.isEmpty(filterValues) && !sortValues.length) {
-//       filterData = dataSource;
-//     } else {
-//       filterData = dataSource.filter(
-//         (record) =>
-//           (!searchKeyWord
-//             ? true
-//             : record.name.indexOf(searchKeyWord) !== -1 ||
-//               record.describe.indexOf(searchKeyWord) !== -1) &&
-//           (_.isEmpty(filterValues) ? true : record.name.indexOf(filterValues.name) !== -1),
-//       );
-//     }
-//
-//     // sort
-//     if (sortValues.length) {
-//       filterData = sortValues.reduce((res, sortValue) => {
-//         res = res.sort((r1, r2) => {
-//           if (sortValue.order === 'asc') {
-//             if (r1[sortValue.name] > r2[sortValue.name]) return 1;
-//             else if (r1[sortValue.name] < r2[sortValue.name]) return -1;
-//             else return 0;
-//           } else {
-//             if (r1[sortValue.name] < r2[sortValue.name]) return 1;
-//             else if (r1[sortValue.name] > r2[sortValue.name]) return -1;
-//             else return 0;
-//           }
-//         });
-//         return [...res];
-//       }, filterData);
-//     }
-//
-//     resolve({
-//       total: filterData.length,
-//       data: filterData.slice((page - 1) * pageSize, page * pageSize),
-//     });
-//   });
-// }
-
-function getData() {
+function getData({ page, pageSize, searchKeyWord, filterValues = {}, sortValues = [] }) {
+  console.log(page, pageSize, searchKeyWord, filterValues, sortValues);
   return new Promise((resolve) => {
+    let filterData;
+
+    // filter
+    if (!searchKeyWord && _.isEmpty(filterValues) && !sortValues.length) {
+      filterData = dataSource;
+    } else {
+      filterData = dataSource.filter(
+        (record) =>
+          (!searchKeyWord
+            ? true
+            : record.name.indexOf(searchKeyWord) !== -1 ||
+              record.describe.indexOf(searchKeyWord) !== -1) &&
+          (_.isEmpty(filterValues) ? true : record.name.indexOf(filterValues.name) !== -1),
+      );
+    }
+
+    // sort
+    if (sortValues.length) {
+      filterData = sortValues.reduce((res, sortValue) => {
+        res = res.sort((r1, r2) => {
+          if (sortValue.order === 'asc') {
+            if (r1[sortValue.name] > r2[sortValue.name]) return 1;
+            else if (r1[sortValue.name] < r2[sortValue.name]) return -1;
+            else return 0;
+          } else {
+            if (r1[sortValue.name] < r2[sortValue.name]) return 1;
+            else if (r1[sortValue.name] > r2[sortValue.name]) return -1;
+            else return 0;
+          }
+        });
+        return [...res];
+      }, filterData);
+    }
+
     resolve({
-      total: dataSource.length,
-      data: dataSource,
+      total: filterData.length,
+      data: filterData.slice((page - 1) * pageSize, page * pageSize),
     });
   });
 }
@@ -136,6 +139,8 @@ const BirthPlaceComponent2 =
   ];
 
 export default () => {
+  const ref = useRef();
+
   const [loading, setLoading] = useState(true);
 
   const filterConfig = useMemo(
@@ -547,23 +552,17 @@ export default () => {
   return (
     <div className="Wrapper">
       <PRSL
-        // isUseFirstLoading={false}
+        ref={ref}
+        // selectionMultiple={false}
+        // isUseDND={false}
+        // isUseSelection={false}
         className="PRSLWrapper"
-        beforeRender={() => <div>InnerBefore</div>}
-        afterRender={() => <div>InnerAfter</div>}
-        beforeToolBarRender={() => <div>beforeToolBarRender</div>}
-        afterToolBarRender={() => <div>afterToolBarRender</div>}
-        scrollLoadBeforeRender={() => <div>scrollLoadWrapperBeforeRender</div>}
-        scrollLoadAfterRender={() => <div>scrollLoadWrapperAfterRender</div>}
-        scrollLoadInnerBeforeRender={() => {
-          return <div>scrollLoadInnerBeforeRender</div>;
+        searchKeyWordHistoryStoreType="local"
+        isUseFirstLoading
+        isUseLocal={false}
+        paging={{
+          defaultPageSize: 30,
         }}
-        scrollLoadInnerAfterRender={() => <div>scrollLoadInnerAfterRender</div>}
-        // paging={{
-        //   defaultPageSize: 30,
-        // }}
-        paging={false}
-        isUseLocal
         toolbarConfig={(defaultElements) => {
           return [
             {
@@ -619,25 +618,119 @@ export default () => {
             }, 1500);
           });
         }}
+        searchKeyWordBarProps={{
+          placeholder: '请输入查询关键字',
+        }}
+        searchKeyWordMode="history"
+        actionTriggerMode="ActionSheet"
+        onAction={(record, rowIndex) => {
+          return [
+            {
+              key: 'edit',
+              text: '编辑',
+              disabled: false,
+              onClick: () => {
+                const handle = MobileGlobalIndicator.show();
+
+                ref.current.resetAll().then(() => {
+                  MobileGlobalIndicator.hide(handle);
+                  MobileSuccessPrompt.openSuccessMessage({
+                    content: '操作成功!',
+                  });
+                });
+              },
+            },
+            {
+              key: 'remove',
+              text: '删除',
+              // disabled: true,
+              onClick: () => {
+                console.log('id', record.id, rowIndex);
+                const handle = MobileGlobalIndicator.show();
+                ref.current.resetPagination().then(() => {
+                  MobileGlobalIndicator.hide(handle);
+                  MobileSuccessPrompt.openSuccessMessage({
+                    content: '删除成功!',
+                  });
+                });
+              },
+            },
+          ];
+        }}
       >
         {({ dataSource }) => (
           <List header="用户列表">
             {dataSource.map((user) => (
-              <List.Item
-                key={user.id}
-                prefix={
-                  <Image
-                    src={user.avatar}
-                    style={{ borderRadius: 20 }}
-                    fit="cover"
-                    width={40}
-                    height={40}
-                  />
-                }
-                description={user.describe}
-              >
-                {user.name}
-              </List.Item>
+              <PRSL.Item key={user.id} record={user}>
+                {({ actionSheetTrigger }) => (
+                  <List.Item
+                    className="grid-item"
+                    arrow
+                    // prefix={
+                    //   <Image
+                    //     src={user.avatar}
+                    //     style={{ borderRadius: 20 }}
+                    //     fit="cover"
+                    //     width={40}
+                    //     height={40}
+                    //   />
+                    // }
+                    // extra={actionSheetTrigger}
+                    // description={user.describe}
+                  >
+                    {/*{user.name}*/}
+                    <FlexLayout direction="horizontal">
+                      <Space.Group direction="horizontal" size={10}>
+                        <Fixed fit style={{ alignItems: 'center' }}>
+                          <Image
+                            lazy
+                            src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg"
+                            // style={{ borderRadius: 20 }}
+                            fit="cover"
+                            width={70}
+                            height={70}
+                          />
+                        </Fixed>
+
+                        <Auto style={{ flexDirection: 'column' }}>
+                          <FlexLayout direction="horizontal">
+                            <Auto>
+                              <Title level={4} ellipsis>
+                                {user.name}
+                              </Title>
+                            </Auto>
+
+                            <Fixed>
+                              <Text type="secondary">2023-01-05</Text>
+                            </Fixed>
+                          </FlexLayout>
+
+                          <Paragraph ellipsis>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis
+                            tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor
+                            metus, ultrices condimentum sodales sit amet, pharetra sodales eros.
+                            Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In
+                            vel dui laoreet, commodo augue id, pulvinar lacus.
+                          </Paragraph>
+
+                          <Paragraph
+                            type="secondary"
+                            ellipsis={{
+                              rows: 2,
+                            }}
+                          >
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis
+                            tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor
+                            metus, ultrices condimentum sodales sit amet, pharetra sodales eros.
+                            Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In
+                            vel dui laoreet, commodo augue id, pulvinar lacus.
+                          </Paragraph>
+                        </Auto>
+                      </Space.Group>
+                    </FlexLayout>
+                  </List.Item>
+                )}
+              </PRSL.Item>
             ))}
           </List>
         )}

@@ -338,10 +338,16 @@ export interface PRSLProps
   showBackTopAnimation?: boolean;
   scrollLoadBeforeRender?: () => ReactNode;
   scrollLoadAfterRender?: () => ReactNode;
+  scrollLoadInnerBeforeRender?: () => ReactNode;
+  scrollLoadInnerAfterRender?: () => ReactNode;
   scrollLoadBeforeRenderClassName?: string;
   scrollLoadBeforeRenderStyle?: CSSProperties;
   scrollLoadAfterRenderClassName?: string;
   scrollLoadAfterRenderStyle?: CSSProperties;
+  scrollLoadInnerBeforeRenderClassName?: string;
+  scrollLoadInnerBeforeRenderStyle?: CSSProperties;
+  scrollLoadInnerAfterRenderClassName?: string;
+  scrollLoadInnerAfterRenderStyle?: CSSProperties;
 
   // ----------------------------- 分页 --------------------
   paging?:

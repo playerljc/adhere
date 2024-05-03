@@ -3,6 +3,7 @@ import { Button, DotLoading, ErrorBlock, PullToRefresh, Radio, Skeleton } from '
 import classNames from 'classnames';
 import isPrimaryEmpty from 'lodash.isempty';
 import React, {
+  CSSProperties,
   forwardRef,
   memo,
   useCallback,
@@ -110,6 +111,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         backTopAnimationProps,
         scrollLoadBeforeRender,
         scrollLoadAfterRender,
+        scrollLoadInnerBeforeRender,
+        scrollLoadInnerAfterRender,
+        scrollLoadInnerBeforeRenderClassName,
+        scrollLoadInnerBeforeRenderStyle,
+        scrollLoadInnerAfterRenderClassName,
+        scrollLoadInnerAfterRenderStyle,
         scrollLoadBeforeRenderClassName = '',
         scrollLoadBeforeRenderStyle,
         scrollLoadAfterRenderClassName = '',
@@ -215,10 +222,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       const isUseNormalMode = useMemo(() => mode === 'normal', [mode]);
 
-      const targetActionTriggerMode = useMemo(
-        () => actionTriggerMode ?? DEFAULT_ACTION_TRIGGER_MODE,
-        [actionTriggerMode],
-      );
+      const targetActionTriggerMode = useMemo(() => {
+        return actionTriggerMode ?? DEFAULT_ACTION_TRIGGER_MODE;
+      }, [actionTriggerMode]);
 
       const isTargetUseDND = useMemo(() => {
         return isUseDND ?? DEFAULT_IS_USE_DND;
@@ -524,7 +530,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         );
       }, [afterRender, afterRenderClassName, afterRenderStyle]);
 
-      const scrollLoadBeforeInnerElement = useMemo(() => {
+      const scrollLoadBeforeWrapperElement = useMemo(() => {
         const element = scrollLoadBeforeRender?.();
 
         return (
@@ -542,7 +548,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         );
       }, [scrollLoadBeforeRender, scrollLoadBeforeRenderClassName, scrollLoadBeforeRenderStyle]);
 
-      const scrollLoadAfterInnerElement = useMemo(() => {
+      const scrollLoadAfterWrapperElement = useMemo(() => {
         const element = scrollLoadAfterRender?.();
 
         return (
@@ -559,6 +565,50 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
           )
         );
       }, [scrollLoadAfterRender, scrollLoadAfterRenderClassName, scrollLoadAfterRenderStyle]);
+
+      const scrollLoadBeforeInnerElement = useMemo(() => {
+        const element = scrollLoadInnerBeforeRender?.();
+
+        return (
+          element && (
+            <div
+              className={classNames(
+                `${selectorPrefix}-scroll-inner-before`,
+                scrollLoadInnerBeforeRenderClassName ?? '',
+              )}
+              style={scrollLoadInnerBeforeRenderStyle ?? {}}
+            >
+              {element}
+            </div>
+          )
+        );
+      }, [
+        scrollLoadInnerBeforeRender,
+        scrollLoadInnerBeforeRenderClassName,
+        scrollLoadInnerBeforeRenderStyle,
+      ]);
+
+      const scrollLoadAfterInnerElement = useMemo(() => {
+        const element = scrollLoadInnerAfterRender?.();
+
+        return (
+          element && (
+            <div
+              className={classNames(
+                `${selectorPrefix}-scroll-inner-after`,
+                scrollLoadInnerAfterRenderClassName ?? '',
+              )}
+              style={scrollLoadInnerAfterRenderStyle ?? {}}
+            >
+              {element}
+            </div>
+          )
+        );
+      }, [
+        scrollLoadInnerAfterRender,
+        scrollLoadInnerAfterRenderClassName,
+        scrollLoadInnerAfterRenderStyle,
+      ]);
 
       const isEmpty = useCallback(() => !targetDataSource.data.length, [targetDataSource.data]);
 
@@ -593,10 +643,14 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
               scrollLoadProps?.className ?? '',
             )}
           >
+            {scrollLoadBeforeInnerElement}
             {renderScrollChildren()}
+            {scrollLoadAfterInnerElement}
           </ScrollLoad>
         );
       }, [
+        scrollLoadBeforeInnerElement,
+        scrollLoadAfterInnerElement,
         isUseDNDMode,
         isUseSelectionMode,
         isSelectionMultiple,
@@ -614,7 +668,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             // @ts-ignore
             ref={scrollRef}
           >
+            {scrollLoadBeforeInnerElement}
             {targetChildren}
+            {scrollLoadAfterInnerElement}
           </div>
         );
       }, [targetChildren]);
@@ -712,13 +768,13 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             onRefresh={onPullToRefresh}
             disabled={!isUseNormalMode}
           >
-            {scrollLoadBeforeInnerElement}
+            {scrollLoadBeforeWrapperElement}
 
             {isEmpty() && (renderEmpty?.() ?? <ErrorBlock status="empty" />)}
             {!isEmpty() && isUsePaging && scrollLoadElement}
             {!isEmpty() && !isUsePaging && normalListElement}
 
-            {scrollLoadAfterInnerElement}
+            {scrollLoadAfterWrapperElement}
 
             {showBackTopAnimation && backTopAnimationElement}
           </PullToRefresh>
@@ -726,8 +782,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }, [
         paging,
         pullToRefreshProps,
-        scrollLoadBeforeInnerElement,
-        scrollLoadAfterInnerElement,
+        scrollLoadBeforeWrapperElement,
+        scrollLoadAfterWrapperElement,
         scrollLoadElement,
         normalListElement,
         showBackTopAnimation,

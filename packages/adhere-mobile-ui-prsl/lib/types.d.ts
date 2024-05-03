@@ -233,10 +233,16 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     showBackTopAnimation?: boolean;
     scrollLoadBeforeRender?: () => ReactNode;
     scrollLoadAfterRender?: () => ReactNode;
+    scrollLoadInnerBeforeRender?: () => ReactNode;
+    scrollLoadInnerAfterRender?: () => ReactNode;
     scrollLoadBeforeRenderClassName?: string;
     scrollLoadBeforeRenderStyle?: CSSProperties;
     scrollLoadAfterRenderClassName?: string;
     scrollLoadAfterRenderStyle?: CSSProperties;
+    scrollLoadInnerBeforeRenderClassName?: string;
+    scrollLoadInnerBeforeRenderStyle?: CSSProperties;
+    scrollLoadInnerAfterRenderClassName?: string;
+    scrollLoadInnerAfterRenderStyle?: CSSProperties;
     paging?: boolean | {
         page: number;
         defaultPageSize: number;

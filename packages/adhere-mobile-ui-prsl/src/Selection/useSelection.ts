@@ -21,6 +21,7 @@ export default function UseSelection({
     () => selectionMultiple ?? DEFAULT_SELECTION_MULTIPLE,
     [selectionMultiple],
   );
+
   function finish() {
     const _preSelectedRowKeys = [...targetSelectedRowKeys];
     const _targetSelectedRowKeys = [...optionSelectedRowKeys];
