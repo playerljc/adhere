@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-import { Button, Image, List } from 'antd-mobile';
+import { Button, Ellipsis, Image, List } from 'antd-mobile';
 import _ from 'lodash';
 import Masonry from 'masonry-layout';
 import Mockjs, { Random } from 'mockjs';
@@ -725,6 +725,18 @@ export default () => {
                             Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In
                             vel dui laoreet, commodo augue id, pulvinar lacus.
                           </Paragraph>
+
+                          <Ellipsis
+                            rows={2}
+                            direction="end"
+                            expandText="展开"
+                            collapseText="收起"
+                            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis
+                            tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor
+                            metus, ultrices condimentum sodales sit amet, pharetra sodales eros.
+                            Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In
+                            vel dui laoreet, commodo augue id, pulvinar lacus"
+                          />
                         </Auto>
                       </Space.Group>
                     </FlexLayout>
