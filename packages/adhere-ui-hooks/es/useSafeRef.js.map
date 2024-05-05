@@ -1,0 +1,1 @@
+{"version":3,"file":"useSafeRef.js","sources":["useSafeRef.js"],"sourcesContent":["export default function useSafeRef(ref, defaultValue) {\n    var _a;\n    return (_a = ref.current) !== null && _a !== void 0 ? _a : defaultValue;\n}\n"],"names":["useSafeRef","ref","defaultValue","_a","current"],"mappings":"eAAe,SAASA,WAAWC,EAAKC,GAEpC,OAAO,OAACC,EAAKF,EAAIG,SAAqCD,EAAKD,CAC/D"}
