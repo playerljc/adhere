@@ -41,14 +41,19 @@ const labelByTypeMap = new Map<DateType, (value?: number) => string>([
   ['custom', () => Intl.v('自定义')],
 ]);
 
-const sync = (dateValue: DateValue | undefined) => {
+/**
+ * sync
+ * @param {DateType | function} dateValue
+ * @return {undefined | DateType}
+ */
+function sync(dateValue: DateValue | undefined) {
   if (!dateValue) return undefined;
 
   const { type, value } = dateValue;
 
   if (isCustomByType(type)) return dateValue;
 
-  if (dateValue?.start || dateValue?.end) return dateValue;
+  if (dateValue?.start && dateValue?.end) return dateValue;
 
   const dataRange = getDataRangeByValue(type, value as number);
 
@@ -57,11 +62,12 @@ const sync = (dateValue: DateValue | undefined) => {
     start: dataRange[0],
     end: dataRange[1],
   };
-};
+}
 
 /**
  * stringValue
- * @param dateValue
+ * @param {DateValue | undefined} dateValue
+ * @return {undefined | DateType | string}
  */
 const stringValue = (dateValue: DateValue | undefined) => {
   if (!dateValue) return undefined;
@@ -75,7 +81,8 @@ const stringValue = (dateValue: DateValue | undefined) => {
 
 /**
  * numberToDayjs
- * @param dateValue
+ * @param {[number | undefined, number | undefined]} dateValue
+ * @return {null | [dayjs.Dayjs, dayjs.Dayjs]}
  */
 const numberToDayjs = (dateValue: [number | undefined, number | undefined]) => {
   if (!dateValue.filter((t) => !!t).length) return null;
@@ -85,7 +92,8 @@ const numberToDayjs = (dateValue: [number | undefined, number | undefined]) => {
 
 /**
  * datesToNumbers
- * @param _value
+ * @param {undefined | [] | [dayjs.Dayjs, dayjs.Dayjs]} _value
+ * @return {[undefined | number, undefined | number]}
  */
 const datesToNumbers = (_value) => {
   if (!_value) return [undefined, undefined];
@@ -95,6 +103,11 @@ const datesToNumbers = (_value) => {
   return _value.map((_dayjs) => _dayjs.valueOf());
 };
 
+/**
+ * getValueEntityByStringValue
+ * @param {string} stringValue
+ * @return { type: DateType, value: number }
+ */
 const getValueEntityByStringValue = (stringValue: string) => {
   const arr = stringValue.split(',');
   const type = arr[0] as DateType;
@@ -106,6 +119,12 @@ const getValueEntityByStringValue = (stringValue: string) => {
   };
 };
 
+/**
+ * getDataRangeByValue
+ * @param {DateType} type
+ * @param {number} typeValue
+ * @return {[number | undefined, number | undefined]}
+ */
 const getDataRangeByValue = (type: DateType, typeValue: number) => {
   const arr = type.split('-');
 
@@ -126,10 +145,20 @@ const getDataRangeByValue = (type: DateType, typeValue: number) => {
   return [undefined, undefined];
 };
 
+/**
+ * getLabel
+ * @param { type: DateType; value?: number } params
+ * @return { ReactNode }
+ */
 const getLabel = ({ type, value }: { type: DateType; value?: number }) => {
   return labelByTypeMap.get(type)?.(!isCustomByType(type) ? value : undefined);
 };
 
+/**
+ * isCustomByType
+ * @param {DateValue} type
+ * @return {boolean}
+ */
 const isCustomByType = (type?: DateType) => {
   return type === 'custom';
 };
@@ -294,7 +323,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
     }, [targetConfig, selfValue, rangePickerProps, radioGroupProps]);
 
     useUpdateEffect(() => {
-      setSelfValue(value);
+      setSelfValue(sync(value));
     }, [value]);
 
     return (
@@ -332,6 +361,8 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
 const QuickRangeDate = InternalQuickRangeDate as QuickRangeDateComponent;
 
 QuickRangeDate.displayName = 'QuickRangeDate';
+
+QuickRangeDate.sync = sync;
 
 QuickRangeDate.stringValue = stringValue;
 

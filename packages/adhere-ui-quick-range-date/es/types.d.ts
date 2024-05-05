@@ -33,6 +33,7 @@ export interface QuickRangeDateProps {
  * QuickRangeDateComponent
  */
 export type QuickRangeDateComponent = NamedExoticComponent<QuickRangeDateProps> & {
+    sync: (dateValue: DateValue | undefined) => DateValue | undefined;
     stringValue: (dateValue: DateValue | undefined) => undefined | string;
     getLabel: (params: {
         type: DateType;
