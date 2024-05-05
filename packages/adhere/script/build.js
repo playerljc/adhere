@@ -71,6 +71,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-fieldgeneratortodict', 'FieldGeneratorToDict'],
   ['@baifendian/adhere-ui-ellipsis', 'Ellipsis'],
   ['@baifendian/adhere-ui-expression', 'Expression'],
+  ['@baifendian/adhere-ui-quick-range-date', 'QuickRangeDate'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
@@ -97,6 +98,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-mobile-ui-tabs', 'MobileTabs'],
   ['@baifendian/adhere-mobile-ui-time-picker-view', 'MobileTimePickerView'],
   ['@baifendian/adhere-mobile-ui-prsl', 'MobilePRSL'],
+  ['@baifendian/adhere-mobile-ui-quick-range-date', 'MobileQuickRangeDate'],
 ]);
 
 /**

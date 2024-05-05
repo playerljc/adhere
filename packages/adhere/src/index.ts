@@ -6,6 +6,7 @@ import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
 import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
 import MobilePRSL from '@baifendian/adhere-mobile-ui-prsl';
+import MobileQuickRangeDate from '@baifendian/adhere-mobile-ui-quick-range-date';
 import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
 import AutoComplete from '@baifendian/adhere-ui-auto-complete';
@@ -43,6 +44,7 @@ import ErrorPrompt from '@baifendian/adhere-ui-prompt-errorprompt';
 import SuccessPrompt from '@baifendian/adhere-ui-prompt-successprompt';
 import WarnPrompt from '@baifendian/adhere-ui-prompt-warnprompt';
 import PullRefresh from '@baifendian/adhere-ui-pullrefresh';
+import QuickRangeDate from '@baifendian/adhere-ui-quick-range-date';
 import Revolving from '@baifendian/adhere-ui-revolving';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
 import SearchList from '@baifendian/adhere-ui-searchlist';
@@ -87,6 +89,7 @@ export {
   MobileSuccessPrompt,
   MobileWarnPrompt,
   MobilePRSL,
+  MobileQuickRangeDate,
   MobileTabs,
   MobileTimePickerView,
   AutoComplete,
@@ -124,6 +127,7 @@ export {
   SuccessPrompt,
   WarnPrompt,
   PullRefresh,
+  QuickRangeDate,
   Revolving,
   ScrollLoad,
   SearchList,
