@@ -7,6 +7,7 @@ export type ScrollLoadComponent = NamedExoticComponent<
   EMPTY: string;
   ERROR: string;
   NORMAL: string;
+  HIDE_EMPTY: string;
 };
 
 export interface ScrollLoadRefHandle {

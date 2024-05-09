@@ -4,6 +4,7 @@ export type ScrollLoadComponent = NamedExoticComponent<PropsWithoutRef<ScrollLoa
     EMPTY: string;
     ERROR: string;
     NORMAL: string;
+    HIDE_EMPTY: string;
 };
 export interface ScrollLoadRefHandle {
     hideAll: () => void;

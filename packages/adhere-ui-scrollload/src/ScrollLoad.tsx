@@ -18,6 +18,7 @@ import type { ScrollLoadComponent, ScrollLoadProps, ScrollLoadRefHandle } from '
 const selectorPrefix = 'adhere-ui-scroll-load';
 
 const EMPTY = 'empty';
+const HIDE_EMPTY = 'hide_empty';
 const ERROR = 'error';
 const NORMAL = 'normal';
 
@@ -47,6 +48,7 @@ const InternalScrollLoad = memo<
       ...attrs
     } = props;
 
+    const currentStatus = useRef<string | undefined>(NORMAL);
     const lock = useRef(false); // 锁
     const el = useRef<HTMLDivElement | null>(null);
     const loadEl = useRef<HTMLDivElement | null>(null);
@@ -84,6 +86,9 @@ const InternalScrollLoad = memo<
        * 条件完全相等或误差值在1之间
        */
       if (onScrollBottom && Math.abs(scrollTop - bottomHeight) <= distance) {
+        // 如果是EMPTY则不触发滚动事件
+        if ([EMPTY, HIDE_EMPTY].includes(currentStatus.current as string)) return;
+
         if (lock.current) return;
 
         lock.current = true;
@@ -96,12 +101,16 @@ const InternalScrollLoad = memo<
          * @param {string} status [empty(没有数据) | error(有错误) | normal(正常)]
          */
         onScrollBottom((status) => {
+          currentStatus.current = status;
+
           (loadEl.current as HTMLElement).style.display = 'none';
 
-          if (status === EMPTY) {
+          if (currentStatus.current === EMPTY) {
             (emptyEl.current as HTMLElement).style.display = 'block';
-          } else if (status === ERROR) {
+          } else if (currentStatus.current === ERROR) {
             (errorEl.current as HTMLElement).style.display = 'block';
+          } else if (currentStatus.current === HIDE_EMPTY) {
+            (emptyEl.current as HTMLElement).style.display = 'none';
           }
 
           lock.current = false;
@@ -121,6 +130,8 @@ const InternalScrollLoad = memo<
      * hideAll
      */
     function hideAll() {
+      currentStatus.current = NORMAL;
+
       (loadEl.current as HTMLElement).style.display = 'none';
       (errorEl.current as HTMLElement).style.display = 'none';
       (emptyEl.current as HTMLElement).style.display = 'none';
@@ -245,8 +256,9 @@ const ScrollLoad = InternalScrollLoad as ScrollLoadComponent;
 
 ScrollLoad.displayName = 'ScrollLoad';
 
-ScrollLoad.EMPTY = 'empty';
-ScrollLoad.ERROR = 'error';
-ScrollLoad.NORMAL = 'normal';
+ScrollLoad.EMPTY = EMPTY;
+ScrollLoad.ERROR = ERROR;
+ScrollLoad.NORMAL = NORMAL;
+ScrollLoad.HIDE_EMPTY = HIDE_EMPTY;
 
 export default ScrollLoad;
