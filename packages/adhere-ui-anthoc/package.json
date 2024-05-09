@@ -38,7 +38,7 @@
     "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-validator": "^2.10.28",
     "ahooks": "^3.7.8",
-    "antd": "^5.15.3",
+    "antd": "^5.17.0",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
     "immer": "^9.0.21",

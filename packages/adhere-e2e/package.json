@@ -32,8 +32,8 @@
   },
   "dependencies": {
     "@baifendian/adhere": "^2.10.28",
-    "antd": "^5.15.3",
-    "antd-mobile": "^5.34.0",
+    "antd": "^5.17.0",
+    "antd-mobile": "^5.36.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tinycolor2": "^1.6.0"

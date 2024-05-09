@@ -31,7 +31,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "antd-mobile": "^5.34.0",
+    "antd-mobile": "^5.36.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
