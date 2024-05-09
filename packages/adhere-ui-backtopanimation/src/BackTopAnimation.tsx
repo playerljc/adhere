@@ -46,7 +46,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
 
       mask.current!.style.display = 'block';
 
-      const container = getContainer();
+      const container = getContainer() as HTMLElement;
 
       const srcTop = container.scrollTop;
       let scrollVal = srcTop;
@@ -120,7 +120,7 @@ const BackTopAnimation = memo<BackTopAnimationProps>((props) => {
   useLayoutEffect(() => renderMask(), []);
 
   useLayoutEffect(() => {
-    const container = getContainer();
+    const container = getContainer() as HTMLElement;
 
     function onScroll() {
       if (container.scrollTop !== 0) {
