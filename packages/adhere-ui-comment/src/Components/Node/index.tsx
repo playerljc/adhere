@@ -12,6 +12,12 @@ import type { NodeProps } from '../../types';
 
 const selectorPrefix = 'adhere-ui-comment-node';
 
+const DEFAULT_KEYS = {
+  current: 'current',
+  totalPage: 'totalPage',
+  list: 'list',
+  totalCount: 'totalCount',
+};
 /**
  * Node
  * @param props
@@ -21,12 +27,7 @@ const selectorPrefix = 'adhere-ui-comment-node';
 const Node = memo<NodeProps>((props) => {
   const {
     isReply = false,
-    dataKeys = {
-      current: 'current',
-      totalPage: 'totalPage',
-      list: 'list',
-      totalCount: 'totalCount',
-    },
+    dataKeys = DEFAULT_KEYS,
     limit = 10,
     keyProp,
     children,

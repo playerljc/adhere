@@ -1,6 +1,5 @@
 import { Empty } from 'antd';
 import React, {
-  FC,
   memo,
   useCallback,
   useEffect,
@@ -21,6 +20,15 @@ const { VerticalFlexLayout } = FlexLayout;
 
 const selectorPrefix = 'adhere-ui-comment-list-standard';
 
+const DEFAULT_KEYS = {
+  current: 'current',
+  totalPage: 'totalPage',
+  list: 'list',
+  totalCount: 'totalCount',
+};
+
+const DEFAULT_RENDER_EMPTY = () => <Empty />;
+
 /**
  * ListStandard
  * @param props
@@ -31,18 +39,12 @@ const selectorPrefix = 'adhere-ui-comment-list-standard';
 const ListStandard = memo<ListStandardProps>((props) => {
   const {
     limit = 10,
-    dataKeys = {
-      current: 'current',
-      totalPage: 'totalPage',
-      list: 'list',
-      totalCount: 'totalCount',
-    },
+    dataKeys = DEFAULT_KEYS,
     listProps = {},
     flexLayoutProps = {},
     renderFirstLoading,
-    renderEmpty = () => <Empty />,
+    renderEmpty = DEFAULT_RENDER_EMPTY,
     renderList,
-    getScrollWrapContainer,
   } = props;
 
   const paging = useRef({
@@ -130,11 +132,11 @@ const ListStandard = memo<ListStandardProps>((props) => {
    * @param callback
    */
   const onLoadMore = useCallback((callback) => {
-    if (status.current === ScrollLoad.EMPTY) {
-      status.current = ScrollLoad.EMPTY;
-      callback(ScrollLoad.EMPTY);
-      return;
-    }
+    // if (status.current === ScrollLoad.EMPTY) {
+    //   status.current = ScrollLoad.EMPTY;
+    //   callback(ScrollLoad.EMPTY);
+    //   return;
+    // }
 
     callbackHandler.current = callback;
 
@@ -153,29 +155,20 @@ const ListStandard = memo<ListStandardProps>((props) => {
   const _CommentList = useMemo(
     () => (
       <CommentList
-        getScrollWrapContainer={getScrollWrapContainer}
         isLoading={loading}
         // @ts-ignore
         hasMore={(data[dataKeys!.list] as Array<any>).length <= data[dataKeys!.totalCount]}
         onLoadMore={onLoadMore}
         renderFirstLoading={renderFirstLoading}
         {...(listProps ?? {})}
+        pages={data[dataKeys!.totalPage] as number}
       >
         <ConditionalRender conditional={!isEmpty()} noMatch={() => renderEmpty()}>
           {() => renderList?.(data)}
         </ConditionalRender>
       </CommentList>
     ),
-    [
-      getScrollWrapContainer,
-      loading,
-      data,
-      dataKeys.totalCount,
-      dataKeys.list,
-      renderFirstLoading,
-      listProps,
-      renderEmpty,
-    ],
+    [loading, data, dataKeys.totalCount, dataKeys.list, renderFirstLoading, listProps, renderEmpty],
   );
 
   useEffect(() => {
@@ -184,9 +177,12 @@ const ListStandard = memo<ListStandardProps>((props) => {
 
   useLayoutEffect(() => {
     if (callbackHandler.current) {
+      const totalPage = data[dataKeys!.totalPage] as number;
+
       status.current =
         // @ts-ignore
-        paging.current.page < data[dataKeys!.totalPage] ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
+        paging.current.page < totalPage ? ScrollLoad.NORMAL : ScrollLoad.EMPTY;
+
       callbackHandler?.current(status.current);
     }
   }, [data]);

@@ -1,11 +1,11 @@
 import { Skeleton } from 'antd';
 import classnames from 'classnames';
 import React, { ReactElement, memo, useRef } from 'react';
-import { createPortal } from 'react-dom';
 
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import ScrollLoad from '@baifendian/adhere-ui-scrollload';
+import type { ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 
 import type { ListProps } from '../../types';
 
@@ -19,15 +19,17 @@ const selectorPrefix = 'adhere-ui-comment-inner-list';
 const CommentList = memo<ListProps>((props) => {
   const {
     className = '',
-    style = {},
+    style,
     isLoading = false,
     hasMore = false,
     onLoadMore,
-    scrollLoadProps = {},
+    scrollLoadProps,
     renderFirstLoading,
-    getScrollWrapContainer,
+    pages,
     children,
   } = props;
+
+  const scrollLoadRef = useRef<ScrollLoadRefHandle | null>(null);
 
   // 第一次
   const isFirst = useRef(true);
@@ -87,8 +89,7 @@ const CommentList = memo<ListProps>((props) => {
    */
   function renderNormal() {
     const defaultScrollLoadProps = {
-      getScrollContainer: () => getScrollWrapContainer?.()?.firstElementChild as HTMLElement,
-      onScrollBottom: onLoadMore!,
+      onScrollBottom: onLoadMore,
     };
 
     return (
@@ -96,36 +97,19 @@ const CommentList = memo<ListProps>((props) => {
         {() => (
           <div className={`${selectorPrefix}-normal-wrap`}>
             <ScrollLoad
+              ref={scrollLoadRef}
               {...defaultScrollLoadProps}
               {...(scrollLoadProps ?? {})}
               distance={scrollLoadProps?.distance || 50}
+              disabled={pages <= 1}
             >
               {children}
             </ScrollLoad>
 
-            <ConditionalRender
-              conditional={!!(getScrollWrapContainer ? getScrollWrapContainer() : null)}
-              noMatch={() => (
-                <BackTopAnimation
-                  getContainer={() =>
-                    wrapRef?.current?.querySelector?.('.adhere-ui-scroll-load') as HTMLElement
-                  }
-                  onTrigger={() => Promise.resolve()}
-                />
-              )}
-            >
-              {() =>
-                createPortal(
-                  <BackTopAnimation
-                    getContainer={() =>
-                      getScrollWrapContainer?.()?.firstElementChild as HTMLElement
-                    }
-                    onTrigger={() => Promise.resolve()}
-                  />,
-                  getScrollWrapContainer?.() as HTMLElement,
-                )
-              }
-            </ConditionalRender>
+            <BackTopAnimation
+              getContainer={() => scrollLoadRef?.current?.getScrollContainer?.()}
+              onTrigger={() => Promise.resolve()}
+            />
           </div>
         )}
       </ConditionalRender>

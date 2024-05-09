@@ -100,7 +100,7 @@ const Reply = memo<ReplyProps>((props) => {
         {...(emojiPickerProps ?? {})}
       />
     ),
-    [data, local, emojiPickerProps],
+    [data, local, onEmojiSelect, emojiPickerProps],
   );
 
   useLayoutEffect(() => {
@@ -120,6 +120,7 @@ const Reply = memo<ReplyProps>((props) => {
 
     document.body.addEventListener('click', onDocBodyClick);
     (emojiWrapRef?.current! as HTMLElement)?.addEventListener?.('click', onEmojiWrapClick);
+
     return () => {
       document.body.removeEventListener('click', onDocBodyClick);
       (emojiWrapRef?.current! as HTMLElement)?.removeEventListener?.('click', onEmojiWrapClick);

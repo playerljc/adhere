@@ -33,7 +33,6 @@ const Comment = memo<CommentProps>((props) => {
     },
     commentLimit = 10,
     flexLayoutProps,
-    getScrollWrapContainer,
     commentKeyProp = 'id',
     replyDataKeys = {
       current: 'current',
@@ -176,7 +175,6 @@ const Comment = memo<CommentProps>((props) => {
 
   return (
     <ListStandard
-      getScrollWrapContainer={getScrollWrapContainer}
       listProps={listProps}
       dataKeys={commentDataKeys}
       limit={commentLimit}
