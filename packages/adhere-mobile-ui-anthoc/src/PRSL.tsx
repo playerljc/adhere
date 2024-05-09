@@ -40,6 +40,7 @@ const PRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
         isLoading,
         firstLoading,
         loading,
+        pages,
         onRefreshBefore,
         onRefresh,
         onLoadMore,
@@ -117,6 +118,7 @@ const PRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>>(
               renderLoading={renderLoading}
               onScrollBottom={onLoadMore}
               distance={scrollLoadProps?.distance || 50}
+              disabled={pages <= 1}
               {...(scrollLoadProps || {})}
               className={classNames(
                 scrollLoadProps?.className ?? '',

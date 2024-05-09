@@ -52,11 +52,11 @@ function Paging<Option>({
   }
 
   function onLoadMore(callback) {
-    if (status.current === ScrollLoad.EMPTY) {
-      status.current = ScrollLoad.EMPTY;
-      callback(ScrollLoad.EMPTY);
-      return;
-    }
+    // if (status.current === ScrollLoad.EMPTY) {
+    //   status.current = ScrollLoad.EMPTY;
+    //   callback(ScrollLoad.EMPTY);
+    //   return;
+    // }
 
     callbackHandler.current = callback;
 
@@ -220,6 +220,7 @@ function Paging<Option>({
       onRefresh={onRefresh}
       onLoadMore={onLoadMore}
       {...prslProps}
+      pages={pages}
     >
       {pagingChildren}
     </PRSL>

@@ -216,6 +216,7 @@ export type PRSLProps = {
     onRefresh: () => void;
     onLoadMore: ScrollLoadProps['onScrollBottom'];
     children?: any;
+    pages: number;
 };
 export type PRSLHandle = {
     getScrollEl: () => HTMLElement;
