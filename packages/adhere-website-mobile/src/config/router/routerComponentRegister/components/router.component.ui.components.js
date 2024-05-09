@@ -800,3 +800,63 @@ export const FGTDMobileSelectorStandard = lazy(() =>
     /* webpackChunkName: "fgtd" */ '@/components/ui/fieldgeneratortodict/examples/MobileSelector/MobileSelectorStandard.jsx'
   ),
 );
+
+export const PRSLMobileNormal = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/Normal.jsx'),
+);
+
+export const PRSLMobileRemote = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/Remote.jsx'),
+);
+
+export const PRSLMobileLocal = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/Local.jsx'),
+);
+
+export const PRSLMobileNoPaging = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/NoPaging.jsx'),
+);
+
+export const PRSLMobileSearchHistory = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/SearchHistory.jsx'),
+);
+
+export const PRSLMobileExtra = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/Extra.jsx'),
+);
+
+export const PRSLMobileCustomToolbarItem = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/CustomToolbarItem.jsx'),
+);
+
+export const PRSLMobileCustomSearchItem = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/CustomSearchItem.jsx'),
+);
+
+export const PRSLMobileAPI = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/API.jsx'),
+);
+
+export const PRSLMobileList = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/List.jsx'),
+);
+
+export const PRSLMobileSelection = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/Selection.jsx'),
+);
+
+export const PRSLMobileDND = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/DND.jsx'),
+);
+
+export const PRSLMobileActionSheet = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/ActionSheet.jsx'),
+);
+
+export const PRSLMobileSwipeAction = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/SwiperAction.jsx'),
+);
+
+export const PRSLMobileGridView = lazy(() =>
+  import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/GridView.jsx'),
+);

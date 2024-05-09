@@ -1,0 +1,27 @@
+.Wrapper {
+  :global {
+    .adm-list-body {
+      padding: 10px 20px;
+      background-color: rgba(249, 249, 249, 1);
+
+      .adm-list-item {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.Item {
+  padding: 10px 20px;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 3px #d9d9d9;
+
+  .Images {
+    display: grid;
+    grid-row-gap: 6px;
+    grid-column-gap: 6px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

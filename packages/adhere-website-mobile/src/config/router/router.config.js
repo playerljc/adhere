@@ -147,6 +147,21 @@ const {
   FGTDMobileSelectorPaginationFilter,
   FGTDMobileSelectorPaginationStandard,
   FGTDMobileSelectorStandard,
+  PRSLMobileNormal,
+  PRSLMobileRemote,
+  PRSLMobileLocal,
+  PRSLMobileNoPaging,
+  PRSLMobileSearchHistory,
+  PRSLMobileExtra,
+  PRSLMobileCustomToolbarItem,
+  PRSLMobileCustomSearchItem,
+  PRSLMobileAPI,
+  PRSLMobileList,
+  PRSLMobileSelection,
+  PRSLMobileDND,
+  PRSLMobileActionSheet,
+  PRSLMobileSwipeAction,
+  PRSLMobileGridView,
 } = Components;
 
 export default () => [
@@ -877,6 +892,67 @@ export default () => [
       {
         path: '/adhere/component/ui/fieldgeneratortodict/mobileselector/mobileselectorstandard',
         component: FGTDMobileSelectorStandard,
+      },
+
+      {
+        path: '/adhere/component/ui/prsl/normal',
+        component: PRSLMobileNormal,
+      },
+      {
+        path: '/adhere/component/ui/prsl/remote',
+        component: PRSLMobileRemote,
+      },
+      {
+        path: '/adhere/component/ui/prsl/local',
+        component: PRSLMobileLocal,
+      },
+      {
+        path: '/adhere/component/ui/prsl/nopaging',
+        component: PRSLMobileNoPaging,
+      },
+      {
+        path: '/adhere/component/ui/prsl/searchhistory',
+        component: PRSLMobileSearchHistory,
+      },
+      {
+        path: '/adhere/component/ui/prsl/extra',
+        component: PRSLMobileExtra,
+      },
+      {
+        path: '/adhere/component/ui/prsl/customtoolbaritem',
+        component: PRSLMobileCustomToolbarItem,
+      },
+      {
+        path: '/adhere/component/ui/prsl/customsearchitem',
+        component: PRSLMobileCustomSearchItem,
+      },
+      {
+        path: '/adhere/component/ui/prsl/api',
+        component: PRSLMobileAPI,
+      },
+      {
+        path: '/adhere/component/ui/prsl/list',
+        component: PRSLMobileList,
+      },
+      {
+        path: '/adhere/component/ui/prsl/selection',
+        component: PRSLMobileSelection,
+      },
+      {
+        path: '/adhere/component/ui/prsl/dnd',
+        component: PRSLMobileDND,
+      },
+      {
+        path: '/adhere/component/ui/prsl/actionsheet',
+        component: PRSLMobileActionSheet,
+      },
+      {
+        path: '/adhere/component/ui/prsl/swipeaction',
+        component: PRSLMobileSwipeAction,
+      },
+      {
+        path: '/adhere/component/ui/prsl/gridview',
+        component: PRSLMobileGridView,
       },
     ],
   },

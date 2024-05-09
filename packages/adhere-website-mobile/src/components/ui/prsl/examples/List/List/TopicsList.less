@@ -1,0 +1,42 @@
+.Wrapper {
+  :global {
+    .adm-list-body {
+      padding: 10px 20px;
+      background-color: rgba(249, 249, 249, 1);
+
+      .adm-list-item {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.Item {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #ccc;
+
+  > .MediaWrapper {
+    position: relative;
+
+    > .MediaInfo {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 5px 10px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  > .Info {
+    padding: 0 15px;
+  }
+
+  > .Footer {
+    padding: 0 15px 15px 15px;
+  }
+}
