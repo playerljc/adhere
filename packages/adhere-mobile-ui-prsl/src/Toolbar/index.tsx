@@ -1,6 +1,7 @@
 import { Popover } from 'antd-mobile';
+import type { PopoverRef } from 'antd-mobile/es/components/popover';
 import classNames from 'classnames';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 import { isElement } from 'react-is';
 
@@ -76,6 +77,10 @@ const ToolBar = memo<ToolBarProps>(
     total = 0,
     disabled,
   }) => {
+    const popoverRef = useRef<PopoverRef | null>(null);
+
+    const [popoverVisible, setPopoverVisible] = useState(false);
+
     // 显示Total的UI
     const showTotalElement = useMemo(() => {
       return showTotal && total > 0 ? (
@@ -96,15 +101,15 @@ const ToolBar = memo<ToolBarProps>(
     const filterItemElement = useMemo(() => {
       return isShowFilterTrigger ? (
         <FilterItem
-          disabled={disabled}
-          filterTriggerMode={filterTriggerMode}
-          filterTriggerProps={filterTriggerProps}
-          renderFilter={renderFilter}
+          disabled={disabled ?? false}
+          filterTriggerMode={filterTriggerMode ?? 'popup-bottom'}
+          filterTriggerProps={filterTriggerProps ?? {}}
+          renderFilter={renderFilter!}
           filterFormProps={filterFormProps}
-          filterConfig={filterConfig}
+          filterConfig={filterConfig!}
           defaultFilterValues={defaultFilterValues}
-          onFilter={onFilter}
-          onFilterReset={onFilterReset}
+          onFilter={onFilter!}
+          onFilterReset={onFilterReset!}
         >
           {(defaultUI) => renderFilterTrigger?.(defaultUI)}
         </FilterItem>
@@ -127,7 +132,7 @@ const ToolBar = memo<ToolBarProps>(
     const sortItemElement = useMemo(() => {
       return isShowSortTrigger ? (
         <SortItem
-          disabled={disabled}
+          disabled={disabled ?? false}
           sortTriggerMode={sortTriggerMode}
           sortTriggerProps={sortTriggerProps}
           renderSort={renderSort}
@@ -156,7 +161,7 @@ const ToolBar = memo<ToolBarProps>(
     const viewSettingItemElement = useMemo(() => {
       return isShowViewSettingTrigger ? (
         <ViewSettingItem
-          disabled={disabled}
+          disabled={disabled ?? false}
           viewSettingTriggerMode={viewSettingTriggerMode}
           viewSettingTriggerProps={viewSettingTriggerProps}
           renderViewSetting={renderViewSetting}
@@ -193,7 +198,7 @@ const ToolBar = memo<ToolBarProps>(
         .map((el) => {
           if (isElement(el)) return el;
 
-          return <NormalItem disabled={disabled} {...(el as ToolbarConfigItem)} />;
+          return <NormalItem disabled={disabled ?? false} {...(el as ToolbarConfigItem)} />;
         })
         .filter((t) => !!t) as ReactElement[];
     }, [toolbarConfig, filterItemElement, sortItemElement, viewSettingItemElement, disabled]);
@@ -216,17 +221,31 @@ const ToolBar = memo<ToolBarProps>(
       if (!!popoverMenuElements.length) {
         return (
           <Popover
+            ref={popoverRef}
             placement="bottom-start"
             trigger="click"
+            visible={popoverVisible}
             content={
               <ul className={`${selectorPrefix}-tool-menu-items`}>
                 {popoverMenuElements.map((_element) => (
-                  <li className={`${selectorPrefix}-tool-menu-item`}>{_element}</li>
+                  <li
+                    className={`${selectorPrefix}-tool-menu-item`}
+                    onClick={() => {
+                      setPopoverVisible(false);
+                    }}
+                  >
+                    {_element}
+                  </li>
                 ))}
               </ul>
             }
           >
-            <div className={`${selectorPrefix}-tool-menu-trigger`}>
+            <div
+              className={`${selectorPrefix}-tool-menu-trigger`}
+              onClick={() => {
+                setPopoverVisible(!popoverVisible);
+              }}
+            >
               <HolderOutlined />
             </div>
           </Popover>
@@ -234,7 +253,7 @@ const ToolBar = memo<ToolBarProps>(
       }
 
       return null;
-    }, [toolbarItemElements, toolbarCollapseCount]);
+    }, [toolbarItemElements, toolbarCollapseCount, popoverVisible]);
 
     // beforeToolBarElement
     const beforeToolBarElement = useMemo(() => beforeToolBarRender?.(), [beforeToolBarRender]);

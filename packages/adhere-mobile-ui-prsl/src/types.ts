@@ -302,7 +302,7 @@ export interface PRSLProps
   // ------------------------------ 数据 ----------------------
   // dataSource中的primary key
   rowKey?: string;
-  // 是否是本数据
+  // 是否使用本地数据
   isUseLocal?: boolean;
   // 首次加载数据
   loadData?: (params: LoadDataSourceParams) => Promise<DataSource>;
@@ -310,9 +310,11 @@ export interface PRSLProps
   renderEmpty?: () => ReactElement;
   // 自定义无网络UI
   renderOffLine?: () => ReactElement;
+  // 是否使用首次加载loading
   isUseFirstLoading: boolean;
   // 首次渲染UI
   firstLoading?: () => ReactNode;
+  // 是否是加载中
   isLoading: boolean;
 
   // ---------------------------- 下拉重置设置 -------------
@@ -335,7 +337,8 @@ export interface PRSLProps
   // 自定义加载更多loading
   loadMoreLoading?: () => ReactNode;
   backTopAnimationProps?: BackTopAnimationProps;
-  showBackTopAnimation?: boolean;
+  // 是否使用backTopAnimation
+  isUseBackTopAnimation?: boolean;
   scrollLoadBeforeRender?: () => ReactNode;
   scrollLoadAfterRender?: () => ReactNode;
   scrollLoadInnerBeforeRender?: () => ReactNode;

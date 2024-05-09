@@ -1,6 +1,6 @@
 import { Button, Image, List } from 'antd-mobile';
 import _ from 'lodash';
-import Masonry from 'masonry-layout';
+// import Masonry from 'masonry-layout';
 import Mockjs, { Random } from 'mockjs';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -623,7 +623,7 @@ export default () => {
               text: '编辑',
               disabled: false,
               onClick: () => {
-                const handle = MobileGlobalIndicator.show();
+                const handle = MobileGlobalIndicator.show(document.body, '操作中');
 
                 ref.current.resetAll().then(() => {
                   MobileGlobalIndicator.hide(handle);
@@ -639,7 +639,8 @@ export default () => {
               // disabled: true,
               onClick: () => {
                 console.log('id', record.id, rowIndex);
-                const handle = MobileGlobalIndicator.show();
+                const handle = MobileGlobalIndicator.show(document.body, '操作中');
+
                 ref.current.resetPagination().then(() => {
                   MobileGlobalIndicator.hide(handle);
                   MobileSuccessPrompt.openSuccessMessage({

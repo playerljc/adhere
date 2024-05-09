@@ -3,7 +3,6 @@ import { Button, DotLoading, ErrorBlock, PullToRefresh, Radio, Skeleton } from '
 import classNames from 'classnames';
 import isPrimaryEmpty from 'lodash.isempty';
 import React, {
-  CSSProperties,
   forwardRef,
   memo,
   useCallback,
@@ -46,9 +45,9 @@ const DEFAULT_MODE = 'normal';
 
 const DEFAULT_SEARCH_KEY_WORD_MODE = 'normal';
 
-const DEFAULT_IS_USE_DND = true;
+const DEFAULT_IS_USE_DND = false;
 
-const DEFAULT_IS_USE_SELECTION = true;
+const DEFAULT_IS_USE_SELECTION = false;
 
 const DEFAULT_ACTION_TRIGGER_MODE = 'ActionSheet';
 
@@ -62,7 +61,7 @@ const DEFAULT_ACTION_TRIGGER_MODE = 'ActionSheet';
  *   {scrollLoadBeforeInnerElement}
  *   {scrollLoadElement}
  *   {scrollLoadAfterInnerElement}
- *   {showBackTopAnimation && backTopAnimationElement}
+ *   {isUseBackTopAnimation && backTopAnimationElement}
  * }
  * afterInnerElement
  */
@@ -107,7 +106,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         scrollLoadProps,
         onLoadMore,
         loadMoreLoading,
-        showBackTopAnimation = true,
+        isUseBackTopAnimation = true,
         backTopAnimationProps,
         scrollLoadBeforeRender,
         scrollLoadAfterRender,
@@ -285,7 +284,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       // 是否使用本地模式
       const isLocal = useMemo(() => {
-        return typeof isUseLocal !== 'boolean' ? true : isUseLocal;
+        return typeof isUseLocal !== 'boolean' ? false : isUseLocal;
       }, [isUseLocal]);
 
       // 排序和过滤后的数据
@@ -373,8 +372,8 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         isUseDNDMode,
         isLocal,
         isUsePaging,
-        // pagingRef.current.page,
-        // pagingRef.current.pageSize,
+        pagingRef.current.page,
+        pagingRef.current.pageSize,
       ]);
 
       const targetChildren = useMemo(() => {
@@ -432,7 +431,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
       // 总页数
       const pages = useMemo(() => {
-        return (targetDataSource?.total ?? 0) / pagingRef.current.pageSize;
+        return Math.floor((targetDataSource?.total ?? 0) / pagingRef.current.pageSize) || 1;
       }, [/*pagingRef.current.pageSize,*/ targetDataSource.total]);
 
       const defaultFirstLoading = useMemo(() => {
@@ -637,7 +636,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             distance={scrollLoadProps?.distance || 50}
             onScrollBottom={onScrollBottom}
             {...(scrollLoadProps || {})}
-            disabled={!isUseNormalMode}
+            disabled={pages <= 1 || !isUseNormalMode}
             className={classNames(
               `${selectorPrefix}-scroll-load`,
               scrollLoadProps?.className ?? '',
@@ -659,6 +658,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         renderLoadMoreLoading,
         scrollLoadProps,
         targetChildren,
+        pages,
       ]);
 
       const normalListElement = useMemo(() => {
@@ -776,7 +776,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
             {scrollLoadAfterWrapperElement}
 
-            {showBackTopAnimation && backTopAnimationElement}
+            {isUseBackTopAnimation && backTopAnimationElement}
           </PullToRefresh>
         );
       }, [
@@ -786,7 +786,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         scrollLoadAfterWrapperElement,
         scrollLoadElement,
         normalListElement,
-        showBackTopAnimation,
+        isUseBackTopAnimation,
         backTopAnimationElement,
         isUseNormalMode,
         renderEmpty,
@@ -798,6 +798,20 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
        * @description 渲染Inner
        */
       const renderInner = useCallback(() => {
+        const defaultHeaderExtra = [dndManageButton, selectionManageButton].filter(
+          (t) => !!t,
+        ) as ReactElement[];
+
+        const targetHeaderExtra = headerExtra?.(defaultHeaderExtra, mode) ?? defaultHeaderExtra;
+
+        let existsHeaderExtra = false;
+
+        if (targetHeaderExtra) {
+          if (Array.isArray(targetHeaderExtra) && targetHeaderExtra.length) {
+            existsHeaderExtra = true;
+          }
+        }
+
         return (
           <>
             <div className={`${selectorPrefix}-header`}>
@@ -805,12 +819,9 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
                 {showKeyWordSearchBar && searchKeyWordElement}
               </div>
 
-              <div className={`${selectorPrefix}-header-extra`}>
-                {headerExtra?.(
-                  [dndManageButton, selectionManageButton].filter((t) => !!t) as ReactElement[],
-                  mode,
-                ) ?? [dndManageButton, selectionManageButton].filter((t) => !!t)}
-              </div>
+              {existsHeaderExtra ? (
+                <div className={`${selectorPrefix}-header-extra`}>{targetHeaderExtra}</div>
+              ) : null}
             </div>
 
             {showToolBar && toolBarElement}
@@ -1106,24 +1117,21 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             })
           : Promise.resolve();
 
-        if (onRefresh) {
-          return resolve.then(() => {
-            _resetCallback();
+        return resolve.then(() => {
+          _resetCallback();
 
-            if (isLocal) {
-              return;
-            }
+          if (isLocal) {
+            forceUpdate();
+            return;
+          }
 
-            return onRefresh?.({
-              ...pagingRef.current,
-              ...params,
-            }).then((res) => {
-              setDataSource(res);
-            });
+          return onRefresh?.({
+            ...pagingRef.current,
+            ...params,
+          }).then((res) => {
+            setDataSource(res);
           });
-        } else {
-          return Promise.resolve(dataSource);
-        }
+        });
       }
 
       function pullToRefreshAll() {
@@ -1148,11 +1156,11 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
        * @param callback
        */
       function onScrollBottom(callback) {
-        if (status.current === ScrollLoad.EMPTY) {
-          status.current = ScrollLoad.EMPTY;
-          callback(ScrollLoad.EMPTY);
-          return;
-        }
+        // if (status.current === ScrollLoad.EMPTY) {
+        //   status.current = ScrollLoad.EMPTY;
+        //   callback(ScrollLoad.EMPTY);
+        //   return;
+        // }
 
         callbackHandler.current = callback;
 
@@ -1198,7 +1206,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
 
           callbackHandler.current(status.current);
         }
-      }, [dataSource.data, pages /*pagingRef.current.page*/]);
+      }, [targetDataSource.data, pages /*pagingRef.current.page*/]);
 
       useUpdateEffect(() => {
         reset();

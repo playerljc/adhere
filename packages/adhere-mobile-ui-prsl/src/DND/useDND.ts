@@ -1,4 +1,4 @@
-import { useUpdateEffect } from 'ahooks';
+import { useLatest, useUpdateEffect } from 'ahooks';
 import { arrayMoveImmutable } from 'array-move';
 import { useMemo, useState } from 'react';
 
@@ -16,11 +16,15 @@ import type { DNDChangeValue } from '../types';
 export default function UseDND({ mode, dataSource, reset, rowKey, total }) {
   const [optionDataSource, setOptionDataSource] = useState([...(dataSource ?? [])]);
 
+  const optionDataSourceRef = useLatest(optionDataSource);
+
+  const dataSourceRef = useLatest(dataSource);
+
   const isUseDNDMode = useMemo(() => mode === 'dnd', [mode]);
 
-  function finish() {
-    return optionDataSource.reduce<DNDChangeValue>((result, optionRecord, _index) => {
-      const preValue = dataSource[_index][rowKey];
+  const finish = () => {
+    return optionDataSourceRef.current.reduce<DNDChangeValue>((result, optionRecord, _index) => {
+      const preValue = dataSourceRef.current[_index][rowKey];
       const currentValue = optionRecord[rowKey];
 
       if (preValue !== currentValue) {
@@ -32,12 +36,12 @@ export default function UseDND({ mode, dataSource, reset, rowKey, total }) {
 
       return result;
     }, []);
-  }
+  };
 
-  function cancel() {
-    setOptionDataSource([...(dataSource ?? [])]);
+  const cancel = () => {
+    setOptionDataSource([...(dataSourceRef.current ?? [])]);
     reset();
-  }
+  };
 
   function move({ oldIndex, newIndex }) {
     setOptionDataSource((_optionDataSource) =>

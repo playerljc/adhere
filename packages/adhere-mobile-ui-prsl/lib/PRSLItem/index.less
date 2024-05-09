@@ -5,12 +5,25 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    margin-left: 20px;
+    //margin-left: 10px;
     margin-right: 10px;
   }
 
   > .adhere-mobile-ui-prsl-item-main {
     flex: 1;
     min-width: 0;
+
+    > .adm-list-item {
+      > .adm-list-item-content {
+        > .adm-list-item-content-main {
+          flex: 1;
+          min-width: 0;
+        }
+
+        > .adm-list-item-content-arrow {
+          flex-shrink: 0;
+        }
+      }
+    }
   }
 }

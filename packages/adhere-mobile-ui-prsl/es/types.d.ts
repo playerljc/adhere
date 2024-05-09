@@ -230,7 +230,7 @@ export interface PRSLProps extends Omit<SearchKeyWordProps, 'className' | 'style
     }) => Promise<DataSource>;
     loadMoreLoading?: () => ReactNode;
     backTopAnimationProps?: BackTopAnimationProps;
-    showBackTopAnimation?: boolean;
+    isUseBackTopAnimation?: boolean;
     scrollLoadBeforeRender?: () => ReactNode;
     scrollLoadAfterRender?: () => ReactNode;
     scrollLoadInnerBeforeRender?: () => ReactNode;

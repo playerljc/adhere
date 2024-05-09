@@ -4,18 +4,13 @@ import Mockjs, { Random } from 'mockjs';
 import React, { useMemo, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
-import { ShareAltOutlined, UserAddOutlined } from '@ant-design/icons';
-import { FieldGeneratorToDict, Popup } from '@baifendian/adhere';
+import { FieldGeneratorToDict } from '@baifendian/adhere';
 import {
   CalendarDialog,
-  CalendarModal,
   DateDialog,
-  DateModal,
-  Dialog,
   Input,
   Modal,
   TimeDialog,
-  TimeModal,
 } from '@baifendian/adhere-mobile-ui-anthoc';
 
 import PRSL from '../../src/index';
@@ -33,57 +28,57 @@ const dataSource = Array.from({ length: 100 })
     avatar: Random.image(),
   }));
 
-// function getData({ page, pageSize, searchKeyWord, filterValues = {}, sortValues = [] }) {
-//   return new Promise((resolve) => {
-//     let filterData;
-//
-//     // filter
-//     if (!searchKeyWord && _.isEmpty(filterValues) && !sortValues.length) {
-//       filterData = dataSource;
-//     } else {
-//       filterData = dataSource.filter(
-//         (record) =>
-//           (!searchKeyWord
-//             ? true
-//             : record.name.indexOf(searchKeyWord) !== -1 ||
-//               record.describe.indexOf(searchKeyWord) !== -1) &&
-//           (_.isEmpty(filterValues) ? true : record.name.indexOf(filterValues.name) !== -1),
-//       );
-//     }
-//
-//     // sort
-//     if (sortValues.length) {
-//       filterData = sortValues.reduce((res, sortValue) => {
-//         res = res.sort((r1, r2) => {
-//           if (sortValue.order === 'asc') {
-//             if (r1[sortValue.name] > r2[sortValue.name]) return 1;
-//             else if (r1[sortValue.name] < r2[sortValue.name]) return -1;
-//             else return 0;
-//           } else {
-//             if (r1[sortValue.name] < r2[sortValue.name]) return 1;
-//             else if (r1[sortValue.name] > r2[sortValue.name]) return -1;
-//             else return 0;
-//           }
-//         });
-//         return [...res];
-//       }, filterData);
-//     }
-//
-//     resolve({
-//       total: filterData.length,
-//       data: filterData.slice((page - 1) * pageSize, page * pageSize),
-//     });
-//   });
-// }
-
-function getData() {
+function getData({ page, pageSize, searchKeyWord, filterValues = {}, sortValues = [] }) {
   return new Promise((resolve) => {
+    let filterData;
+
+    // filter
+    if (!searchKeyWord && _.isEmpty(filterValues) && !sortValues.length) {
+      filterData = dataSource;
+    } else {
+      filterData = dataSource.filter(
+        (record) =>
+          (!searchKeyWord
+            ? true
+            : record.name.indexOf(searchKeyWord) !== -1 ||
+              record.describe.indexOf(searchKeyWord) !== -1) &&
+          (_.isEmpty(filterValues) ? true : record.name.indexOf(filterValues.name) !== -1),
+      );
+    }
+
+    // sort
+    if (sortValues.length) {
+      filterData = sortValues.reduce((res, sortValue) => {
+        res = res.sort((r1, r2) => {
+          if (sortValue.order === 'asc') {
+            if (r1[sortValue.name] > r2[sortValue.name]) return 1;
+            else if (r1[sortValue.name] < r2[sortValue.name]) return -1;
+            else return 0;
+          } else {
+            if (r1[sortValue.name] < r2[sortValue.name]) return 1;
+            else if (r1[sortValue.name] > r2[sortValue.name]) return -1;
+            else return 0;
+          }
+        });
+        return [...res];
+      }, filterData);
+    }
+
     resolve({
-      total: dataSource.length,
-      data: dataSource,
+      total: filterData.length,
+      data: filterData.slice((page - 1) * pageSize, page * pageSize),
     });
   });
 }
+
+// function getData() {
+//   return new Promise((resolve) => {
+//     resolve({
+//       total: dataSource.length,
+//       data: dataSource,
+//     });
+//   });
+// }
 
 const UserSelectComponent1 =
   FieldGeneratorToDict.Components[
@@ -549,51 +544,17 @@ export default () => {
       <PRSL
         // isUseFirstLoading={false}
         className="PRSLWrapper"
-        beforeRender={() => <div>InnerBefore</div>}
-        afterRender={() => <div>InnerAfter</div>}
-        beforeToolBarRender={() => <div>beforeToolBarRender</div>}
-        afterToolBarRender={() => <div>afterToolBarRender</div>}
-        scrollLoadBeforeRender={() => <div>scrollLoadWrapperBeforeRender</div>}
-        scrollLoadAfterRender={() => <div>scrollLoadWrapperAfterRender</div>}
-        scrollLoadInnerBeforeRender={() => {
-          return <div>scrollLoadInnerBeforeRender</div>;
-        }}
-        scrollLoadInnerAfterRender={() => <div>scrollLoadInnerAfterRender</div>}
         // paging={{
         //   defaultPageSize: 30,
         // }}
-        paging={false}
-        isUseLocal
+        // paging={false}
+        // isUseLocal
         toolbarConfig={(defaultElements) => {
-          return [
-            {
-              key: 'add',
-              label: '新增',
-              icon: <UserAddOutlined />,
-              onClick: () => {
-                console.log('新增');
-              },
-            },
-            {
-              key: 'share',
-              label: '分享',
-              icon: <ShareAltOutlined />,
-              onClick: () => {
-                console.log('分享');
-              },
-            },
-            ...defaultElements,
-          ];
+          return [...defaultElements];
         }}
         filterConfig={filterConfig}
         sortConfig={sortConfig}
         viewSettingConfig={viewSettingConfig}
-        onViewSetting={(view) => {
-          debugger;
-        }}
-        onViewSettingReset={() => {
-          debugger;
-        }}
         isLoading={loading}
         loadData={(params) => {
           return getData(params).then((res) => {

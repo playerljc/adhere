@@ -1,6 +1,6 @@
 import { Button, Image, List } from 'antd-mobile';
 import _ from 'lodash';
-import Masonry from 'masonry-layout';
+// import Masonry from 'masonry-layout';
 import Mockjs, { Random } from 'mockjs';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -541,9 +541,21 @@ export default () => {
   return (
     <div className="Wrapper">
       <PRSL
-        // selectionMultiple={false}
         // isUseDND={false}
-        // isUseSelection={false}
+        isUseSelection
+        selectionMultiple
+        onSelectChange={(
+          selectedRowKeys,
+          selectedRows,
+          changeRowKeys,
+          // @ts-ignore
+          info,
+        ) => {
+          console.log('selectedRowKeys', selectedRowKeys);
+          console.log('selectedRows', selectedRows);
+          console.log('changeRowKeys', changeRowKeys);
+          console.log('info', info);
+        }}
         searchKeyWordHistoryStoreType="local"
         isUseFirstLoading
         isUseLocal={false}

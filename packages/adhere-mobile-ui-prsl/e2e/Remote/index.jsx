@@ -603,7 +603,7 @@ export default () => {
         searchKeyWordBarProps={{
           placeholder: '请输入查询关键字',
         }}
-        searchKeyWordMode="history"
+        // searchKeyWordMode="history"
       >
         {({ dataSource }) => (
           <List header="用户列表">

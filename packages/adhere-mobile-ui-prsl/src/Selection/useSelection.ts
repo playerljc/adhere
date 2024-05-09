@@ -1,4 +1,4 @@
-import { useUpdateEffect } from 'ahooks';
+import { useLatest, useUpdateEffect } from 'ahooks';
 import difference from 'lodash.difference';
 import { useMemo, useState } from 'react';
 
@@ -15,6 +15,10 @@ export default function UseSelection({
 
   const [optionSelectedRowKeys, setOptionSelectedRowKeys] = useState(selectedRowKeys ?? []);
 
+  const targetSelectedRowKeysRef = useLatest(targetSelectedRowKeys);
+
+  const optionSelectedRowKeysRef = useLatest(optionSelectedRowKeys);
+
   const isUseSelectionMode = useMemo(() => mode === 'selection', [mode]);
 
   const isSelectionMultiple = useMemo(
@@ -22,9 +26,9 @@ export default function UseSelection({
     [selectionMultiple],
   );
 
-  function finish() {
-    const _preSelectedRowKeys = [...targetSelectedRowKeys];
-    const _targetSelectedRowKeys = [...optionSelectedRowKeys];
+  const finish = () => {
+    const _preSelectedRowKeys = [...targetSelectedRowKeysRef.current];
+    const _targetSelectedRowKeys = [...optionSelectedRowKeysRef.current];
 
     setTargetSelectedRowKeys(_targetSelectedRowKeys);
 
@@ -42,11 +46,11 @@ export default function UseSelection({
         type: (added ?? []).length ? 'select' : 'unselect',
       },
     };
-  }
+  };
 
-  function cancel() {
-    setOptionSelectedRowKeys([...targetSelectedRowKeys]);
-  }
+  const cancel = () => {
+    setOptionSelectedRowKeys([...targetSelectedRowKeysRef.current]);
+  };
 
   function selectionChange(_checked, _id) {
     setOptionSelectedRowKeys((_optionSelectedRowKeys) => {

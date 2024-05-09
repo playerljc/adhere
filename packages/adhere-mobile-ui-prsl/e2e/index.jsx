@@ -17,5 +17,5 @@ import Selection from './Selection';
 DictConfig();
 
 e2e.Mobile({
-  children: <List />,
+  children: <Selection />,
 });

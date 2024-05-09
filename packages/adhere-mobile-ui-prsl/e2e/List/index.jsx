@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import { Button, Ellipsis, Image, List } from 'antd-mobile';
 import _ from 'lodash';
-import Masonry from 'masonry-layout';
+// import Masonry from 'masonry-layout';
 import Mockjs, { Random } from 'mockjs';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
