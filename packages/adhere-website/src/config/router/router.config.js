@@ -84,6 +84,7 @@ const {
   Ellipsis,
   Expression,
   AutoComplete,
+  QuickRangeDate,
   MobileSuccessPrompt,
   MobileErrorPrompt,
   MobileWarnPrompt,
@@ -96,6 +97,7 @@ const {
   MobileAntHOC,
   MobileFieldGeneratorToDict,
   MobilePRSL,
+  MobileQuickRangeDate,
 } = Components;
 
 export default () => [
@@ -458,6 +460,11 @@ export default () => [
                 name: 'AutoComplete',
                 component: AutoComplete,
               },
+              {
+                path: '/adhere/component/ui/quickrangedate',
+                name: 'QuickRangeDate',
+                component: QuickRangeDate,
+              },
             ],
           },
           {
@@ -617,6 +624,11 @@ export default () => [
                 path: '/adhere/component/mobile/prsl',
                 name: 'PRSL',
                 component: MobilePRSL,
+              },
+              {
+                path: '/adhere/component/mobile/quickrangedate',
+                name: 'QuickRangeDate',
+                component: MobileQuickRangeDate,
               },
             ],
           },

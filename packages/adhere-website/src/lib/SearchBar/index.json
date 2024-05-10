@@ -285,6 +285,11 @@
     "path": "/adhere/component/ui/autocomplete"
   },
   {
+    "kw": ["快速时间选取", "QuickRangeDate"],
+    "group": "组件 - UI",
+    "path": "/adhere/component/ui/quickrangedate"
+  },
+  {
     "kw": ["组件强制刷新", "ForceUpdate"],
     "group": "组件 - Util",
     "path": "/adhere/component/ui/forceupdate"
@@ -419,6 +424,11 @@
     "kw": ["下拉重置，上拉刷新的操作", "MobilePRSL"],
     "group": "组件 - Mobile - UI",
     "path": "/adhere/component/mobile/prsl"
+  },
+  {
+    "kw": ["快速时间选取", "MobileQuickRangeDate"],
+    "group": "组件 - Mobile- UI",
+    "path": "/adhere/component/mobile/quickrangedate"
   },
   {
     "kw": ["echarts", "echarts"],

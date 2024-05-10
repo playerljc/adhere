@@ -162,6 +162,7 @@ const {
   PRSLMobileActionSheet,
   PRSLMobileSwipeAction,
   PRSLMobileGridView,
+  QuickRangeDate,
 } = Components;
 
 export default () => [
@@ -953,6 +954,10 @@ export default () => [
       {
         path: '/adhere/component/ui/prsl/gridview',
         component: PRSLMobileGridView,
+      },
+      {
+        path: '/adhere/component/ui/quickrangedate',
+        component: QuickRangeDate,
       },
     ],
   },

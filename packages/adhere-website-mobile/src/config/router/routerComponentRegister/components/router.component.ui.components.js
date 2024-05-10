@@ -860,3 +860,7 @@ export const PRSLMobileSwipeAction = lazy(() =>
 export const PRSLMobileGridView = lazy(() =>
   import(/* webpackChunkName: "prsl" */ '@/components/ui/prsl/GridView.jsx'),
 );
+
+export const QuickRangeDate = lazy(() =>
+  import(/* webpackChunkName: "quickrangedate" */ '@/components/ui/quickrangedate'),
+);

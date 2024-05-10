@@ -41,3 +41,7 @@ export const MobileFieldGeneratorToDict = lazy(() =>
 export const MobilePRSL = lazy(() =>
   import(/* webpackChunkName: "mobileprsl" */ '@/components/mobile/prsl'),
 );
+
+export const MobileQuickRangeDate = lazy(() =>
+  import(/* webpackChunkName: "mobilequickrangedate" */ '@/components/mobile/quickrangedate'),
+);

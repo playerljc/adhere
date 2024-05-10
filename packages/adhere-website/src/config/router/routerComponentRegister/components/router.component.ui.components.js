@@ -164,3 +164,7 @@ export const Expression = lazy(() =>
 export const AutoComplete = lazy(() =>
   import(/* webpackChunkName: "autocomplete" */ '@/components/ui/autocomplete'),
 );
+
+export const QuickRangeDate = lazy(() =>
+  import(/* webpackChunkName: "quickrangedate" */ '@/components/ui/quickrangedate'),
+);
