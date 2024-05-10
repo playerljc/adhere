@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import { useMobileCodeText } from '@/hooks';
 import PlayGroundPage, {
   CodeBoxSection,
   FunctionPropsSection,
   Section,
 } from '@/lib/PlaygroundPage';
-import Util from '@/util';
 
 export default () => {
-  const [indexCodeText, setIndexCodeText] = useState('');
-  const [p1CodeText, setP1CodeText] = useState('');
-  const [p2CodeText, setP2CodeText] = useState('');
-
-  useEffect(() => {
-    Util.getMobileCodeText('globalindicator/index.jsx').then(setIndexCodeText);
-    Util.getMobileCodeText('globalindicator/examples/p1.jsx').then(setP1CodeText);
-    Util.getMobileCodeText('globalindicator/examples/p2.jsx').then(setP2CodeText);
-  }, []);
+  const indexCodeText = useMobileCodeText('globalindicator/index.jsx');
+  const p1CodeText = useMobileCodeText('globalindicator/examples/p1.jsx');
+  const p2CodeText = useMobileCodeText('globalindicator/examples/p2.jsx');
 
   function boxPanelConfig() {
     return [

@@ -37,3 +37,7 @@ export const MobileFieldGeneratorToDict = lazy(() =>
     /* webpackChunkName: "mobilefieldgeneratortodict" */ '@/components/mobile/fieldgeneratortodict'
   ),
 );
+
+export const MobilePRSL = lazy(() =>
+  import(/* webpackChunkName: "mobileprsl" */ '@/components/mobile/prsl'),
+);

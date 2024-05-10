@@ -79,7 +79,7 @@ const config = [
   },
   {
     name: 'SwiperAction.jsx',
-    des: '',
+    des: '使用Swipe进行操作',
   },
 ];
 

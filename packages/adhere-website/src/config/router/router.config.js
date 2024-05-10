@@ -95,6 +95,7 @@ const {
   MobileAutoComplete,
   MobileAntHOC,
   MobileFieldGeneratorToDict,
+  MobilePRSL,
 } = Components;
 
 export default () => [
@@ -611,6 +612,11 @@ export default () => [
                 path: '/adhere/component/mobile/fieldgeneratortodict',
                 name: 'FieldGeneratorToDict',
                 component: MobileFieldGeneratorToDict,
+              },
+              {
+                path: '/adhere/component/mobile/prsl',
+                name: 'PRSL',
+                component: MobilePRSL,
               },
             ],
           },

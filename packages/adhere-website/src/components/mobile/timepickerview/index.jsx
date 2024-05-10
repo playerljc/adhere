@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import { useMobileCodeText } from '@/hooks';
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
-import Util from '@/util';
 
 export default () => {
-  const [indexCodeText, setIndexCodeText] = useState('');
-  const [p1CodeText, setP1CodeText] = useState('');
-  const [p2CodeText, setP2CodeText] = useState('');
-  const [p3CodeText, setP3CodeText] = useState('');
-  const [p4CodeText, setP4CodeText] = useState('');
-  const [p5CodeText, setP5CodeText] = useState('');
-  const [p6CodeText, setP6CodeText] = useState('');
-
-  useEffect(() => {
-    Util.getMobileCodeText('tabs/index.jsx').then(setIndexCodeText);
-    Util.getMobileCodeText('tabs/timepickerview/p1.jsx').then(setP1CodeText);
-    Util.getMobileCodeText('tabs/timepickerview/p2.jsx').then(setP2CodeText);
-    Util.getMobileCodeText('tabs/timepickerview/p3.jsx').then(setP3CodeText);
-    Util.getMobileCodeText('tabs/timepickerview/p4.jsx').then(setP4CodeText);
-    Util.getMobileCodeText('tabs/timepickerview/p5.jsx').then(setP5CodeText);
-    Util.getMobileCodeText('tabs/timepickerview/p6.jsx').then(setP6CodeText);
-  }, []);
+  const indexCodeText = useMobileCodeText('tabs/index.jsx');
+  const p1CodeText = useMobileCodeText('tabs/timepickerview/p1.jsx');
+  const p2CodeText = useMobileCodeText('tabs/timepickerview/p2.jsx');
+  const p3CodeText = useMobileCodeText('tabs/timepickerview/p3.jsx');
+  const p4CodeText = useMobileCodeText('tabs/timepickerview/p4.jsx');
+  const p5CodeText = useMobileCodeText('tabs/timepickerview/p5.jsx');
+  const p6CodeText = useMobileCodeText('tabs/timepickerview/p6.jsx');
 
   function boxPanelConfig() {
     return [

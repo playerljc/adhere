@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import { useMobileCodeText } from '@/hooks';
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
-import Util from '@/util';
 
 export default () => {
-  const [P1CodeText, setP1CodeText] = useState('');
-  const [P2CodeText, setP2CodeText] = useState('');
-  const [P3CodeText, setP3CodeText] = useState('');
-  const [p1ComCodeText, setP1ComCodeText] = useState('');
-  const [p2ComCodeText, setP2ComCodeText] = useState('');
-  const [p3ComCodeText, setP3ComCodeText] = useState('');
-
-  useEffect(() => {
-    Util.getMobileCodeText('autocomplete/P1.jsx').then(setP1CodeText);
-    Util.getMobileCodeText('autocomplete/P2.jsx').then(setP2CodeText);
-    Util.getMobileCodeText('autocomplete/P3.jsx').then(setP3CodeText);
-    Util.getMobileCodeText('autocomplete/examples/p1.jsx').then(setP1ComCodeText);
-    Util.getMobileCodeText('autocomplete/examples/p2.jsx').then(setP2ComCodeText);
-    Util.getMobileCodeText('autocomplete/examples/p3.jsx').then(setP3ComCodeText);
-  }, []);
+  const p1CodeText = useMobileCodeText('autocomplete/P1.jsx');
+  const p2CodeText = useMobileCodeText('autocomplete/P2.jsx');
+  const p3CodeText = useMobileCodeText('autocomplete/P3.jsx');
+  const p1ComCodeText = useMobileCodeText('autocomplete/examples/p1.jsx');
+  const p2ComCodeText = useMobileCodeText('autocomplete/examples/p2.jsx');
+  const p3ComCodeText = useMobileCodeText('autocomplete/examples/p3.jsx');
 
   function boxPanelConfig() {
     return [
@@ -41,7 +32,7 @@ export default () => {
             title: 'index.jsx',
             style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: P1CodeText,
+            codeText: p1CodeText,
           },
           {
             key: 'p1.jsx',
@@ -73,7 +64,7 @@ export default () => {
             title: 'index.jsx',
             style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: P2CodeText,
+            codeText: p2CodeText,
           },
           {
             key: 'p2.jsx',
@@ -105,7 +96,7 @@ export default () => {
             title: 'index.jsx',
             style: { position: 'relative', height: 500 },
             theme: 'eclipse',
-            codeText: P3CodeText,
+            codeText: p3CodeText,
           },
           {
             key: 'p3.jsx',

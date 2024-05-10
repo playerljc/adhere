@@ -1,44 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
+import { useMobileCodeText } from '@/hooks';
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
-import Util from '@/util';
 
 export default () => {
-  const [p1IndexCodeText, setP1IndexCodeText] = useState('');
-  const [p2IndexCodeText, setP2IndexCodeText] = useState('');
-  const [p1CodeText, setP1CodeText] = useState('');
-  const [p2CodeText, setP2CodeText] = useState('');
-  const [p3CodeText, setP3CodeText] = useState('');
-  const [p4CodeText, setP4CodeText] = useState('');
-  const [p5CodeText, setP5CodeText] = useState('');
-  const [p6CodeText, setP6CodeText] = useState('');
-  const [p7CodeText, setP7CodeText] = useState('');
-  const [p8CodeText, setP8CodeText] = useState('');
-  const [p9CodeText, setP9CodeText] = useState('');
-  const [p10CodeText, setP10CodeText] = useState('');
-  const [homeCodeText, setHomeCodeText] = useState('');
-  const [messageCodeText, setMessageCodeText] = useState('');
-  const [todoCodeText, setTodoCodeText] = useState('');
-  const [personalCenterCodeText, setPersonalCenterCodeText] = useState('');
-
-  useEffect(() => {
-    Util.getMobileCodeText('tabs/P1.jsx').then(setP1IndexCodeText);
-    Util.getMobileCodeText('tabs/P2.jsx').then(setP2IndexCodeText);
-    Util.getMobileCodeText('tabs/examples/p1.jsx').then(setP1CodeText);
-    Util.getMobileCodeText('tabs/examples/p2.jsx').then(setP2CodeText);
-    Util.getMobileCodeText('tabs/examples/p3.jsx').then(setP3CodeText);
-    Util.getMobileCodeText('tabs/examples/p4.jsx').then(setP4CodeText);
-    Util.getMobileCodeText('tabs/examples/p5.jsx').then(setP5CodeText);
-    Util.getMobileCodeText('tabs/examples/p6.jsx').then(setP6CodeText);
-    Util.getMobileCodeText('tabs/examples/p7.jsx').then(setP7CodeText);
-    Util.getMobileCodeText('tabs/examples/p8.jsx').then(setP8CodeText);
-    Util.getMobileCodeText('tabs/examples/p9.jsx').then(setP9CodeText);
-    Util.getMobileCodeText('tabs/examples/p10/index.jsx').then(setP10CodeText);
-    Util.getMobileCodeText('tabs/examples/p10/Home.jsx').then(setHomeCodeText);
-    Util.getMobileCodeText('tabs/examples/p10/Message.jsx').then(setMessageCodeText);
-    Util.getMobileCodeText('tabs/examples/p10/PersonalCenter.jsx').then(setPersonalCenterCodeText);
-    Util.getMobileCodeText('tabs/examples/p10/Todo.jsx').then(setTodoCodeText);
-  }, []);
+  const p1IndexCodeText = useMobileCodeText('tabs/P1.jsx');
+  const p2IndexCodeText = useMobileCodeText('tabs/P2.jsx');
+  const p1CodeText = useMobileCodeText('tabs/examples/p1.jsx');
+  const p2CodeText = useMobileCodeText('tabs/examples/p2.jsx');
+  const p3CodeText = useMobileCodeText('tabs/examples/p3.jsx');
+  const p4CodeText = useMobileCodeText('tabs/examples/p4.jsx');
+  const p5CodeText = useMobileCodeText('tabs/examples/p5.jsx');
+  const p6CodeText = useMobileCodeText('tabs/examples/p6.jsx');
+  const p7CodeText = useMobileCodeText('tabs/examples/p7.jsx');
+  const p8CodeText = useMobileCodeText('tabs/examples/p8.jsx');
+  const p9CodeText = useMobileCodeText('tabs/examples/p9.jsx');
+  const p10CodeText = useMobileCodeText('tabs/examples/p10/index.jsx');
+  const homeCodeText = useMobileCodeText('tabs/examples/p10/Home.jsx');
+  const messageCodeText = useMobileCodeText('tabs/examples/p10/Message.jsx');
+  const todoCodeText = useMobileCodeText('tabs/examples/p10/PersonalCenter.jsx');
+  const personalCenterCodeText = useMobileCodeText('tabs/examples/p10/Todo.jsx');
 
   function boxPanelConfig() {
     return [

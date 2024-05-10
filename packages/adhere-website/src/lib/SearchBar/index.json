@@ -416,6 +416,11 @@
     "path": "/adhere/component/mobile/timepickerview"
   },
   {
+    "kw": ["下拉重置，上拉刷新的操作", "MobilePRSL"],
+    "group": "组件 - Mobile - UI",
+    "path": "/adhere/component/mobile/prsl"
+  },
+  {
     "kw": ["echarts", "echarts"],
     "group": "Gallery",
     "path": "/adhere/gallery/echarts"
