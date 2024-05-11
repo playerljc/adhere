@@ -4,6 +4,14 @@
 
 2024-04-22
 
+* tree加入了AutoComplete、table加入了TreeAutoComplete
+* tree-select加入数据源组件
+* 加入Calendar的ValueHOC
+* 加入ListPagingEntityValueHOC
+* 加入一系列EntityValueHOC
+* List和Table的Paging加入SuspenseAsync的包裹
+* 加入AutoCompleteSelectInput
+* 加入Tag的AutoComplete
 * ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断
 
 # 1.0.7

@@ -4,6 +4,8 @@
 
 2023-10-04
 
+* Anchors修改
+* SimpleTabs，CodeTabPanel加入className和style参数
 * 加入PlayGroundTabMobile组件
 
 # 1.0.15

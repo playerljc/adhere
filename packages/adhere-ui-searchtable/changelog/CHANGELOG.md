@@ -12,6 +12,7 @@
 
 2024-01-24
 
+* 使用fetchData的方法都变成Promise
 * 可以自定义高级查询面板
 * 高级查询优化
 
@@ -21,6 +22,7 @@
 
 2023-10-01
 
+* 修改renderSearchToolBar变为renderTitle，renderSearchBarExtra，renderSearchBarActions
 * 查询区域加入工具栏，操作工具栏和查询工具栏分离，查询工具栏加入收起功能
 * OptionsWrap加入收起功能
 * 缺省的工具按钮修改

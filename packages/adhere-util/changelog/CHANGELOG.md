@@ -20,6 +20,7 @@
 
 2024-01-24
 
+* 修改getTopDom方法的BUG，selector支持数组形式
 * 修改getTopDom方法
 * 加入isPromise方法
 
@@ -29,6 +30,7 @@
 
 2023-12-17
 
+* getTopDom方法修改
 * 加入gcoord
 
 # 1.0.35
@@ -37,6 +39,7 @@
 
 2023-11-06
 
+* 加入pascalCaseToKebabCase2
 * pascalCaseToKebabCase方法修改
 
 # 1.0.34

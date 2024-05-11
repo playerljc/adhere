@@ -6,6 +6,10 @@
 
 * 修复已知BUG
 * 适配adhere-ui-searchtable的修改
+* 修改文件名的大小写
+* 使用fetchData的方法都变成Promise
+* 修复已知BUG
+* 适配adhere-ui-searchtable的修改
 
 # 1.0.3
 
