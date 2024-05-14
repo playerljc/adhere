@@ -44,7 +44,7 @@ const Fixed = memo<FixedProps>(
 
     const isUseGap = useGap(gutter);
 
-    const renderTrigger = useTrigger({
+    const { renderTrigger, /*collapseClassName,*/ collapseStyle } = useTrigger({
       trigger,
       collapseDirection,
       collapsedSize,
@@ -56,12 +56,16 @@ const Fixed = memo<FixedProps>(
 
     const classList = useMemo(
       () =>
-        classNames(selectorPrefix, className ?? '', {
-          [`${selectorPrefix}-fit`]: fit,
-          [`${selectorPrefix}-col-${props.span}`]: isUseGrid,
-          [`${selectorPrefix}-gap`]: isUseGap,
-        }),
-      [className, props.span, fit],
+        classNames(
+          selectorPrefix,
+          className ?? '',
+          /*collapseClassName,*/ {
+            [`${selectorPrefix}-fit`]: fit,
+            [`${selectorPrefix}-col-${props.span}`]: isUseGrid,
+            [`${selectorPrefix}-gap`]: isUseGap,
+          },
+        ),
+      [className, props.span, fit /*collapseClassName*/],
     );
 
     const styleList = useMemo(() => {
@@ -74,8 +78,9 @@ const Fixed = memo<FixedProps>(
       return {
         ...defaultStyle,
         ...gridStyle,
+        ...(collapseStyle ?? {}),
       };
-    }, [style, gutter]);
+    }, [style, gutter, collapseStyle]);
 
     useImperativeHandle(ref, () => ({
       getEl: () => elRef.current,

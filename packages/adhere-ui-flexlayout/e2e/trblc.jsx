@@ -8,6 +8,8 @@ import 'antd/dist/reset.css';
 import '../src/index.less';
 import './index.less';
 
+const { Fixed } = FlexLayout;
+
 export default () => {
   return (
     <div style={{ height: 500, padding: 20, background: '#ccc' }}>
@@ -30,19 +32,23 @@ export default () => {
         }}
       />*/}
 
-      {/*<FlexLayout.TRBLC.TCBLayout
+      <FlexLayout.TRBLC.TCBLayout
         gutter={20}
         tProps={{
-          children: <Card>top</Card>,
+          span: 10,
+          children: <Card style={{ height: '100%' }}>top</Card>,
+          trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
         cProps={{
           autoFixed: false,
           children: <Card>Center</Card>,
         }}
         bProps={{
-          children: <Card>bottom</Card>,
+          span: 10,
+          children: <Card style={{ height: '100%' }}>bottom</Card>,
+          trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
-      />*/}
+      />
 
       {/*<FlexLayout.TRBLC.CBLayout
         gutter={20}
@@ -203,7 +209,7 @@ export default () => {
         }}
       />*/}
 
-      <FlexLayout.TRBLC.LCRLayout
+      {/*<FlexLayout.TRBLC.LCRLayout
         gutter={20}
         lProps={{
           fit: true,
@@ -221,7 +227,41 @@ export default () => {
           children: <Card>Right</Card>,
           trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
-      />
+      />*/}
+
+      {/*<FlexLayout direction="horizontal" gutter={20}>
+        <Fixed span={6}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={6}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={6}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={6}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={24}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={12}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={12}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+
+        <Fixed span={24}>
+          <p>11111111111111111111111</p>
+        </Fixed>
+      </FlexLayout>*/}
 
       {/*<FlexLayout.TRBLC.CRLayout
         gutter={20}

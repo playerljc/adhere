@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import React, { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { ResizeObserver } from '@juggle/resize-observer';
 
+// import { ResizeObserver } from '@juggle/resize-observer';
 import { gridCount } from './Fixed';
 import type { FixedProps } from './types';
 
@@ -74,11 +74,17 @@ export const useTrigger = ({
 }) => {
   const [collapsible, setCollapsible] = useState(defaultCollapsible);
 
-  const originElSize = useRef<{
-    computedWidth: number | string;
-    computedHeight: number | string;
-  }>({ computedWidth: 0, computedHeight: 0 });
+  const [box, setBox] = useState({
+    width: 10000,
+    height: 10000,
+  });
 
+  // const originElSize = useRef<{
+  //   computedWidth: number | string;
+  //   computedHeight: number | string;
+  // }>({ computedWidth: 0, computedHeight: 0 });
+
+  // 缺省的Trigger元素
   const DefaultTrigger = useMemo(() => {
     if (collapseDirection === 'L') {
       if (collapsible) {
@@ -99,6 +105,7 @@ export const useTrigger = ({
     }
   }, [collapseDirection, collapsible]);
 
+  // 渲染Trigger
   const renderTrigger = useCallback(() => {
     if (trigger) {
       const triggerInner = trigger?.(collapsible as boolean, DefaultTrigger);
@@ -127,89 +134,172 @@ export const useTrigger = ({
     setCollapsible(defaultCollapsible);
   }, [defaultCollapsible]);
 
-  useUpdateEffect(() => {
-    adapterSize();
-  }, [collapsible]);
+  // useUpdateEffect(() => {
+  //   adapterSize();
+  // }, [collapsible]);
 
-  useEffect(() => {
-    const el = elRef.current as HTMLDivElement;
+  // useEffect(() => {
+  //   const el = elRef.current as HTMLDivElement;
+  //
+  //   const ro = new ResizeObserver((entries) => {
+  //     if (!collapsible) {
+  //       for (const entry of entries) {
+  //         const target = entry.target as HTMLElement;
+  //
+  //         if (target === el) {
+  //           originElSize.current = {
+  //             computedWidth: toPx(target.offsetWidth),
+  //             computedHeight: toPx(target.offsetHeight),
+  //           };
+  //         }
+  //       }
+  //     }
+  //   });
+  //
+  //   ro.observe(el);
+  //
+  //   return () => {
+  //     ro.unobserve(el);
+  //   };
+  // }, [collapsible]);
 
-    const ro = new ResizeObserver((entries) => {
-      if (!collapsible) {
-        for (const entry of entries) {
-          const target = entry.target as HTMLElement;
-
-          if (target === el) {
-            originElSize.current = {
-              computedWidth: toPx(target.offsetWidth),
-              computedHeight: toPx(target.offsetHeight),
-            };
-          }
-        }
-      }
-    });
-
-    ro.observe(el);
-
-    return () => {
-      ro.unobserve(el);
-    };
-  }, [collapsible]);
+  // useMount(() => {
+  //   // 获取originElSize
+  //   const computedStyle = window.getComputedStyle(elRef.current as HTMLDivElement);
+  //   const width = computedStyle.width;
+  //   const height = computedStyle.height;
+  //   originElSize.current = {
+  //     computedWidth: width ? width : 'auto',
+  //     computedHeight: height ? height : 'auto',
+  //   };
+  // });
 
   useMount(() => {
-    // 获取originElSize
+    // adapterSize();
     const computedStyle = window.getComputedStyle(elRef.current as HTMLDivElement);
-    const width = computedStyle.width;
-    const height = computedStyle.height;
-    originElSize.current = {
-      computedWidth: width ? width : 'auto',
-      computedHeight: height ? height : 'auto',
-    };
+    const width = parseFloat(computedStyle.width);
+    const height = parseFloat(computedStyle.height);
+    setBox({
+      width,
+      height,
+    });
   });
 
-  useMount(() => {
-    adapterSize();
-  });
-
-  /**
-   * toPx
-   * @param val
-   */
-  function toPx(val) {
-    if (typeof val === 'number') return `${val}px`;
-
-    return val;
-  }
+  // /**
+  //  * toPx
+  //  * @param value
+  //  */
+  // function toPx(value) {
+  //   if (typeof value === 'number') return `${value}px`;
+  //
+  //   return value;
+  // }
 
   /**
    * adapterSize
    */
-  function adapterSize() {
-    const el = elRef.current as HTMLDivElement;
+  // function adapterSize() {
+  //   const el = elRef.current as HTMLDivElement;
+  //
+  //   if (collapsible) {
+  //     if (collapseDirection === 'L') {
+  //       el.style.width = toPx(collapsedSize);
+  //     } else if (collapseDirection === 'R') {
+  //       el.style.width = toPx(collapsedSize);
+  //     } else if (collapseDirection === 'T') {
+  //       el.style.height = toPx(collapsedSize);
+  //     } else if (collapseDirection === 'B') {
+  //       el.style.height = toPx(collapsedSize);
+  //     }
+  //     return;
+  //   }
+  //
+  //   if (collapseDirection === 'L') {
+  //     el.style.width = `${originElSize.current.computedWidth}`;
+  //   } else if (collapseDirection === 'R') {
+  //     el.style.width = `${originElSize.current.computedWidth}`;
+  //   } else if (collapseDirection === 'T') {
+  //     el.style.height = `${originElSize.current.computedHeight}`;
+  //   } else if (collapseDirection === 'B') {
+  //     el.style.height = `${originElSize.current.computedHeight}`;
+  //   }
+  // }
 
+  // const collapseClassName = useMemo(() => {
+  //   // 关闭
+  //   if (collapsible) {
+  //     if (collapseDirection === 'L') {
+  //       return `${selectorPrefix}-l-close`;
+  //     } else if (collapseDirection === 'R') {
+  //       return `${selectorPrefix}-r-close`;
+  //     } else if (collapseDirection === 'T') {
+  //       return `${selectorPrefix}-t-close`;
+  //     } else if (collapseDirection === 'B') {
+  //       return `${selectorPrefix}-b-close`;
+  //     }
+  //     return null;
+  //   }
+  //
+  //   if (collapseDirection === 'L') {
+  //     return `${selectorPrefix}-l-open`;
+  //   } else if (collapseDirection === 'R') {
+  //     return `${selectorPrefix}-r-open`;
+  //   } else if (collapseDirection === 'T') {
+  //     return `${selectorPrefix}-t-open`;
+  //   } else if (collapseDirection === 'B') {
+  //     return `${selectorPrefix}-b-open`;
+  //   }
+  //
+  //   return null;
+  // }, [collapseDirection, collapsible, collapsedSize]);
+
+  const collapseStyle = useMemo(() => {
+    // 关闭
     if (collapsible) {
       if (collapseDirection === 'L') {
-        el.style.width = toPx(collapsedSize);
+        return {
+          maxWidth: collapsedSize,
+        };
       } else if (collapseDirection === 'R') {
-        el.style.width = toPx(collapsedSize);
+        return {
+          maxWidth: collapsedSize,
+        };
       } else if (collapseDirection === 'T') {
-        el.style.height = toPx(collapsedSize);
+        return {
+          maxHeight: collapsedSize,
+        };
       } else if (collapseDirection === 'B') {
-        el.style.height = toPx(collapsedSize);
+        return {
+          maxHeight: collapsedSize,
+        };
       }
-      return;
+
+      return {};
     }
 
+    const { width, height } = box;
+
+    // 显示
     if (collapseDirection === 'L') {
-      el.style.width = `${originElSize.current.computedWidth}`;
+      return {
+        maxWidth: width,
+      };
     } else if (collapseDirection === 'R') {
-      el.style.width = `${originElSize.current.computedWidth}`;
+      return {
+        maxWidth: width,
+      };
     } else if (collapseDirection === 'T') {
-      el.style.height = `${originElSize.current.computedHeight}`;
+      return {
+        maxHeight: height,
+      };
     } else if (collapseDirection === 'B') {
-      el.style.height = `${originElSize.current.computedHeight}`;
+      return {
+        maxHeight: height,
+      };
     }
-  }
+
+    return {};
+  }, [collapseDirection, collapsible, collapsedSize, box]);
 
   /**
    * _onCollapse
@@ -219,5 +309,9 @@ export const useTrigger = ({
     onCollapse?.(!collapsible);
   }
 
-  return renderTrigger;
+  return {
+    renderTrigger,
+    // collapseClassName,
+    collapseStyle,
+  };
 };

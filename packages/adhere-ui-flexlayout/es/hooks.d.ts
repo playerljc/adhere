@@ -16,7 +16,19 @@ export declare const useGap: (gutter: any) => boolean;
 /**
  * useTrigger
  */
-export declare const useTrigger: ({ trigger, collapseDirection, collapsedSize, defaultCollapsible, onCollapse, selectorPrefix, elRef, }: Pick<FixedProps, "trigger" | "collapseDirection" | "collapsedSize" | "defaultCollapsible" | "onCollapse"> & {
+export declare const useTrigger: ({ trigger, collapseDirection, collapsedSize, defaultCollapsible, onCollapse, selectorPrefix, elRef, }: Pick<FixedProps, 'trigger' | 'collapseDirection' | 'collapsedSize' | 'defaultCollapsible' | 'onCollapse'> & {
     elRef: MutableRefObject<HTMLDivElement | null>;
     selectorPrefix: string;
-}) => () => React.JSX.Element | null;
+}) => {
+    renderTrigger: () => React.JSX.Element | null;
+    collapseStyle: {
+        maxWidth: string | number;
+        maxHeight?: undefined;
+    } | {
+        maxHeight: string | number;
+        maxWidth?: undefined;
+    } | {
+        maxWidth?: undefined;
+        maxHeight?: undefined;
+    };
+};
