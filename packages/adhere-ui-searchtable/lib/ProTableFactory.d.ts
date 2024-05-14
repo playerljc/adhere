@@ -27,7 +27,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * @description - 初始化组件的查询和分页参数
          * @param queryReduce 查询参数的处理
          */
-        initSearchAndPaginParams(queryReduce?: ((key: string, v: any) => any) | undefined): any;
+        initSearchAndPaginParams(queryReduce?: (key: string, v: any) => any): any;
         /**
          * hasAdvancedSearchPanel
          * @description 是否开启高级搜索
