@@ -88,6 +88,7 @@
   - 重构最终数据源的计算
   - 修改初始化没有下拉数据的BUG
 * **adhere-ui-flexlayout**
+  - 展开和收起(trigger)内部实现修改
   - 加入展开和收起功能(trigger)
   - 加入LCRLayout、TCBLayout
 * **adhere-util-communication-ajax**
