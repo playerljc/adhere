@@ -321,7 +321,8 @@ module.exports = {
     webpackConfig.module.rules[1].use.find((l) => l.loader === 'ts-loader').options.configFile =
       path.join(__dirname, 'tsconfig.e2e.json');
 
-    webpackConfig.module.rules[3].include.push(e2ePath);
+    webpackConfig.module.rules[2].include.push(e2ePath, srcPath);
+    webpackConfig.module.rules[3].include.push(e2ePath, srcPath);
 
     webpackConfig.resolve.alias['@'] = e2ePath;
   },
