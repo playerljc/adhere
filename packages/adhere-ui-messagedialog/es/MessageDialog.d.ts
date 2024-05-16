@@ -126,12 +126,12 @@ declare const MessageDialogFactory: {
      *  @param {ReactNode} - children
      *  @param defaultCloseBtn
      */
-    Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): void | {
+    Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
         update: (children?: any) => void;
-    };
+    } | void;
     /**
      * MaximizeModal
      * @param config
@@ -140,12 +140,12 @@ declare const MessageDialogFactory: {
      * @param local
      * @constructor
      */
-    MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): void | {
+    MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
         update: (children?: any) => void;
-    };
+    } | void;
     /**
      * close
      * @param el

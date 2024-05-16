@@ -92,7 +92,9 @@ const Trigger: FC<TriggerProps> = ({
   }
 
   useEffect(() => {
-    dialog.current?.update(bodyChildren);
+    try {
+      dialog.current?.update(bodyChildren);
+    } catch (err) {}
   });
 
   return (

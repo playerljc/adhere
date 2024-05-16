@@ -1,11 +1,21 @@
 .adhere-ui-message-dialog-maximize-modal {
+  @max-width: 96vw;
+  @max-height: 96vh;
+
   &.adhere-ui-message-dialog-maximize-modal-maximize {
     width: 100% !important;
     max-width: 100%;
     height: 100%;
 
+    // 最大化了
     .adhere-ui-message-dialog-maximize-modal-inner {
-      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      max-width: 100vw;
+      max-height: 100vh;
       border-radius: 0;
       transform: translate3d(0, 0, 0) !important;
     }
@@ -14,6 +24,8 @@
   .adhere-ui-message-dialog-maximize-modal-inner {
     display: flex;
     flex-direction: column;
+    max-width: @max-width;
+    max-height: @max-height;
     padding: calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px);
     background-color: #fff;
     border-radius: calc(var(--antd-border-radius-l-g) * 1px);
@@ -56,18 +68,26 @@
     }
 
     > .adhere-ui-message-dialog-maximize-modal-body {
+      display: flex;
       flex: 1;
       min-height: 0;
-      overflow-y: auto;
 
       .ant-modal-content {
-        height: 100%;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
         padding: 0;
         border-radius: 0;
         box-shadow: none;
 
         > .ant-modal-body {
-          height: 100%;
+          flex: 1;
+          min-height: 0;
+        }
+
+        > .ant-modal-footer {
+          flex-shrink: 0;
         }
       }
 
