@@ -20,7 +20,7 @@ const ListDensitySetting: FC<ListDensitySettingProps> = (props) => {
       content={<Setting {...props} density={props.density ?? 'default'} />}
       placement="bottomRight"
       trigger="click"
-      getPopupContainer={(el) => el.parentElement as HTMLElement}
+      // getPopupContainer={(el) => el.parentElement as HTMLElement}
     >
       <Tooltip title={`${Intl.v('密度')}`}>
         <div className={`${selectorPrefix}-list-density-setting-btn`}>
