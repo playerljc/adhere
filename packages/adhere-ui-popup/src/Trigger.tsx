@@ -147,7 +147,9 @@ const Trigger: FC<TriggerProps> = ({
   };
 
   useEffect(() => {
-    popup.current?.update(popupChildren);
+    try {
+      popup.current?.update(popupChildren);
+    } catch (err) {}
   });
 
   return (
