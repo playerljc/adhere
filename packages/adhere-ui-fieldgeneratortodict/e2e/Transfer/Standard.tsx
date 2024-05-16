@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import FieldGeneratorToDict from '../../src/index';
 
 export default () => {
-  const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.Standard}`;
+  const DictComponentName = `SystemBookCatalog${FieldGeneratorToDict.ComponentNames.Transfer.Standard}`;
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
   const [targetKeys, setTargetKeys] = useState();
@@ -29,11 +29,11 @@ export default () => {
     <DictComponent
       style={{ width: 600 }}
       titles={['Source', 'Target']}
-      targetKeys={targetKeys}
-      selectedKeys={selectedKeys}
-      onChange={onChange}
-      onSelectChange={onSelectChange}
-      onScroll={onScroll}
+      // targetKeys={targetKeys}
+      // selectedKeys={selectedKeys}
+      // onChange={onChange}
+      // onSelectChange={onSelectChange}
+      // onScroll={onScroll}
       render={(item) => item.title}
     />
   );

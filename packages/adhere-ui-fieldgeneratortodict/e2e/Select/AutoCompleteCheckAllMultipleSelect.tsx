@@ -18,10 +18,10 @@ export default () => {
       value={value}
       onChange={setValue}
     >
-      {({ originNode, value, onChange, options }) => {
+      {/*{({ originNode, value, onChange, options }) => {
         // return originNode;
         return <Checkbox.Group value={value} onChange={onChange} options={options} />;
-      }}
+      }}*/}
     </DictComponent>
   );
 };

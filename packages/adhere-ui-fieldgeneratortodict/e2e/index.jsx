@@ -77,6 +77,8 @@ import MobileSelectorStandard from './MobileSelector/MobileSelectorStandard';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect';
 import SegmentedTest from './Segmented/SuspenseStandard';
 import SelectTest from './Select/ArrayEntityValueHOC';
+import AutoCompleteCheckAllMultipleSelect from './Select/AutoCompleteCheckAllMultipleSelect';
+import MultipleSelect from './Select/MultipleSelect';
 import StepsTest from './Steps/SuspenseStandard';
 import TableTest from './Table/AutoCompleteCheckboxPagin';
 import AutoCompleteTableTreeMulti from './Table/AutoCompleteTableTreeMulti';
@@ -87,11 +89,13 @@ import AutoCompleteTableTreePaging from './Table/AutoCompleteTableTreePaging';
 import AutoCompleteTableTreeStandard from './Table/AutoCompleteTableTreeStandard';
 import CheckboxTablePagingEntityValueHOC from './Table/CheckboxTablePagingEntityValueHOC';
 import CheckboxTablePagingSelectEntityValueHOC from './Table/CheckboxTablePagingSelectEntityValueHOC';
+import MultiSelect from './Table/MultiSelect';
 import RadioTablePagingEntityValueHOC from './Table/RadioTablePagingEntityValueHOC';
 import RadioTablePagingSelectEntityValueHOC from './Table/RadioTablePagingSelectEntityValueHOC';
 import TagTest from './Tag/AutoCompleteTagCheckAllSelect';
 import TimelineTest from './Timeline/SuspenseStandard';
 import TransferTest from './Transfer/AutoComplete';
+import Transfer from './Transfer/Standard';
 import TreeAsyncEntityValueHOC from './Tree/TreeAsyncEntityValueHOC';
 import TreeTest from './Tree/TreeAsyncFlatCheckedShowParent';
 import TreeAsyncFlatEntityValueHOC from './Tree/TreeAsyncFlatEntityValueHOC';
@@ -116,10 +120,10 @@ import '../src/index.less';
 
 DictConfig();
 
-// e2e.PC({
-//   children: <MobileCheckListACPaging />,
-// });
-
-e2e.Mobile({
-  children: <MobileCheckListACStandard />,
+e2e.PC({
+  children: <Transfer />,
 });
+
+// e2e.Mobile({
+//   children: <MultipleSelect />,
+// });

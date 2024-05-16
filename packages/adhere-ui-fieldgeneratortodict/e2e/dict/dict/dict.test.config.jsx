@@ -16,7 +16,7 @@ import { MobileGlobalIndicator } from '@baifendian/adhere';
 import Util from '@baifendian/adhere-util';
 import Dict from '@baifendian/adhere-util-dict';
 
-import { City, County, Province, options } from './data';
+import { City, County, Province, books, options } from './data';
 
 const PCCFlat = [
   ...Province.map((t) => ({
@@ -267,6 +267,9 @@ export default {
       ].map((t) => ({
         label: t.catalog,
         value: t.id,
+        children: t.catalog,
+        key: t.id,
+        title: t.catalog,
       }));
 
     Dict.handlers.SystemBookCatalogDynamic = () =>
@@ -856,13 +859,14 @@ export default {
 
     Dict.handlers.SystemBook = () => Promise.resolve(books);
 
-    Dict.handlers.SystemTableBook = () =>
-      Promise.resolve(
-        books.map(({ children, ...t }) => ({
-          ...t,
-          value: t.id,
-        })),
-      );
+    Dict.handlers.SystemTableBook = () => {
+      const options = books.map(({ children, ...t }) => ({
+        ...t,
+        value: t.id,
+      }));
+
+      return Promise.resolve(options);
+    };
 
     Dict.handlers.SystemTableBookAC = () => (_kw) => {
       return new Promise((resolve) => {
