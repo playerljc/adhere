@@ -32,7 +32,7 @@ export default () => {
         }}
       />*/}
 
-      <FlexLayout.TRBLC.TCBLayout
+      {/*<FlexLayout.TRBLC.TCBLayout
         gutter={20}
         tProps={{
           span: 10,
@@ -48,7 +48,7 @@ export default () => {
           children: <Card style={{ height: '100%' }}>bottom</Card>,
           trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
-      />
+      />*/}
 
       {/*<FlexLayout.TRBLC.CBLayout
         gutter={20}
@@ -209,7 +209,7 @@ export default () => {
         }}
       />*/}
 
-      {/*<FlexLayout.TRBLC.LCRLayout
+      <FlexLayout.TRBLC.LCRLayout
         gutter={20}
         lProps={{
           fit: true,
@@ -227,7 +227,7 @@ export default () => {
           children: <Card>Right</Card>,
           trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
-      />*/}
+      />
 
       {/*<FlexLayout direction="horizontal" gutter={20}>
         <Fixed span={6}>

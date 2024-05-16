@@ -1,12 +1,23 @@
-import { useMount, useUpdateEffect } from 'ahooks';
+import {
+  /*useMount,*/
+  useUpdateEffect,
+} from 'ahooks';
 import classNames from 'classnames';
-import React, { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  MutableRefObject,
+  useCallback,
+  /*useEffect,*/
+  useMemo,
+  /*useRef,*/
+  useState,
+} from 'react';
 
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 
-// import { ResizeObserver } from '@juggle/resize-observer';
 import { gridCount } from './Fixed';
 import type { FixedProps } from './types';
+
+// import { ResizeObserver } from '@juggle/resize-observer';
 
 /**
  * useGrid
@@ -14,7 +25,7 @@ import type { FixedProps } from './types';
  * @param {FixedProps} props
  * @return {boolean}
  */
-export const useGrid = (props: FixedProps) =>
+export const useGrid = (props: FixedProps): boolean =>
   useMemo(
     () =>
       'span' in props &&
@@ -29,7 +40,7 @@ export const useGrid = (props: FixedProps) =>
  * @param {number | number[]} gutter
  * @return {boolean}
  */
-export const useGap = (gutter) =>
+export const useGap = (gutter: any): boolean =>
   useMemo(() => {
     if (
       gutter === undefined ||
@@ -38,8 +49,9 @@ export const useGap = (gutter) =>
       gutter === 0 ||
       typeof gutter === 'function' ||
       (typeof gutter === 'object' && !Array.isArray(gutter))
-    )
+    ) {
       return false;
+    }
 
     if (Array.isArray(gutter)) {
       if (gutter.length === 0) return false;
@@ -74,10 +86,10 @@ export const useTrigger = ({
 }) => {
   const [collapsible, setCollapsible] = useState(defaultCollapsible);
 
-  const [box, setBox] = useState({
-    width: 10000,
-    height: 10000,
-  });
+  // const [box, setBox] = useState({
+  //   width: '100%',
+  //   height: '100%',
+  // });
 
   // const originElSize = useRef<{
   //   computedWidth: number | string;
@@ -174,16 +186,16 @@ export const useTrigger = ({
   //   };
   // });
 
-  useMount(() => {
-    // adapterSize();
-    const computedStyle = window.getComputedStyle(elRef.current as HTMLDivElement);
-    const width = parseFloat(computedStyle.width);
-    const height = parseFloat(computedStyle.height);
-    setBox({
-      width,
-      height,
-    });
-  });
+  // useMount(() => {
+  //   // adapterSize();
+  //   const computedStyle = window.getComputedStyle(elRef.current as HTMLDivElement);
+  //   const width = parseFloat(computedStyle.width);
+  //   const height = parseFloat(computedStyle.height);
+  //   setBox({
+  //     width,
+  //     height,
+  //   });
+  // });
 
   // /**
   //  * toPx
@@ -277,29 +289,29 @@ export const useTrigger = ({
       return {};
     }
 
-    const { width, height } = box;
+    // const { width, height } = box;
 
     // 显示
     if (collapseDirection === 'L') {
       return {
-        maxWidth: width,
+        maxWidth: '100%',
       };
     } else if (collapseDirection === 'R') {
       return {
-        maxWidth: width,
+        maxWidth: '100%',
       };
     } else if (collapseDirection === 'T') {
       return {
-        maxHeight: height,
+        maxHeight: '100%',
       };
     } else if (collapseDirection === 'B') {
       return {
-        maxHeight: height,
+        maxHeight: '100%',
       };
     }
 
     return {};
-  }, [collapseDirection, collapsible, collapsedSize, box]);
+  }, [collapseDirection, collapsible, collapsedSize]);
 
   /**
    * _onCollapse
