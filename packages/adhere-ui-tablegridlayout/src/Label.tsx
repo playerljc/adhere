@@ -7,7 +7,7 @@ const Label = (props) => {
   const { className, ..._props } = props;
 
   return (
-    <td className={classNames(`${selectorPrefix}-table-row-value`, className ?? '')} {..._props}>
+    <td className={classNames(`${selectorPrefix}-table-row-label`, className ?? '')} {..._props}>
       {props.children}
     </td>
   );

@@ -120,7 +120,7 @@ const renderHorizontal: RenderHorizontal = (params) => {
         {
           ...label.props,
           className: classNames(
-            `${selectorPrefix}-table-row-label`,
+            // `${selectorPrefix}-table-row-label`,
             'require',
             label.props.className ?? '',
           ),
@@ -238,7 +238,7 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
         {
           ...label.props,
           className: classNames(
-            `${selectorPrefix}-table-row-label`,
+            // `${selectorPrefix}-table-row-label`,
             'require',
             label.props.className ?? '',
           ),
