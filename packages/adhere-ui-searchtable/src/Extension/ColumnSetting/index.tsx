@@ -20,7 +20,7 @@ const ColumnSetting: FC<ColumnSettingProps> = (props) => {
       content={<Setting {...props} />}
       placement="bottomRight"
       trigger="click"
-      getPopupContainer={(el) => el.parentElement as HTMLElement}
+      // getPopupContainer={(el) => el.parentElement as HTMLElement}
     >
       <Tooltip title={`${Intl.v('列设置')}`}>
         <div className={`${selectorPrefix}-column-setting-btn`}>

@@ -60,13 +60,13 @@ const store = createStore(null, {}, applyMiddleware(createLoggerMiddleware(), sa
 registerModels();
 
 const ProSearchStateTableImpl = lazy(() =>
-  import(/* webpackChunkName: "conditionalrender" */ './Main.jsx'),
+  import(/* webpackChunkName: "conditionalrender" */ './proStateSearchTable.jsx'),
 );
 
 e2e.PC({
   children: (
     <Provider store={store}>
-      <div style={{ display: 'flex', height: 700 }}>
+      <div style={{ height: 700 }}>
         <Suspense fallback={<div>loading</div>}>
           <ProSearchStateTableImpl pagination={true} />
         </Suspense>

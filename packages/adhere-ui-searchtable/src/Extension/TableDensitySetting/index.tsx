@@ -20,7 +20,7 @@ const TableDensitySetting: FC<TableDensitySettingProps> = (props) => {
       content={<Setting {...props} density={props.density ?? TableDensity.DEFAULT} />}
       placement="bottomRight"
       trigger="click"
-      getPopupContainer={(el) => el.parentElement as HTMLElement}
+      // getPopupContainer={(el) => el.parentElement as HTMLElement}
     >
       <Tooltip title={`${Intl.v('密度')}`}>
         <div className={`${selectorPrefix}-table-density-setting-btn`}>

@@ -1,10 +1,14 @@
-import faker from 'faker';
+// import faker from 'faker';
+import {
+  Ajax,
+  /*Util*/
+} from '@baifendian/adhere';
 
-import { Ajax, Util } from '@baifendian/adhere';
+import data from '../mock';
 
 const request = new Ajax('');
 
-const data = require('../mock.js').default;
+// const data = require('../mock.js').default;
 
 // const data = Array.from({ length: 100 }).map((t) => ({
 //   id: faker.random.uuid(),
@@ -21,31 +25,38 @@ const data = require('../mock.js').default;
 export const fetchList = (() => {
   return {
     call: (params) => {
-      const _localAddDataMap = params._localAddDataMap;
+      // const _localAddDataMap = params._localAddDataMap;
+      //
+      // const addCount = Array.from(_localAddDataMap.values()).flat().length;
+      //
+      // const res = data(params);
+      //
+      // const pages = res.data?.totalCount / params.limit;
+      //
+      // const invalidate = Array.from(_localAddDataMap.keys()).filter((page) => page > pages);
+      //
+      // res.data.totalCount += addCount;
+      //
+      // const addListByPage = _localAddDataMap.get(params.page) ?? [];
+      //
+      // res.data.list = [
+      //   ...addListByPage,
+      //   ...res.data.list.slice(0, res.data.list.length - addListByPage.length),
+      // ];
+      //
+      // /**
+      //  * data.slice((params.page - 1) * params.limit, params.page * params.limit)
+      //  */
+      // return request.get({
+      //   path: res,
+      //   mock: true,
+      //   loading: {
+      //     show: false,
+      //   },
+      // }).promise;
 
-      const addCount = Array.from(_localAddDataMap.values()).flat().length;
-
-      const res = data(params);
-
-      const pages = res.data?.totalCount / params.limit;
-
-      const invalidate = Array.from(_localAddDataMap.keys()).filter((page) => page > pages);
-
-      res.data.totalCount += addCount;
-
-      const addListByPage = _localAddDataMap.get(params.page) ?? [];
-
-      debugger;
-      res.data.list = [
-        ...addListByPage,
-        ...res.data.list.slice(0, res.data.list.length - addListByPage.length),
-      ];
-
-      /**
-       * data.slice((params.page - 1) * params.limit, params.page * params.limit)
-       */
       return request.get({
-        path: res,
+        path: data(params),
         mock: true,
         loading: {
           show: false,
