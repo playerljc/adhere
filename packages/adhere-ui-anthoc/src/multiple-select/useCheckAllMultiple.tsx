@@ -39,10 +39,12 @@ const useCheckAllMultiple: UseCheckAllMultiple = ({
       currentOriginNode.current = originNode;
 
       // @ts-ignore
-      dropdownRenderElement.current = children?.({
-        originNode,
-        ..._renderProps,
-      });
+      dropdownRenderElement.current =
+        // @ts-ignore
+        children?.({
+          originNode,
+          ..._renderProps,
+        }) ?? originNode;
 
       const CheckAllOrigin = <CheckAllWrapper {..._renderProps} />;
 

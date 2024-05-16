@@ -6,7 +6,7 @@ import { UseTransferRenderProps } from '../types';
  * useTransferRenderProps
  */
 const useTransferRenderProps: UseTransferRenderProps = (transferProps) => {
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<any[]>([]);
 
   return ({ value, onChange, options }) => ({
     render: (item) => item.title,

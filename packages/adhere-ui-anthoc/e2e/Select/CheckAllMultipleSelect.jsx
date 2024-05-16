@@ -30,10 +30,10 @@ export default () => {
       //   );
       // }}
     >
-      {({ originNode, value, onChange, options }) => {
-        // return originNode;
-        return <Checkbox.Group value={value} onChange={onChange} options={options} />;
-      }}
+      {/*{({ originNode, value, onChange, options }) => {*/}
+      {/*  return originNode;*/}
+      {/*  // return <Checkbox.Group value={value} onChange={onChange} options={options} />;*/}
+      {/*}}*/}
     </MultipleSelect.CheckAllSelect>
   );
 };
