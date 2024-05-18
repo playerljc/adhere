@@ -3,6 +3,8 @@ import type { CSSProperties } from 'react';
 
 import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
 
+import { ElasticSearch, Math, Sql } from './operators';
+
 // 运算符的类型
 // unary 单目运算符
 // binary 双目运算符
@@ -124,4 +126,7 @@ export type ExpressionComponent = NamedExoticComponent<
   validator: () => {
     validator: (_: any, value: string) => Promise<any>;
   };
+  ElasticSearchOptions: typeof ElasticSearch;
+  SqlOptions: typeof Sql;
+  MathOptions: typeof Math;
 };

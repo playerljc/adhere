@@ -1,6 +1,7 @@
 import { FC, NamedExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import type { CSSProperties } from 'react';
 import type { EllipsisProps } from '@baifendian/adhere-ui-ellipsis/es/types';
+import { ElasticSearch, Math, Sql } from './operators';
 export type OperatorType = 'unary' | 'binary' | 'ternary' | 'brackets';
 /**
  * OperatorItem
@@ -108,4 +109,7 @@ export type ExpressionComponent = NamedExoticComponent<PropsWithoutRef<Expressio
     validator: () => {
         validator: (_: any, value: string) => Promise<any>;
     };
+    ElasticSearchOptions: typeof ElasticSearch;
+    SqlOptions: typeof Sql;
+    MathOptions: typeof Math;
 };

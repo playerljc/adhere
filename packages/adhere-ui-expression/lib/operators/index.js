@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(e){return e&&e.__esModule?e:{default:e}},ElasticSearch_1=(Object.defineProperty(exports,"__esModule",{value:!0}),exports.Sql=exports.Math=exports.ElasticSearch=void 0,__importDefault(require("./ElasticSearch"))),Math_1=(exports.ElasticSearch=ElasticSearch_1.default,__importDefault(require("./Math"))),Sql_1=(exports.Math=Math_1.default,__importDefault(require("./Sql")));exports.Sql=Sql_1.default;
+//# sourceMappingURL=index.js.map

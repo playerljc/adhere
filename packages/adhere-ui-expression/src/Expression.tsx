@@ -10,7 +10,7 @@ import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 
 import View from './View';
-import ElasticSearchOperators from './operators/ElasticSearch';
+import { ElasticSearch, Math, Sql } from './operators';
 import type {
   ExpressionComponent,
   ExpressionHandle,
@@ -108,7 +108,7 @@ const InternalExpression = memo<
       ref,
     ) => {
       const operatorsConfig = useMemo<Operators>(
-        () => operators ?? (ElasticSearchOperators as OperatorItem[]),
+        () => operators ?? (ElasticSearch as OperatorItem[]),
         [operators],
       );
 
@@ -849,6 +849,10 @@ const InternalExpression = memo<
 const Expression = InternalExpression as ExpressionComponent;
 
 Expression.View = View;
+
+Expression.ElasticSearchOptions = ElasticSearch;
+Expression.SqlOptions = Sql;
+Expression.MathOptions = Math;
 
 /**
  * parse
