@@ -1,8 +1,7 @@
 import type dayjs from 'dayjs';
-import cloneDeep from 'lodash.clonedeep';
 
 import { SearchTableImplement } from '../SearchTableImplement';
-import { findRecord } from '../Util';
+import { cloneDeep, findRecord } from '../Util';
 import type { SearchTableImplementProps, SearchTableImplementState } from '../types';
 import SearchEditableCellFactory from './SearchEditableCellFactory';
 

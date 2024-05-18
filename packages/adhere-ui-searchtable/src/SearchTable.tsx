@@ -11,7 +11,6 @@ import type {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import classNames from 'classnames';
-import cloneDeep from 'lodash.clonedeep';
 import PropTypes from 'prop-types';
 import type { ReactElement, ReactNode, RefObject } from 'react';
 import React, { createContext, createRef } from 'react';
@@ -31,6 +30,7 @@ import TableCell from './Extension/TableComponents/TableCell';
 import TableRow from './Extension/TableComponents/TableRow';
 import TableDensitySetting from './Extension/TableDensitySetting';
 import Search, { defaultProps as searchDefaultProps, propTypes as searchPropTypes } from './Search';
+import { cloneDeep } from './Util';
 import type {
   CellConfigReducer,
   ColumnTypeExt,

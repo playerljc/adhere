@@ -406,7 +406,12 @@ export declare const propTypes: {
     isShowExpandSearch: PropTypes.Requireable<boolean>;
     defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
     fitBody: PropTypes.Requireable<boolean>;
-    autoFixed: PropTypes.Requireable<boolean>;
+    autoFixed: PropTypes.Requireable<boolean>; /**
+     * sortOrder
+     * @description table的column中加入
+     * @param {string} columnName
+     * @return {string}
+     */
     title: PropTypes.Requireable<string>;
     antdTableProps: PropTypes.Requireable<object>;
     fixedHeaderAutoTable: PropTypes.Requireable<boolean>;

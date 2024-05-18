@@ -1,3 +1,8 @@
+import lodashClone from 'lodash.clone';
+import lodashCloneDeep from 'lodash.clonedeep';
+
+import Util from '@baifendian/adhere-util';
+
 /**
  * findRecord
  * @description 在dataResource中查找rowKey是id的record
@@ -146,3 +151,16 @@ export const createChildren = (tdREL, subChildren) => {
 
   return [subChildren];
 };
+
+export const cloneDeep = (obj: { [x: string]: any }) => {
+  const targetObj = Object.keys(obj).reduce((cloneObj, prop) => {
+    if (!prop.startsWith('_')) {
+      cloneObj[prop] = obj[prop];
+    }
+    return cloneObj;
+  }, {});
+
+  return lodashCloneDeep(targetObj);
+};
+
+export const clone = lodashClone;
