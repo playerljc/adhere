@@ -2,7 +2,6 @@ import debounce from 'lodash.debounce';
 import React, { useState } from 'react';
 
 import { Expression } from '@baifendian/adhere';
-import Sql from '@baifendian/adhere-ui-expression/es/operators/Sql';
 
 export default () => {
   const [quickTipDataSource, setQuickTipDataSource] = useState([]);
@@ -27,7 +26,7 @@ export default () => {
     <div>
       <Expression
         placeholder="请输入表达式"
-        operators={Sql}
+        operators={Expression.SqlOptions}
         allowClear
         onContinuousTextChange={onContinuousTextChange}
         quickTipDataSource={quickTipDataSource}
