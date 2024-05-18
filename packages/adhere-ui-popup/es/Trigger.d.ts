@@ -10,6 +10,8 @@ import type { TriggerProps } from './types';
  * @param closeIcon
  * @param extra
  * @param actions
+ * @param isShowCloseAction
+ * @param closeActionPosition
  * @param children
  * @param value
  * @param disabled

@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* Trigger加入closeAction的设置
 * 加入disabled设置和update刷新方法
 
 # 1.0.5

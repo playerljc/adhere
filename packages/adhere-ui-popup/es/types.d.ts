@@ -30,6 +30,8 @@ export interface TriggerProps {
     closeIcon?: ReactNode;
     extra?: ReactNode;
     disabled?: boolean;
+    isShowCloseAction?: boolean;
+    closeActionPosition?: 'start' | 'end';
     actions?: Omit<AntdButtonProps | AntdMobileButtonProps, 'onClick'> & {
         key: any;
         onClick?: () => Promise<any>;
@@ -40,6 +42,7 @@ export interface TriggerProps {
  * TriggerPromptProps
  */
 export type TriggerPromptProps = Omit<TriggerProps, 'actions'> & {
+    isShowCloseAction?: boolean;
     onSubmit?: () => Promise<any>;
     okText?: string;
 };

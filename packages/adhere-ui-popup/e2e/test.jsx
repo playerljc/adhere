@@ -1,6 +1,8 @@
 import { Form, Input, Select } from 'antd';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
+import Space from '@baifendian/adhere-ui-space';
+
 import Popup from '../src/index';
 
 import '../src/index.less';
@@ -56,95 +58,94 @@ export default () => {
 
   return (
     <div>
-      <Popup.TriggerPrompt
-        okText="确认"
-        renderTrigger={() => <div>trigger</div>}
-        title="确认"
-        onSubmit={() => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(123);
-            }, 2000);
-          });
-        }}
-      >
-        <div>Inner</div>
-      </Popup.TriggerPrompt>
+      <Space.Group direction="vertical" size={20}>
+        <Popup.TriggerPrompt
+          okText="确认111"
+          isShowCloseAction={false}
+          renderTrigger={() => <div>trigger</div>}
+          title="确认"
+          onSubmit={() => {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(123);
+              }, 2000);
+            });
+          }}
+        >
+          <div>Inner</div>
+        </Popup.TriggerPrompt>
 
-      <Popup.TriggerPrompt
-        value={{ note: '123', gender: 'male' }}
-        renderTrigger={() => <div>触发</div>}
-        onSubmit={() => {
-          return new Promise((resolve, reject) => {
-            formRef.current
-              .validAndGetValues()
-              .then((values) => {
-                resolve(values);
-              })
-              .catch((error) => {
-                reject(error);
-              });
-          });
-        }}
-      >
-        <UserForm ref={formRef} />
-      </Popup.TriggerPrompt>
+        <Popup.TriggerPrompt
+          value={{ note: '123', gender: 'male' }}
+          renderTrigger={() => <div>触发</div>}
+          onSubmit={() => {
+            return new Promise((resolve, reject) => {
+              formRef.current
+                .validAndGetValues()
+                .then((values) => {
+                  resolve(values);
+                })
+                .catch((error) => {
+                  reject(error);
+                });
+            });
+          }}
+        >
+          <UserForm ref={formRef} />
+        </Popup.TriggerPrompt>
 
-      <Form>
-        <Form.Item
-          name="values"
-          label="选人"
-          rules={[
+        <Form>
+          <Form.Item
+            name="values"
+            label="选人"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Popup.TriggerPrompt
+              renderTrigger={() => <div>触发</div>}
+              onSubmit={() => {
+                return new Promise((resolve, reject) => {});
+              }}
+            >
+              <div>111</div>
+            </Popup.TriggerPrompt>
+          </Form.Item>
+        </Form>
+
+        <Popup.Trigger
+          renderTrigger={() => <div>Trigger</div>}
+          title="确认"
+          actions={[
             {
-              required: true,
+              key: 'submit',
+              color: 'primary',
+              children: '提交',
+              onClick: () =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    resolve(123);
+                  }, 2000);
+                }),
+            },
+            {
+              key: 'save',
+              color: 'primary',
+              children: '暂存',
+              onClick: () =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    resolve(123);
+                  }, 2000);
+                }),
             },
           ]}
         >
-          <Popup.TriggerPrompt
-            renderTrigger={() => <div>触发</div>}
-            onSubmit={() => {
-              return new Promise((resolve, reject) => {});
-            }}
-          >
-            <div>111</div>
-          </Popup.TriggerPrompt>
-        </Form.Item>
-      </Form>
-
-      <Popup.Trigger
-        renderTrigger={() => <div>Trigger</div>}
-        modalConfig={{
-          config: {
-            title: '确认',
-          },
-        }}
-        footer={[
-          {
-            key: 'submit',
-            type: 'primary',
-            children: '提交',
-            onClick: () =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  resolve(123);
-                }, 2000);
-              }),
-          },
-          {
-            key: 'submit',
-            type: 'primary',
-            children: '暂存',
-            onClick: () =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  resolve(123);
-                }, 2000);
-              }),
-          },
-        ]}
-      >
-        <div>Inner</div>
-      </Popup.Trigger>
+          <div>Inner</div>
+        </Popup.Trigger>
+      </Space.Group>
     </div>
   );
 };
