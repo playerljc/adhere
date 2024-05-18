@@ -29,4 +29,5 @@ export interface IAdapterScreen {
      */
     off(id: string): void;
     elRectification(el: string, level: number): void;
+    detectZoom: () => void;
 }

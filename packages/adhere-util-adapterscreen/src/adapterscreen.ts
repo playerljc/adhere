@@ -80,7 +80,7 @@ let currScale = 1;
 let isAutoFitRunning = false;
 let isElRectification = false;
 
-function elRectification(el, level = 1) {
+function elRectification(el: string, level = 1) {
   if (!isAutoFitRunning) {
     console.error('adapterScreen.js：adapterScreen has not been initialized yet');
   }
@@ -114,7 +114,7 @@ function elRectification(el, level = 1) {
   isElRectification = true;
 }
 
-function keepFit(dw, dh, dom, ignore) {
+function keepFit(dw: number, dh: number, dom: HTMLElement, ignore: any[]) {
   let clientHeight = document.documentElement.clientHeight;
   let clientWidth = document.documentElement.clientWidth;
   currScale = clientWidth / clientHeight < dw / dh ? clientWidth / dw : clientHeight / dh;
@@ -262,6 +262,24 @@ const adapterScreen: IAdapterScreen = {
         `%c` + `adapterScreen.js` + ` is off`,
         `font-weight: bold;color: #707070; background: #c9c9c9; padding: 8px 12px; border-radius: 4px;`,
       );
+  },
+  detectZoom() {
+    let ratio = 0,
+      screen = window.screen,
+      ua = navigator.userAgent.toLowerCase();
+    if (window.devicePixelRatio !== undefined) {
+      ratio = window.devicePixelRatio;
+    } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+      ratio = window.outerWidth / window.innerWidth;
+    }
+    if (ratio) {
+      ratio = Math.round(ratio * 100);
+    }
+
+    if (ratio !== 1) {
+      // @ts-ignore
+      document.body.style.zoom = 100 / Number(ratio);
+    }
   },
   elRectification,
 };
