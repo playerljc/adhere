@@ -1,7 +1,4 @@
 .adhere-ui-message-dialog-maximize-modal {
-  @max-width: 96vw;
-  @max-height: 96vh;
-
   &.adhere-ui-message-dialog-maximize-modal-maximize {
     width: 100% !important;
     max-width: 100%;
@@ -14,8 +11,8 @@
       right: 0;
       bottom: 0;
       left: 0;
-      max-width: 100vw;
-      max-height: 100vh;
+      max-width: calc(100vw * var(--adhere-device-pixel-ratio));
+      max-height: calc(100vh * var(--adhere-device-pixel-ratio));
       border-radius: 0;
       transform: translate3d(0, 0, 0) !important;
     }
@@ -24,8 +21,8 @@
   .adhere-ui-message-dialog-maximize-modal-inner {
     display: flex;
     flex-direction: column;
-    max-width: @max-width;
-    max-height: @max-height;
+    max-width: calc(96vw * var(--adhere-device-pixel-ratio));
+    max-height: calc(96vh * var(--adhere-device-pixel-ratio));
     padding: calc(var(--antd-padding-m-d) * 1px) calc(var(--antd-padding-l-g) * 1px);
     background-color: #fff;
     border-radius: calc(var(--antd-border-radius-l-g) * 1px);

@@ -92,13 +92,13 @@ abstract class Suspense<
 
   componentDidMount() {
     if (this.onFirstFetchDataBefore) {
-      this.onFirstFetchDataBefore().then(() => {
-        this?.fetchData?.().then((res) => {
+      this.onFirstFetchDataBefore?.()?.then?.(() => {
+        this?.fetchData?.()?.then?.((res) => {
           this?.onFirstFetchDataAfter?.(res);
         });
       });
     } else {
-      this?.fetchData?.().then?.((res) => {
+      this?.fetchData?.()?.then?.((res) => {
         this?.onFirstFetchDataAfter?.(res);
       });
     }

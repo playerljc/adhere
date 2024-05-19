@@ -11,7 +11,7 @@ import Resource from '@baifendian/adhere-util-resource';
 
 import type { ConfigProviderComponent, ConfigProviderContext, ConfigProviderProps } from './types';
 
-export const Context = createContext<ConfigProviderContext>({});
+export const Context = createContext<ConfigProviderContext>({} as ConfigProviderContext);
 const { useForceUpdate } = Hooks;
 
 const selectorPrefix = 'adhere-ui-config-provider';
