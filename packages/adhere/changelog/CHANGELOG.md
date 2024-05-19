@@ -122,6 +122,10 @@
   - 优化内部函数，去掉一些无用函数
 * **adhere-ui-hooks**
   - 加入useSafeRef
+* **adhere-util-adapterscreen**
+  - 加入devicePixelRatio的适配
+* **adhere-ui-css**
+  - 加入DPR变量
 
 # 2.10.28
 
