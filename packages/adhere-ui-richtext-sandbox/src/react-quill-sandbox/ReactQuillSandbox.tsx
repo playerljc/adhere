@@ -206,10 +206,6 @@ const InternalReactQuillSandbox = memo<
               padding: 0;
             }
 
-            body {
-              zoom: ${getZoom()};
-            }
-
             html.editor {
               width: 100%;
               height: 100%;
@@ -256,6 +252,10 @@ const InternalReactQuillSandbox = memo<
             }
 
             ${THEME_MAP.get('snow') as string}
+            
+            body {
+              zoom: ${getZoom()};
+            }
           </style>
           <script src="${propTypesUrl}"><\/script>
           <script src="${reactUrl}"><\/script>

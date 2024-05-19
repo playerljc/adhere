@@ -109,28 +109,28 @@ const InternalWangEditorSandbox = memo<
           const headerRule: CSSStyleRule = styleSheet.cssRules[4] as CSSStyleRule;
 
           const editorWrapRuleCssText = `
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        box-sizing: border-box;
-      `;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+          `;
 
           const headerRulesText = `
-        flex-shrink: 0;
-      `;
+            flex-shrink: 0;
+          `;
 
           // 有边框
           if (!('bordered' in props) || props.bordered) {
             editorWrapRule.style.cssText = `
-          ${editorWrapRuleCssText}
-          border: 1px solid #ccc;
-        `;
+              ${editorWrapRuleCssText}
+              border: 1px solid #ccc;
+            `;
             headerRule.style.cssText = `
-          ${headerRulesText}
-          border-bottom: 1px solid #ccc;
-        `;
+              ${headerRulesText}
+              border-bottom: 1px solid #ccc;
+            `;
           }
           // 没边框
           else {
@@ -308,10 +308,6 @@ const InternalWangEditorSandbox = memo<
               padding: 0;
             }
 
-            body {
-              zoom: ${getZoom()};
-            }
-            
             html.editor {
               width: 100%;
               height: 100%;
@@ -323,11 +319,9 @@ const InternalWangEditorSandbox = memo<
             }
 
             html.editor > body > #${editorId} {
-              
             }
             
             html > body > #${editorId} > [data-w-e-toolbar=true] {
-              
             }
             
             html > body > #${editorId} > [data-w-e-textarea=true] {
@@ -346,9 +340,13 @@ const InternalWangEditorSandbox = memo<
               width: 10px;
               height: 10px;
             }
-
+            
             ${WangEditorCssStr}
             ${WangEditorViewCssStr}
+            
+            body {
+              zoom: ${getZoom()};
+            }
           </style>
           <script src="${reactUrl}"><\/script>
           <script src="${reactDOMUrl}"><\/script>
