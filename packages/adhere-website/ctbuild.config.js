@@ -120,7 +120,7 @@ module.exports = {
             libraryDirectory: 'es',
             transformToDefaultImport: true,
             style: true,
-            // styleLibraryDirectory: 'es'
+            // styleLibraryDirectory: 'es',
           },
           'adhere',
         ],
@@ -129,7 +129,9 @@ module.exports = {
           {
             libraryName: '@baifendian/adhere-ui-anthoc',
             libraryDirectory: 'es',
-            style: false,
+            transformToDefaultImport: true,
+            style: true,
+            // styleLibraryDirectory: 'es',
           },
           'adhere-ui-anthoc',
         ],
@@ -138,6 +140,8 @@ module.exports = {
           {
             libraryName: '@baifendian/adhere-ui-richtext-sandbox',
             libraryDirectory: 'es',
+            transformToDefaultImport: true,
+            // styleLibraryDirectory: 'es',
             style: true,
           },
           'adhere-ui-richtext-sandbox',

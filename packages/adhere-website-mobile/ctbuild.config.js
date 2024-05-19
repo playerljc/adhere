@@ -146,6 +146,7 @@ module.exports = {
             libraryDirectory: 'es',
             transformToDefaultImport: true,
             style: true,
+            // styleLibraryDirectory: 'es',
           },
           'adhere',
         ],
@@ -155,6 +156,7 @@ module.exports = {
             libraryName: '@baifendian/adhere-ui-anthoc',
             libraryDirectory: 'es',
             style: false,
+            // styleLibraryDirectory: 'es',
           },
           'adhere-ui-anthoc',
         ],
@@ -164,18 +166,19 @@ module.exports = {
             libraryName: '@baifendian/adhere-mobile-ui-anthoc',
             libraryDirectory: 'es',
             style: false,
+            // styleLibraryDirectory: 'es',
           },
           'adhere-mobile-ui-anthoc',
         ],
-        [
-          'import',
-          {
-            libraryName: 'antd-mobile',
-            libraryDirectory: 'es/components',
-            style: false,
-          },
-          'ant-mobile',
-        ],
+        // [
+        //   'import',
+        //   {
+        //     libraryName: 'antd-mobile',
+        //     libraryDirectory: 'es/components',
+        //     style: false,
+        //   },
+        //   'ant-mobile',
+        // ],
         [
           'import',
           {

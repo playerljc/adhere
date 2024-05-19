@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import {
+  AdapterScreen,
   ConfigProvider as AdhereConfigProvider,
   DateDisplay,
   Dict,
@@ -126,6 +127,8 @@ function render() {
 }
 
 (function () {
+  AdapterScreen.detectZoom();
+
   // 配置字典
   DictConfig();
 
