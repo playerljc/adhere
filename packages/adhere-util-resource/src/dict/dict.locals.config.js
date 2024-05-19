@@ -19,14 +19,30 @@ export default {
       en_US: 'en_US',
       ar_EG: 'ar_EG',
     });
+    Dict.handlers.AddLocals = () => (key, value) => {
+      Dict.value.Locals.value[key] = value;
+      Dict.value.Locals.refresh();
+    };
+    Dict.handlers.RemoveLocals = () => (key) => {
+      delete Dict.value.Locals.value[key];
+      Dict.value.Locals.refresh();
+    };
 
-    // antd的国际化资源
+    // AntDesign的国际化资源
     Dict.handlers.LocalsAntd = () => ({
       zh_CN: zhCN,
       pt_PT: ptPT,
       en_US: enUS,
       ar_EG: arEG,
     });
+    Dict.handlers.AddLocalsAntd = () => (key, value) => {
+      Dict.value.LocalsAntd.value[key] = value;
+      Dict.value.LocalsAntd.refresh();
+    };
+    Dict.handlers.RemoveLocalsAntd = () => (key) => {
+      delete Dict.value.LocalsAntd.value[key];
+      Dict.value.LocalsAntd.refresh();
+    };
 
     // dayjs国际化
     Dict.handlers.LocalsMoment = () => ({
@@ -43,6 +59,14 @@ export default {
         dayjs.locale('ar');
       },
     });
+    Dict.handlers.AddLocalsMoment = () => (key, value) => {
+      Dict.value.LocalsMoment.value[key] = value;
+      Dict.value.LocalsMoment.refresh();
+    };
+    Dict.handlers.RemoveLocalsMoment = () => (key) => {
+      delete Dict.value.LocalsMoment.value[key];
+      Dict.value.LocalsMoment.refresh();
+    };
   },
   initRemote() {},
 };
