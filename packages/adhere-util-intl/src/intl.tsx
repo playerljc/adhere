@@ -1,4 +1,4 @@
-import intl from 'react-intl-universal';
+import intl, { ReactIntlUniversalMessageDescriptor } from 'react-intl-universal';
 
 import ar_EG from './locales/ar_EG';
 import en_US from './locales/en_US';
@@ -20,10 +20,10 @@ let mainLocales = {};
  * initIntlMap - 初始化以中文为key,intl.get()为值的Map
  * @param zh_CN
  */
-function initIntlMap(zh_CN) {
-  const propertys = Object.getOwnPropertyNames(zh_CN);
+function initIntlMap(zh_CN: { [x: string]: string | number }) {
+  const properties = Object.getOwnPropertyNames(zh_CN);
 
-  propertys.forEach((p) => {
+  properties.forEach((p) => {
     // 中文key 国际化值为值
     intlMap[zh_CN[p]] = intl.get(p);
 
@@ -74,6 +74,19 @@ export function getLocales(): object {
   return { ...mainLocales };
 }
 
+export interface Init {
+  prefix: string;
+  currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+  mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
+  locales: {
+    [key: string]: string[];
+  };
+  // 对adhere的国际化扩展
+  extraLibLocales?: {
+    [key: string]: string[];
+  };
+}
+
 export default {
   /**
    * init
@@ -84,17 +97,11 @@ export default {
     {
       prefix = 'local',
       currentLocale = 'zh_CN',
-      locales = {},
       mainLanguage = 'zh_CN',
+      locales = {},
+      extraLibLocales = {},
       ...rest
-    }: {
-      prefix: string;
-      currentLocale: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
-      locales: {
-        [key: string]: string[];
-      };
-      mainLanguage: 'en_US' | 'zh_CN' | 'pt_PT' | 'ar_EG' | string;
-    },
+    }: Init,
     reload: boolean = false,
   ): Promise<any> {
     if (!reload && isInit) {
@@ -109,20 +116,23 @@ export default {
       zh_CN: [...zh_CN],
       pt_PT: [...pt_PT],
       ar_EG: [...ar_EG],
+      // 还需要加入
+      ...extraLibLocales,
     };
 
     const duplicateIndex: number[] = [];
 
-    libLocales[mainLanguage].forEach((_word, _index) => {
+    libLocales[mainLanguage].forEach((_word: string, _index: number) => {
       if (locales[mainLanguage].includes(_word)) {
         duplicateIndex.push(_index);
       }
     });
 
+    // 如果用户重写了国际化，使用用户的
     const libLocaleKeys = Object.keys(libLocales);
     libLocaleKeys.forEach((_libLocaleKey) => {
       libLocales[_libLocaleKey] = libLocales[_libLocaleKey].filter(
-        (_t, _index) => !duplicateIndex.includes(_index),
+        (_t: any, _index: number) => !duplicateIndex.includes(_index),
       );
     });
 
@@ -144,7 +154,7 @@ export default {
       const stringItems: string[] = [];
       const objEntry: any[] = [];
 
-      local.forEach((_item) => {
+      local.forEach((_item: string) => {
         if (typeof _item === 'string') stringItems.push(_item);
         else objEntry.push(_item);
       });
@@ -237,7 +247,7 @@ export default {
    * @param options
    * @param variables
    */
-  formatMessage(options, variables?: object | null): string {
+  formatMessage(options: ReactIntlUniversalMessageDescriptor, variables?: object | null): string {
     return intl.formatMessage(options, variables);
   },
 
@@ -246,7 +256,10 @@ export default {
    * @param options
    * @param variables
    */
-  formatHTMLMessage(options, variables?: object | null): string {
+  formatHTMLMessage(
+    options: ReactIntlUniversalMessageDescriptor,
+    variables?: object | null,
+  ): string {
     return intl.formatHTMLMessage(options, variables);
   },
 
