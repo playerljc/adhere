@@ -27,6 +27,7 @@
     "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
+    "postbuildpackage": "node ./script/style.js",
     "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "e2e": "cross-env environment=dev mode=development ctbuild startapp -c ../adhere-e2e/ctbuild.e2e.config.js --define alias=@,evnVars=true"
