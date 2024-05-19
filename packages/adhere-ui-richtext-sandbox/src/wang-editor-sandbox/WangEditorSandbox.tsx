@@ -219,6 +219,19 @@ const InternalWangEditorSandbox = memo<
       }
     }
 
+    function getZoom() {
+      let ratio = 0,
+        screen = window.screen,
+        ua = navigator.userAgent.toLowerCase();
+      ratio = window.devicePixelRatio;
+
+      if (ratio) {
+        ratio = Math.round(ratio * 100);
+      }
+
+      return ratio;
+    }
+
     /**
      * render
      * @description 渲染内容
@@ -298,6 +311,10 @@ const InternalWangEditorSandbox = memo<
               padding: 0;
             }
 
+            body {
+              zoom: ${100 / Number(getZoom())};
+            }
+            
             html.editor {
               width: 100%;
               height: 100%;

@@ -143,6 +143,19 @@ const InternalReactQuillSandbox = memo<
       });
     }
 
+    function getZoom() {
+      let ratio = 0,
+        screen = window.screen,
+        ua = navigator.userAgent.toLowerCase();
+      ratio = window.devicePixelRatio;
+
+      if (ratio) {
+        ratio = Math.round(ratio * 100);
+      }
+
+      return ratio;
+    }
+
     /**
      * useImperativeHandle
      * @description 向外暴漏的方法
@@ -194,6 +207,10 @@ const InternalReactQuillSandbox = memo<
             html, body {
               margin: 0;
               padding: 0;
+            }
+
+            body {
+              zoom: ${100 / Number(getZoom())};
             }
 
             html.editor {
