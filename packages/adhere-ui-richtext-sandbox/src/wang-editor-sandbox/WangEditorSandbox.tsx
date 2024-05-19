@@ -215,21 +215,18 @@ const InternalWangEditorSandbox = memo<
       wrap.innerHTML = props.value as string;
 
       if (wrapRef.current) {
-        wrapRef.current.style.height = `${document.documentElement.offsetHeight}px`;
+        wrapRef.current.style.height = `${document.documentElement.offsetHeight / getZoom()}px`;
       }
     }
 
     function getZoom() {
-      let ratio = 0,
-        screen = window.screen,
-        ua = navigator.userAgent.toLowerCase();
-      ratio = window.devicePixelRatio;
+      let ratio = window.devicePixelRatio;
 
       if (ratio) {
         ratio = Math.round(ratio * 100);
       }
 
-      return ratio;
+      return 100 / Number(ratio);
     }
 
     /**
@@ -312,7 +309,7 @@ const InternalWangEditorSandbox = memo<
             }
 
             body {
-              zoom: ${100 / Number(getZoom())};
+              zoom: ${getZoom()};
             }
             
             html.editor {
