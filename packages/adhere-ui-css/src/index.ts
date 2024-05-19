@@ -103,6 +103,13 @@ const defaultThemeMap = new Map<string, any>([
       value: 'solid',
     },
   ],
+  // DPR
+  [
+    'adhere-device-pixel-ratio',
+    {
+      value: window.devicePixelRatio,
+    },
+  ],
 ]);
 
 export interface Init {
@@ -190,7 +197,7 @@ const init: Init = (theme, wrapperEL = document.documentElement) => {
     });
 
     // 定义导出变量
-    exportObj[`set${varUpperCamelCaseName}`] = (value) => {
+    exportObj[`set${varUpperCamelCaseName}`] = (value: any) => {
       cssVars[varCamelCaseName] = value;
     };
 
