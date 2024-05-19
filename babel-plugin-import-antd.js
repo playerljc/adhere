@@ -29,7 +29,7 @@ const es = [
     {
       libraryName: '@baifendian/adhere-ui-richtext-sandbox',
       libraryDirectory: 'es',
-      style: true,
+      style: false,
     },
     'adhere-ui-richtext-sandbox',
   ],
@@ -76,7 +76,7 @@ const lib = [
     {
       libraryName: '@baifendian/adhere-ui-richtext-sandbox',
       libraryDirectory: 'lib',
-      style: true,
+      style: false,
     },
     'adhere-ui-richtext-sandbox',
   ],
