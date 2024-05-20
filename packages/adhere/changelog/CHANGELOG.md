@@ -117,6 +117,7 @@
   - 加入扇形菜单
 * **adhere-util-resource**
   - dict.moment.config.js中加入时间国际化formats和本地化formats
+  - dict.locals.config.js加入可以动态添加和删除的方法
 * **adhere-ui-datedisplay**
   - 加入本地化显示的组件
   - 优化内部函数，去掉一些无用函数
