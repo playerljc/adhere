@@ -2,7 +2,11 @@ import { ConfigProvider } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
+import {
+  AdapterScreen,
+  ConfigProvider as AdhereConfigProvider,
+  Resource,
+} from '@baifendian/adhere';
 
 import { antdThemeToCssVariable } from './theme';
 
@@ -23,6 +27,8 @@ export default ({
   theme = {},
   curTheme = 'default',
 }) => {
+  AdapterScreen.detectZoom();
+
   ReactDOM.createRoot(document.getElementById('app')).render(
     <ConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
       <AdhereConfigProvider
