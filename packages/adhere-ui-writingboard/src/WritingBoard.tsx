@@ -409,15 +409,23 @@ const InternalWritingBoard = memo<
 
     /**
      * devicePointToCanvasPoint
-     * @param clientX
-     * @param clientY
+     * @param {{clientX: number; clientY: number}}
+     * @return {Point}
      */
-    function devicePointToCanvasPoint({ clientX, clientY }): Point {
+    function devicePointToCanvasPoint({
+      clientX,
+      clientY,
+    }: {
+      clientX: number;
+      clientY: number;
+    }): Point {
       const { x, y } = canvasRef?.current?.getBoundingClientRect()!;
 
+      const zoom = Util.getZoom();
+
       return {
-        x: clientX - x,
-        y: clientY - y,
+        x: clientX / zoom - x,
+        y: clientY / zoom - y,
       };
     }
 

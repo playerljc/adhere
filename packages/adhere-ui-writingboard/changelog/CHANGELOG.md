@@ -4,6 +4,7 @@
 
 2023-08-08
 
+* 修复math中的clientToCtxPoint方法适配zoom
 * 同步adhere-ui-flexlayout的修改
 
 # 1.0.2

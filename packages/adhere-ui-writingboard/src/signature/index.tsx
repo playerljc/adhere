@@ -56,7 +56,7 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
                         if (isEmpty) {
                           if (onChange) {
                             onChange('');
-                            dialog.close();
+                            dialog?.close();
                           }
 
                           return;
@@ -66,7 +66,7 @@ const InternalSignature = memo<PropsWithoutRef<SignatureProps> & RefAttributes<S
 
                         if (onChange) {
                           onChange(base64);
-                          dialog.close();
+                          dialog?.close();
                         }
                       }}
                     >
