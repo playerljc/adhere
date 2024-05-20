@@ -186,7 +186,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     return resultVal < elSize ? elSize : resultVal;
   }
 
-  function onMouseenter(e) {
+  function onMouseenter(e: any) {
     el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
 
     isOut.current = false;
@@ -210,7 +210,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
   }
 
-  function onMouseup(e) {
+  function onMouseup(e: any) {
     el.current?.classList.add(`${selectorPrefix}-${getResizeClass()}`);
 
     if (isDown.current) {
@@ -228,7 +228,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
   }
 
-  function onMouseleave(e) {
+  function onMouseleave(e: any) {
     if (isDown.current) {
       isDown.current = false;
 
@@ -244,7 +244,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
   }
 
-  function onMousemove(e) {
+  function onMousemove(e: { [x: string]: any }) {
     if (isEnter.current && isDown.current) {
       isMove.current = true;
 
@@ -259,7 +259,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
           ? fixedValue.current + changeVal.current
           : fixedValue.current - changeVal.current;
 
-      let targetValue;
+      let targetValue: number = 0;
 
       const maxSize = getMaxSize();
 
@@ -283,7 +283,7 @@ const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
     }
   }
 
-  function onMouseout(e) {
+  function onMouseout(e: any) {
     isOut.current = true;
 
     if (!isDown.current) {
