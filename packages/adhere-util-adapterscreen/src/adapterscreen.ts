@@ -264,14 +264,14 @@ const adapterScreen: IAdapterScreen = {
       );
   },
   detectZoom() {
-    let ratio = 0,
-      screen = window.screen,
-      ua = navigator.userAgent.toLowerCase();
+    let ratio = 0;
+
     if (window.devicePixelRatio !== undefined) {
       ratio = window.devicePixelRatio;
     } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
       ratio = window.outerWidth / window.innerWidth;
     }
+
     if (ratio) {
       ratio = Math.round(ratio * 100);
     }
