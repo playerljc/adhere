@@ -183,7 +183,7 @@ declare const DomUtil: {
      * @param handler
      * @param capture
      */
-    addClickListener: (el: HTMLElement, handler: (e: any) => {}, capture?: boolean) => Function;
+    addClickListener: (el: HTMLElement, handler: (e) => {}, capture?: boolean) => Function;
     /**
      * clickInRange
      * @description 再点击区域内执行点击操作，超出的区域执行bodyClickHandler的操作
@@ -261,5 +261,6 @@ declare const DomUtil: {
         scaleY: number;
         rotate: number;
     };
+    getZoom(): number;
 };
 export default DomUtil;

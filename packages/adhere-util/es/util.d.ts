@@ -268,6 +268,7 @@ declare const _default: {
         scaleY: number;
         rotate: number;
     };
+    getZoom(): number;
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

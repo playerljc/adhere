@@ -712,6 +712,15 @@ const DomUtil = {
       rotate: 0,
     };
   },
+  getZoom() {
+    let ratio = window.devicePixelRatio;
+
+    if (ratio) {
+      ratio = Math.round(ratio * 100);
+    }
+
+    return 100 / Number(ratio);
+  },
   /**--------------------------dom-end-------------------------**/
 };
 

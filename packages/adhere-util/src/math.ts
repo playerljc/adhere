@@ -1,3 +1,4 @@
+import Dom from './dom';
 import { ICircle, IPoint } from './types';
 
 export default {
@@ -81,9 +82,11 @@ export default {
    */
   clientToCtxPoint({ event, rect }: { event: MouseEvent; rect: DOMRect }): IPoint {
     const { clientX, clientY } = event;
+    const zoom = Dom.getZoom();
+
     return {
-      x: clientX - rect.left,
-      y: clientY - rect.top,
+      x: clientX / zoom - rect.left,
+      y: clientY / zoom - rect.top,
     };
   },
   /**
