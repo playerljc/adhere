@@ -1,3 +1,7 @@
+import arEGMobile from 'antd-mobile/es/locales/ar-SA';
+import enUSMobile from 'antd-mobile/es/locales/en-US';
+import ptPTMobile from 'antd-mobile/es/locales/pt-BR';
+import zhCNMobile from 'antd-mobile/es/locales/zh-CN';
 import arEG from 'antd/locale/ar_EG';
 import enUS from 'antd/locale/en_US';
 import ptPT from 'antd/locale/pt_PT';
@@ -42,6 +46,22 @@ export default {
     Dict.handlers.RemoveLocalsAntd = () => (key) => {
       delete Dict.value.LocalsAntd.value[key];
       Dict.value.LocalsAntd.refresh();
+    };
+
+    // AntDesignMobile的国际化资源
+    Dict.handlers.LocalsAntMobile = () => ({
+      zh_CN: zhCNMobile,
+      pt_PT: ptPTMobile,
+      en_US: enUSMobile,
+      ar_EG: arEGMobile,
+    });
+    Dict.handlers.AddLocalsAntMobile = () => (key, value) => {
+      Dict.value.LocalsAntMobile.value[key] = value;
+      Dict.value.LocalsAntMobile.refresh();
+    };
+    Dict.handlers.RemoveLocalsAntMobile = () => (key) => {
+      delete Dict.value.LocalsAntMobile.value[key];
+      Dict.value.LocalsAntMobile.refresh();
     };
 
     // dayjs国际化
