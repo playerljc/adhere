@@ -6,6 +6,8 @@ import Custom from './Custom';
 import Form from './Form';
 import Normal from './Normal';
 
+import '@baifendian/adhere-e2e/es/index.less';
+
 import './index.less';
 
 e2e.Mobile({

@@ -13,6 +13,8 @@ import P7 from './p7';
 import P8 from './p8';
 import P9 from './p9';
 
+import '@baifendian/adhere-e2e/es/index.less';
+
 e2e.Mobile({
   children: <P10 />,
 });

@@ -73,6 +73,8 @@ import TimeModal from './TimeModal/TimeModal';
 import TimeModalTimestampValueHOC from './TimeModal/TimestampValueHoc';
 import TimePopup from './TimePopup/TimePopup';
 
+import '@baifendian/adhere-e2e/es/index.less';
+
 e2e.Mobile({
   children: <ModalTrigger />,
 });
