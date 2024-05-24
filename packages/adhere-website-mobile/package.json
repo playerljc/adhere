@@ -14,8 +14,8 @@
   "license": "ISC",
   "author": "playerljc",
   "scripts": {
-    "buildapp:dev": "cross-env environment=dev mode=production publicPath=adheremobile router=hash ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
-    "buildapp:pe": "cross-env environment=pe mode=production publicPath=adheremobile router=hash ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildapp:dev": "cross-env environment=dev mode=production mobile=true publicPath=adheremobile router=hash ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildapp:pe": "cross-env environment=pe mode=production mobile=true publicPath=adheremobile router=hash ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
@@ -24,7 +24,7 @@
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "startapp": "cross-env environment=dev mode=development publicPath=adheremobile router=hash ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "startapp": "cross-env environment=dev mode=development mobile=true publicPath=adheremobile router=hash ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
@@ -36,7 +36,7 @@
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {
-    "@ant-design/icons":"^5.2.6",
+    "@ant-design/icons": "^5.2.6",
     "@baifendian/adhere": "^2.10.28",
     "@baifendian/adhere-mock": "^2.10.28",
     "@ctsj/router": "^1.0.5",
@@ -48,7 +48,8 @@
     "mockjs": "^1.1.0",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-fastclick": "^3.0.2"
   },
   "devDependencies": {
     "@babel/runtime": "^7.23.1",

@@ -1,8 +1,15 @@
+import 'amfe-flexible';
+
 import { useUpdateEffect } from 'ahooks';
 import { App } from 'antd';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
+import {
+  StyleProvider,
+  legacyLogicalPropertiesTransformer,
+  px2remTransformer,
+} from '@ant-design/cssinjs';
 import {
   AdapterScreen,
   ConfigProvider as AdhereConfigProvider,
@@ -66,6 +73,15 @@ function Application() {
     locale: Resource.Dict.value.LocalsAntd.value[lang],
   };
 
+  const styleProviderProps = {
+    transformers: [
+      legacyLogicalPropertiesTransformer,
+      px2remTransformer({
+        rootValue: 192,
+      }),
+    ],
+  };
+
   useUpdateEffect(() => {
     initMessageDialog({ ...configProviderProps });
   });
@@ -84,36 +100,38 @@ function Application() {
 
   return (
     <ConfigProvider {...configProviderProps}>
-      <App className={styles.App}>
-        <AdhereConfigProvider
-          theme={{
-            colorPrimary,
-            colorTextBase: themeValue.mapToken.colorTextBase,
-            colorBgBase: themeValue.mapToken.colorBgBase,
-            colorBorderBase: themeValue.mapToken.colorBorder,
-            colorSplitBase: themeValue.mapToken.colorSplit,
-            fontSizeBase: `${themeValue.mapToken.fontSize}px`,
-            borderRadiusBase: `${themeValue.mapToken.borderRadius}px`,
-            lineWidth: `${themeValue.mapToken.lineWidth}px`,
-            lintType: themeValue.mapToken.lineType,
-          }}
-          intl={{
-            lang,
-            locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
-              pre[cur.code] = cur.module;
-              return pre;
-            }, {}),
-          }}
-          onIntlInit={() => {
-            Router().then((routerConfig) => {
-              RouterConfig = routerConfig;
-              render();
-            });
-          }}
-        >
-          {() => RouterConfig}
-        </AdhereConfigProvider>
-      </App>
+      <StyleProvider {...styleProviderProps}>
+        <App className={styles.App}>
+          <AdhereConfigProvider
+            theme={{
+              colorPrimary,
+              colorTextBase: themeValue.mapToken.colorTextBase,
+              colorBgBase: themeValue.mapToken.colorBgBase,
+              colorBorderBase: themeValue.mapToken.colorBorder,
+              colorSplitBase: themeValue.mapToken.colorSplit,
+              fontSizeBase: `${themeValue.mapToken.fontSize}px`,
+              borderRadiusBase: `${themeValue.mapToken.borderRadius}px`,
+              lineWidth: `${themeValue.mapToken.lineWidth}px`,
+              lintType: themeValue.mapToken.lineType,
+            }}
+            intl={{
+              lang,
+              locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
+                pre[cur.code] = cur.module;
+                return pre;
+              }, {}),
+            }}
+            onIntlInit={() => {
+              Router().then((routerConfig) => {
+                RouterConfig = routerConfig;
+                render();
+              });
+            }}
+          >
+            {() => RouterConfig}
+          </AdhereConfigProvider>
+        </App>
+      </StyleProvider>
     </ConfigProvider>
   );
 }

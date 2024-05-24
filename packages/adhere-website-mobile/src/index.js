@@ -1,3 +1,7 @@
+import 'amfe-flexible';
+
+import '@/lib/Mobile';
+
 import { App } from 'antd';
 import { ConfigProvider as AntdMobileConfigProvider } from 'antd-mobile';
 import 'antd-mobile/es/global';
@@ -5,6 +9,11 @@ import zhCN from 'antd-mobile/es/locales/zh-CN';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import {
+  StyleProvider,
+  legacyLogicalPropertiesTransformer,
+  px2remTransformer,
+} from '@ant-design/cssinjs';
 import {
   AdapterScreen,
   ConfigProvider as AdhereConfigProvider,
@@ -36,30 +45,44 @@ let direction;
  * @constructor
  */
 function Application() {
+  const styleProviderProps = {
+    transformers: [
+      legacyLogicalPropertiesTransformer,
+      px2remTransformer({
+        rootValue: 37.5,
+      }),
+    ],
+  };
+
   return (
     <AntdConfigProvider>
-      <App className={styles.App}>
-        <AntdMobileConfigProvider locale={zhCN}>
-          <AdhereConfigProvider
-            theme={{}}
-            intl={{
-              lang,
-              locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
-                pre[cur.code] = cur.module;
-                return pre;
-              }, {}),
-            }}
-            onIntlInit={() => {
-              Router().then((routerConfig) => {
-                RouterConfig = routerConfig;
-                render();
-              });
-            }}
-          >
-            {() => RouterConfig}
-          </AdhereConfigProvider>
-        </AntdMobileConfigProvider>
-      </App>
+      <StyleProvider {...styleProviderProps}>
+        <App className={styles.App}>
+          <AntdMobileConfigProvider locale={zhCN}>
+            <AdhereConfigProvider
+              theme={{}}
+              intl={{
+                lang,
+                locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce(
+                  (pre, cur) => {
+                    pre[cur.code] = cur.module;
+                    return pre;
+                  },
+                  {},
+                ),
+              }}
+              onIntlInit={() => {
+                Router().then((routerConfig) => {
+                  RouterConfig = routerConfig;
+                  render();
+                });
+              }}
+            >
+              {() => RouterConfig}
+            </AdhereConfigProvider>
+          </AntdMobileConfigProvider>
+        </App>
+      </StyleProvider>
     </AntdConfigProvider>
   );
 }
