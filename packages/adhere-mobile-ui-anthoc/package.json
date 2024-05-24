@@ -30,7 +30,7 @@
     "postbuildpackage": "node ./script/style.js",
     "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
-    "e2e": "cross-env environment=dev mode=development ctbuild startapp -c ../adhere-e2e/ctbuild.e2e.config.js --define alias=@,evnVars=true"
+    "e2e": "cross-env mobile=true e2e"
   },
   "dependencies": {
     "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",

@@ -36,6 +36,7 @@ function getConfig({ webpackConfig, webpack, plugins }) {
 
   webpackConfig.plugins.shift();
 
+  // html文件是当前目录下的index.html
   webpackConfig.plugins.push(
     new HtmlWebpackPlugin({
       title: '',
@@ -83,6 +84,19 @@ function getConfig({ webpackConfig, webpack, plugins }) {
 
   webpackConfig.module.rules[3].include.push(path.join(__dirname, '../../packages'));
 
+  // 寻找使用了postcss-loader的插件修改配置文件地址
+  webpackConfig.module.rules
+    .filter((_rule) => {
+      return !!(_rule.use && Array.isArray(_rule.use) && _rule.use.length);
+    })
+    .forEach((_rule) => {
+      _rule.use
+        .filter((_use) => _use.loader === 'postcss-loader')
+        .forEach((_use) => {
+          _use.options.postcssOptions.config = path.join(__dirname, 'postcss.config.js');
+        });
+    });
+
   // 暗黑主题
   // const nodeModuleLessRule = webpackConfig.module.rules[webpackConfig.module.rules.length - 1];
   // nodeModuleLessRule.use[3].options.lessOptions.modifyVars = {
@@ -123,9 +137,30 @@ function getConfig({ webpackConfig, webpack, plugins }) {
         {
           libraryName: '@baifendian/adhere-ui-anthoc',
           libraryDirectory: 'es',
-          style: false,
+          transformToDefaultImport: true,
+          style: true,
         },
         'adhere-ui-anthoc',
+      ],
+      [
+        'import',
+        {
+          libraryName: '@baifendian/adhere-mobile-ui-anthoc',
+          libraryDirectory: 'es',
+          transformToDefaultImport: true,
+          style: true,
+        },
+        'adhere-mobile-ui-anthoc',
+      ],
+      [
+        'import',
+        {
+          libraryName: '@baifendian/adhere-ui-richtext-sandbox',
+          libraryDirectory: 'es',
+          transformToDefaultImport: true,
+          style: true,
+        },
+        'adhere-ui-richtext-sandbox',
       ],
       [
         'import',
@@ -137,16 +172,6 @@ function getConfig({ webpackConfig, webpack, plugins }) {
         },
         '@ant-design/icons',
       ],
-
-      [
-        'import',
-        {
-          libraryName: 'antd-mobile',
-          libraryDirectory: 'es/components',
-          style: false,
-        },
-        'ant-mobile',
-      ],
       [
         'import',
         {
@@ -156,6 +181,15 @@ function getConfig({ webpackConfig, webpack, plugins }) {
           style: false,
         },
         'antd-mobile-icons',
+      ],
+      [
+        'import',
+        {
+          libraryName: 'antd-mobile',
+          libraryDirectory: 'es/components',
+          style: false,
+        },
+        'ant-mobile',
       ],
     );
   }
@@ -314,6 +348,7 @@ module.exports = {
 
     const srcPath = path.join(cwd, 'src');
 
+    // 主入口文件是每个package的e2e/index.jsx
     webpackConfig.entry.index = path.join(e2ePath, 'index.jsx');
 
     webpackConfig.module.rules[0].include = [e2ePath, srcPath];

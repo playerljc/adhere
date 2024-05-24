@@ -14,6 +14,8 @@ import Normal from './Normal';
 import Remote from './Remote';
 import Selection from './Selection';
 
+import '@baifendian/adhere-e2e/es/index.less';
+
 DictConfig();
 
 e2e.Mobile({
