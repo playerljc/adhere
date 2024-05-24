@@ -96,7 +96,7 @@ function render() {
 }
 
 (function () {
-  AdapterScreen.detectZoom();
+  // AdapterScreen.detectZoom();
 
   // 配置字典
   DictConfig();
