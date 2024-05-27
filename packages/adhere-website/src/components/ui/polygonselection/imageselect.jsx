@@ -193,7 +193,7 @@ export default () => {
                     key: 'option',
                     render: (text, record) => {
                       return (
-                        <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
+                        <div className={styles.OptionWrapper}>
                           <a
                             href="#"
                             onClick={() => {

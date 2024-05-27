@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { ConfigProvider, Util } from '@baifendian/adhere';
 
 import { useMobileCodeText } from '@/hooks';
 import PlayGroundPage, {
@@ -9,6 +11,8 @@ import PlayGroundPage, {
 } from '@/lib/PlaygroundPage';
 
 export default () => {
+  const { media } = useContext(ConfigProvider.Context);
+
   const normalIndexJSCodeText = useMobileCodeText('prsl/examples/Normal/index.jsx');
   const normalIndexLessCodeText = useMobileCodeText('prsl/examples/Normal/index.less');
   const localIndexJSCodeText = useMobileCodeText('prsl/examples/Local/index.jsx');
@@ -78,14 +82,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: normalIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: normalIndexLessCodeText,
           },
@@ -110,14 +114,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: localIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: localIndexLessCodeText,
           },
@@ -142,14 +146,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: remoteIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: remoteIndexLessCodeText,
           },
@@ -174,14 +178,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: noPagingIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: noPagingIndexLessCodeText,
           },
@@ -206,14 +210,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: searchHistoryIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: searchHistoryIndexLessCodeText,
           },
@@ -238,14 +242,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: extraIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: extraIndexLessCodeText,
           },
@@ -270,14 +274,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: customToolbarItemIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: customToolbarItemIndexLessCodeText,
           },
@@ -302,14 +306,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: customSearchItemIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: customSearchItemIndexLessCodeText,
           },
@@ -334,14 +338,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: apiIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: apiIndexLessCodeText,
           },
@@ -366,63 +370,63 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: listIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: listIndexLessCodeText,
           },
           {
             key: 'CardList.jsx',
             title: 'CardList.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: cardListJSCodeText,
           },
           {
             key: 'CardList.less',
             title: 'CardList.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: cardListLessCodeText,
           },
           {
             key: 'GTList.jsx',
             title: 'GTList.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: gtListJSCodeText,
           },
           {
             key: 'GTMList.jsx',
             title: 'GTMList.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: gtmListJSCodeText,
           },
           {
             key: 'GTMList.less',
             title: 'GTMList.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: gtmListLessCodeText,
           },
           {
             key: 'TopicsList.jsx',
             title: 'TopicsList.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: topicsListJSCodeText,
           },
           {
             key: 'TopicsList.less',
             title: 'TopicsList.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: topicsListLessCodeText,
           },
@@ -447,14 +451,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: selectionIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: selectionIndexLessCodeText,
           },
@@ -479,14 +483,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: dndIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: dndIndexLessCodeText,
           },
@@ -511,14 +515,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: actionSheetIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: actionSheetIndexLessCodeText,
           },
@@ -543,14 +547,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: swipeActionIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: swipeActionIndexLessCodeText,
           },
@@ -575,14 +579,14 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: gridListIndexJSCodeText,
           },
           {
             key: 'index.less',
             title: 'index.less',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: gridListIndexLessCodeText,
           },

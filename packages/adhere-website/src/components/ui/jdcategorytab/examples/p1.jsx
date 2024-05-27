@@ -111,7 +111,7 @@ export default () => {
               conditional={index % 2 === 0}
               noMatch={() => (
                 <Table
-                  style={{ padding: 20 }}
+                  className={styles.Table}
                   columns={columns}
                   dataSource={tableData}
                   pagination={false}
@@ -120,7 +120,7 @@ export default () => {
             >
               {() => (
                 <List
-                  style={{ padding: 20 }}
+                  className={styles.Table}
                   itemLayout="horizontal"
                   dataSource={listData}
                   renderItem={(item) => (

@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { Space, StickupLayout } from '@baifendian/adhere';
 
 import '../index.less';
+import styles from './examples.less';
 
 const { Item } = StickupLayout;
 
@@ -47,7 +48,7 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <div style={{ height: 500, overflow: 'hidden' }}>
+      <div className={styles.Wrapper}>
         <StickupLayout ref={ref}>
           <Item
             title={<span className="title">基本参数</span>}

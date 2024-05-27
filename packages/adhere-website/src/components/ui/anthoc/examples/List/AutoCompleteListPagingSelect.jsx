@@ -1,7 +1,10 @@
 import Mock from 'mockjs';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { List } from '@baifendian/adhere-ui-anthoc';
+
+import styles from '../examples.less';
 
 const data = Array.from({ length: 100 }).map(() => {
   const label = Mock.mock('@cname');
@@ -18,6 +21,8 @@ const data = Array.from({ length: 100 }).map(() => {
 export default () => {
   const [value, setValue] = useState([]);
 
+  const { media } = useContext(ConfigProvider.Context);
+
   function loadData(page, limit, _kw) {
     return new Promise((resolve) => {
       const result = !_kw ? [] : data.filter(({ label }) => label.indexOf(_kw) !== -1);
@@ -33,8 +38,8 @@ export default () => {
     <List.AutoCompleteListPagingSelect
       mode="multiple"
       placeholder="AutoCompleteListPagingSelect"
-      style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      className={styles.FieldWrapper}
+      dropdownStyle={{ maxHeight: Util.pxToRem(300, media.designWidth, media), overflow: 'auto' }}
       value={value}
       onChange={setValue}
       pagingProps={{

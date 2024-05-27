@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react';
 
 import { GlobalIndicator, Space } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   let handler = null;
 
@@ -14,7 +16,8 @@ export default () => {
     <div>
       <div
         ref={ref}
-        style={{ position: 'relative', width: 200, height: 200, wordBreak: 'break-all' }}
+        className={styles.Wrapper}
+        style={{ position: 'relative', wordBreak: 'break-all' }}
       >
         In the process of internal desktop applications development, many different design specs and
         implementations would be involved, which might cause designers and developers difficulties

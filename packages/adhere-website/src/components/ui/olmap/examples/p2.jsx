@@ -4,14 +4,16 @@ import React, { useRef } from 'react';
 import { OLMap } from '@baifendian/adhere';
 import XinBei from '@baifendian/adhere-util-resource/resource/gis/geoJson/China/320000/320400.json';
 
+import styles from './examples.less';
+
 export default () => {
   const xbqRef = useRef();
 
   return (
-    <div style={{ width: '100%', height: 500 }}>
+    <div className={styles.Wrapper}>
       <Button
         type="primary"
-        style={{ marginBottom: 20 }}
+        className={styles.Button}
         onClick={() => {
           xbqRef.current.addMainGeoJSONLayer({
             geoJSONStyle: {

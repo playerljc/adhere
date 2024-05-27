@@ -3,8 +3,10 @@ import React from 'react';
 
 import { SplitLayout } from '@baifendian/adhere';
 
+import styles from './trblc.less';
+
 export default () => (
-  <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+  <div className={styles.Wrapper}>
     <SplitLayout.TRBLC.TBLCRSplitLayout
       style={{ height: '100%' }}
       gutter={20}

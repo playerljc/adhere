@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Checkbox } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
+
+import styles from '../examples.less';
 
 export default () => {
   const [options, setOptions] = useState([]);
 
   const [value, setValue] = useState([]);
 
+  const { media } = useContext(ConfigProvider.Context);
+
   return (
     <Checkbox.AutoCompleteCheckAllCheckboxSelect
       placeholder="AutoCompleteCheckAllCheckboxSelect111"
-      style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      className={styles.FieldWrapper}
+      dropdownStyle={{ maxHeight: Util.pxToRem(300, media.designWidth, media), overflow: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}

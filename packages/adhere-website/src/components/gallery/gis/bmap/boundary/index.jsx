@@ -344,7 +344,7 @@ function Boundary() {
         <div className={styles.Map} ref={ref} />
         <div className={styles.CityOptionsWrap}>
           <Select
-            style={{ width: 150 }}
+            className={styles.SelectWrapper}
             value={city}
             onChange={(cityCode) => {
               indicatorRef.current = GlobalIndicator.show(ref.current);

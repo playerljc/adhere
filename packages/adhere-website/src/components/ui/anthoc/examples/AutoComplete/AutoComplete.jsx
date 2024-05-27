@@ -2,6 +2,8 @@ import React from 'react';
 
 import { AutoComplete } from '@baifendian/adhere-ui-anthoc';
 
+import styles from './index.less';
+
 export default () => (
   <AutoComplete
     // value={value}
@@ -13,7 +15,8 @@ export default () => (
         value: 97 + _index,
       };
     })}
-    style={{ width: 200 }}
+    // style={{ width: 200 }}
+    className={styles.Wrapper}
     onSelect={(v) => {
       console.log('onSelect', v);
     }}

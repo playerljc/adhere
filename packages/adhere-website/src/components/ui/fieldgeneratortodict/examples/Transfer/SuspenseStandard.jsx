@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { FieldGeneratorToDict } from '@baifendian/adhere';
 
+import styles from '../examples.less';
+
 export default () => {
   const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.TransferDynamic.SuspenseStandard}`;
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
@@ -27,7 +29,7 @@ export default () => {
 
   return (
     <DictComponent
-      style={{ width: 600 }}
+      className={styles.DictComponent2}
       titles={['Source', 'Target']}
       targetKeys={targetKeys}
       selectedKeys={selectedKeys}

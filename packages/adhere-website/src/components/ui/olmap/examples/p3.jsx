@@ -3,11 +3,13 @@ import React, { useRef } from 'react';
 
 import { OLMap } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const changeRef = useRef();
 
   return (
-    <div style={{ width: '100%', height: 500 }}>
+    <div className={styles.Wrapper}>
       <Radio.Group
         defaultValue="OSM"
         size="large"

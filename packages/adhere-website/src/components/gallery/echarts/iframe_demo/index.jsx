@@ -2,6 +2,8 @@ import React from 'react';
 
 import Playground from '@/lib/Playground';
 
+import styles from './index.less';
+
 export default () => (
   <Playground
     mode="code"
@@ -179,7 +181,7 @@ export default () => (
     <iframe
       src="https://echarts.apache.org/examples/zh/editor.html?c=area-stack-gradient"
       frameBorder={false}
-      style={{ width: '100%', height: 296, border: 0 }}
+      className={styles.Wrapper}
     />
   </Playground>
 );

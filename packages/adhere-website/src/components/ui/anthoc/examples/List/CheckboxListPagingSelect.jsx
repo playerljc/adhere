@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { Avatar, List } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../examples.less';
+
 const data = Array.from({ length: 100 }).map(() => {
   const label = Mock.mock('@cname');
   const value = Mock.mock('@guid');
@@ -30,7 +32,7 @@ export default () => {
   return (
     <List.ListPagingSelect
       mode="multiple"
-      style={{ width: 600 }}
+      className={styles.FieldWrapper}
       placeholder="CheckboxListPagingSelect"
       value={value}
       onChange={setValue}

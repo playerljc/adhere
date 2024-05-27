@@ -2,8 +2,10 @@ import React from 'react';
 
 import ColumnResizeTable from '../columnResizeTable';
 
+import styles from './examples.less';
+
 export default () => (
-  <div style={{ display: 'flex', height: 700 }}>
+  <div className={styles.Wrapper}>
     <ColumnResizeTable
       style={{ height: '100%' }}
       isShowExpandSearch

@@ -4,6 +4,8 @@ import { Cascader } from '@baifendian/adhere-ui-anthoc';
 
 import { City, County, Province } from '@/mock/pcc';
 
+import styles from './index.less';
+
 export default () => {
   const [value, setValue] = useState([]);
 
@@ -43,7 +45,7 @@ export default () => {
 
   return (
     <Cascader.AsyncCascaderMulti
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       placeholder="AsyncCascaderMulti"
       value={value}
       onChange={setValue}

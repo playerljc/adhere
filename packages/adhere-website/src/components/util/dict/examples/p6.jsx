@@ -5,6 +5,8 @@ import { Dict, Space } from '@baifendian/adhere';
 
 import pca from '@/components/util/dict/pca.json';
 
+import styles from './examples.less';
+
 const { Option } = Select;
 
 export default () => {
@@ -41,19 +43,19 @@ export default () => {
     return (
       <div>
         <Space.Group direction="horizontal">
-          <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
+          <Select className={styles.Wrapper} value={p} onChange={(e) => setP(e)}>
             {pArr.map((t) => (
               <Option key={t.code}>{t.value}</Option>
             ))}
           </Select>
 
-          <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
+          <Select className={styles.Wrapper} value={c} onChange={(e) => setC(e)}>
             {cArr.map((t) => (
               <Option key={t.code}>{t.value}</Option>
             ))}
           </Select>
 
-          <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
+          <Select className={styles.Wrapper} value={a} onChange={(e) => setA(e)}>
             {aArr.map((t) => (
               <Option key={t.code}>{t.value}</Option>
             ))}

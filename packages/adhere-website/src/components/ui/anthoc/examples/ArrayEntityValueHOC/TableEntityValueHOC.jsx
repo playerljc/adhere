@@ -1,8 +1,9 @@
 import { Button } from 'antd';
 import Mock from 'mockjs';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useImmer } from 'use-immer';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { ArrayEntityValueHOC, Form, Table } from '@baifendian/adhere-ui-anthoc';
 
 const dataSource = Array.from({ length: 100 }).map(() => {
@@ -28,6 +29,8 @@ export default () => {
     options: [],
     value: [],
   });
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {}, []);
 
@@ -153,7 +156,10 @@ export default () => {
           <Table.AutoCompleteTableSelect
             // mode="multiple"
             placeholder="AutoCompleteTableSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value.options}
             loadData={(_kw) =>
               new Promise((resolve) => {

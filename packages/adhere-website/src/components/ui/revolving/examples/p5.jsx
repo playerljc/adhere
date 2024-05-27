@@ -2,8 +2,10 @@ import React from 'react';
 
 import { Revolving } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => (
-  <Revolving direction="bottom" speed={1000 * 3} style={{ height: 50 }}>
+  <Revolving direction="bottom" speed={1000 * 3} className={styles.Wrapper}>
     <Revolving.Item>Slide 1</Revolving.Item>
     <Revolving.Item>Slide 2</Revolving.Item>
     <Revolving.Item>Slide 3</Revolving.Item>

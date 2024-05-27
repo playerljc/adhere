@@ -4,11 +4,13 @@ import { FlexLayout, Space } from '@baifendian/adhere';
 
 import FormItemWrap from '../../FormItemWrap';
 
+import styles from './base.less';
+
 const { ScrollLayout } = FlexLayout;
 
 export default () => {
   return (
-    <div style={{ height: 500 }}>
+    <div className={styles.Wrapper2}>
       <ScrollLayout scrollY>
         <Space.Group direction="vertical">
           {Array.from({ length: 20 })

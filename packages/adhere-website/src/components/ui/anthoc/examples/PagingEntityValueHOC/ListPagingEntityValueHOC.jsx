@@ -1,7 +1,8 @@
 import { Avatar, Button } from 'antd';
 import Mock from 'mockjs';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Form, List, PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 
 const data = Array.from({ length: 100 }).map(() => {
@@ -29,6 +30,8 @@ export default () => {
       });
     });
   }
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {}, []);
 
@@ -191,7 +194,10 @@ export default () => {
           <List.AutoCompleteListPagingSelect
             mode="multiple"
             placeholder="AutoCompleteListPagingSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             pagingProps={{
               loadData,
               defaultLimit: 5,

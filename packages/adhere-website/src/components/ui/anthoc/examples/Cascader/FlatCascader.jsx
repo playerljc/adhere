@@ -4,6 +4,8 @@ import { Cascader } from '@baifendian/adhere-ui-anthoc';
 
 import { City, County, Province } from '@/mock/pcc';
 
+import styles from './index.less';
+
 const treeData = [
   ...Province.map((t) => ({
     title: t.name,
@@ -48,7 +50,7 @@ export default () => {
 
   return (
     <Cascader.CascaderMulti
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       value={value}
       placeholder="Please select"
       onChange={onChange}

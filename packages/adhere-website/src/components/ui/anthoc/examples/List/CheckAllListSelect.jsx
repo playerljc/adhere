@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { List } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../examples.less';
+
 const data = [
   {
     title: 'Ant Design Title 1',
@@ -27,7 +29,7 @@ export default () => {
 
   return (
     <List.CheckAllListSelect
-      style={{ width: 600 }}
+      className={styles.FieldWrapper}
       placeholder="List"
       value={value}
       onChange={setValue}

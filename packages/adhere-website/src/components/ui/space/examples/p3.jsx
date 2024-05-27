@@ -2,9 +2,11 @@ import React from 'react';
 
 import { Space } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => (
   <div>
-    <div style={{ display: 'flex', alignItems: 'center', height: 15 }}>
+    <div className={styles.Wrapper}>
       <a>编辑</a>
       <Space direction="horizontal" size={10} />
       <a>查看</a>

@@ -3,6 +3,8 @@ import React from 'react';
 
 import { ImageLazy } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const listData = [];
 
 for (let i = 0; i < 6; i++) {
@@ -32,7 +34,7 @@ export default () => {
                 alt: 'logo',
                 targetSrc: 'https://dss2.bdstatic.com/8_V1bjqh_Q23odCf/pacific/1989213037.jpg',
               }}
-              style={{ width: 272 }}
+              className={styles.Img}
             />
           }
         >

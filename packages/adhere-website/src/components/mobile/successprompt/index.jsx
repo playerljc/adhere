@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { ConfigProvider, Util } from '@baifendian/adhere';
 
 import { useMobileCodeText } from '@/hooks';
 import PlayGroundPage, {
@@ -11,6 +13,8 @@ export default () => {
   const indexCodeText = useMobileCodeText('successprompt/index.jsx');
   const p1CodeText = useMobileCodeText('successprompt/examples/p1.jsx');
   const p2CodeText = useMobileCodeText('successprompt/examples/p2.jsx');
+
+  const { media } = useContext(ConfigProvider.Context);
 
   function boxPanelConfig() {
     return [
@@ -31,21 +35,21 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: indexCodeText,
           },
           {
             key: 'p1.jsx',
             title: 'p1.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: p1CodeText,
           },
           {
             key: 'p2.jsx',
             title: 'p2.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: Util.pxToRem(500, media.designWidth, media) },
             theme: 'eclipse',
             codeText: p2CodeText,
           },

@@ -3,11 +3,13 @@ import React from 'react';
 
 import { Emitter } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   return (
     <>
       <Button
-        style={{ marginRight: 20 }}
+        className={styles.Button}
         onClick={() => {
           Emitter.on('type2', (params) => {
             alert(params);

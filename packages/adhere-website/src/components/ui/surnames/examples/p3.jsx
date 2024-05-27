@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 
 import { Space, Surnames } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 function getIndexesProps() {
   const startCharCode = 'A'.charCodeAt();
   const endCharCode = 'Z'.charCodeAt();
@@ -73,7 +75,7 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <div style={{ width: 300 }}>
+      <div className={styles.Wrapper}>
         <Surnames
           ref={ref}
           style={{ border: '1px solid #ccc' }}

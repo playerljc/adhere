@@ -5,6 +5,8 @@ import { MobileAutoComplete, MobileGlobalIndicator } from '@baifendian/adhere';
 
 import Book from '@/data';
 
+import styles from './examples.less';
+
 export default () => {
   const [searchDataSource, setSearchDataSource] = useState([]);
 
@@ -12,7 +14,7 @@ export default () => {
 
   return (
     <MobileAutoComplete
-      style={{ height: 500 }}
+      className={styles.Wrapper}
       value={value}
       loadData={(_kw) => {
         if (!_kw) {
@@ -38,10 +40,8 @@ export default () => {
             prefix={
               <Image
                 src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                style={{ borderRadius: 20 }}
+                className={styles.Image}
                 fit="cover"
-                width={40}
-                height={40}
               />
             }
             description={record.label}

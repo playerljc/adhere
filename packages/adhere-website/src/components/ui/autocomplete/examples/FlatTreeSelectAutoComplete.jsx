@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { AutoComplete, Util } from '@baifendian/adhere';
 
+import styles from '../../anthoc/examples/Cascader/index.less';
+
 const TREE_DATA = [
   {
     value: 'parent 1',
@@ -95,7 +97,7 @@ export default () => {
   return (
     <AutoComplete.TreeAutoComplete
       value={value}
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       defaultTreeData={flatDefaultTreeData}
       treeDataSimpleMode
       loadData={(_kw) => {

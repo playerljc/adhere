@@ -4,6 +4,8 @@ import { MultipleSelect } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
 
+import styles from '../examples.less';
+
 export default () => {
   const [options, setOptions] = useState([]);
 
@@ -11,7 +13,7 @@ export default () => {
 
   return (
     <MultipleSelect.AutoCompleteMultipleSelect
-      style={{ width: 600 }}
+      className={styles.FieldWrapper}
       placeholder="AutoCompleteMultipleSelect"
       value={value}
       options={options}

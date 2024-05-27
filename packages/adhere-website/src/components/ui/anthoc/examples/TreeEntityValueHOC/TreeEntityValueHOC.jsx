@@ -1,6 +1,7 @@
 import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Form, TreeEntityValueHOC, TreeSelect } from '@baifendian/adhere-ui-anthoc';
 
 import { City, County, Province } from '@/mock/pcc';
@@ -76,6 +77,8 @@ const flatTreeData = [
 export default () => {
   const [form] = Form.useForm();
 
+  const { media } = useContext(ConfigProvider.Context);
+
   useEffect(() => {}, []);
 
   return (
@@ -101,7 +104,10 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <TreeSelect
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(400, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="Please select"
             treeDefaultExpandAll
             treeData={treeData}
@@ -121,7 +127,10 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <TreeSelect.TreeMultiSelect
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(400, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="Please select"
             treeDefaultExpandAll
             treeData={treeData}
@@ -141,7 +150,10 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <TreeSelect.TreeCheckedShowParentSelect
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(400, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="Please select"
             treeDefaultExpandAll
             treeData={treeData}
@@ -161,7 +173,10 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <TreeSelect.TreeCheckedShowChildSelect
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(400, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="Please select"
             treeDefaultExpandAll
             treeData={treeData}
@@ -181,7 +196,10 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <TreeSelect.TreeCheckedShowAllSelect
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(400, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="Please select"
             treeDefaultExpandAll
             treeData={treeData}
@@ -201,7 +219,10 @@ export default () => {
       >
         <TreeEntityValueHOC>
           <TreeSelect
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(400, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="Please select"
             treeDefaultExpandAll
             treeData={flatTreeData}

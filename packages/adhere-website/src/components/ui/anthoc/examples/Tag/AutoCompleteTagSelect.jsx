@@ -4,6 +4,8 @@ import { Tag } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
 
+import styles from '../examples.less';
+
 export default () => {
   const [options, setOptions] = useState([]);
 
@@ -13,7 +15,7 @@ export default () => {
     <Tag.AutoCompleteTagSelect
       placeholder="AutoCompleteTagSelect"
       mode="multiple"
-      style={{ width: 600 }}
+      className={styles.FieldWrapper}
       value={value}
       options={options}
       onChange={setValue}

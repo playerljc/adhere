@@ -1,7 +1,8 @@
 import { Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { ArrayEntityValueHOC, Form, Transfer } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
@@ -40,6 +41,8 @@ export default () => {
     console.log('direction:', direction);
     console.log('target:', e.target);
   };
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {}, []);
 
@@ -116,7 +119,10 @@ export default () => {
         <ArrayEntityValueHOC>
           <Transfer.AutoCompleteTransferSelect
             placeholder="AutoCompleteTransferSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value.options}
             loadData={(_kw) =>
               new Promise((resolve) => {

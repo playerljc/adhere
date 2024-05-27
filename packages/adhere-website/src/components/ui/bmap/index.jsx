@@ -934,7 +934,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={interactionValue}
           onChange={(value) => {
             setInteractionValue(value);
@@ -1036,7 +1036,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={interactionValue}
                 onChange={(value) => {
                   setInteractionValue(value);
@@ -1501,7 +1501,7 @@ export default () => {
       <div className={styles.ToolBar}>
         <span>点的类型：</span>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={pointType}
           onSelect={(value) => {
             setPointType(value);
@@ -1600,7 +1600,7 @@ export default () => {
             <div className={styles.ToolBar}>
               <span>点的类型：</span>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={pointType}
                 onSelect={(value) => {
                   setPointType(value);
@@ -1758,7 +1758,7 @@ export default () => {
       <div className={styles.ToolBar}>
         <span>点的类型：</span>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={multiPointType}
           onSelect={(value) => {
             setMultiPointType(value);
@@ -1862,7 +1862,7 @@ export default () => {
             <div className={styles.ToolBar}>
               <span>点的类型：</span>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={multiPointType}
                 onSelect={(value) => {
                   setMultiPointType(value);
@@ -2763,7 +2763,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={lineStringType}
           onChange={(value) => {
             const map = lineStringRef.current.getMap();
@@ -2893,7 +2893,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={lineStringType}
                 onChange={(value) => {
                   const map = lineStringRef.current.getMap();
@@ -3082,7 +3082,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={regularPolygonCount}
           onChange={(value) => {
             setRegularPolygonCount(value);
@@ -3146,7 +3146,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={regularPolygonCount}
                 onChange={(value) => {
                   setRegularPolygonCount(value);
@@ -3270,7 +3270,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={leafCount}
           onChange={(value) => {
             setLeafCount(value);
@@ -3336,7 +3336,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={leafCount}
                 onChange={(value) => {
                   setLeafCount(value);
@@ -3458,7 +3458,7 @@ export default () => {
     <>
       <div className={styles.ToolBar}>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           value={textCount}
           onChange={(value) => {
             const map = textRef.current.getMap();
@@ -3553,7 +3553,7 @@ export default () => {
           <>
             <div className={styles.ToolBar}>
               <Select
-                style={{ width: 200 }}
+                className={styles.Select}
                 value={textCount}
                 onChange={(value) => {
                   const map = textRef.current.getMap();

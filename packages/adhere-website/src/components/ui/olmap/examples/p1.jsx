@@ -2,9 +2,11 @@ import React from 'react';
 
 import { OLMap } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   return (
-    <div style={{ width: '100%', height: 500 }}>
+    <div className={styles.Wrapper}>
       <OLMap.OLMap />
     </div>
   );

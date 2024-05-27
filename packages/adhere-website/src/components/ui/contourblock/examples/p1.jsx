@@ -2,8 +2,10 @@ import React from 'react';
 
 import { ContourBlock } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => (
-  <div style={{ width: 200, height: 300 }}>
+  <div className={styles.Wrapper}>
     <ContourBlock style={{ border: '1px solid #ccc' }} />
   </div>
 );

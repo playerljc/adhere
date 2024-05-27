@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { TreeSelect } from '@baifendian/adhere-ui-anthoc';
 
 import { City, County, Province } from '@/mock/pcc';
+
+import styles from '../Cascader/index.less';
 
 const treeData = [
   ...Province.map((t) => ({
@@ -42,15 +45,17 @@ const treeData = [
 export default () => {
   const [value, setValue] = useState();
 
+  const { media } = useContext(ConfigProvider.Context);
+
   const onChange = (newValue) => {
     setValue(newValue);
   };
 
   return (
     <TreeSelect
-      style={{ width: 200 }}
+      className={styles.Wrapper}
+      dropdownStyle={{ maxHeight: Util.pxToRem(400, media.designWidth, media), overflow: 'auto' }}
       value={value}
-      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
       placeholder="Please select"
       treeDefaultExpandAll
       onChange={onChange}

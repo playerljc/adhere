@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useImmer } from 'use-immer';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { ArrayEntityValueHOC, Avatar, Button, Form, List } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
@@ -36,6 +37,8 @@ export default () => {
     options: [],
     value: [],
   });
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {}, []);
 
@@ -166,7 +169,10 @@ export default () => {
         <ArrayEntityValueHOC>
           <List.AutoCompleteListSelect
             placeholder="AutoCompleteListSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value3.options}
             loadData={(_kw) =>
               new Promise((resolve) => {
@@ -221,7 +227,10 @@ export default () => {
         <ArrayEntityValueHOC>
           <List.AutoCompleteCheckAllListSelect
             placeholder="AutoCompleteCheckAllListSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value4.options}
             loadData={(_kw) =>
               new Promise((resolve) => {

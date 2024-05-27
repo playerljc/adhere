@@ -1,11 +1,14 @@
 import { Avatar } from 'antd';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { FieldGeneratorToDict } from '@baifendian/adhere';
+import { ConfigProvider, FieldGeneratorToDict, Util } from '@baifendian/adhere';
 import { List } from '@baifendian/adhere-ui-anthoc';
+
+import styles from '../examples.less';
 
 export default () => {
   const [value, setValue] = useState([]);
+  const { media } = useContext(ConfigProvider.Context);
 
   const DictComponentName = `SystemBookAC${FieldGeneratorToDict.ComponentNames.ListAC.CheckAll}`;
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
@@ -13,8 +16,8 @@ export default () => {
   return (
     <DictComponent
       placeholder={DictComponentName}
-      style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      className={styles.DictComponent2}
+      dropdownStyle={{ maxHeight: Util.pxToRem(300, media.designWidth, media), overflow: 'auto' }}
       value={value}
       onChange={setValue}
       listProps={{

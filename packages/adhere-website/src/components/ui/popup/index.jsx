@@ -2,7 +2,9 @@ import P1CodeText from '!!raw-loader!./examples/p1';
 import P2CodeText from '!!raw-loader!./examples/p2';
 import PopupCodeText from '!!raw-loader!./popup';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
+import { Util as AdhereUtil, ConfigProvider } from '@baifendian/adhere';
 
 import Constent from '@/constent';
 import PlayGroundPage, {
@@ -26,6 +28,8 @@ export default () => {
   const [p2CodeText, setP2CodeText] = useState('');
   const [p3CodeText, setP3CodeText] = useState('');
   const [p4CodeText, setP4CodeText] = useState('');
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {
     Util.getMobileCodeText('popup/index.jsx').then(setIndexCodeText);
@@ -101,49 +105,49 @@ export default () => {
           {
             key: 'index.jsx',
             title: 'index.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: indexCodeText,
             theme: 'eclipse',
           },
           {
             key: 'SelectPerson.jsx',
             title: 'SelectPerson.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: selectPersonCodeText,
             theme: 'eclipse',
           },
           {
             key: 'Task.jsx',
             title: 'Task.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: taskCodeText,
             theme: 'eclipse',
           },
           {
             key: 'p1.jsx',
             title: 'p1.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: p1CodeText,
             theme: 'eclipse',
           },
           {
             key: 'p2.jsx',
             title: 'p2.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: p2CodeText,
             theme: 'eclipse',
           },
           {
             key: 'p3.jsx',
             title: 'p3.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: p3CodeText,
             theme: 'eclipse',
           },
           {
             key: 'p4.jsx',
             title: 'p4.jsx',
-            style: { maxHeight: 500 },
+            style: { maxHeight: AdhereUtil.pxToRem(500, media.designWidth, media) },
             codeText: p4CodeText,
             theme: 'eclipse',
           },

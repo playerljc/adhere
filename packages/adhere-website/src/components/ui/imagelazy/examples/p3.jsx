@@ -3,6 +3,8 @@ import React from 'react';
 
 import { ImageLazy } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const listData = [];
 
 for (let i = 0; i < 6; i++) {
@@ -38,7 +40,7 @@ export default () => {
         return (
           <List.Item
             key={item.title}
-            extra={<ImageLazy imgArgs={imgProps} style={{ width: 272 }} />}
+            extra={<ImageLazy imgArgs={imgProps} className={styles.Img} />}
           >
             <List.Item.Meta
               avatar={<Avatar src={item.avatar} />}

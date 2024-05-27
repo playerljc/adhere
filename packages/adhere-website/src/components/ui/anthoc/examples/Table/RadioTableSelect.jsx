@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { Table } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../examples.less';
+
 const dataSource = Array.from({ length: 100 }).map(() => {
   const label = Mock.mock('@name');
   const value = Mock.mock('@guid');
@@ -24,7 +26,7 @@ export default () => {
 
   return (
     <Table.TableSelect
-      style={{ width: 600 }}
+      className={styles.FieldWrapper}
       placeholder="TableSelect"
       value={value}
       onChange={setValue}

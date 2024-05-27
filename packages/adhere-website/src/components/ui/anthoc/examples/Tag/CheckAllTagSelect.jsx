@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 
 import { Tag } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../Cascader/index.less';
+
 export default () => {
   const [value, setValue] = useState([]);
 
   return (
     <Tag.CheckAllTagSelect
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       placeholder="A-Z"
       value={value}
       onChange={(v) => {

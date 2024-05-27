@@ -1,7 +1,10 @@
 import Mock from 'mockjs';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Table } from '@baifendian/adhere-ui-anthoc';
+
+import styles from '../examples.less';
 
 const dataSource = Array.from({ length: 100 }).map(() => {
   const label = Mock.mock('@name');
@@ -22,6 +25,8 @@ const dataSource = Array.from({ length: 100 }).map(() => {
 export default () => {
   const [value, setValue] = useState([]);
 
+  const { media } = useContext(ConfigProvider.Context);
+
   function loadData(page, limit, _kw) {
     console.log(page, limit, _kw);
     return new Promise((resolve) => {
@@ -38,8 +43,8 @@ export default () => {
     <Table.AutoCompleteTablePagingSelect
       mode="multiple"
       placeholder="AutoCompleteTablePagingSelect"
-      style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      className={styles.FieldWrapper}
+      dropdownStyle={{ maxHeight: Util.pxToRem(300, media.designWidth, media), overflow: 'auto' }}
       value={value}
       onChange={setValue}
       pagingProps={{

@@ -1,12 +1,16 @@
 import { Avatar } from 'antd';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { FieldGeneratorToDict } from '@baifendian/adhere';
+import { ConfigProvider, FieldGeneratorToDict, Util } from '@baifendian/adhere';
 import { Checkbox, Col, List, Radio, Row } from '@baifendian/adhere-ui-anthoc';
 
 import PlayGroundPage, { CodeBoxSection, PropsSection, Section } from '@/lib/PlaygroundPage';
 
+import styles from './index.less';
+
 export default () => {
+  const { media } = useContext(ConfigProvider.Context);
+
   return (
     <PlayGroundPage>
       <Section title="FieldGeneratorToDict">
@@ -45,7 +49,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -73,7 +77,9 @@ export default () => {
                 const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.AutoCompleteDynamic.Standard}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+                return (
+                  <DictComponent placeholder={DictComponentName} className={styles.DictComponent} />
+                );
               };
 
               return <Component />;
@@ -162,7 +168,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -195,7 +201,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -228,7 +234,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -261,7 +267,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -294,7 +300,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -327,7 +333,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -360,7 +366,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -393,7 +399,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -426,7 +432,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -459,7 +465,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -487,7 +493,9 @@ export default () => {
                 const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.ChangeOnSelect}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+                return (
+                  <DictComponent placeholder={DictComponentName} className={styles.DictComponent} />
+                );
               };
 
               return <Component />;
@@ -516,7 +524,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -549,7 +557,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -582,7 +590,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -615,7 +623,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -648,7 +656,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -681,7 +689,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -709,7 +717,12 @@ export default () => {
                 const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Multi}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -733,7 +746,9 @@ export default () => {
                 const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.ShowChild}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+                return (
+                  <DictComponent placeholder={DictComponentName} className={styles.DictComponent} />
+                );
               };
 
               return <Component />;
@@ -757,7 +772,9 @@ export default () => {
                 const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.ShowParent}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+                return (
+                  <DictComponent placeholder={DictComponentName} className={styles.DictComponent} />
+                );
               };
 
               return <Component />;
@@ -781,7 +798,12 @@ export default () => {
                 const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.Standard}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -805,7 +827,9 @@ export default () => {
                 const DictComponentName = `SystemSSQ${FieldGeneratorToDict.ComponentNames.Cascader.TreeSelect}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 350 }} />;
+                return (
+                  <DictComponent placeholder={DictComponentName} className={styles.DictComponent} />
+                );
               };
 
               return <Component />;
@@ -839,7 +863,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -892,7 +916,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -925,7 +949,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -978,7 +1002,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -1060,7 +1084,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   >
@@ -1139,7 +1163,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -1294,7 +1318,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   >
@@ -1371,7 +1395,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -1712,8 +1736,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     listProps={{
@@ -1762,8 +1789,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     listProps={{
@@ -1812,8 +1842,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -1865,8 +1898,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     listProps={{
@@ -1915,8 +1951,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -1968,8 +2007,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     listProps={{
@@ -2068,8 +2110,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -2163,8 +2208,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     listProps={{
@@ -2263,8 +2311,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -2316,8 +2367,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     listProps={{
@@ -2573,7 +2627,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -2606,7 +2660,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -2651,7 +2705,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -2709,7 +2763,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -2780,7 +2834,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   >
@@ -2849,7 +2903,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -3076,7 +3130,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -3114,7 +3168,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -3147,7 +3201,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     placeholder={DictComponentName}
                     value={value}
                     onChange={setValue}
@@ -3181,7 +3235,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 500 }}
+                    className={styles.DictComponent4}
                     value={value}
                     onChange={setValue}
                   >
@@ -3220,7 +3274,7 @@ export default () => {
                   <DictComponent
                     mode="multiple"
                     placeholder={DictComponentName}
-                    style={{ width: 500 }}
+                    className={styles.DictComponent4}
                     value={value}
                     onChange={setValue}
                   >
@@ -3253,7 +3307,12 @@ export default () => {
                 const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Multi}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 500 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent4}
+                  />
+                );
               };
 
               return <Component />;
@@ -3277,7 +3336,12 @@ export default () => {
                 const DictComponentName = `SystemBookCatalogDynamic${FieldGeneratorToDict.ComponentNames.SelectDynamic.Standard}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 500 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent4}
+                  />
+                );
               };
 
               return <Component />;
@@ -3366,8 +3430,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -3413,8 +3480,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     tableProps={{
@@ -3478,8 +3548,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -3525,8 +3598,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     tableProps={{
@@ -3639,8 +3715,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -3692,8 +3771,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     tableProps={{
@@ -3805,8 +3887,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     pagingProps={{
@@ -3858,8 +3943,11 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 600 }}
-                    dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+                    className={styles.DictComponent3}
+                    dropdownStyle={{
+                      maxHeight: Util.pxToRem(300, media.designWidth, media),
+                      overflowY: 'auto',
+                    }}
                     value={value}
                     onChange={setValue}
                     tableProps={{
@@ -4135,9 +4223,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{
-                      width: 350,
-                    }}
+                    className={styles.DictComponent5}
                     value={value}
                     onChange={setValue}
                   />
@@ -4171,9 +4257,7 @@ export default () => {
                   <DictComponent
                     mode="multiple"
                     placeholder={DictComponentName}
-                    style={{
-                      width: 350,
-                    }}
+                    className={styles.DictComponent5}
                     value={value}
                     onChange={setValue}
                   />
@@ -4232,9 +4316,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{
-                      width: 200,
-                    }}
+                    className={styles.DictComponent5}
                     value={value}
                     onChange={setValue}
                   />
@@ -4343,9 +4425,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{
-                      width: 200,
-                    }}
+                    className={styles.DictComponent5}
                     value={value}
                     onChange={setValue}
                   />
@@ -4378,9 +4458,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{
-                      width: 200,
-                    }}
+                    className={styles.DictComponent2}
                     value={value}
                     onChange={setValue}
                   />
@@ -4694,7 +4772,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                     render={(item) => item.title}
@@ -4744,7 +4822,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     titles={['Source', 'Target']}
                     targetKeys={targetKeys}
                     selectedKeys={selectedKeys}
@@ -4798,7 +4876,7 @@ export default () => {
 
                 return (
                   <DictComponent
-                    style={{ width: 600 }}
+                    className={styles.DictComponent3}
                     titles={['Source', 'Target']}
                     targetKeys={targetKeys}
                     selectedKeys={selectedKeys}
@@ -4837,7 +4915,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.CheckedShowAll}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -4861,7 +4944,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.CheckedShowChild}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -4885,7 +4973,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.CheckedShowParent}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -4909,7 +5002,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.Flat}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -4933,7 +5031,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatCheckedShowAll}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -4957,7 +5060,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatCheckedShowChild}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -4981,7 +5089,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatCheckedShowParent}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5005,7 +5118,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatLeaf}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5029,7 +5147,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatLeafMulti}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5053,7 +5176,12 @@ export default () => {
                 const DictComponentName = `SystemDepartmentAll${FieldGeneratorToDict.ComponentNames.TreeDynamic.FlatMulti}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5077,7 +5205,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Leaf}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5101,7 +5234,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.LeafMulti}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5125,7 +5263,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Multi}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5149,7 +5292,12 @@ export default () => {
                 const DictComponentName = `SystemOrg${FieldGeneratorToDict.ComponentNames.Tree.Standard}`;
                 const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
-                return <DictComponent placeholder={DictComponentName} style={{ width: 200 }} />;
+                return (
+                  <DictComponent
+                    placeholder={DictComponentName}
+                    className={styles.DictComponent2}
+                  />
+                );
               };
 
               return <Component />;
@@ -5178,7 +5326,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5211,7 +5359,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5244,7 +5392,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5277,7 +5425,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5310,7 +5458,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5343,7 +5491,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5376,7 +5524,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5409,7 +5557,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5442,7 +5590,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5475,7 +5623,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5508,7 +5656,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5541,7 +5689,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5574,7 +5722,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />
@@ -5607,7 +5755,7 @@ export default () => {
                 return (
                   <DictComponent
                     placeholder={DictComponentName}
-                    style={{ width: 350 }}
+                    className={styles.DictComponent}
                     value={value}
                     onChange={setValue}
                   />

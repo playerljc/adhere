@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 
 import { ScrollLoad } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const globalData = Array.from({ length: 10 }).fill(1);
 
 export default () => {
@@ -10,7 +12,7 @@ export default () => {
 
   return (
     <ScrollLoad
-      style={{ width: 400, height: 600 }}
+      className={styles.Wrapper}
       onScrollBottom={(callback) => {
         if (refStatus.current === ScrollLoad.EMPTY) {
           callback(ScrollLoad.EMPTY);

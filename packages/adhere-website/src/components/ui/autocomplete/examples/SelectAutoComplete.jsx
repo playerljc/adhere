@@ -4,6 +4,8 @@ import { AutoComplete } from '@baifendian/adhere';
 
 import Book from '../data';
 
+import styles from '../../anthoc/examples/Cascader/index.less';
+
 export default () => {
   const [options, setOptions] = useState([]);
 
@@ -14,7 +16,7 @@ export default () => {
       placeholder="自动补全"
       value={value}
       mode="multiple"
-      style={{ width: 600 }}
+      className={styles.Wrapper3}
       loadData={(_kw) => {
         return new Promise((resolve) => {
           if (!_kw) {

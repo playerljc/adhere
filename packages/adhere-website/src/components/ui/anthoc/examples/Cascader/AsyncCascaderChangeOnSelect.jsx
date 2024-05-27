@@ -4,6 +4,8 @@ import { Cascader } from '@baifendian/adhere-ui-anthoc';
 
 import { City, County, Province } from '@/mock/pcc';
 
+import styles from './index.less';
+
 export default () => {
   const [value, setValue] = useState(undefined);
 
@@ -43,7 +45,7 @@ export default () => {
 
   return (
     <Cascader.AsyncCascaderChangeOnSelect
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       placeholder="AsyncCascaderChangeOnSelect"
       value={value}
       onChange={setValue}

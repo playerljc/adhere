@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { FieldGeneratorToDict } from '@baifendian/adhere';
 import { Checkbox } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../examples.less';
+
 export default () => {
   const [value, setValue] = useState([]);
 
@@ -12,7 +14,7 @@ export default () => {
   return (
     <DictComponent
       placeholder={DictComponentName}
-      style={{ width: 500 }}
+      className={styles.DictComponent3}
       value={value}
       onChange={setValue}
     >

@@ -3,11 +3,13 @@ import React from 'react';
 
 import { FlexLayout } from '@baifendian/adhere';
 
+import styles from './base.less';
+
 const { Fixed, Auto } = FlexLayout;
 
 export default () => {
   return (
-    <FlexLayout direction="horizontal" style={{ height: 600 }} gutter={20}>
+    <FlexLayout direction="horizontal" className={styles.Wrapper7} gutter={20}>
       <Fixed span={5} collapseDirection="L" trigger={(collapsed, defaultTrigger) => defaultTrigger}>
         <div style={{ height: '100%', overflowY: 'auto' }}>
           第一章：引言 1.1 背景

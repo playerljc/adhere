@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { Checkbox, Select } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../Cascader/index.less';
+
 export default () => {
   const [value, setValue] = useState([]);
 
@@ -11,7 +13,7 @@ export default () => {
       mode="multiple"
       value={value}
       onChange={setValue}
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       options={[
         {
           label: '男',

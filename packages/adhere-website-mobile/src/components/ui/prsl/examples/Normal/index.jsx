@@ -97,15 +97,7 @@ export default () => {
             {dataSource.map((user) => (
               <List.Item
                 key={user.id}
-                prefix={
-                  <Image
-                    src={user.avatar}
-                    style={{ borderRadius: 20 }}
-                    fit="cover"
-                    width={40}
-                    height={40}
-                  />
-                }
+                prefix={<Image src={user.avatar} className={styles.Images} fit="cover" />}
                 description={user.describe}
               >
                 {user.name}

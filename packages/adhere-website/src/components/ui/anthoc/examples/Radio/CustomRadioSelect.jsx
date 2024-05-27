@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Col, Radio, Row } from '@baifendian/adhere-ui-anthoc';
+
+import styles from '../Cascader/index.less';
 
 export default () => {
   const [value, setValue] = useState(undefined);
 
+  const { media } = useContext(ConfigProvider.Context);
+
   return (
     <Radio.CustomRadioSelect
-      style={{ width: 300 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      className={styles.Wrapper1}
+      dropdownStyle={{ maxHeight: Util.pxToRem(300, media.designWidth, media), overflowY: 'auto' }}
       placeholder="A-Z"
       value={value}
       onChange={setValue}

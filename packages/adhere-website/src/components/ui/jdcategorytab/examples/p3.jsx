@@ -3,6 +3,8 @@ import React, { useRef, useState } from 'react';
 
 import { Space as BSpace, ConditionalRender, JdCategoryTab, Spin } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const data = Array.from({ length: 100 }).fill(0);
 
 const columns = [
@@ -121,14 +123,7 @@ export default () => {
 
       <BSpace direction="vertical" />
 
-      <div
-        style={{
-          position: 'relative',
-          width: 600,
-          height: 600,
-          border: '1px solid rgba(0,0,0,.1)',
-        }}
-      >
+      <div className={styles.Wrapper1}>
         <Spin spinning={loading} />
         <JdCategoryTab
           ref={ref}
@@ -152,7 +147,7 @@ export default () => {
                 conditional={index % 2 === 0}
                 noMatch={() => (
                   <Table
-                    style={{ padding: 20 }}
+                    className={styles.Table}
                     columns={columns}
                     dataSource={tableData}
                     pagination={false}
@@ -161,7 +156,7 @@ export default () => {
               >
                 {() => (
                   <List
-                    style={{ padding: 20 }}
+                    className={styles.Table}
                     itemLayout="horizontal"
                     dataSource={listData}
                     renderItem={(item) => (

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Cascader } from '@baifendian/adhere-ui-anthoc';
 
+import styles from './index.less';
+
 export default () => {
   const options = [
     {
@@ -45,7 +47,7 @@ export default () => {
 
   return (
     <Cascader.CascaderShowChild
-      style={{ width: 300 }}
+      className={styles.Wrapper1}
       placeholder="Please select"
       options={options}
       onChange={onChange}

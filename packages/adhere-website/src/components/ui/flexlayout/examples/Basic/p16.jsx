@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { FlexLayout } from '@baifendian/adhere';
 
+import styles from './base.less';
+
 const { Fixed, Auto } = FlexLayout;
 
 export default () => {
   const [collapsible, setCollapsible] = useState(false);
 
   return (
-    <FlexLayout direction="horizontal" style={{ height: 600 }} gutter={20}>
+    <FlexLayout direction="horizontal" className={styles.Wrapper7} gutter={20}>
       <Fixed span={5} collapseDirection="L" defaultCollapsible={collapsible} collapsedSize={200}>
         <div style={{ height: '100%', overflowY: 'auto' }}>
           第一章：引言 1.1 背景

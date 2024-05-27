@@ -4,6 +4,8 @@ import { Select } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
 
+import styles from '../examples.less';
+
 export default () => {
   const [options, setOptions] = useState([]);
 
@@ -11,7 +13,7 @@ export default () => {
 
   return (
     <Select.AutoCompleteSelect
-      style={{ width: 600 }}
+      className={styles.FieldWrapper}
       placeholder="AutoCompleteSelect"
       value={value}
       options={options}

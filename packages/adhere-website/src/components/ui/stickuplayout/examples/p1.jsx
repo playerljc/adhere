@@ -3,11 +3,12 @@ import React from 'react';
 import { StickupLayout } from '@baifendian/adhere';
 
 import '../index.less';
+import styles from './examples.less';
 
 const { Item } = StickupLayout;
 
 export default () => (
-  <div style={{ height: 500, overflow: 'hidden' }}>
+  <div className={styles.Wrapper}>
     <StickupLayout>
       <Item
         title={<span className="title">基本参数</span>}

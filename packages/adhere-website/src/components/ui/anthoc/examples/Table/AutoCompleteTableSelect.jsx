@@ -1,7 +1,10 @@
 import Mock from 'mockjs';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Table } from '@baifendian/adhere-ui-anthoc';
+
+import styles from '../examples.less';
 
 const dataSource = Array.from({ length: 100 }).map(() => {
   const label = Mock.mock('@name');
@@ -24,12 +27,14 @@ export default () => {
 
   const [value, setValue] = useState(undefined);
 
+  const { media } = useContext(ConfigProvider.Context);
+
   return (
     <Table.AutoCompleteTableSelect
       // mode="multiple"
       placeholder="AutoCompleteTableSelect"
-      style={{ width: 600 }}
-      dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+      className={styles.FieldWrapper}
+      dropdownStyle={{ maxHeight: Util.pxToRem(300, media.designWidth, media), overflow: 'auto' }}
       value={value}
       options={options}
       onChange={setValue}

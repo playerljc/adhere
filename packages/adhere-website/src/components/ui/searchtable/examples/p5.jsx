@@ -5,6 +5,8 @@ import { Space } from '@baifendian/adhere';
 
 import FewTable from '../fewTable';
 
+import styles from './examples.less';
+
 export default () => {
   const [pagination, setPagination] = useState(false);
 
@@ -20,7 +22,7 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <div style={{ display: 'flex', height: 700 }}>
+      <div className={styles.Wrapper}>
         <FewTable
           style={{ height: '100%' }}
           isShowExpandSearch

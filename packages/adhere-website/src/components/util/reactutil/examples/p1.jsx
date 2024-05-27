@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { ReactUtil, Resource, Space } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const { Option } = Select;
 
 export default () => {
@@ -17,7 +19,7 @@ export default () => {
     <>
       <div>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
         >
           {data.map((t) => (
@@ -32,7 +34,7 @@ export default () => {
 
       <div>
         <Select
-          style={{ width: 200 }}
+          className={styles.Select}
           getPopupContainer={Resource.Dict.value.FormPopupContainer.value}
         >
           {ReactUtil.keyMap(data, (t) => (

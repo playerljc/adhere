@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 
 import { Revolving, Space } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const ref = useRef();
 
@@ -30,7 +32,7 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <Revolving direction="bottom" delay={1000 * 3} style={{ height: 50 }} ref={ref}>
+      <Revolving direction="bottom" delay={1000 * 3} className={styles.Wrapper} ref={ref}>
         <Revolving.Item>Slide 1</Revolving.Item>
         <Revolving.Item>Slide 2</Revolving.Item>
         <Revolving.Item>Slide 3</Revolving.Item>

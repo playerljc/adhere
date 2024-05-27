@@ -1,7 +1,8 @@
 import { Button } from 'antd';
 import Mock from 'mockjs';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { Form, PagingEntityValueHOC, Table } from '@baifendian/adhere-ui-anthoc';
 
 const dataSource = Array.from({ length: 100 }).map(() => {
@@ -50,6 +51,8 @@ const columns = [
 
 export default () => {
   const [form] = Form.useForm();
+
+  const { media } = useContext(ConfigProvider.Context);
 
   function loadData(page, limit) {
     console.log('paging', page, limit);
@@ -191,7 +194,10 @@ export default () => {
           <Table.AutoCompleteTablePagingSelect
             mode="multiple"
             placeholder="AutoCompleteTablePagingSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             pagingProps={{
               loadData,
               defaultLimit: 5,

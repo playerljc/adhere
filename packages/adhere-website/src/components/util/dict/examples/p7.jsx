@@ -5,6 +5,8 @@ import { Dict, Space } from '@baifendian/adhere';
 
 import pca from '@/components/util/dict/pca.json';
 
+import styles from './examples.less';
+
 const { Option } = Select;
 
 export default () => {
@@ -28,7 +30,7 @@ export default () => {
           <div>
             <Dict.React.Test7PDict>
               {({ data }) => (
-                <Select style={{ width: 200 }} value={p} onChange={(e) => setP(e)}>
+                <Select className={styles.Wrapper} value={p} onChange={(e) => setP(e)}>
                   {data?.map?.((t) => (
                     <Option key={t.code}>{t.value}</Option>
                   ))}
@@ -40,7 +42,7 @@ export default () => {
           <div>
             <Dict.React.Test7CDict args={[p]}>
               {({ data }) => (
-                <Select style={{ width: 200 }} value={c} onChange={(e) => setC(e)}>
+                <Select className={styles.Wrapper} value={c} onChange={(e) => setC(e)}>
                   {data?.map?.((t) => (
                     <Option key={t.code}>{t.value}</Option>
                   ))}
@@ -52,7 +54,7 @@ export default () => {
           <div>
             <Dict.React.Test7ADict args={[p, c]}>
               {({ data }) => (
-                <Select style={{ width: 200 }} value={a} onChange={(e) => setA(e)}>
+                <Select className={styles.Wrapper} value={a} onChange={(e) => setA(e)}>
                   {data?.map?.((t) => (
                     <Option key={t.code}>{t.value}</Option>
                   ))}

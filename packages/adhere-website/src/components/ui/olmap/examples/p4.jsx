@@ -6,14 +6,16 @@ import React, { useRef } from 'react';
 
 import { OLMap } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const heatRef = useRef();
 
   return (
-    <div style={{ width: '100%', height: 500 }}>
+    <div className={styles.Wrapper}>
       <Button
         type="primary"
-        style={{ marginBottom: 20 }}
+        className={styles.Button}
         onClick={() => {
           const dataSource = [
             [119.7493459, 31.8885404],

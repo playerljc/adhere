@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { ScrollLoad } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const page = useRef(0);
 
@@ -29,7 +31,7 @@ export default () => {
 
   return (
     <ScrollLoad
-      style={{ width: 400, height: 600 }}
+      className={styles.Wrapper}
       onScrollBottom={(callback) => {
         setTimeout(() => {
           callbackHandler.current = callback;

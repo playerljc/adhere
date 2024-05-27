@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { FlexLayout, Space } from '@baifendian/adhere';
 
 import style from '../../index.less';
+import styles from './base.less';
 
 const { Fixed } = FlexLayout;
 
@@ -83,7 +84,7 @@ export default () => {
         />
       </div>
 
-      <div style={{ height: 600 }}>
+      <div className={styles.Wrapper7}>
         <FlexLayout
           style={{ height: '100%' }}
           gutter={[vVgutters[vVgutterKey], vGutters[vGutterKey]]}

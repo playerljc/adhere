@@ -3,14 +3,16 @@ import React, { useRef } from 'react';
 
 import { OLMap } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const windRef = useRef();
 
   return (
-    <div style={{ width: '100%', height: 500 }}>
+    <div className={styles.Wrapper}>
       <Button
         type="primary"
-        style={{ marginBottom: 20 }}
+        className={styles.Button}
         onClick={() => {
           windRef.current.addWindLayer();
         }}

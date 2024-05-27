@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { Resource, TableHeadSearch } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const { Option } = Select;
 
 const { Search } = Input;
@@ -14,8 +16,8 @@ function getColumns() {
       dataIndex: 'name',
       key: 'name',
       ...TableHeadSearch(({ confirm }) => (
-        <div style={{ padding: 10 }}>
-          <div style={{ marginBottom: 10 }}>
+        <div className={styles.Wrapper}>
+          <div className={styles.Inner}>
             <Input autoFocus style={{ width: '100%' }} />
           </div>
           <div>
@@ -61,13 +63,9 @@ function getColumns() {
       dataIndex: 'dept',
       key: 'dept',
       ...TableHeadSearch(({ confirm }) => (
-        <div style={{ padding: 20 }}>
-          <div style={{ marginBottom: 10 }}>
-            <Search
-              placeholder="input search text"
-              allowClear
-              style={{ width: 200, marginRight: 10 }}
-            />
+        <div className={styles.Wrapper1}>
+          <div className={styles.Inner}>
+            <Search placeholder="input search text" allowClear className={styles.Search} />
             <Button
               type="primary"
               onClick={() => {

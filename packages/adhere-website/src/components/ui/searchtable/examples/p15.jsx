@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 
 import EditorCellStateSearchTable from '../editorCellStateSearchTable';
 
+import styles from './examples.less';
+
 export default () => {
   const [pagination, setPagination] = useState(false);
 
   return (
-    <div style={{ display: 'flex', height: 700 }}>
+    <div className={styles.Wrapper}>
       <EditorCellStateSearchTable
         style={{ height: '100%' }}
         isShowExpandSearch

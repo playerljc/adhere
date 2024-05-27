@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 
 import { Radio } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../Cascader/index.less';
+
 export default () => {
   const [value, setValue] = useState(undefined);
 
   return (
     <Radio.ButtonRadioSelect
-      style={{ width: 300 }}
+      className={styles.Wrapper1}
       placeholder="A-Z"
       value={value}
       onChange={setValue}

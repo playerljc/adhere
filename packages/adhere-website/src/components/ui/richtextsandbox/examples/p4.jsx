@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FlexLayout, Space } from '@baifendian/adhere';
 import { WangEditorSandbox } from '@baifendian/adhere-ui-richtext-sandbox';
 
+import styles from './examples.less';
+
 const { Fixed, Auto } = FlexLayout;
 
 export default () => {
@@ -30,8 +32,8 @@ export default () => {
   }, []);
 
   return (
-    <FlexLayout style={{ height: 800 }}>
-      <Fixed style={{ marginBottom: 20 }}>
+    <FlexLayout className={styles.Wrapper}>
+      <Fixed className={styles.Fixed}>
         <Space.Group>
           <Button
             type="primary"

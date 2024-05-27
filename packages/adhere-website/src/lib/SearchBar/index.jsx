@@ -88,7 +88,7 @@ export default withRouter((props) => {
       <div className={styles.Auto} ref={ref}>
         <Select
           open={open}
-          style={{ width: 450 }}
+          className={styles.Select}
           placeholder="请输入关键词"
           autoFocus
           showSearch

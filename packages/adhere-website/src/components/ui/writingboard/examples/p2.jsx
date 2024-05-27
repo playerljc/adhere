@@ -4,6 +4,8 @@ import { SketchPicker } from 'react-color';
 
 import { FlexLayout, WritingBoard } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const { Option } = Select;
 
 export default () => {
@@ -14,7 +16,7 @@ export default () => {
 
   return (
     <FlexLayout direction="horizontal" style={{ width: '100%', height: '100%' }}>
-      <FlexLayout.Fixed style={{ width: 300 }}>
+      <FlexLayout.Fixed className={styles.Wrapper1}>
         <Space direction="vertical">
           <Card title="绘制模式">
             <Radio.Group

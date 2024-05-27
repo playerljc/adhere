@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 
 import { BackTopAnimation } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const ref = useRef();
 
@@ -14,7 +16,7 @@ export default () => {
   }));
 
   return (
-    <div style={{ position: 'relative', height: 300, overflowY: 'hidden' }}>
+    <div className={styles.Wrapper}>
       <div style={{ height: '100%', overflowY: 'auto' }} ref={ref}>
         <List
           itemLayout="horizontal"

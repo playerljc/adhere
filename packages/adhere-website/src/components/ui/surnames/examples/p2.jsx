@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Space, Surnames } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 function getIndexesProps() {
   const startCharCode = 'A'.charCodeAt();
   const endCharCode = 'Z'.charCodeAt();
@@ -50,7 +52,7 @@ function getDataSource() {
 export default () => (
   <div style={{ display: 'flex' }}>
     <Space.Group direction="horizontal">
-      <div style={{ height: 516 }}>
+      <div className={styles.Wrapper1}>
         <Surnames
           position="top"
           style={{ border: '1px solid #ccc' }}
@@ -59,7 +61,7 @@ export default () => (
         />
       </div>
 
-      <div style={{ height: 516 }}>
+      <div className={styles.Wrapper1}>
         <Surnames
           position="bottom"
           style={{ border: '1px solid #ccc' }}

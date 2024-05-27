@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 
 import RenderSearchBetweenTable from '../renderSearchBetweenTable';
 
+import styles from './examples.less';
+
 export default () => {
   const [pagination, setPagination] = useState(false);
 
   return (
     <>
-      <div style={{ display: 'flex', height: 800 }}>
+      <div className={styles.Wrapper1}>
         <RenderSearchBetweenTable
           style={{ height: '100%' }}
           isShowExpandSearch

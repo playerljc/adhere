@@ -5,6 +5,8 @@ import { MobileAutoComplete, MobileGlobalIndicator } from '@baifendian/adhere';
 
 import Book from '@/data';
 
+import styles from './examples.less';
+
 const ListItemWithCheckbox = ({ id, label, t }) => {
   const checkboxRef = useRef(null);
 
@@ -16,10 +18,8 @@ const ListItemWithCheckbox = ({ id, label, t }) => {
       prefix={
         <Image
           src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-          style={{ borderRadius: 20 }}
+          className={styles.Image}
           fit="cover"
-          width={40}
-          height={40}
         />
       }
       extra={<Checkbox value={id} ref={checkboxRef} />}

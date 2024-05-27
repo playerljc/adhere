@@ -2,11 +2,13 @@ import React from 'react';
 
 import { Select } from '@baifendian/adhere-ui-anthoc';
 
+import styles from '../Cascader/index.less';
+
 export default () => {
   return (
     <Select
       placeholder="Select"
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       options={[
         {
           label: '男',

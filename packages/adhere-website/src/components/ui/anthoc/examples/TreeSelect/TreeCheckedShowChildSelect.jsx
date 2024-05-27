@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { TreeSelect } from '@baifendian/adhere-ui-anthoc';
+
+import styles from '../Cascader/index.less';
 
 const treeData = [
   {
@@ -38,15 +41,17 @@ const treeData = [
 export default () => {
   const [value, setValue] = useState();
 
+  const { media } = useContext(ConfigProvider.Context);
+
   const onChange = (newValue) => {
     setValue(newValue);
   };
 
   return (
     <TreeSelect.TreeCheckedShowChildSelect
-      style={{ width: 300 }}
       value={value}
-      dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+      className={styles.Wrapper1}
+      dropdownStyle={{ maxHeight: Util.pxToRem(400, media.designWidth, media), overflow: 'auto' }}
       placeholder="Please select"
       treeDefaultExpandAll
       onChange={onChange}

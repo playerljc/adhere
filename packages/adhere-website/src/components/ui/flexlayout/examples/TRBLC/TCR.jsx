@@ -3,9 +3,11 @@ import React from 'react';
 
 import { FlexLayout } from '@baifendian/adhere';
 
+import styles from './trblc.less';
+
 export default () => {
   return (
-    <div style={{ height: 500, padding: 20, background: '#ccc' }}>
+    <div className={styles.Wrapper} style={{ background: '#ccc' }}>
       <FlexLayout.TRBLC.TCRLayout
         style={{ height: '100%' }}
         gutter={20}

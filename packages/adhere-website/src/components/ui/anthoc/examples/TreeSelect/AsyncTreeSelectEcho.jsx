@@ -4,6 +4,8 @@ import { TreeSelect } from '@baifendian/adhere-ui-anthoc';
 
 import { City, County, Province } from '@/mock/pcc';
 
+import styles from '../Cascader/index.less';
+
 export default () => {
   const [value, setValue] = useState('210102000000');
 
@@ -75,7 +77,7 @@ export default () => {
 
   return (
     <TreeSelect.AsyncTreeSelect
-      style={{ width: 200 }}
+      className={styles.Wrapper}
       placeholder="AsyncTreeSelectEcho"
       value={value}
       onChange={setValue}

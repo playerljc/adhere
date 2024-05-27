@@ -1,7 +1,8 @@
 import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useImmer } from 'use-immer';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { ArrayEntityValueHOC, Checkbox, Form } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
@@ -22,6 +23,8 @@ export default () => {
     options: [],
     value: [],
   });
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {}, []);
 
@@ -131,7 +134,10 @@ export default () => {
         <ArrayEntityValueHOC>
           <Checkbox.AutoCompleteCheckboxSelect
             placeholder="AutoCompleteCheckboxSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value.options}
             loadData={(_kw) =>
               new Promise((resolve) => {

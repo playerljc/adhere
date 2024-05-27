@@ -3,13 +3,15 @@ import React, { useRef } from 'react';
 
 import { Emitter } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => {
   const handler1 = useRef();
 
   return (
     <>
       <Button
-        style={{ marginRight: 20 }}
+        className={styles.Button}
         onClick={() => {
           if (handler1.current) {
             Emitter.remove('type1', handler1.current);

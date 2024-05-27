@@ -283,6 +283,8 @@ import TreeMultiLeafSelect from './examples/TreeSelect/TreeMultiLeafSelect';
 import TreeMultiSelect from './examples/TreeSelect/TreeMultiSelect';
 import TreeSelect from './examples/TreeSelect/TreeSelect';
 
+import styles from './index.less';
+
 // Input.defaultProps.maxLength = 2000;
 
 const { ScrollLayout } = FlexLayout;
@@ -353,7 +355,7 @@ export default () => {
             cardProps: {
               description: {
                 title: 'InputNumberDecimal2',
-                info: '只能输入两位小鼠',
+                info: '只能输入两位小数',
               },
             },
             type: 'PlayGround',
@@ -2511,7 +2513,7 @@ export default () => {
               },
             },
             renderChildren: () => (
-              <div style={{ height: 500 }}>
+              <div className={styles.Wrapper}>
                 <ScrollLayout scrollY>
                   <Space.Group direction="vertical">
                     <dl>
@@ -2555,11 +2557,7 @@ export default () => {
                         <p>DatePicker</p>
                       </dt>
                       <dd>
-                        <DatePicker
-                          style={{
-                            width: 200,
-                          }}
-                        />
+                        <DatePicker className={styles.Wrapper1} />
                       </dd>
                     </dl>
 
@@ -2568,11 +2566,7 @@ export default () => {
                         <p>RangePicker</p>
                       </dt>
                       <dd>
-                        <RangePicker
-                          style={{
-                            width: 200,
-                          }}
-                        />
+                        <RangePicker className={styles.Wrapper1} />
                       </dd>
                     </dl>
 
@@ -2581,11 +2575,7 @@ export default () => {
                         <p>TimePicker</p>
                       </dt>
                       <dd>
-                        <TimePicker
-                          style={{
-                            width: 200,
-                          }}
-                        />
+                        <TimePicker className={styles.Wrapper1} />
                       </dd>
                     </dl>
 

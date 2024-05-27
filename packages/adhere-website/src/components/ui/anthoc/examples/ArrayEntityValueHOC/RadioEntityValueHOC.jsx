@@ -1,7 +1,8 @@
 import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useImmer } from 'use-immer';
 
+import { ConfigProvider, Util } from '@baifendian/adhere';
 import { ArrayEntityValueHOC, Col, Form, Radio, Row } from '@baifendian/adhere-ui-anthoc';
 
 import Book from '@/mock/book';
@@ -32,6 +33,8 @@ export default () => {
     options: [],
     value: [],
   });
+
+  const { media } = useContext(ConfigProvider.Context);
 
   useEffect(() => {}, []);
 
@@ -126,7 +129,10 @@ export default () => {
       >
         <ArrayEntityValueHOC>
           <Radio.CustomRadioSelect
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             placeholder="A-Z"
             options={options}
           >
@@ -232,7 +238,10 @@ export default () => {
         <ArrayEntityValueHOC>
           <Radio.AutoCompleteCustomRadioSelect
             placeholder="AutoCompleteCustomRadioSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value6.options}
             loadData={(_kw) =>
               new Promise((resolve) => {
@@ -289,7 +298,10 @@ export default () => {
         <ArrayEntityValueHOC>
           <Radio.AutoCompleteButtonRadioSelect
             placeholder="AutoCompleteButtonRadioSelect"
-            dropdownStyle={{ maxHeight: 300, overflowY: 'auto' }}
+            dropdownStyle={{
+              maxHeight: Util.pxToRem(300, media.designWidth, media),
+              overflow: 'auto',
+            }}
             options={value7.options}
             loadData={(_kw) =>
               new Promise((resolve) => {
