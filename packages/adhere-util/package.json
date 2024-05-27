@@ -30,6 +30,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.10.28",
     "@baifendian/adhere-util-preferences": "^2.10.28",
     "crypto-js": "^4.1.1",
     "gcoord": "^1.0.5",

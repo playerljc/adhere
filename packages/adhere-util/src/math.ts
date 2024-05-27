@@ -1,3 +1,5 @@
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+
 import Dom from './dom';
 import { ICircle, IPoint } from './types';
 
@@ -280,17 +282,22 @@ export default {
    * @param {number} base
    * @return {number}
    */
-  pxToRemNumber(px: number, base: number) {
+  pxToRemNumber(px: number, base: number): number {
     return px / base;
   },
   /**
    * pxToRem
    * @param {number} px
    * @param {number} base
+   * @param media
    * @return {string}
    */
-  pxToRem(px: number, base: number) {
-    return `${this.pxToRemNumber(px, base)}rem`;
+  pxToRem(px: number, base: number, media?: ConfigProviderProps['media']): string {
+    if (!media || media.isUseMedia) {
+      return `${this.pxToRemNumber(px, base)}rem`;
+    }
+
+    return `${px}px`;
   },
   /**--------------------------math-end------------------------**/
 };

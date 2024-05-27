@@ -1,3 +1,4 @@
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import { ICircle, IPoint } from './types';
 declare const _default: {
     /**--------------------------math-start----------------------**/
@@ -156,8 +157,9 @@ declare const _default: {
      * pxToRem
      * @param {number} px
      * @param {number} base
+     * @param media
      * @return {string}
      */
-    pxToRem(px: number, base: number): string;
+    pxToRem(px: number, base: number, media?: ConfigProviderProps['media']): string;
 };
 export default _default;

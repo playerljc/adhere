@@ -205,7 +205,10 @@ declare const _default: {
     getCirclePoint(center: import("./types").IPoint, raduis: number, angle: number): import("./types").IPoint;
     getOvalPoint(center: import("./types").IPoint, radiusX: number, radiusY: number, angle: number): import("./types").IPoint;
     pxToRemNumber(px: number, base: number): number;
-    pxToRem(px: number, base: number): string;
+    pxToRem(px: number, base: number, media?: {
+        isUseMedia?: boolean | undefined;
+        designWidth?: number | undefined;
+    } | undefined): string;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
