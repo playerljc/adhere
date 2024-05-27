@@ -4,6 +4,7 @@
 
 2024-05-18
 
+* 加入flexible方法适配REM
 * 加入devicePixelRatio的适配
 
 # 1.0.19
