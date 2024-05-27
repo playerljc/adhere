@@ -1,8 +1,11 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactElement, memo, useMemo } from 'react';
+import React, { ReactElement, memo, useContext, useMemo } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import Util from '@baifendian/adhere-util';
 
 import Label from './Label';
 import Value from './Value';
@@ -265,20 +268,29 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
  * @description 渲染一个Table
  * @return {ReactElement}
  */
-const renderGridSearchForm: RenderGridSearchForm = (params) => {
+const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
   const {
-    data: {
-      className,
-      style,
-      width: _width,
-      colgroup: _colgroup,
-      defaultLabelWidth: _defaultLabelWidth = 120,
-    },
+    data: { className, style, width, colgroup, defaultLabelWidth = 120 },
     layout,
-    density: _density,
-    parity: _parity = false,
+    density,
+    parity = false,
     rowCountRef,
+    media = { isUseMedia: false, designWidth: 192 },
   } = params;
+
+  let targetWidth = width;
+  if (media.isUseMedia) {
+    targetWidth = Util.isNumber(width)
+      ? Util.pxToRem(width as number, media.designWidth as number)
+      : width;
+  }
+
+  let targetDefaultLabelWidth: string | number = defaultLabelWidth;
+  if (media.isUseMedia) {
+    targetDefaultLabelWidth = Util.isNumber(defaultLabelWidth)
+      ? Util.pxToRem(defaultLabelWidth as number, media.designWidth as number)
+      : defaultLabelWidth;
+  }
 
   const densityClass = new Map([
     ['default', 'densitydefault'],
@@ -288,12 +300,25 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
 
   const colgroupJSX: ReactElement[] = [];
 
-  for (let i = 0; i < (_colgroup || []).length; i++) {
-    const width = (_colgroup || [])[i];
+  for (let i = 0; i < (colgroup || []).length; i++) {
+    const width = (colgroup || [])[i];
+
+    let targetWidth: number | string = width;
+    if (media.isUseMedia) {
+      targetWidth = Util.isNumber(width)
+        ? Util.pxToRem(width as number, media.designWidth as number)
+        : width;
+    }
 
     colgroupJSX.push(
-      <ConditionalRender key={i} conditional={width !== 'auto'} noMatch={() => <col />}>
-        {() => <col width={width || _defaultLabelWidth} />}
+      <ConditionalRender key={i} conditional={targetWidth !== 'auto'} noMatch={() => <col />}>
+        {() => (
+          <col
+            style={{
+              width: targetWidth ?? targetDefaultLabelWidth,
+            }}
+          />
+        )}
       </ConditionalRender>,
     );
   }
@@ -303,15 +328,16 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
       className={classNames(
         `${selectorPrefix}-table`,
         `${selectorPrefix}-table-${layout}`,
-        densityClass.get(_density || 'default'),
+        densityClass.get(density || 'default'),
         {
-          parity: _parity,
+          parity,
         },
         className ?? '',
       )}
-      style={{ width: _width ? _width : '100%', ...(style ?? {}) }}
+      style={{ width: targetWidth ? targetWidth : '100%', ...(style ?? {}) }}
     >
       <colgroup>{colgroupJSX}</colgroup>
+
       <ConditionalRender
         conditional={layout === 'horizontal'}
         noMatch={() => renderVertical(params.data, rowCountRef).element}
@@ -323,66 +349,16 @@ const renderGridSearchForm: RenderGridSearchForm = (params) => {
 };
 
 /**
- * TableGridLayout
- * @param data
- * @param className
- * @param style
- * @param props
- * @return {ReactElement}
- * @constructor
- */
-const InternalTableGridLayout = memo<TableGridLayoutProps>(
-  ({ data, className, style, ...props }) => {
-    const computedData = useMemo(
-      () =>
-        (data ?? [])
-          .map((_record) => ({
-            ..._record,
-            data: _record.data?.filter?.((_item) => !('show' in _item) || !!_item.show),
-          }))
-          .filter((_record) => !!_record?.data?.length),
-      [data, className, style, props],
-    );
-
-    return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
-        {TableGridLayout.renderGridSearchFormGroup(computedData, props)}
-      </div>
-    );
-  },
-);
-
-const TableGridLayout = InternalTableGridLayout as TableGridLayoutComponent;
-
-TableGridLayout.displayName = 'TableGridLayout';
-
-/**
- * Label
- * @description 左侧Label
- * @param props
- * @constructor
- */
-TableGridLayout.Label = Label;
-
-/**
- * Value
- * @description 右侧Value
- * @param props
- * @constructor
- */
-TableGridLayout.Value = Value;
-
-/**
  * renderGridSearchFormGroup
- * @description - 渲染TableGridLayout
  * @param data
  * @param props
- * @return {ReactElement}
+ * @param media
  */
-TableGridLayout.renderGridSearchFormGroup = (
+function renderGridSearchFormGroup(
   data?: DataItem[],
   props?: Omit<TableGridLayoutProps, 'data'>,
-) => {
+  media?: ConfigProviderProps['media'],
+): ReactElement {
   const rowCountRef = { current: 0 };
 
   const {
@@ -411,6 +387,7 @@ TableGridLayout.renderGridSearchFormGroup = (
             renderGridSearchForm({
               data: g,
               rowCountRef,
+              media,
               ...renderGridSearchFormProps,
             })
           }
@@ -420,6 +397,7 @@ TableGridLayout.renderGridSearchFormGroup = (
               {renderGridSearchForm({
                 data: g,
                 rowCountRef,
+                media,
                 ...renderGridSearchFormProps,
               })}
             </div>
@@ -428,19 +406,17 @@ TableGridLayout.renderGridSearchFormGroup = (
       ))}
     </div>
   );
-};
+}
 
 /**
  * getRenderDetail
- * @description 获取渲染细节
- * @param data - 组数据
- * @param props - 配置
- * @return RenderDetail
+ * @param data
+ * @param props
  */
-TableGridLayout.getRenderDetail = (
+function getRenderDetail(
   data: DataItem[],
   props: Omit<TableGridLayoutProps, 'data'>,
-): RenderDetail => {
+): RenderDetail {
   const {
     bordered = false,
     innerClassName,
@@ -477,7 +453,76 @@ TableGridLayout.getRenderDetail = (
   });
 
   return result;
-};
+}
+
+/**
+ * TableGridLayout
+ * @param data
+ * @param className
+ * @param style
+ * @param props
+ * @return {ReactElement}
+ */
+const InternalTableGridLayout = memo<TableGridLayoutProps>(
+  ({ data, className, style, ...props }) => {
+    const targetData = useMemo(
+      () =>
+        (data ?? [])
+          .map((_record) => ({
+            ..._record,
+            data: _record.data?.filter?.((_item) => !('show' in _item) || !!_item.show),
+          }))
+          .filter((_record) => !!_record?.data?.length),
+      [data, className, style, props],
+    );
+
+    const configProvider = useContext(ConfigProvider.Context);
+
+    return (
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+        {renderGridSearchFormGroup(targetData, props, configProvider.media)}
+      </div>
+    );
+  },
+);
+
+const TableGridLayout = InternalTableGridLayout as TableGridLayoutComponent;
+
+TableGridLayout.displayName = 'TableGridLayout';
+
+/**
+ * Label
+ * @description 左侧Label
+ * @param props
+ * @constructor
+ */
+TableGridLayout.Label = Label;
+
+/**
+ * Value
+ * @description 右侧Value
+ * @param props
+ * @constructor
+ */
+TableGridLayout.Value = Value;
+
+/**
+ * renderGridSearchFormGroup
+ * @description - 渲染TableGridLayout
+ * @param data
+ * @param props
+ * @return {ReactElement}
+ */
+TableGridLayout.renderGridSearchFormGroup = renderGridSearchFormGroup;
+
+/**
+ * getRenderDetail
+ * @description 获取渲染细节
+ * @param data - 组数据
+ * @param props - 配置
+ * @return RenderDetail
+ */
+TableGridLayout.getRenderDetail = getRenderDetail;
 
 TableGridLayout.defaultProps = {
   data: [],

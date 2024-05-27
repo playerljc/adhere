@@ -1,5 +1,7 @@
 import type { CSSProperties, NamedExoticComponent, ReactElement, ReactNode } from 'react';
 
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+
 import Label from './Label';
 import Value from './Value';
 
@@ -44,6 +46,7 @@ export interface RenderGridSearchForm {
     layout?: LayoutType;
     density?: DensityType;
     parity?: boolean;
+    media?: ConfigProviderProps['media'];
   }): ReactElement;
 }
 
@@ -124,6 +127,7 @@ export type TableGridLayoutComponent = NamedExoticComponent<TableGridLayoutProps
   renderGridSearchFormGroup(
     data?: DataItem[],
     props?: Omit<TableGridLayoutProps, 'data'>,
+    media?: ConfigProviderProps['media'],
   ): ReactNode;
   getRenderDetail(data: DataItem[], props: Omit<TableGridLayoutProps, 'data'>): RenderDetail;
 };
