@@ -6,7 +6,7 @@ import { Context } from './ConfigProvider';
  */
 export type IntlType = {
     lang: 'en_US' | 'zh_CN' | 'pt_PT';
-    locales: object;
+    locales: Record<string, any>;
     prefix: string;
 };
 /**
@@ -27,13 +27,19 @@ export interface ConfigProviderProps {
         smallFontSize: string;
         commonMaxZIndex: string;
     };
-    children: any;
     onIntlInit: () => void;
+    media?: {
+        isUseMedia?: boolean;
+        designWidth?: number;
+    };
+    isUseWrapper?: boolean;
+    children: any;
 }
 /**
  * ConfigProviderProps
  */
 export interface ConfigProviderContext {
+    media: ConfigProviderProps['media'];
     intl?: IntlType;
 }
 export type ConfigProviderComponent = NamedExoticComponent<ConfigProviderProps> & {

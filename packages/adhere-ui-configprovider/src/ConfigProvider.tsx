@@ -2,7 +2,7 @@ import init from '@baifendian/adhere-ui-css';
 
 import { useUpdateEffect, useUpdateLayoutEffect } from 'ahooks';
 import classNames from 'classnames';
-import React, { createContext, memo, useLayoutEffect, useRef, useState } from 'react';
+import React, { createContext, memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
 import Hooks from '@baifendian/adhere-ui-hooks';
@@ -12,6 +12,7 @@ import Resource from '@baifendian/adhere-util-resource';
 import type { ConfigProviderComponent, ConfigProviderContext, ConfigProviderProps } from './types';
 
 export const Context = createContext<ConfigProviderContext>({} as ConfigProviderContext);
+
 const { useForceUpdate } = Hooks;
 
 const selectorPrefix = 'adhere-ui-config-provider';
@@ -25,15 +26,52 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   const {
     intl: { lang, locales, prefix, mainLanguage },
     theme,
+    media,
     children,
     onIntlInit,
+    isUseWrapper = true,
   } = props;
 
   const wrapperELRef = useRef<HTMLElement | null>(null);
 
   const [isIntlInit, setIntlInit] = useState(false);
 
+  const providerValue = useMemo<ConfigProviderContext>(
+    () => ({
+      intl: {
+        lang,
+        prefix,
+        locales: locales ?? {},
+      },
+      media: {
+        ...{
+          isUseMedia: false,
+          designWidth: 192,
+        },
+        ...(media ?? {}),
+      },
+    }),
+    [lang, prefix, locales, media],
+  );
+
   const forceUpdate = useForceUpdate();
+
+  const targetChildren = useMemo(() => {
+    if (isUseWrapper) {
+      return (
+        <div
+          // @ts-ignore
+          ref={wrapperELRef}
+          className={classNames(selectorPrefix, props.className ?? '')}
+          style={props.style ?? {}}
+        >
+          {children()}
+        </div>
+      );
+    }
+
+    return children();
+  }, [isUseWrapper, children, props.className, props.style]);
 
   function initIntl() {
     return Intl.init(
@@ -56,12 +94,8 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   }, [lang, locales, prefix, mainLanguage]);
 
   useLayoutEffect(() => {
-    // console.log('useLayoutEffect');
-
     initIntl().then(() => {
       Resource.Dict.value.LocalsMoment.value[lang]();
-
-      // console.log('initIntl');
 
       setIntlInit(true);
 
@@ -70,8 +104,6 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
   }, []);
 
   useUpdateLayoutEffect(() => {
-    // console.log('useUpdateLayoutEffect');
-
     if (isIntlInit && wrapperELRef.current) {
       init(theme, wrapperELRef.current as HTMLElement);
     }
@@ -79,26 +111,7 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
 
   return (
     <ConditionalRender conditional={isIntlInit}>
-      {() => (
-        <Context.Provider
-          value={{
-            intl: {
-              lang,
-              prefix,
-              locales: locales ?? {},
-            },
-          }}
-        >
-          <div
-            // @ts-ignore
-            ref={wrapperELRef}
-            className={classNames(selectorPrefix, props.className ?? '')}
-            style={props.style ?? {}}
-          >
-            {children()}
-          </div>
-        </Context.Provider>
-      )}
+      {() => <Context.Provider value={providerValue}>{targetChildren}</Context.Provider>}
     </ConditionalRender>
   );
 });
