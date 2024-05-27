@@ -47,6 +47,7 @@ module.exports = {
 
       map.set(itemArr[0], itemArr[1]);
     });
+
     return map;
   },
 };

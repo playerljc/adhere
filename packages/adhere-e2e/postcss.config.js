@@ -1,5 +1,5 @@
 const postcssPresetEnv = require('postcss-preset-env');
-const postcssRTLCSS = require('postcss-rtlcss');
+// const postcssRTLCSS = require('postcss-rtlcss');
 const postcssPxToRem = require('postcss-pxtorem');
 
 /**
@@ -9,6 +9,15 @@ const postcssPxToRem = require('postcss-pxtorem');
  */
 function isMobile() {
   return process.env.mobile === 'true';
+}
+
+/**
+ * isUseMedia
+ * @description 是否使用媒体
+ * @return {boolean}
+ */
+function isUseMedia() {
+  return process.env.media === 'true';
 }
 
 /**
@@ -37,13 +46,14 @@ const plugins = [
   // 网页方向设置
   // postcssRTLCSS({}),
   // px to rem(现在默认就加入，之前是移动端才加入)
-  postcssPxToRem({
-    rootValue: getDesignWidth(),
-    propList: ['*'],
-    // 不排除第三方库
-    // exclude: /node_modules/i,
-  }),
-];
+  isUseMedia() &&
+    postcssPxToRem({
+      rootValue: getDesignWidth(),
+      propList: ['*'],
+      // 不排除第三方库
+      // exclude: /node_modules/i,
+    }),
+].filter((c) => !!c);
 
 module.exports = {
   plugins,

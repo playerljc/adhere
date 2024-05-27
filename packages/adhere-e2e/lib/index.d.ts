@@ -1,4 +1,3 @@
-import 'amfe-flexible';
 declare const _default: {
     PC: ({ children, lang, locales, theme, curTheme, }: {
         children: any;

@@ -68,6 +68,7 @@ function getConfig({ webpackConfig, webpack, plugins }) {
         pathgen: JSON.stringify(process.env.pathgen),
         router: JSON.stringify(process.env.router),
         mobile: JSON.stringify(process.env.mobile),
+        media: JSON.stringify(process.env.media),
         publicPath: JSON.stringify(process.env.publicPath),
       },
     }),

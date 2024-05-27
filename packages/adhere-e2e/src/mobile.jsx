@@ -16,10 +16,18 @@ import {
   legacyLogicalPropertiesTransformer,
   px2remTransformer,
 } from '@ant-design/cssinjs';
-import { ConfigProvider as AdhereConfigProvider, Resource } from '@baifendian/adhere';
-import Browsersniff from '@baifendian/adhere-util-browsersniff';
+import {
+  ConfigProvider as AdhereConfigProvider,
+  Browsersniff,
+  ContextMenu,
+  MessageDialog,
+  Notification,
+  Popup,
+  Resource,
+} from '@baifendian/adhere';
 
 import { antdThemeToCssVariable } from './theme';
+import { isUseMedia } from './util';
 
 import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -75,37 +83,77 @@ export default ({
 }) => {
   const styleProviderProps = {
     transformers: [
-      /**
-       * 为了统一 LTR 和 RTL 样式，Ant Design 使用了 CSS 逻辑属性。例如原 margin-left 使用 margin-inline-start 代替，使其在 LTR 和 RTL 下都为起始位置间距。如果你需要兼容旧版浏览器（如 360 浏览器、QQ 浏览器 等等），可以通过 @ant-design/cssinjs 的 StyleProvider 配置 transformers 将其转换
-       */
       legacyLogicalPropertiesTransformer,
-      /**
-       * REM转换
-       */
-      px2remTransformer({
-        rootValue: 37.5,
-      }),
-    ],
+      isUseMedia() &&
+        px2remTransformer({
+          rootValue: 37.5,
+        }),
+    ].filter((c) => !!c),
   };
 
-  ReactDOM.createRoot(document.getElementById('app')).render(
-    <AntdConfigProvider locale={Resource.Dict.value.LocalsAntd.value[lang]}>
-      <StyleProvider {...styleProviderProps}>
-        <AntdMobileConfigProvider locale={zhCN}>
-          <AdhereConfigProvider
-            intl={{
-              lang,
-              locales,
-            }}
-            onIntlInit={() => {
-              antdThemeToCssVariable(curTheme);
-            }}
-            theme={theme}
-          >
-            {() => children}
-          </AdhereConfigProvider>
-        </AntdMobileConfigProvider>
-      </StyleProvider>
-    </AntdConfigProvider>,
-  );
+  const antDesignConfigProviderProps = {
+    locale: Resource.Dict.value.LocalsAntd.value[lang],
+  };
+
+  function renderToFragmentWrapper(children) {
+    return (
+      <AntdConfigProvider {...antDesignConfigProviderProps}>
+        <StyleProvider {...styleProviderProps}>
+          <AntdMobileConfigProvider locale={zhCN}>
+            <AdhereConfigProvider
+              intl={{
+                lang,
+                locales,
+              }}
+              onIntlInit={() => {
+                antdThemeToCssVariable(curTheme);
+              }}
+              theme={theme}
+              media={{
+                isUseMedia: isUseMedia(),
+                designWidth: 37.5,
+              }}
+              isUseWrapper={false}
+            >
+              {children}
+            </AdhereConfigProvider>
+          </AntdMobileConfigProvider>
+        </StyleProvider>
+      </AntdConfigProvider>
+    );
+  }
+
+  function renderToWrapper(children) {
+    return (
+      <AntdConfigProvider {...antDesignConfigProviderProps}>
+        <StyleProvider {...styleProviderProps}>
+          <AntdMobileConfigProvider locale={zhCN}>
+            <AdhereConfigProvider
+              intl={{
+                lang,
+                locales,
+              }}
+              onIntlInit={() => {
+                antdThemeToCssVariable(curTheme);
+              }}
+              theme={theme}
+              media={{
+                isUseMedia: isUseMedia(),
+                designWidth: 37.5,
+              }}
+            >
+              {children}
+            </AdhereConfigProvider>
+          </AntdMobileConfigProvider>
+        </StyleProvider>
+      </AntdConfigProvider>
+    );
+  }
+
+  MessageDialog.setRenderToWrapper(renderToFragmentWrapper);
+  Popup.setRenderToWrapper(renderToFragmentWrapper);
+  ContextMenu.setRenderToWrapper(renderToFragmentWrapper);
+  Notification.setRenderToWrapper(renderToFragmentWrapper);
+
+  ReactDOM.createRoot(document.getElementById('app')).render(renderToWrapper(() => children));
 };
