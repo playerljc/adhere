@@ -17,6 +17,7 @@ import {
   TimePicker,
 } from '@baifendian/adhere-ui-anthoc';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
 import TableGridLayout from '@baifendian/adhere-ui-tablegridlayout';
 import TableHeadSearch from '@baifendian/adhere-ui-tableheadsearch';
@@ -700,6 +701,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       ];
     }
 
+    getSearchLabelSymbol($search) {
+      const isShowLabelSymbol = !('isShowLabelSymbol' in $search)
+        ? true
+        : !!$search.isShowLabelSymbol;
+      return isShowLabelSymbol ? <span>：</span> : null;
+    }
+
     /**
      * getGridSearchFormGroupDataByColumnConfig
      * @description 通过列设置获取gridSearchFormGroup的Data数据
@@ -735,7 +743,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
               sort: $search.sort,
               label: (
                 <Label {...($search.labelAttrs ?? {})}>
-                  {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}：
+                  {Util.isFunction(currentTitle) ? currentTitle() : currentTitle}
+                  {this.getSearchLabelSymbol($search)}
                 </Label>
               ),
               value: ConditionalRender.conditionalRender({
@@ -1400,7 +1409,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       );
 
       // 标准的查询面板
-      const StandardSearchPanel = renderGridSearchFormGroup(group, defaultProps);
+      const StandardSearchPanel = (
+        <ConfigProvider.Context.Consumer>
+          {({ media }) => renderGridSearchFormGroup(group, defaultProps, media)}
+        </ConfigProvider.Context.Consumer>
+      );
 
       if (
         (this.advancedSearchConfig && this.advancedSearchConfig.rowCount !== 'auto') ||
@@ -1471,11 +1484,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
 
           return (
             <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>
-              {renderGridSearchFormGroup(
-                // @ts-ignore
-                gData,
-                defaultProps,
-              )}
+              <ConfigProvider.Context.Consumer>
+                {({ media }) =>
+                  renderGridSearchFormGroup(
+                    // @ts-ignore
+                    gData,
+                    defaultProps,
+                    media,
+                  )
+                }
+              </ConfigProvider.Context.Consumer>
               <AdvancedSearchPanel
                 groupData={group}
                 tableGridLayoutConfig={defaultProps}

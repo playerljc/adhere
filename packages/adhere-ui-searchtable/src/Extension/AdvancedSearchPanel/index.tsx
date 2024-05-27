@@ -11,6 +11,7 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import ConditionalRender from '@baifendian/adhere-ui-conditionalrender';
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 import SlideLayout from '@baifendian/adhere-ui-slidelayout';
 import Space from '@baifendian/adhere-ui-space';
@@ -116,12 +117,18 @@ const AdvancedSearchPanel = memo<AdvancedSearchPanelProps>((props) => {
               <ScrollLayout scrollY className={`${_selectorPrefix}-scroll-innner`}>
                 {
                   // @ts-ignore
-                  props?.children?.({ ...props }) ??
-                    renderGridSearchFormGroup(
-                      // @ts-ignore
-                      showStrategy === 'all' ? groupData : remainingGroupData,
-                      tableGridLayoutConfig,
-                    )
+                  props?.children?.({ ...props }) ?? (
+                    <ConfigProvider.Context.Consumer>
+                      {({ media }) =>
+                        renderGridSearchFormGroup(
+                          // @ts-ignore
+                          showStrategy === 'all' ? groupData : remainingGroupData,
+                          tableGridLayoutConfig,
+                          media,
+                        )
+                      }
+                    </ConfigProvider.Context.Consumer>
+                  )
                 }
               </ScrollLayout>
             </div>

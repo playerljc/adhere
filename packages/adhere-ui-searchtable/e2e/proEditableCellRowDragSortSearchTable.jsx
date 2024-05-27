@@ -69,6 +69,7 @@ class RowDragSort extends ProSearchEditableCellRowDragSortStateTable {
         $search: {
           type: 'input',
           visible: true,
+          isShowLabelSymbol: false,
         },
         $editable: {
           editable: true,

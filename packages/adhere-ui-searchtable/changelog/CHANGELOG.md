@@ -4,6 +4,8 @@
 
 2024-04-22
 
+* $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制
+* 加入REM适配
 * 可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式
 
 # 1.0.39

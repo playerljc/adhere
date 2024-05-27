@@ -115,6 +115,8 @@ export interface ColumnSearchConfig {
   startName?: string;
   // 时间区间控件的endName
   endName?: string;
+  // 是否显示label后面的：
+  isShowLabelSymbol?: boolean;
 }
 
 export interface ColumnParams {
