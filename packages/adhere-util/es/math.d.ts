@@ -140,10 +140,24 @@ declare const _default: {
      * getOvalPoint
      * @description - 获取椭圆上任意一点
      * @param center
-     * @param raduisX
+     * @param radiusX
      * @param radiusY
      * @param angle
      */
-    getOvalPoint(center: IPoint, raduisX: number, radiusY: number, angle: number): IPoint;
+    getOvalPoint(center: IPoint, radiusX: number, radiusY: number, angle: number): IPoint;
+    /**
+     * pxToRemNumber
+     * @param {number} px
+     * @param {number} base
+     * @return {number}
+     */
+    pxToRemNumber(px: number, base: number): number;
+    /**
+     * pxToRem
+     * @param {number} px
+     * @param {number} base
+     * @return {string}
+     */
+    pxToRem(px: number, base: number): string;
 };
 export default _default;

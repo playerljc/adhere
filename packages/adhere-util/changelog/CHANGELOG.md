@@ -4,6 +4,7 @@
 
 2024-02-22
 
+* 加入pxToRem方法
 * 修复math中的clientToCtxPoint方法适配zoom
 * 加入getTransformValues方法
 

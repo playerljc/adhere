@@ -203,7 +203,9 @@ declare const _default: {
     angleToRadian(angle: any): number;
     distance(value: number, unit: "kilometer"): number;
     getCirclePoint(center: import("./types").IPoint, raduis: number, angle: number): import("./types").IPoint;
-    getOvalPoint(center: import("./types").IPoint, raduisX: number, radiusY: number, angle: number): import("./types").IPoint;
+    getOvalPoint(center: import("./types").IPoint, radiusX: number, radiusY: number, angle: number): import("./types").IPoint;
+    pxToRemNumber(px: number, base: number): number;
+    pxToRem(px: number, base: number): string;
     isTextNode(el: Node): boolean;
     isCommentNode(el: Node): boolean;
     isElementNode(el: Node): boolean;
