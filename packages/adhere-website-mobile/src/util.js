@@ -52,13 +52,20 @@ export default {
    */
   setLang(lang) {
     Preferences.putStringByLocal('language', lang ?? Dict.value.SystemDefaultLang.value);
-  }
+  },
   /**
    * getEvnVars
    * @description 获取webpack的define参数
    * @return {object}
-   */,
-  getEvnVars() {
+   */ getEvnVars() {
     return CustomEvnVars;
+  },
+  /**
+   * isUseMedia
+   * @description 是否使用媒体
+   * @return {boolean}
+   */
+  isUseMedia() {
+    return this.getEvnVars().media === 'true';
   },
 };

@@ -2,12 +2,14 @@ import React from 'react';
 
 import { FlexLayout, Space } from '@baifendian/adhere';
 
+import styles from './base.less';
+
 const { Fixed, Auto } = FlexLayout;
 
 export default () => {
   return (
     <>
-      <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
+      <FlexLayout className={styles.Wrapper} style={{ border: '1px solid #ccc' }}>
         <Fixed>
           <div
             style={{
@@ -19,7 +21,7 @@ export default () => {
             Top
           </div>
         </Fixed>
-        <Auto style={{ justifyContent: 'center', alignItems: 'center' }}>Center</Auto>
+        f<Auto style={{ justifyContent: 'center', alignItems: 'center' }}>Center</Auto>
         <Fixed>
           <div
             style={{
@@ -35,7 +37,7 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
+      <FlexLayout className={styles.Wrapper} style={{ border: '1px solid #ccc' }}>
         <Fixed>
           <div
             style={{
@@ -94,7 +96,11 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
+      <FlexLayout
+        direction="horizontal"
+        className={styles.Wrapper}
+        style={{ border: '1px solid #ccc' }}
+      >
         <Fixed
           style={{
             borderRight: '1px solid #ccc',

@@ -24,7 +24,7 @@
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "startapp": "cross-env environment=dev mode=development publicPath=adhere router=hash ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "startapp": "cross-env environment=dev mode=development publicPath=adhere router=hash media=true ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {

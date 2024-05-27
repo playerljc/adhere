@@ -2,12 +2,14 @@ import React from 'react';
 
 import { FlexLayout, Space } from '@baifendian/adhere';
 
+import styles from './base.less';
+
 const { Fixed, Auto } = FlexLayout;
 
 export default () => {
   return (
     <>
-      <FlexLayout style={{ height: 500, border: '1px solid #ccc' }}>
+      <FlexLayout className={styles.Wrapper2} style={{ border: '1px solid #ccc' }}>
         <Fixed>fixed1</Fixed>
         <Fixed>fixed2</Fixed>
         <Auto>auto1</Auto>
@@ -18,7 +20,11 @@ export default () => {
 
       <Space direction="vertical" />
 
-      <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
+      <FlexLayout
+        direction="horizontal"
+        className={styles.Wrapper}
+        style={{ border: '1px solid #ccc' }}
+      >
         <Fixed>fixed1</Fixed>
         <Fixed>fixed2</Fixed>
         <Auto>auto1</Auto>

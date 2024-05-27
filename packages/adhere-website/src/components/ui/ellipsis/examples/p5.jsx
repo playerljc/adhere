@@ -2,8 +2,10 @@ import React from 'react';
 
 import { Ellipsis } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 export default () => (
-  <div style={{ position: 'relative', width: 200, padding: 10, border: '1px solid #ccc' }}>
+  <div className={styles.Wrapper} style={{ position: 'relative', border: '1px solid #ccc' }}>
     <Ellipsis
       wrap={false}
       dangerouslySetInnerHTML={{

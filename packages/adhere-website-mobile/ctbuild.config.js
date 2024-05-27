@@ -105,6 +105,7 @@ module.exports = {
           environment: JSON.stringify(process.env.environment),
           publicPath: JSON.stringify(process.env.publicPath),
           router: JSON.stringify(process.env.router),
+          media: JSON.stringify(process.env.media),
         },
       }),
     );

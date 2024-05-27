@@ -2,6 +2,8 @@ import React from 'react';
 
 import { CascadeCompared } from '@baifendian/adhere';
 
+import styles from './example.less';
+
 const columns = [];
 columns.length = 10;
 columns.fill(0);
@@ -37,7 +39,8 @@ function getMaster() {
   return data.map((t, i) => ({
     title: (
       <h2
-        style={{ padding: '15px 0 15px 15px', margin: 0, borderBottom: '1px solid rgba(0,0,0,.1)' }}
+        className={styles.H2}
+        style={{ margin: 0, borderBottom: '1px solid rgba(0,0,0,.1)' }}
       >{`header${i + 1}`}</h2>
     ),
     columns: columns.map((c, j) => ({
@@ -89,7 +92,7 @@ function getMaster() {
 
 export default () => {
   return (
-    <div style={{ width: 320, height: 548, border: '1px solid rgba(0,0,0,.1)' }}>
+    <div className={styles.Wrapper} style={{ border: '1px solid rgba(0,0,0,.1)' }}>
       <CascadeCompared indicator={getIndicator()} master={getMaster()} />
     </div>
   );

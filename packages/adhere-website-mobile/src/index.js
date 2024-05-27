@@ -1,7 +1,6 @@
-import 'amfe-flexible';
-
 import '@/lib/Mobile';
 
+import { useUpdateEffect } from 'ahooks';
 import { App } from 'antd';
 import { ConfigProvider as AntdMobileConfigProvider } from 'antd-mobile';
 import 'antd-mobile/es/global';
@@ -17,8 +16,12 @@ import {
 import {
   AdapterScreen,
   ConfigProvider as AdhereConfigProvider,
+  ContextMenu,
   DateDisplay,
   Dict,
+  MessageDialog,
+  Notification,
+  Popup,
   Util,
 } from '@baifendian/adhere';
 import { ConfigProvider as AntdConfigProvider } from '@baifendian/adhere-ui-anthoc';
@@ -34,6 +37,11 @@ import '@baifendian/adhere/lib/css.less';
 
 import styles from './index.less';
 
+if (SelfUtil.isUseMedia()) {
+  // 适配REM
+  AdapterScreen.flexible();
+}
+
 let root;
 let RouterConfig;
 let lang;
@@ -45,46 +53,77 @@ let direction;
  * @constructor
  */
 function Application() {
+  const adhereProviderConfig = {
+    theme: {},
+    intl: {
+      lang,
+      locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce((pre, cur) => {
+        pre[cur.code] = cur.module;
+        return pre;
+      }, {}),
+    },
+    onIntlInit: () => {
+      Router().then((routerConfig) => {
+        RouterConfig = routerConfig;
+        render();
+      });
+    },
+    media: {
+      isUseMedia: SelfUtil.isUseMedia(),
+      designWidth: 37.5,
+    },
+  };
+
   const styleProviderProps = {
     transformers: [
       legacyLogicalPropertiesTransformer,
-      px2remTransformer({
-        rootValue: 37.5,
-      }),
-    ],
+      SelfUtil.isUseMedia() &&
+        px2remTransformer({
+          rootValue: 37.5,
+        }),
+    ].filter((c) => !!c),
   };
 
-  return (
-    <AntdConfigProvider>
-      <StyleProvider {...styleProviderProps}>
-        <App className={styles.App}>
+  useUpdateEffect(() => {
+    MessageDialog.setRenderToWrapper(renderToFragmentWrapper);
+    Popup.setRenderToWrapper(renderToFragmentWrapper);
+    ContextMenu.setRenderToWrapper(renderToFragmentWrapper);
+    Notification.setRenderToWrapper(renderToFragmentWrapper);
+  });
+
+  function renderToFragmentWrapper(children) {
+    return (
+      <AntdConfigProvider>
+        <StyleProvider {...styleProviderProps}>
           <AntdMobileConfigProvider locale={zhCN}>
             <AdhereConfigProvider
-              theme={{}}
-              intl={{
-                lang,
-                locales: Array.from(Object.values(Dict.value.SystemLang.value)).reduce(
-                  (pre, cur) => {
-                    pre[cur.code] = cur.module;
-                    return pre;
-                  },
-                  {},
-                ),
-              }}
-              onIntlInit={() => {
-                Router().then((routerConfig) => {
-                  RouterConfig = routerConfig;
-                  render();
-                });
-              }}
+              {...adhereProviderConfig}
+              onIntlInit={() => {}}
+              isUseWrapper={false}
             >
-              {() => RouterConfig}
+              {children}
             </AdhereConfigProvider>
           </AntdMobileConfigProvider>
-        </App>
-      </StyleProvider>
-    </AntdConfigProvider>
-  );
+        </StyleProvider>
+      </AntdConfigProvider>
+    );
+  }
+
+  function renderToWrapper(children) {
+    return (
+      <AntdConfigProvider>
+        <StyleProvider {...styleProviderProps}>
+          <App className={styles.App}>
+            <AntdMobileConfigProvider locale={zhCN}>
+              <AdhereConfigProvider {...adhereProviderConfig}>{children}</AdhereConfigProvider>
+            </AntdMobileConfigProvider>
+          </App>
+        </StyleProvider>
+      </AntdConfigProvider>
+    );
+  }
+
+  return renderToWrapper(() => RouterConfig);
 }
 
 /**
@@ -96,8 +135,6 @@ function render() {
 }
 
 (function () {
-  // AdapterScreen.detectZoom();
-
   // 配置字典
   DictConfig();
 

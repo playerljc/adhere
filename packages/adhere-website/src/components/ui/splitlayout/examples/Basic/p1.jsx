@@ -2,38 +2,48 @@ import React from 'react';
 
 import { FlexLayout, Space, SplitLayout } from '@baifendian/adhere';
 
+import styles from './basic.less';
+
 const { Fixed, Auto } = FlexLayout;
 
 export default () => (
   <>
-    <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
-      <Fixed style={{ width: 30 }} />
+    <FlexLayout
+      direction="horizontal"
+      className={styles.Wrapper}
+      style={{ border: '1px solid #ccc' }}
+    >
+      <Fixed className={styles.Wrapper2} />
       <SplitLayout />
       <Auto />
     </FlexLayout>
 
     <Space size={30} />
 
-    <FlexLayout direction="horizontal" style={{ height: 200, border: '1px solid #ccc' }}>
+    <FlexLayout
+      direction="horizontal"
+      className={styles.Wrapper}
+      style={{ border: '1px solid #ccc' }}
+    >
       <Auto />
       <SplitLayout />
-      <Fixed style={{ width: 30 }} />
+      <Fixed className={styles.Wrapper2} />
     </FlexLayout>
 
     <Space size={30} />
 
-    <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
-      <Fixed style={{ height: 30 }} />
+    <FlexLayout className={styles.Wrapper} style={{ border: '1px solid #ccc' }}>
+      <Fixed className={styles.Wrapper1} />
       <SplitLayout style={{ width: 'auto' }} />
       <Auto />
     </FlexLayout>
 
     <Space size={30} />
 
-    <FlexLayout style={{ height: 200, border: '1px solid #ccc' }}>
+    <FlexLayout className={styles.Wrapper} style={{ border: '1px solid #ccc' }}>
       <Auto />
       <SplitLayout style={{ width: 'auto' }} />
-      <Fixed style={{ height: 30 }} />
+      <Fixed className={styles.Wrapper1} />
     </FlexLayout>
   </>
 );

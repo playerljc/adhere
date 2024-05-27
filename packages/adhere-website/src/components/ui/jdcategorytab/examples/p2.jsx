@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { ConditionalRender, JdCategoryTab } from '@baifendian/adhere';
 
+import styles from './examples.less';
+
 const data = Array.from({ length: 100 }).fill(0);
 
 const columns = [
@@ -97,7 +99,7 @@ export default () => {
   const [activeKey, setActiveKey] = useState('1');
 
   return (
-    <div style={{ width: 600, height: 600, border: '1px solid rgba(0,0,0,.1)' }}>
+    <div className={styles.Wrapper} style={{ border: '1px solid rgba(0,0,0,.1)' }}>
       <JdCategoryTab
         menuData={data.map((t, index) => ({
           key: `${index + 1}`,
