@@ -22,7 +22,7 @@ const BackLayout = memo<BackLayoutProps>((props) => {
     history,
     backTitle,
     children,
-    ...otherProps
+    ...resetProps
   } = props;
 
   const toolbar = useMemo(
@@ -52,7 +52,7 @@ const BackLayout = memo<BackLayoutProps>((props) => {
   );
 
   return (
-    <ToolBarLayout {...otherProps} topToolBarItems={toolbar}>
+    <ToolBarLayout {...resetProps} topToolBarItems={toolbar}>
       {children}
     </ToolBarLayout>
   );

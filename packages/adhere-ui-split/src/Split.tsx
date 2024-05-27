@@ -1,5 +1,7 @@
 import classNames from 'classnames';
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useContext, useMemo } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import SplitGroup from './Group';
 import { getValue } from './Util';
@@ -13,16 +15,11 @@ const selectorPrefix = 'adhere-ui-split';
  * @constructor
  */
 const InternalSplit = memo<SplitProps>((props) => {
-  const {
-    className = '',
-    style,
-    direction = 'vertical',
-    size = 20,
-    isUseMedia = false,
-    rootValue = 192,
-  } = props;
+  const { className = '', style, direction = 'vertical', size = 20 } = props;
 
-  const value = useMemo(() => getValue(isUseMedia, rootValue, size), [isUseMedia, rootValue, size]);
+  const { media } = useContext(ConfigProvider.Context);
+
+  const value = useMemo(() => getValue(media, size), [media, size]);
 
   const getStyle = useCallback(() => {
     if (direction === 'horizontal') {

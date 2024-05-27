@@ -24,7 +24,7 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
     mainAutoWrapClassName = '',
     topProps = {},
     bottomProps = {},
-    ...otherProps
+    ...restProps
   } = props;
 
   const topElement = useMemo(
@@ -76,7 +76,7 @@ const ToolBarLayout = memo<ToolBarLayoutProps>((props) => {
       )}
       topProps={targetTopProps}
       bottomProps={targetBottomProps}
-      {...otherProps}
+      {...restProps}
       renderTop={topElement}
       renderMain={children}
       renderBottom={bottomElement}

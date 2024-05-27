@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import debounce from 'lodash.debounce';
 import React, {
-  ForwardRefRenderFunction,
   PropsWithoutRef,
   RefAttributes,
   forwardRef,
@@ -9,6 +9,8 @@ import React, {
   useLayoutEffect,
   useRef,
 } from 'react';
+
+import { ResizeObserver } from '@juggle/resize-observer';
 
 import StickupLayoutItem from './Item';
 import type {
@@ -35,6 +37,7 @@ const InternalStickupLayout = memo<
       children,
     } = props;
 
+    const ro = useRef<ResizeObserver>({} as ResizeObserver);
     const el = useRef<HTMLDivElement | null>(null);
     const fixedEl = useRef<HTMLDivElement | null>(null);
     const innerEl = useRef<HTMLDivElement | null>(null);
@@ -66,7 +69,7 @@ const InternalStickupLayout = memo<
 
         let rangeStart = pre;
 
-        let rangeEnd;
+        let rangeEnd: number;
 
         if (i !== len - 1) {
           rangeEnd = (headerEls.current![i + 1] as HTMLElement).offsetTop - header.offsetHeight;
@@ -96,7 +99,7 @@ const InternalStickupLayout = memo<
 
       let low = 0,
         high = index.current.length - 1,
-        middle,
+        middle: number,
         target;
       while (low <= high && low <= index.current.length - 1 && high <= index.current.length - 1) {
         middle = (high + low) >> 1;
@@ -161,7 +164,7 @@ const InternalStickupLayout = memo<
      * @param {number} targetTop
      * @param {number} duration
      */
-    function scrollAnimationTo(targetTop = 0, duration = 300) {
+    function scrollAnimationTo(targetTop: number = 0, duration: number = 300) {
       if (key.current) return;
 
       initMask();
@@ -256,7 +259,7 @@ const InternalStickupLayout = memo<
        * @param {number} _duration
        * @return {boolean}
        */
-      scrollToByIndex: (_index, _duration = 300) => {
+      scrollToByIndex: (_index: number, _duration: number = 300) => {
         let i = 0,
           item;
         for (; i < index.current.length; i++) {
@@ -302,6 +305,24 @@ const InternalStickupLayout = memo<
       initial();
 
       return () => {
+        if (maskEl.current) {
+          maskEl.current?.parentElement?.removeChild(maskEl.current);
+        }
+      };
+    }, []);
+
+    useLayoutEffect(() => {
+      const onResize = debounce(() => {
+        initial();
+      }, 300);
+
+      ro.current = new ResizeObserver(onResize);
+
+      ro.current.observe(el.current as HTMLElement);
+
+      return () => {
+        ro?.current?.disconnect();
+
         if (maskEl.current) {
           maskEl.current?.parentElement?.removeChild(maskEl.current);
         }

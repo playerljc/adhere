@@ -1,6 +1,8 @@
 import classNames from 'classnames';
-import React, { forwardRef, memo, useMemo } from 'react';
+import React, { forwardRef, memo, useCallback, useContext, useMemo } from 'react';
 import type { PropsWithoutRef, RefAttributes } from 'react';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
 import Auto from './Auto';
 import BackLayout from './BackLayout';
@@ -10,6 +12,7 @@ import HorizontalFlexLayout from './HorizontalFlexLayout';
 import ScrollLayout, { ScrollLayoutContext, useScrollLayout } from './ScrollLayout';
 import * as TRBLC from './TRBLC';
 import ToolBarLayout from './ToolBarLayout';
+import { getValueWithUnit } from './Util';
 import VerticalFlexLayout from './VerticalFlexLayout';
 import type { FlexLayoutComponent, FlexLayoutProps } from './types';
 
@@ -32,17 +35,19 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
       ...attrs
     } = props;
 
+    const { media } = useContext(ConfigProvider.Context);
+
     /**
      * getVerticalGridStyle
      */
-    const getVerticalGridStyle = () => ({});
+    const getVerticalGridStyle = useCallback(() => ({}), []);
 
     /**
      * getHorizontalGridStyle
      */
-    const getHorizontalGridStyle = () => {
-      let rowGapOrigin;
-      let columnGapOrigin;
+    const getHorizontalGridStyle = useCallback(() => {
+      let rowGapOrigin: number = 0;
+      let columnGapOrigin: number = 0;
 
       if (Array.isArray(gutter)) {
         if (gutter.length === 1) {
@@ -53,30 +58,33 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
           columnGapOrigin = gutter[1];
         }
       } else {
-        rowGapOrigin = gutter;
-        columnGapOrigin = gutter;
+        rowGapOrigin = gutter as number;
+        columnGapOrigin = gutter as number;
       }
 
-      const columnGapOriginPixel = `${columnGapOrigin / 2}px`;
+      const columnGapOriginValue = getValueWithUnit(
+        columnGapOrigin / 2,
+        media,
+      ); /*`${columnGapOrigin / 2}px`;*/
 
       return {
-        rowGap: `${rowGapOrigin}px`,
-        marginLeft: `-${columnGapOriginPixel}`,
-        marginRight: `-${columnGapOriginPixel}`,
+        rowGap: getValueWithUnit(rowGapOrigin, media) /*`${rowGapOrigin}px`*/,
+        marginLeft: `-${columnGapOriginValue}`,
+        marginRight: `-${columnGapOriginValue}`,
       };
-    };
+    }, [gutter]);
 
     /**
      * getGridStyle
      */
-    const getGridStyle = () => {
+    const getGridStyle = useCallback(() => {
       const map = new Map([
         ['horizontal', getHorizontalGridStyle],
         ['vertical', getVerticalGridStyle],
       ]);
 
       return map.get(direction)?.();
-    };
+    }, [direction, getHorizontalGridStyle, getVerticalGridStyle]);
 
     // class
     const classList = useMemo(

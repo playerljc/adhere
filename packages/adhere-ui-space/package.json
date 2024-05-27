@@ -26,10 +26,12 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereSpace --define alias=@,evnVars=true",
-    "e2e": "cross-env e2e",
+    "e2e": "cross-env e2e media=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.10.28",
+    "@baifendian/adhere-util": "^2.10.28",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0"

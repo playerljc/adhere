@@ -71,6 +71,12 @@ export declare class Popup {
  */
 declare const PopupFactory: {
     /**
+     * setRenderToWrapper
+     * @description 设置renderToWrapper方法
+     * @param _renderToWrapper
+     */
+    setRenderToWrapper(_renderToWrapper: any): void;
+    /**
      * create
      * @param config
      * @return Popup

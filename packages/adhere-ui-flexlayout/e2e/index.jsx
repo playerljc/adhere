@@ -9,5 +9,5 @@ import Trblc from './trblc';
 import './index.less';
 
 e2e.PC({
-  children: <Trblc />,
+  children: <RefTest />,
 });

@@ -57,12 +57,12 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
           ),
       },
       show: {
-        left: (time) => {
+        left: (time: string | number | null | undefined) => {
           slider(el.current as HTMLElement, '0', '0', '0', `${getDuration(time)}ms`, onAfterShow);
 
           if (maskEl.current) maskEl.current.style.display = 'block';
         },
-        right: (time) => {
+        right: (time: string | number | null | undefined) => {
           slider(
             el.current as HTMLElement,
             `${
@@ -77,12 +77,12 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
 
           if (maskEl.current) maskEl.current.style.display = 'block';
         },
-        top: (time) => {
+        top: (time: string | number | null | undefined) => {
           slider(el.current as HTMLElement, '0', '0', '0', `${getDuration(time)}ms`, onAfterShow);
 
           if (maskEl.current) maskEl.current.style.display = 'block';
         },
-        bottom: (time) => {
+        bottom: (time: string | number | null | undefined) => {
           slider(
             el.current as HTMLElement,
             '0',
@@ -99,7 +99,7 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
         },
       },
       close: {
-        left: (time) => {
+        left: (time: string | number | null | undefined) => {
           slider(
             el.current as HTMLElement,
             '-100%',
@@ -111,7 +111,7 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
 
           if (maskEl.current) maskEl.current.style.display = 'none';
         },
-        right: (time) => {
+        right: (time: string | number | null | undefined) => {
           slider(
             el.current as HTMLElement,
             `${(el.current?.parentElement as HTMLElement).offsetWidth}px`,
@@ -123,7 +123,7 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
 
           if (maskEl.current) maskEl.current.style.display = 'none';
         },
-        top: (time) => {
+        top: (time: string | number | null | undefined) => {
           slider(
             el.current as HTMLElement,
             '0',
@@ -135,7 +135,7 @@ const Overlay = memo<PropsWithoutRef<OverlayProps> & RefAttributes<SlideLayoutHa
 
           if (maskEl.current) maskEl.current.style.display = 'none';
         },
-        bottom: (time) => {
+        bottom: (time: string | number | null | undefined) => {
           slider(
             el.current as HTMLElement,
             '0',

@@ -11,7 +11,7 @@ declare class Notification {
     private notificationContainer;
     private notifications;
     private key;
-    constructor(container: any, config: Config);
+    constructor(container: HTMLElement, config: Config);
     /**
      * createInnerContainer
      * @private
@@ -52,6 +52,7 @@ declare class Notification {
      * build
      * @param id
      * @param n
+     * @param media
      * @return string
      * @private
      */
@@ -79,9 +80,15 @@ declare class Notification {
      * close
      * @param {string} id
      */
-    close(id: any): void;
+    close(id: string): void;
 }
 declare const NotificationFactory: {
+    /**
+     * setRenderToWrapper
+     * @description 设置renderToWrapper方法
+     * @param _renderToWrapper
+     */
+    setRenderToWrapper(_renderToWrapper: any): void;
     /**
      * build
      * @param container

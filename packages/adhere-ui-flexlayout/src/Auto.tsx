@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React, { forwardRef, memo, useContext, useMemo } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
 import { FlexContext } from './Context';
 import { useGap } from './Hooks';
 import { getGridStyle } from './Util';
@@ -17,6 +19,8 @@ const selectorPrefix = 'adhere-ui-flex-layout-auto';
 const Auto = memo<AutoProps>(
   forwardRef<any, AutoProps>((props, ref) => {
     const { children, className = '', style = {}, autoFixed = true, fit = true, ...attrs } = props;
+
+    const { media } = useContext(ConfigProvider.Context);
 
     const {
       gutter = 0,
@@ -40,7 +44,7 @@ const Auto = memo<AutoProps>(
       const defaultStyle = style ?? {};
 
       const gridStyle = isUseGap
-        ? getGridStyle({ gutter, span: null, children: contextChildren, direction })
+        ? getGridStyle({ gutter, span: null, children: contextChildren, direction, media })
         : {};
 
       return {

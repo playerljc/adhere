@@ -48,14 +48,14 @@ export default () => {
           left
         </SlideLayout.Revolving>*/}
 
-        {/*<SlideLayout.Overlay
+        <SlideLayout.Overlay
           onAfterClose={() => {
             setCollapse1(false);
           }}
           collapse={collapse1}
         >
           left
-        </SlideLayout.Overlay>*/}
+        </SlideLayout.Overlay>
 
         {/*<SlideLayout.Push
           onAfterClose={() => {

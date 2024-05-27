@@ -1,18 +1,17 @@
-//@import '~@baifendian/adhere-ui-css/es/vars';
 @import '~@baifendian/adhere-ui-css/es/mixin';
 
-@adhere-ui-notification-transition-duration: 600ms;
-@adhere-ui-notification-standard-header-icon-width: 50px;
-@adhere-ui-notification-standard-header-icon-height: 50px;
-@adhere-ui-notification-ios-close-btn-width: 30px;
-@adhere-ui-notification-ios-close-btn-height: 30px;
-@adhere-ui-notification-material-close-btn-width: 30px;
-@adhere-ui-notification-material-close-btn-height: 30px;
-//@adhere-ui-notification-border-color: @adhere-border-color;
-@adhere-ui-notification-standard-content-color: #8e8e93;
-@adhere-ui-notification-material-ul-background-color: #323232;
-
 .adhere-ui-notification {
+  @adhere-ui-notification-transition-duration: 600ms;
+  @adhere-ui-notification-standard-header-icon-width: 50px;
+  @adhere-ui-notification-standard-header-icon-height: 50px;
+  @adhere-ui-notification-ios-close-btn-width: 30px;
+  @adhere-ui-notification-ios-close-btn-height: 30px;
+  @adhere-ui-notification-material-close-btn-width: 30px;
+  @adhere-ui-notification-material-close-btn-height: 30px;
+  //@adhere-ui-notification-border-color: @adhere-border-color;
+  @adhere-ui-notification-standard-content-color: #8e8e93;
+  @adhere-ui-notification-material-ul-background-color: #323232;
+
   &-top,
   &-bottom {
     &-material,
@@ -87,7 +86,7 @@
 
               > .adhere-ui-notification-standard-content-media-r {
                 align-self: flex-start;
-                width: @adhere-ui-notification-standard-header-icon-width;
+                //width: @adhere-ui-notification-standard-header-icon-width;
                 margin: 10px;
                 overflow: hidden;
                 font-size: var(--adhere-font-size-base);

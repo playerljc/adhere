@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import CircularMenuFactory from './CircularMenu/factory';
@@ -15,6 +15,8 @@ import type {
 } from './types';
 
 const selectorPrefix = 'adhere-ui-context-menu';
+
+let renderToWrapper: (children: () => ReactNode) => ReactNode;
 
 const ContextMenuComponentFunction = forwardRef<
   ContextMenuComponentRefHandle,
@@ -86,6 +88,14 @@ const openHandlers = new WeakMap<HTMLElement, Root>();
 
 const ContextMenu: ContextMenuComponent = {
   /**
+   * setRenderToWrapper
+   * @description 设置renderToWrapper方法
+   * @param _renderToWrapper
+   */
+  setRenderToWrapper(_renderToWrapper) {
+    renderToWrapper = _renderToWrapper;
+  },
+  /**
    * config
    * {
    *   name - {String} 名字
@@ -121,7 +131,7 @@ const ContextMenu: ContextMenuComponent = {
       // () => contextMenuIns.current?.mount(),
     );
 
-    root.render(
+    const element = (
       <ContextMenuComponentFunction
         data={data}
         config={config}
@@ -131,8 +141,10 @@ const ContextMenu: ContextMenuComponent = {
           contextMenuIns.current = ins;
           contextMenuIns.current?.mount();
         }}
-      />,
+      />
     );
+
+    root.render(renderToWrapper?.(() => element) ?? element);
 
     openHandlers.set(parentEl, root);
 

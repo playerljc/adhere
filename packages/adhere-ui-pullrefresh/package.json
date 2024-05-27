@@ -27,7 +27,7 @@
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildumd": "ctbuild buildumd --packagename AdherePullRefresh --define alias=@,evnVars=true",
-    "e2e": "cross-env e2e",
+    "e2e": "cross-env e2e media=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
@@ -36,9 +36,12 @@
     "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-intl": "^2.10.28",
     "@baifendian/adhere-util-resource": "^2.10.28",
+    "@juggle/resize-observer": "^3.4.0",
+    "ahooks": "^3.7.11",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
     "load-awesome": "^1.1.0",
+    "lodash.debounce": "^4.0.8",
     "omit.js": "^2.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

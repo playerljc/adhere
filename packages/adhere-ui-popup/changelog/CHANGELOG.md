@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* 加入renderToWrapper方法
 * Trigger加入closeAction的设置
 * 加入disabled设置和update刷新方法
 

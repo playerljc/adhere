@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 import { v1 } from 'uuid';
 
@@ -12,8 +12,10 @@ const selectorPrefix = 'adhere-ui-popup';
 
 let prePopup: Popup | null = null;
 let popups: Popup[] = [];
-let maskEl;
+let maskEl: HTMLElement | null;
 let el = null;
+
+let renderToWrapper: (children: () => ReactNode) => ReactNode;
 
 /**
  * Popup
@@ -78,24 +80,23 @@ export class Popup {
 
     this.root = ReactDOM.createRoot(this.popupEl);
 
-    this.root.render(
-      React.cloneElement(children, {
-        ref: () => {
-          (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+    const element = React.cloneElement(children, {
+      ref: () => {
+        (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
 
-          const configProviderEL = Util.getTopDom(
-            this.popupEl as HTMLElement,
-            'adhere-ui-config-provider',
-          );
+        const configProviderEL = Util.getTopDom(
+          this.popupEl as HTMLElement,
+          'adhere-ui-config-provider',
+        );
 
-          if (configProviderEL) {
-            (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
-          }
+        if (configProviderEL) {
+          (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
+        }
 
-          this.trigger('onCreate');
-        },
-      }),
-    );
+        this.trigger('onCreate');
+      },
+    });
+    this.root.render(renderToWrapper?.(() => element) ?? element);
 
     this.popupHandlers.set(this.popupEl, this.root);
   }
@@ -113,26 +114,23 @@ export class Popup {
   update(_children) {
     const { children } = this.config!;
 
-    console.log('update');
+    const element = React.cloneElement(_children ?? children, {
+      ref: () => {
+        (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
 
-    this.root?.render(
-      React.cloneElement(_children ?? children, {
-        ref: () => {
-          (this.el as HTMLElement).appendChild(this.popupEl as HTMLElement);
+        const configProviderEL = Util.getTopDom(
+          this.popupEl as HTMLElement,
+          'adhere-ui-config-provider',
+        );
 
-          const configProviderEL = Util.getTopDom(
-            this.popupEl as HTMLElement,
-            'adhere-ui-config-provider',
-          );
+        if (configProviderEL) {
+          (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
+        }
 
-          if (configProviderEL) {
-            (this.popupEl as HTMLDivElement).style.cssText = configProviderEL?.style?.cssText;
-          }
-
-          this.trigger('onUpdate');
-        },
-      }),
-    );
+        this.trigger('onUpdate');
+      },
+    });
+    this.root?.render(renderToWrapper?.(() => element) ?? element);
   }
 
   /**
@@ -148,7 +146,7 @@ export class Popup {
     //   prePopup.close();
     // }
 
-    maskEl.style.display = 'block';
+    (maskEl as HTMLElement).style.display = 'block';
 
     (this.popupEl as HTMLElement).style.display = 'block';
 
@@ -157,7 +155,7 @@ export class Popup {
     this.trigger('onBeforeShow');
 
     setTimeout(() => {
-      maskEl.classList.add('modal-in');
+      (maskEl as HTMLElement).classList.add('modal-in');
       (this.popupEl as HTMLElement).classList.add('modal-in');
     }, 100);
 
@@ -177,7 +175,7 @@ export class Popup {
       prePopup.close();
     }
 
-    maskEl.style.display = 'block';
+    (maskEl as HTMLElement).style.display = 'block';
 
     (this.popupEl as HTMLElement).style.display = 'block';
 
@@ -186,7 +184,7 @@ export class Popup {
     this.trigger('onBeforeShow');
 
     setTimeout(() => {
-      maskEl.classList.add('modal-in');
+      (maskEl as HTMLElement).classList.add('modal-in');
       (this.popupEl as HTMLElement).classList.add('modal-in');
     }, 100);
 
@@ -214,12 +212,12 @@ export class Popup {
           throw e;
         }
 
-        maskEl.classList.remove('modal-in');
+        (maskEl as HTMLElement).classList.remove('modal-in');
       });
     } else {
       (this.popupEl as HTMLElement).classList.remove('modal-in');
 
-      maskEl.classList.remove('modal-in');
+      (maskEl as HTMLElement).classList.remove('modal-in');
     }
 
     return true;
@@ -271,7 +269,7 @@ export class Popup {
       prePopup = null;
 
       (this.popupEl as HTMLElement).style.display = 'none';
-      maskEl.style.display = 'none';
+      (maskEl as HTMLElement).style.display = 'none';
 
       this.trigger('onAfterClose');
     } else {
@@ -287,6 +285,14 @@ export class Popup {
  */
 const PopupFactory = {
   /**
+   * setRenderToWrapper
+   * @description 设置renderToWrapper方法
+   * @param _renderToWrapper
+   */
+  setRenderToWrapper(_renderToWrapper) {
+    renderToWrapper = _renderToWrapper;
+  },
+  /**
    * create
    * @param config
    * @return Popup
@@ -298,7 +304,6 @@ const PopupFactory = {
 
     return ins;
   },
-
   /**
    * show - 显示一个popup
    * @param popup
@@ -315,7 +320,6 @@ const PopupFactory = {
 
     return popup.show();
   },
-
   /**
    * showClosePrePopup
    * @description 关闭之前的显示
@@ -337,7 +341,6 @@ const PopupFactory = {
 
     return popup.show();
   },
-
   /**
    * close - 关闭一个popup
    * @param {Popup} popup
@@ -354,7 +357,6 @@ const PopupFactory = {
       throw e;
     }
   },
-
   /**
    * closeAll - 关闭所有
    * @return boolean
@@ -369,7 +371,6 @@ const PopupFactory = {
 
     return flags.every((flag) => flag);
   },
-
   /**
    * destroy - 销毁一个popup
    * @param {Popup} popup
@@ -392,7 +393,6 @@ const PopupFactory = {
 
     return res;
   },
-
   /**
    * getEl
    * @return {HTMLElement}
@@ -400,7 +400,6 @@ const PopupFactory = {
   getEl() {
     return el || document.body;
   },
-
   /**
    * setEl
    * @param tel

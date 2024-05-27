@@ -1,5 +1,7 @@
+import { useUpdate } from 'ahooks';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
+import debounce from 'lodash.debounce';
 import React, {
   PropsWithoutRef,
   RefAttributes,
@@ -17,6 +19,7 @@ import Hooks from '@baifendian/adhere-ui-hooks';
 import Util from '@baifendian/adhere-util';
 import Intl from '@baifendian/adhere-util-intl';
 import Resource from '@baifendian/adhere-util-resource';
+import { ResizeObserver } from '@juggle/resize-observer';
 
 import { PullRefreshProps, PullRefreshRefHandle } from './types';
 
@@ -42,10 +45,13 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       updateTimeFormat = Resource.Dict.value.ResourceMomentFormat18.value(),
       children,
     } = props;
+    const update = useUpdate();
 
+    const ro = useRef<ResizeObserver>({} as ResizeObserver);
     const [isCan, setCan] = useSetState(false);
     const [preUpdateTime, setPreUpdateTime] = useSetState(dayjs().valueOf());
 
+    const rootEl = useRef<HTMLDivElement>(null);
     const elRef = useRef<HTMLDivElement>(null);
     const scrollElRef = useRef<HTMLDivElement>(null);
     const iconElRef = useRef<HTMLImageElement>(null);
@@ -200,7 +206,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param action
      * @param params
      */
-    function trigger(action, params?: any) {
+    function trigger(action: string, params?: any) {
       if (props[action]) {
         props[action](params);
       }
@@ -213,9 +219,9 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param duration
      * @private
      */
-    function translateY(el, y: string, duration = 0) {
-      el.style.transition = el.style.webkitTransition = `transform ${duration}ms ease`;
-      el.style.transform = el.style.webkitTransform = `translate3d(0,${y},0)`;
+    function translateY(el: HTMLDivElement, y: string, duration = 0) {
+      el.style.transition = el.style.transition = `transform ${duration}ms ease`;
+      el.style.transform = el.style.transform = `translate3d(0,${y},0)`;
     }
 
     /**
@@ -234,7 +240,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
       (triggerInnerEl.current as HTMLElement).style.display = 'flex';
 
-      rotateIcon(iconEl.current, 180, 0);
+      rotateIcon(iconEl.current as HTMLDivElement, 180, 0);
 
       (scrollEl.current as HTMLElement).style.overflowY = 'auto';
 
@@ -273,11 +279,11 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
       scrollEl.current?.addEventListener?.('transitionend', onTransitionEnd);
 
-      translateY(scrollEl.current, `${refreshHeight.current}px`, 500);
+      translateY(scrollEl.current as HTMLDivElement, `${refreshHeight.current}px`, 500);
 
-      translateY(el.current, `calc(-100% + ${refreshHeight.current}px)`, 500);
+      translateY(el.current as HTMLDivElement, `calc(-100% + ${refreshHeight.current}px)`, 500);
 
-      rotateIcon(iconEl.current, 180, 300);
+      rotateIcon(iconEl.current as HTMLDivElement, 180, 300);
     }
 
     /**
@@ -294,9 +300,9 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
       scrollEl.current?.addEventListener?.('transitionend', onTransitionEnd);
 
-      translateY(scrollEl.current, '0px', 200);
+      translateY(scrollEl.current as HTMLDivElement, '0px', 200);
 
-      translateY(el.current, 'calc(-100% + 0px)', 200);
+      translateY(el.current as HTMLDivElement, 'calc(-100% + 0px)', 200);
     }
 
     /**
@@ -325,10 +331,10 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @param duration
      * @private
      */
-    function rotateIcon(el, distance, duration = 0) {
+    function rotateIcon(el: HTMLDivElement, distance: number, duration = 0) {
       const deg = distance;
-      el.style.transition = el.style.webkitTransition = `transform ${duration}ms linear`;
-      el.style.transform = el.style.webkitTransform = `rotate(${deg}deg)`;
+      el.style.transition = el.style.transition = `transform ${duration}ms linear`;
+      el.style.transform = el.style.transform = `rotate(${deg}deg)`;
     }
 
     /**
@@ -366,20 +372,20 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
 
         // 正常拉
         if (distance < pullHeight.current) {
-          translateY(scrollEl.current, `${distance}px`, 0);
+          translateY(scrollEl.current as HTMLDivElement, `${distance}px`, 0);
 
-          translateY(el.current, `calc(-100% + ${distance}px)`, 0);
+          translateY(el.current as HTMLDivElement, `calc(-100% + ${distance}px)`, 0);
 
           // 具备刷新条件
           if (distance >= refreshHeight.current + 80) {
             // console.log('3.具备刷新条件');
-            rotateIcon(iconEl.current, 0, 150);
+            rotateIcon(iconEl.current as HTMLDivElement, 0, 150);
 
             setCan(true, () => trigger('onPullCanRefresh'));
           }
           // 不具备刷新条件
           else {
-            rotateIcon(iconEl.current, 180, 150);
+            rotateIcon(iconEl.current as HTMLDivElement, 180, 150);
 
             setCan(false);
           }
@@ -388,11 +394,11 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
         }
         // 越界了
         else {
-          translateY(scrollEl.current, `${pullHeight.current}px`, 0);
+          translateY(scrollEl.current as HTMLDivElement, `${pullHeight.current}px`, 0);
 
-          translateY(el.current, `calc(-100% + ${pullHeight.current}px)`, 0);
+          translateY(el.current as HTMLDivElement, `calc(-100% + ${pullHeight.current}px)`, 0);
 
-          rotateIcon(iconEl.current, 0, 150);
+          rotateIcon(iconEl.current as HTMLDivElement, 0, 150);
 
           // console.log('4.拉动到了底部');
           setCan(true, () => trigger('onPullBottom'));
@@ -402,11 +408,11 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       else if (isDownPull.current) {
         e.preventDefault();
 
-        translateY(scrollEl.current, '0px', 0);
+        translateY(scrollEl.current as HTMLDivElement, '0px', 0);
 
-        translateY(el.current, 'calc(-100% + 0px)', 0);
+        translateY(el.current as HTMLDivElement, 'calc(-100% + 0px)', 0);
 
-        rotateIcon(iconEl.current, 180, 0);
+        rotateIcon(iconEl.current as HTMLDivElement, 180, 0);
       }
       // 其他
       else {
@@ -461,6 +467,11 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       }
     }
 
+    function imer() {
+      pullHeight.current = getPullHeight();
+      refreshHeight.current = (el.current as HTMLElement).clientHeight;
+    }
+
     useImperativeHandle(ref, () => ({
       refresh,
       reset,
@@ -482,8 +493,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       scrollEl.current = scrollElRef.current;
       triggerInnerEl.current = triggerInnerElRef.current;
 
-      pullHeight.current = getPullHeight();
-      refreshHeight.current = (el.current as HTMLElement).clientHeight;
+      imer();
     }, []);
 
     useLayoutEffect(() => {
@@ -492,8 +502,23 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
       return () => removeEvents();
     });
 
+    useLayoutEffect(() => {
+      const onResize = debounce(() => {
+        imer();
+        update();
+      }, 300);
+
+      ro.current = new ResizeObserver(onResize);
+
+      ro.current.observe(rootEl.current as HTMLElement);
+
+      return () => {
+        ro?.current?.disconnect();
+      };
+    }, []);
+
     return (
-      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}}>
+      <div className={classNames(selectorPrefix, className ?? '')} style={style ?? {}} ref={rootEl}>
         <div
           className={classNames(`${selectorPrefix}-scroll`, scrollClassName ?? '')}
           style={scrollStyle ?? {}}

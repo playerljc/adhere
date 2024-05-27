@@ -26,10 +26,13 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereNotification --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "e2e": "cross-env e2e media=true"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.10.28",
     "@baifendian/adhere-ui-css": "^2.10.28",
+    "@baifendian/adhere-util": "^2.10.28",
     "classnames": "^2.3.2",
     "omit.js": "^2.0.2",
     "react": "^18.2.0",

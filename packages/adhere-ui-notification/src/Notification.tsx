@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { ReactNode, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { v1 } from 'uuid';
+
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import Util from '@baifendian/adhere-util';
 
 import type { Config, ShowConfig, ShowStandardConfig } from './types';
 
 const selectorPrefix = 'adhere-ui-notification';
+
+let renderToWrapper: (children: () => ReactNode) => ReactNode;
 
 /**
  * Notification
@@ -30,7 +36,7 @@ class Notification {
   private notifications = {};
   private key: boolean = false;
 
-  constructor(container, config: Config) {
+  constructor(container: HTMLElement, config: Config) {
     this.container = container;
 
     this.config = Object.assign(this.config, config);
@@ -141,22 +147,28 @@ class Notification {
   private buildCustom(config: ShowConfig): string {
     const { closed, children } = config;
 
-    // console.log('IShowConfig', config);
-
     const id = v1();
     const n = document.createElement('li');
     n.dataset.id = id;
 
-    const Component = () => (
-      <>
-        <div className="info">{children}</div>
-        {closed ? <span className="close-btn" /> : null}
-      </>
-    );
+    const Component = () => {
+      const { media } = useContext(ConfigProvider.Context);
 
-    ReactDOM.createRoot(n).render(<Component />);
+      useEffect(() => {
+        this.build(id, n, media);
+      }, []);
 
-    return this.build(id, n);
+      return (
+        <>
+          <div className="info">{children}</div>
+          {closed ? <span className="close-btn" /> : null}
+        </>
+      );
+    };
+
+    ReactDOM.createRoot(n).render(renderToWrapper?.(() => <Component />) ?? <Component />);
+
+    return id;
   }
 
   /**
@@ -176,49 +188,62 @@ class Notification {
       datetime = '',
     } = config;
 
-    // console.log('IShowStandardConfig', config);
-
     const id = v1();
     const n = document.createElement('li');
     n.dataset.id = id;
 
-    const Component = () => (
-      <>
-        <div className="info">
-          <div className={`${selectorPrefix}-standard-header`}>
-            <div className={`${selectorPrefix}-standard-header-icon`}>
-              {headerIcon ? <img src={headerIcon} alt="" /> : null}
-            </div>
-            <div className={`${selectorPrefix}-standard-header-label`}>{headerLabel ?? ''}</div>
-          </div>
-          <div className={`${selectorPrefix}-standard-content`}>
-            <div className={`${selectorPrefix}-standard-content-media-l`}>
-              {icon ? <img src={icon} alt="" /> : null}
-            </div>
-            <div className={`${selectorPrefix}-standard-content-row`}>
-              <div className={`${selectorPrefix}-standard-content-row-title`}>{title ?? ''}</div>
-              <div className={`${selectorPrefix}-standard-content-row-text`}>{text ?? ''}</div>
-            </div>
-            <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime ?? ''}</div>
-          </div>
-        </div>
-        {closed ? <span className="close-btn" /> : null}
-      </>
-    );
+    const Component = () => {
+      const { media } = useContext(ConfigProvider.Context);
 
-    ReactDOM.createRoot(n).render(<Component />);
+      useEffect(() => {
+        this.build(id, n, media);
+      }, []);
 
-    return this.build(id, n);
+      return (
+        <>
+          <div className="info">
+            <div className={`${selectorPrefix}-standard-header`}>
+              <div className={`${selectorPrefix}-standard-header-icon`}>
+                {headerIcon ? <img src={headerIcon} alt="" /> : null}
+              </div>
+              <div className={`${selectorPrefix}-standard-header-label`}>{headerLabel ?? ''}</div>
+            </div>
+            <div className={`${selectorPrefix}-standard-content`}>
+              <div className={`${selectorPrefix}-standard-content-media-l`}>
+                {icon ? <img src={icon} alt="" /> : null}
+              </div>
+              <div className={`${selectorPrefix}-standard-content-row`}>
+                <div className={`${selectorPrefix}-standard-content-row-title`}>{title ?? ''}</div>
+                <div className={`${selectorPrefix}-standard-content-row-text`}>{text ?? ''}</div>
+              </div>
+              <div className={`${selectorPrefix}-standard-content-media-r`}>{datetime ?? ''}</div>
+            </div>
+          </div>
+          {closed ? <span className="close-btn" /> : null}
+        </>
+      );
+    };
+
+    ReactDOM.createRoot(n).render(renderToWrapper?.(() => <Component />) ?? <Component />);
+
+    this.build(id, n);
+
+    return id;
   }
 
   /**
    * build
    * @param id
    * @param n
+   * @param media
    * @return string
    * @private
    */
-  private build(id: string, n): string {
+  private build(
+    id: string,
+    n: HTMLLIElement,
+    media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 },
+  ): string {
     const self = this;
 
     this.notifications[id] = n;
@@ -248,9 +273,13 @@ class Notification {
       n.style.height = '0';
 
       setTimeout(() => {
-        n.style.height = `${targetHeight}px`;
+        let targetHeightValue = `${targetHeight}px`;
+        if (media?.isUseMedia) {
+          targetHeightValue = `${Util.pxToRem(targetHeight, media?.designWidth as number)}`;
+        }
+        n.style.height = `${targetHeightValue}`;
 
-        n.querySelector('.info').style.opacity = '1';
+        (n.querySelector('.info') as HTMLElement).style.opacity = '1';
 
         self.trigger('onShow', n);
       }, 100);
@@ -265,7 +294,7 @@ class Notification {
    * @param params
    * @private
    */
-  private trigger(action, params?: any): void {
+  private trigger(action: string, params?: any): void {
     if (this.config[action]) {
       this.config[action](params);
     }
@@ -293,12 +322,20 @@ class Notification {
    * close
    * @param {string} id
    */
-  close(id): void {
+  close(id: string): void {
     this.closeNotification(id);
   }
 }
 
 const NotificationFactory = {
+  /**
+   * setRenderToWrapper
+   * @description 设置renderToWrapper方法
+   * @param _renderToWrapper
+   */
+  setRenderToWrapper(_renderToWrapper) {
+    renderToWrapper = _renderToWrapper;
+  },
   /**
    * build
    * @param container

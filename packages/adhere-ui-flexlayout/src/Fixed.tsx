@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React, { forwardRef, memo, useContext, useImperativeHandle, useMemo, useRef } from 'react';
 
+import ConfigProvider from '@baifendian/adhere-ui-configprovider';
+
 import { FlexContext } from './Context';
 import { useGap, useGrid, useTrigger } from './Hooks';
 import { getGridStyle } from './Util';
@@ -32,6 +34,8 @@ const Fixed = memo<FixedProps>(
       ...attrs
     } = props;
 
+    const { media } = useContext(ConfigProvider.Context);
+
     const {
       gutter = 0,
       direction,
@@ -61,18 +65,18 @@ const Fixed = memo<FixedProps>(
           className ?? '',
           /*collapseClassName,*/ {
             [`${selectorPrefix}-fit`]: fit,
-            [`${selectorPrefix}-col-${props.span}`]: isUseGrid,
+            [`${selectorPrefix}-col-${span}`]: isUseGrid,
             [`${selectorPrefix}-gap`]: isUseGap,
           },
         ),
-      [className, props.span, fit /*collapseClassName*/],
+      [className, span, fit /*collapseClassName*/],
     );
 
     const styleList = useMemo(() => {
       const defaultStyle = style ?? {};
 
       const gridStyle = isUseGap
-        ? getGridStyle({ gutter, span, children: contextChildren, direction })
+        ? getGridStyle({ gutter, span, children: contextChildren, direction, media })
         : {};
 
       return {

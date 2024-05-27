@@ -1,15 +1,23 @@
-export function getValue(isUseMedia, rootValue, size) {
-  return isUseMedia ? createPxReplace(rootValue, size, 5, 0) : `${size}px`;
-}
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+import Util from '@baifendian/adhere-util';
 
-export function createPxReplace(rootValue, pixels, unitPrecision, minPixelValue) {
-  if (pixels < minPixelValue) return pixels;
-  const fixedVal = toFixed(pixels / rootValue, unitPrecision);
-  return fixedVal === 0 ? '0' : fixedVal + 'rem';
-}
+/**
+ * @typedef {ConfigProviderProps['media]} Media
+ */
+/**
+ * getValue
+ * @param {Media} media
+ * @param {number} size
+ * @return {string}
+ */
+export function getValue(media: ConfigProviderProps['media'], size: number | string): string {
+  if (Util.isNumber(size)) {
+    if (media?.isUseMedia) {
+      return Util.pxToRem(size as number, media?.designWidth as number);
+    }
 
-export function toFixed(number, precision) {
-  const multiplier = Math.pow(10, precision + 1),
-    wholeNumber = Math.floor(number * multiplier);
-  return (Math.round(wholeNumber / 10) * 10) / multiplier;
+    return `${size}px`;
+  }
+
+  return size as string;
 }

@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 export interface MenuRefHandle {
   mount: () => void;
@@ -56,6 +56,7 @@ export interface MenuData {
 }
 
 export type ContextMenuComponent = {
+  setRenderToWrapper: (renderToWrapper: (children: () => ReactNode) => ReactNode) => void;
   open: (data: MenuData[], config: Config) => HTMLDivElement;
   close: (el: HTMLDivElement) => void;
   openCircular: (config: CircularMenuConfig, point: Point) => void;

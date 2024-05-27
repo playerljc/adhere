@@ -1,14 +1,13 @@
-import { Button, ConfigProvider, Form } from 'antd';
-import type { ConfigProviderProps } from 'antd/lib/config-provider';
-import type { FormInstance } from 'antd/lib/form';
+import { Button, Form } from 'antd';
+import type { FormInstance } from 'antd/es/form';
 import { produce } from 'immer';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import ReactDOM, { Root } from 'react-dom/client';
 
 import FormItemCreator from '@baifendian/adhere-ui-formitemcreator';
 import Intl from '@baifendian/adhere-util-intl';
 
-import { DEFAULT_LOCAL, DEFAULT_WIDTH, DEFAULT_ZINDEX, LOCAL, PROMPT_LAYOUT } from './Constent';
+import { DEFAULT_WIDTH, DEFAULT_ZINDEX, PROMPT_LAYOUT } from './Constent';
 import MaximizeModalDialog from './MaximizeModal';
 import ModalDialog, { selectorPrefix } from './Modal';
 import Trigger from './Trigger';
@@ -21,7 +20,7 @@ import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
  * @param text
  * @return React.ReactElement
  */
-function renderByIcon(icon, text) {
+function renderByIcon(icon: ReactNode, text: ReactNode) {
   return (
     <div className={`${selectorPrefix}-render-icon`}>
       <div className={`${selectorPrefix}-render-icon-fixed`}>{icon}</div>
@@ -30,20 +29,20 @@ function renderByIcon(icon, text) {
   );
 }
 
-let lock;
+let lock = false;
 
-let antdConfigProviderProps: ConfigProviderProps = {};
+let renderToWrapper: (children: () => ReactNode) => ReactNode;
 
 const MessageDialogHandlers = new WeakMap<HTMLElement, Root>();
 
 const MessageDialogFactory = {
   /**
-   * setAntdConfigProviderProps
-   * @description 设置ConfigProvider的props
-   * @param params
+   * setRenderToWrapper
+   * @description 设置renderToWrapper方法
+   * @param _renderToWrapper
    */
-  setAntdConfigProviderProps(params) {
-    antdConfigProviderProps = params;
+  setRenderToWrapper(_renderToWrapper) {
+    renderToWrapper = _renderToWrapper;
   },
   /**
    * Confirm
@@ -267,12 +266,7 @@ const MessageDialogFactory = {
    *  @param {ReactNode} - children
    *  @param defaultCloseBtn
    */
-  Modal({
-    config = {},
-    children = null,
-    defaultCloseBtn = true,
-    local = DEFAULT_LOCAL,
-  }: ModalArgv): {
+  Modal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
     el: HTMLElement;
     close: () => void;
     setConfig: (callback: any) => void;
@@ -283,13 +277,13 @@ const MessageDialogFactory = {
     lock = true;
 
     function render(_children?: any) {
-      root.render(
-        <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-          <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
-            {_children ?? children}
-          </ModalDialog>
-        </ConfigProvider>,
+      const element = (
+        <ModalDialog open={open} close={close} config={modalConfig} closeBtn={defaultCloseBtn}>
+          {_children ?? children}
+        </ModalDialog>
       );
+
+      root.render(renderToWrapper?.(() => element) ?? element);
     }
 
     function close() {
@@ -347,12 +341,7 @@ const MessageDialogFactory = {
    * @param local
    * @constructor
    */
-  MaximizeModal({
-    config = {},
-    children = null,
-    defaultCloseBtn = true,
-    local = DEFAULT_LOCAL,
-  }: ModalArgv): {
+  MaximizeModal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
     el: HTMLElement;
     close: () => void;
     setConfig: (callback: any) => void;
@@ -363,18 +352,18 @@ const MessageDialogFactory = {
     lock = true;
 
     function render(_children?: any) {
-      root.render(
-        <ConfigProvider locale={LOCAL[local || DEFAULT_LOCAL]} {...(antdConfigProviderProps ?? {})}>
-          <MaximizeModalDialog
-            close={close}
-            open={open}
-            config={modalConfig}
-            closeBtn={defaultCloseBtn}
-          >
-            {_children ?? children}
-          </MaximizeModalDialog>
-        </ConfigProvider>,
+      const element = (
+        <MaximizeModalDialog
+          close={close}
+          open={open}
+          config={modalConfig}
+          closeBtn={defaultCloseBtn}
+        >
+          {_children ?? children}
+        </MaximizeModalDialog>
       );
+
+      root.render(renderToWrapper?.(() => element) ?? element);
     }
 
     function close() {

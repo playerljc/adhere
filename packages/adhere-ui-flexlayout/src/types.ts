@@ -1,6 +1,8 @@
 import { FC, NamedExoticComponent, PropsWithoutRef, ReactNode, RefAttributes } from 'react';
 import type { CSSProperties, Context, ReactElement } from 'react';
 
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
+
 import Auto from './Auto';
 import BackLayout from './BackLayout';
 import { FlexContext } from './Context';
@@ -210,7 +212,7 @@ export interface BackLayoutProps {
   enforceBackPath?: string;
   isShowBack?: boolean;
   history?: any;
-  backTitle?: string | ReactElement;
+  backTitle?: ReactNode;
   children?: any;
 }
 
@@ -230,6 +232,7 @@ export interface getGridStyleParams {
   children?: any;
   span?: number | null;
   direction: 'vertical' | 'horizontal';
+  media: ConfigProviderProps['media'];
 }
 
 export interface TBLRProps extends FixedProps {

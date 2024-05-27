@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* 加入renderToWrapper方法
 * 加入disable设置和update刷新方法
 
 # 1.0.23

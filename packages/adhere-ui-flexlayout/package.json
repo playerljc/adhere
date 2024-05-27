@@ -28,12 +28,14 @@
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --config ctbuild.config.umd.js --packagename AdhereFlexLayout --define alias=@,evnVars=true",
-    "e2e": "cross-env e2e",
+    "e2e": "cross-env e2e media=true",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
     "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
+    "@baifendian/adhere-ui-configprovider": "^2.10.28",
     "@baifendian/adhere-ui-historyback": "^2.10.28",
+    "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-intl": "^2.10.28",
     "@juggle/resize-observer": "^3.4.0",
     "ahooks": "^3.7.8",

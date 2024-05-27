@@ -2,11 +2,11 @@ import React from 'react';
 import type { AlertArgv, ConfirmArgv, ModalArgv, PromptArgv } from './types';
 declare const MessageDialogFactory: {
     /**
-     * setAntdConfigProviderProps
-     * @description 设置ConfigProvider的props
-     * @param params
+     * setRenderToWrapper
+     * @description 设置renderToWrapper方法
+     * @param _renderToWrapper
      */
-    setAntdConfigProviderProps(params: any): void;
+    setRenderToWrapper(_renderToWrapper: any): void;
     /**
      * Confirm
      * @param title {String | ReactNode}
@@ -126,7 +126,7 @@ declare const MessageDialogFactory: {
      *  @param {ReactNode} - children
      *  @param defaultCloseBtn
      */
-    Modal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
+    Modal({ config, children, defaultCloseBtn }: ModalArgv): {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
@@ -140,7 +140,7 @@ declare const MessageDialogFactory: {
      * @param local
      * @constructor
      */
-    MaximizeModal({ config, children, defaultCloseBtn, local, }: ModalArgv): {
+    MaximizeModal({ config, children, defaultCloseBtn }: ModalArgv): {
         el: HTMLElement;
         close: () => void;
         setConfig: (callback: any) => void;
