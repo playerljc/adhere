@@ -1,4 +1,3 @@
-import { ConfigProvider } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -15,6 +14,7 @@ import {
   Popup,
   Resource,
 } from '@baifendian/adhere';
+import { ConfigProvider } from '@baifendian/adhere-ui-anthoc';
 
 import { antdThemeToCssVariable } from './theme';
 import { isUseMedia } from './util';

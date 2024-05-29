@@ -4,7 +4,6 @@
  * amfe-flexible是否需要载入
  * postcss中的pxtorem插件是否需要载入
  */
-import { ConfigProvider as AntdConfigProvider } from 'antd';
 import { ConfigProvider as AntdMobileConfigProvider } from 'antd-mobile';
 import 'antd-mobile/es/global';
 import zhCN from 'antd-mobile/es/locales/zh-CN';
@@ -25,6 +24,7 @@ import {
   Popup,
   Resource,
 } from '@baifendian/adhere';
+import { ConfigProvider as AntdConfigProvider } from '@baifendian/adhere-ui-anthoc';
 
 import { antdThemeToCssVariable } from './theme';
 import { isUseMedia } from './util';

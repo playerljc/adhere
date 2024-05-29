@@ -36,6 +36,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.0",
     "@baifendian/adhere": "^2.10.28",
+    "@baifendian/adhere-ui-anthoc": "^2.10.28",
     "antd": "^5.17.0",
     "antd-mobile": "^5.36.0",
     "react": "^18.2.0",
