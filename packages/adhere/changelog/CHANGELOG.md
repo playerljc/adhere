@@ -27,6 +27,8 @@
 * **adhere-mobile-ui-quick-range-date**
   - 加入adhere-mobile-ui-quick-range-date组件
 * **adhere-ui-searchtable**
+  - $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制
+  - 加入REM适配
   - 加入导出excel功能
   - 查询区域加入工具栏
   - 操作工具栏和查询工具栏分离
@@ -51,6 +53,8 @@
   - 带有全选按钮可以自定义全选按钮的位置
   - hoc文件结构调整
 * **adhere-util**
+  - 加入pxToRem方法
+  - 修复math中的clientToCtxPoint方法适配zoom
   - 加入getTransformValues方法
   - treeToArray方法排除children属性
   - 加入isPromise方法
@@ -88,14 +92,18 @@
   - 重构最终数据源的计算
   - 修改初始化没有下拉数据的BUG
 * **adhere-ui-flexlayout**
+  - 加入REM适配
   - 展开和收起(trigger)内部实现修改
   - 加入展开和收起功能(trigger)
   - 加入LCRLayout、TCBLayout
 * **adhere-util-communication-ajax**
   - 修改FormData值是数组情况
 * **adhere-ui-configprovider**
+  - 加入media配置项控制是否支持REM
   - 加入Wrapper元素用来存放css变量
 * **adhere-ui-css**
+  - 加入REM适配
+  - 加入DPR变量
   - init方法修改
 * **adhere-util-intl**
   - 序号词条翻译修改
@@ -116,6 +124,8 @@
 * **adhere-ui-contextmenu**
   - 加入扇形菜单
 * **adhere-util-resource**
+  - dict.locals.config.js加入AntDesignMobile的国际化
+  - dict.locals.config.js加入可以动态添加和删除的方法
   - dict.moment.config.js中加入时间国际化formats和本地化formats
   - dict.locals.config.js加入可以动态添加和删除的方法
 * **adhere-ui-datedisplay**
@@ -124,9 +134,18 @@
 * **adhere-ui-hooks**
   - 加入useSafeRef
 * **adhere-util-adapterscreen**
+  - 加入flexible方法适配REM
   - 加入devicePixelRatio的适配
 * **adhere-ui-css**
   - 加入DPR变量
+* **adhere-ui-tablegridlayout**
+  - 加入REM适配
+* **adhere-ui-space**
+  - 加入REM适配
+* **adhere-ui-split**
+  - 加入REM适配
+* **adhere-ui-stickuplayout**
+  - 加入resize适配
 
 # 2.10.28
 
@@ -293,6 +312,7 @@
 2023-08-18
 
 * **adhere-ui-tablegridlayout**
+  - 加入REM适配
   - 加入show属性控制显隐
 
 # 2.10.13
