@@ -29,6 +29,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-ui-configprovider": "^2.10.28",
     "@baifendian/adhere-util": "^2.10.28",
     "tinycolor2": "^1.6.0"
   },

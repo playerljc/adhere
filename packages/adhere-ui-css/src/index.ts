@@ -1,5 +1,6 @@
 import tinyColor from 'tinycolor2';
 
+import type { ConfigProviderProps } from '@baifendian/adhere-ui-configprovider/es/types';
 import Util from '@baifendian/adhere-util';
 
 const defaultThemeMap = new Map<string, any>([
@@ -57,7 +58,7 @@ const defaultThemeMap = new Map<string, any>([
         [
           'adhere-font-size-lg',
           {
-            calc: ' + 2px',
+            calc: '+ 2px',
           },
         ],
         [
@@ -113,15 +114,55 @@ const defaultThemeMap = new Map<string, any>([
 ]);
 
 export interface Init {
-  (theme: { [prop: string]: string }, wrapperEL?: HTMLElement): void;
+  (
+    theme: { [prop: string]: string },
+    wrapperEL?: HTMLElement,
+    media?: ConfigProviderProps['media'],
+  ): void;
+}
+
+/**
+ * getValue
+ * @param {string | number} originValue
+ * @param {ConfigProviderProps['media']} media
+ * @return {string | number}
+ */
+function getValue(
+  originValue: string | number,
+  media: ConfigProviderProps['media'],
+): string | number {
+  if (media?.isUseMedia) {
+    if (typeof originValue === 'string' && originValue.endsWith('px')) {
+      return originValue
+        .split(/\s+/gim)
+        .map((value) => {
+          if (value.endsWith('px')) {
+            const number = parseFloat(value.replace('px', ''));
+            return Util.pxToRem(number, media.designWidth ?? 192, media);
+          }
+
+          return value;
+        })
+        .join(' ');
+    }
+  }
+
+  return originValue;
 }
 
 /**
  * init
  * @param theme
  * @param wrapperEL
+ * @param media
  */
-const init: Init = (theme, wrapperEL = document.documentElement) => {
+const init: Init = (
+  theme,
+  wrapperEL = document.documentElement,
+  media?: ConfigProviderProps['media'],
+) => {
+  const htmlEl = document.documentElement;
+
   // 当前变量
   const cssVars = {};
 
@@ -144,23 +185,22 @@ const init: Init = (theme, wrapperEL = document.documentElement) => {
     // cssVars定义驼峰变量
     Object.defineProperty(cssVars, varCamelCaseName, {
       set(value) {
+        const targetValue = getValue(value, media);
+
         // --------------定义css变量 -------------
-        wrapperEL.style.setProperty(`--${varName}`, value);
-        if (!document.documentElement.style.getPropertyValue(`--${varName}`)) {
-          document.documentElement.style.setProperty(`--${varName}`, value);
+        wrapperEL.style.setProperty(`--${varName}`, `${targetValue}`);
+        if (!htmlEl.style.getPropertyValue(`--${varName}`)) {
+          htmlEl.style.setProperty(`--${varName}`, `${targetValue}`);
         }
 
         // 是颜色需要在定义一个-rgb的变量
-        const color = tinyColor(value);
+        const color = tinyColor(targetValue);
         if (color.isValid()) {
           const rgb = color.toRgb();
 
           wrapperEL.style.setProperty(`--${varName}-rgb`, `${[rgb.r, rgb.g, rgb.b].join(',')}`);
-          if (!document.documentElement.style.getPropertyValue(`--${varName}-rgb`)) {
-            document.documentElement.style.setProperty(
-              `--${varName}-rgb`,
-              `${[rgb.r, rgb.g, rgb.b].join(',')}`,
-            );
+          if (!htmlEl.style.getPropertyValue(`--${varName}-rgb`)) {
+            htmlEl.style.setProperty(`--${varName}-rgb`, `${[rgb.r, rgb.g, rgb.b].join(',')}`);
           }
         }
 
@@ -168,27 +208,28 @@ const init: Init = (theme, wrapperEL = document.documentElement) => {
         if (!entryValue?.mapToken) return;
         Array.from(entryValue?.mapToken?.keys?.())?.forEach?.((mapTokenVarName) => {
           const mapTokenVEntryValue = entryValue?.mapToken?.get?.(mapTokenVarName);
+          // alpha的处理
           if (mapTokenVEntryValue?.alpha) {
             color.setAlpha(Number.parseFloat(mapTokenVEntryValue?.alpha));
 
             wrapperEL.style.setProperty(`--${mapTokenVarName}`, color.toPercentageRgbString());
-            if (!document.documentElement.style.getPropertyValue(`--${mapTokenVarName}`)) {
-              document.documentElement.style.setProperty(
-                `--${mapTokenVarName}`,
-                color.toPercentageRgbString(),
-              );
+            if (!htmlEl.style.getPropertyValue(`--${mapTokenVarName}`)) {
+              htmlEl.style.setProperty(`--${mapTokenVarName}`, color.toPercentageRgbString());
             }
           }
 
+          // calc的处理
           if (mapTokenVEntryValue.calc) {
+            const targetCalc = getValue(mapTokenVEntryValue.calc, media);
+
             wrapperEL.style.setProperty(
               `--${mapTokenVarName}`,
-              `calc(${value} ${mapTokenVEntryValue.calc})`,
+              `calc(${targetValue} ${targetCalc})`,
             );
-            if (!document.documentElement.style.getPropertyValue(`--${mapTokenVarName}`)) {
-              document.documentElement.style.setProperty(
+            if (!htmlEl.style.getPropertyValue(`--${mapTokenVarName}`)) {
+              htmlEl.style.setProperty(
                 `--${mapTokenVarName}`,
-                `calc(${value} ${mapTokenVEntryValue.calc})`,
+                `calc(${targetValue} ${targetCalc})`,
               );
             }
           }
