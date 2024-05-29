@@ -9,6 +9,11 @@ let currScale = 1;
 let isAutoFitRunning = false;
 let isElRectification = false;
 
+/**
+ * elRectification
+ * @param {string} el
+ * @param {number} level
+ */
 function elRectification(el: string, level = 1) {
   if (!isAutoFitRunning) {
     console.error('adapterScreen.js：adapterScreen has not been initialized yet');
@@ -43,6 +48,13 @@ function elRectification(el: string, level = 1) {
   isElRectification = true;
 }
 
+/**
+ * keepFit
+ * @param {number} dw
+ * @param {number} dh
+ * @param {HTMLElement} dom
+ * @param {any[]} ignore
+ */
 function keepFit(dw: number, dh: number, dom: HTMLElement, ignore: any[]) {
   let clientHeight = document.documentElement.clientHeight;
   let clientWidth = document.documentElement.clientWidth;
@@ -83,8 +95,16 @@ function keepFit(dw: number, dh: number, dom: HTMLElement, ignore: any[]) {
   }
 }
 
+/**
+ * adapterScreen
+ */
 const adapterScreen: IAdapterScreen = {
-  init(defaultDefaultOptions = {}, isShowInitTip = true) {
+  /**
+   * init
+   * @param defaultDefaultOptions
+   * @param {boolean} isShowInitTip
+   */
+  init(defaultDefaultOptions = {}, isShowInitTip: boolean = true) {
     if (isShowInitTip) {
       console.log(
         `%c` + `adapterScreen.js` + ` is running`,
@@ -161,7 +181,11 @@ const adapterScreen: IAdapterScreen = {
       }
     });
   },
-  off(el = '#app') {
+  /**
+   * off
+   * @param {string} el
+   */
+  off(el: string = '#app') {
     try {
       isElRectification = false;
 
@@ -192,6 +216,10 @@ const adapterScreen: IAdapterScreen = {
         `font-weight: bold;color: #707070; background: #c9c9c9; padding: 8px 12px; border-radius: 4px;`,
       );
   },
+  /**
+   * detectZoom
+   * @description 适配zoom
+   */
   detectZoom() {
     let ratio = 0;
 
@@ -210,23 +238,50 @@ const adapterScreen: IAdapterScreen = {
       document.body.style.zoom = 100 / Number(ratio);
     }
   },
-  flexible() {
-    // adjust body font size
+  /**
+   * flexible
+   * @param {{minWidth: number; minHeight:number;}} minSize
+   * @return {void}
+   */
+  flexible(minSize?: { minWidth: number; minHeight: number }): void {
+    /**
+     * setBodyFontSize
+     * @description adjust body font size
+     */
     function setBodyFontSize() {
       if (document.body) {
-        const rem = docEl.clientWidth / 10;
-        document.body.style.fontSize = (12 * dpr) / rem + 'rem';
+        const rem = window.screen.availWidth / 10;
+        document.body.style.fontSize = (baseFontSize * dpr) / rem + 'rem';
       } else {
         document.addEventListener('DOMContentLoaded', setBodyFontSize);
       }
     }
 
-    // set 1rem = viewWidth / 10
+    /**
+     * setRemUnit
+     * set 1rem = viewWidth / 10
+     */
     function setRemUnit() {
-      const rem = docEl.clientWidth / 10;
+      // 使用window.screen.availWidth的目的是只有改变操作系统的分辨率才重新设置rem，如果是浏览器窗口的resize不重新计算rem
+      const rem = window.screen.availWidth / 10;
       docEl.style.fontSize = rem + 'px';
     }
 
+    /**
+     * checkSize
+     * @description
+     * @return {boolean}
+     */
+    function checkSize(): boolean {
+      if (!minSize) return true;
+
+      const clientWidth = docEl.clientWidth;
+      const clientHeight = docEl.clientHeight;
+
+      return minSize.minWidth <= clientWidth && minSize.minHeight <= clientHeight;
+    }
+
+    const baseFontSize = 12;
     const docEl = document.documentElement;
     const dpr = window.devicePixelRatio || 1;
 
@@ -235,10 +290,16 @@ const adapterScreen: IAdapterScreen = {
     setRemUnit();
 
     // reset rem unit on page resize
-    window.addEventListener('resize', setRemUnit);
+    window.addEventListener('resize', () => {
+      if (checkSize()) {
+        setRemUnit();
+      }
+    });
     window.addEventListener('pageshow', function (e) {
       if (e.persisted) {
-        setRemUnit();
+        if (checkSize()) {
+          setRemUnit();
+        }
       }
     });
 
