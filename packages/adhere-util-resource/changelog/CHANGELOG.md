@@ -5,6 +5,7 @@
 2024-05-19
 
 * dict.locals.config.js加入可以动态添加和删除的方法
+* dict.locals.config.js加入AntDesignMobile的国际化
 
 # 1.0.24
 
