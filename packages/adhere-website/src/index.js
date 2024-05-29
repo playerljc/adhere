@@ -53,8 +53,6 @@ let direction;
  * @constructor
  */
 function Application() {
-  console.log('aaa');
-
   const themeValue = getThemeValue();
 
   const colorPrimary = themeToken.getCommonPrimaryColor();
