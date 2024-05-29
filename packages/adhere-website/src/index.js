@@ -57,6 +57,11 @@ function Application() {
 
   const colorPrimary = themeToken.getCommonPrimaryColor();
 
+  const media = {
+    isUseMedia: SelfUtil.isUseMedia(),
+    designWidth: 192,
+  };
+
   const antDesignConfigProviderProps = {
     direction,
     theme: {
@@ -72,7 +77,7 @@ function Application() {
   const styleProviderProps = {
     transformers: [
       legacyLogicalPropertiesTransformer,
-      SelfUtil.isUseMedia() &&
+      media.isUseMedia &&
         px2remTransformer({
           rootValue: 192,
         }),
@@ -86,9 +91,13 @@ function Application() {
       colorBgBase: themeValue.mapToken.colorBgBase,
       colorBorderBase: themeValue.mapToken.colorBorder,
       colorSplitBase: themeValue.mapToken.colorSplit,
-      fontSizeBase: `${themeValue.mapToken.fontSize}px`,
-      borderRadiusBase: `${themeValue.mapToken.borderRadius}px`,
-      lineWidth: `${themeValue.mapToken.lineWidth}px`,
+      fontSizeBase: `${Util.pxToRem(themeValue.mapToken.fontSize, media.designWidth, media)}`,
+      borderRadiusBase: `${Util.pxToRem(
+        themeValue.mapToken.borderRadius,
+        media.designWidth,
+        media,
+      )}`,
+      lineWidth: `${Util.pxToRem(themeValue.mapToken.lineWidth, media.designWidth, media)}`,
       lintType: themeValue.mapToken.lineType,
     },
     intl: {
@@ -104,10 +113,7 @@ function Application() {
         render();
       });
     },
-    media: {
-      isUseMedia: SelfUtil.isUseMedia(),
-      designWidth: 192,
-    },
+    media,
   };
 
   function renderToFragmentWrapper(children) {

@@ -2083,6 +2083,13 @@
     xml-loader "^1.2.1"
     yaml-loader "^0.8.0"
 
+"@ctsj/less-media-query-loader@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ctsj/less-media-query-loader/-/less-media-query-loader-1.0.1.tgz#9ee0632557ec69596efb44fb68743f4d74b03d28"
+  integrity sha512-vnHTMKdp7/ihthm219jbhng0GH1qAHchPM/QdBRQojAcpK9+GeKEclZRWmvwtfdRPdzmxbT3H4zq7m4mRpJGWg==
+  dependencies:
+    loader-utils "^2.0.2"
+
 "@ctsj/router@^1.0.4", "@ctsj/router@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@ctsj/router/-/router-1.0.5.tgz#02e532f3a1f2499f626778e888d04644bf480e15"
@@ -5110,6 +5117,21 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+ahooks@^3.7.11:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/ahooks/-/ahooks-3.8.0.tgz#62476bf3459862ff706de2189b87de5e4f49b298"
+  integrity sha512-M01m+mxLRNNeJ/PCT3Fom26UyreTj6oMqJBetUrJnK4VNI5j6eMA543Xxo53OBXn6XibA2FXKcCCgrT6YCTtKQ==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    dayjs "^1.9.1"
+    intersection-observer "^0.12.0"
+    js-cookie "^2.x.x"
+    lodash "^4.17.21"
+    react-fast-compare "^3.2.2"
+    resize-observer-polyfill "^1.5.1"
+    screenfull "^5.0.0"
+    tslib "^2.4.1"
+
 ahooks@^3.7.6, ahooks@^3.7.8:
   version "3.7.11"
   resolved "https://registry.yarnpkg.com/ahooks/-/ahooks-3.7.11.tgz#51b6fdcad8cb603511318ac370feee0628bd6d68"
@@ -5168,11 +5190,6 @@ algebra.js@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/algebra.js/-/algebra.js-0.2.6.tgz#23aacc86f8634e4c206d56c8077ef220a6221c74"
   integrity sha512-ogfp7ukWOqIgBGERLLhArKhPORnmvn1t0pXvPvtfe15qlDV9BaDwCArHh5RyoEj2GHUqYeCWfBzQ7oZRqQxKDw==
-
-amfe-flexible@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/amfe-flexible/-/amfe-flexible-2.2.1.tgz#353f00289e4d38ca88a21eb3854420308af0b559"
-  integrity sha512-L2VfvDzoETBjhRptg5u/IUuzHSuxm22JpSRb404p/TBGeRfwWmmNEbB+TFPIP/sS/+pbM18bCFH9QnMojLuPNw==
 
 ansi-colors@^1.0.1:
   version "1.1.0"
@@ -11947,7 +11964,7 @@ loader-utils@^1.0.0, loader-utils@^1.2.3:
     emojis-list "^3.0.0"
     json5 "^1.0.1"
 
-loader-utils@^2.0.0, loader-utils@^2.0.4:
+loader-utils@^2.0.0, loader-utils@^2.0.2, loader-utils@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.4.tgz#8b5cb38b5c34a9a018ee1fc0e6a066d1dfcc528c"
   integrity sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==

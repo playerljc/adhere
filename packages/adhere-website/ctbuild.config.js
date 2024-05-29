@@ -91,6 +91,10 @@ module.exports = {
 
     webpackConfig.module.rules[2].include.push(/ol.css/, /swiper.css/, /nprogress.css/);
 
+    webpackConfig.module.rules[3].use.push({
+      loader: '@ctsj/less-media-query-loader',
+    });
+
     // TODO:umd umd的时候需要注释掉
     // babel-plugin-import的配置
     const { use } = webpackConfig.module.rules[0];
