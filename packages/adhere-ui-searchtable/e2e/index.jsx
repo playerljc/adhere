@@ -66,7 +66,7 @@ const ProSearchStateTableImpl = lazy(() =>
 e2e.PC({
   children: (
     <Provider store={store}>
-      <div style={{ height: 700 }}>
+      <div style={{ height: 1000 }}>
         <Suspense fallback={<div>loading</div>}>
           <ProSearchStateTableImpl pagination={true} />
         </Suspense>
