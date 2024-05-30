@@ -147,6 +147,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
          * getGridSearchFormGroupParams
          */
         getGridSearchFormGroupParams(): {}[];
+        getSearchLabelSymbol($search: any): React.JSX.Element | null;
         /**
          * getGridSearchFormGroupDataByColumnConfig
          * @description 通过列设置获取gridSearchFormGroup的Data数据

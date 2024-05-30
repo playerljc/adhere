@@ -698,7 +698,6 @@ abstract class SearchTable<
     const { page = 1, limit = this.getLimit() } = this.state;
 
     return {
-      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() ?? {} : {}),
       ...{
         title: Intl.v('序号'),
         dataIndex: '_number',
@@ -721,6 +720,7 @@ abstract class SearchTable<
           </ConditionalRender>
         ),
       },
+      ...(this.getTableNumberColumnProps ? this.getTableNumberColumnProps() ?? {} : {}),
     };
   }
 

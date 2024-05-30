@@ -29,6 +29,7 @@ export interface ColumnSearchConfig {
     render?: () => ReactNode | null;
     startName?: string;
     endName?: string;
+    isShowLabelSymbol?: boolean;
 }
 export interface ColumnParams {
     value: string;
