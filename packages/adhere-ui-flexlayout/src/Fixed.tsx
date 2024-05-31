@@ -69,7 +69,7 @@ const Fixed = memo<FixedProps>(
             [`${selectorPrefix}-gap`]: isUseGap,
           },
         ),
-      [className, span, fit /*collapseClassName*/],
+      [className, span, fit, isUseGap, isUseGrid /*collapseClassName*/],
     );
 
     const styleList = useMemo(() => {
@@ -84,7 +84,7 @@ const Fixed = memo<FixedProps>(
         ...gridStyle,
         ...(collapseStyle ?? {}),
       };
-    }, [style, gutter, collapseStyle]);
+    }, [style, gutter, collapseStyle, isUseGap, direction, media, span, contextChildren]);
 
     useImperativeHandle(ref, () => ({
       getEl: () => elRef.current,

@@ -4,6 +4,7 @@
 
 2024-05-14
 
+* Auto加入isUseNormal属性
 * 加入REM适配
 * 展开和收起(trigger)内部实现修改
 

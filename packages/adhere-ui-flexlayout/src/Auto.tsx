@@ -18,7 +18,15 @@ const selectorPrefix = 'adhere-ui-flex-layout-auto';
  */
 const Auto = memo<AutoProps>(
   forwardRef<any, AutoProps>((props, ref) => {
-    const { children, className = '', style = {}, autoFixed = true, fit = true, ...attrs } = props;
+    const {
+      children,
+      className = '',
+      style = {},
+      autoFixed = true,
+      fit = true,
+      isUseNormal = false,
+      ...attrs
+    } = props;
 
     const { media } = useContext(ConfigProvider.Context);
 
@@ -34,10 +42,11 @@ const Auto = memo<AutoProps>(
       () =>
         classNames(selectorPrefix, className, {
           [`${selectorPrefix}-auto-fixed`]: autoFixed,
-          [`${selectorPrefix}-fit`]: fit,
+          [`${selectorPrefix}-fit`]: isUseNormal ? false : fit,
           [`${selectorPrefix}-gap`]: isUseGap,
+          'adhere-ui-flex-layout-normal': isUseNormal,
         }),
-      [className, autoFixed, fit],
+      [className, autoFixed, fit, isUseGap],
     );
 
     const styleList = useMemo(() => {
@@ -51,7 +60,7 @@ const Auto = memo<AutoProps>(
         ...defaultStyle,
         ...gridStyle,
       };
-    }, [style, gutter]);
+    }, [style, gutter, isUseGap, direction, media, contextChildren]);
 
     return (
       <div ref={ref} {...attrs} className={classList} style={styleList}>

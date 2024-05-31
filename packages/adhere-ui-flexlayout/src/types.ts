@@ -104,6 +104,7 @@ export interface AutoProps {
   autoFixed?: boolean;
   fit?: boolean;
   children?: any;
+  isUseNormal?: boolean;
 }
 
 export interface VerticalFlexLayoutProps {

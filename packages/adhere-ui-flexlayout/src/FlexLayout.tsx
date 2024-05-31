@@ -72,7 +72,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
         marginLeft: `-${columnGapOriginValue}`,
         marginRight: `-${columnGapOriginValue}`,
       };
-    }, [gutter]);
+    }, [gutter, media]);
 
     /**
      * getGridStyle
@@ -103,7 +103,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
         ...defaultStyle,
         ...gridStyle,
       };
-    }, [style, gutter]);
+    }, [style, gutter, getGridStyle]);
 
     return (
       <FlexContext.Provider
