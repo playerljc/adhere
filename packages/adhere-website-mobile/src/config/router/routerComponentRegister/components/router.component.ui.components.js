@@ -864,3 +864,15 @@ export const PRSLMobileGridView = lazy(() =>
 export const QuickRangeDate = lazy(() =>
   import(/* webpackChunkName: "quickrangedate" */ '@/components/ui/quickrangedate'),
 );
+
+export const PopoverMenuBase = lazy(() =>
+  import(/* webpackChunkName: "popovermenu" */ '@/components/ui/popovermenu/Base'),
+);
+
+export const PopoverMenuTabs = lazy(() =>
+  import(/* webpackChunkName: "popovermenu" */ '@/components/ui/popovermenu/Tabs'),
+);
+
+export const PopoverMenuSliderTabs = lazy(() =>
+  import(/* webpackChunkName: "popovermenu" */ '@/components/ui/popovermenu/SliderTabs'),
+);

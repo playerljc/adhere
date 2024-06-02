@@ -13,11 +13,12 @@ import LocalPaging from './Local/paging';
 import Normal from './Normal';
 import Remote from './Remote';
 import Selection from './Selection';
+import Test from './Test';
 
 import '@baifendian/adhere-e2e/es/index.less';
 
 DictConfig();
 
 e2e.Mobile({
-  children: <Selection />,
+  children: <Test />,
 });

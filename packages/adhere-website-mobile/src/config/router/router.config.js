@@ -1,3 +1,5 @@
+import { lazy } from 'react';
+
 import TabsHome from '@/components/ui/tabs/examples/p10/Home';
 import TabsMessage from '@/components/ui/tabs/examples/p10/Message';
 import TabsPersonalCenter from '@/components/ui/tabs/examples/p10/PersonalCenter';
@@ -163,6 +165,9 @@ const {
   PRSLMobileSwipeAction,
   PRSLMobileGridView,
   QuickRangeDate,
+  PopoverMenuBase,
+  PopoverMenuTabs,
+  PopoverMenuSliderTabs,
 } = Components;
 
 export default () => [
@@ -958,6 +963,19 @@ export default () => [
       {
         path: '/adhere/component/ui/quickrangedate',
         component: QuickRangeDate,
+      },
+
+      {
+        path: '/adhere/component/ui/popovermenubase',
+        component: PopoverMenuBase,
+      },
+      {
+        path: '/adhere/component/ui/popovermenutabs',
+        component: PopoverMenuTabs,
+      },
+      {
+        path: '/adhere/component/ui/popovermenuslidertabs',
+        component: PopoverMenuSliderTabs,
       },
     ],
   },

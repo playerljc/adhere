@@ -98,6 +98,7 @@ const {
   MobileFieldGeneratorToDict,
   MobilePRSL,
   MobileQuickRangeDate,
+  MobilePopoverMenu,
 } = Components;
 
 export default () => [
@@ -629,6 +630,11 @@ export default () => [
                 path: '/adhere/component/mobile/quickrangedate',
                 name: 'QuickRangeDate',
                 component: MobileQuickRangeDate,
+              },
+              {
+                path: '/adhere/component/mobile/popovermenu',
+                name: 'PopoverMenu',
+                component: MobilePopoverMenu,
               },
             ],
           },

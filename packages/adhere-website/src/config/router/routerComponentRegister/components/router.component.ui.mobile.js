@@ -45,3 +45,7 @@ export const MobilePRSL = lazy(() =>
 export const MobileQuickRangeDate = lazy(() =>
   import(/* webpackChunkName: "mobilequickrangedate" */ '@/components/mobile/quickrangedate'),
 );
+
+export const MobilePopoverMenu = lazy(() =>
+  import(/* webpackChunkName: "mobilepopovermenu" */ '@/components/mobile/popovermenu'),
+);
