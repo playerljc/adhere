@@ -99,6 +99,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-mobile-ui-time-picker-view', 'MobileTimePickerView'],
   ['@baifendian/adhere-mobile-ui-prsl', 'MobilePRSL'],
   ['@baifendian/adhere-mobile-ui-quick-range-date', 'MobileQuickRangeDate'],
+  ['@baifendian/adhere-mobile-ui-popovermenu', 'MobilePopoverMenu'],
 ]);
 
 /**

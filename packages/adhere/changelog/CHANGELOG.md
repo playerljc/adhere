@@ -24,6 +24,8 @@
   - 加入adhere-mobile-ui-prsl组件
 * **adhere-ui-quick-range-date**
   - 加入adhere-ui-quick-range-date组件
+* **adhere-mobile-ui-popovermenu**
+  - 加入adhere-mobile-ui-popovermenu组件
 * **adhere-mobile-ui-quick-range-date**
   - 加入adhere-mobile-ui-quick-range-date组件
 * **adhere-ui-searchtable**
@@ -92,6 +94,7 @@
   - 重构最终数据源的计算
   - 修改初始化没有下拉数据的BUG
 * **adhere-ui-flexlayout**
+  - 加入isUseNormal属性
   - 加入REM适配
   - 展开和收起(trigger)内部实现修改
   - 加入展开和收起功能(trigger)

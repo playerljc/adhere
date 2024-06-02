@@ -2,6 +2,7 @@ import MobileAutoComplete from '@baifendian/adhere-mobile-ui-auto-complete';
 import MobileDelConfirm from '@baifendian/adhere-mobile-ui-confirm-delconfirm';
 import MobileImportantConfirm from '@baifendian/adhere-mobile-ui-confirm-importantconfirm';
 import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
+import MobilePopoverMenu from '@baifendian/adhere-mobile-ui-popovermenu';
 import MobileErrorPrompt from '@baifendian/adhere-mobile-ui-prompt-errorprompt';
 import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprompt';
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
@@ -85,6 +86,7 @@ export {
   MobileDelConfirm,
   MobileImportantConfirm,
   MobileGlobalIndicator,
+  MobilePopoverMenu,
   MobileErrorPrompt,
   MobileSuccessPrompt,
   MobileWarnPrompt,
