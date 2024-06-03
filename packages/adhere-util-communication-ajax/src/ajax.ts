@@ -1,5 +1,6 @@
 import { notification } from 'antd';
 
+import MobileGlobalIndicator from '@baifendian/adhere-mobile-ui-globalindicator';
 import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
@@ -325,14 +326,16 @@ function initXhrEvents({ xhr, events, reject }) {
  * @param indicator
  * @param xhr
  */
-function resolveData({ show, data, indicator, xhr }): {
+function resolveData({ show, terminal, data, indicator, xhr }): {
   data: any;
   xhr: XMLHttpRequest;
   hideIndicator?: () => void;
 } {
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
+
   return {
     ...{ xhr, data },
-    ...(show ? { hideIndicator: () => GlobalIndicator.hide(indicator) } : {}),
+    ...(show ? { hideIndicator: () => targetGlobalIndicator.hide(indicator) } : {}),
   };
 }
 
@@ -342,6 +345,7 @@ function resolveData({ show, data, indicator, xhr }): {
  * @param interceptor
  * @param show
  * @param indicator
+ * @param terminal
  * @param messageKey
  * @param codeKey
  * @param codeSuccess
@@ -352,12 +356,14 @@ function resolveData({ show, data, indicator, xhr }): {
 function onreadystatechange({
   xhr,
   interceptor,
-  loading: { show, indicator },
+  loading: { show, indicator, terminal },
   business: { messageKey, codeKey, codeSuccess, showWarn },
   resolve,
   reject,
 }) {
   // const { status, readyState, statusText, response, responseText } = xhr;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // readyState === 4
   if (xhr.readyState === Ajax.READY_STATE_DONE) {
@@ -375,13 +381,14 @@ function onreadystatechange({
           warnInfo(intl.v('提示'), jsonObj[messageKey]);
         }
 
-        resolve(resolveData({ show, data: jsonObj, indicator, xhr }));
+        resolve(resolveData({ show, terminal, data: jsonObj, indicator, xhr }));
       }
       // response ContentType是xml
       else if ([Ajax.CONTENT_TYPE_TEXT_XML, Ajax.CONTENT_TYPE_TEXT_XML].includes(contentType)) {
         resolve(
           resolveData({
             show,
+            terminal,
             data: xhr.responseXML,
             indicator,
             xhr,
@@ -393,6 +400,7 @@ function onreadystatechange({
         resolve(
           resolveData({
             show,
+            terminal,
             data: xhr.response,
             indicator,
             xhr,
@@ -425,7 +433,7 @@ function onreadystatechange({
 
       // 取消遮罩
       if (show && indicator) {
-        GlobalIndicator.hide(indicator);
+        targetGlobalIndicator.hide(indicator);
       }
     }
   }
@@ -445,6 +453,16 @@ function isMultipartFormData(data: any) {
     !Util.isEmpty(data.data) &&
     data.form instanceof HTMLFormElement
   );
+}
+
+/**
+ * getGlobalIndicator
+ * @param terminal
+ */
+function getGlobalIndicator(terminal: string) {
+  if (terminal === 'PC') return GlobalIndicator;
+
+  return MobileGlobalIndicator;
 }
 
 /**
@@ -487,11 +505,19 @@ function sendPrepare(
     el = document.body,
     zIndex = 19999,
     size = 'default',
+    terminal = 'PC',
   } = loading!;
+
+  const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   // 显示loading
   if (show) {
-    indicator = GlobalIndicator.show(el || document.body, text || defaultLoadingText, zIndex, size);
+    indicator = targetGlobalIndicator.show(
+      el || document.body,
+      text || defaultLoadingText,
+      zIndex,
+      size,
+    );
   }
 
   // 如果是mock数据
@@ -501,7 +527,7 @@ function sendPrepare(
         resolve({
           data: path,
           hideIndicator: () => {
-            GlobalIndicator.hide(indicator);
+            targetGlobalIndicator.hide(indicator);
           },
         });
       } else {
@@ -582,6 +608,7 @@ function sendPrepare(
     interceptor,
     loading: {
       show,
+      terminal,
       indicator,
     },
     business: {
