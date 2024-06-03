@@ -26,13 +26,13 @@ const InternalSpace = memo<SpaceProps>((props) => {
       return {
         display: 'inline-block',
         height: '100%',
-        margin: `0 ${value}`,
+        marginRight: `0 ${value}`,
       };
     }
 
     return {
       width: '100%',
-      margin: `${value} 0`,
+      marginTop: `${value} 0`,
     };
   }, [direction, size]);
 
