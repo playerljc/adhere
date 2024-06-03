@@ -100,6 +100,7 @@
   - 加入展开和收起功能(trigger)
   - 加入LCRLayout、TCBLayout
 * **adhere-util-communication-ajax**
+  - loading适配移动端
   - 修改FormData值是数组情况
 * **adhere-ui-configprovider**
   - 加入media配置项控制是否支持REM
@@ -144,8 +145,10 @@
 * **adhere-ui-tablegridlayout**
   - 加入REM适配
 * **adhere-ui-space**
+  - 间距BUG修改
   - 加入REM适配
 * **adhere-ui-split**
+  - 间距BUG修改
   - 加入REM适配
 * **adhere-ui-stickuplayout**
   - 加入resize适配
