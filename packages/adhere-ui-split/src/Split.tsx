@@ -27,14 +27,14 @@ const InternalSplit = memo<SplitProps>((props) => {
         display: 'inline-block',
         width: 1,
         height: '100%',
-        margin: `0 ${value}`,
+        marginRight: `0 ${value}`,
       };
     }
 
     return {
       width: '100%',
       height: 1,
-      margin: `${value} 0`,
+      marginTop: `${value} 0`,
     };
   }, [direction, size]);
 
