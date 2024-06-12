@@ -14,6 +14,7 @@ import Util from '@baifendian/adhere-util';
 import { ResizeObserver } from '@juggle/resize-observer';
 
 import Signature from './signature';
+import MobileSignature from './signature/mobile';
 import { Mode, Point, WritingBoardComponent, WritingBoardHandle, WritingBoardProps } from './types';
 
 const selectorPrefix = 'adhere-ui-writing-board';
@@ -421,11 +422,11 @@ const InternalWritingBoard = memo<
     }): Point {
       const { x, y } = canvasRef?.current?.getBoundingClientRect()!;
 
-      const zoom = Util.getZoom();
+      // const zoom = Util.getZoom();
 
       return {
-        x: clientX / zoom - x,
-        y: clientY / zoom - y,
+        x: clientX /*/ zoom*/ - x,
+        y: clientY /*/ zoom*/ - y,
       };
     }
 
@@ -747,5 +748,6 @@ const WritingBoard = InternalWritingBoard as WritingBoardComponent;
 WritingBoard.displayName = 'WritingBoard';
 
 WritingBoard.Signature = Signature;
+WritingBoard.MobileSignature = MobileSignature;
 
 export default WritingBoard;

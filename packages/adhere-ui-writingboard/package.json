@@ -28,10 +28,11 @@
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename WritingBoard --define alias=@,evnVars=true",
-    "e2e": "cross-env e2e",
+    "e2e": "cross-env mobile=true e2e",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-mobile-ui-anthoc": "^2.10.28",
     "@baifendian/adhere-ui-flexlayout": "^2.10.28",
     "@baifendian/adhere-ui-messagedialog": "^2.10.28",
     "@baifendian/adhere-util": "^2.10.28",
@@ -39,6 +40,7 @@
     "@juggle/resize-observer": "^3.3.1",
     "ahooks": "^3.7.8",
     "antd": "^5.17.4",
+    "antd-mobile": "^5.36.1",
     "classnames": "^2.3.2",
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.1",

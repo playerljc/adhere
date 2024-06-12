@@ -1,3 +1,5 @@
+import MobileSignatureCore from './signature/MobileSignatureCore';
+
 import type { ModalProps } from 'antd/lib/modal/interface';
 import { PropsWithoutRef } from 'react';
 import type { CSSProperties, NamedExoticComponent, RefAttributes } from 'react';
@@ -10,6 +12,7 @@ import type {
 
 import Signature from './signature';
 import SignatureCore from './signature/SignatureCore';
+import MobileSignature from './signature/mobile';
 
 /**
  * WritingBoardHandle
@@ -117,10 +120,12 @@ export type WritingBoardComponent = NamedExoticComponent<
 > &
   RefAttributes<WritingBoardHandle> & {
     Signature: typeof Signature;
+    MobileSignature: typeof MobileSignature;
   };
 
 export type SignatureComponent = NamedExoticComponent<
   PropsWithoutRef<SignatureProps> & RefAttributes<SignatureHandle>
 > & {
   SignatureCore: typeof SignatureCore;
+  MobileSignatureCore: typeof MobileSignatureCore;
 };
