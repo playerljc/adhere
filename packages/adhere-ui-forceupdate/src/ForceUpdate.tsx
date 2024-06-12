@@ -1,4 +1,5 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import { cloneElement, forwardRef, useImperativeHandle } from 'react';
+import { v1 } from 'uuid';
 
 import Hooks from '@baifendian/adhere-ui-hooks';
 
@@ -8,14 +9,17 @@ const { useSetState } = Hooks;
 
 const ForceUpdate = forwardRef<ForceUpdateRefHandle, ForceUpdateProps>((props, ref) => {
   const { children } = props;
-  const [display, setDisplay] = useSetState<boolean>(true);
+
+  const [key, setKey] = useSetState<string>(v1());
 
   useImperativeHandle(ref, () => ({
-    reMount: () =>
-      new Promise<void>((resolve) => setDisplay(false, () => setDisplay(true, () => resolve()))),
+    reMount: () => new Promise<void>((resolve) => setKey(v1(), () => resolve())),
   }));
 
-  return display ? children : null;
+  return cloneElement(children, {
+    key,
+    ...(children.props ?? {}),
+  });
 });
 
 ForceUpdate.displayName = 'ForceUpdate';
