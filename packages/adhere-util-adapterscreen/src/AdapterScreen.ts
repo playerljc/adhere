@@ -1,3 +1,5 @@
+import Util from '@baifendian/adhere-util';
+
 import { IAdapterScreen } from './type';
 
 let currRenderDom = '';
@@ -315,6 +317,31 @@ const adapterScreen: IAdapterScreen = {
       }
       docEl.removeChild(fakeBody);
     }
+  },
+  /**
+   * setPageMinSizeToCSS
+   * @description 设置页面的minWidth和minHeight的css样式
+   * @param {HTMLElement} el
+   */
+  setPageMinSizeToCSS(el?: HTMLElement) {
+    function setMinSize() {
+      const { width, height } = Util.getMaximizedViewportSize();
+
+      const minWidth = width - Util.getScrollbarWidth();
+      const minHeight = height;
+
+      (el ?? document.body).style.minWidth = `${minWidth}px`;
+      (el ?? document.body).style.minHeight = `${minHeight}px`;
+    }
+
+    window.addEventListener('resize', () => {
+      setMinSize();
+    });
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        setMinSize();
+      }
+    });
   },
   elRectification,
 };

@@ -29,6 +29,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
+    "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-browsersniff": "^2.10.28",
     "lodash.debounce": "^4.0.8"
   },
