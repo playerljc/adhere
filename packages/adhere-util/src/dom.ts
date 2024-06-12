@@ -721,6 +721,64 @@ const DomUtil = {
 
     return 100 / Number(ratio);
   },
+  /**
+   * getScrollbarWidth
+   * @description 获取滚动条的宽度
+   * @return {number}
+   */
+  getScrollbarWidth(): number {
+    // Create a temporary div container and append it into the body
+    const container = document.createElement('div');
+    // Force scrollbars
+    container.style.overflow = 'scroll';
+    container.style.visibility = 'hidden';
+    container.style.position = 'absolute';
+    container.style.top = '-9999px';
+    document.body.appendChild(container);
+
+    // Create a temporary inner element and append it into the container
+    const inner = document.createElement('div');
+    container.appendChild(inner);
+
+    // Calculate the scrollbar width
+    const scrollbarWidth = container.offsetWidth - inner.offsetWidth;
+
+    // Remove the temporary elements from the DOM
+    document.body.removeChild(container);
+
+    return scrollbarWidth;
+  },
+
+  /**
+   * getMaximizedViewportSize
+   * @return {{width: number; height: number}}
+   */
+  getMaximizedViewportSize(): { width: number; height: number } {
+    // 获取当前窗口的视口宽度和高度
+    const currentWidth = window.innerWidth;
+    const currentHeight = window.innerHeight;
+
+    // 获取当前窗口的外部宽度和高度
+    const outerWidth = window.outerWidth;
+    const outerHeight = window.outerHeight;
+
+    // 获取可用屏幕宽度和高度
+    const availWidth = screen.availWidth;
+    const availHeight = screen.availHeight;
+
+    // 计算窗口边框、标题栏等非视口部分的宽度和高度
+    const borderWidth = outerWidth - currentWidth;
+    const borderHeight = outerHeight - currentHeight;
+
+    // 计算最大化窗口的视口宽度和高度
+    const maximizedWidth = availWidth - borderWidth;
+    const maximizedHeight = availHeight - borderHeight;
+
+    return {
+      width: maximizedWidth,
+      height: maximizedHeight,
+    };
+  },
   /**--------------------------dom-end-------------------------**/
 };
 

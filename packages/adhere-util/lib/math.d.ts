@@ -49,7 +49,7 @@ declare const _default: {
      * @return {x:number,y:number}
      */
     clientToCtxPoint({ event, rect }: {
-        event: MouseEvent;
+        event: MouseEvent | TouchEvent;
         rect: DOMRect;
     }): IPoint;
     /**

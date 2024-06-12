@@ -181,7 +181,7 @@ declare const _default: {
         p2: import("./types").IPoint;
     }): number;
     clientToCtxPoint({ event, rect }: {
-        event: MouseEvent;
+        event: MouseEvent | TouchEvent;
         rect: DOMRect;
     }): import("./types").IPoint;
     isPointInCircle(point: import("./types").IPoint, circle: import("./types").ICircle): boolean;
@@ -274,6 +274,11 @@ declare const _default: {
         rotate: number;
     };
     getZoom(): number;
+    getScrollbarWidth(): number;
+    getMaximizedViewportSize(): {
+        width: number;
+        height: number;
+    };
     rgbRandom(): string;
     color16Random(): string;
     colorToRgb(color: string): number[];

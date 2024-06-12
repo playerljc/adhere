@@ -82,8 +82,18 @@ export default {
    * @param {Rect} - rect
    * @return {x:number,y:number}
    */
-  clientToCtxPoint({ event, rect }: { event: MouseEvent; rect: DOMRect }): IPoint {
-    const { clientX, clientY } = event;
+  clientToCtxPoint({ event, rect }: { event: MouseEvent | TouchEvent; rect: DOMRect }): IPoint {
+    let clientX: number;
+    let clientY: number;
+
+    if (event instanceof MouseEvent) {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else {
+      clientX = event.changedTouches[0].clientX;
+      clientY = event.changedTouches[0].clientY;
+    }
+
     // const zoom = Dom.getZoom();
 
     return {

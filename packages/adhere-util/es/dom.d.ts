@@ -262,5 +262,19 @@ declare const DomUtil: {
         rotate: number;
     };
     getZoom(): number;
+    /**
+     * getScrollbarWidth
+     * @description 获取滚动条的宽度
+     * @return {number}
+     */
+    getScrollbarWidth(): number;
+    /**
+     * getMaximizedViewportSize
+     * @return {{width: number; height: number}}
+     */
+    getMaximizedViewportSize(): {
+        width: number;
+        height: number;
+    };
 };
 export default DomUtil;
