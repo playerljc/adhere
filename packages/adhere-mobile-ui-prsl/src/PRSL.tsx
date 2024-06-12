@@ -1,6 +1,7 @@
 import { useMount, useNetwork, useUpdate, useUpdateEffect } from 'ahooks';
 import { Button, DotLoading, ErrorBlock, PullToRefresh, Radio, Skeleton } from 'antd-mobile';
 import classNames from 'classnames';
+import { WritableDraft } from 'immer/dist/internal';
 import isPrimaryEmpty from 'lodash.isempty';
 import React, {
   forwardRef,
@@ -25,7 +26,14 @@ import PRSLItem from './PRSLItem';
 import SearchKeyWord from './SearchKeyWord';
 import { SelectionCheckAllManage, SelectionManageButton, useSelection } from './Selection';
 import ToolBar from './Toolbar';
-import type { DataSource, ModeType, PRSLComponent, PRSLHandle, PRSLProps } from './types';
+import type {
+  DataSource,
+  DefaultSortValue,
+  ModeType,
+  PRSLComponent,
+  PRSLHandle,
+  PRSLProps,
+} from './types';
 
 const selectorPrefix = 'adhere-mobile-ui-prsl';
 
@@ -694,7 +702,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
               dndCancelLabel={dndCancelLabel}
               isUseDNDMode={isUseDNDMode}
               isUseNormalMode={isUseNormalMode}
-              onChange={(_isUseDNDMode) => {
+              onChange={(_isUseDNDMode: boolean) => {
                 if (_isUseDNDMode) {
                   setDNDMode();
                 } else {
@@ -731,7 +739,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
               selectionCancelLabel={selectionCancelLabel}
               isUseSelectionMode={isUseSelectionMode}
               isUseNormalMode={isUseNormalMode}
-              onChange={(_isUseSelectionMode) => {
+              onChange={(_isUseSelectionMode: boolean) => {
                 if (_isUseSelectionMode) {
                   setSelectionMode();
                 } else {
@@ -993,7 +1001,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         resetSearchOrFilterOrSort();
       }
 
-      function onFilter(filterData) {
+      function onFilter(filterData: WritableDraft<Record<string, any>> | undefined) {
         resetScrollLoadOrPaging();
 
         setCombinationParams((draft) => {
@@ -1027,7 +1035,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         });
       }
 
-      function onSort(sortData) {
+      function onSort(sortData: WritableDraft<DefaultSortValue>[] | undefined) {
         resetScrollLoadOrPaging();
 
         setCombinationParams((draft) => {
@@ -1061,7 +1069,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         });
       }
 
-      function onSearch(value) {
+      function onSearch(value: string | undefined) {
         resetScrollLoadOrPaging();
 
         setCombinationParams((draft) => {
@@ -1235,13 +1243,14 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         getOptionSelectedRowKeys: () => optionSelectedRowKeys ?? [],
         getDatasourceLength: () => dataSource.data.length,
         getSelectionMultiple: () => isSelectionMultiple,
-        getIndexByIdFormOptionDataSource: (id) => {
+        getIndexByIdFormOptionDataSource: (id: any) => {
           return optionDataSource.data.findIndex((t) => t[targetRowKey] === id);
         },
         getDndDragHandle: () => dndDragHandle,
         getActionTriggerMode: () => targetActionTriggerMode,
         getRenderActionSheetTrigger: () => renderActionSheetTrigger?.(),
-        onAction: (record, rowIndex) => onAction?.(record, rowIndex) ?? [],
+        onAction: (record: Record<string, any>, rowIndex: number) =>
+          onAction?.(record, rowIndex) ?? [],
       };
 
       return (

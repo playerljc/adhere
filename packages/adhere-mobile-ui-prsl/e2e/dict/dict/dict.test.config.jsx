@@ -833,7 +833,6 @@ export default {
     };
 
     Dict.handlers.SystemDepartment = () => (pid, cascadeParams) => {
-      debugger;
       if (!pid) {
         return Promise.resolve(
           Province.map((t) => ({

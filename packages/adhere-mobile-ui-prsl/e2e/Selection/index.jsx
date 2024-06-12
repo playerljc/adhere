@@ -542,6 +542,7 @@ export default () => {
     <div className="Wrapper">
       <PRSL
         // isUseDND={false}
+        isUseDND
         isUseSelection
         selectionMultiple
         onSelectChange={(
