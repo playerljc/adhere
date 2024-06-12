@@ -206,7 +206,7 @@ export default () => {
             title: '确认',
           },
         }}
-        footer={[
+        actions={[
           {
             key: 'submit',
             type: 'primary',
