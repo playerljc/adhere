@@ -59,7 +59,7 @@ const InternalCropping = memo<PropsWithoutRef<CroppingProps> & RefAttributes<Cro
 
                         if (onChange) {
                           onChange(base64);
-                          dialog.close();
+                          dialog?.close();
                         }
                       }}
                     >
