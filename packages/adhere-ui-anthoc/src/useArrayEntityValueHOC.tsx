@@ -141,7 +141,7 @@ export default (props: ArrayEntityValueHOCProps) => {
   }
 
   return React.cloneElement(children, {
-    ...omit(props, ['children']),
+    ...omit(props, ['children', 'options']),
     ...children.props,
     value: _isUsePrimaryValue ? getInternalValue() : value,
     realValue: value,
@@ -154,7 +154,11 @@ export default (props: ArrayEntityValueHOCProps) => {
         onChange?.(_selectValue, ...rest);
       }
 
-      children.props?.onChange?.(_selectValue, ...rest);
+      if (!Object.is(onChange, children.props?.onChange)) {
+        if (!('changePropagation' in props) || props.changePropagation) {
+          children.props?.onChange?.(_selectValue, ...rest);
+        }
+      }
     },
   });
 };

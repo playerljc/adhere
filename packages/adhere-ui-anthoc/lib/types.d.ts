@@ -1,7 +1,6 @@
 import type { AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, FormProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TransferProps, TreeSelectProps } from 'antd';
 import { DatePickerProps, FormRule, TimePickerProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { RangePickerProps } from 'antd/es/date-picker';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
@@ -50,7 +49,7 @@ export type DropdownWrapperStyleProps = {
     render?: (checkAllOrigin: ReactElement, childrenOrigin: ReactNode) => ReactElement;
 };
 export type CheckAllWrapperProps = Pick<SelectProps, 'value' | 'options'> & {
-    onChange?: (checkedValue: CheckboxValueType[], checked: boolean, changeValue: CheckboxValueType[]) => void;
+    onChange?: (checkedValue: any[], checked: boolean, changeValue: any[]) => void;
 };
 export type AutoCompleteCheckAllMultipleSelectProps = DropdownWrapperStyleProps & CheckAllWrapperStyleProps & AutoCompleteProps;
 export type CheckAllSelectProps = DropdownWrapperStyleProps & CheckAllWrapperStyleProps & DropdownRenderSelectProps;
@@ -599,7 +598,7 @@ export type CheckboxGroupExtProps = Omit<CheckboxGroupProps, 'onChange' | 'child
     className?: string;
     style?: CSSProperties;
     direction?: SpaceProps['direction'];
-    onChange?: (checkedValue: CheckboxValueType[], checked: boolean, changeValue: CheckboxValueType[]) => void;
+    onChange?: (checkedValue: any[], checked: boolean, changeValue: any[]) => void;
     children?: (onChange: (e: any, itemValue: CheckboxOptionType['value']) => void) => ReactNode;
 };
 export type AutoCompleteSelectInputProps = Omit<AntdAutoCompleteProps, 'value' | 'onChange'> & {
@@ -697,6 +696,7 @@ export type ArrayEntityValueHOCProps = {
     valueProp?: string;
     options?: any[];
     isUsePrimaryValue?: boolean;
+    changePropagation?: boolean;
     [prop: string]: any;
 };
 export type TreeEntityValueHOCProps = {
@@ -713,6 +713,9 @@ export type PagingEntityValueHOCProps = {
     value?: any;
     onChange?: (...argv: any[]) => any;
     valueProp?: string;
+    changePropagation?: boolean;
+    getOptionsByDataSource: (_dataSource: any[]) => any[];
+    pagingPropsPath?: string[];
     [prop: string]: any;
 };
 export type AsyncTreeEntityValueHOCProps = {
