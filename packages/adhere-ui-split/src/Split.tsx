@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { memo, useCallback, useContext, useMemo } from 'react';
+import React, { CSSProperties, memo, useContext, useMemo } from 'react';
 
 import ConfigProvider from '@baifendian/adhere-ui-configprovider';
 
@@ -15,33 +15,33 @@ const selectorPrefix = 'adhere-ui-split';
  * @constructor
  */
 const InternalSplit = memo<SplitProps>((props) => {
-  const { className = '', style, direction = 'vertical', size = 20 } = props;
+  const { className = '', style, direction = 'vertical', size = 10 } = props;
 
   const { media } = useContext(ConfigProvider.Context);
 
   const value = useMemo(() => getValue(media, size), [media, size]);
 
-  const getStyle = useCallback(() => {
+  const targetStyle = useMemo<CSSProperties>(() => {
     if (direction === 'horizontal') {
       return {
         display: 'inline-block',
         width: 1,
         height: '100%',
-        marginRight: `0 ${value}`,
+        margin: `0 ${value}`,
       };
     }
 
     return {
       width: '100%',
       height: 1,
-      marginTop: `${value} 0`,
+      margin: `${value} 0`,
     };
   }, [direction, size]);
 
   return (
     <div
       className={classNames(selectorPrefix, className ?? '')}
-      style={{ ...getStyle(), ...(style ?? {}) }}
+      style={{ ...targetStyle, ...(style ?? {}) }}
     />
   );
 });
