@@ -131,7 +131,6 @@ export function getValue(
   pixel: number,
   media: ConfigProviderProps['media'] = { isUseMedia: false, designWidth: 192 },
 ) {
-  console.log('isUseMedia', media.isUseMedia);
   if (media.isUseMedia) {
     return Util.pxToRemNumber(pixel, media.designWidth as number);
   }
