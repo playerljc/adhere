@@ -507,7 +507,6 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
         limit,
         ...searchParams,
         [this.getOrderProp()]: order === 'descend' ? 'desc' : 'asc',
-
         [this.getOrderFieldProp()]: this.state?.[this.getOrderFieldProp()],
         ...this.getFetchDataParams(),
       },

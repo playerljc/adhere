@@ -341,9 +341,11 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         (key) =>
           state[key] === null ||
           state[key] === 'null' ||
-          Validator.isDate(state[key], {
-            format: 'YYYY-MM-DD',
-          }),
+          // Validator.isDate(state[key], {
+          //   format: 'YYYY-MM-DD',
+          // }),
+          // 判断是否是时间字符串
+          dayjs(state[key]).isValid(),
       );
 
       const dateObj = {};
