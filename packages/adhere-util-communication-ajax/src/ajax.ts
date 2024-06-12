@@ -13,8 +13,8 @@ let trigger402 = false;
 // notification的节流时间(毫秒)
 const notificationThrottlingTime = 300;
 
-let errorInfoHandler;
-let warnInfoHandler;
+let errorInfoHandler: string | number | NodeJS.Timeout | null | undefined;
+let warnInfoHandler: string | number | NodeJS.Timeout | null | undefined;
 
 /**
  * Ajax
@@ -171,7 +171,7 @@ class Ajax {
  * @param title
  * @param message
  */
-function errorInfo(title, message) {
+function errorInfo(title: string, message: string) {
   if (errorInfoHandler) {
     clearTimeout(errorInfoHandler);
     errorInfoHandler = null;
@@ -190,7 +190,7 @@ function errorInfo(title, message) {
  * @param title
  * @param message
  */
-function warnInfo(title, message) {
+function warnInfo(title: string, message: string) {
   if (warnInfoHandler) {
     clearTimeout(warnInfoHandler);
     warnInfoHandler = null;
@@ -282,21 +282,21 @@ function initXhrEvents({ xhr, events, reject }) {
   const { onTimeout, onLoadsStart, onProgress, onAbort, onError, onLoad, onLoadend } = events;
 
   if (onTimeout) {
-    xhr.addEventListener('timeout', function (...params) {
+    xhr.addEventListener('timeout', function (...params: any) {
       onTimeout(...(params ?? {}));
       reject(...(params ?? {}));
     });
   }
 
   if (onAbort) {
-    xhr.addEventListener('abort', function (...params) {
+    xhr.addEventListener('abort', function (...params: any) {
       onAbort(...(params ?? {}));
       reject(...(params ?? {}));
     });
   }
 
   if (onError) {
-    xhr.addEventListener('error', function (...params) {
+    xhr.addEventListener('error', function (...params: any) {
       onError(...(params ?? {}));
       reject(...(params ?? {}));
     });
@@ -322,6 +322,7 @@ function initXhrEvents({ xhr, events, reject }) {
 /**
  * resolveData - onreadystatechange中resolve的数据
  * @param show
+ * @param terminal
  * @param data
  * @param indicator
  * @param xhr
@@ -460,7 +461,7 @@ function isMultipartFormData(data: any) {
  * @param terminal
  */
 function getGlobalIndicator(terminal: string) {
-  if (terminal === 'PC') return GlobalIndicator;
+  if (terminal === 'pc') return GlobalIndicator;
 
   return MobileGlobalIndicator;
 }
@@ -505,7 +506,7 @@ function sendPrepare(
     el = document.body,
     zIndex = 19999,
     size = 'default',
-    terminal = 'PC',
+    terminal = 'pc',
   } = loading!;
 
   const targetGlobalIndicator = getGlobalIndicator(terminal);
@@ -527,7 +528,7 @@ function sendPrepare(
         resolve({
           data: path,
           hideIndicator: () => {
-            targetGlobalIndicator.hide(indicator);
+            targetGlobalIndicator.hide(indicator as any);
           },
         });
       } else {

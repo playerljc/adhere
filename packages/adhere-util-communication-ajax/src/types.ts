@@ -72,7 +72,7 @@ export interface IConfig {
     // 大小
     size: Size;
     // 终端
-    terminal?: 'PC' | 'Mobile';
+    terminal?: 'pc' | 'mobile';
   };
   // 和后端定义的三大业务key
   onBeforeResponse?: () => void;

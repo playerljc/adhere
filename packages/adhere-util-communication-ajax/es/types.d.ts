@@ -59,7 +59,7 @@ export interface IConfig {
         el: HTMLElement;
         zIndex: number;
         size: Size;
-        terminal?: 'PC' | 'Mobile';
+        terminal?: 'pc' | 'mobile';
     };
     onBeforeResponse?: () => void;
     dataKey?: string;
