@@ -126,7 +126,7 @@ const InternalQuickRangeDate = memo<QuickRangeDateProps>(
             className={classNames(`${selectorPrefix}-inner`, innerClassName ?? '')}
             style={innerStyle ?? {}}
           >
-            <div className={`${selectorPrefix}-trigger`}>
+            <div className={classNames(`${selectorPrefix}-trigger`)}>
               <Modal.TriggerPrompt
                 submitAction={{
                   key: 'submit',
