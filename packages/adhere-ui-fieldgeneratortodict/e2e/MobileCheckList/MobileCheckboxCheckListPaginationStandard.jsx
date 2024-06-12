@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { ArrayEntityValueHOC, PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+
 import FieldGeneratorToDict from '../../src/index';
 
 const defaultPaging = {
@@ -13,15 +15,17 @@ export default () => {
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
   return (
-    <DictComponent
-      multiple
-      value={value}
-      onChange={setValue}
-      pagingProps={{
-        style: { height: '100%' },
-        defaultPaging,
-        isLocal: false,
-      }}
-    />
+    <PagingEntityValueHOC onChange={setValue} value={value}>
+      <DictComponent
+        multiple
+        // value={value}
+        // onChange={setValue}
+        pagingProps={{
+          style: { height: '100%' },
+          defaultPaging,
+          isLocal: false,
+        }}
+      />
+    </PagingEntityValueHOC>
   );
 };

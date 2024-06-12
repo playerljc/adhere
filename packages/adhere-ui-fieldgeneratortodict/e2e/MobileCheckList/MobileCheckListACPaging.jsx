@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+
 import FieldGeneratorToDict from '../../src/index';
 
 export default () => {
@@ -9,19 +11,25 @@ export default () => {
   const DictComponent = FieldGeneratorToDict.Components[DictComponentName];
 
   return (
-    <DictComponent
-      placeholder="请输入关键字"
-      style={{ height: '100%' }}
-      bodyStyle={{ overflowY: 'hidden' }}
+    <PagingEntityValueHOC
       value={value}
       onChange={setValue}
-      pagingCheckListProps={{
-        multiple: true,
-        pagingProps: {
-          style: { height: '100%' },
-          isLocal: false,
-        },
-      }}
-    />
+      // optionsProp="searchDataSource"
+      // changePropagation={false}
+      pagingPropsPath={['pagingCheckListProps', 'pagingProps']}
+    >
+      <DictComponent
+        placeholder="请输入关键字"
+        style={{ height: '100%' }}
+        bodyStyle={{ overflowY: 'hidden' }}
+        pagingCheckListProps={{
+          multiple: true,
+          pagingProps: {
+            style: { height: '100%' },
+            isLocal: false,
+          },
+        }}
+      />
+    </PagingEntityValueHOC>
   );
 };

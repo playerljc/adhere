@@ -1,23 +1,3 @@
-import React from 'react';
-
-import e2e from '@baifendian/adhere-e2e';
-import Dict from '@baifendian/adhere-util-dict';
-
-import DictConfig from '@/dict/dict.config';
-
-import AutoCompleteTest from './AutoComplete/SelectInput';
-import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
-import CascaderAsyncEntityValueHOC from './Cascader/CascaderAsyncEntityValueHOC';
-import CascaderTest from './Cascader/CascaderAsyncFlatChangeOnSelect';
-import CascaderAsyncFlatEntityValueHOC from './Cascader/CascaderAsyncFlatEntityValueHOC';
-import CascaderEntityValueHOC from './Cascader/CascaderEntityValueHOC';
-import CascaderFlatEntityValueHOC from './Cascader/CascaderFlatEntityValueHOC';
-import CascaderMulitEntityValueHOC from './Cascader/CascaderMulitEntityValueHOC';
-import CheckboxTest from './Checkbox/Vertical.tsx';
-import DropdownTest from './Dropdown/Standard';
-import ListTest from './List/AutoCompleteCheckboxPagin';
-import MentionsTest from './Mentions/Standard';
-import MenuTest from './Menu/Standard';
 import MobileCascaderViewAsyncStandard from './MobileCascaderView/MobileCascaderViewAsyncStandard';
 import MobileCascaderViewDynamicFilter from './MobileCascaderView/MobileCascaderViewDynamicFilter';
 import MobileCascaderViewDynamicStandard from './MobileCascaderView/MobileCascaderViewDynamicStandard';
@@ -74,6 +54,27 @@ import MobileSelectorPaginationDynamicFilter from './MobileSelector/MobileSelect
 import MobileSelectorPaginationFilter from './MobileSelector/MobileSelectorPaginationFilter';
 import MobileSelectorPaginationStandard from './MobileSelector/MobileSelectorPaginationStandard';
 import MobileSelectorStandard from './MobileSelector/MobileSelectorStandard';
+
+import React from 'react';
+
+import e2e from '@baifendian/adhere-e2e';
+import Dict from '@baifendian/adhere-util-dict';
+
+import DictConfig from '@/dict/dict.config';
+
+import AutoCompleteTest from './AutoComplete/SelectInput';
+import BreadcrumbTest from './Breadcrumb/SuspenseStandard';
+import CascaderAsyncEntityValueHOC from './Cascader/CascaderAsyncEntityValueHOC';
+import CascaderTest from './Cascader/CascaderAsyncFlatChangeOnSelect';
+import CascaderAsyncFlatEntityValueHOC from './Cascader/CascaderAsyncFlatEntityValueHOC';
+import CascaderEntityValueHOC from './Cascader/CascaderEntityValueHOC';
+import CascaderFlatEntityValueHOC from './Cascader/CascaderFlatEntityValueHOC';
+import CascaderMulitEntityValueHOC from './Cascader/CascaderMulitEntityValueHOC';
+import CheckboxTest from './Checkbox/Vertical.tsx';
+import DropdownTest from './Dropdown/Standard';
+import ListTest from './List/AutoCompleteCheckboxPagin';
+import MentionsTest from './Mentions/Standard';
+import MenuTest from './Menu/Standard';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect';
 import SegmentedTest from './Segmented/SuspenseStandard';
 import SelectTest from './Select/ArrayEntityValueHOC';
@@ -120,10 +121,10 @@ import '../src/index.less';
 
 DictConfig();
 
-e2e.PC({
-  children: <Transfer />,
-});
-
-// e2e.Mobile({
-//   children: <MultipleSelect />,
+// e2e.PC({
+//   children: <Transfer />,
 // });
+
+e2e.Mobile({
+  children: <MobileCheckListACPaging />,
+});

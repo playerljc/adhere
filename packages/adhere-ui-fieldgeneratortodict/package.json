@@ -28,7 +28,7 @@
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereFieldGeneratorToDict --define alias=@,evnVars=true",
-    "e2e": "cross-env e2e",
+    "e2e": "cross-env mobile=true e2e",
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {

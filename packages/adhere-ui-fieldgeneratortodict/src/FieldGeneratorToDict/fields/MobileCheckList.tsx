@@ -1,4 +1,3 @@
-import { useUpdateEffect } from 'ahooks';
 import React from 'react';
 
 import { CheckList } from '@baifendian/adhere-mobile-ui-anthoc';
