@@ -4,13 +4,9 @@ import { CascadeCompared } from '@baifendian/adhere';
 
 import styles from './example.less';
 
-const columns = [];
-columns.length = 10;
-columns.fill(0);
+const columns = Array.from({ length: 10 }).fill(0);
 
-const data = [];
-data.length = 10;
-data.fill(0);
+const data = Array.from({ length: 10 }).fill(0);
 
 function getIndicator() {
   return {
@@ -18,19 +14,22 @@ function getIndicator() {
       dataIndex: `column${i + 1}`,
       isFixed: i === 0,
       width: 120,
-      render: () => <h2>{`指标${i + 1}`}</h2>,
+      render: (val, dataSource, groupIndex, rowIndex, columnIndex) => {
+        console.log('indicator', val, dataSource, groupIndex, rowIndex, columnIndex);
+        return <h2>{`指标${i + 1}`}</h2>;
+      },
     })),
     dataSource: {
-      columns1: 1,
-      columns2: 2,
-      columns3: 3,
-      columns4: 4,
-      columns5: 5,
-      columns6: 6,
-      columns7: 7,
-      columns8: 8,
-      columns9: 9,
-      columns10: 10,
+      column1: 1,
+      column2: 2,
+      column3: 3,
+      column4: 4,
+      column5: 5,
+      column6: 6,
+      column7: 7,
+      column8: 8,
+      column9: 9,
+      column10: 10,
     },
   };
 }
@@ -47,44 +46,48 @@ function getMaster() {
       dataIndex: `column${j + 1}`,
       isFixed: j === 0,
       width: 120,
-      render: () => <h4>{`厂家指导价${j + 1}`}</h4>,
+      // render: () => <h4>{`厂家指导价${j + 1}`}</h4>,
+      render: (val, dataSource, groupIndex, rowIndex, columnIndex) => {
+        console.log('master', val, dataSource, groupIndex, rowIndex, columnIndex);
+        return <h4>{`厂家指导价${j + 1}`}</h4>;
+      },
     })),
     dataSource: [
       {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
+        column1: 1,
+        column2: 2,
+        column3: 3,
+        column4: 4,
+        column5: 5,
+        column6: 6,
+        column7: 7,
+        column8: 8,
+        column9: 9,
+        column10: 10,
       },
       {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
+        column1: 1,
+        column2: 2,
+        column3: 3,
+        column4: 4,
+        column5: 5,
+        column6: 6,
+        column7: 7,
+        column8: 8,
+        column9: 9,
+        column10: 10,
       },
       {
-        columns1: 1,
-        columns2: 2,
-        columns3: 3,
-        columns4: 4,
-        columns5: 5,
-        columns6: 6,
-        columns7: 7,
-        columns8: 8,
-        columns9: 9,
-        columns10: 10,
+        column1: 1,
+        column2: 2,
+        column3: 3,
+        column4: 4,
+        column5: 5,
+        column6: 6,
+        column7: 7,
+        column8: 8,
+        column9: 9,
+        column10: 10,
       },
     ],
   }));

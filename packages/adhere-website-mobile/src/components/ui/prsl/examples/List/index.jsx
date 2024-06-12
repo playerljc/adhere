@@ -1,7 +1,7 @@
 import { Button, List } from 'antd-mobile';
 import _ from 'lodash';
 import Mockjs, { Random } from 'mockjs';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 
 import { ShareAltOutlined, UserAddOutlined } from '@ant-design/icons';
@@ -130,6 +130,8 @@ function getData({ page, pageSize, searchKeyWord, filterValues = {}, sortValues 
 }
 
 export default () => {
+  const prslRef = useRef();
+
   const [loading, setLoading] = useState(true);
 
   const [viewMode, setViewMode] = useState('GT');
