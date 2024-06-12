@@ -1,7 +1,7 @@
 import { Button, Form } from 'antd-mobile';
 import React from 'react';
 
-import { PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+import { ArrayEntityValueHOC, PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
 
 import { CheckList } from '../../src/index';
 
@@ -52,7 +52,7 @@ export default () => {
         // initialValue={[]}
       >
         <PagingEntityValueHOC>
-          <CheckList.PagingCheckList
+          <CheckList.PagingCheckboxCheckList
             // options={options}
             multiple
             pagingProps={{

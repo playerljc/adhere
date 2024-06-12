@@ -1,6 +1,8 @@
 // import Mockjs from 'mockjs';
 import React, { useState } from 'react';
 
+import { ArrayEntityValueHOC, PagingEntityValueHOC } from '@baifendian/adhere-ui-anthoc';
+
 // import Mock from '@baifendian/adhere-mock';
 import { CheckList } from '../../src/index';
 
@@ -21,25 +23,28 @@ export default () => {
   const [value, setValue] = useState([]);
 
   return (
-    <CheckList.PagingCheckboxCheckList
-      multiple
-      value={value}
-      onChange={setValue}
-      pagingProps={{
-        style: { height: '100%' },
-        defaultPaging,
-        isLocal: false,
-        onLoad: (page, limit) => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve({
-                data: options.slice((page - 1) * limit, page * limit),
-                total: options.length,
-              });
-            }, 1000);
-          });
-        },
-      }}
-    />
+    <PagingEntityValueHOC onChange={setValue} value={value}>
+      <CheckList.PagingCheckboxCheckList
+        multiple
+        // onChange={(v) => {
+        //   setValue(v);
+        // }}
+        pagingProps={{
+          style: { height: 300 },
+          defaultPaging,
+          isLocal: false,
+          onLoad: (page, limit) => {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve({
+                  data: options.slice((page - 1) * limit, page * limit),
+                  total: options.length,
+                });
+              }, 1000);
+            });
+          },
+        }}
+      />
+    </PagingEntityValueHOC>
   );
 };

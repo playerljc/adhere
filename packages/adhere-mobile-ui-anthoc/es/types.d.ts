@@ -1,4 +1,5 @@
-import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CascaderViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, ListItemProps, ListProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
+import { FormProps, FormRule } from 'antd';
+import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CascaderViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, Form, ListItemProps, ListProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
 import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
@@ -503,5 +504,16 @@ export type ValueHOCProps = BaseType & {
 };
 export type ValueHOCHandle = {
     getValue: () => any;
+};
+export type FormHOCComponent = typeof Form & {
+    defaultProps?: Partial<FormProps>;
+} & {
+    ValidatorRules: FormValidatorRulesType;
+};
+export type FormValidatorRulesType = {
+    [prop: string]: (argv?: {
+        params?: any;
+        invalidMessage?: string;
+    }) => FormRule;
 };
 export {};

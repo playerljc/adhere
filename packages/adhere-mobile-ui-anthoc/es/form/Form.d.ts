@@ -1,6 +1,3 @@
-import { Form } from 'antd-mobile';
-import type { FormProps } from 'antd-mobile';
-declare const FormHOC: typeof Form & {
-    defaultProps?: Partial<FormProps>;
-};
+import type { FormHOCComponent } from '../types';
+declare const FormHOC: FormHOCComponent;
 export default FormHOC;

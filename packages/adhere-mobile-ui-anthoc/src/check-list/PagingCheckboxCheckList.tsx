@@ -6,11 +6,13 @@ import type { DisplayNameInternal, PagingCheckboxCheckListProps } from '../types
 import CheckboxCheckList from './CheckboxCheckList';
 
 const InternalPagingCheckboxCheckList = memo<PagingCheckboxCheckListProps>(
-  ({ options, pagingProps, ...checkboxCheckListProps }) => (
-    <Paging<CheckListItemProps> {...pagingProps} options={options}>
-      <CheckboxCheckList {...checkboxCheckListProps} />
-    </Paging>
-  ),
+  ({ options, pagingProps, ...checkboxCheckListProps }) => {
+    return (
+      <Paging<CheckListItemProps> {...pagingProps} options={options}>
+        <CheckboxCheckList {...checkboxCheckListProps} />
+      </Paging>
+    );
+  },
 );
 
 const PagingCheckboxCheckList = InternalPagingCheckboxCheckList as DisplayNameInternal<

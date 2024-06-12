@@ -1,3 +1,4 @@
+import { FormProps, FormRule } from 'antd';
 import type {
   CheckListProps as AntMobileCheckListProps,
   CheckboxProps as AntMobileCheckbox,
@@ -9,6 +10,7 @@ import type {
   CheckListItemProps,
   DatePickerViewProps,
   DialogProps,
+  Form,
   ListItemProps,
   ListProps,
   ModalProps,
@@ -359,26 +361,26 @@ export type PagingCheckboxCheckListProps = CheckboxCheckListProps & {
   pagingProps: PagingProps<CheckListItemProps>;
 };
 
-export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
-
-export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps &
-  PagingCheckboxCheckListProps;
-
 export type PagingCheckboxProps = CheckboxGroupProps & {
   pagingProps: PagingProps<AntMobileCheckboxItem>;
 };
-
-export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
 
 export type PagingRadioProps = RadioGroupProps & {
   pagingProps: PagingProps<AntMobileRadioItem>;
 };
 
-export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
-
 export type PagingSelectorProps = SelectorProps<any> & {
   pagingProps: PagingProps<SelectorOption<any>>;
 };
+
+export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
+
+export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps &
+  PagingCheckboxCheckListProps;
+
+export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
+
+export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
 
 export type FilterPagingSelectorProps = FilterSelectorProps & PagingSelectorProps;
 
@@ -756,4 +758,14 @@ export type ValueHOCProps = BaseType & {
 
 export type ValueHOCHandle = {
   getValue: () => any;
+};
+
+export type FormHOCComponent = typeof Form & {
+  defaultProps?: Partial<FormProps>;
+} & {
+  ValidatorRules: FormValidatorRulesType;
+};
+
+export type FormValidatorRulesType = {
+  [prop: string]: (argv?: { params?: any; invalidMessage?: string }) => FormRule;
 };
