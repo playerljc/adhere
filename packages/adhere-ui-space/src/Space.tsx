@@ -15,7 +15,13 @@ const selectorPrefix = 'adhere-ui-space';
  * @constructor
  */
 const InternalSpace = memo<SpaceProps>((props) => {
-  const { className = '', style = {}, direction = 'horizontal', size = 40 } = props;
+  const {
+    className = '',
+    style = {},
+    direction = 'horizontal',
+    size = 40,
+    horizontalFit = false,
+  } = props;
 
   const { media } = useContext(ConfigProvider.Context);
 
@@ -23,11 +29,16 @@ const InternalSpace = memo<SpaceProps>((props) => {
 
   const targetStyle = useMemo<CSSProperties>(() => {
     if (direction === 'horizontal') {
-      return {
+      const styles: CSSProperties = {
         display: 'inline-block',
-        height: '100%',
         marginRight: `${value}`,
       };
+
+      if (horizontalFit) {
+        styles.height = '100%';
+      }
+
+      return styles;
     }
 
     return {

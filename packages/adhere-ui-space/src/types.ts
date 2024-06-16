@@ -15,6 +15,7 @@ export interface SpaceProps {
   style?: CSSProperties;
   direction?: 'vertical' | 'horizontal';
   size?: string | number;
+  horizontalFit?: boolean;
 }
 
 /**
