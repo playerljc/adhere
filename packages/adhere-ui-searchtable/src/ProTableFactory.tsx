@@ -338,20 +338,31 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     getDateState(state) {
       // null | null字符串 | 时间字符串
       const dateKeys = Object.keys(state).filter(
-        (key) =>
-          state[key] === null ||
-          state[key] === 'null' ||
-          // Validator.isDate(state[key], {
-          //   format: 'YYYY-MM-DD',
-          // }),
-          // 判断是否是时间字符串
-          dayjs(state[key]).isValid(),
+        (key) => {
+          return (
+            state[key] === null ||
+            state[key] === 'null' ||
+            state[key] === undefined ||
+            state[key] === 'undefined' ||
+            state[key] === '' ||
+            Validator.isDate(state[key])
+          );
+        },
+        // 判断是否是时间字符串
+        // dayjs(state[key]).isValid(),
       );
 
       const dateObj = {};
 
       dateKeys.forEach((key) => {
-        dateObj[key] = state[key] === null || state[key] === 'null' ? null : dayjs(state[key]);
+        dateObj[key] =
+          state[key] === null ||
+          state[key] === 'null' ||
+          state[key] === undefined ||
+          state[key] === 'undefined' ||
+          state[key] === ''
+            ? null
+            : dayjs(state[key]);
       });
 
       return dateObj;
