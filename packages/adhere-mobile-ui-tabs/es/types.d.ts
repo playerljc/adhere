@@ -82,12 +82,14 @@ export interface SystemTabsProps extends TabsProps {
     swiper?: boolean;
     swiperProps?: SwiperProps;
     children?: ReactElement[];
+    arrowZIndex?: number;
 }
 export type SystemTabsComponent = NamedExoticComponent<SystemTabsProps> & {
     Tab: FC<SystemTabProps>;
 };
 export type SystemTabProps = TabProps;
 export interface SystemTabArrowMoreProps {
+    zIndex?: number;
     data?: {
         key?: any;
         title?: ReactNode;

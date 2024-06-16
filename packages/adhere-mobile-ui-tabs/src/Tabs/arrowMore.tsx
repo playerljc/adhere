@@ -19,6 +19,7 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
     onChange,
     wrapRef,
     swiper = false,
+    zIndex,
     getActiveIndexByKey,
   } = props;
 
@@ -52,6 +53,9 @@ const ArrowMore: FC<SystemTabArrowMoreProps> = (props) => {
               [`${selectorPrefix}-open`]: collapse,
               [`${selectorPrefix}-close`]: !collapse,
             })}
+            style={{
+              zIndex,
+            }}
             src={arrowIcon}
             alt=""
             onClick={() => {

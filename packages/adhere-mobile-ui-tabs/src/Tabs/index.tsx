@@ -18,6 +18,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
   const {
     swiper = false,
     showArrowMore = true,
+    arrowZIndex = 100,
     className = '',
     style = {},
     innerClassName = '',
@@ -112,6 +113,7 @@ const InternalSystemTabs = memo<SystemTabsProps>((props) => {
 
       {showArrowMore && (
         <ArrowMore
+          zIndex={arrowZIndex}
           wrapRef={wrapRef}
           data={props?.children?.map?.((_rElement) => ({
             key: _rElement.key,
