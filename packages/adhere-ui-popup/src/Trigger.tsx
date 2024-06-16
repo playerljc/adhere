@@ -144,7 +144,11 @@ const Trigger: FC<TriggerProps> = ({
 
         <div className={classNames(`${triggerSelectorInnerPrefix}-body`)}>{bodyChildren}</div>
 
-        <div className={classNames(`${triggerSelectorInnerPrefix}-actions`)}>{actionElements}</div>
+        {actionElements.length ? (
+          <div className={classNames(`${triggerSelectorInnerPrefix}-actions`)}>
+            {actionElements}
+          </div>
+        ) : null}
       </div>
     );
   }, [bodyChildren, title, extra, closeIcon, actionElements]);
