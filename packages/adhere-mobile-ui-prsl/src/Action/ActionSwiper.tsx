@@ -17,7 +17,9 @@ const ActionSwiper: FC<ActionSwiperProps> = ({ children, config }) => (
     rightActions={config.map((_config, _index) => ({
       key: _config.key,
       text: _config.text,
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
+
         if (!!_config.disabled) return;
 
         _config.onClick?.();

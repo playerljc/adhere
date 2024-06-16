@@ -17,7 +17,9 @@ const ActionSheetTrigger: FC<ActionSheetTriggerProps> = ({ config, actionSheetTr
   return (
     <span
       className={selectorPrefix}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
+
         ActionSheet.show({
           actions: config.map((_config) => ({
             key: _config.key,
