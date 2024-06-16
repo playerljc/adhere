@@ -15,7 +15,7 @@ const selectorPrefix = 'adhere-ui-split';
  * @constructor
  */
 const InternalSplit = memo<SplitProps>((props) => {
-  const { className = '', style, direction = 'vertical', size = 10 } = props;
+  const { className = '', style, direction = 'vertical', size = 10, horizontalFit = false } = props;
 
   const { media } = useContext(ConfigProvider.Context);
 
@@ -23,12 +23,17 @@ const InternalSplit = memo<SplitProps>((props) => {
 
   const targetStyle = useMemo<CSSProperties>(() => {
     if (direction === 'horizontal') {
-      return {
+      const styles: CSSProperties = {
         display: 'inline-block',
         width: 1,
-        height: '100%',
         margin: `0 ${value}`,
       };
+
+      if (horizontalFit) {
+        styles.height = '100%';
+      }
+
+      return styles;
     }
 
     return {

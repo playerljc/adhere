@@ -18,6 +18,7 @@ export interface SplitProps {
   style?: CSSProperties;
   direction?: 'vertical' | 'horizontal';
   size?: string | number;
+  horizontalFit?: boolean;
 }
 
 /**
