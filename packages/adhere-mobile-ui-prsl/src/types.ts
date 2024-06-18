@@ -442,6 +442,9 @@ export interface PRSLHandle {
   scrollLoadHideAll: ScrollLoadRefHandle['hideAll'];
   resetAll: () => any;
   resetPagination: () => any;
+  loadData: () => any;
+  resetPaginationAndLoadData: () => any;
+
   // 11
   // 12
   // 13

@@ -950,7 +950,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         });
       }
 
-      function resetScrollLoadOrPaging() {
+      function resetScrollLoadAndPaging() {
         resetScrollLoad();
         resetPaging();
       }
@@ -988,7 +988,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
             : DEFAULT_PAGING_SIZE;
       }
 
-      function resetSearchOrFilterOrSort() {
+      function resetSearchAndFilterAndSort() {
         setCombinationParams((draft) => {
           draft.searchKeyWord = defaultSearchKeyWord;
           draft.filterValues = defaultFilterValues;
@@ -997,12 +997,12 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function reset() {
-        resetScrollLoadOrPaging();
-        resetSearchOrFilterOrSort();
+        resetScrollLoadAndPaging();
+        resetSearchAndFilterAndSort();
       }
 
       function onFilter(filterData: WritableDraft<Record<string, any>> | undefined) {
-        resetScrollLoadOrPaging();
+        resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
           draft.filterValues = filterData;
@@ -1019,7 +1019,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function onFilterReset() {
-        resetScrollLoadOrPaging();
+        resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
           draft.filterValues = {};
@@ -1036,7 +1036,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function onSort(sortData: WritableDraft<DefaultSortValue>[] | undefined) {
-        resetScrollLoadOrPaging();
+        resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
           draft.sortValues = sortData;
@@ -1053,7 +1053,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function onSortReset() {
-        resetScrollLoadOrPaging();
+        resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
           draft.sortValues = [];
@@ -1070,7 +1070,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function onSearch(value: string | undefined) {
-        resetScrollLoadOrPaging();
+        resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
           draft.searchKeyWord = value;
@@ -1087,7 +1087,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function onSearchClear() {
-        resetScrollLoadOrPaging();
+        resetScrollLoadAndPaging();
 
         setCombinationParams((draft) => {
           draft.searchKeyWord = '';
@@ -1147,7 +1147,7 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       }
 
       function pullToRefreshPagination() {
-        return pullToRefresh(resetScrollLoadOrPaging);
+        return pullToRefresh(resetScrollLoadAndPaging);
       }
 
       /**
@@ -1229,8 +1229,23 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
       useImperativeHandle(ref, () => ({
         getScrollEl,
         scrollLoadHideAll: () => scrollLoadRef?.current?.hideAll?.(),
-        resetPagination: () => pullToRefreshAll(),
-        resetAll: () => pullToRefreshPagination(),
+        resetPagination: () => pullToRefreshPagination(),
+        resetAll: () => pullToRefreshAll(),
+        loadData: () =>
+          loadDataCall({
+            searchKeyWord: defaultSearchKeyWord,
+            filterValues: defaultFilterValues,
+            sortValues: defaultSortValues,
+          }),
+        resetPaginationAndLoadData: () => {
+          resetScrollLoadAndPaging();
+
+          return loadDataCall({
+            searchKeyWord: defaultSearchKeyWord,
+            filterValues: defaultFilterValues,
+            sortValues: defaultSortValues,
+          });
+        },
       }));
 
       const contextExpose = {

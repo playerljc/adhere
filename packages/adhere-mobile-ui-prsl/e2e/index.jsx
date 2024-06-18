@@ -5,6 +5,7 @@ import e2e from '@baifendian/adhere-e2e';
 import DictConfig from '@/dict/dict.config';
 
 import Action from './Action';
+import ElectronicCommerce from './ElectronicCommerce';
 import Extend from './Extend';
 import GridView from './GridView';
 import List from './List';
@@ -20,5 +21,5 @@ import '@baifendian/adhere-e2e/es/index.less';
 DictConfig();
 
 e2e.Mobile({
-  children: <Selection />,
+  children: <ElectronicCommerce />,
 });
