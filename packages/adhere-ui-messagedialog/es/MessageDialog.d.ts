@@ -159,5 +159,11 @@ declare const MessageDialogFactory: {
      * TriggerPrompt
      */
     TriggerPrompt: React.FC<import("./types").TriggerPromptProps>;
+    /**
+     * allowMultipleInstances
+     * @description 设置是否允许多实例共存
+     * @param {boolean} allow
+     */
+    allowMultipleInstances: (allow: boolean) => void;
 };
 export default MessageDialogFactory;

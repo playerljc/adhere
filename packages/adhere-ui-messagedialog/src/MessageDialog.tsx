@@ -29,6 +29,10 @@ function renderByIcon(icon: ReactNode, text: ReactNode) {
   );
 }
 
+// 是否允许多实例共存(也就是弹层之后再弹层) 默认是允许
+let allowMultipleInstances = true;
+
+// lock
 let lock = false;
 
 let renderToWrapper: (children: () => ReactNode) => ReactNode;
@@ -272,7 +276,9 @@ const MessageDialogFactory = {
     setConfig: (callback: any) => void;
     update: (children?: any) => void;
   } | void {
-    if (lock) return;
+    // allowMultipleInstances true 允许多实例
+    // allowMultipleInstances false 不允许
+    if (!allowMultipleInstances && lock) return;
 
     lock = true;
 
@@ -347,7 +353,7 @@ const MessageDialogFactory = {
     setConfig: (callback: any) => void;
     update: (children?: any) => void;
   } | void {
-    if (lock) return;
+    if (!allowMultipleInstances && lock) return;
 
     lock = true;
 
@@ -438,6 +444,14 @@ const MessageDialogFactory = {
    * TriggerPrompt
    */
   TriggerPrompt,
+  /**
+   * allowMultipleInstances
+   * @description 设置是否允许多实例共存
+   * @param {boolean} allow
+   */
+  allowMultipleInstances: (allow: boolean) => {
+    allowMultipleInstances = allow;
+  },
 };
 
 export default MessageDialogFactory;
