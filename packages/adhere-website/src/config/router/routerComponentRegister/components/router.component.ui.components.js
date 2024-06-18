@@ -168,3 +168,7 @@ export const AutoComplete = lazy(() =>
 export const QuickRangeDate = lazy(() =>
   import(/* webpackChunkName: "quickrangedate" */ '@/components/ui/quickrangedate'),
 );
+
+export const CurrencySymbol = lazy(() =>
+  import(/* webpackChunkName: "currencysymbol" */ '@/components/ui/currencysymbol'),
+);
