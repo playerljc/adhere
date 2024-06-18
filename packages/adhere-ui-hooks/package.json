@@ -29,8 +29,10 @@
     "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true"
   },
   "dependencies": {
+    "ahooks": "^3.7.8",
     "react": "^18.2.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "use-immer": "^0.9.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.23.1",
