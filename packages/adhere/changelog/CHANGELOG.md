@@ -28,6 +28,8 @@
   - 加入adhere-mobile-ui-popovermenu组件
 * **adhere-mobile-ui-quick-range-date**
   - 加入adhere-mobile-ui-quick-range-date组件
+* **adhere-ui-currency-symbol**
+  - 加入adhere-ui-currency-symbol组件
 * **adhere-ui-searchtable**
   - $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制
   - 加入REM适配

@@ -21,6 +21,7 @@ import DelConfirm from '@baifendian/adhere-ui-confirm-delconfirm';
 import ImportantConfirm from '@baifendian/adhere-ui-confirm-importantconfirm';
 import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
+import CurrencySymbol from '@baifendian/adhere-ui-currency-symbol';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
 import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 import Expression from '@baifendian/adhere-ui-expression';
@@ -105,6 +106,7 @@ export {
   ImportantConfirm,
   ContextMenu,
   ContourBlock,
+  CurrencySymbol,
   DateDisplay,
   Ellipsis,
   Expression,

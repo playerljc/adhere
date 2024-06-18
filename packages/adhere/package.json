@@ -57,6 +57,7 @@
     "@baifendian/adhere-ui-contextmenu": "^2.10.28",
     "@baifendian/adhere-ui-contourblock": "^2.10.28",
     "@baifendian/adhere-ui-css": "^2.10.28",
+    "@baifendian/adhere-ui-currency-symbol": "^2.10.28",
     "@baifendian/adhere-ui-datedisplay": "^2.10.28",
     "@baifendian/adhere-ui-ellipsis": "^2.10.28",
     "@baifendian/adhere-ui-expression": "^2.10.28",

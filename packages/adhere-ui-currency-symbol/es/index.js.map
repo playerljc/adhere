@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["index.js"],"sourcesContent":["import CurrencySymbol from './CurrencySymbol';\nexport default CurrencySymbol;\n"],"names":["CurrencySymbol"],"mappings":"OAAOA,mBAAoB,kCACZA"}
