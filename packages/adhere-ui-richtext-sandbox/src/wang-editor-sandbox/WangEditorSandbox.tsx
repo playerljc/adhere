@@ -342,7 +342,7 @@ const InternalWangEditorSandbox = memo<
             }
             
             ${WangEditorCssStr}
-            ${WangEditorViewCssStr}
+            ${'readOnly' in props || props.readOnly ? WangEditorViewCssStr : ''}
             
             body {
               zoom: ${getZoom()};

@@ -8,7 +8,7 @@ export default `
 }*/
 
 .editor-content-view p,
-/*.editor-content-view li*/ {
+.editor-content-view li {
   white-space: pre-wrap;
 }
 
