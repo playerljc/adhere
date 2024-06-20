@@ -11,4 +11,4 @@ export declare const openErrorDialog: ErrorDialog;
  * @param duration
  * @param onClose
  */
-export declare const openErrorMessage: (content?: JointContent, duration?: duration | undefined, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;
+export declare const openErrorMessage: (content?: JointContent, duration?: duration, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;

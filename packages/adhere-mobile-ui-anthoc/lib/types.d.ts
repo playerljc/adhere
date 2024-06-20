@@ -244,19 +244,19 @@ export type PagingCheckListProps = CheckListProps & {
 export type PagingCheckboxCheckListProps = CheckboxCheckListProps & {
     pagingProps: PagingProps<CheckListItemProps>;
 };
-export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
-export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps & PagingCheckboxCheckListProps;
 export type PagingCheckboxProps = CheckboxGroupProps & {
     pagingProps: PagingProps<AntMobileCheckboxItem>;
 };
-export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
 export type PagingRadioProps = RadioGroupProps & {
     pagingProps: PagingProps<AntMobileRadioItem>;
 };
-export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
 export type PagingSelectorProps = SelectorProps<any> & {
     pagingProps: PagingProps<SelectorOption<any>>;
 };
+export type FilterPagingCheckListProps = FilterCheckListProps & PagingCheckListProps;
+export type FilterPagingCheckboxCheckListProps = FilterCheckboxCheckListProps & PagingCheckboxCheckListProps;
+export type FilterPagingCheckboxProps = FilterCheckboxProps & PagingCheckboxProps;
+export type FilterPagingRadioProps = FilterRadioProps & PagingRadioProps;
 export type FilterPagingSelectorProps = FilterSelectorProps & PagingSelectorProps;
 export type AutoCompletePagingProps = Omit<AutoCompleteProps, 'loadData'> & {
     loadData?: (kw: string | undefined, page?: number, limit?: number) => Promise<{

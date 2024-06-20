@@ -38,6 +38,7 @@ declare const _default: (SuperClass: any, searchAndPaginParamsMemo: any) => {
             rowCount: number;
         };
         getGridSearchFormGroupParams(): {}[];
+        getSearchLabelSymbol($search: any): React.JSX.Element | null;
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
             sort?: number | undefined;

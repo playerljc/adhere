@@ -44,8 +44,8 @@ declare class OlMap extends React.Component<OLMapProps, any> {
      * @return {*|{vectorLayer, vectorSource}}
      */
     addDataLayer(zIndex: any): {
-        vectorLayer: import("ol/layer/Vector").default<import("ol/source/Vector").default<import("ol/geom/Geometry").default>>;
-        vectorSource: import("ol/source/Vector").default<import("ol/geom/Geometry").default>;
+        vectorLayer: import("ol/layer").Vector<import("ol/source").Vector<import("ol/geom").Geometry>>;
+        vectorSource: import("ol/source").Vector<import("ol/geom").Geometry>;
     };
     /**
      * 给地图实例添加 hover监听者

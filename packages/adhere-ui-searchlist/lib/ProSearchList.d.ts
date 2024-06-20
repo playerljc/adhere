@@ -38,6 +38,7 @@ declare const ProSearchList: {
             rowCount: number;
         };
         getGridSearchFormGroupParams(): {}[];
+        getSearchLabelSymbol($search: any): React.JSX.Element | null;
         getGridSearchFormGroupDataByColumnConfig(): {
             key: number;
             sort?: number | undefined;

@@ -138,6 +138,7 @@ function getValue(
         .map((value) => {
           if (value.endsWith('px')) {
             const number = parseFloat(value.replace('px', ''));
+
             return Util.pxToRem(number, media.designWidth ?? 192, media);
           }
 

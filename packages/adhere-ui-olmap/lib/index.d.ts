@@ -18,12 +18,12 @@ declare const _default: {
         addGeoLayer: (mapInstance: any, geojsonData: any, getStyleConfig?: () => void, zIndex?: number) => GeoLayer;
         addWindLayer: (mapInstance: any, data: any, config: any, zIndex?: number) => import("./WindLayer").default;
         addVectorLayer(map: any, zIndex: any): {
-            vectorLayer: import("ol/layer/Vector").default<import("ol/source/Vector").default<import("ol/geom/Geometry").default>>;
-            vectorSource: import("ol/source/Vector").default<import("ol/geom/Geometry").default>;
+            vectorLayer: import("ol/layer").Vector<import("ol/source").Vector<import("ol/geom").Geometry>>;
+            vectorSource: import("ol/source").Vector<import("ol/geom").Geometry>;
         };
         createHeatMapLayer(layoutConfig: any): {
-            layer: import("ol/layer/Heatmap").default;
-            vectorSource: import("ol/source/Vector").default<import("ol/geom/Geometry").default>;
+            layer: import("ol/layer").Heatmap;
+            vectorSource: import("ol/source").Vector<import("ol/geom").Geometry>;
         };
         drawCircle({ center, radius, color, strokeColor, strokeWidth, zIndex, id, propertys, }: {
             center: any;
@@ -34,7 +34,7 @@ declare const _default: {
             zIndex?: any;
             id?: string | undefined;
             propertys?: {} | undefined;
-        }): import("ol/Feature").default<import("ol/geom/Circle").default>;
+        }): import("ol/Feature").default<import("ol/geom").Circle>;
         drawPolygon({ points, color, strokeColor, strokeWidth, zIndex, id, propertys, }: {
             points: any;
             color?: string | undefined;
@@ -43,7 +43,7 @@ declare const _default: {
             zIndex?: any;
             id?: string | undefined;
             propertys?: {} | undefined;
-        }): import("ol/Feature").default<import("ol/geom/Polygon").default>;
+        }): import("ol/Feature").default<import("ol/geom").Polygon>;
         drawCirclePoint({ id, pos, fillOpt, strokeOpt, radius, textOpt, zIndex, text, propertys, }: {
             id: any;
             pos: any;
@@ -59,7 +59,7 @@ declare const _default: {
             zIndex?: number | undefined;
             text?: string | undefined;
             propertys?: {} | undefined;
-        }): import("ol/Feature").default<import("ol/geom/Point").default>;
+        }): import("ol/Feature").default<import("ol/geom").Point>;
         drawRegularShapePoint({ id, pos, fillOpt, strokeOpt, text, textOpt, zIndex, propertys, ...others }: {
             [x: string]: any;
             id: any;
@@ -75,7 +75,7 @@ declare const _default: {
             textOpt?: {} | undefined;
             zIndex?: number | undefined;
             propertys?: {} | undefined;
-        }): import("ol/Feature").default<import("ol/geom/Point").default>;
+        }): import("ol/Feature").default<import("ol/geom").Point>;
         drawImagePoint({ id, pos, zIndex, src, color, opacity, scale, anchor, rotation, offset, offsetOrigin, size, text, textOpt, propertys, }: {
             id: any;
             pos: any;
@@ -92,8 +92,8 @@ declare const _default: {
             text?: string | undefined;
             textOpt?: {} | undefined;
             propertys?: {} | undefined;
-        }): import("ol/Feature").default<import("ol/geom/Point").default>;
-        createRegularPolygonCurve(origin: any, radius: any, sides: any, r: any, angel: any): import("ol/geom/Polygon").default;
+        }): import("ol/Feature").default<import("ol/geom").Point>;
+        createRegularPolygonCurve(origin: any, radius: any, sides: any, r: any, angel: any): import("ol/geom").Polygon;
         removeFeature(vectorSource: any, feature: any): void;
         removeAllFeature(vectorSource: any): void;
         removeAllOverlay(map: any): void;
@@ -108,7 +108,7 @@ declare const _default: {
             color: any;
             lineCap?: string | undefined;
             lineJoin?: string | undefined;
-        }): import("ol/Feature").default<import("ol/geom/LineString").default>;
+        }): import("ol/Feature").default<import("ol/geom").LineString>;
         createInteraction(map: any, config: any): import("ol/interaction/Draw").default;
         polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: {
             [x: string]: any;

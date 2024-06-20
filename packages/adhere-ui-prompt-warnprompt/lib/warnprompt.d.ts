@@ -11,4 +11,4 @@ export declare const openWarnDialog: WarnDialog;
  * @param duration
  * @param onClose
  */
-export declare const openWarnMessage: (content?: JointContent, duration?: duration | undefined, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;
+export declare const openWarnMessage: (content?: JointContent, duration?: duration, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;

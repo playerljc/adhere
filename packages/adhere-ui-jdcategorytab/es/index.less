@@ -6,14 +6,15 @@
 /* 京东的分类面板 */
 .adhere-ui-jd-category-tab {
   position: relative;
+  display: flex;
   width: 100%;
   height: 100%;
   overflow: hidden;
 
   > .adhere-ui-jd-category-tab-menu {
     position: relative;
-    float: left;
-    width: 4rem;
+    flex-shrink: 0;
+    //width: 4rem;
     height: 100%;
     overflow: hidden;
     overflow-scrolling: touch;
@@ -36,7 +37,8 @@
 
         &:not(:last-child) {
           > a {
-            border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+            border-bottom: var(--adhere-line-width) var(--adhere-line-type)
+              var(--adhere-color-border-base);
           }
         }
 
@@ -52,24 +54,27 @@
           display: block;
           box-sizing: border-box;
           width: 100%;
-          height: 3rem;
+          padding: 5px 10px;
+          //height: 3rem;
           font-size: var(--adhere-font-size-base);
-          line-height: 3rem;
+          //line-height: 3rem;
           white-space: nowrap;
           text-align: center;
           text-overflow: ellipsis;
           word-wrap: break-word;
           word-break: break-all;
           background: @adhere-ui-jd-category-tab-menu-item-background-color;
-          border-right: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
+          border-right: var(--adhere-line-width) var(--adhere-line-type)
+            var(--adhere-color-border-base);
         }
       }
     }
   }
 
   > .adhere-ui-jd-category-tab-tab {
-    height: 100%;
-    margin: 0 0 0 4rem;
+    flex: 1;
+    min-width: 0;
+    margin: 0 0 0 20px;
     padding: 0;
     list-style: none;
 

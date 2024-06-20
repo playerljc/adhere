@@ -51,6 +51,7 @@ declare const _default: {
                 rowCount: number;
             };
             getGridSearchFormGroupParams(): {}[];
+            getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;
@@ -111,6 +112,7 @@ declare const _default: {
                 rowCount: number;
             };
             getGridSearchFormGroupParams(): {}[];
+            getSearchLabelSymbol($search: any): import("react").JSX.Element | null;
             getGridSearchFormGroupDataByColumnConfig(): {
                 key: number;
                 sort?: number | undefined;

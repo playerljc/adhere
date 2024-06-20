@@ -11,4 +11,4 @@ export declare const openSuccessDialog: SuccessDialog;
  * @param duration
  * @param onClose
  */
-export declare const openSuccessMessage: (content?: JointContent, duration?: duration | undefined, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;
+export declare const openSuccessMessage: (content?: JointContent, duration?: duration, onClose?: VoidFunction) => import("antd/es/message/interface").MessageType;

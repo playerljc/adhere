@@ -13,7 +13,7 @@ declare const _default: {
     renderInputArea: React.NamedExoticComponent<TextAreaProps>;
     renderInputNumber: React.NamedExoticComponent<InputNumberProps<import("rc-input-number").ValueType>>;
     renderRadio: React.NamedExoticComponent<RadioGroupProps>;
-    renderCheckbox: React.NamedExoticComponent<CheckboxProps | CheckboxGroupProps>;
+    renderCheckbox: React.NamedExoticComponent<CheckboxProps | CheckboxGroupProps<any>>;
     renderSelect: React.NamedExoticComponent<SelectProps<any, import("rc-select/lib/Select").DefaultOptionType> & {
         optGroup: OptionProps[];
         renderOption: (v: OptionProps) => React.ReactElement<any, string | React.JSXElementConstructor<any>>;

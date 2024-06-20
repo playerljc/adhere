@@ -66,8 +66,8 @@ declare const _default: {
      * @param zIndex
      */
     addVectorLayer(map: any, zIndex: any): {
-        vectorLayer: VectorLayer<VectorSource<import("ol/geom/Geometry").default>>;
-        vectorSource: VectorSource<import("ol/geom/Geometry").default>;
+        vectorLayer: VectorLayer<VectorSource<import("ol/geom").Geometry>>;
+        vectorSource: VectorSource<import("ol/geom").Geometry>;
     };
     /**
      * createHeatMapLayer - 创建一个热力层
@@ -75,7 +75,7 @@ declare const _default: {
      */
     createHeatMapLayer(layoutConfig: any): {
         layer: HeatMapLayer;
-        vectorSource: VectorSource<import("ol/geom/Geometry").default>;
+        vectorSource: VectorSource<import("ol/geom").Geometry>;
     };
     /**
      * drawCircle - 创建一个圆形
