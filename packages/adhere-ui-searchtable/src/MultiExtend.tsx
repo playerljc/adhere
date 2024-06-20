@@ -30,10 +30,7 @@ function MultiExtendFactory<P, S>(
       SuperClasses.forEach((SuperClass) => {
         SuperClass.call(this, props);
         try {
-          console.log('this', this);
-          console.log('start');
           const cloneObj = clone(this);
-          console.log('end', cloneObj);
           SuperClassesObjs.push(cloneObj);
         } catch (err) {
           console.log('err', err);

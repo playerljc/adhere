@@ -28,11 +28,7 @@ const dayjsLocalesMap = [ar, en, pt, zhCN].reduce((result, locale) => {
 export default (props, draft) => {
   const localeKey = props?.locale?.locale ?? 'zh-cn';
 
-  console.log('localeKey', localeKey);
-
   const locale = dayjsLocalesMap.get(localeKey);
-
-  console.log('locale', locale);
 
   if (draft?.locale?.DatePicker?.lang) {
     if (!draft.locale.DatePicker.lang.fieldDateTimeFormat) {

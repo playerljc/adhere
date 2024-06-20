@@ -434,7 +434,6 @@ const InternalExpression = memo<
        * @description 编辑框input
        */
       function onEditorInput(e) {
-        console.log('Input');
         if (comStart.current) return; // 中文输入过程中不截断
 
         if (cursorContextElement) {
