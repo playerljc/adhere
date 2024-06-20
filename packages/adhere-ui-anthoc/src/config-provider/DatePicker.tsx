@@ -25,20 +25,20 @@ const dayjsLocalesMap = [ar, en, pt, zhCN].reduce((result, locale) => {
   return result;
 }, new Map());
 
-export default (props, draft) => {
+export default (props) => {
   const localeKey = props?.locale?.locale ?? 'zh-cn';
 
   const locale = dayjsLocalesMap.get(localeKey);
 
-  if (draft?.locale?.DatePicker?.lang) {
-    if (!draft.locale.DatePicker.lang.fieldDateTimeFormat) {
+  if (props?.locale?.DatePicker?.lang) {
+    if (!props.locale.DatePicker.lang.fieldDateTimeFormat) {
       // @ts-ignore
-      draft.locale.DatePicker.lang.fieldDateTimeFormat = `${locale.formats.L} ${locale.formats.LTS}`;
+      props.locale.DatePicker.lang.fieldDateTimeFormat = `${locale.formats.L} ${locale.formats.LTS}`;
     }
 
-    if (!draft.locale.DatePicker.lang.fieldDateFormat) {
+    if (!props.locale.DatePicker.lang.fieldDateFormat) {
       // @ts-ignore
-      draft.locale.DatePicker.lang.fieldDateFormat = locale.formats.L;
+      props.locale.DatePicker.lang.fieldDateFormat = locale.formats.L;
     }
   }
 };

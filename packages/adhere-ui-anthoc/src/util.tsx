@@ -23,7 +23,7 @@ export function createFactory<P>(
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
-    const props = { ...defaultProps, ..._props, ...(override?.(_props) ?? {}) };
+    const props = { ...defaultProps, ..._props, ...(override?.({ ...(_props ?? {}) }) ?? {}) };
 
     if (!('getPopupContainer' in props)) {
       props.getPopupContainer = (el) => {

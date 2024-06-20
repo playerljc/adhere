@@ -1,2 +1,2 @@
-declare const _default: (props: any, draft: any) => void;
+declare const _default: (props: any) => void;
 export default _default;
