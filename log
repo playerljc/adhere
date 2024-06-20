@@ -1,0 +1,434 @@
+demo(adhere-website): 加入adhere-mobile-ui-quick-range-date组价你的demo playerljc Yesterday 17:40
+demo(adhere-website): 加入adhere-mobile-ui-prsl组价你的demo playerljc Yesterday 13:26
+build(packages): 依赖升级到最新 playerljc 2024/5/9 18:43
+demo(adhere-website-mobile): adhere-mobile-ui-prsl加入demo playerljc 2024/5/9 17:59
+fix(adhere-mobile-ui-prsl): hooks中闭包错误修改，样式优化 playerljc 2024/5/9 17:58
+perf(adhere-ui-backtopanimation): ts注释修改 playerljc 2024/5/9 17:56
+feat(adhere-ui-hooks): 加入useSafeRef playerljc 2024/5/6 9:33
+feat(adhere): 加入quick-range-date组件 playerljc 2024/5/5 23:04
+feat(adhere-ui-hooks): 加入useSafeRef playerljc 2024/5/5 23:03
+feat(adhere-mobile-ui-quick-range-date): 加入adhere-mobile-ui-quick-range-date playerljc 2024/5/5 16:55
+docs(adhere-ui-quick-range-date): 补全注释 playerljc 2024/5/5 16:54
+docs(adhere-ui-quick-range-date): 更新changelog playerljc 2024/5/4 16:31
+feat(adhere-ui-quick-range-date): 加入adhere-ui-quick-range-date组件 playerljc 2024/5/4 16:29
+demo(adhere-mobile-ui-prsl): demo更新 playerljc 2024/5/4 16:28
+perf(adhere-mobile-ui-prsl): 加入scrollLoadInner的hook playerljc 2024/5/3 8:20
+perf(adhere-mobile-ui-prsl): 删除无用引用 playerljc 2024/4/27 8:56
+feat(adhere-ui): 加入adhere-mobile-ui-prsl组件 playerljc 2024/4/27 8:52
+feat(adhere-ui): 加入adhere-mobile-ui-prsl组件 playerljc 2024/4/27 8:52
+feat(adhere-mobile-ui-prsl): 加入renderActionSheetTrigger配置 playerljc 2024/4/27 8:24
+feat(adhere-mobile-ui-prsl): 加入Action功能 playerljc 2024/4/23 17:59
+feat(adhere-mobile-ui-prsl): 加入Action功能 playerljc 2024/4/23 17:45
+feat(adhere-mobile-ui-prsl): 加入DND功能 playerljc 2024/4/23 14:56
+feat(adhere-mobile-ui-prsl): 70% develop playerljc 2024/4/22 23:02
+feat(packages): babel-plugin-import配置调整 playerljc 2024/4/22 14:02
+feat(adhere-ui-intl): 加入adhere-mobile-ui-prsl组件的国际化词条 playerljc 2024/4/22 13:27
+feat(adhere-mobile-ui-prsl): 加入adhere-mobile-ui-prsl组件 playerljc 2024/4/8 17:34
+fix(packages): babel-plugin-import引入文件修改 playerljc 2024/4/8 17:33
+ci(adhere-*): ant-design升级到最新版本 playerljc 2024/3/19 15:32
+test(adhere-website): 修改Header中Search和Menu的大小 playerljc 2024/3/19 15:25
+test(website): 加入fieldgeneratortodict的mobile例子 playerljc 2024/3/19 14:16
+test(adhere-ui-website): 加入adhere-mobile-ui-anthoc的demo playerljc 2024/3/18 22:45
+refactor(adhere-website-mobile): 例子修改为多实例 playerljc 2024/3/18 9:22
+refactor(adhere-mobile-ui-prsl): 组件名称修改 playerljc 2024/3/17 20:32
+remove(adhere-mobile-ui-fieldheneratortodict): 删除此组件 playerljc 2024/3/17 11:23
+chore(adhere-mobile-ui-*): 加入README.md playerljc 2024/3/10 22:49
+test(adhere-ui-mobile-ui-anthoc): 加入分页的ValueHOC测试用例 playerljc 2024/3/6 15:58
+chore(packages): dependencies调整 "@types/react": "^18.0.26", "@types/react-dom": "^18.0.10", 放入devDependencies中 playerljc 2024/2/28 11:16
+test(adhere-website): DateDisplay加入本地化组件的测试 playerljc 2024/2/8 9:48
+demo(adhere-website): ConfigProvider替换成antd-hoc实现 playerljc 2024/2/7 18:29
+ci(packages): antd升级到最新版本 playerljc 2024/2/7 18:27
+
+
+test(adhere-website): 去掉不用的引用 playerljc 2024/2/6 16:58
+demo(adhere-website): adhere-ui-messagedialog中加入动态设置ModalConfig的例子 playerljc 2024/2/6 16:49
+demo(adhere-website): AutoComplete加入TreeAutoComplete的demo playerljc 2024/2/6 14:57
+demo(adhere-website): AutoComplete加入TreeAutoComplete的demo playerljc 2024/2/6 14:57
+feat(packages): 引入adhere-mock包的mock数据 playerljc 2024/2/6 10:34
+feat(adhere-mock): 加入adhere-mock包，提供mock数据 playerljc 2024/2/6 10:32
+demo(adhere): hoc加入自定义全选按钮位置的demo playerljc 2024/2/5 18:56
+build(packages): antd和antd-mobile升级到最新版本 playerljc 2024/2/2 15:30
+test(packages): e2e的构建文件修改为e2e包中的文件处理 playerljc 2024/2/2 15:22
+feat(adhere-e2e): 修改构建文件的逻辑 playerljc 2024/2/2 15:20
+demo(adhere-ui-website): adhere-ui-contextmenu扇形菜单加入demo playerljc 2024/2/2 10:49
+demo(adhere-ui-website): adhere-ui-contextmenu扇形菜单加入demo playerljc 2024/2/2 10:36
+build(adhere-ui-formcreator): build playerljc 2024/1/31 17:21
+fix(adhere-ui-formitemcreator,adhere-ui-tablelist): others修改为rest playerljc 2024/1/29 17:27
+demo(adhere-website): 嵌套中加入更多的例子 playerljc 2024/1/29 15:52
+feat(adhere): 加入tsconfig.json，重新构建 playerljc 2024/1/28 17:23
+demo(adhere-website): 加入adhere-ui-anthoc的ValueEntity例子 playerljc 2024/1/28 17:21
+feat(adhere-util-dict): 类型的修改 playerljc 2024/1/28 17:17
+build(adhere-ui-bmap): build playerljc 2024/1/28 16:59
+feat(adhere-e2e): 加入adhere-ui-configprovider样式的引入 playerljc 2023/12/21 16:16
+feat(adhere-ui-richtext-sandbox): 类型修复，文件大小写修改 playerljc 2023/12/16 21:28
+feat(adhere-ui-pullrefresh): 类型修复 playerljc 2023/12/16 21:27
+feat(adhere-olmap): 类型细化 playerljc 2023/12/16 21:25
+feat(adhere-ui-fontsizesetting): 微调 playerljc 2023/12/16 21:24
+feat(website): adhere-website的例子都修改为单独的文件形式，然后使用raw-loader进行加载 playerljc 2023/12/16 21:08
+feat(packages): 加入displayName属性 playerljc 2023/11/24 14:18
+feat(packages): 加入displayName属性 playerljc 2023/11/24 14:16
+chore(packages): antd、antd-mobile升级 playerljc 2023/11/20 21:12
+build(packages): 重新构建packages playerljc 2023/11/20 17:26
+chore(packages/package.json): antd升级到最新版本 playerljc 2023/11/17 16:48
+feat(packages/package.json): 加入"typings": "es/index.d.ts" playerljc 2023/11/17 16:34
+fix(adhere-website): 驼峰转换修改为pascalCaseToKebabCase2 playerljc 2023/11/7 15:38
+fix(adhere-e2e): 驼峰转换修改为pascalCaseToKebabCase2 playerljc 2023/11/7 15:37
+fix(packages/ui): 类型不匹配修改 playerljc 2023/11/6 23:13
+fix(adhere): babel-plugin-import升级到最新后修改pascalCaseToKebabCase的实现 playerljc 2023/11/6 14:39
+fix(packages/ui): 类型不匹配修改 playerljc 2023/11/6 13:48
+chore(yarn.lock): 升级antd重新生成yarn.lock文件 playerljc 2023/10/29 11:04
+chore(packages): antd升级到5.10.2 playerljc 2023/10/29 11:03
+demo(adhere-website): 加入adhere-mobile-ui-auto-complete的example playerljc 2023/10/16 13:30
+demo(adhere-website): 加入adhere-mobile-ui-auto-complete的example playerljc 2023/10/16 13:29
+feat(adhere): 加入adhere-mobile-ui-auto-complete playerljc 2023/10/16 13:29
+demo(adhere-website): 对adhere-mobile-ui-auto-complete例子的修改 playerljc 2023/10/14 16:34
+demo(adhere-website): 加入adhere-ui-popup的demo playerljc 2023/10/14 14:19
+demo(adhere-website): 加入adhere-ui-popup的demo playerljc 2023/10/13 19:29
+demo(adhere-website): adhere-ui-messagedialog加入Trigger相关例子 playerljc 2023/10/13 15:38
+feat(packages): e2e测试修改成使用adhere-e2e playerljc 2023/10/13 11:52
+feat(adhere-e2e): adhere-e2e加入Mobile实现 playerljc 2023/10/11 22:53
+fear(adhere-e2e): 加入adhere-e2e的包 playerljc 2023/10/11 22:37
+test(e2e): 去掉之前的e2e playerljc 2023/10/11 22:36
+chore: 加入babel-plugin-import-antd-all.js playerljc 2023/10/11 15:51
+demo(adhere-website): 加入adhere-mobile-ui-auto-complete的example playerljc 2023/10/8 17:55
+demo(adhere-website-mobile): 加入adhere-mobile-ui-auto-complete的example playerljc 2023/10/8 16:07
+demo(adhere-website): 加入adhere-mobile-ui-time-picker-view的demo playerljc 2023/10/7 13:26
+chore(packages): ahooks版本统一 playerljc 2023/10/7 13:09
+chore(e2e): 加入移动端标签和antd-mobile等的babel-plugin-import playerljc 2023/10/7 13:09
+demo(adhere-website-mobile): 加入adhere-mobile-ui-time-picker-view的demo playerljc 2023/10/7 13:08
+build(adhere): build - adhere-mobile-ui-time-picker-view playerljc 2023/10/7 13:07
+demo(adhere-website-mobile): 加入adhere-mobile-ui-time-picker-view的demo playerljc 2023/10/7 13:07
+chore(adhere): build playerljc 2023/10/6 17:35
+demo(website): 加入mobile的demo playerljc 2023/10/5 17:26
+feat(packages/*): 依赖包的版本对齐 playerljc 2023/10/4 17:08
+feat(packages/*): 依赖包的版本对齐 playerljc 2023/10/4 17:06
+feat(adhere): 加入新的packages playerljc 2023/10/4 17:05
+chore(lerna): 升级lerna playerljc 2023/10/4 17:04
+chore(.gitignore): 修改.gitignore playerljc 2023/10/4 17:04
+feat(babel-plugin-import-antd-mobile): 加入babel-plugin-import-antd-mobile.js playerljc 2023/10/4 17:03
+demo(adhere-website-mobile): 加入adhere-website-mobile playerljc 2023/10/4 17:01
+chore(adhere): rebuild playerljc 2023/10/2 6:34
+test(demo): 修复已知BUG playerljc 2023/10/2 6:29
+test(demo): 修复已知BUG playerljc 2023/10/2 6:28
+fix(packages): 将样式修改成KebabCase格式 playerljc 2023/10/2 6:27
+
+
+
+
+
+
+
+
+adhere-ui-hooks
+
+
+
+
+
+perf(adhere-ui-scrollload): 加入HIDE_EMPTY做性能优化 playerljc 2024/5/9 17:57
+doc(adhere-ui-scrollload): 更新changelog playerljc 2024/4/27 8:54
+feat(adhere-ui-scrollload): 加入disabled设置 playerljc 2024/4/22 13:55
+feat(adhere-ui-scrollload): 加入getScrollContainer方法 playerljc 2024/2/18 14:55
+
+
+
+feat(adhere-ui-datedisplay): 加入本地化显示的组件 playerljc 2024/2/7 21:54
+feat(adhere-ui-datedisplay): 优化内部函数，去掉一些无用函数 playerljc 2024/2/7 18:23
+
+
+
+feat(adhere-util-resource): dict.moment.config.js中加入时间国际化formats和本地化formats playerljc 2024/2/7 18:20
+
+
+
+feat(adhere-ui-autocomplete): 接口名称修改 playerljc 2024/2/6 11:20
+fix(adhere-ui-autocomplete): TreeAutoComplete加入不筛选的属性 playerljc 2024/2/6 7:34
+build(adhere-ui-autocomplete): 生成es/lib playerljc 2024/2/5 15:07
+refactor(adhere-ui-autocomplete): 重构最终数据源的计算 playerljc 2024/2/5 14:53
+refactor(adhere-ui-autocomplete): 重构最终数据源的计算 playerljc 2024/2/4 16:04
+fix(adhere-ui-autocomplete): 修改初始化没有下拉数据的BUG playerljc 2024/2/4 7:17
+
+
+
+feat(adhere-ui-contextmenu): 加入扇形菜单 playerljc 2024/2/2 10:35
+feat(adhere-ui-contextmenu): 加入扇形菜单 playerljc 2024/2/1 18:43
+
+
+
+perf(adhere-ui-comment): 使用ScrollLoad的优化 playerljc 2024/5/9 17:57
+fix(adhere-ui-comment): createPortal引用修改 playerljc 2024/1/28 17:00
+
+
+
+feat(adhere-ui-splitlayout): 优化 playerljc 2024/1/29 15:53
+demo(adhere-ui-splitlayout): 加入基本的例子 playerljc 2024/1/29 15:51
+demo(adhere-ui-splitlayout): trble修改 playerljc 2024/1/28 17:15
+demo(adhere-ui-splitlayout): TRBLC结构调整 playerljc 2023/12/17 21:13
+feat(adhere-ui-splitlayout): TRBLC结构调整 playerljc 2023/12/17 18:47
+
+
+
+refactor(adhere-ui-flexlayout): 修改变量名称 playerljc 2024/4/27 8:26
+demo(adhere-ui-flexlayout): 加入trigger的demo playerljc 2023/12/21 16:19
+feat(adhere-ui-flexlayout): 加入展开和收起功能(trigger) playerljc 2023/12/21 16:18
+feat(adhere-ui-flexlayout): 加入LCRLayout、TCBLayout playerljc 2023/12/17 18:01
+
+
+
+feat(adhere-util-watchmemoized): 浅比较修改为Object.is playerljc 2023/12/16 21:30
+
+
+
+feat(adhere-ui-css): init方法修改 playerljc 2023/12/16 21:19
+
+
+
+feat(adhere-ui-configprovider): 加入Wrapper元素用来存放css变量 playerljc 2023/12/16 21:18
+
+
+
+fix(adhere-util-communication-ajax): 修改FormData值是数组情况 playerljc 2023/11/18 17:47
+
+
+
+feat(adhere-ui-suspense): 加入onFirstFetchDataBefore和onFirstFetchDataAfter方法 playerljc 2024/1/31 17:20
+feat(adhere-ui-suspense): 加入onFirstFetchDataBefore和onFirstFetchDataAfter方法 playerljc 2024/1/31 17:19
+build(adhere-ui-suspense): build playerljc 2024/1/28 17:17
+fix(adhere-ui-suspense): 类型修复 playerljc 2024/1/26 7:50
+fix(adhere-ui-suspense): typescript类型修改 playerljc 2023/11/17 17:50
+fix(adhere-ui-suspense): Asyc和Sync在Impl中实现，加入Impl实现 playerljc 2023/11/7 15:36
+fix(adhere-ui-suspense): Asyc和Sync在Impl中实现，加入Impl实现 playerljc 2023/11/7 15:34
+
+
+
+feat(adhere-ui-hoc): 带有全选按钮可以自定义全选按钮的位置 playerljc 2024/2/5 18:34
+feat(adhere-ui-hoc): hoc文件结构调整 playerljc 2024/2/4 8:17
+doc(adhere-ui-anthoc): 更新changelog playerljc 2024/4/27 8:53
+feat(adhere-ui-anthoc): ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断 playerljc 2024/4/22 13:30
+format(adhere-ui-anthoc): 函数位置调整 playerljc 2024/3/8 9:36
+test(adhere-ui-anthoc): 加入分页的ValueHOC测试用例 playerljc 2024/3/6 15:58
+test(adhere-ui-anthoc): 加入TreeSelectAutoComplete的e2e测试 playerljc 2024/3/5 15:33
+feat(adhere-ui-anthoc): TreeAutoComplete去掉checkabled playerljc 2024/3/2 9:03
+feat(adhere-ui-anthoc): tree加入了AutoComplete、table加入了TreeAutoComplete playerljc 2024/2/28 11:17
+feat(adhere-ui-anthoc): tree-select加入AutoComplete AutoCompleteTreeCheckedShowAllSelect.tsx AutoCompleteTreeCheckedShowChildSelect.tsx AutoCompleteTreeCheckedShowParentSelect.tsx AutoCompleteTreeLeafSelect.tsx AutoCompleteTreeMultiLeafSelect.tsx AutoCompleteTreeMultiSelect.tsx AutoCompleteTreeSelect.tsx playerljc 2024/2/26 15:52
+style(adhere-ui-anthoc,adhere-ui-messagedialog): 格式的调整 playerljc 2024/2/26 9:34
+feat(adhere-ui-anthoc): 加入Calendar的ValueHOC playerljc 2024/2/8 13:56
+feat(adhere-ui-anthoc): config-provider加入日期国际化的统一处理 playerljc 2024/2/7 22:30
+feat(adhere-ui-anthoc): config-provider加入日期国际化的统一处理 playerljc 2024/2/7 21:53
+feat(adhere-ui-anthoc): config-provider加入日期国际化的统一处理 playerljc 2024/2/7 18:18
+demo(adhere-ui-anthoc): 加入ListPagingEntityValueHOC playerljc 2024/1/28 17:20
+feat(adhere-ui-anthoc): TimeValueEntityHOC修改 playerljc 2024/1/28 17:18
+feat(adhere-ui-anthoc): 加入一系列EntityValueHOC playerljc 2024/1/24 17:43
+demo(adhere-ui-anthoc,adhere-ui-fieldgeneratortodict): 加入demo playerljc 2023/11/20 17:29
+demo(adhere-ui-anthoc,adhere-ui-fieldgeneratortodict): 加入demo playerljc 2023/11/20 17:29
+fix(adhere-ui-anthoc): e2e例子修改，pagination的default修改,table导出新的HOC playerljc 2023/11/20 17:28
+feat(adhere-ui-anthoc): BUG修改 playerljc 2023/11/17 16:35
+feat(adhere-ui-anthoc): segmented类型兼容i需改，List和Table中Suspense修改 playerljc 2023/11/7 16:36
+feat(adhere-ui-anthoc): List和Table的Paging加入SuspenseAsync的包裹 playerljc 2023/11/7 15:38
+feat(adhere-ui-anthoc): ts类型修改 wangkun 2023/11/7 12:57
+refactor(adhere-ui-anthoc): 单一组件的类型导出 playerljc 2023/11/6 15:03
+feat(adhere-ui-anthoc): 加入AutoCompleteSelectInput playerljc 2023/11/2 18:02
+doc(adhere-ui-anthoc): README.md完善 playerljc 2023/11/2 13:18
+fix(adhere-ui-anthoc): 已知问题修改 playerljc 2023/11/2 13:15
+fix(adhere-ui-anthoc): 已知问题修改 playerljc 2023/11/1 22:35
+fix(adhere-ui-anthoc): 已知问题修改 playerljc 2023/10/31 15:38
+feat(adhere-ui-anthoc): 加入Tag的AutoComplete，修改已有问题 playerljc 2023/10/29 17:51
+feat(adhere-ui-anthoc): 对数据源组件加入特有的功能 playerljc 2023/10/29 11:47
+style(adhere-ui-anthoc): 去掉无用引用 playerljc 2023/10/7 13:10
+
+
+
+feat(adhere-ui-auto-complete): 加入对defalutValue和value重新设置的时候，重新设置路径 playerljc 2024/3/6 15:57
+feat(adhere-ui-auto-complete): 加入对defalutValue和value重新设置的时候，重新设置路径 playerljc 2024/3/6 14:54
+feat(adhere-ui-auto-complete): 优化代码，去掉对checkabled的支持 playerljc 2024/3/2 9:04
+fix(adhere-ui-auto-complete): 可能为空的变量都加上默认值的适配 playerljc 2024/2/26 15:51
+feat(adhere-ui-auto-complete): 已知问题修改 1.加入用于回显的defaultOptions属性 2.加入emptyContent属性 3.selectedRows逻辑修改 playerljc 2023/11/1 22:36
+feat(adhere-ui-auto-complete): 已知问题修改 1.加入用于回显的defaultOptions属性 2.加入emptyContent属性 3.selectedRows逻辑修改 playerljc 2023/10/31 15:37
+fix(adhere-ui-auto-complete): 加入不同mode模式的处理 playerljc 2023/10/29 17:50
+fix(adhere-ui-auto-complete): 加入默认值初始化，loading参数传递 playerljc 2023/10/29 11:06
+feat(adhere-ui-auto-complete): 加入adhere-ui-auto-complete组件 playerljc 2023/10/16 11:17
+
+
+
+doc(adhere-ui-popup): 更新changelog playerljc 2024/4/27 8:53
+feat(adhere-ui-popup): 加入disabled设置和update刷新方法 playerljc 2024/4/22 13:55
+feat(adhere-ui-popup): 加入try catch playerljc 2024/1/28 17:14
+fix(adhere-ui-popup): 修改popup的Trigger的细节和e2e测试 playerljc 2023/10/13 9:51
+feat(adhere-ui-popup): 加入Trigger和TriggerPrompt组件 playerljc 2023/10/11 15:49
+
+
+
+doc(adhere-ui-messagedialog): 更新changelog playerljc 2024/4/27 8:53
+feat(adhere-ui-messagedialog): 加入disabled设置和update刷新方法 playerljc 2024/4/22 13:56
+feat(adhere-ui-messagedialog): 箭头函数修改为函数声明形式 playerljc 2024/2/20 16:00
+refactor(adhere-ui-messagedialog): Modal的render方法修改 playerljc 2024/2/6 16:34
+feat(adhere-ui-messagedialog): Modal和MaximizeModal的返回值中加入setConfig方法 playerljc 2024/2/6 16:19
+feat(adhere-ui-messagedialog): 加入节流操作 playerljc 2024/1/28 19:2
+test(adhere-ui-messagedialog): e2e测试 playerljc 2023/10/13 15:36
+fix(adhere-ui-messagedialog): 加入可以maximized的功能 playerljc 2023/10/11 22:36
+fix(adhere-ui-messagedialog): Trigger的footer修改为actions playerljc 2023/10/11 15:41
+feat(adhere-ui-messagedialog): 加入Trigger和TriggerPrompt组件 playerljc 2023/10/10 22:04
+
+
+
+doc(adhere-mobile-ui-auto-complete): 更新changelog playerljc 2024/4/27 8:53
+feat(adhere-mobile-ui-auto-complete): value支持传入对象形式 playerljc 2024/4/22 13:59
+feat(adhere-mobile-ui-auto-complete): loadData方法返回值类型修改 playerljc 2024/3/17 11:19
+feat(adhere-mobile-ui-auto-complete): 加入searchBarClassName、searchBarStyle、bodyClassName和bodyStyle属性 playerljc 2024/2/19 18:19
+feat(adhere-mobile-ui-auto-complete): 加入showResult属性 playerljc 2024/2/16 19:02
+feat(adhere-mobile-ui-auto-complete): 修改e2e测试 playerljc 2024/2/14 20:00
+feat(adhere-mobile-ui-auto-complete): 类型修改 playerljc 2024/1/28 16:59
+feat(adhere-mobile-ui-auto-complete): 加入placeholder属性 playerljc 2023/11/24 22:27
+style(adhere-mobile-ui-auto-complete): 去掉无用注释的代码 playerljc 2023/10/16 11:17
+fix(adhere-mobile-ui-auto-complete): 修改为可以自定义查询内容 playerljc 2023/10/14 16:34
+fix(adhere-mobile-ui-auto-complete): BUG修改 playerljc 2023/10/8 16:05
+feat(adhere): 加入adhere-mobile-ui-auto-complete playerljc 2023/10/8 13:43
+feat(adhere-mobile-ui-auto-complete): Result面板使用FloatPanel实现 playerljc 2024/2/19 11:29
+
+
+build(adhere-ui-fieldgeneratortodict): build playerljc 2024/3/19 14:17
+fix(adhere-ui-fieldgeneratortodict): ts类型引入错误修改 playerljc 2024/3/19 14:16
+doc(adhere-ui-fieldgeneratortodict): 1.0.18文档更新 playerljc 2024/3/17 20:31
+feat(adhere-ui-fieldgeneratortodict): 加入adhere-mobile-ui-anthoc中的数据源组件 playerljc 2024/3/17 11:25
+feat(adhere-ui-fieldgeneratortodict): TreeEntityValueHOC加入分页 playerljc 2024/3/5 15:41
+feat(adhere-ui-fieldgeneratortodict): tree和table加入TreeAutoComplete playerljc 2024/3/2 9:05
+feat(adhere-ui-fieldgeneratortodict): 加入一系列ValueEntityHOC playerljc 2024/1/24 18:07
+feat(adhere-ui-fieldgeneratortodict): 完成e2e测试和收尾 playerljc 2023/11/17 16:37
+fix(adhere-ui-fieldgeneratortodict): items数据源修改 playerljc 2023/11/7 16:38
+fix(adhere-ui-fieldgeneratortodict): 去掉any[]的泛型约束 playerljc 2023/11/6 15:11
+refactor(adhere-ui-fieldgeneratortodict): 更新 es/lib 构建目录 Michael_Zhang 2023/11/2 13:54
+feat(adhere-ui-fieldgeneratortodict): 添加组件名称生成函数 Michael_Zhang 2023/11/2 13:50
+refactor(adhere-ui-fieldgeneratortodict): 更新 es/lib 构建目录 Michael_Zhang 2023/10/17 19:02
+fix(adhere-ui-fieldgeneratortodict): 错误的引用了删除的类型 Michael_Zhang 2023/10/17 18:59
+test(adhere-ui-fieldgeneratortodict): 补充测试用例 Michael_Zhang 2023/10/17 18:50
+feat(adhere-ui-fieldgeneratortodict): 添加字典组件对象 Michael_Zhang 2023/10/17 18:49
+delete(adhere-ui-fieldgeneratortodict): 删除一些无用的组件 playerljc 2023/10/16 14:40
+feat(adhere-ui-fieldgeneratortodict): 加入DictNames属性 playerljc 2023/10/7 22:27
+
+
+
+perf(adhere-mobile-ui-anthoc): 使用ScrollLoad的优化 playerljc 2024/5/9 17:55
+feat(adhere-mobile-ui-anthoc): Modal、Dialog、Popup加入disabled、Context、细节微调 playerljc 2024/4/22 14:01
+doc(adhere-mobile-ui-anthoc): 1.0.1文档更新 playerljc 2024/3/17 20:30
+feat(adhere-mobile-ui-anthoc): 若干修改 1.Paging细节修改 2.加入SRSL组件 3.加入useAutoCompletePaging的hook 4.AsyncCascaderView的加载策略修改 5.加入DataSourceList组件 playerljc 2024/3/17 11:21
+feat(adhere-mobile-ui-anthoc): 若干修改 1.Paging细节修改 2.加入SRSL组件 3.加入useAutoCompletePaging的hook 4.AsyncCascaderView的加载策略修改 5.加入DataSourceList组件 playerljc 2024/3/17 11:21
+test(adhere-mobile-ui-anthoc): 加入AsyncCascaderViewValueHOC和FilterCascaderViewValueHOC测试用例 playerljc 2024/3/10 22:46
+feat(adhere-mobile-ui-anthoc): AsyncCascaderView加入onDatasourceChange事件 playerljc 2024/3/10 22:45
+feat(adhere-mobile-ui-anthoc): CascaderView加入AsyncCascaderView组件 playerljc 2024/3/10 19:43
+feat(adhere-mobile-ui-anthoc): CascaderView加入AsyncCascaderView组件 playerljc 2024/3/10 18:26
+feat(adhere-mobile-ui-anthoc): 加入FilterCascaderView playerljc 2024/3/9 15:34
+feat(adhere-mobile-ui-anthoc): 加入timestamp和form的hoc playerljc 2024/3/8 9:38
+fix(adhere-mobile-ui-anthoc): 对defaultValue的修改 playerljc 2024/2/25 22:50
+doc(adhere-mobile-ui-anthoc): 加入CalendarModal、CalendarDialog、CalendarPopup，调整ts类型 playerljc 2024/2/25 12:17
+feat(adhere-mobile-ui-anthoc): 加入DateModal、DateDialog和DatePopup playerljc 2024/2/23 14:59
+feat(adhere-mobile-ui-anthoc): 加入Popup的show、clear、Trigger和TriggerPrompt playerljc 2024/2/21 16:16
+fix(adhere-mobile-ui-anthoc): Dialog加入Trigger和TriggerPrompt playerljc 2024/2/20 17:15
+fix(adhere-mobile-ui-anthoc): Modal加入Trigger和TriggerPrompt playerljc 2024/2/20 15:59
+fix(adhere-mobile-ui-anthoc): 修改AutoCompletePagingRadio的props playerljc 2024/2/19 18:34
+feat(adhere-mobile-ui-anthoc): 优化AutoComplete的props playerljc 2024/2/19 18:21
+refactor(adhere-mobile-ui-anthoc): 一些hooks换成组件 playerljc 2024/2/18 23:39
+refactor(adhere-mobile-ui-anthoc): 一些hooks换成组件 playerljc 2024/2/18 23:39
+feat(adhere-mobile-ui-anthoc): 加入Paging组件 playerljc 2024/2/18 14:56
+feat(adhere-mobile-ui-anthoc): CheckList、Checkbox、Radio和Selector加入AutoComplete playerljc 2024/2/16 19:01
+feat(adhere-mobile-ui-anthoc): 对CheckList、Checkbox、Radio和Selector加入全选、搜索等功能、和e2e测试 playerljc 2024/2/14 20:02
+feat(adhere-mobile-ui-anthoc): 对CheckList、Checkbox、Radio和Selector加入全选、搜索等功能、和e2e测试 playerljc 2024/2/14 20:01
+feat(adhere-mobile-ui-anthoc): 修改为createFactory playerljc 2024/2/11 19:28
+feat(adhere-mobile-ui-anthoc): 加入adhere-mobile-ui-anthoc playerljc 2023/10/7 13:11
+
+
+
+doc(adhere-mobile-ui-time-picker-view): 修改README.md playerljc 2024/2/23 15:01
+feat(adhere-mobile-ui-time-picker-view): value的返回值类型修改为Date playerljc 2024/2/25 12:18
+style(adhere-mobile-ui-time-picker-view): 样式修改 playerljc 2023/10/7 22:28
+fix(adhere-mobile-ui-time-picker-view): 加入adhere-mobile-ui-time-picker-view playerljc 2023/10/7 13:06
+
+
+
+doc(adhere-mobile-ui-tabs): 1.0.1文档更新 playerljc 2024/3/17 20:31
+feat(adhere-mobile-ui-tabs): 加入items配置 playerljc 2024/3/17 11:23
+test(adhere-mobile-ui-tabs): 加入e2e测试 playerljc 2024/3/12 22:05
+fix(adhere-mobile-ui-tabs): createPortal引用修改 playerljc 2024/1/28 16:5
+demo(adhere-mobile-ui-tabs): 加入adhere-mobile-ui-tabs的demo playerljc 2023/10/6 17:34
+feat(adhere-mobile-ui-tabs): 加入adhere-mobile-ui-tabs playerljc 2023/10/6 17:34
+
+
+
+feat(adhere-mobile-ui-globalindicator): 加入adhere-mobile-ui-globalindicator playerljc 2023/10/5 17:25
+
+
+
+feat(adhere-mobile-ui-confirm-importantconfirm): 加入adhere-mobile-ui-confirm-importantconfirm playerljc 2023/10/5 17:25
+
+
+
+feat(adhere-mobile-ui-confirm-delconfirm): 加入adhere-mobile-ui-confirm-delconfirm playerljc 2023/10/5 17:24
+
+
+
+fix(adhere-ui-playground): Anchors修改 playerljc 2024/3/18 22:43
+feat(adhere-ui-playground): SimpleTabs，CodeTabPanel加入className和style参数 playerljc 2023/10/5 17:24
+docs(adhere-ui-playground): 加入PlayGroundTabMobile组件 playerljc 2023/10/4 17:10
+
+
+
+feat(adhere-mobile-ui-prompt-warnprompt): 加入adhere-mobile-ui-prompt-warnprompt playerljc 2023/10/4 17:02
+
+
+
+feat(adhere-mobile-ui-prompt-successprompt): 加入adhere-mobile-ui-prompt-successprompt playerljc 2023/10/4 17:02
+
+
+
+feat(adhere-mobile-ui-prompt-errorprompt): 加入adhere-mobile-ui-prompt-errorprompt playerljc 2023/10/4 17:02
+
+
+
+refactor(adhere-ui-olmap): 文件大小写修改为帕斯卡命名规则 playerljc 2024/2/6 8:23
+fix(adhere-ui-olmap): OLMap组件的fitZoom参数默认值修改 playerljc 2023/10/2 6:24
+
+
+feat(adhere-ui-searchlist): 使用fetchData的方法都变成Promise playerljc 2024/2/1 13:26
+feat(adhere-ui-searchlist): 修改文件名的大小写 playerljc 2023/12/17 18:02
+feat(adhere-ui-searchlist): 综合修改 1.修复已知BUG 2.适配adhere-ui-searchtable的修改 playerljc 2023/10/2 6:23
+
+
+
+feat(adhere-ui-intl): searchtable加入新的国际化词条 playerljc 2023/10/2 6:25
+feat(adhere-util-intl): 加入quick-range-date的词条 playerljc 2024/5/4 16:28
+revert(adhere-util-intl): 回退到之前的版本 playerljc 2024/3/5 15:30
+feat(adhere-util-intl): 国际化方法加入description方法 playerljc 2024/3/2 15:52
+feat(adhere-util-intl): 加入新的词条 playerljc 2024/2/11 19:28
+fix(adhere-util-intl): 修改ts类型 playerljc 2024/2/7 9:57
+feat(adhere-util-intl): 加入新的国际化词条 playerljc 2023/11/17 17:49
+feat(adhere-util-intl): 序号词条翻译修改 playerljc 2023/9/29 17:21
+
+
+
+doc(adhere-util): 更新changelog playerljc 2024/4/27 8:54
+docs(adhere-util): 更新CHANGELOG.md playerljc 2023/9/29 13:21
+feat(adhere-util): 加入getTransformValues方法 playerljc 2024/4/22 13:28
+fix(adhere-util): treeToArray方法排除children属性 playerljc 2024/2/4 14:59
+fix(adhere-util): treeToArray方法排除children属性 playerljc 2024/2/4 14:54
+feat(adhere-util): 加入isPromise方法 playerljc 2024/2/1 11:46
+fix(adhere-util): 修改getTopDom方法的BUG，selector支持数组形式 playerljc 2024/1/24 17:08
+feat(adhere-util): 加入gcoord playerljc 2023/12/17 17:02
+feat(adhere-util): getTopDom方法修改 playerljc 2023/12/16 21:29
+feat(adhere-util): 加入pascalCaseToKebabCase2 playerljc 2023/11/7 15:37
+fix(adhere-util): pascalCaseToKebabCase方法修改 playerljc 2023/11/6 14:41
+chore(adhere-util): 将未导出的ts定义进行导出 playerljc 2023/10/29 11:05
+fix(adhere-util): 修复tree中的若干方法的细节 playerljc 2023/9/29 13:18
+
+
+
+doc(adhere-ui-searchtable): 更新changelog playerljc 2024/4/27 8:54
+feat(adhere-ui-searchtable): 可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式 playerljc 2024/4/22 13:54
+feat(adhere-ui-searchtable): 使用fetchData的方法都变成Promise playerljc 2024/2/1 13:22
+fix(adhere-ui-searchtable): createPortal引用修改 playerljc 2024/1/28 17:14
+demo(adhere-ui-searchtable): 更新searchtable的demo playerljc 2024/1/24 17:30
+feat(adhere-ui-searchtable): 可以自定义高级查询面板，高级查询优化 playerljc 2024/1/24 17:29
+feat(adhere-util-searchtable): 修改renderSearchToolBar变为renderTitle，renderSearchBarExtra，renderSearchBarActions playerljc 2023/12/17 17:15
+fix(adhere-ui-searchlist,adhere-ui-searchtable): 同步fieldgeneratortodict修改 playerljc 2023/11/17 17:51
+feat(adhere-ui-searchtable): 综合修改 1.查询区域加入工具栏，操作工具栏和查询工具栏分离，查询工具栏加入收起功能 2.OptionsWrap加入收起功能 3.缺省的工具按钮修改 4.列头和查询文字支持tip显示 playerljc 2023/10/2 6:22
+feat(adhere-ui-searchtable): 加入导出excel功能 playerljc 2023/9/29 17:20
+docs(adhere-ui-searchtable): 更新CHANGELOG.md playerljc 2023/9/29 13:21
+feat(adhere-ui-searchtable): 加入导出excel功能 playerljc 2023/9/29 13:18
