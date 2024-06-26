@@ -79,7 +79,7 @@ const TableCell: FC<TableCellComponentProps> = (props) => {
     ['useRowDragSortCell', RowDragSortCell],
   ]);
 
-  // 所有的reducer都去装饰tr，最终返回装饰后的tr
+  // 所有的reducer都去装饰td，最终返回装饰后的td
   return context?.context?.getTableCellComponentReducers()?.reduce?.(
     (pre, hookName) => {
       pre.value = map.get(hookName)?.(pre.value);

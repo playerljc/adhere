@@ -5,7 +5,8 @@ import { DateDisplay, Resource } from '@baifendian/adhere';
 import SearchTable from '../src/index';
 import './serviceRegister';
 
-const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory } = SearchTable;
+const { ProSearchRowDragSortStateTable, SearchTableStateImplementFactory, DragSortColumn } =
+  SearchTable;
 
 const serviceName = 'user';
 
@@ -56,6 +57,7 @@ class RowDragSort extends ProSearchRowDragSortStateTable {
    */
   getColumns() {
     return super.getColumns([
+      DragSortColumn(),
       {
         title: '姓名',
         dataIndex: 'name',

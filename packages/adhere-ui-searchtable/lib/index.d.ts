@@ -7,6 +7,7 @@ import SearchEditableRowStateTable from './Editable/SearchEditableRowStateTable'
 import SearchEditableRowTable from './Editable/SearchEditableRowTable';
 import SearchEditableStateTable from './Editable/SearchEditableStateTable';
 import SearchEditableTable from './Editable/SearchEditableTable';
+import DragSortColumn from './Extension/DragSort/RowDragSort/DragSortColumn';
 import * as SearchAndPaginParams from './Extension/SearchAndPaginParams';
 import Search from './Search';
 import SearchTable from './SearchTable';
@@ -34,6 +35,7 @@ declare const _default: {
     TableDensitySetting: import("react").FC<import("./types").TableDensitySettingProps>;
     ReloadTable: import("react").FC<import("./types").ReloadTableProps>;
     ExportExcel: import("react").FC<import("./types").ExportExcelProps>;
+    DragSortColumn: typeof DragSortColumn;
     TableImplement: typeof SearchTableImplement;
     TableStateImplement: typeof SearchTableStateImplement;
     SearchTableImplementFactory: import("./types").SearchTableImplementFactoryFunction<any, any>;

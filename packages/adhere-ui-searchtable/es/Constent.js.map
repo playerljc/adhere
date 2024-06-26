@@ -1,0 +1,1 @@
+{"version":3,"file":"Constent.js","sources":["Constent.js"],"sourcesContent":["import Util from '@baifendian/adhere-util';\nexport var DRAG_SORT_ROW_COLUMN_KEY = Util.uuid();"],"names":["Util","DRAG_SORT_ROW_COLUMN_KEY","uuid"],"mappings":"OAAOA,SAAU,0BACV,IAAIC,yBAA2BD,KAAKE,KAAK,SAArCD,wBAAsC"}

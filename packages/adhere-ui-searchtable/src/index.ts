@@ -27,6 +27,7 @@ import SearchEditableRowTable from './Editable/SearchEditableRowTable';
 import SearchEditableStateTable from './Editable/SearchEditableStateTable';
 import SearchEditableTable from './Editable/SearchEditableTable';
 import DisabledOption from './Extension/DisabledOption';
+import DragSortColumn from './Extension/DragSort/RowDragSort/DragSortColumn';
 import { EditableContext } from './Extension/EditableCell/EditableRow';
 import EditableRowControl from './Extension/EditableCell/EditableRowControl';
 import EditableTableControl from './Extension/EditableCell/EditableTableControl';
@@ -53,6 +54,7 @@ export default {
   TableDensitySetting,
   ReloadTable,
   ExportExcel,
+  DragSortColumn,
   TableImplement: SearchTableImplement,
   TableStateImplement: SearchTableStateImplement,
   SearchTableImplementFactory,

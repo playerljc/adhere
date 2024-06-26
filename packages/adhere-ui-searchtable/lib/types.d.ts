@@ -4,6 +4,7 @@ import type { Rule } from 'antd/lib/form/index';
 import type { ColumnType } from 'antd/lib/table/interface';
 import type { DataIndex } from 'rc-table/lib/interface';
 import type { CSSProperties, ForwardRefExoticComponent, PropsWithoutRef, ReactElement, ReactNode, RefAttributes, RefObject } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 import type SearchTableImplement from './SearchTableImplement';
 import type { SearchTableStateImplement } from './SearchTableStateImplement';
@@ -460,4 +461,15 @@ export declare enum TableDensity {
     DEFAULT = "default",
     MIDDLE = "middle",
     SMALL = "small"
+}
+export interface DragSortRowContextProps {
+    dragResult: ReturnType<typeof useDrag>;
+    dropResult: ReturnType<typeof useDrop>;
+    setCanDrag: (canDrag: boolean) => void;
+}
+export interface DragSortColumnProps {
+    className?: string;
+    width?: string | number;
+    title?: ReactNode;
+    render?: (value: any, record: Record<string, any>, rowIndex: number) => ReactNode;
 }

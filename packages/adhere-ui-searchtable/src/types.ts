@@ -18,6 +18,7 @@ import type {
   RefAttributes,
   RefObject,
 } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 import type { SuspenseProps, SuspenseState } from '@baifendian/adhere-ui-suspense/lib/types';
 
@@ -620,4 +621,17 @@ export enum TableDensity {
   DEFAULT = 'default',
   MIDDLE = 'middle',
   SMALL = 'small',
+}
+
+export interface DragSortRowContextProps {
+  dragResult: ReturnType<typeof useDrag>;
+  dropResult: ReturnType<typeof useDrop>;
+  setCanDrag: (canDrag: boolean) => void;
+}
+
+export interface DragSortColumnProps {
+  className?: string;
+  width?: string | number;
+  title?: ReactNode;
+  render?: (value: any, record: Record<string, any>, rowIndex: number) => ReactNode;
 }
