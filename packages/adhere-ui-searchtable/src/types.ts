@@ -1,5 +1,6 @@
 import type { FormInstance } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
+import type { ColumnsType } from 'antd/es/table/interface';
 import type { Rule } from 'antd/lib/form/index';
 import type {
   ColumnType, // FilterValue,
@@ -629,9 +630,6 @@ export interface DragSortRowContextProps {
   setCanDrag: (canDrag: boolean) => void;
 }
 
-export interface DragSortColumnProps {
+export interface DragSortColumnProps extends ColumnTypeExt {
   className?: string;
-  width?: string | number;
-  title?: ReactNode;
-  render?: (value: any, record: Record<string, any>, rowIndex: number) => ReactNode;
 }

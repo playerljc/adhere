@@ -55,19 +55,15 @@ function DragHandler({ className, value, record, rowIndex, render }) {
 
 /**
  * DragSortColumn
- * @param width
- * @param title
- * @param render
- * @param className
+ * @param {DragSortColumnProps} props
  * @constructor
  */
-function DragSortColumn({ width = 80, title, render, className }: DragSortColumnProps = {}) {
+function DragSortColumn({ width = 80, render, className, ...rest }: DragSortColumnProps) {
   const key = DRAG_SORT_ROW_COLUMN_KEY;
 
   return {
     key,
     dataIndex: key,
-    title,
     width,
     $search: {
       visible: false,
@@ -75,6 +71,7 @@ function DragSortColumn({ width = 80, title, render, className }: DragSortColumn
     },
     // @ts-ignore
     render: (...params) => <DragHandler render={render} className={className} {...params} />,
+    ...rest,
   };
 }
 

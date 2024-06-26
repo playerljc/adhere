@@ -467,9 +467,6 @@ export interface DragSortRowContextProps {
     dropResult: ReturnType<typeof useDrop>;
     setCanDrag: (canDrag: boolean) => void;
 }
-export interface DragSortColumnProps {
+export interface DragSortColumnProps extends ColumnTypeExt {
     className?: string;
-    width?: string | number;
-    title?: ReactNode;
-    render?: (value: any, record: Record<string, any>, rowIndex: number) => ReactNode;
 }
