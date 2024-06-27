@@ -1,6 +1,7 @@
 import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
 import usePrevious from './usePrevious';
+import usePropToState from './usePropToState';
 import useSetState from './useSetState';
 import useTriggerQuery from './useTriggerQuery';
 export type UseFirst = () => [boolean, (first: boolean) => void];
@@ -12,4 +13,5 @@ export type HooksComponent = {
     usePrevious: typeof usePrevious;
     useSetState: typeof useSetState;
     useTriggerQuery: typeof useTriggerQuery;
+    usePropToState: typeof usePropToState;
 };
