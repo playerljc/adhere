@@ -1,11 +1,11 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 export interface ColumnConfig {
-    dataIndex: string;
-    isFixed: boolean;
-    width: string | number;
-    render: Function;
     className: string;
     style: CSSProperties;
+    dataIndex: string;
+    width: string | number;
+    isFixed: boolean;
+    render: (val: string, record: Record<string, any>, groupIndex: number, rowIndex: number, columnIndex: number) => ReactNode;
 }
 export interface ITableConfig {
     columns: ColumnConfig[];
@@ -16,7 +16,6 @@ export interface IndicatorTableConfig {
     dataSource: Record<string, any>;
 }
 export interface IMasterItem extends ITableConfig {
-    title: ReactElement;
     className: string;
     style: CSSProperties;
     fixedWrapClassName: string;
@@ -25,6 +24,7 @@ export interface IMasterItem extends ITableConfig {
     autoWrapStyle: CSSProperties;
     autoInnerClassName: string;
     autoInnerStyle: CSSProperties;
+    title: ReactElement;
 }
 /**
  * CascadeComparedProps

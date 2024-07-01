@@ -1,6 +1,13 @@
 import classNames from 'classnames';
 import IScroll from 'iscroll/build/iscroll-probe';
-import React, { forwardRef, memo, useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, {
+  ReactNode,
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import type { PropsWithoutRef, ReactElement, RefAttributes } from 'react';
 
 import StickupLayout from '@baifendian/adhere-ui-stickuplayout';
@@ -137,31 +144,25 @@ const CascadeCompared = memo<
     /**
      * renderCell
      * @param config
-     * @param dataSource
+     * @param record
      * @param groupIndex
      * @param rowIndex
      * @param columnIndex
      */
     function renderCell(
       config: ColumnConfig | null,
-      dataSource: Record<string, any>,
+      record: Record<string, any>,
       groupIndex: number,
       rowIndex: number,
       columnIndex: number,
-    ): ReactElement | null {
+    ): ReactNode {
       if (!config) return null;
 
       if (config.render) {
-        return config.render(
-          dataSource[config.dataIndex],
-          dataSource,
-          groupIndex,
-          rowIndex,
-          columnIndex,
-        );
+        return config.render(record[config.dataIndex], record, groupIndex, rowIndex, columnIndex);
       }
 
-      return dataSource[config.dataIndex];
+      return record[config.dataIndex];
     }
 
     /**
