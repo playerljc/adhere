@@ -10,7 +10,7 @@ export interface DictObj {
   value: any;
   init: InitFunc;
   React: DictReactComponentObj;
-  useDict: Function;
+  useDict: (dictName: string) => StateData;
 }
 
 export interface InitFunc {
