@@ -4,6 +4,8 @@
 
 2024-05-05
 
+* 加入useLatestState的hook
+* 加入usePropToState的hook
 * 加入useSafeRef的hook
 
 # 1.0.19
