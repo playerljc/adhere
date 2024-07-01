@@ -107,41 +107,46 @@ declare const EncryptUtil: {
      * @description 对称加密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 加密后的字符串
      */
-    symmetricEncryptToAES(_value?: string, _pwd?: string): any;
+    symmetricEncryptToAES(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricEncryptToDES
      * @description 对称加密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 加密后的字符串
      */
-    symmetricEncryptToDES(_value?: string, _pwd?: string): any;
+    symmetricEncryptToDES(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricEncryptToRC4
      * @description 对称加密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 加密后的字符串
      */
-    symmetricEncryptToRC4(_value?: string, _pwd?: string): any;
+    symmetricEncryptToRC4(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricEncryptToRabbit
      * @description 对称加密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 加密后的字符串
      */
-    symmetricEncryptToRabbit(_value?: string, _pwd?: string): any;
+    symmetricEncryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricEncryptToTripleDes
      * @description 对称加密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 加密后的字符串
      */
-    symmetricEncryptToTripleDes(_value?: string, _pwd?: string): any;
+    symmetricEncryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricDecryptToAES
      * @description 对称解密算法
@@ -149,7 +154,7 @@ declare const EncryptUtil: {
      * @param _pwd 密钥
      * @return 解密后的字符串
      */
-    symmetricDecryptToAES(_value?: string, _pwd?: string): any;
+    symmetricDecryptToAES(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricDecryptToDES
      * @description 对称解密算法
@@ -157,7 +162,7 @@ declare const EncryptUtil: {
      * @param _pwd 密钥
      * @return 解密后的字符串
      */
-    symmetricDecryptToDES(_value?: string, _pwd?: string): any;
+    symmetricDecryptToDES(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricDecryptToRC4
      * @description 对称解密算法
@@ -165,7 +170,7 @@ declare const EncryptUtil: {
      * @param _pwd 密钥
      * @return 解密后的字符串
      */
-    symmetricDecryptToRC4(_value?: string, _pwd?: string): any;
+    symmetricDecryptToRC4(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricDecryptToRabbit
      * @description 对称解密算法
@@ -173,7 +178,7 @@ declare const EncryptUtil: {
      * @param _pwd 密钥
      * @return 解密后的字符串
      */
-    symmetricDecryptToRabbit(_value?: string, _pwd?: string): any;
+    symmetricDecryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
     /**
      * symmetricDecryptToTripleDes
      * @description 对称解密算法
@@ -181,7 +186,7 @@ declare const EncryptUtil: {
      * @param _pwd 密钥
      * @return 解密后的字符串
      */
-    symmetricDecryptToTripleDes(_value?: string, _pwd?: string): any;
+    symmetricDecryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
     /**
      * dataUrlToBlob
      * @description base64转换成Blob
