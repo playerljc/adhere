@@ -11,6 +11,13 @@
     flex-shrink: 0;
     border-bottom: var(--adhere-line-width) var(--adhere-line-type) var(--adhere-color-border-base);
 
+    > .adhere-ui-cascade-compared-auto-wrap {
+      > .adhere-ui-cascade-compared-item {
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+
     /* 头的行和单元格 */
     .adhere-ui-cascade-compared-item {
       height: 100%;
@@ -71,15 +78,15 @@
       }
     }
 
-    //> .adhere-ui-cascade-compared-auto-inner {
-    //  display: flex;
-    //}
+    > .adhere-ui-cascade-compared-auto-inner {
+      display: inline-block;
+      vertical-align: top;
+    }
   }
 
   .adhere-ui-cascade-compared-item {
-    display: flex;
-    //font-size: 0;
-    //white-space: nowrap;
+    font-size: 0;
+    white-space: nowrap;
 
     /* 不是最后一行才有 */
     &:not(:last-child) {
@@ -89,10 +96,12 @@
       }
     }
 
-    /*> .adhere-ui-cascade-compared-cell {
+    > .adhere-ui-cascade-compared-cell {
+      display: inline-block;
       box-sizing: border-box;
+      vertical-align: top;
       //overflow: auto;
-    }*/
+    }
   }
 
   /* 值和项下的单元格 */
