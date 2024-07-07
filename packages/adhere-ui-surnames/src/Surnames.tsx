@@ -24,6 +24,10 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
       position = 'right',
       className = '',
       style = {},
+      indexClassName = '',
+      indexStyle = {},
+      contentClassName = '',
+      contentStyle,
       indexes = [],
       dataSource = [],
       onScroll,
@@ -462,11 +466,19 @@ const Surnames = memo<PropsWithoutRef<SurnamesProps> & RefAttributes<SurnamesRef
       >
         <div className={`${selectorPrefix}-highlighted`} ref={highlightedEl} />
 
-        <div className={`${selectorPrefix}-content`} ref={contentEl}>
+        <div
+          className={classNames(`${selectorPrefix}-content`, contentClassName)}
+          style={contentStyle ?? {}}
+          ref={contentEl}
+        >
           {renderContent()}
         </div>
 
-        <div className={`${selectorPrefix}-index`} ref={indexEl}>
+        <div
+          className={classNames(`${selectorPrefix}-index`, indexClassName)}
+          style={indexStyle ?? {}}
+          ref={indexEl}
+        >
           <div className={`${selectorPrefix}-index-inner`} ref={indexInnerEl}>
             {renderIndex()}
           </div>
