@@ -28,6 +28,8 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
     isUseKilo,
     isUseAnimation,
     countUpProps,
+    prefix,
+    suffix,
     align,
   }) => {
     const targetCode = useMemo(() => code ?? 'CNY', [code]);
@@ -54,6 +56,7 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
         })}
         style={style ?? {}}
       >
+        {prefix}
         <span
           className={classNames(
             `${selectorPrefix}-symbol`,
@@ -77,6 +80,7 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
             end={targetAmount}
           />
         </span>
+        {suffix}
       </span>
     );
   },

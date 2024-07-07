@@ -1,4 +1,4 @@
-import type { CSSProperties, NamedExoticComponent } from 'react';
+import type { CSSProperties, NamedExoticComponent, ReactNode } from 'react';
 import { CountUpProps } from 'react-countup/build';
 
 import codes from './codes';
@@ -22,6 +22,8 @@ export interface CurrencySymbolProps {
   amountClassName?: string;
   amountStyle?: CSSProperties;
   amountInnerClassName?: string;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
   // 金额
   amount?: number;
   // 符号code
