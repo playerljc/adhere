@@ -102,12 +102,13 @@ declare const _default: {
             point: any;
             duration?: number | undefined;
         }): void;
-        drawLine({ points, width, color, lineCap, lineJoin }: {
+        drawLine({ points, width, color, lineCap, lineJoin, lineDash }: {
             points: any;
             width: any;
             color: any;
             lineCap?: string | undefined;
             lineJoin?: string | undefined;
+            lineDash: any;
         }): import("ol/Feature").default<import("ol/geom").LineString>;
         createInteraction(map: any, config: any): import("ol/interaction/Draw").default;
         polygonInteraction({ map, freehand, vectorSource, onDrawEnd, ...other }: {
@@ -144,10 +145,12 @@ declare const _default: {
         removeInteraction(map: any, interaction: any): void;
         removeInteractionAll(map: any): void;
         mapFit(extent: never[] | undefined, option: {} | undefined, map: any): void;
-        addArrowsSource({ points, color, icon }: {
+        addArrowsSource({ points, color, icon, anchor, offset }: {
             points: any;
             color: any;
             icon: any;
+            anchor: any;
+            offset: any;
         }): never[];
         addArrowsOverlay(map: any, parentDom: any, color: any, points: any): void;
         addOverlay: (map: any, config: any, div: HTMLDivElement | null) => import("ol/Overlay").default;
@@ -179,6 +182,7 @@ declare const _default: {
         color16(): string;
         getLineColor(index: any): string;
         downLoadMap(map: any): void;
+        getRadius(center: any, radius: any): number;
     };
 };
 export default _default;

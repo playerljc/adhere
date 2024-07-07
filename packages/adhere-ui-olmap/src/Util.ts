@@ -2,24 +2,24 @@ import Feature from 'ol/Feature.js';
 import Map from 'ol/Map';
 import Overlay from 'ol/Overlay.js';
 import View from 'ol/View';
-import { defaults as defaultControls } from 'ol/control.js';
+import {defaults as defaultControls} from 'ol/control.js';
 import MousePosition from 'ol/control/MousePosition.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import Zoom from 'ol/control/Zoom.js';
-import { createStringXY } from 'ol/coordinate';
-import { boundingExtent, getBottomLeft, getTopRight } from 'ol/extent.js';
-import { LineString, Point } from 'ol/geom';
+import {createStringXY} from 'ol/coordinate';
+import {boundingExtent, getBottomLeft, getTopRight} from 'ol/extent.js';
+import {LineString, Point} from 'ol/geom';
 import Circle from 'ol/geom/Circle';
 import LinearRing from 'ol/geom/LinearRing';
 import Polygon from 'ol/geom/Polygon';
-import Draw, { createBox } from 'ol/interaction/Draw.js';
+import Draw, {createBox} from 'ol/interaction/Draw.js';
 import Modify from 'ol/interaction/Modify';
-import { Heatmap as HeatMapLayer, Vector as VectorLayer } from 'ol/layer.js';
-import { fromLonLat, toLonLat, transform, transformExtent } from 'ol/proj.js';
-import { Vector as VectorSource } from 'ol/source.js';
-import { Circle as CircleStyle, Fill, Icon, RegularShape, Stroke, Style } from 'ol/style.js';
+import {Heatmap as HeatMapLayer, Vector as VectorLayer} from 'ol/layer.js';
+import {fromLonLat, toLonLat, transform, transformExtent} from 'ol/proj.js';
+import {Vector as VectorSource} from 'ol/source.js';
+import {Circle as CircleStyle, Fill, Icon, RegularShape, Stroke, Style} from 'ol/style.js';
 import Text from 'ol/style/Text';
-import { v4 } from 'uuid';
+import {v4} from 'uuid';
 
 import Resource from '@baifendian/adhere-util-resource';
 
@@ -672,8 +672,9 @@ export default {
    * @param color
    * @param lineCap
    * @param lineJoin
+   * @param lineDash
    */
-  drawLine({ points, width, color, lineCap = 'square', lineJoin = 'round' }) {
+  drawLine({ points, width, color, lineCap = 'square', lineJoin = 'round', lineDash }) {
     const line = new Feature({
       geometry: new LineString(points),
     });
@@ -685,6 +686,7 @@ export default {
           color,
           lineCap: lineCap as CanvasLineCap,
           lineJoin: lineJoin as CanvasLineJoin,
+          lineDash: lineDash as number[]
         }),
       }),
     );
@@ -939,9 +941,11 @@ export default {
    * @param points
    * @param color
    * @param icon
+   * @param anchor
+   * @param offset
    * @return {Array}
    */
-  addArrowsSource({ points, color, icon }) {
+  addArrowsSource({ points, color, icon, anchor, offset }) {
     const arrows = [];
     for (let i = 0; i < points.length - 1; i++) {
       const start = points[i];
@@ -960,8 +964,9 @@ export default {
           image: new Icon({
             color,
             src: icon,
-            anchor: [0.5, 0.5],
+            anchor: anchor ?? [0.5, 0.5],
             rotateWithView: true,
+            offset: offset ?? [0, 0],
             rotation: -rotation,
           }),
         }),
@@ -970,6 +975,7 @@ export default {
       // @ts-ignore
       arrows.push(arrow);
     }
+
     return arrows;
   },
   /**
@@ -1341,5 +1347,34 @@ export default {
     //     });
     // });
     // map.renderSync();
+  },
+  /**
+   * getRadius
+   * @param center 4326的点 [xxx.xx,xxx.xx]
+   * @param radius 半径(米/M)
+   */
+  getRadius(center, radius) {
+    const R = 6371000;
+    const center4326 = center;
+    const center3857 = fromLonLat(center4326);
+    // 计算出经度方向上距离圆心1000米的点的坐标
+    const lat1 = center4326[1] + (radius / R) * (180 / Math.PI);
+    const top4236 = [center4326[0], lat1];
+    const top3857 = fromLonLat(top4236);
+    // 计算出纬度方向上距离圆心1000米的点的坐标
+    const lon1 =
+        center4326[0] + (radius / (R * Math.cos((Math.PI * center4326[1]) / 180))) * (180 / Math.PI);
+    const right4236 = [lon1, center4326[1]];
+    const right3857 = fromLonLat(right4236);
+    // 计算经度方向上的点和圆心的平面距离
+    const dx = top3857[0] - center3857[0];
+    const dy = top3857[1] - center3857[1];
+    const verticalDistance = Math.sqrt(dx * dx + dy * dy);
+    // 计算纬度方向上的点和圆心的平面距离
+    const dxR = right3857[0] - center3857[0];
+    const dyR = right3857[1] - center3857[1];
+    const horizontalDistance = Math.sqrt(dxR * dxR + dyR * dyR);
+    // 两个距离选择最大的作为圆的半径
+    return Math.max(verticalDistance, horizontalDistance);
   },
 };

@@ -252,13 +252,15 @@ declare const _default: {
      * @param color
      * @param lineCap
      * @param lineJoin
+     * @param lineDash
      */
-    drawLine({ points, width, color, lineCap, lineJoin }: {
+    drawLine({ points, width, color, lineCap, lineJoin, lineDash }: {
         points: any;
         width: any;
         color: any;
         lineCap?: string | undefined;
         lineJoin?: string | undefined;
+        lineDash: any;
     }): Feature<LineString>;
     /**
      * createInteraction
@@ -355,12 +357,16 @@ declare const _default: {
      * @param points
      * @param color
      * @param icon
+     * @param anchor
+     * @param offset
      * @return {Array}
      */
-    addArrowsSource({ points, color, icon }: {
+    addArrowsSource({ points, color, icon, anchor, offset }: {
         points: any;
         color: any;
         icon: any;
+        anchor: any;
+        offset: any;
     }): never[];
     /**
      * addArrowsOverlay
@@ -467,5 +473,11 @@ declare const _default: {
     color16(): string;
     getLineColor(index: any): string;
     downLoadMap(map: any): void;
+    /**
+     * getRadius
+     * @param center 4326的点 [xxx.xx,xxx.xx]
+     * @param radius 半径(米/M)
+     */
+    getRadius(center: any, radius: any): number;
 };
 export default _default;
