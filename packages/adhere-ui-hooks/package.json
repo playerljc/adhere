@@ -26,7 +26,8 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
-    "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true"
+    "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true",
+    "e2e": "cross-env e2e media=true"
   },
   "dependencies": {
     "ahooks": "^3.7.8",
