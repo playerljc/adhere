@@ -145,14 +145,14 @@ const InternalExpression = memo<
       // 若干可见字符的输入之前，而这些可见字符的输入可能需要一连串的键盘操作、点击输入法的备选词等
       const comStart = useRef(false);
 
-      const [operatorsShow, setOperatorsShow] = useSetState(false);
+      const [operatorsShowRef, setOperatorsShow] = useSetState(false);
 
-      const [quickTipShow, setQuickTipShow] = useSetState(false);
+      const [quickTipShowRef, setQuickTipShow] = useSetState(false);
 
-      const [placeholderShow, setPlaceholderShow] = useSetState(true);
+      const [placeholderShowRef, setPlaceholderShow] = useSetState(true);
 
       // allowClear是否显示
-      const [showAllowClear, setShowAllClear] = useSetState(false);
+      const [showAllowClearRef, setShowAllClear] = useSetState(false);
 
       const triggerChar = useMemo(
         () => String.fromCharCode(triggerCharCode ?? defaultTriggerCharCode),
@@ -761,7 +761,7 @@ const InternalExpression = memo<
           </div>
 
           {/*allowClear*/}
-          {!!allowClear && showAllowClear && (
+          {!!allowClear && showAllowClearRef.current && (
             <div className={`${selectorPrefix}-editor-clear`}>
               <CloseCircleOutlined
                 onClick={() => {
@@ -776,7 +776,7 @@ const InternalExpression = memo<
           {/*placeholder*/}
           <div
             className={classNames(`${selectorPrefix}-editor-placeholder`, {
-              [`${selectorPrefix}-editor-placeholder--show`]: placeholderShow,
+              [`${selectorPrefix}-editor-placeholder--show`]: placeholderShowRef.current,
             })}
             ref={placeholderRef}
           >
@@ -787,7 +787,7 @@ const InternalExpression = memo<
           <div
             ref={operatorsRef}
             className={classNames(`${selectorPrefix}-operators`, operatorWrapClassName ?? '', {
-              [`${selectorPrefix}-operators--show`]: operatorsShow,
+              [`${selectorPrefix}-operators--show`]: operatorsShowRef.current,
             })}
             style={operatorWrapStyle ?? {}}
           >
@@ -814,7 +814,7 @@ const InternalExpression = memo<
           <div
             ref={quickTipRef}
             className={classNames(`${selectorPrefix}-quick-tips`, quickTipWrapClassName ?? '', {
-              [`${selectorPrefix}-quick-tips--show`]: quickTipShow,
+              [`${selectorPrefix}-quick-tips--show`]: quickTipShowRef.current,
             })}
             style={quickTipWrapStyle ?? {}}
           >

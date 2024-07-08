@@ -55,7 +55,7 @@ const LOCAL_MAP = new Map<string, any>([
 const Reply = memo<ReplyProps>((props) => {
   const { local = 'zh', emojiPickerProps = {}, onResult, onCancel } = props;
 
-  const [value, setValue] = useSetState<string>('');
+  const [valueRef, setValue] = useSetState<string>('');
 
   // 回复内容的textarea
   const textAreaRef = useRef<HTMLDivElement | null>(null);
@@ -78,7 +78,9 @@ const Reply = memo<ReplyProps>((props) => {
 
       // (0) 1 (1) 2 (2) 3 (3)
       setValue(
-        `${value.substring(0, selectionStart)}${native}${value.substring(selectionStart)}`,
+        `${valueRef.current.substring(0, selectionStart)}${native}${valueRef.current.substring(
+          selectionStart,
+        )}`,
         () => {
           textareaEl.focus();
           textareaEl.setSelectionRange(
@@ -88,7 +90,7 @@ const Reply = memo<ReplyProps>((props) => {
         },
       );
     },
-    [value],
+    [valueRef.current],
   );
 
   const PopoverContent = useMemo(
@@ -134,7 +136,7 @@ const Reply = memo<ReplyProps>((props) => {
           className={`${selectorPrefix}-textarea`}
           placeholder={Intl.v('请输入回复内容')}
           autoFocus={true}
-          value={value}
+          value={valueRef.current}
           onChange={(e) => setValue(e.target.value)}
           showCount
           maxLength={100}
@@ -164,8 +166,8 @@ const Reply = memo<ReplyProps>((props) => {
           <Button
             type="primary"
             className={`${selectorPrefix}-toolbar-item`}
-            disabled={!value}
-            onClick={() => onResult?.(value.trim())}
+            disabled={!valueRef.current}
+            onClick={() => onResult?.(valueRef.current.trim())}
           >
             {Intl.v('添加')}
           </Button>

@@ -41,7 +41,7 @@ const InternalJdCategoryTab = memo<
       children,
     } = props;
 
-    const [activeKey, setActiveKey] = useSetState(props.activeKey);
+    const [activeKeyRef, setActiveKey] = useSetState(props.activeKey);
 
     const ease = useRef(IScroll.utils.ease);
     const el = useRef<HTMLDivElement | null>(null);
@@ -69,7 +69,7 @@ const InternalJdCategoryTab = memo<
       let isCan = true;
 
       if (onBeforeChange) {
-        isCan = onBeforeChange(activeKey, key);
+        isCan = onBeforeChange(activeKeyRef.current, key);
       }
 
       if (!isCan) return;
@@ -90,7 +90,7 @@ const InternalJdCategoryTab = memo<
               className={classNames(
                 `${selectorPrefix}-menu-item`,
                 {
-                  [`active`]: activeKey === data.key,
+                  [`active`]: activeKeyRef.current === data.key,
                 },
                 menuItemClassName ?? '',
               )}
@@ -107,7 +107,7 @@ const InternalJdCategoryTab = memo<
             className={classNames(
               `${selectorPrefix}-menu-item`,
               {
-                [`active`]: activeKey === data.key,
+                [`active`]: activeKeyRef.current === data.key,
               },
               menuItemClassName ?? '',
             )}
@@ -127,7 +127,7 @@ const InternalJdCategoryTab = memo<
       return childrenItems?.map((t) => {
         let itemIns = t;
 
-        if (t.key === activeKey) {
+        if (t.key === activeKeyRef.current) {
           itemIns = React.cloneElement(t, {
             ...(t.props ?? {}),
             className: classNames(t?.className, 'active'),

@@ -48,8 +48,8 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     const update = useUpdate();
 
     const ro = useRef<ResizeObserver>({} as ResizeObserver);
-    const [isCan, setCan] = useSetState(false);
-    const [preUpdateTime, setPreUpdateTime] = useSetState(dayjs().valueOf());
+    const [isCanRef, setCan] = useSetState(false);
+    const [preUpdateTimeRef, setPreUpdateTime] = useSetState(dayjs().valueOf());
 
     const rootEl = useRef<HTMLDivElement>(null);
     const elRef = useRef<HTMLDivElement>(null);
@@ -104,12 +104,12 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
     const _renderLabel = useCallback(
       () => (
         <p className={`${selectorPrefix}-trigger-label`}>
-          <ConditionalRender conditional={isCan} noMatch={() => renderLabel?.()}>
+          <ConditionalRender conditional={isCanRef.current} noMatch={() => renderLabel?.()}>
             {() => renderCanLabel?.()}
           </ConditionalRender>
         </p>
       ),
-      [isCan, renderLabel, renderCanLabel],
+      [isCanRef.current, renderLabel, renderCanLabel],
     );
 
     /**
@@ -122,13 +122,13 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
             <p className={`${selectorPrefix}-trigger-update`}>
               {Intl.v('更新时间')}：
               <span className={`${selectorPrefix}-trigger-update-label`}>
-                {dayjs(preUpdateTime).format(updateTimeFormat)}
+                {dayjs(preUpdateTimeRef.current).format(updateTimeFormat)}
               </span>
             </p>
           )}
         </ConditionalRender>
       ),
-      [isShowUpdateTime, preUpdateTime, updateTimeFormat],
+      [isShowUpdateTime, preUpdateTimeRef.current, updateTimeFormat],
     );
 
     const _renderLoadingAnimation = useCallback(
@@ -321,7 +321,7 @@ const PullRefresh = memo<PropsWithoutRef<PullRefreshProps> & RefAttributes<PullR
      * @return number
      */
     function getUpdateTime() {
-      return preUpdateTime;
+      return preUpdateTimeRef.current;
     }
 
     /**

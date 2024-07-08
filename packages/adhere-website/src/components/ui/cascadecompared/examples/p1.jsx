@@ -34,8 +34,24 @@ function getIndicator() {
   };
 }
 
+// [
+//   {
+//     groupName: '基本信息',
+//     columns: ['name', 'hafu1', 'hongqi'],
+//     dataSource: [
+//       {
+//         name: '车款名称',
+//         hafu1: 'hafu',
+//         hongqi: 'hongqi',
+//       },
+//     ],
+//   },
+// ];
+
 function getMaster() {
+  // 一组一组的
   return data.map((t, i) => ({
+    // 组名
     title: (
       <h2
         className={styles.H2}

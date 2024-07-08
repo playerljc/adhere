@@ -10,14 +10,14 @@ const { useSetState } = Hooks;
 const ForceUpdate = forwardRef<ForceUpdateRefHandle, ForceUpdateProps>((props, ref) => {
   const { children } = props;
 
-  const [key, setKey] = useSetState<string>(v1());
+  const [keyRef, setKey] = useSetState<string>(v1());
 
   useImperativeHandle(ref, () => ({
     reMount: () => new Promise<void>((resolve) => setKey(v1(), () => resolve())),
   }));
 
   return cloneElement(children, {
-    key,
+    key: keyRef.current,
     ...(children.props ?? {}),
   });
 });
