@@ -330,9 +330,9 @@ const MessageDialogFactory = {
     return {
       el,
       close,
-      setConfig: (callback: any) => {
+      setConfig: (callback: any, _children?: any) => {
         modalConfig = produce(modalConfig, callback);
-        render();
+        render(_children);
       },
       update: (_children) => {
         render(_children);
@@ -350,7 +350,7 @@ const MessageDialogFactory = {
   MaximizeModal({ config = {}, children = null, defaultCloseBtn = true }: ModalArgv): {
     el: HTMLElement;
     close: () => void;
-    setConfig: (callback: any) => void;
+    setConfig: (callback: any, _children?: any) => void;
     update: (children?: any) => void;
   } | void {
     if (!allowMultipleInstances && lock) return;
@@ -410,9 +410,9 @@ const MessageDialogFactory = {
     return {
       el,
       close,
-      setConfig: (callback: any) => {
+      setConfig: (callback: any, _children) => {
         modalConfig = produce(modalConfig, callback);
-        render();
+        render(_children);
       },
       update: (_children) => {
         render(_children);

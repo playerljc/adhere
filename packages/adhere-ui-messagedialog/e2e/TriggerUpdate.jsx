@@ -4,6 +4,14 @@ import MessageDialog from '../src/index';
 
 import '../src/index.less';
 
+function Inner({ title, onClick }) {
+  return (
+    <div>
+      <button onClick={onClick}>{title}</button>
+    </div>
+  );
+}
+
 export default () => {
   const [title, setTitle] = useState(`1`);
 
@@ -25,15 +33,12 @@ export default () => {
           });
         }}
       >
-        <div>
-          <button
-            onClick={() => {
-              setTitle((title) => `${parseInt(title) + 1}`);
-            }}
-          >
-            ++
-          </button>
-        </div>
+        <Inner
+          title={title}
+          onClick={() => {
+            setTitle((title) => `${parseInt(title) + 1}`);
+          }}
+        />
       </MessageDialog.TriggerPrompt>
 
       {/*<MessageDialog.Trigger

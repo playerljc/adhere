@@ -37,8 +37,9 @@ const Trigger: FC<TriggerProps> = ({
     ReturnType<typeof MessageDialog.MaximizeModal> | ReturnType<typeof MessageDialog.Modal> | null
   >(null);
 
-  const bodyChildren = useMemo(
-    () =>
+  const bodyChildren = useMemo(() => {
+    debugger;
+    return (
       children &&
       React.cloneElement(
         children,
@@ -47,9 +48,9 @@ const Trigger: FC<TriggerProps> = ({
           value,
         },
         children.props.children,
-      ),
-    [children, value],
-  );
+      )
+    );
+  }, [children, value]);
 
   function onConfirm(onClick, close) {
     return new Promise((resolve, reject) => {
@@ -93,14 +94,15 @@ const Trigger: FC<TriggerProps> = ({
 
   useEffect(() => {
     try {
-      dialog.current?.update(bodyChildren);
+      // debugger;
+      // dialog.current?.update(bodyChildren);
 
       const _modalConfig: ModalProps = modalConfig?.config ?? {};
       dialog.current?.setConfig((draft) => {
         Object.keys(_modalConfig).forEach((_key) => {
           draft[_key] = _modalConfig[_key];
         });
-      });
+      }, bodyChildren);
     } catch (err) {}
   });
 

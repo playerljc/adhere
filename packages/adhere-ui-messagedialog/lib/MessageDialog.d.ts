@@ -143,7 +143,7 @@ declare const MessageDialogFactory: {
     MaximizeModal({ config, children, defaultCloseBtn }: ModalArgv): {
         el: HTMLElement;
         close: () => void;
-        setConfig: (callback: any) => void;
+        setConfig: (callback: any, _children?: any) => void;
         update: (children?: any) => void;
     } | void;
     /**
