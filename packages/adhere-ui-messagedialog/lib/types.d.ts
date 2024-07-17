@@ -77,6 +77,7 @@ export interface TriggerProps {
     modalConfig?: Omit<Omit<ModalArgv, 'config'> & {
         config?: Omit<ModalProps, 'footer'>;
     }, 'children' | 'defaultCloseBtn'>;
+    defaultCloseBtn?: boolean;
 }
 /**
  * SubmitButtonProps

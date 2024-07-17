@@ -92,6 +92,7 @@ export interface TriggerProps {
     },
     'children' | 'defaultCloseBtn'
   >;
+  defaultCloseBtn?: boolean;
 }
 
 /**

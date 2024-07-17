@@ -20,6 +20,7 @@ export default () => {
       <MessageDialog.TriggerPrompt
         okText="确认"
         renderTrigger={() => <div>trigger</div>}
+        defaultCloseBtn={false}
         modalConfig={{
           config: {
             title,

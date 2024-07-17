@@ -32,13 +32,13 @@ const Trigger: FC<TriggerProps> = ({
   modalConfig,
   actions,
   maximized = true,
+  defaultCloseBtn = true,
 }) => {
   const dialog = useRef<
     ReturnType<typeof MessageDialog.MaximizeModal> | ReturnType<typeof MessageDialog.Modal> | null
   >(null);
 
   const bodyChildren = useMemo(() => {
-    debugger;
     return (
       children &&
       React.cloneElement(
@@ -87,16 +87,13 @@ const Trigger: FC<TriggerProps> = ({
 
     dialog.current = modalMap.get(maximized as boolean)?.({
       config: _modalConfig,
-      defaultCloseBtn: true,
+      defaultCloseBtn,
       children: bodyChildren,
     });
   }
 
   useEffect(() => {
     try {
-      // debugger;
-      // dialog.current?.update(bodyChildren);
-
       const _modalConfig: ModalProps = modalConfig?.config ?? {};
       dialog.current?.setConfig((draft) => {
         Object.keys(_modalConfig).forEach((_key) => {
