@@ -33,6 +33,7 @@ const InternalCheckboxGroupExt = memo<CheckboxGroupExtProps>(
     children,
     defaultValue,
     disabled = false,
+    spaceProps,
   }) => {
     const [currentValue, setCurrentValue] = useState(value || defaultValue);
 
@@ -61,7 +62,7 @@ const InternalCheckboxGroupExt = memo<CheckboxGroupExtProps>(
         {children && children(onCheckboxChange)}
 
         {!children && (
-          <Space direction={direction ?? 'horizontal'}>
+          <Space direction={direction ?? 'horizontal'} wrap {...(spaceProps ?? {})}>
             {options?.map?.((t, _index) => {
               const { value: itemValue, disabled: itemDisabled, label } = t as CheckboxOptionType;
 

@@ -3,7 +3,10 @@ import type {
   CalendarProps,
   CascaderProps,
   CheckboxProps,
+  DatePickerProps,
   FormProps,
+  FormRule,
+  InputProps,
   ListProps,
   PaginationProps,
   RadioProps,
@@ -11,12 +14,12 @@ import type {
   SpaceProps,
   TableProps,
   TagProps,
+  TimePickerProps,
   TransferProps,
   TreeSelectProps,
 } from 'antd';
-import { DatePickerProps, FormRule, TimePickerProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
-import { RangePickerProps } from 'antd/es/date-picker';
+import type { RangePickerProps } from 'antd/es/date-picker';
 import type { RadioGroupProps } from 'antd/es/radio';
 import type { CheckableTagProps } from 'antd/es/tag';
 import dayjs from 'dayjs';
@@ -851,6 +854,7 @@ export type CheckboxGroupExtProps = Omit<CheckboxGroupProps, 'onChange' | 'child
   className?: string;
   style?: CSSProperties;
   direction?: SpaceProps['direction'];
+  spaceProps?: SpaceProps;
   onChange?: (checkedValue: any[], checked: boolean, changeValue: any[]) => void;
   children?: (onChange: (e: any, itemValue: CheckboxOptionType['value']) => void) => ReactNode;
 };
@@ -1094,3 +1098,12 @@ export type AutoCompleteTreeLeafSelectProps = TreeAutoCompleteProps & {
 export type AutoCompleteTreeMultiLeafSelectProps = TreeAutoCompleteProps & {
   treeSelectProps?: TreeSelectProps;
 };
+
+export interface InternalNestingFormItemProps {
+  className?: string;
+  style?: CSSProperties;
+  formProps?: FormProps;
+  value?: any;
+  onChange?: (value?: any) => void;
+  children?: any;
+}
