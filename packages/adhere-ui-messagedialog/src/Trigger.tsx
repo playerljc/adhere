@@ -94,6 +94,13 @@ const Trigger: FC<TriggerProps> = ({
   useEffect(() => {
     try {
       dialog.current?.update(bodyChildren);
+
+      const _modalConfig: ModalProps = modalConfig?.config ?? {};
+      dialog.current?.setConfig((draft) => {
+        Object.keys(_modalConfig).forEach((_key) => {
+          draft[_key] = _modalConfig[_key];
+        });
+      });
     } catch (err) {}
   });
 

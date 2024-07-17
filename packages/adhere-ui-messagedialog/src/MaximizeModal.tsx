@@ -40,13 +40,10 @@ const MaximizeModalDialog = memo<ModalDialogProps>((props) => {
       classNames(`${selectorPrefix}`, restConfig.className ?? '', {
         [`${selectorPrefix}-maximize`]: isMaximize,
       }),
-    [isMaximize],
+    [isMaximize, restConfig],
   );
 
-  const modalRender = useCallback(
-    (_modal) => renderDraggableModal(_modal),
-    [isMaximize, bounds, draggableDisabled],
-  );
+  const modalRender = (_modal) => renderDraggableModal(_modal);
 
   /**
    * renderDraggableModal

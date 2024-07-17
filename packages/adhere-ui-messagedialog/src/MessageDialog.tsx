@@ -360,8 +360,8 @@ const MessageDialogFactory = {
     function render(_children?: any) {
       const element = (
         <MaximizeModalDialog
-          close={close}
           open={open}
+          close={close}
           config={modalConfig}
           closeBtn={defaultCloseBtn}
         >
