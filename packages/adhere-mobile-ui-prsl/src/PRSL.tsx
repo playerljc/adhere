@@ -329,12 +329,14 @@ const InternalPRSL = memo<PropsWithoutRef<PRSLProps> & RefAttributes<PRSLHandle>
         if (!(!searchKeyWord && isPrimaryEmpty(filterValues) && !sortValues.length)) {
           targetData = targetData.filter((record) => {
             if (searchKeyWord) {
-              return Object.keys(record).some((_key) => record[_key].indexOf(searchKeyWord) !== -1);
+              return Object.keys(record).some(
+                (_key) => record[_key]?.indexOf?.(searchKeyWord) !== -1,
+              );
             } else if (!isPrimaryEmpty(filterValues)) {
               return Object.keys(filterValues)
                 .filter((_key) => !!filterValues[_key])
                 .every((_key) => {
-                  return record[_key].indexOf(filterValues[_key]) !== -1;
+                  return record[_key]?.indexOf?.(filterValues[_key]) !== -1;
                 });
             }
 
