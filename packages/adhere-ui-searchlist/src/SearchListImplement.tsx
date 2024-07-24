@@ -138,7 +138,7 @@ export class SearchListImplement<P extends SearchListProps, S extends SearchList
   onInputChange = (property: string, e): void => {
     // @ts-ignore
     this.setState({
-      [property]: e.target.value.trim(),
+      [property]: e.target.value,
     });
   };
 
