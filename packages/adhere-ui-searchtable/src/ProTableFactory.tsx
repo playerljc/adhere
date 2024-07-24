@@ -421,6 +421,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           : null;
       });
 
+      // 对时间类型对象(一般是dayjs对象)进行转换，现在是format转换，其实应该转换成时间戳才对
       const dateKeys = Object.keys(searchParams).filter(
         (key) => !(key in dateSearchParams) && dayjs.isDayjs(searchParams[key]),
       );

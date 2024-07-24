@@ -114,7 +114,7 @@ export class SearchTableImplement<P extends SearchTableProps, S extends SearchTa
   onInputChange = (property: string, e): void => {
     // @ts-ignore
     this.setState({
-      [property]: e.target.value.trim(),
+      [property]: e.target.value,
     });
   };
 
