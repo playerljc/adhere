@@ -53,16 +53,30 @@ let ValidatorRules: FormValidatorRulesType;
          * @param value
          */
         validator(_, value) {
-          if (!value) {
-            return Promise.reject();
+          const self = this;
+
+          function validate() {
+            // 调用Validator的指定方法进行校验
+            if (!Validator[_key].apply(self, [value, ...(argv?.params || [])])) {
+              return Promise.reject(argv?.invalidMessage ?? '');
+            }
+
+            return Promise.resolve();
           }
 
-          // 调用Validator的指定方法进行校验
-          if (!Validator[_key].apply(this, [value, ...(argv?.params || [])])) {
-            return Promise.reject(argv?.invalidMessage ?? '');
+          if (_?.required) {
+            if (!value) {
+              return Promise.reject(_?.message);
+            } else {
+              return validate();
+            }
+          } else {
+            if (!value) {
+              return Promise.resolve();
+            } else {
+              return validate();
+            }
           }
-
-          return Promise.resolve();
         },
       });
 

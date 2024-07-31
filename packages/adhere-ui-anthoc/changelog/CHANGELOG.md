@@ -4,6 +4,11 @@
 
 2024-04-22
 
+* Form中加入NestingFormItem组件
+* Form的Validate的rules加入required设置
+* 修复CheckAll不返回children的默认值设置
+* ConfigProvider加入router、publicPath参数的传递
+* CheckboxGroup加入spaceProps属性的设置
 * tree加入了AutoComplete、table加入了TreeAutoComplete
 * tree-select加入数据源组件
 * 加入Calendar的ValueHOC
