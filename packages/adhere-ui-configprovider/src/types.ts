@@ -19,9 +19,13 @@ export type IntlType = {
 export interface ConfigProviderProps {
   className?: string;
   style?: CSSProperties;
+  // 国际化
   intl: IntlType & {
     mainLanguage: string;
   };
+  // 国际化初始化完成
+  onIntlInit: () => void;
+  // 主题
   theme: {
     primaryColor: string;
     normalColor: string;
@@ -30,7 +34,6 @@ export interface ConfigProviderProps {
     smallFontSize: string;
     commonMaxZIndex: string;
   };
-  onIntlInit: () => void;
   // 媒体相关参数
   media?: {
     // 是否使用媒体
@@ -40,6 +43,10 @@ export interface ConfigProviderProps {
   };
   // 是否使用外部包裹对象
   isUseWrapper?: boolean;
+  // 路由类型
+  router?: 'hash' | 'browser';
+  // publicPath
+  publicPath?: string;
   children: any;
 }
 
@@ -49,6 +56,8 @@ export interface ConfigProviderProps {
 export interface ConfigProviderContext {
   media: ConfigProviderProps['media'];
   intl?: IntlType;
+  router?: ConfigProviderProps['router'];
+  publicPath?: string;
 }
 
 export type ConfigProviderComponent = NamedExoticComponent<ConfigProviderProps> & {

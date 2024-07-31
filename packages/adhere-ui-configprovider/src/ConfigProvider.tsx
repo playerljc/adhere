@@ -29,6 +29,8 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
     media,
     children,
     onIntlInit,
+    router,
+    publicPath,
     isUseWrapper = true,
   } = props;
 
@@ -50,6 +52,8 @@ const InternalConfigProvider = memo<ConfigProviderProps>((props) => {
         },
         ...(media ?? {}),
       },
+      router: router ?? 'browser',
+      publicPath: publicPath ?? '/',
     }),
     [lang, prefix, locales, media],
   );

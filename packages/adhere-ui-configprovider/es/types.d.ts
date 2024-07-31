@@ -19,6 +19,7 @@ export interface ConfigProviderProps {
     intl: IntlType & {
         mainLanguage: string;
     };
+    onIntlInit: () => void;
     theme: {
         primaryColor: string;
         normalColor: string;
@@ -27,12 +28,13 @@ export interface ConfigProviderProps {
         smallFontSize: string;
         commonMaxZIndex: string;
     };
-    onIntlInit: () => void;
     media?: {
         isUseMedia?: boolean;
         designWidth?: number;
     };
     isUseWrapper?: boolean;
+    router?: 'hash' | 'browser';
+    publicPath?: string;
     children: any;
 }
 /**
@@ -41,6 +43,8 @@ export interface ConfigProviderProps {
 export interface ConfigProviderContext {
     media: ConfigProviderProps['media'];
     intl?: IntlType;
+    router?: ConfigProviderProps['router'];
+    publicPath?: string;
 }
 export type ConfigProviderComponent = NamedExoticComponent<ConfigProviderProps> & {
     Context: typeof Context;
