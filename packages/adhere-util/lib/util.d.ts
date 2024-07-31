@@ -69,6 +69,9 @@ declare const _default: {
     };
     parse(path?: string | undefined, config?: import("./types").IUrlConfig): object | null;
     stringify(record: object, config?: import("./types").IUrlConfig): string;
+    getPathName(publicPath?: string, router?: "hash" | "browser"): string;
+    getSearch(router?: "hash" | "browser"): string | undefined;
+    getFullPath(): string;
     treeToArray: (treeData: (import("./types").IAntdTreeNode | import("./types").IAntdTreeSelectNode)[], config: {
         parentIdAttr: string;
         rootParentId: string | number;

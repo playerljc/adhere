@@ -4,6 +4,10 @@
 
 2024-02-22
 
+* 加入getSaerch、getPathname方法
+* encrypt函数加入options
+* 加入dom尺寸计算方法
+* clientToCtxPoint去掉使用zoom计算
 * 加入pxToRem方法
 * 修复math中的clientToCtxPoint方法适配zoom
 * 加入getTransformValues方法

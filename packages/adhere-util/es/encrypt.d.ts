@@ -152,6 +152,7 @@ declare const EncryptUtil: {
      * @description 对称解密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 解密后的字符串
      */
     symmetricDecryptToAES(_value?: string, _pwd?: string, options?: any): any;
@@ -160,6 +161,7 @@ declare const EncryptUtil: {
      * @description 对称解密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 解密后的字符串
      */
     symmetricDecryptToDES(_value?: string, _pwd?: string, options?: any): any;
@@ -168,6 +170,7 @@ declare const EncryptUtil: {
      * @description 对称解密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 解密后的字符串
      */
     symmetricDecryptToRC4(_value?: string, _pwd?: string, options?: any): any;
@@ -176,6 +179,7 @@ declare const EncryptUtil: {
      * @description 对称解密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 解密后的字符串
      */
     symmetricDecryptToRabbit(_value?: string, _pwd?: string, options?: any): any;
@@ -184,6 +188,7 @@ declare const EncryptUtil: {
      * @description 对称解密算法
      * @param _value 加密的字符串
      * @param _pwd 密钥
+     * @param options
      * @return 解密后的字符串
      */
     symmetricDecryptToTripleDes(_value?: string, _pwd?: string, options?: any): any;
