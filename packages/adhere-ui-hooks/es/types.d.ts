@@ -1,3 +1,4 @@
+import use from './use';
 import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
 import useLatestState from './useLatestState';
@@ -8,7 +9,14 @@ import useTriggerQuery from './useTriggerQuery';
 export type UseFirst = () => [boolean, (first: boolean) => void];
 export type UseForceUpdate = () => () => void;
 export type UsePrevious = (value: any) => any;
+export type Use = (p: (...args: any[]) => Promise<any>, defaultArgs?: any[]) => {
+    data: any;
+    isPending: boolean;
+    isValidate: boolean;
+    reset: (...args: any[]) => void;
+};
 export type HooksComponent = {
+    use: typeof use;
     useFirst: typeof useFirst;
     useForceUpdate: typeof useForceUpdate;
     usePrevious: typeof usePrevious;
