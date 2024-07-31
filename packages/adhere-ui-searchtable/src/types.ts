@@ -384,6 +384,10 @@ export interface SearchProps extends SuspenseProps {
   bodyClassName: string;
   bodyStyle: CSSProperties;
   title: string;
+  // 使用的路由系统
+  router: 'browser' | 'hash';
+  // publicPath
+  publicPath: string;
 }
 
 /**

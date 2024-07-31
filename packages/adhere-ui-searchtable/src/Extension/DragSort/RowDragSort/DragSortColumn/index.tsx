@@ -55,10 +55,11 @@ function DragHandler({ className, value, record, rowIndex, render }) {
 
 /**
  * DragSortColumn
- * @param {DragSortColumnProps} props
  * @constructor
+ * @param columnConfig
  */
-function DragSortColumn({ width = 80, render, className, ...rest }: DragSortColumnProps) {
+function DragSortColumn(columnConfig?: DragSortColumnProps) {
+  const { width = 80, render, className, ...rest } = columnConfig ?? {};
   const key = DRAG_SORT_ROW_COLUMN_KEY;
 
   return {

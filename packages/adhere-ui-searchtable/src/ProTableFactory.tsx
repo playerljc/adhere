@@ -45,9 +45,6 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     constructor(props) {
       super(props);
 
-      // 地址栏的pathname
-      this.pathname = typeof window !== 'undefined' ? this.getPathName() : '';
-
       // 获取浏览器地址栏上默认的searchQuery和分页参数
       let defaultSearchAndPaginParams = {
         search: {},
@@ -153,7 +150,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       // 查询条件
       const searchParams = this.state.searchParams ?? {};
 
-      const pathname = this.pathname;
+      const pathname = this.getPathName() ?? '';
 
       const componentId = this.getComponentId();
 
@@ -168,7 +165,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       } else {
         const item = searchAndPaginParamsMemo.findByPath(pathname);
 
-        if (item) {
+        if (item && item?.components?.[componentId]) {
           item.components[componentId].search = searchParams;
           item.components[componentId].page = this.state.page;
           item.components[componentId].limit = this.state.limit;
@@ -224,7 +221,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         };
       }
 
-      const item = searchAndPaginParamsMemo.findByPath(this.pathname);
+      const pathname = this.getPathName() ?? '';
+
+      const item = searchAndPaginParamsMemo.findByPath(pathname);
 
       const componentId = this.getComponentId();
 
@@ -274,7 +273,10 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 不同路由模式下获取pathname的方法
      */
     getPathName() {
-      return window.location.pathname;
+      const publicPath = this.props.publicPath ?? '/';
+      const router = this.props.router ?? 'browser';
+
+      return Util.getPathName(publicPath, router); /*window.location.pathname;*/
     }
 
     /**
@@ -282,7 +284,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
      * @description 不同路由模式下获取search的方法
      */
     getSearch() {
-      return window.location.search;
+      return Util.getSearch(this.props.router ?? 'browser') ?? ''; /*window.location.search;*/
     }
 
     /**
@@ -1497,7 +1499,7 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
             this.state.advancedSearchPanelCollapse;
 
           return (
-            <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>
+            <div className={`${_selectorPrefix}-grid-search-form-group-wrap`}>
               <ConfigProvider.Context.Consumer>
                 {({ media }) =>
                   renderGridSearchFormGroup(
@@ -1543,7 +1545,9 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       this.hasAdvancedSearchPanel = false;
 
       return (
-        <div className={`${_selectorPrefix}-gridsearchformgroupwrap`}>{StandardSearchPanel}</div>
+        <div className={`${_selectorPrefix}-grid-search-form-group-wrap`}>
+          {StandardSearchPanel}
+        </div>
       );
     }
 

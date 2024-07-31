@@ -2,10 +2,10 @@ import React from 'react';
 import type { DragSortColumnProps } from '../../../../types';
 /**
  * DragSortColumn
- * @param {DragSortColumnProps} props
  * @constructor
+ * @param columnConfig
  */
-declare function DragSortColumn({ width, render, className, ...rest }: DragSortColumnProps): {
+declare function DragSortColumn(columnConfig?: DragSortColumnProps): {
     $tip?: React.ReactNode;
     renderTip?: ((tip: React.ReactNode) => React.ReactNode) | undefined;
     $authorized?: (() => boolean) | undefined;

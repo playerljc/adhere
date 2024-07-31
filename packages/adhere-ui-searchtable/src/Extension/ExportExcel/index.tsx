@@ -31,7 +31,7 @@ function renderTitle({ worksheet, title, columnsLength }) {
   worksheet.mergeCells(1, 1, 1, columnsLength);
 
   const mergedCell = worksheet.getCell('A1');
-  mergedCell.value = title;
+  mergedCell.value = getTitleByTitle(title);
   mergedCell.alignment = { vertical: 'middle', horizontal: 'center' };
   mergedCell.font = { bold: true, size: 14 };
   mergedCell.fill = {
@@ -214,6 +214,19 @@ function download({ workbook, title }) {
 }
 
 /**
+ * getTitleByTitle
+ * @description 获取excel的title
+ * @param title
+ */
+function getTitleByTitle(title: any): string {
+  if (!title) return 'excel';
+
+  if (typeof title === 'string') return title;
+
+  return 'excel';
+}
+
+/**
  * exportExcel
  * @param dataSource
  * @param columns
@@ -221,13 +234,16 @@ function download({ workbook, title }) {
  */
 function exportExcel({ dataSource, columns, title }) {
   const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet(title);
+
+  const targetTitle = getTitleByTitle(title);
+
+  const worksheet = workbook.addWorksheet(targetTitle);
 
   const leafNodes = Util.getLeafNodes(columns);
   const level = Util.getTreeLevel(columns, 'key');
 
   // 标题
-  renderTitle({ worksheet, title, columnsLength: leafNodes.length });
+  renderTitle({ worksheet, title: targetTitle, columnsLength: leafNodes.length });
 
   // 列
   renderColumns({ worksheet, leafNodes, columns, level });
@@ -239,7 +255,7 @@ function exportExcel({ dataSource, columns, title }) {
   columnsAdaption(worksheet);
 
   // 导出
-  return download({ workbook, title });
+  return download({ workbook, title: targetTitle });
 }
 
 /**
@@ -267,7 +283,7 @@ const ExportExcel: FC<ExportExcelProps> = ({
 
     const dataSource = getDataSource();
 
-    return exportExcel({ dataSource, columns, title })
+    return exportExcel({ dataSource, columns, title: getTitleByTitle(title) })
       .then(() => {
         GlobalIndicator.hide(indicator);
         SuccessPrompt.openSuccessMessage();

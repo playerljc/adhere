@@ -264,6 +264,8 @@ export interface SearchProps extends SuspenseProps {
     bodyClassName: string;
     bodyStyle: CSSProperties;
     title: string;
+    router: 'browser' | 'hash';
+    publicPath: string;
 }
 /**
  * SearchState
