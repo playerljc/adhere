@@ -11,6 +11,13 @@ const defaultThemeMap = new Map<string, any>([
       value: '#2480ff',
     },
   ],
+  // 主boxShadow颜色
+  [
+    'adhere-box-shadow-primary',
+    {
+      value: 'rgba(0, 0, 0, 0.15) 0 0 10px',
+    },
+  ],
   // 主文字颜色
   [
     'adhere-color-text-base',
