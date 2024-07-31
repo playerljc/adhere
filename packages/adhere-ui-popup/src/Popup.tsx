@@ -96,6 +96,7 @@ export class Popup {
         this.trigger('onCreate');
       },
     });
+
     this.root.render(renderToWrapper?.(() => element) ?? element);
 
     this.popupHandlers.set(this.popupEl, this.root);
@@ -155,8 +156,13 @@ export class Popup {
     this.trigger('onBeforeShow');
 
     setTimeout(() => {
-      (maskEl as HTMLElement).classList.add('modal-in');
-      (this.popupEl as HTMLElement).classList.add('modal-in');
+      if (maskEl) {
+        (maskEl as HTMLElement).classList.add('modal-in');
+      }
+
+      if (this.popupEl) {
+        (this.popupEl as HTMLElement).classList.add('modal-in');
+      }
     }, 100);
 
     return true;
@@ -184,8 +190,13 @@ export class Popup {
     this.trigger('onBeforeShow');
 
     setTimeout(() => {
-      (maskEl as HTMLElement).classList.add('modal-in');
-      (this.popupEl as HTMLElement).classList.add('modal-in');
+      if (maskEl) {
+        (maskEl as HTMLElement).classList.add('modal-in');
+      }
+
+      if (this.popupEl) {
+        (this.popupEl as HTMLElement).classList.add('modal-in');
+      }
     }, 100);
 
     return true;
@@ -207,17 +218,25 @@ export class Popup {
     if (promise && 'then' in promise && promise.then instanceof Function) {
       promise.then(() => {
         try {
-          (this.popupEl as HTMLElement).classList.remove('modal-in');
+          if (this.popupEl) {
+            (this.popupEl as HTMLElement).classList.remove('modal-in');
+          }
         } catch (e) {
           throw e;
         }
 
-        (maskEl as HTMLElement).classList.remove('modal-in');
+        if (maskEl) {
+          (maskEl as HTMLElement).classList.remove('modal-in');
+        }
       });
     } else {
-      (this.popupEl as HTMLElement).classList.remove('modal-in');
+      if (this.popupEl) {
+        (this.popupEl as HTMLElement).classList.remove('modal-in');
+      }
 
-      (maskEl as HTMLElement).classList.remove('modal-in');
+      if (maskEl) {
+        (maskEl as HTMLElement).classList.remove('modal-in');
+      }
     }
 
     return true;

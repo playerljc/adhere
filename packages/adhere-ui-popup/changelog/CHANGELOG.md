@@ -4,6 +4,9 @@
 
 2024-04-22
 
+* Action为空不渲染wrapper
+* 移动端适配
+* 加入对closeAction的控制
 * 加入renderToWrapper方法
 * Trigger加入closeAction的设置
 * 加入disabled设置和update刷新方法
