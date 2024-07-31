@@ -17,10 +17,11 @@ export default () => {
 
   return (
     <div>
-      <MessageDialog.TriggerPrompt
+      {/*<MessageDialog.TriggerPrompt
         okText="确认"
         renderTrigger={() => <div>trigger</div>}
         defaultCloseBtn={false}
+        maximized={false}
         modalConfig={{
           config: {
             title,
@@ -40,42 +41,44 @@ export default () => {
             setTitle((title) => `${parseInt(title) + 1}`);
           }}
         />
-      </MessageDialog.TriggerPrompt>
+      </MessageDialog.TriggerPrompt>*/}
 
-      {/*<MessageDialog.Trigger
-                renderTrigger={() => <div>Trigger</div>}
-                modalConfig={{
-                    config: {
-                        title: '确认',
-                    },
-                }}
-                actions={[
-                    {
-                        key: 'submit',
-                        type: 'primary',
-                        children: '提交',
-                        onClick: () =>
-                            new Promise((resolve, reject) => {
-                                setTimeout(() => {
-                                    resolve(123);
-                                }, 2000);
-                            }),
-                    },
-                    {
-                        key: 'submit',
-                        type: 'primary',
-                        children: '暂存',
-                        onClick: () =>
-                            new Promise((resolve, reject) => {
-                                setTimeout(() => {
-                                    resolve(123);
-                                }, 2000);
-                            }),
-                    },
-                ]}
-            >
-                <div>Inner</div>
-            </MessageDialog.Trigger>*/}
+      <MessageDialog.Trigger
+        renderTrigger={() => <div>Trigger</div>}
+        defaultCloseBtn={false}
+        maximized={false}
+        modalConfig={{
+          config: {
+            title: '确认',
+          },
+        }}
+        actions={[
+          {
+            key: 'submit',
+            type: 'primary',
+            children: '提交',
+            onClick: () =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve(123);
+                }, 2000);
+              }),
+          },
+          {
+            key: 'submit',
+            type: 'primary',
+            children: '暂存',
+            onClick: () =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve(123);
+                }, 2000);
+              }),
+          },
+        ]}
+      >
+        <div>Inner</div>
+      </MessageDialog.Trigger>
     </div>
   );
 };

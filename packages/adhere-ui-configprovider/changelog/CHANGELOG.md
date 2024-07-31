@@ -4,6 +4,7 @@
 
 2024-05-25
 
+* 加入router、publicPath参数的注入
 * 加入media配置项控制是否支持REM
 
 # 1.0.5

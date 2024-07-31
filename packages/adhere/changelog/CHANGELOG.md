@@ -138,6 +138,8 @@
   - 加入本地化显示的组件
   - 优化内部函数，去掉一些无用函数
 * **adhere-ui-hooks**
+  - 加入useLatestState的hook
+  - 加入usePropToState的hook
   - 加入useSafeRef
 * **adhere-util-adapterscreen**
   - 加入flexible方法适配REM

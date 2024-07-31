@@ -4,8 +4,14 @@
 
 2024-04-22
 
+* Trigger加入defaultCloseBtn配置
+* 修改Trigger修改props不刷新的问题
+* 加入allowMultipleInstances参数控制是否允许多实例共存
+* Mobile的适配
+* 修复MaximizeModal组件最大化和最小化的样式问题
 * 加入renderToWrapper方法
 * 加入disable设置和update刷新方法
+* 加入是否允许多实例共存的设置
 
 # 1.0.23
 

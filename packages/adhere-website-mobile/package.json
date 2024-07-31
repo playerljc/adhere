@@ -25,7 +25,8 @@
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
     "startapp": "cross-env environment=dev mode=development mobile=true publicPath=adheremobile router=hash ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",

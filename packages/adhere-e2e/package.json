@@ -31,7 +31,8 @@
     "buildpackage:esm": "ctbuild buildpackagets-babel -c ctbuild.package.ts.esm.config.js -o es",
     "postbuildpackage:esm": "tsc --declaration -p ./ --emitDeclarationOnly --outDir es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
-    "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true"
+    "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.0",

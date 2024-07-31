@@ -26,7 +26,8 @@
     "buildpackage:cjs": "ctbuild buildpackagets -p tsconfig.cjs.json -o lib",
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
-    "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true"
+    "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
+    "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "devDependencies": {
     "@babel/runtime": "^7.23.1",

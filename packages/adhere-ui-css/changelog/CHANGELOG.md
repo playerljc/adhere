@@ -4,6 +4,7 @@
 
 2024-05-19
 
+* 加入adhere-box-shadow-primary变量
 * 加入REM适配
 * 加入DPR变量
 
