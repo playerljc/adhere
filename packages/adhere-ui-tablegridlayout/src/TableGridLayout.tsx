@@ -273,7 +273,8 @@ const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
     data: { className, style, width, colgroup, defaultLabelWidth = 120 },
     layout,
     density,
-    parity = false,
+    // parity = false,
+    mode,
     rowCountRef,
     media = { isUseMedia: false, designWidth: 192 },
   } = params;
@@ -329,9 +330,7 @@ const renderGridSearchForm: RenderGridSearchForm = (params): ReactElement => {
         `${selectorPrefix}-table`,
         `${selectorPrefix}-table-${layout}`,
         densityClass.get(density || 'default'),
-        {
-          parity,
-        },
+        mode,
         className ?? '',
       )}
       style={{ width: targetWidth ? targetWidth : '100%', ...(style ?? {}) }}
@@ -528,6 +527,7 @@ TableGridLayout.defaultProps = {
   data: [],
   layout: 'horizontal',
   bordered: false,
+  mode: 'normal',
 };
 
 TableGridLayout.propTypes = {
@@ -542,7 +542,8 @@ TableGridLayout.propTypes = {
   // 密度
   density: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   // 是否是奇偶数不同色
-  parity: PropTypes.bool,
+  // parity: PropTypes.bool,
+  mode: PropTypes.string,
   // 数据配置，一个数据表示一个表格
   data: PropTypes.arrayOf(
     PropTypes.shape({

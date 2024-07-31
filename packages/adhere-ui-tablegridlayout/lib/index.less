@@ -113,10 +113,18 @@
     &.parity {
       .adhere-ui-table-grid-layout-table-row {
         &.odd {
-          background-color: @adhere-ui-table-grid-layout-table-row-odd-color;
+          background-color: @adhere-ui-table-grid-layout-table-row-even-color;
         }
 
         &.even {
+          background-color: @adhere-ui-table-grid-layout-table-row-odd-color;
+        }
+      }
+    }
+
+    &.bordered {
+      .adhere-ui-table-grid-layout-table-row {
+        > .adhere-ui-table-grid-layout-table-row-label {
           background-color: @adhere-ui-table-grid-layout-table-row-even-color;
         }
       }

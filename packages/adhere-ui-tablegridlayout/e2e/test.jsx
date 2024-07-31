@@ -9,12 +9,14 @@ const { Label, Value } = TableGridLayout;
 export default () => {
   return (
     <TableGridLayout
+      bordered
+      mode="bordered"
       data={[
         {
           name: 'g1',
           width: '100%',
           columnCount: 3,
-          colgroup: [, 'auto', , 'auto', , 'auto'],
+          colgroup: [150, 'auto', 150, 'auto', 150, 'auto'],
           data: [
             {
               key: 'UserName',
@@ -43,7 +45,11 @@ export default () => {
             {
               key: 'Address',
               label: <Label valign="top">Address：</Label>,
-              value: <Value>No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China</Value>,
+              value: (
+                <Value colSpan={5}>
+                  No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                </Value>
+              ),
               // show: false,
             },
           ],
@@ -52,7 +58,7 @@ export default () => {
           name: 'g2',
           width: '100%',
           columnCount: 3,
-          colgroup: [, 'auto', , 'auto', , 'auto'],
+          colgroup: [150, 'auto', 150, 'auto', 150, 'auto'],
           data: [
             {
               key: 'UserName',
@@ -81,7 +87,11 @@ export default () => {
             {
               key: 'Address',
               label: <Label valign="top">Address：</Label>,
-              value: <Value>No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China</Value>,
+              value: (
+                <Value colSpan={3}>
+                  No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                </Value>
+              ),
               // show: false,
             },
           ],

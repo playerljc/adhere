@@ -45,7 +45,8 @@ export interface RenderGridSearchForm {
     rowCountRef?: RowCountRef;
     layout?: LayoutType;
     density?: DensityType;
-    parity?: boolean;
+    // parity?: boolean;
+    mode?: TableGridLayoutProps['mode'];
     media?: ConfigProviderProps['media'];
   }): ReactElement;
 }
@@ -85,7 +86,12 @@ export interface TableGridLayoutProps {
   style?: CSSProperties;
   layout: LayoutType;
   density?: DensityType;
-  parity?: boolean;
+  // parity?: boolean;
+  // 模式
+  //    normal 缺省
+  //    parity奇偶不同色
+  //    bordered label有背景色
+  mode?: 'normal' | 'parity' | 'bordered';
 }
 
 /**

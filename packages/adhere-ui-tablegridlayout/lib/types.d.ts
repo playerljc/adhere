@@ -40,7 +40,7 @@ export interface RenderGridSearchForm {
         rowCountRef?: RowCountRef;
         layout?: LayoutType;
         density?: DensityType;
-        parity?: boolean;
+        mode?: TableGridLayoutProps['mode'];
         media?: ConfigProviderProps['media'];
     }): ReactElement;
 }
@@ -78,7 +78,7 @@ export interface TableGridLayoutProps {
     style?: CSSProperties;
     layout: LayoutType;
     density?: DensityType;
-    parity?: boolean;
+    mode?: 'normal' | 'parity' | 'bordered';
 }
 /**
  * GroupDetail
