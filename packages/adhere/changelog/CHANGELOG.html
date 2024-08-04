@@ -107,6 +107,8 @@
       <li>
         <h3>adhere-ui-searchtable</h3>
         <ul>
+          <li>拖拽排序加入可以在列上加入自定义句柄</li>
+          <li>$search中的输入框去掉trim</li>
           <li>$search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制</li>
           <li>加入REM适配</li>
           <li>加入导出excel功能</li>
@@ -128,6 +130,11 @@
       <li>
         <h3>adhere-ui-anthoc</h3>
         <ul>
+          <li>Form中加入NestingFormItem组件</li>
+          <li>Form的Validate的rules加入required设置</li>
+          <li>修复CheckAll不返回children的默认值设置</li>
+          <li>ConfigProvider加入router、publicPath参数的传递</li>
+          <li>CheckboxGroup加入spaceProps属性的设置</li>
           <li>
             ArrayEntityValueHOC、TreeEntityValueHOC加入isUsePrimaryValue(是否使用原始值)的判断
           </li>
@@ -147,6 +154,10 @@
       <li>
         <h3>adhere-util</h3>
         <ul>
+          <li>加入getSaerch、getPathname方法</li>
+          <li>encrypt函数加入options</li>
+          <li>加入dom尺寸计算方法</li>
+          <li>clientToCtxPoint去掉使用zoom计算</li>
           <li>加入pxToRem方法</li>
           <li>修复math中的clientToCtxPoint方法适配zoom</li>
           <li>加入getTransformValues方法</li>
@@ -182,6 +193,14 @@
       <li>
         <h3>adhere-ui-messagedialog</h3>
         <ul>
+          <li>Trigger加入defaultCloseBtn配置</li>
+          <li>修改Trigger修改props不刷新的问题</li>
+          <li>加入allowMultipleInstances参数控制是否允许多实例共存</li>
+          <li>Mobile的适配</li>
+          <li>修复MaximizeModal组件最大化和最小化的样式问题</li>
+          <li>加入renderToWrapper方法</li>
+          <li>加入disable设置和update刷新方法</li>
+          <li>加入是否允许多实例共存的设置</li>
           <li>加入Trigger和TriggerPrompt组件</li>
           <li>加入disabled设置和update刷新方法</li>
           <li>Modal和MaximizeModal的返回值中加入setConfig方法</li>
@@ -200,6 +219,10 @@
       <li>
         <h3>adhere-ui-popup</h3>
         <ul>
+          <li>Action为空不渲染wrapper</li>
+          <li>移动端适配</li>
+          <li>加入对closeAction的控制</li>
+          <li>加入renderToWrapper方法</li>
           <li>加入Trigger和TriggerPrompt组件</li>
           <li>加入disabled设置和update刷新方法</li>
         </ul>
@@ -226,6 +249,7 @@
       <li>
         <h3>adhere-ui-flexlayout</h3>
         <ul>
+          <li>Auto加入isUseNormal属性</li>
           <li>加入isUseNormal属性</li>
           <li>加入REM适配</li>
           <li>展开和收起(trigger)内部实现修改</li>
@@ -245,6 +269,7 @@
       <li>
         <h3>adhere-ui-configprovider</h3>
         <ul>
+          <li>加入router、publicPath参数的注入</li>
           <li>加入media配置项控制是否支持REM</li>
           <li>加入Wrapper元素用来存放css变量</li>
         </ul>
@@ -253,6 +278,7 @@
       <li>
         <h3>adhere-ui-css</h3>
         <ul>
+          <li>加入adhere-box-shadow-primary变量</li>
           <li>加入REM适配</li>
           <li>加入DPR变量</li>
           <li>init方法修改</li>
@@ -262,6 +288,7 @@
       <li>
         <h3>adhere-util-intl</h3>
         <ul>
+          <li>国际化方法加入description方法</li>
           <li>序号词条翻译修改</li>
           <li>加入quick-range-date的词条</li>
         </ul>
@@ -308,6 +335,7 @@
       <li>
         <h3>adhere-ui-contextmenu</h3>
         <ul>
+          <li>加入renderToWrapper方法</li>
           <li>加入扇形菜单</li>
         </ul>
       </li>
@@ -333,6 +361,12 @@
       <li>
         <h3>adhere-ui-hooks</h3>
         <ul>
+          <li>加入use</li>
+          <li>useLatestState和useSetState修改为使用ref</li>
+          <li>加入useLatestState的hook</li>
+          <li>加入usePropToState的hook</li>
+          <li>加入useTriggerQuery</li>
+          <li>加入useSafeRef的hook</li>
           <li>加入useLatestState的hook</li>
           <li>加入usePropToState的hook</li>
           <li>加入useSafeRef</li>
@@ -350,6 +384,8 @@
       <li>
         <h3>adhere-ui-css</h3>
         <ul>
+          <li>加入adhere-box-shadow-primary变量</li>
+          <li>加入REM适配</li>
           <li>加入DPR变量</li>
         </ul>
       </li>
@@ -357,6 +393,8 @@
       <li>
         <h3>adhere-ui-tablegridlayout</h3>
         <ul>
+          <li>加入mode属性</li>
+          <li>奇偶颜色互换位置</li>
           <li>加入REM适配</li>
         </ul>
       </li>
