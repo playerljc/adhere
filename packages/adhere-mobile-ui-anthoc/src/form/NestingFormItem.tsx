@@ -54,6 +54,7 @@ const InternalNestingFormItem = memo<
 
       return (
         <Form
+          // @ts-ignore
           ref={ref}
           className={className ?? ''}
           style={style ?? {}}

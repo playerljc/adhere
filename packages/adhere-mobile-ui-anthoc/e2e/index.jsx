@@ -49,6 +49,7 @@ import DatePopup from './DatePopup/DatePopup';
 import DatePopupTimestampValueHoc from './DatePopup/TimestampValueHoc';
 import DialogTrigger from './Dialog/Trigger';
 import DialogTriggerPrompt from './Dialog/TriggerPrompt';
+import NestingFormItem from './Form/NestingFormItem';
 import ModalTrigger from './Modal/Trigger';
 import ModalTriggerPrompt from './Modal/TriggerPrompt';
 import PopupTrigger from './Popup/Trigger';
@@ -76,5 +77,5 @@ import TimePopup from './TimePopup/TimePopup';
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <PagingCheckboxCheckList />,
+  children: <NestingFormItem />,
 });

@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* Form中加入对FormItem加入getErrorContainer自定义错误输出
 * Form中加入NestingFormItem组件
 * Form的Validate的rules加入required设置
 * 修复CheckAll不返回children的默认值设置

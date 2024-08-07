@@ -34,6 +34,7 @@ import type {
   ScrollLoadRefHandle,
 } from '@baifendian/adhere-ui-scrollload/es/types';
 
+import NestingFormItem from './form/NestingFormItem';
 import { createFactory } from './util';
 
 type BaseType = {
@@ -764,8 +765,22 @@ export type FormHOCComponent = typeof Form & {
   defaultProps?: Partial<FormProps>;
 } & {
   ValidatorRules: FormValidatorRulesType;
+  NestingFormItem: typeof NestingFormItem;
 };
 
 export type FormValidatorRulesType = {
   [prop: string]: (argv?: { params?: any; invalidMessage?: string }) => FormRule;
 };
+
+export interface InternalNestingFormItemProps {
+  className?: string;
+  style?: CSSProperties;
+  formProps?: FormProps;
+  value?: any;
+  onChange?: (value?: any) => void;
+  children?: ReactNode;
+}
+
+export interface InternalNestingFormItemHandle {
+  validateFields: () => Promise<any>;
+}

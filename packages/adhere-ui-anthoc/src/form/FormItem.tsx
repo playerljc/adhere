@@ -8,7 +8,7 @@ import type { FormItemProps } from '../types';
 
 /**
  * FormItem
- * @description 自定义Form.Item，可以自定义error的错误信息
+ * @description 自定义Form.Item，可以自定义error的错误信息显示位置
  * @param {() => HtmlElement | null} getErrorContainer
  * @param children
  * @param {FormItemProps} props

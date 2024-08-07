@@ -8,6 +8,7 @@ import { Context, FC } from 'react';
 import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifendian/adhere-mobile-ui-auto-complete/es/types';
 import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
 import type { ScrollLoadProps, ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
+import NestingFormItem from './form/NestingFormItem';
 import { createFactory } from './util';
 type BaseType = {
     className?: string;
@@ -509,6 +510,7 @@ export type FormHOCComponent = typeof Form & {
     defaultProps?: Partial<FormProps>;
 } & {
     ValidatorRules: FormValidatorRulesType;
+    NestingFormItem: typeof NestingFormItem;
 };
 export type FormValidatorRulesType = {
     [prop: string]: (argv?: {
@@ -516,4 +518,15 @@ export type FormValidatorRulesType = {
         invalidMessage?: string;
     }) => FormRule;
 };
+export interface InternalNestingFormItemProps {
+    className?: string;
+    style?: CSSProperties;
+    formProps?: FormProps;
+    value?: any;
+    onChange?: (value?: any) => void;
+    children?: ReactNode;
+}
+export interface InternalNestingFormItemHandle {
+    validateFields: () => Promise<any>;
+}
 export {};
