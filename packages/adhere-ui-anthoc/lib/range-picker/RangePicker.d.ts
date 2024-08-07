@@ -6,7 +6,7 @@ declare const RangePicker: import("react").ForwardRefExoticComponent<Omit<import
     placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topRight" | undefined;
     bordered?: boolean | undefined;
     status?: "" | "warning" | "error" | undefined;
-    variant?: "outlined" | "borderless" | "filled" | undefined;
+    variant?: "filled" | "outlined" | "borderless" | undefined;
     dropdownClassName?: string | undefined;
     popupClassName?: string | undefined;
     rootClassName?: string | undefined;

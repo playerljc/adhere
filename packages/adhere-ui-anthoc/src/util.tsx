@@ -1,4 +1,5 @@
-import React from 'react';
+import { Form } from 'antd';
+import React, { useEffect } from 'react';
 
 import FlexLayout from '@baifendian/adhere-ui-flexlayout';
 
@@ -16,14 +17,30 @@ export function createFactory<P>(
   Component: any,
   defaultProps: Partial<P>,
   override?: (props: Partial<P>) => Partial<P>,
-  // value: _props.realValue ?? _props.value
 ): typeof Component & {
   defaultProps?: Partial<P>;
-} /*{ [key in keyof typeof Component]?: T[key] }*/ {
+} {
   const fn = (_props) => {
     const { getEl } = useScrollLayout();
 
-    const props = { ...defaultProps, ..._props, ...(override?.({ ...(_props ?? {}) }) ?? {}) };
+    const { status, errors } = Form.Item.useStatus();
+
+    // 对自动以error显示的处理
+    useEffect(() => {
+      if (_props.errorContainer && status === 'error' && errors && !!errors?.length) {
+        _props.errorContainer.innerHTML = errors[0];
+        _props.errorContainer.style = '';
+      } else if (_props.errorContainer && status === 'success') {
+        _props.errorContainer.innerHTML = '';
+        _props.errorContainer.style = 'none';
+      }
+    }, [_props.errorContainer, status, errors]);
+
+    const props = {
+      ...defaultProps,
+      ..._props,
+      ...(override?.({ ...(_props ?? {}) }) ?? {}),
+    };
 
     if (!('getPopupContainer' in props)) {
       props.getPopupContainer = (el) => {
@@ -31,7 +48,7 @@ export function createFactory<P>(
       };
     }
 
-    const { children, ...rest } = props;
+    const { children, getErrorContainer, ...rest } = props;
 
     return <Component {...rest}>{children}</Component>;
   };

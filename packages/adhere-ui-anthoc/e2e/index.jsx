@@ -9,6 +9,8 @@ import CascaderTest from './Cascader/FlatAsyncCascader.tsx';
 import CheckboxTest from './Checkbox/VerticalCheckAllCheckbox.tsx';
 import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
+import FormErrorContainer from './Form/FormErrorContainer';
+import NestingFormItem from './Form/NestingFormItem';
 import ListTest from './List/CheckboxListPaging';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
@@ -32,5 +34,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <CheckAllMultipleSelect />,
+  children: <FormErrorContainer />,
 });

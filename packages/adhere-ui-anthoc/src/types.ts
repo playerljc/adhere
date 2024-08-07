@@ -1,4 +1,5 @@
 import type {
+  FormItemProps as AntFormItemProps,
   AutoCompleteProps as AntdAutoCompleteProps,
   CalendarProps,
   CascaderProps,
@@ -6,7 +7,6 @@ import type {
   DatePickerProps,
   FormProps,
   FormRule,
-  InputProps,
   ListProps,
   PaginationProps,
   RadioProps,
@@ -32,6 +32,8 @@ import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 
+import FormItem from './form/FormItem';
+import NestingFormItem from './form/NestingFormItem';
 import ButtonRadio from './radio/ButtonRadio';
 import { createFactory } from './util';
 
@@ -697,7 +699,13 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxProps
 
 export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
   ValidatorRules: FormValidatorRulesType;
+  NestingFormItem: typeof NestingFormItem;
+  Item: typeof FormItem;
 };
+
+export interface FormItemProps extends AntFormItemProps {
+  getErrorContainer: () => HTMLElement | null;
+}
 
 export type ListHOCComponent = ReturnType<typeof createFactory<ListProps<any>>> & {
   AutoCompleteCheckAllListSelect: FC<AutoCompleteCheckAllListSelectProps>;
@@ -1105,5 +1113,9 @@ export interface InternalNestingFormItemProps {
   formProps?: FormProps;
   value?: any;
   onChange?: (value?: any) => void;
-  children?: any;
+  children?: ReactNode;
+}
+
+export interface InternalNestingFormItemHandle {
+  validateFields: () => Promise<string>;
 }
