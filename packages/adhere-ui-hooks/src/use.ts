@@ -22,11 +22,7 @@ const FAIL_STATUS = {
 /**
  * use
  * @description use promise
- * @param {Promise} p
- *     data: any;
- *     isPending: boolean;
- *     isValidate: boolean;
- * } result
+ * @param { data: any; isPending: boolean; isValidate: boolean; } p
  * @param defaultArgs
  */
 const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
@@ -37,6 +33,7 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
   /**
    * executePromise
    * @description execute promise
+   * @param {any[]} _defaultArgs
    */
   function executePromise(_defaultArgs: any[]) {
     // @ts-ignore
@@ -55,6 +52,11 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
       });
   }
 
+  /**
+   * reset
+   * @description 重新调用接口
+   * @param {any[]} args
+   */
   function reset(...args: any[]) {
     setResult({
       ...DEFAULT_STATUS,
