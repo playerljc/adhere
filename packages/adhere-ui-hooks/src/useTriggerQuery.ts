@@ -1,6 +1,8 @@
 import { useCreation, useLatest } from 'ahooks';
 import { useImmer } from 'use-immer';
 
+import useSetState from './useSetState';
+
 /**
  * useTriggerQuery
  * @param defaultValue
@@ -12,23 +14,21 @@ function useTriggerQuery<T extends Record<string, any>>(defaultValue: T) {
   const [fieldsValue, setFieldsValue] = useImmer(memoDefaultValue ?? {});
 
   // 查询参数
-  const [searchParams, setSearchParams] = useImmer(memoDefaultValue ?? {});
+  const [targetSearchParamsRef, setSearchParams] = useSetState(memoDefaultValue ?? {});
 
   const targetFieldsValueRef = useLatest(fieldsValue);
 
-  const targetSearchParamsRef = useLatest(searchParams);
-
-  function search() {
+  function search(cb) {
     const keys = Object.keys(targetFieldsValueRef.current);
 
-    setSearchParams((draft) => {
-      keys.forEach((key) => {
-        draft[key] = targetFieldsValueRef.current[key];
-      });
+    const searchParams: any = {};
+    keys.forEach((key) => {
+      searchParams[key] = targetFieldsValueRef.current[key];
     });
+    setSearchParams(searchParams, cb);
   }
 
-  function reset() {
+  function reset(cb) {
     const keys = Object.keys(memoDefaultValue);
 
     setFieldsValue((draft) => {
@@ -37,17 +37,17 @@ function useTriggerQuery<T extends Record<string, any>>(defaultValue: T) {
       });
     });
 
-    setSearchParams((draft) => {
-      keys.forEach((key) => {
-        draft[key] = memoDefaultValue[key];
-      });
+    const searchParams: any = {};
+    keys.forEach((key) => {
+      searchParams[key] = memoDefaultValue[key];
     });
+    setSearchParams(searchParams, cb);
   }
 
   return {
     setFieldsValue,
-    fieldsValue: targetFieldsValueRef.current,
-    searchParams: targetSearchParamsRef.current,
+    fieldsValue: targetFieldsValueRef,
+    searchParams: targetSearchParamsRef,
     search,
     reset,
   };

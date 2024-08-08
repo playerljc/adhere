@@ -11,6 +11,8 @@ export type UseFirst = () => [boolean, (first: boolean) => void];
 export type UseForceUpdate = () => () => void;
 export type UsePrevious = (value: any) => any;
 
+export type UseType = 'reset' | 'reload';
+
 export type Use = (
   p: (...args: any[]) => Promise<any>,
   defaultArgs?: any[],
@@ -18,7 +20,9 @@ export type Use = (
   data: any;
   isPending: boolean;
   isValidate: boolean;
+  type: UseType;
   reset: (...args: any[]) => void;
+  reload: (...args: any[]) => void;
 };
 
 export type HooksComponent = {

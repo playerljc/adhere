@@ -7,6 +7,7 @@ type Dispatch<A> = (value: A) => void;
 
 /**
  * useLatestState
+ * @description 返回的是最新的值(防止了闭包的问题)，返回的值用useLatest
  * @param initialState
  */
 function useLatestState<S>(

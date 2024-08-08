@@ -1,7 +1,7 @@
 import { useMount } from 'ahooks';
 import { useState } from 'react';
 
-import type { Use } from './types';
+import type { Use, UseType } from './types';
 
 const DEFAULT_STATUS = {
   data: null,
@@ -29,6 +29,8 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
   const [result, setResult] = useState({
     ...DEFAULT_STATUS,
   });
+
+  const [type, setType] = useState<UseType>('reset');
 
   /**
    * executePromise
@@ -62,6 +64,24 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
       ...DEFAULT_STATUS,
     });
 
+    setType('reset');
+
+    executePromise(args);
+  }
+
+  /**
+   * reload
+   * @description 重新调用接口
+   * @param {any[]} args
+   */
+  function reload(...args: any[]) {
+    setResult({
+      ...DEFAULT_STATUS,
+      data: result.data,
+    });
+
+    setType('reload');
+
     executePromise(args);
   }
 
@@ -71,7 +91,9 @@ const use: Use = (p: (...args: any[]) => Promise<any>, defaultArgs) => {
 
   return {
     ...result,
+    type,
     reset,
+    reload,
   };
 };
 
