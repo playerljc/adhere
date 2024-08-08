@@ -35,7 +35,7 @@
     "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
     "@baifendian/adhere-ui-flexlayout": "^2.10.28",
     "@ctsj/router": "^1.0.5",
-    "antd-mobile": "^5.36.1",
+    "antd-mobile": "^5.37.1",
     "antd-mobile-icons": "^0.3.0",
     "react": "^18.2.1",
     "react-dom": "^18.2.0"

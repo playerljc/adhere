@@ -54,7 +54,7 @@
     "@baifendian/adhere-util-validator": "^2.10.28",
     "@ctsj/router": "^1.0.4",
     "@ctsj/state": "^2.0.24",
-    "antd": "^5.17.4",
+    "antd": "^5.20.0",
     "array-move": "^4.0.0",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",

@@ -41,7 +41,7 @@
     "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-intl": "^2.10.28",
     "@baifendian/adhere-util-validator": "^2.10.28",
-    "antd-mobile": "^5.36.1",
+    "antd-mobile": "^5.37.1",
     "dayjs": "^1.11.10",
     "lodash.debounce": "^4.0.8",
     "lodash.difference": "^4.5.0",
