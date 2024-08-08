@@ -47,6 +47,7 @@
   - 使用fetchData的方法都变成Promise
   - 可编辑单元格和可编辑的Table单元格中$editable的rules和props支持函数形式
 * **adhere-ui-anthoc**
+  - Form中加入对FormItem加入getErrorContainer自定义错误输出
   - Form中加入NestingFormItem组件
   - Form的Validate的rules加入required设置
   - 修复CheckAll不返回children的默认值设置
