@@ -25,7 +25,7 @@ export default () => {
       </div>
       <TableGridLayout
         bordered
-        parity
+        mode="parity"
         density={density}
         data={[
           {

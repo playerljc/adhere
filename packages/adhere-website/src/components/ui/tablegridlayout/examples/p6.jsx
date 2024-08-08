@@ -8,7 +8,7 @@ export default () => (
   <div>
     <TableGridLayout
       bordered
-      parity
+      mode="parity"
       data={[
         {
           name: 'g1',

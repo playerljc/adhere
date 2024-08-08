@@ -27,7 +27,7 @@ export default () => {
         noMatch={() => (
           <TableGridLayout
             bordered
-            parity
+            mode="parity"
             data={[
               {
                 name: 'g1',

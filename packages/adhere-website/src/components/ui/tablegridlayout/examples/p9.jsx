@@ -33,6 +33,7 @@ export default () => {
           // bordered
           // parity
           // density="middle"
+          mode="bordered"
           data={[
             {
               name: 'g1',

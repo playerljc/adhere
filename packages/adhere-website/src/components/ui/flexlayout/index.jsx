@@ -15,6 +15,7 @@ import P13CodeText from '!!raw-loader!./examples/Basic/p13';
 import P14CodeText from '!!raw-loader!./examples/Basic/p14';
 import P15CodeText from '!!raw-loader!./examples/Basic/p15';
 import P16CodeText from '!!raw-loader!./examples/Basic/p16';
+import P17CodeText from '!!raw-loader!./examples/Basic/p17';
 import CBCodeText from '!!raw-loader!./examples/TRBLC/CB';
 import CBRCodeText from '!!raw-loader!./examples/TRBLC/CBR';
 import CRCodeText from '!!raw-loader!./examples/TRBLC/CR';
@@ -24,7 +25,6 @@ import LCCodeText from '!!raw-loader!./examples/TRBLC/LC';
 import LCBCodeText from '!!raw-loader!./examples/TRBLC/LCB';
 import LCRCodeText from '!!raw-loader!./examples/TRBLC/LCR';
 import LCRBCodeText from '!!raw-loader!./examples/TRBLC/LCRB';
-import LCTriggerCodeText from '!!raw-loader!./examples/TRBLC/LCTrigger';
 import LRTCBCodeText from '!!raw-loader!./examples/TRBLC/LRTCB';
 import LRTCBScrollCodeText from '!!raw-loader!./examples/TRBLC/LRTCBScroll';
 import LTCCodeText from '!!raw-loader!./examples/TRBLC/LTC';
@@ -60,6 +60,7 @@ import P13 from './examples/Basic/p13';
 import P14 from './examples/Basic/p14';
 import P15 from './examples/Basic/p15';
 import P16 from './examples/Basic/p16';
+import P17 from './examples/Basic/p17';
 import CB from './examples/TRBLC/CB';
 import CBR from './examples/TRBLC/CBR';
 import CR from './examples/TRBLC/CR';
@@ -85,7 +86,6 @@ import TLRC from './examples/TRBLC/TLRC';
 import TRC from './examples/TRBLC/TRC';
 
 import IndexLessCodeText from '!!raw-loader!./index.less';
-import style from './index.less';
 
 export default () => {
   function boxPanelConfig() {
@@ -426,6 +426,34 @@ export default () => {
           },
         ],
         renderChildren: () => <P16 />,
+      },
+
+      {
+        id: 'p17',
+        name: `isUseNormal`,
+        mode: 'code',
+        scope: { React },
+        type: 'PlayGroundTab',
+        cardProps: {
+          description: {
+            title: 'isUseNormal',
+            info: 'isUseNormal',
+          },
+        },
+        active: 'p17.jsx',
+        config: [
+          {
+            key: 'p17.jsx',
+            title: 'p17.jsx',
+            codeText: P17CodeText,
+          },
+          {
+            key: 'index.less',
+            title: 'index.less',
+            codeText: IndexLessCodeText,
+          },
+        ],
+        renderChildren: () => <P17 />,
       },
     ];
   }
