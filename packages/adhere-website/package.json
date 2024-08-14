@@ -37,7 +37,7 @@
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere": "^2.10.28",
     "@baifendian/adhere-ui-anthoc": "^2.10.28",
     "@baifendian/adhere-ui-bmap": "^2.10.28",
@@ -50,7 +50,7 @@
     "component-playground": "^3.2.1",
     "copy-to-clipboard": "^3.3.3",
     "core-js": "^3.27.1",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.12",
     "echarts": "^5.1.1",
     "echarts-for-react": "^3.0.2",
     "echarts-wordcloud": "^2.1.0",

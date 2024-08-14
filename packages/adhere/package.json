@@ -32,7 +32,7 @@
     "mergegenchangelog": "node script/changelog.js"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",
     "@baifendian/adhere-mobile-ui-confirm-delconfirm": "^2.10.28",
     "@baifendian/adhere-mobile-ui-confirm-importantconfirm": "^2.10.28",
@@ -124,7 +124,7 @@
     "antd": "^5.20.0",
     "antd-mobile": "^5.37.1",
     "classnames": "^2.3.2",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.12",
     "iscroll": "^5.2.0",
     "lodash": "^4.17.21",
     "ol": "^6.5.0",

@@ -32,7 +32,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere-ui-ellipsis": "^2.10.28",
     "@baifendian/adhere-ui-hooks": "^2.10.28",
     "@baifendian/adhere-util": "^2.10.28",

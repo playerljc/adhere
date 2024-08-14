@@ -33,7 +33,7 @@
     "generatorchangelog": "bd changelog/CHANGELOG.html"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
     "@baifendian/adhere-ui-contourblock": "^2.10.28",
     "@baifendian/adhere-ui-css": "^2.10.28",

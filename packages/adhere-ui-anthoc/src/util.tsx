@@ -29,10 +29,10 @@ export function createFactory<P>(
     useEffect(() => {
       if (_props.errorContainer && status === 'error' && errors && !!errors?.length) {
         _props.errorContainer.innerHTML = errors[0];
-        _props.errorContainer.style = '';
+        _props.errorContainer.style.display = '';
       } else if (_props.errorContainer && status === 'success') {
         _props.errorContainer.innerHTML = '';
-        _props.errorContainer.style = 'none';
+        _props.errorContainer.style.display = 'none';
       }
     }, [_props.errorContainer, status, errors]);
 

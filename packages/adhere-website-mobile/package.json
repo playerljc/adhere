@@ -37,7 +37,7 @@
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.4.0",
     "@baifendian/adhere": "^2.10.28",
     "@baifendian/adhere-mock": "^2.10.28",
     "@ctsj/router": "^1.0.5",

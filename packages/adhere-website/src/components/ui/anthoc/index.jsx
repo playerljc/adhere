@@ -52,6 +52,9 @@ import VerticalCheckAllCheckboxCodeText from '!!raw-loader!./examples/Checkbox/V
 import VerticalCheckboxCodeText from '!!raw-loader!./examples/Checkbox/VerticalCheckbox';
 import DatePickerFormatValueHOCCodeText from '!!raw-loader!./examples/DatePickerValueHOC/DatePickerFormatValueHOC';
 import DatePickerTimestampValueHOCCodeText from '!!raw-loader!./examples/DatePickerValueHOC/DatePickerTimestampValueHOC';
+import FormErrorContainerCodeText from '!!raw-loader!./examples/Form/FormErrorContainer';
+import NestingFormItemCodeText from '!!raw-loader!./examples/Form/NestingFormItem';
+import ValidatorRulesCodeText from '!!raw-loader!./examples/Form/ValidatorRules';
 import AutoCompleteCheckAllListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListSelect';
@@ -198,6 +201,9 @@ import VerticalCheckAllCheckbox from './examples/Checkbox/VerticalCheckAllCheckb
 import VerticalCheckbox from './examples/Checkbox/VerticalCheckbox';
 import DatePickerFormatValueHOC from './examples/DatePickerValueHOC/DatePickerFormatValueHOC';
 import DatePickerTimestampValueHOC from './examples/DatePickerValueHOC/DatePickerTimestampValueHOC';
+import FormErrorContainer from './examples/Form/FormErrorContainer';
+import NestingFormItem from './examples/Form/NestingFormItem';
+import ValidatorRules from './examples/Form/ValidatorRules';
 import AutoCompleteCheckAllListSelect from './examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelect from './examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelect from './examples/List/AutoCompleteListSelect';
@@ -2490,6 +2496,57 @@ export default () => {
             type: 'PlayGround',
             codeText: TimePickerFormatValueHOCCodeText,
             renderChildren: () => <TimePickerFormatValueHOC />,
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="FormHOC"
+        config={[
+          {
+            id: `NestingFormItem`,
+            name: `NestingFormItem`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '嵌套的FormItem',
+                info: '嵌套的FormItem',
+              },
+            },
+            type: 'PlayGround',
+            codeText: NestingFormItemCodeText,
+            renderChildren: () => <NestingFormItem />,
+          },
+          {
+            id: `FormErrorContainer`,
+            name: `FormErrorContainer`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '自定义验证信息',
+                info: '自定义验证信息',
+              },
+            },
+            type: 'PlayGround',
+            codeText: FormErrorContainerCodeText,
+            renderChildren: () => <FormErrorContainer />,
+          },
+          {
+            id: `ValidatorRules`,
+            name: `ValidatorRules`,
+            mode: 'code',
+            scope: { React },
+            cardProps: {
+              description: {
+                title: '结合adhere-util-browsersniff生成rules',
+                info: '结合adhere-util-browsersniff生成rules',
+              },
+            },
+            type: 'PlayGround',
+            codeText: ValidatorRulesCodeText,
+            renderChildren: () => <ValidatorRules />,
           },
         ]}
       />
