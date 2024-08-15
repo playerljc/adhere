@@ -45,6 +45,8 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
     constructor(props) {
       super(props);
 
+      this.pathname = this.getPathName();
+
       // 获取浏览器地址栏上默认的searchQuery和分页参数
       let defaultSearchAndPaginParams = {
         search: {},
@@ -150,11 +152,16 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       // 查询条件
       const searchParams = this.state.searchParams ?? {};
 
-      const pathname = this.getPathName() ?? '';
+      const pathname = this.pathname ?? '';
 
       const componentId = this.getComponentId();
 
       if (searchAndPaginParamsMemo.isEmpty()) {
+        // console.log('===================s1:', pathname, componentId, {
+        //   search: searchParams,
+        //   page: this.state.page,
+        //   limit: this.state.limit,
+        // });
         searchAndPaginParamsMemo.add(pathname, {
           [componentId]: {
             search: searchParams,
@@ -169,6 +176,13 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
           item.components[componentId].search = searchParams;
           item.components[componentId].page = this.state.page;
           item.components[componentId].limit = this.state.limit;
+
+          // console.log(
+          //   '===================s2:',
+          //   pathname,
+          //   componentId,
+          //   item.components[componentId],
+          // );
         } else {
           searchAndPaginParamsMemo.add(pathname, {
             [componentId]: {
@@ -177,6 +191,12 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
               limit: this.state.limit,
             },
           });
+
+          // console.log('===================s3:', pathname, componentId, {
+          //   search: searchParams,
+          //   page: this.state.page,
+          //   limit: this.state.limit,
+          // });
         }
       }
 
@@ -221,11 +241,17 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
         };
       }
 
-      const pathname = this.getPathName() ?? '';
+      const pathname = this.pathname ?? '';
+
+      // console.log('================pathName:', pathname);
 
       const item = searchAndPaginParamsMemo.findByPath(pathname);
 
+      // console.log('================item:', item);
+
       const componentId = this.getComponentId();
+
+      // console.log('================componentId:', componentId);
 
       if (item && item.components[componentId]) {
         return {

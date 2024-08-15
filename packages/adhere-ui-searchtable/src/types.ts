@@ -1,6 +1,5 @@
 import type { FormInstance } from 'antd/es/form';
 import type { TableProps } from 'antd/es/table/InternalTable';
-import type { ColumnsType } from 'antd/es/table/interface';
 import type { Rule } from 'antd/lib/form/index';
 import type {
   ColumnType, // FilterValue,
