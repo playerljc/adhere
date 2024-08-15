@@ -341,14 +341,18 @@ export default (SuperClass, searchAndPaginParamsMemo) =>
       // null | null字符串 | 时间字符串
       const dateKeys = Object.keys(state).filter(
         (key) => {
-          return (
-            state[key] === null ||
-            state[key] === 'null' ||
-            state[key] === undefined ||
-            state[key] === 'undefined' ||
-            state[key] === '' ||
-            Validator.isDate(state[key])
-          );
+          let result = false;
+          try {
+            result =
+              state[key] === null ||
+              state[key] === 'null' ||
+              state[key] === undefined ||
+              state[key] === 'undefined' ||
+              state[key] === '' ||
+              Validator.isDate(state[key]);
+          } catch (e) {}
+
+          return result;
         },
         // 判断是否是时间字符串
         // dayjs(state[key]).isValid(),
