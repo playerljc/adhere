@@ -32,6 +32,7 @@ import type { SuspenseASyncProps } from '@baifendian/adhere-ui-suspense/es/types
 import type { TreeUtilType } from '@baifendian/adhere-util/es/tree';
 import type { IFlatTreeArrNode } from '@baifendian/adhere-util/es/types';
 
+import CustomWrapperFormItem from './form/CustomWrapperFormItem';
 import FormItem from './form/FormItem';
 import NestingFormItem from './form/NestingFormItem';
 import ButtonRadio from './radio/ButtonRadio';
@@ -700,6 +701,7 @@ export type CheckboxHOCComponent = ReturnType<typeof createFactory<CheckboxProps
 export type FormHOCComponent = ReturnType<typeof createFactory<FormProps>> & {
   ValidatorRules: FormValidatorRulesType;
   NestingFormItem: typeof NestingFormItem;
+  CustomWrapperFormItem: typeof CustomWrapperFormItem;
   Item: typeof FormItem;
 };
 
@@ -1118,4 +1120,10 @@ export interface InternalNestingFormItemProps {
 
 export interface InternalNestingFormItemHandle {
   validateFields: () => Promise<string>;
+}
+
+export interface CustomWrapperFormItemProps {
+  children?: (params: { value: any; onChange: (value?: any) => void }) => ReactNode;
+  value?: any;
+  onChange: (value?: any) => void;
 }
