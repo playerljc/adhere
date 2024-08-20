@@ -466,6 +466,7 @@ abstract class SearchTable<
         record,
         columns,
       }),
+      ...(this.props?.onRow?.(columns, record, rowIndex) ?? {}),
     };
   };
 

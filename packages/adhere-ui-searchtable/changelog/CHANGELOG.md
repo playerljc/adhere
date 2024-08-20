@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* 对props.onRow进行适配
 * 拖拽排序加入可以在列上加入自定义句柄
 * $search中的输入框去掉trim
 * $search中加入isShowLabelSymbol配置项对ProSearchTable的label符号进行控制

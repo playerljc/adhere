@@ -193,13 +193,7 @@ declare abstract class SearchTable<P extends SearchTableProps = SearchTableProps
      * @param {any} sorter
      */
     onTableChange: (pagination: any, filters: any, sorter: any) => Promise<unknown>;
-    onTableRow: (columns: any, record: any, rowIndex: any) => {
-        record: any;
-        rowIndex: any;
-        columns: any;
-        rowKey: string;
-        rowConfig: RowConfig;
-    };
+    onTableRow: (columns: any, record: any, rowIndex: any) => any;
     /**
      * sortOrder
      * @description table的column中加入
@@ -406,12 +400,7 @@ export declare const propTypes: {
     isShowExpandSearch: PropTypes.Requireable<boolean>;
     defaultExpandSearchCollapse: PropTypes.Requireable<boolean>;
     fitBody: PropTypes.Requireable<boolean>;
-    autoFixed: PropTypes.Requireable<boolean>; /**
-     * sortOrder
-     * @description table的column中加入
-     * @param {string} columnName
-     * @return {string}
-     */
+    autoFixed: PropTypes.Requireable<boolean>;
     title: PropTypes.Requireable<string>;
     antdTableProps: PropTypes.Requireable<object>;
     fixedHeaderAutoTable: PropTypes.Requireable<boolean>;
