@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import type { TriggerPromptProps } from './types';
+import React from 'react';
+import type { TriggerPromptHandle } from './types';
 /**
  * TriggerPrompt
  * @param className
@@ -8,5 +8,9 @@ import type { TriggerPromptProps } from './types';
  * @param {ReactNode} okText 确定按钮文本
  * @constructor
  */
-declare const TriggerPrompt: FC<TriggerPromptProps>;
+declare const TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "footer" | "modalConfig"> & {
+    onSubmit?: (() => Promise<any>) | undefined;
+    modalConfig?: Omit<import("./types").ModalArgv, "children" | "defaultCloseBtn"> | undefined;
+    okText?: string | undefined;
+} & React.RefAttributes<TriggerPromptHandle>>;
 export default TriggerPrompt;

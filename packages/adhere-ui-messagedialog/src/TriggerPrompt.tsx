@@ -1,10 +1,9 @@
-import type { FC } from 'react';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import Trigger from './Trigger';
-import type { TriggerPromptProps } from './types';
+import type { TriggerPromptHandle, TriggerPromptProps } from './types';
 
 /**
  * TriggerPrompt
@@ -14,23 +13,26 @@ import type { TriggerPromptProps } from './types';
  * @param {ReactNode} okText 确定按钮文本
  * @constructor
  */
-const TriggerPrompt: FC<TriggerPromptProps> = ({ onSubmit, modalConfig, okText, ...props }) => {
-  return (
-    <Trigger
-      {...props}
-      modalConfig={modalConfig}
-      actions={[
-        {
-          key: 'submit',
-          // @ts-ignore
-          type: 'primary',
-          children: okText ?? Intl.v('确定'),
-          onClick: () => onSubmit?.() ?? Promise.resolve(),
-        },
-      ]}
-    />
-  );
-};
+const TriggerPrompt = forwardRef<TriggerPromptHandle, TriggerPromptProps>(
+  ({ onSubmit, modalConfig, okText, ...props }, ref) => {
+    return (
+      <Trigger
+        ref={ref}
+        {...props}
+        modalConfig={modalConfig}
+        actions={[
+          {
+            key: 'submit',
+            // @ts-ignore
+            type: 'primary',
+            children: okText ?? Intl.v('确定'),
+            onClick: () => onSubmit?.() ?? Promise.resolve(),
+          },
+        ]}
+      />
+    );
+  },
+);
 
 TriggerPrompt.displayName = 'TriggerPrompt';
 

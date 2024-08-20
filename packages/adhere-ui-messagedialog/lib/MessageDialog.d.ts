@@ -154,11 +154,15 @@ declare const MessageDialogFactory: {
     /**
      * Trigger
      */
-    Trigger: React.FC<import("./types").TriggerProps>;
+    Trigger: React.ForwardRefExoticComponent<import("./types").TriggerProps & React.RefAttributes<import("./types").TriggerHandle>>;
     /**
      * TriggerPrompt
      */
-    TriggerPrompt: React.FC<import("./types").TriggerPromptProps>;
+    TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "footer" | "modalConfig"> & {
+        onSubmit?: (() => Promise<any>) | undefined;
+        modalConfig?: Omit<ModalArgv, "children" | "defaultCloseBtn"> | undefined;
+        okText?: string | undefined;
+    } & React.RefAttributes<import("./types").TriggerPromptHandle>>;
     /**
      * allowMultipleInstances
      * @description 设置是否允许多实例共存

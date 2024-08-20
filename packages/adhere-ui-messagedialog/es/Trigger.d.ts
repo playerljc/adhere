@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import type { TriggerProps } from './types';
+import React from 'react';
+import type { TriggerHandle, TriggerProps } from './types';
 /**
  * Trigger
  * @param className
@@ -12,5 +12,5 @@ import type { TriggerProps } from './types';
  * @param {() => Promise<any>} onSubmit 点击确定按钮，在里面处理实际业务最后resolve的值为value
  * @constructor
  */
-declare const Trigger: FC<TriggerProps>;
+declare const Trigger: React.ForwardRefExoticComponent<TriggerProps & React.RefAttributes<TriggerHandle>>;
 export default Trigger;

@@ -4,6 +4,8 @@
 
 2024-04-22
 
+* 加入beforeTrigger方法
+* Trigger和TriggerPrompt加入close方法
 * Trigger加入defaultCloseBtn配置
 * 修改Trigger修改props不刷新的问题
 * 加入allowMultipleInstances参数控制是否允许多实例共存

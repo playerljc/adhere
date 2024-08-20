@@ -1,13 +1,13 @@
 import type { ModalProps } from 'antd/lib/modal/interface';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import type { FC } from 'react';
-import React, { useEffect, useMemo, useRef } from 'react';
+import { forwardRef } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 
 import MessageDialog from './MessageDialog';
 import { selectorPrefix } from './Modal';
 import SubmitButton from './SubmitButton';
-import type { TriggerProps } from './types';
+import type { TriggerHandle, TriggerProps } from './types';
 
 /**
  * Trigger
@@ -21,98 +21,120 @@ import type { TriggerProps } from './types';
  * @param {() => Promise<any>} onSubmit 点击确定按钮，在里面处理实际业务最后resolve的值为value
  * @constructor
  */
-const Trigger: FC<TriggerProps> = ({
-  className,
-  style,
-  value,
-  disabled = false,
-  onChange,
-  children,
-  renderTrigger,
-  modalConfig,
-  actions,
-  maximized = true,
-  defaultCloseBtn = true,
-}) => {
-  const dialog = useRef<
-    ReturnType<typeof MessageDialog.MaximizeModal> | ReturnType<typeof MessageDialog.Modal> | null
-  >(null);
+const Trigger = forwardRef<TriggerHandle, TriggerProps>(
+  (
+    {
+      className,
+      style,
+      value,
+      disabled = false,
+      onChange,
+      children,
+      renderTrigger,
+      modalConfig,
+      actions,
+      maximized = true,
+      defaultCloseBtn = true,
+      beforeTrigger,
+    },
+    ref,
+  ) => {
+    const dialog = useRef<
+      ReturnType<typeof MessageDialog.MaximizeModal> | ReturnType<typeof MessageDialog.Modal> | null
+    >(null);
 
-  const bodyChildren = useMemo(() => {
-    return (
-      children &&
-      React.cloneElement(
-        children,
-        {
-          ...children.props,
-          value,
-        },
-        children.props.children,
-      )
-    );
-  }, [children, value]);
+    const bodyChildren = useMemo(() => {
+      return (
+        children &&
+        React.cloneElement(
+          children,
+          {
+            ...children.props,
+            value,
+          },
+          children.props.children,
+        )
+      );
+    }, [children, value]);
 
-  function onConfirm(onClick, close) {
-    return new Promise((resolve, reject) => {
-      onClick?.()
-        ?.then((result) => {
-          onChange?.(result);
+    function onConfirm(onClick, close) {
+      return new Promise((resolve, reject) => {
+        onClick?.()
+          ?.then((result) => {
+            onChange?.(result);
 
-          setTimeout(() => {
-            resolve(result);
-            close?.();
-          }, 300);
-        })
-        .catch((error) => reject(error));
-    });
-  }
+            setTimeout(() => {
+              resolve(result);
+              close?.();
+            }, 300);
+          })
+          .catch((error) => reject(error));
+      });
+    }
 
-  function onTrigger() {
-    if (disabled) return;
+    function onTrigger() {
+      if (disabled) return;
 
-    const _modalConfig: ModalProps = modalConfig?.config ?? {};
+      function execute() {
+        const _modalConfig: ModalProps = modalConfig?.config ?? {};
 
-    _modalConfig.footer =
-      (actions ?? []).map?.((_actionConfig) => (
-        <SubmitButton
-          {...(_actionConfig ?? {})}
-          onClick={() => onConfirm(_actionConfig.onClick, (dialog.current as any).close)}
-        />
-      )) ?? [];
+        _modalConfig.footer =
+          (actions ?? []).map?.((_actionConfig) => (
+            <SubmitButton
+              {...(_actionConfig ?? {})}
+              onClick={() => onConfirm(_actionConfig.onClick, (dialog.current as any).close)}
+            />
+          )) ?? [];
 
-    const modalMap = new Map([
-      [true, MessageDialog.MaximizeModal],
-      [false, MessageDialog.Modal],
-    ]);
+        const modalMap = new Map([
+          [true, MessageDialog.MaximizeModal],
+          [false, MessageDialog.Modal],
+        ]);
 
-    dialog.current = modalMap.get(maximized as boolean)?.({
-      config: _modalConfig,
-      defaultCloseBtn,
-      children: bodyChildren,
-    });
-  }
-
-  useEffect(() => {
-    try {
-      const _modalConfig: ModalProps = modalConfig?.config ?? {};
-      dialog.current?.setConfig((draft) => {
-        Object.keys(_modalConfig).forEach((_key) => {
-          draft[_key] = _modalConfig[_key];
+        dialog.current = modalMap.get(maximized as boolean)?.({
+          config: _modalConfig,
+          defaultCloseBtn,
+          children: bodyChildren,
         });
-      }, bodyChildren);
-    } catch (err) {}
-  });
+      }
 
-  return (
-    <div
-      className={classNames(`${selectorPrefix}-trigger`, className ?? '')}
-      style={style ?? {}}
-      onClick={debounce(onTrigger, 200)}
-    >
-      {renderTrigger?.()}
-    </div>
-  );
-};
+      if (!beforeTrigger) {
+        execute();
+      } else {
+        beforeTrigger().then(() => {
+          execute();
+        });
+      }
+    }
+
+    useEffect(() => {
+      try {
+        const _modalConfig: ModalProps = modalConfig?.config ?? {};
+        dialog.current?.setConfig((draft) => {
+          Object.keys(_modalConfig).forEach((_key) => {
+            draft[_key] = _modalConfig[_key];
+          });
+        }, bodyChildren);
+      } catch (err) {}
+    });
+
+    useImperativeHandle(ref, () => ({
+      close: () => {
+        (dialog.current as any).close();
+      },
+    }));
+
+    return (
+      <div
+        className={classNames(`${selectorPrefix}-trigger`, className ?? '')}
+        style={style ?? {}}
+        onClick={debounce(onTrigger, 200)}
+      >
+        {renderTrigger?.()}
+      </div>
+    );
+  },
+);
 
 Trigger.displayName = 'Trigger';
 

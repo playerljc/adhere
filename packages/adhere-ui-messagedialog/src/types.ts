@@ -93,6 +93,7 @@ export interface TriggerProps {
     'children' | 'defaultCloseBtn'
   >;
   defaultCloseBtn?: boolean;
+  beforeTrigger?: () => Promise<void>;
 }
 
 /**
@@ -101,3 +102,11 @@ export interface TriggerProps {
 export type SubmitButtonProps = Omit<ButtonProps, 'onClick'> & {
   onClick: (e?: any) => Promise<void>;
 };
+
+export interface TriggerPromptHandle {
+  close: () => void;
+}
+
+export interface TriggerHandle {
+  close: () => void;
+}
