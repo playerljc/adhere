@@ -426,6 +426,7 @@ export type PopoverTriggerProps = BaseType & {
   disabled?: boolean;
   renderTrigger?: (changeValue: any) => ReactNode;
   renderPopover?: () => void;
+  beforeTrigger?: () => Promise<void>;
 };
 
 export type ModalTriggerProps<Value> = Omit<ModalProps, 'content' | 'actions'> & {

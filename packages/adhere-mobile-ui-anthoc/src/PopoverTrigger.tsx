@@ -26,11 +26,22 @@ const PopoverTrigger: FC<PopoverTriggerProps> = ({
   renderTrigger,
   renderPopover,
   disabled = false,
+  beforeTrigger,
 }) => {
   function onTrigger() {
     if (disabled) return;
 
-    renderPopover?.();
+    function execute() {
+      renderPopover?.();
+    }
+
+    if (!beforeTrigger) {
+      execute();
+    } else {
+      beforeTrigger().then(() => {
+        execute();
+      });
+    }
   }
 
   return (

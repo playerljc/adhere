@@ -4,6 +4,7 @@
 
 2024-03-06
 
+* PopoverTrigger加入beforeTrigger方法
 * Form加入NestingFormItem
 * 使用ScrollLoad的优化
 * rules校验规则加入required
