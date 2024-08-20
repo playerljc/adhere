@@ -125,10 +125,14 @@ declare const PopupFactory: {
     /**
      * Trigger
      */
-    Trigger: React.FC<import("./types").TriggerProps>;
+    Trigger: React.ForwardRefExoticComponent<import("./types").TriggerProps & React.RefAttributes<import("./types").TriggerHandle>>;
     /**
      * TriggerPrompt
      */
-    TriggerPrompt: React.FC<import("./types").TriggerPromptProps>;
+    TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "actions"> & {
+        isShowCloseAction?: boolean | undefined;
+        onSubmit?: (() => Promise<any>) | undefined;
+        okText?: string | undefined;
+    } & React.RefAttributes<import("./types").TriggerPromptHandle>>;
 };
 export default PopupFactory;

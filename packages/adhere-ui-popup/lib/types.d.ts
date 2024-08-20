@@ -37,6 +37,7 @@ export interface TriggerProps {
         onClick?: () => Promise<any>;
     }[];
     popupConfig?: Omit<IConfig, 'children'>;
+    beforeTrigger?: () => Promise<void>;
 }
 /**
  * TriggerPromptProps
@@ -52,3 +53,9 @@ export type TriggerPromptProps = Omit<TriggerProps, 'actions'> & {
 export type SubmitButtonProps = Omit<AntdMobileButtonProps, 'onClick'> & {
     onClick: (e?: any) => Promise<void>;
 };
+export interface TriggerPromptHandle {
+    close: () => void;
+}
+export interface TriggerHandle {
+    close: () => void;
+}

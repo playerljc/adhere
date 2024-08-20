@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import type { TriggerProps } from './types';
+import React from 'react';
+import type { TriggerHandle, TriggerProps } from './types';
 /**
  * Trigger
  * @param className
@@ -18,5 +18,5 @@ import type { TriggerProps } from './types';
  * @param onChange
  * @constructor
  */
-declare const Trigger: FC<TriggerProps>;
+declare const Trigger: React.ForwardRefExoticComponent<TriggerProps & React.RefAttributes<TriggerHandle>>;
 export default Trigger;

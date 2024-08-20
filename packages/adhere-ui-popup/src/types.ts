@@ -2,8 +2,6 @@ import { ButtonProps as AntdButtonProps } from 'antd';
 import { ButtonProps as AntdMobileButtonProps } from 'antd-mobile';
 import { CSSProperties, ReactNode } from 'react';
 
-import { ModalArgv } from '@baifendian/adhere-ui-messagedialog/src/types';
-
 /**
  * IConfig
  * @interface IConfig
@@ -42,6 +40,7 @@ export interface TriggerProps {
       onClick?: () => Promise<any>;
     }[];
   popupConfig?: Omit<IConfig, 'children'>;
+  beforeTrigger?: () => Promise<void>;
 }
 
 /**
@@ -59,3 +58,11 @@ export type TriggerPromptProps = Omit<TriggerProps, 'actions'> & {
 export type SubmitButtonProps = Omit<AntdMobileButtonProps, 'onClick'> & {
   onClick: (e?: any) => Promise<void>;
 };
+
+export interface TriggerPromptHandle {
+  close: () => void;
+}
+
+export interface TriggerHandle {
+  close: () => void;
+}

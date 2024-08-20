@@ -1,14 +1,14 @@
 import { LeftOutline } from 'antd-mobile-icons';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import type { FC } from 'react';
+import { forwardRef, useImperativeHandle } from 'react';
 import React, { useEffect, useMemo, useRef } from 'react';
 
 import Intl from '@baifendian/adhere-util-intl';
 
 import Popup, { Popup as PopupInner } from './Popup';
 import SubmitButton from './SubmitButton';
-import type { TriggerProps } from './types';
+import type { TriggerHandle, TriggerProps } from './types';
 
 const selectorPrefix = 'adhere-ui-popup';
 const triggerSelectorPrefix = `${selectorPrefix}-trigger`;
@@ -32,156 +32,180 @@ const triggerSelectorInnerPrefix = `${triggerSelectorPrefix}-inner`;
  * @param onChange
  * @constructor
  */
-const Trigger: FC<TriggerProps> = ({
-  className,
-  style,
-  renderTrigger,
-  popupConfig,
-  title,
-  closeIcon = true,
-  extra,
-  actions,
-  isShowCloseAction = true,
-  closeActionPosition = 'start',
-  children,
-  value,
-  disabled = false,
-  onChange,
-}) => {
-  const popup = useRef<PopupInner | null>();
+const Trigger = forwardRef<TriggerHandle, TriggerProps>(
+  (
+    {
+      className,
+      style,
+      renderTrigger,
+      popupConfig,
+      title,
+      closeIcon = true,
+      extra,
+      actions,
+      isShowCloseAction = true,
+      closeActionPosition = 'start',
+      children,
+      value,
+      disabled = false,
+      onChange,
+      beforeTrigger,
+    },
+    ref,
+  ) => {
+    const popup = useRef<PopupInner | null>();
 
-  const onConfirm = (
-    onClick: (() => Promise<any>) | undefined,
-    close: { (): boolean | undefined; (): void },
-  ) =>
-    new Promise<void>((resolve, reject) => {
-      onClick?.()
-        ?.then((result) => {
-          onChange?.(result);
+    const onConfirm = (
+      onClick: (() => Promise<any>) | undefined,
+      close: { (): boolean | undefined; (): void },
+    ) =>
+      new Promise<void>((resolve, reject) => {
+        onClick?.()
+          ?.then((result) => {
+            onChange?.(result);
 
-          setTimeout(() => {
-            resolve(result);
-            close?.();
-          }, 400);
-        })
-        .catch((error) => reject(error));
-    });
+            setTimeout(() => {
+              resolve(result);
+              close?.();
+            }, 400);
+          })
+          .catch((error) => reject(error));
+      });
 
-  const bodyChildren = useMemo(
-    () =>
-      children
-        ? React.cloneElement(
-            children,
-            {
-              ...children.props,
-              value,
-            },
-            children.props.children,
-          )
-        : null,
-    [children, value],
-  );
-
-  const actionElements = useMemo(() => {
-    const elements = (actions ?? []).map?.((_actionConfig) => (
-      <div key={_actionConfig.key} className={classNames(`${triggerSelectorInnerPrefix}-action`)}>
-        <SubmitButton
-          {...(_actionConfig ?? {})}
-          onClick={() => onConfirm(_actionConfig.onClick, () => popup?.current?.close())}
-        />
-      </div>
-    ));
-
-    const closeActionElement = isShowCloseAction && (
-      <div key="close" className={classNames(`${triggerSelectorInnerPrefix}-action`)}>
-        <SubmitButton
-          key="close"
-          onClick={() =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                popup.current?.close();
-              }, 100);
-
-              resolve();
-            })
-          }
-        >
-          {Intl.v('关闭')}
-        </SubmitButton>
-      </div>
+    const bodyChildren = useMemo(
+      () =>
+        children
+          ? React.cloneElement(
+              children,
+              {
+                ...children.props,
+                value,
+              },
+              children.props.children,
+            )
+          : null,
+      [children, value],
     );
 
-    if (closeActionElement && ['start', 'end'].includes(closeActionPosition)) {
-      if (closeActionPosition === 'start') {
-        elements.unshift(closeActionElement);
-      } else {
-        elements.push(closeActionElement);
-      }
-    }
-
-    return elements;
-  }, [actions, isShowCloseAction, closeActionPosition]);
-
-  const popupChildren = useMemo(() => {
-    return (
-      <div className={classNames(triggerSelectorInnerPrefix)}>
-        <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
-          <div
-            className={`${triggerSelectorInnerPrefix}-close`}
-            onClick={() => {
-              popup.current?.close();
-            }}
-          >
-            {closeIcon && (
-              <span className={`${triggerSelectorInnerPrefix}-close-inner`}>{<LeftOutline />}</span>
-            )}
-          </div>
-
-          {title && <div className={`${triggerSelectorInnerPrefix}-title`}>{title}</div>}
-
-          {extra && <div className={`${triggerSelectorInnerPrefix}-extra`}>{extra}</div>}
+    const actionElements = useMemo(() => {
+      const elements = (actions ?? []).map?.((_actionConfig) => (
+        <div key={_actionConfig.key} className={classNames(`${triggerSelectorInnerPrefix}-action`)}>
+          <SubmitButton
+            {...(_actionConfig ?? {})}
+            onClick={() => onConfirm(_actionConfig.onClick, () => popup?.current?.close())}
+          />
         </div>
+      ));
 
-        <div className={classNames(`${triggerSelectorInnerPrefix}-body`)}>{bodyChildren}</div>
+      const closeActionElement = isShowCloseAction && (
+        <div key="close" className={classNames(`${triggerSelectorInnerPrefix}-action`)}>
+          <SubmitButton
+            key="close"
+            onClick={() =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  popup.current?.close();
+                }, 100);
 
-        {actionElements.length ? (
-          <div className={classNames(`${triggerSelectorInnerPrefix}-actions`)}>
-            {actionElements}
+                resolve();
+              })
+            }
+          >
+            {Intl.v('关闭')}
+          </SubmitButton>
+        </div>
+      );
+
+      if (closeActionElement && ['start', 'end'].includes(closeActionPosition)) {
+        if (closeActionPosition === 'start') {
+          elements.unshift(closeActionElement);
+        } else {
+          elements.push(closeActionElement);
+        }
+      }
+
+      return elements;
+    }, [actions, isShowCloseAction, closeActionPosition]);
+
+    const popupChildren = useMemo(() => {
+      return (
+        <div className={classNames(triggerSelectorInnerPrefix)}>
+          <div className={classNames(`${triggerSelectorInnerPrefix}-header`)}>
+            <div
+              className={`${triggerSelectorInnerPrefix}-close`}
+              onClick={() => {
+                popup.current?.close();
+              }}
+            >
+              {closeIcon && (
+                <span className={`${triggerSelectorInnerPrefix}-close-inner`}>
+                  {<LeftOutline />}
+                </span>
+              )}
+            </div>
+
+            {title && <div className={`${triggerSelectorInnerPrefix}-title`}>{title}</div>}
+
+            {extra && <div className={`${triggerSelectorInnerPrefix}-extra`}>{extra}</div>}
           </div>
-        ) : null}
-      </div>
-    );
-  }, [bodyChildren, title, extra, closeIcon, actionElements]);
 
-  const onTrigger = () => {
-    if (disabled) return;
+          <div className={classNames(`${triggerSelectorInnerPrefix}-body`)}>{bodyChildren}</div>
 
-    popup.current = Popup.create({
-      ...(popupConfig ?? {}),
-      onBeforeClose: () => (popupConfig ?? {})?.onBeforeClose?.() ?? Promise.resolve(),
-      onAfterClose: () => (popupConfig ?? {})?.onAfterClose?.() ?? Popup.destroy(popup.current),
-      children: popupChildren,
+          {actionElements.length ? (
+            <div className={classNames(`${triggerSelectorInnerPrefix}-actions`)}>
+              {actionElements}
+            </div>
+          ) : null}
+        </div>
+      );
+    }, [bodyChildren, title, extra, closeIcon, actionElements]);
+
+    const onTrigger = () => {
+      if (disabled) return;
+
+      function execute() {
+        popup.current = Popup.create({
+          ...(popupConfig ?? {}),
+          onBeforeClose: () => (popupConfig ?? {})?.onBeforeClose?.() ?? Promise.resolve(),
+          onAfterClose: () => (popupConfig ?? {})?.onAfterClose?.() ?? Popup.destroy(popup.current),
+          children: popupChildren,
+        });
+
+        popup.current?.show();
+      }
+
+      if (!beforeTrigger) {
+        execute();
+      } else {
+        beforeTrigger().then(() => {
+          execute();
+        });
+      }
+    };
+
+    useEffect(() => {
+      try {
+        popup.current?.update(popupChildren);
+      } catch (err) {}
     });
 
-    popup.current?.show();
-  };
+    useImperativeHandle(ref, () => ({
+      close: () => {
+        (popup.current as any).close();
+      },
+    }));
 
-  useEffect(() => {
-    try {
-      popup.current?.update(popupChildren);
-    } catch (err) {}
-  });
-
-  return (
-    <div
-      className={classNames(triggerSelectorPrefix, className ?? '')}
-      style={style ?? {}}
-      onClick={debounce(onTrigger, 200)}
-    >
-      {renderTrigger?.()}
-    </div>
-  );
-};
+    return (
+      <div
+        className={classNames(triggerSelectorPrefix, className ?? '')}
+        style={style ?? {}}
+        onClick={debounce(onTrigger, 200)}
+      >
+        {renderTrigger?.()}
+      </div>
+    );
+  },
+);
 
 Trigger.displayName = 'Trigger';
 

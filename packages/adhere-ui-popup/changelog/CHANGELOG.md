@@ -4,6 +4,8 @@
 
 2024-04-22
 
+* 加入beforeTrigger方法
+* Trigger和TriggerPrompt加入close方法
 * Action为空不渲染wrapper
 * 移动端适配
 * 加入对closeAction的控制
