@@ -74,7 +74,7 @@ const InternalCurrencySymbol = memo<CurrencySymbolProps>(
         >
           <CountUp
             className={amountInnerClassName}
-            duration={targetIsUseAnimation ? 1 : 0}
+            duration={targetIsUseAnimation ? 1 : 0.1}
             separator={targetIsUseKilo ? ',' : ''}
             {...(countUpProps ?? {})}
             end={targetAmount}
