@@ -30,8 +30,14 @@ const InternalPlayGroundPage = memo<
 >(
   forwardRef<HTMLElement, PlayGroundPageProps>((props, ref) => {
     const {
-      className = '',
-      style = {},
+      className,
+      style,
+      anchorNavigationClassName,
+      anchorNavigationStyle,
+      anchorNavigationAutoClassName,
+      anchorNavigationAutoStyle,
+      anchorNavigationFixedClassName,
+      anchorNavigationFixedStyle,
       anchorPosition = {
         top: 77,
         width: 120,
@@ -71,7 +77,16 @@ const InternalPlayGroundPage = memo<
           className={`${classNames(selectPrefix, className ?? '')}`}
           style={style ?? {}}
         >
-          <AnchorNavigation anchors={getAnchors()} anchorPosition={anchorPosition}>
+          <AnchorNavigation
+            className={anchorNavigationClassName}
+            style={anchorNavigationStyle}
+            autoClassName={anchorNavigationAutoClassName}
+            autoStyle={anchorNavigationAutoStyle}
+            fixedClassName={anchorNavigationFixedClassName}
+            fixedStyle={anchorNavigationFixedStyle}
+            anchors={getAnchors()}
+            anchorPosition={anchorPosition}
+          >
             <Space.Group direction="vertical">{children}</Space.Group>
           </AnchorNavigation>
         </div>

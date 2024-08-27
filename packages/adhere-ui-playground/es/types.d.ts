@@ -196,6 +196,12 @@ export interface AnchorNavigationContextValue {
     scrollEl: HTMLElement | null;
 }
 export interface AnchorNavigationProps {
+    className?: string;
+    style?: CSSProperties;
+    autoClassName?: string;
+    autoStyle?: CSSProperties;
+    fixedClassName?: string;
+    fixedStyle?: CSSProperties;
     activeAnchor?: string;
     anchors?: Array<{
         anchor: string;
@@ -250,6 +256,12 @@ export type PlayGroundPageComponent = NamedExoticComponent<PlayGroundPageProps> 
 export interface PlayGroundPageProps {
     className?: string;
     style?: CSSProperties;
+    anchorNavigationClassName?: string;
+    anchorNavigationStyle?: CSSProperties;
+    anchorNavigationAutoClassName?: string;
+    anchorNavigationAutoStyle?: CSSProperties;
+    anchorNavigationFixedClassName?: string;
+    anchorNavigationFixedStyle?: CSSProperties;
     anchorPosition: {
         top: number;
         width: number;
