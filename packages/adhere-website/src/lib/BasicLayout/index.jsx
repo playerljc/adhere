@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Footer from '@/lib/Footer';
-import { getPathName, getSearch } from "../Router/path";
+
+import { getPathName } from "../Router/path";
 import styles from './index.less';
 
 const { SubMenu } = Menu;
@@ -431,7 +431,9 @@ class BasicLayout extends React.Component {
     return (
       <div className={styles.BasicLayout}>
         <div
-          className={classNames(styles.Fixed, styles.Sider, isMenuCollapse ? styles.Collapse : '')}
+          className={classNames(styles.MenuWrapper, styles.Sider, {
+            [styles.Collapse]: isMenuCollapse
+          })}
         >
           {this.renderMenu({
             defaultSelectedKeys: selectedKeys,
@@ -439,16 +441,14 @@ class BasicLayout extends React.Component {
           })}
         </div>
 
-        <div className={styles.Auto}>
+        <div className={styles.Body}>
           {this.renderBreadcrumb({
             defaultSelectedKeys: selectedKeys,
             defaultOpenKeys: openKeys,
           })}
 
-          <div className={styles.Auto}>{this.props.children}</div>
-
-          <div className={styles.FooterWrap}>
-            <Footer />
+          <div className={styles.Main}>
+            {this.props.children}
           </div>
         </div>
       </div>

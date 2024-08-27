@@ -3,59 +3,55 @@
   width: 100%;
   height: 100%;
 
-  > .Auto {
-    flex-direction: column;
-    overflow-y: auto;
-
-    > .Fixed {
-      padding: 20px;
-    }
-
-    > .Auto {
-      //background: var(--common-block-background-color);
-    }
-  }
-
-  .Fixed {
+  > .MenuWrapper {
     flex-shrink: 0;
     width: 300px;
+
+    &.Sider {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      transition: all 0.2s;
+    }
+
+    &.Collapse {
+      width: 51px;
+      overflow-x: hidden;
+    }
 
     .Menu {
       width: 100%;
       height: 100%;
+      overflow-x: hidden;
       overflow-y: auto;
+
+      .MenuIcon {
+        margin-right: 15px;
+      }
+
+      .MenuIconText {
+        vertical-align: middle;
+      }
     }
   }
 
-  .Auto {
-    position: relative;
+  > .Body {
     display: flex;
-    flex-grow: 1;
+    flex: 1;
+    flex-direction: column;
     min-width: 0;
-  }
 
-  .MenuIcon {
-    margin-right: 15px;
-  }
+    > .BreadcrumbWrap {
+      flex-shrink: 0;
+      width: 100%;
+      padding: 10px 20px;
+    }
 
-  .MenuIconText {
-    vertical-align: middle;
-  }
-
-  .Sider {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    transition: all 0.2s;
-  }
-
-  .Collapse {
-    width: 51px;
-    overflow-x: hidden;
-  }
-
-  .BreadcrumbWrap {
-    width: 100%;
-    padding: 10px 20px;
+    > .Main {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+    }
   }
 }

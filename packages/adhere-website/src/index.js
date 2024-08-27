@@ -40,6 +40,9 @@ import styles from './index.less';
 if (SelfUtil.isUseMedia()) {
   // 适配REM
   AdapterScreen.flexible();
+
+  // 适配minSize
+  AdapterScreen.setPageMinSizeToCSS(document.getElementById('app'));
 }
 
 let root;

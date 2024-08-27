@@ -55,6 +55,7 @@ import DatePickerTimestampValueHOCCodeText from '!!raw-loader!./examples/DatePic
 import FormErrorContainerCodeText from '!!raw-loader!./examples/Form/FormErrorContainer';
 import NestingFormItemCodeText from '!!raw-loader!./examples/Form/NestingFormItem';
 import ValidatorRulesCodeText from '!!raw-loader!./examples/Form/ValidatorRules';
+import InputMultipleSelectCodeText from '!!raw-loader!./examples/InputMultiple/InputMultipleSelect';
 import AutoCompleteCheckAllListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListSelect';
@@ -204,6 +205,7 @@ import DatePickerTimestampValueHOC from './examples/DatePickerValueHOC/DatePicke
 import FormErrorContainer from './examples/Form/FormErrorContainer';
 import NestingFormItem from './examples/Form/NestingFormItem';
 import ValidatorRules from './examples/Form/ValidatorRules';
+import InputMultipleSelect from './examples/InputMultiple/InputMultipleSelect';
 import AutoCompleteCheckAllListSelect from './examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelect from './examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelect from './examples/List/AutoCompleteListSelect';
@@ -2646,6 +2648,31 @@ export default () => {
                     </dl>
                   </Space.Group>
                 </ScrollLayout>
+              </div>
+            ),
+          },
+        ]}
+      />
+
+      <CodeBoxSection
+        title="InputMultipleSelect"
+        config={[
+          {
+            id: 'p1',
+            name: 'InputMultipleSelect',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            codeText: InputMultipleSelectCodeText,
+            cardProps: {
+              description: {
+                title: 'InputMultipleSelect',
+                info: 'InputMultipleSelect',
+              },
+            },
+            renderChildren: () => (
+              <div className={styles.Wrapper}>
+                <InputMultipleSelect />
               </div>
             ),
           },

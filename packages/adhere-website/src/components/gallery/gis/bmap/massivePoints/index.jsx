@@ -93,7 +93,7 @@ class VectoryLayer extends BMap.CanvasLayer {
 
     ctx.beginPath();
 
-    const color = Util.color16();
+    const color = Util.color16Random();
 
     ctx.lineWidth = 1;
     ctx.strokeStyle = color;
