@@ -55,7 +55,6 @@ const InternalDropdownRenderSelect = memo<DropdownRenderSelectProps>(
       (_originNode) => {
         currentOriginNode.current = _originNode;
 
-        debugger;
         dropdownRenderElement.current = !!filterOptions?.length
           ? children?.({
               originNode: _originNode,

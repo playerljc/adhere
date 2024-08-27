@@ -11,6 +11,8 @@ import DatePickerValueHOCInFormTest from './DatePickerValueHOCInFormTest';
 import DatePickerValueHOCTest from './DatePickerValueHOCTest';
 import FormErrorContainer from './Form/FormErrorContainer';
 import NestingFormItem from './Form/NestingFormItem';
+import InputMultiple from './Input/InputMultiple';
+import InputMultipleSelect from './Input/InputMultipleSelect';
 import ListTest from './List/CheckboxListPaging';
 import PagingEntityValueHOC from './PagingEntityValueHOC';
 import RadioTest from './Radio/AutoCompleteButtonRadioSelect.tsx';
@@ -21,7 +23,7 @@ import CheckAllMultipleSelect from './Select/CheckAllMultipleSelect';
 import AutoCompleteTablePagingSelectValueHOC from './Table/AutoCompleteTablePagingSelectValueHOC.tsx';
 import AutoCompleteTableSelectValueHOC from './Table/AutoCompleteTableSelectValueHOC.tsx';
 import TableTest from './Table/AutoCompleteTreeTablePagingSelectValueHOC.jsx';
-import TagTest from './Tag/VerticalCheckAllCheckableTagGroup';
+import TagTest from './Tag/HorizontalCheckableTagGroup';
 import TimePickerValueHOCInFormTest from './TimePickerValueHOCInFormTest';
 import TimePickerValueHOCTest from './TimePickerValueHOCTest';
 import TransferTest from './Transfer/AutoCompleteTransferSelect.tsx';
@@ -34,5 +36,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <FormErrorContainer />,
+  children: <InputMultipleSelect />,
 });

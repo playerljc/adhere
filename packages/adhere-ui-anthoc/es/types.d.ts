@@ -1,4 +1,4 @@
-import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
+import type { FormItemProps as AntFormItemProps, AutoCompleteProps as AntdAutoCompleteProps, CalendarProps, CascaderProps, CheckboxProps, DatePickerProps, FormProps, FormRule, InputProps, ListProps, PaginationProps, RadioProps, SelectProps, SpaceProps, TableProps, TagProps, TimePickerProps, TransferProps, TreeSelectProps } from 'antd';
 import type { CheckboxGroupProps, CheckboxOptionType } from 'antd/es/checkbox';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import type { RadioGroupProps } from 'antd/es/radio';
@@ -762,3 +762,28 @@ export interface CustomWrapperFormItemProps {
     value?: any;
     onChange: (value?: any) => void;
 }
+export interface InputMultipleOptionsItem {
+    label: string;
+    value: string;
+}
+export interface InputMultipleProps {
+    className?: string;
+    style?: CSSProperties;
+    tagWrapperClassName?: string;
+    tagWrapperStyle?: CSSProperties;
+    inputProps?: InputProps;
+    tagProps?: VerticalCheckableTagGroupProps | HorizontalCheckableTagGroupProps;
+    direction?: 'vertical' | 'horizontal';
+    isCheckAll?: boolean;
+    renderAdd?: () => ReactNode;
+    renderClear?: () => ReactNode;
+    value?: string[];
+    onChange?: (_value?: string[]) => void;
+    options?: InputMultipleOptionsItem[];
+}
+export interface InputMultipleSelectProps extends InputMultipleProps {
+    selectProps?: SelectProps;
+}
+export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps>> & {
+    Select: FC<InputMultipleSelectProps>;
+};

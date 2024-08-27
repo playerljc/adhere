@@ -4,6 +4,7 @@
 
 2024-04-22
 
+* 加入InputMultiple组件
 * Form中加入对FormItem加入getErrorContainer自定义错误输出
 * Form中加入NestingFormItem组件
 * Form的Validate的rules加入required设置

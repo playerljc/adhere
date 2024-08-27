@@ -33,6 +33,7 @@ import FloatButton from './float-button';
 import Form from './form';
 import Image from './image';
 import Input from './input';
+import InputMultiple from './input-multiple';
 import InputNumberDecimal1 from './input-number-decimal1';
 import InputNumberDecimal2 from './input-number-decimal2';
 import InputNumberInteger from './input-number-integer';
@@ -120,6 +121,7 @@ export {
   Form,
   Image,
   Input,
+  InputMultiple,
   InputNumberDecimal1,
   InputNumberDecimal2,
   InputNumberInteger,

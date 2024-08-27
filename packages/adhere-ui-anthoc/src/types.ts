@@ -7,6 +7,7 @@ import type {
   DatePickerProps,
   FormProps,
   FormRule,
+  InputProps,
   ListProps,
   PaginationProps,
   RadioProps,
@@ -1127,3 +1128,39 @@ export interface CustomWrapperFormItemProps {
   value?: any;
   onChange: (value?: any) => void;
 }
+
+export interface InputMultipleOptionsItem {
+  label: string;
+  value: string;
+}
+
+export interface InputMultipleProps {
+  className?: string;
+  style?: CSSProperties;
+  tagWrapperClassName?: string;
+  tagWrapperStyle?: CSSProperties;
+  inputProps?: InputProps;
+  tagProps?: VerticalCheckableTagGroupProps | HorizontalCheckableTagGroupProps;
+  // 方向
+  direction?: 'vertical' | 'horizontal';
+  // 是否带有全选
+  isCheckAll?: boolean;
+  // 渲染添加按钮
+  renderAdd?: () => ReactNode;
+  // 渲染清除按钮
+  renderClear?: () => ReactNode;
+  // 值
+  value?: string[];
+  // onChange
+  onChange?: (_value?: string[]) => void;
+  // options
+  options?: InputMultipleOptionsItem[];
+}
+
+export interface InputMultipleSelectProps extends InputMultipleProps {
+  selectProps?: SelectProps;
+}
+
+export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps>> & {
+  Select: FC<InputMultipleSelectProps>;
+};
