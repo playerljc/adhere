@@ -136,4 +136,5 @@ export default [
   '未来{value}秒',
   '未来{value}毫秒',
   '自定义',
+  '请输入关键字',
 ];

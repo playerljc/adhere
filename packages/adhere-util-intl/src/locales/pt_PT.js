@@ -136,4 +136,5 @@ export default [
   '{value} segundos no futuro',
   '{value} milissegundos no futuro',
   'customizar',
+  'Insira palavras-chave',
 ];
