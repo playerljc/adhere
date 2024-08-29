@@ -1,5 +1,5 @@
 import { FormProps, FormRule } from 'antd';
-import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CascaderViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, Form, ListItemProps, ListProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
+import type { CheckListProps as AntMobileCheckListProps, CheckboxProps as AntMobileCheckbox, CheckboxGroupProps as AntMobileCheckboxGroupProps, RadioGroupProps as AntMobileRadioGroupProps, RadioProps as AntMobileRadioProps, CalendarPickerViewProps, CascaderViewProps, CheckListItemProps, DatePickerViewProps, DialogProps, Form, InputProps, ListItemProps, ListProps, ModalProps, PopupProps, PullToRefreshProps, SearchBarProps, SelectorOption, SelectorProps, SpaceProps } from 'antd-mobile';
 import type { CascaderOption } from 'antd-mobile/es/components/cascader-view';
 import type { CheckListValue } from 'antd-mobile/es/components/check-list';
 import type { Action } from 'antd-mobile/es/components/modal';
@@ -540,4 +540,25 @@ export interface CustomWrapperFormItemProps {
     value?: any;
     onChange: (value?: any) => void;
 }
+export interface InputMultipleProps<T> {
+    className?: string;
+    style?: CSSProperties;
+    selectorWrapperClassName?: string;
+    selectorWrapperStyle?: CSSProperties;
+    inputProps?: InputProps;
+    selectorProps?: FilterCheckAllSelectorProps | FilterSelectorProps | CheckAllSelectorProps | SelectorProps<T>;
+    renderAdd?: () => ReactNode;
+    renderClear?: () => ReactNode;
+    isCheckAll?: boolean;
+    isFilter?: boolean;
+    options?: SelectorProps<T>['options'];
+    value?: SelectorProps<T>['value'];
+    onChange?: SelectorProps<T>['onChange'];
+}
+export type InputMultipleDialogProps<T> = InputMultipleProps<T> & {
+    triggerProps: DialogTriggerPromptProps<T>;
+};
+export type InputMultipleHOCComponent = ReturnType<typeof createFactory<InputMultipleProps<string>>> & {
+    Dialog: FC<InputMultipleDialogProps<string>>;
+};
 export {};

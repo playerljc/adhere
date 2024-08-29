@@ -45,6 +45,7 @@ import ImageViewer from './image-viewer';
 import IndexBar from './index-bar';
 import InfiniteScroll from './infinite-scroll';
 import Input from './input';
+import InputMultiple from './input-multiple';
 import InputNumber from './input-number';
 import JumboTabs from './jumbo-tabs';
 import List from './list';
@@ -145,6 +146,7 @@ export {
   InfiniteScroll,
   Input,
   InputNumber,
+  InputMultiple,
   JumboTabs,
   List,
   Loading,

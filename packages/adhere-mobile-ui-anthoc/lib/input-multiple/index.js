@@ -1,0 +1,2 @@
+"use strict";var __importDefault=function(t){return t&&t.__esModule?t:{default:t}},InputMultipleDialog_1=(Object.defineProperty(exports,"__esModule",{value:!0}),__importDefault(require("./InputMultipleDialog"))),InputMultipleHOC_1=__importDefault(require("./InputMultipleHOC"));InputMultipleHOC_1.default.Dialog=InputMultipleDialog_1.default,exports.default=InputMultipleHOC_1.default;
+//# sourceMappingURL=index.js.map
