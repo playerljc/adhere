@@ -115,6 +115,10 @@ const InputMultiple: FC<InputMultipleProps> = ({
     setSelectOptions([]);
 
     setInputValue('');
+
+    setTargetValue([]);
+
+    onChange?.([]);
   }
 
   return (
