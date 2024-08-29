@@ -4,6 +4,7 @@
 
 2024-03-06
 
+* 加入input-multiple组件
 * PopoverTrigger加入beforeTrigger方法
 * Form加入NestingFormItem
 * 使用ScrollLoad的优化
