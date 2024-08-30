@@ -21,11 +21,23 @@ const InputMultipleSelect: FC<InputMultipleSelectProps> = ({
 
   const targetProps = useMemo(() => selectProps ?? {}, [selectProps]);
 
-  debugger;
+  const targetOptions = useMemo(
+    () =>
+      Array.from(
+        new Set([
+          ...(inputMultipleSelectProps.options ?? []),
+          ...(inputMultipleSelectProps.value ?? []),
+        ]),
+      ).map((_value) => ({
+        label: _value,
+        value: _value,
+      })),
+    [inputMultipleSelectProps?.options, inputMultipleSelectProps?.value],
+  );
 
   const dropdownRender = useCallback(() => {
-    return <InputMultipleHOC {...inputMultipleSelectProps} />;
-  }, [inputMultipleSelectProps]);
+    return <InputMultipleHOC {...inputMultipleSelectProps} options={targetOptions} />;
+  }, [inputMultipleSelectProps, targetOptions]);
 
   return (
     <div className={selectorPrefix}>
@@ -37,7 +49,7 @@ const InputMultipleSelect: FC<InputMultipleSelectProps> = ({
           setTargetValue(_value);
           inputMultipleSelectProps?.onChange?.(_value);
         }}
-        options={inputMultipleSelectProps?.options ?? []}
+        options={targetOptions}
         dropdownRender={dropdownRender}
       />
     </div>
