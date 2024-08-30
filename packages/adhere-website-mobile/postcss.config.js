@@ -21,7 +21,7 @@ const plugins = [
     postcssPxToRem({
       rootValue: 37.5,
       propList: ['*'],
-      // 不排除第三方库
+      // 排除第三方库
       // exclude: /node_modules/i,
     }),
 ].filter((c) => !!c);

@@ -10,6 +10,7 @@ import MobilePRSL from '@baifendian/adhere-mobile-ui-prsl';
 import MobileQuickRangeDate from '@baifendian/adhere-mobile-ui-quick-range-date';
 import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
+import MobileSpin from '@baifendian/adhere-mobile-ui-spin';
 import AutoComplete from '@baifendian/adhere-ui-auto-complete';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
@@ -95,6 +96,7 @@ export {
   MobileQuickRangeDate,
   MobileTabs,
   MobileTimePickerView,
+  MobileSpin,
   AutoComplete,
   BackTopAnimation,
   BMap,

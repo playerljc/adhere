@@ -1,0 +1,32 @@
+.adhere-mobile-ui-spin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  > .adm-mask {
+    &.adm-toast-mask {
+      position: static;
+      top: auto;
+      left: auto;
+
+      > .adm-mask-content {
+        width: 100%;
+        height: 100%;
+
+        > .adm-toast-wrap {
+          position: static;
+          top: auto;
+          left: auto;
+
+          > .adm-toast-main {
+            &.adm-toast-main-icon {
+              overflow-y: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+}

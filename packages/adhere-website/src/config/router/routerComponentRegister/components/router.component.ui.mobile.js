@@ -49,3 +49,7 @@ export const MobileQuickRangeDate = lazy(() =>
 export const MobilePopoverMenu = lazy(() =>
   import(/* webpackChunkName: "mobilepopovermenu" */ '@/components/mobile/popovermenu'),
 );
+
+export const MobileSpin = lazy(() =>
+  import(/* webpackChunkName: "mobilespin" */ '@/components/mobile/spin'),
+);

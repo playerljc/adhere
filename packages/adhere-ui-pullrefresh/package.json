@@ -37,7 +37,7 @@
     "@baifendian/adhere-util-intl": "^2.10.28",
     "@baifendian/adhere-util-resource": "^2.10.28",
     "@juggle/resize-observer": "^3.4.0",
-    "ahooks": "^3.7.11",
+    "ahooks": "^3.7.8",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.12",
     "load-awesome": "^1.1.0",

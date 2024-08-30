@@ -441,6 +441,11 @@
     "path": "/adhere/component/mobile/popovermenu"
   },
   {
+    "kw": ["无侵入的loading", "MobileSpin"],
+    "group": "组件 - Mobile- UI",
+    "path": "/adhere/component/mobile/spin"
+  },
+  {
     "kw": ["echarts", "echarts"],
     "group": "Gallery",
     "path": "/adhere/gallery/echarts"

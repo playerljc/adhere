@@ -477,6 +477,10 @@ export const AntHOCInputMultipleTriggerForm = lazy(() =>
   ),
 );
 
+export const Spin = lazy(() =>
+  import(/* webpackChunkName: "spin" */ '@/components/ui/spin/examples/p1.jsx'),
+);
+
 export const FGTDMobileCascaderViewAsyncStandard = lazy(() =>
   import(
     /* webpackChunkName: "fgtd" */ '@/components/ui/fieldgeneratortodict/examples/MobileCascaderView/MobileCascaderViewAsyncStandard.jsx'

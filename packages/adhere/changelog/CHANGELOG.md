@@ -4,6 +4,8 @@
 
 2024-05-11
 
+* **adhere-mobile-ui-spin**
+  - 加入adhere-mobile-ui-spin组件
 * **adhere-mobile-ui-prompt-warnprompt**
   - 加入adhere-mobile-ui-prompt-warnprompt组件
 * **adhere-mobile-ui-prompt-successprompt**

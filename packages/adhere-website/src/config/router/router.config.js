@@ -100,6 +100,7 @@ const {
   MobilePRSL,
   MobileQuickRangeDate,
   MobilePopoverMenu,
+  MobileSpin,
 } = Components;
 
 export default () => [
@@ -641,6 +642,11 @@ export default () => [
                 path: '/adhere/component/mobile/popovermenu',
                 name: 'PopoverMenu',
                 component: MobilePopoverMenu,
+              },
+              {
+                path: '/adhere/component/mobile/spin',
+                name: 'Spin',
+                component: MobileSpin,
               },
             ],
           },

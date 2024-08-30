@@ -14,8 +14,8 @@
   "license": "ISC",
   "author": "playerljc",
   "scripts": {
-    "buildapp:dev": "cross-env environment=dev mode=production publicPath=adhere router=hash ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
-    "buildapp:pe": "cross-env environment=pe mode=production publicPath=adhere router=hash ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildapp:dev": "cross-env environment=dev mode=production publicPath=adhere router=hash media=true ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "buildapp:pe": "cross-env environment=pe mode=production publicPath=adhere router=hash media=true ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",

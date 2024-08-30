@@ -93,6 +93,7 @@ const {
   AntHOCTimePopup,
   AntHOCInputMultipleTrigger,
   AntHOCInputMultipleTriggerForm,
+  Spin,
   FGTDMobileCascaderViewAsyncStandard,
   FGTDMobileCascaderViewDynamicFilter,
   FGTDMobileCascaderViewDynamicStandard,
@@ -626,6 +627,11 @@ export default () => [
       {
         path: '/adhere/component/ui/anthoc/inputmultiple/inputmultipletriggerform',
         component: AntHOCInputMultipleTriggerForm,
+      },
+
+      {
+        path: '/adhere/component/ui/anthoc/spin/p1',
+        component: Spin,
       },
 
       // -----------
