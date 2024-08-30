@@ -50,6 +50,7 @@ import DatePopupTimestampValueHoc from './DatePopup/TimestampValueHoc';
 import DialogTrigger from './Dialog/Trigger';
 import DialogTriggerPrompt from './Dialog/TriggerPrompt';
 import NestingFormItem from './Form/NestingFormItem';
+import InputMultipleForm from './Input/Form';
 import InputMultiple from './Input/InputMultiple';
 import InputMultipleDialog from './Input/InputMultipleDialog';
 import ModalTrigger from './Modal/Trigger';
@@ -79,5 +80,5 @@ import TimePopup from './TimePopup/TimePopup';
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <InputMultipleDialog />,
+  children: <InputMultipleForm />,
 });

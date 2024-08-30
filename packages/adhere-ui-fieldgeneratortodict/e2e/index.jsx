@@ -126,5 +126,5 @@ DictConfig();
 // });
 
 e2e.Mobile({
-  children: <MobileCheckListACPaging />,
+  children: <MobileCheckListACStandard />,
 });
