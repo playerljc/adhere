@@ -6,6 +6,7 @@ import Util from '@/util';
 const FUN_NAMES = [
   'CalendarModal',
   'CalendarPopup',
+  'CalendarDialog',
   'CascaderView',
   'Checkbox',
   'CheckList',
@@ -20,14 +21,12 @@ const FUN_NAMES = [
   'TimeDialog',
   'TimeModal',
   'TimePopup',
+  'InputMultipleTrigger',
+  'InputMultipleTriggerForm',
   '_PropsSection',
 ];
 
 export default () => {
-  const [elements, setElements] = useState([]);
-
-  const index = useRef(0);
-
   const [CalendarDialogCodeText, setCalendarDialogCodeText] = useState('');
 
   const [CalendarModalCodeText, setCalendarModalCodeText] = useState('');
@@ -184,6 +183,10 @@ export default () => {
 
   const [TimePopupCodeText, setTimePopupCodeText] = useState('');
 
+  const [InputMultipleTriggerCodeText, setInputMultipleTriggerCodeText] = useState('');
+
+  const [InputMultipleTriggerFormCodeText, setInputMultipleTriggerFormCodeText] = useState('');
+
   const CalendarModal = () => (
     <CodeBoxSection
       title="CalendarModal"
@@ -254,6 +257,30 @@ export default () => {
 
   const TimePopup = () => (
     <CodeBoxSection title="TimePopup" columnCount={1} config={TimePopupCodeBoxPanelConfig} />
+  );
+
+  const InputMultipleTrigger = () => (
+    <CodeBoxSection
+      title="InputMultipleTrigger"
+      columnCount={1}
+      config={InputMultipleTriggerCodeBoxPanelConfig}
+    />
+  );
+
+  const InputMultipleTriggerForm = () => (
+    <CodeBoxSection
+      title="InputMultipleTriggerForm"
+      columnCount={1}
+      config={InputMultipleTriggerFormCodeBoxPanelConfig}
+    />
+  );
+
+  const CalendarDialog = () => (
+    <CodeBoxSection
+      title="CalendarDialog"
+      columnCount={1}
+      config={CalendarDialogCodeBoxPanelConfig}
+    />
   );
 
   const _PropsSection = () => (
@@ -2390,20 +2417,80 @@ export default () => {
     },
   ];
 
-  function onScrollBottom() {
-    return new Promise((resolve) => {
-      if (index.current >= FUN_NAMES.length) return;
+  const InputMultipleTriggerCodeBoxPanelConfig = [
+    {
+      id: `p1`,
+      name: `InputMultipleTrigger`,
+      cardProps: {
+        description: {
+          title: 'InputMultipleTrigger',
+          info: 'InputMultipleTrigger',
+        },
+      },
+      displayBodyStyle: {
+        width: 450,
+      },
+      active: 'index.jsx',
+      config: [
+        {
+          key: 'index.jsx',
+          title: 'index.jsx',
+          style: { height: 500 },
+          theme: 'eclipse',
+          codeText: InputMultipleTriggerCodeText,
+        },
+      ],
+      type: 'PlayGroundTabMobile',
+      url: `${
+        Constent(CustomEvnVars).mobileOrigin
+      }/#/adhere/component/ui/anthoc/inputmultiple/inputmultipletrigger`,
+    },
+  ];
 
-      setTimeout(() => {
-        setElements((_elements) => [
-          ..._elements,
-          ...FUN_NAMES.slice(index.current++, index.current),
-        ]);
+  const InputMultipleTriggerFormCodeBoxPanelConfig = [
+    {
+      id: `p1`,
+      name: `InputMultipleTriggerForm`,
+      cardProps: {
+        description: {
+          title: 'InputMultipleTriggerForm',
+          info: 'InputMultipleTriggerForm',
+        },
+      },
+      displayBodyStyle: {
+        width: 450,
+      },
+      active: 'index.jsx',
+      config: [
+        {
+          key: 'index.jsx',
+          title: 'index.jsx',
+          style: { height: 500 },
+          theme: 'eclipse',
+          codeText: InputMultipleTriggerFormCodeText,
+        },
+      ],
+      type: 'PlayGroundTabMobile',
+      url: `${
+        Constent(CustomEvnVars).mobileOrigin
+      }/#/adhere/component/ui/anthoc/inputmultiple/inputmultipletriggerform`,
+    },
+  ];
 
-        resolve();
-      }, 1000);
-    });
-  }
+  // function onScrollBottom() {
+  //   return new Promise((resolve) => {
+  //     if (index.current >= FUN_NAMES.length) return;
+  //
+  //     setTimeout(() => {
+  //       setElements((_elements) => [
+  //         ..._elements,
+  //         ...FUN_NAMES.slice(index.current++, index.current),
+  //       ]);
+  //
+  //       resolve();
+  //     }, 1000);
+  //   });
+  // }
 
   useEffect(() => {
     Util.getMobileCodeText('anthoc/examples/CalendarDialog/CalendarDialog.jsx').then(
@@ -2665,21 +2752,23 @@ export default () => {
     );
 
     Util.getMobileCodeText('anthoc/examples/TimePopup/TimePopup.jsx').then(setTimePopupCodeText);
+
+    Util.getMobileCodeText('anthoc/examples/InputMultiple/InputMultipleTrigger.jsx').then(
+      setInputMultipleTriggerCodeText,
+    );
+
+    Util.getMobileCodeText('anthoc/examples/InputMultiple/InputMultipleTriggerForm.jsx').then(
+      setInputMultipleTriggerFormCodeText,
+    );
   }, []);
 
   return (
-    <PlayGroundPage onScrollBottom={onScrollBottom}>
+    <PlayGroundPage>
       <Section title="AntMobileHOC">
         <p>AntdMobile组件HOC和增强</p>
       </Section>
 
-      <CodeBoxSection
-        title="CalendarDialog"
-        columnCount={1}
-        config={CalendarDialogCodeBoxPanelConfig}
-      />
-
-      {elements.map((_funName) => eval(`${_funName}()`))}
+      {FUN_NAMES.map((_funName) => eval(`${_funName}()`))}
     </PlayGroundPage>
   );
 };

@@ -56,6 +56,7 @@ import FormErrorContainerCodeText from '!!raw-loader!./examples/Form/FormErrorCo
 import NestingFormItemCodeText from '!!raw-loader!./examples/Form/NestingFormItem';
 import ValidatorRulesCodeText from '!!raw-loader!./examples/Form/ValidatorRules';
 import InputMultipleSelectCodeText from '!!raw-loader!./examples/InputMultiple/InputMultipleSelect';
+import InputMultipleSelectFormCodeText from '!!raw-loader!./examples/InputMultiple/InputMultipleSelectForm';
 import AutoCompleteCheckAllListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelectCodeText from '!!raw-loader!./examples/List/AutoCompleteListSelect';
@@ -206,6 +207,7 @@ import FormErrorContainer from './examples/Form/FormErrorContainer';
 import NestingFormItem from './examples/Form/NestingFormItem';
 import ValidatorRules from './examples/Form/ValidatorRules';
 import InputMultipleSelect from './examples/InputMultiple/InputMultipleSelect';
+import InputMultipleSelectForm from './examples/InputMultiple/InputMultipleSelectForm';
 import AutoCompleteCheckAllListSelect from './examples/List/AutoCompleteCheckAllListSelect';
 import AutoCompleteListPagingSelect from './examples/List/AutoCompleteListPagingSelect';
 import AutoCompleteListSelect from './examples/List/AutoCompleteListSelect';
@@ -2655,7 +2657,7 @@ export default () => {
       />
 
       <CodeBoxSection
-        title="InputMultipleSelect"
+        title="InputMultiple"
         config={[
           {
             id: 'p1',
@@ -2673,6 +2675,25 @@ export default () => {
             renderChildren: () => (
               <div className={styles.Wrapper}>
                 <InputMultipleSelect />
+              </div>
+            ),
+          },
+          {
+            id: 'p2',
+            name: '在form中使用InputMultipleSelect',
+            mode: 'code',
+            scope: { React },
+            type: 'PlayGround',
+            codeText: InputMultipleSelectFormCodeText,
+            cardProps: {
+              description: {
+                title: '在form中使用InputMultipleSelect',
+                info: '在form中使用InputMultipleSelect',
+              },
+            },
+            renderChildren: () => (
+              <div className={styles.Wrapper}>
+                <InputMultipleSelectForm />
               </div>
             ),
           },

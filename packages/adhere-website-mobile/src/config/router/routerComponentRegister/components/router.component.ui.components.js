@@ -465,6 +465,18 @@ export const AntHOCTimePopup = lazy(() =>
   ),
 );
 
+export const AntHOCInputMultipleTrigger = lazy(() =>
+  import(
+    /* webpackChunkName: "anthoc" */ '@/components/ui/anthoc/examples/InputMultiple/InputMultipleTrigger.jsx'
+  ),
+);
+
+export const AntHOCInputMultipleTriggerForm = lazy(() =>
+  import(
+    /* webpackChunkName: "anthoc" */ '@/components/ui/anthoc/examples/InputMultiple/InputMultipleTriggerForm.jsx'
+  ),
+);
+
 export const FGTDMobileCascaderViewAsyncStandard = lazy(() =>
   import(
     /* webpackChunkName: "fgtd" */ '@/components/ui/fieldgeneratortodict/examples/MobileCascaderView/MobileCascaderViewAsyncStandard.jsx'

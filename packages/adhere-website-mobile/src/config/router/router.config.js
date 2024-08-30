@@ -1,5 +1,3 @@
-import { lazy } from 'react';
-
 import TabsHome from '@/components/ui/tabs/examples/p10/Home';
 import TabsMessage from '@/components/ui/tabs/examples/p10/Message';
 import TabsPersonalCenter from '@/components/ui/tabs/examples/p10/PersonalCenter';
@@ -93,6 +91,8 @@ const {
   AntHOCTimeModal,
   AntHOCTimestampValueHoc,
   AntHOCTimePopup,
+  AntHOCInputMultipleTrigger,
+  AntHOCInputMultipleTriggerForm,
   FGTDMobileCascaderViewAsyncStandard,
   FGTDMobileCascaderViewDynamicFilter,
   FGTDMobileCascaderViewDynamicStandard,
@@ -616,6 +616,16 @@ export default () => [
       {
         path: '/adhere/component/ui/anthoc/timepopup/timepopup',
         component: AntHOCTimePopup,
+      },
+
+      {
+        path: '/adhere/component/ui/anthoc/inputmultiple/inputmultipletrigger',
+        component: AntHOCInputMultipleTrigger,
+      },
+
+      {
+        path: '/adhere/component/ui/anthoc/inputmultiple/inputmultipletriggerform',
+        component: AntHOCInputMultipleTriggerForm,
       },
 
       // -----------
