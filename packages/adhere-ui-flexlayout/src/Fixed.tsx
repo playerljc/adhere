@@ -60,15 +60,11 @@ const Fixed = memo<FixedProps>(
 
     const classList = useMemo(
       () =>
-        classNames(
-          selectorPrefix,
-          className ?? '',
-          /*collapseClassName,*/ {
-            [`${selectorPrefix}-fit`]: fit,
-            [`${selectorPrefix}-col-${span}`]: isUseGrid,
-            [`${selectorPrefix}-gap`]: isUseGap,
-          },
-        ),
+        classNames(selectorPrefix, className ?? '', {
+          [`${selectorPrefix}-fit`]: fit,
+          [`${selectorPrefix}-col-${span}`]: isUseGrid,
+          [`${selectorPrefix}-gap`]: isUseGap,
+        }),
       [className, span, fit, isUseGap, isUseGrid /*collapseClassName*/],
     );
 

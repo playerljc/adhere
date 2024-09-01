@@ -9,8 +9,8 @@ export default () => (
   <div className={styles.Wrapper}>
     <SplitLayout.TRBLC.LRTCBSplitLayout
       style={{ height: '100%' }}
-      gutter={50}
-      autoInnerProps={{ gutter: [0, 30] }}
+      gutter={20}
+      autoInnerProps={{ gutter: 20 }}
       tProps={{
         fit: true,
         span: 4,

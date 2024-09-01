@@ -26,16 +26,11 @@ export const selectorPrefix = 'adhere-ui-flex-layout';
  */
 const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes<any>>(
   forwardRef<any, FlexLayoutProps>((props, ref) => {
-    const {
-      className = '',
-      style = {},
-      direction = 'vertical',
-      gutter,
-      children,
-      ...attrs
-    } = props;
+    const { className, style, direction, gutter, children, ...attrs } = props;
 
     const { media } = useContext(ConfigProvider.Context);
+
+    const targetDirection = useMemo(() => direction ?? 'vertical', [direction]);
 
     /**
      * getVerticalGridStyle
@@ -62,13 +57,10 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
         columnGapOrigin = gutter as number;
       }
 
-      const columnGapOriginValue = getValueWithUnit(
-        columnGapOrigin / 2,
-        media,
-      ); /*`${columnGapOrigin / 2}px`;*/
+      const columnGapOriginValue = getValueWithUnit(columnGapOrigin / 2, media);
 
       return {
-        rowGap: getValueWithUnit(rowGapOrigin, media) /*`${rowGapOrigin}px`*/,
+        rowGap: getValueWithUnit(rowGapOrigin, media),
         marginLeft: `-${columnGapOriginValue}`,
         marginRight: `-${columnGapOriginValue}`,
       };
@@ -83,13 +75,13 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
         ['vertical', getVerticalGridStyle],
       ]);
 
-      return map.get(direction)?.();
-    }, [direction, getHorizontalGridStyle, getVerticalGridStyle]);
+      return map.get(targetDirection)?.();
+    }, [targetDirection, getHorizontalGridStyle, getVerticalGridStyle]);
 
     // class
     const classList = useMemo(
-      () => classNames(selectorPrefix, className, `${selectorPrefix}-${direction}`),
-      [className, direction],
+      () => classNames(selectorPrefix, className, `${selectorPrefix}-${targetDirection}`),
+      [className, targetDirection],
     );
 
     // style
@@ -109,7 +101,7 @@ const InternalFlexLayout = memo<PropsWithoutRef<FlexLayoutProps> & RefAttributes
       <FlexContext.Provider
         value={{
           gutter,
-          direction,
+          direction: targetDirection,
           children,
         }}
       >
@@ -137,5 +129,4 @@ FlexLayout.useScrollLayout = useScrollLayout;
 FlexLayout.ScrollLayoutContext = ScrollLayoutContext;
 FlexLayout.TRBLC = TRBLC;
 
-// forwardRef<any, FlexLayoutProps>(FlexLayout)
 export default FlexLayout;

@@ -10,7 +10,7 @@ export default () => (
     <SplitLayout.TRBLC.CBRSplitLayout
       style={{ height: '100%' }}
       gutter={20}
-      autoInnerProps={{ gutter: [0, 20] }}
+      autoInnerProps={{ gutter: 20 }}
       bProps={{
         fit: true,
         span: 3,

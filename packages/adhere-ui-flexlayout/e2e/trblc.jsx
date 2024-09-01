@@ -65,20 +65,20 @@ export default () => {
       {/*<FlexLayout.TRBLC.TLCLayout
         gutter={20}
         autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        autoInnerProps={{ autoFixed: true, gutter: 20 }}
         tProps={{
           fit: true,
           span: 8,
-          children:<Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         lProps={{
           fit: true,
           span: 8,
-          children:<Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
           autoFixed: false,
-          children:(
+          children: (
             <Card>
               {Array.from({ length: 1 }).map((t) => (
                 <p>1</p>
@@ -90,101 +90,101 @@ export default () => {
 
       {/*<FlexLayout.TRBLC.TRCLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         tProps={{
           fit: true,
           span: 8,
-          children:<Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         rProps={{
           fit: true,
           span: 8,
-          children:<Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          children:<Card>center</Card>,
+          children: <Card>center</Card>,
         }}
       />*/}
 
       {/*<FlexLayout.TRBLC.TLRCLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         tProps={{
           fit: true,
           span: 3,
-          children:<Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         lProps={{
           fit: true,
           span: 3,
-          children:<Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          children:<Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          children:<Card>center</Card>,
+          children: <Card>center</Card>,
         }}
       />*/}
 
       {/*<FlexLayout.TRBLC.LCBLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,
-          children:<Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
-          children:<Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          children:<Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
       />*/}
 
       {/*<FlexLayout.TRBLC.CRBLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         rProps={{
           fit: true,
           span: 3,
-          children:<Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          children:<Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          children:<Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
       />*/}
 
       {/*<FlexLayout.TRBLC.LCRBLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,
-          children:<Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          children:<Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         cProps={{
-          children:<Card>Center</Card>,
+          children: <Card>Center</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          children:<Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
       />*/}
 
@@ -209,7 +209,7 @@ export default () => {
         }}
       />*/}
 
-      <FlexLayout.TRBLC.LCRLayout
+      {/*<FlexLayout.TRBLC.LCRLayout
         gutter={20}
         lProps={{
           fit: true,
@@ -227,7 +227,7 @@ export default () => {
           children: <Card>Right</Card>,
           trigger: (collapse, defaultTrigger) => defaultTrigger,
         }}
-      />
+      />*/}
 
       {/*<FlexLayout direction="horizontal" gutter={20}>
         <Fixed span={6}>
@@ -277,7 +277,7 @@ export default () => {
 
       {/*<FlexLayout.TRBLC.LTCLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,
@@ -295,7 +295,7 @@ export default () => {
 
       {/*<FlexLayout.TRBLC.LTCLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,
@@ -313,7 +313,7 @@ export default () => {
 
       {/*<FlexLayout.TRBLC.LBCLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,
@@ -332,7 +332,7 @@ export default () => {
       {/*<FlexLayout.TRBLC.LTCBLayout
         gutter={20}
         autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        autoInnerProps={{ autoFixed: true, gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,
@@ -364,7 +364,7 @@ export default () => {
 
       {/*<FlexLayout.TRBLC.TCRLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         tProps={{
           fit: true,
           span: 3,
@@ -382,7 +382,7 @@ export default () => {
 
       {/*<FlexLayout.TRBLC.CBRLayout
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         bProps={{
           fit: true,
           span: 3,
@@ -401,7 +401,7 @@ export default () => {
       {/*<FlexLayout.TRBLC.TCBRLayout
         gutter={20}
         autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        autoInnerProps={{ autoFixed: true, gutter: 20 }}
         tProps={{
           fit: true,
           span: 3,
@@ -434,7 +434,7 @@ export default () => {
       {/*<FlexLayout.TRBLC.TBLCRLayout
         gutter={20}
         autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        autoInnerProps={{ autoFixed: true, gutter: 20 }}
         tProps={{
           fit: true,
           span: 3,
@@ -469,33 +469,33 @@ export default () => {
         }}
       />*/}
 
-      {/*<FlexLayout.TRBLC.LRTCBLayout
+      <FlexLayout.TRBLC.LRTCBLayout
         gutter={20}
         autoWrapProps={{ autoFixed: false }}
-        autoInnerProps={{ autoFixed: true, gutter: [0, 20] }}
+        autoInnerProps={{ autoFixed: true, gutter: 20 }}
         tProps={{
           fit: true,
           span: 4,
-          children:<Card>Top</Card>,
+          children: <Card>Top</Card>,
         }}
         rProps={{
           fit: true,
           span: 3,
-          children:<Card>Right</Card>,
+          children: <Card>Right</Card>,
         }}
         bProps={{
           fit: true,
           span: 3,
-          children:<Card>Bottom</Card>,
+          children: <Card>Bottom</Card>,
         }}
         lProps={{
           fit: true,
           style: { width: '50%' },
-          children:<Card>Left</Card>,
+          children: <Card>Left</Card>,
         }}
         cProps={{
           autoFixed: false,
-          children:(
+          children: (
             <Card>
               {Array.from({ length: 100 }).map((t) => (
                 <p>
@@ -505,7 +505,7 @@ export default () => {
             </Card>
           ),
         }}
-      />*/}
+      />
     </div>
   );
 };

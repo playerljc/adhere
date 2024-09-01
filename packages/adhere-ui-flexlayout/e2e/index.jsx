@@ -10,5 +10,5 @@ import Trblc from './trblc';
 import './index.less';
 
 e2e.PC({
-  children: <Normal />,
+  children: <Trblc />,
 });

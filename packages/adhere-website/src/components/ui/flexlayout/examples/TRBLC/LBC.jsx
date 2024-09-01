@@ -11,7 +11,7 @@ export default () => {
       <FlexLayout.TRBLC.LBCLayout
         style={{ height: '100%' }}
         gutter={20}
-        autoInnerProps={{ gutter: [0, 20] }}
+        autoInnerProps={{ gutter: 20 }}
         lProps={{
           fit: true,
           span: 3,

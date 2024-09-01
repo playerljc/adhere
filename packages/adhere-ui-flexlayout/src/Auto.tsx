@@ -20,8 +20,8 @@ const Auto = memo<AutoProps>(
   forwardRef<any, AutoProps>((props, ref) => {
     const {
       children,
-      className = '',
-      style = {},
+      className,
+      style,
       autoFixed = true,
       fit = true,
       isUseNormal = false,

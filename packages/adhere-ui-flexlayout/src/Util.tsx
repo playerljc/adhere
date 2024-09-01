@@ -21,7 +21,7 @@ const getHorizontalGridStyle = ({
 }): CSSProperties => {
   const gridLayout: any = {};
 
-  const gapValue = getValueWithUnit(gapOrigin, media); /*`${gapOrigin / 2}px`;*/
+  const gapValue = getValueWithUnit(gapOrigin / 2, media);
 
   gridLayout.paddingLeft = gapValue;
   gridLayout.paddingRight = gapValue;
@@ -50,15 +50,15 @@ const getVerticalGridStyle = ({
 }): CSSProperties => {
   const gridStyle: any = {};
 
-  const gapValue = getValueWithUnit(gapOrigin / 2, media); /*`${gapOrigin / 2}px`*/
+  const gapValue = getValueWithUnit(gapOrigin / 2, media);
 
   // 栅格设置
   if (span) {
-    const gapHeight = (children.length - 1) * gapOrigin;
+    const heightGap = (children.length - 1) * gapOrigin;
     // (100% - 所有栅格间隙的高度) * (span / 24)
     // gridStyle.height = `calc( (100% - ${gapHeight}px) * (${span}/${gridCount}) )`;
     gridStyle.height = `calc( (100% - ${getValueWithUnit(
-      gapHeight,
+      heightGap,
       media,
     )}) * (${span}/${gridCount}) )`;
   }
@@ -93,7 +93,13 @@ export const getGridStyle = ({
     if (gutter.length === 1) {
       gapOrigin = gutter[0];
     } else if (gutter.length === 2) {
-      gapOrigin = gutter[1];
+      if (direction === 'horizontal') {
+        gapOrigin = gutter[1];
+      } else if (direction === 'vertical') {
+        gapOrigin = gutter[0];
+      } else {
+        gapOrigin = gutter[0];
+      }
     }
   } else {
     gapOrigin = gutter as number;

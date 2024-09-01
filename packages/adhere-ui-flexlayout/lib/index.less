@@ -8,9 +8,9 @@
   height: 100%;
   overflow: hidden;
 
-  &.adhere-ui-flex-layout-trblc-no-autofix {
-    overflow: auto;
-  }
+  //&.adhere-ui-flex-layout-trblc-no-autofix {
+  //  overflow: auto;
+  //}
 
   > .adhere-ui-flex-layout {
     height: 100%;
@@ -163,10 +163,12 @@
     }
 
     &.adhere-ui-flex-layout-trblc-auto {
-      overflow: hidden;
-
       &.adhere-ui-flex-layout-trblc-auto-no-autofix {
         overflow: inherit;
+      }
+
+      &.adhere-ui-flex-layout-auto-gap {
+        overflow: hidden !important;
       }
     }
 
