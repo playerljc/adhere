@@ -5,6 +5,7 @@ import P4CodeText from '!!raw-loader!./examples/p4';
 import P5CodeText from '!!raw-loader!./examples/p5';
 import P6CodeText from '!!raw-loader!./examples/p6';
 import P7CodeText from '!!raw-loader!./examples/p7';
+import P8CodeText from '!!raw-loader!./examples/p8';
 
 import React from 'react';
 
@@ -17,6 +18,7 @@ import P4 from './examples/p4';
 import P5 from './examples/p5';
 import P6 from './examples/p6';
 import P7 from './examples/p7';
+import P8 from './examples/p8';
 
 export default () => {
   function boxPanelConfig() {
@@ -126,6 +128,21 @@ export default () => {
         codeText: P7CodeText,
         renderChildren: () => <P7 />,
       },
+      {
+        id: `p8`,
+        name: `useItemsRef`,
+        mode: 'code',
+        scope: { React },
+        cardProps: {
+          description: {
+            title: 'useItemsRef',
+            info: 'useItemsRef',
+          },
+        },
+        type: 'PlayGround',
+        codeText: P8CodeText,
+        renderChildren: () => <P8 />,
+      },
     ];
   }
 
@@ -141,6 +158,7 @@ export default () => {
           <li>- useSetState</li>
           <li>- useTriggerQuery</li>
           <li>- use</li>
+          <li>- useItemsRef</li>
         </ul>
       </Section>
 
