@@ -34,8 +34,8 @@ function toPoint(percent: string) {
 
 const InternalSplitLayout = memo<SplitLayoutProps>((props) => {
   const {
-    className = '',
-    style = {},
+    className,
+    style,
     maxSize = '100%',
     minSize = 10,
     onCanDrag,
