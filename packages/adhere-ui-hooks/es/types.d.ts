@@ -1,6 +1,7 @@
 import use from './use';
 import useFirst from './useFirst';
 import useForceUpdate from './useForceUpdate';
+import useItemsRef from './useItemsRef';
 import useLatestState from './useLatestState';
 import usePrevious from './usePrevious';
 import usePropToState from './usePropToState';
@@ -27,4 +28,5 @@ export type HooksComponent = {
     useTriggerQuery: typeof useTriggerQuery;
     usePropToState: typeof usePropToState;
     useLatestState: typeof useLatestState;
+    useItemsRef: typeof useItemsRef;
 };
