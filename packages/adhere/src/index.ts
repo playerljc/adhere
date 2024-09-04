@@ -8,9 +8,9 @@ import MobileSuccessPrompt from '@baifendian/adhere-mobile-ui-prompt-successprom
 import MobileWarnPrompt from '@baifendian/adhere-mobile-ui-prompt-warnprompt';
 import MobilePRSL from '@baifendian/adhere-mobile-ui-prsl';
 import MobileQuickRangeDate from '@baifendian/adhere-mobile-ui-quick-range-date';
+import MobileSpin from '@baifendian/adhere-mobile-ui-spin';
 import MobileTabs from '@baifendian/adhere-mobile-ui-tabs';
 import MobileTimePickerView from '@baifendian/adhere-mobile-ui-time-picker-view';
-import MobileSpin from '@baifendian/adhere-mobile-ui-spin';
 import AutoComplete from '@baifendian/adhere-ui-auto-complete';
 import BackTopAnimation from '@baifendian/adhere-ui-backtopanimation';
 import BMap from '@baifendian/adhere-ui-bmap';
@@ -24,6 +24,7 @@ import ContextMenu from '@baifendian/adhere-ui-contextmenu';
 import ContourBlock from '@baifendian/adhere-ui-contourblock';
 import CurrencySymbol from '@baifendian/adhere-ui-currency-symbol';
 import DateDisplay from '@baifendian/adhere-ui-datedisplay';
+import ECharts from '@baifendian/adhere-ui-echarts';
 import Ellipsis from '@baifendian/adhere-ui-ellipsis';
 import Expression from '@baifendian/adhere-ui-expression';
 import FieldGeneratorToDict from '@baifendian/adhere-ui-fieldgeneratortodict';
@@ -94,9 +95,9 @@ export {
   MobileWarnPrompt,
   MobilePRSL,
   MobileQuickRangeDate,
+  MobileSpin,
   MobileTabs,
   MobileTimePickerView,
-  MobileSpin,
   AutoComplete,
   BackTopAnimation,
   BMap,
@@ -110,6 +111,7 @@ export {
   ContourBlock,
   CurrencySymbol,
   DateDisplay,
+  ECharts,
   Ellipsis,
   Expression,
   FieldGeneratorToDict,

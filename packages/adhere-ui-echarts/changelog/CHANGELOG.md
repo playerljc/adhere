@@ -1,0 +1,72 @@
+# 1.0.25
+
+***
+
+2024-05-19
+
+* dict.locals.config.js加入可以动态添加和删除的方法
+* dict.locals.config.js加入AntDesignMobile的国际化
+
+# 1.0.24
+
+***
+
+2024-02-07
+
+* dict.moment.config.js中加入时间国际化formats和本地化formats
+
+# 1.0.23
+
+***
+
+2023-08-23
+
+* dict.gis.config.js加入Dict.handlers.ResourceGisDefaultExtent
+
+# 1.0.22
+
+***
+
+2023-06-06
+
+* 修复dict.locals.config.js中antd语言包引用
+
+# 1.0.21
+
+***
+
+2023-05-17
+
+* locals中加入了新的语种
+
+# 1.0.20
+
+***
+
+2023-02-27
+
+* 去掉request.context的Api
+
+# 1.0.19
+
+***
+
+2022-12-26
+
+* 加入resource资源目录
+
+# 1.0.18
+
+***
+
+2022-7-27
+
+* dict.moment.config.js资源的修改
+
+# 1.0.0
+
+***
+
+2020-12-22
+
+* 加入代码

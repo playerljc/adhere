@@ -73,6 +73,7 @@ const namedMap = new Map([
   ['@baifendian/adhere-ui-expression', 'Expression'],
   ['@baifendian/adhere-ui-quick-range-date', 'QuickRangeDate'],
   ['@baifendian/adhere-ui-currency-symbol', 'CurrencySymbol'],
+  ['@baifendian/adhere-ui-echarts', 'ECharts'],
   ['@baifendian/adhere-util', 'Util'],
   ['@baifendian/adhere-util-communication-ajax', 'Ajax'],
   ['@baifendian/adhere-util-decorators', 'Decorators'],
