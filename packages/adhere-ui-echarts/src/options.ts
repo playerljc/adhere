@@ -14,7 +14,7 @@ import {
 } from 'echarts/charts';
 
 import merge from './merge';
-import type { AreaStyle, Radius } from './types';
+import type { AreaStyle, Radius, RoseType } from './types';
 
 /**
  * Echarts配置的分类
@@ -107,7 +107,7 @@ const Options = {
       radius,
     }),
   //南丁格尔图（玫瑰图）(饼图)
-  pieToRoseOption: (roseType: boolean) =>
+  pieToRoseOption: (roseType: RoseType) =>
     merge(Options.pieOption(), {
       roseType,
     }),
@@ -174,6 +174,7 @@ const Options = {
   // 仪表盘
   gaugeOption: () => ({
     type: 'gauge',
+    radius: '100%',
   }),
   // ---------------------------------------------------------------
 
@@ -435,16 +436,16 @@ const Options = {
       ),
     });
   },
-  pieChartToRose: (roseType: boolean | boolean[], series?: PieSeriesOption[]) => {
+  pieChartToRose: (roseType: RoseType | RoseType[], series?: PieSeriesOption[]) => {
     if (!series || !series?.length) {
       return merge(Options.baseOption(), {
-        series: [Options.pieToRoseOption(roseType as boolean)],
+        series: [Options.pieToRoseOption(roseType as RoseType)],
       });
     }
 
     return merge(Options.baseOption(), {
       series: series.map((s, _index) =>
-        merge(Options.pieToRoseOption((roseType as boolean[])[_index]), s),
+        merge(Options.pieToRoseOption((roseType as RoseType[])[_index]), s),
       ),
     });
   },

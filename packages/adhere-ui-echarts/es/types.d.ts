@@ -8,3 +8,4 @@ export interface AreaStyle {
     opacity: number;
 }
 export type Radius = number | string | Array<number | string>;
+export type RoseType = boolean | 'area' | 'radius';

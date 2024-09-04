@@ -42,7 +42,7 @@ declare const _default: {
             type: string;
         };
         readonly pieToRadiusOption: (radius: import("./types").Radius) => any;
-        readonly pieToRoseOption: (roseType: boolean) => any;
+        readonly pieToRoseOption: (roseType: import("./types").RoseType) => any;
         readonly scatterOption: () => {
             type: string;
         };
@@ -88,7 +88,7 @@ declare const _default: {
         readonly lineChartToStepValueToX: (step: string | string[], series?: import("echarts/charts").LineSeriesOption[] | undefined) => any;
         readonly pieChart: (series?: import("echarts/charts").PieSeriesOption[] | undefined) => any;
         readonly pieChartToRadius: (radius: import("./types").Radius | import("./types").Radius[], series?: import("echarts/charts").PieSeriesOption[] | undefined) => any;
-        readonly pieChartToRose: (roseType: boolean | boolean[], series?: import("echarts/charts").PieSeriesOption[] | undefined) => any;
+        readonly pieChartToRose: (roseType: import("./types").RoseType | import("./types").RoseType[], series?: import("echarts/charts").PieSeriesOption[] | undefined) => any;
         readonly scatterChart: (series?: import("echarts/charts").ScatterSeriesOption[] | undefined) => any;
         readonly scatterChartValueToX: (series?: import("echarts/charts").ScatterSeriesOption[] | undefined) => any;
         readonly radarChart: (series?: import("echarts/charts").RadarSeriesOption[] | undefined) => any;

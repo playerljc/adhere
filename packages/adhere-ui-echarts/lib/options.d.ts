@@ -1,5 +1,5 @@
 import { BarSeriesOption, BoxplotSeriesOption, CandlestickSeriesOption, FunnelSeriesOption, GaugeSeriesOption, HeatmapSeriesOption, LineSeriesOption, PieSeriesOption, RadarSeriesOption, SankeySeriesOption, ScatterSeriesOption, SunburstSeriesOption } from 'echarts/charts';
-import type { AreaStyle, Radius } from './types';
+import type { AreaStyle, Radius, RoseType } from './types';
 /**
  * Echarts配置的分类
  *
@@ -49,7 +49,7 @@ declare const Options: {
         type: string;
     };
     readonly pieToRadiusOption: (radius: Radius) => any;
-    readonly pieToRoseOption: (roseType: boolean) => any;
+    readonly pieToRoseOption: (roseType: RoseType) => any;
     readonly scatterOption: () => {
         type: string;
     };
@@ -95,7 +95,7 @@ declare const Options: {
     readonly lineChartToStepValueToX: (step: string | string[], series?: LineSeriesOption[]) => any;
     readonly pieChart: (series?: PieSeriesOption[]) => any;
     readonly pieChartToRadius: (radius: Radius | Radius[], series?: PieSeriesOption[]) => any;
-    readonly pieChartToRose: (roseType: boolean | boolean[], series?: PieSeriesOption[]) => any;
+    readonly pieChartToRose: (roseType: RoseType | RoseType[], series?: PieSeriesOption[]) => any;
     readonly scatterChart: (series?: ScatterSeriesOption[]) => any;
     readonly scatterChartValueToX: (series?: ScatterSeriesOption[]) => any;
     readonly radarChart: (series?: RadarSeriesOption[]) => any;

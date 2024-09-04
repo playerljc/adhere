@@ -9,3 +9,5 @@ export interface AreaStyle {
 }
 
 export type Radius = number | string | Array<number | string>;
+
+export type RoseType = boolean | 'area' | 'radius';
