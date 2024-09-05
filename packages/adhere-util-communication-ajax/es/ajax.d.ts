@@ -1,4 +1,48 @@
-import type { IConfig, ISendArg, SendResult } from './types';
+import type { IConfig, ISendArg, RequestInterceptor, ResponseInterceptor, SendResult } from './types';
+/**
+ * Interceptors
+ * @description 拦截器
+ */
+declare class Interceptors {
+    protected requestInterceptors: Set<RequestInterceptor>;
+    protected responseInterceptors: Set<ResponseInterceptor>;
+    /**
+     * addRequest
+     * @description 添加一个请求拦截器
+     * @param handler
+     */
+    addRequest(handler: RequestInterceptor | RequestInterceptor[]): Set<RequestInterceptor>;
+    /**
+     * addResponse
+     * @description 添加一个响应拦截器
+     * @param handler
+     */
+    addResponse(handler: ResponseInterceptor): Set<ResponseInterceptor>;
+    /**
+     * remove
+     * @description 删除拦截器
+     * @param handler
+     */
+    remove(handler: RequestInterceptor | ResponseInterceptor): void;
+    /**
+     * requestReducer
+     * @description 对请求参数进行拦截器处理
+     * @param params
+     */
+    requestReducer(params: ISendArg): ISendArg;
+    /**
+     * responseReducer
+     * @description 对响应参数进行拦截器处理
+     * @param params
+     */
+    responseReducer(params: Parameters<ResponseInterceptor>[0]): {
+        show: boolean;
+        terminal: string;
+        data: any;
+        indicator: any;
+        xhr: XMLHttpRequest;
+    };
+}
 /**
  * Ajax
  * @class Ajax
@@ -43,6 +87,7 @@ declare class Ajax {
     static CONTENT_TYPE_TEXT_XML: string;
     static CONTENT_TYPE_APPLICATION_XML: string;
     static CONTENT_TYPE_TEXT_PLAIN: string;
+    static interceptors: Interceptors;
     protected baseURL: string;
     protected systemManagerBaseURL: string;
     protected config: IConfig;

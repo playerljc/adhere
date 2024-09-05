@@ -5,7 +5,16 @@ import GlobalIndicator from '@baifendian/adhere-ui-globalindicator';
 import Util from '@baifendian/adhere-util';
 import intl from '@baifendian/adhere-util-intl';
 
-import type { IConfig, ISendArg, ISendPrepareArg, Method, Prepare, SendResult } from './types';
+import type {
+  IConfig,
+  ISendArg,
+  ISendPrepareArg,
+  Method,
+  Prepare,
+  RequestInterceptor,
+  ResponseInterceptor,
+  SendResult,
+} from './types';
 
 // 是否触发过402
 let trigger402 = false;
@@ -15,6 +24,87 @@ const notificationThrottlingTime = 300;
 
 let errorInfoHandler: string | number | NodeJS.Timeout | null | undefined;
 let warnInfoHandler: string | number | NodeJS.Timeout | null | undefined;
+
+/**
+ * Interceptors
+ * @description 拦截器
+ */
+class Interceptors {
+  // 请求拦截器容器
+  protected requestInterceptors = new Set<RequestInterceptor>();
+
+  // 响应拦截器容器
+  protected responseInterceptors = new Set<ResponseInterceptor>();
+
+  /**
+   * addRequest
+   * @description 添加一个请求拦截器
+   * @param handler
+   */
+  addRequest(handler: RequestInterceptor | RequestInterceptor[]) {
+    if (Array.isArray(handler)) {
+      (handler as RequestInterceptor[]).forEach((_handler) => {
+        this.requestInterceptors.add(_handler);
+      });
+
+      return this.requestInterceptors;
+    }
+
+    return this.requestInterceptors.add(handler as RequestInterceptor);
+  }
+
+  /**
+   * addResponse
+   * @description 添加一个响应拦截器
+   * @param handler
+   */
+  addResponse(handler: ResponseInterceptor) {
+    if (Array.isArray(handler)) {
+      (handler as ResponseInterceptor[]).forEach((_handler) => {
+        this.responseInterceptors.add(_handler);
+      });
+
+      return this.responseInterceptors;
+    }
+
+    return this.responseInterceptors.add(handler as ResponseInterceptor);
+  }
+
+  /**
+   * remove
+   * @description 删除拦截器
+   * @param handler
+   */
+  remove(handler: RequestInterceptor | ResponseInterceptor) {
+    if (this.requestInterceptors.has(handler as RequestInterceptor)) {
+      this.requestInterceptors.delete(handler as RequestInterceptor);
+    } else if (this.responseInterceptors.has(handler as ResponseInterceptor)) {
+      this.responseInterceptors.delete(handler as ResponseInterceptor);
+    }
+  }
+
+  /**
+   * requestReducer
+   * @description 对请求参数进行拦截器处理
+   * @param params
+   */
+  requestReducer(params: ISendArg) {
+    return Array.from(this.requestInterceptors).reduce((result, interceptor) => {
+      return interceptor(result);
+    }, params);
+  }
+
+  /**
+   * responseReducer
+   * @description 对响应参数进行拦截器处理
+   * @param params
+   */
+  responseReducer(params: Parameters<ResponseInterceptor>[0]) {
+    return Array.from(this.responseInterceptors).reduce((result, interceptor) => {
+      return interceptor(result);
+    }, params);
+  }
+}
 
 /**
  * Ajax
@@ -73,6 +163,9 @@ class Ajax {
   static CONTENT_TYPE_APPLICATION_XML = 'application/xml';
 
   static CONTENT_TYPE_TEXT_PLAIN = 'text/plain';
+
+  // 真正的烂机器
+  static interceptors = new Interceptors();
 
   protected baseURL: string;
 
@@ -321,17 +414,16 @@ function initXhrEvents({ xhr, events, reject }) {
 
 /**
  * resolveData - onreadystatechange中resolve的数据
- * @param show
- * @param terminal
- * @param data
- * @param indicator
- * @param xhr
+ * @param params
  */
-function resolveData({ show, terminal, data, indicator, xhr }): {
+function resolveData(params): {
   data: any;
   xhr: XMLHttpRequest;
   hideIndicator?: () => void;
 } {
+  // 调用response拦截器
+  const { show, terminal, data, indicator, xhr } = Ajax.interceptors.responseReducer(params);
+
   const targetGlobalIndicator = getGlobalIndicator(terminal);
 
   return {
@@ -474,7 +566,13 @@ function sendPrepare(
   {
     // 当前方法独有
     method,
+    ...params
+  }: ISendPrepareArg,
+  { resolve, reject },
+): Prepare {
+  let indicator;
 
+  const {
     // get|post|path|put|delete方法独有
     path,
     headers,
@@ -493,10 +591,9 @@ function sendPrepare(
 
     // curConfig
     ...curConfig // timeout && withCredentials && events
-  }: ISendPrepareArg,
-  { resolve, reject },
-): Prepare {
-  let indicator;
+  } =
+    // 调用request拦截器
+    Ajax.interceptors.requestReducer(params);
 
   const defaultLoadingText = `${intl.v('加载中')}...`;
 

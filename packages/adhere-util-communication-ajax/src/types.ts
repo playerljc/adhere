@@ -133,3 +133,13 @@ export type Prepare = {
 export type SendResult = Prepare & {
   promise: Promise<any>;
 };
+
+export type RequestInterceptor = (params: ISendArg) => ISendArg;
+
+export type ResponseInterceptor = (params: {
+  show: boolean;
+  terminal: string;
+  data: any;
+  indicator: any;
+  xhr: XMLHttpRequest;
+}) => { show: boolean; terminal: string; data: any; indicator: any; xhr: XMLHttpRequest };
