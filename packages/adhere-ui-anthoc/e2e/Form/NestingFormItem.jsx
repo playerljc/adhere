@@ -22,7 +22,7 @@ export default () => {
   }
 
   useEffect(() => {
-    form.setFieldsValue(JSON.parse('{"name":"1","obj1":{"a":"2","b":{"b.1":"3","b.2":"4"}}}'));
+    // form.setFieldsValue(JSON.parse('{"name":"1","obj1":{"a":"2","b":{"b.1":"3","b.2":"4"}}}'));
   }, []);
 
   return (
@@ -45,7 +45,7 @@ export default () => {
           name="obj1"
           rules={[
             {
-              validator: () => {
+              validator: function () {
                 return obj1Ref.current.validateFields();
               },
             },
@@ -66,6 +66,18 @@ export default () => {
             </Form.Item>
 
             <Form.Item
+              name="b"
+              label="b"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入b',
+                },
+              ]}
+            >
+              <Input placeholder="b" />
+            </Form.Item>
+            {/*<Form.Item
               name="b"
               rules={[
                 {
@@ -102,7 +114,7 @@ export default () => {
                   <Input placeholder="b.2" />
                 </Form.Item>
               </Form.NestingFormItem>
-            </Form.Item>
+            </Form.Item>*/}
           </Form.NestingFormItem>
         </Form.Item>
 

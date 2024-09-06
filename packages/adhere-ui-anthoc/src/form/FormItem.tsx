@@ -46,8 +46,17 @@ const FormItem: FC<FormItemProps> = ({ getErrorContainer, children, ...props }) 
     }
   }, [children, errorContainer]);
 
+  const targetValidateTrigger = useMemo(() => {
+    // @ts-ignore
+    if (targetChildren?.type?.displayName === 'NestingFormItem') {
+      return '';
+    }
+
+    return 'onChange';
+  }, [targetChildren]);
+
   return (
-    <Form.Item {...props} noStyle={!!errorContainer}>
+    <Form.Item noStyle={!!errorContainer} validateTrigger={targetValidateTrigger} {...props}>
       {targetChildren}
     </Form.Item>
   );

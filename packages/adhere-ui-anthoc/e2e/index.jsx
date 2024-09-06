@@ -37,5 +37,5 @@ import AntHOC from './test';
 import '../src/index.less';
 
 e2e.PC({
-  children: <InputMultipleForm />,
+  children: <NestingFormItem />,
 });

@@ -6,6 +6,7 @@ import Validator from '@baifendian/adhere-util-validator';
 import type { FormHOCComponent, FormValidatorRulesType } from '../types';
 import { createFactory } from '../util';
 import CustomWrapperFormItem from './CustomWrapperFormItem';
+import FormItem from './FormItem';
 import NestingFormItem from './NestingFormItem';
 
 const FormHOC: FormHOCComponent = createFactory<FormProps>(Form, {});
@@ -86,6 +87,7 @@ let ValidatorRules: FormValidatorRulesType;
 })();
 
 FormHOC.ValidatorRules = ValidatorRules;
+FormHOC.Item = FormItem;
 FormHOC.NestingFormItem = NestingFormItem;
 FormHOC.CustomWrapperFormItem = CustomWrapperFormItem;
 FormHOC.displayName = 'Form';

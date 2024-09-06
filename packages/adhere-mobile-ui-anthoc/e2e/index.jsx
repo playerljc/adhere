@@ -80,5 +80,5 @@ import TimePopup from './TimePopup/TimePopup';
 import '@baifendian/adhere-e2e/es/index.less';
 
 e2e.Mobile({
-  children: <InputMultipleForm />,
+  children: <NestingFormItem />,
 });

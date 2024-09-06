@@ -9,6 +9,7 @@ import type { AutoCompleteProps as AdhereMobileAutoCompleteProps } from '@baifen
 import type { TimePickerViewProps } from '@baifendian/adhere-mobile-ui-time-picker-view/es/types';
 import type { ScrollLoadProps, ScrollLoadRefHandle } from '@baifendian/adhere-ui-scrollload/es/types';
 import CustomWrapperFormItem from './form/CustomWrapperFormItem';
+import FormItem from './form/FormItem';
 import NestingFormItem from './form/NestingFormItem';
 import { createFactory } from './util';
 type BaseType = {
@@ -514,6 +515,7 @@ export type FormHOCComponent = typeof Form & {
     ValidatorRules: FormValidatorRulesType;
     NestingFormItem: typeof NestingFormItem;
     CustomWrapperFormItem: typeof CustomWrapperFormItem;
+    Item: typeof FormItem;
 };
 export type FormValidatorRulesType = {
     [prop: string]: (argv?: {

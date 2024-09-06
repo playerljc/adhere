@@ -36,6 +36,7 @@ import type {
 } from '@baifendian/adhere-ui-scrollload/es/types';
 
 import CustomWrapperFormItem from './form/CustomWrapperFormItem';
+import FormItem from './form/FormItem';
 import NestingFormItem from './form/NestingFormItem';
 import { createFactory } from './util';
 
@@ -770,6 +771,7 @@ export type FormHOCComponent = typeof Form & {
   ValidatorRules: FormValidatorRulesType;
   NestingFormItem: typeof NestingFormItem;
   CustomWrapperFormItem: typeof CustomWrapperFormItem;
+  Item: typeof FormItem;
 };
 
 export type FormValidatorRulesType = {

@@ -29,13 +29,18 @@ const InternalNestingFormItem = memo<
         onChange?.(all);
       }
 
-      function validateFields() {
+      /**
+       * validateFields
+       * @description 对表单项进行校验
+       * @return {Promise}
+       */
+      function validateFields(): Promise<any> {
         return form
           .validateFields()
           .then(() => {
             return;
           })
-          .catch((err) => {
+          .catch((err: string | undefined) => {
             return new Error(err);
           });
       }
