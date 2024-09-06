@@ -64,6 +64,7 @@ export default () => {
             >
               <Input placeholder="a" />
             </Form.Item>
+
             <Form.Item
               name="b"
               rules={[
@@ -116,6 +117,7 @@ export default () => {
                 >
                   Add
                 </Button>
+
                 {fields.map((field) => {
                   return (
                     <Form.Item
@@ -210,4 +212,31 @@ export default () => {
       </div>
     </div>
   );
+
+  /**
+   * 人
+   * 姓名
+   * 性别
+   * 出生年月
+   * 联系电话
+   *   联系电话
+   *   紧急联系电话
+   * 住址
+   *   常驻地址
+   *   户籍地址
+   * 父亲
+   *   姓名
+   *   出生年月
+   *   籍贯
+   *   住址
+   * 母亲
+   *   姓名
+   *   出生年月
+   *   籍贯
+   *   住址
+   *
+   * 房屋信息
+   *
+   * 车辆信息
+   */
 };

@@ -51,16 +51,20 @@ const renderHorizontal: RenderHorizontal = (params) => {
     let columnsCount = 0;
 
     while (_index < flatData.length) {
+      // label或者value
       const item = flatData[_index];
 
       if (columnsCount !== columnCount) {
-        if ('colSpan' in item.props && typeof item.props.colSpan === 'number') {
-          columnsCount += item.props.colSpan;
-        } else {
-          columnsCount = columnsCount + 1;
+        if (item) {
+          if ('colSpan' in item.props && typeof item.props.colSpan === 'number') {
+            columnsCount += item.props.colSpan;
+          } else {
+            columnsCount = columnsCount + 1;
+          }
+
+          tdJSXChildren.push(item);
         }
 
-        tdJSXChildren.push(item);
         _index++;
       } else {
         break;
@@ -180,14 +184,17 @@ const renderVertical: RenderVertical = (data, rowCountRef) => {
       const item = (_data || [])[_index];
 
       if (columnsCount !== columnCount) {
-        if ('colSpan' in item.value.props && typeof item.value.props.colSpan === 'number') {
-          columnsCount += item.value.props.colSpan;
-        } else {
-          columnsCount = columnsCount + 1;
+        if (item) {
+          if ('colSpan' in item.value.props && typeof item.value.props.colSpan === 'number') {
+            columnsCount += item.value.props.colSpan;
+          } else {
+            columnsCount = columnsCount + 1;
+          }
+
+          tdLabelJSXS.push(item.label);
+          tdValueJSXS.push(item.value);
         }
 
-        tdLabelJSXS.push(item.label);
-        tdValueJSXS.push(item.value);
         _index++;
       } else {
         break;
