@@ -1,7 +1,7 @@
 import type { Component } from 'react';
 import React from 'react';
 
-import { clone, cloneDeep } from './Util';
+import { clone } from './Util';
 
 /**
  * MultiExtendFactory
