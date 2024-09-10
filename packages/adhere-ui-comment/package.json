@@ -29,7 +29,9 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereComment --define alias=@,evnVars=true",
     "e2e": "cross-env e2e",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
@@ -44,21 +46,21 @@
     "@emoji-mart/data": "^1.0.3",
     "@emoji-mart/react": "^1.0.0",
     "@types/emoji-mart": "^3.0.9",
-    "antd": "^5.20.0",
-    "classnames": "^2.3.2",
+    "antd": "^5.20.6",
+    "classnames": "^2.5.1",
     "emoji-mart": "^5.2.0",
-    "react": "^18.2.1",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.23.1",
+    "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
-    "babel-plugin-import": "^1.13.6",
+    "babel-plugin-import": "^1.13.8",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "antd": ">=5.0.0 - <6.0.0",

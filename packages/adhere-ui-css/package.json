@@ -26,7 +26,9 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "postbuildpackage": "node ./scripts/postbuildpackage.js",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
     "@baifendian/adhere-ui-configprovider": "^2.10.28",
@@ -34,11 +36,11 @@
     "tinycolor2": "^1.6.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.23.1",
+    "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "publishConfig": {
     "access": "public"

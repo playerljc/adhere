@@ -27,13 +27,9 @@
     "buildpackage:esm": "ctbuild buildpackagets -p tsconfig.esm.json -o es",
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename AdhereAntMobileHOC --define alias=@,evnVars=true",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
-  },
-  "devDependencies": {
-    "@babel/runtime": "^7.23.1",
-    "@ctsj/build": "^6.3.0",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
@@ -48,5 +44,11 @@
     "postcss": "^8.4.20",
     "stylelint-config-css-modules": "^4.1.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.6.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.25.6",
+    "@ctsj/build": "^6.3.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2"
   }
 }

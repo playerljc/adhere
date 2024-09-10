@@ -27,18 +27,20 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "e2e": "cross-env e2e",
-    "buildumd": "ctbuild buildumd --packagename AdhereGlobalIndicator --define alias=@,evnVars=true"
+    "buildumd": "ctbuild buildumd --packagename AdhereGlobalIndicator --define alias=@,evnVars=true",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
     "@baifendian/adhere-util-resource": "^2.10.28",
     "spin.js": "^4.1.1"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.23.1",
+    "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "publishConfig": {
     "access": "public"

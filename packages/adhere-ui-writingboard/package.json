@@ -29,7 +29,9 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "buildumd": "ctbuild buildumd --packagename WritingBoard --define alias=@,evnVars=true",
     "e2e": "cross-env mobile=true e2e",
-    "generatorchangelog": "bd changelog/CHANGELOG.html"
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
     "@baifendian/adhere-mobile-ui-anthoc": "^2.10.28",
@@ -38,24 +40,24 @@
     "@baifendian/adhere-util": "^2.10.28",
     "@baifendian/adhere-util-intl": "^2.10.28",
     "@juggle/resize-observer": "^3.3.1",
-    "ahooks": "^3.7.8",
-    "antd": "^5.20.0",
+    "ahooks": "^3.8.1",
+    "antd": "^5.20.6",
     "antd-mobile": "^5.37.1",
-    "classnames": "^2.3.2",
+    "classnames": "^2.5.1",
     "lodash.debounce": "^4.0.8",
-    "react": "^18.2.1",
+    "react": "^18.3.1",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.23.1",
+    "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
-    "babel-plugin-import": "^1.13.6",
+    "babel-plugin-import": "^1.13.8",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "react": ">=18.0.0 - <19.0.0",

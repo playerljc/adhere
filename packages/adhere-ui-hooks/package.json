@@ -27,22 +27,24 @@
     "buildpackage": "npm-run-all --parallel buildpackage:cjs buildpackage:esm",
     "generatorchangelog": "bd changelog/CHANGELOG.html",
     "buildumd": "ctbuild buildumd --packagename AdhereHooks --define alias=@,evnVars=true",
-    "e2e": "cross-env e2e media=true"
+    "e2e": "cross-env e2e media=true",
+    "upgrade": "yarn upgrade",
+    "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "ahooks": "^3.7.8",
-    "react": "^18.2.1",
+    "ahooks": "^3.8.1",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
-    "use-immer": "^0.9.0"
+    "use-immer": "^0.10.0"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.23.1",
+    "@babel/runtime": "^7.25.6",
     "@baifendian/adhere-e2e": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "react": ">=18.0.0 - <19.0.0",
