@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-richtext-sandbox",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "对富文本进行样式隔离的包装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -33,7 +33,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-configprovider": "^2.10.28",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-react": "^1.0.6",
     "ahooks": "^3.8.1",
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

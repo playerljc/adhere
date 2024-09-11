@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-globalindicator",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "全局无侵入的遮罩",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,12 +32,12 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util-resource": "^2.10.28",
+    "@baifendian/adhere-util-resource": "^2.11.0",
     "spin.js": "^4.1.1"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.6.2"

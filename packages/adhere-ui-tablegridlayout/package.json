@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tablegridlayout",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "表格布局",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -32,17 +32,17 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
-    "@baifendian/adhere-ui-configprovider": "^2.10.28",
-    "@baifendian/adhere-ui-css": "^2.10.28",
-    "@baifendian/adhere-util": "^2.10.28",
+    "@baifendian/adhere-ui-conditionalrender": "^2.11.0",
+    "@baifendian/adhere-ui-configprovider": "^2.11.0",
+    "@baifendian/adhere-ui-css": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
     "classnames": "^2.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

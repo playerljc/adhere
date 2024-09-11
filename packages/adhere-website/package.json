@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-website",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "private": true,
   "description": "adhere的website",
   "homepage": "https://github.com/playerljc/adhere",
@@ -16,6 +16,7 @@
   "scripts": {
     "buildapp:dev": "cross-env environment=dev mode=production publicPath=adhere router=hash media=true ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "buildapp:pe": "cross-env environment=pe mode=production publicPath=adhere router=hash media=true ctbuild buildapp --define alias=@,evnVars=true,cssModules=true,static=assets",
+    "generatorchangelog": "bd changelog/CHANGELOG.html",
     "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
@@ -26,7 +27,7 @@
     "prettier": "prettier -c --write \"**/*\"",
     "startapp": "cross-env environment=dev mode=development publicPath=adhere router=hash media=true ctbuild startapp --define alias=@,evnVars=true,cssModules=true,static=assets",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generatorchangelog": "bd changelog/CHANGELOG.html","upgrade": "yarn upgrade",
+    "upgrade": "yarn upgrade",
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "lint-staged": {
@@ -39,10 +40,10 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
-    "@baifendian/adhere": "^2.10.28",
-    "@baifendian/adhere-ui-anthoc": "^2.10.28",
-    "@baifendian/adhere-ui-bmap": "^2.10.28",
-    "@baifendian/adhere-ui-richtext-sandbox": "^2.10.28",
+    "@baifendian/adhere": "^2.11.0",
+    "@baifendian/adhere-ui-anthoc": "^2.11.0",
+    "@baifendian/adhere-ui-bmap": "^2.11.0",
+    "@baifendian/adhere-ui-richtext-sandbox": "^2.11.0",
     "@ctsj/router": "^1.0.5",
     "@ctsj/state": "^2.0.24",
     "antd": "^5.20.6",
@@ -75,7 +76,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-mock": "^2.10.28",
+    "@baifendian/adhere-mock": "^2.11.0",
     "@ctsj/build": "^6.4.0",
     "@ctsj/less-media-query-loader": "^1.0.1",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",

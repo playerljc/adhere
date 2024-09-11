@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-tableheadsearch",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "基于antd-design的Table的列头筛选",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

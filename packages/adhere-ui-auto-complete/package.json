@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-auto-complete",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "自动补全",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -34,7 +34,7 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util-watchmemoized": "^2.10.28",
+    "@baifendian/adhere-util-watchmemoized": "^2.11.0",
     "antd": "^5.20.6",
     "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

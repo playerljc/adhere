@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-messagedialog",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "对ant-design的<Model>进行封装",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -34,11 +34,11 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-ui-formitemcreator": "^2.10.28",
-    "@baifendian/adhere-ui-hooks": "^2.10.28",
-    "@baifendian/adhere-ui-space": "^2.10.28",
-    "@baifendian/adhere-util-intl": "^2.10.28",
-    "@baifendian/adhere-util-resource": "^2.10.28",
+    "@baifendian/adhere-ui-formitemcreator": "^2.11.0",
+    "@baifendian/adhere-ui-hooks": "^2.11.0",
+    "@baifendian/adhere-ui-space": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
+    "@baifendian/adhere-util-resource": "^2.11.0",
     "antd": "^5.20.6",
     "immer": "^9.0.21",
     "lodash.debounce": "^4.0.8",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

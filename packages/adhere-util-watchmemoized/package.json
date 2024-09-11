@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-util-watchmemoized",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "对值的监控和缓存",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -31,13 +31,13 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util": "^2.10.28",
-    "@baifendian/adhere-util-emitter": "^2.10.28",
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-emitter": "^2.11.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.6.2"

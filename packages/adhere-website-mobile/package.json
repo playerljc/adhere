@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-website-mobile",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "private": true,
   "description": "adhere的website-mobile",
   "homepage": "https://github.com/playerljc/adhere",
@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
-    "@baifendian/adhere": "^2.10.28",
-    "@baifendian/adhere-mock": "^2.10.28",
+    "@baifendian/adhere": "^2.11.0",
+    "@baifendian/adhere-mock": "^2.11.0",
     "@ctsj/router": "^1.0.5",
     "antd": "^5.20.6",
     "antd-mobile": "^5.37.1",

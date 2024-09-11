@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-mobile-ui-anthoc",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "antd-mobile组件的hoc",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -35,14 +35,14 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-mobile-ui-auto-complete": "^2.10.28",
-    "@baifendian/adhere-mobile-ui-time-picker-view": "^2.10.28",
-    "@baifendian/adhere-ui-backtopanimation": "^2.10.28",
-    "@baifendian/adhere-ui-flexlayout": "^2.10.28",
-    "@baifendian/adhere-ui-scrollload": "^2.10.28",
-    "@baifendian/adhere-util": "^2.10.28",
-    "@baifendian/adhere-util-intl": "^2.10.28",
-    "@baifendian/adhere-util-validator": "^2.10.28",
+    "@baifendian/adhere-mobile-ui-auto-complete": "^2.11.0",
+    "@baifendian/adhere-mobile-ui-time-picker-view": "^2.11.0",
+    "@baifendian/adhere-ui-backtopanimation": "^2.11.0",
+    "@baifendian/adhere-ui-flexlayout": "^2.11.0",
+    "@baifendian/adhere-ui-scrollload": "^2.11.0",
+    "@baifendian/adhere-util": "^2.11.0",
+    "@baifendian/adhere-util-intl": "^2.11.0",
+    "@baifendian/adhere-util-validator": "^2.11.0",
     "antd-mobile": "^5.37.1",
     "dayjs": "^1.11.12",
     "lodash.debounce": "^4.0.8",
@@ -53,9 +53,9 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
-    "@baifendian/adhere-mock": "^2.10.28",
-    "@baifendian/adhere-ui-anthoc": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
+    "@baifendian/adhere-mock": "^2.11.0",
+    "@baifendian/adhere-ui-anthoc": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

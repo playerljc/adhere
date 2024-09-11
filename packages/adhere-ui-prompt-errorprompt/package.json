@@ -1,6 +1,6 @@
 {
   "name": "@baifendian/adhere-ui-prompt-errorprompt",
-  "version": "2.10.28",
+  "version": "2.11.0",
   "description": "错误的提示(就是为了全局统一)",
   "homepage": "https://github.com/playerljc/adhere",
   "bugs": {
@@ -33,14 +33,14 @@
     "upgrade-interactive": "yarn upgrade-interactive"
   },
   "dependencies": {
-    "@baifendian/adhere-util-intl": "^2.10.28",
+    "@baifendian/adhere-util-intl": "^2.11.0",
     "antd": "^5.20.6",
     "react": "^18.3.1",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-e2e": "^2.11.0",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
