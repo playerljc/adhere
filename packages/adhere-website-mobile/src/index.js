@@ -37,10 +37,13 @@ import '@baifendian/adhere/lib/css.less';
 
 import styles from './index.less';
 
-if (SelfUtil.isUseMedia()) {
-  // 适配REM
-  AdapterScreen.flexible();
-}
+// if (SelfUtil.isUseMedia()) {
+//   // 适配REM
+//   AdapterScreen.flexible();
+// }
+
+const rem = window.document.body.clientWidth / 10;
+document.documentElement.style.fontSize = rem + 'px';
 
 let root;
 let RouterConfig;

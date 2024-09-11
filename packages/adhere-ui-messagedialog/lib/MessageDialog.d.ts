@@ -159,9 +159,9 @@ declare const MessageDialogFactory: {
      * TriggerPrompt
      */
     TriggerPrompt: React.ForwardRefExoticComponent<Omit<import("./types").TriggerProps, "footer" | "modalConfig"> & {
-        onSubmit?: (() => Promise<any>) | undefined;
-        modalConfig?: Omit<ModalArgv, "children" | "defaultCloseBtn"> | undefined;
-        okText?: string | undefined;
+        onSubmit?: () => Promise<any>;
+        modalConfig?: Omit<ModalArgv, "children" | "defaultCloseBtn">;
+        okText?: string;
     } & React.RefAttributes<import("./types").TriggerPromptHandle>>;
     /**
      * allowMultipleInstances

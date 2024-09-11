@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Hooks from '@baifendian/adhere';
+import { Hooks } from '@baifendian/adhere';
 
 const { useItemsRef } = Hooks;
 
