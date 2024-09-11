@@ -29,6 +29,12 @@ function useItemsRef<T>() {
         return getMap();
       }
     },
+    getKeys() {
+      return itemsRef.current?.keys();
+    },
+    getRefs() {
+      return itemsRef.current?.values();
+    },
   };
 }
 
