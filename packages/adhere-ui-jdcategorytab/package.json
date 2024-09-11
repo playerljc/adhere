@@ -41,8 +41,10 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.25.6",
-    "@baifendian/adhere": "^2.10.28",
     "@baifendian/adhere-e2e": "^2.10.28",
+    "@baifendian/adhere-ui-conditionalrender": "^2.10.28",
+    "@baifendian/adhere-ui-space": "^2.10.28",
+    "@baifendian/adhere-ui-spin": "^2.10.28",
     "@ctsj/build": "^6.3.0",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

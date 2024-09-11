@@ -1,4 +1,4 @@
-import { AdapterScreen } from '@baifendian/adhere';
+import AdapterScreen from '@baifendian/adhere-util-adapterscreen';
 
 import Mobile from './mobile';
 import PC from './pc';

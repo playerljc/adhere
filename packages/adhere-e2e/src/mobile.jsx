@@ -15,16 +15,14 @@ import {
   legacyLogicalPropertiesTransformer,
   px2remTransformer,
 } from '@ant-design/cssinjs';
-import {
-  ConfigProvider as AdhereConfigProvider,
-  Browsersniff,
-  ContextMenu,
-  MessageDialog,
-  Notification,
-  Popup,
-  Resource,
-} from '@baifendian/adhere';
 import { ConfigProvider as AntdConfigProvider } from '@baifendian/adhere-ui-anthoc';
+import AdhereConfigProvider from '@baifendian/adhere-ui-configprovider';
+import ContextMenu from '@baifendian/adhere-ui-contextmenu';
+import MessageDialog from '@baifendian/adhere-ui-messagedialog';
+import Notification from '@baifendian/adhere-ui-notification';
+import Popup from '@baifendian/adhere-ui-popup';
+import Browsersniff from '@baifendian/adhere-util-browsersniff';
+import Resource from '@baifendian/adhere-util-resource';
 
 import { antdThemeToCssVariable } from './theme';
 import { isUseMedia } from './util';
@@ -33,7 +31,7 @@ import 'antd/dist/reset.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import '@baifendian/adhere-ui-configprovider/es/index.less';
-import '@baifendian/adhere/lib/css.less';
+import '@baifendian/adhere-ui-css/lib/css.less';
 
 let timerRef = null;
 

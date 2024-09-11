@@ -1,7 +1,8 @@
 import { theme } from 'antd';
 import tinyColor from 'tinycolor2';
 
-import { Preferences, Util } from '@baifendian/adhere';
+import Util from '@baifendian/adhere-util';
+import Preferences from '@baifendian/adhere-util-preferences';
 
 /**
  * setCssVariable
